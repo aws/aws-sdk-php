@@ -18,6 +18,7 @@
     "DeleteTrustStore": "<p>Deletes a trust store.</p>",
     "DeregisterTargets": "<p>Deregisters the specified targets from the specified target group. After the targets are deregistered, they no longer receive traffic from the load balancer.</p> <p>The load balancer stops sending requests to targets that are deregistering, but uses connection draining to ensure that in-flight traffic completes on the existing connections. This deregistration delay is configured by default but can be updated for each target group.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Application Load Balancers User Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Network Load Balancers User Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Gateway Load Balancers User Guide</i> </p> </li> </ul> <p>Note: If the specified target does not exist, the action returns successfully.</p>",
     "DescribeAccountLimits": "<p>Describes the current Elastic Load Balancing resource limits for your Amazon Web Services account.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html\">Quotas for your Application Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-limits.html\">Quotas for your Network Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/quotas-limits.html\">Quotas for your Gateway Load Balancers</a> </p> </li> </ul>",
+    "DescribeListenerAttributes": "<p>Describes the attributes for the specified listener.</p>",
     "DescribeListenerCertificates": "<p>Describes the default certificate and the certificate list for the specified HTTPS or TLS listener.</p> <p>If the default certificate is also in the certificate list, it appears twice in the results (once with <code>IsDefault</code> set to true and once with <code>IsDefault</code> set to false).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#https-listener-certificates\">SSL certificates</a> in the <i>Application Load Balancers Guide</i> or <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/create-tls-listener.html#tls-listener-certificate\">Server certificates</a> in the <i>Network Load Balancers Guide</i>.</p>",
     "DescribeListeners": "<p>Describes the specified listeners or the listeners for the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer. You must specify either a load balancer or one or more listeners.</p>",
     "DescribeLoadBalancerAttributes": "<p>Describes the attributes for the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#load-balancer-attributes\">Load balancer attributes</a> in the <i>Application Load Balancers Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html#load-balancer-attributes\">Load balancer attributes</a> in the <i>Network Load Balancers Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/gateway-load-balancers.html#load-balancer-attributes\">Load balancer attributes</a> in the <i>Gateway Load Balancers Guide</i> </p> </li> </ul>",
@@ -35,6 +36,7 @@
     "GetTrustStoreCaCertificatesBundle": "<p>Retrieves the ca certificate bundle.</p> <p>This action returns a pre-signed S3 URI which is active for ten minutes.</p>",
     "GetTrustStoreRevocationContent": "<p>Retrieves the specified revocation file.</p> <p>This action returns a pre-signed S3 URI which is active for ten minutes.</p>",
     "ModifyListener": "<p>Replaces the specified properties of the specified listener. Any properties that you do not specify remain unchanged.</p> <p>Changing the protocol from HTTPS to HTTP, or from TLS to TCP, removes the security policy and default certificate properties. If you change the protocol from HTTP to HTTPS, or from TCP to TLS, you must add the security policy and default certificate properties.</p> <p>To add an item to a list, remove an item from a list, or update an item in a list, you must provide the entire list. For example, to add an action, specify a list with the current actions plus the new action.</p>",
+    "ModifyListenerAttributes": "<p>Modifies the specified attributes of the specified listener.</p>",
     "ModifyLoadBalancerAttributes": "<p>Modifies the specified attributes of the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer.</p> <p>If any of the specified attributes can't be modified as requested, the call fails. Any existing attributes that you do not modify retain their current values.</p>",
     "ModifyRule": "<p>Replaces the specified properties of the specified rule. Any properties that you do not specify are unchanged.</p> <p>To add an item to a list, remove an item from a list, or update an item in a list, you must provide the entire list. For example, to add an action, specify a list with the current actions plus the new action.</p>",
     "ModifyTargetGroup": "<p>Modifies the health checks used when evaluating the health state of the targets in the specified target group.</p>",
@@ -556,6 +558,16 @@
       "refs": {
       }
     },
+    "DescribeListenerAttributesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeListenerAttributesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeListenerCertificatesInput": {
       "base": null,
       "refs": {
@@ -1016,10 +1028,12 @@
         "AddListenerCertificatesInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "CreateRuleInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "DeleteListenerInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
+        "DescribeListenerAttributesInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "DescribeListenerCertificatesInput$ListenerArn": "<p>The Amazon Resource Names (ARN) of the listener.</p>",
         "DescribeRulesInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "Listener$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "ListenerArns$member": null,
+        "ModifyListenerAttributesInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "ModifyListenerInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>",
         "RemoveListenerCertificatesInput$ListenerArn": "<p>The Amazon Resource Name (ARN) of the listener.</p>"
       }
@@ -1028,6 +1042,32 @@
       "base": null,
       "refs": {
         "DescribeListenersInput$ListenerArns": "<p>The Amazon Resource Names (ARN) of the listeners.</p>"
+      }
+    },
+    "ListenerAttribute": {
+      "base": "<p>Information about a listener attribute.</p>",
+      "refs": {
+        "ListenerAttributes$member": null
+      }
+    },
+    "ListenerAttributeKey": {
+      "base": null,
+      "refs": {
+        "ListenerAttribute$Key": "<p>The name of the attribute.</p> <p>The following attribute is supported by Network Load Balancers, and Gateway Load Balancers.</p> <ul> <li> <p> <code>tcp.idle_timeout.seconds</code> - The tcp idle timeout value, in seconds. The valid range is 60-6000 seconds. The default is 350 seconds.</p> </li> </ul>"
+      }
+    },
+    "ListenerAttributeValue": {
+      "base": null,
+      "refs": {
+        "ListenerAttribute$Value": "<p>The value of the attribute.</p>"
+      }
+    },
+    "ListenerAttributes": {
+      "base": null,
+      "refs": {
+        "DescribeListenerAttributesOutput$Attributes": "<p>Information about the listener attributes.</p>",
+        "ModifyListenerAttributesInput$Attributes": "<p>The listener attributes.</p>",
+        "ModifyListenerAttributesOutput$Attributes": "<p>Information about the listener attributes.</p>"
       }
     },
     "ListenerNotFoundException": {
@@ -1220,6 +1260,16 @@
       "base": null,
       "refs": {
         "MutualAuthenticationAttributes$Mode": "<p>The client certificate handling method. Options are <code>off</code>, <code>passthrough</code> or <code>verify</code>. The default value is <code>off</code>.</p>"
+      }
+    },
+    "ModifyListenerAttributesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyListenerAttributesOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ModifyListenerInput": {
@@ -1942,8 +1992,8 @@
       "base": null,
       "refs": {
         "DescribeTargetGroupAttributesOutput$Attributes": "<p>Information about the target group attributes</p>",
-        "ModifyTargetGroupAttributesInput$Attributes": "<p>The attributes.</p>",
-        "ModifyTargetGroupAttributesOutput$Attributes": "<p>Information about the attributes.</p>"
+        "ModifyTargetGroupAttributesInput$Attributes": "<p>The target group attributes.</p>",
+        "ModifyTargetGroupAttributesOutput$Attributes": "<p>Information about the target group attributes.</p>"
       }
     },
     "TargetGroupIpAddressTypeEnum": {

@@ -10,7 +10,7 @@
     "CreateIPSet": "<p>Creates a new IPSet, which is called a trusted IP list in the console user interface. An IPSet is a list of IP addresses that are trusted for secure communication with Amazon Web Services infrastructure and applications. GuardDuty doesn't generate findings for IP addresses that are included in IPSets. Only users from the administrator account can use this operation.</p>",
     "CreateMalwareProtectionPlan": "<p>Creates a new Malware Protection plan for the protected resource.</p> <p>When you create a Malware Protection plan, the Amazon Web Services service terms for GuardDuty Malware Protection apply. For more information, see <a href=\"http://aws.amazon.com/service-terms/#87._Amazon_GuardDuty\">Amazon Web Services service terms for GuardDuty Malware Protection</a>.</p>",
     "CreateMembers": "<p>Creates member accounts of the current Amazon Web Services account by specifying a list of Amazon Web Services account IDs. This step is a prerequisite for managing the associated member accounts either by invitation or through an organization.</p> <p>As a delegated administrator, using <code>CreateMembers</code> will enable GuardDuty in the added member accounts, with the exception of the organization delegated administrator account. A delegated administrator must enable GuardDuty prior to being added as a member.</p> <p>When you use CreateMembers as an Organizations delegated administrator, GuardDuty applies your organization's auto-enable settings to the member accounts in this request, irrespective of the accounts being new or existing members. For more information about the existing auto-enable settings for your organization, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeOrganizationConfiguration.html\">DescribeOrganizationConfiguration</a>.</p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
-    "CreatePublishingDestination": "<p>Creates a publishing destination to export findings to. The resource to export findings to must exist before you use this operation.</p>",
+    "CreatePublishingDestination": "<p>Creates a publishing destination where you can export your GuardDuty findings. Before you start exporting the findings, the destination resource must exist.</p>",
     "CreateSampleFindings": "<p>Generates sample findings of types specified by the list of finding types. If 'NULL' is specified for <code>findingTypes</code>, the API generates sample findings of all supported finding types.</p>",
     "CreateThreatIntelSet": "<p>Creates a new ThreatIntelSet. ThreatIntelSets consist of known malicious IP addresses. GuardDuty generates findings based on ThreatIntelSets. Only users of the administrator account can use this operation.</p>",
     "DeclineInvitations": "<p>Declines invitations sent to the current member account by Amazon Web Services accounts specified by their account IDs.</p>",
@@ -32,10 +32,10 @@
     "EnableOrganizationAdminAccount": "<p>Designates an Amazon Web Services account within the organization as your GuardDuty delegated administrator. Only the organization's management account can run this API operation.</p>",
     "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <note> <p>If the organization's management account or a delegated administrator runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </note>",
     "GetCoverageStatistics": "<p>Retrieves aggregated statistics for your account. If you are a GuardDuty administrator, you can retrieve the statistics for all the resources associated with the active member accounts in your organization who have enabled Runtime Monitoring and have the GuardDuty security agent running on their resources.</p>",
-    "GetDetector": "<p>Retrieves an Amazon GuardDuty detector specified by the detectorId.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
+    "GetDetector": "<p>Retrieves a GuardDuty detector specified by the detectorId.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetFilter": "<p>Returns the details of the filter specified by the filter name.</p>",
     "GetFindings": "<p>Describes Amazon GuardDuty findings specified by finding IDs.</p>",
-    "GetFindingsStatistics": "<p>Lists Amazon GuardDuty findings statistics for the specified detector ID.</p> <p>There might be regional differences because some flags might not be available in all the Regions where GuardDuty is currently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
+    "GetFindingsStatistics": "<p>Lists GuardDuty findings statistics for the specified detector ID.</p> <p>You must provide either <code>findingStatisticTypes</code> or <code>groupBy</code> parameter, and not both. You can use the <code>maxResults</code> and <code>orderBy</code> parameters only when using <code>groupBy</code>.</p> <p>There might be regional differences because some flags might not be available in all the Regions where GuardDuty is currently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetIPSet": "<p>Retrieves the IPSet specified by the <code>ipSetId</code>.</p>",
     "GetInvitationsCount": "<p>Returns the count of all GuardDuty membership invitations that were sent to the current member account except the currently accepted invitation.</p>",
     "GetMalwareProtectionPlan": "<p>Retrieves the Malware Protection plan details associated with a Malware Protection plan ID.</p>",
@@ -163,7 +163,7 @@
         "DeleteInvitationsRequest$AccountIds": "<p>A list of account IDs of the Amazon Web Services accounts that sent invitations to the current member account that you want to delete invitations from.</p>",
         "DeleteMembersRequest$AccountIds": "<p>A list of account IDs of the GuardDuty member accounts that you want to delete.</p>",
         "DisassociateMembersRequest$AccountIds": "<p>A list of account IDs of the GuardDuty member accounts that you want to disassociate from the administrator account.</p>",
-        "GetMemberDetectorsRequest$AccountIds": "<p>The account ID of the member account.</p>",
+        "GetMemberDetectorsRequest$AccountIds": "<p>A list of member account IDs.</p>",
         "GetMembersRequest$AccountIds": "<p>A list of account IDs of the GuardDuty member accounts that you want to describe.</p>",
         "GetRemainingFreeTrialDaysRequest$AccountIds": "<p>A list of account identifiers of the GuardDuty member account.</p>",
         "InviteMembersRequest$AccountIds": "<p>A list of account IDs of the accounts that you want to invite to GuardDuty as members.</p>",
@@ -177,6 +177,12 @@
       "base": "<p>Contains information about the account level permissions on the S3 bucket.</p>",
       "refs": {
         "PermissionConfiguration$AccountLevelPermissions": "<p>Contains information about the account level permissions on the S3 bucket.</p>"
+      }
+    },
+    "AccountStatistics": {
+      "base": "<p>Represents a list of map of accounts with the number of findings associated with each account.</p>",
+      "refs": {
+        "GroupedByAccount$member": null
       }
     },
     "Action": {
@@ -436,7 +442,7 @@
     "CountBySeverity": {
       "base": null,
       "refs": {
-        "FindingStatistics$CountBySeverity": "<p>Represents a map of severity to count statistics for a set of findings.</p>"
+        "FindingStatistics$CountBySeverity": "<p>Represents a list of map of severity to count statistics for a set of findings.</p>"
       }
     },
     "Country": {
@@ -472,7 +478,7 @@
     "CoverageFilterCriteria": {
       "base": "<p>Represents the criteria used in the filter.</p>",
       "refs": {
-        "GetCoverageStatisticsRequest$FilterCriteria": "<p>Represents the criteria used to filter the coverage statistics</p>",
+        "GetCoverageStatisticsRequest$FilterCriteria": "<p>Represents the criteria used to filter the coverage statistics.</p>",
         "ListCoverageRequest$FilterCriteria": "<p>Represents the criteria used to filter the coverage details.</p>"
       }
     },
@@ -716,6 +722,12 @@
         "AccountFreeTrialInfo$DataSources": "<p>Describes the data source enabled for the GuardDuty member account.</p>"
       }
     },
+    "DateStatistics": {
+      "base": "<p>Represents list a map of dates with a count of total findings generated on each date.</p>",
+      "refs": {
+        "GroupedByDate$member": null
+      }
+    },
     "DeclineInvitationsRequest": {
       "base": null,
       "refs": {
@@ -940,57 +952,57 @@
         "ArchiveFindingsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings you want to archive.</p>",
         "CoverageResource$DetectorId": "<p>The unique ID of the GuardDuty detector associated with the resource.</p>",
         "CreateDetectorResponse$DetectorId": "<p>The unique ID of the created detector.</p>",
-        "CreateFilterRequest$DetectorId": "<p>The ID of the detector belonging to the GuardDuty account that you want to create a filter for.</p>",
-        "CreateIPSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account that you want to create an IPSet for.</p>",
-        "CreateMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account that you want to associate member accounts with.</p>",
+        "CreateFilterRequest$DetectorId": "<p>The detector ID associated with the GuardDuty account for which you want to create a filter.</p>",
+        "CreateIPSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create an IPSet.</p>",
+        "CreateMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to associate member accounts.</p>",
         "CreatePublishingDestinationRequest$DetectorId": "<p>The ID of the GuardDuty detector associated with the publishing destination.</p>",
-        "CreateSampleFindingsRequest$DetectorId": "<p>The ID of the detector to create sample findings for.</p>",
-        "CreateThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account that you want to create a threatIntelSet for.</p>",
+        "CreateSampleFindingsRequest$DetectorId": "<p>The ID of the detector for which you need to create sample findings.</p>",
+        "CreateThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account for which you want to create a <code>ThreatIntelSet</code>.</p>",
         "DeleteDetectorRequest$DetectorId": "<p>The unique ID of the detector that you want to delete.</p>",
-        "DeleteFilterRequest$DetectorId": "<p>The unique ID of the detector that the filter is associated with.</p>",
+        "DeleteFilterRequest$DetectorId": "<p>The unique ID of the detector that is associated with the filter.</p>",
         "DeleteIPSetRequest$DetectorId": "<p>The unique ID of the detector associated with the IPSet.</p>",
         "DeleteMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account whose members you want to delete.</p>",
         "DeletePublishingDestinationRequest$DetectorId": "<p>The unique ID of the detector associated with the publishing destination to delete.</p>",
-        "DeleteThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that the threatIntelSet is associated with.</p>",
+        "DeleteThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p>",
         "DescribeMalwareScansRequest$DetectorId": "<p>The unique ID of the detector that the request is associated with.</p>",
-        "DescribeOrganizationConfigurationRequest$DetectorId": "<p>The ID of the detector to retrieve information about the delegated administrator from.</p>",
+        "DescribeOrganizationConfigurationRequest$DetectorId": "<p>The detector ID of the delegated administrator for which you need to retrieve the information.</p>",
         "DescribePublishingDestinationRequest$DetectorId": "<p>The unique ID of the detector associated with the publishing destination to retrieve.</p>",
         "DetectorIds$member": null,
         "DisassociateFromAdministratorAccountRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
         "DisassociateFromMasterAccountRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
         "DisassociateMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account whose members you want to disassociate from the administrator account.</p>",
         "GetAdministratorAccountRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
-        "GetCoverageStatisticsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector associated to the coverage statistics.</p>",
+        "GetCoverageStatisticsRequest$DetectorId": "<p>The unique ID of the GuardDuty detector.</p>",
         "GetDetectorRequest$DetectorId": "<p>The unique ID of the detector that you want to get.</p>",
-        "GetFilterRequest$DetectorId": "<p>The unique ID of the detector that the filter is associated with.</p>",
+        "GetFilterRequest$DetectorId": "<p>The unique ID of the detector that is associated with this filter.</p>",
         "GetFindingsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings you want to retrieve.</p>",
-        "GetFindingsStatisticsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings' statistics you want to retrieve.</p>",
-        "GetIPSetRequest$DetectorId": "<p>The unique ID of the detector that the IPSet is associated with.</p>",
-        "GetMalwareScanSettingsRequest$DetectorId": "<p>The unique ID of the detector that the scan setting is associated with.</p>",
+        "GetFindingsStatisticsRequest$DetectorId": "<p>The ID of the detector whose findings statistics you want to retrieve.</p>",
+        "GetIPSetRequest$DetectorId": "<p>The unique ID of the detector that is associated with the IPSet.</p>",
+        "GetMalwareScanSettingsRequest$DetectorId": "<p>The unique ID of the detector that is associated with this scan.</p>",
         "GetMasterAccountRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
         "GetMemberDetectorsRequest$DetectorId": "<p>The detector ID for the administrator account.</p>",
         "GetMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account whose members you want to retrieve.</p>",
         "GetRemainingFreeTrialDaysRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty member account.</p>",
-        "GetThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that the threatIntelSet is associated with.</p>",
+        "GetThreatIntelSetRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p>",
         "GetUsageStatisticsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose usage statistics you want to retrieve.</p>",
-        "InviteMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account that you want to invite members with.</p>",
+        "InviteMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty account with which you want to invite members.</p>",
         "ListCoverageRequest$DetectorId": "<p>The unique ID of the detector whose coverage details you want to retrieve.</p>",
-        "ListFiltersRequest$DetectorId": "<p>The unique ID of the detector that the filter is associated with.</p>",
+        "ListFiltersRequest$DetectorId": "<p>The unique ID of the detector that is associated with the filter.</p>",
         "ListFindingsRequest$DetectorId": "<p>The ID of the detector that specifies the GuardDuty service whose findings you want to list.</p>",
-        "ListIPSetsRequest$DetectorId": "<p>The unique ID of the detector that the IPSet is associated with.</p>",
-        "ListMembersRequest$DetectorId": "<p>The unique ID of the detector the member is associated with.</p>",
-        "ListPublishingDestinationsRequest$DetectorId": "<p>The ID of the detector to retrieve publishing destinations for.</p>",
-        "ListThreatIntelSetsRequest$DetectorId": "<p>The unique ID of the detector that the threatIntelSet is associated with.</p>",
+        "ListIPSetsRequest$DetectorId": "<p>The unique ID of the detector that is associated with IPSet.</p>",
+        "ListMembersRequest$DetectorId": "<p>The unique ID of the detector that is associated with the member.</p>",
+        "ListPublishingDestinationsRequest$DetectorId": "<p>The detector ID for which you want to retrieve the publishing destination.</p>",
+        "ListThreatIntelSetsRequest$DetectorId": "<p>The unique ID of the detector that is associated with the threatIntelSet.</p>",
         "Member$DetectorId": "<p>The detector ID of the member account.</p>",
         "Scan$DetectorId": "<p>The unique ID of the detector that the request is associated with.</p>",
-        "Scan$AdminDetectorId": "<p>The unique detector ID of the administrator account that the request is associated with. Note that this value will be the same as the one used for <code>DetectorId</code> if the account is an administrator.</p>",
+        "Scan$AdminDetectorId": "<p>The unique detector ID of the administrator account that the request is associated with. If the account is an administrator, the <code>AdminDetectorId</code> will be the same as the one used for <code>DetectorId</code>.</p>",
         "Service$DetectorId": "<p>The detector ID for the GuardDuty service.</p>",
         "StartMonitoringMembersRequest$DetectorId": "<p>The unique ID of the detector of the GuardDuty administrator account associated with the member accounts to monitor.</p>",
         "StopMonitoringMembersRequest$DetectorId": "<p>The unique ID of the detector associated with the GuardDuty administrator account that is monitoring member accounts.</p>",
         "UnarchiveFindingsRequest$DetectorId": "<p>The ID of the detector associated with the findings to unarchive.</p>",
         "UpdateDetectorRequest$DetectorId": "<p>The unique ID of the detector to update.</p>",
         "UpdateFilterRequest$DetectorId": "<p>The unique ID of the detector that specifies the GuardDuty service where you want to update a filter.</p>",
-        "UpdateFindingsFeedbackRequest$DetectorId": "<p>The ID of the detector associated with the findings to update feedback for.</p>",
+        "UpdateFindingsFeedbackRequest$DetectorId": "<p>The ID of the detector that is associated with the findings for which you want to update the feedback.</p>",
         "UpdateIPSetRequest$DetectorId": "<p>The detectorID that specifies the GuardDuty service whose IPSet you want to update.</p>",
         "UpdateMalwareScanSettingsRequest$DetectorId": "<p>The unique ID of the detector that specifies the GuardDuty service where you want to update scan settings.</p>",
         "UpdateMemberDetectorsRequest$DetectorId": "<p>The detector ID of the administrator account.</p>",
@@ -1066,10 +1078,12 @@
     "Double": {
       "base": null,
       "refs": {
+        "DateStatistics$Severity": "<p>The severity of the findings generated on each date.</p>",
         "Finding$Confidence": "<p>The confidence score for the finding.</p>",
         "Finding$Severity": "<p>The severity of the finding.</p>",
         "GeoLocation$Lat": "<p>The latitude information of the remote IP address.</p>",
-        "GeoLocation$Lon": "<p>The longitude information of the remote IP address.</p>"
+        "GeoLocation$Lon": "<p>The longitude information of the remote IP address.</p>",
+        "SeverityStatistics$Severity": "<p>The severity level associated with each finding type.</p>"
       }
     },
     "EbsSnapshotPreservation": {
@@ -1265,7 +1279,7 @@
         "CreateFilterRequest$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p> <p>You can only use the following attributes to query findings:</p> <ul> <li> <p>accountId</p> </li> <li> <p>id</p> </li> <li> <p>region</p> </li> <li> <p>severity</p> <p>To filter on the basis of severity, the API and CLI use the following input list for the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html\">FindingCriteria</a> condition:</p> <ul> <li> <p> <b>Low</b>: <code>[\"1\", \"2\", \"3\"]</code> </p> </li> <li> <p> <b>Medium</b>: <code>[\"4\", \"5\", \"6\"]</code> </p> </li> <li> <p> <b>High</b>: <code>[\"7\", \"8\", \"9\"]</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html#guardduty_findings-severity\">Severity levels for GuardDuty findings</a>.</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: ISO 8601 string format: YYYY-MM-DDTHH:MM:SS.SSSZ or YYYY-MM-DDTHH:MM:SSZ depending on whether the value contains milliseconds.</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.outpostArn</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>resource.s3BucketDetails.publicAccess.effectivePermissions</p> </li> <li> <p>resource.s3BucketDetails.name</p> </li> <li> <p>resource.s3BucketDetails.tags.key</p> </li> <li> <p>resource.s3BucketDetails.tags.value</p> </li> <li> <p>resource.s3BucketDetails.type</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.errorCode</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.affiliated</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV6</p> </li> <li> <p>service.action.kubernetesApiCallAction.namespace</p> </li> <li> <p>service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.kubernetesApiCallAction.requestUri</p> </li> <li> <p>service.action.kubernetesApiCallAction.statusCode</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.localIpDetails.ipAddressV6</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.awsApiCallAction.remoteAccountDetails.accountId</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>resource.eksClusterDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.name</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.namespace</p> </li> <li> <p>resource.kubernetesDetails.kubernetesUserDetails.username</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.image</p> </li> <li> <p>resource.kubernetesDetails.kubernetesWorkloadDetails.containers.imagePrefix</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.name</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.severity</p> </li> <li> <p>service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.hash</p> </li> <li> <p>resource.ecsClusterDetails.name</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.containers.image</p> </li> <li> <p>resource.ecsClusterDetails.taskDetails.definitionArn</p> </li> <li> <p>resource.containerDetails.image</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbInstanceIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.dbClusterIdentifier</p> </li> <li> <p>resource.rdsDbInstanceDetails.engine</p> </li> <li> <p>resource.rdsDbUserDetails.user</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.key</p> </li> <li> <p>resource.rdsDbInstanceDetails.tags.value</p> </li> <li> <p>service.runtimeDetails.process.executableSha256</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>service.runtimeDetails.process.name</p> </li> <li> <p>resource.lambdaDetails.functionName</p> </li> <li> <p>resource.lambdaDetails.functionArn</p> </li> <li> <p>resource.lambdaDetails.tags.key</p> </li> <li> <p>resource.lambdaDetails.tags.value</p> </li> </ul>",
         "GetFilterResponse$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p>",
         "GetFindingsStatisticsRequest$FindingCriteria": "<p>Represents the criteria that is used for querying findings.</p>",
-        "ListFindingsRequest$FindingCriteria": "<p>Represents the criteria used for querying findings. Valid values include:</p> <ul> <li> <p>JSON field name</p> </li> <li> <p>accountId</p> </li> <li> <p>region</p> </li> <li> <p>confidence</p> </li> <li> <p>id</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.archived</p> <p>When this attribute is set to 'true', only archived findings are listed. When it's set to 'false', only unarchived findings are listed. When this attribute is not set, all existing findings are listed.</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>severity</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format: 1486685375000</p> </li> </ul>",
+        "ListFindingsRequest$FindingCriteria": "<p>Represents the criteria used for querying findings. Valid values include:</p> <ul> <li> <p>JSON field name</p> </li> <li> <p>accountId</p> </li> <li> <p>region</p> </li> <li> <p>confidence</p> </li> <li> <p>id</p> </li> <li> <p>resource.accessKeyDetails.accessKeyId</p> </li> <li> <p>resource.accessKeyDetails.principalId</p> </li> <li> <p>resource.accessKeyDetails.userName</p> </li> <li> <p>resource.accessKeyDetails.userType</p> </li> <li> <p>resource.instanceDetails.iamInstanceProfile.id</p> </li> <li> <p>resource.instanceDetails.imageId</p> </li> <li> <p>resource.instanceDetails.instanceId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.ipv6Addresses</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.privateIpAddresses.privateIpAddress</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicDnsName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.publicIp</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.securityGroups.groupName</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.subnetId</p> </li> <li> <p>resource.instanceDetails.networkInterfaces.vpcId</p> </li> <li> <p>resource.instanceDetails.tags.key</p> </li> <li> <p>resource.instanceDetails.tags.value</p> </li> <li> <p>resource.resourceType</p> </li> <li> <p>service.action.actionType</p> </li> <li> <p>service.action.awsApiCallAction.api</p> </li> <li> <p>service.action.awsApiCallAction.callerType</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.city.cityName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.awsApiCallAction.serviceName</p> </li> <li> <p>service.action.dnsRequestAction.domain</p> </li> <li> <p>service.action.dnsRequestAction.domainWithSuffix</p> </li> <li> <p>service.action.networkConnectionAction.blocked</p> </li> <li> <p>service.action.networkConnectionAction.connectionDirection</p> </li> <li> <p>service.action.networkConnectionAction.localPortDetails.port</p> </li> <li> <p>service.action.networkConnectionAction.protocol</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.country.countryName</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.ipAddressV4</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asn</p> </li> <li> <p>service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg</p> </li> <li> <p>service.action.networkConnectionAction.remotePortDetails.port</p> </li> <li> <p>service.additionalInfo.threatListName</p> </li> <li> <p>service.archived</p> <p>When this attribute is set to 'true', only archived findings are listed. When it's set to 'false', only unarchived findings are listed. When this attribute is not set, all existing findings are listed.</p> </li> <li> <p>service.ebsVolumeScanDetails.scanId</p> </li> <li> <p>service.resourceRole</p> </li> <li> <p>severity</p> </li> <li> <p>type</p> </li> <li> <p>updatedAt</p> <p>Type: Timestamp in Unix Epoch millisecond format: 1486685375000</p> </li> </ul>",
         "UpdateFilterRequest$FindingCriteria": "<p>Represents the criteria to be used in the filter for querying findings.</p>"
       }
     },
@@ -1316,6 +1330,12 @@
       "refs": {
         "Finding$Type": "<p>The type of finding.</p>",
         "FindingTypes$member": null
+      }
+    },
+    "FindingTypeStatistics": {
+      "base": "<p>Information about each finding type associated with the <code>groupedByFindingType</code> statistics.</p>",
+      "refs": {
+        "GroupedByFindingType$member": null
       }
     },
     "FindingTypes": {
@@ -1531,6 +1551,42 @@
       "refs": {
       }
     },
+    "GroupByType": {
+      "base": null,
+      "refs": {
+        "GetFindingsStatisticsRequest$GroupBy": "<p>Displays the findings statistics grouped by one of the listed valid values.</p>"
+      }
+    },
+    "GroupedByAccount": {
+      "base": null,
+      "refs": {
+        "FindingStatistics$GroupedByAccount": "<p>Represents a list of map of accounts with a findings count associated with each account.</p>"
+      }
+    },
+    "GroupedByDate": {
+      "base": null,
+      "refs": {
+        "FindingStatistics$GroupedByDate": "<p>Represents a list of map of dates with a count of total findings generated on each date per severity level.</p>"
+      }
+    },
+    "GroupedByFindingType": {
+      "base": null,
+      "refs": {
+        "FindingStatistics$GroupedByFindingType": "<p>Represents a list of map of finding types with a count of total findings generated for each type. </p> <p>Based on the <code>orderBy</code> parameter, this request returns either the most occurring finding types or the least occurring finding types. If the <code>orderBy</code> parameter is <code>ASC</code>, this will represent the least occurring finding types in your account; otherwise, this will represent the most occurring finding types. The default value of <code>orderBy</code> is <code>DESC</code>.</p>"
+      }
+    },
+    "GroupedByResource": {
+      "base": null,
+      "refs": {
+        "FindingStatistics$GroupedByResource": "<p>Represents a list of map of top resources with a count of total findings.</p>"
+      }
+    },
+    "GroupedBySeverity": {
+      "base": null,
+      "refs": {
+        "FindingStatistics$GroupedBySeverity": "<p>Represents a list of map of total findings for each severity level.</p>"
+      }
+    },
     "Groups": {
       "base": null,
       "refs": {
@@ -1585,15 +1641,18 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AccountStatistics$TotalFindings": "<p>The total number of findings associated with an account.</p>",
         "Condition$Gt": "<p>Represents a <i>greater than</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Gte": "<p>Represents a <i>greater than or equal</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Lt": "<p>Represents a <i>less than</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Lte": "<p>Represents a <i>less than or equal</i> condition to be applied to a single field when querying for findings.</p>",
         "CountBySeverity$value": null,
         "DataSourceFreeTrial$FreeTrialDaysRemaining": "<p>A value that specifies the number of days left to use each enabled data source.</p>",
+        "DateStatistics$TotalFindings": "<p>The total number of findings that were generated per severity level on each date.</p>",
         "EcsClusterDetails$ActiveServicesCount": "<p>The number of services that are running on the cluster in an ACTIVE state.</p>",
         "EcsClusterDetails$RegisteredContainerInstancesCount": "<p>The number of container instances registered into the cluster.</p>",
         "EcsClusterDetails$RunningTasksCount": "<p>The number of tasks in the cluster that are in the RUNNING state.</p>",
+        "FindingTypeStatistics$TotalFindings": "<p>The total number of findings associated with generated for each distinct finding type.</p>",
         "FreeTrialFeatureConfigurationResult$FreeTrialDaysRemaining": "<p>The number of the remaining free trial days for the feature.</p>",
         "GetInvitationsCountResponse$InvitationsCount": "<p>The number of received invitations.</p>",
         "HighestSeverityThreatDetails$Count": "<p>Total number of infected files with the highest severity threat detected.</p>",
@@ -1616,12 +1675,14 @@
         "ProcessDetails$UserId": "<p>The unique ID of the user that executed the process.</p>",
         "ProcessDetails$Euid": "<p>The effective user ID of the user that executed the process.</p>",
         "RemotePortDetails$Port": "<p>The port number of the remote connection.</p>",
+        "ResourceStatistics$TotalFindings": "<p>The total number of findings associated with this resource.</p>",
         "RuntimeContext$IanaProtocolNumber": "<p>Specifies a particular protocol within the address family. Usually there is a single protocol in address families. For example, the address family <code>AF_INET</code> only has the IP protocol.</p>",
         "ScanThreatName$ItemCount": "<p>Total number of files infected with given threat.</p>",
         "ScannedItemCount$TotalGb": "<p>Total GB of files scanned for malware.</p>",
         "ScannedItemCount$Files": "<p>Number of files scanned.</p>",
         "ScannedItemCount$Volumes": "<p>Total number of scanned volumes.</p>",
         "Service$Count": "<p>The total count of the occurrences of this finding type.</p>",
+        "SeverityStatistics$TotalFindings": "<p>The total number of findings associated with this severity.</p>",
         "ThreatDetectedByName$ItemCount": "<p>Total number of infected files identified.</p>",
         "ThreatDetectedByName$UniqueThreatNameCount": "<p>Total number of unique threats by name identified, as part of the malware scan.</p>",
         "ThreatsDetectedItemCount$Files": "<p>Total number of infected files.</p>",
@@ -2093,6 +2154,12 @@
         "ListThreatIntelSetsRequest$MaxResults": "<p>You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 50. The maximum value is 50.</p>"
       }
     },
+    "MaxResults100": {
+      "base": null,
+      "refs": {
+        "GetFindingsStatisticsRequest$MaxResults": "<p>The maximum number of results to be returned in the response. The default value is 25.</p> <p>You can use this parameter only with the <code>groupBy</code> parameter.</p>"
+      }
+    },
     "Member": {
       "base": "<p>Contains information about the member account. </p>",
       "refs": {
@@ -2241,6 +2308,7 @@
       "base": null,
       "refs": {
         "CoverageSortCriteria$OrderBy": "<p>The order in which the sorted findings are to be displayed.</p>",
+        "GetFindingsStatisticsRequest$OrderBy": "<p>Displays the sorted findings in the requested order. The default value of <code>orderBy</code> is <code>DESC</code>.</p> <p>You can use this parameter only with the <code>groupBy</code> parameter.</p>",
         "SortCriteria$OrderBy": "<p>The order by which the sorted findings are to be displayed.</p>"
       }
     },
@@ -2610,6 +2678,12 @@
       "refs": {
       }
     },
+    "ResourceStatistics": {
+      "base": "<p>Information about each resource type associated with the <code>groupedByResource</code> statistics.</p>",
+      "refs": {
+        "GroupedByResource$member": null
+      }
+    },
     "ResourceType": {
       "base": null,
       "refs": {
@@ -2824,6 +2898,12 @@
         "KubernetesUserDetails$SessionName": "<p>Entity that assumes the IAM role when Kubernetes RBAC permissions are assigned to that role.</p>"
       }
     },
+    "SeverityStatistics": {
+      "base": "<p>Information about severity level for each finding type.</p>",
+      "refs": {
+        "GroupedBySeverity$member": null
+      }
+    },
     "SortCriteria": {
       "base": "<p>Contains information about the criteria used for sorting findings.</p>",
       "refs": {
@@ -2888,6 +2968,7 @@
         "AccessKeyDetails$UserName": "<p>The name of the user.</p>",
         "AccessKeyDetails$UserType": "<p>The type of the user.</p>",
         "AccountFreeTrialInfo$AccountId": "<p>The account identifier of the GuardDuty member account.</p>",
+        "AccountStatistics$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
         "Action$ActionType": "<p>The GuardDuty finding activity type.</p>",
         "AddonDetails$AddonVersion": "<p>Version of the installed EKS add-on.</p>",
         "AddonDetails$AddonStatus": "<p>Status of the installed EKS add-on.</p>",
@@ -2928,7 +3009,7 @@
         "CoverageResource$ResourceId": "<p>The unique ID of the resource.</p>",
         "CoverageResource$Issue": "<p>Represents the reason why a coverage status was <code>UNHEALTHY</code> for the EKS cluster.</p>",
         "CreateIPSetResponse$IpSetId": "<p>The ID of the IPSet resource.</p>",
-        "CreateMalwareProtectionPlanRequest$Role": "<p>IAM role with permissions required to scan and add tags to the associated protected resource.</p>",
+        "CreateMalwareProtectionPlanRequest$Role": "<p>Amazon Resource Name (ARN) of the IAM role that has the permissions to scan and add tags to the associated protected resource.</p>",
         "CreateMalwareProtectionPlanResponse$MalwareProtectionPlanId": "<p>A unique identifier associated with the Malware Protection plan resource.</p>",
         "CreatePublishingDestinationResponse$DestinationId": "<p>The ID of the publishing destination that is created.</p>",
         "CreateS3BucketResource$BucketName": "<p>Name of the S3 bucket.</p>",
@@ -2966,6 +3047,7 @@
         "EcsTaskDetails$Version": "<p>The version counter for the task.</p>",
         "EcsTaskDetails$StartedBy": "<p>Contains the tag specified when a task is started.</p>",
         "EcsTaskDetails$Group": "<p>The name of the task group that's associated with the task.</p>",
+        "EcsTaskDetails$LaunchType": "<p>A capacity on which the task is running. For example, <code>Fargate</code> and <code>EC2</code>.</p>",
         "EksClusterDetails$Name": "<p>EKS cluster name.</p>",
         "EksClusterDetails$Arn": "<p>EKS cluster ARN.</p>",
         "EksClusterDetails$VpcId": "<p>The VPC ID to which the EKS cluster is attached.</p>",
@@ -2983,15 +3065,17 @@
         "Finding$SchemaVersion": "<p>The version of the schema used for the finding.</p>",
         "Finding$Title": "<p>The title of the finding.</p>",
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
+        "FindingTypeStatistics$FindingType": "<p>Name of the finding type.</p>",
         "FlagsList$member": null,
         "GetDetectorResponse$CreatedAt": "<p>The timestamp of when the detector was created.</p>",
         "GetDetectorResponse$ServiceRole": "<p>The GuardDuty service role.</p>",
         "GetDetectorResponse$UpdatedAt": "<p>The last-updated timestamp for the detector.</p>",
         "GetFilterRequest$FilterName": "<p>The name of the filter you want to get.</p>",
+        "GetFindingsStatisticsResponse$NextToken": "<p>The pagination parameter to be used on the next list operation to retrieve more items.</p> <p>This parameter is currently not supported.</p>",
         "GetIPSetRequest$IpSetId": "<p>The unique ID of the IPSet to retrieve.</p>",
         "GetMalwareProtectionPlanRequest$MalwareProtectionPlanId": "<p>A unique identifier associated with Malware Protection plan resource.</p>",
         "GetMalwareProtectionPlanResponse$Arn": "<p>Amazon Resource Name (ARN) of the protected resource.</p>",
-        "GetMalwareProtectionPlanResponse$Role": "<p>IAM role that includes the permissions required to scan and add tags to the associated protected resource.</p>",
+        "GetMalwareProtectionPlanResponse$Role": "<p>Amazon Resource Name (ARN) of the IAM role that includes the permissions to scan and add tags to the associated protected resource.</p>",
         "GetThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID of the threatIntelSet that you want to get.</p>",
         "GetUsageStatisticsRequest$Unit": "<p>The currency unit you would like to view your usage statistics in. Current valid values are USD.</p>",
         "GetUsageStatisticsRequest$NextToken": "<p>A token to use for paginating results that are returned in the response. Set the value of this parameter to null for the first request to a list action. For subsequent calls, use the NextToken value returned from the previous request to continue listing results after the first page.</p>",
@@ -3142,6 +3226,9 @@
         "ResourceList$member": null,
         "ResourceNotFoundException$Message": "<p>The error message.</p>",
         "ResourceNotFoundException$Type": "<p>The error type.</p>",
+        "ResourceStatistics$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
+        "ResourceStatistics$ResourceId": "<p>ID associated with each resource. The following list provides the mapping of the resource type and resource ID.</p> <p class=\"title\"> <b>Mapping of resource and resource ID</b> </p> <ul> <li> <p>AccessKey - <code>resource.accessKeyDetails.accessKeyId</code> </p> </li> <li> <p>Container - <code>resource.containerDetails.id</code> </p> </li> <li> <p>ECSCluster - <code>resource.ecsClusterDetails.name</code> </p> </li> <li> <p>EKSCluster - <code>resource.eksClusterDetails.name</code> </p> </li> <li> <p>Instance - <code>resource.instanceDetails.instanceId</code> </p> </li> <li> <p>KubernetesCluster - <code>resource.kubernetesDetails.kubernetesWorkloadDetails.name</code> </p> </li> <li> <p>Lambda - <code>resource.lambdaDetails.functionName</code> </p> </li> <li> <p>RDSDBInstance - <code>resource.rdsDbInstanceDetails.dbInstanceIdentifier</code> </p> </li> <li> <p>S3Bucket - <code>resource.s3BucketDetails.name</code> </p> </li> <li> <p>S3Object - <code>resource.s3BucketDetails.name</code> </p> </li> </ul>",
+        "ResourceStatistics$ResourceType": "<p>The type of resource.</p>",
         "RuntimeContext$ScriptPath": "<p>The path to the script that was executed.</p>",
         "RuntimeContext$LibraryPath": "<p>The path to the new library that was loaded.</p>",
         "RuntimeContext$LdPreloadValue": "<p>The value of the LD_PRELOAD environment variable.</p>",
@@ -3205,7 +3292,7 @@
         "UpdateFindingsFeedbackRequest$Comments": "<p>Additional feedback about the GuardDuty findings.</p>",
         "UpdateIPSetRequest$IpSetId": "<p>The unique ID that specifies the IPSet that you want to update.</p>",
         "UpdateMalwareProtectionPlanRequest$MalwareProtectionPlanId": "<p>A unique identifier associated with the Malware Protection plan.</p>",
-        "UpdateMalwareProtectionPlanRequest$Role": "<p>IAM role with permissions required to scan and add tags to the associated protected resource.</p>",
+        "UpdateMalwareProtectionPlanRequest$Role": "<p>Amazon Resource Name (ARN) of the IAM role with permissions to scan and add tags to the associated protected resource.</p>",
         "UpdatePublishingDestinationRequest$DestinationId": "<p>The ID of the publishing destination to update.</p>",
         "UpdateThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID that specifies the ThreatIntelSet that you want to update.</p>",
         "UsageResourceResult$Resource": "<p>The Amazon Web Services resource that generated usage.</p>",
@@ -3357,7 +3444,10 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AccountStatistics$LastGeneratedAt": "<p>The timestamp at which the finding for this account was last generated.</p>",
         "CoverageResource$UpdatedAt": "<p>The timestamp at which the coverage details for the resource were last updated. This is in UTC format.</p>",
+        "DateStatistics$Date": "<p>The timestamp when the total findings count is observed.</p> <p>For example, <code>Date</code> would look like <code>\"2024-09-05T17:00:00-07:00\"</code> whereas <code>LastGeneratedAt</code> would look like 2024-09-05T17:12:29-07:00\".</p>",
+        "DateStatistics$LastGeneratedAt": "<p>The timestamp at which the last finding in the findings count, was generated.</p>",
         "DetectorAdditionalConfigurationResult$UpdatedAt": "<p>The timestamp at which the additional configuration was last updated. This is in UTC format.</p>",
         "DetectorFeatureConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
         "EbsVolumeScanDetails$ScanStartedAt": "<p>Returns the start date and time of the malware scan.</p>",
@@ -3365,6 +3455,7 @@
         "EcsTaskDetails$TaskCreatedAt": "<p>The Unix timestamp for the time when the task was created.</p>",
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
+        "FindingTypeStatistics$LastGeneratedAt": "<p>The timestamp at which this finding type was last generated in your environment.</p>",
         "GetMalwareProtectionPlanResponse$CreatedAt": "<p>The timestamp when the Malware Protection plan resource was created.</p>",
         "LambdaDetails$LastModifiedAt": "<p>The timestamp when the Lambda function was last modified. This field is in the UTC date string format <code>(2023-03-22T19:37:20.168Z)</code>.</p>",
         "LineageObject$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
@@ -3372,10 +3463,12 @@
         "MemberFeaturesConfigurationResult$UpdatedAt": "<p>The timestamp at which the feature object was updated.</p>",
         "OrganizationDetails$UpdatedAt": "<p>The timestamp at which the organization statistics was last updated. This is in UTC format.</p>",
         "ProcessDetails$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
+        "ResourceStatistics$LastGeneratedAt": "<p>The timestamp at which the statistics for this resource was last generated.</p>",
         "RuntimeContext$ModifiedAt": "<p>The timestamp at which the process modified the current process. The timestamp is in UTC date string format.</p>",
         "S3BucketDetail$CreatedAt": "<p>The date and time the bucket was created at.</p>",
         "Scan$ScanStartTime": "<p>The timestamp of when the scan was triggered.</p>",
-        "Scan$ScanEndTime": "<p>The timestamp of when the scan was finished.</p>"
+        "Scan$ScanEndTime": "<p>The timestamp of when the scan was finished.</p>",
+        "SeverityStatistics$LastGeneratedAt": "<p>The timestamp at which a finding type for a specific severity was last generated.</p>"
       }
     },
     "Total": {

@@ -5,10 +5,12 @@
     "endpointPrefix":"backup",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Backup",
     "serviceId":"Backup",
     "signatureVersion":"v4",
-    "uid":"backup-2018-11-15"
+    "uid":"backup-2018-11-15",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelLegalHold":{
@@ -1739,6 +1741,8 @@
       "members":{
         "BackupVaultName":{"shape":"BackupVaultName"},
         "BackupVaultArn":{"shape":"ARN"},
+        "VaultType":{"shape":"VaultType"},
+        "VaultState":{"shape":"VaultState"},
         "CreationDate":{"shape":"timestamp"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreatorRequestId":{"shape":"string"},
@@ -2421,6 +2425,7 @@
         "BackupVaultName":{"shape":"string"},
         "BackupVaultArn":{"shape":"ARN"},
         "VaultType":{"shape":"VaultType"},
+        "VaultState":{"shape":"VaultState"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "CreatorRequestId":{"shape":"string"},

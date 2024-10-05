@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Test\EndpointV2;
 
+use Aws\Api\Service;
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
+use Aws\AwsClient;
 use Aws\Credentials\Credentials;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
@@ -40,7 +42,8 @@ class EndpointProviderV2Test extends TestCase
             "parse-url",
             "substring",
             "uri-encode",
-            "valid-hostlabel"
+            "valid-hostlabel",
+            "string-array"
         ];
         $providerCases = [];
 
@@ -64,6 +67,7 @@ class EndpointProviderV2Test extends TestCase
                 $providerCases[] = $providerCase;
             }
         }
+
         return $providerCases;
     }
 
@@ -127,6 +131,7 @@ class EndpointProviderV2Test extends TestCase
                 $serviceTestCases[] = $testCase;
             }
         }
+
         return $serviceTestCases;
     }
 
@@ -371,5 +376,78 @@ class EndpointProviderV2Test extends TestCase
         $endpointProvider->resolveEndpoint(['Region' => 'us-west-2']);
         $endpointProvider->resolveEndpoint(['Region' => 'us-west-2']);
         $endpointProvider->resolveEndpoint(['Region' => 'us-west-2']);
+    }
+
+    /**
+     * @dataProvider stringArrayOperationInputsProvider
+     * @return void
+     */
+    public function testStringArrayOperationInputs(
+        $params,
+        $expected,
+        $operationInputs
+    )
+    {
+        if (isset($expected['error'])) {
+            $this->expectException(UnresolvedEndpointException::class);
+            $this->expectExceptionMessage($expected['error']);
+        }
+
+        $serviceDefinition = json_decode(file_get_contents(
+            __DIR__ . '/service-models/string-array.json'
+        ), true);
+        $service = new Service($serviceDefinition, function () {
+            return [];
+        });
+        $client = new AwsClient([
+            'service' => 'foo',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'region' => 'bar',
+            'endpoint_provider' => new EndpointProviderV2(
+                json_decode(
+                    file_get_contents(
+                    __DIR__ . '/valid-rules/string-array.json'),
+                    true
+                    ),
+                EndpointDefinitionProvider::getPartitions()
+            )
+        ]);
+
+        $list = $client->getHandlerList();
+        if (!isset($expected['error'])) {
+            $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
+                $this->assertEquals(
+                    $expected['endpoint']['url'],
+                    (string) $req->getUri()
+                );
+            }));
+        }
+
+        foreach($operationInputs as $operation) {
+            $this->addMockResults($client, [[]]);
+            $command = $client->getCommand(
+                $operation['operationName'],
+                $operation['operationParams'] ?? []
+            );
+            $client->execute($command);
+        }
+    }
+
+    public function stringArrayOperationInputsProvider()
+    {
+        $cases = json_decode(
+            file_get_contents(__DIR__ . '/test-cases/string-array.json'),
+            true
+        );
+        $providerCases = [];
+
+        foreach ($cases['testCases'] as $case) {
+            unset($case['documentation']);
+            $providerCases[] = $case;
+        }
+
+        return $providerCases;
     }
 }

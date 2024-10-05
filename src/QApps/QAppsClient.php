@@ -47,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateLibraryItem(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLibraryItemAsync(array $args = [])
+ * @method \Aws\Result updateLibraryItemMetadata(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateLibraryItemMetadataAsync(array $args = [])
  * @method \Aws\Result updateQApp(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateQAppAsync(array $args = [])
  * @method \Aws\Result updateQAppSession(array $args = [])

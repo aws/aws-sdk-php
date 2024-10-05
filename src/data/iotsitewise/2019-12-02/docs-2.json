@@ -61,7 +61,7 @@
     "ListAssetProperties": "<p>Retrieves a paginated list of properties associated with an asset. If you update properties associated with the model before you finish listing all the properties, you need to start all over again.</p>",
     "ListAssetRelationships": "<p>Retrieves a paginated list of asset relationships for an asset. You can use this operation to identify an asset's root asset and all associated assets between that asset and its root.</p>",
     "ListAssets": "<p>Retrieves a paginated list of asset summaries.</p> <p>You can use this operation to do the following:</p> <ul> <li> <p>List assets based on a specific asset model.</p> </li> <li> <p>List top-level assets.</p> </li> </ul> <p>You can't use this operation to list all assets. To retrieve summaries for all of your assets, use <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_ListAssetModels.html\">ListAssetModels</a> to get all of your asset model IDs. Then, use ListAssets to get all assets for each asset model.</p>",
-    "ListAssociatedAssets": "<p>Retrieves a paginated list of associated assets.</p> <p>You can use this operation to do the following:</p> <ul> <li> <p>List child assets associated to a parent asset by a hierarchy that you specify.</p> </li> <li> <p>List an asset's parent asset.</p> </li> </ul>",
+    "ListAssociatedAssets": "<p>Retrieves a paginated list of associated assets.</p> <p>You can use this operation to do the following:</p> <ul> <li> <p> <code>CHILD</code> - List all child assets associated to the asset.</p> </li> <li> <p> <code>PARENT</code> - List the asset's parent asset.</p> </li> </ul>",
     "ListBulkImportJobs": "<p>Retrieves a paginated list of bulk import job requests. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/ListBulkImportJobs.html\">List bulk import jobs (CLI)</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "ListCompositionRelationships": "<p>Retrieves a paginated list of composition relationships for an asset model of type <code>COMPONENT_MODEL</code>.</p>",
     "ListDashboards": "<p>Retrieves a paginated list of dashboards for an IoT SiteWise Monitor project.</p>",
@@ -506,6 +506,26 @@
         "CreateAssetModelRequest$assetModelType": "<p>The type of asset model.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>",
         "DescribeAssetModelResponse$assetModelType": "<p>The type of asset model.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>",
         "ListAssetModelsTypeFilter$member": null
+      }
+    },
+    "AssetModelVersionFilter": {
+      "base": null,
+      "refs": {
+        "DescribeAssetModelCompositeModelRequest$assetModelVersion": "<p>The version alias that specifies the latest or active version of the asset model. The details are returned in the response. The default value is <code>LATEST</code>. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "DescribeAssetModelRequest$assetModelVersion": "<p>The version alias that specifies the latest or active version of the asset model. The details are returned in the response. The default value is <code>LATEST</code>. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListAssetModelCompositeModelsRequest$assetModelVersion": "<p>The version alias that specifies the latest or active version of the asset model. The details are returned in the response. The default value is <code>LATEST</code>. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListAssetModelPropertiesRequest$assetModelVersion": "<p>The version alias that specifies the latest or active version of the asset model. The details are returned in the response. The default value is <code>LATEST</code>. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListAssetModelsRequest$assetModelVersion": "<p>The version alias that specifies the latest or active version of the asset model. The details are returned in the response. The default value is <code>LATEST</code>. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>"
+      }
+    },
+    "AssetModelVersionType": {
+      "base": null,
+      "refs": {
+        "CreateAssetModelCompositeModelRequest$matchForVersionType": "<p>Specifies the asset model version type (<code>LATEST</code> or <code>ACTIVE</code>) used in conjunction with <code>If-Match</code> or <code>If-None-Match</code> headers to determine the target ETag for the create operation.</p>",
+        "DeleteAssetModelCompositeModelRequest$matchForVersionType": "<p>Specifies the asset model version type (<code>LATEST</code> or <code>ACTIVE</code>) used in conjunction with <code>If-Match</code> or <code>If-None-Match</code> headers to determine the target ETag for the delete operation.</p>",
+        "DeleteAssetModelRequest$matchForVersionType": "<p>Specifies the asset model version type (<code>LATEST</code> or <code>ACTIVE</code>) used in conjunction with <code>If-Match</code> or <code>If-None-Match</code> headers to determine the target ETag for the delete operation.</p>",
+        "UpdateAssetModelCompositeModelRequest$matchForVersionType": "<p>Specifies the asset model version type (<code>LATEST</code> or <code>ACTIVE</code>) used in conjunction with <code>If-Match</code> or <code>If-None-Match</code> headers to determine the target ETag for the update operation.</p>",
+        "UpdateAssetModelRequest$matchForVersionType": "<p>Specifies the asset model version type (<code>LATEST</code> or <code>ACTIVE</code>) used in conjunction with <code>If-Match</code> or <code>If-None-Match</code> headers to determine the target ETag for the update operation.</p>"
       }
     },
     "AssetProperties": {
@@ -1283,7 +1303,7 @@
         "ListAssetRelationshipsRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssetsRequest$assetModelId": "<p>The ID of the asset model by which to filter the list of assets. This parameter is required if you choose <code>ALL</code> for <code>filter</code>. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssociatedAssetsRequest$assetId": "<p>The ID of the asset to query. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "ListAssociatedAssetsRequest$hierarchyId": "<p>The ID of the hierarchy by which child assets are associated to the asset. (This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.) To find a hierarchy ID, use the <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeAsset.html\">DescribeAsset</a> or <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeAssetModel.html\">DescribeAssetModel</a> operations. This parameter is required if you choose <code>CHILD</code> for <code>traversalDirection</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListAssociatedAssetsRequest$hierarchyId": "<p>(Optional) If you don't provide a <code>hierarchyId</code>, all the immediate assets in the <code>traversalDirection</code> will be returned. </p> <p> The ID of the hierarchy by which child assets are associated to the asset. (This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.)</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "TargetResource$assetId": "<p>The ID of the asset, in UUID format.</p>",
         "UpdateAssetModelCompositeModelRequest$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
@@ -1673,6 +1693,17 @@
         "PutStorageConfigurationResponse$disassociatedDataStorage": "<p>Contains the storage configuration for time series (data streams) that aren't associated with asset properties. The <code>disassociatedDataStorage</code> can be one of the following values:</p> <ul> <li> <p> <code>ENABLED</code> – IoT SiteWise accepts time series that aren't associated with asset properties.</p> <important> <p>After the <code>disassociatedDataStorage</code> is enabled, you can't disable it.</p> </important> </li> <li> <p> <code>DISABLED</code> – IoT SiteWise doesn't accept time series (data streams) that aren't associated with asset properties.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/data-streams.html\">Data streams</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
+    "ETag": {
+      "base": null,
+      "refs": {
+        "CreateAssetModelCompositeModelRequest$ifMatch": "<p>The expected current entity tag (ETag) for the asset model’s latest or active version (specified using <code>matchForVersionType</code>). The create request is rejected if the tag does not match the latest or active version's current entity tag. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "DeleteAssetModelCompositeModelRequest$ifMatch": "<p>The expected current entity tag (ETag) for the asset model’s latest or active version (specified using <code>matchForVersionType</code>). The delete request is rejected if the tag does not match the latest or active version's current entity tag. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "DeleteAssetModelRequest$ifMatch": "<p>The expected current entity tag (ETag) for the asset model’s latest or active version (specified using <code>matchForVersionType</code>). The delete request is rejected if the tag does not match the latest or active version's current entity tag. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "DescribeAssetModelResponse$eTag": "<p>The entity tag (ETag) is a hash of the retrieved version of the asset model. It's used to make concurrent updates safely to the resource. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>. </p> <p>See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\"> Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "UpdateAssetModelCompositeModelRequest$ifMatch": "<p>The expected current entity tag (ETag) for the asset model’s latest or active version (specified using <code>matchForVersionType</code>). The update request is rejected if the tag does not match the latest or active version's current entity tag. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "UpdateAssetModelRequest$ifMatch": "<p>The expected current entity tag (ETag) for the asset model’s latest or active version (specified using <code>matchForVersionType</code>). The update request is rejected if the tag does not match the latest or active version's current entity tag. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/opt-locking-for-model.html\">Optimistic locking for asset model writes</a> in the <i>IoT SiteWise User Guide</i>.</p>"
+      }
+    },
     "Email": {
       "base": null,
       "refs": {
@@ -1738,6 +1769,7 @@
         "InternalFailureException$message": null,
         "InvalidRequestException$message": null,
         "LimitExceededException$message": null,
+        "PreconditionFailedException$message": null,
         "ResourceAlreadyExistsException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceUnavailableException$message": null,
@@ -2349,7 +2381,7 @@
     "ListAssetModelsTypeFilter": {
       "base": null,
       "refs": {
-        "ListAssetModelsRequest$assetModelTypes": "<p>The type of asset model.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>"
+        "ListAssetModelsRequest$assetModelTypes": "<p>The type of asset model. If you don't provide an <code>assetModelTypes</code>, all types of asset models are returned.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>"
       }
     },
     "ListAssetPropertiesFilter": {
@@ -2814,6 +2846,11 @@
         "PortalSummaries$member": null
       }
     },
+    "PreconditionFailedException": {
+      "base": "<p>The precondition in one or more of the request-header fields evaluated to <code>FALSE</code>.</p>",
+      "refs": {
+      }
+    },
     "ProjectResource": {
       "base": "<p>Identifies a specific IoT SiteWise Monitor project.</p>",
       "refs": {
@@ -3029,6 +3066,7 @@
       "base": null,
       "refs": {
         "ConflictingOperationException$resourceArn": "<p>The ARN of the resource that conflicts with this operation.</p>",
+        "PreconditionFailedException$resourceArn": "<p>The ARN of the resource on which precondition failed with this operation.</p>",
         "ResourceAlreadyExistsException$resourceArn": "<p>The ARN of the resource that already exists.</p>"
       }
     },
@@ -3036,6 +3074,7 @@
       "base": null,
       "refs": {
         "ConflictingOperationException$resourceId": "<p>The ID of the resource that conflicts with this operation.</p>",
+        "PreconditionFailedException$resourceId": "<p>The ID of the resource on which precondition failed with this operation.</p>",
         "ResourceAlreadyExistsException$resourceId": "<p>The ID of the resource that already exists.</p>"
       }
     },
@@ -3087,6 +3126,16 @@
       "base": null,
       "refs": {
         "Datum$scalarValue": "<p>Indicates if the data point is a scalar value such as integer, string, double, or Boolean. </p>"
+      }
+    },
+    "SelectAll": {
+      "base": null,
+      "refs": {
+        "CreateAssetModelCompositeModelRequest$ifNoneMatch": "<p>Accepts <b>*</b> to reject the create request if an active version (specified using <code>matchForVersionType</code> as <code>ACTIVE</code>) already exists for the asset model.</p>",
+        "DeleteAssetModelCompositeModelRequest$ifNoneMatch": "<p>Accepts <b>*</b> to reject the delete request if an active version (specified using <code>matchForVersionType</code> as <code>ACTIVE</code>) already exists for the asset model.</p>",
+        "DeleteAssetModelRequest$ifNoneMatch": "<p>Accepts <b>*</b> to reject the delete request if an active version (specified using <code>matchForVersionType</code> as <code>ACTIVE</code>) already exists for the asset model.</p>",
+        "UpdateAssetModelCompositeModelRequest$ifNoneMatch": "<p>Accepts <b>*</b> to reject the update request if an active version (specified using <code>matchForVersionType</code> as <code>ACTIVE</code>) already exists for the asset model.</p>",
+        "UpdateAssetModelRequest$ifNoneMatch": "<p>Accepts <b>*</b> to reject the update request if an active version (specified using <code>matchForVersionType</code> as <code>ACTIVE</code>) already exists for the asset model.</p>"
       }
     },
     "ServiceUnavailableException": {
@@ -3304,7 +3353,7 @@
     "TraversalDirection": {
       "base": null,
       "refs": {
-        "ListAssociatedAssetsRequest$traversalDirection": "<p>The direction to list associated assets. Choose one of the following options:</p> <ul> <li> <p> <code>CHILD</code> – The list includes all child assets associated to the asset. The <code>hierarchyId</code> parameter is required if you choose <code>CHILD</code>.</p> </li> <li> <p> <code>PARENT</code> – The list includes the asset's parent asset.</p> </li> </ul> <p>Default: <code>CHILD</code> </p>"
+        "ListAssociatedAssetsRequest$traversalDirection": "<p>The direction to list associated assets. Choose one of the following options:</p> <ul> <li> <p> <code>CHILD</code> – The list includes all child assets associated to the asset.</p> </li> <li> <p> <code>PARENT</code> – The list includes the asset's parent asset.</p> </li> </ul> <p>Default: <code>CHILD</code> </p>"
       }
     },
     "TraversalType": {
@@ -3468,6 +3517,13 @@
       "refs": {
         "AssetPropertyValue$value": "<p>The value of the asset property (see <code>Variant</code>).</p>",
         "InterpolatedAssetPropertyValue$value": null
+      }
+    },
+    "Version": {
+      "base": null,
+      "refs": {
+        "AssetModelSummary$version": "<p>The version number of the asset model.</p>",
+        "DescribeAssetModelResponse$assetModelVersion": "<p>The version of the asset model. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
     "WarmTierRetentionPeriod": {

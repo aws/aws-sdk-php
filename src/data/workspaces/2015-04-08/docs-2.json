@@ -17,7 +17,7 @@
     "CreateUpdatedWorkspaceImage": "<p>Creates a new updated WorkSpace image based on the specified source image. The new updated WorkSpace image has the latest drivers and other updates required by the Amazon WorkSpaces components.</p> <p>To determine which WorkSpace images need to be updated with the latest Amazon WorkSpaces requirements, use <a href=\"https://docs.aws.amazon.com/workspaces/latest/api/API_DescribeWorkspaceImages.html\"> DescribeWorkspaceImages</a>.</p> <note> <ul> <li> <p>Only Windows 10, Windows Server 2016, and Windows Server 2019 WorkSpace images can be programmatically updated at this time.</p> </li> <li> <p>Microsoft Windows updates and other application updates are not included in the update process.</p> </li> <li> <p>The source WorkSpace image is not deleted. You can delete the source image after you've verified your new updated image and created a new bundle. </p> </li> </ul> </note>",
     "CreateWorkspaceBundle": "<p>Creates the specified WorkSpace bundle. For more information about creating WorkSpace bundles, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/create-custom-bundle.html\"> Create a Custom WorkSpaces Image and Bundle</a>.</p>",
     "CreateWorkspaceImage": "<p>Creates a new WorkSpace image from an existing WorkSpace.</p>",
-    "CreateWorkspaces": "<p>Creates one or more WorkSpaces.</p> <p>This operation is asynchronous and returns before the WorkSpaces are created.</p> <note> <ul> <li> <p>The <code>MANUAL</code> running mode value is only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use this value. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </li> <li> <p>You don't need to specify the <code>PCOIP</code> protocol for Linux bundles because <code>WSP</code> is the default protocol for those bundles.</p> </li> <li> <p>User-decoupled WorkSpaces are only supported by Amazon WorkSpaces Core.</p> </li> <li> <p>Review your running mode to ensure you are using one that is optimal for your needs and budget. For more information on switching running modes, see <a href=\"http://aws.amazon.com/workspaces-family/workspaces/faqs/#:~:text=Can%20I%20switch%20between%20hourly%20and%20monthly%20billing%20on%20WorkSpaces%20Personal%3F\"> Can I switch between hourly and monthly billing?</a> </p> </li> </ul> </note>",
+    "CreateWorkspaces": "<p>Creates one or more WorkSpaces.</p> <p>This operation is asynchronous and returns before the WorkSpaces are created.</p> <note> <ul> <li> <p>The <code>MANUAL</code> running mode value is only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use this value. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </li> <li> <p>You don't need to specify the <code>PCOIP</code> protocol for Linux bundles because <code>DCV</code> (formerly WSP) is the default protocol for those bundles.</p> </li> <li> <p>User-decoupled WorkSpaces are only supported by Amazon WorkSpaces Core.</p> </li> <li> <p>Review your running mode to ensure you are using one that is optimal for your needs and budget. For more information on switching running modes, see <a href=\"http://aws.amazon.com/workspaces-family/workspaces/faqs/#:~:text=Can%20I%20switch%20between%20hourly%20and%20monthly%20billing%20on%20WorkSpaces%20Personal%3F\"> Can I switch between hourly and monthly billing?</a> </p> </li> </ul> </note>",
     "CreateWorkspacesPool": "<p>Creates a pool of WorkSpaces.</p>",
     "DeleteAccountLinkInvitation": "<p>Deletes the account link invitation.</p>",
     "DeleteClientBranding": "<p>Deletes customized client branding. Client branding allows you to customize your WorkSpace's client login portal. You can tailor your login portal company logo, the support email address, support link, link to reset password, and a custom message for users trying to sign in.</p> <p>After you delete your customized client branding, your login portal reverts to the default client branding.</p>",
@@ -77,9 +77,9 @@
     "RejectAccountLinkInvitation": "<p>Rejects the account link invitation.</p>",
     "RestoreWorkspace": "<p>Restores the specified WorkSpace to its last known healthy state.</p> <p>You cannot restore a WorkSpace unless its state is <code> AVAILABLE</code>, <code>ERROR</code>, <code>UNHEALTHY</code>, or <code>STOPPED</code>.</p> <p>Restoring a WorkSpace is a potentially destructive action that can result in the loss of data. For more information, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/restore-workspace.html\">Restore a WorkSpace</a>.</p> <p>This operation is asynchronous and returns before the WorkSpace is completely restored.</p>",
     "RevokeIpRules": "<p>Removes one or more rules from the specified IP access control group.</p>",
-    "StartWorkspaces": "<p>Starts the specified WorkSpaces.</p> <p>You cannot start a WorkSpace unless it has a running mode of <code>AutoStop</code> and a state of <code>STOPPED</code>.</p>",
+    "StartWorkspaces": "<p>Starts the specified WorkSpaces.</p> <p>You cannot start a WorkSpace unless it has a running mode of <code>AutoStop</code> or <code>Manual</code> and a state of <code>STOPPED</code>.</p>",
     "StartWorkspacesPool": "<p>Starts the specified pool.</p> <p>You cannot start a pool unless it has a running mode of <code>AutoStop</code> and a state of <code>STOPPED</code>.</p>",
-    "StopWorkspaces": "<p> Stops the specified WorkSpaces.</p> <p>You cannot stop a WorkSpace unless it has a running mode of <code>AutoStop</code> and a state of <code>AVAILABLE</code>, <code>IMPAIRED</code>, <code>UNHEALTHY</code>, or <code>ERROR</code>.</p>",
+    "StopWorkspaces": "<p>Stops the specified WorkSpaces.</p> <p>You cannot stop a WorkSpace unless it has a running mode of <code>AutoStop</code> or <code>Manual</code> and a state of <code>AVAILABLE</code>, <code>IMPAIRED</code>, <code>UNHEALTHY</code>, or <code>ERROR</code>.</p>",
     "StopWorkspacesPool": "<p>Stops the specified pool.</p> <p>You cannot stop a WorkSpace pool unless it has a running mode of <code>AutoStop</code> and a state of <code>AVAILABLE</code>, <code>IMPAIRED</code>, <code>UNHEALTHY</code>, or <code>ERROR</code>.</p>",
     "TerminateWorkspaces": "<p>Terminates the specified WorkSpaces.</p> <important> <p>Terminating a WorkSpace is a permanent action and cannot be undone. The user's data is destroyed. If you need to archive any user data, contact Amazon Web Services Support before terminating the WorkSpace.</p> </important> <p>You can terminate a WorkSpace that is in any state except <code>SUSPENDED</code>.</p> <p>This operation is asynchronous and returns before the WorkSpaces have been completely terminated. After a WorkSpace is terminated, the <code>TERMINATED</code> state is returned only briefly before the WorkSpace directory metadata is cleaned up, so this state is rarely returned. To confirm that a WorkSpace is terminated, check for the WorkSpace ID by using <a href=\"https://docs.aws.amazon.com/workspaces/latest/api/API_DescribeWorkspaces.html\"> DescribeWorkSpaces</a>. If the WorkSpace ID isn't returned, then the WorkSpace has been successfully terminated.</p> <note> <p>Simple AD and AD Connector are made available to you free of charge to use with WorkSpaces. If there are no WorkSpaces being used with your Simple AD or AD Connector directory for 30 consecutive days, this directory will be automatically deregistered for use with Amazon WorkSpaces, and you will be charged for this directory as per the <a href=\"http://aws.amazon.com/directoryservice/pricing/\">Directory Service pricing terms</a>.</p> <p>To delete empty directories, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/delete-workspaces-directory.html\"> Delete the Directory for Your WorkSpaces</a>. If you delete your Simple AD or AD Connector directory, you can always create a new one when you want to start using WorkSpaces again.</p> </note>",
     "TerminateWorkspacesPool": "<p>Terminates the specified pool.</p>",
@@ -96,6 +96,9 @@
       "base": null,
       "refs": {
         "DefaultWorkspaceCreationProperties$InstanceIamRoleArn": "<p>Indicates the IAM role ARN of the instance.</p>",
+        "IDCConfig$InstanceArn": "<p>The Amazon Resource Name (ARN) of the identity center instance.</p>",
+        "IDCConfig$ApplicationArn": "<p>The Amazon Resource Name (ARN) of the application.</p>",
+        "RegisterWorkspaceDirectoryRequest$IdcInstanceArn": "<p>The Amazon Resource Name (ARN) of the identity center instance.</p>",
         "WorkspaceCreationProperties$InstanceIamRoleArn": "<p>Indicates the IAM role ARN of the instance.</p>",
         "WorkspaceDirectory$IamRoleId": "<p>The identifier of the IAM role. This is the role that allows Amazon WorkSpaces to make calls to other services, such as Amazon EC2, on your behalf.</p>",
         "WorkspacesPool$PoolArn": "<p>The Amazon Resource Name (ARN) for the pool.</p>"
@@ -239,7 +242,7 @@
     "ApplicationList": {
       "base": null,
       "refs": {
-        "ImportWorkspaceImageRequest$Applications": "<p>If specified, the version of Microsoft Office to subscribe to. Valid only for Windows 10 and 11 BYOL images. For more information about subscribing to Office for BYOL images, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.html\"> Bring Your Own Windows Desktop Licenses</a>.</p> <note> <ul> <li> <p>Although this parameter is an array, only one item is allowed at this time.</p> </li> <li> <p>During the image import process, non-GPU WSP WorkSpaces with Windows 11 support only <code>Microsoft_Office_2019</code>. GPU WSP WorkSpaces with Windows 11 do not support Office installation.</p> </li> </ul> </note>"
+        "ImportWorkspaceImageRequest$Applications": "<p>If specified, the version of Microsoft Office to subscribe to. Valid only for Windows 10 and 11 BYOL images. For more information about subscribing to Office for BYOL images, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.html\"> Bring Your Own Windows Desktop Licenses</a>.</p> <note> <ul> <li> <p>Although this parameter is an array, only one item is allowed at this time.</p> </li> <li> <p>During the image import process, non-GPU DCV (formerly WSP) WorkSpaces with Windows 11 support only <code>Microsoft_Office_2019</code>. GPU DCV (formerly WSP) WorkSpaces with Windows 11 do not support Office installation.</p> </li> </ul> </note>"
       }
     },
     "ApplicationNotSupportedException": {
@@ -1204,6 +1207,36 @@
       "refs": {
       }
     },
+    "DescribeWorkspaceDirectoriesFilter": {
+      "base": "<p>Describes the filter conditions for the WorkSpaces to return.</p>",
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilterList$member": null
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesRequest$Filters": "<p>The filter condition for the WorkSpaces.</p>"
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterName": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilter$Name": "<p>The name of the WorkSpaces to filter.</p>"
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterValue": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilterValues$member": null
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterValues": {
+      "base": null,
+      "refs": {
+        "DescribeWorkspaceDirectoriesFilter$Values": "<p>The values for filtering WorkSpaces</p>"
+      }
+    },
     "DescribeWorkspaceDirectoriesRequest": {
       "base": null,
       "refs": {
@@ -1575,6 +1608,12 @@
       "refs": {
       }
     },
+    "IDCConfig": {
+      "base": "<p>Specifies the configurations of the identity center.</p>",
+      "refs": {
+        "WorkspaceDirectory$IDCConfig": "<p>Specifies details about identity center configurations.</p>"
+      }
+    },
     "IdleDisconnectTimeoutInSeconds": {
       "base": null,
       "refs": {
@@ -1869,6 +1908,19 @@
         "UserSetting$MaximumLength": "<p>Indicates the maximum character length for the specified user setting.</p>"
       }
     },
+    "MicrosoftEntraConfig": {
+      "base": "<p>Specifies the configurations of the Microsoft Entra.</p>",
+      "refs": {
+        "RegisterWorkspaceDirectoryRequest$MicrosoftEntraConfig": "<p>The details about Microsoft Entra config.</p>",
+        "WorkspaceDirectory$MicrosoftEntraConfig": "<p>Specifies details about Microsoft Entra configurations.</p>"
+      }
+    },
+    "MicrosoftEntraConfigTenantId": {
+      "base": null,
+      "refs": {
+        "MicrosoftEntraConfig$TenantId": "<p>The identifier of the tenant.</p>"
+      }
+    },
     "MigrateWorkspaceRequest": {
       "base": null,
       "refs": {
@@ -2140,7 +2192,7 @@
     "ProtocolList": {
       "base": null,
       "refs": {
-        "WorkspaceProperties$Protocols": "<p>The protocol. For more information, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces-protocols.html\"> Protocols for Amazon WorkSpaces</a>.</p> <note> <ul> <li> <p>Only available for WorkSpaces created with PCoIP bundles.</p> </li> <li> <p>The <code>Protocols</code> property is case sensitive. Ensure you use <code>PCOIP</code> or <code>WSP</code>.</p> </li> <li> <p>Unavailable for Windows 7 WorkSpaces and WorkSpaces using GPU-based bundles (Graphics, GraphicsPro, Graphics.g4dn, and GraphicsPro.g4dn).</p> </li> </ul> </note>"
+        "WorkspaceProperties$Protocols": "<p>The protocol. For more information, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/amazon-workspaces-protocols.html\"> Protocols for Amazon WorkSpaces</a>.</p> <note> <ul> <li> <p>Only available for WorkSpaces created with PCoIP bundles.</p> </li> <li> <p>The <code>Protocols</code> property is case sensitive. Ensure you use <code>PCOIP</code> or <code>DCV</code> (formerly WSP).</p> </li> <li> <p>Unavailable for Windows 7 WorkSpaces and WorkSpaces using GPU-based bundles (Graphics, GraphicsPro, Graphics.g4dn, and GraphicsPro.g4dn).</p> </li> </ul> </note>"
       }
     },
     "RebootRequest": {
@@ -2358,7 +2410,8 @@
     "SecretsManagerArn": {
       "base": null,
       "refs": {
-        "ActiveDirectoryConfig$ServiceAccountSecretArn": "<p>Indicates the secret ARN on the service account.</p>"
+        "ActiveDirectoryConfig$ServiceAccountSecretArn": "<p>Indicates the secret ARN on the service account.</p>",
+        "MicrosoftEntraConfig$ApplicationConfigSecretArn": "<p>The Amazon Resource Name (ARN) of the application config.</p>"
       }
     },
     "SecurityGroupId": {
@@ -3115,7 +3168,7 @@
     "WorkspaceImageIngestionProcess": {
       "base": null,
       "refs": {
-        "ImportWorkspaceImageRequest$IngestionProcess": "<p>The ingestion process to be used when importing the image, depending on which protocol you want to use for your BYOL Workspace image, either PCoIP, WorkSpaces Streaming Protocol (WSP), or bring your own protocol (BYOP). To use WSP, specify a value that ends in <code>_WSP</code>. To use PCoIP, specify a value that does not end in <code>_WSP</code>. To use BYOP, specify a value that ends in <code>_BYOP</code>.</p> <p>For non-GPU-enabled bundles (bundles other than Graphics or GraphicsPro), specify <code>BYOL_REGULAR</code>, <code>BYOL_REGULAR_WSP</code>, or <code>BYOL_REGULAR_BYOP</code>, depending on the protocol.</p> <note> <p>The <code>BYOL_REGULAR_BYOP</code> and <code>BYOL_GRAPHICS_G4DN_BYOP</code> values are only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use these values. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </note>"
+        "ImportWorkspaceImageRequest$IngestionProcess": "<p>The ingestion process to be used when importing the image, depending on which protocol you want to use for your BYOL Workspace image, either PCoIP, DCV, or bring your own protocol (BYOP). To use WSP, specify a value that ends in <code>_DCV</code>. To use PCoIP, specify a value that does not end in <code>_DCV</code>. To use BYOP, specify a value that ends in <code>_BYOP</code>.</p> <p>For non-GPU-enabled bundles (bundles other than Graphics or GraphicsPro), specify <code>BYOL_REGULAR</code>, <code>BYOL_REGULAR_DCV</code>, or <code>BYOL_REGULAR_BYOP</code>, depending on the protocol.</p> <note> <p>The <code>BYOL_REGULAR_BYOP</code> and <code>BYOL_GRAPHICS_G4DN_BYOP</code> values are only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use these values. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </note>"
       }
     },
     "WorkspaceImageList": {
@@ -3161,7 +3214,7 @@
       "refs": {
         "DescribeWorkspacesRequest$WorkspaceName": "<p>The name of the user-decoupled WorkSpace.</p>",
         "Workspace$WorkspaceName": "<p>The name of the user-decoupled WorkSpace.</p>",
-        "WorkspaceRequest$WorkspaceName": "<p>The name of the user-decoupled WorkSpace.</p>"
+        "WorkspaceRequest$WorkspaceName": "<p>The name of the user-decoupled WorkSpace.</p> <note> <p> <code>WorkspaceName</code> is required if <code>UserName</code> is <code>[UNDEFINED]</code> for user-decoupled WorkSpaces. <code>WorkspaceName</code> is not applicable if <code>UserName</code> is specified for user-assigned WorkSpaces.</p> </note>"
       }
     },
     "WorkspaceProperties": {

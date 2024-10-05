@@ -5,11 +5,13 @@
     "endpointPrefix":"runtime.sagemaker",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon SageMaker Runtime",
     "serviceId":"SageMaker Runtime",
     "signatureVersion":"v4",
     "signingName":"sagemaker",
-    "uid":"runtime.sagemaker-2017-05-13"
+    "uid":"runtime.sagemaker-2017-05-13",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "InvokeEndpoint":{
@@ -264,6 +266,11 @@
           "shape":"InferenceComponentHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-Inference-Component"
+        },
+        "SessionId":{
+          "shape":"SessionIdOrNewSessionConstantHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Session-Id"
         }
       },
       "payload":"Body"
@@ -287,6 +294,16 @@
           "shape":"CustomAttributesHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-Custom-Attributes"
+        },
+        "NewSessionId":{
+          "shape":"NewSessionResponseHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-New-Session-Id"
+        },
+        "ClosedSessionId":{
+          "shape":"SessionIdHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Closed-Session-Id"
         }
       },
       "payload":"Body"
@@ -338,6 +355,11 @@
           "shape":"InferenceComponentHeader",
           "location":"header",
           "locationName":"X-Amzn-SageMaker-Inference-Component"
+        },
+        "SessionId":{
+          "shape":"SessionIdHeader",
+          "location":"header",
+          "locationName":"X-Amzn-SageMaker-Session-Id"
         }
       },
       "payload":"Body"
@@ -399,6 +421,11 @@
       "exception":true,
       "synthetic":true
     },
+    "NewSessionResponseHeader":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*;\\sExpires=[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
     "PartBlob":{
       "type":"blob",
       "sensitive":true
@@ -436,6 +463,16 @@
       "exception":true,
       "fault":true,
       "synthetic":true
+    },
+    "SessionIdHeader":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
+    },
+    "SessionIdOrNewSessionConstantHeader":{
+      "type":"string",
+      "max":256,
+      "pattern":"^(NEW_SESSION)$|^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
     },
     "StatusCode":{"type":"integer"},
     "TargetContainerHostnameHeader":{

@@ -131,4 +131,44 @@ class OperationTest extends TestCase
            $contextParams
         );
     }
+
+    public function testGetOperationContextParams()
+    {
+        $definition = [
+            "input" => ["shape" => "ListOfObjectsOperationRequest"],
+            "operationContextParams" => [
+                "stringArrayParam" => [
+                    "path" => "nested.listOfObjects[*].key"
+                ]
+            ],
+            "http" => [
+                "method" => "POST",
+                "requestUri" => "/"
+            ]
+        ];
+        $operation = new Operation(
+            $definition,
+            new ShapeMap([
+                "ListOfObjectsOperationRequest" => [
+                    "type" => "structure",
+                    "members" => [
+                        "nested" => ["shape" => "Nested"]
+                    ]
+                ],
+                "Nested" => [
+                    "type" => "structure",
+                    "members" => [
+                        "listOfObjects" => ["shape" => "ListOfObjects"]
+                    ]
+                ],
+                "ListOfObjects" => [
+                    "type" => "list",
+                    "member" => ["shape" => "ObjectMember"]
+                ]
+            ])
+        );
+
+        $operationContextParams = $operation->getOperationContextParams();
+        $this->assertSame($definition['operationContextParams'], $operationContextParams);
+    }
 }

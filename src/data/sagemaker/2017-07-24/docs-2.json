@@ -671,7 +671,15 @@
     "AppInstanceType": {
       "base": null,
       "refs": {
+        "HiddenInstanceTypesList$member": null,
         "ResourceSpec$InstanceType": "<p>The instance type that the image version runs on.</p> <note> <p> <b>JupyterServer apps</b> only support the <code>system</code> value.</p> <p>For <b>KernelGateway apps</b>, the <code>system</code> value is translated to <code>ml.t3.medium</code>. KernelGateway apps also support all other values for available instance types.</p> </note>"
+      }
+    },
+    "AppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications.</p>",
+      "refs": {
+        "CodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications.</p>",
+        "JupyterLabAppSettings$AppLifecycleManagement": "<p>Indicates whether idle shutdown is activated for JupyterLab applications.</p>"
       }
     },
     "AppList": {
@@ -1397,6 +1405,12 @@
       "refs": {
         "ListAutoMLJobsRequest$SortOrder": "<p>The sort order for the results. The default is <code>Descending</code>.</p>",
         "ListCandidatesForAutoMLJobRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>"
+      }
+    },
+    "AutoMountHomeEFS": {
+      "base": null,
+      "refs": {
+        "UserSettings$AutoMountHomeEFS": "<p>Indicates whether auto-mounting of an EFS volume is supported for the user profile. The <code>DefaultAsDomain</code> value is only supported for user profiles. Do not use the <code>DefaultAsDomain</code> value when setting this parameter for a domain.</p>"
       }
     },
     "AutoParameter": {
@@ -2214,6 +2228,14 @@
         "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>"
       }
     },
+    "ClusterNodeRecovery": {
+      "base": null,
+      "refs": {
+        "CreateClusterRequest$NodeRecovery": "<p>The node recovery mode for the SageMaker HyperPod cluster. When set to <code>Automatic</code>, SageMaker HyperPod will automatically reboot or replace faulty nodes when issues are detected. When set to <code>None</code>, cluster administrators will need to manually manage any faulty cluster instances.</p>",
+        "DescribeClusterResponse$NodeRecovery": "<p>The node recovery mode configured for the SageMaker HyperPod cluster.</p>",
+        "UpdateClusterRequest$NodeRecovery": "<p>The node recovery mode to be applied to the SageMaker HyperPod cluster.</p>"
+      }
+    },
     "ClusterNodeSummaries": {
       "base": null,
       "refs": {
@@ -2230,6 +2252,19 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterOrchestrator": {
+      "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service (EKS) cluster as the orchestrator.</p>",
+        "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
+      }
+    },
+    "ClusterOrchestratorEksConfig": {
+      "base": "<p>The configuration settings for the Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>",
+      "refs": {
+        "ClusterOrchestrator$Eks": "<p>The Amazon EKS cluster used as the orchestrator for the SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterPrivateDnsHostname": {
@@ -3601,6 +3636,12 @@
       "refs": {
         "DescribeTrainingJobResponse$DebugRuleEvaluationStatuses": "<p>Evaluation status of Amazon SageMaker Debugger rules for debugging on a training job.</p>",
         "TrainingJob$DebugRuleEvaluationStatuses": "<p>Information about the evaluation status of the rules for the training job.</p>"
+      }
+    },
+    "DeepHealthCheckType": {
+      "base": null,
+      "refs": {
+        "OnStartDeepHealthChecks$member": null
       }
     },
     "DefaultEbsStorageSettings": {
@@ -5317,6 +5358,12 @@
         "DescribeUserProfileResponse$HomeEfsFileSystemUid": "<p>The ID of the user's profile in the Amazon Elastic File System volume.</p>"
       }
     },
+    "EksClusterArn": {
+      "base": null,
+      "refs": {
+        "ClusterOrchestratorEksConfig$ClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster associated with the SageMaker HyperPod cluster.</p>"
+      }
+    },
     "EmrServerlessComputeConfig": {
       "base": "<note> <p>This data type is intended for use exclusively by SageMaker Canvas and cannot be used in other contexts at the moment.</p> </note> <p>Specifies the compute configuration for the EMR Serverless job.</p>",
       "refs": {
@@ -5755,7 +5802,7 @@
       "base": null,
       "refs": {
         "AutoMLContainerDefinition$Environment": "<p>The environment variables to set in the container. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ContainerDefinition.html\"> ContainerDefinition</a>.</p>",
-        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
+        "ContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables.</p> <p>The maximum length of each key and value in the <code>Environment</code> map is 1024 bytes. The maximum length of all keys and values in the map, combined, is 32 KB. If you pass multiple containers to a <code>CreateModel</code> request, then the maximum length of all of their maps, combined, is also 32 KB.</p>",
         "InferenceComponentContainerSpecification$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the Environment string-to-string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
         "InferenceComponentContainerSpecificationSummary$Environment": "<p>The environment variables to set in the Docker container.</p>",
         "ModelPackageContainerDefinition$Environment": "<p>The environment variables to set in the Docker container. Each key and value in the <code>Environment</code> string to string map can have length of up to 1024. We support up to 16 entries in the map.</p>",
@@ -6641,10 +6688,28 @@
         "StudioWebPortalSettings$HiddenAppTypes": "<p>The <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/studio-updated-apps.html\">Applications supported in Studio</a> that are hidden from the Studio left navigation pane.</p>"
       }
     },
+    "HiddenInstanceTypesList": {
+      "base": null,
+      "refs": {
+        "StudioWebPortalSettings$HiddenInstanceTypes": "<p> The instance types you are hiding from the Studio user interface. </p>"
+      }
+    },
     "HiddenMlToolsList": {
       "base": null,
       "refs": {
         "StudioWebPortalSettings$HiddenMlTools": "<p>The machine learning tools that are hidden from the Studio left navigation pane.</p>"
+      }
+    },
+    "HiddenSageMakerImage": {
+      "base": "<p>The SageMaker images that are hidden from the Studio user interface. You must specify the SageMaker image name and version aliases.</p>",
+      "refs": {
+        "HiddenSageMakerImageVersionAliasesList$member": null
+      }
+    },
+    "HiddenSageMakerImageVersionAliasesList": {
+      "base": null,
+      "refs": {
+        "StudioWebPortalSettings$HiddenSageMakerImageVersionAliases": "<p> The version aliases you are hiding from the Studio user interface. </p>"
       }
     },
     "HolidayConfig": {
@@ -7307,6 +7372,21 @@
         "CanvasAppSettings$IdentityProviderOAuthSettings": "<p>The settings for connecting to an external data source with OAuth.</p>"
       }
     },
+    "IdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications.</p>",
+      "refs": {
+        "AppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
+      }
+    },
+    "IdleTimeoutInMinutes": {
+      "base": null,
+      "refs": {
+        "IdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>",
+        "IdleSettings$MinIdleTimeoutInMinutes": "<p>The minimum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "IdleSettings$MaxIdleTimeoutInMinutes": "<p>The maximum value in minutes that custom idle shutdown can be set to by the user.</p>",
+        "SpaceIdleSettings$IdleTimeoutInMinutes": "<p>The time that SageMaker waits after the application becomes idle before shutting it down.</p>"
+      }
+    },
     "Image": {
       "base": "<p>A SageMaker image. A SageMaker image represents a set of container images that are derived from a common base container image. Each of these container images is represented by a SageMaker <code>ImageVersion</code>.</p>",
       "refs": {
@@ -7451,6 +7531,12 @@
       "base": null,
       "refs": {
         "ResourceSpec$SageMakerImageVersionAlias": "<p>The SageMakerImageVersionAlias of the image to launch with. This value is in SemVer 2.0.0 versioning format.</p>"
+      }
+    },
+    "ImageVersionAliasPattern": {
+      "base": null,
+      "refs": {
+        "VersionAliasesList$member": null
       }
     },
     "ImageVersionArn": {
@@ -8439,6 +8525,12 @@
         "JupyterLabAppSettings$LifecycleConfigArns": "<p>The Amazon Resource Name (ARN) of the lifecycle configurations attached to the user profile or domain. To remove a lifecycle config, you must set <code>LifecycleConfigArns</code> to an empty list.</p>",
         "JupyterServerAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the JupyterServerApp. If you use this parameter, the <code>DefaultResourceSpec</code> parameter is also required.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>",
         "KernelGatewayAppSettings$LifecycleConfigArns": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configurations attached to the the user profile or domain.</p> <note> <p>To remove a Lifecycle Config, you must set <code>LifecycleConfigArns</code> to an empty list.</p> </note>"
+      }
+    },
+    "LifecycleManagement": {
+      "base": null,
+      "refs": {
+        "IdleSettings$LifecycleManagement": "<p>Indicates whether idle shutdown is activated for the application type.</p>"
       }
     },
     "LineageEntityParameters": {
@@ -11565,6 +11657,13 @@
         "MemberDefinition$OidcMemberDefinition": "<p>A list user groups that exist in your OIDC Identity Provider (IdP). One to ten groups can be used to create a single private work team. When you add a user group to the list of <code>Groups</code>, you can add that user group to one or more private work teams. If you add a user group to a private work team, all workers in that user group are added to the work team.</p>"
       }
     },
+    "OnStartDeepHealthChecks": {
+      "base": null,
+      "refs": {
+        "ClusterInstanceGroupDetails$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>",
+        "ClusterInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
+      }
+    },
     "OnlineStoreConfig": {
       "base": "<p>Use this to specify the Amazon Web Services Key Management Service (KMS) Key ID, or <code>KMSKeyId</code>, for at rest data encryption. You can turn <code>OnlineStore</code> on or off by specifying the <code>EnableOnlineStore</code> flag at General Assembly.</p> <p>The default value is <code>False</code>.</p>",
       "refs": {
@@ -13651,7 +13750,8 @@
     "S3ModelUri": {
       "base": null,
       "refs": {
-        "S3ModelDataSource$S3Uri": "<p>Specifies the S3 path of ML model data to deploy.</p>"
+        "S3ModelDataSource$S3Uri": "<p>Specifies the S3 path of ML model data to deploy.</p>",
+        "S3ModelDataSource$ManifestS3Uri": "<p>The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.</p>"
       }
     },
     "S3OutputPath": {
@@ -13737,6 +13837,12 @@
         "UiConfig$UiTemplateS3Uri": "<p>The Amazon S3 bucket location of the UI template, or worker task template. This is the template used to render the worker UI and tools for labeling job tasks. For more information about the contents of a UI template, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-custom-templates-step2.html\"> Creating Your Custom Labeling Task Template</a>.</p>",
         "UpdateMlflowTrackingServerRequest$ArtifactStoreUri": "<p>The new S3 URI for the general purpose bucket to use as the artifact store for the MLflow Tracking Server.</p>",
         "WorkspaceSettings$S3ArtifactPath": "<p>The Amazon S3 bucket used to store artifacts generated by Canvas. Updating the Amazon S3 location impacts existing configuration settings, and Canvas users no longer have access to their artifacts. Canvas users must log out and log back in to apply the new location.</p>"
+      }
+    },
+    "SageMakerImageName": {
+      "base": null,
+      "refs": {
+        "HiddenSageMakerImage$SageMakerImageName": "<p> The SageMaker image name that you are hiding from the Studio user interface. </p>"
       }
     },
     "SageMakerImageVersionAlias": {
@@ -14297,6 +14403,13 @@
         "ListContextsRequest$SourceUri": "<p>A filter that returns only contexts with the specified source URI.</p>"
       }
     },
+    "SpaceAppLifecycleManagement": {
+      "base": "<p>Settings that are used to configure and manage the lifecycle of Amazon SageMaker Studio applications in a space.</p>",
+      "refs": {
+        "SpaceCodeEditorAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of CodeEditor applications in a space.</p>",
+        "SpaceJupyterLabAppSettings$AppLifecycleManagement": "<p>Settings that are used to configure and manage the lifecycle of JupyterLab applications in a space.</p>"
+      }
+    },
     "SpaceArn": {
       "base": null,
       "refs": {
@@ -14323,6 +14436,12 @@
         "DefaultEbsStorageSettings$DefaultEbsVolumeSizeInGb": "<p>The default size of the EBS storage volume for a space.</p>",
         "DefaultEbsStorageSettings$MaximumEbsVolumeSizeInGb": "<p>The maximum size of the EBS storage volume for a space.</p>",
         "EbsStorageSettings$EbsVolumeSizeInGb": "<p>The size of an EBS storage volume for a space.</p>"
+      }
+    },
+    "SpaceIdleSettings": {
+      "base": "<p>Settings related to idle shutdown of Studio applications in a space.</p>",
+      "refs": {
+        "SpaceAppLifecycleManagement$IdleSettings": "<p>Settings related to idle shutdown of Studio applications.</p>"
       }
     },
     "SpaceJupyterLabAppSettings": {
@@ -14852,8 +14971,11 @@
     "StudioLifecycleConfigArn": {
       "base": null,
       "refs": {
+        "CodeEditorAppSettings$BuiltInLifecycleConfigArn": "<p>The lifecycle configuration that runs before the default lifecycle configuration. It can override changes made in the default lifecycle configuration.</p>",
         "CreateStudioLifecycleConfigResponse$StudioLifecycleConfigArn": "<p>The ARN of your created Lifecycle Configuration.</p>",
+        "DescribeAppResponse$BuiltInLifecycleConfigArn": "<p>The lifecycle configuration that runs before the default lifecycle configuration</p>",
         "DescribeStudioLifecycleConfigResponse$StudioLifecycleConfigArn": "<p>The ARN of the Lifecycle Configuration to describe.</p>",
+        "JupyterLabAppSettings$BuiltInLifecycleConfigArn": "<p>The lifecycle configuration that runs before the default lifecycle configuration. It can override changes made in the default lifecycle configuration.</p>",
         "LifecycleConfigArns$member": null,
         "ResourceSpec$LifecycleConfigArn": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configuration attached to the Resource.</p>",
         "StudioLifecycleConfigDetails$StudioLifecycleConfigArn": "<p> The Amazon Resource Name (ARN) of the Lifecycle Configuration.</p>"
@@ -15072,6 +15194,14 @@
         "Trial$Tags": "<p>The list of tags that are associated with the trial. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
         "TrialComponent$Tags": "<p>The list of tags that are associated with the component. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
         "UpdateProjectInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>. In addition, the project must have tag update constraints set in order to include this parameter in the request. For more information, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/constraints-resourceupdate.html\">Amazon Web Services Service Catalog Tag Update Constraints</a>.</p>"
+      }
+    },
+    "TagPropagation": {
+      "base": null,
+      "refs": {
+        "CreateDomainRequest$TagPropagation": "<p>Indicates whether custom tag propagation is supported for the domain. Defaults to <code>DISABLED</code>.</p>",
+        "DescribeDomainResponse$TagPropagation": "<p>Indicates whether custom tag propagation is supported for the domain.</p>",
+        "UpdateDomainRequest$TagPropagation": "<p>Indicates whether custom tag propagation is supported for the domain. Defaults to <code>DISABLED</code>.</p>"
       }
     },
     "TagValue": {
@@ -16084,7 +16214,7 @@
     "TransformEnvironmentMap": {
       "base": null,
       "refs": {
-        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
+        "CreateTransformJobRequest$Environment": "<p>The environment variables to set in the Docker container. Don't include any sensitive data in your environment variables. We support up to 16 key and values entries in the map.</p>",
         "DescribeTransformJobResponse$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJob$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>",
         "TransformJobDefinition$Environment": "<p>The environment variables to set in the Docker container. We support up to 16 key and values entries in the map.</p>"
@@ -17081,6 +17211,12 @@
         "CreateImageVersionRequest$VendorGuidance": "<p>The stability of the image version, specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>",
         "DescribeImageVersionResponse$VendorGuidance": "<p>The stability of the image version specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>",
         "UpdateImageVersionRequest$VendorGuidance": "<p>The availability of the image version specified by the maintainer.</p> <ul> <li> <p> <code>NOT_PROVIDED</code>: The maintainers did not provide a status for image version stability.</p> </li> <li> <p> <code>STABLE</code>: The image version is stable.</p> </li> <li> <p> <code>TO_BE_ARCHIVED</code>: The image version is set to be archived. Custom image versions that are set to be archived are automatically archived after three months.</p> </li> <li> <p> <code>ARCHIVED</code>: The image version is archived. Archived image versions are not searchable and are no longer actively supported. </p> </li> </ul>"
+      }
+    },
+    "VersionAliasesList": {
+      "base": null,
+      "refs": {
+        "HiddenSageMakerImage$VersionAliases": "<p> The version aliases you are hiding from the Studio user interface. </p>"
       }
     },
     "VersionId": {

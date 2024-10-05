@@ -22,7 +22,7 @@
     "DescribeReplicator" : "<p>Returns a description of the Kafka Replicator whose Amazon Resource Name (ARN) is specified in the request.</p>",
     "DescribeVpcConnection" : "<p>Displays information about the specified Amazon MSK VPC connection.</p>",
     "BatchDisassociateScramSecret" : "<p>Disassociates one or more Scram Secrets from an Amazon MSK cluster.</p>",
-    "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap.</p>",
+    "GetBootstrapBrokers" : "<p>A list of brokers that a client application can use to bootstrap. This list doesn't necessarily include all of the brokers in the cluster. The following Python 3.6 example shows how you can use the Amazon Resource Name (ARN) of a cluster to get its bootstrap brokers. If you don't know the ARN of your cluster, you can use the <code>ListClusters</code> operation to get the ARNs of all the clusters in this account and Region.</p>",
     "GetCompatibleKafkaVersions" : "<p>Gets the Apache Kafka versions to which you can update the MSK cluster.</p>",
     "GetClusterPolicy" : "<p>Retrieves the contents of the specified MSK cluster policy.</p>",
     "ListClientVpcConnections" : "<p>Displays a list of client VPC connections.</p>",
@@ -767,6 +767,18 @@
       "base" : "<p>The type of replication starting position.</p>",
       "refs" : {
         "ReplicationStartingPosition$Type" : "<p>The type of replication starting position.</p>"
+      }
+    },
+    "ReplicationTopicNameConfiguration" : {
+      "base" : "<p>Configuration for specifying replicated topic names should be the same as their corresponding upstream topics or prefixed with source cluster alias.</p>",
+      "refs" : {
+        "TopicReplication$TopicNameConfiguration" : "<p>Configuration for specifying replicated topic names same as their corresponding upstream topics or prefixed with source cluster alias.</p>"
+      }
+    },
+    "ReplicationTopicNameConfigurationType" : {
+      "base" : "<p>The type of replicated topic name.</p>",
+      "refs" : {
+        "ReplicationTopicNameConfiguration$Type" : "<p>The type of replicated topic name.</p>"
       }
     },
     "ReplicationStateInfo" : {

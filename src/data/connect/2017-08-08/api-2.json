@@ -3186,6 +3186,24 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "StartOutboundChatContact":{
+      "name":"StartOutboundChatContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/outbound-chat"
+      },
+      "input":{"shape":"StartOutboundChatContactRequest"},
+      "output":{"shape":"StartOutboundChatContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartOutboundVoiceContact":{
       "name":"StartOutboundVoiceContact",
       "http":{
@@ -7425,7 +7443,8 @@
     "DescribeInstanceResponse":{
       "type":"structure",
       "members":{
-        "Instance":{"shape":"Instance"}
+        "Instance":{"shape":"Instance"},
+        "ReplicationConfiguration":{"shape":"ReplicationConfiguration"}
       }
     },
     "DescribeInstanceStorageConfigRequest":{
@@ -8265,7 +8284,8 @@
       "enum":[
         "TELEPHONE_NUMBER",
         "VOIP",
-        "CONTACT_FLOW"
+        "CONTACT_FLOW",
+        "CONNECT_PHONENUMBER_ARN"
       ]
     },
     "ErrorCode":{"type":"string"},
@@ -9322,6 +9342,11 @@
         "AgentConfig":{"shape":"AgentConfig"}
       }
     },
+    "GlobalSignInEndpoint":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Grouping":{
       "type":"string",
       "enum":[
@@ -9340,7 +9365,7 @@
     "GroupingsV2":{
       "type":"list",
       "member":{"shape":"GroupingV2"},
-      "max":3
+      "max":4
     },
     "HierarchyGroup":{
       "type":"structure",
@@ -9753,6 +9778,17 @@
       "max":250,
       "min":1,
       "pattern":"^(arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9]{1}:[0-9]{1,20}:instance/)?[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "InstanceReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "INSTANCE_REPLICATION_COMPLETE",
+        "INSTANCE_REPLICATION_IN_PROGRESS",
+        "INSTANCE_REPLICATION_FAILED",
+        "INSTANCE_REPLICA_DELETING",
+        "INSTANCE_REPLICATION_DELETION_FAILED",
+        "RESOURCE_REPLICATION_NOT_STARTED"
+      ]
     },
     "InstanceStatus":{
       "type":"string",
@@ -13288,6 +13324,33 @@
         "Arn":{"shape":"ARN"}
       }
     },
+    "ReplicationConfiguration":{
+      "type":"structure",
+      "members":{
+        "ReplicationStatusSummaryList":{"shape":"ReplicationStatusSummaryList"},
+        "SourceRegion":{"shape":"AwsRegion"},
+        "GlobalSignInEndpoint":{"shape":"GlobalSignInEndpoint"}
+      }
+    },
+    "ReplicationStatusReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ReplicationStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"AwsRegion"},
+        "ReplicationStatus":{"shape":"InstanceReplicationStatus"},
+        "ReplicationStatusReason":{"shape":"ReplicationStatusReason"}
+      }
+    },
+    "ReplicationStatusSummaryList":{
+      "type":"list",
+      "member":{"shape":"ReplicationStatusSummary"},
+      "max":11,
+      "min":0
+    },
     "RequestIdentifier":{
       "type":"string",
       "max":80
@@ -14602,6 +14665,39 @@
       "required":["StreamingId"],
       "members":{
         "StreamingId":{"shape":"StreamingId"}
+      }
+    },
+    "StartOutboundChatContactRequest":{
+      "type":"structure",
+      "required":[
+        "SourceEndpoint",
+        "DestinationEndpoint",
+        "InstanceId",
+        "SegmentAttributes",
+        "ContactFlowId"
+      ],
+      "members":{
+        "SourceEndpoint":{"shape":"Endpoint"},
+        "DestinationEndpoint":{"shape":"Endpoint"},
+        "InstanceId":{"shape":"InstanceId"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Attributes":{"shape":"Attributes"},
+        "ContactFlowId":{"shape":"ContactFlowId"},
+        "ChatDurationInMinutes":{"shape":"ChatDurationInMinutes"},
+        "ParticipantDetails":{"shape":"ParticipantDetails"},
+        "InitialSystemMessage":{"shape":"ChatMessage"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "SupportedMessagingContentTypes":{"shape":"SupportedMessagingContentTypes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartOutboundChatContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"}
       }
     },
     "StartOutboundVoiceContactRequest":{
@@ -17059,7 +17155,17 @@
         "pt-PT",
         "zh-CN",
         "en-NZ",
-        "en-ZA"
+        "en-ZA",
+        "ca-ES",
+        "da-DK",
+        "fi-FI",
+        "id-ID",
+        "ms-MY",
+        "nl-NL",
+        "no-NO",
+        "pl-PL",
+        "sv-SE",
+        "tl-PH"
       ]
     },
     "VocabularyLastModifiedTime":{"type":"timestamp"},

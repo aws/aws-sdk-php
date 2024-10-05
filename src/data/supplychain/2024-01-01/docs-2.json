@@ -3,13 +3,35 @@
   "service": "<p> AWS Supply Chain is a cloud-based application that works with your enterprise resource planning (ERP) and supply chain management systems. Using AWS Supply Chain, you can connect and extract your inventory, supply, and demand related data from existing ERP or supply chain systems into a single data model. </p> <p>The AWS Supply Chain API supports configuration data import for Supply Planning.</p> <p> All AWS Supply chain API operations are Amazon-authenticated and certificate-signed. They not only require the use of the AWS SDK, but also allow for the exclusive use of AWS Identity and Access Management users and roles to help facilitate access, trust, and permission policies. </p>",
   "operations": {
     "CreateBillOfMaterialsImportJob": "<p>CreateBillOfMaterialsImportJob creates an import job for the Product Bill Of Materials (BOM) entity. For information on the product_bom entity, see the AWS Supply Chain User Guide.</p> <p>The CSV file must be located in an Amazon S3 location accessible to AWS Supply Chain. It is recommended to use the same Amazon S3 bucket created during your AWS Supply Chain instance creation.</p>",
+    "CreateDataIntegrationFlow": "<p>Create DataIntegrationFlow to map one or more different sources to one target using the SQL transformation query.</p>",
+    "CreateDataLakeDataset": "<p>Create a data lake dataset.</p>",
+    "DeleteDataIntegrationFlow": "<p>Delete the DataIntegrationFlow.</p>",
+    "DeleteDataLakeDataset": "<p>Delete a data lake dataset.</p>",
     "GetBillOfMaterialsImportJob": "<p>Get status and details of a BillOfMaterialsImportJob.</p>",
-    "SendDataIntegrationEvent": "<p>Send the transactional data payload for the event with real-time data for analysis or monitoring. The real-time data events are stored in an Amazon Web Services service before being processed and stored in data lake. New data events are synced with data lake at 5 PM GMT everyday. The updated transactional data is available in data lake after ingestion.</p>"
+    "GetDataIntegrationFlow": "<p>View the DataIntegrationFlow details.</p>",
+    "GetDataLakeDataset": "<p>Get a data lake dataset.</p>",
+    "ListDataIntegrationFlows": "<p>Lists all the DataIntegrationFlows in a paginated way.</p>",
+    "ListDataLakeDatasets": "<p>List the data lake datasets for a specific instance and name space.</p>",
+    "ListTagsForResource": "<p>List all the tags for an Amazon Web ServicesSupply Chain resource.</p>",
+    "SendDataIntegrationEvent": "<p>Send the transactional data payload for the event with real-time data for analysis or monitoring. The real-time data events are stored in an Amazon Web Services service before being processed and stored in data lake. New data events are synced with data lake at 5 PM GMT everyday. The updated transactional data is available in data lake after ingestion.</p>",
+    "TagResource": "<p>Create tags for an Amazon Web Services Supply chain resource.</p>",
+    "UntagResource": "<p>Delete tags for an Amazon Web Services Supply chain resource.</p>",
+    "UpdateDataIntegrationFlow": "<p>Update the DataIntegrationFlow.</p>",
+    "UpdateDataLakeDataset": "<p>Update a data lake dataset.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have the required privileges to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AscResourceArn": {
+      "base": null,
+      "refs": {
+        "DataLakeDataset$arn": "<p>The arn of the dataset.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs tags to be listed.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs to be tagged.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs to be untagged.</p>"
       }
     },
     "BillOfMaterialsImportJob": {
@@ -18,10 +40,17 @@
         "GetBillOfMaterialsImportJobResponse$job": "<p>The BillOfMaterialsImportJob.</p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowDatasetOptions$dedupeRecords": "<p>The dataset load option to remove duplicates.</p>",
+        "DataLakeDatasetSchemaField$isRequired": "<p>Indicate if the field is required or not.</p>"
+      }
+    },
     "ClientToken": {
       "base": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
       "refs": {
-        "CreateBillOfMaterialsImportJobRequest$clientToken": "<p>An idempotency token.</p>",
+        "CreateBillOfMaterialsImportJobRequest$clientToken": "<p>An idempotency token ensures the API request is only completed no more than once. This way, retrying the request will not trigger the operation multiple times. A client token is a unique, case-sensitive string of 33 to 128 ASCII characters. To make an idempotent API request, specify a client token in the request. You should not reuse the same client token for other requests. If you retry a successful request with the same client token, the request will succeed with no further actions being taken, and you will receive the same API response as the original successful request.</p>",
         "SendDataIntegrationEventRequest$clientToken": "<p>The idempotent client token.</p>"
       }
     },
@@ -53,6 +82,26 @@
       "refs": {
       }
     },
+    "CreateDataIntegrationFlowRequest": {
+      "base": "<p>The request parameters for CreateDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "CreateDataIntegrationFlowResponse": {
+      "base": "<p>The response parameters for CreateDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "CreateDataLakeDatasetRequest": {
+      "base": "<p>The request parameters for CreateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "CreateDataLakeDatasetResponse": {
+      "base": "<p>The response parameters of CreateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
     "DataIntegrationEventData": {
       "base": null,
       "refs": {
@@ -71,6 +120,291 @@
         "SendDataIntegrationEventRequest$eventType": "<p>The data event type.</p>"
       }
     },
+    "DataIntegrationFlow": {
+      "base": "<p>The DataIntegrationFlow details.</p>",
+      "refs": {
+        "DataIntegrationFlowList$member": null,
+        "GetDataIntegrationFlowResponse$flow": "<p>The details of the DataIntegrationFlow returned.</p>",
+        "UpdateDataIntegrationFlowResponse$flow": "<p>The details of the updated DataIntegrationFlow.</p>"
+      }
+    },
+    "DataIntegrationFlowDatasetOptions": {
+      "base": "<p>The dataset options used in dataset source and target configurations.</p>",
+      "refs": {
+        "DataIntegrationFlowDatasetSourceConfiguration$options": "<p>The dataset DataIntegrationFlow source options.</p>",
+        "DataIntegrationFlowDatasetTargetConfiguration$options": "<p>The dataset DataIntegrationFlow target options.</p>"
+      }
+    },
+    "DataIntegrationFlowDatasetSourceConfiguration": {
+      "base": "<p>The dataset DataIntegrationFlow source configuration parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowSource$datasetSource": "<p>The dataset DataIntegrationFlow source.</p>"
+      }
+    },
+    "DataIntegrationFlowDatasetTargetConfiguration": {
+      "base": "<p>The dataset DataIntegrationFlow target configuration parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowTarget$datasetTarget": "<p>The dataset DataIntegrationFlow target.</p>"
+      }
+    },
+    "DataIntegrationFlowFileType": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowS3Options$fileType": "<p>The Amazon S3 file type in S3 options.</p>"
+      }
+    },
+    "DataIntegrationFlowList": {
+      "base": null,
+      "refs": {
+        "ListDataIntegrationFlowsResponse$flows": "<p>The response parameters for ListDataIntegrationFlows.</p>"
+      }
+    },
+    "DataIntegrationFlowLoadType": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowDatasetOptions$loadType": "<p>The dataset data load type in dataset options.</p>"
+      }
+    },
+    "DataIntegrationFlowMaxResults": {
+      "base": null,
+      "refs": {
+        "ListDataIntegrationFlowsRequest$maxResults": "<p>Specify the maximum number of DataIntegrationFlows to fetch in one paginated request.</p>"
+      }
+    },
+    "DataIntegrationFlowName": {
+      "base": null,
+      "refs": {
+        "CreateDataIntegrationFlowRequest$name": "<p>Name of the DataIntegrationFlow.</p>",
+        "CreateDataIntegrationFlowResponse$name": "<p>The name of the DataIntegrationFlow created.</p>",
+        "DataIntegrationFlow$name": "<p>The DataIntegrationFlow name.</p>",
+        "DeleteDataIntegrationFlowRequest$name": "<p>The name of the DataIntegrationFlow to be deleted.</p>",
+        "DeleteDataIntegrationFlowResponse$name": "<p>The name of the DataIntegrationFlow deleted.</p>",
+        "GetDataIntegrationFlowRequest$name": "<p>The name of the DataIntegrationFlow created.</p>",
+        "UpdateDataIntegrationFlowRequest$name": "<p>The name of the DataIntegrationFlow to be updated.</p>"
+      }
+    },
+    "DataIntegrationFlowNextToken": {
+      "base": null,
+      "refs": {
+        "ListDataIntegrationFlowsRequest$nextToken": "<p>The pagination token to fetch the next page of the DataIntegrationFlows.</p>",
+        "ListDataIntegrationFlowsResponse$nextToken": "<p>The pagination token to fetch the next page of the DataIntegrationFlows.</p>"
+      }
+    },
+    "DataIntegrationFlowS3Options": {
+      "base": "<p>The Amazon S3 options used in S3 source and target configurations.</p>",
+      "refs": {
+        "DataIntegrationFlowS3SourceConfiguration$options": "<p>The other options of the S3 DataIntegrationFlow source.</p>",
+        "DataIntegrationFlowS3TargetConfiguration$options": "<p>The S3 DataIntegrationFlow target options.</p>"
+      }
+    },
+    "DataIntegrationFlowS3Prefix": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowS3SourceConfiguration$prefix": "<p>The prefix of the S3 source objects.</p>",
+        "DataIntegrationFlowS3TargetConfiguration$prefix": "<p>The prefix of the S3 target objects.</p>"
+      }
+    },
+    "DataIntegrationFlowS3SourceConfiguration": {
+      "base": "<p>The S3 DataIntegrationFlow source configuration parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowSource$s3Source": "<p>The S3 DataIntegrationFlow source.</p>"
+      }
+    },
+    "DataIntegrationFlowS3TargetConfiguration": {
+      "base": "<p>The S3 DataIntegrationFlow target configuration parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowTarget$s3Target": "<p>The S3 DataIntegrationFlow target.</p>"
+      }
+    },
+    "DataIntegrationFlowSQLQuery": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowSQLTransformationConfiguration$query": "<p>The transformation SQL query body based on SparkSQL.</p>"
+      }
+    },
+    "DataIntegrationFlowSQLTransformationConfiguration": {
+      "base": "<p>The SQL DataIntegrationFlow transformation configuration parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowTransformation$sqlTransformation": "<p>The SQL DataIntegrationFlow transformation configuration.</p>"
+      }
+    },
+    "DataIntegrationFlowSource": {
+      "base": "<p>The DataIntegrationFlow source parameters.</p>",
+      "refs": {
+        "DataIntegrationFlowSourceList$member": null
+      }
+    },
+    "DataIntegrationFlowSourceList": {
+      "base": null,
+      "refs": {
+        "CreateDataIntegrationFlowRequest$sources": "<p>The source configurations for DataIntegrationFlow.</p>",
+        "DataIntegrationFlow$sources": "<p>The DataIntegrationFlow source configurations.</p>",
+        "UpdateDataIntegrationFlowRequest$sources": "<p>The new source configurations for the DataIntegrationFlow.</p>"
+      }
+    },
+    "DataIntegrationFlowSourceName": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowSource$sourceName": "<p>The DataIntegrationFlow source name that can be used as table alias in SQL transformation query.</p>"
+      }
+    },
+    "DataIntegrationFlowSourceType": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowSource$sourceType": "<p>The DataIntegrationFlow source type.</p>"
+      }
+    },
+    "DataIntegrationFlowTarget": {
+      "base": "<p>The DataIntegrationFlow target parameters.</p>",
+      "refs": {
+        "CreateDataIntegrationFlowRequest$target": "<p>The target configurations for DataIntegrationFlow.</p>",
+        "DataIntegrationFlow$target": "<p>The DataIntegrationFlow target configuration.</p>",
+        "UpdateDataIntegrationFlowRequest$target": "<p>The new target configurations for the DataIntegrationFlow.</p>"
+      }
+    },
+    "DataIntegrationFlowTargetType": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowTarget$targetType": "<p>The DataIntegrationFlow target type.</p>"
+      }
+    },
+    "DataIntegrationFlowTransformation": {
+      "base": "<p>The DataIntegrationFlow transformation parameters.</p>",
+      "refs": {
+        "CreateDataIntegrationFlowRequest$transformation": "<p>The transformation configurations for DataIntegrationFlow.</p>",
+        "DataIntegrationFlow$transformation": "<p>The DataIntegrationFlow transformation configurations.</p>",
+        "UpdateDataIntegrationFlowRequest$transformation": "<p>The new transformation configurations for the DataIntegrationFlow.</p>"
+      }
+    },
+    "DataIntegrationFlowTransformationType": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowTransformation$transformationType": "<p>The DataIntegrationFlow transformation type.</p>"
+      }
+    },
+    "DataLakeDataset": {
+      "base": "<p>The data lake dataset details.</p>",
+      "refs": {
+        "CreateDataLakeDatasetResponse$dataset": "<p>The detail of created dataset.</p>",
+        "DataLakeDatasetList$member": null,
+        "GetDataLakeDatasetResponse$dataset": "<p>The fetched dataset details.</p>",
+        "UpdateDataLakeDatasetResponse$dataset": "<p>The updated dataset details.</p>"
+      }
+    },
+    "DataLakeDatasetDescription": {
+      "base": null,
+      "refs": {
+        "CreateDataLakeDatasetRequest$description": "<p>The description of the dataset.</p>",
+        "DataLakeDataset$description": "<p>The description of the dataset.</p>",
+        "UpdateDataLakeDatasetRequest$description": "<p>The updated description of the data lake dataset.</p>"
+      }
+    },
+    "DataLakeDatasetList": {
+      "base": null,
+      "refs": {
+        "ListDataLakeDatasetsResponse$datasets": "<p>The list of fetched dataset details.</p>"
+      }
+    },
+    "DataLakeDatasetMaxResults": {
+      "base": null,
+      "refs": {
+        "ListDataLakeDatasetsRequest$maxResults": "<p>The max number of datasets to fetch in this paginated request.</p>"
+      }
+    },
+    "DataLakeDatasetName": {
+      "base": null,
+      "refs": {
+        "CreateDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
+        "DataLakeDataset$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
+        "DeleteDataLakeDatasetRequest$name": "<p>The name of the dataset. If the namespace is <i>asc</i>, the name must be one of the supported <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">data entities </a>.</p>",
+        "DeleteDataLakeDatasetResponse$name": "<p>The name of deleted dataset.</p>",
+        "GetDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
+        "UpdateDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>"
+      }
+    },
+    "DataLakeDatasetNamespace": {
+      "base": null,
+      "refs": {
+        "CreateDataLakeDatasetRequest$namespace": "<p>The name space of the dataset.</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
+        "DataLakeDataset$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
+        "DeleteDataLakeDatasetRequest$namespace": "<p>The namespace of the dataset. The available values are:</p> <ul> <li> <p>asc: for <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\"> AWS Supply Chain supported datasets </a>.</p> </li> <li> <p>default: for datasets with custom user-defined schemas.</p> </li> </ul>",
+        "DeleteDataLakeDatasetResponse$namespace": "<p>The namespace of deleted dataset.</p>",
+        "GetDataLakeDatasetRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
+        "ListDataLakeDatasetsRequest$namespace": "<p>The namespace of the dataset. The available values are:</p> <ul> <li> <p>asc: for <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\"> AWS Supply Chain supported datasets </a>.</p> </li> <li> <p>default: for datasets with custom user-defined schemas.</p> </li> </ul>",
+        "UpdateDataLakeDatasetRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>"
+      }
+    },
+    "DataLakeDatasetNextToken": {
+      "base": null,
+      "refs": {
+        "ListDataLakeDatasetsRequest$nextToken": "<p>The pagination token to fetch next page of datasets.</p>",
+        "ListDataLakeDatasetsResponse$nextToken": "<p>The pagination token to fetch next page of datasets.</p>"
+      }
+    },
+    "DataLakeDatasetSchema": {
+      "base": "<p>The schema details of the dataset.</p>",
+      "refs": {
+        "CreateDataLakeDatasetRequest$schema": "<p>The custom schema of the data lake dataset and is only required when the name space is <i>default</i>.</p>",
+        "DataLakeDataset$schema": "<p>The schema of the dataset.</p>"
+      }
+    },
+    "DataLakeDatasetSchemaField": {
+      "base": "<p>The dataset field details.</p>",
+      "refs": {
+        "DataLakeDatasetSchemaFieldList$member": null
+      }
+    },
+    "DataLakeDatasetSchemaFieldList": {
+      "base": null,
+      "refs": {
+        "DataLakeDatasetSchema$fields": "<p>The list of field details of the dataset schema.</p>"
+      }
+    },
+    "DataLakeDatasetSchemaFieldName": {
+      "base": null,
+      "refs": {
+        "DataLakeDatasetSchemaField$name": "<p>The dataset field name.</p>"
+      }
+    },
+    "DataLakeDatasetSchemaFieldType": {
+      "base": null,
+      "refs": {
+        "DataLakeDatasetSchemaField$type": "<p>The dataset field type.</p>"
+      }
+    },
+    "DataLakeDatasetSchemaName": {
+      "base": null,
+      "refs": {
+        "DataLakeDatasetSchema$name": "<p>The name of the dataset schema.</p>"
+      }
+    },
+    "DatasetIdentifier": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowDatasetSourceConfiguration$datasetIdentifier": "<p>The ARN of the dataset.</p>",
+        "DataIntegrationFlowDatasetTargetConfiguration$datasetIdentifier": "<p>The dataset ARN.</p>"
+      }
+    },
+    "DeleteDataIntegrationFlowRequest": {
+      "base": "<p>The request parameters for DeleteDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "DeleteDataIntegrationFlowResponse": {
+      "base": "<p>The response parameters for DeleteDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "DeleteDataLakeDatasetRequest": {
+      "base": "<p>The request parameters of DeleteDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "DeleteDataLakeDatasetResponse": {
+      "base": "<p>The response parameters of DeleteDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
     "GetBillOfMaterialsImportJobRequest": {
       "base": "<p>The request parameters for GetBillOfMaterialsImportJob.</p>",
       "refs": {
@@ -81,14 +415,71 @@
       "refs": {
       }
     },
+    "GetDataIntegrationFlowRequest": {
+      "base": "<p>The request parameters for GetDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "GetDataIntegrationFlowResponse": {
+      "base": "<p>The response parameters for GetDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "GetDataLakeDatasetRequest": {
+      "base": "<p>The request parameters for GetDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "GetDataLakeDatasetResponse": {
+      "base": "<p>The response parameters for UpdateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
     "InternalServerException": {
       "base": "<p>Unexpected error during processing of request.</p>",
+      "refs": {
+      }
+    },
+    "ListDataIntegrationFlowsRequest": {
+      "base": "<p>The request parameters for ListDataIntegrationFlows.</p>",
+      "refs": {
+      }
+    },
+    "ListDataIntegrationFlowsResponse": {
+      "base": "<p>The response parameters for ListDataIntegrationFlows.</p>",
+      "refs": {
+      }
+    },
+    "ListDataLakeDatasetsRequest": {
+      "base": "<p>The request parameters of ListDataLakeDatasets.</p>",
+      "refs": {
+      }
+    },
+    "ListDataLakeDatasetsResponse": {
+      "base": "<p>The response parameters of ListDataLakeDatasets.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": "<p>The request parameters of ListTagsForResource.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": "<p>The response parameters of ListTagsForResource.</p>",
       "refs": {
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist.</p>",
       "refs": {
+      }
+    },
+    "S3BucketName": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlowS3SourceConfiguration$bucketName": "<p>The bucketName of the S3 source objects.</p>",
+        "DataIntegrationFlowS3TargetConfiguration$bucketName": "<p>The bucketName of the S3 target objects.</p>"
       }
     },
     "SendDataIntegrationEventRequest": {
@@ -125,9 +516,56 @@
         "SendDataIntegrationEventRequest$eventTimestamp": "<p>The event timestamp (in epoch seconds).</p>"
       }
     },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The list of tag keys to be deleted for an Amazon Web Services Supply Chain resource.</p>"
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateDataIntegrationFlowRequest$tags": "<p>The tags of the DataIntegrationFlow to be created</p>",
+        "CreateDataLakeDatasetRequest$tags": "<p>The tags of the dataset.</p>",
+        "ListTagsForResourceResponse$tags": "<p>The tags added to an Amazon Web Services Supply Chain resource.</p>",
+        "TagResourceRequest$tags": "<p>The tags of the Amazon Web Services Supply chain resource to be created.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": "<p>The request parameters of TagResource.</p>",
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": "<p>The response parameters for TagResource.</p>",
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
     "ThrottlingException": {
       "base": "<p>Request was denied due to request throttling.</p>",
       "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "DataIntegrationFlow$createdTime": "<p>The DataIntegrationFlow creation timestamp.</p>",
+        "DataIntegrationFlow$lastModifiedTime": "<p>The DataIntegrationFlow last modified timestamp.</p>",
+        "DataLakeDataset$createdTime": "<p>The creation time of the dataset.</p>",
+        "DataLakeDataset$lastModifiedTime": "<p>The last modified time of the dataset.</p>"
       }
     },
     "UUID": {
@@ -137,10 +575,55 @@
         "BillOfMaterialsImportJob$jobId": "<p>The BillOfMaterialsImportJob jobId.</p>",
         "CreateBillOfMaterialsImportJobRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "CreateBillOfMaterialsImportJobResponse$jobId": "<p>The new BillOfMaterialsImportJob identifier.</p>",
+        "CreateDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "CreateDataIntegrationFlowResponse$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "CreateDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "DataIntegrationFlow$instanceId": "<p>The DataIntegrationFlow instance ID.</p>",
+        "DataLakeDataset$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "DeleteDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "DeleteDataIntegrationFlowResponse$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "DeleteDataLakeDatasetRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
+        "DeleteDataLakeDatasetResponse$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "GetBillOfMaterialsImportJobRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "GetBillOfMaterialsImportJobRequest$jobId": "<p>The BillOfMaterialsImportJob identifier.</p>",
+        "GetDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "GetDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "ListDataIntegrationFlowsRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "ListDataLakeDatasetsRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "SendDataIntegrationEventRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
-        "SendDataIntegrationEventResponse$eventId": "<p>The unique event identifier.</p>"
+        "SendDataIntegrationEventResponse$eventId": "<p>The unique event identifier.</p>",
+        "UpdateDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "UpdateDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Chain instance identifier.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": "<p>The request parameters of UntagResource.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": "<p>The response parameters of UntagResource.</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataIntegrationFlowRequest": {
+      "base": "<p>The request parameters for UpdateDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataIntegrationFlowResponse": {
+      "base": "<p>The response parameters for UpdateDataIntegrationFlow.</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataLakeDatasetRequest": {
+      "base": "<p>The request parameters of UpdateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataLakeDatasetResponse": {
+      "base": "<p>The response parameters of UpdateDataLakeDataset.</p>",
+      "refs": {
       }
     },
     "ValidationException": {

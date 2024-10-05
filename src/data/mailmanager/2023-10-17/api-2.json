@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"ses",
     "targetPrefix":"MailManagerSvc",
-    "uid":"mailmanager-2023-10-17"
+    "uid":"mailmanager-2023-10-17",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateAddonInstance":{
@@ -1925,6 +1926,10 @@
         "Text":{"shape":"String"}
       }
     },
+    "MimeHeaderAttribute":{
+      "type":"string",
+      "pattern":"^X-[a-zA-Z0-9-]{1,256}$"
+    },
     "NameOrArn":{
       "type":"string",
       "max":2048,
@@ -2366,7 +2371,8 @@
     "RuleStringToEvaluate":{
       "type":"structure",
       "members":{
-        "Attribute":{"shape":"RuleStringEmailAttribute"}
+        "Attribute":{"shape":"RuleStringEmailAttribute"},
+        "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"}
       },
       "union":true
     },
@@ -2609,9 +2615,14 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "StringValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "StringValueList":{
       "type":"list",
-      "member":{"shape":"String"},
+      "member":{"shape":"StringValue"},
       "max":10,
       "min":1
     },

@@ -35,7 +35,7 @@
     "DescribeMultiRegionAccessPointOperation": "<note> <p>This operation is not supported by directory buckets.</p> </note> <p>Retrieves the status of an asynchronous request to manage a Multi-Region Access Point. For more information about managing Multi-Region Access Points and how asynchronous requests work, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/MrapOperations.html\">Using Multi-Region Access Points</a> in the <i>Amazon S3 User Guide</i>.</p> <p>The following actions are related to <code>GetMultiRegionAccessPoint</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateMultiRegionAccessPoint.html\">CreateMultiRegionAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteMultiRegionAccessPoint.html\">DeleteMultiRegionAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetMultiRegionAccessPoint.html\">GetMultiRegionAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListMultiRegionAccessPoints.html\">ListMultiRegionAccessPoints</a> </p> </li> </ul>",
     "DissociateAccessGrantsIdentityCenter": "<p>Dissociates the Amazon Web Services IAM Identity Center instance from the S3 Access Grants instance. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:DissociateAccessGrantsIdentityCenter</code> permission to use this operation. </p> </dd> <dt>Additional Permissions</dt> <dd> <p>You must have the <code>sso:DeleteApplication</code> permission to use this operation. </p> </dd> </dl>",
     "GetAccessGrant": "<p>Get the details of an access grant from your S3 Access Grants instance.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrant</code> permission to use this operation. </p> </dd> </dl>",
-    "GetAccessGrantsInstance": "<p>Retrieves the S3 Access Grants instance for a Region in your account. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrantsInstance</code> permission to use this operation. </p> </dd> </dl>",
+    "GetAccessGrantsInstance": "<p>Retrieves the S3 Access Grants instance for a Region in your account. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrantsInstance</code> permission to use this operation. </p> </dd> </dl> <note> <p> <code>GetAccessGrantsInstance</code> is not supported for cross-account access. You can only call the API from the account that owns the S3 Access Grants instance.</p> </note>",
     "GetAccessGrantsInstanceForPrefix": "<p>Retrieve the S3 Access Grants instance that contains a particular prefix. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrantsInstanceForPrefix</code> permission for the caller account to use this operation. </p> </dd> <dt>Additional Permissions</dt> <dd> <p>The prefix owner account must grant you the following permissions to their S3 Access Grants instance: <code>s3:GetAccessGrantsInstanceForPrefix</code>. </p> </dd> </dl>",
     "GetAccessGrantsInstanceResourcePolicy": "<p>Returns the resource policy of the S3 Access Grants instance. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrantsInstanceResourcePolicy</code> permission to use this operation. </p> </dd> </dl>",
     "GetAccessGrantsLocation": "<p>Retrieves the details of a particular location registered in your S3 Access Grants instance. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:GetAccessGrantsLocation</code> permission to use this operation. </p> </dd> </dl>",
@@ -67,6 +67,7 @@
     "ListAccessGrantsLocations": "<p>Returns a list of the locations registered in your S3 Access Grants instance.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:ListAccessGrantsLocations</code> permission to use this operation. </p> </dd> </dl>",
     "ListAccessPoints": "<note> <p>This operation is not supported by directory buckets.</p> </note> <p>Returns a list of the access points that are owned by the current account that's associated with the specified bucket. You can retrieve up to 1000 access points per call. If the specified bucket has more than 1,000 access points (or the number specified in <code>maxResults</code>, whichever is less), the response will include a continuation token that you can use to list the additional access points.</p> <p/> <p>All Amazon S3 on Outposts REST API requests for this action require an additional parameter of <code>x-amz-outpost-id</code> to be passed with the request. In addition, you must use an S3 on Outposts endpoint hostname prefix instead of <code>s3-control</code>. For an example of the request syntax for Amazon S3 on Outposts that uses the S3 on Outposts endpoint hostname prefix and the <code>x-amz-outpost-id</code> derived by using the access point ARN, see the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html#API_control_GetAccessPoint_Examples\">Examples</a> section.</p> <p>The following actions are related to <code>ListAccessPoints</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html\">CreateAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPoint.html\">DeleteAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html\">GetAccessPoint</a> </p> </li> </ul>",
     "ListAccessPointsForObjectLambda": "<note> <p>This operation is not supported by directory buckets.</p> </note> <p>Returns some or all (up to 1,000) access points associated with the Object Lambda Access Point per call. If there are more access points than what can be returned in one call, the response will include a continuation token that you can use to list the additional access points.</p> <p>The following actions are related to <code>ListAccessPointsForObjectLambda</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPointForObjectLambda.html\">CreateAccessPointForObjectLambda</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPointForObjectLambda.html\">DeleteAccessPointForObjectLambda</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointForObjectLambda.html\">GetAccessPointForObjectLambda</a> </p> </li> </ul>",
+    "ListCallerAccessGrants": "<p>Returns a list of the access grants that were given to the caller using S3 Access Grants and that allow the caller to access the S3 data of the Amazon Web Services account specified in the request.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3:ListCallerAccessGrants</code> permission to use this operation. </p> </dd> </dl>",
     "ListJobs": "<p>Lists current S3 Batch Operations jobs as well as the jobs that have ended within the last 90 days for the Amazon Web Services account making the request. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/batch-ops.html\">S3 Batch Operations</a> in the <i>Amazon S3 User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>To use the <code>ListJobs</code> operation, you must have permission to perform the <code>s3:ListJobs</code> action.</p> </dd> </dl> <p>Related actions include:</p> <p/> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html\">CreateJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeJob.html\">DescribeJob</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobPriority.html\">UpdateJobPriority</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobStatus.html\">UpdateJobStatus</a> </p> </li> </ul>",
     "ListMultiRegionAccessPoints": "<note> <p>This operation is not supported by directory buckets.</p> </note> <p>Returns a list of the Multi-Region Access Points currently associated with the specified Amazon Web Services account. Each call can return up to 100 Multi-Region Access Points, the maximum number of Multi-Region Access Points that can be associated with a single account.</p> <p>This action will always be routed to the US West (Oregon) Region. For more information about the restrictions around working with Multi-Region Access Points, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiRegionAccessPointRestrictions.html\">Multi-Region Access Point restrictions and limitations</a> in the <i>Amazon S3 User Guide</i>.</p> <p>The following actions are related to <code>ListMultiRegionAccessPoint</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateMultiRegionAccessPoint.html\">CreateMultiRegionAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteMultiRegionAccessPoint.html\">DeleteMultiRegionAccessPoint</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeMultiRegionAccessPointOperation.html\">DescribeMultiRegionAccessPointOperation</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetMultiRegionAccessPoint.html\">GetMultiRegionAccessPoint</a> </p> </li> </ul>",
     "ListRegionalBuckets": "<note> <p>This operation is not supported by directory buckets.</p> </note> <p>Returns a list of all Outposts buckets in an Outpost that are owned by the authenticated sender of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/S3onOutposts.html\">Using Amazon S3 on Outposts</a> in the <i>Amazon S3 User Guide</i>.</p> <p>For an example of the request syntax for Amazon S3 on Outposts that uses the S3 on Outposts endpoint hostname prefix and <code>x-amz-outpost-id</code> in your request, see the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListRegionalBuckets.html#API_control_ListRegionalBuckets_Examples\">Examples</a> section.</p>",
@@ -129,7 +130,7 @@
     "AccessGrantsInstanceArn": {
       "base": null,
       "refs": {
-        "CreateAccessGrantsInstanceResult$AccessGrantsInstanceArn": "<p>The Amazon Resource Name (ARN) of the S3 Access Grants instance. </p>",
+        "CreateAccessGrantsInstanceResult$AccessGrantsInstanceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs.</p>",
         "GetAccessGrantsInstanceForPrefixResult$AccessGrantsInstanceArn": "<p>The Amazon Resource Name (ARN) of the S3 Access Grants instance. </p>",
         "GetAccessGrantsInstanceResult$AccessGrantsInstanceArn": "<p>The Amazon Resource Name (ARN) of the S3 Access Grants instance. </p>",
         "ListAccessGrantsInstanceEntry$AccessGrantsInstanceArn": "<p>The Amazon Resource Name (ARN) of the S3 Access Grants instance. </p>"
@@ -232,20 +233,20 @@
       "base": null,
       "refs": {
         "AccessPoint$BucketAccountId": "<p>The Amazon Web Services account ID associated with the S3 bucket associated with this access point.</p>",
-        "AssociateAccessGrantsIdentityCenterRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "CreateAccessGrantRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "CreateAccessGrantsInstanceRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "CreateAccessGrantsLocationRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "AssociateAccessGrantsIdentityCenterRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "CreateAccessGrantRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "CreateAccessGrantsInstanceRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "CreateAccessGrantsLocationRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "CreateAccessPointForObjectLambdaRequest$AccountId": "<p>The Amazon Web Services account ID for owner of the specified Object Lambda Access Point.</p>",
         "CreateAccessPointRequest$AccountId": "<p>The Amazon Web Services account ID for the account that owns the specified access point.</p>",
         "CreateAccessPointRequest$BucketAccountId": "<p>The Amazon Web Services account ID associated with the S3 bucket associated with this access point.</p> <p>For same account access point when your bucket and access point belong to the same account owner, the <code>BucketAccountId</code> is not required. For cross-account access point when your bucket and access point are not in the same account, the <code>BucketAccountId</code> is required. </p>",
         "CreateJobRequest$AccountId": "<p>The Amazon Web Services account ID that creates the job.</p>",
         "CreateMultiRegionAccessPointRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point. The owner of the Multi-Region Access Point also must own the underlying buckets.</p>",
         "CreateStorageLensGroupRequest$AccountId": "<p> The Amazon Web Services account ID that the Storage Lens group is created from and associated with. </p>",
-        "DeleteAccessGrantRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "DeleteAccessGrantsInstanceRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "DeleteAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "DeleteAccessGrantsLocationRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "DeleteAccessGrantRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "DeleteAccessGrantsInstanceRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "DeleteAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "DeleteAccessGrantsLocationRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "DeleteAccessPointForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "DeleteAccessPointPolicyForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "DeleteAccessPointPolicyRequest$AccountId": "<p>The account ID for the account that owns the specified access point.</p>",
@@ -264,12 +265,12 @@
         "DescribeJobRequest$AccountId": "<p>The Amazon Web Services account ID associated with the S3 Batch Operations job.</p>",
         "DescribeMultiRegionAccessPointOperationRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point.</p>",
         "Destination$Account": "<p>The destination bucket owner's account ID. </p>",
-        "DissociateAccessGrantsIdentityCenterRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "GetAccessGrantRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "DissociateAccessGrantsIdentityCenterRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "GetAccessGrantRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "GetAccessGrantsInstanceForPrefixRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "GetAccessGrantsInstanceRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "GetAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "GetAccessGrantsLocationRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "GetAccessGrantsInstanceRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "GetAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "GetAccessGrantsLocationRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "GetAccessPointConfigurationForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "GetAccessPointForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "GetAccessPointPolicyForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
@@ -284,7 +285,7 @@
         "GetBucketRequest$AccountId": "<p>The Amazon Web Services account ID of the Outposts bucket.</p>",
         "GetBucketTaggingRequest$AccountId": "<p>The Amazon Web Services account ID of the Outposts bucket.</p>",
         "GetBucketVersioningRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 on Outposts bucket.</p>",
-        "GetDataAccessRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "GetDataAccessRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "GetJobTaggingRequest$AccountId": "<p>The Amazon Web Services account ID associated with the S3 Batch Operations job.</p>",
         "GetMultiRegionAccessPointPolicyRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point.</p>",
         "GetMultiRegionAccessPointPolicyStatusRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point.</p>",
@@ -294,18 +295,19 @@
         "GetStorageLensConfigurationRequest$AccountId": "<p>The account ID of the requester.</p>",
         "GetStorageLensConfigurationTaggingRequest$AccountId": "<p>The account ID of the requester.</p>",
         "GetStorageLensGroupRequest$AccountId": "<p> The Amazon Web Services account ID associated with the Storage Lens group that you're trying to retrieve the details for. </p>",
-        "ListAccessGrantsInstancesRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "ListAccessGrantsLocationsRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
-        "ListAccessGrantsRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "ListAccessGrantsInstancesRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "ListAccessGrantsLocationsRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
+        "ListAccessGrantsRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "ListAccessPointsForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "ListAccessPointsRequest$AccountId": "<p>The Amazon Web Services account ID for the account that owns the specified access points.</p>",
+        "ListCallerAccessGrantsRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "ListJobsRequest$AccountId": "<p>The Amazon Web Services account ID associated with the S3 Batch Operations job.</p>",
         "ListMultiRegionAccessPointsRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point.</p>",
         "ListRegionalBucketsRequest$AccountId": "<p>The Amazon Web Services account ID of the Outposts bucket.</p>",
         "ListStorageLensConfigurationsRequest$AccountId": "<p>The account ID of the requester.</p>",
         "ListStorageLensGroupsRequest$AccountId": "<p> The Amazon Web Services account ID that owns the Storage Lens groups. </p>",
         "ListTagsForResourceRequest$AccountId": "<p> The Amazon Web Services account ID of the resource owner. </p>",
-        "PutAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "PutAccessGrantsInstanceResourcePolicyRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "PutAccessPointConfigurationForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "PutAccessPointPolicyForObjectLambdaRequest$AccountId": "<p>The account ID for the account that owns the specified Object Lambda Access Point.</p>",
         "PutAccessPointPolicyRequest$AccountId": "<p>The Amazon Web Services account ID for owner of the bucket associated with the specified access point.</p>",
@@ -327,7 +329,7 @@
         "SubmitMultiRegionAccessPointRoutesRequest$AccountId": "<p>The Amazon Web Services account ID for the owner of the Multi-Region Access Point.</p>",
         "TagResourceRequest$AccountId": "<p> The Amazon Web Services account ID that created the S3 resource that you're trying to add tags to or the requester's account ID. </p>",
         "UntagResourceRequest$AccountId": "<p> The Amazon Web Services account ID that owns the resource that you're trying to remove the tags from. </p>",
-        "UpdateAccessGrantsLocationRequest$AccountId": "<p>The ID of the Amazon Web Services account that is making this request.</p>",
+        "UpdateAccessGrantsLocationRequest$AccountId": "<p>The Amazon Web Services account ID of the S3 Access Grants instance.</p>",
         "UpdateJobPriorityRequest$AccountId": "<p>The Amazon Web Services account ID associated with the S3 Batch Operations job.</p>",
         "UpdateJobStatusRequest$AccountId": "<p>The Amazon Web Services account ID associated with the S3 Batch Operations job.</p>",
         "UpdateStorageLensGroupRequest$AccountId": "<p> The Amazon Web Services account ID of the Storage Lens group owner. </p>"
@@ -454,6 +456,7 @@
       "refs": {
         "JobManifestGeneratorFilter$EligibleForReplication": "<p>Include objects in the generated manifest only if they are eligible for replication according to the Replication configuration on the source bucket.</p>",
         "JobReport$Enabled": "<p>Indicates whether the specified job will generate a job-completion report.</p>",
+        "ListCallerAccessGrantsRequest$AllowedByApplication": "<p>If this optional parameter is passed in the request, a filter is applied to the results. The results will include only the access grants for the caller's Identity Center application or for any other applications (<code>ALL</code>).</p>",
         "ObjectLambdaConfiguration$CloudWatchMetricsEnabled": "<p>A container for whether the CloudWatch metrics configuration is enabled.</p>",
         "S3CopyObjectOperation$RequesterPays": "<p/> <note> <p>This functionality is not supported by directory buckets.</p> </note>",
         "S3CopyObjectOperation$BucketKeyEnabled": "<p>Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Amazon Web Services KMS (SSE-KMS). Setting this header to <code>true</code> causes Amazon S3 to use an S3 Bucket Key for object encryption with SSE-KMS.</p> <p>Specifying this header with an <i>object</i> action doesn’t affect <i>bucket-level</i> settings for S3 Bucket Key.</p> <note> <p>This functionality is not supported by directory buckets.</p> </note>",
@@ -542,6 +545,12 @@
         "Include$Buckets": "<p>A container for the S3 Storage Lens bucket includes.</p>"
       }
     },
+    "CallerAccessGrantsList": {
+      "base": null,
+      "refs": {
+        "ListCallerAccessGrantsResult$CallerAccessGrantsList": "<p>A list of the caller's access grants that were created using S3 Access Grants and that grant the caller access to the S3 data of the Amazon Web Services account ID that was specified in the request. </p>"
+      }
+    },
     "CloudWatchMetrics": {
       "base": "<p>A container for enabling Amazon CloudWatch publishing for S3 Storage Lens metrics.</p> <p>For more information about publishing S3 Storage Lens metrics to CloudWatch, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens_view_metrics_cloudwatch.html\">Monitor S3 Storage Lens metrics in CloudWatch</a> in the <i>Amazon S3 User Guide</i>.</p>",
       "refs": {
@@ -583,6 +592,8 @@
         "ListAccessGrantsLocationsResult$NextToken": "<p>A pagination token to request the next page of results. Pass this value into a subsequent <code>List Access Grants Locations</code> request in order to retrieve the next page of results.</p>",
         "ListAccessGrantsRequest$NextToken": "<p>A pagination token to request the next page of results. Pass this value into a subsequent <code>List Access Grants</code> request in order to retrieve the next page of results.</p>",
         "ListAccessGrantsResult$NextToken": "<p>A pagination token to request the next page of results. Pass this value into a subsequent <code>List Access Grants</code> request in order to retrieve the next page of results.</p>",
+        "ListCallerAccessGrantsRequest$NextToken": "<p>A pagination token to request the next page of results. Pass this value into a subsequent <code>List Caller Access Grants</code> request in order to retrieve the next page of results.</p>",
+        "ListCallerAccessGrantsResult$NextToken": "<p>A pagination token that you can use to request the next page of results. Pass this value into a subsequent <code>List Caller Access Grants</code> request in order to retrieve the next page of results.</p>",
         "ListStorageLensConfigurationsRequest$NextToken": "<p>A pagination token to request the next page of results.</p>",
         "ListStorageLensConfigurationsResult$NextToken": "<p>If the request produced more than the maximum number of S3 Storage Lens configuration results, you can pass this value into a subsequent request to retrieve the next page of results.</p>",
         "ListStorageLensGroupsRequest$NextToken": "<p>The token for the next set of results, or <code>null</code> if there are no more results. </p>",
@@ -916,7 +927,7 @@
       }
     },
     "EncryptionConfiguration": {
-      "base": "<p>Specifies encryption-related information for an Amazon S3 bucket that is a destination for replicated objects.</p> <note> <p>This is not supported by Amazon S3 on Outposts buckets.</p> </note>",
+      "base": "<p>Specifies encryption-related information for an Amazon S3 bucket that is a destination for replicated objects. If you're specifying a customer managed KMS key, we recommend using a fully qualified KMS key ARN. If you use a KMS key alias instead, then KMS resolves the key within the requester’s account. This behavior can result in data that's encrypted with a KMS key that belongs to the requester, and not the bucket owner.</p> <note> <p>This is not supported by Amazon S3 on Outposts buckets.</p> </note>",
       "refs": {
         "Destination$EncryptionConfiguration": "<p>A container that provides information about encryption. If <code>SourceSelectionCriteria</code> is specified, you must specify this element.</p> <note> <p>This is not supported by Amazon S3 on Outposts buckets.</p> </note>"
       }
@@ -1372,9 +1383,13 @@
       "refs": {
         "CreateAccessGrantRequest$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If an application ARN is included in the request to create an access grant, the grantee can only access the S3 data through this application. </p>",
         "CreateAccessGrantResult$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>",
+        "CreateAccessGrantsInstanceResult$IdentityCenterApplicationArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
         "GetAccessGrantResult$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>",
+        "GetAccessGrantsInstanceResult$IdentityCenterApplicationArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
         "ListAccessGrantEntry$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>",
-        "ListAccessGrantsRequest$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>"
+        "ListAccessGrantsInstanceEntry$IdentityCenterApplicationArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
+        "ListAccessGrantsRequest$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>",
+        "ListCallerAccessGrantsEntry$ApplicationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services IAM Identity Center application associated with your Identity Center instance. If the grant includes an application ARN, the grantee can only access the S3 data through this application. </p>"
       }
     },
     "IdentityCenterArn": {
@@ -1382,9 +1397,12 @@
       "refs": {
         "AssociateAccessGrantsIdentityCenterRequest$IdentityCenterArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs.</p>",
         "CreateAccessGrantsInstanceRequest$IdentityCenterArn": "<p>If you would like to associate your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, use this field to pass the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs. </p>",
-        "CreateAccessGrantsInstanceResult$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance passed in the request. S3 Access Grants creates this Identity Center application for this specific S3 Access Grants instance. </p>",
-        "GetAccessGrantsInstanceResult$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
-        "ListAccessGrantsInstanceEntry$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>"
+        "CreateAccessGrantsInstanceResult$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
+        "CreateAccessGrantsInstanceResult$IdentityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs.</p>",
+        "GetAccessGrantsInstanceResult$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
+        "GetAccessGrantsInstanceResult$IdentityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs.</p>",
+        "ListAccessGrantsInstanceEntry$IdentityCenterArn": "<p>If you associated your S3 Access Grants instance with an Amazon Web Services IAM Identity Center instance, this field returns the Amazon Resource Name (ARN) of the IAM Identity Center instance application; a subresource of the original Identity Center instance. S3 Access Grants creates this Identity Center application for the specific S3 Access Grants instance. </p>",
+        "ListAccessGrantsInstanceEntry$IdentityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services IAM Identity Center instance that you are associating with your S3 Access Grants instance. An IAM Identity Center instance is your corporate identity directory that you added to the IAM Identity Center. You can use the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_ListInstances.html\">ListInstances</a> API operation to retrieve a list of your Identity Center instances and their ARNs.</p>"
       }
     },
     "Include": {
@@ -1781,6 +1799,22 @@
       "refs": {
       }
     },
+    "ListCallerAccessGrantsEntry": {
+      "base": "<p>Part of <code>ListCallerAccessGrantsResult</code>. Each entry includes the permission level (READ, WRITE, or READWRITE) and the grant scope of the access grant. If the grant also includes an application ARN, the grantee can only access the S3 data through this application.</p>",
+      "refs": {
+        "CallerAccessGrantsList$member": null
+      }
+    },
+    "ListCallerAccessGrantsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCallerAccessGrantsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListJobsRequest": {
       "base": null,
       "refs": {
@@ -1942,6 +1976,7 @@
         "ListAccessGrantsRequest$MaxResults": "<p>The maximum number of access grants that you would like returned in the <code>List Access Grants</code> response. If the results include the pagination token <code>NextToken</code>, make another call using the <code>NextToken</code> to determine if there are more results.</p>",
         "ListAccessPointsForObjectLambdaRequest$MaxResults": "<p>The maximum number of access points that you want to include in the list. The response may contain fewer access points but will never contain more. If there are more than this number of access points, then the response will include a continuation token in the <code>NextToken</code> field that you can use to retrieve the next page of access points.</p>",
         "ListAccessPointsRequest$MaxResults": "<p>The maximum number of access points that you want to include in the list. If the specified bucket has more than this number of access points, then the response will include a continuation token in the <code>NextToken</code> field that you can use to retrieve the next page of access points.</p>",
+        "ListCallerAccessGrantsRequest$MaxResults": "<p>The maximum number of access grants that you would like returned in the <code>List Caller Access Grants</code> response. If the results include the pagination token <code>NextToken</code>, make another call using the <code>NextToken</code> to determine if there are more results.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum number of jobs that Amazon S3 will include in the <code>List Jobs</code> response. If there are more jobs than this number, the response will include a pagination token in the <code>NextToken</code> field to enable you to retrieve the next page of results.</p>",
         "ListMultiRegionAccessPointsRequest$MaxResults": "<p>Not currently used. Do not use this parameter.</p>",
         "ListRegionalBucketsRequest$MaxResults": "<p/>"
@@ -2103,9 +2138,9 @@
     "NonEmptyMaxLength1024StringList": {
       "base": null,
       "refs": {
-        "KeyNameConstraint$MatchAnyPrefix": "<p>If provided, the generated manifest includes objects where the specified string appears at the start of the object key string.</p>",
-        "KeyNameConstraint$MatchAnySuffix": "<p>If provided, the generated manifest includes objects where the specified string appears at the end of the object key string.</p>",
-        "KeyNameConstraint$MatchAnySubstring": "<p>If provided, the generated manifest includes objects where the specified string appears anywhere within the object key string.</p>"
+        "KeyNameConstraint$MatchAnyPrefix": "<p>If provided, the generated manifest includes objects where the specified string appears at the start of the object key string. Each KeyNameConstraint filter accepts an array of strings with a length of 1 string.</p>",
+        "KeyNameConstraint$MatchAnySuffix": "<p>If provided, the generated manifest includes objects where the specified string appears at the end of the object key string. Each KeyNameConstraint filter accepts an array of strings with a length of 1 string.</p>",
+        "KeyNameConstraint$MatchAnySubstring": "<p>If provided, the generated manifest includes objects where the specified string appears anywhere within the object key string. Each KeyNameConstraint filter accepts an array of strings with a length of 1 string.</p>"
       }
     },
     "NonEmptyMaxLength2048String": {
@@ -2358,7 +2393,8 @@
         "GetAccessGrantResult$Permission": "<p>The type of permission that was granted in the access grant. Can be one of the following values:</p> <ul> <li> <p> <code>READ</code> – Grant read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> – Grant write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> – Grant both read and write access to the S3 data.</p> </li> </ul>",
         "GetDataAccessRequest$Permission": "<p>The type of permission granted to your S3 data, which can be set to one of the following values:</p> <ul> <li> <p> <code>READ</code> – Grant read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> – Grant write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> – Grant both read and write access to the S3 data.</p> </li> </ul>",
         "ListAccessGrantEntry$Permission": "<p>The type of access granted to your S3 data, which can be set to one of the following values:</p> <ul> <li> <p> <code>READ</code> – Grant read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> – Grant write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> – Grant both read and write access to the S3 data.</p> </li> </ul>",
-        "ListAccessGrantsRequest$Permission": "<p>The type of permission granted to your S3 data, which can be set to one of the following values:</p> <ul> <li> <p> <code>READ</code> – Grant read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> – Grant write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> – Grant both read and write access to the S3 data.</p> </li> </ul>"
+        "ListAccessGrantsRequest$Permission": "<p>The type of permission granted to your S3 data, which can be set to one of the following values:</p> <ul> <li> <p> <code>READ</code> – Grant read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> – Grant write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> – Grant both read and write access to the S3 data.</p> </li> </ul>",
+        "ListCallerAccessGrantsEntry$Permission": "<p>The type of permission granted, which can be one of the following values:</p> <ul> <li> <p> <code>READ</code> - Grants read-only access to the S3 data.</p> </li> <li> <p> <code>WRITE</code> - Grants write-only access to the S3 data.</p> </li> <li> <p> <code>READWRITE</code> - Grants both read and write access to the S3 data.</p> </li> </ul>"
       }
     },
     "Policy": {
@@ -2749,7 +2785,7 @@
         "Buckets$member": null,
         "JobReport$Bucket": "<p>The Amazon Resource Name (ARN) for the bucket where specified job-completion report will be stored.</p> <note> <p> <b>Directory buckets</b> - Directory buckets aren't supported as a location for Batch Operations to store job completion reports.</p> </note>",
         "S3BucketDestination$Arn": "<p>The Amazon Resource Name (ARN) of the bucket. This property is read-only and follows the following format: <code> arn:aws:s3:<i>us-east-1</i>:<i>example-account-id</i>:bucket/<i>your-destination-bucket-name</i> </code> </p>",
-        "S3JobManifestGenerator$SourceBucket": "<p>The source bucket used by the ManifestGenerator.</p> <note> <p> <b>Directory buckets</b> - Directory buckets aren't supported as the source buckets used by <code>S3JobManifestGenerator</code> to generate the job manifest.</p> </note>",
+        "S3JobManifestGenerator$SourceBucket": "<p>The ARN of the source bucket used by the ManifestGenerator.</p> <note> <p> <b>Directory buckets</b> - Directory buckets aren't supported as the source buckets used by <code>S3JobManifestGenerator</code> to generate the job manifest.</p> </note>",
         "S3ManifestOutputLocation$Bucket": "<p>The bucket ARN the generated manifest should be written to.</p> <note> <p> <b>Directory buckets</b> - Directory buckets aren't supported as the buckets to store the generated manifest.</p> </note>"
       }
     },
@@ -2928,6 +2964,8 @@
         "ListAccessGrantsLocationsEntry$LocationScope": "<p>The S3 path to the location that you are registering. The location scope can be the default S3 location <code>s3://</code>, the S3 path to a bucket <code>s3://&lt;bucket&gt;</code>, or the S3 path to a bucket and prefix <code>s3://&lt;bucket&gt;/&lt;prefix&gt;</code>. A prefix in S3 is a string of characters at the beginning of an object key name used to organize the objects that you store in your S3 buckets. For example, object key names that start with the <code>engineering/</code> prefix or object key names that start with the <code>marketing/campaigns/</code> prefix.</p>",
         "ListAccessGrantsLocationsRequest$LocationScope": "<p>The S3 path to the location that you are registering. The location scope can be the default S3 location <code>s3://</code>, the S3 path to a bucket <code>s3://&lt;bucket&gt;</code>, or the S3 path to a bucket and prefix <code>s3://&lt;bucket&gt;/&lt;prefix&gt;</code>. A prefix in S3 is a string of characters at the beginning of an object key name used to organize the objects that you store in your S3 buckets. For example, object key names that start with the <code>engineering/</code> prefix or object key names that start with the <code>marketing/campaigns/</code> prefix.</p>",
         "ListAccessGrantsRequest$GrantScope": "<p>The S3 path of the data to which you are granting access. It is the result of appending the <code>Subprefix</code> to the location scope.</p>",
+        "ListCallerAccessGrantsEntry$GrantScope": "<p>The S3 path of the data to which you have been granted access. </p>",
+        "ListCallerAccessGrantsRequest$GrantScope": "<p>The S3 path of the data that you would like to access. Must start with <code>s3://</code>. You can optionally pass only the beginning characters of a path, and S3 Access Grants will search for all applicable grants for the path fragment. </p>",
         "UpdateAccessGrantsLocationResult$LocationScope": "<p>The S3 URI path of the location that you are updating. You cannot update the scope of the registered location. The location scope can be the default S3 location <code>s3://</code>, the S3 path to a bucket <code>s3://&lt;bucket&gt;</code>, or the S3 path to a bucket and prefix <code>s3://&lt;bucket&gt;/&lt;prefix&gt;</code>. </p>"
       }
     },
@@ -3091,7 +3129,7 @@
         "PublicAccessBlockConfiguration$BlockPublicAcls": "<p>Specifies whether Amazon S3 should block public access control lists (ACLs) for buckets in this account. Setting this element to <code>TRUE</code> causes the following behavior:</p> <ul> <li> <p> <code>PutBucketAcl</code> and <code>PutObjectAcl</code> calls fail if the specified ACL is public.</p> </li> <li> <p>PUT Object calls fail if the request includes a public ACL.</p> </li> <li> <p>PUT Bucket calls fail if the request includes a public ACL.</p> </li> </ul> <p>Enabling this setting doesn't affect existing policies or ACLs.</p> <p>This property is not supported for Amazon S3 on Outposts.</p>",
         "PublicAccessBlockConfiguration$IgnorePublicAcls": "<p>Specifies whether Amazon S3 should ignore public ACLs for buckets in this account. Setting this element to <code>TRUE</code> causes Amazon S3 to ignore all public ACLs on buckets in this account and any objects that they contain. </p> <p>Enabling this setting doesn't affect the persistence of any existing ACLs and doesn't prevent new public ACLs from being set.</p> <p>This property is not supported for Amazon S3 on Outposts.</p>",
         "PublicAccessBlockConfiguration$BlockPublicPolicy": "<p>Specifies whether Amazon S3 should block public bucket policies for buckets in this account. Setting this element to <code>TRUE</code> causes Amazon S3 to reject calls to PUT Bucket policy if the specified bucket policy allows public access. </p> <p>Enabling this setting doesn't affect existing bucket policies.</p> <p>This property is not supported for Amazon S3 on Outposts.</p>",
-        "PublicAccessBlockConfiguration$RestrictPublicBuckets": "<p>Specifies whether Amazon S3 should restrict public bucket policies for buckets in this account. Setting this element to <code>TRUE</code> restricts access to buckets with public policies to only Amazon Web Service principals and authorized users within this account.</p> <p>Enabling this setting doesn't affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked.</p> <p>This property is not supported for Amazon S3 on Outposts.</p>"
+        "PublicAccessBlockConfiguration$RestrictPublicBuckets": "<p>Specifies whether Amazon S3 should restrict public bucket policies for buckets in this account. Setting this element to <code>TRUE</code> restricts access to buckets with public policies to only Amazon Web Servicesservice principals and authorized users within this account.</p> <p>Enabling this setting doesn't affect previously stored bucket policies, except that public and cross-account access within any public bucket policy, including non-public delegation to specific accounts, is blocked.</p> <p>This property is not supported for Amazon S3 on Outposts.</p>"
       }
     },
     "SourceSelectionCriteria": {
@@ -3453,9 +3491,9 @@
     "VpcConfiguration": {
       "base": "<p>The virtual private cloud (VPC) configuration for an access point.</p>",
       "refs": {
-        "AccessPoint$VpcConfiguration": "<p>The virtual private cloud (VPC) configuration for this access point, if one exists.</p> <note> <p>This element is empty if this access point is an Amazon S3 on Outposts access point that is used by other Amazon Web Services.</p> </note>",
+        "AccessPoint$VpcConfiguration": "<p>The virtual private cloud (VPC) configuration for this access point, if one exists.</p> <note> <p>This element is empty if this access point is an Amazon S3 on Outposts access point that is used by other Amazon Web Servicesservices.</p> </note>",
         "CreateAccessPointRequest$VpcConfiguration": "<p>If you include this field, Amazon S3 restricts access to this access point to requests from the specified virtual private cloud (VPC).</p> <note> <p>This is required for creating an access point for Amazon S3 on Outposts buckets.</p> </note>",
-        "GetAccessPointResult$VpcConfiguration": "<p>Contains the virtual private cloud (VPC) configuration for the specified access point.</p> <note> <p>This element is empty if this access point is an Amazon S3 on Outposts access point that is used by other Amazon Web Services.</p> </note>"
+        "GetAccessPointResult$VpcConfiguration": "<p>Contains the virtual private cloud (VPC) configuration for the specified access point.</p> <note> <p>This element is empty if this access point is an Amazon S3 on Outposts access point that is used by other Amazon Web Servicesservices.</p> </note>"
       }
     },
     "VpcId": {

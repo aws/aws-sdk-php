@@ -1685,8 +1685,8 @@ EOF;
         }
 
         putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=false');
-        $this->expectWarning();
-        $this->expectWarningMessage('This installation of the SDK is using PHP version');
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('This installation of the SDK is using PHP version');
 
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
 

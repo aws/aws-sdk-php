@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"personalize",
     "targetPrefix":"AmazonPersonalize",
-    "uid":"personalize-2018-05-22"
+    "uid":"personalize-2018-05-22",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateBatchInferenceJob":{
@@ -1043,6 +1044,22 @@
         {"shape":"ResourceInUseException"}
       ],
       "idempotent":true
+    },
+    "UpdateSolution":{
+      "name":"UpdateSolution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSolutionRequest"},
+      "output":{"shape":"UpdateSolutionResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceInUseException"}
+      ]
     }
   },
   "shapes":{
@@ -3003,7 +3020,8 @@
         "status":{"shape":"Status"},
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"},
-        "latestSolutionVersion":{"shape":"SolutionVersionSummary"}
+        "latestSolutionVersion":{"shape":"SolutionVersionSummary"},
+        "latestSolutionUpdate":{"shape":"SolutionUpdateSummary"}
       }
     },
     "SolutionConfig":{
@@ -3028,6 +3046,23 @@
         "creationDateTime":{"shape":"Date"},
         "lastUpdatedDateTime":{"shape":"Date"},
         "recipeArn":{"shape":"Arn"}
+      }
+    },
+    "SolutionUpdateConfig":{
+      "type":"structure",
+      "members":{
+        "autoTrainingConfig":{"shape":"AutoTrainingConfig"}
+      }
+    },
+    "SolutionUpdateSummary":{
+      "type":"structure",
+      "members":{
+        "solutionUpdateConfig":{"shape":"SolutionUpdateConfig"},
+        "status":{"shape":"Status"},
+        "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "creationDateTime":{"shape":"Date"},
+        "lastUpdatedDateTime":{"shape":"Date"},
+        "failureReason":{"shape":"FailureReason"}
       }
     },
     "SolutionVersion":{
@@ -3306,6 +3341,21 @@
       "type":"structure",
       "members":{
         "recommenderArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateSolutionRequest":{
+      "type":"structure",
+      "required":["solutionArn"],
+      "members":{
+        "solutionArn":{"shape":"Arn"},
+        "performAutoTraining":{"shape":"PerformAutoTraining"},
+        "solutionUpdateConfig":{"shape":"SolutionUpdateConfig"}
+      }
+    },
+    "UpdateSolutionResponse":{
+      "type":"structure",
+      "members":{
+        "solutionArn":{"shape":"Arn"}
       }
     }
   }

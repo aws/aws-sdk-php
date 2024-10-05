@@ -2598,10 +2598,17 @@
       "required":["definition"],
       "members":{
         "definition":{"shape":"Definition"},
-        "type":{"shape":"StateMachineType"}
+        "type":{"shape":"StateMachineType"},
+        "severity":{"shape":"ValidateStateMachineDefinitionSeverity"},
+        "maxResults":{"shape":"ValidateStateMachineDefinitionMaxResult"}
       }
     },
     "ValidateStateMachineDefinitionLocation":{"type":"string"},
+    "ValidateStateMachineDefinitionMaxResult":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "ValidateStateMachineDefinitionMessage":{"type":"string"},
     "ValidateStateMachineDefinitionOutput":{
       "type":"structure",
@@ -2611,7 +2618,8 @@
       ],
       "members":{
         "result":{"shape":"ValidateStateMachineDefinitionResultCode"},
-        "diagnostics":{"shape":"ValidateStateMachineDefinitionDiagnosticList"}
+        "diagnostics":{"shape":"ValidateStateMachineDefinitionDiagnosticList"},
+        "truncated":{"shape":"ValidateStateMachineDefinitionTruncated"}
       }
     },
     "ValidateStateMachineDefinitionResultCode":{
@@ -2623,7 +2631,14 @@
     },
     "ValidateStateMachineDefinitionSeverity":{
       "type":"string",
-      "enum":["ERROR"]
+      "enum":[
+        "ERROR",
+        "WARNING"
+      ]
+    },
+    "ValidateStateMachineDefinitionTruncated":{
+      "type":"boolean",
+      "box":true
     },
     "ValidationException":{
       "type":"structure",

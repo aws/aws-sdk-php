@@ -110,7 +110,7 @@ class Credentials extends AwsCredentialIdentity implements
         $this->secret = $data['secret'];
         $this->token = $data['token'];
         $this->expires = $data['expires'];
-        $this->accountId = $data['accountId'];
+        $this->accountId = $data['accountId'] ?? null;
     }
 
     /**

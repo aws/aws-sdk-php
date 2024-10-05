@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-11-28",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"omics",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Omics",
     "serviceId":"Omics",
     "signatureVersion":"v4",
@@ -1629,8 +1630,9 @@
         {"shape":"AccessDeniedException"},
         {"shape":"RequestTimeoutException"}
       ],
-      "authtype":"v4-unsigned-body",
-      "endpoint":{"hostPrefix":"storage-"}
+      "endpoint":{"hostPrefix":"storage-"},
+      "unsignedPayload":true,
+      "authtype":"v4-unsigned-body"
     }
   },
   "shapes":{
@@ -2371,6 +2373,12 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "CreationJobId":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+"
+    },
     "CreationTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -3053,7 +3061,8 @@
         "files":{"shape":"ReadSetFiles"},
         "statusMessage":{"shape":"ReadSetStatusMessage"},
         "creationType":{"shape":"CreationType"},
-        "etag":{"shape":"ETag"}
+        "etag":{"shape":"ETag"},
+        "creationJobId":{"shape":"CreationJobId"}
       }
     },
     "GetReadSetRequest":{
@@ -3178,7 +3187,9 @@
         "description":{"shape":"ReferenceDescription"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
         "updateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "files":{"shape":"ReferenceFiles"}
+        "files":{"shape":"ReferenceFiles"},
+        "creationType":{"shape":"ReferenceCreationType"},
+        "creationJobId":{"shape":"CreationJobId"}
       }
     },
     "GetReferenceRequest":{
@@ -3659,7 +3670,8 @@
         "referenceArn":{"shape":"ReferenceArn"},
         "name":{"shape":"ReadSetName"},
         "description":{"shape":"ReadSetDescription"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "readSetId":{"shape":"ReadSetId"}
       }
     },
     "ImportReadSetSourceList":{
@@ -3705,7 +3717,8 @@
         "statusMessage":{"shape":"JobStatusMessage"},
         "name":{"shape":"ReferenceName"},
         "description":{"shape":"ReferenceDescription"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "referenceId":{"shape":"ReferenceId"}
       }
     },
     "ImportReferenceSourceList":{
@@ -4895,6 +4908,10 @@
       "max":127,
       "min":0,
       "pattern":"$|^arn:.+"
+    },
+    "ReferenceCreationType":{
+      "type":"string",
+      "enum":["IMPORT"]
     },
     "ReferenceDescription":{
       "type":"string",

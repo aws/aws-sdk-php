@@ -24,6 +24,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
@@ -136,6 +137,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
@@ -390,11 +392,31 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "UpdateLibraryItemMetadata":{
+      "name":"UpdateLibraryItemMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/catalog.updateItemMetadata",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateLibraryItemMetadataInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "UpdateQApp":{
       "name":"UpdateQApp",
@@ -750,7 +772,8 @@
         "createdBy":{"shape":"String"},
         "updatedAt":{"shape":"QAppsTimestamp"},
         "updatedBy":{"shape":"String"},
-        "ratingCount":{"shape":"Integer"}
+        "ratingCount":{"shape":"Integer"},
+        "isVerified":{"shape":"Boolean"}
       }
     },
     "CreateQAppInput":{
@@ -1012,7 +1035,8 @@
         "updatedBy":{"shape":"String"},
         "ratingCount":{"shape":"Integer"},
         "isRatedByUser":{"shape":"Boolean"},
-        "userCount":{"shape":"Integer"}
+        "userCount":{"shape":"Integer"},
+        "isVerified":{"shape":"Boolean"}
       }
     },
     "GetQAppInput":{
@@ -1182,7 +1206,8 @@
         "updatedBy":{"shape":"String"},
         "ratingCount":{"shape":"Integer"},
         "isRatedByUser":{"shape":"Boolean"},
-        "userCount":{"shape":"Integer"}
+        "userCount":{"shape":"Integer"},
+        "isVerified":{"shape":"Boolean"}
       }
     },
     "LibraryItemStatus":{
@@ -1648,7 +1673,8 @@
     "Title":{
       "type":"string",
       "max":100,
-      "min":0
+      "min":0,
+      "pattern":"[^{}\\\\\"<>]+"
     },
     "UUID":{
       "type":"string",
@@ -1707,6 +1733,22 @@
         "categories":{"shape":"CategoryIdList"}
       }
     },
+    "UpdateLibraryItemMetadataInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "libraryItemId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "libraryItemId":{"shape":"UUID"},
+        "isVerified":{"shape":"Boolean"}
+      }
+    },
     "UpdateLibraryItemOutput":{
       "type":"structure",
       "required":[
@@ -1731,7 +1773,8 @@
         "updatedBy":{"shape":"String"},
         "ratingCount":{"shape":"Integer"},
         "isRatedByUser":{"shape":"Boolean"},
-        "userCount":{"shape":"Integer"}
+        "userCount":{"shape":"Integer"},
+        "isVerified":{"shape":"Boolean"}
       }
     },
     "UpdateQAppInput":{
@@ -1822,7 +1865,8 @@
         "description":{"shape":"Description"},
         "createdAt":{"shape":"QAppsTimestamp"},
         "canEdit":{"shape":"Boolean"},
-        "status":{"shape":"String"}
+        "status":{"shape":"String"},
+        "isVerified":{"shape":"Boolean"}
       }
     },
     "UserAppsList":{

@@ -10,21 +10,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class RulesetParameterTest extends TestCase
 {
-    private $rulesetParameter;
-
-    protected function set_up()
-    {
-        $spec = [
-            "type" => "string",
-            "builtIn" => "AWS::Region",
-            "deprecated" => [
-                "since" => 'then',
-                "message" => 'There is a new parameter.'
-            ]
-        ];
-        $this->rulesetParameter = new RulesetParameter('Region' ,$spec);
-    }
-
     public function wrongParameterTypeProvider()
     {
         return [
@@ -46,7 +31,11 @@ class RulesetParameterTest extends TestCase
             "Input parameter `Region` is the wrong type. Must be a String."
         );
 
-        $this->rulesetParameter->validateInputParam($inputParameter);
+        $parameter = $this->createTestParameter('Region', [
+            "type" => "string",
+            "builtIn" => "AWS::Region"
+        ]);
+        $parameter->validateInputParam($inputParameter);
     }
 
     public function testDeprecatedParameterLogsError()
@@ -55,19 +44,67 @@ class RulesetParameterTest extends TestCase
         $this->expectExceptionMessage(
             'Region has been deprecated since then. There is a new parameter.'
         );
-        $this->rulesetParameter->validateInputParam('us-east-1');
+        $parameter = new RulesetParameter('Region', [
+            "type" => "string",
+            "builtIn" => "AWS::Region",
+            "deprecated" => [
+                "since" => 'then',
+                "message" => 'There is a new parameter.'
+            ]
+        ]);
+        $parameter->validateInputParam('us-east-1');
     }
 
-    public function testUnknownTypeThrowsException() {
+    public function testUnknownTypeThrowsException()
+    {
         $parameterSpec = [
             'type' => 'tuple'
         ];
         $this->expectException(UnresolvedEndpointException::class);
         $this->expectExceptionMessage(
             'Unknown parameter type `Tuple`. ' .
-                'Parameters must be of type `String` or `Boolean`.'
+                'Parameters must be of type `String`, `Boolean` or `StringArray.'
         );
 
         $rulesetParameter = new RulesetParameter('invalidType', $parameterSpec);
+    }
+
+    public function testGetDefault()
+    {
+        $spec = [
+            "type" => "stringArray",
+            "default" => ['foo', 'bar']
+        ];
+        $ruleset = new RulesetParameter('FooStringArray', $spec);
+        $this->assertSame($spec['default'], $ruleset->getDefault());
+    }
+
+    /**
+     * @dataProvider validTypesProvider
+     * @doesNotPerformAssertions
+     */
+    public function testRulesetCreationWithValidTypes($spec)
+    {
+        new RulesetParameter('FooParam', $spec);
+    }
+
+    public function validTypesProvider()
+    {
+        return [
+            [
+                ["type" => "string",]
+            ],
+            [
+                ["type" => "boolean",]
+            ],
+            [
+                ["type" => "stringArray",]
+            ],
+        ];
+    }
+
+    private function createTestParameter($name, $spec)
+    {
+        return new RulesetParameter($name, $spec);
     }
 }

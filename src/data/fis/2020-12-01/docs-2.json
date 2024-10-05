@@ -10,6 +10,7 @@
     "GetExperiment": "<p>Gets information about the specified experiment.</p>",
     "GetExperimentTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment.</p>",
     "GetExperimentTemplate": "<p>Gets information about the specified experiment template.</p>",
+    "GetSafetyLever": "<p> Gets information about the specified safety lever. </p>",
     "GetTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment template.</p>",
     "GetTargetResourceType": "<p>Gets information about the specified resource type.</p>",
     "ListActions": "<p>Lists the available FIS actions.</p>",
@@ -25,6 +26,7 @@
     "TagResource": "<p>Applies the specified tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateExperimentTemplate": "<p>Updates the specified experiment template.</p>",
+    "UpdateSafetyLeverState": "<p> Updates the specified safety lever state. </p>",
     "UpdateTargetAccountConfiguration": "<p>Updates the target account configuration for the specified experiment template.</p>"
   },
   "shapes": {
@@ -885,6 +887,16 @@
       "refs": {
       }
     },
+    "GetSafetyLeverRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSafetyLeverResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetTargetAccountConfigurationRequest": {
       "base": null,
       "refs": {
@@ -1079,6 +1091,7 @@
         "ExperimentTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the experiment template.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ResourceArnList$member": null,
+        "SafetyLever$arn": "<p> The Amazon Resource Name (ARN) of the safety lever. </p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
@@ -1126,6 +1139,46 @@
         "ExperimentS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfigurationInput$prefix": "<p>The bucket prefix.</p>"
+      }
+    },
+    "SafetyLever": {
+      "base": "<p> Describes a safety lever. </p>",
+      "refs": {
+        "GetSafetyLeverResponse$safetyLever": "<p> Information about the safety lever. </p>",
+        "UpdateSafetyLeverStateResponse$safetyLever": "<p> Information about the safety lever. </p>"
+      }
+    },
+    "SafetyLeverId": {
+      "base": null,
+      "refs": {
+        "GetSafetyLeverRequest$id": "<p> The ID of the safety lever. </p>",
+        "SafetyLever$id": "<p> The ID of the safety lever. </p>",
+        "UpdateSafetyLeverStateRequest$id": "<p> The ID of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverState": {
+      "base": "<p> Describes the state of the safety lever. </p>",
+      "refs": {
+        "SafetyLever$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatus": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$status": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusInput": {
+      "base": null,
+      "refs": {
+        "UpdateSafetyLeverStateInput$status": "<p> The updated state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusReason": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$reason": "<p> The reason for the state of the safety lever. </p>",
+        "UpdateSafetyLeverStateInput$reason": "<p> The reason for updating the state of the safety lever. </p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1438,6 +1491,22 @@
       "base": null,
       "refs": {
         "UpdateExperimentTemplateRequest$targets": "<p>The targets for the experiment.</p>"
+      }
+    },
+    "UpdateSafetyLeverStateInput": {
+      "base": "<p> Specifies a state for a safety lever. </p>",
+      "refs": {
+        "UpdateSafetyLeverStateRequest$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "UpdateSafetyLeverStateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSafetyLeverStateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateTargetAccountConfigurationRequest": {
