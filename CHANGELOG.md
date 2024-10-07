@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MarketplaceReporting` - Documentation-only update for AWS Marketplace Reporting API.
+* `Aws\Redshift` - Add validation pattern to S3KeyPrefix on the EnableLogging API
+* `Aws\Deadline` - Add support for using the template from a previous job during job creation and listing parameter definitions for a job.
+* `Aws\QConnect` - This release adds support for the following capabilities: Configuration of the Gen AI system via AIAgent and AIPrompts. Integration support for Bedrock Knowledge Base.
+
 ## 3.323.1 - 2024-10-04
 
 * `Aws\EC2` - Documentation updates for Amazon EC2.

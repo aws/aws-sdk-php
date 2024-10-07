@@ -3027,6 +3027,13 @@
       "refs": {
       }
     },
+    "S3KeyPrefixValue": {
+      "base": null,
+      "refs": {
+        "EnableLoggingMessage$S3KeyPrefix": "<p>The prefix applied to the log file names.</p> <p>Valid characters are any letter from any language, any whitespace character, any numeric character, and the following characters: underscore (<code>_</code>), period (<code>.</code>), colon (<code>:</code>), slash (<code>/</code>), equal (<code>=</code>), plus (<code>+</code>), backslash (<code>\\</code>), hyphen (<code>-</code>), at symbol (<code>@</code>).</p>",
+        "LoggingStatus$S3KeyPrefix": "<p>The prefix applied to the log file names.</p>"
+      }
+    },
     "SNSInvalidTopicFault": {
       "base": "<p>Amazon SNS has responded that there is a problem with the specified Amazon SNS topic.</p>",
       "refs": {
@@ -3653,7 +3660,6 @@
         "ElasticIpStatus$Status": "<p>The status of the elastic IP (EIP) address.</p>",
         "EnableLoggingMessage$ClusterIdentifier": "<p>The identifier of the cluster on which logging is to be started.</p> <p>Example: <code>examplecluster</code> </p>",
         "EnableLoggingMessage$BucketName": "<p>The name of an existing S3 bucket where the log files are to be stored.</p> <p>Constraints:</p> <ul> <li> <p>Must be in the same region as the cluster</p> </li> <li> <p>The cluster must have read bucket and put object permissions</p> </li> </ul>",
-        "EnableLoggingMessage$S3KeyPrefix": "<p>The prefix applied to the log file names.</p> <p>Constraints:</p> <ul> <li> <p>Cannot exceed 512 characters</p> </li> <li> <p>Cannot contain spaces( ), double quotes (\"), single quotes ('), a backslash (\\), or control characters. The hexadecimal codes for invalid characters are: </p> <ul> <li> <p>x00 to x20</p> </li> <li> <p>x22</p> </li> <li> <p>x27</p> </li> <li> <p>x5c</p> </li> <li> <p>x7f or larger</p> </li> </ul> </li> </ul>",
         "EnableSnapshotCopyMessage$ClusterIdentifier": "<p>The unique identifier of the source cluster to copy snapshots from.</p> <p>Constraints: Must be the valid name of an existing cluster that does not already have cross-region snapshot copy enabled.</p>",
         "EnableSnapshotCopyMessage$DestinationRegion": "<p>The destination Amazon Web Services Region that you want to copy snapshots to.</p> <p>Constraints: Must be the name of a valid Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#redshift_region\">Regions and Endpoints</a> in the Amazon Web Services General Reference. </p>",
         "EnableSnapshotCopyMessage$SnapshotCopyGrantName": "<p>The name of the snapshot copy grant to use when snapshots of an Amazon Web Services KMS-encrypted cluster are copied to the destination region.</p>",
@@ -3732,7 +3738,6 @@
         "ListRecommendationsResult$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
         "LogTypeList$member": null,
         "LoggingStatus$BucketName": "<p>The name of the S3 bucket where the log files are stored.</p>",
-        "LoggingStatus$S3KeyPrefix": "<p>The prefix applied to the log file names.</p>",
         "LoggingStatus$LastFailureMessage": "<p>The message indicating that logs failed to be delivered.</p>",
         "MaintenanceTrack$MaintenanceTrackName": "<p>The name of the maintenance track. Possible values are <code>current</code> and <code>trailing</code>.</p>",
         "MaintenanceTrack$DatabaseVersion": "<p>The version number for the cluster release.</p>",

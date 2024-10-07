@@ -4509,7 +4509,7 @@
       "members":{
         "ClusterIdentifier":{"shape":"String"},
         "BucketName":{"shape":"String"},
-        "S3KeyPrefix":{"shape":"String"},
+        "S3KeyPrefix":{"shape":"S3KeyPrefixValue"},
         "LogDestinationType":{"shape":"LogDestinationType"},
         "LogExports":{"shape":"LogTypeList"}
       }
@@ -5551,7 +5551,7 @@
       "members":{
         "LoggingEnabled":{"shape":"Boolean"},
         "BucketName":{"shape":"String"},
-        "S3KeyPrefix":{"shape":"String"},
+        "S3KeyPrefix":{"shape":"S3KeyPrefixValue"},
         "LastSuccessfulDeliveryTime":{"shape":"TStamp"},
         "LastFailureTime":{"shape":"TStamp"},
         "LastFailureMessage":{"shape":"String"},
@@ -6788,6 +6788,11 @@
       "members":{
         "Cluster":{"shape":"Cluster"}
       }
+    },
+    "S3KeyPrefixValue":{
+      "type":"string",
+      "max":256,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*"
     },
     "SNSInvalidTopicFault":{
       "type":"structure",
