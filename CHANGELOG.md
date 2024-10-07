@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.323.2 - 2024-10-07
 
 * `Aws\MarketplaceReporting` - Documentation-only update for AWS Marketplace Reporting API.
 * `Aws\Redshift` - Add validation pattern to S3KeyPrefix on the EnableLogging API
