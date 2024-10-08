@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElastiCache` - AWS ElastiCache SDK now supports using APIs with newly launched Valkey engine. Please refer to updated AWS ElastiCache public documentation for detailed information on API usage.
+* `Aws\MemoryDB` - Amazon MemoryDB SDK now supports all APIs for newly launched Valkey engine. Please refer to the updated Amazon MemoryDB public documentation for detailed information on API usage.
+
 ## 3.323.2 - 2024-10-07
 
 * `Aws\MarketplaceReporting` - Documentation-only update for AWS Marketplace Reporting API.
