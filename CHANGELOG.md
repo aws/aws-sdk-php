@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.323.4 - 2024-10-09
 
 * `Aws\CodePipeline` - AWS CodePipeline introduces a Compute category
 
