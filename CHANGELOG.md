@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.0 - 2024-10-10
 
 * `Aws\TimestreamInfluxDB` - This release updates our regex based validation rules in regards to valid DbInstance and DbParameterGroup name.
 * `Aws\ACMPCA` - Documentation updates for AWS Private CA.
