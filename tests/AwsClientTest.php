@@ -10,6 +10,7 @@ use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
+use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
@@ -24,6 +25,7 @@ use Aws\Waiter;
 use Aws\WrappedHttpHandler;
 use Exception;
 use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -33,6 +35,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
+    use MetricsBuilderTestTrait;
 
     private function getApiProvider()
     {
@@ -981,5 +984,39 @@ EOT
         $builtIns = $client->getClientBuiltIns();
 
         self::assertEquals($expectedAccountIdEndpointMode, $builtIns['AWS::Auth::AccountIdEndpointMode']);
+    }
+
+    public function testAppendsC2jMetricsCaptureMiddleware()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::RESOURCE_MODEL,
+                        $this->getMetricsAsArray($request)
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+
+        $client->listBuckets();
+    }
+
+    public function testAppendsUserAgentMiddleware()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $userAgentValue = $request->getHeaderLine('User-Agent');
+
+                $this->assertNotEmpty($userAgentValue);
+
+                return new Response();
+            }
+        ]);
+        $client->listBuckets();
     }
 }

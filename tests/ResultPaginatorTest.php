@@ -5,8 +5,11 @@ use Aws\Api\ApiProvider;
 use Aws\CloudWatchLogs\CloudWatchLogsClient;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\MetricsBuilder;
 use Aws\Result;
+use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -16,6 +19,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class ResultPaginatorTest extends TestCase
 {
     use UsesServiceTrait;
+    use MetricsBuilderTestTrait;
 
     private function getCustomClientProvider(array $config)
     {
@@ -456,5 +460,24 @@ class ResultPaginatorTest extends TestCase
         // Make sure the paginator yields the expected results
         $this->assertInstanceOf(Result::class, $result);
         $this->assertEquals(3, $requestCount);
+    }
+
+    public function testAppendsMetricsCaptureMiddleware()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::PAGINATOR,
+                        $this->getMetricsAsArray($request)
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $paginator = $client->getPaginator('ListBuckets');
+        $paginator->current();
     }
 }
