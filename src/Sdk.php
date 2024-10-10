@@ -694,6 +694,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSnowDeviceManagement(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSns(array $args = [])
+ * @method \Aws\SocialMessaging\SocialMessagingClient createSocialMessaging(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSocialMessaging(array $args = [])
  * @method \Aws\Sqs\SqsClient createSqs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSqs(array $args = [])
  * @method \Aws\Ssm\SsmClient createSsm(array $args = [])

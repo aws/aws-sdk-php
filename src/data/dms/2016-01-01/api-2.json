@@ -23,7 +23,8 @@
       "input":{"shape":"AddTagsToResourceMessage"},
       "output":{"shape":"AddTagsToResourceResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundFault"}
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -66,6 +67,22 @@
         {"shape":"InvalidResourceStateFault"}
       ]
     },
+    "CreateDataMigration":{
+      "name":"CreateDataMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDataMigrationMessage"},
+      "output":{"shape":"CreateDataMigrationResponse"},
+      "errors":[
+        {"shape":"ResourceQuotaExceededFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"ResourceAlreadyExistsFault"},
+        {"shape":"InvalidOperationFault"},
+        {"shape":"FailedDependencyFault"}
+      ]
+    },
     "CreateDataProvider":{
       "name":"CreateDataProvider",
       "http":{
@@ -77,7 +94,8 @@
       "errors":[
         {"shape":"ResourceQuotaExceededFault"},
         {"shape":"AccessDeniedFault"},
-        {"shape":"ResourceAlreadyExistsFault"}
+        {"shape":"ResourceAlreadyExistsFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "CreateEndpoint":{
@@ -151,7 +169,8 @@
         {"shape":"InvalidResourceStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"S3ResourceNotFoundFault"},
-        {"shape":"S3AccessDeniedFault"}
+        {"shape":"S3AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "CreateMigrationProject":{
@@ -168,7 +187,8 @@
         {"shape":"ResourceQuotaExceededFault"},
         {"shape":"ResourceNotFoundFault"},
         {"shape":"S3ResourceNotFoundFault"},
-        {"shape":"S3AccessDeniedFault"}
+        {"shape":"S3AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "CreateReplicationConfig":{
@@ -272,6 +292,20 @@
         {"shape":"InvalidResourceStateFault"}
       ]
     },
+    "DeleteDataMigration":{
+      "name":"DeleteDataMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDataMigrationMessage"},
+      "output":{"shape":"DeleteDataMigrationResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"FailedDependencyFault"}
+      ]
+    },
     "DeleteDataProvider":{
       "name":"DeleteDataProvider",
       "http":{
@@ -283,7 +317,8 @@
       "errors":[
         {"shape":"AccessDeniedFault"},
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"InvalidResourceStateFault"}
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DeleteEndpoint":{
@@ -321,7 +356,8 @@
       "input":{"shape":"DeleteCollectorRequest"},
       "errors":[
         {"shape":"InvalidResourceStateFault"},
-        {"shape":"CollectorNotFoundFault"}
+        {"shape":"CollectorNotFoundFault"},
+        {"shape":"AccessDeniedFault"}
       ]
     },
     "DeleteFleetAdvisorDatabases":{
@@ -334,7 +370,8 @@
       "output":{"shape":"DeleteFleetAdvisorDatabasesResponse"},
       "errors":[
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"InvalidOperationFault"}
+        {"shape":"InvalidOperationFault"},
+        {"shape":"AccessDeniedFault"}
       ]
     },
     "DeleteInstanceProfile":{
@@ -348,7 +385,8 @@
       "errors":[
         {"shape":"AccessDeniedFault"},
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"InvalidResourceStateFault"}
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DeleteMigrationProject":{
@@ -362,7 +400,9 @@
       "errors":[
         {"shape":"AccessDeniedFault"},
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"InvalidResourceStateFault"}
+        {"shape":"AccessDeniedFault"},
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DeleteReplicationConfig":{
@@ -491,6 +531,20 @@
         {"shape":"ResourceNotFoundFault"}
       ]
     },
+    "DescribeDataMigrations":{
+      "name":"DescribeDataMigrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataMigrationsMessage"},
+      "output":{"shape":"DescribeDataMigrationsResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"FailedDependencyFault"}
+      ]
+    },
     "DescribeDataProviders":{
       "name":"DescribeDataProviders",
       "http":{
@@ -501,7 +555,8 @@
       "output":{"shape":"DescribeDataProvidersResponse"},
       "errors":[
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"AccessDeniedFault"}
+        {"shape":"AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DescribeEndpointSettings":{
@@ -652,7 +707,8 @@
       "output":{"shape":"DescribeInstanceProfilesResponse"},
       "errors":[
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"AccessDeniedFault"}
+        {"shape":"AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DescribeMetadataModelAssessments":{
@@ -725,7 +781,8 @@
       "output":{"shape":"DescribeMigrationProjectsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"AccessDeniedFault"}
+        {"shape":"AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "DescribeOrderableReplicationInstances":{
@@ -971,7 +1028,8 @@
       "input":{"shape":"ListTagsForResourceMessage"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundFault"}
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"}
       ]
     },
     "ModifyConversionConfiguration":{
@@ -987,6 +1045,20 @@
         {"shape":"InvalidResourceStateFault"}
       ]
     },
+    "ModifyDataMigration":{
+      "name":"ModifyDataMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyDataMigrationMessage"},
+      "output":{"shape":"ModifyDataMigrationResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"FailedDependencyFault"}
+      ]
+    },
     "ModifyDataProvider":{
       "name":"ModifyDataProvider",
       "http":{
@@ -998,7 +1070,8 @@
       "errors":[
         {"shape":"AccessDeniedFault"},
         {"shape":"ResourceNotFoundFault"},
-        {"shape":"InvalidResourceStateFault"}
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "ModifyEndpoint":{
@@ -1051,7 +1124,8 @@
         {"shape":"InvalidResourceStateFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"S3ResourceNotFoundFault"},
-        {"shape":"S3AccessDeniedFault"}
+        {"shape":"S3AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "ModifyMigrationProject":{
@@ -1067,7 +1141,8 @@
         {"shape":"ResourceNotFoundFault"},
         {"shape":"InvalidResourceStateFault"},
         {"shape":"S3ResourceNotFoundFault"},
-        {"shape":"S3AccessDeniedFault"}
+        {"shape":"S3AccessDeniedFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "ModifyReplicationConfig":{
@@ -1216,7 +1291,8 @@
       "input":{"shape":"RemoveTagsFromResourceMessage"},
       "output":{"shape":"RemoveTagsFromResourceResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundFault"}
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"}
       ]
     },
     "RunFleetAdvisorLsaAnalysis":{
@@ -1229,6 +1305,22 @@
       "errors":[
         {"shape":"InvalidResourceStateFault"},
         {"shape":"ResourceNotFoundFault"}
+      ]
+    },
+    "StartDataMigration":{
+      "name":"StartDataMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartDataMigrationMessage"},
+      "output":{"shape":"StartDataMigrationResponse"},
+      "errors":[
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"InvalidOperationFault"},
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"ResourceQuotaExceededFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "StartExtensionPackAssociation":{
@@ -1420,6 +1512,20 @@
         {"shape":"S3AccessDeniedFault"},
         {"shape":"S3ResourceNotFoundFault"},
         {"shape":"ResourceAlreadyExistsFault"}
+      ]
+    },
+    "StopDataMigration":{
+      "name":"StopDataMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopDataMigrationMessage"},
+      "output":{"shape":"StopDataMigrationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundFault"},
+        {"shape":"InvalidResourceStateFault"},
+        {"shape":"FailedDependencyFault"}
       ]
     },
     "StopReplication":{
@@ -1751,6 +1857,31 @@
       "type":"list",
       "member":{"shape":"Connection"}
     },
+    "CreateDataMigrationMessage":{
+      "type":"structure",
+      "required":[
+        "MigrationProjectIdentifier",
+        "DataMigrationType",
+        "ServiceAccessRoleArn"
+      ],
+      "members":{
+        "DataMigrationName":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"String"},
+        "DataMigrationType":{"shape":"MigrationTypeValue"},
+        "ServiceAccessRoleArn":{"shape":"String"},
+        "EnableCloudwatchLogs":{"shape":"BooleanOptional"},
+        "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "NumberOfJobs":{"shape":"IntegerOptional"},
+        "Tags":{"shape":"TagList"},
+        "SelectionRules":{"shape":"SecretString"}
+      }
+    },
+    "CreateDataMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigration":{"shape":"DataMigration"}
+      }
+    },
     "CreateDataProviderMessage":{
       "type":"structure",
       "required":[
@@ -2031,6 +2162,52 @@
         "parquet"
       ]
     },
+    "DataMigration":{
+      "type":"structure",
+      "members":{
+        "DataMigrationName":{"shape":"String"},
+        "DataMigrationArn":{"shape":"String"},
+        "DataMigrationCreateTime":{"shape":"Iso8601DateTime"},
+        "DataMigrationStartTime":{"shape":"Iso8601DateTime"},
+        "DataMigrationEndTime":{"shape":"Iso8601DateTime"},
+        "ServiceAccessRoleArn":{"shape":"String"},
+        "MigrationProjectArn":{"shape":"String"},
+        "DataMigrationType":{"shape":"MigrationTypeValue"},
+        "DataMigrationSettings":{"shape":"DataMigrationSettings"},
+        "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "DataMigrationStatistics":{"shape":"DataMigrationStatistics"},
+        "DataMigrationStatus":{"shape":"String"},
+        "PublicIpAddresses":{"shape":"PublicIpAddressList"},
+        "LastFailureMessage":{"shape":"String"},
+        "StopReason":{"shape":"String"}
+      }
+    },
+    "DataMigrationSettings":{
+      "type":"structure",
+      "members":{
+        "NumberOfJobs":{"shape":"IntegerOptional"},
+        "CloudwatchLogsEnabled":{"shape":"BooleanOptional"},
+        "SelectionRules":{"shape":"SecretString"}
+      }
+    },
+    "DataMigrationStatistics":{
+      "type":"structure",
+      "members":{
+        "TablesLoaded":{"shape":"Integer"},
+        "ElapsedTimeMillis":{"shape":"Long"},
+        "TablesLoading":{"shape":"Integer"},
+        "FullLoadPercentage":{"shape":"Integer"},
+        "CDCLatency":{"shape":"Integer"},
+        "TablesQueued":{"shape":"Integer"},
+        "TablesErrored":{"shape":"Integer"},
+        "StartTime":{"shape":"Iso8601DateTime"},
+        "StopTime":{"shape":"Iso8601DateTime"}
+      }
+    },
+    "DataMigrations":{
+      "type":"list",
+      "member":{"shape":"DataMigration"}
+    },
     "DataProvider":{
       "type":"structure",
       "members":{
@@ -2190,6 +2367,19 @@
       "type":"structure",
       "members":{
         "Connection":{"shape":"Connection"}
+      }
+    },
+    "DeleteDataMigrationMessage":{
+      "type":"structure",
+      "required":["DataMigrationIdentifier"],
+      "members":{
+        "DataMigrationIdentifier":{"shape":"String"}
+      }
+    },
+    "DeleteDataMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigration":{"shape":"DataMigration"}
       }
     },
     "DeleteDataProviderMessage":{
@@ -2407,6 +2597,23 @@
       "members":{
         "MigrationProjectIdentifier":{"shape":"String"},
         "ConversionConfiguration":{"shape":"String"}
+      }
+    },
+    "DescribeDataMigrationsMessage":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"Marker"},
+        "WithoutSettings":{"shape":"BooleanOptional"},
+        "WithoutStatistics":{"shape":"BooleanOptional"}
+      }
+    },
+    "DescribeDataMigrationsResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigrations":{"shape":"DataMigrations"},
+        "Marker":{"shape":"Marker"}
       }
     },
     "DescribeDataProvidersMessage":{
@@ -3271,6 +3478,13 @@
         "ObjectURL":{"shape":"String"}
       }
     },
+    "FailedDependencyFault":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "Filter":{
       "type":"structure",
       "required":[
@@ -3615,6 +3829,10 @@
         "CertificateArn":{"shape":"String"}
       }
     },
+    "Marker":{
+      "type":"string",
+      "max":1024
+    },
     "MessageFormatValue":{
       "type":"string",
       "enum":[
@@ -3696,6 +3914,26 @@
       "type":"structure",
       "members":{
         "MigrationProjectIdentifier":{"shape":"String"}
+      }
+    },
+    "ModifyDataMigrationMessage":{
+      "type":"structure",
+      "required":["DataMigrationIdentifier"],
+      "members":{
+        "DataMigrationIdentifier":{"shape":"String"},
+        "DataMigrationName":{"shape":"String"},
+        "EnableCloudwatchLogs":{"shape":"BooleanOptional"},
+        "ServiceAccessRoleArn":{"shape":"String"},
+        "DataMigrationType":{"shape":"MigrationTypeValue"},
+        "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "NumberOfJobs":{"shape":"IntegerOptional"},
+        "SelectionRules":{"shape":"SecretString"}
+      }
+    },
+    "ModifyDataMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigration":{"shape":"DataMigration"}
       }
     },
     "ModifyDataProviderMessage":{
@@ -4178,6 +4416,11 @@
         "DateNewProvisioningDataAvailable":{"shape":"TStamp"},
         "ReasonForNewProvisioningData":{"shape":"String"}
       }
+    },
+    "PublicIpAddressList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "sensitive":true
     },
     "RdsConfiguration":{
       "type":"structure",
@@ -4882,6 +5125,19 @@
         "ServerName":{"shape":"String"}
       }
     },
+    "SourceDataSetting":{
+      "type":"structure",
+      "members":{
+        "CDCStartPosition":{"shape":"String"},
+        "CDCStartTime":{"shape":"Iso8601DateTime"},
+        "CDCStopTime":{"shape":"Iso8601DateTime"},
+        "SlotName":{"shape":"String"}
+      }
+    },
+    "SourceDataSettings":{
+      "type":"list",
+      "member":{"shape":"SourceDataSetting"}
+    },
     "SourceIdsList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -4896,6 +5152,23 @@
         "plaintext",
         "ssl-encryption"
       ]
+    },
+    "StartDataMigrationMessage":{
+      "type":"structure",
+      "required":[
+        "DataMigrationIdentifier",
+        "StartType"
+      ],
+      "members":{
+        "DataMigrationIdentifier":{"shape":"String"},
+        "StartType":{"shape":"StartReplicationMigrationTypeValue"}
+      }
+    },
+    "StartDataMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigration":{"shape":"DataMigration"}
+      }
     },
     "StartExtensionPackAssociationMessage":{
       "type":"structure",
@@ -5042,6 +5315,14 @@
         "CdcStopPosition":{"shape":"String"}
       }
     },
+    "StartReplicationMigrationTypeValue":{
+      "type":"string",
+      "enum":[
+        "reload-target",
+        "resume-processing",
+        "start-replication"
+      ]
+    },
     "StartReplicationResponse":{
       "type":"structure",
       "members":{
@@ -5114,6 +5395,19 @@
         "resume-processing",
         "reload-target"
       ]
+    },
+    "StopDataMigrationMessage":{
+      "type":"structure",
+      "required":["DataMigrationIdentifier"],
+      "members":{
+        "DataMigrationIdentifier":{"shape":"String"}
+      }
+    },
+    "StopDataMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "DataMigration":{"shape":"DataMigration"}
+      }
     },
     "StopReplicationMessage":{
       "type":"structure",
