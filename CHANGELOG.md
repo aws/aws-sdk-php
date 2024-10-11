@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.1 - 2024-10-11
 
 * `Aws\RoboMaker` - Documentation update: added support notices to each API action.
 * `Aws\ElasticLoadBalancingv2` - Add zonal_shift.config.enabled attribute. Add new AdministrativeOverride construct in the describe-target-health API response to include information about the override status applied to a target.
