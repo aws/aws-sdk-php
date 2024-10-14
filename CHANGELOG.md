@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.2 - 2024-10-14
 
 * `Aws\Transfer` - This release enables customers using SFTP connectors to query the transfer status of their files to meet their monitoring needs as well as orchestrate post transfer actions.
 * `Aws\CodePipeline` - AWS CodePipeline V2 type pipelines now support automatically retrying failed stages and skipping stage for failed entry conditions.
