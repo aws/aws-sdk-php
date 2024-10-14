@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Transfer` - This release enables customers using SFTP connectors to query the transfer status of their files to meet their monitoring needs as well as orchestrate post transfer actions.
+* `Aws\CodePipeline` - AWS CodePipeline V2 type pipelines now support automatically retrying failed stages and skipping stage for failed entry conditions.
+* `Aws\MailManager` - Mail Manager support for viewing and exporting metadata of archived messages.
+* `Aws\SupplyChain` - This release adds AWS Supply Chain instance management functionality. Specifically adding CreateInstance, DeleteInstance, GetInstance, ListInstances, and UpdateInstance APIs.
+* `Aws\SecurityLake` - This release updates request validation regex for resource ARNs.
+
 ## 3.324.1 - 2024-10-11
 
 * `Aws\RoboMaker` - Documentation update: added support notices to each API action.

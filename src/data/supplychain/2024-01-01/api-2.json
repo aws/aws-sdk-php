@@ -73,6 +73,26 @@
       ],
       "idempotent":true
     },
+    "CreateInstance":{
+      "name":"CreateInstance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/api/instance",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateInstanceRequest"},
+      "output":{"shape":"CreateInstanceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDataIntegrationFlow":{
       "name":"DeleteDataIntegrationFlow",
       "http":{
@@ -102,6 +122,26 @@
       },
       "input":{"shape":"DeleteDataLakeDatasetRequest"},
       "output":{"shape":"DeleteDataLakeDatasetResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteInstance":{
+      "name":"DeleteInstance",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/api/instance/{instanceId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteInstanceRequest"},
+      "output":{"shape":"DeleteInstanceResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
@@ -170,6 +210,25 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetInstance":{
+      "name":"GetInstance",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/instance/{instanceId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInstanceRequest"},
+      "output":{"shape":"GetInstanceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "ListDataIntegrationFlows":{
       "name":"ListDataIntegrationFlows",
       "http":{
@@ -202,6 +261,25 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "ListInstances":{
+      "name":"ListInstances",
+      "http":{
+        "method":"GET",
+        "requestUri":"/api/instance",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInstancesRequest"},
+      "output":{"shape":"ListInstancesResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -323,6 +401,25 @@
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "UpdateInstance":{
+      "name":"UpdateInstance",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/api/instance/{instanceId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateInstanceRequest"},
+      "output":{"shape":"UpdateInstanceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
     }
   },
   "shapes":{
@@ -342,6 +439,10 @@
       "max":1011,
       "min":20,
       "pattern":"arn:aws:scn(?::([a-z0-9-]+):([0-9]+):instance)?/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})[-_./A-Za-z0-9]*"
+    },
+    "AwsAccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "BillOfMaterialsImportJob":{
       "type":"structure",
@@ -490,6 +591,26 @@
       "required":["dataset"],
       "members":{
         "dataset":{"shape":"DataLakeDataset"}
+      }
+    },
+    "CreateInstanceRequest":{
+      "type":"structure",
+      "members":{
+        "instanceName":{"shape":"InstanceName"},
+        "instanceDescription":{"shape":"InstanceDescription"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateInstanceResponse":{
+      "type":"structure",
+      "required":["instance"],
+      "members":{
+        "instance":{"shape":"Instance"}
       }
     },
     "DataIntegrationEventData":{
@@ -895,6 +1016,28 @@
         "name":{"shape":"DataLakeDatasetName"}
       }
     },
+    "DeleteInstanceRequest":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        }
+      }
+    },
+    "DeleteInstanceResponse":{
+      "type":"structure",
+      "required":["instance"],
+      "members":{
+        "instance":{"shape":"Instance"}
+      }
+    },
+    "Double":{
+      "type":"double",
+      "box":true
+    },
     "GetBillOfMaterialsImportJobRequest":{
       "type":"structure",
       "required":[
@@ -979,6 +1122,98 @@
         "dataset":{"shape":"DataLakeDataset"}
       }
     },
+    "GetInstanceRequest":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        }
+      }
+    },
+    "GetInstanceResponse":{
+      "type":"structure",
+      "required":["instance"],
+      "members":{
+        "instance":{"shape":"Instance"}
+      }
+    },
+    "Instance":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "awsAccountId",
+        "state"
+      ],
+      "members":{
+        "instanceId":{"shape":"UUID"},
+        "awsAccountId":{"shape":"AwsAccountId"},
+        "state":{"shape":"InstanceState"},
+        "webAppDnsDomain":{"shape":"InstanceWebAppDnsDomain"},
+        "createdTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "instanceName":{"shape":"InstanceName"},
+        "instanceDescription":{"shape":"InstanceDescription"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "versionNumber":{"shape":"Double"}
+      }
+    },
+    "InstanceDescription":{
+      "type":"string",
+      "max":501,
+      "min":0,
+      "pattern":"([a-zA-Z0-9., _ʼ'%-]){0,500}"
+    },
+    "InstanceList":{
+      "type":"list",
+      "member":{"shape":"Instance"}
+    },
+    "InstanceMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":0
+    },
+    "InstanceName":{
+      "type":"string",
+      "max":63,
+      "min":0,
+      "pattern":"(?![ _ʼ'%-])[a-zA-Z0-9 _ʼ'%-]{0,62}[a-zA-Z0-9]"
+    },
+    "InstanceNameList":{
+      "type":"list",
+      "member":{"shape":"InstanceName"},
+      "max":10,
+      "min":0
+    },
+    "InstanceNextToken":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "InstanceState":{
+      "type":"string",
+      "enum":[
+        "Initializing",
+        "Active",
+        "CreateFailed",
+        "DeleteFailed",
+        "Deleting",
+        "Deleted"
+      ]
+    },
+    "InstanceStateList":{
+      "type":"list",
+      "member":{"shape":"InstanceState"},
+      "max":6,
+      "min":0
+    },
+    "InstanceWebAppDnsDomain":{
+      "type":"string",
+      "pattern":"[A-Za-z0-9]+(.[A-Za-z0-9]+)+"
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -988,6 +1223,12 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"arn:[a-z0-9][-.a-z0-9]{0,62}:kms:([a-z0-9][-.a-z0-9]{0,62})?:([a-z0-9][-.a-z0-9]{0,62})?:key/.{0,1019}"
     },
     "ListDataIntegrationFlowsRequest":{
       "type":"structure",
@@ -1053,6 +1294,39 @@
       "members":{
         "datasets":{"shape":"DataLakeDatasetList"},
         "nextToken":{"shape":"DataLakeDatasetNextToken"}
+      }
+    },
+    "ListInstancesRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"InstanceNextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"InstanceMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "instanceNameFilter":{
+          "shape":"InstanceNameList",
+          "location":"querystring",
+          "locationName":"instanceNameFilter"
+        },
+        "instanceStateFilter":{
+          "shape":"InstanceStateList",
+          "location":"querystring",
+          "locationName":"instanceStateFilter"
+        }
+      }
+    },
+    "ListInstancesResponse":{
+      "type":"structure",
+      "required":["instances"],
+      "members":{
+        "instances":{"shape":"InstanceList"},
+        "nextToken":{"shape":"InstanceNextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1283,6 +1557,26 @@
       "required":["dataset"],
       "members":{
         "dataset":{"shape":"DataLakeDataset"}
+      }
+    },
+    "UpdateInstanceRequest":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"instanceId"
+        },
+        "instanceName":{"shape":"InstanceName"},
+        "instanceDescription":{"shape":"InstanceDescription"}
+      }
+    },
+    "UpdateInstanceResponse":{
+      "type":"structure",
+      "required":["instance"],
+      "members":{
+        "instance":{"shape":"Instance"}
       }
     },
     "ValidationException":{

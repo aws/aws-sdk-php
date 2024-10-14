@@ -5,19 +5,24 @@
     "CreateBillOfMaterialsImportJob": "<p>CreateBillOfMaterialsImportJob creates an import job for the Product Bill Of Materials (BOM) entity. For information on the product_bom entity, see the AWS Supply Chain User Guide.</p> <p>The CSV file must be located in an Amazon S3 location accessible to AWS Supply Chain. It is recommended to use the same Amazon S3 bucket created during your AWS Supply Chain instance creation.</p>",
     "CreateDataIntegrationFlow": "<p>Create DataIntegrationFlow to map one or more different sources to one target using the SQL transformation query.</p>",
     "CreateDataLakeDataset": "<p>Create a data lake dataset.</p>",
+    "CreateInstance": "<p>Create a new instance for AWS Supply Chain. This is an asynchronous operation. Upon receiving a CreateInstance request, AWS Supply Chain immediately returns the instance resource, with instance ID, and the initializing state while simultaneously creating all required Amazon Web Services resources for an instance creation. You can use GetInstance to check the status of the instance.</p>",
     "DeleteDataIntegrationFlow": "<p>Delete the DataIntegrationFlow.</p>",
     "DeleteDataLakeDataset": "<p>Delete a data lake dataset.</p>",
+    "DeleteInstance": "<p>Delete the instance. This is an asynchronous operation. Upon receiving a DeleteInstance request, AWS Supply Chain immediately returns a response with the instance resource, delete state while cleaning up all Amazon Web Services resources created during the instance creation process. You can use the GetInstance action to check the instance status.</p>",
     "GetBillOfMaterialsImportJob": "<p>Get status and details of a BillOfMaterialsImportJob.</p>",
     "GetDataIntegrationFlow": "<p>View the DataIntegrationFlow details.</p>",
     "GetDataLakeDataset": "<p>Get a data lake dataset.</p>",
+    "GetInstance": "<p>Get the AWS Supply Chain instance details.</p>",
     "ListDataIntegrationFlows": "<p>Lists all the DataIntegrationFlows in a paginated way.</p>",
     "ListDataLakeDatasets": "<p>List the data lake datasets for a specific instance and name space.</p>",
+    "ListInstances": "<p>List all the AWS Supply Chain instances in a paginated way.</p>",
     "ListTagsForResource": "<p>List all the tags for an Amazon Web ServicesSupply Chain resource.</p>",
     "SendDataIntegrationEvent": "<p>Send the transactional data payload for the event with real-time data for analysis or monitoring. The real-time data events are stored in an Amazon Web Services service before being processed and stored in data lake. New data events are synced with data lake at 5 PM GMT everyday. The updated transactional data is available in data lake after ingestion.</p>",
     "TagResource": "<p>Create tags for an Amazon Web Services Supply chain resource.</p>",
     "UntagResource": "<p>Delete tags for an Amazon Web Services Supply chain resource.</p>",
     "UpdateDataIntegrationFlow": "<p>Update the DataIntegrationFlow.</p>",
-    "UpdateDataLakeDataset": "<p>Update a data lake dataset.</p>"
+    "UpdateDataLakeDataset": "<p>Update a data lake dataset.</p>",
+    "UpdateInstance": "<p>Update the instance.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -32,6 +37,12 @@
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs tags to be listed.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs to be tagged.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Web Services Supply chain resource ARN that needs to be untagged.</p>"
+      }
+    },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "Instance$awsAccountId": "<p>The Amazon Web Services account ID that owns the instance.</p>"
       }
     },
     "BillOfMaterialsImportJob": {
@@ -51,6 +62,7 @@
       "base": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
       "refs": {
         "CreateBillOfMaterialsImportJobRequest$clientToken": "<p>An idempotency token ensures the API request is only completed no more than once. This way, retrying the request will not trigger the operation multiple times. A client token is a unique, case-sensitive string of 33 to 128 ASCII characters. To make an idempotent API request, specify a client token in the request. You should not reuse the same client token for other requests. If you retry a successful request with the same client token, the request will succeed with no further actions being taken, and you will receive the same API response as the original successful request.</p>",
+        "CreateInstanceRequest$clientToken": "<p>The client token for idempotency.</p>",
         "SendDataIntegrationEventRequest$clientToken": "<p>The idempotent client token.</p>"
       }
     },
@@ -99,6 +111,16 @@
     },
     "CreateDataLakeDatasetResponse": {
       "base": "<p>The response parameters of CreateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "CreateInstanceRequest": {
+      "base": "<p>The request parameters for CreateInstance.</p>",
+      "refs": {
+      }
+    },
+    "CreateInstanceResponse": {
+      "base": "<p>The response parameters for CreateInstance.</p>",
       "refs": {
       }
     },
@@ -405,6 +427,22 @@
       "refs": {
       }
     },
+    "DeleteInstanceRequest": {
+      "base": "<p>The request parameters for DeleteInstance.</p>",
+      "refs": {
+      }
+    },
+    "DeleteInstanceResponse": {
+      "base": "<p>The response parameters for DeleteInstance.</p>",
+      "refs": {
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "Instance$versionNumber": "<p>The version number of the instance.</p>"
+      }
+    },
     "GetBillOfMaterialsImportJobRequest": {
       "base": "<p>The request parameters for GetBillOfMaterialsImportJob.</p>",
       "refs": {
@@ -435,9 +473,97 @@
       "refs": {
       }
     },
+    "GetInstanceRequest": {
+      "base": "<p>The request parameters for GetInstance.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceResponse": {
+      "base": "<p>The response parameters for GetInstance.</p>",
+      "refs": {
+      }
+    },
+    "Instance": {
+      "base": "<p>The details of the instance.</p>",
+      "refs": {
+        "CreateInstanceResponse$instance": "<p>The AWS Supply Chain instance resource data details.</p>",
+        "DeleteInstanceResponse$instance": "<p>The AWS Supply Chain instance resource data details.</p>",
+        "GetInstanceResponse$instance": "<p>The instance resource data details.</p>",
+        "InstanceList$member": null,
+        "UpdateInstanceResponse$instance": "<p>The instance resource data details.</p>"
+      }
+    },
+    "InstanceDescription": {
+      "base": null,
+      "refs": {
+        "CreateInstanceRequest$instanceDescription": "<p>The AWS Supply Chain instance description.</p>",
+        "Instance$instanceDescription": "<p>The Amazon Web Services Supply Chain instance description.</p>",
+        "UpdateInstanceRequest$instanceDescription": "<p>The AWS Supply Chain instance description.</p>"
+      }
+    },
+    "InstanceList": {
+      "base": null,
+      "refs": {
+        "ListInstancesResponse$instances": "<p>The list of instances resource data details.</p>"
+      }
+    },
+    "InstanceMaxResults": {
+      "base": null,
+      "refs": {
+        "ListInstancesRequest$maxResults": "<p>Specify the maximum number of instances to fetch in this paginated request.</p>"
+      }
+    },
+    "InstanceName": {
+      "base": null,
+      "refs": {
+        "CreateInstanceRequest$instanceName": "<p>The AWS Supply Chain instance name.</p>",
+        "Instance$instanceName": "<p>The Amazon Web Services Supply Chain instance name.</p>",
+        "InstanceNameList$member": null,
+        "UpdateInstanceRequest$instanceName": "<p>The AWS Supply Chain instance name.</p>"
+      }
+    },
+    "InstanceNameList": {
+      "base": null,
+      "refs": {
+        "ListInstancesRequest$instanceNameFilter": "<p>The filter to ListInstances based on their names.</p>"
+      }
+    },
+    "InstanceNextToken": {
+      "base": null,
+      "refs": {
+        "ListInstancesRequest$nextToken": "<p>The pagination token to fetch the next page of instances.</p>",
+        "ListInstancesResponse$nextToken": "<p>The pagination token to fetch the next page of instances.</p>"
+      }
+    },
+    "InstanceState": {
+      "base": null,
+      "refs": {
+        "Instance$state": "<p>The state of the instance.</p>",
+        "InstanceStateList$member": null
+      }
+    },
+    "InstanceStateList": {
+      "base": null,
+      "refs": {
+        "ListInstancesRequest$instanceStateFilter": "<p>The filter to ListInstances based on their state.</p>"
+      }
+    },
+    "InstanceWebAppDnsDomain": {
+      "base": null,
+      "refs": {
+        "Instance$webAppDnsDomain": "<p>The WebApp DNS domain name of the instance.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>Unexpected error during processing of request.</p>",
       "refs": {
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateInstanceRequest$kmsKeyArn": "<p>The ARN (Amazon Resource Name) of the Key Management Service (KMS) key you provide for encryption. This is required if you do not want to use the Amazon Web Services owned KMS key. If you don't provide anything here, AWS Supply Chain uses the Amazon Web Services owned KMS key.</p>",
+        "Instance$kmsKeyArn": "<p>The ARN (Amazon Resource Name) of the Key Management Service (KMS) key you optionally provided for encryption. If you did not provide anything here, AWS Supply Chain uses the Amazon Web Services owned KMS key and nothing is returned.</p>"
       }
     },
     "ListDataIntegrationFlowsRequest": {
@@ -457,6 +583,16 @@
     },
     "ListDataLakeDatasetsResponse": {
       "base": "<p>The response parameters of ListDataLakeDatasets.</p>",
+      "refs": {
+      }
+    },
+    "ListInstancesRequest": {
+      "base": "<p>The request parameters for ListInstances.</p>",
+      "refs": {
+      }
+    },
+    "ListInstancesResponse": {
+      "base": "<p>The response parameters for ListInstances.</p>",
       "refs": {
       }
     },
@@ -534,6 +670,7 @@
       "refs": {
         "CreateDataIntegrationFlowRequest$tags": "<p>The tags of the DataIntegrationFlow to be created</p>",
         "CreateDataLakeDatasetRequest$tags": "<p>The tags of the dataset.</p>",
+        "CreateInstanceRequest$tags": "<p>The Amazon Web Services tags of an instance to be created.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags added to an Amazon Web Services Supply Chain resource.</p>",
         "TagResourceRequest$tags": "<p>The tags of the Amazon Web Services Supply chain resource to be created.</p>"
       }
@@ -565,7 +702,9 @@
         "DataIntegrationFlow$createdTime": "<p>The DataIntegrationFlow creation timestamp.</p>",
         "DataIntegrationFlow$lastModifiedTime": "<p>The DataIntegrationFlow last modified timestamp.</p>",
         "DataLakeDataset$createdTime": "<p>The creation time of the dataset.</p>",
-        "DataLakeDataset$lastModifiedTime": "<p>The last modified time of the dataset.</p>"
+        "DataLakeDataset$lastModifiedTime": "<p>The last modified time of the dataset.</p>",
+        "Instance$createdTime": "<p>The instance creation timestamp.</p>",
+        "Instance$lastModifiedTime": "<p>The instance last modified timestamp.</p>"
       }
     },
     "UUID": {
@@ -584,16 +723,20 @@
         "DeleteDataIntegrationFlowResponse$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "DeleteDataLakeDatasetRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "DeleteDataLakeDatasetResponse$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
+        "DeleteInstanceRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "GetBillOfMaterialsImportJobRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "GetBillOfMaterialsImportJobRequest$jobId": "<p>The BillOfMaterialsImportJob identifier.</p>",
         "GetDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "GetDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
+        "GetInstanceRequest$instanceId": "<p>The AWS Supply Chain instance identifier</p>",
+        "Instance$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "ListDataIntegrationFlowsRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "ListDataLakeDatasetsRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
         "SendDataIntegrationEventRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>",
         "SendDataIntegrationEventResponse$eventId": "<p>The unique event identifier.</p>",
         "UpdateDataIntegrationFlowRequest$instanceId": "<p>The Amazon Web Services Supply Chain instance identifier.</p>",
-        "UpdateDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Chain instance identifier.</p>"
+        "UpdateDataLakeDatasetRequest$instanceId": "<p>The Amazon Web Services Chain instance identifier.</p>",
+        "UpdateInstanceRequest$instanceId": "<p>The AWS Supply Chain instance identifier.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -623,6 +766,16 @@
     },
     "UpdateDataLakeDatasetResponse": {
       "base": "<p>The response parameters of UpdateDataLakeDataset.</p>",
+      "refs": {
+      }
+    },
+    "UpdateInstanceRequest": {
+      "base": "<p>The request parameters for UpdateInstance.</p>",
+      "refs": {
+      }
+    },
+    "UpdateInstanceResponse": {
+      "base": "<p>The response parameters for UpdateInstance.</p>",
       "refs": {
       }
     },

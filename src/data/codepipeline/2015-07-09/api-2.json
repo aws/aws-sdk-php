@@ -1626,6 +1626,7 @@
       "type":"structure",
       "members":{
         "result":{"shape":"Result"},
+        "retryConfiguration":{"shape":"RetryConfiguration"},
         "conditions":{"shape":"ConditionList"}
       }
     },
@@ -2804,8 +2805,20 @@
       "type":"string",
       "enum":[
         "ROLLBACK",
-        "FAIL"
+        "FAIL",
+        "RETRY",
+        "SKIP"
       ]
+    },
+    "RetryAttempt":{
+      "type":"integer",
+      "min":1
+    },
+    "RetryConfiguration":{
+      "type":"structure",
+      "members":{
+        "retryMode":{"shape":"StageRetryMode"}
+      }
     },
     "RetryStageExecutionInput":{
       "type":"structure",
@@ -2827,6 +2840,21 @@
       "members":{
         "pipelineExecutionId":{"shape":"PipelineExecutionId"}
       }
+    },
+    "RetryStageMetadata":{
+      "type":"structure",
+      "members":{
+        "autoStageRetryAttempt":{"shape":"RetryAttempt"},
+        "manualStageRetryAttempt":{"shape":"RetryAttempt"},
+        "latestRetryTrigger":{"shape":"RetryTrigger"}
+      }
+    },
+    "RetryTrigger":{
+      "type":"string",
+      "enum":[
+        "AutomatedStageRetry",
+        "ManualStageRetry"
+      ]
     },
     "Revision":{
       "type":"string",
@@ -3269,7 +3297,8 @@
         "Failed",
         "Stopped",
         "Stopping",
-        "Succeeded"
+        "Succeeded",
+        "Skipped"
       ]
     },
     "StageName":{
@@ -3308,7 +3337,8 @@
         "latestExecution":{"shape":"StageExecution"},
         "beforeEntryConditionState":{"shape":"StageConditionState"},
         "onSuccessConditionState":{"shape":"StageConditionState"},
-        "onFailureConditionState":{"shape":"StageConditionState"}
+        "onFailureConditionState":{"shape":"StageConditionState"},
+        "retryStageMetadata":{"shape":"RetryStageMetadata"}
       }
     },
     "StageStateList":{

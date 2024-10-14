@@ -354,6 +354,51 @@
         "title": "Create a custom dataset"
       }
     ],
+    "CreateInstance": [
+      {
+        "input": {
+          "instanceDescription": "example instance description",
+          "instanceName": "example instance name",
+          "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+          "tags": {
+            "tagKey1": "tagValue1"
+          }
+        },
+        "output": {
+          "instance": {
+            "awsAccountId": "123456789012",
+            "createdTime": 172615383136,
+            "instanceDescription": "example instance description",
+            "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+            "instanceName": "example instance name",
+            "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+            "lastModifiedTime": 172615383136,
+            "state": "Initializing",
+            "versionNumber": 2.0
+          }
+        },
+        "id": "example-1",
+        "title": "Successful CreateInstance request with all input data"
+      },
+      {
+        "input": {
+        },
+        "output": {
+          "instance": {
+            "awsAccountId": "123456789012",
+            "createdTime": 172615383136,
+            "instanceDescription": "",
+            "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+            "kmsKeyArn": "arn:aws:kms:us-west-2:456789012345:key/7372eb6d-874c-4212-8d49-7804282d33a8",
+            "lastModifiedTime": 172615383136,
+            "state": "Initializing",
+            "versionNumber": 2.0
+          }
+        },
+        "id": "example-2",
+        "title": "Successful CreateInstance request with no input data"
+      }
+    ],
     "DeleteDataIntegrationFlow": [
       {
         "input": {
@@ -396,6 +441,28 @@
         },
         "id": "example-2",
         "title": "Delete a custom dataset"
+      }
+    ],
+    "DeleteInstance": [
+      {
+        "input": {
+          "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793"
+        },
+        "output": {
+          "instance": {
+            "awsAccountId": "123456789012",
+            "createdTime": 172615383136,
+            "instanceDescription": "updated example instance description",
+            "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+            "instanceName": "updated example instance name",
+            "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+            "lastModifiedTime": 172615383136,
+            "state": "Deleting",
+            "versionNumber": 2.0
+          }
+        },
+        "id": "example-1",
+        "title": "Successful DeleteInstance request"
       }
     ],
     "GetBillOfMaterialsImportJob": [
@@ -693,6 +760,28 @@
         },
         "id": "example-2",
         "title": "Get proporties of an existing custom dataset"
+      }
+    ],
+    "GetInstance": [
+      {
+        "input": {
+          "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793"
+        },
+        "output": {
+          "instance": {
+            "awsAccountId": "123456789012",
+            "createdTime": 172615383136,
+            "instanceDescription": "example instance description",
+            "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+            "instanceName": "example instance name",
+            "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+            "lastModifiedTime": 172615383136,
+            "state": "Active",
+            "versionNumber": 2.0
+          }
+        },
+        "id": "example-1",
+        "title": "Successful GetInstance request"
       }
     ],
     "ListDataIntegrationFlows": [
@@ -1019,6 +1108,111 @@
         },
         "id": "example-2",
         "title": "List custom datasets using pagination"
+      }
+    ],
+    "ListInstances": [
+      {
+        "input": {
+        },
+        "output": {
+          "instances": [
+            {
+              "awsAccountId": "123456789012",
+              "createdTime": 172615383136,
+              "instanceDescription": "example instance description",
+              "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+              "instanceName": "example instance name",
+              "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+              "lastModifiedTime": 172615383136,
+              "state": "Active",
+              "versionNumber": 2.0
+            },
+            {
+              "awsAccountId": "123456789012",
+              "createdTime": 17261674383136,
+              "instanceDescription": "example instance description",
+              "instanceId": "3ad8116a-644d-4172-8dcb-20e51d314c14",
+              "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+              "lastModifiedTime": 17261674383136,
+              "state": "Initializing",
+              "versionNumber": 2.0
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Successful ListInstance request with no input data"
+      },
+      {
+        "input": {
+          "instanceNameFilter": [
+            "example instance name"
+          ],
+          "instanceStateFilter": [
+            "Active"
+          ]
+        },
+        "output": {
+          "instances": [
+            {
+              "awsAccountId": "123456789012",
+              "createdTime": 172615383136,
+              "instanceDescription": "example instance description",
+              "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+              "instanceName": "example instance name",
+              "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+              "lastModifiedTime": 172615383136,
+              "state": "Active",
+              "versionNumber": 2.0
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "Successful ListInstance request with filters"
+      },
+      {
+        "input": {
+          "maxResults": 1
+        },
+        "output": {
+          "instances": [
+            {
+              "awsAccountId": "123456789012",
+              "createdTime": 172615383136,
+              "instanceDescription": "example instance description",
+              "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+              "instanceName": "example instance name",
+              "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+              "lastModifiedTime": 172615383136,
+              "state": "Active",
+              "versionNumber": 2.0
+            }
+          ],
+          "nextToken": "AAQA-EFRSURBSGhtcng0c0dxbENwUHdnckVIbkFYNU1QVjRTZWN2ak5iMFVicC8zemlHOVF3SEpjSC9WTWJVVXBMV2Z1N3ZvZlQ0WEFBQUFmakI4QmdrcWhraUc5dzBCQndhZ2J6QnRBZ0VBTUdnR0NTcUdTSWIzRFFFSEFUQWVCZ2xnaGtnQlpRTUVBUzR3RVFRTTJibW9LemgrSWZTY0RaZEdBZ0VRZ0R2dDhsQnVGbGJ0dnFTZityWmNSWEVPbG93emJoSjhxOGNMbGQ1UGMvY0VRbWlTR3pQUFd4N2RraXY5Y0ovcS9vSmFYZVBGdWVHaU0zWmd0dz09n-rC1ejA5--7ltJxpDT2xP_i8xGqDPMOZfjpp8q6l5NuP9_bnBURvwwYhdqDriMK5_f96LuPEnPbuML-ItfgEiCcUy0p2tApvpZkZqOG5fbqP-4C5aDYPTffHLyq-MMqvfrGVJzL1nvkpZcnTkVR9VJsu5b8I0qqDW0H8EMKGgTo78U9lr4sj3Usi9VMwZxgKCBmr03HhFLYXOW--XMbIx0CTZF0fYIcRxmA_sVS6J7gpaB9yMcnzs5VUKokoA5JTcAPY5d1Y1VyE8KKxv51cfPgXw8OYCDbFQncw8mZPmE-VqxjFbksmk_FmghpPn9j2Ppoe-zr0LQ%3D"
+        },
+        "id": "example-3",
+        "title": "Successful ListInstance request with maxResult override"
+      },
+      {
+        "input": {
+          "maxResults": 1,
+          "nextToken": "AAQA-EFRSURBSGhtcng0c0dxbENwUHdnckVIbkFYNU1QVjRTZWN2ak5iMFVicC8zemlHOVF3SEpjSC9WTWJVVXBMV2Z1N3ZvZlQ0WEFBQUFmakI4QmdrcWhraUc5dzBCQndhZ2J6QnRBZ0VBTUdnR0NTcUdTSWIzRFFFSEFUQWVCZ2xnaGtnQlpRTUVBUzR3RVFRTTJibW9LemgrSWZTY0RaZEdBZ0VRZ0R2dDhsQnVGbGJ0dnFTZityWmNSWEVPbG93emJoSjhxOGNMbGQ1UGMvY0VRbWlTR3pQUFd4N2RraXY5Y0ovcS9vSmFYZVBGdWVHaU0zWmd0dz09n-rC1ejA5--7ltJxpDT2xP_i8xGqDPMOZfjpp8q6l5NuP9_bnBURvwwYhdqDriMK5_f96LuPEnPbuML-ItfgEiCcUy0p2tApvpZkZqOG5fbqP-4C5aDYPTffHLyq-MMqvfrGVJzL1nvkpZcnTkVR9VJsu5b8I0qqDW0H8EMKGgTo78U9lr4sj3Usi9VMwZxgKCBmr03HhFLYXOW--XMbIx0CTZF0fYIcRxmA_sVS6J7gpaB9yMcnzs5VUKokoA5JTcAPY5d1Y1VyE8KKxv51cfPgXw8OYCDbFQncw8mZPmE-VqxjFbksmk_FmghpPn9j2Ppoe-zr0LQ%3D"
+        },
+        "output": {
+          "instances": [
+            {
+              "awsAccountId": "123456789012",
+              "createdTime": 17261674383136,
+              "instanceDescription": "example instance description",
+              "instanceId": "3ad8116a-644d-4172-8dcb-20e51d314c14",
+              "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+              "lastModifiedTime": 17261674383136,
+              "state": "Initializing",
+              "versionNumber": 2.0
+            }
+          ]
+        },
+        "id": "example-4",
+        "title": "Successful ListInstance request with nextToken"
       }
     ],
     "ListTagsForResource": [
@@ -1631,6 +1825,30 @@
         },
         "id": "example-2",
         "title": "Update description of an existing custom dataset"
+      }
+    ],
+    "UpdateInstance": [
+      {
+        "input": {
+          "instanceDescription": "updated example instance description",
+          "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+          "instanceName": "updated example instance name"
+        },
+        "output": {
+          "instance": {
+            "awsAccountId": "123456789012",
+            "createdTime": 172615383136,
+            "instanceDescription": "updated example instance description",
+            "instanceId": "9e193580-7cc5-45f7-9609-c43ba0ada793",
+            "instanceName": "updated example instance name",
+            "kmsKeyArn": "arn:aws:kms:us-west-2:123456789012:key/b14ffc39-b7d4-45ab-991a-6257a7f0d24d",
+            "lastModifiedTime": 172615383136,
+            "state": "Active",
+            "versionNumber": 2.0
+          }
+        },
+        "id": "example-1",
+        "title": "Successful UpdateInstance request"
       }
     ]
   }

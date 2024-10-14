@@ -1965,6 +1965,19 @@
         "FailureConditions$result": "<p>The specified result for when the failure conditions are met, such as rolling back the stage.</p>"
       }
     },
+    "RetryAttempt": {
+      "base": null,
+      "refs": {
+        "RetryStageMetadata$autoStageRetryAttempt": "<p>The number of attempts for a specific stage with automatic retry on stage failure. One attempt is allowed for automatic stage retry on failure.</p>",
+        "RetryStageMetadata$manualStageRetryAttempt": "<p>The number of attempts for a specific stage where manual retries have been made upon stage failure.</p>"
+      }
+    },
+    "RetryConfiguration": {
+      "base": "<p>The retry configuration specifies automatic retry for a failed stage, along with the configured retry mode.</p>",
+      "refs": {
+        "FailureConditions$retryConfiguration": "<p>The retry configuration specifies automatic retry for a failed stage, along with the configured retry mode.</p>"
+      }
+    },
     "RetryStageExecutionInput": {
       "base": "<p>Represents the input of a <code>RetryStageExecution</code> action.</p>",
       "refs": {
@@ -1973,6 +1986,18 @@
     "RetryStageExecutionOutput": {
       "base": "<p>Represents the output of a <code>RetryStageExecution</code> action.</p>",
       "refs": {
+      }
+    },
+    "RetryStageMetadata": {
+      "base": "<p>The details of a specific automatic retry on stage failure, including the attempt number and trigger.</p>",
+      "refs": {
+        "StageState$retryStageMetadata": "<p>he details of a specific automatic retry on stage failure, including the attempt number and trigger.</p>"
+      }
+    },
+    "RetryTrigger": {
+      "base": null,
+      "refs": {
+        "RetryStageMetadata$latestRetryTrigger": "<p>The latest trigger for a specific stage where manual or automatic retries have been made upon stage failure.</p>"
       }
     },
     "Revision": {
@@ -2386,6 +2411,7 @@
     "StageRetryMode": {
       "base": null,
       "refs": {
+        "RetryConfiguration$retryMode": "<p>The method that you want to configure for automatic stage retry on stage failure. You can specify to retry only failed action in the stage or all actions in the stage.</p>",
         "RetryStageExecutionInput$retryMode": "<p>The scope of the retry attempt.</p>"
       }
     },
