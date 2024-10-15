@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.3 - 2024-10-15
 
 * `Aws\Redshift` - This release launches the CreateIntegration, DeleteIntegration, DescribeIntegrations and ModifyIntegration APIs to create and manage Amazon Redshift Zero-ETL Integrations.
 * `Aws\QBusiness` - Amazon Q Business now supports embedding the Amazon Q Business web experience on third-party websites.
