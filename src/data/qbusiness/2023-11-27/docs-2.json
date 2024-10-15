@@ -1992,6 +1992,12 @@
         "IdentityProviderConfiguration$openIDConnectConfiguration": null
       }
     },
+    "Origin": {
+      "base": null,
+      "refs": {
+        "WebExperienceOrigins$member": null
+      }
+    },
     "Payload": {
       "base": null,
       "refs": {
@@ -2142,7 +2148,7 @@
       }
     },
     "QAppsConfiguration": {
-      "base": "<p>Configuration information about Amazon Q Apps. (preview feature)</p>",
+      "base": "<p>Configuration information about Amazon Q Apps.</p>",
       "refs": {
         "CreateApplicationRequest$qAppsConfiguration": "<p>An option to allow end users to create and use Amazon Q Apps in the web experience.</p>",
         "GetApplicationResponse$qAppsConfiguration": "<p>Settings for whether end users can create and use Amazon Q Apps in the web experience.</p>",
@@ -2241,7 +2247,7 @@
       "refs": {
         "BasicAuthConfiguration$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the basic authentication credentials stored in a Secrets Manager secret.</p>",
         "BatchPutDocumentRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your S3 bucket.</p>",
-        "CreateApplicationRequest$roleArn": "<p> The Amazon Resource Name (ARN) of an IAM role with permissions to access your Amazon CloudWatch logs and metrics.</p>",
+        "CreateApplicationRequest$roleArn": "<p> The Amazon Resource Name (ARN) of an IAM role with permissions to access your Amazon CloudWatch logs and metrics. If this property is not specified, Amazon Q Business will create a <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles.html#slr-permissions\">service linked role (SLR)</a> and use it as the application's role.</p>",
         "CreateDataSourceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources.</p>",
         "CreateRetrieverRequest$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the basic authentication credentials stored in a Secrets Manager secret.</p>",
         "CreateWebExperienceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the service role attached to your web experience.</p> <note> <p>You must provide this value if you're using IAM Identity Center to manage end user access to your application. If you're using legacy identity management to manage user access, you don't need to provide this value.</p> </note>",
@@ -2790,9 +2796,9 @@
     "UserGroups": {
       "base": null,
       "refs": {
-        "ChatInput$userGroups": "<p>The groups that a user associated with the chat input belongs to.</p>",
-        "ChatSyncInput$userGroups": "<p>The groups that a user associated with the chat input belongs to.</p>",
-        "UsersAndGroups$userGroups": "<p>The user groups associated with a topic control rule.</p>"
+        "ChatInput$userGroups": "<p>The group names that a user associated with the chat input belongs to.</p>",
+        "ChatSyncInput$userGroups": "<p>The group names that a user associated with the chat input belongs to.</p>",
+        "UsersAndGroups$userGroups": "<p>The user group names associated with a topic control rule.</p>"
       }
     },
     "UserId": {
@@ -2821,7 +2827,7 @@
       }
     },
     "UsersAndGroups": {
-      "base": "<p>Provides information about users and groups associated with a topic control rule.</p>",
+      "base": "<p>Provides information about users and group names associated with a topic control rule.</p>",
       "refs": {
         "Rule$includedUsersAndGroups": "<p>Users and groups to be included in a rule.</p>",
         "Rule$excludedUsersAndGroups": "<p>Users and groups to be excluded from a rule.</p>"
@@ -2879,6 +2885,14 @@
         "GetWebExperienceResponse$webExperienceId": "<p>The identifier of the Amazon Q Business web experience.</p>",
         "UpdateWebExperienceRequest$webExperienceId": "<p>The identifier of the Amazon Q Business web experience.</p>",
         "WebExperience$webExperienceId": "<p>The identifier of your Amazon Q Business web experience.</p>"
+      }
+    },
+    "WebExperienceOrigins": {
+      "base": null,
+      "refs": {
+        "CreateWebExperienceRequest$origins": "<p>Sets the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the base URL for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified). &lt;/p&gt; &lt;note&gt; &lt;p&gt;You must only submit a &lt;i&gt;base URL&lt;/i&gt; and not a full path. For example, &lt;code&gt;https://docs.aws.amazon.com&lt;/code&gt;.&lt;/p&gt; &lt;/note&gt; </code></pre>",
+        "GetWebExperienceResponse$origins": "<p>Gets the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the base URL for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified). &lt;/p&gt; </code></pre>",
+        "UpdateWebExperienceRequest$origins": "<p>Updates the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the &lt;i&gt;base URL&lt;/i&gt; for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified).&lt;/p&gt; &lt;note&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;Any values except &lt;code&gt;null&lt;/code&gt; submitted as part of this update will replace all previous values.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;You must only submit a &lt;i&gt;base URL&lt;/i&gt; and not a full path. For example, &lt;code&gt;https://docs.aws.amazon.com&lt;/code&gt;.&lt;/p&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/note&gt; </code></pre>"
       }
     },
     "WebExperienceSamplePromptsControlMode": {

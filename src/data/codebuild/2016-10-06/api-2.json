@@ -1130,6 +1130,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
@@ -1476,6 +1477,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationOutput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
@@ -1519,6 +1521,51 @@
         "QUEUE",
         "ON_DEMAND"
       ]
+    },
+    "FleetProxyRule":{
+      "type":"structure",
+      "required":[
+        "type",
+        "effect",
+        "entities"
+      ],
+      "members":{
+        "type":{"shape":"FleetProxyRuleType"},
+        "effect":{"shape":"FleetProxyRuleEffectType"},
+        "entities":{"shape":"FleetProxyRuleEntities"}
+      }
+    },
+    "FleetProxyRuleBehavior":{
+      "type":"string",
+      "enum":[
+        "ALLOW_ALL",
+        "DENY_ALL"
+      ]
+    },
+    "FleetProxyRuleEffectType":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "DENY"
+      ]
+    },
+    "FleetProxyRuleEntities":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":100,
+      "min":1
+    },
+    "FleetProxyRuleType":{
+      "type":"string",
+      "enum":[
+        "DOMAIN",
+        "IP"
+      ]
+    },
+    "FleetProxyRules":{
+      "type":"list",
+      "member":{"shape":"FleetProxyRule"},
+      "max":100
     },
     "FleetScalingMetricType":{
       "type":"string",
@@ -2162,6 +2209,13 @@
       "type":"list",
       "member":{"shape":"Project"}
     },
+    "ProxyConfiguration":{
+      "type":"structure",
+      "members":{
+        "defaultBehavior":{"shape":"FleetProxyRuleBehavior"},
+        "orderedProxyRules":{"shape":"FleetProxyRules"}
+      }
+    },
     "PutResourcePolicyInput":{
       "type":"structure",
       "required":[
@@ -2750,6 +2804,7 @@
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
+        "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "imageId":{"shape":"NonEmptyString"},
         "fleetServiceRole":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagList"}
@@ -2904,7 +2959,8 @@
         "COMMIT_MESSAGE",
         "WORKFLOW_NAME",
         "TAG_NAME",
-        "RELEASE_NAME"
+        "RELEASE_NAME",
+        "REPOSITORY_NAME"
       ]
     },
     "WebhookScopeType":{

@@ -714,6 +714,42 @@
         "UpdateFleetInput$overflowBehavior": "<p>The compute fleet overflow behavior.</p> <ul> <li> <p>For overflow behavior <code>QUEUE</code>, your overflow builds need to wait on the existing fleet instance to become available.</p> </li> <li> <p>For overflow behavior <code>ON_DEMAND</code>, your overflow builds run on CodeBuild on-demand.</p> <note> <p>If you choose to set your overflow behavior to on-demand while creating a VPC-connected fleet, make sure that you add the required VPC permissions to your project service role. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface\">Example policy statement to allow CodeBuild access to Amazon Web Services services required to create a VPC network interface</a>.</p> </note> </li> </ul>"
       }
     },
+    "FleetProxyRule": {
+      "base": "<p>Information about the proxy rule for your reserved capacity instances.</p>",
+      "refs": {
+        "FleetProxyRules$member": null
+      }
+    },
+    "FleetProxyRuleBehavior": {
+      "base": null,
+      "refs": {
+        "ProxyConfiguration$defaultBehavior": "<p>The default behavior of outgoing traffic.</p>"
+      }
+    },
+    "FleetProxyRuleEffectType": {
+      "base": null,
+      "refs": {
+        "FleetProxyRule$effect": "<p>The behavior of the proxy rule.</p>"
+      }
+    },
+    "FleetProxyRuleEntities": {
+      "base": null,
+      "refs": {
+        "FleetProxyRule$entities": "<p>The destination of the proxy rule.</p>"
+      }
+    },
+    "FleetProxyRuleType": {
+      "base": null,
+      "refs": {
+        "FleetProxyRule$type": "<p>The type of proxy rule.</p>"
+      }
+    },
+    "FleetProxyRules": {
+      "base": null,
+      "refs": {
+        "ProxyConfiguration$orderedProxyRules": "<p>An array of <code>FleetProxyRule</code> objects that represent the specified destination domains or IPs to allow or deny network access control to.</p>"
+      }
+    },
     "FleetScalingMetricType": {
       "base": null,
       "refs": {
@@ -1369,6 +1405,14 @@
         "BatchGetProjectsOutput$projects": "<p>Information about the requested build projects.</p>"
       }
     },
+    "ProxyConfiguration": {
+      "base": "<p>Information about the proxy configurations that apply network access control to your reserved capacity instances.</p>",
+      "refs": {
+        "CreateFleetInput$proxyConfiguration": "<p>The proxy configuration of the compute fleet.</p>",
+        "Fleet$proxyConfiguration": "<p>The proxy configuration of the compute fleet.</p>",
+        "UpdateFleetInput$proxyConfiguration": "<p>The proxy configuration of the compute fleet.</p>"
+      }
+    },
     "PutResourcePolicyInput": {
       "base": null,
       "refs": {
@@ -1777,6 +1821,7 @@
         "EnvironmentImage$description": "<p>The description of the Docker image.</p>",
         "EnvironmentVariable$value": "<p>The value of the environment variable.</p> <important> <p>We strongly discourage the use of <code>PLAINTEXT</code> environment variables to store sensitive values, especially Amazon Web Services secret key IDs. <code>PLAINTEXT</code> environment variables can be displayed in plain text using the CodeBuild console and the CLI. For sensitive values, we recommend you use an environment variable of type <code>PARAMETER_STORE</code> or <code>SECRETS_MANAGER</code>. </p> </important>",
         "ExportedEnvironmentVariable$value": "<p>The value assigned to the exported environment variable.</p>",
+        "FleetProxyRuleEntities$member": null,
         "FleetStatus$message": "<p>A message associated with the status of a compute fleet.</p>",
         "ImageVersions$member": null,
         "ListBuildBatchesForProjectInput$nextToken": "<p>The <code>nextToken</code> value returned from a previous call to <code>ListBuildBatchesForProject</code>. This specifies the next item to return. To return the beginning of the list, exclude this parameter.</p>",

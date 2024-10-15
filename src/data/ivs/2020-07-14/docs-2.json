@@ -424,9 +424,9 @@
     "Integer": {
       "base": null,
       "refs": {
-        "AudioConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
-        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
         "AudioConfiguration$channels": "<p>Number of audio channels.</p>",
+        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
+        "AudioConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
         "VideoConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
         "VideoConfiguration$targetFramerate": "<p>The expected ingest framerate. This is configured in the encoder.</p>",
         "VideoConfiguration$videoHeight": "<p>Video-resolution height in pixels.</p>",
@@ -1032,10 +1032,11 @@
       "base": null,
       "refs": {
         "AudioConfiguration$codec": "<p>Codec used for the audio encoding.</p>",
+        "StreamEvent$code": "<p>Provides additional details about the stream event. There are several values; note that the long descriptions are provided in the IVS console but not delivered through the IVS API or EventBridge:</p> <ul> <li> <p> <code>StreamTakeoverMediaMismatch</code> — The broadcast client attempted to take over with different media properties (e.g., codec, resolution, or video track type) from the original stream.</p> </li> <li> <p> <code>StreamTakeoverInvalidPriority</code> — The broadcast client attempted a takeover with either a priority integer value equal to or lower than the original stream's value or a value outside the allowed range of 1 to 2,147,483,647.</p> </li> <li> <p> <code>StreamTakeoverLimitBreached</code> — The broadcast client reached the maximum allowed takeover attempts for this stream.</p> </li> </ul>",
         "StreamEvent$name": "<p>Name that identifies the stream event within a <code>type</code>.</p>",
         "StreamEvent$type": "<p>Logical group for certain events.</p>",
-        "VideoConfiguration$avcProfile": "<p>Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification.</p>",
         "VideoConfiguration$avcLevel": "<p>Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. For details, see the H.264 specification.</p>",
+        "VideoConfiguration$avcProfile": "<p>Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification.</p>",
         "VideoConfiguration$codec": "<p>Codec used for the video encoding.</p>",
         "VideoConfiguration$encoder": "<p>Software or hardware used to encode the video.</p>"
       }
@@ -1131,10 +1132,10 @@
       "base": null,
       "refs": {
         "StreamEvent$eventTime": "<p>Time when the event occurred. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "StreamSession$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
-        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>"
+        "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
+        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>"
       }
     },
     "TranscodePreset": {

@@ -24,6 +24,7 @@
     "CreateEventSubscription": "<p>Creates an Amazon Redshift event notification subscription. This action requires an ARN (Amazon Resource Name) of an Amazon SNS topic created by either the Amazon Redshift console, the Amazon SNS console, or the Amazon SNS API. To obtain an ARN with Amazon SNS, you must create a topic in Amazon SNS and subscribe to the topic. The ARN is displayed in the SNS console.</p> <p>You can specify the source type, and lists of Amazon Redshift source IDs, event categories, and event severities. Notifications will be sent for all events you want that match those criteria. For example, you can specify source type = cluster, source ID = my-cluster-1 and mycluster2, event categories = Availability, Backup, and severity = ERROR. The subscription will only send notifications for those ERROR events in the Availability and Backup categories for the specified clusters.</p> <p>If you specify both the source type and source IDs, such as source type = cluster and source identifier = my-cluster-1, notifications will be sent for all the cluster events for my-cluster-1. If you specify a source type but do not specify a source identifier, you will receive notice of the events for the objects of that type in your Amazon Web Services account. If you do not specify either the SourceType nor the SourceIdentifier, you will be notified of events generated from all Amazon Redshift sources belonging to your Amazon Web Services account. You must specify a source type if you specify a source ID.</p>",
     "CreateHsmClientCertificate": "<p>Creates an HSM client certificate that an Amazon Redshift cluster will use to connect to the client's HSM in order to store and retrieve the keys used to encrypt the cluster databases.</p> <p>The command returns a public key, which you must store in the HSM. In addition to creating the HSM certificate, you must create an Amazon Redshift HSM configuration that provides a cluster the information needed to store and use encryption keys in the HSM. For more information, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html#working-with-HSM\">Hardware Security Modules</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
     "CreateHsmConfiguration": "<p>Creates an HSM configuration that contains the information required by an Amazon Redshift cluster to store and use database encryption keys in a Hardware Security Module (HSM). After creating the HSM configuration, you can specify it as a parameter when creating a cluster. The cluster will then store its encryption keys in the HSM.</p> <p>In addition to creating an HSM configuration, you must also create an HSM client certificate. For more information, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-HSM.html\">Hardware Security Modules</a> in the Amazon Redshift Cluster Management Guide.</p>",
+    "CreateIntegration": "<p>Creates a zero-ETL integration with Amazon Redshift.</p>",
     "CreateRedshiftIdcApplication": "<p>Creates an Amazon Redshift application for use with IAM Identity Center.</p>",
     "CreateScheduledAction": "<p>Creates a scheduled action. A scheduled action contains a schedule and an Amazon Redshift API action. For example, you can create a schedule of when to run the <code>ResizeCluster</code> API operation. </p>",
     "CreateSnapshotCopyGrant": "<p>Creates a snapshot copy grant that permits Amazon Redshift to use an encrypted symmetric key from Key Management Service (KMS) to encrypt copied snapshots in a destination region.</p> <p> For more information about managing snapshot copy grants, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-db-encryption.html\">Amazon Redshift Database Encryption</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>",
@@ -42,6 +43,7 @@
     "DeleteEventSubscription": "<p>Deletes an Amazon Redshift event notification subscription.</p>",
     "DeleteHsmClientCertificate": "<p>Deletes the specified HSM client certificate.</p>",
     "DeleteHsmConfiguration": "<p>Deletes the specified Amazon Redshift HSM configuration.</p>",
+    "DeleteIntegration": "<p>Deletes a zero-ETL integration with Amazon Redshift.</p>",
     "DeletePartner": "<p>Deletes a partner integration from a cluster. Data can still flow to the cluster until the integration is deleted at the partner's website.</p>",
     "DeleteRedshiftIdcApplication": "<p>Deletes an Amazon Redshift IAM Identity Center application.</p>",
     "DeleteResourcePolicy": "<p>Deletes the resource policy for a specified resource.</p>",
@@ -74,6 +76,7 @@
     "DescribeHsmClientCertificates": "<p>Returns information about the specified HSM client certificate. If no certificate ID is specified, returns information about all the HSM certificates owned by your Amazon Web Services account.</p> <p>If you specify both tag keys and tag values in the same request, Amazon Redshift returns all HSM client certificates that match any combination of the specified keys and values. For example, if you have <code>owner</code> and <code>environment</code> for tag keys, and <code>admin</code> and <code>test</code> for tag values, all HSM client certificates that have any combination of those values are returned.</p> <p>If both tag keys and values are omitted from the request, HSM client certificates are returned regardless of whether they have tag keys or values associated with them.</p>",
     "DescribeHsmConfigurations": "<p>Returns information about the specified Amazon Redshift HSM configuration. If no configuration ID is specified, returns information about all the HSM configurations owned by your Amazon Web Services account.</p> <p>If you specify both tag keys and tag values in the same request, Amazon Redshift returns all HSM connections that match any combination of the specified keys and values. For example, if you have <code>owner</code> and <code>environment</code> for tag keys, and <code>admin</code> and <code>test</code> for tag values, all HSM connections that have any combination of those values are returned.</p> <p>If both tag keys and values are omitted from the request, HSM connections are returned regardless of whether they have tag keys or values associated with them.</p>",
     "DescribeInboundIntegrations": "<p>Returns a list of inbound integrations.</p>",
+    "DescribeIntegrations": "<p>Describes one or more zero-ETL integrations with Amazon Redshift.</p>",
     "DescribeLoggingStatus": "<p>Describes whether information, such as queries and connection attempts, is being logged for the specified Amazon Redshift cluster.</p>",
     "DescribeNodeConfigurationOptions": "<p>Returns properties of possible node configurations such as node type, number of nodes, and disk usage for the specified action type.</p>",
     "DescribeOrderableClusterOptions": "<p>Returns a list of orderable cluster options. Before you create a new cluster you can use this operation to find what options are available, such as the EC2 Availability Zones (AZ) in the specific Amazon Web Services Region that you can specify, and the node types you can request. The node types differ by available storage, memory, CPU and price. With the cost involved you might want to obtain a list of cluster options in the specific region and specify values when creating a cluster. For more information about managing clusters, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
@@ -115,6 +118,7 @@
     "ModifyCustomDomainAssociation": "<p>Contains information for changing a custom domain association.</p>",
     "ModifyEndpointAccess": "<p>Modifies a Redshift-managed VPC endpoint.</p>",
     "ModifyEventSubscription": "<p>Modifies an existing Amazon Redshift event notification subscription.</p>",
+    "ModifyIntegration": "<p>Modifies a zero-ETL integration with Amazon Redshift.</p>",
     "ModifyRedshiftIdcApplication": "<p>Changes an existing Amazon Redshift IAM Identity Center application.</p>",
     "ModifyScheduledAction": "<p>Modifies a scheduled action. </p>",
     "ModifySnapshotCopyRetentionPeriod": "<p>Modifies the number of days to retain snapshots in the destination Amazon Web Services Region after they are copied from the source Amazon Web Services Region. By default, this operation only changes the retention period of copied automated snapshots. The retention periods for both new and existing copied automated snapshots are updated with the new retention period. You can set the manual option to change only the retention periods of copied manual snapshots. If you set this option, only newly copied manual snapshots have the new retention period. </p>",
@@ -126,7 +130,7 @@
     "RebootCluster": "<p>Reboots a cluster. This action is taken as soon as possible. It results in a momentary outage to the cluster, during which the cluster status is set to <code>rebooting</code>. A cluster event is created when the reboot is completed. Any pending cluster modifications (see <a>ModifyCluster</a>) are applied at this reboot. For more information about managing clusters, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>",
     "RejectDataShare": "<p>From a datashare consumer account, rejects the specified datashare.</p>",
     "ResetClusterParameterGroup": "<p>Sets one or more parameters of the specified parameter group to their default values and sets the source values of the parameters to \"engine-default\". To reset the entire parameter group specify the <i>ResetAllParameters</i> parameter. For parameter changes to take effect you must reboot any associated clusters. </p>",
-    "ResizeCluster": "<p>Changes the size of the cluster. You can change the cluster's type, or change the number or type of nodes. The default behavior is to use the elastic resize method. With an elastic resize, your cluster is available for read and write operations more quickly than with the classic resize method. </p> <p>Elastic resize operations have the following restrictions:</p> <ul> <li> <p>You can only resize clusters of the following types:</p> <ul> <li> <p>dc2.large</p> </li> <li> <p>dc2.8xlarge</p> </li> <li> <p>ra3.xlplus</p> </li> <li> <p>ra3.4xlarge</p> </li> <li> <p>ra3.16xlarge</p> </li> </ul> </li> <li> <p>The type of nodes that you add must match the node type for the cluster.</p> </li> </ul>",
+    "ResizeCluster": "<p>Changes the size of the cluster. You can change the cluster's type, or change the number or type of nodes. The default behavior is to use the elastic resize method. With an elastic resize, your cluster is available for read and write operations more quickly than with the classic resize method. </p> <p>Elastic resize operations have the following restrictions:</p> <ul> <li> <p>You can only resize clusters of the following types:</p> <ul> <li> <p>dc2.large</p> </li> <li> <p>dc2.8xlarge</p> </li> <li> <p>ra3.large</p> </li> <li> <p>ra3.xlplus</p> </li> <li> <p>ra3.4xlarge</p> </li> <li> <p>ra3.16xlarge</p> </li> </ul> </li> <li> <p>The type of nodes that you add must match the node type for the cluster.</p> </li> </ul>",
     "RestoreFromClusterSnapshot": "<p>Creates a new cluster from a snapshot. By default, Amazon Redshift creates the resulting cluster with the same configuration as the original cluster from which the snapshot was created, except that the new cluster is created with the default cluster security and parameter groups. After Amazon Redshift creates the cluster, you can use the <a>ModifyCluster</a> API to associate a different security group and different parameter group with the restored cluster. If you are using a DS node type, you can also choose to change to another DS node type of the same size during restore.</p> <p>If you restore a cluster into a VPC, you must provide a cluster subnet group where you want the cluster restored.</p> <p> For more information about working with snapshots, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html\">Amazon Redshift Snapshots</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p>",
     "RestoreTableFromClusterSnapshot": "<p>Creates a new table from a table in an Amazon Redshift cluster snapshot. You must create the new table within the Amazon Redshift cluster that the snapshot was taken from.</p> <p>You cannot use <code>RestoreTableFromClusterSnapshot</code> to restore a table with the same name as an existing table in an Amazon Redshift cluster. That is, you cannot overwrite an existing table in a cluster with a restored table. If you want to replace your original table with a new, restored table, then rename or drop your original table before you call <code>RestoreTableFromClusterSnapshot</code>. When you have renamed your original table, then you can pass the original name of the table as the <code>NewTableName</code> parameter value in the call to <code>RestoreTableFromClusterSnapshot</code>. This way, you can replace the original table with the table created from the snapshot.</p> <p>You can't use this operation to restore tables with <a href=\"https://docs.aws.amazon.com/redshift/latest/dg/t_Sorting_data.html#t_Sorting_data-interleaved\">interleaved sort keys</a>.</p>",
     "ResumeCluster": "<p>Resumes a paused cluster.</p>",
@@ -943,6 +947,11 @@
       "refs": {
       }
     },
+    "CreateIntegrationMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateRedshiftIdcApplicationMessage": {
       "base": null,
       "refs": {
@@ -1180,6 +1189,11 @@
       "refs": {
       }
     },
+    "DeleteIntegrationMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteRedshiftIdcApplicationMessage": {
       "base": null,
       "refs": {
@@ -1375,6 +1389,35 @@
       "refs": {
       }
     },
+    "DescribeIntegrationsFilter": {
+      "base": "<p>A set of elements to filter the returned integrations.</p>",
+      "refs": {
+        "DescribeIntegrationsFilterList$member": null
+      }
+    },
+    "DescribeIntegrationsFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeIntegrationsMessage$Filters": "<p>A filter that specifies one or more resources to return.</p>"
+      }
+    },
+    "DescribeIntegrationsFilterName": {
+      "base": null,
+      "refs": {
+        "DescribeIntegrationsFilter$Name": "<p>Specifies the type of integration filter.</p>"
+      }
+    },
+    "DescribeIntegrationsFilterValueList": {
+      "base": null,
+      "refs": {
+        "DescribeIntegrationsFilter$Values": "<p>Specifies the values to filter on.</p>"
+      }
+    },
+    "DescribeIntegrationsMessage": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeLoggingStatusMessage": {
       "base": "<p/>",
       "refs": {
@@ -1470,6 +1513,12 @@
       "refs": {
       }
     },
+    "Description": {
+      "base": null,
+      "refs": {
+        "Integration$Description": "<p>The description of the integration.</p>"
+      }
+    },
     "DisableLoggingMessage": {
       "base": "<p/>",
       "refs": {
@@ -1553,6 +1602,13 @@
     "EnableSnapshotCopyResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "EncryptionContextMap": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationMessage$AdditionalEncryptionContext": "<p>An optional set of non-secret key–value pairs that contains additional contextual information about the data. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context\">Encryption context</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p> <p>You can only include this parameter if you specify the <code>KMSKeyId</code> parameter.</p>",
+        "Integration$AdditionalEncryptionContext": "<p>The encryption context for the integration. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context\">Encryption context</a> in the <i>Amazon Web Services Key Management Service Developer Guide</i>.</p>"
       }
     },
     "Endpoint": {
@@ -1986,6 +2042,7 @@
         "DescribeHsmClientCertificatesMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
         "DescribeHsmConfigurationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
         "DescribeInboundIntegrationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
+        "DescribeIntegrationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
         "DescribeNodeConfigurationOptionsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>500</code> </p> <p>Constraints: minimum 100, maximum 500.</p>",
         "DescribeOrderableClusterOptionsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified <code>MaxRecords</code> value, a value is returned in a <code>marker</code> field of the response. You can retrieve the next set of records by retrying the command with the returned marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20, maximum 100.</p>",
         "DescribeRedshiftIdcApplicationsMessage$MaxRecords": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified MaxRecords value, a value is returned in a marker field of the response. You can retrieve the next set of records by retrying the command with the returned marker value.</p>",
@@ -2025,6 +2082,42 @@
         "SnapshotSchedule$AssociatedClusterCount": "<p>The number of clusters associated with the schedule.</p>"
       }
     },
+    "Integration": {
+      "base": null,
+      "refs": {
+        "IntegrationList$member": null
+      }
+    },
+    "IntegrationAlreadyExistsFault": {
+      "base": "<p>The integration you are trying to create already exists.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationArn": {
+      "base": null,
+      "refs": {
+        "DeleteIntegrationMessage$IntegrationArn": "<p>The unique identifier of the integration to delete.</p>",
+        "DescribeIntegrationsMessage$IntegrationArn": "<p>The unique identifier of the integration.</p>",
+        "ModifyIntegrationMessage$IntegrationArn": "<p>The unique identifier of the integration to modify.</p>"
+      }
+    },
+    "IntegrationConflictOperationFault": {
+      "base": "<p>A conflicting conditional operation is currently in progress against this resource. This typically occurs when there are multiple requests being made to the same resource at the same time, and these requests conflict with each other.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationConflictStateFault": {
+      "base": "<p>The integration is in an invalid state and can't perform the requested operation.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationDescription": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationMessage$Description": "<p>A description of the integration.</p>",
+        "ModifyIntegrationMessage$Description": "<p>A new description for the integration.</p>"
+      }
+    },
     "IntegrationError": {
       "base": "<p>The error of an inbound integration.</p>",
       "refs": {
@@ -2034,11 +2127,46 @@
     "IntegrationErrorList": {
       "base": null,
       "refs": {
-        "InboundIntegration$Errors": "<p>The outstanding errors of an inbound integration. Each item is an \"IntegrationError\". This is null if there is no error.</p>"
+        "InboundIntegration$Errors": "<p>The outstanding errors of an inbound integration. Each item is an \"IntegrationError\". This is null if there is no error.</p>",
+        "Integration$Errors": "<p>Any errors associated with the integration.</p>"
+      }
+    },
+    "IntegrationList": {
+      "base": null,
+      "refs": {
+        "IntegrationsMessage$Integrations": "<p>List of integrations that are described.</p>"
+      }
+    },
+    "IntegrationName": {
+      "base": null,
+      "refs": {
+        "CreateIntegrationMessage$IntegrationName": "<p>The name of the integration.</p>",
+        "Integration$IntegrationName": "<p>The name of the integration.</p>",
+        "ModifyIntegrationMessage$IntegrationName": "<p>A new name for the integration.</p>"
       }
     },
     "IntegrationNotFoundFault": {
       "base": "<p>The integration can't be found.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationQuotaExceededFault": {
+      "base": "<p>You can't create any more zero-ETL integrations because the quota has been reached.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationSourceNotFoundFault": {
+      "base": "<p>The specified integration source can't be found.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationTargetNotFoundFault": {
+      "base": "<p>The specified integration target can't be found.</p>",
+      "refs": {
+      }
+    },
+    "IntegrationsMessage": {
+      "base": null,
       "refs": {
       }
     },
@@ -2408,6 +2536,11 @@
       }
     },
     "ModifyEventSubscriptionResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyIntegrationMessage": {
       "base": null,
       "refs": {
       }
@@ -3464,7 +3597,7 @@
         "CreateClusterMessage$DBName": "<p>The name of the first database to be created when the cluster is created.</p> <p>To create additional databases after the cluster is created, connect to the cluster with a SQL client and use SQL commands to create a database. For more information, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/dg/t_creating_database.html\">Create a Database</a> in the Amazon Redshift Database Developer Guide. </p> <p>Default: <code>dev</code> </p> <p>Constraints:</p> <ul> <li> <p>Must contain 1 to 64 alphanumeric characters.</p> </li> <li> <p>Must contain only lowercase letters.</p> </li> <li> <p>Cannot be a word that is reserved by the service. A list of reserved words can be found in <a href=\"https://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html\">Reserved Words</a> in the Amazon Redshift Database Developer Guide. </p> </li> </ul>",
         "CreateClusterMessage$ClusterIdentifier": "<p>A unique identifier for the cluster. You use this identifier to refer to the cluster for any subsequent cluster operations such as deleting or modifying. The identifier also appears in the Amazon Redshift console.</p> <p>Constraints:</p> <ul> <li> <p>Must contain from 1 to 63 alphanumeric characters or hyphens.</p> </li> <li> <p>Alphabetic characters must be lowercase.</p> </li> <li> <p>First character must be a letter.</p> </li> <li> <p>Cannot end with a hyphen or contain two consecutive hyphens.</p> </li> <li> <p>Must be unique for all clusters within an Amazon Web Services account.</p> </li> </ul> <p>Example: <code>myexamplecluster</code> </p>",
         "CreateClusterMessage$ClusterType": "<p>The type of the cluster. When cluster type is specified as</p> <ul> <li> <p> <code>single-node</code>, the <b>NumberOfNodes</b> parameter is not required.</p> </li> <li> <p> <code>multi-node</code>, the <b>NumberOfNodes</b> parameter is required.</p> </li> </ul> <p>Valid Values: <code>multi-node</code> | <code>single-node</code> </p> <p>Default: <code>multi-node</code> </p>",
-        "CreateClusterMessage$NodeType": "<p>The node type to be provisioned for the cluster. For information about node types, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes\"> Working with Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p> <p>Valid Values: <code>dc2.large</code> | <code>dc2.8xlarge</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code> </p>",
+        "CreateClusterMessage$NodeType": "<p>The node type to be provisioned for the cluster. For information about node types, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes\"> Working with Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p> <p>Valid Values: <code>dc2.large</code> | <code>dc2.8xlarge</code> | <code>ra3.large</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code> </p>",
         "CreateClusterMessage$MasterUsername": "<p>The user name associated with the admin user account for the cluster that is being created.</p> <p>Constraints:</p> <ul> <li> <p>Must be 1 - 128 alphanumeric characters or hyphens. The user name can't be <code>PUBLIC</code>.</p> </li> <li> <p>Must contain only lowercase letters, numbers, underscore, plus sign, period (dot), at symbol (@), or hyphen.</p> </li> <li> <p>The first character must be a letter.</p> </li> <li> <p>Must not contain a colon (:) or a slash (/).</p> </li> <li> <p>Cannot be a reserved word. A list of reserved words can be found in <a href=\"https://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html\">Reserved Words</a> in the Amazon Redshift Database Developer Guide. </p> </li> </ul>",
         "CreateClusterMessage$ClusterSubnetGroupName": "<p>The name of a cluster subnet group to be associated with this cluster.</p> <p>If this parameter is not provided the resulting cluster will be deployed outside virtual private cloud (VPC).</p>",
         "CreateClusterMessage$AvailabilityZone": "<p>The EC2 Availability Zone (AZ) in which you want Amazon Redshift to provision the cluster. For example, if you have several EC2 instances running in a specific Availability Zone, then you might want the cluster to be provisioned in the same zone in order to decrease network latency.</p> <p>Default: A random, system-chosen Availability Zone in the region that is specified by the endpoint.</p> <p>Example: <code>us-east-2d</code> </p> <p>Constraint: The specified Availability Zone must be in the same region as the current endpoint.</p>",
@@ -3510,6 +3643,9 @@
         "CreateHsmConfigurationMessage$HsmPartitionName": "<p>The name of the partition in the HSM where the Amazon Redshift clusters will store their database encryption keys.</p>",
         "CreateHsmConfigurationMessage$HsmPartitionPassword": "<p>The password required to access the HSM partition.</p>",
         "CreateHsmConfigurationMessage$HsmServerPublicCertificate": "<p>The HSMs public certificate file. When using Cloud HSM, the file name is server.pem.</p>",
+        "CreateIntegrationMessage$SourceArn": "<p>The Amazon Resource Name (ARN) of the database to use as the source for replication.</p>",
+        "CreateIntegrationMessage$TargetArn": "<p>The Amazon Resource Name (ARN) of the Amazon Redshift data warehouse to use as the target for replication.</p>",
+        "CreateIntegrationMessage$KMSKeyId": "<p>An Key Management Service (KMS) key identifier for the key to use to encrypt the integration. If you don't specify an encryption key, the default Amazon Web Services owned key is used.</p>",
         "CreateRedshiftIdcApplicationMessage$IdcInstanceArn": "<p>The Amazon resource name (ARN) of the IAM Identity Center instance where Amazon Redshift creates a new managed application.</p>",
         "CreateRedshiftIdcApplicationMessage$IamRoleArn": "<p>The IAM role ARN for the Amazon Redshift IAM Identity Center application instance. It has the required permissions to be assumed and invoke the IDC Identity Center API.</p>",
         "CreateScheduledActionMessage$ScheduledActionName": "<p>The name of the scheduled action. The name must be unique within an account. For more information about this parameter, see <a>ScheduledAction</a>. </p>",
@@ -3610,6 +3746,8 @@
         "DescribeInboundIntegrationsMessage$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the inbound integration.</p>",
         "DescribeInboundIntegrationsMessage$TargetArn": "<p>The Amazon Resource Name (ARN) of the target of an inbound integration.</p>",
         "DescribeInboundIntegrationsMessage$Marker": "<p>An optional parameter that specifies the starting point to return a set of response records. When the results of a <a>DescribeInboundIntegrations</a> request exceed the value specified in <code>MaxRecords</code>, Amazon Web Services returns a value in the <code>Marker</code> field of the response. You can retrieve the next set of response records by providing the returned marker value in the <code>Marker</code> parameter and retrying the request. </p>",
+        "DescribeIntegrationsFilterValueList$member": null,
+        "DescribeIntegrationsMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeIntegrations</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
         "DescribeLoggingStatusMessage$ClusterIdentifier": "<p>The identifier of the cluster from which to get the logging status.</p> <p>Example: <code>examplecluster</code> </p>",
         "DescribeNodeConfigurationOptionsMessage$ClusterIdentifier": "<p>The identifier of the cluster to evaluate for possible node configurations.</p>",
         "DescribeNodeConfigurationOptionsMessage$SnapshotIdentifier": "<p>The identifier of the snapshot to evaluate for possible node configurations.</p>",
@@ -3643,7 +3781,7 @@
         "DescribeTableRestoreStatusMessage$TableRestoreRequestId": "<p>The identifier of the table restore request to return status for. If you don't specify a <code>TableRestoreRequestId</code> value, then <code>DescribeTableRestoreStatus</code> returns the status of all in-progress table restore requests.</p>",
         "DescribeTableRestoreStatusMessage$Marker": "<p>An optional pagination token provided by a previous <code>DescribeTableRestoreStatus</code> request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by the <code>MaxRecords</code> parameter.</p>",
         "DescribeTagsMessage$ResourceName": "<p>The Amazon Resource Name (ARN) for which you want to describe the tag or tags. For example, <code>arn:aws:redshift:us-east-2:123456789:cluster:t1</code>. </p>",
-        "DescribeTagsMessage$ResourceType": "<p>The type of resource with which you want to view tags. Valid resource types are: </p> <ul> <li> <p>Cluster</p> </li> <li> <p>CIDR/IP</p> </li> <li> <p>EC2 security group</p> </li> <li> <p>Snapshot</p> </li> <li> <p>Cluster security group</p> </li> <li> <p>Subnet group</p> </li> <li> <p>HSM connection</p> </li> <li> <p>HSM certificate</p> </li> <li> <p>Parameter group</p> </li> <li> <p>Snapshot copy grant</p> </li> </ul> <p>For more information about Amazon Redshift resource types and constructing ARNs, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-overview.html#redshift-iam-access-control-specify-actions\">Specifying Policy Elements: Actions, Effects, Resources, and Principals</a> in the Amazon Redshift Cluster Management Guide. </p>",
+        "DescribeTagsMessage$ResourceType": "<p>The type of resource with which you want to view tags. Valid resource types are: </p> <ul> <li> <p>Cluster</p> </li> <li> <p>CIDR/IP</p> </li> <li> <p>EC2 security group</p> </li> <li> <p>Snapshot</p> </li> <li> <p>Cluster security group</p> </li> <li> <p>Subnet group</p> </li> <li> <p>HSM connection</p> </li> <li> <p>HSM certificate</p> </li> <li> <p>Parameter group</p> </li> <li> <p>Snapshot copy grant</p> </li> <li> <p>Integration (zero-ETL integration)</p> <note> <p>To describe the tags associated with an <code>integration</code>, don't specify <code>ResourceType</code>, instead specify the <code>ResourceName</code> of the integration.</p> </note> </li> </ul> <p>For more information about Amazon Redshift resource types and constructing ARNs, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/redshift-iam-access-control-overview.html#redshift-iam-access-control-specify-actions\">Specifying Policy Elements: Actions, Effects, Resources, and Principals</a> in the Amazon Redshift Cluster Management Guide. </p>",
         "DescribeTagsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the <code>marker</code> parameter and retrying the command. If the <code>marker</code> field is empty, all response records have been retrieved for the request. </p>",
         "DescribeUsageLimitsMessage$UsageLimitId": "<p>The identifier of the usage limit to describe.</p>",
         "DescribeUsageLimitsMessage$ClusterIdentifier": "<p>The identifier of the cluster for which you want to describe usage limits.</p>",
@@ -3663,6 +3801,8 @@
         "EnableSnapshotCopyMessage$ClusterIdentifier": "<p>The unique identifier of the source cluster to copy snapshots from.</p> <p>Constraints: Must be the valid name of an existing cluster that does not already have cross-region snapshot copy enabled.</p>",
         "EnableSnapshotCopyMessage$DestinationRegion": "<p>The destination Amazon Web Services Region that you want to copy snapshots to.</p> <p>Constraints: Must be the name of a valid Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#redshift_region\">Regions and Endpoints</a> in the Amazon Web Services General Reference. </p>",
         "EnableSnapshotCopyMessage$SnapshotCopyGrantName": "<p>The name of the snapshot copy grant to use when snapshots of an Amazon Web Services KMS-encrypted cluster are copied to the destination region.</p>",
+        "EncryptionContextMap$key": null,
+        "EncryptionContextMap$value": null,
         "Endpoint$Address": "<p>The DNS address of the Cluster.</p>",
         "EndpointAccess$ClusterIdentifier": "<p>The cluster identifier of the cluster associated with the endpoint.</p>",
         "EndpointAccess$ResourceOwner": "<p>The Amazon Web Services account ID of the owner of the cluster.</p>",
@@ -3730,8 +3870,13 @@
         "InboundIntegration$SourceArn": "<p>The Amazon Resource Name (ARN) of the source of an inbound integration.</p>",
         "InboundIntegration$TargetArn": "<p>The Amazon Resource Name (ARN) of the target of an inbound integration.</p>",
         "InboundIntegrationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the <code>Marker</code> parameter and retrying the command. If the <code>Marker</code> field is empty, all response records have been retrieved for the request. </p>",
+        "Integration$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p>",
+        "Integration$SourceArn": "<p>The Amazon Resource Name (ARN) of the database used as the source for replication.</p>",
+        "Integration$TargetArn": "<p>The Amazon Resource Name (ARN) of the Amazon Redshift data warehouse to use as the target for replication.</p>",
+        "Integration$KMSKeyId": "<p>The Key Management Service (KMS) key identifier for the key used to encrypt the integration.</p>",
         "IntegrationError$ErrorCode": "<p>The error code of an inbound integration error.</p>",
         "IntegrationError$ErrorMessage": "<p>The error message of an inbound integration error.</p>",
+        "IntegrationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the <code>Marker</code> parameter and retrying the command. If the <code>Marker</code> field is empty, all response records have been retrieved for the request.</p>",
         "ListRecommendationsMessage$ClusterIdentifier": "<p>The unique identifier of the Amazon Redshift cluster for which the list of Advisor recommendations is returned. If the neither the cluster identifier and the cluster namespace ARN parameters are specified, then recommendations for all clusters in the account are returned.</p>",
         "ListRecommendationsMessage$NamespaceArn": "<p>The Amazon Redshift cluster namespace Amazon Resource Name (ARN) for which the list of Advisor recommendations is returned. If the neither the cluster identifier and the cluster namespace ARN parameters are specified, then recommendations for all clusters in the account are returned.</p>",
         "ListRecommendationsMessage$Marker": "<p>A value that indicates the starting point for the next set of response records in a subsequent request. If a value is returned in a response, you can retrieve the next set of records by providing this returned marker value in the Marker parameter and retrying the command. If the Marker field is empty, all response records have been retrieved for the request. </p>",
@@ -3752,7 +3897,7 @@
         "ModifyClusterMaintenanceMessage$DeferMaintenanceIdentifier": "<p>A unique identifier for the deferred maintenance window.</p>",
         "ModifyClusterMessage$ClusterIdentifier": "<p>The unique identifier of the cluster to be modified.</p> <p>Example: <code>examplecluster</code> </p>",
         "ModifyClusterMessage$ClusterType": "<p>The new cluster type.</p> <p>When you submit your cluster resize request, your existing cluster goes into a read-only mode. After Amazon Redshift provisions a new cluster based on your resize requirements, there will be outage for a period while the old cluster is deleted and your connection is switched to the new cluster. You can use <a>DescribeResize</a> to track the progress of the resize request. </p> <p>Valid Values: <code> multi-node | single-node </code> </p>",
-        "ModifyClusterMessage$NodeType": "<p>The new node type of the cluster. If you specify a new node type, you must also specify the number of nodes parameter.</p> <p> For more information about resizing clusters, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/rs-resize-tutorial.html\">Resizing Clusters in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p> <p>Valid Values: <code>dc2.large</code> | <code>dc2.8xlarge</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code> </p>",
+        "ModifyClusterMessage$NodeType": "<p>The new node type of the cluster. If you specify a new node type, you must also specify the number of nodes parameter.</p> <p> For more information about resizing clusters, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/rs-resize-tutorial.html\">Resizing Clusters in Amazon Redshift</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p> <p>Valid Values: <code>dc2.large</code> | <code>dc2.8xlarge</code> | <code>ra3.large</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code> </p>",
         "ModifyClusterMessage$ClusterParameterGroupName": "<p>The name of the cluster parameter group to apply to this cluster. This change is applied only after the cluster is rebooted. To reboot a cluster use <a>RebootCluster</a>. </p> <p>Default: Uses existing setting.</p> <p>Constraints: The cluster parameter group must be in the same parameter group family that matches the cluster version.</p>",
         "ModifyClusterMessage$PreferredMaintenanceWindow": "<p>The weekly time range (in UTC) during which system maintenance can occur, if necessary. If system maintenance is necessary during the window, it may result in an outage.</p> <p>This maintenance window change is made immediately. If the new maintenance window indicates the current time, there must be at least 120 minutes between the current time and end of the window in order to ensure that pending changes are applied.</p> <p>Default: Uses existing setting.</p> <p>Format: ddd:hh24:mi-ddd:hh24:mi, for example <code>wed:07:30-wed:08:00</code>.</p> <p>Valid Days: Mon | Tue | Wed | Thu | Fri | Sat | Sun</p> <p>Constraints: Must be at least 30 minutes.</p>",
         "ModifyClusterMessage$ClusterVersion": "<p>The new version number of the Amazon Redshift engine to upgrade to.</p> <p>For major version upgrades, if a non-default cluster parameter group is currently in use, a new cluster parameter group in the cluster parameter group family for the new version must be specified. The new cluster parameter group can be the default for that cluster parameter group family. For more information about parameters and parameter groups, go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-parameter-groups.html\">Amazon Redshift Parameter Groups</a> in the <i>Amazon Redshift Cluster Management Guide</i>.</p> <p>Example: <code>1.0</code> </p>",
@@ -4093,6 +4238,7 @@
         "Event$Date": "<p>The date and time of the event.</p>",
         "EventSubscription$SubscriptionCreationTime": "<p>The date and time the Amazon Redshift event notification subscription was created.</p>",
         "InboundIntegration$CreateTime": "<p>The creation time of an inbound integration.</p>",
+        "Integration$CreateTime": "<p>The time (UTC) when the integration was created.</p>",
         "LoggingStatus$LastSuccessfulDeliveryTime": "<p>The last time that logs were delivered.</p>",
         "LoggingStatus$LastFailureTime": "<p>The last time when logs failed to be delivered.</p>",
         "ModifyClusterMaintenanceMessage$DeferMaintenanceStartTime": "<p>A timestamp indicating the start time for the deferred maintenance window.</p>",
@@ -4194,6 +4340,7 @@
         "CreateEventSubscriptionMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateHsmClientCertificateMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateHsmConfigurationMessage$Tags": "<p>A list of tag instances.</p>",
+        "CreateIntegrationMessage$TagList": "<p>A list of tags.</p>",
         "CreateSnapshotCopyGrantMessage$Tags": "<p>A list of tag instances.</p>",
         "CreateSnapshotScheduleMessage$Tags": "<p>An optional set of tags you can use to search for the schedule.</p>",
         "CreateTagsMessage$Tags": "<p>One or more name/value pairs to add as tags to the specified resource. Each tag name is passed in with the parameter <code>Key</code> and the corresponding value is passed in with the parameter <code>Value</code>. The <code>Key</code> and <code>Value</code> parameters are separated by a comma (,). Separate multiple tags with a space. For example, <code>--tags \"Key\"=\"owner\",\"Value\"=\"admin\" \"Key\"=\"environment\",\"Value\"=\"test\" \"Key\"=\"version\",\"Value\"=\"1.0\"</code>. </p>",
@@ -4203,6 +4350,7 @@
         "HsmClientCertificate$Tags": "<p>The list of tags for the HSM client certificate.</p>",
         "HsmConfiguration$Tags": "<p>The list of tags for the HSM configuration.</p>",
         "IPRange$Tags": "<p>The list of tags for the IP range.</p>",
+        "Integration$Tags": "<p>The list of tags associated with the integration.</p>",
         "Snapshot$Tags": "<p>The list of tags for the cluster snapshot.</p>",
         "SnapshotCopyGrant$Tags": "<p>A list of tag instances.</p>",
         "SnapshotSchedule$Tags": "<p>An optional set of tags describing the schedule.</p>",
@@ -4402,7 +4550,8 @@
     "ZeroETLIntegrationStatus": {
       "base": null,
       "refs": {
-        "InboundIntegration$Status": "<p>The status of an inbound integration.</p>"
+        "InboundIntegration$Status": "<p>The status of an inbound integration.</p>",
+        "Integration$Status": "<p>The current status of the integration.</p>"
       }
     }
   }

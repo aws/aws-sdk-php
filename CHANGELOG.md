@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Redshift` - This release launches the CreateIntegration, DeleteIntegration, DescribeIntegrations and ModifyIntegration APIs to create and manage Amazon Redshift Zero-ETL Integrations.
+* `Aws\QBusiness` - Amazon Q Business now supports embedding the Amazon Q Business web experience on third-party websites.
+* `Aws\IVS` - On a channel that you own, you can now replace an ongoing stream with a new stream by streaming up with the priority parameter appended to the stream key.
+* `Aws\SESv2` - This release adds support for email maximum delivery seconds that allows senders to control the time within which their emails are attempted for delivery.
+* `Aws\CodeBuild` - Enable proxy for reserved capacity fleet.
+* `Aws\Amplify` - Added sourceUrlType field to StartDeployment request
+* `Aws\CloudFormation` - Documentation update for AWS CloudFormation API Reference.
+* `Aws\ResilienceHub` - AWS Resilience Hub now integrates with the myApplications platform, enabling customers to easily assess the resilience of applications defined in myApplications. The new Resiliency widget provides visibility into application resilience and actionable recommendations for improvement.
+
 ## 3.324.2 - 2024-10-14
 
 * `Aws\Transfer` - This release enables customers using SFTP connectors to query the transfer status of their files to meet their monitoring needs as well as orchestrate post transfer actions.

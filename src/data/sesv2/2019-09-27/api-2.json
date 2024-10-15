@@ -2199,7 +2199,8 @@
       "type":"structure",
       "members":{
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"PoolName"}
+        "SendingPoolName":{"shape":"PoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "Description":{"type":"string"},
@@ -3636,6 +3637,11 @@
       ]
     },
     "Max24HourSend":{"type":"double"},
+    "MaxDeliverySeconds":{
+      "type":"long",
+      "max":50400,
+      "min":300
+    },
     "MaxItems":{"type":"integer"},
     "MaxSendRate":{"type":"double"},
     "Message":{
@@ -3949,7 +3955,8 @@
           "locationName":"ConfigurationSetName"
         },
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"SendingPoolName"}
+        "SendingPoolName":{"shape":"SendingPoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "PutConfigurationSetDeliveryOptionsResponse":{

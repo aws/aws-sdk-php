@@ -29,7 +29,7 @@
     "DescribeResourceGroupingRecommendationTask": "<p>Describes the resource grouping recommendation tasks run by Resilience Hub for your application.</p>",
     "ImportResourcesToDraftAppVersion": "<p>Imports resources to Resilience Hub application draft version from different input sources. For more information about the input sources supported by Resilience Hub, see <a href=\"https://docs.aws.amazon.com/resilience-hub/latest/userguide/discover-structure.html\">Discover the structure and describe your Resilience Hub application</a>.</p>",
     "ListAlarmRecommendations": "<p>Lists the alarm recommendations for an Resilience Hub application.</p>",
-    "ListAppAssessmentComplianceDrifts": "<p>List of compliance drifts that were detected while running an assessment.</p>",
+    "ListAppAssessmentComplianceDrifts": "<p>Indicates the list of compliance drifts that were detected while running an assessment.</p>",
     "ListAppAssessmentResourceDrifts": "<p>Indicates the list of resource drifts that were detected while running an assessment.</p>",
     "ListAppAssessments": "<p>Lists the assessments for an Resilience Hub application. You can use request parameters to refine the results for the response object.</p>",
     "ListAppComponentCompliances": "<p>Lists the compliances for an Resilience Hub Application Component.</p>",
@@ -286,6 +286,7 @@
         "AddDraftAppVersionResourceMappingsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AddDraftAppVersionResourceMappingsResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "App$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "App$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "App$policyArn": "<p>Amazon Resource Name (ARN) of the resiliency policy. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:resiliency-policy/<code>policy-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppAssessment$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppAssessment$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -293,9 +294,11 @@
         "AppAssessmentSummary$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppInputSource$sourceArn": "<p>The Amazon Resource Name (ARN) of the input source. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppSummary$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "AppSummary$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ArnList$member": null,
         "BatchUpdateRecommendationStatusRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "BatchUpdateRecommendationStatusResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "CreateAppRequest$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppRequest$policyArn": "<p>Amazon Resource Name (ARN) of the resiliency policy. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:resiliency-policy/<code>policy-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppVersionAppComponentRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppVersionAppComponentResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -351,6 +354,7 @@
         "ListAppVersionResourcesRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListAppVersionsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListAppsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "ListAppsRequest$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListRecommendationTemplatesRequest$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListRecommendationTemplatesRequest$recommendationTemplateArn": "<p>The Amazon Resource Name (ARN) for a recommendation template.</p>",
         "ListResourceGroupingRecommendationsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -444,7 +448,7 @@
     "AssessmentSummary": {
       "base": "<p>Indicates the AI-generated summary for the Resilience Hub assessment, providing a concise overview that highlights the top risks and recommendations.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
       "refs": {
-        "AppAssessment$summary": "<p>Indicates a concise summary that provides an overview of the Resilience Hub assessment.</p>"
+        "AppAssessment$summary": "<p>Indicates the AI-generated summary for the Resilience Hub assessment, providing a concise overview that highlights the top risks and recommendations.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>"
       }
     },
     "AwsRegion": {
@@ -1081,10 +1085,23 @@
         "UpdateAppVersionResponse$appVersion": "<p>Resilience Hub application version.</p>"
       }
     },
+    "ErrorDetail": {
+      "base": "<p>Indicates the error that was encountered while importing a resource.</p>",
+      "refs": {
+        "ErrorDetailList$member": null
+      }
+    },
+    "ErrorDetailList": {
+      "base": null,
+      "refs": {
+        "DescribeDraftAppVersionResourcesImportStatusResponse$errorDetails": "<p>List of errors that were encountered while importing resources.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
         "BatchUpdateRecommendationStatusFailedEntry$errorMessage": "<p>Indicates the error that occurred while excluding an operational recommendation.</p>",
+        "ErrorDetail$errorMessage": "<p>Provides additional information about the error.</p>",
         "FailedGroupingRecommendationEntry$errorMessage": "<p>Indicates the error that occurred while implementing a grouping recommendation.</p>",
         "ResourceError$reason": "<p> This is the error message. </p>"
       }
@@ -2083,7 +2100,7 @@
         "AssessmentSummary$summary": "<p>Indicates a concise summary that provides an overview of the Resilience Hub assessment.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
         "ConflictException$message": null,
         "DescribeAppVersionResourcesResolutionStatusResponse$errorMessage": "<p>The returned error message for the request.</p>",
-        "DescribeDraftAppVersionResourcesImportStatusResponse$errorMessage": "<p>The returned error message for the request.</p>",
+        "DescribeDraftAppVersionResourcesImportStatusResponse$errorMessage": "<p>The error message returned for the resource request.</p>",
         "DescribeResourceGroupingRecommendationTaskResponse$errorMessage": "<p>Indicates the error that occurred while generating a grouping recommendation.</p>",
         "DisruptionCompliance$message": "<p>The disruption compliance message.</p>",
         "DisruptionCompliance$rpoDescription": "<p>The RPO description.</p>",
