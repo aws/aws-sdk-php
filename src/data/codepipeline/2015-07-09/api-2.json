@@ -716,7 +716,8 @@
         "Deploy",
         "Test",
         "Invoke",
-        "Approval"
+        "Approval",
+        "Compute"
       ]
     },
     "ActionConfiguration":{
@@ -795,8 +796,10 @@
         "actionTypeId":{"shape":"ActionTypeId"},
         "runOrder":{"shape":"ActionRunOrder"},
         "configuration":{"shape":"ActionConfigurationMap"},
+        "commands":{"shape":"CommandList"},
         "outputArtifacts":{"shape":"OutputArtifactList"},
         "inputArtifacts":{"shape":"InputArtifactList"},
+        "outputVariables":{"shape":"OutputVariableList"},
         "roleArn":{"shape":"RoleArn"},
         "region":{"shape":"AWSRegionName"},
         "namespace":{"shape":"ActionNamespace"},
@@ -1295,6 +1298,17 @@
       "min":1
     },
     "Code":{"type":"string"},
+    "Command":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "CommandList":{
+      "type":"list",
+      "member":{"shape":"Command"},
+      "max":50,
+      "min":1
+    },
     "ConcurrentModificationException":{
       "type":"structure",
       "members":{
@@ -1612,6 +1626,7 @@
       "type":"structure",
       "members":{
         "result":{"shape":"Result"},
+        "retryConfiguration":{"shape":"RetryConfiguration"},
         "conditions":{"shape":"ConditionList"}
       }
     },
@@ -1637,6 +1652,17 @@
         "RevisionUnavailable",
         "SystemUnavailable"
       ]
+    },
+    "FilePath":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FilePathList":{
+      "type":"list",
+      "member":{"shape":"FilePath"},
+      "max":10,
+      "min":1
     },
     "GetActionTypeInput":{
       "type":"structure",
@@ -2253,12 +2279,24 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "name":{"shape":"ArtifactName"}
+        "name":{"shape":"ArtifactName"},
+        "files":{"shape":"FilePathList"}
       }
     },
     "OutputArtifactList":{
       "type":"list",
       "member":{"shape":"OutputArtifact"}
+    },
+    "OutputVariable":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "OutputVariableList":{
+      "type":"list",
+      "member":{"shape":"OutputVariable"},
+      "max":15,
+      "min":1
     },
     "OutputVariablesKey":{
       "type":"string",
@@ -2767,8 +2805,20 @@
       "type":"string",
       "enum":[
         "ROLLBACK",
-        "FAIL"
+        "FAIL",
+        "RETRY",
+        "SKIP"
       ]
+    },
+    "RetryAttempt":{
+      "type":"integer",
+      "min":1
+    },
+    "RetryConfiguration":{
+      "type":"structure",
+      "members":{
+        "retryMode":{"shape":"StageRetryMode"}
+      }
     },
     "RetryStageExecutionInput":{
       "type":"structure",
@@ -2790,6 +2840,21 @@
       "members":{
         "pipelineExecutionId":{"shape":"PipelineExecutionId"}
       }
+    },
+    "RetryStageMetadata":{
+      "type":"structure",
+      "members":{
+        "autoStageRetryAttempt":{"shape":"RetryAttempt"},
+        "manualStageRetryAttempt":{"shape":"RetryAttempt"},
+        "latestRetryTrigger":{"shape":"RetryTrigger"}
+      }
+    },
+    "RetryTrigger":{
+      "type":"string",
+      "enum":[
+        "AutomatedStageRetry",
+        "ManualStageRetry"
+      ]
     },
     "Revision":{
       "type":"string",
@@ -3232,7 +3297,8 @@
         "Failed",
         "Stopped",
         "Stopping",
-        "Succeeded"
+        "Succeeded",
+        "Skipped"
       ]
     },
     "StageName":{
@@ -3271,7 +3337,8 @@
         "latestExecution":{"shape":"StageExecution"},
         "beforeEntryConditionState":{"shape":"StageConditionState"},
         "onSuccessConditionState":{"shape":"StageConditionState"},
-        "onFailureConditionState":{"shape":"StageConditionState"}
+        "onFailureConditionState":{"shape":"StageConditionState"},
+        "retryStageMetadata":{"shape":"RetryStageMetadata"}
       }
     },
     "StageStateList":{

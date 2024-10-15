@@ -765,6 +765,40 @@
         }
       ]
     },
+    "ListVersions": {
+      "name": "ListVersions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/2017-08-29/versions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListVersionsRequest"
+      },
+      "output": {
+        "shape": "ListVersionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "PutPolicy": {
       "name": "PutPolicy",
       "http": {
@@ -1557,7 +1591,8 @@
         "DISABLED",
         "AUTO",
         "TRACK",
-        "FRAME"
+        "FRAME",
+        "FORCE"
       ]
     },
     "AudioLanguageCodeControl": {
@@ -2400,6 +2435,13 @@
         }
       }
     },
+    "CaptionSourceByteRateLimit": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "CaptionSourceConvertPaintOnToPopOn": {
       "type": "string",
       "enum": [
@@ -3155,6 +3197,7 @@
         "MP4",
         "MPD",
         "MXF",
+        "OGG",
         "WEBM",
         "RAW",
         "Y4M"
@@ -3186,6 +3229,10 @@
         "HopDestinations": {
           "shape": "__listOfHopDestination",
           "locationName": "hopDestinations"
+        },
+        "JobEngineVersion": {
+          "shape": "__string",
+          "locationName": "jobEngineVersion"
         },
         "JobTemplate": {
           "shape": "__string",
@@ -4563,6 +4610,19 @@
         "USE_MDPM"
       ]
     },
+    "EncryptionContractConfiguration": {
+      "type": "structure",
+      "members": {
+        "SpekeAudioPreset": {
+          "shape": "PresetSpeke20Audio",
+          "locationName": "spekeAudioPreset"
+        },
+        "SpekeVideoPreset": {
+          "shape": "PresetSpeke20Video",
+          "locationName": "spekeVideoPreset"
+        }
+      }
+    },
     "Endpoint": {
       "type": "structure",
       "members": {
@@ -4668,6 +4728,10 @@
     "FileSourceSettings": {
       "type": "structure",
       "members": {
+        "ByteRateLimit": {
+          "shape": "CaptionSourceByteRateLimit",
+          "locationName": "byteRateLimit"
+        },
         "Convert608To708": {
           "shape": "FileSourceConvert608To708",
           "locationName": "convert608To708"
@@ -5043,6 +5107,13 @@
         "ENABLED"
       ]
     },
+    "H264SaliencyAwareEncoding": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "PREFERRED"
+      ]
+    },
     "H264ScanTypeConversionMode": {
       "type": "string",
       "enum": [
@@ -5192,6 +5263,10 @@
         "RepeatPps": {
           "shape": "H264RepeatPps",
           "locationName": "repeatPps"
+        },
+        "SaliencyAwareEncoding": {
+          "shape": "H264SaliencyAwareEncoding",
+          "locationName": "saliencyAwareEncoding"
         },
         "ScanTypeConversionMode": {
           "shape": "H264ScanTypeConversionMode",
@@ -6735,6 +6810,14 @@
           "shape": "__string",
           "locationName": "id"
         },
+        "JobEngineVersionRequested": {
+          "shape": "__string",
+          "locationName": "jobEngineVersionRequested"
+        },
+        "JobEngineVersionUsed": {
+          "shape": "__string",
+          "locationName": "jobEngineVersionUsed"
+        },
         "JobPercentComplete": {
           "shape": "__integer",
           "locationName": "jobPercentComplete"
@@ -6804,6 +6887,19 @@
         "Settings",
         "Role"
       ]
+    },
+    "JobEngineVersion": {
+      "type": "structure",
+      "members": {
+        "ExpirationDate": {
+          "shape": "__timestampUnix",
+          "locationName": "expirationDate"
+        },
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
     },
     "JobMessages": {
       "type": "structure",
@@ -7467,6 +7563,34 @@
         "ResourceTags": {
           "shape": "ResourceTags",
           "locationName": "resourceTags"
+        }
+      }
+    },
+    "ListVersionsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "__integerMin1Max20",
+          "locationName": "maxResults",
+          "location": "querystring"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken",
+          "location": "querystring"
+        }
+      }
+    },
+    "ListVersionsResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Versions": {
+          "shape": "__listOfJobEngineVersion",
+          "locationName": "versions"
         }
       }
     },
@@ -9175,6 +9299,31 @@
         }
       }
     },
+    "PresetSpeke20Audio": {
+      "type": "string",
+      "enum": [
+        "PRESET_AUDIO_1",
+        "PRESET_AUDIO_2",
+        "PRESET_AUDIO_3",
+        "SHARED",
+        "UNENCRYPTED"
+      ]
+    },
+    "PresetSpeke20Video": {
+      "type": "string",
+      "enum": [
+        "PRESET_VIDEO_1",
+        "PRESET_VIDEO_2",
+        "PRESET_VIDEO_3",
+        "PRESET_VIDEO_4",
+        "PRESET_VIDEO_5",
+        "PRESET_VIDEO_6",
+        "PRESET_VIDEO_7",
+        "PRESET_VIDEO_8",
+        "SHARED",
+        "UNENCRYPTED"
+      ]
+    },
     "PricingPlan": {
       "type": "string",
       "enum": [
@@ -9732,6 +9881,10 @@
           "shape": "__stringPatternArnAwsUsGovAcm",
           "locationName": "certificateArn"
         },
+        "EncryptionContractConfiguration": {
+          "shape": "EncryptionContractConfiguration",
+          "locationName": "encryptionContractConfiguration"
+        },
         "ResourceId": {
           "shape": "__string",
           "locationName": "resourceId"
@@ -9756,6 +9909,10 @@
         "DashSignaledSystemIds": {
           "shape": "__listOf__stringMin36Max36Pattern09aFAF809aFAF409aFAF409aFAF409aFAF12",
           "locationName": "dashSignaledSystemIds"
+        },
+        "EncryptionContractConfiguration": {
+          "shape": "EncryptionContractConfiguration",
+          "locationName": "encryptionContractConfiguration"
         },
         "HlsSignaledSystemIds": {
           "shape": "__listOf__stringMin36Max36Pattern09aFAF809aFAF409aFAF409aFAF409aFAF12",
@@ -10522,13 +10679,25 @@
           "shape": "__stringPattern010920405090509092",
           "locationName": "endTimecode"
         },
+        "InitialPosition": {
+          "shape": "VideoOverlayPosition",
+          "locationName": "initialPosition"
+        },
         "Input": {
           "shape": "VideoOverlayInput",
           "locationName": "input"
         },
+        "Playback": {
+          "shape": "VideoOverlayPlayBackMode",
+          "locationName": "playback"
+        },
         "StartTimecode": {
           "shape": "__stringPattern010920405090509092",
           "locationName": "startTimecode"
+        },
+        "Transitions": {
+          "shape": "__listOfVideoOverlayTransition",
+          "locationName": "transitions"
         }
       }
     },
@@ -10557,6 +10726,55 @@
       "type": "structure",
       "members": {
         "EndTimecode": {
+          "shape": "__stringPattern010920405090509092090909",
+          "locationName": "endTimecode"
+        },
+        "StartTimecode": {
+          "shape": "__stringPattern010920405090509092090909",
+          "locationName": "startTimecode"
+        }
+      }
+    },
+    "VideoOverlayPlayBackMode": {
+      "type": "string",
+      "enum": [
+        "ONCE",
+        "REPEAT"
+      ]
+    },
+    "VideoOverlayPosition": {
+      "type": "structure",
+      "members": {
+        "Height": {
+          "shape": "__integerMinNegative1Max2147483647",
+          "locationName": "height"
+        },
+        "Unit": {
+          "shape": "VideoOverlayUnit",
+          "locationName": "unit"
+        },
+        "Width": {
+          "shape": "__integerMinNegative1Max2147483647",
+          "locationName": "width"
+        },
+        "XPosition": {
+          "shape": "__integerMinNegative2147483648Max2147483647",
+          "locationName": "xPosition"
+        },
+        "YPosition": {
+          "shape": "__integerMinNegative2147483648Max2147483647",
+          "locationName": "yPosition"
+        }
+      }
+    },
+    "VideoOverlayTransition": {
+      "type": "structure",
+      "members": {
+        "EndPosition": {
+          "shape": "VideoOverlayPosition",
+          "locationName": "endPosition"
+        },
+        "EndTimecode": {
           "shape": "__stringPattern010920405090509092",
           "locationName": "endTimecode"
         },
@@ -10565,6 +10783,13 @@
           "locationName": "startTimecode"
         }
       }
+    },
+    "VideoOverlayUnit": {
+      "type": "string",
+      "enum": [
+        "PIXELS",
+        "PERCENTAGE"
+      ]
     },
     "VideoPreprocessor": {
       "type": "structure",
@@ -11795,6 +12020,11 @@
       "min": -1,
       "max": 10
     },
+    "__integerMinNegative1Max2147483647": {
+      "type": "integer",
+      "min": -1,
+      "max": 2147483647
+    },
     "__integerMinNegative1Max3": {
       "type": "integer",
       "min": -1,
@@ -11956,6 +12186,12 @@
         "shape": "Job"
       }
     },
+    "__listOfJobEngineVersion": {
+      "type": "list",
+      "member": {
+        "shape": "JobEngineVersion"
+      }
+    },
     "__listOfJobTemplate": {
       "type": "list",
       "member": {
@@ -12032,6 +12268,12 @@
       "type": "list",
       "member": {
         "shape": "VideoOverlayInputClipping"
+      }
+    },
+    "__listOfVideoOverlayTransition": {
+      "type": "list",
+      "member": {
+        "shape": "VideoOverlayTransition"
       }
     },
     "__listOfWarningGroup": {

@@ -73,6 +73,21 @@
       ],
       "idempotent":true
     },
+    "CreateStarterMappingTemplate":{
+      "name":"CreateStarterMappingTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateStarterMappingTemplateRequest"},
+      "output":{"shape":"CreateStarterMappingTemplateResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateTransformer":{
       "name":"CreateTransformer",
       "http":{
@@ -347,6 +362,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "TestConversion":{
+      "name":"TestConversion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TestConversionRequest"},
+      "output":{"shape":"TestConversionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "TestMapping":{
       "name":"TestMapping",
       "http":{
@@ -503,6 +535,13 @@
       },
       "union":true
     },
+    "CapabilityDirection":{
+      "type":"string",
+      "enum":[
+        "INBOUND",
+        "OUTBOUND"
+      ]
+    },
     "CapabilityId":{
       "type":"string",
       "max":64,
@@ -517,6 +556,12 @@
       "type":"string",
       "max":254,
       "min":1
+    },
+    "CapabilityOptions":{
+      "type":"structure",
+      "members":{
+        "outboundEdi":{"shape":"OutboundEdiOptions"}
+      }
     },
     "CapabilitySummary":{
       "type":"structure",
@@ -545,6 +590,44 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ConversionSource":{
+      "type":"structure",
+      "required":[
+        "fileFormat",
+        "inputFile"
+      ],
+      "members":{
+        "fileFormat":{"shape":"ConversionSourceFormat"},
+        "inputFile":{"shape":"InputFileSource"}
+      }
+    },
+    "ConversionSourceFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "XML"
+      ]
+    },
+    "ConversionTarget":{
+      "type":"structure",
+      "required":["fileFormat"],
+      "members":{
+        "fileFormat":{"shape":"ConversionTargetFormat"},
+        "formatDetails":{"shape":"ConversionTargetFormatDetails"},
+        "outputSampleFile":{"shape":"OutputSampleFileSource"}
+      }
+    },
+    "ConversionTargetFormat":{
+      "type":"string",
+      "enum":["X12"]
+    },
+    "ConversionTargetFormatDetails":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
     },
     "CreateCapabilityRequest":{
       "type":"structure",
@@ -599,6 +682,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -622,6 +706,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"}
       }
@@ -669,25 +754,59 @@
         "createdAt":{"shape":"CreatedDate"}
       }
     },
-    "CreateTransformerRequest":{
+    "CreateStarterMappingTemplateRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "fileFormat",
-        "mappingTemplate",
-        "ediType"
+        "mappingType",
+        "templateDetails"
       ],
       "members":{
+        "outputSampleLocation":{"shape":"S3Location"},
+        "mappingType":{"shape":"MappingType"},
+        "templateDetails":{"shape":"TemplateDetails"}
+      }
+    },
+    "CreateStarterMappingTemplateResponse":{
+      "type":"structure",
+      "required":["mappingTemplate"],
+      "members":{
+        "mappingTemplate":{"shape":"String"}
+      }
+    },
+    "CreateTransformerRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "CreateTransformerResponse":{
@@ -696,22 +815,39 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
-        "createdAt":{"shape":"CreatedDate"}
+        "createdAt":{"shape":"CreatedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "CreatedDate":{
@@ -755,6 +891,7 @@
         "transformerId"
       ],
       "members":{
+        "capabilityDirection":{"shape":"CapabilityDirection"},
         "type":{"shape":"EdiType"},
         "inputLocation":{"shape":"S3Location"},
         "outputLocation":{"shape":"S3Location"},
@@ -784,13 +921,25 @@
       "type":"string",
       "enum":[
         "XML",
-        "JSON"
+        "JSON",
+        "NOT_USED"
       ]
     },
     "FileLocation":{
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "FormatOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
+    },
+    "FromFormat":{
+      "type":"string",
+      "enum":["X12"]
     },
     "GetCapabilityRequest":{
       "type":"structure",
@@ -843,6 +992,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -911,24 +1061,61 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
+    },
+    "InputConversion":{
+      "type":"structure",
+      "required":["fromFormat"],
+      "members":{
+        "fromFormat":{"shape":"FromFormat"},
+        "formatOptions":{"shape":"FormatOptions"}
+      }
+    },
+    "InputFileSource":{
+      "type":"structure",
+      "members":{
+        "fileContent":{"shape":"InputFileSourceFileContentString"}
+      },
+      "union":true
+    },
+    "InputFileSourceFileContentString":{
+      "type":"string",
+      "max":5000000,
+      "min":1
     },
     "InstructionsDocuments":{
       "type":"list",
@@ -950,6 +1137,10 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "KeyList":{
+      "type":"list",
+      "member":{"shape":"SampleDocumentKeys"}
     },
     "ListCapabilitiesRequest":{
       "type":"structure",
@@ -1037,10 +1228,32 @@
         "DISABLED"
       ]
     },
+    "Mapping":{
+      "type":"structure",
+      "required":["templateLanguage"],
+      "members":{
+        "templateLanguage":{"shape":"MappingTemplateLanguage"},
+        "template":{"shape":"MappingTemplate"}
+      }
+    },
     "MappingTemplate":{
       "type":"string",
       "max":350000,
       "min":0
+    },
+    "MappingTemplateLanguage":{
+      "type":"string",
+      "enum":[
+        "XSLT",
+        "JSONATA"
+      ]
+    },
+    "MappingType":{
+      "type":"string",
+      "enum":[
+        "JSONATA",
+        "XSLT"
+      ]
     },
     "MaxResults":{
       "type":"integer",
@@ -1051,6 +1264,28 @@
     "ModifiedDate":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "OutboundEdiOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Envelope"}
+      },
+      "union":true
+    },
+    "OutputConversion":{
+      "type":"structure",
+      "required":["toFormat"],
+      "members":{
+        "toFormat":{"shape":"ToFormat"},
+        "formatOptions":{"shape":"FormatOptions"}
+      }
+    },
+    "OutputSampleFileSource":{
+      "type":"structure",
+      "members":{
+        "fileLocation":{"shape":"S3Location"}
+      },
+      "union":true
     },
     "PageToken":{
       "type":"string",
@@ -1088,6 +1323,7 @@
         "partnershipId":{"shape":"PartnershipId"},
         "name":{"shape":"PartnerName"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -1161,6 +1397,24 @@
     "S3LocationList":{
       "type":"list",
       "member":{"shape":"S3Location"}
+    },
+    "SampleDocumentKeys":{
+      "type":"structure",
+      "members":{
+        "input":{"shape":"S3Key"},
+        "output":{"shape":"S3Key"}
+      }
+    },
+    "SampleDocuments":{
+      "type":"structure",
+      "required":[
+        "bucketName",
+        "keys"
+      ],
+      "members":{
+        "bucketName":{"shape":"BucketName"},
+        "keys":{"shape":"KeyList"}
+      }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1249,6 +1503,32 @@
       "max":256,
       "min":0
     },
+    "TemplateDetails":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
+    },
+    "TestConversionRequest":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target"
+      ],
+      "members":{
+        "source":{"shape":"ConversionSource"},
+        "target":{"shape":"ConversionTarget"}
+      }
+    },
+    "TestConversionResponse":{
+      "type":"structure",
+      "required":["convertedFileContent"],
+      "members":{
+        "convertedFileContent":{"shape":"String"},
+        "validationMessages":{"shape":"ValidationMessages"}
+      }
+    },
     "TestMappingInputFileContent":{
       "type":"string",
       "max":5000000,
@@ -1304,6 +1584,10 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "ToFormat":{
+      "type":"string",
+      "enum":["X12"]
+    },
     "TradingPartnerId":{
       "type":"string",
       "max":64,
@@ -1337,7 +1621,8 @@
     "TransformerName":{
       "type":"string",
       "max":254,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]{1,512}"
     },
     "TransformerStatus":{
       "type":"string",
@@ -1351,22 +1636,39 @@
       "required":[
         "transformerId",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "UntagResourceRequest":{
@@ -1417,7 +1719,8 @@
       "members":{
         "partnershipId":{"shape":"PartnershipId"},
         "name":{"shape":"PartnerName"},
-        "capabilities":{"shape":"PartnershipCapabilities"}
+        "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"}
       }
     },
     "UpdatePartnershipResponse":{
@@ -1436,6 +1739,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -1481,11 +1785,31 @@
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"}
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "UpdateTransformerResponse":{
@@ -1494,10 +1818,7 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt",
         "modifiedAt"
       ],
@@ -1505,13 +1826,33 @@
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "ValidationException":{
@@ -1522,12 +1863,124 @@
       },
       "exception":true
     },
+    "ValidationMessages":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "X12AcknowledgmentRequestedCode":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12ApplicationReceiverCode":{
+      "type":"string",
+      "max":15,
+      "min":2,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12ApplicationSenderCode":{
+      "type":"string",
+      "max":15,
+      "min":2,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12ComponentSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12DataElementSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12Delimiters":{
+      "type":"structure",
+      "members":{
+        "componentSeparator":{"shape":"X12ComponentSeparator"},
+        "dataElementSeparator":{"shape":"X12DataElementSeparator"},
+        "segmentTerminator":{"shape":"X12SegmentTerminator"}
+      }
+    },
     "X12Details":{
       "type":"structure",
       "members":{
         "transactionSet":{"shape":"X12TransactionSet"},
         "version":{"shape":"X12Version"}
       }
+    },
+    "X12Envelope":{
+      "type":"structure",
+      "members":{
+        "common":{"shape":"X12OutboundEdiHeaders"}
+      }
+    },
+    "X12FunctionalGroupHeaders":{
+      "type":"structure",
+      "members":{
+        "applicationSenderCode":{"shape":"X12ApplicationSenderCode"},
+        "applicationReceiverCode":{"shape":"X12ApplicationReceiverCode"},
+        "responsibleAgencyCode":{"shape":"X12ResponsibleAgencyCode"}
+      }
+    },
+    "X12IdQualifier":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12InterchangeControlHeaders":{
+      "type":"structure",
+      "members":{
+        "senderIdQualifier":{"shape":"X12IdQualifier"},
+        "senderId":{"shape":"X12SenderId"},
+        "receiverIdQualifier":{"shape":"X12IdQualifier"},
+        "receiverId":{"shape":"X12ReceiverId"},
+        "repetitionSeparator":{"shape":"X12RepetitionSeparator"},
+        "acknowledgmentRequestedCode":{"shape":"X12AcknowledgmentRequestedCode"},
+        "usageIndicatorCode":{"shape":"X12UsageIndicatorCode"}
+      }
+    },
+    "X12OutboundEdiHeaders":{
+      "type":"structure",
+      "members":{
+        "interchangeControlHeaders":{"shape":"X12InterchangeControlHeaders"},
+        "functionalGroupHeaders":{"shape":"X12FunctionalGroupHeaders"},
+        "delimiters":{"shape":"X12Delimiters"},
+        "validateEdi":{"shape":"X12ValidateEdi"}
+      }
+    },
+    "X12ReceiverId":{
+      "type":"string",
+      "max":15,
+      "min":15,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12RepetitionSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1
+    },
+    "X12ResponsibleAgencyCode":{
+      "type":"string",
+      "max":2,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12SegmentTerminator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12SenderId":{
+      "type":"string",
+      "max":15,
+      "min":15,
+      "pattern":"[a-zA-Z0-9]*"
     },
     "X12TransactionSet":{
       "type":"string",
@@ -1608,6 +2061,16 @@
         "X12_837_X298",
         "X12_999_X231"
       ]
+    },
+    "X12UsageIndicatorCode":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12ValidateEdi":{
+      "type":"boolean",
+      "box":true
     },
     "X12Version":{
       "type":"string",

@@ -1413,6 +1413,23 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "DescribeQPersonalizationConfiguration":{
+      "name":"DescribeQPersonalizationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"DescribeQPersonalizationConfigurationRequest"},
+      "output":{"shape":"DescribeQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeRefreshSchedule":{
       "name":"DescribeRefreshSchedule",
       "http":{
@@ -1891,6 +1908,24 @@
       },
       "input":{"shape":"ListFoldersRequest"},
       "output":{"shape":"ListFoldersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListFoldersForResource":{
+      "name":"ListFoldersForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/resource/{ResourceArn}/folders"
+      },
+      "input":{"shape":"ListFoldersForResourceRequest"},
+      "output":{"shape":"ListFoldersForResourceResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"AccessDeniedException"},
@@ -2891,6 +2926,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateQPersonalizationConfiguration":{
+      "name":"UpdateQPersonalizationConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"UpdateQPersonalizationConfigurationRequest"},
+      "output":{"shape":"UpdateQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "UpdateRefreshSchedule":{
       "name":"UpdateRefreshSchedule",
       "http":{
@@ -3638,7 +3691,8 @@
         "DataSets":{"shape":"AssetBundleExportJobDataSetOverridePropertiesList"},
         "Themes":{"shape":"AssetBundleExportJobThemeOverridePropertiesList"},
         "Analyses":{"shape":"AssetBundleExportJobAnalysisOverridePropertiesList"},
-        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"}
+        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"},
+        "Folders":{"shape":"AssetBundleExportJobFolderOverridePropertiesList"}
       }
     },
     "AssetBundleExportFormat":{
@@ -3786,6 +3840,36 @@
     "AssetBundleExportJobErrorList":{
       "type":"list",
       "member":{"shape":"AssetBundleExportJobError"}
+    },
+    "AssetBundleExportJobFolderOverrideProperties":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Properties"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Properties":{"shape":"AssetBundleExportJobFolderPropertyToOverrideList"}
+      }
+    },
+    "AssetBundleExportJobFolderOverridePropertiesList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderOverrideProperties"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleExportJobFolderPropertyToOverride":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "ParentFolderArn"
+      ]
+    },
+    "AssetBundleExportJobFolderPropertyToOverrideList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderPropertyToOverride"},
+      "max":10,
+      "min":1
     },
     "AssetBundleExportJobRefreshScheduleOverrideProperties":{
       "type":"structure",
@@ -4159,6 +4243,52 @@
       "type":"list",
       "member":{"shape":"AssetBundleImportJobError"}
     },
+    "AssetBundleImportJobFolderOverrideParameters":{
+      "type":"structure",
+      "required":["FolderId"],
+      "members":{
+        "FolderId":{"shape":"ResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "ParentFolderArn":{"shape":"Arn"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideParametersList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideParameters"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverridePermissions":{
+      "type":"structure",
+      "required":["FolderIds"],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobFolderOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverrideTags":{
+      "type":"structure",
+      "required":[
+        "FolderIds",
+        "Tags"
+      ],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobOverrideParameters":{
       "type":"structure",
       "members":{
@@ -4169,7 +4299,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideParametersList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideParametersList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideParametersList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideParametersList"}
       }
     },
     "AssetBundleImportJobOverridePermissions":{
@@ -4179,7 +4310,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverridePermissionsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverridePermissionsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverridePermissionsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverridePermissionsList"}
       }
     },
     "AssetBundleImportJobOverrideTags":{
@@ -4190,7 +4322,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideTagsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideTagsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideTagsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideTagsList"}
       }
     },
     "AssetBundleImportJobOverrideValidationStrategy":{
@@ -5618,6 +5751,13 @@
         "Actions":{"shape":"VisualCustomActionList"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
       }
+    },
+    "CommitMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
     },
     "ComparativeOrder":{
       "type":"structure",
@@ -8063,7 +8203,8 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"SheetControlDateTimePickerType"},
-        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"}
+        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterControlConfiguration":{
@@ -8094,7 +8235,8 @@
       "members":{
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
-        "SelectableValues":{"shape":"FilterSelectableValues"}
+        "SelectableValues":{"shape":"FilterSelectableValues"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterListControlOptions":{
@@ -8150,7 +8292,8 @@
     "DefaultRelativeDateTimeControlOptions":{
       "type":"structure",
       "members":{
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultSectionBasedLayoutConfiguration":{
@@ -9295,7 +9438,9 @@
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
         "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
-        "Warnings":{"shape":"AssetBundleExportJobWarningList"}
+        "Warnings":{"shape":"AssetBundleExportJobWarningList"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "DescribeAssetBundleImportJobRequest":{
@@ -10048,6 +10193,28 @@
       "type":"structure",
       "members":{
         "Namespace":{"shape":"NamespaceInfoV2"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -11126,7 +11293,8 @@
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
         "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
-        "Type":{"shape":"SheetControlDateTimePickerType"}
+        "Type":{"shape":"SheetControlDateTimePickerType"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterDropDownControl":{
@@ -11143,7 +11311,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterGroup":{
@@ -11246,7 +11415,8 @@
         "FilterControlId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterScopeConfiguration":{
@@ -11412,6 +11582,11 @@
         "SHARED",
         "RESTRICTED"
       ]
+    },
+    "FoldersForResourceArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":20
     },
     "Font":{
       "type":"structure",
@@ -12553,6 +12728,14 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "IncludeFolderMembers":{
+      "type":"string",
+      "enum":[
+        "RECURSE",
+        "ONE_LEVEL",
+        "NONE"
+      ]
+    },
     "IncrementalRefresh":{
       "type":"structure",
       "required":["LookbackWindow"],
@@ -13614,6 +13797,48 @@
           "location":"statusCode"
         },
         "FolderMemberList":{"shape":"FolderMemberList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "ListFoldersForResourceRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ResourceArn"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ResourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFoldersForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Folders":{"shape":"FoldersForResourceArnList"},
         "NextToken":{"shape":"String"},
         "RequestId":{"shape":"String"}
       }
@@ -15374,7 +15599,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"ParameterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "ParameterListControl":{
@@ -15558,6 +15784,13 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "PersonalizationMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "PhysicalTable":{
       "type":"structure",
@@ -18217,7 +18450,9 @@
         "CloudFormationOverridePropertyConfiguration":{"shape":"AssetBundleCloudFormationOverridePropertyConfiguration"},
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
-        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"}
+        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "StartAssetBundleExportJobResponse":{
@@ -19479,6 +19714,12 @@
       "type":"list",
       "member":{"shape":"TopicColumn"}
     },
+    "TopicConfigOptions":{
+      "type":"structure",
+      "members":{
+        "QBusinessInsightsEnabled":{"shape":"NullableBoolean"}
+      }
+    },
     "TopicConstantValue":{
       "type":"structure",
       "members":{
@@ -19502,7 +19743,8 @@
         "Name":{"shape":"ResourceName"},
         "Description":{"shape":"LimitedString"},
         "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"},
-        "DataSets":{"shape":"Datasets"}
+        "DataSets":{"shape":"Datasets"},
+        "ConfigOptions":{"shape":"TopicConfigOptions"}
       }
     },
     "TopicFilter":{
@@ -20841,6 +21083,32 @@
     "UpdatePublicSharingSettingsResponse":{
       "type":"structure",
       "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "PersonalizationMode"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "PersonalizationMode":{"shape":"PersonalizationMode"}
+      }
+    },
+    "UpdateQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",

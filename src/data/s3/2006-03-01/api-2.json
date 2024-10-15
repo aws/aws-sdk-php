@@ -964,6 +964,7 @@
         "requestUri":"/{Bucket}?lifecycle"
       },
       "input":{"shape":"PutBucketLifecycleConfigurationRequest"},
+      "output":{"shape":"PutBucketLifecycleConfigurationOutput"},
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -2551,6 +2552,26 @@
       "type":"structure",
       "required":["Credentials"],
       "members":{
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "SSEKMSKeyId":{
+          "shape":"SSEKMSKeyId",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "SSEKMSEncryptionContext":{
+          "shape":"SSEKMSEncryptionContext",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-context"
+        },
+        "BucketKeyEnabled":{
+          "shape":"BucketKeyEnabled",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-bucket-key-enabled"
+        },
         "Credentials":{
           "shape":"SessionCredentials",
           "locationName":"Credentials"
@@ -2571,6 +2592,26 @@
           "contextParam":{"name":"Bucket"},
           "location":"uri",
           "locationName":"Bucket"
+        },
+        "ServerSideEncryption":{
+          "shape":"ServerSideEncryption",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption"
+        },
+        "SSEKMSKeyId":{
+          "shape":"SSEKMSKeyId",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-aws-kms-key-id"
+        },
+        "SSEKMSEncryptionContext":{
+          "shape":"SSEKMSEncryptionContext",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-context"
+        },
+        "BucketKeyEnabled":{
+          "shape":"BucketKeyEnabled",
+          "location":"header",
+          "locationName":"x-amz-server-side-encryption-bucket-key-enabled"
         }
       }
     },
@@ -3485,6 +3526,11 @@
         "Rules":{
           "shape":"LifecycleRules",
           "locationName":"Rule"
+        },
+        "TransitionDefaultMinimumObjectSize":{
+          "shape":"TransitionDefaultMinimumObjectSize",
+          "location":"header",
+          "locationName":"x-amz-transition-default-minimum-object-size"
         }
       }
     },
@@ -6744,6 +6790,16 @@
       },
       "payload":"InventoryConfiguration"
     },
+    "PutBucketLifecycleConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "TransitionDefaultMinimumObjectSize":{
+          "shape":"TransitionDefaultMinimumObjectSize",
+          "location":"header",
+          "locationName":"x-amz-transition-default-minimum-object-size"
+        }
+      }
+    },
     "PutBucketLifecycleConfigurationRequest":{
       "type":"structure",
       "required":["Bucket"],
@@ -6768,6 +6824,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "TransitionDefaultMinimumObjectSize":{
+          "shape":"TransitionDefaultMinimumObjectSize",
+          "location":"header",
+          "locationName":"x-amz-transition-default-minimum-object-size"
         }
       },
       "payload":"LifecycleConfiguration"
@@ -8665,6 +8726,13 @@
         "Days":{"shape":"Days"},
         "StorageClass":{"shape":"TransitionStorageClass"}
       }
+    },
+    "TransitionDefaultMinimumObjectSize":{
+      "type":"string",
+      "enum":[
+        "varies_by_storage_class",
+        "all_storage_classes_128K"
+      ]
     },
     "TransitionList":{
       "type":"list",

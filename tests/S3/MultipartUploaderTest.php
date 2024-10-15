@@ -32,7 +32,7 @@ class MultipartUploaderTest extends TestCase
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
-        StreamInterface $source = null,
+        ?StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('s3', $clientOptions);

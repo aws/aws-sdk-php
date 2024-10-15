@@ -252,6 +252,7 @@
         {"shape":"InvalidLambdaResponseException"},
         {"shape":"MFAMethodNotFoundException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
+        {"shape":"InvalidEmailRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
         {"shape":"PasswordResetRequiredException"},
         {"shape":"UserNotFoundException"},
@@ -392,6 +393,7 @@
         {"shape":"InvalidUserPoolConfigurationException"},
         {"shape":"InternalErrorException"},
         {"shape":"MFAMethodNotFoundException"},
+        {"shape":"InvalidEmailRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
         {"shape":"AliasExistsException"},
@@ -1314,6 +1316,7 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
+        {"shape":"InvalidEmailRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
         {"shape":"ForbiddenException"}
       ],
@@ -1541,6 +1544,7 @@
         {"shape":"UserNotConfirmedException"},
         {"shape":"InvalidSmsRoleAccessPolicyException"},
         {"shape":"InvalidSmsRoleTrustRelationshipException"},
+        {"shape":"InvalidEmailRoleAccessPolicyException"},
         {"shape":"AliasExistsException"},
         {"shape":"InternalErrorException"},
         {"shape":"SoftwareTokenMFANotFoundException"},
@@ -2455,6 +2459,7 @@
       "members":{
         "SMSMfaSettings":{"shape":"SMSMfaSettingsType"},
         "SoftwareTokenMfaSettings":{"shape":"SoftwareTokenMfaSettingsType"},
+        "EmailMfaSettings":{"shape":"EmailMfaSettingsType"},
         "Username":{"shape":"UsernameType"},
         "UserPoolId":{"shape":"UserPoolIdType"}
       }
@@ -2781,6 +2786,7 @@
       "type":"string",
       "enum":[
         "SMS_MFA",
+        "EMAIL_OTP",
         "SOFTWARE_TOKEN_MFA",
         "SELECT_MFA_TYPE",
         "MFA_SETUP",
@@ -3583,6 +3589,30 @@
         "ConfigurationSet":{"shape":"SESConfigurationSet"}
       }
     },
+    "EmailMfaConfigType":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"EmailMfaMessageType"},
+        "Subject":{"shape":"EmailMfaSubjectType"}
+      }
+    },
+    "EmailMfaMessageType":{
+      "type":"string",
+      "max":20000,
+      "min":6,
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\s*]*\\{####\\}[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\s*]*"
+    },
+    "EmailMfaSettingsType":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"BooleanType"},
+        "PreferredMfa":{"shape":"BooleanType"}
+      }
+    },
+    "EmailMfaSubjectType":{
+      "type":"string",
+      "pattern":"[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\s]+"
+    },
     "EmailNotificationBodyType":{
       "type":"string",
       "max":20000,
@@ -3916,6 +3946,7 @@
       "members":{
         "SmsMfaConfiguration":{"shape":"SmsMfaConfigType"},
         "SoftwareTokenMfaConfiguration":{"shape":"SoftwareTokenMfaConfigType"},
+        "EmailMfaConfiguration":{"shape":"EmailMfaConfigType"},
         "MfaConfiguration":{"shape":"UserPoolMfaType"}
       }
     },
@@ -4987,6 +5018,7 @@
       "members":{
         "SMSMfaSettings":{"shape":"SMSMfaSettingsType"},
         "SoftwareTokenMfaSettings":{"shape":"SoftwareTokenMfaSettingsType"},
+        "EmailMfaSettings":{"shape":"EmailMfaSettingsType"},
         "AccessToken":{"shape":"TokenModelType"}
       }
     },
@@ -5002,6 +5034,7 @@
         "UserPoolId":{"shape":"UserPoolIdType"},
         "SmsMfaConfiguration":{"shape":"SmsMfaConfigType"},
         "SoftwareTokenMfaConfiguration":{"shape":"SoftwareTokenMfaConfigType"},
+        "EmailMfaConfiguration":{"shape":"EmailMfaConfigType"},
         "MfaConfiguration":{"shape":"UserPoolMfaType"}
       }
     },
@@ -5010,6 +5043,7 @@
       "members":{
         "SmsMfaConfiguration":{"shape":"SmsMfaConfigType"},
         "SoftwareTokenMfaConfiguration":{"shape":"SoftwareTokenMfaConfigType"},
+        "EmailMfaConfiguration":{"shape":"EmailMfaConfigType"},
         "MfaConfiguration":{"shape":"UserPoolMfaType"}
       }
     },

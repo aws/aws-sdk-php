@@ -96,9 +96,7 @@ class ApplyChecksumMiddleware
         );
         if ($shouldAddChecksum) {
             if (!$this->hasAlgorithmHeader($request)) {
-                $supportedAlgorithms = isset($checksumMember['enum'])
-                    ? array_map('strtolower', $checksumMember['enum'])
-                    : [];
+                $supportedAlgorithms =  array_map('strtolower', $checksumMember['enum'] ?? []);
                 $algorithm = $this->determineChecksumAlgorithm(
                     $supportedAlgorithms,
                     $requestedAlgorithm,

@@ -1157,6 +1157,24 @@
       ],
       "endpoint":{"hostPrefix":"management."}
     },
+    "ListJobParameterDefinitions":{
+      "name":"ListJobParameterDefinitions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2023-10-12/farms/{farmId}/queues/{queueId}/jobs/{jobId}/parameter-definitions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListJobParameterDefinitionsRequest"},
+      "output":{"shape":"ListJobParameterDefinitionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerErrorException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ],
+      "endpoint":{"hostPrefix":"management."}
+    },
     "ListJobs":{
       "name":"ListJobs",
       "http":{
@@ -2776,8 +2794,6 @@
       "required":[
         "farmId",
         "queueId",
-        "template",
-        "templateType",
         "priority"
       ],
       "members":{
@@ -2805,7 +2821,8 @@
         "storageProfileId":{"shape":"StorageProfileId"},
         "targetTaskRunStatus":{"shape":"CreateJobTargetTaskRunStatus"},
         "maxFailedTasksCount":{"shape":"MaxFailedTasksCount"},
-        "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"}
+        "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
+        "sourceJobId":{"shape":"JobId"}
       }
     },
     "CreateJobResponse":{
@@ -4131,7 +4148,8 @@
         "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
         "parameters":{"shape":"JobParameters"},
         "attachments":{"shape":"Attachments"},
-        "description":{"shape":"JobDescription"}
+        "description":{"shape":"JobDescription"},
+        "sourceJobId":{"shape":"JobId"}
       }
     },
     "GetLicenseEndpointRequest":{
@@ -5036,6 +5054,16 @@
       },
       "union":true
     },
+    "JobParameterDefinition":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
+    "JobParameterDefinitions":{
+      "type":"list",
+      "member":{"shape":"JobParameterDefinition"}
+    },
     "JobParameters":{
       "type":"map",
       "key":{"shape":"String"},
@@ -5079,7 +5107,8 @@
         "createdAt":{"shape":"CreatedAt"},
         "endedAt":{"shape":"EndedAt"},
         "startedAt":{"shape":"StartedAt"},
-        "jobParameters":{"shape":"JobParameters"}
+        "jobParameters":{"shape":"JobParameters"},
+        "sourceJobId":{"shape":"JobId"}
       }
     },
     "JobSummaries":{
@@ -5113,7 +5142,8 @@
         "targetTaskRunStatus":{"shape":"JobTargetTaskRunStatus"},
         "taskRunStatusCounts":{"shape":"TaskRunStatusCounts"},
         "maxFailedTasksCount":{"shape":"MaxFailedTasksCount"},
-        "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"}
+        "maxRetriesPerTask":{"shape":"MaxRetriesPerTask"},
+        "sourceJobId":{"shape":"JobId"}
       }
     },
     "JobTargetTaskRunStatus":{
@@ -5410,6 +5440,49 @@
       "required":["members"],
       "members":{
         "members":{"shape":"JobMembers"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobParameterDefinitionsRequest":{
+      "type":"structure",
+      "required":[
+        "farmId",
+        "jobId",
+        "queueId"
+      ],
+      "members":{
+        "farmId":{
+          "shape":"FarmId",
+          "location":"uri",
+          "locationName":"farmId"
+        },
+        "jobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"jobId"
+        },
+        "queueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"queueId"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListJobParameterDefinitionsResponse":{
+      "type":"structure",
+      "required":["jobParameterDefinitions"],
+      "members":{
+        "jobParameterDefinitions":{"shape":"JobParameterDefinitions"},
         "nextToken":{"shape":"String"}
       }
     },

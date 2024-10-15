@@ -293,9 +293,9 @@
     },
     "BedrockModelArn":{
       "type":"string",
-      "max":1011,
-      "min":20,
-      "pattern":"^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}))$"
+      "max":2048,
+      "min":1,
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))))|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):inference-profile/[a-zA-Z0-9-:.]+)|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)$"
     },
     "Boolean":{
       "type":"boolean",
@@ -1528,7 +1528,9 @@
     "PostProcessingModelInvocationOutput":{
       "type":"structure",
       "members":{
+        "metadata":{"shape":"Metadata"},
         "parsedResponse":{"shape":"PostProcessingParsedResponse"},
+        "rawResponse":{"shape":"RawResponse"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true
@@ -1552,7 +1554,9 @@
     "PreProcessingModelInvocationOutput":{
       "type":"structure",
       "members":{
+        "metadata":{"shape":"Metadata"},
         "parsedResponse":{"shape":"PreProcessingParsedResponse"},
+        "rawResponse":{"shape":"RawResponse"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true

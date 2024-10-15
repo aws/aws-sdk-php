@@ -105,6 +105,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise prepareFlowAsync(array $args = [])
  * @method \Aws\Result startIngestionJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startIngestionJobAsync(array $args = [])
+ * @method \Aws\Result stopIngestionJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopIngestionJobAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

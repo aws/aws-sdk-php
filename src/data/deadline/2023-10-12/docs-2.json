@@ -63,6 +63,7 @@
     "ListFleetMembers": "<p>Lists fleet members.</p>",
     "ListFleets": "<p>Lists fleets.</p>",
     "ListJobMembers": "<p>Lists members on a job.</p>",
+    "ListJobParameterDefinitions": "<p>Lists parameter definitions of a job.</p>",
     "ListJobs": "<p>Lists jobs.</p>",
     "ListLicenseEndpoints": "<p>Lists license endpoints.</p>",
     "ListMeteredProducts": "<p>Lists metered products.</p>",
@@ -1217,6 +1218,7 @@
         "ListFleetMembersRequest$farmId": "<p>The farm ID of the fleet.</p>",
         "ListFleetsRequest$farmId": "<p>The farm ID of the fleets.</p>",
         "ListJobMembersRequest$farmId": "<p>The farm ID of the job to list.</p>",
+        "ListJobParameterDefinitionsRequest$farmId": "<p>The farm ID of the job to list.</p>",
         "ListJobsRequest$farmId": "<p>The farm ID for the jobs.</p>",
         "ListQueueEnvironmentsRequest$farmId": "<p>The farm ID for the queue environment list.</p>",
         "ListQueueFleetAssociationsRequest$farmId": "<p>The farm ID for the queue-fleet association list.</p>",
@@ -1894,6 +1896,7 @@
         "AssignedSession$jobId": "<p>The job ID for the assigned session.</p>",
         "AssociateMemberToJobRequest$jobId": "<p>The job ID to associate with the member.</p>",
         "CopyJobTemplateRequest$jobId": "<p>The job ID to copy.</p>",
+        "CreateJobRequest$sourceJobId": "<p>The job ID for the source job.</p>",
         "CreateJobResponse$jobId": "<p>The job ID.</p>",
         "DisassociateMemberFromJobRequest$jobId": "<p>The job ID to disassociate from a member in a job.</p>",
         "EnvironmentDetailsEntity$jobId": "<p>The job ID.</p>",
@@ -1901,6 +1904,7 @@
         "EnvironmentDetailsIdentifiers$jobId": "<p>The job ID.</p>",
         "GetJobRequest$jobId": "<p>The job ID.</p>",
         "GetJobResponse$jobId": "<p>The job ID.</p>",
+        "GetJobResponse$sourceJobId": "<p>The job ID for the source job.</p>",
         "GetSessionActionRequest$jobId": "<p>The job ID for the session.</p>",
         "GetSessionRequest$jobId": "<p>The job ID for the session.</p>",
         "GetStepRequest$jobId": "<p>The job ID for the step.</p>",
@@ -1913,8 +1917,11 @@
         "JobDetailsIdentifiers$jobId": "<p>The job ID.</p>",
         "JobMember$jobId": "<p>The job ID.</p>",
         "JobSearchSummary$jobId": "<p>The job ID.</p>",
+        "JobSearchSummary$sourceJobId": "<p>The job ID for the source job.</p>",
         "JobSummary$jobId": "<p>The job ID.</p>",
+        "JobSummary$sourceJobId": "<p>The job ID for the source job.</p>",
         "ListJobMembersRequest$jobId": "<p>The job ID to include on the list.</p>",
+        "ListJobParameterDefinitionsRequest$jobId": "<p>The job ID to include on the list.</p>",
         "ListSessionActionsRequest$jobId": "<p>The job ID for the session actions list.</p>",
         "ListSessionsRequest$jobId": "<p>The job ID for the list of sessions.</p>",
         "ListStepConsumersRequest$jobId": "<p>The job ID for the step consumer.</p>",
@@ -1969,6 +1976,18 @@
       "base": "<p>The details of job parameters.</p>",
       "refs": {
         "JobParameters$value": null
+      }
+    },
+    "JobParameterDefinition": {
+      "base": null,
+      "refs": {
+        "JobParameterDefinitions$member": null
+      }
+    },
+    "JobParameterDefinitions": {
+      "base": null,
+      "refs": {
+        "ListJobParameterDefinitionsResponse$jobParameterDefinitions": "<p>Lists parameter definitions of a job.</p>"
       }
     },
     "JobParameters": {
@@ -2164,6 +2183,16 @@
       }
     },
     "ListJobMembersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListJobParameterDefinitionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListJobParameterDefinitionsResponse": {
       "base": null,
       "refs": {
       }
@@ -2468,6 +2497,7 @@
         "ListFleetMembersRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListFleetsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListJobMembersRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
+        "ListJobParameterDefinitionsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListJobsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListLicenseEndpointsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListMeteredProductsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
@@ -2822,6 +2852,7 @@
         "JobMember$queueId": "<p>The queue ID.</p>",
         "JobSearchSummary$queueId": "<p>The queue ID.</p>",
         "ListJobMembersRequest$queueId": "<p>The queue ID to include on the list.</p>",
+        "ListJobParameterDefinitionsRequest$queueId": "<p>The queue ID to include on the list.</p>",
         "ListJobsRequest$queueId": "<p>The queue ID for the job.</p>",
         "ListQueueEnvironmentsRequest$queueId": "<p>The queue ID for the queue environment list.</p>",
         "ListQueueFleetAssociationsRequest$queueId": "<p>The queue ID for the queue-fleet association list.</p>",
@@ -3649,6 +3680,8 @@
         "ListFleetsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListJobMembersRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListJobMembersResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
+        "ListJobParameterDefinitionsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
+        "ListJobParameterDefinitionsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListJobsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListJobsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListLicenseEndpointsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",

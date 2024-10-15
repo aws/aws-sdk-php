@@ -319,6 +319,49 @@ class ObjectUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
+    /**
+     * @param $checksumAlgorithm
+     * @return void
+     *
+     * @dataProvider flexibleChecksumsProvider
+     */
+    public function testAddsFlexibleChecksums($checksumAlgorithm, $value)
+    {
+        if ($checksumAlgorithm === 'crc32c'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped();
+        }
+
+        $client = $this->getTestClient('S3');
+        $handlerList = $client->getHandlerList();
+        $handlerList->appendBuild(Middleware::tap(
+            function ($cmd, $req) use ($checksumAlgorithm, $value) {
+                $headerName = 'x-amz-checksum-' . $checksumAlgorithm;
+                $this->assertTrue($req->hasHeader($headerName));
+                $this->assertEquals($value, $req->getHeaderLine($headerName));
+            })
+        );
+        $this->addMockResults($client, [new Result()]);
+        $result = (new ObjectUploader(
+            $client,
+            'bucket',
+            'key',
+            $this->generateStream(1024 * 1024 * 1),
+            'private',
+            ['params' => ['ChecksumAlgorithm' => $checksumAlgorithm]]
+        ))->upload();
+    }
+
+    public function flexibleChecksumsProvider() {
+        return [
+            ['sha1', 'VfWih+7phcE4uG3HQZCHKfpUwFs='],
+            ['sha256', 'FT+vHyoAcJfTMSC77mlEpBy4vnZDwSIva8a8aewxaI8='],
+            ['crc32c', 'd8twAA=='],
+            ['crc32', '9p4rcQ==']
+        ];
+    }
+
     public function testAddContentMd5EmitsDeprecationNotice()
     {
         $this->expectDeprecation();

@@ -7,7 +7,7 @@
     "InvokeAgent": "<note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeAgent</code>.</p> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response is returned in the <code>bytes</code> field of the <code>chunk</code> object.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
-    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results. The response only cites sources that are relevant to the query.</p>"
+    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -151,8 +151,8 @@
     "BedrockModelArn": {
       "base": null,
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The modelArn used with the external source wrapper object in the retrieveAndGenerate function.</p>",
-        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model used to generate a response.</p>"
+        "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The model Amazon Resource Name (ARN) for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
+        "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>"
       }
     },
     "Boolean": {
@@ -305,19 +305,19 @@
     "ExternalSources": {
       "base": null,
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$sources": "<p>The document used with the external source wrapper object in the retrieveAndGenerate function.</p>"
+        "ExternalSourcesRetrieveAndGenerateConfiguration$sources": "<p>The document for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "ExternalSourcesGenerationConfiguration": {
       "base": "<p>Contains the generation configuration of the external source wrapper object.</p>",
       "refs": {
-        "ExternalSourcesRetrieveAndGenerateConfiguration$generationConfiguration": "<p>The prompt used with the external source wrapper object with the retrieveAndGenerate function.</p>"
+        "ExternalSourcesRetrieveAndGenerateConfiguration$generationConfiguration": "<p>The prompt used with the external source wrapper object with the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "ExternalSourcesRetrieveAndGenerateConfiguration": {
-      "base": "<p>The configurations of the external source wrapper object in the retrieveAndGenerate function.</p>",
+      "base": "<p>The configurations of the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
       "refs": {
-        "RetrieveAndGenerateConfiguration$externalSourcesConfiguration": "<p>The configuration used with the external source wrapper object in the retrieveAndGenerate function.</p>"
+        "RetrieveAndGenerateConfiguration$externalSourcesConfiguration": "<p>The configuration for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>"
       }
     },
     "FailureReasonString": {
@@ -847,7 +847,7 @@
       "base": null,
       "refs": {
         "KnowledgeBaseConfiguration$knowledgeBaseId": "<p>The unique identifier for a knowledge base attached to the agent.</p>",
-        "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is queried and the foundation model used for generation.</p>",
+        "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is queried.</p>",
         "RetrieveRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to query.</p>"
       }
     },
@@ -904,7 +904,7 @@
     "KnowledgeBaseRetrieveAndGenerateConfiguration": {
       "base": "<p>Contains details about the resource being queried.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax\">Retrieve request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>knowledgeBaseConfiguration</code> field</p> </li> </ul>",
       "refs": {
-        "RetrieveAndGenerateConfiguration$knowledgeBaseConfiguration": "<p>Contains details about the resource being queried.</p>"
+        "RetrieveAndGenerateConfiguration$knowledgeBaseConfiguration": "<p>Contains details about the knowledge base for retrieving information and generating responses.</p>"
       }
     },
     "KnowledgeBaseVectorSearchConfiguration": {
@@ -980,7 +980,9 @@
     "Metadata": {
       "base": "<p>Provides details of the foundation model.</p>",
       "refs": {
-        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>"
+        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>",
+        "PostProcessingModelInvocationOutput$metadata": null,
+        "PreProcessingModelInvocationOutput$metadata": null
       }
     },
     "MimeType": {
@@ -1224,7 +1226,9 @@
     "RawResponse": {
       "base": "<p>Contains the raw output from the foundation model.</p>",
       "refs": {
-        "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>"
+        "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>",
+        "PostProcessingModelInvocationOutput$rawResponse": null,
+        "PreProcessingModelInvocationOutput$rawResponse": null
       }
     },
     "RepromptResponse": {
@@ -1392,7 +1396,7 @@
     "RetrieveAndGenerateType": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that is queried by the request.</p>"
+        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <p>If you choose ot use <code>EXTERNAL_SOURCES</code>, then currently only Claude 3 Sonnet models for knowledge bases are supported.</p>"
       }
     },
     "RetrieveRequest": {

@@ -58,7 +58,7 @@ class S3SignatureV4 extends SignatureV4
         CredentialsInterface $credentials,
         RequestInterface $request,
         $signingService,
-        SigningConfigAWS $signingConfig = null
+        ?SigningConfigAWS $signingConfig = null
     ){
         $this->verifyCRTLoaded();
         $credentials_provider = $this->createCRTStaticCredentialsProvider($credentials);
@@ -93,17 +93,6 @@ class S3SignatureV4 extends SignatureV4
                 'X-Amz-Content-Sha256',
                 $this->getPresignedPayload($request)
             );
-        }
-
-        //Payload is unknown, checksum will cause requests to fail.
-        if ($request->getMethod() === 'PUT') {
-            foreach($request->getHeaders() as $header => $value) {
-                if ($header !== 'x-amz-checksum-algorithm'
-                    && stripos($header, 'x-amz-checksum-') === 0
-                ){
-                    $request = $request->withoutHeader($header);
-                }
-            }
         }
 
         if (strpos($request->getUri()->getHost(), "accesspoint.s3-global")) {

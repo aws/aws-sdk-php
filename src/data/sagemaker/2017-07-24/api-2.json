@@ -4241,6 +4241,14 @@
         "ml.g6.16xlarge",
         "ml.g6.24xlarge",
         "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
         "ml.geospatial.interactive",
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
@@ -5920,7 +5928,7 @@
     },
     "ClusterInstanceCount":{
       "type":"integer",
-      "min":1
+      "min":0
     },
     "ClusterInstanceGroupDetails":{
       "type":"structure",
@@ -6213,7 +6221,8 @@
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
         "CustomImages":{"shape":"CustomImages"},
         "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
-        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"}
+        "AppLifecycleManagement":{"shape":"AppLifecycleManagement"},
+        "BuiltInLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
       }
     },
     "CodeRepositories":{
@@ -6967,6 +6976,7 @@
         },
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
     },
@@ -9146,7 +9156,8 @@
         "LastUserActivityTimestamp":{"shape":"Timestamp"},
         "CreationTime":{"shape":"Timestamp"},
         "FailureReason":{"shape":"FailureReason"},
-        "ResourceSpec":{"shape":"ResourceSpec"}
+        "ResourceSpec":{"shape":"ResourceSpec"},
+        "BuiltInLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
       }
     },
     "DescribeArtifactRequest":{
@@ -9523,6 +9534,7 @@
         "VpcId":{"shape":"VpcId"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "TagPropagation":{"shape":"TagPropagation"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"}
       }
     },
@@ -12713,9 +12725,25 @@
       "type":"list",
       "member":{"shape":"AppType"}
     },
+    "HiddenInstanceTypesList":{
+      "type":"list",
+      "member":{"shape":"AppInstanceType"}
+    },
     "HiddenMlToolsList":{
       "type":"list",
       "member":{"shape":"MlTools"}
+    },
+    "HiddenSageMakerImage":{
+      "type":"structure",
+      "members":{
+        "SageMakerImageName":{"shape":"SageMakerImageName"},
+        "VersionAliases":{"shape":"VersionAliasesList"}
+      }
+    },
+    "HiddenSageMakerImageVersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"HiddenSageMakerImage"},
+      "max":5
     },
     "HolidayConfig":{
       "type":"list",
@@ -12992,12 +13020,10 @@
       "required":[
         "WorkteamArn",
         "UiConfig",
-        "PreHumanTaskLambdaArn",
         "TaskTitle",
         "TaskDescription",
         "NumberOfHumanWorkersPerDataObject",
-        "TaskTimeLimitInSeconds",
-        "AnnotationConsolidationConfig"
+        "TaskTimeLimitInSeconds"
       ],
       "members":{
         "WorkteamArn":{"shape":"WorkteamArn"},
@@ -13606,6 +13632,12 @@
       "max":128,
       "min":1,
       "pattern":"(^\\d+$)|(^\\d+.\\d+$)|(^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$)"
+    },
+    "ImageVersionAliasPattern":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
     },
     "ImageVersionArn":{
       "type":"string",
@@ -14400,7 +14432,8 @@
         "LifecycleConfigArns":{"shape":"LifecycleConfigArns"},
         "CodeRepositories":{"shape":"CodeRepositories"},
         "AppLifecycleManagement":{"shape":"AppLifecycleManagement"},
-        "EmrSettings":{"shape":"EmrSettings"}
+        "EmrSettings":{"shape":"EmrSettings"},
+        "BuiltInLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
       }
     },
     "JupyterServerAppSettings":{
@@ -14630,8 +14663,7 @@
         "LastModifiedTime",
         "LabelingJobStatus",
         "LabelCounters",
-        "WorkteamArn",
-        "PreHumanTaskLambdaArn"
+        "WorkteamArn"
       ],
       "members":{
         "LabelingJobName":{"shape":"LabelingJobName"},
@@ -16743,7 +16775,8 @@
         "InferenceRecommender",
         "Endpoints",
         "Projects",
-        "InferenceOptimization"
+        "InferenceOptimization",
+        "PerformanceEvaluation"
       ]
     },
     "MlflowVersion":{
@@ -20946,7 +20979,8 @@
         "S3DataType":{"shape":"S3ModelDataType"},
         "CompressionType":{"shape":"ModelCompressionType"},
         "ModelAccessConfig":{"shape":"ModelAccessConfig"},
-        "HubAccessConfig":{"shape":"InferenceHubAccessConfig"}
+        "HubAccessConfig":{"shape":"InferenceHubAccessConfig"},
+        "ManifestS3Uri":{"shape":"S3ModelUri"}
       }
     },
     "S3ModelDataType":{
@@ -20985,6 +21019,10 @@
       "type":"string",
       "max":1024,
       "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+    },
+    "SageMakerImageName":{
+      "type":"string",
+      "enum":["sagemaker_distribution"]
     },
     "SageMakerImageVersionAlias":{
       "type":"string",
@@ -22061,7 +22099,9 @@
       "type":"structure",
       "members":{
         "HiddenMlTools":{"shape":"HiddenMlToolsList"},
-        "HiddenAppTypes":{"shape":"HiddenAppTypesList"}
+        "HiddenAppTypes":{"shape":"HiddenAppTypesList"},
+        "HiddenInstanceTypes":{"shape":"HiddenInstanceTypesList"},
+        "HiddenSageMakerImageVersionAliases":{"shape":"HiddenSageMakerImageVersionAliasesList"}
       }
     },
     "SubnetId":{
@@ -22159,6 +22199,13 @@
       "member":{"shape":"Tag"},
       "max":50,
       "min":0
+    },
+    "TagPropagation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "TagValue":{
       "type":"string",
@@ -23639,7 +23686,8 @@
         "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
         "DefaultSpaceSettings":{"shape":"DefaultSpaceSettings"},
         "SubnetIds":{"shape":"Subnets"},
-        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"}
+        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"},
+        "TagPropagation":{"shape":"TagPropagation"}
       }
     },
     "UpdateDomainResponse":{
@@ -24317,6 +24365,11 @@
         "TO_BE_ARCHIVED",
         "ARCHIVED"
       ]
+    },
+    "VersionAliasesList":{
+      "type":"list",
+      "member":{"shape":"ImageVersionAliasPattern"},
+      "max":20
     },
     "VersionId":{
       "type":"string",

@@ -1693,7 +1693,9 @@
         "startTime":{"shape":"StartTime"},
         "status":{"shape":"JobStatus"},
         "endTime":{"shape":"EndTime"},
-        "jobType":{"shape":"JobType"}
+        "jobType":{"shape":"JobType"},
+        "sourceUrl":{"shape":"SourceUrl"},
+        "sourceUrlType":{"shape":"SourceUrlType"}
       }
     },
     "JobType":{
@@ -2074,7 +2076,14 @@
     "SourceUrl":{
       "type":"string",
       "max":3000,
-      "pattern":"(?s).*"
+      "pattern":"^(s3|https|http)://.*"
+    },
+    "SourceUrlType":{
+      "type":"string",
+      "enum":[
+        "ZIP",
+        "BUCKET_PREFIX"
+      ]
     },
     "StackArn":{
       "type":"string",
@@ -2116,7 +2125,8 @@
           "locationName":"branchName"
         },
         "jobId":{"shape":"JobId"},
-        "sourceUrl":{"shape":"SourceUrl"}
+        "sourceUrl":{"shape":"SourceUrl"},
+        "sourceUrlType":{"shape":"SourceUrlType"}
       }
     },
     "StartDeploymentResult":{

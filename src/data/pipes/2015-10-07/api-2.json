@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2015-10-07",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"pipes",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -400,7 +401,8 @@
         "TargetParameters":{"shape":"PipeTargetParameters"},
         "RoleArn":{"shape":"RoleArn"},
         "Tags":{"shape":"TagMap"},
-        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"}
+        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "CreatePipeResponse":{
@@ -484,7 +486,8 @@
         "Tags":{"shape":"TagMap"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LogConfiguration":{"shape":"PipeLogConfiguration"}
+        "LogConfiguration":{"shape":"PipeLogConfiguration"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "DimensionMapping":{
@@ -801,6 +804,12 @@
         "LATEST",
         "AT_TIMESTAMP"
       ]
+    },
+    "KmsKeyIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"[a-zA-Z0-9_\\-/:]*"
     },
     "LaunchType":{
       "type":"string",
@@ -1957,7 +1966,8 @@
         "Target":{"shape":"Arn"},
         "TargetParameters":{"shape":"PipeTargetParameters"},
         "RoleArn":{"shape":"RoleArn"},
-        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"}
+        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "UpdatePipeResponse":{

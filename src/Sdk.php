@@ -234,6 +234,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDirectConnect(array $args = [])
  * @method \Aws\DirectoryService\DirectoryServiceClient createDirectoryService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDirectoryService(array $args = [])
+ * @method \Aws\DirectoryServiceData\DirectoryServiceDataClient createDirectoryServiceData(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionDirectoryServiceData(array $args = [])
  * @method \Aws\DocDB\DocDBClient createDocDB(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDocDB(array $args = [])
  * @method \Aws\DocDBElastic\DocDBElasticClient createDocDBElastic(array $args = [])
@@ -462,6 +464,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceEntitlementService(array $args = [])
  * @method \Aws\MarketplaceMetering\MarketplaceMeteringClient createMarketplaceMetering(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceMetering(array $args = [])
+ * @method \Aws\MarketplaceReporting\MarketplaceReportingClient createMarketplaceReporting(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMarketplaceReporting(array $args = [])
  * @method \Aws\MediaConnect\MediaConnectClient createMediaConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaConnect(array $args = [])
  * @method \Aws\MediaConvert\MediaConvertClient createMediaConvert(array $args = [])
@@ -690,6 +694,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSnowDeviceManagement(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSns(array $args = [])
+ * @method \Aws\SocialMessaging\SocialMessagingClient createSocialMessaging(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSocialMessaging(array $args = [])
  * @method \Aws\Sqs\SqsClient createSqs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSqs(array $args = [])
  * @method \Aws\Ssm\SsmClient createSsm(array $args = [])
@@ -746,8 +752,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWellArchitected(array $args = [])
  * @method \Aws\WorkDocs\WorkDocsClient createWorkDocs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkDocs(array $args = [])
- * @method \Aws\WorkLink\WorkLinkClient createWorkLink(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionWorkLink(array $args = [])
  * @method \Aws\WorkMail\WorkMailClient createWorkMail(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkMail(array $args = [])
  * @method \Aws\WorkMailMessageFlow\WorkMailMessageFlowClient createWorkMailMessageFlow(array $args = [])
@@ -777,7 +781,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.321.7';
+    const VERSION = '3.324.3';
 
     /** @var array Arguments for creating clients */
     private $args;

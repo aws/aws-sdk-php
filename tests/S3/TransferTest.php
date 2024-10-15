@@ -435,12 +435,84 @@ class TransferTest extends TestCase
         `rm -rf $dir`;
     }
 
+    /**
+     * @param $checksumAlgorithm
+     * @param $value
+     * @return void
+     *
+     * @dataProvider flexibleChecksumsProvider
+     */
+    public function testAddsFlexibleChecksums($checksumAlgorithm)
+    {
+        if ($checksumAlgorithm === 'crc32c'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped();
+        }
+
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new Result(['UploadId' => '123']),
+        ]);
+
+        $s3->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd, RequestInterface $req) use ($checksumAlgorithm) {
+                $name = $cmd->getName();
+                if ($name === 'UploadPart') {
+                    $headerName = 'x-amz-checksum-' . $checksumAlgorithm;
+                    $this->assertTrue($req->hasHeader($headerName));
+                }
+            }
+        ));
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = $dir . '/large.txt';
+        $f = fopen($filename, 'w+');
+        $line = str_repeat('.', 1024);
+        for ($i = 0; $i < 6000; $i++) {
+            fwrite($f, $line);
+        }
+        fclose($f);
+
+        $before = function ($cmd, $req = null) use ($checksumAlgorithm) {
+            if ($cmd->getName() === 'UploadPart') {
+                $cmd['ChecksumAlgorithm'] = $checksumAlgorithm;
+            }
+        };
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'mup_threshold' => 5248000,
+            'debug' => $res,
+            'before' => $before
+        ]);
+
+        $t->transfer();
+        rewind($res);
+        $output = stream_get_contents($res);
+        $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
+        `rm -rf $dir`;
+    }
+
+    public function flexibleChecksumsProvider() {
+        return [
+            ['sha256'],
+            ['sha1'],
+            ['crc32c'],
+            ['crc32']
+        ];
+    }
+
     private function mockResult(callable $fn)
     {
         return function (callable $handler) use ($fn) {
             return function (
                 CommandInterface $command,
-                RequestInterface $request = null
+                ?RequestInterface $request = null
             ) use ($handler, $fn) {
                 return Promise\Create::promiseFor($fn($command, $request));
             };

@@ -528,9 +528,9 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"MaxDBShardGroupLimitReached"},
         {"shape":"InvalidDBClusterStateFault"},
-        {"shape":"InvalidMaxAcuFault"},
         {"shape":"UnsupportedDBEngineVersionFault"},
-        {"shape":"InvalidVPCNetworkStateFault"}
+        {"shape":"InvalidVPCNetworkStateFault"},
+        {"shape":"NetworkTypeNotSupported"}
       ]
     },
     "CreateDBSnapshot":{
@@ -2046,8 +2046,7 @@
       "errors":[
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"DBShardGroupAlreadyExistsFault"},
-        {"shape":"DBShardGroupNotFoundFault"},
-        {"shape":"InvalidMaxAcuFault"}
+        {"shape":"DBShardGroupNotFoundFault"}
       ]
     },
     "ModifyDBSnapshot":{
@@ -3327,6 +3326,13 @@
         "CertificateDetails":{"shape":"CertificateDetails"}
       }
     },
+    "ClusterScalabilityType":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "limitless"
+      ]
+    },
     "ConnectionPoolConfiguration":{
       "type":"structure",
       "members":{
@@ -3591,6 +3597,7 @@
         "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
         "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "NetworkType":{"shape":"String"},
+        "ClusterScalabilityType":{"shape":"ClusterScalabilityType"},
         "DBSystemId":{"shape":"String"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
@@ -3881,7 +3888,8 @@
         "ComputeRedundancy":{"shape":"IntegerOptional"},
         "MaxACU":{"shape":"DoubleOptional"},
         "MinACU":{"shape":"DoubleOptional"},
-        "PubliclyAccessible":{"shape":"BooleanOptional"}
+        "PubliclyAccessible":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateDBSnapshotMessage":{
@@ -3954,7 +3962,8 @@
         "EngineLifecycleSupport":{"shape":"String"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "DatabaseName":{"shape":"String"},
-        "StorageEncrypted":{"shape":"BooleanOptional"}
+        "StorageEncrypted":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateGlobalClusterResult":{
@@ -4185,6 +4194,7 @@
         "AwsBackupRecoveryPointArn":{"shape":"String"},
         "LimitlessDatabase":{"shape":"LimitlessDatabase"},
         "StorageThroughput":{"shape":"IntegerOptional"},
+        "ClusterScalabilityType":{"shape":"ClusterScalabilityType"},
         "CertificateDetails":{"shape":"CertificateDetails"},
         "EngineLifecycleSupport":{"shape":"String"}
       },
@@ -5435,7 +5445,9 @@
         "ComputeRedundancy":{"shape":"IntegerOptional"},
         "Status":{"shape":"String"},
         "PubliclyAccessible":{"shape":"BooleanOptional"},
-        "Endpoint":{"shape":"String"}
+        "Endpoint":{"shape":"String"},
+        "DBShardGroupArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"}
       }
     },
     "DBShardGroupAlreadyExistsFault":{
@@ -6977,7 +6989,8 @@
         "StorageEncrypted":{"shape":"BooleanOptional"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterMembers":{"shape":"GlobalClusterMemberList"},
-        "FailoverState":{"shape":"FailoverState"}
+        "FailoverState":{"shape":"FailoverState"},
+        "TagList":{"shape":"TagList"}
       },
       "wrapper":true
     },
@@ -7543,17 +7556,6 @@
       },
       "exception":true
     },
-    "InvalidMaxAcuFault":{
-      "type":"structure",
-      "members":{
-      },
-      "error":{
-        "code":"InvalidMaxAcu",
-        "httpStatusCode":400,
-        "senderFault":true
-      },
-      "exception":true
-    },
     "InvalidOptionGroupStateFault":{
       "type":"structure",
       "members":{
@@ -8068,7 +8070,8 @@
       "members":{
         "DBShardGroupIdentifier":{"shape":"DBShardGroupIdentifier"},
         "MaxACU":{"shape":"DoubleOptional"},
-        "MinACU":{"shape":"DoubleOptional"}
+        "MinACU":{"shape":"DoubleOptional"},
+        "ComputeRedundancy":{"shape":"IntegerOptional"}
       }
     },
     "ModifyDBSnapshotAttributeMessage":{

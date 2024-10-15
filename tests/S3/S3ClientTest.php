@@ -512,9 +512,16 @@ class S3ClientTest extends TestCase
     public function testAddsLocationConstraintAutomatically($region, $target, $command, $contains)
     {
         $client = $this->getTestClient('S3', ['region' => $region]);
-        $params = ['Bucket' => 'foo'];
+        $params = [
+            'Bucket' => 'foo',
+            'CreateBucketConfiguration' => [
+                'Bucket' => [
+                    'Type' => 'foo'
+                ]
+            ]
+        ];
         if ($region !== $target) {
-            $params['CreateBucketConfiguration'] = ['LocationConstraint' => $target];
+            $params['CreateBucketConfiguration']['LocationConstraint'] = $target;
         }
         $command = $client->getCommand($command, $params);
 
@@ -524,6 +531,12 @@ class S3ClientTest extends TestCase
             $this->assertStringContainsString($text, $body);
         } else {
             $this->assertStringNotContainsString($text, $body);
+        }
+        //ensures original configuration is not overwritten
+        if ($target !== 'us-east-1'
+            && $command->getName() === 'CreateBucket'
+        ) {
+            $this->assertStringContainsString('<Bucket><Type>foo</Type></Bucket>', $body);
         }
     }
 
@@ -535,6 +548,33 @@ class S3ClientTest extends TestCase
             ['us-west-2', 'us-west-2', 'HeadBucket',   false],
             ['us-west-2', 'eu-west-1', 'CreateBucket', true],
             ['us-west-2', 'us-east-1', 'CreateBucket', false],
+        ];
+    }
+
+    /**
+     * @param string $bucket
+     *
+     * @dataProvider directoryBucketLocationConstraintProvider
+     */
+    public function testDoesNotAddLocationConstraintForDirectoryBuckets(
+        string $bucket
+    ): void
+    {
+        $client = $this->getTestClient('s3');
+        $params = ['Bucket' => $bucket];
+        $command = $client->getCommand('CreateBucket', $params);
+        $body = (string) \Aws\serialize($command)->getBody();
+        $this->assertStringNotContainsString('LocationConstraint', $body);
+    }
+
+    public function directoryBucketLocationConstraintProvider(): array
+    {
+        return [
+            ['bucket-base-name--usw2-az1--x-s3'],
+            ['mybucket123--euw1-az2--x-s3'],
+            ['test_bucket_name--apne1-az3--x-s3'],
+            ['valid-name--aps1-az4--x-s3'],
+            ['s3_express_demo_directory_bucket--usw2-az1--x-s3']
         ];
     }
 
@@ -2467,6 +2507,38 @@ EOXML;
         $client->listBuckets();
         $this->assertEquals(0, $retries);
     }
+  
+  /**
+     * @param string $bucketName
+     * @param bool $expected
+     *
+     * @return void
+     *
+     * @dataProvider directoryBucketProvider
+     */
+    public function testIsDirectoryBucket(string $bucketName, bool $expected): void
+    {
+        $client = $this->getTestClient('s3');
+        $this->assertEquals($expected, $client::isDirectoryBucket($bucketName));
+    }
+
+    public function directoryBucketProvider(): array
+    {
+        return [
+            ['bucket-base-name--usw2-az1--x-s3', true],
+            ['mybucket123--euw1-az2--x-s3', true],
+            ['test_bucket_name--apne1-az3--x-s3', true],
+            ['valid-name--aps1-az4--x-s3', true],
+            ['s3_express_demo_directory_bucket--usw2-az1--x-s3', true],
+            ['bucket-name--usw2-az1--s3alias', false], // ends with -s3alias
+            ['bucketname--usw2-az1--ol-s3', false],    // ends with --ol-s3
+            ['bucketname--usw2-az1.mrap', false],      // ends with .mrap
+            ['invalid_bucket_name--az1--x-s3', false], // missing region in azid
+            ['name--usw2-az1', false],                 // missing --x-s3 at the end
+            ['wrong-format--usw2az1--x-s3', false],    // missing hyphen in azid part
+            ['too-short--x-s3', false],                // invalid azid format, missing prefix
+        ];
+    }
 
     public function testAddCrc32ForDirectoryBucketsAsAppropriate()
     {
@@ -2763,7 +2835,7 @@ EOXML;
         ];
     }
 
-    public function testCreatesPresignedPutRequestsWithoutChecksum()
+    public function testCreatesPresignedRequestsWithoutChecksumByDefault()
     {
         /** @var S3Client $client */
         $client = $this->getTestClient('S3', [
@@ -2771,11 +2843,12 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar']
         ]);
         $command = $client->getCommand('PutObject', ['Bucket' => 'foo', 'Key' => 'bar']);
-        $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringNotContainsString('x-amz-checksum-', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-', $url);
     }
 
-    public function testCreatesPresignedPutRequestsDoNotRemoveChecksumAlgorithmHeader()
+    public function testCreatesPresignedRequestsWithRequestedChecksumAlgorithm()
     {
         /** @var S3Client $client */
         $client = $this->getTestClient('S3', [
@@ -2783,15 +2856,27 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar']
         ]);
         $command = $client->getCommand(
-            'CopyObject',
-            [
-                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-                'Key' => 'copied-object',
-                'CopySource' => 'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object',
-                'ChecksumAlgorithm' => 'crc32'
-            ]
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar', 'ChecksumAlgorithm' => 'crc32']
         );
-        $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertStringContainsString('x-amz-checksum-algorithm=crc32', $url);
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('x-amz-checksum-crc32=AAAAAA%3D%3D', $url);
+        $this->assertStringContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
+    }
+
+    public function testCreatesPresignedPutRequestsWithChecksumValue()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar','ChecksumCRC32' => 'AAAAAA==']
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('x-amz-checksum-crc32=AAAAAA%3D%3D', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
     }
 }
