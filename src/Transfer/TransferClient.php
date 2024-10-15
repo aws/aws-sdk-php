@@ -77,6 +77,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listConnectorsAsync(array $args = [])
  * @method \Aws\Result listExecutions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listExecutionsAsync(array $args = [])
+ * @method \Aws\Result listFileTransferResults(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFileTransferResultsAsync(array $args = [])
  * @method \Aws\Result listHostKeys(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listHostKeysAsync(array $args = [])
  * @method \Aws\Result listProfiles(array $args = [])

@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"ses",
     "targetPrefix":"MailManagerSvc",
-    "uid":"mailmanager-2023-10-17"
+    "uid":"mailmanager-2023-10-17",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateAddonInstance":{
@@ -886,7 +887,9 @@
         "TO",
         "FROM",
         "CC",
-        "SUBJECT"
+        "SUBJECT",
+        "ENVELOPE_TO",
+        "ENVELOPE_FROM"
       ]
     },
     "ArchiveStringExpression":{
@@ -1208,6 +1211,14 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "Envelope":{
+      "type":"structure",
+      "members":{
+        "From":{"shape":"String"},
+        "Helo":{"shape":"String"},
+        "To":{"shape":"StringList"}
+      }
+    },
     "ErrorMessage":{"type":"string"},
     "ExportDestinationConfiguration":{
       "type":"structure",
@@ -1329,7 +1340,9 @@
     "GetArchiveMessageResponse":{
       "type":"structure",
       "members":{
-        "MessageDownloadLink":{"shape":"S3PresignedURL"}
+        "Envelope":{"shape":"Envelope"},
+        "MessageDownloadLink":{"shape":"S3PresignedURL"},
+        "Metadata":{"shape":"Metadata"}
       }
     },
     "GetArchiveRequest":{
@@ -1925,6 +1938,23 @@
         "Text":{"shape":"String"}
       }
     },
+    "Metadata":{
+      "type":"structure",
+      "members":{
+        "IngressPointId":{"shape":"IngressPointId"},
+        "RuleSetId":{"shape":"RuleSetId"},
+        "SenderHostname":{"shape":"String"},
+        "SenderIpAddress":{"shape":"SenderIpAddress"},
+        "Timestamp":{"shape":"Timestamp"},
+        "TlsCipherSuite":{"shape":"String"},
+        "TlsProtocol":{"shape":"String"},
+        "TrafficPolicyId":{"shape":"TrafficPolicyId"}
+      }
+    },
+    "MimeHeaderAttribute":{
+      "type":"string",
+      "pattern":"^X-[a-zA-Z0-9-]{1,256}$"
+    },
     "NameOrArn":{
       "type":"string",
       "max":2048,
@@ -2083,12 +2113,16 @@
         "ArchivedMessageId":{"shape":"ArchivedMessageId"},
         "Cc":{"shape":"String"},
         "Date":{"shape":"String"},
+        "Envelope":{"shape":"Envelope"},
         "From":{"shape":"String"},
         "HasAttachments":{"shape":"Boolean"},
         "InReplyTo":{"shape":"String"},
+        "IngressPointId":{"shape":"IngressPointId"},
         "MessageId":{"shape":"String"},
         "ReceivedHeaders":{"shape":"EmailReceivedHeadersList"},
         "ReceivedTimestamp":{"shape":"Timestamp"},
+        "SenderHostname":{"shape":"String"},
+        "SenderIpAddress":{"shape":"SenderIpAddress"},
         "Subject":{"shape":"String"},
         "To":{"shape":"String"},
         "XMailer":{"shape":"String"},
@@ -2366,7 +2400,8 @@
     "RuleStringToEvaluate":{
       "type":"structure",
       "members":{
-        "Attribute":{"shape":"RuleStringEmailAttribute"}
+        "Attribute":{"shape":"RuleStringEmailAttribute"},
+        "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"}
       },
       "union":true
     },
@@ -2521,6 +2556,10 @@
         "RoleArn":{"shape":"IamRoleArn"}
       }
     },
+    "SenderIpAddress":{
+      "type":"string",
+      "sensitive":true
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -2548,6 +2587,7 @@
         "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
+        "IncludeMetadata":{"shape":"Boolean"},
         "MaxResults":{"shape":"ExportMaxResults"},
         "ToTimestamp":{"shape":"Timestamp"}
       }
@@ -2609,9 +2649,14 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "StringValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "StringValueList":{
       "type":"list",
-      "member":{"shape":"String"},
+      "member":{"shape":"StringValue"},
       "max":10,
       "min":1
     },

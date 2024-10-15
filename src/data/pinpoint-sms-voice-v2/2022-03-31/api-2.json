@@ -454,6 +454,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteTextMessageSpendLimitOverride":{
       "name":"DeleteTextMessageSpendLimitOverride",
       "http":{
@@ -866,6 +882,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListPoolOriginationIdentities":{
       "name":"ListPoolOriginationIdentities",
       "http":{
@@ -962,6 +994,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -2236,6 +2284,21 @@
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "DeleteResourcePolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "Policy":{"shape":"ResourcePolicy"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "DeleteTextMessageSpendLimitOverrideRequest":{
       "type":"structure",
       "members":{
@@ -2355,7 +2418,8 @@
       "members":{
         "OptOutListNames":{"shape":"OptOutListNameList"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "Owner":{"shape":"Owner"}
       }
     },
     "DescribeOptOutListsResult":{
@@ -2391,7 +2455,8 @@
         "PhoneNumberIds":{"shape":"PhoneNumberIdList"},
         "Filters":{"shape":"PhoneNumberFilterList"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "Owner":{"shape":"Owner"}
       }
     },
     "DescribePhoneNumbersResult":{
@@ -2407,7 +2472,8 @@
         "PoolIds":{"shape":"PoolIdList"},
         "Filters":{"shape":"PoolFilterList"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "Owner":{"shape":"Owner"}
       }
     },
     "DescribePoolsResult":{
@@ -2588,7 +2654,8 @@
         "SenderIds":{"shape":"SenderIdList"},
         "Filters":{"shape":"SenderIdFilterList"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
+        "MaxResults":{"shape":"MaxResults"},
+        "Owner":{"shape":"Owner"}
       }
     },
     "DescribeSenderIdsResult":{
@@ -2876,6 +2943,21 @@
         "ProtectConfigurationId":{"shape":"ProtectConfigurationId"},
         "NumberCapability":{"shape":"NumberCapability"},
         "CountryRuleSet":{"shape":"ProtectConfigurationCountryRuleSet"}
+      }
+    },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "GetResourcePolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "Policy":{"shape":"ResourcePolicy"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "IamRoleArn":{
@@ -3255,6 +3337,13 @@
     "OriginationIdentityMetadataList":{
       "type":"list",
       "member":{"shape":"OriginationIdentityMetadata"}
+    },
+    "Owner":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "SHARED"
+      ]
     },
     "PhoneNumber":{
       "type":"string",
@@ -3636,6 +3725,25 @@
         "SelectChoices":{"shape":"SelectChoiceList"},
         "TextValue":{"shape":"TextValue"},
         "RegistrationAttachmentId":{"shape":"String"}
+      }
+    },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutResourcePolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "Policy":{"shape":"ResourcePolicy"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "RegistrationAssociationBehavior":{
@@ -4239,6 +4347,11 @@
       },
       "exception":true
     },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":10000,
+      "min":1
+    },
     "ResourceType":{
       "type":"string",
       "enum":[
@@ -4254,7 +4367,8 @@
         "registration",
         "registration-attachment",
         "verified-destination-number",
-        "protect-configuration"
+        "protect-configuration",
+        "policy"
       ]
     },
     "SectionPath":{

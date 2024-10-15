@@ -675,6 +675,7 @@
         "ManifestName":{"shape":"ManifestName"},
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
+        "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
         "FilterConfiguration":{"shape":"FilterConfiguration"}
@@ -702,6 +703,7 @@
         "ManifestName":{"shape":"ManifestName"},
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
+        "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
         "FilterConfiguration":{"shape":"FilterConfiguration"}
@@ -1046,7 +1048,8 @@
         "ManifestFilter":{"shape":"FilterConfigurationManifestFilterString"},
         "Start":{"shape":"Timestamp"},
         "End":{"shape":"Timestamp"},
-        "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"}
+        "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"},
+        "ClipStartTime":{"shape":"Timestamp"}
       }
     },
     "FilterConfigurationManifestFilterString":{
@@ -1059,6 +1062,10 @@
       "box":true,
       "max":1209600,
       "min":0
+    },
+    "Float":{
+      "type":"float",
+      "box":true
     },
     "ForceEndpointErrorConfiguration":{
       "type":"structure",
@@ -1211,7 +1218,8 @@
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "StartTag":{"shape":"StartTag"}
       }
     },
     "GetHlsManifests":{
@@ -1231,7 +1239,8 @@
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "StartTag":{"shape":"StartTag"}
       }
     },
     "GetLowLatencyHlsManifests":{
@@ -1786,6 +1795,14 @@
       "max":1024,
       "min":1
     },
+    "StartTag":{
+      "type":"structure",
+      "required":["TimeOffset"],
+      "members":{
+        "TimeOffset":{"shape":"Float"},
+        "Precise":{"shape":"Boolean"}
+      }
+    },
     "String":{"type":"string"},
     "TagArn":{"type":"string"},
     "TagKey":{"type":"string"},
@@ -2081,7 +2098,9 @@
         "PERIOD_TRIGGERS_NONE_SPECIFIED_WITH_ADDITIONAL_VALUES",
         "DRM_SIGNALING_MISMATCH_SEGMENT_ENCRYPTION_STATUS",
         "ONLY_CMAF_INPUT_TYPE_ALLOW_FORCE_ENDPOINT_ERROR_CONFIGURATION",
-        "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY"
+        "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY",
+        "CLIP_START_TIME_WITH_START_OR_END",
+        "START_TAG_TIME_OFFSET_INVALID"
       ]
     }
   }

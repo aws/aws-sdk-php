@@ -964,6 +964,14 @@
         "TrustStoreRevocations":{"shape":"TrustStoreRevocations"}
       }
     },
+    "AdministrativeOverride":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"TargetAdministrativeOverrideStateEnum"},
+        "Reason":{"shape":"TargetAdministrativeOverrideReasonEnum"},
+        "Description":{"shape":"Description"}
+      }
+    },
     "AllocationId":{"type":"string"},
     "AllocationIdNotFoundException":{
       "type":"structure",
@@ -2770,6 +2778,24 @@
       "min":0,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
+    "TargetAdministrativeOverrideReasonEnum":{
+      "type":"string",
+      "enum":[
+        "AdministrativeOverride.Unknown",
+        "AdministrativeOverride.NoOverride",
+        "AdministrativeOverride.ZonalShiftActive",
+        "AdministrativeOverride.ZonalShiftDelegatedToDns"
+      ]
+    },
+    "TargetAdministrativeOverrideStateEnum":{
+      "type":"string",
+      "enum":[
+        "unknown",
+        "no_override",
+        "zonal_shift_active",
+        "zonal_shift_delegated_to_dns"
+      ]
+    },
     "TargetDescription":{
       "type":"structure",
       "required":["Id"],
@@ -2901,7 +2927,8 @@
         "Target":{"shape":"TargetDescription"},
         "HealthCheckPort":{"shape":"HealthCheckPort"},
         "TargetHealth":{"shape":"TargetHealth"},
-        "AnomalyDetection":{"shape":"AnomalyDetection"}
+        "AnomalyDetection":{"shape":"AnomalyDetection"},
+        "AdministrativeOverride":{"shape":"AdministrativeOverride"}
       }
     },
     "TargetHealthDescriptions":{

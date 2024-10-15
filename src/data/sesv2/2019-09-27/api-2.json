@@ -2199,7 +2199,8 @@
       "type":"structure",
       "members":{
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"PoolName"}
+        "SendingPoolName":{"shape":"PoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "Description":{"type":"string"},
@@ -3046,6 +3047,14 @@
         "OptimizedSharedDelivery":{"shape":"FeatureStatus"}
       }
     },
+    "HttpsPolicy":{
+      "type":"string",
+      "enum":[
+        "REQUIRE",
+        "REQUIRE_OPEN_ONLY",
+        "OPTIONAL"
+      ]
+    },
     "Identity":{
       "type":"string",
       "min":1
@@ -3628,6 +3637,11 @@
       ]
     },
     "Max24HourSend":{"type":"double"},
+    "MaxDeliverySeconds":{
+      "type":"long",
+      "max":50400,
+      "min":300
+    },
     "MaxItems":{"type":"integer"},
     "MaxSendRate":{"type":"double"},
     "Message":{
@@ -3941,7 +3955,8 @@
           "locationName":"ConfigurationSetName"
         },
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"SendingPoolName"}
+        "SendingPoolName":{"shape":"SendingPoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "PutConfigurationSetDeliveryOptionsResponse":{
@@ -4009,7 +4024,8 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "PutConfigurationSetTrackingOptionsResponse":{
@@ -4653,7 +4669,8 @@
       "type":"structure",
       "required":["CustomRedirectDomain"],
       "members":{
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "UnsubscribeAll":{"type":"boolean"},

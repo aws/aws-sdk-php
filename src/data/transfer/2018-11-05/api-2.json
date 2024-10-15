@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-11-05",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"transfer",
     "jsonVersion":"1.1",
     "protocol":"json",
@@ -578,6 +579,21 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListFileTransferResults":{
+      "name":"ListFileTransferResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFileTransferResultsRequest"},
+      "output":{"shape":"ListFileTransferResultsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListHostKeys":{
       "name":"ListHostKeys",
       "http":{
@@ -1104,6 +1120,25 @@
         "Message":{"shape":"Message"}
       },
       "exception":true
+    },
+    "ConnectorFileTransferResult":{
+      "type":"structure",
+      "required":[
+        "FilePath",
+        "StatusCode"
+      ],
+      "members":{
+        "FilePath":{"shape":"FilePath"},
+        "StatusCode":{"shape":"TransferTableStatus"},
+        "FailureCode":{"shape":"FailureCode"},
+        "FailureMessage":{"shape":"Message"}
+      }
+    },
+    "ConnectorFileTransferResults":{
+      "type":"list",
+      "member":{"shape":"ConnectorFileTransferResult"},
+      "max":1000,
+      "min":0
     },
     "ConnectorId":{
       "type":"string",
@@ -1947,6 +1982,7 @@
       "min":1,
       "pattern":"S-1-[\\d-]+"
     },
+    "FailureCode":{"type":"string"},
     "FileLocation":{
       "type":"structure",
       "members":{
@@ -2239,6 +2275,27 @@
         "NextToken":{"shape":"NextToken"},
         "WorkflowId":{"shape":"WorkflowId"},
         "Executions":{"shape":"ListedExecutions"}
+      }
+    },
+    "ListFileTransferResultsRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "TransferId"
+      ],
+      "members":{
+        "ConnectorId":{"shape":"ConnectorId"},
+        "TransferId":{"shape":"TransferId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListFileTransferResultsResponse":{
+      "type":"structure",
+      "required":["FileTransferResults"],
+      "members":{
+        "FileTransferResults":{"shape":"ConnectorFileTransferResults"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListHostKeysRequest":{
@@ -3222,6 +3279,15 @@
       "max":512,
       "min":1,
       "pattern":"[0-9a-zA-Z./-]+"
+    },
+    "TransferTableStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "UntagResourceRequest":{
       "type":"structure",

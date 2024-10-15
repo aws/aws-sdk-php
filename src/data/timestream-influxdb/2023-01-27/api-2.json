@@ -260,7 +260,8 @@
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
         "deploymentType":{"shape":"DeploymentType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
-        "tags":{"shape":"RequestTagMap"}
+        "tags":{"shape":"RequestTagMap"},
+        "port":{"shape":"Port"}
       }
     },
     "CreateDbInstanceOutput":{
@@ -277,6 +278,7 @@
         "arn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -337,7 +339,7 @@
       "type":"string",
       "max":40,
       "min":3,
-      "pattern":"[a-zA-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
     },
     "DbInstanceSummary":{
       "type":"structure",
@@ -352,6 +354,7 @@
         "arn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -391,7 +394,7 @@
       "type":"string",
       "max":64,
       "min":3,
-      "pattern":"[a-zA-z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
+      "pattern":"[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*"
     },
     "DbParameterGroupSummary":{
       "type":"structure",
@@ -440,6 +443,7 @@
         "arn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -460,6 +464,31 @@
         "SINGLE_AZ",
         "WITH_MULTIAZ_STANDBY"
       ]
+    },
+    "Duration":{
+      "type":"structure",
+      "required":[
+        "durationType",
+        "value"
+      ],
+      "members":{
+        "durationType":{"shape":"DurationType"},
+        "value":{"shape":"DurationValueLong"}
+      }
+    },
+    "DurationType":{
+      "type":"string",
+      "enum":[
+        "hours",
+        "minutes",
+        "seconds",
+        "milliseconds"
+      ]
+    },
+    "DurationValueLong":{
+      "type":"long",
+      "box":true,
+      "min":0
     },
     "GetDbInstanceInput":{
       "type":"structure",
@@ -482,6 +511,7 @@
         "arn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -527,8 +557,53 @@
         "queryConcurrency":{"shape":"InfluxDBv2ParametersQueryConcurrencyInteger"},
         "queryQueueSize":{"shape":"InfluxDBv2ParametersQueryQueueSizeInteger"},
         "tracingType":{"shape":"TracingType"},
-        "metricsDisabled":{"shape":"Boolean"}
+        "metricsDisabled":{"shape":"Boolean"},
+        "httpIdleTimeout":{"shape":"Duration"},
+        "httpReadHeaderTimeout":{"shape":"Duration"},
+        "httpReadTimeout":{"shape":"Duration"},
+        "httpWriteTimeout":{"shape":"Duration"},
+        "influxqlMaxSelectBuckets":{"shape":"InfluxDBv2ParametersInfluxqlMaxSelectBucketsLong"},
+        "influxqlMaxSelectPoint":{"shape":"InfluxDBv2ParametersInfluxqlMaxSelectPointLong"},
+        "influxqlMaxSelectSeries":{"shape":"InfluxDBv2ParametersInfluxqlMaxSelectSeriesLong"},
+        "pprofDisabled":{"shape":"Boolean"},
+        "queryInitialMemoryBytes":{"shape":"InfluxDBv2ParametersQueryInitialMemoryBytesLong"},
+        "queryMaxMemoryBytes":{"shape":"InfluxDBv2ParametersQueryMaxMemoryBytesLong"},
+        "queryMemoryBytes":{"shape":"InfluxDBv2ParametersQueryMemoryBytesLong"},
+        "sessionLength":{"shape":"InfluxDBv2ParametersSessionLengthInteger"},
+        "sessionRenewDisabled":{"shape":"Boolean"},
+        "storageCacheMaxMemorySize":{"shape":"InfluxDBv2ParametersStorageCacheMaxMemorySizeLong"},
+        "storageCacheSnapshotMemorySize":{"shape":"InfluxDBv2ParametersStorageCacheSnapshotMemorySizeLong"},
+        "storageCacheSnapshotWriteColdDuration":{"shape":"Duration"},
+        "storageCompactFullWriteColdDuration":{"shape":"Duration"},
+        "storageCompactThroughputBurst":{"shape":"InfluxDBv2ParametersStorageCompactThroughputBurstLong"},
+        "storageMaxConcurrentCompactions":{"shape":"InfluxDBv2ParametersStorageMaxConcurrentCompactionsInteger"},
+        "storageMaxIndexLogFileSize":{"shape":"InfluxDBv2ParametersStorageMaxIndexLogFileSizeLong"},
+        "storageNoValidateFieldSize":{"shape":"Boolean"},
+        "storageRetentionCheckInterval":{"shape":"Duration"},
+        "storageSeriesFileMaxConcurrentSnapshotCompactions":{"shape":"InfluxDBv2ParametersStorageSeriesFileMaxConcurrentSnapshotCompactionsInteger"},
+        "storageSeriesIdSetCacheSize":{"shape":"InfluxDBv2ParametersStorageSeriesIdSetCacheSizeLong"},
+        "storageWalMaxConcurrentWrites":{"shape":"InfluxDBv2ParametersStorageWalMaxConcurrentWritesInteger"},
+        "storageWalMaxWriteDelay":{"shape":"Duration"},
+        "uiDisabled":{"shape":"Boolean"}
       }
+    },
+    "InfluxDBv2ParametersInfluxqlMaxSelectBucketsLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersInfluxqlMaxSelectPointLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersInfluxqlMaxSelectSeriesLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
     },
     "InfluxDBv2ParametersQueryConcurrencyInteger":{
       "type":"integer",
@@ -536,7 +611,79 @@
       "max":256,
       "min":0
     },
+    "InfluxDBv2ParametersQueryInitialMemoryBytesLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersQueryMaxMemoryBytesLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersQueryMemoryBytesLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
     "InfluxDBv2ParametersQueryQueueSizeInteger":{
+      "type":"integer",
+      "box":true,
+      "max":256,
+      "min":0
+    },
+    "InfluxDBv2ParametersSessionLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2880,
+      "min":1
+    },
+    "InfluxDBv2ParametersStorageCacheMaxMemorySizeLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageCacheSnapshotMemorySizeLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageCompactThroughputBurstLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageMaxConcurrentCompactionsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":64,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageMaxIndexLogFileSizeLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageSeriesFileMaxConcurrentSnapshotCompactionsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":64,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageSeriesIdSetCacheSizeLong":{
+      "type":"long",
+      "box":true,
+      "max":1000000000000,
+      "min":0
+    },
+    "InfluxDBv2ParametersStorageWalMaxConcurrentWritesInteger":{
       "type":"integer",
       "box":true,
       "max":256,
@@ -642,6 +789,12 @@
       "min":8,
       "pattern":"[a-zA-Z0-9]+",
       "sensitive":true
+    },
+    "Port":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1024
     },
     "RequestTagMap":{
       "type":"map",
@@ -773,6 +926,7 @@
         "identifier":{"shape":"DbInstanceIdentifier"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "dbParameterGroupIdentifier":{"shape":"DbParameterGroupIdentifier"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "deploymentType":{"shape":"DeploymentType"}
       }
@@ -791,6 +945,7 @@
         "arn":{"shape":"Arn"},
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
+        "port":{"shape":"Port"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},

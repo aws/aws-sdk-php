@@ -5,12 +5,14 @@
     "endpointPrefix":"api.iotdeviceadvisor",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"AWSIoTDeviceAdvisor",
     "serviceFullName":"AWS IoT Core Device Advisor",
     "serviceId":"IotDeviceAdvisor",
     "signatureVersion":"v4",
     "signingName":"iotdeviceadvisor",
-    "uid":"iotdeviceadvisor-2020-09-18"
+    "uid":"iotdeviceadvisor-2020-09-18",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateSuiteDefinition":{
@@ -218,6 +220,12 @@
         "SignatureVersion4"
       ]
     },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\u0021-\\u007E]+$"
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -231,7 +239,11 @@
       "required":["suiteDefinitionConfiguration"],
       "members":{
         "suiteDefinitionConfiguration":{"shape":"SuiteDefinitionConfiguration"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateSuiteDefinitionResponse":{

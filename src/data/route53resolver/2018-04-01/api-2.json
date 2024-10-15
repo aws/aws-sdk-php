@@ -3121,6 +3121,11 @@
       "type":"list",
       "member":{"shape":"ResourceId"}
     },
+    "ServerNameIndication":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
     "ServicePrinciple":{
       "type":"string",
       "max":512,
@@ -3227,6 +3232,10 @@
         },
         "Protocol":{
           "shape":"Protocol",
+          "box":true
+        },
+        "ServerNameIndication":{
+          "shape":"ServerNameIndication",
           "box":true
         }
       }

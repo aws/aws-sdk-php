@@ -77,7 +77,7 @@ class EndpointV2Middleware
         EndpointProviderV2 $endpointProvider,
         Service $api,
         array $args,
-        callable $credentialProvider = null
+        ?callable $credentialProvider = null
     )
     {
         $this->nextHandler = $nextHandler;

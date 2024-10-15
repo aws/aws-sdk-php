@@ -4,14 +4,25 @@
     "apiVersion":"2022-09-30",
     "endpointPrefix":"metrics.sagemaker",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"SageMaker Metrics",
     "serviceFullName":"Amazon SageMaker Metrics Service",
     "serviceId":"SageMaker Metrics",
     "signatureVersion":"v4",
     "signingName":"sagemaker",
-    "uid":"sagemaker-metrics-2022-09-30"
+    "uid":"sagemaker-metrics-2022-09-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "BatchGetMetrics":{
+      "name":"BatchGetMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetMetrics"
+      },
+      "input":{"shape":"BatchGetMetricsRequest"},
+      "output":{"shape":"BatchGetMetricsResponse"}
+    },
     "BatchPutMetrics":{
       "name":"BatchPutMetrics",
       "http":{
@@ -23,6 +34,19 @@
     }
   },
   "shapes":{
+    "BatchGetMetricsRequest":{
+      "type":"structure",
+      "required":["MetricQueries"],
+      "members":{
+        "MetricQueries":{"shape":"MetricQueryList"}
+      }
+    },
+    "BatchGetMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "MetricQueryResults":{"shape":"MetricQueryResultList"}
+      }
+    },
     "BatchPutMetricsError":{
       "type":"structure",
       "members":{
@@ -58,14 +82,104 @@
       "type":"string",
       "max":120,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,119}"
+      "pattern":"^[a-z0-9](-*[a-z0-9]){0,119}"
     },
     "Integer":{"type":"integer"},
+    "Long":{"type":"long"},
+    "Message":{
+      "type":"string",
+      "max":2048,
+      "pattern":".*"
+    },
     "MetricName":{
       "type":"string",
       "max":255,
       "min":1,
       "pattern":".+"
+    },
+    "MetricQuery":{
+      "type":"structure",
+      "required":[
+        "MetricName",
+        "ResourceArn",
+        "MetricStat",
+        "Period",
+        "XAxisType"
+      ],
+      "members":{
+        "MetricName":{"shape":"MetricName"},
+        "ResourceArn":{"shape":"SageMakerResourceArn"},
+        "MetricStat":{"shape":"MetricStatistic"},
+        "Period":{"shape":"Period"},
+        "XAxisType":{"shape":"XAxisType"},
+        "Start":{
+          "shape":"Long",
+          "box":true
+        },
+        "End":{
+          "shape":"Long",
+          "box":true
+        }
+      }
+    },
+    "MetricQueryList":{
+      "type":"list",
+      "member":{"shape":"MetricQuery"},
+      "max":100,
+      "min":1
+    },
+    "MetricQueryResult":{
+      "type":"structure",
+      "required":[
+        "Status",
+        "XAxisValues",
+        "MetricValues"
+      ],
+      "members":{
+        "Status":{"shape":"MetricQueryResultStatus"},
+        "Message":{"shape":"Message"},
+        "XAxisValues":{"shape":"XAxisValues"},
+        "MetricValues":{"shape":"MetricValues"}
+      }
+    },
+    "MetricQueryResultList":{
+      "type":"list",
+      "member":{"shape":"MetricQueryResult"},
+      "max":100,
+      "min":1
+    },
+    "MetricQueryResultStatus":{
+      "type":"string",
+      "enum":[
+        "Complete",
+        "Truncated",
+        "InternalError",
+        "ValidationError"
+      ]
+    },
+    "MetricStatistic":{
+      "type":"string",
+      "enum":[
+        "Min",
+        "Max",
+        "Avg",
+        "Count",
+        "StdDev",
+        "Last"
+      ]
+    },
+    "MetricValues":{
+      "type":"list",
+      "member":{"shape":"Double"}
+    },
+    "Period":{
+      "type":"string",
+      "enum":[
+        "OneMinute",
+        "FiveMinute",
+        "OneHour",
+        "IterationNumber"
+      ]
     },
     "PutMetricsErrorCode":{
       "type":"string",
@@ -96,10 +210,26 @@
       "max":10,
       "min":1
     },
+    "SageMakerResourceArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-].*/.*"
+    },
     "Step":{
       "type":"integer",
       "min":0
     },
-    "Timestamp":{"type":"timestamp"}
+    "Timestamp":{"type":"timestamp"},
+    "XAxisType":{
+      "type":"string",
+      "enum":[
+        "IterationNumber",
+        "Timestamp"
+      ]
+    },
+    "XAxisValues":{
+      "type":"list",
+      "member":{"shape":"Long"}
+    }
   }
 }

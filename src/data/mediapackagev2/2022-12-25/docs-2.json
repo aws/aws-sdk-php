@@ -50,7 +50,8 @@
       "refs": {
         "Segment$TsUseAudioRenditionGroup": "<p>When selected, MediaPackage bundles all audio tracks in a rendition group. All other tracks in the stream can be used with any audio rendition from the group.</p>",
         "Segment$IncludeIframeOnlyStreams": "<p>When selected, the stream set includes an additional I-frame only stream, along with the other tracks. If false, this extra stream is not included. MediaPackage generates an I-frame only stream from the first rendition in the manifest. The service inserts EXT-I-FRAMES-ONLY tags in the output manifest, and then generates and includes an I-frames only playlist in the stream. This playlist permits player functionality like fast forward and rewind.</p>",
-        "Segment$TsIncludeDvbSubtitles": "<p>By default, MediaPackage excludes all digital video broadcasting (DVB) subtitles from the output. When selected, MediaPackage passes through DVB subtitles into the output.</p>"
+        "Segment$TsIncludeDvbSubtitles": "<p>By default, MediaPackage excludes all digital video broadcasting (DVB) subtitles from the output. When selected, MediaPackage passes through DVB subtitles into the output.</p>",
+        "StartTag$Precise": "<p>Specify the value for PRECISE within your EXT-X-START tag. Leave blank, or choose false, to use the default value NO. Choose yes to use the value YES.</p>"
       }
     },
     "ChannelGroupListConfiguration": {
@@ -410,6 +411,12 @@
       "base": null,
       "refs": {
         "FilterConfiguration$TimeDelaySeconds": "<p>Optionally specify the time delay for all of your manifest egress requests. Enter a value that is smaller than your endpoint's startover window. When you include time delay, note that you cannot use time delay query parameters for this manifest's endpoint URL.</p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "StartTag$TimeOffset": "<p>Specify the value for TIME-OFFSET within your EXT-X-START tag. Enter a signed floating point value which, if positive, must be less than the configured manifest duration minus three times the configured segment target duration. If negative, the absolute value must be larger than three times the configured segment target duration, and the absolute value must be smaller than the configured manifest duration.</p>"
       }
     },
     "ForceEndpointErrorConfiguration": {
@@ -912,6 +919,15 @@
         "SpekeKeyProvider$Url": "<p>The URL of the API Gateway proxy that you set up to talk to your key server. The API Gateway proxy must reside in the same AWS Region as MediaPackage and must start with https://.</p> <p>The following example shows a URL: <code>https://1wm2dx1f33.execute-api.us-west-2.amazonaws.com/SpekeSample/copyProtection</code> </p>"
       }
     },
+    "StartTag": {
+      "base": "<p>To insert an EXT-X-START tag in your HLS playlist, specify a StartTag configuration object with a valid TimeOffset. When you do, you can also optionally specify whether to include a PRECISE value in the EXT-X-START tag.</p>",
+      "refs": {
+        "CreateHlsManifestConfiguration$StartTag": null,
+        "CreateLowLatencyHlsManifestConfiguration$StartTag": null,
+        "GetHlsManifestConfiguration$StartTag": null,
+        "GetLowLatencyHlsManifestConfiguration$StartTag": null
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1038,6 +1054,7 @@
         "CreateOriginEndpointResponse$ModifiedAt": "<p>The date and time the origin endpoint was modified.</p>",
         "FilterConfiguration$Start": "<p>Optionally specify the start time for all of your manifest egress requests. When you include start time, note that you cannot use start time query parameters for this manifest's endpoint URL.</p>",
         "FilterConfiguration$End": "<p>Optionally specify the end time for all of your manifest egress requests. When you include end time, note that you cannot use end time query parameters for this manifest's endpoint URL.</p>",
+        "FilterConfiguration$ClipStartTime": "<p>Optionally specify the clip start time for all of your manifest egress requests. When you include clip start time, note that you cannot use clip start time query parameters for this manifest's endpoint URL.</p>",
         "GetChannelGroupResponse$CreatedAt": "<p>The date and time the channel group was created.</p>",
         "GetChannelGroupResponse$ModifiedAt": "<p>The date and time the channel group was modified.</p>",
         "GetChannelResponse$CreatedAt": "<p>The date and time the channel was created.</p>",

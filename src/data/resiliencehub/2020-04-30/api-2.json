@@ -1205,6 +1205,7 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "complianceStatus":{"shape":"AppComplianceStatusType"},
         "creationTime":{"shape":"TimeStamp"},
         "description":{"shape":"EntityDescription"},
@@ -1370,6 +1371,7 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "complianceStatus":{"shape":"AppComplianceStatusType"},
         "creationTime":{"shape":"TimeStamp"},
         "description":{"shape":"EntityDescription"},
@@ -1512,7 +1514,6 @@
       "required":[
         "entryId",
         "excluded",
-        "item",
         "referenceId"
       ],
       "members":{
@@ -1657,6 +1658,7 @@
       "required":["name"],
       "members":{
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2145,6 +2147,7 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "appVersion":{"shape":"EntityVersion"},
+        "errorDetails":{"shape":"ErrorDetailList"},
         "errorMessage":{"shape":"String500"},
         "status":{"shape":"ResourceImportStatusType"},
         "statusChangeTime":{"shape":"TimeStamp"}
@@ -2308,6 +2311,16 @@
     "EntityVersion":{
       "type":"string",
       "pattern":"^\\S{1,50}$"
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ErrorDetailList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"}
     },
     "ErrorMessage":{
       "type":"string",
@@ -2791,6 +2804,11 @@
           "shape":"Arn",
           "location":"querystring",
           "locationName":"appArn"
+        },
+        "awsApplicationArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"awsApplicationArn"
         },
         "fromLastAssessmentTime":{
           "shape":"TimeStamp",
@@ -3965,7 +3983,6 @@
       "required":[
         "entryId",
         "excluded",
-        "item",
         "referenceId"
       ],
       "members":{

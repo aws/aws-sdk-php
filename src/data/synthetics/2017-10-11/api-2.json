@@ -5,12 +5,14 @@
     "endpointPrefix":"synthetics",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Synthetics",
     "serviceFullName":"Synthetics",
     "serviceId":"synthetics",
     "signatureVersion":"v4",
     "signingName":"synthetics",
-    "uid":"synthetics-2017-10-11"
+    "uid":"synthetics-2017-10-11",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateResource":{
@@ -423,7 +425,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,21}"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,255}"
     },
     "CanaryCodeInput":{
       "type":"structure",
@@ -452,7 +454,7 @@
     },
     "CanaryName":{
       "type":"string",
-      "max":21,
+      "max":255,
       "min":1,
       "pattern":"^[0-9a-z_\\-]+$"
     },
@@ -615,6 +617,7 @@
         "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
         "RuntimeVersion":{"shape":"String"},
         "VpcConfig":{"shape":"VpcConfigInput"},
+        "ResourcesToReplicateTags":{"shape":"ResourceList"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
@@ -1026,6 +1029,12 @@
       "min":1,
       "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:(canary|group):[0-9a-z_\\-]+"
     },
+    "ResourceList":{
+      "type":"list",
+      "member":{"shape":"ResourceToTag"},
+      "max":1,
+      "min":1
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -1033,6 +1042,10 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "ResourceToTag":{
+      "type":"string",
+      "enum":["lambda-function"]
     },
     "RoleArn":{
       "type":"string",

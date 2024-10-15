@@ -1651,6 +1651,13 @@
       "type":"list",
       "member":{"shape":"DomainSummary"}
     },
+    "EndpointType":{
+      "type":"string",
+      "enum":[
+        "dualstack",
+        "ipv4"
+      ]
+    },
     "ErrorMessage":{"type":"string"},
     "ExternalConnectionName":{
       "type":"string",
@@ -1920,6 +1927,11 @@
           "shape":"PackageFormat",
           "location":"querystring",
           "locationName":"format"
+        },
+        "endpointType":{
+          "shape":"EndpointType",
+          "location":"querystring",
+          "locationName":"endpointType"
         }
       }
     },

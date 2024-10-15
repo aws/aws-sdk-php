@@ -3222,6 +3222,9 @@
                 "samplePromptsControlMode": {
                     "shape": "WebExperienceSamplePromptsControlMode"
                 },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
+                },
                 "roleArn": {
                     "shape": "RoleArn"
                 },
@@ -4616,6 +4619,9 @@
                 "samplePromptsControlMode": {
                     "shape": "WebExperienceSamplePromptsControlMode"
                 },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
+                },
                 "roleArn": {
                     "shape": "RoleArn"
                 },
@@ -5728,6 +5734,12 @@
                     "shape": "RoleArn"
                 }
             }
+        },
+        "Origin": {
+            "type": "string",
+            "max": 256,
+            "min": 1,
+            "pattern": "(http:\/\/|https:\/\/)[a-zA-Z0-9-_.]+(?::[0-9]{1,5})?"
         },
         "Payload": {
             "type": "string",
@@ -7007,6 +7019,9 @@
                 },
                 "identityProviderConfiguration": {
                     "shape": "IdentityProviderConfiguration"
+                },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
                 }
             }
         },
@@ -7169,6 +7184,14 @@
             "max": 36,
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]*"
+        },
+        "WebExperienceOrigins": {
+            "type": "list",
+            "member": {
+                "shape": "Origin"
+            },
+            "max": 10,
+            "min": 0
         },
         "WebExperienceSamplePromptsControlMode": {
             "type": "string",

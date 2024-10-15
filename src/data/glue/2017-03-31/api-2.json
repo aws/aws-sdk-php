@@ -204,7 +204,11 @@
       "input":{"shape":"BatchGetTableOptimizerRequest"},
       "output":{"shape":"BatchGetTableOptimizerResponse"},
       "errors":[
-        {"shape":"InternalServiceException"}
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "BatchGetTriggers":{
@@ -676,10 +680,12 @@
       "output":{"shape":"CreateTableOptimizerResponse"},
       "errors":[
         {"shape":"EntityNotFoundException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidInputException"},
         {"shape":"AccessDeniedException"},
         {"shape":"AlreadyExistsException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateTrigger":{
@@ -1085,7 +1091,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeleteTableVersion":{
@@ -1984,7 +1991,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetTableVersion":{
@@ -2543,7 +2551,9 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidInputException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListTriggers":{
@@ -3099,6 +3109,26 @@
         {"shape":"EntityNotFoundException"}
       ]
     },
+    "TestConnection":{
+      "name":"TestConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TestConnectionRequest"},
+      "output":{"shape":"TestConnectionResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"FederationSourceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -3424,7 +3454,10 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"ValidationException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "UpdateTrigger":{
@@ -3757,8 +3790,8 @@
       "type":"structure",
       "members":{
         "AuthenticationType":{"shape":"AuthenticationType"},
-        "SecretArn":{"shape":"SecretArn"},
-        "OAuth2Properties":{"shape":"OAuth2PropertiesInput"}
+        "OAuth2Properties":{"shape":"OAuth2PropertiesInput"},
+        "SecretArn":{"shape":"SecretArn"}
       }
     },
     "AuthenticationType":{
@@ -3773,7 +3806,8 @@
       "type":"string",
       "max":4096,
       "min":1,
-      "pattern":"\\S+"
+      "pattern":"\\S+",
+      "sensitive":true
     },
     "AuthorizationCodeProperties":{
       "type":"structure",
@@ -5006,6 +5040,12 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "CompactionMetrics":{
+      "type":"structure",
+      "members":{
+        "IcebergMetrics":{"shape":"IcebergCompactionMetrics"}
+      }
+    },
     "Comparator":{
       "type":"string",
       "enum":[
@@ -5131,6 +5171,7 @@
         "ConnectionType":{"shape":"ConnectionType"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AthenaProperties":{"shape":"PropertyMap"},
         "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
         "CreationTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
@@ -5154,6 +5195,7 @@
         "ConnectionType":{"shape":"ConnectionType"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AthenaProperties":{"shape":"PropertyMap"},
         "PhysicalConnectionRequirements":{"shape":"PhysicalConnectionRequirements"},
         "AuthenticationConfiguration":{"shape":"AuthenticationConfigurationInput"},
         "ValidateCredentials":{"shape":"Boolean"}
@@ -9192,12 +9234,54 @@
       "type":"string",
       "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:iam::[0-9]{12}:role/.+"
     },
+    "IcebergCompactionMetrics":{
+      "type":"structure",
+      "members":{
+        "NumberOfBytesCompacted":{"shape":"metricCounts"},
+        "NumberOfFilesCompacted":{"shape":"metricCounts"},
+        "NumberOfDpus":{"shape":"dpuCounts"},
+        "JobDurationInHour":{"shape":"dpuDurationInHour"}
+      }
+    },
     "IcebergInput":{
       "type":"structure",
       "required":["MetadataOperation"],
       "members":{
         "MetadataOperation":{"shape":"MetadataOperation"},
         "Version":{"shape":"VersionString"}
+      }
+    },
+    "IcebergOrphanFileDeletionConfiguration":{
+      "type":"structure",
+      "members":{
+        "orphanFileRetentionPeriodInDays":{"shape":"NullableInteger"},
+        "location":{"shape":"MessageString"}
+      }
+    },
+    "IcebergOrphanFileDeletionMetrics":{
+      "type":"structure",
+      "members":{
+        "NumberOfOrphanFilesDeleted":{"shape":"metricCounts"},
+        "NumberOfDpus":{"shape":"dpuCounts"},
+        "JobDurationInHour":{"shape":"dpuDurationInHour"}
+      }
+    },
+    "IcebergRetentionConfiguration":{
+      "type":"structure",
+      "members":{
+        "snapshotRetentionPeriodInDays":{"shape":"NullableInteger"},
+        "numberOfSnapshotsToRetain":{"shape":"NullableInteger"},
+        "cleanExpiredFiles":{"shape":"NullableBoolean"}
+      }
+    },
+    "IcebergRetentionMetrics":{
+      "type":"structure",
+      "members":{
+        "NumberOfDataFilesDeleted":{"shape":"metricCounts"},
+        "NumberOfManifestFilesDeleted":{"shape":"metricCounts"},
+        "NumberOfManifestListsDeleted":{"shape":"metricCounts"},
+        "NumberOfDpus":{"shape":"dpuCounts"},
+        "JobDurationInHour":{"shape":"dpuDurationInHour"}
       }
     },
     "IcebergTarget":{
@@ -10833,6 +10917,18 @@
       "type":"list",
       "member":{"shape":"Order"}
     },
+    "OrphanFileDeletionConfiguration":{
+      "type":"structure",
+      "members":{
+        "icebergConfiguration":{"shape":"IcebergOrphanFileDeletionConfiguration"}
+      }
+    },
+    "OrphanFileDeletionMetrics":{
+      "type":"structure",
+      "members":{
+        "IcebergMetrics":{"shape":"IcebergOrphanFileDeletionMetrics"}
+      }
+    },
     "OtherMetadataValueList":{
       "type":"list",
       "member":{"shape":"OtherMetadataValueListItem"}
@@ -11176,6 +11272,16 @@
         "JobConfiguration":{"shape":"ConfigurationMap"}
       }
     },
+    "PropertyKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "PropertyMap":{
+      "type":"map",
+      "key":{"shape":"PropertyKey"},
+      "value":{"shape":"PropertyValue"}
+    },
     "PropertyPredicate":{
       "type":"structure",
       "members":{
@@ -11183,6 +11289,11 @@
         "Value":{"shape":"ValueString"},
         "Comparator":{"shape":"Comparator"}
       }
+    },
+    "PropertyValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "PublicKeysList":{
       "type":"list",
@@ -11625,6 +11736,18 @@
       "members":{
         "RunId":{"shape":"IdString"},
         "NodeIds":{"shape":"NodeIdList"}
+      }
+    },
+    "RetentionConfiguration":{
+      "type":"structure",
+      "members":{
+        "icebergConfiguration":{"shape":"IcebergRetentionConfiguration"}
+      }
+    },
+    "RetentionMetrics":{
+      "type":"structure",
+      "members":{
+        "IcebergMetrics":{"shape":"IcebergRetentionMetrics"}
       }
     },
     "Role":{"type":"string"},
@@ -13148,7 +13271,9 @@
       "type":"structure",
       "members":{
         "roleArn":{"shape":"ArnString"},
-        "enabled":{"shape":"NullableBoolean"}
+        "enabled":{"shape":"NullableBoolean"},
+        "retentionConfiguration":{"shape":"RetentionConfiguration"},
+        "orphanFileDeletionConfiguration":{"shape":"OrphanFileDeletionConfiguration"}
       }
     },
     "TableOptimizerEventType":{
@@ -13166,8 +13291,15 @@
         "eventType":{"shape":"TableOptimizerEventType"},
         "startTimestamp":{"shape":"TableOptimizerRunTimestamp"},
         "endTimestamp":{"shape":"TableOptimizerRunTimestamp"},
-        "metrics":{"shape":"RunMetrics"},
-        "error":{"shape":"MessageString"}
+        "metrics":{
+          "shape":"RunMetrics",
+          "deprecated":true,
+          "deprecatedMessage":"Metrics has been replaced by optimizer type specific metrics such as IcebergCompactionMetrics"
+        },
+        "error":{"shape":"MessageString"},
+        "compactionMetrics":{"shape":"CompactionMetrics"},
+        "retentionMetrics":{"shape":"RetentionMetrics"},
+        "orphanFileDeletionMetrics":{"shape":"OrphanFileDeletionMetrics"}
       }
     },
     "TableOptimizerRunTimestamp":{"type":"timestamp"},
@@ -13177,7 +13309,11 @@
     },
     "TableOptimizerType":{
       "type":"string",
-      "enum":["compaction"]
+      "enum":[
+        "compaction",
+        "retention",
+        "orphan_file_deletion"
+      ]
     },
     "TablePrefix":{
       "type":"string",
@@ -13354,6 +13490,37 @@
         "EXPORT_LABELS",
         "FIND_MATCHES"
       ]
+    },
+    "TestConnectionInput":{
+      "type":"structure",
+      "required":[
+        "ConnectionType",
+        "ConnectionProperties"
+      ],
+      "members":{
+        "ConnectionType":{"shape":"ConnectionType"},
+        "ConnectionProperties":{"shape":"ConnectionProperties"},
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfigurationInput"}
+      }
+    },
+    "TestConnectionRequest":{
+      "type":"structure",
+      "members":{
+        "ConnectionName":{"shape":"NameString"},
+        "TestConnectionInput":{"shape":"TestConnectionInput"}
+      }
+    },
+    "TestConnectionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
     },
     "Timeout":{
       "type":"integer",
@@ -14441,6 +14608,9 @@
       "min":1
     },
     "double":{"type":"double"},
+    "dpuCounts":{"type":"integer"},
+    "dpuDurationInHour":{"type":"double"},
+    "metricCounts":{"type":"long"},
     "tableNameString":{
       "type":"string",
       "min":1

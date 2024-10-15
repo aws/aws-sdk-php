@@ -3535,6 +3535,7 @@
         "CacheParameterGroupName":{"shape":"String"},
         "NotificationTopicStatus":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
@@ -3588,6 +3589,7 @@
         "GlobalReplicationGroupId":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
         "CacheNodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "CacheParameterGroupName":{"shape":"String"},
         "GlobalReplicationGroupDescription":{"shape":"String"},
@@ -3621,6 +3623,7 @@
         "CacheParameterGroupName":{"shape":"String"},
         "NotificationTopicStatus":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
@@ -3677,7 +3680,9 @@
         "UserGroupId":{"shape":"String"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdsList"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
-        "DailySnapshotTime":{"shape":"String"}
+        "DailySnapshotTime":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "MajorEngineVersion":{"shape":"String"}
       }
     },
     "ModifyServerlessCacheResponse":{
@@ -4192,7 +4197,8 @@
         "NetworkType":{"shape":"NetworkType"},
         "IpDiscovery":{"shape":"IpDiscovery"},
         "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
-        "ClusterMode":{"shape":"ClusterMode"}
+        "ClusterMode":{"shape":"ClusterMode"},
+        "Engine":{"shape":"String"}
       },
       "wrapper":true
     },
