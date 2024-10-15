@@ -53,7 +53,7 @@ trait CalculatesChecksumTrait
         $validAlgorithms = implode(', ', array_keys(self::$supportedAlgorithms));
         throw new InvalidArgumentException(
             "Invalid checksum requested: {$requestedAlgorithm}."
-            . "  Valid algorithms are {$validAlgorithms}."
+            . "  Valid algorithms supported by the runtime are {$validAlgorithms}."
         );
     }
 }

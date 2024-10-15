@@ -61,7 +61,9 @@
         "CustomModelSummary$ownerAccountId": "<p>The unique identifier of the account that owns the model.</p>",
         "GetModelCopyJobResponse$sourceAccountId": "<p>The unique identifier of the account that the model being copied originated from.</p>",
         "ListModelCopyJobsRequest$sourceAccountEquals": "<p>Filters for model copy jobs in which the account that the source model belongs to is equal to the value that you specify.</p>",
-        "ModelCopyJobSummary$sourceAccountId": "<p>The unique identifier of the account that the model being copied originated from.</p>"
+        "ModelCopyJobSummary$sourceAccountId": "<p>The unique identifier of the account that the model being copied originated from.</p>",
+        "ModelInvocationJobS3InputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the input data.</p>",
+        "ModelInvocationJobS3OutputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the output data.</p>"
       }
     },
     "AutomatedEvaluationConfig": {
@@ -359,9 +361,9 @@
       }
     },
     "EvaluationBedrockModel": {
-      "base": "<p>Contains the ARN of the Amazon Bedrock models specified in your model evaluation job. Each Amazon Bedrock model supports different <code>inferenceParams</code>. To learn more about supported inference parameters for Amazon Bedrock models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>The <code>inferenceParams</code> are specified using JSON. To successfully insert JSON as string make sure that all quotations are properly escaped. For example, <code>\"temperature\":\"0.25\"</code> key value pair would need to be formatted as <code>\\\"temperature\\\":\\\"0.25\\\"</code> to successfully accepted in the request.</p>",
+      "base": "<p>Contains the ARN of the Amazon Bedrock model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> specified in your model evaluation job. Each Amazon Bedrock model supports different <code>inferenceParams</code>. To learn more about supported inference parameters for Amazon Bedrock models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>The <code>inferenceParams</code> are specified using JSON. To successfully insert JSON as string make sure that all quotations are properly escaped. For example, <code>\"temperature\":\"0.25\"</code> key value pair would need to be formatted as <code>\\\"temperature\\\":\\\"0.25\\\"</code> to successfully accepted in the request.</p>",
       "refs": {
-        "EvaluationModelConfig$bedrockModel": "<p>Defines the Amazon Bedrock model and inference parameters you want used.</p>"
+        "EvaluationModelConfig$bedrockModel": "<p>Defines the Amazon Bedrock model or inference profile and inference parameters you want used.</p>"
       }
     },
     "EvaluationConfig": {
@@ -405,7 +407,7 @@
     "EvaluationInferenceConfig": {
       "base": "<p>Used to define the models you want used in your model evaluation job. Automated model evaluation jobs support only a single model. In a human-based model evaluation job, your annotator can compare the responses for up to two different models.</p>",
       "refs": {
-        "CreateEvaluationJobRequest$inferenceConfig": "<p>Specify the models you want to use in your model evaluation job. Automatic model evaluation jobs support a single model, and model evaluation job that use human workers support two models.</p>",
+        "CreateEvaluationJobRequest$inferenceConfig": "<p>Specify the models you want to use in your model evaluation job. Automatic model evaluation jobs support a single model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>, and model evaluation job that use human workers support two models or inference profiles.</p>",
         "GetEvaluationJobResponse$inferenceConfig": "<p>Details about the models you specified in your model evaluation job.</p>"
       }
     },
@@ -499,7 +501,7 @@
     "EvaluationModelIdentifier": {
       "base": null,
       "refs": {
-        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model specified.</p>",
+        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model or inference profile specified.</p>",
         "EvaluationModelIdentifiers$member": null
       }
     },
@@ -1816,7 +1818,7 @@
       }
     },
     "ModelInvocationJobS3InputDataConfig": {
-      "base": "<p>Contains the configuration of the S3 location of the output data.</p>",
+      "base": "<p>Contains the configuration of the S3 location of the input data.</p>",
       "refs": {
         "ModelInvocationJobInputDataConfig$s3InputDataConfig": "<p>Contains the configuration of the S3 location of the input data.</p>"
       }
@@ -2062,7 +2064,7 @@
     "SecurityGroupIds": {
       "base": null,
       "refs": {
-        "VpcConfig$securityGroupIds": "<p>VPC configuration security group Ids.</p>"
+        "VpcConfig$securityGroupIds": "<p>An array of IDs for each security group in the VPC to use.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -2155,7 +2157,7 @@
     "SubnetIds": {
       "base": null,
       "refs": {
-        "VpcConfig$subnetIds": "<p>VPC configuration subnets.</p>"
+        "VpcConfig$subnetIds": "<p>An array of IDs for each subnet in the VPC to use.</p>"
       }
     },
     "Tag": {
@@ -2380,12 +2382,15 @@
       }
     },
     "VpcConfig": {
-      "base": "<p>VPC configuration.</p>",
+      "base": "<p>The configuration of a virtual private cloud (VPC). For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/usingVPC.html\">Protect your data using Amazon Virtual Private Cloud and Amazon Web Services PrivateLink</a>.</p>",
       "refs": {
-        "CreateModelCustomizationJobRequest$vpcConfig": "<p>VPC configuration (optional). Configuration parameters for the private Virtual Private Cloud (VPC) that contains the resources you are using for this job.</p>",
+        "CreateModelCustomizationJobRequest$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) that contains the resources that you're using for this job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/vpc-model-customization.html\">Protect your model customization jobs using a VPC</a>.</p>",
         "CreateModelImportJobRequest$vpcConfig": "<p>VPC configuration parameters for the private Virtual Private Cloud (VPC) that contains the resources you are using for the import job.</p>",
+        "CreateModelInvocationJobRequest$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc\">Protect batch inference jobs using a VPC</a>.</p>",
         "GetModelCustomizationJobResponse$vpcConfig": "<p>VPC configuration for the custom model job.</p>",
-        "GetModelImportJobResponse$vpcConfig": "<p>The Virtual Private Cloud (VPC) configuration of the import model job.</p>"
+        "GetModelImportJobResponse$vpcConfig": "<p>The Virtual Private Cloud (VPC) configuration of the import model job.</p>",
+        "GetModelInvocationJobResponse$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc\">Protect batch inference jobs using a VPC</a>.</p>",
+        "ModelInvocationJobSummary$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc\">Protect batch inference jobs using a VPC</a>.</p>"
       }
     }
   }

@@ -4,11 +4,13 @@
     "apiVersion":"2015-05-28",
     "endpointPrefix":"iot",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT",
     "serviceId":"IoT",
     "signatureVersion":"v4",
     "signingName":"iot",
-    "uid":"iot-2015-05-28"
+    "uid":"iot-2015-05-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptCertificateTransfer":{
@@ -57,6 +59,25 @@
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "AssociateSbomWithPackageVersion":{
+      "name":"AssociateSbomWithPackageVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateSbomWithPackageVersionRequest"},
+      "output":{"shape":"AssociateSbomWithPackageVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "AssociateTargetsWithJob":{
       "name":"AssociateTargetsWithJob",
@@ -1981,6 +2002,24 @@
         {"shape":"ConflictingResourceUpdateException"}
       ]
     },
+    "DisassociateSbomFromPackageVersion":{
+      "name":"DisassociateSbomFromPackageVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateSbomFromPackageVersionRequest"},
+      "output":{"shape":"DisassociateSbomFromPackageVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "EnableTopicRule":{
       "name":"EnableTopicRule",
       "http":{
@@ -2924,6 +2963,22 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListSbomValidationResults":{
+      "name":"ListSbomValidationResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom-validation-results",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSbomValidationResultsRequest"},
+      "output":{"shape":"ListSbomValidationResultsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListScheduledAudits":{
@@ -4028,6 +4083,7 @@
       "output":{"shape":"UpdateStreamResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"UnauthorizedException"},
@@ -4345,6 +4401,15 @@
         "policies":{"shape":"Policies"}
       }
     },
+    "ApplicationProtocol":{
+      "type":"string",
+      "enum":[
+        "SECURE_MQTT",
+        "MQTT_WSS",
+        "HTTPS",
+        "DEFAULT"
+      ]
+    },
     "ApproximateSecondsBeforeTimedOut":{"type":"long"},
     "AscendingOrder":{"type":"boolean"},
     "AssetId":{"type":"string"},
@@ -4397,6 +4462,42 @@
         "integerValue":{"shape":"AssetPropertyIntegerValue"},
         "doubleValue":{"shape":"AssetPropertyDoubleValue"},
         "booleanValue":{"shape":"AssetPropertyBooleanValue"}
+      }
+    },
+    "AssociateSbomWithPackageVersionRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName",
+        "sbom"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "sbom":{"shape":"Sbom"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "AssociateSbomWithPackageVersionResponse":{
+      "type":"structure",
+      "members":{
+        "packageName":{"shape":"PackageName"},
+        "versionName":{"shape":"VersionName"},
+        "sbom":{"shape":"Sbom"},
+        "sbomValidationStatus":{"shape":"SbomValidationStatus"}
       }
     },
     "AssociateTargetsWithJobRequest":{
@@ -4799,6 +4900,16 @@
       "type":"list",
       "member":{"shape":"AuthResult"}
     },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM_AUTH_X509",
+        "CUSTOM_AUTH",
+        "AWS_X509",
+        "AWS_SIGV4",
+        "DEFAULT"
+      ]
+    },
     "AuthorizerArn":{
       "type":"string",
       "max":2048
@@ -4974,6 +5085,7 @@
     },
     "AwsJobTimeoutInProgressTimeoutInMinutes":{"type":"long"},
     "BatchMode":{"type":"boolean"},
+    "BeforeSubstitutionFlag":{"type":"boolean"},
     "Behavior":{
       "type":"structure",
       "required":["name"],
@@ -5418,6 +5530,17 @@
       "members":{
       }
     },
+    "ClientCertificateCallbackArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"[\\s\\S]*"
+    },
+    "ClientCertificateConfig":{
+      "type":"structure",
+      "members":{
+        "clientCertificateCallbackArn":{"shape":"ClientCertificateCallbackArn"}
+      }
+    },
     "ClientId":{"type":"string"},
     "ClientProperties":{
       "type":"map",
@@ -5796,7 +5919,10 @@
         "serviceType":{"shape":"ServiceType"},
         "tags":{"shape":"TagList"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -6068,6 +6194,8 @@
         },
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
+        "recipe":{"shape":"PackageVersionRecipe"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -7429,7 +7557,10 @@
         "domainType":{"shape":"DomainType"},
         "lastStatusChangeDate":{"shape":"DateType"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "DescribeEndpointRequest":{
@@ -7547,6 +7678,11 @@
           "shape":"JobId",
           "location":"uri",
           "locationName":"jobId"
+        },
+        "beforeSubstitution":{
+          "shape":"BeforeSubstitutionFlag",
+          "location":"querystring",
+          "locationName":"beforeSubstitution"
         }
       }
     },
@@ -8127,6 +8263,36 @@
         }
       }
     },
+    "DisassociateSbomFromPackageVersionRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DisassociateSbomFromPackageVersionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DisconnectReason":{"type":"string"},
     "DocumentParameter":{
       "type":"structure",
@@ -8637,6 +8803,11 @@
           "shape":"JobId",
           "location":"uri",
           "locationName":"jobId"
+        },
+        "beforeSubstitution":{
+          "shape":"BeforeSubstitutionFlag",
+          "location":"querystring",
+          "locationName":"beforeSubstitution"
         }
       }
     },
@@ -8735,10 +8906,14 @@
         "versionName":{"shape":"VersionName"},
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
         "status":{"shape":"PackageVersionStatus"},
         "errorReason":{"shape":"PackageVersionErrorReason"},
         "creationDate":{"shape":"CreationDate"},
-        "lastModifiedDate":{"shape":"LastModifiedDate"}
+        "lastModifiedDate":{"shape":"LastModifiedDate"},
+        "sbom":{"shape":"Sbom"},
+        "sbomValidationStatus":{"shape":"SbomValidationStatus"},
+        "recipe":{"shape":"PackageVersionRecipe"}
       }
     },
     "GetPercentilesRequest":{
@@ -10721,6 +10896,47 @@
         "nextMarker":{"shape":"Marker"}
       }
     },
+    "ListSbomValidationResultsRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "validationResult":{
+          "shape":"SbomValidationResult",
+          "location":"querystring",
+          "locationName":"validationResult"
+        },
+        "maxResults":{
+          "shape":"PackageCatalogMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListSbomValidationResultsResponse":{
+      "type":"structure",
+      "members":{
+        "validationResultSummaries":{"shape":"SbomValidationResultSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListScheduledAuditsRequest":{
       "type":"structure",
       "members":{
@@ -11901,7 +12117,18 @@
       "min":1,
       "pattern":"^arn:[!-~]+$"
     },
+    "PackageVersionArtifact":{
+      "type":"structure",
+      "members":{
+        "s3Location":{"shape":"S3Location"}
+      }
+    },
     "PackageVersionErrorReason":{"type":"string"},
+    "PackageVersionRecipe":{
+      "type":"string",
+      "max":3072,
+      "sensitive":true
+    },
     "PackageVersionStatus":{
       "type":"string",
       "enum":[
@@ -12713,6 +12940,48 @@
     "SalesforceToken":{
       "type":"string",
       "min":40
+    },
+    "Sbom":{
+      "type":"structure",
+      "members":{
+        "s3Location":{"shape":"S3Location"}
+      }
+    },
+    "SbomValidationErrorCode":{
+      "type":"string",
+      "enum":[
+        "INCOMPATIBLE_FORMAT",
+        "FILE_SIZE_LIMIT_EXCEEDED"
+      ]
+    },
+    "SbomValidationErrorMessage":{"type":"string"},
+    "SbomValidationResult":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "SUCCEEDED"
+      ]
+    },
+    "SbomValidationResultSummary":{
+      "type":"structure",
+      "members":{
+        "fileName":{"shape":"FileName"},
+        "validationResult":{"shape":"SbomValidationResult"},
+        "errorCode":{"shape":"SbomValidationErrorCode"},
+        "errorMessage":{"shape":"SbomValidationErrorMessage"}
+      }
+    },
+    "SbomValidationResultSummaryList":{
+      "type":"list",
+      "member":{"shape":"SbomValidationResultSummary"}
+    },
+    "SbomValidationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "FAILED",
+        "SUCCEEDED"
+      ]
     },
     "ScheduledAuditArn":{"type":"string"},
     "ScheduledAuditMetadata":{
@@ -14229,7 +14498,10 @@
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "removeAuthorizerConfig":{"shape":"RemoveAuthorizerConfig"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "UpdateDomainConfigurationResponse":{
@@ -14413,7 +14685,9 @@
         },
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
         "action":{"shape":"PackageVersionAction"},
+        "recipe":{"shape":"PackageVersionRecipe"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true,

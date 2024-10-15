@@ -1600,7 +1600,12 @@
         "ClientToken":{"shape":"ClientToken"},
         "NFSFileShareDefaults":{"shape":"NFSFileShareDefaults"},
         "GatewayARN":{"shape":"GatewayARN"},
-        "KMSEncrypted":{"shape":"Boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "Role":{"shape":"Role"},
         "LocationARN":{"shape":"LocationARN"},
@@ -1637,7 +1642,12 @@
       "members":{
         "ClientToken":{"shape":"ClientToken"},
         "GatewayARN":{"shape":"GatewayARN"},
-        "KMSEncrypted":{"shape":"Boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "Role":{"shape":"Role"},
         "LocationARN":{"shape":"LocationARN"},
@@ -2437,6 +2447,14 @@
     "DoubleObject":{"type":"double"},
     "Ec2InstanceId":{"type":"string"},
     "Ec2InstanceRegion":{"type":"string"},
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "SseS3",
+        "SseKms",
+        "DsseKms"
+      ]
+    },
     "EndpointNetworkConfiguration":{
       "type":"structure",
       "members":{
@@ -3040,7 +3058,12 @@
         "FileShareId":{"shape":"FileShareId"},
         "FileShareStatus":{"shape":"FileShareStatus"},
         "GatewayARN":{"shape":"GatewayARN"},
-        "KMSEncrypted":{"shape":"boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "Path":{"shape":"Path"},
         "Role":{"shape":"Role"},
@@ -3309,7 +3332,12 @@
         "FileShareId":{"shape":"FileShareId"},
         "FileShareStatus":{"shape":"FileShareStatus"},
         "GatewayARN":{"shape":"GatewayARN"},
-        "KMSEncrypted":{"shape":"boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "Path":{"shape":"Path"},
         "Role":{"shape":"Role"},
@@ -3809,7 +3837,12 @@
       "required":["FileShareARN"],
       "members":{
         "FileShareARN":{"shape":"FileShareARN"},
-        "KMSEncrypted":{"shape":"Boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "NFSFileShareDefaults":{"shape":"NFSFileShareDefaults"},
         "DefaultStorageClass":{"shape":"StorageClass"},
@@ -3836,7 +3869,12 @@
       "required":["FileShareARN"],
       "members":{
         "FileShareARN":{"shape":"FileShareARN"},
-        "KMSEncrypted":{"shape":"Boolean"},
+        "EncryptionType":{"shape":"EncryptionType"},
+        "KMSEncrypted":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"KMSEncrypted is deprecated, use EncryptionType instead."
+        },
         "KMSKey":{"shape":"KMSKey"},
         "DefaultStorageClass":{"shape":"StorageClass"},
         "ObjectACL":{"shape":"ObjectACL"},
@@ -3991,7 +4029,8 @@
     "VolumeARN":{
       "type":"string",
       "max":500,
-      "min":50
+      "min":50,
+      "pattern":"arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):storagegateway:[a-z\\-0-9]+:[0-9]+:gateway\\/(.+)\\/volume\\/vol-(\\S+)"
     },
     "VolumeARNs":{
       "type":"list",

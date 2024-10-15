@@ -7,7 +7,7 @@
     "protocol":"json",
     "protocols":["json"],
     "serviceAbbreviation":"Amazon ECR",
-    "serviceFullName":"Amazon EC2 Container Registry",
+    "serviceFullName":"Amazon Elastic Container Registry",
     "serviceId":"ECR",
     "signatureVersion":"v4",
     "signingName":"ecr",
@@ -1312,7 +1312,8 @@
       "type":"string",
       "enum":[
         "AES256",
-        "KMS"
+        "KMS",
+        "KMS_DSSE"
       ]
     },
     "EnhancedImageScanFinding":{
@@ -1332,7 +1333,9 @@
         "status":{"shape":"Status"},
         "title":{"shape":"Title"},
         "type":{"shape":"Type"},
-        "updatedAt":{"shape":"Date"}
+        "updatedAt":{"shape":"Date"},
+        "fixAvailable":{"shape":"FixAvailable"},
+        "exploitAvailable":{"shape":"ExploitAvailable"}
       }
     },
     "EnhancedImageScanFindingList":{
@@ -1343,6 +1346,7 @@
     "EvaluationTimestamp":{"type":"timestamp"},
     "ExceptionMessage":{"type":"string"},
     "ExpirationTimestamp":{"type":"timestamp"},
+    "ExploitAvailable":{"type":"string"},
     "FilePath":{"type":"string"},
     "FindingArn":{"type":"string"},
     "FindingDescription":{"type":"string"},
@@ -1363,6 +1367,8 @@
       "key":{"shape":"FindingSeverity"},
       "value":{"shape":"SeverityCount"}
     },
+    "FixAvailable":{"type":"string"},
+    "FixedInVersion":{"type":"string"},
     "ForceFlag":{"type":"boolean"},
     "GetAccountSettingRequest":{
       "type":"structure",
@@ -2930,7 +2936,8 @@
         "packageManager":{"shape":"PackageManager"},
         "release":{"shape":"Release"},
         "sourceLayerHash":{"shape":"SourceLayerHash"},
-        "version":{"shape":"Version"}
+        "version":{"shape":"Version"},
+        "fixedInVersion":{"shape":"FixedInVersion"}
       }
     },
     "VulnerablePackageName":{"type":"string"},

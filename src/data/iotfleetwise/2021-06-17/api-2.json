@@ -930,7 +930,8 @@
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
-      "min":1
+      "min":1,
+      "pattern":"arn:.*"
     },
     "AssociateVehicleFleetRequest":{
       "type":"structure",
@@ -1026,7 +1027,7 @@
         "lastModificationTime"
       ],
       "members":{
-        "arn":{"shape":"arn"},
+        "arn":{"shape":"campaignArn"},
         "name":{"shape":"campaignName"},
         "description":{"shape":"description"},
         "signalCatalogArn":{"shape":"arn"},
@@ -1161,7 +1162,11 @@
         "diagnosticsMode":{"shape":"DiagnosticsMode"},
         "spoolingMode":{"shape":"SpoolingMode"},
         "compression":{"shape":"Compression"},
-        "priority":{"shape":"priority"},
+        "priority":{
+          "shape":"priority",
+          "deprecated":true,
+          "deprecatedMessage":"priority is no longer used or needed as input"
+        },
         "signalsToCollect":{"shape":"SignalInformationList"},
         "collectionScheme":{"shape":"CollectionScheme"},
         "dataExtraDimensions":{"shape":"DataExtraDimensionNodePathList"},
@@ -1173,7 +1178,7 @@
       "type":"structure",
       "members":{
         "name":{"shape":"campaignName"},
-        "arn":{"shape":"arn"}
+        "arn":{"shape":"campaignArn"}
       }
     },
     "CreateDecoderManifestRequest":{
@@ -1373,7 +1378,8 @@
       "type":"list",
       "member":{"shape":"NodePath"},
       "max":5,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "DataFormat":{
       "type":"string",
@@ -1419,7 +1425,7 @@
       "type":"structure",
       "members":{
         "name":{"shape":"campaignName"},
-        "arn":{"shape":"arn"}
+        "arn":{"shape":"campaignArn"}
       }
     },
     "DeleteDecoderManifestRequest":{
@@ -1592,7 +1598,7 @@
       "type":"structure",
       "members":{
         "name":{"shape":"campaignName"},
-        "arn":{"shape":"arn"},
+        "arn":{"shape":"campaignArn"},
         "description":{"shape":"description"},
         "signalCatalogArn":{"shape":"arn"},
         "targetArn":{"shape":"arn"},
@@ -1961,7 +1967,7 @@
       "members":{
         "nextToken":{"shape":"nextToken"},
         "maxResults":{"shape":"maxResults"},
-        "status":{"shape":"status"}
+        "status":{"shape":"statusStr"}
       }
     },
     "ListCampaignsResponse":{
@@ -2668,7 +2674,8 @@
       "type":"list",
       "member":{"shape":"SignalInformation"},
       "max":1000,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "SignalNodeType":{
       "type":"string",
@@ -2926,7 +2933,7 @@
     "UpdateCampaignResponse":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"arn"},
+        "arn":{"shape":"campaignArn"},
         "name":{"shape":"campaignName"},
         "status":{"shape":"CampaignStatus"}
       }
@@ -3141,7 +3148,7 @@
     "VehicleStatus":{
       "type":"structure",
       "members":{
-        "campaignName":{"shape":"string"},
+        "campaignName":{"shape":"campaignName"},
         "vehicleName":{"shape":"vehicleName"},
         "status":{"shape":"VehicleState"}
       }
@@ -3195,6 +3202,10 @@
       "key":{"shape":"attributeName"},
       "value":{"shape":"attributeValue"}
     },
+    "campaignArn":{
+      "type":"string",
+      "pattern":"arn:aws:iotfleetwise:[a-z0-9-]+:[0-9]{12}:campaign/[a-zA-Z\\d\\-_:]{1,100}"
+    },
     "campaignName":{
       "type":"string",
       "max":100,
@@ -3208,7 +3219,7 @@
     "collectionPeriodMs":{
       "type":"long",
       "box":true,
-      "max":60000,
+      "max":86400000,
       "min":10000
     },
     "createVehicleErrors":{
@@ -3243,7 +3254,8 @@
     "eventExpression":{
       "type":"string",
       "max":2048,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "fleetId":{
       "type":"string",
@@ -3262,6 +3274,7 @@
     "languageVersion":{
       "type":"integer",
       "box":true,
+      "max":1,
       "min":1
     },
     "listOfStrings":{
@@ -3326,7 +3339,12 @@
       "type":"list",
       "member":{"shape":"SignalCatalogSummary"}
     },
-    "status":{"type":"string"},
+    "statusStr":{
+      "type":"string",
+      "max":20,
+      "min":7,
+      "pattern":"[A-Z_]*"
+    },
     "string":{"type":"string"},
     "timestamp":{"type":"timestamp"},
     "uint32":{

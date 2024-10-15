@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p><fullname>AWS SES Mail Manager API</fullname> <p> <a href=\"http://aws.amazon.com/ses\">AWS SES Mail Manager API</a> contains operations and data types that comprise the Mail Manager feature of Amazon Simple Email Service.</p> <p>Mail Manager is a set of Amazon SES email gateway features designed to help you strengthen your organization's email infrastructure, simplify email workflow management, and streamline email compliance control. To learn more, see the <a href=\"https://docs.aws.amazon.com/ses/latest/dg/eb.html\">Mail Manager chapter</a> in the Amazon SES Developer Guide.</p></p>",
+  "service": "<p><fullname>Amazon SES Mail Manager API</fullname> <p>The Amazon SES Mail Manager API contains operations and data types that comprise the Mail Manager feature of <a href=\"http://aws.amazon.com/ses\">Amazon Simple Email Service (SES)</a>.</p> <p>Mail Manager is a set of Amazon SES email gateway features designed to help you strengthen your organization's email infrastructure, simplify email workflow management, and streamline email compliance control. To learn more, see the <a href=\"https://docs.aws.amazon.com/ses/latest/dg/eb.html\">Mail Manager chapter</a> in the <i>Amazon SES Developer Guide</i>.</p></p>",
   "operations": {
     "CreateAddonInstance": "<p>Creates an Add On instance for the subscription indicated in the request. The resulting Amazon Resource Name (ARN) can be used in a conditional statement for a rule set or traffic policy. </p>",
     "CreateAddonSubscription": "<p>Creates a subscription for an Add On representing the acceptance of its terms of use and additional pricing. The subscription can then be used to create an instance for use in rule sets or traffic policies.</p>",
@@ -47,7 +47,7 @@
     "UpdateArchive": "<p>Updates the attributes of an existing email archive.</p>",
     "UpdateIngressPoint": "<p>Update attributes of a provisioned ingress endpoint resource.</p>",
     "UpdateRelay": "<p>Updates the attributes of an existing relay resource.</p>",
-    "UpdateRuleSet": "<p>&gt;Update attributes of an already provisioned rule set.</p>",
+    "UpdateRuleSet": "<p>Update attributes of an already provisioned rule set.</p>",
     "UpdateTrafficPolicy": "<p>Update attributes of an already provisioned traffic policy resource.</p>"
   },
   "shapes": {
@@ -316,7 +316,8 @@
       "base": null,
       "refs": {
         "MessageBody$MessageMalformed": "<p>A flag indicating if the email was malformed.</p>",
-        "Row$HasAttachments": "<p>A flag indicating if the email has attachments.</p>"
+        "Row$HasAttachments": "<p>A flag indicating if the email has attachments.</p>",
+        "StartArchiveExportRequest$IncludeMetadata": "<p>Whether to include message metadata as JSON files in the export.</p>"
       }
     },
     "ConflictException": {
@@ -492,6 +493,13 @@
       "base": null,
       "refs": {
         "Row$ReceivedHeaders": "<p>The received headers from the email delivery path.</p>"
+      }
+    },
+    "Envelope": {
+      "base": "<p>The SMTP envelope information of the email.</p>",
+      "refs": {
+        "GetArchiveMessageResponse$Envelope": "<p>The SMTP envelope information of the email.</p>",
+        "Row$Envelope": "<p>The SMTP envelope information of the email.</p>"
       }
     },
     "ErrorMessage": {
@@ -801,6 +809,8 @@
         "GetIngressPointRequest$IngressPointId": "<p>The identifier of an ingress endpoint.</p>",
         "GetIngressPointResponse$IngressPointId": "<p>The identifier of an ingress endpoint resource.</p>",
         "IngressPoint$IngressPointId": "<p>The identifier of the ingress endpoint resource.</p>",
+        "Metadata$IngressPointId": "<p>The ID of the ingress endpoint through which the email was received.</p>",
+        "Row$IngressPointId": "<p>The ID of the ingress endpoint through which the email was received.</p>",
         "UpdateIngressPointRequest$IngressPointId": "<p>The identifier for the ingress endpoint you want to update.</p>"
       }
     },
@@ -1049,6 +1059,18 @@
       "base": "<p>The textual body content of an email message.</p>",
       "refs": {
         "GetArchiveMessageContentResponse$Body": "<p>The textual body content of the email message.</p>"
+      }
+    },
+    "Metadata": {
+      "base": "<p>The metadata about the email.</p>",
+      "refs": {
+        "GetArchiveMessageResponse$Metadata": "<p>The metadata about the email.</p>"
+      }
+    },
+    "MimeHeaderAttribute": {
+      "base": null,
+      "refs": {
+        "RuleStringToEvaluate$MimeHeaderAttribute": "<p>The email MIME X-Header attribute to evaluate in a string condition expression.</p>"
       }
     },
     "NameOrArn": {
@@ -1402,6 +1424,7 @@
         "GetIngressPointResponse$RuleSetId": "<p>The identifier of a rule set resource associated with the ingress endpoint.</p>",
         "GetRuleSetRequest$RuleSetId": "<p>The identifier of an existing rule set to be retrieved.</p>",
         "GetRuleSetResponse$RuleSetId": "<p>The identifier of the rule set resource.</p>",
+        "Metadata$RuleSetId": "<p>The ID of the rule set that processed the email.</p>",
         "RuleSet$RuleSetId": "<p>The identifier of the rule set.</p>",
         "UpdateIngressPointRequest$RuleSetId": "<p>The identifier of an existing rule set that you attach to an ingress endpoint resource.</p>",
         "UpdateRuleSetRequest$RuleSetId": "<p>The identifier of a rule set you want to update.</p>"
@@ -1594,6 +1617,13 @@
         "RuleAction$Send": "<p>This action sends the email to the internet.</p>"
       }
     },
+    "SenderIpAddress": {
+      "base": null,
+      "refs": {
+        "Metadata$SenderIpAddress": "<p>The IP address of the host from which the email was received.</p>",
+        "Row$SenderIpAddress": "<p>The IP address of the host from which the email was received.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Occurs when an operation exceeds a predefined service quota or limit.</p>",
       "refs": {
@@ -1649,28 +1679,40 @@
       "base": null,
       "refs": {
         "EmailReceivedHeadersList$member": null,
+        "Envelope$From": "<p>The RCPT FROM given by the host from which the email was received.</p>",
+        "Envelope$Helo": "<p>The HELO used by the host from which the email was received.</p>",
         "IngressPointPasswordConfiguration$PreviousSmtpPasswordVersion": "<p>The previous password version of the ingress endpoint resource.</p>",
         "IngressPointPasswordConfiguration$SmtpPasswordVersion": "<p>The current password expiry timestamp of the ingress endpoint resource.</p>",
         "MessageBody$Html": "<p>The HTML body content of the message.</p>",
         "MessageBody$Text": "<p>The plain text body content of the message.</p>",
+        "Metadata$SenderHostname": "<p>The name of the host from which the email was received.</p>",
+        "Metadata$TlsCipherSuite": "<p>The TLS cipher suite used to communicate with the host from which the email was received.</p>",
+        "Metadata$TlsProtocol": "<p>The TLS protocol used to communicate with the host from which the email was received.</p>",
         "Row$Cc": "<p>The email addresses in the CC header.</p>",
         "Row$Date": "<p>The date the email was sent.</p>",
         "Row$From": "<p>The email address of the sender.</p>",
         "Row$InReplyTo": "<p>The email message ID this is a reply to.</p>",
         "Row$MessageId": "<p>The unique message ID of the email.</p>",
+        "Row$SenderHostname": "<p>The name of the host from which the email was received.</p>",
         "Row$Subject": "<p>The subject header value of the email.</p>",
         "Row$To": "<p>The email addresses in the To header.</p>",
         "Row$XMailer": "<p>The user agent that sent the email.</p>",
         "Row$XOriginalMailer": "<p>The original user agent that sent the email.</p>",
         "Row$XPriority": "<p>The priority level of the email.</p>",
-        "StringList$member": null,
-        "StringValueList$member": null
+        "StringList$member": null
       }
     },
     "StringList": {
       "base": null,
       "refs": {
+        "Envelope$To": "<p>All SMTP TO entries given by the host from which the email was received.</p>",
         "IngressStringExpression$Values": "<p>The right hand side argument of a string condition expression.</p>"
+      }
+    },
+    "StringValue": {
+      "base": null,
+      "refs": {
+        "StringValueList$member": null
       }
     },
     "StringValueList": {
@@ -1766,6 +1808,7 @@
         "GetTrafficPolicyResponse$CreatedTimestamp": "<p>The timestamp of when the traffic policy was created.</p>",
         "GetTrafficPolicyResponse$LastUpdatedTimestamp": "<p>The timestamp of when the traffic policy was last updated.</p>",
         "IngressPointPasswordConfiguration$PreviousSmtpPasswordExpiryTimestamp": "<p>The previous password expiry timestamp of the ingress endpoint resource.</p>",
+        "Metadata$Timestamp": "<p>The timestamp of when the email was received.</p>",
         "Relay$LastModifiedTimestamp": "<p>The timestamp of when the relay was last modified.</p>",
         "Row$ReceivedTimestamp": "<p>The timestamp of when the email was received.</p>",
         "RuleSet$LastModificationDate": "<p>The last modification date of the rule set.</p>",
@@ -1798,6 +1841,7 @@
         "GetIngressPointResponse$TrafficPolicyId": "<p>The identifier of the traffic policy resource associated with the ingress endpoint.</p>",
         "GetTrafficPolicyRequest$TrafficPolicyId": "<p>The identifier of the traffic policy resource.</p>",
         "GetTrafficPolicyResponse$TrafficPolicyId": "<p>The identifier of the traffic policy resource.</p>",
+        "Metadata$TrafficPolicyId": "<p>The ID of the traffic policy that was in effect when the email was received.</p>",
         "TrafficPolicy$TrafficPolicyId": "<p>The identifier of the traffic policy resource.</p>",
         "UpdateIngressPointRequest$TrafficPolicyId": "<p>The identifier of an existing traffic policy that you attach to an ingress endpoint resource.</p>",
         "UpdateTrafficPolicyRequest$TrafficPolicyId": "<p>The identifier of the traffic policy that you want to update.</p>"

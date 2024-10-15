@@ -239,6 +239,8 @@
         "JobRun$updatedAt": "<p>The date and time when the job run was updated.</p>",
         "JobRun$attemptCreatedAt": "<p>The date and time of when the job run attempt was created.</p>",
         "JobRun$attemptUpdatedAt": "<p>The date and time of when the job run attempt was last updated.</p>",
+        "JobRun$startedAt": "<p>The date and time when the job moved to the RUNNING state.</p>",
+        "JobRun$endedAt": "<p>The date and time when the job was terminated.</p>",
         "JobRunAttemptSummary$jobCreatedAt": "<p>The date and time of when the job run was created.</p>",
         "JobRunAttemptSummary$createdAt": "<p>The date and time when the job run attempt was created.</p>",
         "JobRunAttemptSummary$updatedAt": "<p>The date and time of when the job run attempt was last updated.</p>",
@@ -427,7 +429,9 @@
     "Integer": {
       "base": null,
       "refs": {
-        "JobRun$totalExecutionDurationSeconds": "<p>The job run total execution duration in seconds. This field is only available for job runs in a <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code> state.</p>"
+        "JobRun$totalExecutionDurationSeconds": "<p>The job run total execution duration in seconds. This field is only available for job runs in a <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code> state.</p>",
+        "SchedulerConfiguration$queueTimeoutMinutes": "<p>The maximum duration in minutes for the job in QUEUED state. If scheduler configuration is enabled on your application, the default value is 360 minutes (6 hours). The valid range is from 15 to 720.</p>",
+        "SchedulerConfiguration$maxConcurrentRuns": "<p>The maximum concurrent job runs on this application. If scheduler configuration is enabled on your application, the default value is 15. The valid range is 1 to 1000.</p>"
       }
     },
     "InteractiveConfiguration": {
@@ -623,6 +627,12 @@
         "LogTypeList$member": null
       }
     },
+    "Long": {
+      "base": null,
+      "refs": {
+        "JobRun$queuedDurationMilliseconds": "<p>The total time for a job in the QUEUED state in milliseconds.</p>"
+      }
+    },
     "ManagedPersistenceMonitoringConfiguration": {
       "base": "<p>The managed log persistence configuration for a job run.</p>",
       "refs": {
@@ -747,6 +757,14 @@
       "base": "<p>The Amazon S3 configuration for monitoring log publishing. You can configure your jobs to send log information to Amazon S3.</p>",
       "refs": {
         "MonitoringConfiguration$s3MonitoringConfiguration": "<p>The Amazon S3 configuration for monitoring log publishing.</p>"
+      }
+    },
+    "SchedulerConfiguration": {
+      "base": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+      "refs": {
+        "Application$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+        "CreateApplicationRequest$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+        "UpdateApplicationRequest$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>"
       }
     },
     "SecurityGroupIds": {

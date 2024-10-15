@@ -4,7 +4,6 @@ namespace Aws\Test\Integ;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFrontKeyValueStore\CloudFrontKeyValueStoreClient;
 use Aws\EventBridge\EventBridgeClient;
-use Aws\EventBridge\Exception\EventBridgeException;
 use Aws\Sts\StsClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;

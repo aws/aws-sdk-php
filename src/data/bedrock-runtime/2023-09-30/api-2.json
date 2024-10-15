@@ -171,7 +171,8 @@
         "usage":{"shape":"GuardrailUsage"},
         "action":{"shape":"GuardrailAction"},
         "outputs":{"shape":"GuardrailOutputContentList"},
-        "assessments":{"shape":"GuardrailAssessmentList"}
+        "assessments":{"shape":"GuardrailAssessmentList"},
+        "guardrailCoverage":{"shape":"GuardrailCoverage"}
       }
     },
     "AutoToolChoice":{
@@ -475,7 +476,8 @@
         "contentPolicy":{"shape":"GuardrailContentPolicyAssessment"},
         "wordPolicy":{"shape":"GuardrailWordPolicyAssessment"},
         "sensitiveInformationPolicy":{"shape":"GuardrailSensitiveInformationPolicyAssessment"},
-        "contextualGroundingPolicy":{"shape":"GuardrailContextualGroundingPolicyAssessment"}
+        "contextualGroundingPolicy":{"shape":"GuardrailContextualGroundingPolicyAssessment"},
+        "invocationMetrics":{"shape":"GuardrailInvocationMetrics"}
       }
     },
     "GuardrailAssessmentList":{
@@ -525,6 +527,7 @@
       "members":{
         "type":{"shape":"GuardrailContentFilterType"},
         "confidence":{"shape":"GuardrailContentFilterConfidence"},
+        "filterStrength":{"shape":"GuardrailContentFilterStrength"},
         "action":{"shape":"GuardrailContentPolicyAction"}
       }
     },
@@ -540,6 +543,15 @@
     "GuardrailContentFilterList":{
       "type":"list",
       "member":{"shape":"GuardrailContentFilter"}
+    },
+    "GuardrailContentFilterStrength":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
     },
     "GuardrailContentFilterType":{
       "type":"string",
@@ -668,6 +680,12 @@
         "qualifiers":{"shape":"GuardrailConverseContentQualifierList"}
       }
     },
+    "GuardrailCoverage":{
+      "type":"structure",
+      "members":{
+        "textCharacters":{"shape":"GuardrailTextCharactersCoverage"}
+      }
+    },
     "GuardrailCustomWord":{
       "type":"structure",
       "required":[
@@ -688,6 +706,14 @@
       "max":2048,
       "min":0,
       "pattern":"(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail/[a-z0-9]+))"
+    },
+    "GuardrailInvocationMetrics":{
+      "type":"structure",
+      "members":{
+        "guardrailProcessingLatency":{"shape":"GuardrailProcessingLatency"},
+        "usage":{"shape":"GuardrailUsage"},
+        "guardrailCoverage":{"shape":"GuardrailCoverage"}
+      }
     },
     "GuardrailManagedWord":{
       "type":"structure",
@@ -774,6 +800,10 @@
         "VEHICLE_IDENTIFICATION_NUMBER"
       ]
     },
+    "GuardrailProcessingLatency":{
+      "type":"long",
+      "box":true
+    },
     "GuardrailRegexFilter":{
       "type":"structure",
       "required":["action"],
@@ -840,6 +870,13 @@
       "members":{
         "text":{"shape":"String"},
         "qualifiers":{"shape":"GuardrailContentQualifierList"}
+      }
+    },
+    "GuardrailTextCharactersCoverage":{
+      "type":"structure",
+      "members":{
+        "guarded":{"shape":"TextCharactersGuarded"},
+        "total":{"shape":"TextCharactersTotal"}
       }
     },
     "GuardrailTopic":{
@@ -1324,6 +1361,14 @@
     "SystemContentBlocks":{
       "type":"list",
       "member":{"shape":"SystemContentBlock"}
+    },
+    "TextCharactersGuarded":{
+      "type":"integer",
+      "box":true
+    },
+    "TextCharactersTotal":{
+      "type":"integer",
+      "box":true
     },
     "ThrottlingException":{
       "type":"structure",

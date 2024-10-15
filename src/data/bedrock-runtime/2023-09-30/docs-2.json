@@ -297,6 +297,12 @@
         "GuardrailContentPolicyAssessment$filters": "<p>The content policy filters.</p>"
       }
     },
+    "GuardrailContentFilterStrength": {
+      "base": null,
+      "refs": {
+        "GuardrailContentFilter$filterStrength": "<p>The filter strength setting for the guardrail content filter.</p>"
+      }
+    },
     "GuardrailContentFilterType": {
       "base": null,
       "refs": {
@@ -412,6 +418,13 @@
         "GuardrailConverseContentBlock$text": "<p>The text to guard.</p>"
       }
     },
+    "GuardrailCoverage": {
+      "base": "<p>The action of the guardrail coverage details.</p>",
+      "refs": {
+        "ApplyGuardrailResponse$guardrailCoverage": "<p>The guardrail coverage details in the apply guardrail response.</p>",
+        "GuardrailInvocationMetrics$guardrailCoverage": "<p>The coverage details for the guardrail invocation metrics.</p>"
+      }
+    },
     "GuardrailCustomWord": {
       "base": "<p>A custom word configured in a guardrail.</p>",
       "refs": {
@@ -432,6 +445,12 @@
         "GuardrailStreamConfiguration$guardrailIdentifier": "<p>The identifier for the guardrail.</p>",
         "InvokeModelRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail that you want to use. If you don't provide a value, no guardrail is applied to the invocation.</p> <p>An error will be thrown in the following situations.</p> <ul> <li> <p>You don't provide a guardrail identifier but you specify the <code>amazon-bedrock-guardrailConfig</code> field in the request body.</p> </li> <li> <p>You enable the guardrail but the <code>contentType</code> isn't <code>application/json</code>.</p> </li> <li> <p>You provide a guardrail identifier, but <code>guardrailVersion</code> isn't specified.</p> </li> </ul>",
         "InvokeModelWithResponseStreamRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail that you want to use. If you don't provide a value, no guardrail is applied to the invocation.</p> <p>An error is thrown in the following situations.</p> <ul> <li> <p>You don't provide a guardrail identifier but you specify the <code>amazon-bedrock-guardrailConfig</code> field in the request body.</p> </li> <li> <p>You enable the guardrail but the <code>contentType</code> isn't <code>application/json</code>.</p> </li> <li> <p>You provide a guardrail identifier, but <code>guardrailVersion</code> isn't specified.</p> </li> </ul>"
+      }
+    },
+    "GuardrailInvocationMetrics": {
+      "base": "<p>The invocation metrics for the guardrail.</p>",
+      "refs": {
+        "GuardrailAssessment$invocationMetrics": "<p>The invocation metrics for the guardrail assessment.</p>"
       }
     },
     "GuardrailManagedWord": {
@@ -489,6 +508,12 @@
         "GuardrailPiiEntityFilter$type": "<p>The PII entity filter type.</p>"
       }
     },
+    "GuardrailProcessingLatency": {
+      "base": null,
+      "refs": {
+        "GuardrailInvocationMetrics$guardrailProcessingLatency": "<p>The processing latency details for the guardrail invocation metrics.</p>"
+      }
+    },
     "GuardrailRegexFilter": {
       "base": "<p>A Regex filter configured in a guardrail.</p>",
       "refs": {
@@ -544,6 +569,12 @@
         "GuardrailContentBlock$text": "<p>Text within content block to be evaluated by the guardrail.</p>"
       }
     },
+    "GuardrailTextCharactersCoverage": {
+      "base": "<p>The guardrail coverage for the text characters.</p>",
+      "refs": {
+        "GuardrailCoverage$textCharacters": "<p>The text characters of the guardrail coverage details.</p>"
+      }
+    },
     "GuardrailTopic": {
       "base": "<p>Information about a topic guardrail.</p>",
       "refs": {
@@ -597,7 +628,8 @@
     "GuardrailUsage": {
       "base": "<p>The details on the use of the guardrail.</p>",
       "refs": {
-        "ApplyGuardrailResponse$usage": "<p>The usage details in the response from the guardrail.</p>"
+        "ApplyGuardrailResponse$usage": "<p>The usage details in the response from the guardrail.</p>",
+        "GuardrailInvocationMetrics$usage": "<p>The usage details for the guardrail invocation metrics.</p>"
       }
     },
     "GuardrailVersion": {
@@ -912,6 +944,18 @@
       "refs": {
         "ConverseRequest$system": "<p>A system prompt to pass to the model.</p>",
         "ConverseStreamRequest$system": "<p>A system prompt to send to the model.</p>"
+      }
+    },
+    "TextCharactersGuarded": {
+      "base": null,
+      "refs": {
+        "GuardrailTextCharactersCoverage$guarded": "<p>The text characters that were guarded by the guardrail coverage.</p>"
+      }
+    },
+    "TextCharactersTotal": {
+      "base": null,
+      "refs": {
+        "GuardrailTextCharactersCoverage$total": "<p>The total text characters by the guardrail coverage.</p>"
       }
     },
     "ThrottlingException": {

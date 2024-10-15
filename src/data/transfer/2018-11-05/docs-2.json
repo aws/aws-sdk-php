@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Transfer Family is a fully managed service that enables the transfer of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL (FTPS), or Secure Shell (SSH) File Transfer Protocol (SFTP) directly into and out of Amazon Simple Storage Service (Amazon S3) or Amazon EFS. Additionally, you can use Applicability Statement 2 (AS2) to transfer files into and out of Amazon S3. Amazon Web Services helps you seamlessly migrate your file transfer workflows to Transfer Family by integrating with existing authentication systems, and providing DNS routing with Amazon Route 53 so nothing changes for your customers and partners, or their applications. With your data in Amazon S3, you can use it with Amazon Web Services for processing, analytics, machine learning, and archiving. Getting started with Transfer Family is easy since there is no infrastructure to buy and set up.</p>",
+  "service": "<p>Transfer Family is a fully managed service that enables the transfer of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL (FTPS), or Secure Shell (SSH) File Transfer Protocol (SFTP) directly into and out of Amazon Simple Storage Service (Amazon S3) or Amazon EFS. Additionally, you can use Applicability Statement 2 (AS2) to transfer files into and out of Amazon S3. Amazon Web Services helps you seamlessly migrate your file transfer workflows to Transfer Family by integrating with existing authentication systems, and providing DNS routing with Amazon Route 53 so nothing changes for your customers and partners, or their applications. With your data in Amazon S3, you can use it with Amazon Web Services services for processing, analytics, machine learning, and archiving. Getting started with Transfer Family is easy since there is no infrastructure to buy and set up.</p>",
   "operations": {
     "CreateAccess": "<p>Used by administrators to choose which groups in the directory should have access to upload and download files over the enabled protocols using Transfer Family. For example, a Microsoft Active Directory might contain 50,000 users, but only a small fraction might need the ability to transfer files to the server. An administrator can use <code>CreateAccess</code> to limit the access to the correct set of users who need this ability.</p>",
     "CreateAgreement": "<p>Creates an agreement. An agreement is a bilateral trading partner agreement, or partnership, between an Transfer Family server and an AS2 process. The agreement defines the file and message transfer relationship between the server and the AS2 process. To define an agreement, Transfer Family combines a server, local profile, partner profile, certificate, and other attributes.</p> <p>The partner is identified with the <code>PartnerProfileId</code>, and the AS2 process is identified with the <code>LocalProfileId</code>.</p>",
@@ -38,6 +38,7 @@
     "ListCertificates": "<p>Returns a list of the current certificates that have been imported into Transfer Family. If you want to limit the results to a certain number, supply a value for the <code>MaxResults</code> parameter. If you ran the command previously and received a value for the <code>NextToken</code> parameter, you can supply that value to continue listing certificates from where you left off.</p>",
     "ListConnectors": "<p>Lists the connectors for the specified Region.</p>",
     "ListExecutions": "<p>Lists all in-progress executions for the specified workflow.</p> <note> <p>If the specified workflow ID cannot be found, <code>ListExecutions</code> returns a <code>ResourceNotFound</code> exception.</p> </note>",
+    "ListFileTransferResults": "<p> Returns real-time updates and detailed information on the status of each individual file being transferred in a specific file transfer operation. You specify the file transfer by providing its <code>ConnectorId</code> and its <code>TransferId</code>.</p> <note> <p>File transfer results are available up to 7 days after an operation has been requested.</p> </note>",
     "ListHostKeys": "<p>Returns a list of host keys for the server that's specified by the <code>ServerId</code> parameter.</p>",
     "ListProfiles": "<p>Returns a list of the profiles for your system. If you want to limit the results to a certain number, supply a value for the <code>MaxResults</code> parameter. If you ran the command previously and received a value for <code>NextToken</code>, you can supply that value to continue listing profiles from where you left off.</p>",
     "ListSecurityPolicies": "<p>Lists the security policies that are attached to your servers and SFTP connectors. For more information about security policies, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html\">Working with security policies for servers</a> or <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html\">Working with security policies for SFTP connectors</a>.</p>",
@@ -265,6 +266,18 @@
       "refs": {
       }
     },
+    "ConnectorFileTransferResult": {
+      "base": "<p>A structure that contains the details for files transferred using an SFTP connector, during a single transfer.</p>",
+      "refs": {
+        "ConnectorFileTransferResults$member": null
+      }
+    },
+    "ConnectorFileTransferResults": {
+      "base": null,
+      "refs": {
+        "ListFileTransferResultsResponse$FileTransferResults": "<p>Returns the details for the files transferred in the transfer identified by the <code>TransferId</code> and <code>ConnectorId</code> specified.</p> <ul> <li> <p> <code>FilePath</code>: the filename and path to where the file was sent to or retrieved from.</p> </li> <li> <p> <code>StatusCode</code>: current status for the transfer. The status returned is one of the following values:<code>QUEUED</code>, <code>IN_PROGRESS</code>, <code>COMPLETED</code>, or <code>FAILED</code> </p> </li> <li> <p> <code>FailureCode</code>: for transfers that fail, this parameter contains a code indicating the reason. For example, <code>RETRIEVE_FILE_NOT_FOUND</code> </p> </li> <li> <p> <code>FailureMessage</code>: for transfers that fail, this parameter describes the reason for the failure.</p> </li> </ul>"
+      }
+    },
     "ConnectorId": {
       "base": null,
       "refs": {
@@ -272,6 +285,7 @@
         "DeleteConnectorRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "DescribeConnectorRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "DescribedConnector$ConnectorId": "<p>The unique identifier for the connector.</p>",
+        "ListFileTransferResultsRequest$ConnectorId": "<p>A unique identifier for a connector. This value should match the value supplied to the corresponding <code>StartFileTransfer</code> call.</p>",
         "ListedConnector$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "StartDirectoryListingRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "StartFileTransferRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
@@ -700,7 +714,7 @@
       }
     },
     "EndpointDetails": {
-      "base": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your file transfer protocol-enabled server. With a VPC endpoint, you can restrict access to your server and resources only within your VPC. To control incoming internet traffic, invoke the <code>UpdateServer</code> API and attach an Elastic IP address to your server's endpoint.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> </note>",
+      "base": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your file transfer protocol-enabled server. With a VPC endpoint, you can restrict access to your server and resources only within your VPC. To control incoming internet traffic, invoke the <code>UpdateServer</code> API and attach an Elastic IP address to your server's endpoint.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>",
       "refs": {
         "CreateServerRequest$EndpointDetails": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your server. When you host your endpoint within your VPC, you can make your endpoint accessible only to resources within your VPC, or you can attach Elastic IP addresses and make your endpoint accessible to clients over the internet. Your VPC's default security groups are automatically assigned to your endpoint.</p>",
         "DescribedServer$EndpointDetails": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your server. When you host your endpoint within your VPC, you can make your endpoint accessible only to resources within your VPC, or you can attach Elastic IP addresses and make your endpoint accessible to clients over the internet. Your VPC's default security groups are automatically assigned to your endpoint.</p>",
@@ -713,7 +727,7 @@
         "CreateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>",
         "DescribedServer$EndpointType": "<p>Defines the type of endpoint that your server is connected to. If your server is connected to a VPC endpoint, your server isn't accessible over the public internet.</p>",
         "ListedServer$EndpointType": "<p>Specifies the type of VPC endpoint that your server is connected to. If your server is connected to a VPC endpoint, your server isn't accessible over the public internet.</p>",
-        "UpdateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>"
+        "UpdateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>"
       }
     },
     "ExecutionError": {
@@ -782,6 +796,12 @@
         "UpdateAccessResponse$ExternalId": "<p>The external identifier of the group whose users have access to your Amazon S3 or Amazon EFS resources over the enabled protocols using Amazon Web ServicesTransfer Family.</p>"
       }
     },
+    "FailureCode": {
+      "base": null,
+      "refs": {
+        "ConnectorFileTransferResult$FailureCode": "<p>For transfers that fail, this parameter contains a code indicating the reason. For example, <code>RETRIEVE_FILE_NOT_FOUND</code> </p>"
+      }
+    },
     "FileLocation": {
       "base": "<p>Specifies the Amazon S3 or EFS file details to be used in the step.</p>",
       "refs": {
@@ -792,6 +812,7 @@
     "FilePath": {
       "base": null,
       "refs": {
+        "ConnectorFileTransferResult$FilePath": "<p>The filename and path to where the file was sent to or retrieved from.</p>",
         "FilePaths$member": null,
         "StartDirectoryListingRequest$RemoteDirectoryPath": "<p>Specifies the directory on the remote SFTP server for which you want to list its contents.</p>",
         "StartDirectoryListingRequest$OutputDirectoryPath": "<p>Specifies the path (bucket and prefix) in Amazon S3 storage to store the results of the directory listing.</p>",
@@ -802,7 +823,7 @@
     "FilePaths": {
       "base": null,
       "refs": {
-        "StartFileTransferRequest$SendFilePaths": "<p>One or more source paths for the Amazon S3 storage. Each string represents a source file path for one outbound file transfer. For example, <code> <i>DOC-EXAMPLE-BUCKET</i>/<i>myfile.txt</i> </code>.</p> <note> <p>Replace <code> <i>DOC-EXAMPLE-BUCKET</i> </code> with one of your actual buckets.</p> </note>",
+        "StartFileTransferRequest$SendFilePaths": "<p>One or more source paths for the Amazon S3 storage. Each string represents a source file path for one outbound file transfer. For example, <code> <i>amzn-s3-demo-bucket</i>/<i>myfile.txt</i> </code>.</p> <note> <p>Replace <code> <i>amzn-s3-demo-bucket</i> </code> with one of your actual buckets.</p> </note>",
         "StartFileTransferRequest$RetrieveFilePaths": "<p>One or more source paths for the partner's SFTP server. Each string represents a source file path for one inbound file transfer.</p>"
       }
     },
@@ -822,7 +843,7 @@
       "base": null,
       "refs": {
         "CreateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "CreateAgreementRequest$BaseDirectory": "<p>The landing directory (folder) for files transferred by using the AS2 protocol.</p> <p>A <code>BaseDirectory</code> example is <code>/DOC-EXAMPLE-BUCKET/home/mydirectory</code>.</p>",
+        "CreateAgreementRequest$BaseDirectory": "<p>The landing directory (folder) for files transferred by using the AS2 protocol.</p> <p>A <code>BaseDirectory</code> example is <code>/<i>amzn-s3-demo-bucket</i>/home/mydirectory</code>.</p>",
         "CreateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
         "DescribedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
         "DescribedAgreement$BaseDirectory": "<p>The landing directory (folder) for files that are transferred by using the AS2 protocol.</p>",
@@ -830,7 +851,7 @@
         "ListedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
         "ListedUser$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
         "UpdateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "UpdateAgreementRequest$BaseDirectory": "<p>To change the landing directory (folder) for files that are transferred, provide the bucket folder that you want to use; for example, <code>/<i>DOC-EXAMPLE-BUCKET</i>/<i>home</i>/<i>mydirectory</i> </code>.</p>",
+        "UpdateAgreementRequest$BaseDirectory": "<p>To change the landing directory (folder) for files that are transferred, provide the bucket folder that you want to use; for example, <code>/<i>amzn-s3-demo-bucket</i>/<i>home</i>/<i>mydirectory</i> </code>.</p>",
         "UpdateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>"
       }
     },
@@ -1022,6 +1043,16 @@
       }
     },
     "ListExecutionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFileTransferResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFileTransferResultsResponse": {
       "base": null,
       "refs": {
       }
@@ -1266,6 +1297,7 @@
         "ListCertificatesRequest$MaxResults": "<p>The maximum number of certificates to return.</p>",
         "ListConnectorsRequest$MaxResults": "<p>The maximum number of connectors to return.</p>",
         "ListExecutionsRequest$MaxResults": "<p>Specifies the maximum number of executions to return.</p>",
+        "ListFileTransferResultsRequest$MaxResults": "<p>The maximum number of files to return in a single page. Note that currently you can specify a maximum of 10 file paths in a single <a href=\"https://docs.aws.amazon.com/transfer/latest/APIReference/API_StartFileTransfer.html\">StartFileTransfer</a> operation. Thus, the maximum number of file transfer results that can be returned in a single page is 10. </p>",
         "ListHostKeysRequest$MaxResults": "<p>The maximum number of host keys to return.</p>",
         "ListProfilesRequest$MaxResults": "<p>The maximum number of profiles to return.</p>",
         "ListSecurityPoliciesRequest$MaxResults": "<p>Specifies the number of security policies to return as a response to the <code>ListSecurityPolicies</code> query.</p>",
@@ -1291,6 +1323,7 @@
       "base": null,
       "refs": {
         "ConflictException$Message": null,
+        "ConnectorFileTransferResult$FailureMessage": "<p>For transfers that fail, this parameter describes the reason for the failure.</p>",
         "InternalServiceError$Message": null,
         "InvalidNextTokenException$Message": null,
         "InvalidRequestException$Message": null,
@@ -1319,6 +1352,8 @@
         "ListConnectorsResponse$NextToken": "<p>Returns a token that you can use to call <code>ListConnectors</code> again and receive additional results, if there are any.</p>",
         "ListExecutionsRequest$NextToken": "<p> <code>ListExecutions</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional executions.</p> <p> This is useful for pagination, for instance. If you have 100 executions for a workflow, you might only want to list first 10. If so, call the API by specifying the <code>max-results</code>: </p> <p> <code>aws transfer list-executions --max-results 10</code> </p> <p> This returns details for the first 10 executions, as well as the pointer (<code>NextToken</code>) to the eleventh execution. You can now call the API again, supplying the <code>NextToken</code> value you received: </p> <p> <code>aws transfer list-executions --max-results 10 --next-token $somePointerReturnedFromPreviousListResult</code> </p> <p> This call returns the next 10 executions, the 11th through the 20th. You can then repeat the call until the details for all 100 executions have been returned. </p>",
         "ListExecutionsResponse$NextToken": "<p> <code>ListExecutions</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional executions.</p>",
+        "ListFileTransferResultsRequest$NextToken": "<p>If there are more file details than returned in this call, use this value for a subsequent call to <code>ListFileTransferResults</code> to retrieve them.</p>",
+        "ListFileTransferResultsResponse$NextToken": "<p>Returns a token that you can use to call <code>ListFileTransferResults</code> again and receive additional results, if there are any (against the same <code>TransferId</code>.</p>",
         "ListHostKeysRequest$NextToken": "<p>When there are additional results that were not returned, a <code>NextToken</code> parameter is returned. You can use that value for a subsequent call to <code>ListHostKeys</code> to continue listing results.</p>",
         "ListHostKeysResponse$NextToken": "<p>Returns a token that you can use to call <code>ListHostKeys</code> again and receive additional results, if there are any.</p>",
         "ListProfilesRequest$NextToken": "<p>When there are additional results that were not returned, a <code>NextToken</code> parameter is returned. You can use that value for a subsequent call to <code>ListProfiles</code> to continue listing results.</p>",
@@ -1346,13 +1381,13 @@
     "OnPartialUploadWorkflowDetails": {
       "base": null,
       "refs": {
-        "WorkflowDetails$OnPartialUpload": "<p>A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload.</p> <p>A <i>partial upload</i> occurs when a file is open when the session disconnects.</p>"
+        "WorkflowDetails$OnPartialUpload": "<p>A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload.</p> <p>A <i>partial upload</i> occurs when a file is open when the session disconnects.</p> <note> <p> <code>OnPartialUpload</code> can contain a maximum of one <code>WorkflowDetail</code> object.</p> </note>"
       }
     },
     "OnUploadWorkflowDetails": {
       "base": null,
       "refs": {
-        "WorkflowDetails$OnUpload": "<p>A trigger that starts a workflow: the workflow begins to execute after a file is uploaded.</p> <p>To remove an associated workflow from a server, you can provide an empty <code>OnUpload</code> object, as in the following example.</p> <p> <code>aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}'</code> </p>"
+        "WorkflowDetails$OnUpload": "<p>A trigger that starts a workflow: the workflow begins to execute after a file is uploaded.</p> <p>To remove an associated workflow from a server, you can provide an empty <code>OnUpload</code> object, as in the following example.</p> <p> <code>aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}'</code> </p> <note> <p> <code>OnUpload</code> can contain a maximum of one <code>WorkflowDetail</code> object.</p> </note>"
       }
     },
     "OutputFileName": {
@@ -2045,7 +2080,14 @@
     "TransferId": {
       "base": null,
       "refs": {
+        "ListFileTransferResultsRequest$TransferId": "<p>A unique identifier for a file transfer. This value should match the value supplied to the corresponding <code>StartFileTransfer</code> call.</p>",
         "StartFileTransferResponse$TransferId": "<p>Returns the unique identifier for the file transfer.</p>"
+      }
+    },
+    "TransferTableStatus": {
+      "base": null,
+      "refs": {
+        "ConnectorFileTransferResult$StatusCode": "<p>The current status for the transfer.</p>"
       }
     },
     "UntagResourceRequest": {

@@ -786,6 +786,7 @@
         "AvailabilityMode":{"shape":"AZStatus"},
         "ClusterEndpoint":{"shape":"Endpoint"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupName":{"shape":"String"},
@@ -817,6 +818,7 @@
         "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "MaintenanceWindow":{"shape":"String"},
         "TopicArn":{"shape":"String"},
@@ -921,6 +923,7 @@
         "Tags":{"shape":"TagList"},
         "SnapshotWindow":{"shape":"String"},
         "ACLName":{"shape":"ACLName"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "DataTiering":{"shape":"BooleanOptional"}
@@ -1135,6 +1138,7 @@
     "DescribeEngineVersionsRequest":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"},
         "MaxResults":{"shape":"IntegerOptional"},
@@ -1319,6 +1323,7 @@
     "EngineVersionInfo":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"}
@@ -1774,6 +1779,7 @@
         "Description":{"shape":"String"},
         "Status":{"shape":"ServiceUpdateStatus"},
         "Type":{"shape":"ServiceUpdateType"},
+        "Engine":{"shape":"String"},
         "NodesUpdated":{"shape":"String"},
         "AutoUpdateStartDate":{"shape":"TStamp"}
       }
@@ -2102,6 +2108,7 @@
         "SnapshotWindow":{"shape":"String"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ReplicaConfiguration":{"shape":"ReplicaConfigurationRequest"},
         "ShardConfiguration":{"shape":"ShardConfigurationRequest"},

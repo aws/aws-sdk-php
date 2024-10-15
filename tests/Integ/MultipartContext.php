@@ -2,18 +2,16 @@
 
 namespace Aws\Test\Integ;
 
+use Aws\CommandInterface;
 use Aws\Exception\MultipartUploadException;
 use Aws\Glacier\MultipartUploader as GlacierMultipartUploader;
 use Aws\ResultInterface;
 use Aws\S3\MultipartCopy;
 use Aws\S3\MultipartUploader as S3MultipartUploader;
 use Aws\S3\S3Client;
-use Behat\Behat\Tester\Exception\PendingException;
 use Aws\S3\BatchDelete;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\NoSeekStream;
 use PHPUnit\Framework\Assert;
@@ -74,6 +72,43 @@ class MultipartContext implements Context, SnippetAcceptingContext
             'bucket' => self::getResourceName(),
             'key' => get_class($this->stream) . $concurrency,
             'concurrency' => $concurrency,
+        ]);
+
+        try {
+            $this->result = $uploader->upload();
+        } catch (MultipartUploadException $e) {
+            $client->abortMultipartUpload($e->getState()->getId());
+            $message = "=====\n";
+            while ($e) {
+                $message .= $e->getMessage() . "\n";
+                $e = $e->getPrevious();
+            }
+            $message .= "=====\n";
+            Assert::fail($message);
+        }
+    }
+
+    /**
+     * @When /^I upload the stream to S3 with a checksum algorithm of "(crc32|sha256|sha1)"$/
+     */
+    public function iUploadTheStreamToS3WithAChecksumAlgorithmOf($checksumAlgorithm)
+    {
+        $client = self::getSdk()->createS3();
+        $uploader = new S3MultipartUploader($client, $this->stream, [
+            'bucket' => self::getResourceName(),
+            'key' => get_class($this->stream) . $checksumAlgorithm,
+            'before_initiate' => function (CommandInterface $command) use ($checksumAlgorithm) {
+                // $command is a CreateMultipartUpload operation
+                $command['ChecksumAlgorithm'] = $checksumAlgorithm;
+            },
+            'before_upload' => function (CommandInterface $command) use ($checksumAlgorithm) {
+                // $command is an UploadPart operation
+                $command['ChecksumAlgorithm'] = $checksumAlgorithm;
+            },
+            'before_complete' => function (CommandInterface $command) use ($checksumAlgorithm) {
+                // $command is a CompleteMultipartUpload operation
+                $command['ChecksumAlgorithm'] = $checksumAlgorithm;
+            },
         ]);
 
         try {
@@ -152,6 +187,12 @@ class MultipartContext implements Context, SnippetAcceptingContext
      */
     public function theResultShouldContainA($key)
     {
+        if (strpos($key, "Checksum") === 0) {
+            $algorithm = substr($key, strlen("Checksum"));
+            $formattedAlgorithm = strtoupper($algorithm);
+            $key = "Checksum" . $formattedAlgorithm;
+        }
+
         Assert::assertArrayHasKey($key, $this->result);
     }
 

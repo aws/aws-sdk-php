@@ -395,6 +395,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startContactRecordingAsync(array $args = [])
  * @method \Aws\Result startContactStreaming(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startContactStreamingAsync(array $args = [])
+ * @method \Aws\Result startOutboundChatContact(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startOutboundChatContactAsync(array $args = [])
  * @method \Aws\Result startOutboundVoiceContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startOutboundVoiceContactAsync(array $args = [])
  * @method \Aws\Result startTaskContact(array $args = [])

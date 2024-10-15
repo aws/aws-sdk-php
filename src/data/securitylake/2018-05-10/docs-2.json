@@ -1,35 +1,35 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Security Lake is a fully managed security data lake service. You can use Security Lake to automatically centralize security data from cloud, on-premises, and custom sources into a data lake that's stored in your Amazon Web Services account. Amazon Web Services Organizations is an account management service that lets you consolidate multiple Amazon Web Services accounts into an organization that you create and centrally manage. With Organizations, you can create member accounts and invite existing accounts to join your organization. Security Lake helps you analyze security data for a more complete understanding of your security posture across the entire organization. It can also help you improve the protection of your workloads, applications, and data.</p> <p>The data lake is backed by Amazon Simple Storage Service (Amazon S3) buckets, and you retain ownership over your data.</p> <p>Amazon Security Lake integrates with CloudTrail, a service that provides a record of actions taken by a user, role, or an Amazon Web Services service. In Security Lake, CloudTrail captures API calls for Security Lake as events. The calls captured include calls from the Security Lake console and code calls to the Security Lake API operations. If you create a trail, you can enable continuous delivery of CloudTrail events to an Amazon S3 bucket, including events for Security Lake. If you don't configure a trail, you can still view the most recent events in the CloudTrail console in Event history. Using the information collected by CloudTrail you can determine the request that was made to Security Lake, the IP address from which the request was made, who made the request, when it was made, and additional details. To learn more about Security Lake information in CloudTrail, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/securitylake-cloudtrail.html\">Amazon Security Lake User Guide</a>.</p> <p>Security Lake automates the collection of security-related log and event data from integrated Amazon Web Services and third-party services. It also helps you manage the lifecycle of data with customizable retention and replication settings. Security Lake converts ingested data into Apache Parquet format and a standard open-source schema called the Open Cybersecurity Schema Framework (OCSF).</p> <p>Other Amazon Web Services and third-party services can subscribe to the data that's stored in Security Lake for incident response and security data analytics.</p>",
+  "service": "<p>Amazon Security Lake is a fully managed security data lake service. You can use Security Lake to automatically centralize security data from cloud, on-premises, and custom sources into a data lake that's stored in your Amazon Web Services account. Amazon Web Services Organizations is an account management service that lets you consolidate multiple Amazon Web Services accounts into an organization that you create and centrally manage. With Organizations, you can create member accounts and invite existing accounts to join your organization. Security Lake helps you analyze security data for a more complete understanding of your security posture across the entire organization. It can also help you improve the protection of your workloads, applications, and data.</p> <p>The data lake is backed by Amazon Simple Storage Service (Amazon S3) buckets, and you retain ownership over your data.</p> <p>Amazon Security Lake integrates with CloudTrail, a service that provides a record of actions taken by a user, role, or an Amazon Web Services service. In Security Lake, CloudTrail captures API calls for Security Lake as events. The calls captured include calls from the Security Lake console and code calls to the Security Lake API operations. If you create a trail, you can enable continuous delivery of CloudTrail events to an Amazon S3 bucket, including events for Security Lake. If you don't configure a trail, you can still view the most recent events in the CloudTrail console in Event history. Using the information collected by CloudTrail you can determine the request that was made to Security Lake, the IP address from which the request was made, who made the request, when it was made, and additional details. To learn more about Security Lake information in CloudTrail, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/securitylake-cloudtrail.html\">Amazon Security Lake User Guide</a>.</p> <p>Security Lake automates the collection of security-related log and event data from integrated Amazon Web Services services and third-party services. It also helps you manage the lifecycle of data with customizable retention and replication settings. Security Lake converts ingested data into Apache Parquet format and a standard open-source schema called the Open Cybersecurity Schema Framework (OCSF).</p> <p>Other Amazon Web Services services and third-party services can subscribe to the data that's stored in Security Lake for incident response and security data analytics.</p>",
   "operations": {
-    "CreateAwsLogSource": "<p>Adds a natively supported Amazon Web Service as an Amazon Security Lake source. Enables source types for member accounts in required Amazon Web Services Regions, based on the parameters you specify. You can choose any source type in any Region for either accounts that are part of a trusted organization or standalone accounts. Once you add an Amazon Web Service as a source, Security Lake starts collecting logs and events from it.</p> <p>You can use this API only to enable natively supported Amazon Web Services as a source. Use <code>CreateCustomLogSource</code> to enable data collection from a custom source.</p>",
+    "CreateAwsLogSource": "<p>Adds a natively supported Amazon Web Services service as an Amazon Security Lake source. Enables source types for member accounts in required Amazon Web Services Regions, based on the parameters you specify. You can choose any source type in any Region for either accounts that are part of a trusted organization or standalone accounts. Once you add an Amazon Web Services service as a source, Security Lake starts collecting logs and events from it.</p> <p>You can use this API only to enable natively supported Amazon Web Services services as a source. Use <code>CreateCustomLogSource</code> to enable data collection from a custom source.</p>",
     "CreateCustomLogSource": "<p>Adds a third-party custom source in Amazon Security Lake, from the Amazon Web Services Region where you want to create a custom source. Security Lake can collect logs and events from third-party custom sources. After creating the appropriate IAM role to invoke Glue crawler, use this API to add a custom source name in Security Lake. This operation creates a partition in the Amazon S3 bucket for Security Lake as the target location for log files from the custom source. In addition, this operation also creates an associated Glue table and an Glue crawler.</p>",
-    "CreateDataLake": "<p>Initializes an Amazon Security Lake instance with the provided (or default) configuration. You can enable Security Lake in Amazon Web Services Regions with customized settings before enabling log collection in Regions. To specify particular Regions, configure these Regions using the <code>configurations</code> parameter. If you have already enabled Security Lake in a Region when you call this command, the command will update the Region if you provide new configuration parameters. If you have not already enabled Security Lake in the Region when you call this API, it will set up the data lake in the Region with the specified configurations.</p> <p>When you enable Security Lake, it starts ingesting security data after the <code>CreateAwsLogSource</code> call. This includes ingesting security data from sources, storing data, and making data accessible to subscribers. Security Lake also enables all the existing settings and resources that it stores or maintains for your Amazon Web Services account in the current Region, including security log and event data. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html\">Amazon Security Lake User Guide</a>.</p>",
-    "CreateDataLakeExceptionSubscription": "<p>Creates the specified notification subscription in Amazon Security Lake for the organization you specify.</p>",
+    "CreateDataLake": "<p>Initializes an Amazon Security Lake instance with the provided (or default) configuration. You can enable Security Lake in Amazon Web Services Regions with customized settings before enabling log collection in Regions. To specify particular Regions, configure these Regions using the <code>configurations</code> parameter. If you have already enabled Security Lake in a Region when you call this command, the command will update the Region if you provide new configuration parameters. If you have not already enabled Security Lake in the Region when you call this API, it will set up the data lake in the Region with the specified configurations.</p> <p>When you enable Security Lake, it starts ingesting security data after the <code>CreateAwsLogSource</code> call and after you create subscribers using the <code>CreateSubscriber</code> API. This includes ingesting security data from sources, storing data, and making data accessible to subscribers. Security Lake also enables all the existing settings and resources that it stores or maintains for your Amazon Web Services account in the current Region, including security log and event data. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/what-is-security-lake.html\">Amazon Security Lake User Guide</a>.</p>",
+    "CreateDataLakeExceptionSubscription": "<p>Creates the specified notification subscription in Amazon Security Lake for the organization you specify. The notification subscription is created for exceptions that cannot be resolved by Security Lake automatically.</p>",
     "CreateDataLakeOrganizationConfiguration": "<p>Automatically enables Amazon Security Lake for new member accounts in your organization. Security Lake is not automatically enabled for any existing member accounts in your organization.</p>",
-    "CreateSubscriber": "<p>Creates a subscription permission for accounts that are already enabled in Amazon Security Lake. You can create a subscriber with access to data in the current Amazon Web Services Region.</p>",
+    "CreateSubscriber": "<p>Creates a subscriber for accounts that are already enabled in Amazon Security Lake. You can create a subscriber with access to data in the current Amazon Web Services Region.</p>",
     "CreateSubscriberNotification": "<p>Notifies the subscriber when new data is written to the data lake for the sources that the subscriber consumes in Security Lake. You can create only one subscriber notification per subscriber.</p>",
-    "DeleteAwsLogSource": "<p>Removes a natively supported Amazon Web Service as an Amazon Security Lake source. You can remove a source for one or more Regions. When you remove the source, Security Lake stops collecting data from that source in the specified Regions and accounts, and subscribers can no longer consume new data from the source. However, subscribers can still consume data that Security Lake collected from the source before removal.</p> <p>You can choose any source type in any Amazon Web Services Region for either accounts that are part of a trusted organization or standalone accounts. </p>",
+    "DeleteAwsLogSource": "<p>Removes a natively supported Amazon Web Services service as an Amazon Security Lake source. You can remove a source for one or more Regions. When you remove the source, Security Lake stops collecting data from that source in the specified Regions and accounts, and subscribers can no longer consume new data from the source. However, subscribers can still consume data that Security Lake collected from the source before removal.</p> <p>You can choose any source type in any Amazon Web Services Region for either accounts that are part of a trusted organization or standalone accounts. </p>",
     "DeleteCustomLogSource": "<p>Removes a custom log source from Amazon Security Lake, to stop sending data from the custom source to Security Lake.</p>",
     "DeleteDataLake": "<p>When you disable Amazon Security Lake from your account, Security Lake is disabled in all Amazon Web Services Regions and it stops collecting data from your sources. Also, this API automatically takes steps to remove the account from Security Lake. However, Security Lake retains all of your existing settings and the resources that it created in your Amazon Web Services account in the current Amazon Web Services Region.</p> <p>The <code>DeleteDataLake</code> operation does not delete the data that is stored in your Amazon S3 bucket, which is owned by your Amazon Web Services account. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/disable-security-lake.html\">Amazon Security Lake User Guide</a>.</p>",
     "DeleteDataLakeExceptionSubscription": "<p>Deletes the specified notification subscription in Amazon Security Lake for the organization you specify.</p>",
     "DeleteDataLakeOrganizationConfiguration": "<p>Turns off automatic enablement of Amazon Security Lake for member accounts that are added to an organization in Organizations. Only the delegated Security Lake administrator for an organization can perform this operation. If the delegated Security Lake administrator performs this operation, new member accounts won't automatically contribute data to the data lake.</p>",
     "DeleteSubscriber": "<p>Deletes the subscription permission and all notification settings for accounts that are already enabled in Amazon Security Lake. When you run <code>DeleteSubscriber</code>, the subscriber will no longer consume data from Security Lake and the subscriber is removed. This operation deletes the subscriber and removes access to data in the current Amazon Web Services Region.</p>",
-    "DeleteSubscriberNotification": "<p>Deletes the specified notification subscription in Amazon Security Lake for the organization you specify.</p>",
+    "DeleteSubscriberNotification": "<p>Deletes the specified subscription notification in Amazon Security Lake for the organization you specify.</p>",
     "DeregisterDataLakeDelegatedAdministrator": "<p>Deletes the Amazon Security Lake delegated administrator account for the organization. This API can only be called by the organization management account. The organization management account cannot be the delegated administrator account.</p>",
-    "GetDataLakeExceptionSubscription": "<p>Retrieves the details of exception notifications for the account in Amazon Security Lake.</p>",
+    "GetDataLakeExceptionSubscription": "<p>Retrieves the protocol and endpoint that were provided when subscribing to Amazon SNS topics for exception notifications.</p>",
     "GetDataLakeOrganizationConfiguration": "<p>Retrieves the configuration that will be automatically set up for accounts added to the organization after the organization has onboarded to Amazon Security Lake. This API does not take input parameters.</p>",
     "GetDataLakeSources": "<p>Retrieves a snapshot of the current Region, including whether Amazon Security Lake is enabled for those accounts and which sources Security Lake is collecting data from.</p>",
     "GetSubscriber": "<p>Retrieves the subscription information for the specified subscription ID. You can get information about a specific subscriber.</p>",
     "ListDataLakeExceptions": "<p>Lists the Amazon Security Lake exceptions that you can use to find the source of problems and fix them.</p>",
     "ListDataLakes": "<p>Retrieves the Amazon Security Lake configuration object for the specified Amazon Web Services Regions. You can use this operation to determine whether Security Lake is enabled for a Region.</p>",
-    "ListLogSources": "<p>Retrieves the log sources in the current Amazon Web Services Region.</p>",
-    "ListSubscribers": "<p>List all subscribers for the specific Amazon Security Lake account ID. You can retrieve a list of subscriptions associated with a specific organization or Amazon Web Services account.</p>",
+    "ListLogSources": "<p>Retrieves the log sources.</p>",
+    "ListSubscribers": "<p>Lists all subscribers for the specific Amazon Security Lake account ID. You can retrieve a list of subscriptions associated with a specific organization or Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Retrieves the tags (keys and values) that are associated with an Amazon Security Lake resource: a subscriber, or the data lake configuration for your Amazon Web Services account in a particular Amazon Web Services Region.</p>",
     "RegisterDataLakeDelegatedAdministrator": "<p>Designates the Amazon Security Lake delegated administrator account for the organization. This API can only be called by the organization management account. The organization management account cannot be the delegated administrator account.</p>",
     "TagResource": "<p>Adds or updates one or more tags that are associated with an Amazon Security Lake resource: a subscriber, or the data lake configuration for your Amazon Web Services account in a particular Amazon Web Services Region. A <i>tag</i> is a label that you can define and associate with Amazon Web Services resources. Each tag consists of a required <i>tag key</i> and an associated <i>tag value</i>. A <i>tag key</i> is a general label that acts as a category for a more specific tag value. A <i>tag value</i> acts as a descriptor for a tag key. Tags can help you identify, categorize, and manage resources in different ways, such as by owner, environment, or other criteria. For more information, see <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/tagging-resources.html\">Tagging Amazon Security Lake resources</a> in the <i>Amazon Security Lake User Guide</i>.</p>",
     "UntagResource": "<p>Removes one or more tags (keys and values) from an Amazon Security Lake resource: a subscriber, or the data lake configuration for your Amazon Web Services account in a particular Amazon Web Services Region.</p>",
-    "UpdateDataLake": "<p>Specifies where to store your security data and for how long. You can add a rollup Region to consolidate data from multiple Amazon Web Services Regions.</p>",
+    "UpdateDataLake": "<p>You can use <code>UpdateDataLake</code> to specify where to store your security data, how it should be encrypted at rest and for how long. You can add a <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/manage-regions.html#add-rollup-region\">Rollup Region</a> to consolidate data from multiple Amazon Web Services Regions, replace default encryption (SSE-S3) with <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk\">Customer Manged Key</a>, or specify transition and expiration actions through storage <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/lifecycle-management.html\">Lifecycle management</a>. The <code>UpdateDataLake</code> API works as an \"upsert\" operation that performs an insert if the specified item or record does not exist, or an update if it already exists. Security Lake securely stores your data at rest using Amazon Web Services encryption solutions. For more details, see <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/data-protection.html\">Data protection in Amazon Security Lake</a>.</p> <p>For example, omitting the key <code>encryptionConfiguration</code> from a Region that is included in an update call that currently uses KMS will leave that Region's KMS key in place, but specifying <code>encryptionConfiguration: {kmsKeyId: 'S3_MANAGED_KEY'}</code> for that same Region will reset the key to <code>S3-managed</code>.</p> <p>For more details about lifecycle management and how to update retention settings for one or more Regions after enabling Security Lake, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/lifecycle-management.html\">Amazon Security Lake User Guide</a>. </p>",
     "UpdateDataLakeExceptionSubscription": "<p>Updates the specified notification subscription in Amazon Security Lake for the organization you specify.</p>",
     "UpdateSubscriber": "<p>Updates an existing subscription for the given Amazon Security Lake account ID. You can update a subscriber by changing the sources that the subscriber consumes data from.</p>",
     "UpdateSubscriberNotification": "<p>Updates an existing notification method for the subscription (SQS or HTTPs endpoint) or switches the notification subscription endpoint for a subscriber.</p>"
@@ -57,7 +57,7 @@
       "base": null,
       "refs": {
         "AwsLogSourceConfiguration$accounts": "<p>Specify the Amazon Web Services account information where you want to enable Security Lake.</p>",
-        "CreateAwsLogSourceResponse$failed": "<p>Lists all accounts in which enabling a natively supported Amazon Web Service as a Security Lake source failed. The failure occurred as these accounts are not part of an organization.</p>",
+        "CreateAwsLogSourceResponse$failed": "<p>Lists all accounts in which enabling a natively supported Amazon Web Services service as a Security Lake source failed. The failure occurred as these accounts are not part of an organization.</p>",
         "DeleteAwsLogSourceResponse$failed": "<p>Deletion of the Amazon Web Services sources failed as the account is not a part of the organization.</p>",
         "GetDataLakeSourcesRequest$accounts": "<p>The Amazon Web Services account ID for which a static snapshot of the current Amazon Web Services Region, including enabled accounts and log sources, is retrieved.</p>",
         "ListLogSourcesRequest$accounts": "<p>The list of Amazon Web Services accounts for which log sources are displayed.</p>"
@@ -85,16 +85,16 @@
       }
     },
     "AwsIdentity": {
-      "base": "<p>The AWS identity.</p>",
+      "base": "<p>The Amazon Web Services identity.</p>",
       "refs": {
         "CreateSubscriberRequest$subscriberIdentity": "<p>The Amazon Web Services identity used to access your data.</p>",
         "CustomLogSourceConfiguration$providerIdentity": "<p>The identity of the log provider for the third-party custom source.</p>",
         "SubscriberResource$subscriberIdentity": "<p>The Amazon Web Services identity used to access your data.</p>",
-        "UpdateSubscriberRequest$subscriberIdentity": "<p>The AWS identity used to access your data.</p>"
+        "UpdateSubscriberRequest$subscriberIdentity": "<p>The Amazon Web Services identity used to access your data.</p>"
       }
     },
     "AwsLogSourceConfiguration": {
-      "base": "<p>The Security Lake logs source configuration file describes the information needed to generate Security Lake logs. </p>",
+      "base": "<p>To add a natively-supported Amazon Web Services service as a log source, use these parameters to specify the configuration settings for the log source. </p>",
       "refs": {
         "AwsLogSourceConfigurationList$member": null
       }
@@ -109,7 +109,7 @@
     "AwsLogSourceName": {
       "base": null,
       "refs": {
-        "AwsLogSourceConfiguration$sourceName": "<p>The name for a Amazon Web Services source. This must be a Regionally unique value.</p>",
+        "AwsLogSourceConfiguration$sourceName": "<p>The name for a Amazon Web Services source. </p>",
         "AwsLogSourceResource$sourceName": "<p>The name for a Amazon Web Services source. This must be a Regionally unique value.</p>"
       }
     },
@@ -117,7 +117,7 @@
       "base": "<p>Amazon Security Lake can collect logs and events from natively-supported Amazon Web Services services.</p>",
       "refs": {
         "AwsLogSourceResourceList$member": null,
-        "LogSourceResource$awsLogSource": "<p>Amazon Security Lake supports log and event collection for natively supported Amazon Web Services. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>"
+        "LogSourceResource$awsLogSource": "<p>Amazon Security Lake supports log and event collection for natively supported Amazon Web Services services. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>"
       }
     },
     "AwsLogSourceResourceList": {
@@ -129,14 +129,14 @@
     "AwsLogSourceVersion": {
       "base": null,
       "refs": {
-        "AwsLogSourceConfiguration$sourceVersion": "<p>The version for a Amazon Web Services source. This must be a Regionally unique value.</p>",
+        "AwsLogSourceConfiguration$sourceVersion": "<p>The version for a Amazon Web Services source. </p>",
         "AwsLogSourceResource$sourceVersion": "<p>The version for a Amazon Web Services source. This must be a Regionally unique value.</p>"
       }
     },
     "AwsPrincipal": {
       "base": null,
       "refs": {
-        "AwsIdentity$principal": "<p>The AWS identity principal.</p>"
+        "AwsIdentity$principal": "<p>The Amazon Web Services identity principal.</p>"
       }
     },
     "BadRequestException": {
@@ -177,7 +177,7 @@
     "CreateDataLakeExceptionSubscriptionRequestExceptionTimeToLiveLong": {
       "base": null,
       "refs": {
-        "CreateDataLakeExceptionSubscriptionRequest$exceptionTimeToLive": "<p>The expiration period and time-to-live (TTL).</p>"
+        "CreateDataLakeExceptionSubscriptionRequest$exceptionTimeToLive": "<p>The expiration period and time-to-live (TTL). It is the duration of time until which the exception message remains.</p>"
       }
     },
     "CreateDataLakeExceptionSubscriptionResponse": {
@@ -238,21 +238,21 @@
       }
     },
     "CustomLogSourceConfiguration": {
-      "base": "<p>The configuration for the third-party custom source.</p>",
+      "base": "<p>The configuration used for the third-party custom source.</p>",
       "refs": {
-        "CreateCustomLogSourceRequest$configuration": "<p>The configuration for the third-party custom source.</p>"
+        "CreateCustomLogSourceRequest$configuration": "<p>The configuration used for the third-party custom source.</p>"
       }
     },
     "CustomLogSourceCrawlerConfiguration": {
-      "base": "<p>The configuration for the Glue Crawler for the third-party custom source.</p>",
+      "base": "<p>The configuration used for the Glue Crawler for a third-party custom source.</p>",
       "refs": {
-        "CustomLogSourceConfiguration$crawlerConfiguration": "<p>The configuration for the Glue Crawler for the third-party custom source.</p>"
+        "CustomLogSourceConfiguration$crawlerConfiguration": "<p>The configuration used for the Glue Crawler for a third-party custom source.</p>"
       }
     },
     "CustomLogSourceName": {
       "base": null,
       "refs": {
-        "CreateCustomLogSourceRequest$sourceName": "<p>Specify the name for a third-party custom source. This must be a Regionally unique value.</p>",
+        "CreateCustomLogSourceRequest$sourceName": "<p>Specify the name for a third-party custom source. This must be a Regionally unique value. The <code>sourceName</code> you enter here, is used in the <code>LogProviderRole</code> name which follows the convention <code>AmazonSecurityLake-Provider-{name of the custom source}-{region}</code>. You must use a <code>CustomLogSource</code> name that is shorter than or equal to 20 characters. This ensures that the <code>LogProviderRole</code> name is below the 64 character limit.</p>",
         "CustomLogSourceResource$sourceName": "<p>The name for a third-party custom source. This must be a Regionally unique value.</p>",
         "DeleteCustomLogSourceRequest$sourceName": "<p>The source name of custom log source that you want to delete.</p>"
       }
@@ -266,7 +266,7 @@
     "CustomLogSourceResource": {
       "base": "<p>Amazon Security Lake can collect logs and events from third-party custom sources.</p>",
       "refs": {
-        "CreateCustomLogSourceResponse$source": "<p>The created third-party custom source.</p>",
+        "CreateCustomLogSourceResponse$source": "<p>The third-party custom source that was created.</p>",
         "LogSourceResource$customLogSource": "<p>Amazon Security Lake supports custom source types. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/custom-sources.html\">Amazon Security Lake User Guide</a>.</p>"
       }
     },
@@ -289,7 +289,7 @@
       "refs": {
         "CreateDataLakeOrganizationConfigurationRequest$autoEnableNewAccount": "<p>Enable Security Lake with the specified configuration settings, to begin collecting security data for new accounts in your organization.</p>",
         "DeleteDataLakeOrganizationConfigurationRequest$autoEnableNewAccount": "<p>Turns off automatic enablement of Security Lake for member accounts that are added to an organization.</p>",
-        "GetDataLakeOrganizationConfigurationResponse$autoEnableNewAccount": "<p>The configuration for new accounts.</p>"
+        "GetDataLakeOrganizationConfigurationResponse$autoEnableNewAccount": "<p>The configuration used for new accounts in Security Lake.</p>"
       }
     },
     "DataLakeConfiguration": {
@@ -302,7 +302,7 @@
       "base": null,
       "refs": {
         "CreateDataLakeRequest$configurations": "<p>Specify the Region or Regions that will contribute data to the rollup region.</p>",
-        "UpdateDataLakeRequest$configurations": "<p>Specify the Region or Regions that will contribute data to the rollup region.</p>"
+        "UpdateDataLakeRequest$configurations": "<p>Specifies the Region or Regions that will contribute data to the rollup region.</p>"
       }
     },
     "DataLakeEncryptionConfiguration": {
@@ -321,7 +321,7 @@
     "DataLakeExceptionList": {
       "base": null,
       "refs": {
-        "ListDataLakeExceptionsResponse$exceptions": "<p>Lists the failures that cannot be retried in the current Region.</p>"
+        "ListDataLakeExceptionsResponse$exceptions": "<p>Lists the failures that cannot be retried.</p>"
       }
     },
     "DataLakeLifecycleConfiguration": {
@@ -383,7 +383,7 @@
       }
     },
     "DataLakeSource": {
-      "base": "<p>Amazon Security Lake collects logs and events from supported Amazon Web Services and custom sources. For the list of supported Amazon Web Services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>",
+      "base": "<p>Amazon Security Lake collects logs and events from supported Amazon Web Services services and custom sources. For the list of supported Amazon Web Services services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>",
       "refs": {
         "DataLakeSourceList$member": null
       }
@@ -409,7 +409,7 @@
     "DataLakeStatus": {
       "base": null,
       "refs": {
-        "DataLakeResource$createStatus": "<p>Retrieves the status of the configuration operation for an account in Amazon Security Lake.</p>",
+        "DataLakeResource$createStatus": "<p>Retrieves the status of the <code>CreateDatalake</code> API call for an account in Amazon Security Lake.</p>",
         "DataLakeUpdateStatus$status": "<p>The status of the last <code>UpdateDataLake</code> or <code>DeleteDataLake</code> API request that was requested.</p>"
       }
     },
@@ -521,7 +521,7 @@
     "ExternalId": {
       "base": null,
       "refs": {
-        "AwsIdentity$externalId": "<p>The external ID used to estalish trust relationship with the AWS identity.</p>"
+        "AwsIdentity$externalId": "<p>The external ID used to establish trust relationship with the Amazon Web Services identity.</p>"
       }
     },
     "GetDataLakeExceptionSubscriptionRequest": {
@@ -571,9 +571,9 @@
       }
     },
     "HttpsNotificationConfiguration": {
-      "base": "<p>The configurations for HTTPS subscriber notification.</p>",
+      "base": "<p>The configurations used for HTTPS subscriber notification.</p>",
       "refs": {
-        "NotificationConfiguration$httpsNotificationConfiguration": "<p>The configurations for HTTPS subscriber notification.</p>"
+        "NotificationConfiguration$httpsNotificationConfiguration": "<p>The configurations used for HTTPS subscriber notification.</p>"
       }
     },
     "HttpsNotificationConfigurationEndpointString": {
@@ -656,7 +656,7 @@
       }
     },
     "LogSourceResource": {
-      "base": "<p>The supported source types from which logs and events are collected in Amazon Security Lake. For a list of supported Amazon Web Services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>",
+      "base": "<p>The supported source types from which logs and events are collected in Amazon Security Lake. For a list of supported Amazon Web Services services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>",
       "refs": {
         "LogSourceResourceList$member": null
       }
@@ -664,24 +664,24 @@
     "LogSourceResourceList": {
       "base": null,
       "refs": {
-        "CreateSubscriberRequest$sources": "<p>The supported Amazon Web Services from which logs and events are collected. Security Lake supports log and event collection for natively supported Amazon Web Services.</p>",
+        "CreateSubscriberRequest$sources": "<p>The supported Amazon Web Services services from which logs and events are collected. Security Lake supports log and event collection for natively supported Amazon Web Services services.</p>",
         "ListLogSourcesRequest$sources": "<p>The list of sources for which log sources are displayed.</p>",
         "LogSource$sources": "<p>Specify the sources from which you want to collect logs.</p>",
-        "SubscriberResource$sources": "<p>Amazon Security Lake supports log and event collection for natively supported Amazon Web Services. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/source-management.html\">Amazon Security Lake User Guide</a>.</p>",
-        "UpdateSubscriberRequest$sources": "<p>The supported Amazon Web Services from which logs and events are collected. For the list of supported Amazon Web Services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>"
+        "SubscriberResource$sources": "<p>Amazon Security Lake supports log and event collection for natively supported Amazon Web Services services. For more information, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/source-management.html\">Amazon Security Lake User Guide</a>.</p>",
+        "UpdateSubscriberRequest$sources": "<p>The supported Amazon Web Services services from which logs and events are collected. For the list of supported Amazon Web Services services, see the <a href=\"https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html\">Amazon Security Lake User Guide</a>.</p>"
       }
     },
     "Long": {
       "base": null,
       "refs": {
-        "GetDataLakeExceptionSubscriptionResponse$exceptionTimeToLive": "<p>The expiration period and time-to-live (TTL).</p>"
+        "GetDataLakeExceptionSubscriptionResponse$exceptionTimeToLive": "<p>The expiration period and time-to-live (TTL). It is the duration of time until which the exception message remains.</p>"
       }
     },
     "MaxResults": {
       "base": null,
       "refs": {
         "GetDataLakeSourcesRequest$maxResults": "<p>The maximum limit of accounts for which the static snapshot of the current Region, including enabled accounts and log sources, is retrieved.</p>",
-        "ListDataLakeExceptionsRequest$maxResults": "<p>List the maximum number of failures in Security Lake.</p>",
+        "ListDataLakeExceptionsRequest$maxResults": "<p>Lists the maximum number of failures in Security Lake.</p>",
         "ListLogSourcesRequest$maxResults": "<p>The maximum number of accounts for which the log sources are displayed.</p>",
         "ListSubscribersRequest$maxResults": "<p>The maximum number of accounts for which the configuration is displayed.</p>"
       }
@@ -691,8 +691,8 @@
       "refs": {
         "GetDataLakeSourcesRequest$nextToken": "<p>Lists if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
         "GetDataLakeSourcesResponse$nextToken": "<p>Lists if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
-        "ListDataLakeExceptionsRequest$nextToken": "<p>List if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
-        "ListDataLakeExceptionsResponse$nextToken": "<p>List if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
+        "ListDataLakeExceptionsRequest$nextToken": "<p>Lists if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
+        "ListDataLakeExceptionsResponse$nextToken": "<p>Lists if there are more results available. The value of nextToken is a unique pagination token for each page. Repeat the call using the returned token to retrieve the next page. Keep all other arguments unchanged.</p> <p>Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
         "ListLogSourcesRequest$nextToken": "<p>If nextToken is returned, there are more results available. You can repeat the call using the returned token to retrieve the next page.</p>",
         "ListLogSourcesResponse$nextToken": "<p>If nextToken is returned, there are more results available. You can repeat the call using the returned token to retrieve the next page.</p>",
         "ListSubscribersRequest$nextToken": "<p>If nextToken is returned, there are more results available. You can repeat the call using the returned token to retrieve the next page.</p>",
@@ -816,7 +816,7 @@
       }
     },
     "SqsNotificationConfiguration": {
-      "base": "<p>The configurations for SQS subscriber notification.</p>",
+      "base": "<p>The configurations used for EventBridge subscriber notification.</p>",
       "refs": {
         "NotificationConfiguration$sqsNotificationConfiguration": "<p>The configurations for SQS subscriber notification.</p>"
       }
@@ -830,9 +830,9 @@
         "ConflictException$message": null,
         "ConflictException$resourceName": "<p>The resource name.</p>",
         "ConflictException$resourceType": "<p>The resource type.</p>",
-        "DataLakeEncryptionConfiguration$kmsKeyId": "<p>The id of KMS encryption key used by Amazon Security Lake to encrypt the Security Lake object.</p>",
+        "DataLakeEncryptionConfiguration$kmsKeyId": "<p>The identifier of KMS encryption key used by Amazon Security Lake to encrypt the Security Lake object.</p>",
         "DataLakeSource$account": "<p>The ID of the Security Lake account for which logs are collected.</p>",
-        "DataLakeSource$sourceName": "<p>The supported Amazon Web Services from which logs and events are collected. Amazon Security Lake supports log and event collection for natively supported Amazon Web Services.</p>",
+        "DataLakeSource$sourceName": "<p>The supported Amazon Web Services services from which logs and events are collected. Amazon Security Lake supports log and event collection for natively supported Amazon Web Services services.</p>",
         "DataLakeSourceStatus$resource": "<p>Defines path the stored logs are available which has information on your systems, applications, and services.</p>",
         "DataLakeUpdateException$code": "<p>The reason code for the exception of the last <code>UpdateDataLake</code> or <code>DeleteDataLake</code> API request.</p>",
         "DataLakeUpdateException$reason": "<p>The reason for the exception of the last <code>UpdateDataLake</code>or <code>DeleteDataLake</code> API request.</p>",
@@ -964,7 +964,7 @@
     "UpdateDataLakeExceptionSubscriptionRequestExceptionTimeToLiveLong": {
       "base": null,
       "refs": {
-        "UpdateDataLakeExceptionSubscriptionRequest$exceptionTimeToLive": "<p>The time-to-live (TTL) for the exception message to remain.</p>"
+        "UpdateDataLakeExceptionSubscriptionRequest$exceptionTimeToLive": "<p>The time-to-live (TTL) for the exception message to remain. It is the duration of time until which the exception message remains. </p>"
       }
     },
     "UpdateDataLakeExceptionSubscriptionResponse": {
