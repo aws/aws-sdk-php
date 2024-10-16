@@ -1490,7 +1490,8 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"BucketName"},
-        "CreationDate":{"shape":"CreationDate"}
+        "CreationDate":{"shape":"CreationDate"},
+        "BucketRegion":{"shape":"BucketRegion"}
       }
     },
     "BucketAccelerateStatus":{
@@ -1593,6 +1594,7 @@
       ]
     },
     "BucketName":{"type":"string"},
+    "BucketRegion":{"type":"string"},
     "BucketType":{
       "type":"string",
       "enum":["Directory"]
@@ -5443,7 +5445,8 @@
       "members":{
         "Buckets":{"shape":"Buckets"},
         "Owner":{"shape":"Owner"},
-        "ContinuationToken":{"shape":"NextToken"}
+        "ContinuationToken":{"shape":"NextToken"},
+        "Prefix":{"shape":"Prefix"}
       }
     },
     "ListBucketsRequest":{
@@ -5458,6 +5461,16 @@
           "shape":"Token",
           "location":"querystring",
           "locationName":"continuation-token"
+        },
+        "Prefix":{
+          "shape":"Prefix",
+          "location":"querystring",
+          "locationName":"prefix"
+        },
+        "BucketRegion":{
+          "shape":"BucketRegion",
+          "location":"querystring",
+          "locationName":"bucket-region"
         }
       }
     },

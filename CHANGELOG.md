@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Add support for the new optional bucket-region and prefix query parameters in the ListBuckets API. For ListBuckets requests that express pagination, Amazon S3 will now return both the bucket names and associated AWS regions in the response.
+
 ## 3.324.3 - 2024-10-15
 
 * `Aws\Redshift` - This release launches the CreateIntegration, DeleteIntegration, DescribeIntegrations and ModifyIntegration APIs to create and manage Amazon Redshift Zero-ETL Integrations.
