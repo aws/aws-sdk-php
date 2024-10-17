@@ -2377,6 +2377,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2539,6 +2541,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "StartDashboardSnapshotJobSchedule":{
+      "name":"StartDashboardSnapshotJobSchedule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards/{DashboardId}/schedules/{ScheduleId}"
+      },
+      "input":{"shape":"StartDashboardSnapshotJobScheduleRequest"},
+      "output":{"shape":"StartDashboardSnapshotJobScheduleResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -9359,7 +9379,7 @@
       "members":{
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
         "AnalysisArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -9556,7 +9576,7 @@
       "members":{
         "DashboardId":{"shape":"ShortRestrictiveResourceId"},
         "DashboardArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -10397,7 +10417,7 @@
       "members":{
         "TemplateId":{"shape":"ShortRestrictiveResourceId"},
         "TemplateArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -10505,7 +10525,7 @@
       "members":{
         "ThemeId":{"shape":"ShortRestrictiveResourceId"},
         "ThemeArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -16969,6 +16989,11 @@
           "shape":"ShortRestrictiveResourceId",
           "location":"uri",
           "locationName":"AnalysisId"
+        },
+        "RestoreToFolders":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"restore-to-folders"
         }
       }
     },
@@ -16981,7 +17006,8 @@
         },
         "Arn":{"shape":"Arn"},
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
-        "RequestId":{"shape":"String"}
+        "RequestId":{"shape":"String"},
+        "RestorationFailedFolderArns":{"shape":"FolderArnList"}
       }
     },
     "RestrictiveResourceId":{
@@ -18531,6 +18557,41 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "SnapshotJobId":{"shape":"ShortRestrictiveResourceId"},
+        "RequestId":{"shape":"NonEmptyString"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "StartDashboardSnapshotJobScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DashboardId",
+        "ScheduleId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DashboardId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"DashboardId"
+        },
+        "ScheduleId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ScheduleId"
+        }
+      }
+    },
+    "StartDashboardSnapshotJobScheduleResponse":{
+      "type":"structure",
+      "members":{
         "RequestId":{"shape":"NonEmptyString"},
         "Status":{
           "shape":"StatusCode",
@@ -20496,7 +20557,7 @@
       "members":{
         "AnalysisArn":{"shape":"Arn"},
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -20604,7 +20665,7 @@
       "members":{
         "DashboardArn":{"shape":"Arn"},
         "DashboardId":{"shape":"ShortRestrictiveResourceId"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -21277,7 +21338,7 @@
       "members":{
         "TemplateId":{"shape":"ShortRestrictiveResourceId"},
         "TemplateArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -21387,7 +21448,7 @@
       "members":{
         "ThemeId":{"shape":"ShortRestrictiveResourceId"},
         "ThemeArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",

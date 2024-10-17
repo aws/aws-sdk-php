@@ -291,6 +291,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startAssetBundleImportJobAsync(array $args = [])
  * @method \Aws\Result startDashboardSnapshotJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDashboardSnapshotJobAsync(array $args = [])
+ * @method \Aws\Result startDashboardSnapshotJobSchedule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startDashboardSnapshotJobScheduleAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - This is an Amazon ECS documentation only update to address tickets.
+* `Aws\RDS` - Updates Amazon RDS documentation for TAZ IAM support
+* `Aws\QuickSight` - Add StartDashboardSnapshotJobSchedule API. RestoreAnalysis now supports restoring analysis to folders.
+* `Aws\Pipes` - This release adds validation to require specifying a SecurityGroup and Subnets in the Vpc object under PipesSourceSelfManagedKafkaParameters. It also adds support for iso-e, iso-f, and other non-commercial partitions in ARN parameters.
+* `Aws\DataExchange` - This release adds Data Grant support, through which customers can programmatically create data grants to share with other AWS accounts and accept data grants from other AWS accounts.
+* `Aws\PinpointSMSVoiceV2` - Added the registrations status of REQUIRES_AUTHENTICATION
+* `Aws\WorkSpaces` - Updated the DomainName pattern for Active Directory
+* `Aws\BedrockAgent` - Removing support for topK property in PromptModelInferenceConfiguration object, Making PromptTemplateConfiguration property as required, Limiting the maximum PromptVariant to 1
+
 ## 3.324.4 - 2024-10-16
 
 * `Aws\S3` - Add support for the new optional bucket-region and prefix query parameters in the ListBuckets API. For ListBuckets requests that express pagination, Amazon S3 will now return both the bucket names and associated AWS regions in the response.

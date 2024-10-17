@@ -4525,7 +4525,6 @@
         "maxTokens":{"shape":"MaximumLength"},
         "stopSequences":{"shape":"StopSequences"},
         "temperature":{"shape":"Temperature"},
-        "topK":{"shape":"TopK"},
         "topP":{"shape":"TopP"}
       }
     },
@@ -4599,6 +4598,7 @@
       "type":"structure",
       "required":[
         "name",
+        "templateConfiguration",
         "templateType"
       ],
       "members":{
@@ -4614,7 +4614,7 @@
     "PromptVariantList":{
       "type":"list",
       "member":{"shape":"PromptVariant"},
-      "max":3,
+      "max":1,
       "min":0,
       "sensitive":true
     },

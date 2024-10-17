@@ -145,6 +145,7 @@
     "StartAssetBundleExportJob": "<p>Starts an Asset Bundle export job.</p> <p>An Asset Bundle export job exports specified Amazon QuickSight assets. You can also choose to export any asset dependencies in the same job. Export jobs run asynchronously and can be polled with a <code>DescribeAssetBundleExportJob</code> API call. When a job is successfully completed, a download URL that contains the exported assets is returned. The URL is valid for 5 minutes and can be refreshed with a <code>DescribeAssetBundleExportJob</code> API call. Each Amazon QuickSight account can run up to 5 export jobs concurrently.</p> <p>The API caller must have the necessary permissions in their IAM role to access each resource before the resources can be exported.</p>",
     "StartAssetBundleImportJob": "<p>Starts an Asset Bundle import job.</p> <p>An Asset Bundle import job imports specified Amazon QuickSight assets into an Amazon QuickSight account. You can also choose to import a naming prefix and specified configuration overrides. The assets that are contained in the bundle file that you provide are used to create or update a new or existing asset in your Amazon QuickSight account. Each Amazon QuickSight account can run up to 5 import jobs concurrently.</p> <p>The API caller must have the necessary <code>\"create\"</code>, <code>\"describe\"</code>, and <code>\"update\"</code> permissions in their IAM role to access each resource type that is contained in the bundle file before the resources can be imported.</p>",
     "StartDashboardSnapshotJob": "<p>Starts an asynchronous job that generates a snapshot of a dashboard's output. You can request one or several of the following format configurations in each API call.</p> <ul> <li> <p>1 Paginated PDF</p> </li> <li> <p>1 Excel workbook that includes up to 5 table or pivot table visuals</p> </li> <li> <p>5 CSVs from table or pivot table visuals</p> </li> </ul> <p>The status of a submitted job can be polled with the <code>DescribeDashboardSnapshotJob</code> API. When you call the <code>DescribeDashboardSnapshotJob</code> API, check the <code>JobStatus</code> field in the response. Once the job reaches a <code>COMPLETED</code> or <code>FAILED</code> status, use the <code>DescribeDashboardSnapshotJobResult</code> API to obtain the URLs for the generated files. If the job fails, the <code>DescribeDashboardSnapshotJobResult</code> API returns detailed information about the error that occurred.</p> <p> <b>StartDashboardSnapshotJob API throttling</b> </p> <p>Amazon QuickSight utilizes API throttling to create a more consistent user experience within a time span for customers when they call the <code>StartDashboardSnapshotJob</code>. By default, 12 jobs can run simlutaneously in one Amazon Web Services account and users can submit up 10 API requests per second before an account is throttled. If an overwhelming number of API requests are made by the same user in a short period of time, Amazon QuickSight throttles the API calls to maintin an optimal experience and reliability for all Amazon QuickSight users.</p> <p> <b>Common throttling scenarios</b> </p> <p>The following list provides information about the most commin throttling scenarios that can occur.</p> <ul> <li> <p> <b>A large number of <code>SnapshotExport</code> API jobs are running simultaneously on an Amazon Web Services account.</b> When a new <code>StartDashboardSnapshotJob</code> is created and there are already 12 jobs with the <code>RUNNING</code> status, the new job request fails and returns a <code>LimitExceededException</code> error. Wait for a current job to comlpete before you resubmit the new job.</p> </li> <li> <p> <b>A large number of API requests are submitted on an Amazon Web Services account.</b> When a user makes more than 10 API calls to the Amazon QuickSight API in one second, a <code>ThrottlingException</code> is returned.</p> </li> </ul> <p>If your use case requires a higher throttling limit, contact your account admin or <a href=\"http://aws.amazon.com/contact-us/\">Amazon Web ServicesSupport</a> to explore options to tailor a more optimal expereince for your account.</p> <p> <b>Best practices to handle throttling</b> </p> <p>If your use case projects high levels of API traffic, try to reduce the degree of frequency and parallelism of API calls as much as you can to avoid throttling. You can also perform a timing test to calculate an estimate for the total processing time of your projected load that stays within the throttling limits of the Amazon QuickSight APIs. For example, if your projected traffic is 100 snapshot jobs before 12:00 PM per day, start 12 jobs in parallel and measure the amount of time it takes to proccess all 12 jobs. Once you obtain the result, multiply the duration by 9, for example <code>(12 minutes * 9 = 108 minutes)</code>. Use the new result to determine the latest time at which the jobs need to be started to meet your target deadline.</p> <p>The time that it takes to process a job can be impacted by the following factors:</p> <ul> <li> <p>The dataset type (Direct Query or SPICE).</p> </li> <li> <p>The size of the dataset.</p> </li> <li> <p>The complexity of the calculated fields that are used in the dashboard.</p> </li> <li> <p>The number of visuals that are on a sheet.</p> </li> <li> <p>The types of visuals that are on the sheet.</p> </li> <li> <p>The number of formats and snapshots that are requested in the job configuration.</p> </li> <li> <p>The size of the generated snapshots.</p> </li> </ul>",
+    "StartDashboardSnapshotJobSchedule": "<p>Starts an asynchronous job that runs an existing dashboard schedule and sends the dashboard snapshot through email. </p> <p>Only one job can run simultaneously in a given schedule. Repeated requests are skipped with a <code>202</code> HTTP status code.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/sending-reports.html\">Scheduling and sending Amazon QuickSight reports by email</a> and <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/email-reports-from-dashboard.html\">Configuring email report settings for a Amazon QuickSight dashboard</a> in the <i>Amazon QuickSight User Guide</i>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon QuickSight resource. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values. You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource. Amazon QuickSight supports tagging on data set, data source, dashboard, template, topic, and user. </p> <p>Tagging for Amazon QuickSight works in a similar way to tagging for other Amazon Web Services services, except for the following:</p> <ul> <li> <p>Tags are used to track costs for users in Amazon QuickSight. You can't tag other resources that Amazon QuickSight costs are based on, such as storage capacoty (SPICE), session usage, alert consumption, or reporting units.</p> </li> <li> <p>Amazon QuickSight doesn't currently support the tag editor for Resource Groups.</p> </li> </ul>",
     "UntagResource": "<p>Removes a tag or tags from a resource.</p>",
     "UpdateAccountCustomization": "<p>Updates Amazon QuickSight customizations for the current Amazon Web Services Region. Currently, the only customization that you can use is a theme.</p> <p>You can use customizations for your Amazon Web Services account or, if you specify a namespace, for a Amazon QuickSight namespace instead. Customizations that apply to a namespace override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation. </p>",
@@ -1728,6 +1729,7 @@
         "StartAssetBundleExportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to export assets from.</p>",
         "StartAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to import assets into. </p>",
         "StartDashboardSnapshotJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>",
+        "StartDashboardSnapshotJobScheduleRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the dashboard snapshot job is executed in.</p>",
         "UpdateAccountCustomizationRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations for.</p>",
         "UpdateAccountCustomizationResponse$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to update Amazon QuickSight customizations for.</p>",
         "UpdateAccountSettingsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Amazon QuickSight settings that you want to list.</p>",
@@ -2093,6 +2095,7 @@
         "NumericRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
         "RedshiftIAMParameters$AutoCreateDatabaseUser": "<p>Automatically creates a database user. If your database doesn't have a <code>DatabaseUser</code>, set this parameter to <code>True</code>. If there is no <code>DatabaseUser</code>, Amazon QuickSight can't connect to your cluster. The <code>RoleArn</code> that you use for this operation must grant access to <code>redshift:CreateClusterUser</code> to successfully create the user.</p>",
         "RegisteredCustomerManagedKey$DefaultKey": "<p>Indicates whether a <code>RegisteredCustomerManagedKey</code> is set as the default key for encryption and decryption use.</p>",
+        "RestoreAnalysisRequest$RestoreToFolders": "<p>A boolean value that determines if the analysis will be restored to folders that it previously resided in. A <code>True</code> value restores analysis back to all folders that it previously resided in. A <code>False</code> value restores the analysis but does not restore the analysis back to all previously resided folders. Restoring a restricted analysis requires this parameter to be set to <code>True</code>.</p>",
         "SharedViewConfigurations$Enabled": "<p>The shared view settings of an embedded dashboard.</p>",
         "SignupResponse$IAMUser": "<p>A Boolean that is <code>TRUE</code> if the Amazon QuickSight uses IAM as an authentication method.</p>",
         "SslProperties$DisableSsl": "<p>A Boolean option to control whether SSL should be disabled.</p>",
@@ -5759,7 +5762,8 @@
         "CreateAnalysisRequest$FolderArns": "<p>When you create the analysis, Amazon QuickSight adds the analysis to these folders.</p>",
         "CreateDashboardRequest$FolderArns": "<p>When you create the dashboard, Amazon QuickSight adds the dashboard to these folders.</p>",
         "CreateDataSetRequest$FolderArns": "<p>When you create the dataset, Amazon QuickSight adds the dataset to these folders.</p>",
-        "CreateDataSourceRequest$FolderArns": "<p>When you create the data source, Amazon QuickSight adds the data source to these folders.</p>"
+        "CreateDataSourceRequest$FolderArns": "<p>When you create the data source, Amazon QuickSight adds the data source to these folders.</p>",
+        "RestoreAnalysisResponse$RestorationFailedFolderArns": "<p>A list of folder arns thatthe analysis failed to be restored to.</p>"
       }
     },
     "FolderColumnList": {
@@ -8250,6 +8254,7 @@
         "StartAssetBundleExportJobResponse$RequestId": "<p>The Amazon Web Services response ID for this operation.</p>",
         "StartAssetBundleImportJobResponse$RequestId": "<p>The Amazon Web Services response ID for this operation.</p>",
         "StartDashboardSnapshotJobResponse$RequestId": "<p> The Amazon Web Services request ID for this operation. </p>",
+        "StartDashboardSnapshotJobScheduleResponse$RequestId": "<p> The Amazon Web Services request ID for this operation. </p>",
         "StringParameter$Name": "<p>A display name for a string parameter.</p>",
         "TemplateError$Message": "<p>Description of the error type.</p>",
         "ThemeError$Message": "<p>The error message.</p>",
@@ -9641,18 +9646,12 @@
         "CreateFolderRequest$Permissions": "<p>A structure that describes the principals and the resource-level permissions of a folder.</p> <p>To specify no permissions, omit <code>Permissions</code>.</p>",
         "CreateTemplateRequest$Permissions": "<p>A list of resource permissions to be set on the template. </p>",
         "CreateThemeRequest$Permissions": "<p>A valid grouping of resource permissions to apply to the new theme. </p>",
-        "DescribeAnalysisPermissionsResponse$Permissions": "<p>A structure that describes the principals and the resource-level permissions on an analysis.</p>",
-        "DescribeDashboardPermissionsResponse$Permissions": "<p>A structure that contains the permissions for the dashboard.</p>",
         "DescribeDataSetPermissionsResponse$Permissions": "<p>A list of resource permissions on the dataset.</p>",
         "DescribeDataSourcePermissionsResponse$Permissions": "<p>A list of resource permissions on the data source.</p>",
         "DescribeFolderPermissionsResponse$Permissions": "<p>Information about the permissions on the folder.</p>",
         "DescribeFolderResolvedPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
-        "DescribeTemplatePermissionsResponse$Permissions": "<p>A list of resource permissions to be set on the template. </p>",
-        "DescribeThemePermissionsResponse$Permissions": "<p>A list of resource permissions set on the theme. </p>",
         "DescribeTopicPermissionsResponse$Permissions": "<p>A list of resource permissions that are configured to the topic.</p>",
         "LinkSharingConfiguration$Permissions": "<p>A structure that contains the permissions of a shareable link.</p>",
-        "UpdateAnalysisPermissionsResponse$Permissions": "<p>A structure that describes the principals and the resource-level permissions on an analysis.</p>",
-        "UpdateDashboardPermissionsResponse$Permissions": "<p>Information about the permissions on the dashboard.</p>",
         "UpdateDataSetPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant to the dataset.</p>",
         "UpdateDataSetPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the dataset.</p>",
         "UpdateDataSourcePermissionsRequest$GrantPermissions": "<p>A list of resource permissions that you want to grant on the data source.</p>",
@@ -9660,8 +9659,6 @@
         "UpdateFolderPermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from a resource. Namespace ARNs are not supported <code>Principal</code> values for folder permissions.</p>",
         "UpdateFolderPermissionsResponse$Permissions": "<p>Information about the permissions for the folder.</p>",
-        "UpdateTemplatePermissionsResponse$Permissions": "<p>A list of resource permissions to be set on the template.</p>",
-        "UpdateThemePermissionsResponse$Permissions": "<p>The resulting list of resource permissions for the theme.</p>",
         "UpdateTopicPermissionsResponse$Permissions": "<p>A list of resource permissions on the topic.</p>"
       }
     },
@@ -10741,6 +10738,8 @@
         "StartDashboardSnapshotJobRequest$DashboardId": "<p>The ID of the dashboard that you want to start a snapshot job for. </p>",
         "StartDashboardSnapshotJobRequest$SnapshotJobId": "<p>An ID for the dashboard snapshot job. This ID is unique to the dashboard while the job is running. This ID can be used to poll the status of a job with a <code>DescribeDashboardSnapshotJob</code> while the job runs. You can reuse this ID for another job 24 hours after the current job is completed.</p>",
         "StartDashboardSnapshotJobResponse$SnapshotJobId": "<p>The ID of the job. The job ID is set when you start a new job with a <code>StartDashboardSnapshotJob</code> API call.</p>",
+        "StartDashboardSnapshotJobScheduleRequest$DashboardId": "<p>The ID of the dashboard that you want to start a snapshot job schedule for. </p>",
+        "StartDashboardSnapshotJobScheduleRequest$ScheduleId": "<p>The ID of the schedule that you want to start a snapshot job schedule for. The schedule ID can be found in the Amazon QuickSight console in the <b>Schedules</b> pane of the dashboard that the schedule is configured for.</p>",
         "TableVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers..</p>",
         "TargetVisualList$member": null,
         "Template$TemplateId": "<p>The ID for the template. This is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
@@ -11169,6 +11168,16 @@
       "refs": {
       }
     },
+    "StartDashboardSnapshotJobScheduleRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartDashboardSnapshotJobScheduleResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StatePersistenceConfigurations": {
       "base": "<p>The state perssitence configuration of an embedded dashboard.</p>",
       "refs": {
@@ -11330,6 +11339,7 @@
         "StartAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "StartDashboardSnapshotJobResponse$Status": "<p>The HTTP status of the request</p>",
+        "StartDashboardSnapshotJobScheduleResponse$Status": "<p>The HTTP status of the request</p>",
         "SuccessfulKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>SuccessfulKeyRegistrationEntry</code> entry.</p>",
         "TagResourceResponse$Status": "<p>The HTTP status of the request.</p>",
         "UntagResourceResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -13551,14 +13561,22 @@
     "UpdateResourcePermissionList": {
       "base": null,
       "refs": {
+        "DescribeAnalysisPermissionsResponse$Permissions": "<p>A structure that describes the principals and the resource-level permissions on an analysis.</p>",
+        "DescribeDashboardPermissionsResponse$Permissions": "<p>A structure that contains the permissions for the dashboard.</p>",
+        "DescribeTemplatePermissionsResponse$Permissions": "<p>A list of resource permissions to be set on the template. </p>",
+        "DescribeThemePermissionsResponse$Permissions": "<p>A list of resource permissions set on the theme. </p>",
         "UpdateAnalysisPermissionsRequest$GrantPermissions": "<p>A structure that describes the permissions to add and the principal to add them to.</p>",
         "UpdateAnalysisPermissionsRequest$RevokePermissions": "<p>A structure that describes the permissions to remove and the principal to remove them from.</p>",
+        "UpdateAnalysisPermissionsResponse$Permissions": "<p>A structure that describes the principals and the resource-level permissions on an analysis.</p>",
         "UpdateDashboardPermissionsRequest$GrantPermissions": "<p>The permissions that you want to grant on this resource.</p>",
         "UpdateDashboardPermissionsRequest$RevokePermissions": "<p>The permissions that you want to revoke from this resource.</p>",
+        "UpdateDashboardPermissionsResponse$Permissions": "<p>Information about the permissions on the dashboard.</p>",
         "UpdateTemplatePermissionsRequest$GrantPermissions": "<p>A list of resource permissions to be granted on the template. </p>",
         "UpdateTemplatePermissionsRequest$RevokePermissions": "<p>A list of resource permissions to be revoked from the template. </p>",
+        "UpdateTemplatePermissionsResponse$Permissions": "<p>A list of resource permissions to be set on the template.</p>",
         "UpdateThemePermissionsRequest$GrantPermissions": "<p>A list of resource permissions to be granted for the theme.</p>",
         "UpdateThemePermissionsRequest$RevokePermissions": "<p>A list of resource permissions to be revoked from the theme.</p>",
+        "UpdateThemePermissionsResponse$Permissions": "<p>The resulting list of resource permissions for the theme.</p>",
         "UpdateTopicPermissionsRequest$GrantPermissions": "<p>The resource permissions that you want to grant to the topic.</p>",
         "UpdateTopicPermissionsRequest$RevokePermissions": "<p>The resource permissions that you want to revoke from the topic.</p>"
       }

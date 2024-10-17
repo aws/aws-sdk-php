@@ -11,7 +11,7 @@
     "CreateProtectConfiguration": "<p>Create a new protect configuration. By default all country rule sets for each capability are set to <code>ALLOW</code>. Update the country rule sets using <code>UpdateProtectConfigurationCountryRuleSet</code>. A protect configurations name is stored as a Tag with the key set to <code>Name</code> and value as the name of the protect configuration.</p>",
     "CreateRegistration": "<p>Creates a new registration based on the <b>RegistrationType</b> field. </p>",
     "CreateRegistrationAssociation": "<p>Associate the registration with an origination identity such as a phone number or sender ID.</p>",
-    "CreateRegistrationAttachment": "<p>Create a new registration attachment to use for uploading a file or a URL to a file. The maximum file size is 1MiB and valid file extensions are PDF, JPEG and PNG. For example, many sender ID registrations require a signed “letter of authorization” (LOA) to be submitted.</p>",
+    "CreateRegistrationAttachment": "<p>Create a new registration attachment to use for uploading a file or a URL to a file. The maximum file size is 500KB and valid file extensions are PDF, JPEG and PNG. For example, many sender ID registrations require a signed “letter of authorization” (LOA) to be submitted.</p> <p>Use either <code>AttachmentUrl</code> or <code>AttachmentBody</code> to upload your attachment. If both are specified then an exception is returned.</p>",
     "CreateRegistrationVersion": "<p>Create a new version of the registration and increase the <b>VersionNumber</b>. The previous version of the registration becomes read-only.</p>",
     "CreateVerifiedDestinationNumber": "<p>You can only send messages to verified destination numbers when your account is in the sandbox. You can add up to 10 verified destination numbers.</p>",
     "DeleteAccountDefaultProtectConfiguration": "<p>Removes the current account default protect configuration.</p>",
@@ -37,7 +37,7 @@
     "DescribeConfigurationSets": "<p>Describes the specified configuration sets or all in your account.</p> <p>If you specify configuration set names, the output includes information for only the specified configuration sets. If you specify filters, the output includes information for only those configuration sets that meet the filter criteria. If you don't specify configuration set names or filters, the output includes information for all configuration sets.</p> <p>If you specify a configuration set name that isn't valid, an error is returned.</p>",
     "DescribeKeywords": "<p>Describes the specified keywords or all keywords on your origination phone number or pool.</p> <p>A keyword is a word that you can search for on a particular phone number or pool. It is also a specific word or phrase that an end user can send to your number to elicit a response, such as an informational message or a special offer. When your number receives a message that begins with a keyword, AWS End User Messaging SMS and Voice responds with a customizable message.</p> <p>If you specify a keyword that isn't valid, an error is returned.</p>",
     "DescribeOptOutLists": "<p>Describes the specified opt-out list or all opt-out lists in your account.</p> <p>If you specify opt-out list names, the output includes information for only the specified opt-out lists. Opt-out lists include only those that meet the filter criteria. If you don't specify opt-out list names or filters, the output includes information for all opt-out lists.</p> <p>If you specify an opt-out list name that isn't valid, an error is returned.</p>",
-    "DescribeOptedOutNumbers": "<p>Describes the specified opted out destination numbers or all opted out destination numbers in an opt-out list.</p> <p>If you specify opted out numbers, the output includes information for only the specified opted out numbers. If you specify filters, the output includes information for only those opted out numbers that meet the filter criteria. If you don't specify opted out numbers or filters, the output includes information for all opted out destination numbers in your opt-out list.</p> <p>If you specify an opted out number that isn't valid, an error is returned.</p>",
+    "DescribeOptedOutNumbers": "<p>Describes the specified opted out destination numbers or all opted out destination numbers in an opt-out list.</p> <p>If you specify opted out numbers, the output includes information for only the specified opted out numbers. If you specify filters, the output includes information for only those opted out numbers that meet the filter criteria. If you don't specify opted out numbers or filters, the output includes information for all opted out destination numbers in your opt-out list.</p> <p>If you specify an opted out number that isn't valid, an exception is returned.</p>",
     "DescribePhoneNumbers": "<p>Describes the specified origination phone number, or all the phone numbers in your account.</p> <p>If you specify phone number IDs, the output includes information for only the specified phone numbers. If you specify filters, the output includes information for only those phone numbers that meet the filter criteria. If you don't specify phone number IDs or filters, the output includes information for all phone numbers.</p> <p>If you specify a phone number ID that isn't valid, an error is returned.</p>",
     "DescribePools": "<p>Retrieves the specified pools or all pools associated with your Amazon Web Services account.</p> <p>If you specify pool IDs, the output includes information for only the specified pools. If you specify filters, the output includes information for only those pools that meet the filter criteria. If you don't specify pool IDs or filters, the output includes information for all pools.</p> <p>If you specify a pool ID that isn't valid, an error is returned.</p> <p>A pool is a collection of phone numbers and SenderIds. A pool can include one or more phone numbers and SenderIds that are associated with your Amazon Web Services account.</p>",
     "DescribeProtectConfigurations": "<p>Retrieves the protect configurations that match any of filters. If a filter isn’t provided then all protect configurations are returned.</p>",
@@ -174,7 +174,7 @@
     "AttachmentBody": {
       "base": null,
       "refs": {
-        "CreateRegistrationAttachmentRequest$AttachmentBody": "<p>The registration file to upload. The maximum file size is 1MiB and valid file extensions are PDF, JPEG and PNG.</p>"
+        "CreateRegistrationAttachmentRequest$AttachmentBody": "<p>The registration file to upload. The maximum file size is 500KB and valid file extensions are PDF, JPEG and PNG.</p>"
       }
     },
     "AttachmentStatus": {
@@ -195,7 +195,7 @@
     "AttachmentUrl": {
       "base": null,
       "refs": {
-        "CreateRegistrationAttachmentRequest$AttachmentUrl": "<p>A URL to the required registration file. For example, you can provide the S3 object URL.</p>"
+        "CreateRegistrationAttachmentRequest$AttachmentUrl": "<p>Registration files have to be stored in an Amazon S3 bucket. The URI to use when sending is in the format <code>s3://BucketName/FileName</code>.</p>"
       }
     },
     "Boolean": {
@@ -1443,7 +1443,7 @@
     "OptedOutNumberList": {
       "base": null,
       "refs": {
-        "DescribeOptedOutNumbersRequest$OptedOutNumbers": "<p>An array of phone numbers to search for in the OptOutList.</p>"
+        "DescribeOptedOutNumbersRequest$OptedOutNumbers": "<p>An array of phone numbers to search for in the OptOutList.</p> <p>If you specify an opted out number that isn't valid, an exception is returned.</p>"
       }
     },
     "OriginationIdentityMetadata": {
