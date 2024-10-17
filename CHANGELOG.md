@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.5 - 2024-10-17
 
 * `Aws\ECS` - This is an Amazon ECS documentation only update to address tickets.
 * `Aws\RDS` - Updates Amazon RDS documentation for TAZ IAM support
