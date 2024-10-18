@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.6 - 2024-10-18
 
 * `Aws\BedrockRuntime` - Added converse support for custom imported models
 * `Aws\EC2` - RequestSpotInstances and RequestSpotFleet feature release.
