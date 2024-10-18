@@ -1485,7 +1485,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z]{2}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z]{2}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))"
     },
     "EvaluationModelIdentifiers":{
       "type":"list",
@@ -1795,7 +1795,8 @@
         "modelDataSource":{"shape":"ModelDataSource"},
         "creationTime":{"shape":"Timestamp"},
         "modelArchitecture":{"shape":"String"},
-        "modelKmsKeyArn":{"shape":"KmsKeyArn"}
+        "modelKmsKeyArn":{"shape":"KmsKeyArn"},
+        "instructSupported":{"shape":"InstructSupported"}
       }
     },
     "GetInferenceProfileRequest":{
@@ -2674,7 +2675,9 @@
       "members":{
         "modelArn":{"shape":"ImportedModelArn"},
         "modelName":{"shape":"ImportedModelName"},
-        "creationTime":{"shape":"Timestamp"}
+        "creationTime":{"shape":"Timestamp"},
+        "instructSupported":{"shape":"InstructSupported"},
+        "modelArchitecture":{"shape":"ModelArchitecture"}
       }
     },
     "ImportedModelSummaryList":{
@@ -2767,6 +2770,10 @@
     "InferenceTypeList":{
       "type":"list",
       "member":{"shape":"InferenceType"}
+    },
+    "InstructSupported":{
+      "type":"boolean",
+      "box":true
     },
     "InternalServerException":{
       "type":"structure",
@@ -3361,6 +3368,7 @@
       "type":"float",
       "box":true
     },
+    "ModelArchitecture":{"type":"string"},
     "ModelArn":{
       "type":"string",
       "max":1011,

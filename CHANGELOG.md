@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - Added converse support for custom imported models
+* `Aws\EC2` - RequestSpotInstances and RequestSpotFleet feature release.
+* `Aws\Bedrock` - Adding converse support to CMI API's
+* `Aws\Athena` - Removing FEDERATED from Create/List/Delete/GetDataCatalog API
+* `Aws\DataZone` - Adding the following project member designations: PROJECT_CATALOG_VIEWER, PROJECT_CATALOG_CONSUMER and PROJECT_CATALOG_STEWARD in the CreateProjectMembership API and PROJECT_CATALOG_STEWARD designation in the AddPolicyGrant API.
+
 ## 3.324.5 - 2024-10-17
 
 * `Aws\ECS` - This is an Amazon ECS documentation only update to address tickets.
