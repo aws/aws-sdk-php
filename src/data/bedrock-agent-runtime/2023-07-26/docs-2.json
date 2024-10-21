@@ -52,7 +52,8 @@
       "base": null,
       "refs": {
         "ExternalSourcesGenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and their corresponding values not included in the textInferenceConfig structure for an external source. Takes in custom model parameters specific to the language model being used. </p>",
-        "GenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>"
+        "GenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>",
+        "OrchestrationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>"
       }
     },
     "AdditionalModelRequestFieldsKey": {
@@ -733,7 +734,8 @@
       "base": "<p> The configuration for inference settings when generating responses using RetrieveAndGenerate. </p>",
       "refs": {
         "ExternalSourcesGenerationConfiguration$inferenceConfig": "<p> Configuration settings for inference when using RetrieveAndGenerate to generate responses while using an external source.</p>",
-        "GenerationConfiguration$inferenceConfig": "<p> Configuration settings for inference when using RetrieveAndGenerate to generate responses while using a knowledge base as a source. </p>"
+        "GenerationConfiguration$inferenceConfig": "<p> Configuration settings for inference when using RetrieveAndGenerate to generate responses while using a knowledge base as a source. </p>",
+        "OrchestrationConfiguration$inferenceConfig": "<p> Configuration settings for inference when using RetrieveAndGenerate to generate responses while using a knowledge base as a source. </p>"
       }
     },
     "InferenceConfiguration": {
@@ -980,9 +982,9 @@
     "Metadata": {
       "base": "<p>Provides details of the foundation model.</p>",
       "refs": {
-        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output.</p>",
-        "PostProcessingModelInvocationOutput$metadata": null,
-        "PreProcessingModelInvocationOutput$metadata": null
+        "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output from the orchestration step.</p>",
+        "PostProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the post-processing step. </p>",
+        "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>"
       }
     },
     "MimeType": {
@@ -1165,7 +1167,8 @@
       "base": "<p>Contains the template for the prompt that's sent to the model for response generation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt\">Knowledge base prompt templates</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>filter</code> field</p> </li> </ul>",
       "refs": {
         "ExternalSourcesGenerationConfiguration$promptTemplate": "<p>Contain the textPromptTemplate string for the external source wrapper object.</p>",
-        "GenerationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation.</p>"
+        "GenerationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation.</p>",
+        "OrchestrationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation.</p>"
       }
     },
     "PromptText": {
@@ -1227,8 +1230,8 @@
       "base": "<p>Contains the raw output from the foundation model.</p>",
       "refs": {
         "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>",
-        "PostProcessingModelInvocationOutput$rawResponse": null,
-        "PreProcessingModelInvocationOutput$rawResponse": null
+        "PostProcessingModelInvocationOutput$rawResponse": "<p> Details of the raw response from the foundation model output. </p>",
+        "PreProcessingModelInvocationOutput$rawResponse": "<p> Details of the raw response from the foundation model output. </p>"
       }
     },
     "RepromptResponse": {

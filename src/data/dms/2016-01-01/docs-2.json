@@ -235,6 +235,7 @@
         "ReplicationInstance$MultiAZ": "<p> Specifies whether the replication instance is a Multi-AZ deployment. You can't set the <code>AvailabilityZone</code> parameter if the Multi-AZ parameter is set to <code>true</code>. </p>",
         "ReplicationInstance$AutoMinorVersionUpgrade": "<p>Boolean value indicating if minor version upgrades will be automatically applied to the instance.</p>",
         "ReplicationInstance$PubliclyAccessible": "<p> Specifies the accessibility options for the replication instance. A value of <code>true</code> represents an instance with a public IP address. A value of <code>false</code> represents an instance with a private IP address. The default value is <code>true</code>. </p>",
+        "ReplicationTaskAssessmentRun$IsLatestTaskAssessmentRun": "<p>Indicates that the following PreflightAssessmentRun is the latest for the ReplicationTask. The status is either true or false.</p>",
         "StartMetadataModelImportMessage$Refresh": "<p>If <code>true</code>, DMS loads metadata for the specified objects from the source database.</p>",
         "SupportedEndpointType$SupportsCDC": "<p>Indicates if change data capture (CDC) is supported.</p>"
       }
@@ -588,6 +589,12 @@
         "ModifyDataMigrationResponse$DataMigration": "<p>Information about the modified data migration.</p>",
         "StartDataMigrationResponse$DataMigration": "<p>The data migration that DMS started.</p>",
         "StopDataMigrationResponse$DataMigration": "<p>The data migration that DMS stopped.</p>"
+      }
+    },
+    "DataMigrationCidrBlock": {
+      "base": null,
+      "refs": {
+        "DataMigration$DataMigrationCidrBlocks": "<p>The CIDR blocks of the endpoints for the data migration.</p>"
       }
     },
     "DataMigrationSettings": {
@@ -1702,6 +1709,11 @@
         "ReplicationStats$TablesErrored": "<p>The number of errors that have occured for this replication.</p>",
         "ReplicationTaskAssessmentRunProgress$IndividualAssessmentCount": "<p>The number of individual assessments that are specified to run.</p>",
         "ReplicationTaskAssessmentRunProgress$IndividualAssessmentCompletedCount": "<p>The number of individual assessments that have completed, successfully or not.</p>",
+        "ReplicationTaskAssessmentRunResultStatistic$Passed": "<p>The number of individual assessments that successfully passed all checks in the assessment run.</p>",
+        "ReplicationTaskAssessmentRunResultStatistic$Failed": "<p>The number of individual assessments that failed to meet the criteria defined in the assessment run.</p>",
+        "ReplicationTaskAssessmentRunResultStatistic$Error": "<p>The number of individual assessments that encountered a critical error and could not complete properly.</p>",
+        "ReplicationTaskAssessmentRunResultStatistic$Warning": "<p>Indicates that the recent completed AssessmentRun triggered a warning.</p>",
+        "ReplicationTaskAssessmentRunResultStatistic$Cancelled": "<p> The number of individual assessments that were cancelled during the assessment run. </p>",
         "ReplicationTaskStats$FullLoadProgressPercent": "<p>The percent complete for the full load migration task.</p>",
         "ReplicationTaskStats$TablesLoaded": "<p>The number of tables loaded for this task.</p>",
         "ReplicationTaskStats$TablesLoading": "<p>The number of tables currently loading for this task.</p>",
@@ -2658,6 +2670,12 @@
         "ReplicationTaskAssessmentRun$AssessmentProgress": "<p>Indication of the completion progress for the individual assessments specified to run.</p>"
       }
     },
+    "ReplicationTaskAssessmentRunResultStatistic": {
+      "base": "<p>The object containing the result statistics for a completed assessment run.</p>",
+      "refs": {
+        "ReplicationTaskAssessmentRun$ResultStatistic": "<p> Result statistics for a completed assessment run, showing aggregated statistics of IndividualAssessments for how many assessments were passed, failed, or encountered issues such as errors or warnings. </p>"
+      }
+    },
     "ReplicationTaskIndividualAssessment": {
       "base": "<p>Provides information that describes an individual assessment from a premigration assessment run.</p>",
       "refs": {
@@ -3152,6 +3170,7 @@
         "DataMigration$DataMigrationStatus": "<p>The current status of the data migration. </p>",
         "DataMigration$LastFailureMessage": "<p>Information about the data migration's most recent error or failure.</p>",
         "DataMigration$StopReason": "<p>The reason the data migration last stopped.</p>",
+        "DataMigrationCidrBlock$member": null,
         "DataProvider$DataProviderName": "<p>The name of the data provider.</p>",
         "DataProvider$DataProviderArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the data provider.</p>",
         "DataProvider$Description": "<p>A description of the data provider. Descriptions can have up to 31 characters. A description can contain only ASCII letters, digits, and hyphens ('-'). Also, it can't end with a hyphen or contain two consecutive hyphens, and can only begin with a letter.</p>",
@@ -3924,7 +3943,8 @@
         "CreateReplicationSubnetGroupMessage$Tags": "<p>One or more tags to be assigned to the subnet group.</p>",
         "CreateReplicationTaskMessage$Tags": "<p>One or more tags to be assigned to the replication task.</p>",
         "ImportCertificateMessage$Tags": "<p>The tags associated with the certificate.</p>",
-        "ListTagsForResourceResponse$TagList": "<p>A list of tags for the resource.</p>"
+        "ListTagsForResourceResponse$TagList": "<p>A list of tags for the resource.</p>",
+        "StartReplicationTaskAssessmentRunMessage$Tags": "<p>One or more tags to be assigned to the premigration assessment run that you want to start.</p>"
       }
     },
     "TargetDbType": {

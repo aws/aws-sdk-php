@@ -2178,9 +2178,14 @@
         "DataMigrationStatistics":{"shape":"DataMigrationStatistics"},
         "DataMigrationStatus":{"shape":"String"},
         "PublicIpAddresses":{"shape":"PublicIpAddressList"},
+        "DataMigrationCidrBlocks":{"shape":"DataMigrationCidrBlock"},
         "LastFailureMessage":{"shape":"String"},
         "StopReason":{"shape":"String"}
       }
+    },
+    "DataMigrationCidrBlock":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "DataMigrationSettings":{
       "type":"structure",
@@ -4897,7 +4902,9 @@
         "ResultLocationFolder":{"shape":"String"},
         "ResultEncryptionMode":{"shape":"String"},
         "ResultKmsKeyArn":{"shape":"String"},
-        "AssessmentRunName":{"shape":"String"}
+        "AssessmentRunName":{"shape":"String"},
+        "IsLatestTaskAssessmentRun":{"shape":"Boolean"},
+        "ResultStatistic":{"shape":"ReplicationTaskAssessmentRunResultStatistic"}
       }
     },
     "ReplicationTaskAssessmentRunList":{
@@ -4909,6 +4916,16 @@
       "members":{
         "IndividualAssessmentCount":{"shape":"Integer"},
         "IndividualAssessmentCompletedCount":{"shape":"Integer"}
+      }
+    },
+    "ReplicationTaskAssessmentRunResultStatistic":{
+      "type":"structure",
+      "members":{
+        "Passed":{"shape":"Integer"},
+        "Failed":{"shape":"Integer"},
+        "Error":{"shape":"Integer"},
+        "Warning":{"shape":"Integer"},
+        "Cancelled":{"shape":"Integer"}
       }
     },
     "ReplicationTaskIndividualAssessment":{
@@ -5359,7 +5376,8 @@
         "ResultKmsKeyArn":{"shape":"String"},
         "AssessmentRunName":{"shape":"String"},
         "IncludeOnly":{"shape":"IncludeTestList"},
-        "Exclude":{"shape":"ExcludeTestList"}
+        "Exclude":{"shape":"ExcludeTestList"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartReplicationTaskAssessmentRunResponse":{
