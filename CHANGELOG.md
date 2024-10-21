@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.7 - 2024-10-21
 
 * `Aws\ApplicationInsights` - This feature enables customers to specify SNS Topic ARN. CloudWatch Application Insights (CWAI) will utilize this ARN to send problem notifications.
 * `Aws\AutoScaling` - Adds support for removing the PlacementGroup setting on an Auto Scaling Group through the UpdateAutoScalingGroup API.
