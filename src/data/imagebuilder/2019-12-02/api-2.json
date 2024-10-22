@@ -11,7 +11,8 @@
     "serviceId":"imagebuilder",
     "signatureVersion":"v4",
     "signingName":"imagebuilder",
-    "uid":"imagebuilder-2019-12-02"
+    "uid":"imagebuilder-2019-12-02",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelImageCreation":{
@@ -1946,6 +1947,7 @@
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"},
+        "placement":{"shape":"Placement"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -3144,7 +3146,8 @@
         "dateUpdated":{"shape":"DateTime"},
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "placement":{"shape":"Placement"}
       }
     },
     "InfrastructureConfigurationArn":{
@@ -3162,7 +3165,8 @@
         "resourceTags":{"shape":"ResourceTagMap"},
         "tags":{"shape":"TagMap"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"InstanceProfileNameType"}
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
+        "placement":{"shape":"Placement"}
       }
     },
     "InfrastructureConfigurationSummaryList":{
@@ -4170,11 +4174,21 @@
         "ENABLED"
       ]
     },
+    "Placement":{
+      "type":"structure",
+      "members":{
+        "availabilityZone":{"shape":"NonEmptyString"},
+        "tenancy":{"shape":"TenancyType"},
+        "hostId":{"shape":"NonEmptyString"},
+        "hostResourceGroupArn":{"shape":"NonEmptyString"}
+      }
+    },
     "Platform":{
       "type":"string",
       "enum":[
         "Windows",
-        "Linux"
+        "Linux",
+        "macOS"
       ]
     },
     "PutComponentPolicyRequest":{
@@ -4571,6 +4585,14 @@
       "max":10000,
       "min":1
     },
+    "TenancyType":{
+      "type":"string",
+      "enum":[
+        "default",
+        "dedicated",
+        "host"
+      ]
+    },
     "Timezone":{
       "type":"string",
       "max":100,
@@ -4679,12 +4701,13 @@
         "keyPair":{"shape":"NonEmptyString"},
         "terminateInstanceOnFailure":{"shape":"NullableBoolean"},
         "snsTopicArn":{"shape":"SnsTopicArn"},
+        "resourceTags":{"shape":"ResourceTagMap"},
+        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
+        "placement":{"shape":"Placement"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "resourceTags":{"shape":"ResourceTagMap"},
-        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"}
+        }
       }
     },
     "UpdateInfrastructureConfigurationResponse":{

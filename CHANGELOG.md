@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\imagebuilder` - Add macOS platform and instance placement options
+* `Aws\BedrockRuntime` - Updating invoke regex to support imported models for converse API
+* `Aws\Repostspace` - Adds the BatchAddRole and BatchRemoveRole APIs.
+* `Aws\TimestreamQuery` - This release adds support for Query Insights, a feature that provides details of query execution, enabling users to identify areas for improvement to optimize their queries, resulting in improved query performance and lower query costs.
+* `Aws\MainframeModernization` - Add AuthSecretsManagerArn optional parameter to batch job APIs, expand batch parameter limits, and introduce clientToken constraints.
+* `Aws\RDS` - Global clusters now expose the Endpoint attribute as one of its fields. It is a Read/Write endpoint for the global cluster which resolves to the Global Cluster writer instance.
+
 ## 3.324.7 - 2024-10-21
 
 * `Aws\ApplicationInsights` - This feature enables customers to specify SNS Topic ARN. CloudWatch Application Insights (CWAI) will utilize this ARN to send problem notifications.

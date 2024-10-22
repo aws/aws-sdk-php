@@ -40,7 +40,7 @@
     "GetWorkflowStepExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow step.</p>",
     "ImportComponent": "<p>Imports a component and transforms its data into a component document.</p>",
     "ImportVmImage": "<p>When you export your virtual machine (VM) from its virtualization environment, that process creates a set of one or more disk container files that act as snapshots of your VM’s environment, settings, and data. The Amazon EC2 API <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ImportImage.html\">ImportImage</a> action uses those files to import your VM and create an AMI. To import using the CLI command, see <a href=\"https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html\">import-image</a> </p> <p>You can reference the task ID from the VM import to pull in the AMI that the import created as the base image for your Image Builder recipe.</p>",
-    "ListComponentBuildVersions": "<p>Returns the list of component build versions for the specified semantic version.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
+    "ListComponentBuildVersions": "<p>Returns the list of component build versions for the specified component version Amazon Resource Name (ARN).</p>",
     "ListComponents": "<p>Returns the list of components that can be filtered by name, or by using the listed <code>filters</code> to streamline results. Newly created components can take up to two minutes to appear in the ListComponents API Results.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
     "ListContainerRecipes": "<p>Returns a list of container recipes.</p>",
     "ListDistributionConfigurations": "<p>Returns a list of distribution configurations.</p>",
@@ -2139,7 +2139,7 @@
         "CreateContainerRecipeRequest$imageOsVersionOverride": "<p>Specifies the operating system version for the base image.</p>",
         "CreateContainerRecipeRequest$parentImage": "<p>The base image for the container recipe.</p>",
         "CreateContainerRecipeRequest$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
-        "CreateContainerRecipeRequest$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the container image.</p>",
+        "CreateContainerRecipeRequest$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the Dockerfile template.</p>",
         "CreateContainerRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateDistributionConfigurationRequest$description": "<p>The description of the distribution configuration.</p>",
         "CreateDistributionConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
@@ -2264,6 +2264,9 @@
         "PackageVulnerabilityDetails$source": "<p>The source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$sourceUrl": "<p>A link to the source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$vendorSeverity": "<p>The severity that the vendor assigned to this vulnerability type.</p>",
+        "Placement$availabilityZone": "<p>The Availability Zone where your build and test instances will launch.</p>",
+        "Placement$hostId": "<p>The ID of the Dedicated Host on which build and test instances run. This only applies if <code>tenancy</code> is <code>host</code>. If you specify the host ID, you must not specify the resource group ARN. If you specify both, Image Builder returns an error.</p>",
+        "Placement$hostResourceGroupArn": "<p>The Amazon Resource Name (ARN) of the host resource group in which to launch build and test instances. This only applies if <code>tenancy</code> is <code>host</code>. If you specify the resource group ARN, you must not specify the host ID. If you specify both, Image Builder returns an error.</p>",
         "PutComponentPolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "PutContainerRecipePolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "PutImagePolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
@@ -2497,6 +2500,15 @@
         "UpdateImagePipelineRequest$status": "<p>The status of the image pipeline.</p>"
       }
     },
+    "Placement": {
+      "base": "<p>By default, EC2 instances run on shared tenancy hardware. This means that multiple Amazon Web Services accounts might share the same physical hardware. When you use dedicated hardware, the physical server that hosts your instances is dedicated to your Amazon Web Services account. Instance placement settings contain the details for the physical hardware where instances that Image Builder launches during image creation will run.</p>",
+      "refs": {
+        "CreateInfrastructureConfigurationRequest$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "InfrastructureConfiguration$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "InfrastructureConfigurationSummary$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "UpdateInfrastructureConfigurationRequest$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>"
+      }
+    },
     "Platform": {
       "base": null,
       "refs": {
@@ -2671,7 +2683,7 @@
     "ResourceTagMap": {
       "base": null,
       "refs": {
-        "CreateInfrastructureConfigurationRequest$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>",
+        "CreateInfrastructureConfigurationRequest$resourceTags": "<p>The metadata tags to assign to the Amazon EC2 instance that Image Builder launches during the build process. Tags are formatted as key value pairs.</p>",
         "InfrastructureConfiguration$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>",
         "InfrastructureConfigurationSummary$resourceTags": "<p>The tags attached to the image created by Image Builder.</p>",
         "UpdateInfrastructureConfigurationRequest$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>"
@@ -2826,7 +2838,7 @@
       "refs": {
         "Container$imageUris": "<p>A list of URIs for containers created in the context Region.</p>",
         "ContainerDistributionConfiguration$containerTags": "<p>Tags that are attached to the container distribution configuration.</p>",
-        "EcrConfiguration$containerTags": "<p>Tags for Image Builder to apply to the output container image that &amp;INS; scans. Tags can help you identify and manage your scanned images.</p>",
+        "EcrConfiguration$containerTags": "<p>Tags for Image Builder to apply to the output container image that Amazon Inspector scans. Tags can help you identify and manage your scanned images.</p>",
         "LaunchPermissionConfiguration$userGroups": "<p>The name of the group.</p>",
         "LifecycleExecutionResource$imageUris": "<p>For an impacted container image, this identifies a list of URIs for associated container images distributed to ECR repositories.</p>",
         "LifecyclePolicyDetailExclusionRulesAmis$regions": "<p>Configures Amazon Web Services Regions that are excluded from the lifecycle action.</p>"
@@ -2866,7 +2878,7 @@
         "CreateImagePipelineRequest$tags": "<p>The tags of the image pipeline.</p>",
         "CreateImageRecipeRequest$tags": "<p>The tags of the image recipe.</p>",
         "CreateImageRequest$tags": "<p>The tags of the image.</p>",
-        "CreateInfrastructureConfigurationRequest$tags": "<p>The tags of the infrastructure configuration.</p>",
+        "CreateInfrastructureConfigurationRequest$tags": "<p>The metadata tags to assign to the infrastructure configuration resource that Image Builder creates as output. Tags are formatted as key value pairs.</p>",
         "CreateLifecyclePolicyRequest$tags": "<p>Tags to apply to the lifecycle policy resource.</p>",
         "CreateWorkflowRequest$tags": "<p>Tags that apply to the workflow resource.</p>",
         "DistributionConfiguration$tags": "<p>The tags of the distribution configuration.</p>",
@@ -2920,6 +2932,12 @@
       "base": null,
       "refs": {
         "FastLaunchSnapshotConfiguration$targetResourceCount": "<p>The number of pre-provisioned snapshots to keep on hand for a fast-launch enabled Windows AMI.</p>"
+      }
+    },
+    "TenancyType": {
+      "base": null,
+      "refs": {
+        "Placement$tenancy": "<p>The tenancy of the instance. An instance with a tenancy of <code>dedicated</code> runs on single-tenant hardware. An instance with a tenancy of <code>host</code> runs on a Dedicated Host.</p> <p>If tenancy is set to <code>host</code>, then you can optionally specify one target for placement – either host ID or host resource group ARN. If automatic placement is enabled for your host, and you don't specify any placement target, Amazon EC2 will try to find an available host for your build and test instances.</p>"
       }
     },
     "Timezone": {

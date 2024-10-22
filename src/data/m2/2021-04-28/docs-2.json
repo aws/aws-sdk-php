@@ -22,7 +22,7 @@
     "ListApplications": "<p>Lists the applications associated with a specific Amazon Web Services account. You can provide the unique identifier of a specific runtime environment in a query parameter to see all applications associated with that environment.</p>",
     "ListBatchJobDefinitions": "<p>Lists all the available batch job definitions based on the batch job resources uploaded during the application creation. You can use the batch job definitions in the list to start a batch job.</p>",
     "ListBatchJobExecutions": "<p>Lists historical, current, and scheduled batch job executions for a specific application.</p>",
-    "ListBatchJobRestartPoints": "<p>Lists all the job steps for JCL files to restart a batch job. This is only applicable for Micro Focus engine with versions 8.0.6 and above.</p>",
+    "ListBatchJobRestartPoints": "<p>Lists all the job steps for a JCL file to restart a batch job. This is only applicable for Micro Focus engine with versions 8.0.6 and above.</p>",
     "ListDataSetImportHistory": "<p>Lists the data set imports for the specified application.</p>",
     "ListDataSets": "<p>Lists the data sets imported for a specific application. In Amazon Web Services Mainframe Modernization, data sets are associated with applications deployed on runtime environments. This is known as importing data sets. Currently, Amazon Web Services Mainframe Modernization can import data sets into catalogs using <a href=\"https://docs.aws.amazon.com/m2/latest/APIReference/API_CreateDataSetImportTask.html\">CreateDataSetImportTask</a>.</p>",
     "ListDeployments": "<p>Returns a list of all deployments of a specific application. A deployment is a combination of a specific application and a specific version of that application. Each deployment is mapped to a particular application version.</p>",
@@ -126,6 +126,14 @@
         "GetApplicationResponse$targetGroupArns": "<p>Returns the Amazon Resource Names (ARNs) of the target groups that are attached to the network load balancer.</p>"
       }
     },
+    "AuthSecretsManagerArn": {
+      "base": null,
+      "refs": {
+        "CancelBatchJobExecutionRequest$authSecretsManagerArn": "<p>The Amazon Web Services Secrets Manager containing user's credentials for authentication and authorization for Cancel Batch Job Execution operation.</p>",
+        "ListBatchJobRestartPointsRequest$authSecretsManagerArn": "<p>The Amazon Web Services Secrets Manager containing user's credentials for authentication and authorization for List Batch Job Restart Points operation.</p>",
+        "StartBatchJobRequest$authSecretsManagerArn": "<p>The Amazon Web Services Secrets Manager containing user's credentials for authentication and authorization for Start Batch Job execution operation.</p>"
+      }
+    },
     "BatchJobDefinition": {
       "base": "<p>Defines the details of a batch job.</p>",
       "refs": {
@@ -186,13 +194,13 @@
       }
     },
     "BatchParamKey": {
-      "base": "<p>See https://www.ibm.com/docs/en/workload-automation/9.3.0?topic=zos-coding-variables-in-jcl to get details about limits for both keys and values: 8 for keys (variable names), 44 for values (variable values) In addition, keys will be only alphabetic characters and digits, without any space or special characters (dash, underscore, etc ...)</p> <p>Parameter key: the first character must be alphabetic. Can be of up to 8 alphanumeric characters.</p>",
+      "base": "<p>See https://www.ibm.com/docs/en/workload-automation/9.3.0?topic=zos-coding-variables-in-jcl to get details about limits for both keys and values: 8 for keys (variable names), 44 for values (variable values) In addition, keys will be only alphabetic characters and digits, without any space or special characters (dash, underscore, etc ...)</p> <p>For BluAge Engine: There is no limit in length of keys and values. Additional validation may be applied in code, per engine. Parameter key: the first character must be alphabetic. Can be of up to 32 alphanumeric characters.</p>",
       "refs": {
         "BatchJobParametersMap$key": null
       }
     },
     "BatchParamValue": {
-      "base": "<p>Parameter value can be of up to 44 alphanumeric characters.</p>",
+      "base": "<p>Parameter value can be of up to 1024 alphanumeric characters.</p>",
       "refs": {
         "BatchJobParametersMap$value": null
       }
@@ -228,6 +236,15 @@
         "GetEnvironmentResponse$actualCapacity": "<p>The number of instances included in the runtime environment. A standalone runtime environment has a maximum of one instance. Currently, a high availability runtime environment has a maximum of two instances. </p>",
         "HighAvailabilityConfig$desiredCapacity": "<p>The number of instances in a high availability configuration. The minimum possible value is 1 and the maximum is 100.</p>",
         "UpdateEnvironmentRequest$desiredCapacity": "<p>The desired capacity for the runtime environment to update. The minimum possible value is 0 and the maximum is 100.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>A client token is a unique, case-sensitive string of up to 128 ASCII characters with ASCII values of 33-126 inclusive. It is generated by the client to ensure idempotent operations, allowing safe retries without unintended side effects.</p>",
+      "refs": {
+        "CreateApplicationRequest$clientToken": "<p>A client token is a unique, case-sensitive string of up to 128 ASCII characters with ASCII values of 33-126 inclusive. It's generated by the client to ensure idempotent operations, allowing for safe retries without unintended side effects.</p>",
+        "CreateDataSetImportTaskRequest$clientToken": "<p> Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a data set import. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
+        "CreateDeploymentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a deployment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
+        "CreateEnvironmentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create an environment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>"
       }
     },
     "ConflictException": {
@@ -488,7 +505,7 @@
       "base": null,
       "refs": {
         "EnvironmentSummary$status": "<p>The status of the runtime environment</p>",
-        "GetEnvironmentResponse$status": "<p>The status of the runtime environment.</p>"
+        "GetEnvironmentResponse$status": "<p>The status of the runtime environment. If the Amazon Web Services Mainframe Modernization environment is missing a connection to the customer owned dependent resource, the status will be <code>Unhealthy</code>.</p>"
       }
     },
     "EnvironmentSummary": {
@@ -676,11 +693,11 @@
         "ListBatchJobDefinitionsRequest$applicationId": "<p>The identifier of the application.</p>",
         "ListBatchJobExecutionsRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListBatchJobRestartPointsRequest$applicationId": "<p>The unique identifier of the application.</p>",
-        "ListBatchJobRestartPointsRequest$executionId": "<p>The unique identifier of each batch job execution.</p>",
+        "ListBatchJobRestartPointsRequest$executionId": "<p>The unique identifier of the batch job execution.</p>",
         "ListDataSetImportHistoryRequest$applicationId": "<p>The unique identifier of the application.</p>",
         "ListDataSetsRequest$applicationId": "<p>The unique identifier of the application for which you want to list the associated data sets.</p>",
         "ListDeploymentsRequest$applicationId": "<p>The application identifier.</p>",
-        "RestartBatchJobIdentifier$executionId": "<p>The executionId from the StartBatchJob response when the job ran for the first time.</p>",
+        "RestartBatchJobIdentifier$executionId": "<p>The <code>executionId</code> from the <code>StartBatchJob</code> response when the job ran for the first time.</p>",
         "StartApplicationRequest$applicationId": "<p>The unique identifier of the application you want to start.</p>",
         "StartBatchJobRequest$applicationId": "<p>The unique identifier of the application associated with this batch job.</p>",
         "StartBatchJobResponse$executionId": "<p>The unique identifier of this execution of the batch job.</p>",
@@ -739,10 +756,10 @@
       }
     },
     "JobStepRestartMarker": {
-      "base": "<p>Provides restart step information for the most recent restart operation.</p>",
+      "base": "<p>Provides step/procedure step information for a restart batch job operation.</p>",
       "refs": {
-        "GetBatchJobExecutionResponse$jobStepRestartMarker": "<p>The restart steps information for the most recent restart operation.</p>",
-        "RestartBatchJobIdentifier$jobStepRestartMarker": "<p>The restart step information for the most recent restart operation.</p>"
+        "GetBatchJobExecutionResponse$jobStepRestartMarker": "<p>The step/procedure step information for the restart batch job operation.</p>",
+        "RestartBatchJobIdentifier$jobStepRestartMarker": "<p>The step/procedure step information for a restart batch job operation.</p>"
       }
     },
     "ListApplicationVersionsRequest": {
@@ -977,9 +994,9 @@
       }
     },
     "RestartBatchJobIdentifier": {
-      "base": "<p>An identifier for the StartBatchJob API to show that it is a restart operation.</p>",
+      "base": "<p>An identifier for the <code>StartBatchJob</code> API to show that it is a restart operation.</p>",
       "refs": {
-        "BatchJobIdentifier$restartBatchJobIdentifier": "<p>Specifies the required information for restart, including execution ID and jobsteprestartmarker.</p>"
+        "BatchJobIdentifier$restartBatchJobIdentifier": "<p>Specifies the required information for restart, including <code>executionId</code> and <code>JobStepRestartMarker</code>.</p>"
       }
     },
     "S3BatchJobIdentifier": {
@@ -1063,11 +1080,7 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "ConflictException$resourceType": "<p>The type of the conflicting resource.</p>",
-        "CreateApplicationRequest$clientToken": "<p>Unique, case-sensitive identifier the service generates to ensure the idempotency of the request to create an application. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
         "CreateApplicationRequest$kmsKeyId": "<p>The identifier of a customer managed key.</p>",
-        "CreateDataSetImportTaskRequest$clientToken": "<p> Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a data set import. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
-        "CreateDeploymentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create a deployment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
-        "CreateEnvironmentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request to create an environment. The service generates the clientToken when the API call is triggered. The token expires after one hour, so if you retry the API within this timeframe with the same clientToken, you will get the same response. The service also handles deleting the clientToken after it expires. </p>",
         "CreateEnvironmentRequest$kmsKeyId": "<p>The identifier of a customer managed key.</p>",
         "DataSet$datasetName": "<p>The logical identifier for a specific data set (in mainframe format).</p>",
         "DataSet$relativePath": "<p>The relative location of the data set in the database or file system. </p>",
@@ -1099,10 +1112,10 @@
         "JobStep$procStepName": "<p>The name of a procedure step.</p>",
         "JobStep$stepCondCode": "<p>The condition code of a step.</p>",
         "JobStep$stepName": "<p>The name of a step.</p>",
-        "JobStepRestartMarker$fromProcStep": "<p>The procedure step name that a job was restarted from.</p>",
-        "JobStepRestartMarker$fromStep": "<p>The step name that a batch job restart was from.</p>",
+        "JobStepRestartMarker$fromProcStep": "<p>The procedure step name that a batch job was restarted from.</p>",
+        "JobStepRestartMarker$fromStep": "<p>The step name that a batch job was restarted from.</p>",
         "JobStepRestartMarker$toProcStep": "<p>The procedure step name that a batch job was restarted to.</p>",
-        "JobStepRestartMarker$toStep": "<p>The step name that a job was restarted to.</p>",
+        "JobStepRestartMarker$toStep": "<p>The step name that a batch job was restarted to.</p>",
         "ListBatchJobDefinitionsRequest$prefix": "<p>If the batch job definition is a FileBatchJobDefinition, the prefix allows you to search on the file names of FileBatchJobDefinitions.</p>",
         "PendingMaintenance$engineVersion": "<p>The specific runtime engine that the maintenance schedule applies to.</p>",
         "PoAttributes$encoding": "<p>The character set encoding of the data set.</p>",

@@ -490,7 +490,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "QueryInsights":{"shape":"ScheduledQueryInsights"}
       }
     },
     "ExecutionStats":{
@@ -654,6 +655,11 @@
       "type":"list",
       "member":{"shape":"ParameterMapping"}
     },
+    "PartitionKey":{"type":"string"},
+    "PartitionKeyList":{
+      "type":"list",
+      "member":{"shape":"PartitionKey"}
+    },
     "PrepareQueryRequest":{
       "type":"structure",
       "required":["QueryString"],
@@ -688,6 +694,51 @@
       "min":1,
       "pattern":"[a-zA-Z0-9]+"
     },
+    "QueryInsights":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"QueryInsightsMode"}
+      }
+    },
+    "QueryInsightsMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED_WITH_RATE_CONTROL",
+        "DISABLED"
+      ]
+    },
+    "QueryInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "QuerySpatialCoverage":{"shape":"QuerySpatialCoverage"},
+        "QueryTemporalRange":{"shape":"QueryTemporalRange"},
+        "QueryTableCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "OutputRows":{
+          "shape":"Long",
+          "box":true
+        },
+        "OutputBytes":{
+          "shape":"Long",
+          "box":true
+        },
+        "UnloadPartitionCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "UnloadWrittenRows":{
+          "shape":"Long",
+          "box":true
+        },
+        "UnloadWrittenBytes":{
+          "shape":"Long",
+          "box":true
+        }
+      }
+    },
     "QueryPricingModel":{
       "type":"string",
       "enum":[
@@ -705,7 +756,8 @@
           "idempotencyToken":true
         },
         "NextToken":{"shape":"PaginationToken"},
-        "MaxRows":{"shape":"MaxQueryResults"}
+        "MaxRows":{"shape":"MaxQueryResults"},
+        "QueryInsights":{"shape":"QueryInsights"}
       }
     },
     "QueryResponse":{
@@ -720,7 +772,22 @@
         "NextToken":{"shape":"PaginationToken"},
         "Rows":{"shape":"RowList"},
         "ColumnInfo":{"shape":"ColumnInfoList"},
-        "QueryStatus":{"shape":"QueryStatus"}
+        "QueryStatus":{"shape":"QueryStatus"},
+        "QueryInsightsResponse":{"shape":"QueryInsightsResponse"}
+      }
+    },
+    "QuerySpatialCoverage":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"QuerySpatialCoverageMax"}
+      }
+    },
+    "QuerySpatialCoverageMax":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Double"},
+        "TableArn":{"shape":"AmazonResourceName"},
+        "PartitionKey":{"shape":"PartitionKeyList"}
       }
     },
     "QueryStatus":{
@@ -736,6 +803,19 @@
       "max":262144,
       "min":1,
       "sensitive":true
+    },
+    "QueryTemporalRange":{
+      "type":"structure",
+      "members":{
+        "Max":{"shape":"QueryTemporalRangeMax"}
+      }
+    },
+    "QueryTemporalRangeMax":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Long"},
+        "TableArn":{"shape":"AmazonResourceName"}
+      }
     },
     "ResourceName":{"type":"string"},
     "ResourceNotFoundException":{
@@ -879,6 +959,39 @@
         "RecentlyFailedRuns":{"shape":"ScheduledQueryRunSummaryList"}
       }
     },
+    "ScheduledQueryInsights":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"ScheduledQueryInsightsMode"}
+      }
+    },
+    "ScheduledQueryInsightsMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED_WITH_RATE_CONTROL",
+        "DISABLED"
+      ]
+    },
+    "ScheduledQueryInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "QuerySpatialCoverage":{"shape":"QuerySpatialCoverage"},
+        "QueryTemporalRange":{"shape":"QueryTemporalRange"},
+        "QueryTableCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "OutputRows":{
+          "shape":"Long",
+          "box":true
+        },
+        "OutputBytes":{
+          "shape":"Long",
+          "box":true
+        }
+      }
+    },
     "ScheduledQueryList":{
       "type":"list",
       "member":{"shape":"ScheduledQuery"}
@@ -905,6 +1018,7 @@
         "TriggerTime":{"shape":"Time"},
         "RunStatus":{"shape":"ScheduledQueryRunStatus"},
         "ExecutionStats":{"shape":"ExecutionStats"},
+        "QueryInsightsResponse":{"shape":"ScheduledQueryInsightsResponse"},
         "ErrorReportLocation":{"shape":"ErrorReportLocation"},
         "FailureReason":{"shape":"ErrorMessage"}
       }
