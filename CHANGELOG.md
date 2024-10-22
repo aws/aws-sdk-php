@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.8 - 2024-10-22
 
 * `Aws\imagebuilder` - Add macOS platform and instance placement options
 * `Aws\BedrockRuntime` - Updating invoke regex to support imported models for converse API
