@@ -362,6 +362,13 @@
         "CardExpiryDate":{"shape":"CardExpiryDateType"}
       }
     },
+    "CertificateType":{
+      "type":"string",
+      "max":32768,
+      "min":1,
+      "pattern":"[^\\[;\\]<>]+",
+      "sensitive":true
+    },
     "CipherTextType":{
       "type":"string",
       "max":4096,
@@ -556,6 +563,25 @@
         "CardExpiryDate":{"shape":"CardExpiryDateType"},
         "ServiceCode":{"shape":"ServiceCodeType"},
         "ApplicationTransactionCounter":{"shape":"HexLengthBetween2And4"}
+      }
+    },
+    "EcdhDerivationAttributes":{
+      "type":"structure",
+      "required":[
+        "CertificateAuthorityPublicKeyIdentifier",
+        "PublicKeyCertificate",
+        "KeyAlgorithm",
+        "KeyDerivationFunction",
+        "KeyDerivationHashAlgorithm",
+        "SharedInformation"
+      ],
+      "members":{
+        "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "PublicKeyCertificate":{"shape":"CertificateType"},
+        "KeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"},
+        "KeyDerivationFunction":{"shape":"KeyDerivationFunction"},
+        "KeyDerivationHashAlgorithm":{"shape":"KeyDerivationHashAlgorithm"},
+        "SharedInformation":{"shape":"SharedInformation"}
       }
     },
     "Emv2000Attributes":{
@@ -799,7 +825,8 @@
         "GenerationAttributes":{"shape":"PinGenerationAttributes"},
         "PinDataLength":{"shape":"IntegerRangeBetween4And12"},
         "PrimaryAccountNumber":{"shape":"PrimaryAccountNumberType"},
-        "PinBlockFormat":{"shape":"PinBlockFormatForPinData"}
+        "PinBlockFormat":{"shape":"PinBlockFormatForPinData"},
+        "EncryptionWrappedKey":{"shape":"WrappedKey"}
       }
     },
     "GeneratePinDataOutput":{
@@ -1000,6 +1027,21 @@
         "ANSI_X9_24"
       ]
     },
+    "KeyDerivationFunction":{
+      "type":"string",
+      "enum":[
+        "NIST_SP800",
+        "ANSI_X963"
+      ]
+    },
+    "KeyDerivationHashAlgorithm":{
+      "type":"string",
+      "enum":[
+        "SHA_256",
+        "SHA_384",
+        "SHA_512"
+      ]
+    },
     "MacAlgorithm":{
       "type":"string",
       "enum":[
@@ -1122,7 +1164,8 @@
       "type":"string",
       "enum":[
         "ISO_FORMAT_0",
-        "ISO_FORMAT_3"
+        "ISO_FORMAT_3",
+        "ISO_FORMAT_4"
       ]
     },
     "PinBlockLengthEquals16":{
@@ -1384,6 +1427,12 @@
         "PanSequenceNumber":{"shape":"NumberLengthEquals2"}
       }
     },
+    "SharedInformation":{
+      "type":"string",
+      "max":2048,
+      "min":2,
+      "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
+    },
     "String":{"type":"string"},
     "SymmetricEncryptionAttributes":{
       "type":"structure",
@@ -1393,6 +1442,16 @@
         "InitializationVector":{"shape":"InitializationVectorType"},
         "PaddingType":{"shape":"PaddingType"}
       }
+    },
+    "SymmetricKeyAlgorithm":{
+      "type":"string",
+      "enum":[
+        "TDES_2KEY",
+        "TDES_3KEY",
+        "AES_128",
+        "AES_192",
+        "AES_256"
+      ]
     },
     "ThrottlingException":{
       "type":"structure",
@@ -1646,7 +1705,8 @@
         "PrimaryAccountNumber":{"shape":"PrimaryAccountNumberType"},
         "PinBlockFormat":{"shape":"PinBlockFormatForPinData"},
         "PinDataLength":{"shape":"IntegerRangeBetween4And12"},
-        "DukptAttributes":{"shape":"DukptAttributes"}
+        "DukptAttributes":{"shape":"DukptAttributes"},
+        "EncryptionWrappedKey":{"shape":"WrappedKey"}
       }
     },
     "VerifyPinDataOutput":{
@@ -1735,7 +1795,8 @@
     "WrappedKeyMaterial":{
       "type":"structure",
       "members":{
-        "Tr31KeyBlock":{"shape":"Tr31WrappedKeyBlock"}
+        "Tr31KeyBlock":{"shape":"Tr31WrappedKeyBlock"},
+        "DiffieHellmanSymmetricKey":{"shape":"EcdhDerivationAttributes"}
       },
       "union":true
     }

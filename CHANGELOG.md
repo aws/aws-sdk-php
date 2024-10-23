@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PaymentCryptographyData` - Add ECDH support on PIN operations.
+* `Aws\PaymentCryptography` - Add support for ECC P-256 and P-384 Keys.
+* `Aws\Bedrock` - Doc updates for supporting converse
+* `Aws\EC2` - Amazon EC2 X8g, C8g and M8g instances are powered by AWS Graviton4 processors. X8g provide the lowest cost per GiB of memory among Graviton4 instances. C8g provide the best price performance for compute-intensive workloads. M8g provide the best price performance in for general purpose workloads.
+* `Aws\Connect` - Amazon Connect Service Feature: Add support to start screen sharing for a web calling contact.
+* `Aws\MWAA` - Introducing InvokeRestApi which allows users to invoke the Apache Airflow REST API on the webserver with the specified inputs.
+
 ## 3.324.8 - 2024-10-22
 
 * `Aws\imagebuilder` - Add macOS platform and instance placement options

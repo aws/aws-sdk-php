@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"airflow",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -92,6 +93,25 @@
         {"shape":"InternalServerException"}
       ],
       "endpoint":{"hostPrefix":"api."}
+    },
+    "InvokeRestApi":{
+      "name":"InvokeRestApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/restapi/{Name}",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeRestApiRequest"},
+      "output":{"shape":"InvokeRestApiResponse"},
+      "errors":[
+        {"shape":"RestApiClientException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"RestApiServerException"}
+      ],
+      "endpoint":{"hostPrefix":"env."}
     },
     "ListEnvironments":{
       "name":"ListEnvironments",
@@ -366,6 +386,12 @@
       "deprecated":true,
       "deprecatedMessage":"This type is for internal use and not meant for public use. Data set for this type will be ignored."
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -503,6 +529,32 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvokeRestApiRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Path",
+        "Method"
+      ],
+      "members":{
+        "Name":{
+          "shape":"EnvironmentName",
+          "location":"uri",
+          "locationName":"Name"
+        },
+        "Path":{"shape":"RestApiPath"},
+        "Method":{"shape":"RestApiMethod"},
+        "QueryParameters":{"shape":"Document"},
+        "Body":{"shape":"RestApiRequestBody"}
+      }
+    },
+    "InvokeRestApiResponse":{
+      "type":"structure",
+      "members":{
+        "RestApiStatusCode":{"shape":"Integer"},
+        "RestApiResponse":{"shape":"RestApiResponse"}
+      }
     },
     "KmsKey":{
       "type":"string",
@@ -710,6 +762,59 @@
       },
       "error":{
         "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RestApiClientException":{
+      "type":"structure",
+      "members":{
+        "RestApiStatusCode":{"shape":"Integer"},
+        "RestApiResponse":{"shape":"RestApiResponse"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "RestApiMethod":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "PUT",
+        "POST",
+        "PATCH",
+        "DELETE"
+      ]
+    },
+    "RestApiPath":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "RestApiRequestBody":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true,
+      "sensitive":true
+    },
+    "RestApiResponse":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true,
+      "sensitive":true
+    },
+    "RestApiServerException":{
+      "type":"structure",
+      "members":{
+        "RestApiStatusCode":{"shape":"Integer"},
+        "RestApiResponse":{"shape":"RestApiResponse"}
+      },
+      "error":{
+        "httpStatusCode":400,
         "senderFault":true
       },
       "exception":true

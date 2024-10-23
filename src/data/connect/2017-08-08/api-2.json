@@ -3222,6 +3222,23 @@
         {"shape":"OutboundContactNotPermittedException"}
       ]
     },
+    "StartScreenSharing":{
+      "name":"StartScreenSharing",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/screen-sharing"
+      },
+      "input":{"shape":"StartScreenSharingRequest"},
+      "output":{"shape":"StartScreenSharingResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "StartTaskContact":{
       "name":"StartTaskContact",
       "http":{
@@ -11936,7 +11953,8 @@
     "ParticipantCapabilities":{
       "type":"structure",
       "members":{
-        "Video":{"shape":"VideoCapability"}
+        "Video":{"shape":"VideoCapability"},
+        "ScreenShare":{"shape":"ScreenShareCapability"}
       }
     },
     "ParticipantDetails":{
@@ -13779,6 +13797,10 @@
       "min":1,
       "pattern":"s3://\\S+/.+|https://\\\\S+\\\\.s3\\\\.\\\\S+\\\\.amazonaws\\\\.com/\\\\S+"
     },
+    "ScreenShareCapability":{
+      "type":"string",
+      "enum":["SEND"]
+    },
     "SearchAgentStatusesRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -14731,6 +14753,26 @@
       "type":"structure",
       "members":{
         "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartScreenSharingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartScreenSharingResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "StartTaskContactRequest":{
