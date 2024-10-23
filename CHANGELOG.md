@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.9 - 2024-10-23
 
 * `Aws\PaymentCryptographyData` - Add ECDH support on PIN operations.
 * `Aws\PaymentCryptography` - Add support for ECC P-256 and P-384 Keys.
