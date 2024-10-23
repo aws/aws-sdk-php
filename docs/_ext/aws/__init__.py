@@ -2,7 +2,7 @@ import os, re, subprocess, json, collections
 from sphinx.addnodes import toctree
 from docutils import io, nodes, statemachine, utils
 from docutils.parsers.rst import Directive
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 # Maintain a cache of previously loaded examples
 example_cache = {}
@@ -169,7 +169,10 @@ class ServiceIntro(ServiceDescriptionDirective):
         else:
             apiVersionSuffix = ""
 
-        env = Environment(loader=PackageLoader('aws', 'templates'))
+        env = Environment(
+            loader=PackageLoader('aws', 'templates'),
+            autoescape=select_autoescape(['html'])
+        )
         template = env.get_template("client_intro")
         rawtext += template.render(
             scalar,
@@ -211,7 +214,10 @@ class ServiceApiRef(ServiceDescriptionDirective):
         else:
             apiVersionSuffix = ""
 
-        env = Environment(loader=PackageLoader('aws', 'templates'))
+        env = Environment(
+            loader=PackageLoader('aws', 'templates'),
+            autoescape=select_autoescape(['html'])
+        )
         template = env.get_template("api_reference")
         rawtext += template.render(
             scalar,
