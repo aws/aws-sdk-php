@@ -2462,6 +2462,15 @@
       "input":{"shape":"DescribeInstanceEventWindowsRequest"},
       "output":{"shape":"DescribeInstanceEventWindowsResult"}
     },
+    "DescribeInstanceImageMetadata":{
+      "name":"DescribeInstanceImageMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInstanceImageMetadataRequest"},
+      "output":{"shape":"DescribeInstanceImageMetadataResult"}
+    },
     "DescribeInstanceStatus":{
       "name":"DescribeInstanceStatus",
       "http":{
@@ -16720,6 +16729,40 @@
         }
       }
     },
+    "DescribeInstanceImageMetadataMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeInstanceImageMetadataRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "InstanceIds":{
+          "shape":"InstanceIdStringList",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{"shape":"DescribeInstanceImageMetadataMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeInstanceImageMetadataResult":{
+      "type":"structure",
+      "members":{
+        "InstanceImageMetadata":{
+          "shape":"InstanceImageMetadataList",
+          "locationName":"instanceImageMetadataSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeInstanceStatusRequest":{
       "type":"structure",
       "members":{
@@ -26046,6 +26089,43 @@
         "locationName":"item"
       }
     },
+    "ImageMetadata":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"imageOwnerId"
+        },
+        "State":{
+          "shape":"ImageState",
+          "locationName":"imageState"
+        },
+        "ImageOwnerAlias":{
+          "shape":"String",
+          "locationName":"imageOwnerAlias"
+        },
+        "CreationDate":{
+          "shape":"String",
+          "locationName":"creationDate"
+        },
+        "DeprecationTime":{
+          "shape":"String",
+          "locationName":"deprecationTime"
+        },
+        "IsPublic":{
+          "shape":"Boolean",
+          "locationName":"isPublic"
+        }
+      }
+    },
     "ImageRecycleBinInfo":{
       "type":"structure",
       "members":{
@@ -27465,6 +27545,54 @@
       "type":"list",
       "member":{
         "shape":"InstanceId",
+        "locationName":"item"
+      }
+    },
+    "InstanceImageMetadata":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "InstanceType":{
+          "shape":"InstanceType",
+          "locationName":"instanceType"
+        },
+        "LaunchTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"launchTime"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "ZoneId":{
+          "shape":"String",
+          "locationName":"zoneId"
+        },
+        "State":{
+          "shape":"InstanceState",
+          "locationName":"instanceState"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"instanceOwnerId"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "ImageMetadata":{
+          "shape":"ImageMetadata",
+          "locationName":"imageMetadata"
+        }
+      }
+    },
+    "InstanceImageMetadataList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceImageMetadata",
         "locationName":"item"
       }
     },

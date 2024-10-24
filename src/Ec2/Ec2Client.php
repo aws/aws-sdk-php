@@ -788,6 +788,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeInstanceEventNotificationAttributesAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeInstanceEventWindows(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeInstanceEventWindowsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result describeInstanceImageMetadata(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise describeInstanceImageMetadataAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeInstanceTopology(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise describeInstanceTopologyAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result describeInstanceTypeOfferings(array $args = []) (supported in versions 2016-11-15)
