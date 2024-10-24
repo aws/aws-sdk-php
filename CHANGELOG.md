@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.10 - 2024-10-24
 
 * `Aws\AppConfig` - This release improves deployment safety by granting customers the ability to REVERT completed deployments, to the last known good state.In the StopDeployment API revert case the status of a COMPLETE deployment will be REVERTED. AppConfig only allows a revert within 72 hours of deployment completion.
 * `Aws\ECS` - This release adds support for EBS volumes attached to Amazon ECS Windows tasks running on EC2 instances.
