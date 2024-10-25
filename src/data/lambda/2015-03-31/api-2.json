@@ -2403,6 +2403,7 @@
         "Configuration":{"shape":"FunctionConfiguration"},
         "Code":{"shape":"FunctionCodeLocation"},
         "Tags":{"shape":"Tags"},
+        "TagsError":{"shape":"TagsError"},
         "Concurrency":{"shape":"Concurrency"}
       }
     },
@@ -4288,6 +4289,29 @@
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
+    },
+    "TagsError":{
+      "type":"structure",
+      "required":[
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "ErrorCode":{"shape":"TagsErrorCode"},
+        "Message":{"shape":"TagsErrorMessage"}
+      }
+    },
+    "TagsErrorCode":{
+      "type":"string",
+      "max":21,
+      "min":10,
+      "pattern":"[A-Za-z]+Exception"
+    },
+    "TagsErrorMessage":{
+      "type":"string",
+      "max":1000,
+      "min":84,
+      "pattern":"^.*$"
     },
     "ThrottleReason":{
       "type":"string",

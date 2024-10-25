@@ -85,6 +85,12 @@
         "SourceCredentialsInfo$authType": "<p> The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, PERSONAL_ACCESS_TOKEN, CODECONNECTIONS, or SECRETS_MANAGER. </p>"
       }
     },
+    "AutoRetryConfig": {
+      "base": "<p>Information about the auto-retry configuration for the build.</p>",
+      "refs": {
+        "Build$autoRetryConfig": "<p>Information about the auto-retry configuration for the build.</p>"
+      }
+    },
     "BatchDeleteBuildsInput": {
       "base": null,
       "refs": {
@@ -1792,6 +1798,8 @@
     "String": {
       "base": null,
       "refs": {
+        "AutoRetryConfig$nextAutoRetry": "<p>The build ARN of the auto-retried build triggered by the current build. The next auto-retry will be <code>null</code> for builds that don't trigger an auto-retry.</p>",
+        "AutoRetryConfig$previousAutoRetry": "<p>The build ARN of the build that triggered the current auto-retry build. The previous auto-retry will be <code>null</code> for the initial build.</p>",
         "Build$currentPhase": "<p>The current build phase.</p>",
         "Build$initiator": "<p>The entity that started the build. Valid values include:</p> <ul> <li> <p>If CodePipeline started the build, the pipeline's name (for example, <code>codepipeline/my-demo-pipeline</code>).</p> </li> <li> <p>If a user started the build, the user's name (for example, <code>MyUserName</code>).</p> </li> <li> <p>If the Jenkins plugin for CodeBuild started the build, the string <code>CodeBuild-Jenkins-Plugin</code>.</p> </li> </ul>",
         "Build$buildBatchArn": "<p>The ARN of the batch build that this build is a member of, if applicable.</p>",
@@ -2155,17 +2163,23 @@
     "WrapperInt": {
       "base": null,
       "refs": {
+        "AutoRetryConfig$autoRetryLimit": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
+        "AutoRetryConfig$autoRetryNumber": "<p>The number of times that the build has been retried. The initial build will have an auto-retry number of 0.</p>",
         "BatchRestrictions$maximumBuildsAllowed": "<p>Specifies the maximum number of builds allowed.</p>",
         "Build$timeoutInMinutes": "<p>How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before timing out this build if it does not get marked as completed.</p>",
         "Build$queuedTimeoutInMinutes": "<p> The number of minutes a build is allowed to be queued before it times out. </p>",
         "BuildBatch$buildTimeoutInMinutes": "<p>Specifies the maximum amount of time, in minutes, that the build in a batch must be completed in.</p>",
         "BuildBatch$queuedTimeoutInMinutes": "<p>Specifies the amount of time, in minutes, that the batch build is allowed to be queued before it times out.</p>",
         "CreateProjectInput$concurrentBuildLimit": "<p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p>",
+        "CreateProjectInput$autoRetryLimit": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
         "Project$concurrentBuildLimit": "<p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p>",
+        "Project$autoRetryLimit": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
         "ProjectBuildBatchConfig$timeoutInMins": "<p>Specifies the maximum amount of time, in minutes, that the batch build must be completed in.</p>",
         "ReportStatusCounts$value": null,
+        "StartBuildInput$autoRetryLimitOverride": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
         "TestReportSummary$total": "<p> The number of test cases in this <code>TestReportSummary</code>. The total includes truncated test cases. </p>",
-        "UpdateProjectInput$concurrentBuildLimit": "<p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p> <p>To remove this limit, set this value to -1.</p>"
+        "UpdateProjectInput$concurrentBuildLimit": "<p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p> <p>To remove this limit, set this value to -1.</p>",
+        "UpdateProjectInput$autoRetryLimit": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>"
       }
     },
     "WrapperLong": {

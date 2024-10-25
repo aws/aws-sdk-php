@@ -2525,6 +2525,12 @@
       "members":{
       }
     },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
+    },
     "DraftVersion":{
       "type":"string",
       "max":5,
@@ -2663,8 +2669,7 @@
       "members":{
         "expression":{"shape":"FlowConditionExpression"},
         "name":{"shape":"FlowConditionName"}
-      },
-      "sensitive":true
+      }
     },
     "FlowConditionExpression":{
       "type":"string",
@@ -2687,8 +2692,7 @@
       "type":"list",
       "member":{"shape":"FlowCondition"},
       "max":5,
-      "min":1,
-      "sensitive":true
+      "min":1
     },
     "FlowConnection":{
       "type":"structure",
@@ -2747,7 +2751,8 @@
       "members":{
         "connections":{"shape":"FlowConnections"},
         "nodes":{"shape":"FlowNodes"}
-      }
+      },
+      "sensitive":true
     },
     "FlowDescription":{
       "type":"string",
@@ -2889,8 +2894,7 @@
       "type":"list",
       "member":{"shape":"FlowNode"},
       "max":20,
-      "min":0,
-      "sensitive":true
+      "min":0
     },
     "FlowStatus":{
       "type":"string",
@@ -3667,7 +3671,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(model-gateway|inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
     },
     "KnowledgeBaseRoleArn":{
       "type":"string",
@@ -4104,7 +4108,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})))|(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}))|(([0-9a-zA-Z][_-]?)+)$"
+      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
     },
     "MongoDbAtlasCollectionName":{
       "type":"string",
@@ -4427,6 +4431,7 @@
         "templateType"
       ],
       "members":{
+        "additionalModelRequestFields":{"shape":"Document"},
         "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
         "modelId":{"shape":"PromptModelIdentifier"},
         "templateConfiguration":{"shape":"PromptTemplateConfiguration"},
@@ -4517,7 +4522,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(model-gateway|inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
     },
     "PromptModelInferenceConfiguration":{
       "type":"structure",
@@ -4602,6 +4607,7 @@
         "templateType"
       ],
       "members":{
+        "additionalModelRequestFields":{"shape":"Document"},
         "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
         "metadata":{"shape":"PromptMetadataList"},
         "modelId":{"shape":"PromptModelIdentifier"},

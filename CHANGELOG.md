@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes deprecated Nimble Studio service.
+* `Aws\BedrockAgent` - Add support of new model types for Bedrock Agents, Adding inference profile support for Flows and Prompt Management, Adding new field to configure additional inference configurations for Flows and Prompt Management
+* `Aws\CodeBuild` - AWS CodeBuild now supports automatically retrying failed builds
+* `Aws\Lambda` - Add TagsError field in Lambda GetFunctionResponse. The TagsError field contains details related to errors retrieving tags.
+* `Aws\SupplyChain` - API doc updates, and also support showing error message on a failed instance
+* `Aws\CloudWatchLogs` - Adding inferred token name for dynamic tokens in Anomalies.
+
 ## 3.324.10 - 2024-10-24
 
 * `Aws\AppConfig` - This release improves deployment safety by granting customers the ability to REVERT completed deployments, to the last known good state.In the StopDeployment API revert case the status of a COMPLETE deployment will be REVERTED. AppConfig only allows a revert within 72 hours of deployment completion.

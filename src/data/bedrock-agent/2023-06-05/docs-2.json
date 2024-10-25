@@ -838,6 +838,13 @@
       "refs": {
       }
     },
+    "Document": {
+      "base": null,
+      "refs": {
+        "PromptFlowNodeInlineConfiguration$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>",
+        "PromptVariant$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>"
+      }
+    },
     "DraftVersion": {
       "base": null,
       "refs": {
@@ -1769,7 +1776,7 @@
       }
     },
     "KnowledgeBaseModelIdentifier": {
-      "base": null,
+      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
       "refs": {
         "KnowledgeBaseFlowNodeConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use to generate a response from the query results. Omit this field if you want to return the retrieved results as an array.</p>"
       }
@@ -2032,12 +2039,12 @@
       }
     },
     "ModelIdentifier": {
-      "base": null,
+      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
       "refs": {
         "Agent$foundationModel": "<p>The foundation model used for orchestration by the agent.</p>",
         "AgentVersion$foundationModel": "<p>The foundation model that the version invokes.</p>",
-        "CreateAgentRequest$foundationModel": "<p>The Amazon Resource Name (ARN) of the foundation model to be used for orchestration by the agent you create.</p>",
-        "UpdateAgentRequest$foundationModel": "<p>Specifies a new foundation model to be used for orchestration by the agent.</p>"
+        "CreateAgentRequest$foundationModel": "<p>The identifier for the model that you want to be used for orchestration by the agent you create.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
+        "UpdateAgentRequest$foundationModel": "<p>The identifier for the model that you want to be used for orchestration by the agent you create.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>"
       }
     },
     "MongoDbAtlasCollectionName": {
@@ -2461,7 +2468,7 @@
       }
     },
     "PromptModelIdentifier": {
-      "base": null,
+      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
       "refs": {
         "PromptFlowNodeInlineConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to run inference with.</p>",
         "PromptVariant$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> with which to run inference on the prompt.</p>"

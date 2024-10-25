@@ -2331,6 +2331,10 @@
       "value":{"shape":"Count"}
     },
     "IncludeLinkedAccounts":{"type":"boolean"},
+    "InferredTokenName":{
+      "type":"string",
+      "min":1
+    },
     "InheritedProperties":{
       "type":"list",
       "member":{"shape":"InheritedProperty"}
@@ -2769,7 +2773,8 @@
         "dynamicTokenPosition":{"shape":"DynamicTokenPosition"},
         "isDynamic":{"shape":"Boolean"},
         "tokenString":{"shape":"TokenString"},
-        "enumerations":{"shape":"Enumerations"}
+        "enumerations":{"shape":"Enumerations"},
+        "inferredTokenName":{"shape":"InferredTokenName"}
       }
     },
     "PatternTokens":{

@@ -688,6 +688,15 @@
         "SECRETS_MANAGER"
       ]
     },
+    "AutoRetryConfig":{
+      "type":"structure",
+      "members":{
+        "autoRetryLimit":{"shape":"WrapperInt"},
+        "autoRetryNumber":{"shape":"WrapperInt"},
+        "nextAutoRetry":{"shape":"String"},
+        "previousAutoRetry":{"shape":"String"}
+      }
+    },
     "BatchDeleteBuildsInput":{
       "type":"structure",
       "required":["ids"],
@@ -843,7 +852,8 @@
         "reportArns":{"shape":"BuildReportArns"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "debugSession":{"shape":"DebugSession"},
-        "buildBatchArn":{"shape":"String"}
+        "buildBatchArn":{"shape":"String"},
+        "autoRetryConfig":{"shape":"AutoRetryConfig"}
       }
     },
     "BuildArtifacts":{
@@ -1172,7 +1182,8 @@
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
-        "concurrentBuildLimit":{"shape":"WrapperInt"}
+        "concurrentBuildLimit":{"shape":"WrapperInt"},
+        "autoRetryLimit":{"shape":"WrapperInt"}
       }
     },
     "CreateProjectOutput":{
@@ -2034,7 +2045,8 @@
         "concurrentBuildLimit":{"shape":"WrapperInt"},
         "projectVisibility":{"shape":"ProjectVisibilityType"},
         "publicProjectAlias":{"shape":"NonEmptyString"},
-        "resourceAccessRole":{"shape":"NonEmptyString"}
+        "resourceAccessRole":{"shape":"NonEmptyString"},
+        "autoRetryLimit":{"shape":"WrapperInt"}
       }
     },
     "ProjectArns":{
@@ -2674,7 +2686,8 @@
         "registryCredentialOverride":{"shape":"RegistryCredential"},
         "imagePullCredentialsTypeOverride":{"shape":"ImagePullCredentialsType"},
         "debugSessionEnabled":{"shape":"WrapperBoolean"},
-        "fleetOverride":{"shape":"ProjectFleet"}
+        "fleetOverride":{"shape":"ProjectFleet"},
+        "autoRetryLimitOverride":{"shape":"WrapperInt"}
       }
     },
     "StartBuildOutput":{
@@ -2840,7 +2853,8 @@
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
-        "concurrentBuildLimit":{"shape":"WrapperInt"}
+        "concurrentBuildLimit":{"shape":"WrapperInt"},
+        "autoRetryLimit":{"shape":"WrapperInt"}
       }
     },
     "UpdateProjectOutput":{

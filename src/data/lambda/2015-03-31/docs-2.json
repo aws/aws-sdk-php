@@ -2406,9 +2406,27 @@
         "CreateCodeSigningConfigRequest$Tags": "<p>A list of tags to add to the code signing configuration.</p>",
         "CreateEventSourceMappingRequest$Tags": "<p>A list of tags to apply to the event source mapping.</p>",
         "CreateFunctionRequest$Tags": "<p>A list of <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a> to apply to the function.</p>",
-        "GetFunctionResponse$Tags": "<p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a>.</p>",
+        "GetFunctionResponse$Tags": "<p>The function's <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a>. Lambda returns tag data only if you have explicit allow permissions for <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/lambda/latest/api/API_ListTags.html\">lambda:ListTags</a>.</p>",
         "ListTagsResponse$Tags": "<p>The function's tags.</p>",
         "TagResourceRequest$Tags": "<p>A list of tags to apply to the resource.</p>"
+      }
+    },
+    "TagsError": {
+      "base": "<p>An object that contains details about an error related to retrieving tags.</p>",
+      "refs": {
+        "GetFunctionResponse$TagsError": "<p>An object that contains details about an error related to retrieving tags.</p>"
+      }
+    },
+    "TagsErrorCode": {
+      "base": null,
+      "refs": {
+        "TagsError$ErrorCode": "<p>The error code.</p>"
+      }
+    },
+    "TagsErrorMessage": {
+      "base": null,
+      "refs": {
+        "TagsError$Message": "<p>The error message.</p>"
       }
     },
     "ThrottleReason": {
