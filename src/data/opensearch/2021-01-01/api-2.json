@@ -1513,7 +1513,8 @@
         "WarmType":{"shape":"OpenSearchWarmPartitionInstanceType"},
         "WarmCount":{"shape":"IntegerClass"},
         "ColdStorageOptions":{"shape":"ColdStorageOptions"},
-        "MultiAZWithStandbyEnabled":{"shape":"Boolean"}
+        "MultiAZWithStandbyEnabled":{"shape":"Boolean"},
+        "NodeOptions":{"shape":"NodeOptionsList"}
       }
     },
     "ClusterConfigStatus":{
@@ -3420,10 +3421,33 @@
       }
     },
     "NextToken":{"type":"string"},
+    "NodeConfig":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "Type":{"shape":"OpenSearchPartitionInstanceType"},
+        "Count":{"shape":"IntegerClass"}
+      }
+    },
     "NodeId":{
       "type":"string",
       "max":40,
       "min":10
+    },
+    "NodeOption":{
+      "type":"structure",
+      "members":{
+        "NodeType":{"shape":"NodeOptionsNodeType"},
+        "NodeConfig":{"shape":"NodeConfig"}
+      }
+    },
+    "NodeOptionsList":{
+      "type":"list",
+      "member":{"shape":"NodeOption"}
+    },
+    "NodeOptionsNodeType":{
+      "type":"string",
+      "enum":["coordinator"]
     },
     "NodeStatus":{
       "type":"string",

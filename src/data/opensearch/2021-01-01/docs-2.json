@@ -412,6 +412,7 @@
         "JWTOptionsOutput$Enabled": "<p>True if JWT use is enabled.</p>",
         "ListInstanceTypeDetailsRequest$RetrieveAZs": "<p>An optional parameter that specifies the Availability Zones for the domain.</p>",
         "LogPublishingOption$Enabled": "<p>Whether the log should be published.</p>",
+        "NodeConfig$Enabled": "<p>A boolean that indicates whether a particular node type is enabled or not.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>True to enable node-to-node encryption.</p>",
         "OffPeakWindowOptions$Enabled": "<p>Whether to enable an off-peak window.</p> <p>This option is only available when modifying a domain created prior to February 16, 2023, not when creating a new domain. All domains created after this date have the off-peak window enabled by default. You can't disable the off-peak window after it's enabled for a domain.</p>",
         "OptionStatus$PendingDeletion": "<p>Indicates whether the entity is being deleted.</p>",
@@ -1574,6 +1575,7 @@
         "EBSOptions$VolumeSize": "<p>Specifies the size (in GiB) of EBS volumes attached to data nodes.</p>",
         "EBSOptions$Iops": "<p>Specifies the baseline input/output (I/O) performance of EBS volumes attached to data nodes. Applicable only for the <code>gp3</code> and provisioned IOPS EBS volume types.</p>",
         "EBSOptions$Throughput": "<p>Specifies the throughput (in MiB/s) of the EBS volumes attached to data nodes. Applicable only for the <code>gp3</code> volume type.</p>",
+        "NodeConfig$Count": "<p>The number of nodes of a particular node type in the cluster.</p>",
         "SAMLOptionsInput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive. Acceptable values are between 1 and 1440, and the default value is 60.</p>",
         "SAMLOptionsOutput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive.</p>",
         "SnapshotOptions$AutomatedSnapshotStartHour": "<p>The time, in UTC format, when OpenSearch Service takes a daily automated snapshot of the specified domain. Default is <code>0</code> hours.</p>",
@@ -1972,6 +1974,12 @@
         "ListVpcEndpointsResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>"
       }
     },
+    "NodeConfig": {
+      "base": "<p>Container for specifying configuration of any node type.</p>",
+      "refs": {
+        "NodeOption$NodeConfig": "<p>Container for specifying configuration of any node type.</p>"
+      }
+    },
     "NodeId": {
       "base": null,
       "refs": {
@@ -1979,6 +1987,24 @@
         "DomainNodesStatus$NodeId": "<p>The ID of the node.</p>",
         "GetDomainMaintenanceStatusResponse$NodeId": "<p>The node ID of the maintenance action.</p>",
         "StartDomainMaintenanceRequest$NodeId": "<p>The ID of the data node.</p>"
+      }
+    },
+    "NodeOption": {
+      "base": "<p>Container for specifying node type.</p>",
+      "refs": {
+        "NodeOptionsList$member": null
+      }
+    },
+    "NodeOptionsList": {
+      "base": null,
+      "refs": {
+        "ClusterConfig$NodeOptions": "<p>List of node options for the domain.</p>"
+      }
+    },
+    "NodeOptionsNodeType": {
+      "base": null,
+      "refs": {
+        "NodeOption$NodeType": "<p>Container for node type like coordinating.</p>"
       }
     },
     "NodeStatus": {
@@ -2071,6 +2097,7 @@
         "DescribeInstanceTypeLimitsRequest$InstanceType": "<p>The OpenSearch Service instance type for which you need limit information.</p>",
         "DomainNodesStatus$InstanceType": "<p>The instance type information of the node.</p>",
         "InstanceTypeDetails$InstanceType": "<p>The instance type.</p>",
+        "NodeConfig$Type": "<p>The instance type of a particular node type in the cluster.</p>",
         "ReservedInstance$InstanceType": "<p>The OpenSearch instance type offered by theReserved Instance offering.</p>",
         "ReservedInstanceOffering$InstanceType": "<p>The OpenSearch instance type offered by the Reserved Instance offering.</p>"
       }
