@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.12 - 2024-10-28
 
 * `Aws\RDS` - This release adds support for Enhanced Monitoring and Performance Insights when restoring Aurora Limitless Database DB clusters. It also adds support for the os-upgrade pending maintenance action.
 * `Aws\StorageGateway` - Documentation update: Amazon FSx File Gateway will no longer be available to new customers.
