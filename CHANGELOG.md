@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.324.13 - 2024-10-29
 
 * `Aws\BedrockRuntime` - Update Application Inference Profile
 * `Aws\CleanRooms` - This release adds the option for customers to configure analytics engine when creating a collaboration, and introduces the new SPARK analytics engine type in addition to maintaining the legacy CLEAN_ROOMS_SQL engine type.
