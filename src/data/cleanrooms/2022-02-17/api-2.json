@@ -1125,6 +1125,7 @@
       "output":{"shape":"PopulateIdMappingTableOutput"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -1746,7 +1747,7 @@
       "type":"string",
       "max":200,
       "min":0,
-      "pattern":"(ANY_QUERY|arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)"
+      "pattern":"(ANY_QUERY|ANY_JOB|arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)"
     },
     "AnalysisTemplateIdentifier":{
       "type":"string",
@@ -1833,6 +1834,13 @@
       "enum":[
         "DIRECT_ANALYSIS",
         "ADDITIONAL_ANALYSIS"
+      ]
+    },
+    "AnalyticsEngine":{
+      "type":"string",
+      "enum":[
+        "SPARK",
+        "CLEAN_ROOMS_SQL"
       ]
     },
     "BatchGetCollaborationAnalysisTemplateError":{
@@ -1972,6 +1980,13 @@
         "errors":{"shape":"BatchGetSchemaErrorList"}
       }
     },
+    "BilledResourceUtilization":{
+      "type":"structure",
+      "required":["units"],
+      "members":{
+        "units":{"shape":"Double"}
+      }
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -2008,7 +2023,8 @@
         "membershipId":{"shape":"UUID"},
         "membershipArn":{"shape":"MembershipArn"},
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
-        "queryLogStatus":{"shape":"CollaborationQueryLogStatus"}
+        "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CollaborationAnalysisTemplate":{
@@ -2330,7 +2346,8 @@
         "updateTime":{"shape":"Timestamp"},
         "memberStatus":{"shape":"MemberStatus"},
         "membershipId":{"shape":"UUID"},
-        "membershipArn":{"shape":"MembershipArn"}
+        "membershipArn":{"shape":"MembershipArn"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CollaborationSummaryList":{
@@ -2363,6 +2380,13 @@
       "max":255,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
+    },
+    "ComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "worker":{"shape":"WorkerComputeConfiguration"}
+      },
+      "union":true
     },
     "ConfigurationDetails":{
       "type":"structure",
@@ -2775,7 +2799,8 @@
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
         "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
         "tags":{"shape":"TagMap"},
-        "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"}
+        "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CreateCollaborationOutput":{
@@ -5078,7 +5103,20 @@
         "TIMESTAMPTZ",
         "TIME",
         "TIMETZ",
-        "VARBYTE"
+        "VARBYTE",
+        "BINARY",
+        "BYTE",
+        "CHARACTER",
+        "DOUBLE",
+        "FLOAT",
+        "INT",
+        "LONG",
+        "NUMERIC",
+        "SHORT",
+        "STRING",
+        "TIMESTAMP_LTZ",
+        "TIMESTAMP_NTZ",
+        "TINYINT"
       ]
     },
     "ParameterValue":{
@@ -5317,7 +5355,8 @@
         "statistics":{"shape":"ProtectedQueryStatistics"},
         "result":{"shape":"ProtectedQueryResult"},
         "error":{"shape":"ProtectedQueryError"},
-        "differentialPrivacy":{"shape":"DifferentialPrivacyParameters"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyParameters"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "ProtectedQueryError":{
@@ -5394,7 +5433,8 @@
       "members":{
         "resultFormat":{"shape":"ResultFormat"},
         "bucket":{"shape":"ProtectedQueryS3OutputConfigurationBucketString"},
-        "keyPrefix":{"shape":"KeyPrefix"}
+        "keyPrefix":{"shape":"KeyPrefix"},
+        "singleFileOutput":{"shape":"Boolean"}
       }
     },
     "ProtectedQueryS3OutputConfigurationBucketString":{
@@ -5427,7 +5467,8 @@
     "ProtectedQueryStatistics":{
       "type":"structure",
       "members":{
-        "totalDurationInMillis":{"shape":"Long"}
+        "totalDurationInMillis":{"shape":"Long"},
+        "billedResourceUtilization":{"shape":"BilledResourceUtilization"}
       }
     },
     "ProtectedQueryStatus":{
@@ -5801,7 +5842,8 @@
           "locationName":"membershipIdentifier"
         },
         "sqlParameters":{"shape":"ProtectedQuerySQLParameters"},
-        "resultConfiguration":{"shape":"ProtectedQueryResultConfiguration"}
+        "resultConfiguration":{"shape":"ProtectedQueryResultConfiguration"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "StartProtectedQueryOutput":{
@@ -6284,6 +6326,26 @@
         "INVALID_CONFIGURATION",
         "INVALID_QUERY",
         "IAM_SYNCHRONIZATION_DELAY"
+      ]
+    },
+    "WorkerComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"WorkerComputeType"},
+        "number":{"shape":"WorkerComputeConfigurationNumberInteger"}
+      }
+    },
+    "WorkerComputeConfigurationNumberInteger":{
+      "type":"integer",
+      "box":true,
+      "max":400,
+      "min":2
+    },
+    "WorkerComputeType":{
+      "type":"string",
+      "enum":[
+        "CR.1X",
+        "CR.4X"
       ]
     }
   }

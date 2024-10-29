@@ -103,8 +103,8 @@
         "Collaboration$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplate$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "CollaborationAnalysisTemplateSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
-        "CollaborationConfiguredAudienceModelAssociation$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Only supports AWS account ID.</p>",
-        "CollaborationConfiguredAudienceModelAssociationSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Only supports AWS account ID.</p>",
+        "CollaborationConfiguredAudienceModelAssociation$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Only supports Amazon Web Services account ID.</p>",
+        "CollaborationConfiguredAudienceModelAssociationSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Only supports Amazon Web Services account ID.</p>",
         "CollaborationIdNamespaceAssociation$creatorAccountId": "<p>The unique identifier of the Amazon Web Services account that created the collaboration ID namespace association.</p>",
         "CollaborationIdNamespaceAssociationSummary$creatorAccountId": "<p>The Amazon Web Services account that created this collaboration ID namespace association.</p>",
         "CollaborationPrivacyBudgetSummary$creatorAccountId": "<p>The unique identifier of the account that created this privacy budget.</p>",
@@ -216,7 +216,7 @@
         "ConfiguredTable$analysisMethod": "<p>The analysis method for the configured table. The only valid value is currently `DIRECT_QUERY`.</p>",
         "ConfiguredTableSummary$analysisMethod": "<p>The analysis method for the configured tables. The only valid value is currently `DIRECT_QUERY`.</p>",
         "CreateConfiguredTableInput$analysisMethod": "<p>The analysis method for the configured tables. The only valid value is currently `DIRECT_QUERY`.</p>",
-        "Schema$analysisMethod": "<p>The analysis method for the schema. The only valid value is currently DIRECT_QUERY.</p>",
+        "Schema$analysisMethod": "<p>The analysis method for the schema. The only valid value is currently <code>DIRECT_QUERY</code>.</p>",
         "SchemaSummary$analysisMethod": "<p>The analysis method for the associated schema. The only valid value is currently `DIRECT_QUERY`.</p>"
       }
     },
@@ -345,7 +345,7 @@
     "AnalysisRuleTypeList": {
       "base": null,
       "refs": {
-        "Schema$analysisRuleTypes": "<p>The analysis rule types associated with the schema. Currently, only one entry is present.</p>",
+        "Schema$analysisRuleTypes": "<p>The analysis rule types that are associated with the schema. Currently, only one entry is present.</p>",
         "SchemaSummary$analysisRuleTypes": "<p>The types of analysis rules that are associated with this schema object.</p>"
       }
     },
@@ -471,6 +471,14 @@
         "SchemaStatusDetail$analysisType": "<p>The type of analysis that can be performed on the schema.</p> <p>A schema can have an <code>analysisType</code> of <code>DIRECT_ANALYSIS</code>, <code>ADDITIONAL_ANALYSIS_FOR_AUDIENCE_GENERATION</code>, or both.</p>"
       }
     },
+    "AnalyticsEngine": {
+      "base": null,
+      "refs": {
+        "Collaboration$analyticsEngine": "<p> The analytics engine for the collaboration.</p>",
+        "CollaborationSummary$analyticsEngine": "<p> The analytics engine.</p>",
+        "CreateCollaborationInput$analyticsEngine": "<p> The analytics engine.</p>"
+      }
+    },
     "BatchGetCollaborationAnalysisTemplateError": {
       "base": "<p>Details of errors thrown by the call to retrieve multiple analysis templates within a collaboration by their identifiers.</p>",
       "refs": {
@@ -537,6 +545,12 @@
       "refs": {
       }
     },
+    "BilledResourceUtilization": {
+      "base": "<p> Information related to the utilization of resources that have been billed or charged for in a given context, such as a protected query.</p>",
+      "refs": {
+        "ProtectedQueryStatistics$billedResourceUtilization": "<p> The billed resource utilization.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -550,6 +564,7 @@
         "IdMappingTableInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID mapping table resource. </p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID mapping table resource.</p>",
         "IdNamespaceAssociationInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID namespace association resource.</p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID namespace association resource.</p>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
+        "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
         "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
       }
     },
@@ -621,7 +636,7 @@
         "PrivacyBudgetSummary$collaborationArn": "<p>The ARN of the collaboration that contains this privacy budget.</p>",
         "PrivacyBudgetTemplate$collaborationArn": "<p>The ARN of the collaboration that contains this privacy budget template.</p>",
         "PrivacyBudgetTemplateSummary$collaborationArn": "<p>The ARN of the collaboration that contains this privacy budget template.</p>",
-        "Schema$collaborationArn": "<p>The unique ARN for the collaboration that the schema belongs to.</p>",
+        "Schema$collaborationArn": "<p>The unique Amazon Resource Name (ARN) for the collaboration that the schema belongs to.</p>",
         "SchemaSummary$collaborationArn": "<p>The unique ARN for the collaboration that the schema belongs to.</p>"
       }
     },
@@ -766,7 +781,7 @@
     "ColumnList": {
       "base": null,
       "refs": {
-        "Schema$columns": "<p>The columns for the relation this schema represents.</p>",
+        "Schema$columns": "<p>The columns for the relation that this schema represents.</p>",
         "Schema$partitionKeys": "<p>The partition keys for the dataset underlying this schema.</p>"
       }
     },
@@ -781,6 +796,13 @@
       "base": null,
       "refs": {
         "Column$type": "<p>The type of the column.</p>"
+      }
+    },
+    "ComputeConfiguration": {
+      "base": "<p> The configuration of the compute resources for an analysis with the Spark analytics engine.</p>",
+      "refs": {
+        "ProtectedQuery$computeConfiguration": "<p> The compute configuration for the protected query.</p>",
+        "StartProtectedQueryInput$computeConfiguration": "<p> The compute configuration for the protected query.</p>"
       }
     },
     "ConfigurationDetails": {
@@ -1444,6 +1466,7 @@
     "Double": {
       "base": null,
       "refs": {
+        "BilledResourceUtilization$units": "<p> The number of Clean Rooms Processing Unit (CRPU) hours that have been billed.</p>",
         "ServiceQuotaExceededException$quotaValue": "<p>The value of the quota.</p>"
       }
     },
@@ -2076,24 +2099,24 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListAnalysisTemplatesInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
-        "ListCollaborationAnalysisTemplatesInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
-        "ListCollaborationConfiguredAudienceModelAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListAnalysisTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListCollaborationAnalysisTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListCollaborationConfiguredAudienceModelAssociationsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListCollaborationIdNamespaceAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.&gt;</p>",
-        "ListCollaborationPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListCollaborationPrivacyBudgetsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListCollaborationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListConfiguredAudienceModelAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListConfiguredTableAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
-        "ListConfiguredTablesInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListCollaborationPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListCollaborationPrivacyBudgetsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListCollaborationsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListConfiguredAudienceModelAssociationsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListConfiguredTableAssociationsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListConfiguredTablesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListIdMappingTablesInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
         "ListIdNamespaceAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListMembersInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
-        "ListMembershipsInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
-        "ListPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListPrivacyBudgetsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.</p>",
-        "ListProtectedQueriesInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service can return a nextToken even if the maximum results has not been met. </p>",
-        "ListSchemasInput$maxResults": "<p>The maximum size of the results that is returned per call.</p>"
+        "ListMembersInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListMembershipsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListPrivacyBudgetsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListProtectedQueriesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met. </p>",
+        "ListSchemasInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>"
       }
     },
     "MemberAbilities": {
@@ -2291,42 +2314,42 @@
     "PaginationToken": {
       "base": null,
       "refs": {
-        "ListAnalysisTemplatesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListAnalysisTemplatesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationAnalysisTemplatesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationAnalysisTemplatesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationConfiguredAudienceModelAssociationsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationConfiguredAudienceModelAssociationsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListAnalysisTemplatesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListAnalysisTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationAnalysisTemplatesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationAnalysisTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationConfiguredAudienceModelAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationConfiguredAudienceModelAssociationsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationIdNamespaceAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationIdNamespaceAssociationsOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
-        "ListCollaborationPrivacyBudgetTemplatesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationPrivacyBudgetTemplatesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationPrivacyBudgetsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationPrivacyBudgetsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListCollaborationsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListConfiguredAudienceModelAssociationsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationPrivacyBudgetTemplatesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationPrivacyBudgetTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationPrivacyBudgetsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationPrivacyBudgetsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListConfiguredAudienceModelAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListConfiguredAudienceModelAssociationsOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
-        "ListConfiguredTableAssociationsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListConfiguredTableAssociationsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListConfiguredTablesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListConfiguredTablesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListConfiguredTableAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListConfiguredTableAssociationsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListConfiguredTablesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListConfiguredTablesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListIdMappingTablesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListIdMappingTablesOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
         "ListIdNamespaceAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListIdNamespaceAssociationsOutput$nextToken": "<p>The token value provided to access the next page of results.</p>",
-        "ListMembersInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListMembersOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListMembershipsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListMembershipsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListPrivacyBudgetTemplatesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListPrivacyBudgetTemplatesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListPrivacyBudgetsInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListPrivacyBudgetsOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListProtectedQueriesInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListProtectedQueriesOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListSchemasInput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListSchemasOutput$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>"
+        "ListMembersInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListMembersOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListMembershipsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListMembershipsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListPrivacyBudgetTemplatesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListPrivacyBudgetTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListPrivacyBudgetsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListPrivacyBudgetsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListProtectedQueriesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListProtectedQueriesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListSchemasInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListSchemasOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>"
       }
     },
     "ParameterMap": {
@@ -2609,7 +2632,7 @@
       "refs": {
         "ListProtectedQueriesInput$status": "<p>A filter on the status of the protected query.</p>",
         "ProtectedQuery$status": "<p>The status of the query.</p>",
-        "ProtectedQuerySummary$status": "<p>The status of the protected query. Value values are `SUBMITTED`, `STARTED`, `CANCELLED`, `CANCELLING`, `FAILED`, `SUCCESS`, `TIMED_OUT`.</p>"
+        "ProtectedQuerySummary$status": "<p>The status of the protected query.</p>"
       }
     },
     "ProtectedQuerySummary": {
@@ -2850,9 +2873,9 @@
     "SchemaType": {
       "base": null,
       "refs": {
-        "ListSchemasInput$schemaType": "<p>If present, filter schemas by schema type. The only valid schema type is currently `TABLE`.</p>",
-        "Schema$type": "<p>The type of schema. The only valid value is currently `TABLE`.</p>",
-        "SchemaSummary$type": "<p>The type of schema object. The only valid schema type is currently `TABLE`.</p>"
+        "ListSchemasInput$schemaType": "<p>If present, filter schemas by schema type.</p>",
+        "Schema$type": "<p>The type of schema.</p>",
+        "SchemaSummary$type": "<p>The type of schema object.</p>"
       }
     },
     "SchemaTypeProperties": {
@@ -3075,8 +3098,8 @@
         "PrivacyBudgetTemplateSummary$updateTime": "<p>The most recent time at which the privacy budget template was updated.</p>",
         "ProtectedQuery$createTime": "<p>The time at which the protected query was created.</p>",
         "ProtectedQuerySummary$createTime": "<p>The time the protected query was created.</p>",
-        "Schema$createTime": "<p>The time the schema was created.</p>",
-        "Schema$updateTime": "<p>The time the schema was last updated.</p>",
+        "Schema$createTime": "<p>The time at which the schema was created.</p>",
+        "Schema$updateTime": "<p>The most recent time at which the schema was updated.</p>",
         "SchemaSummary$createTime": "<p>The time the schema object was created.</p>",
         "SchemaSummary$updateTime": "<p>The time the schema object was last updated.</p>"
       }
@@ -3305,6 +3328,24 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>A reason code for the exception.</p>"
+      }
+    },
+    "WorkerComputeConfiguration": {
+      "base": "<p> The configuration of the compute resources for workers running an analysis with the Clean Rooms SQL analytics engine.</p>",
+      "refs": {
+        "ComputeConfiguration$worker": "<p> The worker configuration for the compute environment.</p>"
+      }
+    },
+    "WorkerComputeConfigurationNumberInteger": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfiguration$number": "<p> The number of workers.</p>"
+      }
+    },
+    "WorkerComputeType": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfiguration$type": "<p> The worker compute configuration type.</p>"
       }
     }
   }

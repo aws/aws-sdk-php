@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - Update Application Inference Profile
+* `Aws\CleanRooms` - This release adds the option for customers to configure analytics engine when creating a collaboration, and introduces the new SPARK analytics engine type in addition to maintaining the legacy CLEAN_ROOMS_SQL engine type.
+* `Aws\RedshiftDataAPIService` - Adding a new API GetStatementResultV2 that supports CSV formatted results from ExecuteStatement and BatchExecuteStatement calls.
+* `Aws\SageMaker` - Adding `notebook-al2-v3` as allowed value to SageMaker NotebookInstance PlatformIdentifier attribute
+* `Aws\IoTFleetWise` - Updated BatchCreateVehicle and BatchUpdateVehicle APIs: LimitExceededException has been added and the maximum number of vehicles in a batch has been set to 10 explicitly
+* `Aws\Bedrock` - Update Application Inference Profile
+* `Aws\CloudWatchLogs` - Added support for new optional baseline parameter in the UpdateAnomaly API. For UpdateAnomaly requests with baseline set to True, The anomaly behavior is then treated as baseline behavior. However, more severe occurrences of this behavior will still be reported as anomalies.
+
 ## 3.324.12 - 2024-10-28
 
 * `Aws\RDS` - This release adds support for Enhanced Monitoring and Performance Insights when restoring Aurora Limitless Database DB clusters. It also adds support for the os-upgrade pending maintenance action.
