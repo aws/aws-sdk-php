@@ -256,6 +256,15 @@
       "input":{"shape":"AssociateRouteTableRequest"},
       "output":{"shape":"AssociateRouteTableResult"}
     },
+    "AssociateSecurityGroupVpc":{
+      "name":"AssociateSecurityGroupVpc",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateSecurityGroupVpcRequest"},
+      "output":{"shape":"AssociateSecurityGroupVpcResult"}
+    },
     "AssociateSubnetCidrBlock":{
       "name":"AssociateSubnetCidrBlock",
       "http":{
@@ -2930,6 +2939,15 @@
       "input":{"shape":"DescribeSecurityGroupRulesRequest"},
       "output":{"shape":"DescribeSecurityGroupRulesResult"}
     },
+    "DescribeSecurityGroupVpcAssociations":{
+      "name":"DescribeSecurityGroupVpcAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSecurityGroupVpcAssociationsRequest"},
+      "output":{"shape":"DescribeSecurityGroupVpcAssociationsResult"}
+    },
     "DescribeSecurityGroups":{
       "name":"DescribeSecurityGroups",
       "http":{
@@ -3670,6 +3688,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DisassociateRouteTableRequest"}
+    },
+    "DisassociateSecurityGroupVpc":{
+      "name":"DisassociateSecurityGroupVpc",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateSecurityGroupVpcRequest"},
+      "output":{"shape":"DisassociateSecurityGroupVpcResult"}
     },
     "DisassociateSubnetCidrBlock":{
       "name":"DisassociateSubnetCidrBlock",
@@ -7381,6 +7408,27 @@
         "AssociationState":{
           "shape":"RouteTableAssociationState",
           "locationName":"associationState"
+        }
+      }
+    },
+    "AssociateSecurityGroupVpcRequest":{
+      "type":"structure",
+      "required":[
+        "GroupId",
+        "VpcId"
+      ],
+      "members":{
+        "GroupId":{"shape":"SecurityGroupId"},
+        "VpcId":{"shape":"VpcId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AssociateSecurityGroupVpcResult":{
+      "type":"structure",
+      "members":{
+        "State":{
+          "shape":"SecurityGroupVpcAssociationState",
+          "locationName":"state"
         }
       }
     },
@@ -12146,6 +12194,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "SecurityGroupArn":{
+          "shape":"String",
+          "locationName":"securityGroupArn"
         }
       }
     },
@@ -18402,6 +18454,36 @@
         }
       }
     },
+    "DescribeSecurityGroupVpcAssociationsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeSecurityGroupVpcAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeSecurityGroupVpcAssociationsMaxResults"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeSecurityGroupVpcAssociationsResult":{
+      "type":"structure",
+      "members":{
+        "SecurityGroupVpcAssociations":{
+          "shape":"SecurityGroupVpcAssociationList",
+          "locationName":"securityGroupVpcAssociationSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeSecurityGroupsMaxResults":{
       "type":"integer",
       "max":1000,
@@ -20917,6 +20999,28 @@
         }
       }
     },
+    "DisassociateSecurityGroupVpcRequest":{
+      "type":"structure",
+      "required":[
+        "GroupId",
+        "VpcId"
+      ],
+      "members":{
+        "GroupId":{"shape":"DisassociateSecurityGroupVpcSecurityGroupId"},
+        "VpcId":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisassociateSecurityGroupVpcResult":{
+      "type":"structure",
+      "members":{
+        "State":{
+          "shape":"SecurityGroupVpcAssociationState",
+          "locationName":"state"
+        }
+      }
+    },
+    "DisassociateSecurityGroupVpcSecurityGroupId":{"type":"string"},
     "DisassociateSubnetCidrBlockRequest":{
       "type":"structure",
       "required":["AssociationId"],
@@ -40431,6 +40535,10 @@
         "UnknownIpPermissions":{
           "shape":"IpPermissionList",
           "locationName":"unknownIpPermissionSet"
+        },
+        "RevokedSecurityGroupRules":{
+          "shape":"RevokedSecurityGroupRuleList",
+          "locationName":"revokedSecurityGroupRuleSet"
         }
       }
     },
@@ -40466,7 +40574,67 @@
         "UnknownIpPermissions":{
           "shape":"IpPermissionList",
           "locationName":"unknownIpPermissionSet"
+        },
+        "RevokedSecurityGroupRules":{
+          "shape":"RevokedSecurityGroupRuleList",
+          "locationName":"revokedSecurityGroupRuleSet"
         }
+      }
+    },
+    "RevokedSecurityGroupRule":{
+      "type":"structure",
+      "members":{
+        "SecurityGroupRuleId":{
+          "shape":"SecurityGroupRuleId",
+          "locationName":"securityGroupRuleId"
+        },
+        "GroupId":{
+          "shape":"SecurityGroupId",
+          "locationName":"groupId"
+        },
+        "IsEgress":{
+          "shape":"Boolean",
+          "locationName":"isEgress"
+        },
+        "IpProtocol":{
+          "shape":"String",
+          "locationName":"ipProtocol"
+        },
+        "FromPort":{
+          "shape":"Integer",
+          "locationName":"fromPort"
+        },
+        "ToPort":{
+          "shape":"Integer",
+          "locationName":"toPort"
+        },
+        "CidrIpv4":{
+          "shape":"String",
+          "locationName":"cidrIpv4"
+        },
+        "CidrIpv6":{
+          "shape":"String",
+          "locationName":"cidrIpv6"
+        },
+        "PrefixListId":{
+          "shape":"PrefixListResourceId",
+          "locationName":"prefixListId"
+        },
+        "ReferencedGroupId":{
+          "shape":"SecurityGroupId",
+          "locationName":"referencedGroupId"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        }
+      }
+    },
+    "RevokedSecurityGroupRuleList":{
+      "type":"list",
+      "member":{
+        "shape":"RevokedSecurityGroupRule",
+        "locationName":"item"
       }
     },
     "RoleId":{"type":"string"},
@@ -41363,6 +41531,10 @@
           "shape":"String",
           "locationName":"vpcId"
         },
+        "SecurityGroupArn":{
+          "shape":"String",
+          "locationName":"securityGroupArn"
+        },
         "OwnerId":{
           "shape":"String",
           "locationName":"ownerId"
@@ -41558,6 +41730,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "SecurityGroupRuleArn":{
+          "shape":"String",
+          "locationName":"securityGroupRuleArn"
         }
       }
     },
@@ -41624,6 +41800,49 @@
         "shape":"SecurityGroupName",
         "locationName":"SecurityGroup"
       }
+    },
+    "SecurityGroupVpcAssociation":{
+      "type":"structure",
+      "members":{
+        "GroupId":{
+          "shape":"SecurityGroupId",
+          "locationName":"groupId"
+        },
+        "VpcId":{
+          "shape":"VpcId",
+          "locationName":"vpcId"
+        },
+        "VpcOwnerId":{
+          "shape":"String",
+          "locationName":"vpcOwnerId"
+        },
+        "State":{
+          "shape":"SecurityGroupVpcAssociationState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"String",
+          "locationName":"stateReason"
+        }
+      }
+    },
+    "SecurityGroupVpcAssociationList":{
+      "type":"list",
+      "member":{
+        "shape":"SecurityGroupVpcAssociation",
+        "locationName":"item"
+      }
+    },
+    "SecurityGroupVpcAssociationState":{
+      "type":"string",
+      "enum":[
+        "associating",
+        "associated",
+        "association-failed",
+        "disassociating",
+        "disassociated",
+        "disassociation-failed"
+      ]
     },
     "SelfServicePortal":{
       "type":"string",

@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-02-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cassandra",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Keyspaces",
     "serviceId":"Keyspaces",
     "signatureVersion":"v4",
@@ -46,6 +48,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateType":{
+      "name":"CreateType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTypeRequest"},
+      "output":{"shape":"CreateTypeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteKeyspace":{
       "name":"DeleteKeyspace",
       "http":{
@@ -71,6 +90,23 @@
       },
       "input":{"shape":"DeleteTableRequest"},
       "output":{"shape":"DeleteTableResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DeleteType":{
+      "name":"DeleteType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTypeRequest"},
+      "output":{"shape":"DeleteTypeResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -128,6 +164,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetType":{
+      "name":"GetType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTypeRequest"},
+      "output":{"shape":"GetTypeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListKeyspaces":{
       "name":"ListKeyspaces",
       "http":{
@@ -176,6 +228,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListTypes":{
+      "name":"ListTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTypesRequest"},
+      "output":{"shape":"ListTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "RestoreTable":{
       "name":"RestoreTable",
       "http":{
@@ -205,6 +273,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -407,6 +476,30 @@
         "resourceArn":{"shape":"ARN"}
       }
     },
+    "CreateTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName",
+        "fieldDefinitions"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"},
+        "fieldDefinitions":{"shape":"FieldList"}
+      }
+    },
+    "CreateTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceArn",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceArn":{"shape":"ARN"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
     "DefaultTimeToLive":{
       "type":"integer",
       "box":true,
@@ -441,6 +534,29 @@
       "members":{
       }
     },
+    "DeleteTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "DeleteTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceArn",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceArn":{"shape":"ARN"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "Depth":{"type":"integer"},
     "DoubleObject":{"type":"double"},
     "EncryptionSpecification":{
       "type":"structure",
@@ -456,6 +572,27 @@
         "CUSTOMER_MANAGED_KMS_KEY",
         "AWS_OWNED_KMS_KEY"
       ]
+    },
+    "FieldDefinition":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"FieldDefinitionNameString"},
+        "type":{"shape":"GenericString"}
+      }
+    },
+    "FieldDefinitionNameString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FieldList":{
+      "type":"list",
+      "member":{"shape":"FieldDefinition"},
+      "min":1
     },
     "GenericString":{"type":"string"},
     "GetKeyspaceRequest":{
@@ -540,6 +677,36 @@
         "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"}
       }
     },
+    "GetTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "GetTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName",
+        "keyspaceArn"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"},
+        "fieldDefinitions":{"shape":"FieldList"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "status":{"shape":"TypeStatus"},
+        "directReferringTables":{"shape":"TableNameList"},
+        "directParentTypes":{"shape":"TypeNameList"},
+        "maxNestingDepth":{"shape":"Depth"},
+        "keyspaceArn":{"shape":"ARN"}
+      }
+    },
     "IntegerObject":{"type":"integer"},
     "InternalServerException":{
       "type":"structure",
@@ -618,6 +785,23 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "tags":{"shape":"TagList"}
+      }
+    },
+    "ListTypesRequest":{
+      "type":"structure",
+      "required":["keyspaceName"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "keyspaceName":{"shape":"KeyspaceName"}
+      }
+    },
+    "ListTypesResponse":{
+      "type":"structure",
+      "required":["types"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "types":{"shape":"TypeNameList"}
       }
     },
     "MaxResults":{
@@ -800,6 +984,10 @@
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
     },
+    "TableNameList":{
+      "type":"list",
+      "member":{"shape":"TableName"}
+    },
     "TableStatus":{
       "type":"string",
       "enum":[
@@ -901,6 +1089,24 @@
       "enum":["ENABLED"]
     },
     "Timestamp":{"type":"timestamp"},
+    "TypeName":{
+      "type":"string",
+      "max":48,
+      "min":1
+    },
+    "TypeNameList":{
+      "type":"list",
+      "member":{"shape":"TypeName"}
+    },
+    "TypeStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "DELETING",
+        "RESTORING"
+      ]
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[

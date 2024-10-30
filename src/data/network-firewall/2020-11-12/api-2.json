@@ -1234,6 +1234,12 @@
       "type":"list",
       "member":{"shape":"TCPFlag"}
     },
+    "FlowTimeouts":{
+      "type":"structure",
+      "members":{
+        "TcpIdleTimeoutSeconds":{"shape":"TcpIdleTimeoutRangeBound"}
+      }
+    },
     "GeneratedRulesType":{
       "type":"string",
       "enum":[
@@ -1928,7 +1934,8 @@
       "type":"structure",
       "members":{
         "RuleOrder":{"shape":"RuleOrder"},
-        "StreamExceptionPolicy":{"shape":"StreamExceptionPolicy"}
+        "StreamExceptionPolicy":{"shape":"StreamExceptionPolicy"},
+        "FlowTimeouts":{"shape":"FlowTimeouts"}
       }
     },
     "StatefulRule":{
@@ -2223,6 +2230,7 @@
       "type":"list",
       "member":{"shape":"TargetType"}
     },
+    "TcpIdleTimeoutRangeBound":{"type":"integer"},
     "ThrottlingException":{
       "type":"structure",
       "members":{

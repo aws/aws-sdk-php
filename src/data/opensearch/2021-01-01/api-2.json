@@ -123,6 +123,24 @@
         {"shape":"ValidationException"}
       ]
     },
+    "CreateApplication":{
+      "name":"CreateApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateApplicationRequest"},
+      "output":{"shape":"CreateApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "CreateDomain":{
       "name":"CreateDomain",
       "http":{
@@ -189,6 +207,25 @@
         {"shape":"InternalException"},
         {"shape":"DisabledOperationException"},
         {"shape":"BaseException"}
+      ]
+    },
+    "DeleteApplication":{
+      "name":"DeleteApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteApplicationRequest"},
+      "output":{"shape":"DeleteApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "DeleteDataSource":{
@@ -525,6 +562,24 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetApplication":{
+      "name":"GetApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetApplicationRequest"},
+      "output":{"shape":"GetApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "GetCompatibleVersions":{
       "name":"GetCompatibleVersions",
       "http":{
@@ -620,6 +675,24 @@
         {"shape":"DisabledOperationException"},
         {"shape":"ValidationException"},
         {"shape":"InternalException"}
+      ]
+    },
+    "ListApplications":{
+      "name":"ListApplications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/list-applications",
+        "responseCode":200
+      },
+      "input":{"shape":"ListApplicationsRequest"},
+      "output":{"shape":"ListApplicationsResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "ListDataSources":{
@@ -895,6 +968,25 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateApplication":{
+      "name":"UpdateApplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateApplicationRequest"},
+      "output":{"shape":"UpdateApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "UpdateDataSource":{
       "name":"UpdateDataSource",
       "http":{
@@ -1037,6 +1129,10 @@
         "DomainName":{"shape":"DomainName"},
         "Region":{"shape":"Region"}
       }
+    },
+    "AWSServicePrincipal":{
+      "type":"string",
+      "enum":["application.opensearchservice.amazonaws.com"]
     },
     "AcceptInboundConnectionRequest":{
       "type":"structure",
@@ -1195,6 +1291,66 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "AppConfig":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"AppConfigType"},
+        "value":{"shape":"AppConfigValue"}
+      }
+    },
+    "AppConfigType":{
+      "type":"string",
+      "enum":[
+        "opensearchDashboards.dashboardAdmin.users",
+        "opensearchDashboards.dashboardAdmin.groups"
+      ]
+    },
+    "AppConfigValue":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "AppConfigs":{
+      "type":"list",
+      "member":{"shape":"AppConfig"},
+      "max":200
+    },
+    "ApplicationName":{
+      "type":"string",
+      "max":30,
+      "min":3,
+      "pattern":"[a-z][a-z0-9\\-]+"
+    },
+    "ApplicationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "ACTIVE",
+        "FAILED"
+      ]
+    },
+    "ApplicationStatuses":{
+      "type":"list",
+      "member":{"shape":"ApplicationStatus"}
+    },
+    "ApplicationSummaries":{
+      "type":"list",
+      "member":{"shape":"ApplicationSummary"}
+    },
+    "ApplicationSummary":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"ApplicationName"},
+        "endpoint":{"shape":"String"},
+        "status":{"shape":"ApplicationStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "AssociatePackageRequest":{
       "type":"structure",
       "required":[
@@ -1222,17 +1378,15 @@
     },
     "AuthorizeVpcEndpointAccessRequest":{
       "type":"structure",
-      "required":[
-        "DomainName",
-        "Account"
-      ],
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
         },
-        "Account":{"shape":"AWSAccount"}
+        "Account":{"shape":"AWSAccount"},
+        "Service":{"shape":"AWSServicePrincipal"}
       }
     },
     "AuthorizeVpcEndpointAccessResponse":{
@@ -1617,6 +1771,34 @@
       }
     },
     "ConnectionStatusMessage":{"type":"string"},
+    "CreateApplicationRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"ApplicationName"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptionsInput"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "tagList":{"shape":"TagList"}
+      }
+    },
+    "CreateApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "name":{"shape":"ApplicationName"},
+        "arn":{"shape":"ARN"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "tagList":{"shape":"TagList"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "CreateDomainRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1636,6 +1818,7 @@
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsInput"},
         "TagList":{"shape":"TagList"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
@@ -1722,6 +1905,13 @@
         "SkipUnavailable":{"shape":"SkipUnavailableStatus"}
       }
     },
+    "DataSource":{
+      "type":"structure",
+      "members":{
+        "dataSourceArn":{"shape":"ARN"},
+        "dataSourceDescription":{"shape":"DataSourceDescription"}
+      }
+    },
     "DataSourceDescription":{
       "type":"string",
       "max":1000,
@@ -1759,6 +1949,26 @@
         "S3GlueDataCatalog":{"shape":"S3GlueDataCatalog"}
       },
       "union":true
+    },
+    "DataSources":{
+      "type":"list",
+      "member":{"shape":"DataSource"}
+    },
+    "DeleteApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DeleteApplicationResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DeleteDataSourceRequest":{
       "type":"structure",
@@ -2295,6 +2505,7 @@
         "LogPublishingOptions":{"shape":"LogPublishingOptionsStatus"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsStatus"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
@@ -2488,6 +2699,7 @@
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptions"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
@@ -2643,6 +2855,32 @@
     "GUIDList":{
       "type":"list",
       "member":{"shape":"GUID"}
+    },
+    "GetApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"ApplicationName"},
+        "endpoint":{"shape":"String"},
+        "status":{"shape":"ApplicationStatus"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "dataSources":{"shape":"DataSources"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
     },
     "GetCompatibleVersionsRequest":{
       "type":"structure",
@@ -2813,11 +3051,81 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "IamIdentityCenterOptions":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "iamIdentityCenterInstanceArn":{"shape":"ARN"},
+        "iamRoleForIdentityCenterApplicationArn":{"shape":"RoleArn"},
+        "iamIdentityCenterApplicationArn":{"shape":"ARN"}
+      }
+    },
+    "IamIdentityCenterOptionsInput":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "iamIdentityCenterInstanceArn":{"shape":"ARN"},
+        "iamRoleForIdentityCenterApplicationArn":{"shape":"RoleArn"}
+      }
+    },
+    "Id":{
+      "type":"string",
+      "pattern":"[a-z0-9]{3,30}"
+    },
+    "IdentityCenterApplicationARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\\\-]*:[a-z]+:[a-z0-9\\\\-]*:[0-9]*:[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+"
+    },
+    "IdentityCenterInstanceARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\\\-]*:[a-z]+:[a-z0-9\\\\-]*:[0-9]*:[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+"
+    },
+    "IdentityCenterOptions":{
+      "type":"structure",
+      "members":{
+        "EnabledAPIAccess":{"shape":"Boolean"},
+        "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "SubjectKey":{"shape":"SubjectKeyIdCOption"},
+        "RolesKey":{"shape":"RolesKeyIdCOption"},
+        "IdentityCenterApplicationARN":{"shape":"IdentityCenterApplicationARN"},
+        "IdentityStoreId":{"shape":"IdentityStoreId"}
+      }
+    },
+    "IdentityCenterOptionsInput":{
+      "type":"structure",
+      "members":{
+        "EnabledAPIAccess":{"shape":"Boolean"},
+        "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "SubjectKey":{"shape":"SubjectKeyIdCOption"},
+        "RolesKey":{"shape":"RolesKeyIdCOption"}
+      }
+    },
+    "IdentityCenterOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"IdentityCenterOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "IdentityPoolId":{
       "type":"string",
       "max":55,
       "min":1,
       "pattern":"[\\w-]+:[0-9a-f-]+"
+    },
+    "IdentityStoreId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^d-[0-9a-f]{10}$|^[0-9a-f]{8}\\\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\\\b[0-9a-f]{12}$"
     },
     "InboundConnection":{
       "type":"structure",
@@ -2983,6 +3291,33 @@
       "type":"map",
       "key":{"shape":"InstanceRole"},
       "value":{"shape":"Limits"}
+    },
+    "ListApplicationsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "statuses":{
+          "shape":"ApplicationStatuses",
+          "location":"querystring",
+          "locationName":"statuses"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListApplicationsResponse":{
+      "type":"structure",
+      "members":{
+        "ApplicationSummaries":{"shape":"ApplicationSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
     },
     "ListDataSourcesRequest":{
       "type":"structure",
@@ -3981,17 +4316,15 @@
     },
     "RevokeVpcEndpointAccessRequest":{
       "type":"structure",
-      "required":[
-        "DomainName",
-        "Account"
-      ],
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
         },
-        "Account":{"shape":"AWSAccount"}
+        "Account":{"shape":"AWSAccount"},
+        "Service":{"shape":"AWSServicePrincipal"}
       }
     },
     "RevokeVpcEndpointAccessResponse":{
@@ -4009,6 +4342,13 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "RolesKeyIdCOption":{
+      "type":"string",
+      "enum":[
+        "GroupName",
+        "GroupId"
+      ]
     },
     "RollbackOnDisable":{
       "type":"string",
@@ -4287,6 +4627,14 @@
       "max":64,
       "min":1
     },
+    "SubjectKeyIdCOption":{
+      "type":"string",
+      "enum":[
+        "UserName",
+        "UserId",
+        "Email"
+      ]
+    },
     "TLSSecurityPolicy":{
       "type":"string",
       "enum":[
@@ -4326,12 +4674,39 @@
       "type":"string",
       "enum":["HOURS"]
     },
+    "Timestamp":{"type":"timestamp"},
     "TotalNumberOfStages":{"type":"integer"},
     "UIntValue":{
       "type":"integer",
       "min":0
     },
     "UncompressedPluginSizeInBytes":{"type":"long"},
+    "UpdateApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSources":{"shape":"DataSources"},
+        "appConfigs":{"shape":"AppConfigs"}
+      }
+    },
+    "UpdateApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "name":{"shape":"ApplicationName"},
+        "arn":{"shape":"ARN"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "UpdateDataSourceRequest":{
       "type":"structure",
       "required":[
@@ -4383,6 +4758,7 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
         "DryRun":{"shape":"DryRun"},
         "DryRunMode":{"shape":"DryRunMode"},

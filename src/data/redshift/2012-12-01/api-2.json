@@ -3633,8 +3633,8 @@
         "IntegrationName"
       ],
       "members":{
-        "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "IntegrationName":{"shape":"IntegrationName"},
         "KMSKeyId":{"shape":"String"},
         "TagList":{"shape":"TagList"},
@@ -4356,8 +4356,8 @@
     "DescribeInboundIntegrationsMessage":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "MaxRecords":{"shape":"IntegerOptional"},
         "Marker":{"shape":"String"}
       }
@@ -5209,13 +5209,19 @@
     "InboundIntegration":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
         "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "TargetArn":{"shape":"TargetArn"},
         "Status":{"shape":"ZeroETLIntegrationStatus"},
         "Errors":{"shape":"IntegrationErrorList"},
         "CreateTime":{"shape":"TStamp"}
       }
+    },
+    "InboundIntegrationArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:.+:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "InboundIntegrationList":{
       "type":"list",
@@ -5269,10 +5275,10 @@
     "Integration":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"IntegrationArn"},
         "IntegrationName":{"shape":"IntegrationName"},
-        "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "Status":{"shape":"ZeroETLIntegrationStatus"},
         "Errors":{"shape":"IntegrationErrorList"},
         "CreateTime":{"shape":"TStamp"},
@@ -5297,7 +5303,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"arn:aws[a-z\\-]*:redshift:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+      "pattern":"^arn:aws[a-z\\-]*:redshift:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "IntegrationConflictOperationFault":{
       "type":"structure",
@@ -7548,6 +7554,12 @@
         "DESC"
       ]
     },
+    "SourceArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:(s3|dynamodb):.*:.*:[a-zA-Z0-9._\\-\\/]+$"
+    },
     "SourceIdsList":{
       "type":"list",
       "member":{
@@ -7822,6 +7834,12 @@
         "TaggedResources":{"shape":"TaggedResourceList"},
         "Marker":{"shape":"String"}
       }
+    },
+    "TargetArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:redshift(-serverless)?:[a-z0-9\\-]+:[0-9]{12}:(namespace\\/|namespace:)[a-z0-9\\-]+$"
     },
     "TrackList":{
       "type":"list",

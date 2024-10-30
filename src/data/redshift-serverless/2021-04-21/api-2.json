@@ -1122,6 +1122,7 @@
         "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"NamespaceName"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
@@ -1871,6 +1872,26 @@
     },
     "ParameterKey":{"type":"string"},
     "ParameterValue":{"type":"string"},
+    "PerformanceTarget":{
+      "type":"structure",
+      "members":{
+        "level":{"shape":"PerformanceTargetLevelInteger"},
+        "status":{"shape":"PerformanceTargetStatus"}
+      }
+    },
+    "PerformanceTargetLevelInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "PerformanceTargetStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "PutResourcePolicyRequest":{
       "type":"structure",
       "required":[
@@ -2408,6 +2429,7 @@
         "ipAddressType":{"shape":"IpAddressType"},
         "maxCapacity":{"shape":"Integer"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
@@ -2519,6 +2541,7 @@
         "namespaceName":{"shape":"String"},
         "patchVersion":{"shape":"String"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "status":{"shape":"WorkgroupStatus"},

@@ -324,6 +324,12 @@
       "refs": {
       }
     },
+    "CreateIamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for creating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "CreateSecurityConfigRequest$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map. This field is required if you specify iamidentitycenter for the type parameter.</p>"
+      }
+    },
     "CreateLifecyclePolicyRequest": {
       "base": null,
       "refs": {
@@ -522,6 +528,41 @@
     "GetSecurityPolicyResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "IamIdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IamIdentityCenterConfigOptions$applicationArn": "<p>The ARN of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>"
+      }
+    },
+    "IamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "SecurityConfigDetail$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map.</p>"
+      }
+    },
+    "IamIdentityCenterGroupAttribute": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>",
+        "IamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>",
+        "UpdateIamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>"
+      }
+    },
+    "IamIdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$instanceArn": "<p>The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.</p>",
+        "IamIdentityCenterConfigOptions$instanceArn": "<p>The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.</p>"
+      }
+    },
+    "IamIdentityCenterUserAttribute": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code>.</p>",
+        "IamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code> </p>",
+        "UpdateIamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code>.</p>"
       }
     },
     "IndexingCapacityValue": {
@@ -1037,6 +1078,8 @@
         "EffectiveLifecyclePolicyDetail$retentionPeriod": "<p>The minimum number of index retention in days or hours. This is an optional parameter that will return only if it’s set.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Index resource is not found</code>.</p>",
+        "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
+        "IamIdentityCenterConfigOptions$applicationName": "<p>The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "InternalServerException$message": null,
         "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "LifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Lifecycle Policy is not found</code>.</p>",
@@ -1177,6 +1220,12 @@
     "UpdateCollectionResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UpdateIamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for updating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "UpdateSecurityConfigRequest$iamIdentityCenterOptionsUpdates": "<p>Describes IAM Identity Center options in the form of a key-value map.</p>"
       }
     },
     "UpdateLifecyclePolicyRequest": {

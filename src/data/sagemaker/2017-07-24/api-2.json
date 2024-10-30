@@ -7598,7 +7598,8 @@
         "SkipModelValidation":{"shape":"SkipModelValidation"},
         "SourceUri":{"shape":"ModelPackageSourceUri"},
         "SecurityConfig":{"shape":"ModelPackageSecurityConfig"},
-        "ModelCard":{"shape":"ModelPackageModelCard"}
+        "ModelCard":{"shape":"ModelPackageModelCard"},
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"}
       }
     },
     "CreateModelPackageOutput":{
@@ -10401,7 +10402,8 @@
         "SkipModelValidation":{"shape":"SkipModelValidation"},
         "SourceUri":{"shape":"ModelPackageSourceUri"},
         "SecurityConfig":{"shape":"ModelPackageSecurityConfig"},
-        "ModelCard":{"shape":"ModelPackageModelCard"}
+        "ModelCard":{"shape":"ModelPackageModelCard"},
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"}
       }
     },
     "DescribeModelQualityJobDefinitionRequest":{
@@ -17254,6 +17256,18 @@
       "max":1,
       "min":1
     },
+    "ModelLifeCycle":{
+      "type":"structure",
+      "required":[
+        "Stage",
+        "StageStatus"
+      ],
+      "members":{
+        "Stage":{"shape":"EntityName"},
+        "StageStatus":{"shape":"EntityName"},
+        "StageDescription":{"shape":"StageDescription"}
+      }
+    },
     "ModelMetadataFilter":{
       "type":"structure",
       "required":[
@@ -17355,6 +17369,7 @@
         "SourceUri":{"shape":"ModelPackageSourceUri"},
         "SecurityConfig":{"shape":"ModelPackageSecurityConfig"},
         "ModelCard":{"shape":"ModelPackageModelCard"},
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"},
         "Tags":{"shape":"TagList"},
         "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"},
         "DriftCheckBaselines":{"shape":"DriftCheckBaselines"},
@@ -21695,6 +21710,12 @@
         "TFRecord"
       ]
     },
+    "StageDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^.{0,1024}$"
+    },
     "StageStatus":{
       "type":"string",
       "enum":[
@@ -22723,7 +22744,6 @@
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
         "ml.p5e.48xlarge",
-        "ml.p5en.48xlarge",
         "ml.c5.xlarge",
         "ml.c5.2xlarge",
         "ml.c5.4xlarge",
@@ -22745,7 +22765,6 @@
         "ml.trn1.2xlarge",
         "ml.trn1.32xlarge",
         "ml.trn1n.32xlarge",
-        "ml.trn2.48xlarge",
         "ml.m6i.large",
         "ml.m6i.xlarge",
         "ml.m6i.2xlarge",
@@ -23941,7 +23960,9 @@
         "AdditionalInferenceSpecificationsToAdd":{"shape":"AdditionalInferenceSpecifications"},
         "InferenceSpecification":{"shape":"InferenceSpecification"},
         "SourceUri":{"shape":"ModelPackageSourceUri"},
-        "ModelCard":{"shape":"ModelPackageModelCard"}
+        "ModelCard":{"shape":"ModelPackageModelCard"},
+        "ModelLifeCycle":{"shape":"ModelLifeCycle"},
+        "ClientToken":{"shape":"ClientToken"}
       }
     },
     "UpdateModelPackageOutput":{
@@ -24384,7 +24405,7 @@
       "type":"string",
       "max":176,
       "min":1,
-      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)(\\/[0-9]{1,5})?$"
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)(\\/[0-9]{1,9})?$"
     },
     "Vertex":{
       "type":"structure",

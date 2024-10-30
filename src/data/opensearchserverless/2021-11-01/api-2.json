@@ -861,6 +861,15 @@
         "createCollectionDetail":{"shape":"CreateCollectionDetail"}
       }
     },
+    "CreateIamIdentityCenterConfigOptions":{
+      "type":"structure",
+      "required":["instanceArn"],
+      "members":{
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
+        "instanceArn":{"shape":"IamIdentityCenterInstanceArn"},
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+      }
+    },
     "CreateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -897,6 +906,7 @@
           "idempotencyToken":true
         },
         "description":{"shape":"ConfigDescription"},
+        "iamIdentityCenterOptions":{"shape":"CreateIamIdentityCenterConfigOptions"},
         "name":{"shape":"ConfigName"},
         "samlOptions":{"shape":"SamlConfigOptions"},
         "type":{"shape":"SecurityConfigType"}
@@ -1196,6 +1206,44 @@
       "members":{
         "securityPolicyDetail":{"shape":"SecurityPolicyDetail"}
       }
+    },
+    "IamIdentityCenterApplicationArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}$"
+    },
+    "IamIdentityCenterConfigOptions":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"IamIdentityCenterApplicationArn"},
+        "applicationDescription":{"shape":"String"},
+        "applicationName":{"shape":"String"},
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
+        "instanceArn":{"shape":"IamIdentityCenterInstanceArn"},
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+      }
+    },
+    "IamIdentityCenterGroupAttribute":{
+      "type":"string",
+      "enum":[
+        "GroupId",
+        "GroupName"
+      ]
+    },
+    "IamIdentityCenterInstanceArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$"
+    },
+    "IamIdentityCenterUserAttribute":{
+      "type":"string",
+      "enum":[
+        "UserId",
+        "UserName",
+        "Email"
+      ]
     },
     "IndexingCapacityValue":{
       "type":"integer",
@@ -1541,6 +1589,7 @@
         "configVersion":{"shape":"PolicyVersion"},
         "createdDate":{"shape":"Long"},
         "description":{"shape":"ConfigDescription"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterConfigOptions"},
         "id":{"shape":"SecurityConfigId"},
         "lastModifiedDate":{"shape":"Long"},
         "samlOptions":{"shape":"SamlConfigOptions"},
@@ -1575,7 +1624,10 @@
     },
     "SecurityConfigType":{
       "type":"string",
-      "enum":["saml"]
+      "enum":[
+        "saml",
+        "iamidentitycenter"
+      ]
     },
     "SecurityGroupId":{
       "type":"string",
@@ -1803,6 +1855,13 @@
         "updateCollectionDetail":{"shape":"UpdateCollectionDetail"}
       }
     },
+    "UpdateIamIdentityCenterConfigOptions":{
+      "type":"structure",
+      "members":{
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+      }
+    },
     "UpdateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1841,6 +1900,7 @@
         },
         "configVersion":{"shape":"PolicyVersion"},
         "description":{"shape":"ConfigDescription"},
+        "iamIdentityCenterOptionsUpdates":{"shape":"UpdateIamIdentityCenterConfigOptions"},
         "id":{"shape":"SecurityConfigId"},
         "samlOptions":{"shape":"SamlConfigOptions"}
       }

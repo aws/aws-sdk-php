@@ -12,7 +12,8 @@
     "signatureVersion":"v4",
     "signingName":"datasync",
     "targetPrefix":"FmrsService",
-    "uid":"datasync-2018-11-09"
+    "uid":"datasync-2018-11-09",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddStorageSystem":{
@@ -1248,7 +1249,8 @@
         "Tags":{"shape":"InputTagList"},
         "Includes":{"shape":"FilterList"},
         "ManifestConfig":{"shape":"ManifestConfig"},
-        "TaskReportConfig":{"shape":"TaskReportConfig"}
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "CreateTaskResponse":{
@@ -1645,7 +1647,11 @@
         "FilesSkipped":{"shape":"long"},
         "FilesVerified":{"shape":"long"},
         "ReportResult":{"shape":"ReportResult"},
-        "EstimatedFilesToDelete":{"shape":"long"}
+        "EstimatedFilesToDelete":{"shape":"long"},
+        "TaskMode":{"shape":"TaskMode"},
+        "FilesPrepared":{"shape":"long"},
+        "FilesListed":{"shape":"TaskExecutionFilesListedDetail"},
+        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"}
       }
     },
     "DescribeTaskRequest":{
@@ -1676,7 +1682,8 @@
         "Includes":{"shape":"FilterList"},
         "ManifestConfig":{"shape":"ManifestConfig"},
         "TaskReportConfig":{"shape":"TaskReportConfig"},
-        "ScheduleDetails":{"shape":"TaskScheduleDetails"}
+        "ScheduleDetails":{"shape":"TaskScheduleDetails"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "DestinationNetworkInterfaceArns":{
@@ -2748,8 +2755,8 @@
     },
     "S3BucketArn":{
       "type":"string",
-      "max":156,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):(s3|s3-outposts):[a-z\\-0-9]*:[0-9]*:.*$"
+      "max":268,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3:[a-z\\-0-9]*:[0-9]{12}:accesspoint[/:][a-zA-Z0-9\\-.]{1,63}$|^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3-outposts:[a-z\\-0-9]+:[0-9]{12}:outpost[/:][a-zA-Z0-9\\-]{1,63}[/:]accesspoint[/:][a-zA-Z0-9\\-]{1,63}$|^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3:::[a-zA-Z0-9.\\-_]{1,255}$"
     },
     "S3Config":{
       "type":"structure",
@@ -3026,6 +3033,22 @@
       "max":128,
       "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):datasync:[a-z\\-0-9]*:[0-9]{12}:task/task-[0-9a-f]{17}/execution/exec-[0-9a-f]{17}$"
     },
+    "TaskExecutionFilesFailedDetail":{
+      "type":"structure",
+      "members":{
+        "Prepare":{"shape":"long"},
+        "Transfer":{"shape":"long"},
+        "Verify":{"shape":"long"},
+        "Delete":{"shape":"long"}
+      }
+    },
+    "TaskExecutionFilesListedDetail":{
+      "type":"structure",
+      "members":{
+        "AtSource":{"shape":"long"},
+        "AtDestinationForDelete":{"shape":"long"}
+      }
+    },
     "TaskExecutionList":{
       "type":"list",
       "member":{"shape":"TaskExecutionListEntry"}
@@ -3034,7 +3057,8 @@
       "type":"structure",
       "members":{
         "TaskExecutionArn":{"shape":"TaskExecutionArn"},
-        "Status":{"shape":"TaskExecutionStatus"}
+        "Status":{"shape":"TaskExecutionStatus"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "TaskExecutionResultDetail":{
@@ -3097,8 +3121,16 @@
       "members":{
         "TaskArn":{"shape":"TaskArn"},
         "Status":{"shape":"TaskStatus"},
-        "Name":{"shape":"TagValue"}
+        "Name":{"shape":"TagValue"},
+        "TaskMode":{"shape":"TaskMode"}
       }
+    },
+    "TaskMode":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "ENHANCED"
+      ]
     },
     "TaskQueueing":{
       "type":"string",
