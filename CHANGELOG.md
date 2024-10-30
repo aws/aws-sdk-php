@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.0 - 2024-10-30
 
 * `Aws\Keyspaces` - Adds support for interacting with user-defined types (UDTs) through the following new operations: Create-Type, Delete-Type, List-Types, Get-Type.
 * `Aws\GeoPlaces` - Release of Amazon Location Places API. Places enables you to quickly search, display, and filter places, businesses, and locations based on proximity, category, and name
