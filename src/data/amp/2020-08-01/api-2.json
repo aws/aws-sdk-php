@@ -5,11 +5,13 @@
     "endpointPrefix":"aps",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Prometheus Service",
     "serviceId":"amp",
     "signatureVersion":"v4",
     "signingName":"aps",
-    "uid":"amp-2020-08-01"
+    "uid":"amp-2020-08-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateAlertManagerDefinition":{
@@ -453,6 +455,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateScraper":{
+      "name":"UpdateScraper",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/scrapers/{scraperId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateScraperRequest"},
+      "output":{"shape":"UpdateScraperResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -1371,9 +1393,11 @@
       "type":"string",
       "enum":[
         "CREATING",
+        "UPDATING",
         "ACTIVE",
         "DELETING",
         "CREATION_FAILED",
+        "UPDATE_FAILED",
         "DELETION_FAILED"
       ]
     },
@@ -1578,6 +1602,38 @@
       "required":["status"],
       "members":{
         "status":{"shape":"LoggingConfigurationStatus"}
+      }
+    },
+    "UpdateScraperRequest":{
+      "type":"structure",
+      "required":["scraperId"],
+      "members":{
+        "alias":{"shape":"ScraperAlias"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "destination":{"shape":"Destination"},
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        }
+      }
+    },
+    "UpdateScraperResponse":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "scraperId",
+        "status"
+      ],
+      "members":{
+        "arn":{"shape":"ScraperArn"},
+        "scraperId":{"shape":"ScraperId"},
+        "status":{"shape":"ScraperStatus"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "UpdateWorkspaceAliasRequest":{

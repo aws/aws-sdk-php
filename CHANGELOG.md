@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PrometheusService` - Added support for UpdateScraper API, to enable updating collector configuration in-place
+* `Aws\SageMaker` - SageMaker HyperPod adds scale-down at instance level via BatchDeleteClusterNodes API and group level via UpdateCluster API. SageMaker Training exposes secondary job status in TrainingJobSummary from ListTrainingJobs API. SageMaker now supports G6, G6e, P5e instances for HyperPod and Training.
+* `Aws\SESv2` - This release enables customers to provide the email template content in the SESv2 SendEmail and SendBulkEmail APIs instead of the name or the ARN of a stored email template.
+* `Aws\AutoScaling` - Adds bake time for Auto Scaling group Instance Refresh
+* `Aws\ElasticLoadBalancingv2` - Add UDP support for AWS PrivateLink and dual-stack Network Load Balancers
+* `Aws\Batch` - Add `podNamespace` to `EksAttemptDetail` and `containerID` to `EksAttemptContainerDetail`.
+* `Aws\Glue` - Add schedule support for AWS Glue column statistics
+
 ## 3.325.0 - 2024-10-30
 
 * `Aws\Keyspaces` - Adds support for interacting with user-defined types (UDTs) through the following new operations: Create-Type, Delete-Type, List-Types, Get-Type.

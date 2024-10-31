@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise addTagsAsync(array $args = [])
  * @method \Aws\Result associateTrialComponent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateTrialComponentAsync(array $args = [])
+ * @method \Aws\Result batchDeleteClusterNodes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteClusterNodesAsync(array $args = [])
  * @method \Aws\Result batchDescribeModelPackage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDescribeModelPackageAsync(array $args = [])
  * @method \Aws\Result createAction(array $args = [])

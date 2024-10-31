@@ -390,6 +390,24 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "CreateColumnStatisticsTaskSettings":{
+      "name":"CreateColumnStatisticsTaskSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateColumnStatisticsTaskSettingsRequest"},
+      "output":{"shape":"CreateColumnStatisticsTaskSettingsResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"ColumnStatisticsTaskRunningException"}
+      ]
+    },
     "CreateConnection":{
       "name":"CreateConnection",
       "http":{
@@ -816,6 +834,20 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"}
+      ]
+    },
+    "DeleteColumnStatisticsTaskSettings":{
+      "name":"DeleteColumnStatisticsTaskSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteColumnStatisticsTaskSettingsRequest"},
+      "output":{"shape":"DeleteColumnStatisticsTaskSettingsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"}
       ]
     },
     "DeleteConnection":{
@@ -1307,6 +1339,20 @@
       "input":{"shape":"GetColumnStatisticsTaskRunsRequest"},
       "output":{"shape":"GetColumnStatisticsTaskRunsResponse"},
       "errors":[
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "GetColumnStatisticsTaskSettings":{
+      "name":"GetColumnStatisticsTaskSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetColumnStatisticsTaskSettingsRequest"},
+      "output":{"shape":"GetColumnStatisticsTaskSettingsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"}
       ]
     },
@@ -2822,6 +2868,21 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "StartColumnStatisticsTaskRunSchedule":{
+      "name":"StartColumnStatisticsTaskRunSchedule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartColumnStatisticsTaskRunScheduleRequest"},
+      "output":{"shape":"StartColumnStatisticsTaskRunScheduleResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
     "StartCrawler":{
       "name":"StartCrawler",
       "http":{
@@ -3012,6 +3073,20 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"ColumnStatisticsTaskNotRunningException"},
         {"shape":"ColumnStatisticsTaskStoppingException"},
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "StopColumnStatisticsTaskRunSchedule":{
+      "name":"StopColumnStatisticsTaskRunSchedule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopColumnStatisticsTaskRunScheduleRequest"},
+      "output":{"shape":"StopColumnStatisticsTaskRunScheduleResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"}
       ]
     },
@@ -3206,6 +3281,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"}
+      ]
+    },
+    "UpdateColumnStatisticsTaskSettings":{
+      "name":"UpdateColumnStatisticsTaskSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateColumnStatisticsTaskSettingsRequest"},
+      "output":{"shape":"UpdateColumnStatisticsTaskSettingsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"VersionMismatchException"},
+        {"shape":"OperationTimeoutException"}
       ]
     },
     "UpdateConnection":{
@@ -4972,6 +5063,7 @@
         "SecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
         "NumberOfWorkers":{"shape":"PositiveInteger"},
         "WorkerType":{"shape":"NameString"},
+        "ComputationType":{"shape":"ComputationType"},
         "Status":{"shape":"ColumnStatisticsState"},
         "CreationTime":{"shape":"Timestamp"},
         "LastUpdated":{"shape":"Timestamp"},
@@ -4997,6 +5089,19 @@
     "ColumnStatisticsTaskRunsList":{
       "type":"list",
       "member":{"shape":"ColumnStatisticsTaskRun"}
+    },
+    "ColumnStatisticsTaskSettings":{
+      "type":"structure",
+      "members":{
+        "DatabaseName":{"shape":"DatabaseName"},
+        "TableName":{"shape":"TableName"},
+        "Schedule":{"shape":"Schedule"},
+        "ColumnNameList":{"shape":"ColumnNameList"},
+        "CatalogID":{"shape":"CatalogIdString"},
+        "Role":{"shape":"Role"},
+        "SampleSize":{"shape":"SampleSizePercentage"},
+        "SecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"}
+      }
     },
     "ColumnStatisticsTaskStoppingException":{
       "type":"structure",
@@ -5074,6 +5179,13 @@
       "enum":[
         "gzip",
         "bzip2"
+      ]
+    },
+    "ComputationType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "INCREMENTAL"
       ]
     },
     "ConcurrentModificationException":{
@@ -5560,6 +5672,30 @@
       }
     },
     "CreateClassifierResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "CreateColumnStatisticsTaskSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName",
+        "Role"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "Role":{"shape":"NameString"},
+        "Schedule":{"shape":"CronExpression"},
+        "ColumnNameList":{"shape":"ColumnNameList"},
+        "SampleSize":{"shape":"SampleSizePercentage"},
+        "CatalogID":{"shape":"NameString"},
+        "SecurityConfiguration":{"shape":"NameString"},
+        "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateColumnStatisticsTaskSettingsResponse":{
       "type":"structure",
       "members":{
       }
@@ -6743,6 +6879,22 @@
       "members":{
       }
     },
+    "DeleteColumnStatisticsTaskSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"}
+      }
+    },
+    "DeleteColumnStatisticsTaskSettingsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteConnectionNameList":{
       "type":"list",
       "member":{"shape":"NameString"},
@@ -7896,6 +8048,23 @@
       "members":{
         "ColumnStatisticsTaskRuns":{"shape":"ColumnStatisticsTaskRunsList"},
         "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetColumnStatisticsTaskSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"}
+      }
+    },
+    "GetColumnStatisticsTaskSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "ColumnStatisticsTaskSettings":{"shape":"ColumnStatisticsTaskSettings"}
       }
     },
     "GetConnectionRequest":{
@@ -12717,6 +12886,22 @@
         "ColumnStatisticsTaskRunId":{"shape":"HashString"}
       }
     },
+    "StartColumnStatisticsTaskRunScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"}
+      }
+    },
+    "StartColumnStatisticsTaskRunScheduleResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StartCrawlerRequest":{
       "type":"structure",
       "required":["Name"],
@@ -13050,6 +13235,22 @@
       }
     },
     "StopColumnStatisticsTaskRunResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "StopColumnStatisticsTaskRunScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"}
+      }
+    },
+    "StopColumnStatisticsTaskRunScheduleResponse":{
       "type":"structure",
       "members":{
       }
@@ -13897,6 +14098,28 @@
       "member":{"shape":"ColumnStatistics"},
       "max":25,
       "min":0
+    },
+    "UpdateColumnStatisticsTaskSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "Role":{"shape":"NameString"},
+        "Schedule":{"shape":"CronExpression"},
+        "ColumnNameList":{"shape":"ColumnNameList"},
+        "SampleSize":{"shape":"SampleSizePercentage"},
+        "CatalogID":{"shape":"NameString"},
+        "SecurityConfiguration":{"shape":"NameString"}
+      }
+    },
+    "UpdateColumnStatisticsTaskSettingsResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateConnectionRequest":{
       "type":"structure",

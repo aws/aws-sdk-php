@@ -1326,6 +1326,11 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
     },
+    "BakeTime":{
+      "type":"integer",
+      "max":172800,
+      "min":0
+    },
     "BareMetal":{
       "type":"string",
       "enum":[
@@ -2213,7 +2218,8 @@
         "Cancelled",
         "RollbackInProgress",
         "RollbackFailed",
-        "RollbackSuccessful"
+        "RollbackSuccessful",
+        "Baking"
       ]
     },
     "InstanceRefreshWarmPoolProgress":{
@@ -3085,7 +3091,8 @@
         "ScaleInProtectedInstances":{"shape":"ScaleInProtectedInstances"},
         "StandbyInstances":{"shape":"StandbyInstances"},
         "AlarmSpecification":{"shape":"AlarmSpecification"},
-        "MaxHealthyPercentage":{"shape":"IntPercent100To200"}
+        "MaxHealthyPercentage":{"shape":"IntPercent100To200"},
+        "BakeTime":{"shape":"BakeTime"}
       }
     },
     "RefreshStrategy":{

@@ -542,7 +542,7 @@
       "base": null,
       "refs": {
         "EksPodPropertiesOverride$containers": "<p>The overrides for the container that's used on the Amazon EKS pod.</p>",
-        "EksPodPropertiesOverride$initContainers": "<p>The overrides for the conatainers defined in the Amazon EKS pod. These containers run before application containers, always runs to completion, and must complete successfully before the next container starts. These containers are registered with the Amazon EKS Connector agent and persists the registration information in the Kubernetes backend data store. For more information, see <a href=\"https://kubernetes.io/docs/concepts/workloads/pods/init-containers/\">Init Containers</a> in the <i>Kubernetes documentation</i>.</p> <note> <p>This object is limited to 10 elements</p> </note>"
+        "EksPodPropertiesOverride$initContainers": "<p>The overrides for the <code>initContainers</code> defined in the Amazon EKS pod. These containers run before application containers, always runs to completion, and must complete successfully before the next container starts. These containers are registered with the Amazon EKS Connector agent and persists the registration information in the Kubernetes backend data store. For more information, see <a href=\"https://kubernetes.io/docs/concepts/workloads/pods/init-containers/\">Init Containers</a> in the <i>Kubernetes documentation</i>.</p>"
       }
     },
     "EksContainerResourceRequirements": {
@@ -576,8 +576,8 @@
     "EksContainers": {
       "base": null,
       "refs": {
-        "EksPodProperties$containers": "<p>The properties of the container that's used on the Amazon EKS pod.</p>",
-        "EksPodProperties$initContainers": "<p>These containers run before application containers, always runs to completion, and must complete successfully before the next container starts. These containers are registered with the Amazon EKS Connector agent and persists the registration information in the Kubernetes backend data store. For more information, see <a href=\"https://kubernetes.io/docs/concepts/workloads/pods/init-containers/\">Init Containers</a> in the <i>Kubernetes documentation</i>.</p> <note> <p>This object is limited to 10 elements</p> </note>"
+        "EksPodProperties$containers": "<p>The properties of the container that's used on the Amazon EKS pod.</p> <note> <p>This object is limited to 10 elements.</p> </note>",
+        "EksPodProperties$initContainers": "<p>These containers run before application containers, always runs to completion, and must complete successfully before the next container starts. These containers are registered with the Amazon EKS Connector agent and persists the registration information in the Kubernetes backend data store. For more information, see <a href=\"https://kubernetes.io/docs/concepts/workloads/pods/init-containers/\">Init Containers</a> in the <i>Kubernetes documentation</i>.</p> <note> <p>This object is limited to 10 elements.</p> </note>"
       }
     },
     "EksEmptyDir": {
@@ -941,9 +941,9 @@
     "JobStateTimeLimitActions": {
       "base": null,
       "refs": {
-        "CreateJobQueueRequest$jobStateTimeLimitActions": "<p>The set of actions that Batch performs on jobs that remain at the head of the job queue in the specified state longer than specified times. Batch will perform each action after <code>maxTimeSeconds</code> has passed.</p>",
+        "CreateJobQueueRequest$jobStateTimeLimitActions": "<p>The set of actions that Batch performs on jobs that remain at the head of the job queue in the specified state longer than specified times. Batch will perform each action after <code>maxTimeSeconds</code> has passed. (<b>Note</b>: The minimum value for maxTimeSeconds is 600 (10 minutes) and its maximum value is 86,400 (24 hours).)</p>",
         "JobQueueDetail$jobStateTimeLimitActions": "<p>The set of actions that Batch perform on jobs that remain at the head of the job queue in the specified state longer than specified times. Batch will perform each action after <code>maxTimeSeconds</code> has passed.</p>",
-        "UpdateJobQueueRequest$jobStateTimeLimitActions": "<p>The set of actions that Batch perform on jobs that remain at the head of the job queue in the specified state longer than specified times. Batch will perform each action after <code>maxTimeSeconds</code> has passed.</p>"
+        "UpdateJobQueueRequest$jobStateTimeLimitActions": "<p>The set of actions that Batch perform on jobs that remain at the head of the job queue in the specified state longer than specified times. Batch will perform each action after <code>maxTimeSeconds</code> has passed. (<b>Note</b>: The minimum value for maxTimeSeconds is 600 (10 minutes) and its maximum value is 86,400 (24 hours).)</p>"
       }
     },
     "JobStateTimeLimitActionsAction": {
@@ -1042,7 +1042,7 @@
     "ListEcsTaskProperties": {
       "base": null,
       "refs": {
-        "EcsProperties$taskProperties": "<p>An object that contains the properties for the Amazon ECS task definition of a job.</p> <note> <p>This object is currently limited to one element.</p> </note>"
+        "EcsProperties$taskProperties": "<p>An object that contains the properties for the Amazon ECS task definition of a job.</p> <note> <p>This object is currently limited to one task element. However, the task element can run up to 10 containers.</p> </note>"
       }
     },
     "ListJobsFilterList": {
@@ -1410,7 +1410,7 @@
         "AttemptTaskContainerDetails$reason": "<p>A short (255 max characters) string that's easy to understand and provides additional details for a running or stopped container.</p>",
         "AttemptTaskContainerDetails$logStreamName": "<p>The name of the Amazon CloudWatch Logs log stream that's associated with the container. The log group for Batch jobs is <code>/aws/batch/job</code>. Each container attempt receives a log stream name when they reach the <code>RUNNING</code> status.</p>",
         "CancelJobRequest$jobId": "<p>The Batch job ID of the job to cancel.</p>",
-        "CancelJobRequest$reason": "<p>A message to attach to the job that explains the reason for canceling it. This message is returned by future <a>DescribeJobs</a> operations on the job. This message is also recorded in the Batch activity logs.</p>",
+        "CancelJobRequest$reason": "<p>A message to attach to the job that explains the reason for canceling it. This message is returned by future <a>DescribeJobs</a> operations on the job. It is also recorded in the Batch activity logs.</p> <p>This parameter has as limit of 1024 characters.</p>",
         "ClientException$message": null,
         "ComputeEnvironmentDetail$computeEnvironmentName": "<p>The name of the compute environment. It can be up to 128 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "ComputeEnvironmentDetail$computeEnvironmentArn": "<p>The Amazon Resource Name (ARN) of the compute environment.</p>",
@@ -1451,7 +1451,7 @@
         "CreateComputeEnvironmentResponse$computeEnvironmentName": "<p>The name of the compute environment. It can be up to 128 characters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
         "CreateComputeEnvironmentResponse$computeEnvironmentArn": "<p>The Amazon Resource Name (ARN) of the compute environment.</p>",
         "CreateJobQueueRequest$jobQueueName": "<p>The name of the job queue. It can be up to 128 letters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
-        "CreateJobQueueRequest$schedulingPolicyArn": "<p>The Amazon Resource Name (ARN) of the fair share scheduling policy. If this parameter is specified, the job queue uses a fair share scheduling policy. If this parameter isn't specified, the job queue uses a first in, first out (FIFO) scheduling policy. After a job queue is created, you can replace but can't remove the fair share scheduling policy. The format is <code>aws:<i>Partition</i>:batch:<i>Region</i>:<i>Account</i>:scheduling-policy/<i>Name</i> </code>. An example is <code>aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy</code>.</p>",
+        "CreateJobQueueRequest$schedulingPolicyArn": "<p>The Amazon Resource Name (ARN) of the fair share scheduling policy. Job queues that don't have a scheduling policy are scheduled in a first-in, first-out (FIFO) model. After a job queue has a scheduling policy, it can be replaced but can't be removed.</p> <p>The format is <code>aws:<i>Partition</i>:batch:<i>Region</i>:<i>Account</i>:scheduling-policy/<i>Name</i> </code>.</p> <p>An example is <code>aws:aws:batch:us-west-2:123456789012:scheduling-policy/MySchedulingPolicy</code>.</p> <p>A job queue without a scheduling policy is scheduled as a FIFO job queue and can't have a scheduling policy added. Jobs queues with a scheduling policy can have a maximum of 500 active fair share identifiers. When the limit has been reached, submissions of any jobs that add a new fair share identifier fail.</p>",
         "CreateJobQueueResponse$jobQueueName": "<p>The name of the job queue.</p>",
         "CreateJobQueueResponse$jobQueueArn": "<p>The Amazon Resource Name (ARN) of the job queue.</p>",
         "CreateSchedulingPolicyRequest$name": "<p>The name of the scheduling policy. It can be up to 128 letters long. It can contain uppercase and lowercase letters, numbers, hyphens (-), and underscores (_).</p>",
@@ -1487,9 +1487,11 @@
         "EcsTaskProperties$taskRoleArn": "<p>The Amazon Resource Name (ARN) that's associated with the Amazon ECS task.</p> <note> <p>This is object is comparable to <a href=\"https://docs.aws.amazon.com/batch/latest/APIReference/API_ContainerProperties.html\">ContainerProperties:jobRoleArn</a>.</p> </note>",
         "EcsTaskProperties$pidMode": "<p>The process namespace to use for the containers in the task. The valid values are <code>host</code> or <code>task</code>. For example, monitoring sidecars might need <code>pidMode</code> to access information about other containers running in the same task.</p> <p>If <code>host</code> is specified, all containers within the tasks that specified the <code>host</code> PID mode on the same container instance share the process namespace with the host Amazon EC2 instance.</p> <p>If <code>task</code> is specified, all containers within the specified task share the same process namespace.</p> <p>If no value is specified, the default is a private namespace for each container. For more information, see <a href=\"https://docs.docker.com/engine/reference/run/#pid-settings---pid\">PID settings</a> in the Docker run reference.</p>",
         "EksAttemptContainerDetail$name": "<p>The name of a container.</p>",
+        "EksAttemptContainerDetail$containerID": "<p>The ID for the container.</p>",
         "EksAttemptContainerDetail$reason": "<p>A short (255 max characters) human-readable string to provide additional details for a running or stopped container.</p>",
         "EksAttemptDetail$eksClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster.</p>",
         "EksAttemptDetail$podName": "<p>The name of the pod for this job attempt.</p>",
+        "EksAttemptDetail$podNamespace": "<p>The namespace of the Amazon EKS cluster that the pod exists in.</p>",
         "EksAttemptDetail$nodeName": "<p>The name of the node for this job attempt.</p>",
         "EksAttemptDetail$statusReason": "<p>A short, human-readable string to provide additional details for the current status of the job attempt.</p>",
         "EksConfiguration$eksClusterArn": "<p>The Amazon Resource Name (ARN) of the Amazon EKS cluster. An example is <code>arn:<i>aws</i>:eks:<i>us-east-1</i>:<i>123456789012</i>:cluster/<i>ClusterForBatch</i> </code>. </p>",
@@ -1613,7 +1615,7 @@
         "TaskContainerProperties$name": "<p>The name of a container. The name can be used as a unique identifier to target your <code>dependsOn</code> and <code>Overrides</code> objects. </p>",
         "TaskContainerProperties$user": "<p>The user to use inside the container. This parameter maps to User in the Create a container section of the Docker Remote API and the --user option to docker run.</p> <note> <p>When running tasks using the <code>host</code> network mode, don't run containers using the <code>root user (UID 0)</code>. We recommend using a non-root user for better security.</p> </note> <p>You can specify the <code>user</code> using the following formats. If specifying a UID or GID, you must specify it as a positive integer.</p> <ul> <li> <p> <code>user</code> </p> </li> <li> <p> <code>user:group</code> </p> </li> <li> <p> <code>uid</code> </p> </li> <li> <p> <code>uid:gid</code> </p> </li> <li> <p> <code>user:gi</code> </p> </li> <li> <p> <code>uid:group</code> </p> </li> </ul> <note> <p>This parameter is not supported for Windows containers.</p> </note>",
         "TerminateJobRequest$jobId": "<p>The Batch job ID of the job to terminate.</p>",
-        "TerminateJobRequest$reason": "<p>A message to attach to the job that explains the reason for canceling it. This message is returned by future <a>DescribeJobs</a> operations on the job. This message is also recorded in the Batch activity logs.</p>",
+        "TerminateJobRequest$reason": "<p>A message to attach to the job that explains the reason for canceling it. This message is returned by future <a>DescribeJobs</a> operations on the job. It is also recorded in the Batch activity logs.</p> <p>This parameter has as limit of 1024 characters.</p>",
         "Tmpfs$containerPath": "<p>The absolute file path in the container where the <code>tmpfs</code> volume is mounted.</p>",
         "Ulimit$name": "<p>The <code>type</code> of the <code>ulimit</code>. Valid values are: <code>core</code> | <code>cpu</code> | <code>data</code> | <code>fsize</code> | <code>locks</code> | <code>memlock</code> | <code>msgqueue</code> | <code>nice</code> | <code>nofile</code> | <code>nproc</code> | <code>rss</code> | <code>rtprio</code> | <code>rttime</code> | <code>sigpending</code> | <code>stack</code>.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to delete tags. Batch resources that support tags are compute environments, jobs, job definitions, job queues, and scheduling policies. ARNs for child jobs of array and multi-node parallel (MNP) jobs aren't supported.</p>",

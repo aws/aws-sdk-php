@@ -27,6 +27,7 @@
     "CheckSchemaVersionValidity": "<p>Validates the supplied schema. This call has no side effects, it simply validates using the supplied schema using <code>DataFormat</code> as the format. Since it does not take a schema set name, no compatibility checks are performed.</p>",
     "CreateBlueprint": "<p>Registers a blueprint with Glue.</p>",
     "CreateClassifier": "<p>Creates a classifier in the user's account. This can be a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field of the request is present.</p>",
+    "CreateColumnStatisticsTaskSettings": "<p>Creates settings for a column statistics task.</p>",
     "CreateConnection": "<p>Creates a connection definition in the Data Catalog.</p> <p>Connections used for creating federated resources require the IAM <code>glue:PassConnection</code> permission.</p>",
     "CreateCrawler": "<p>Creates a new crawler with specified targets, role, configuration, and optional schedule. At least one crawl target must be specified, in the <code>s3Targets</code> field, the <code>jdbcTargets</code> field, or the <code>DynamoDBTargets</code> field.</p>",
     "CreateCustomEntityType": "<p>Creates a custom pattern that is used to detect sensitive data across the columns and rows of your structured data.</p> <p>Each custom pattern you create specifies a regular expression and an optional list of context words. If no context words are passed only a regular expression is checked.</p>",
@@ -52,6 +53,7 @@
     "DeleteClassifier": "<p>Removes a classifier from the Data Catalog.</p>",
     "DeleteColumnStatisticsForPartition": "<p>Delete the partition column statistics of a column.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>DeletePartition</code>.</p>",
     "DeleteColumnStatisticsForTable": "<p>Retrieves table statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>DeleteTable</code>.</p>",
+    "DeleteColumnStatisticsTaskSettings": "<p>Deletes settings for a column statistics task.</p>",
     "DeleteConnection": "<p>Deletes a connection from the Data Catalog.</p>",
     "DeleteCrawler": "<p>Removes a specified crawler from the Glue Data Catalog, unless the crawler state is <code>RUNNING</code>.</p>",
     "DeleteCustomEntityType": "<p>Deletes a custom pattern by specifying its name.</p>",
@@ -85,6 +87,7 @@
     "GetColumnStatisticsForTable": "<p>Retrieves table statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>GetTable</code>.</p>",
     "GetColumnStatisticsTaskRun": "<p>Get the associated metadata/information for a task run, given a task run ID.</p>",
     "GetColumnStatisticsTaskRuns": "<p>Retrieves information about all runs associated with the specified table.</p>",
+    "GetColumnStatisticsTaskSettings": "<p>Gets settings for a column statistics task.</p>",
     "GetConnection": "<p>Retrieves a connection definition from the Data Catalog.</p>",
     "GetConnections": "<p>Retrieves a list of connection definitions from the Data Catalog.</p>",
     "GetCrawler": "<p>Retrieves metadata for a specified crawler.</p>",
@@ -184,6 +187,7 @@
     "SearchTables": "<p>Searches a set of tables based on properties in the table metadata as well as on the parent database. You can search against text or filter conditions. </p> <p>You can only get tables that you have access to based on the security policies defined in Lake Formation. You need at least a read-only access to the table for it to be returned. If you do not have access to all the columns in the table, these columns will not be searched against when returning the list of tables back to you. If you have access to the columns but not the data in the columns, those columns and the associated metadata for those columns will be included in the search. </p>",
     "StartBlueprintRun": "<p>Starts a new run of the specified blueprint.</p>",
     "StartColumnStatisticsTaskRun": "<p>Starts a column statistics task run, for a specified table and columns.</p>",
+    "StartColumnStatisticsTaskRunSchedule": "<p>Starts a column statistics task run schedule.</p>",
     "StartCrawler": "<p>Starts a crawl using the specified crawler, regardless of what is scheduled. If the crawler is already running, returns a <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-exceptions.html#aws-glue-api-exceptions-CrawlerRunningException\">CrawlerRunningException</a>.</p>",
     "StartCrawlerSchedule": "<p>Changes the schedule state of the specified crawler to <code>SCHEDULED</code>, unless the crawler is already running or the schedule state is already <code>SCHEDULED</code>.</p>",
     "StartDataQualityRuleRecommendationRun": "<p>Starts a recommendation run that is used to generate rules when you don't know what rules to write. Glue Data Quality analyzes the data and comes up with recommendations for a potential ruleset. You can then triage the ruleset and modify the generated ruleset to your liking.</p> <p>Recommendation runs are automatically deleted after 90 days.</p>",
@@ -196,6 +200,7 @@
     "StartTrigger": "<p>Starts an existing trigger. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/trigger-job.html\">Triggering Jobs</a> for information about how different types of trigger are started.</p>",
     "StartWorkflowRun": "<p>Starts a new run of the specified workflow.</p>",
     "StopColumnStatisticsTaskRun": "<p>Stops a task run for the specified table.</p>",
+    "StopColumnStatisticsTaskRunSchedule": "<p>Stops a column statistics task run schedule.</p>",
     "StopCrawler": "<p>If the specified crawler is running, stops the crawl.</p>",
     "StopCrawlerSchedule": "<p>Sets the schedule state of the specified crawler to <code>NOT_SCHEDULED</code>, but does not stop the crawler if it is already running.</p>",
     "StopSession": "<p>Stops the session.</p>",
@@ -208,6 +213,7 @@
     "UpdateClassifier": "<p>Modifies an existing classifier (a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field is present).</p>",
     "UpdateColumnStatisticsForPartition": "<p>Creates or updates partition statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>UpdatePartition</code>.</p>",
     "UpdateColumnStatisticsForTable": "<p>Creates or updates table statistics of columns.</p> <p>The Identity and Access Management (IAM) permission required for this operation is <code>UpdateTable</code>.</p>",
+    "UpdateColumnStatisticsTaskSettings": "<p>Updates settings for a column statistics task.</p>",
     "UpdateConnection": "<p>Updates a connection definition in the Data Catalog.</p>",
     "UpdateCrawler": "<p>Updates a crawler. If a crawler is running, you must stop it using <code>StopCrawler</code> before updating it.</p>",
     "UpdateCrawlerSchedule": "<p>Updates the schedule of a crawler using a <code>cron</code> expression. </p>",
@@ -1132,6 +1138,7 @@
         "BatchTableOptimizer$catalogId": "<p>The Catalog ID of the table.</p>",
         "BatchUpdatePartitionRequest$CatalogId": "<p>The ID of the catalog in which the partition is to be updated. Currently, this should be the Amazon Web Services account ID.</p>",
         "ColumnStatisticsTaskRun$CatalogID": "<p>The ID of the Data Catalog where the table resides. If none is supplied, the Amazon Web Services account ID is used by default.</p>",
+        "ColumnStatisticsTaskSettings$CatalogID": "<p>The ID of the Data Catalog in which the database resides.</p>",
         "CreateConnectionRequest$CatalogId": "<p>The ID of the Data Catalog in which to create the connection. If none is provided, the Amazon Web Services account ID is used by default.</p>",
         "CreateDatabaseRequest$CatalogId": "<p>The ID of the Data Catalog in which to create the database. If none is provided, the Amazon Web Services account ID is used by default.</p>",
         "CreatePartitionIndexRequest$CatalogId": "<p>The catalog ID where the table resides.</p>",
@@ -1408,8 +1415,11 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$ColumnNameList": "<p>A list of the column names. If none is supplied, all column names for the table will be used by default.</p>",
+        "ColumnStatisticsTaskSettings$ColumnNameList": "<p>A list of column names for which to run statistics.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$ColumnNameList": "<p>A list of column names for which to run statistics.</p>",
         "StartColumnStatisticsTaskRunRequest$ColumnNameList": "<p>A list of the column names to generate statistics. If none is supplied, all column names for the table will be used by default.</p>",
-        "StatisticSummary$ColumnsReferenced": "<p>The list of columns referenced by the statistic.</p>"
+        "StatisticSummary$ColumnsReferenced": "<p>The list of columns referenced by the statistic.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$ColumnNameList": "<p>A list of column names for which to run statistics.</p>"
       }
     },
     "ColumnNameString": {
@@ -1501,6 +1511,12 @@
         "GetColumnStatisticsTaskRunsResponse$ColumnStatisticsTaskRuns": "<p>A list of column statistics task runs.</p>"
       }
     },
+    "ColumnStatisticsTaskSettings": {
+      "base": "<p>The settings for a column statistics task.</p>",
+      "refs": {
+        "GetColumnStatisticsTaskSettingsResponse$ColumnStatisticsTaskSettings": "<p>A <code>ColumnStatisticsTaskSettings</code> object representing the settings for the column statistics task.</p>"
+      }
+    },
     "ColumnStatisticsTaskStoppingException": {
       "base": "<p>An exception thrown when you try to stop a task run.</p>",
       "refs": {
@@ -1574,6 +1590,12 @@
       "refs": {
         "S3CsvSource$CompressionType": "<p>Specifies how the data is compressed. This is generally not necessary if the data has a standard file extension. Possible values are <code>\"gzip\"</code> and <code>\"bzip\"</code>).</p>",
         "S3JsonSource$CompressionType": "<p>Specifies how the data is compressed. This is generally not necessary if the data has a standard file extension. Possible values are <code>\"gzip\"</code> and <code>\"bzip\"</code>).</p>"
+      }
+    },
+    "ComputationType": {
+      "base": null,
+      "refs": {
+        "ColumnStatisticsTaskRun$ComputationType": "<p>The type of column statistics computation.</p>"
       }
     },
     "ConcurrentModificationException": {
@@ -1877,6 +1899,7 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$SecurityConfiguration": "<p>Name of the security configuration that is used to encrypt CloudWatch logs for the column stats task run.</p>",
+        "ColumnStatisticsTaskSettings$SecurityConfiguration": "<p>Name of the security configuration that is used to encrypt CloudWatch logs.</p>",
         "Crawler$CrawlerSecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used by this crawler.</p>",
         "CreateCrawlerRequest$CrawlerSecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used by this crawler.</p>",
         "UpdateCrawlerRequest$CrawlerSecurityConfiguration": "<p>The name of the <code>SecurityConfiguration</code> structure to be used by this crawler.</p>"
@@ -1929,6 +1952,16 @@
       }
     },
     "CreateClassifierResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateColumnStatisticsTaskSettingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateColumnStatisticsTaskSettingsResponse": {
       "base": null,
       "refs": {
       }
@@ -2184,8 +2217,10 @@
     "CronExpression": {
       "base": null,
       "refs": {
+        "CreateColumnStatisticsTaskSettingsRequest$Schedule": "<p>A schedule for running the column statistics, specified in CRON syntax.</p>",
         "CreateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
         "Schedule$ScheduleExpression": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$Schedule": "<p>A schedule for running the column statistics, specified in CRON syntax.</p>",
         "UpdateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
         "UpdateCrawlerScheduleRequest$Schedule": "<p>The updated <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>"
       }
@@ -2637,6 +2672,7 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$DatabaseName": "<p>The database where the table resides.</p>",
+        "ColumnStatisticsTaskSettings$DatabaseName": "<p>The name of the database where the table resides.</p>",
         "Crawler$DatabaseName": "<p>The name of the database in which the crawler's output is stored.</p>",
         "CreateCrawlerRequest$DatabaseName": "<p>The Glue database where results are written, such as: <code>arn:aws:daylight:us-east-1::database/sometable/*</code>.</p>",
         "GetColumnStatisticsTaskRunsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
@@ -2729,6 +2765,16 @@
       }
     },
     "DeleteColumnStatisticsForTableResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteColumnStatisticsTaskSettingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteColumnStatisticsTaskSettingsResponse": {
       "base": null,
       "refs": {
       }
@@ -3974,6 +4020,16 @@
       }
     },
     "GetColumnStatisticsTaskRunsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetColumnStatisticsTaskSettingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetColumnStatisticsTaskSettingsResponse": {
       "base": null,
       "refs": {
       }
@@ -6079,6 +6135,11 @@
         "CrawlerMetrics$CrawlerName": "<p>The name of the crawler.</p>",
         "CrawlerNameList$member": null,
         "CreateBlueprintResponse$Name": "<p>Returns the name of the blueprint that was registered.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to generate column statistics.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$Role": "<p>The role used for running the column statistics.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$CatalogID": "<p>The ID of the Data Catalog in which the database resides.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$SecurityConfiguration": "<p>Name of the security configuration that is used to encrypt CloudWatch logs.</p>",
         "CreateCrawlerRequest$Name": "<p>Name of the new crawler.</p>",
         "CreateCsvClassifierRequest$Name": "<p>The name of the classifier.</p>",
         "CreateCustomEntityTypeRequest$Name": "<p>A name for the custom pattern that allows it to be retrieved or deleted later. This name must be unique per Amazon Web Services account.</p>",
@@ -6146,6 +6207,8 @@
         "DeleteColumnStatisticsForTableRequest$DatabaseName": "<p>The name of the catalog database where the partitions reside.</p>",
         "DeleteColumnStatisticsForTableRequest$TableName": "<p>The name of the partitions' table.</p>",
         "DeleteColumnStatisticsForTableRequest$ColumnName": "<p>The name of the column.</p>",
+        "DeleteColumnStatisticsTaskSettingsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "DeleteColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to delete column statistics.</p>",
         "DeleteConnectionNameList$member": null,
         "DeleteConnectionRequest$ConnectionName": "<p>The name of the connection to delete.</p>",
         "DeleteCrawlerRequest$Name": "<p>The name of the crawler to remove.</p>",
@@ -6196,6 +6259,8 @@
         "GetColumnStatisticsForTableRequest$DatabaseName": "<p>The name of the catalog database where the partitions reside.</p>",
         "GetColumnStatisticsForTableRequest$TableName": "<p>The name of the partitions' table.</p>",
         "GetColumnStatisticsTaskRunsRequest$TableName": "<p>The name of the table.</p>",
+        "GetColumnStatisticsTaskSettingsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "GetColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to retrieve column statistics.</p>",
         "GetConnectionRequest$Name": "<p>The name of the connection definition to retrieve.</p>",
         "GetCrawlerRequest$Name": "<p>The name of the crawler to retrieve metadata for.</p>",
         "GetCustomEntityTypeRequest$Name": "<p>The name of the custom pattern that you want to retrieve.</p>",
@@ -6312,6 +6377,8 @@
         "StartColumnStatisticsTaskRunRequest$Role": "<p>The IAM role that the service assumes to generate statistics.</p>",
         "StartColumnStatisticsTaskRunRequest$CatalogID": "<p>The ID of the Data Catalog where the table reside. If none is supplied, the Amazon Web Services account ID is used by default.</p>",
         "StartColumnStatisticsTaskRunRequest$SecurityConfiguration": "<p>Name of the security configuration that is used to encrypt CloudWatch logs for the column stats task run.</p>",
+        "StartColumnStatisticsTaskRunScheduleRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StartColumnStatisticsTaskRunScheduleRequest$TableName": "<p>The name of the table for which to start a column statistic task run schedule.</p>",
         "StartCrawlerRequest$Name": "<p>Name of the crawler to start.</p>",
         "StartCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler to schedule.</p>",
         "StartDataQualityRuleRecommendationRunRequest$CreatedRulesetName": "<p>A name for the ruleset.</p>",
@@ -6323,6 +6390,8 @@
         "StartWorkflowRunRequest$Name": "<p>The name of the workflow to start.</p>",
         "StatisticPropertiesMap$key": null,
         "StopColumnStatisticsTaskRunRequest$TableName": "<p>The name of the table.</p>",
+        "StopColumnStatisticsTaskRunScheduleRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "StopColumnStatisticsTaskRunScheduleRequest$TableName": "<p>The name of the table for which to stop a column statistic task run schedule.</p>",
         "StopCrawlerRequest$Name": "<p>Name of the crawler to stop.</p>",
         "StopCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler whose schedule state to set.</p>",
         "StopSessionRequest$Id": "<p>The ID of the session to be stopped.</p>",
@@ -6355,6 +6424,11 @@
         "UpdateColumnStatisticsForPartitionRequest$TableName": "<p>The name of the partitions' table.</p>",
         "UpdateColumnStatisticsForTableRequest$DatabaseName": "<p>The name of the catalog database where the partitions reside.</p>",
         "UpdateColumnStatisticsForTableRequest$TableName": "<p>The name of the partitions' table.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$DatabaseName": "<p>The name of the database where the table resides.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$TableName": "<p>The name of the table for which to generate column statistics.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$Role": "<p>The role used for running the column statistics.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$CatalogID": "<p>The ID of the Data Catalog in which the database resides.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$SecurityConfiguration": "<p>Name of the security configuration that is used to encrypt CloudWatch logs.</p>",
         "UpdateConnectionRequest$Name": "<p>The name of the connection definition to update.</p>",
         "UpdateCrawlerRequest$Name": "<p>Name of the new crawler.</p>",
         "UpdateCrawlerScheduleRequest$CrawlerName": "<p>The name of the crawler whose schedule to update.</p>",
@@ -7743,6 +7817,7 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$Role": "<p>The IAM role that the service assumes to generate statistics.</p>",
+        "ColumnStatisticsTaskSettings$Role": "<p>The role used for running the column statistics.</p>",
         "Crawler$Role": "<p>The Amazon Resource Name (ARN) of an IAM role that's used to access customer resources, such as Amazon Simple Storage Service (Amazon S3) data.</p>",
         "CreateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role used by the new crawler to access customer resources.</p>",
         "UpdateCrawlerRequest$Role": "<p>The IAM role or Amazon Resource Name (ARN) of an IAM role that is used by the new crawler to access customer resources.</p>"
@@ -7965,7 +8040,10 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$SampleSize": "<p>The percentage of rows used to generate statistics. If none is supplied, the entire table will be used to generate stats.</p>",
-        "StartColumnStatisticsTaskRunRequest$SampleSize": "<p>The percentage of rows used to generate statistics. If none is supplied, the entire table will be used to generate stats.</p>"
+        "ColumnStatisticsTaskSettings$SampleSize": "<p>The percentage of data to sample.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$SampleSize": "<p>The percentage of data to sample.</p>",
+        "StartColumnStatisticsTaskRunRequest$SampleSize": "<p>The percentage of rows used to generate statistics. If none is supplied, the entire table will be used to generate stats.</p>",
+        "UpdateColumnStatisticsTaskSettingsRequest$SampleSize": "<p>The percentage of data to sample.</p>"
       }
     },
     "ScalaCode": {
@@ -7978,6 +8056,7 @@
     "Schedule": {
       "base": "<p>A scheduling object using a <code>cron</code> statement to schedule an event.</p>",
       "refs": {
+        "ColumnStatisticsTaskSettings$Schedule": "<p>A schedule for running the column statistics, specified in CRON syntax.</p>",
         "Crawler$Schedule": "<p>For scheduled crawlers, the schedule when the crawler runs.</p>"
       }
     },
@@ -8463,6 +8542,16 @@
       "refs": {
       }
     },
+    "StartColumnStatisticsTaskRunScheduleRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartColumnStatisticsTaskRunScheduleResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartCrawlerRequest": {
       "base": null,
       "refs": {
@@ -8681,6 +8770,16 @@
       "refs": {
       }
     },
+    "StopColumnStatisticsTaskRunScheduleRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopColumnStatisticsTaskRunScheduleResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StopCrawlerRequest": {
       "base": null,
       "refs": {
@@ -8829,6 +8928,7 @@
       "base": null,
       "refs": {
         "ColumnStatisticsTaskRun$TableName": "<p>The name of the table for which column statistics is generated.</p>",
+        "ColumnStatisticsTaskSettings$TableName": "<p>The name of the table for which to generate column statistics.</p>",
         "MappingEntry$SourceTable": "<p>The name of the source table.</p>",
         "MappingEntry$TargetTable": "<p>The target table.</p>"
       }
@@ -8960,6 +9060,7 @@
       "base": null,
       "refs": {
         "CreateBlueprintRequest$Tags": "<p>The tags to be applied to this blueprint.</p>",
+        "CreateColumnStatisticsTaskSettingsRequest$Tags": "<p>A map of tags.</p>",
         "CreateConnectionRequest$Tags": "<p>The tags you assign to the connection.</p>",
         "CreateCrawlerRequest$Tags": "<p>The tags to use with this crawler request. You may use tags to limit access to the crawler. For more information about tags in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a> in the developer guide.</p>",
         "CreateCustomEntityTypeRequest$Tags": "<p>A list of tags applied to the custom entity type.</p>",
@@ -9590,6 +9691,16 @@
       "refs": {
         "UpdateColumnStatisticsForPartitionRequest$ColumnStatisticsList": "<p>A list of the column statistics.</p>",
         "UpdateColumnStatisticsForTableRequest$ColumnStatisticsList": "<p>A list of the column statistics.</p>"
+      }
+    },
+    "UpdateColumnStatisticsTaskSettingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateColumnStatisticsTaskSettingsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateConnectionRequest": {

@@ -1025,6 +1025,7 @@
       "refs": {
         "CreateEmailTemplateRequest$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>",
         "GetEmailTemplateResponse$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>",
+        "Template$TemplateContent": "<p>The content of the template.</p> <note> <p>Amazon SES supports only simple substitions when you send email using the <code>SendEmail</code> or <code>SendBulkEmail</code> operations and you provide the full template content in the request.</p> </note>",
         "UpdateEmailTemplateRequest$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>"
       }
     },
@@ -2928,7 +2929,7 @@
       }
     },
     "Template": {
-      "base": "<p>An object that defines the email template to use for an email message, and the values to use for any message variables in that template. An <i>email template</i> is a type of message template that contains content that you want to define, save, and reuse in email messages that you send.</p>",
+      "base": "<p>An object that defines the email template to use for an email message, and the values to use for any message variables in that template. An <i>email template</i> is a type of message template that contains content that you want to reuse in email messages that you send. You can specifiy the email template by providing the name or ARN of an <i>email template</i> previously saved in your Amazon SES account or by providing the full template content.</p>",
       "refs": {
         "BulkEmailContent$Template": "<p>The template to use for the bulk email message.</p>",
         "EmailContent$Template": "<p>The template to use for the email message.</p>"

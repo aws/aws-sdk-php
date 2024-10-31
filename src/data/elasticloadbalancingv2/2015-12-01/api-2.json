@@ -1097,7 +1097,8 @@
         "ZoneName":{"shape":"ZoneName"},
         "SubnetId":{"shape":"SubnetId"},
         "OutpostId":{"shape":"OutpostId"},
-        "LoadBalancerAddresses":{"shape":"LoadBalancerAddresses"}
+        "LoadBalancerAddresses":{"shape":"LoadBalancerAddresses"},
+        "SourceNatIpv6Prefixes":{"shape":"SourceNatIpv6Prefixes"}
       }
     },
     "AvailabilityZoneNotSupportedException":{
@@ -1203,7 +1204,8 @@
         "Tags":{"shape":"TagList"},
         "Type":{"shape":"LoadBalancerTypeEnum"},
         "IpAddressType":{"shape":"IpAddressType"},
-        "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"}
+        "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "CreateLoadBalancerOutput":{
@@ -1698,6 +1700,13 @@
       },
       "exception":true
     },
+    "EnablePrefixForIpv6SourceNatEnum":{
+      "type":"string",
+      "enum":[
+        "on",
+        "off"
+      ]
+    },
     "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"type":"string"},
     "EnforceSecurityGroupInboundRulesOnPrivateLinkTrafficEnum":{
       "type":"string",
@@ -2025,7 +2034,8 @@
         "SecurityGroups":{"shape":"SecurityGroups"},
         "IpAddressType":{"shape":"IpAddressType"},
         "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
-        "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"shape":"EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"}
+        "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"shape":"EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "LoadBalancerAddress":{
@@ -2667,14 +2677,16 @@
         "LoadBalancerArn":{"shape":"LoadBalancerArn"},
         "Subnets":{"shape":"Subnets"},
         "SubnetMappings":{"shape":"SubnetMappings"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "SetSubnetsOutput":{
       "type":"structure",
       "members":{
         "AvailabilityZones":{"shape":"AvailabilityZones"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "SourceIpConditionConfig":{
@@ -2682,6 +2694,11 @@
       "members":{
         "Values":{"shape":"ListOfString"}
       }
+    },
+    "SourceNatIpv6Prefix":{"type":"string"},
+    "SourceNatIpv6Prefixes":{
+      "type":"list",
+      "member":{"shape":"SourceNatIpv6Prefix"}
     },
     "SslPolicies":{
       "type":"list",
@@ -2716,7 +2733,8 @@
         "SubnetId":{"shape":"SubnetId"},
         "AllocationId":{"shape":"AllocationId"},
         "PrivateIPv4Address":{"shape":"PrivateIPv4Address"},
-        "IPv6Address":{"shape":"IPv6Address"}
+        "IPv6Address":{"shape":"IPv6Address"},
+        "SourceNatIpv6Prefix":{"shape":"SourceNatIpv6Prefix"}
       }
     },
     "SubnetMappings":{
