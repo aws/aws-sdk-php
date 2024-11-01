@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.2 - 2024-11-01
 
 * `Aws\DocDBElastic` - Amazon DocumentDB Elastic Clusters adds support for pending maintenance actions feature with APIs GetPendingMaintenanceAction, ListPendingMaintenanceActions and ApplyPendingMaintenanceAction
 * `Aws\BedrockAgent` - Amazon Bedrock Knowledge Bases now supports using application inference profiles to increase throughput and improve resilience.
