@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DocDBElastic` - Amazon DocumentDB Elastic Clusters adds support for pending maintenance actions feature with APIs GetPendingMaintenanceAction, ListPendingMaintenanceActions and ApplyPendingMaintenanceAction
+* `Aws\BedrockAgent` - Amazon Bedrock Knowledge Bases now supports using application inference profiles to increase throughput and improve resilience.
+* `Aws\CloudWatchLogs` - This release introduces an improvement in PutLogEvents
+* `Aws\TaxSettings` - Add support for supplemental tax registrations via these new APIs: PutSupplementalTaxRegistration, ListSupplementalTaxRegistrations, and DeleteSupplementalTaxRegistration.
+
 ## 3.325.1 - 2024-10-31
 
 * `Aws\PrometheusService` - Added support for UpdateScraper API, to enable updating collector configuration in-place

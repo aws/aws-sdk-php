@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p><fullname>Amazon DocumentDB elastic clusters</fullname> <p>Amazon DocumentDB elastic-clusters support workloads with millions of reads/writes per second and petabytes of storage capacity. Amazon DocumentDB elastic clusters also simplify how developers interact with Amazon DocumentDB elastic-clusters by eliminating the need to choose, manage or upgrade instances.</p> <p>Amazon DocumentDB elastic-clusters were created to:</p> <ul> <li> <p>provide a solution for customers looking for a database that provides virtually limitless scale with rich query capabilities and MongoDB API compatibility.</p> </li> <li> <p>give customers higher connection limits, and to reduce downtime from patching.</p> </li> <li> <p>continue investing in a cloud-native, elastic, and class leading architecture for JSON workloads.</p> </li> </ul></p>",
   "operations": {
+    "ApplyPendingMaintenanceAction": "<p>The type of pending maintenance action to be applied to the resource.</p>",
     "CopyClusterSnapshot": "<p>Copies a snapshot of an elastic cluster.</p>",
     "CreateCluster": "<p>Creates a new Amazon DocumentDB elastic cluster and returns its cluster structure.</p>",
     "CreateClusterSnapshot": "<p>Creates a snapshot of an elastic cluster.</p>",
@@ -9,8 +10,10 @@
     "DeleteClusterSnapshot": "<p>Delete an elastic cluster snapshot.</p>",
     "GetCluster": "<p>Returns information about a specific elastic cluster.</p>",
     "GetClusterSnapshot": "<p>Returns information about a specific elastic cluster snapshot</p>",
+    "GetPendingMaintenanceAction": "<p>Retrieves all maintenance actions that are pending.</p>",
     "ListClusterSnapshots": "<p>Returns information about snapshots for a specified elastic cluster.</p>",
     "ListClusters": "<p>Returns information about provisioned Amazon DocumentDB elastic clusters.</p>",
+    "ListPendingMaintenanceActions": "<p>Retrieves a list of all maintenance actions that are pending.</p>",
     "ListTagsForResource": "<p>Lists all tags on a elastic cluster resource</p>",
     "RestoreClusterFromSnapshot": "<p>Restores an elastic cluster from a snapshot.</p>",
     "StartCluster": "<p>Restarts the stopped elastic cluster that is specified by <code>clusterARN</code>.</p>",
@@ -22,6 +25,16 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>An exception that occurs when there are not sufficient permissions to perform an action.</p>",
+      "refs": {
+      }
+    },
+    "ApplyPendingMaintenanceActionInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ApplyPendingMaintenanceActionOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -179,6 +192,25 @@
       "refs": {
       }
     },
+    "GetPendingMaintenanceActionInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPendingMaintenanceActionOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "InputString": {
+      "base": null,
+      "refs": {
+        "ApplyPendingMaintenanceActionInput$applyAction": "<p>The pending maintenance action to apply to the resource.</p> <p>Valid actions are:</p> <ul> <li> <p> <code>ENGINE_UPDATE<i/> </code> </p> </li> <li> <p> <code>ENGINE_UPGRADE</code> </p> </li> <li> <p> <code>SECURITY_UPDATE</code> </p> </li> <li> <p> <code>OS_UPDATE</code> </p> </li> <li> <p> <code>MASTER_USER_PASSWORD_UPDATE</code> </p> </li> </ul>",
+        "ApplyPendingMaintenanceActionInput$applyOn": "<p>A specific date to apply the pending maintenance action. Required if opt-in-type is <code>APPLY_ON</code>. Format: <code>yyyy/MM/dd HH:mm-yyyy/MM/dd HH:mm</code> </p>",
+        "ApplyPendingMaintenanceActionInput$resourceArn": "<p>The Amazon DocumentDB Amazon Resource Name (ARN) of the resource to which the pending maintenance action applies.</p>",
+        "GetPendingMaintenanceActionInput$resourceArn": "<p>Retrieves pending maintenance actions for a specific Amazon Resource Name (ARN).</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -236,6 +268,22 @@
       "refs": {
       }
     },
+    "ListPendingMaintenanceActionsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPendingMaintenanceActionsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListPendingMaintenanceActionsInput$maxResults": "<p>The maximum number of results to include in the response. If more records exist than the specified <code>maxResults</code> value, a pagination token (marker) is included in the response so that the remaining results can be retrieved.</p>"
+      }
+    },
+    "ListPendingMaintenanceActionsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {
@@ -246,13 +294,21 @@
       "refs": {
       }
     },
+    "OptInType": {
+      "base": null,
+      "refs": {
+        "ApplyPendingMaintenanceActionInput$optInType": "<p>A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type <code>IMMEDIATE</code> can't be undone.</p>"
+      }
+    },
     "PaginationToken": {
-      "base": "<p>Token or cursor used in paginated operations.</p> <p>When this value is provided as operation input, the service returns results from where the previous response left off. When this value is present in operation output, it indicates that there are more results to retrieve.</p> <p>This should be opaque to not expose implementation details and potentially versioned to allow evolution of pagination strategy.</p>",
+      "base": "<pre><code>Token or cursor used in paginated operations. When this value is provided as operation input, the service returns results from where the previous response left off. When this value is present in operation output, it indicates that there are more results to retrieve. This should be opaque to not expose implementation details and potentially versioned to allow evolution of pagination strategy. </code></pre>",
       "refs": {
         "ListClusterSnapshotsInput$nextToken": "<p>A pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond this token, up to the value specified by <code>max-results</code>.</p> <p>If there is no more data in the responce, the <code>nextToken</code> will not be returned.</p>",
         "ListClusterSnapshotsOutput$nextToken": "<p>A pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond this token, up to the value specified by <code>max-results</code>.</p> <p>If there is no more data in the responce, the <code>nextToken</code> will not be returned.</p>",
         "ListClustersInput$nextToken": "<p>A pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond this token, up to the value specified by <code>max-results</code>.</p> <p>If there is no more data in the responce, the <code>nextToken</code> will not be returned.</p>",
-        "ListClustersOutput$nextToken": "<p>A pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond this token, up to the value specified by <code>max-results</code>.</p> <p>If there is no more data in the responce, the <code>nextToken</code> will not be returned.</p>"
+        "ListClustersOutput$nextToken": "<p>A pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond this token, up to the value specified by <code>max-results</code>.</p> <p>If there is no more data in the responce, the <code>nextToken</code> will not be returned.</p>",
+        "ListPendingMaintenanceActionsInput$nextToken": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>maxResults</code>.</p>",
+        "ListPendingMaintenanceActionsOutput$nextToken": "<p>An optional pagination token provided by a previous request. If this parameter is displayed, the responses will include only records beyond the marker, up to the value specified by <code>maxResults</code>.</p>"
       }
     },
     "Password": {
@@ -262,9 +318,35 @@
         "UpdateClusterInput$adminUserPassword": "<p>The password associated with the elastic cluster administrator. This password can contain any printable ASCII character except forward slash (/), double quote (\"), or the \"at\" symbol (@).</p> <p> <i>Constraints</i>: Must contain from 8 to 100 characters.</p>"
       }
     },
+    "PendingMaintenanceActionDetails": {
+      "base": "<p>Retrieves the details of maintenance actions that are pending.</p>",
+      "refs": {
+        "PendingMaintenanceActionDetailsList$member": null
+      }
+    },
+    "PendingMaintenanceActionDetailsList": {
+      "base": null,
+      "refs": {
+        "ResourcePendingMaintenanceAction$pendingMaintenanceActionDetails": "<p>Provides information about a pending maintenance action for a resource.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource could not be located.</p>",
       "refs": {
+      }
+    },
+    "ResourcePendingMaintenanceAction": {
+      "base": "<p>Provides information about a pending maintenance action for a resource.</p>",
+      "refs": {
+        "ApplyPendingMaintenanceActionOutput$resourcePendingMaintenanceAction": "<p>The output of the pending maintenance action being applied.</p>",
+        "GetPendingMaintenanceActionOutput$resourcePendingMaintenanceAction": "<p>Provides information about a pending maintenance action for a resource.</p>",
+        "ResourcePendingMaintenanceActionList$member": null
+      }
+    },
+    "ResourcePendingMaintenanceActionList": {
+      "base": null,
+      "refs": {
+        "ListPendingMaintenanceActionsOutput$resourcePendingMaintenanceActions": "<p>Provides information about a pending maintenance action for a resource.</p>"
       }
     },
     "RestoreClusterFromSnapshotInput": {
@@ -374,9 +456,16 @@
         "InternalServerException$message": null,
         "ListClusterSnapshotsInput$clusterArn": "<p>The ARN identifier of the elastic cluster.</p>",
         "ListClusterSnapshotsInput$snapshotType": "<p>The type of cluster snapshots to be returned. You can specify one of the following values:</p> <ul> <li> <p> <code>automated</code> - Return all cluster snapshots that Amazon DocumentDB has automatically created for your Amazon Web Services account.</p> </li> <li> <p> <code>manual</code> - Return all cluster snapshots that you have manually created for your Amazon Web Services account.</p> </li> </ul>",
+        "PendingMaintenanceActionDetails$action": "<p>Displays the specific action of a pending maintenance action.</p>",
+        "PendingMaintenanceActionDetails$autoAppliedAfterDate": "<p>Displays the date of the maintenance window when the action is applied. The maintenance action is applied to the resource during its first maintenance window after this date. If this date is specified, any <code>NEXT_MAINTENANCE</code> <code>optInType</code> requests are ignored.</p>",
+        "PendingMaintenanceActionDetails$currentApplyDate": "<p>Displays the effective date when the pending maintenance action is applied to the resource.</p>",
+        "PendingMaintenanceActionDetails$description": "<p>Displays a description providing more detail about the maintenance action.</p>",
+        "PendingMaintenanceActionDetails$forcedApplyDate": "<p>Displays the date when the maintenance action is automatically applied. The maintenance action is applied to the resource on this date regardless of the maintenance window for the resource. If this date is specified, any <code>IMMEDIATE</code> <code>optInType</code> requests are ignored.</p>",
+        "PendingMaintenanceActionDetails$optInStatus": "<p>Displays the type of <code>optInType</code> request that has been received for the resource.</p>",
         "ResourceNotFoundException$message": "<p>An error message describing the failure.</p>",
         "ResourceNotFoundException$resourceId": "<p>The ID of the resource that could not be located.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that could not be found.</p>",
+        "ResourcePendingMaintenanceAction$resourceArn": "<p>The Amazon DocumentDB Amazon Resource Name (ARN) of the resource to which the pending maintenance action applies.</p>",
         "RestoreClusterFromSnapshotInput$clusterName": "<p>The name of the elastic cluster.</p>",
         "RestoreClusterFromSnapshotInput$kmsKeyId": "<p>The KMS key identifier to use to encrypt the new Amazon DocumentDB elastic clusters cluster.</p> <p>The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a cluster using the same Amazon account that owns this KMS encryption key, you can use the KMS key alias instead of the ARN as the KMS encryption key.</p> <p>If an encryption key is not specified here, Amazon DocumentDB uses the default encryption key that KMS creates for your account. Your account has a different default encryption key for each Amazon Region.</p>",
         "RestoreClusterFromSnapshotInput$snapshotArn": "<p>The ARN identifier of the elastic cluster snapshot.</p>",

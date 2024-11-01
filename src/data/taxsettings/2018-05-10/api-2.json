@@ -44,6 +44,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteSupplementalTaxRegistration":{
+      "name":"DeleteSupplementalTaxRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteSupplementalTaxRegistration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteSupplementalTaxRegistrationRequest"},
+      "output":{"shape":"DeleteSupplementalTaxRegistrationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteTaxRegistration":{
       "name":"DeleteTaxRegistration",
       "http":{
@@ -89,6 +105,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListSupplementalTaxRegistrations":{
+      "name":"ListSupplementalTaxRegistrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListSupplementalTaxRegistrations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSupplementalTaxRegistrationsRequest"},
+      "output":{"shape":"ListSupplementalTaxRegistrationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListTaxRegistrations":{
       "name":"ListTaxRegistrations",
       "http":{
@@ -101,6 +132,21 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "PutSupplementalTaxRegistration":{
+      "name":"PutSupplementalTaxRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutSupplementalTaxRegistration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutSupplementalTaxRegistrationRequest"},
+      "output":{"shape":"PutSupplementalTaxRegistrationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -328,6 +374,10 @@
         "legalNatureCode":{"shape":"LegalNatureCode"}
       }
     },
+    "BusinessRegistrationNumber":{
+      "type":"string",
+      "pattern":"^[0-9]{12}$"
+    },
     "BusinessRepresentativeName":{
       "type":"string",
       "max":200,
@@ -409,6 +459,18 @@
       "min":10,
       "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
     },
+    "DeleteSupplementalTaxRegistrationRequest":{
+      "type":"structure",
+      "required":["authorityId"],
+      "members":{
+        "authorityId":{"shape":"GenericString"}
+      }
+    },
+    "DeleteSupplementalTaxRegistrationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteTaxRegistrationRequest":{
       "type":"structure",
       "members":{
@@ -461,6 +523,12 @@
     "FieldName":{
       "type":"string",
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "GenericString":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^[\\s\\S]*$"
     },
     "GeorgiaAdditionalInfo":{
       "type":"structure",
@@ -614,6 +682,21 @@
       "min":1,
       "pattern":"^[0-9\\u3130-\\u318F\\uAC00-\\uD7AF,.( )-\\\\s]*$"
     },
+    "ListSupplementalTaxRegistrationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"PaginationTokenString"}
+      }
+    },
+    "ListSupplementalTaxRegistrationsResponse":{
+      "type":"structure",
+      "required":["taxRegistrations"],
+      "members":{
+        "nextToken":{"shape":"PaginationTokenString"},
+        "taxRegistrations":{"shape":"SupplementalTaxRegistrationList"}
+      }
+    },
     "ListTaxRegistrationsRequest":{
       "type":"structure",
       "members":{
@@ -631,9 +714,10 @@
     },
     "MalaysiaAdditionalInfo":{
       "type":"structure",
-      "required":["serviceTaxCodes"],
       "members":{
-        "serviceTaxCodes":{"shape":"MalaysiaServiceTaxCodesList"}
+        "businessRegistrationNumber":{"shape":"BusinessRegistrationNumber"},
+        "serviceTaxCodes":{"shape":"MalaysiaServiceTaxCodesList"},
+        "taxInformationNumber":{"shape":"TaxInformationNumber"}
       }
     },
     "MalaysiaServiceTaxCode":{
@@ -649,7 +733,7 @@
       "type":"list",
       "member":{"shape":"MalaysiaServiceTaxCode"},
       "max":4,
-      "min":1
+      "min":0
     },
     "MaxResults":{
       "type":"integer",
@@ -687,6 +771,24 @@
       "max":20,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "PutSupplementalTaxRegistrationRequest":{
+      "type":"structure",
+      "required":["taxRegistrationEntry"],
+      "members":{
+        "taxRegistrationEntry":{"shape":"SupplementalTaxRegistrationEntry"}
+      }
+    },
+    "PutSupplementalTaxRegistrationResponse":{
+      "type":"structure",
+      "required":[
+        "authorityId",
+        "status"
+      ],
+      "members":{
+        "authorityId":{"shape":"GenericString"},
+        "status":{"shape":"TaxRegistrationStatus"}
+      }
     },
     "PutTaxRegistrationRequest":{
       "type":"structure",
@@ -833,6 +935,50 @@
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
     },
+    "SupplementalTaxRegistration":{
+      "type":"structure",
+      "required":[
+        "address",
+        "authorityId",
+        "legalName",
+        "registrationId",
+        "registrationType",
+        "status"
+      ],
+      "members":{
+        "address":{"shape":"Address"},
+        "authorityId":{"shape":"GenericString"},
+        "legalName":{"shape":"LegalName"},
+        "registrationId":{"shape":"RegistrationId"},
+        "registrationType":{"shape":"SupplementalTaxRegistrationType"},
+        "status":{"shape":"TaxRegistrationStatus"}
+      },
+      "sensitive":true
+    },
+    "SupplementalTaxRegistrationEntry":{
+      "type":"structure",
+      "required":[
+        "address",
+        "legalName",
+        "registrationId",
+        "registrationType"
+      ],
+      "members":{
+        "address":{"shape":"Address"},
+        "legalName":{"shape":"LegalName"},
+        "registrationId":{"shape":"RegistrationId"},
+        "registrationType":{"shape":"SupplementalTaxRegistrationType"}
+      },
+      "sensitive":true
+    },
+    "SupplementalTaxRegistrationList":{
+      "type":"list",
+      "member":{"shape":"SupplementalTaxRegistration"}
+    },
+    "SupplementalTaxRegistrationType":{
+      "type":"string",
+      "enum":["VAT"]
+    },
     "TaxCode":{
       "type":"string",
       "pattern":"^([0-9]{11}|[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z])$"
@@ -861,6 +1007,10 @@
     "TaxDocumentName":{
       "type":"string",
       "pattern":"^[\\s\\S]*$"
+    },
+    "TaxInformationNumber":{
+      "type":"string",
+      "pattern":"^[A-Z]{1,2}[0-9]{1,11}$"
     },
     "TaxInheritanceDetails":{
       "type":"structure",
@@ -949,7 +1099,9 @@
         "GST",
         "CPF",
         "CNPJ",
-        "SST"
+        "SST",
+        "TIN",
+        "NRIC"
       ]
     },
     "TaxRegistrationWithJurisdiction":{
