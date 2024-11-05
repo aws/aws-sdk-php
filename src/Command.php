@@ -29,7 +29,12 @@ class Command implements CommandInterface
      * @param array       $args           Arguments to pass to the command
      * @param HandlerList $list           Handler list
      */
-    public function __construct($name, array $args = [], ?HandlerList $list = null)
+    public function __construct(
+        $name,
+        array $args = [],
+        ?HandlerList $list = null,
+        ?MetricsBuilder $metricsBuilder = null
+    )
     {
         $this->name = $name;
         $this->data = $args;
@@ -41,7 +46,7 @@ class Command implements CommandInterface
         if (!isset($this->data['@context'])) {
             $this->data['@context'] = [];
         }
-        $this->metricsBuilder = new MetricsBuilder();
+        $this->metricsBuilder = $metricsBuilder ?: new MetricsBuilder();
     }
 
     public function __clone()

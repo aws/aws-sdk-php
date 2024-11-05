@@ -99,14 +99,13 @@ class EndpointV2Middleware
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
-        $this->hookAccountIdMetric(
-            $providerArgs[self::ACCOUNT_ID_PARAM] ?? null,
-            $command
-        );
+        if (!empty($providerArgs[self::ACCOUNT_ID_PARAM])) {
+            $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
+        }
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
-        $this->hookAccountIdEndpointMetric(
-            $endpoint,
-            $command
+        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+            'account_id_endpoint',
+            $endpoint->getUrl()
         );
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
@@ -401,24 +400,5 @@ class EndpointV2Middleware
         $identity = $identityProviderFn()->wait();
 
         return $identity->getAccountId();
-    }
-
-    private function hookAccountIdMetric($accountId, &$command)
-    {
-        if (!empty($accountId)) {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::RESOLVED_ACCOUNT_ID
-            );
-        }
-    }
-
-    private function hookAccountIdEndpointMetric($endpoint, $command)
-    {
-        $regex = "/^(https?:\/\/\d{12}\.[^\s\/$.?#].\S*)$/";
-        if (preg_match($regex, $endpoint->getUrl())) {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::ACCOUNT_ID_ENDPOINT
-            );
-        }
     }
 }

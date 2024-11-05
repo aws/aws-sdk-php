@@ -84,7 +84,10 @@ class ApplyChecksumMiddleware
                 );
             }
 
-            $this->hookChecksumAlgorithmMetric($requestedAlgorithm, $command);
+            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                'request_checksum',
+                $requestedAlgorithm
+            );
 
             return $next($command, $request);
         }
@@ -98,7 +101,9 @@ class ApplyChecksumMiddleware
                 //S3Express doesn't support MD5; default to crc32 instead
                 if ($this->isS3Express($command)) {
                     $request = $this->addAlgorithmHeader('crc32', $request, $body);
-                    $this->hookChecksumAlgorithmMetric('crc32', $command);
+                    $command->getMetricsBuilder()->append(
+                        MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32
+                    );
                 } elseif (!$request->hasHeader('Content-MD5')) {
                     // Set the content MD5 header for operations that require it.
                     $request = $request->withHeader(
@@ -116,7 +121,9 @@ class ApplyChecksumMiddleware
                 'X-Amz-Content-Sha256',
                 $command['ContentSHA256']
             );
-            $this->hookChecksumAlgorithmMetric('sha256', $command);
+            $command->getMetricsBuilder()->append(
+                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256
+            );
         }
 
         return $next($command, $request);
@@ -149,35 +156,5 @@ class ApplyChecksumMiddleware
     {
         return isset($command['@context']['signing_service'])
             && $command['@context']['signing_service'] === 's3express';
-    }
-
-    private function hookChecksumAlgorithmMetric($algorithm, $command)
-    {
-        if (empty($algorithm)) {
-            return;
-        }
-
-        if ($algorithm === 'crc32') {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32
-            );
-        } elseif ($algorithm === 'crc32c') {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32C
-            );
-        } elseif ($algorithm === 'crc64') {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC64
-            );
-        } elseif ($algorithm === 'sha1') {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA1
-            );
-        } elseif ($algorithm === 'sha256') {
-            MetricsBuilder::fromCommand($command)->append(
-                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256
-            );
-        }
-
     }
 }

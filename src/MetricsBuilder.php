@@ -2,13 +2,16 @@
 
 namespace Aws;
 
+use Aws\Credentials\CredentialsInterface;
+use Aws\Credentials\CredentialSources;
+
 /**
+ * A placeholder for gathering metrics in a request.
+ *
  * @internal
  */
 final class MetricsBuilder
 {
-    const COMMAND_METRICS_BUILDER = "CommandMetricsBuilder";
-    const RESOURCE_MODEL = "A";
     const WAITER = "B";
     const PAGINATOR = "C";
     const RETRY_MODE_LEGACY = "D";
@@ -17,6 +20,8 @@ final class MetricsBuilder
     const S3_TRANSFER = "G";
     const S3_CRYPTO_V1N = "H";
     const S3_CRYPTO_V2 = "I";
+    const S3_EXPRESS_BUCKET = "J";
+    const GZIP_REQUEST_COMPRESSION = "L";
     const ENDPOINT_OVERRIDE = "N";
     const ACCOUNT_ID_ENDPOINT = "O";
     const ACCOUNT_ID_MODE_PREFERRED = "P";
@@ -29,6 +34,18 @@ final class MetricsBuilder
     const FLEXIBLE_CHECKSUMS_REQ_CRC64 = "W";
     const FLEXIBLE_CHECKSUMS_REQ_SHA1 = "X";
     const FLEXIBLE_CHECKSUMS_REQ_SHA256 = "Y";
+    const CREDENTIALS_CODE = "e";
+    const CREDENTIALS_ENV_VARS = "g";
+    const CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN = "h";
+    const CREDENTIALS_STS_ASSUME_ROLE = "i";
+    const CREDENTIALS_STS_ASSUME_ROLE_WEB_ID = "k";
+    const CREDENTIALS_PROFILE = "n";
+    const CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN = "q";
+    const CREDENTIALS_HTTP = "z";
+    const CREDENTIALS_IMDS = "0";
+    const CREDENTIALS_PROCESS = "w";
+    const CREDENTIALS_SSO = "s";
+    const CREDENTIALS_SSO_LEGACY = "u";
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B
@@ -74,15 +91,12 @@ final class MetricsBuilder
     }
 
     /**
-     * Appends a metric into the internal metrics holder.
-     * It checks if the metric can be appended before doing so.
-     * If the metric can be appended then, it is added into the
-     * metrics holder and the current metrics size is increased
-     * by summing the length of the metric being appended plus the length
-     * of the separator used for encoding.
+     * Appends a metric to the internal metrics holder after validating it.
+     * Increases the current metrics size by the length of the new metric
+     * plus the length of the encoding separator.
      * Example: $currentSize = $currentSize + len($newMetric) + len($separator)
      *
-     * @param string $metric
+     * @param string $metric The metric to append.
      *
      * @return void
      */
@@ -97,18 +111,161 @@ final class MetricsBuilder
     }
 
     /**
-     * Validates if a metric can be appended by verifying if the current
-     * metrics size plus the new metric plus the length of the separator
-     * exceeds the metrics size limit. It also checks if the metric already
-     * exists, if so then it returns false.
-     * Example: metric can be appended just if:
-     *  $currentSize + len($newMetric) + len($metricSeparator) <= MAX_SIZE
+     * Receives a feature group and a value to identify which one is the metric.
+     * For example, a group could be `signature` and a value could be `v4a`,
+     * then the metric will be `SIGV4A_SIGNING`.
+     *
+     * @param string $featureGroup the feature group such as `signature`.
+     * @param mixed $value the value for identifying the metric.
+     *
+     * @return void
+     */
+    public function identifyMetricByValueAndAppend(
+        string $featureGroup,
+        $value
+    ): void
+    {
+        if (empty($value)) {
+            return;
+        }
+
+        static $appendMetricFns = [
+            'signature' => 'appendSignatureMetric',
+            'request_compression' => 'appendRequestCompressionMetric',
+            'account_id_endpoint' => 'appendAccountIdEndpoint',
+            'request_checksum' => 'appendRequestChecksumMetric',
+            'credentials' => 'appendCredentialsMetric'
+        ];
+
+        $fn = $appendMetricFns[$featureGroup];
+        $this->{$fn}($value);
+    }
+
+    /**
+     * Appends the signature metric based on the signature value.
+     *
+     * @param string $signature
+     *
+     * @return void
+     */
+    private function appendSignatureMetric(string $signature): void
+    {
+        if ($signature === 'v4-s3express') {
+            $this->append(MetricsBuilder::S3_EXPRESS_BUCKET);
+        } elseif ($signature === 'v4a') {
+            $this->append(MetricsBuilder::SIGV4A_SIGNING);
+        }
+    }
+
+    /**
+     * Appends the request compression metric based on the format resolved.
+     *
+     * @param string $format
+     *
+     * @return void
+     */
+    private function appendRequestCompressionMetric(string $format): void
+    {
+        if ($format === 'gzip') {
+            $this->append(MetricsBuilder::GZIP_REQUEST_COMPRESSION);
+        }
+    }
+
+    /**
+     * Appends the account id endpoint metric by validating if the
+     * endpoint contains an account id in its URL.
+     *
+     * @param string $endpoint
+     *
+     * @return void
+     */
+    private function appendAccountIdEndpoint(string $endpoint): void
+    {
+        $regex = "/^(https?:\/\/\d{12}\.[^\s\/$.?#].\S*)$/";
+        if (preg_match($regex, $endpoint)) {
+            $this->append(MetricsBuilder::ACCOUNT_ID_ENDPOINT);
+        }
+    }
+
+    /**
+     * Appends the request checksum metric based on the algorithm.
+     *
+     * @param string $algorithm
+     *
+     * @return void
+     */
+    private function appendRequestChecksumMetric(string $algorithm): void
+    {
+        if ($algorithm === 'crc32') {
+            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32);
+        } elseif ($algorithm === 'crc32c') {
+            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32C);
+        } elseif ($algorithm === 'crc64') {
+            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC64);
+        } elseif ($algorithm === 'sha1') {
+            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA1);
+        } elseif ($algorithm === 'sha256') {
+            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256);
+        }
+    }
+
+
+    /**
+     * Appends the credentials metric based on the type of credentials
+     * resolved.
+     *
+     * @param CredentialsInterface $credentials
+     *
+     * @return void
+     */
+    private function appendCredentialsMetric(
+        CredentialsInterface $credentials
+    ): void
+    {
+        $source = $credentials->toArray()['source'] ?? null;
+        if (empty($source)) {
+            return;
+        }
+
+        if ($source === CredentialSources::STATIC) {
+            $this->append(MetricsBuilder::CREDENTIALS_CODE);
+        } elseif ($source === CredentialSources::ENVIRONMENT) {
+            $this->append(MetricsBuilder::CREDENTIALS_ENV_VARS);
+        } elseif ($source === CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN) {
+            $this->append(MetricsBuilder::CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN);
+        } elseif ($source === CredentialSources::STS_ASSUME_ROLE) {
+            $this->append(MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE);
+        } elseif ($source === CredentialSources::STS_WEB_ID_TOKEN) {
+            $this->append(MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE_WEB_ID);
+        } elseif ($source === CredentialSources::PROFILE) {
+            $this->append(MetricsBuilder::CREDENTIALS_PROFILE);
+        } elseif ($source === CredentialSources::IMDS) {
+            $this->append(MetricsBuilder::CREDENTIALS_IMDS);
+        } elseif ($source === CredentialSources::ECS) {
+            $this->append(MetricsBuilder::CREDENTIALS_HTTP);
+        } elseif ($source === CredentialSources::PROFILE_STS_WEB_ID_TOKEN) {
+            $this->append(MetricsBuilder::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN);
+        } elseif ($source === CredentialSources::PROCESS) {
+            $this->append(MetricsBuilder::CREDENTIALS_PROCESS);
+        } elseif ($source === CredentialSources::SSO) {
+            $this->append(MetricsBuilder::CREDENTIALS_SSO);
+        } elseif ($source === CredentialSources::SSO_LEGACY) {
+            $this->append(MetricsBuilder::CREDENTIALS_SSO_LEGACY);
+        }
+    }
+
+    /**
+     * Validates if a metric can be appended by ensuring the total size,
+     * including the new metric and separator, does not exceed the limit.
+     * Also checks that the metric does not already exist.
+     * Example: Appendable if:
+     *  $currentSize + len($newMetric) + len($separator) <= MAX_SIZE
      *  and:
-     * $newMetric not in $existentMetrics
+     * $newMetric not in $existingMetrics
      *
-     * @param string $newMetric
+     * @param string $newMetric The metric to validate.
      *
-     * @return bool
+     * @return bool True if the metric can be appended, false otherwise.
      */
     private function canMetricBeAppended(string $newMetric): bool
     {
@@ -149,6 +306,16 @@ final class MetricsBuilder
         return $command->getMetricsBuilder();
     }
 
+    /**
+     * Helper method for appending a metrics capture middleware into a
+     * handler stack given. The middleware appended here is on top of the
+     * build step.
+     *
+     * @param HandlerList $handlerList
+     * @param $metric
+     *
+     * @return void
+     */
     public static function appendMetricsCaptureMiddleware(
         HandlerList $handlerList,
         $metric

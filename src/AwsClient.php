@@ -282,10 +282,6 @@ class AwsClient implements AwsClientInterface
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
         }
-        MetricsBuilder::appendMetricsCaptureMiddleware(
-            $this->getHandlerList(),
-            MetricsBuilder::RESOURCE_MODEL
-        );
         $this->addUserAgentMiddleware($config);
     }
 
@@ -455,7 +451,7 @@ class AwsClient implements AwsClientInterface
         }
 
         $resolver = static function (
-            CommandInterface $c
+            CommandInterface $command
         ) use (
                 $api,
                 $provider,
@@ -467,17 +463,17 @@ class AwsClient implements AwsClientInterface
             $handlerList
         ) {
             if (!$configuredSignatureVersion) {
-                if (!empty($c['@context']['signing_region'])) {
-                    $region = $c['@context']['signing_region'];
+                if (!empty($command['@context']['signing_region'])) {
+                    $region = $command['@context']['signing_region'];
                 }
-                if (!empty($c['@context']['signing_service'])) {
-                    $name = $c['@context']['signing_service'];
+                if (!empty($command['@context']['signing_service'])) {
+                    $name = $command['@context']['signing_service'];
                 }
-                if (!empty($c['@context']['signature_version'])) {
-                    $signatureVersion = $c['@context']['signature_version'];
+                if (!empty($command['@context']['signature_version'])) {
+                    $signatureVersion = $command['@context']['signature_version'];
                 }
 
-                $authType = $api->getOperation($c->getName())['authtype'];
+                $authType = $api->getOperation($command->getName())['authtype'];
                 switch ($authType){
                     case 'none':
                         $signatureVersion = 'anonymous';
@@ -492,19 +488,20 @@ class AwsClient implements AwsClientInterface
             }
 
             if ($signatureVersion === 'v4a') {
-                $commandSigningRegionSet = !empty($c['@context']['signing_region_set'])
-                    ? implode(', ', $c['@context']['signing_region_set'])
+                $commandSigningRegionSet = !empty($command['@context']['signing_region_set'])
+                    ? implode(', ', $command['@context']['signing_region_set'])
                     : null;
 
                 $region = $signingRegionSet
                     ?? $commandSigningRegionSet
                     ?? $region;
-
-                MetricsBuilder::appendMetricsCaptureMiddleware(
-                    $handlerList,
-                    MetricsBuilder::SIGV4A_SIGNING
-                );
             }
+
+            // Capture signature metric
+            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                'signature',
+                $signatureVersion
+            );
 
             return SignatureProvider::resolve($provider, $signatureVersion, $name, $region);
         };
@@ -623,9 +620,19 @@ class AwsClient implements AwsClientInterface
         );
     }
 
+    /**
+     * Appends the user agent middleware.
+     * This middleware MUST be appended after the
+     * signature middleware `addSignatureMiddleware`,
+     * so that metrics around signatures are properly
+     * captured.
+     *
+     * @param $args
+     * @return void
+     */
     private function addUserAgentMiddleware($args)
     {
-        $this->getHandlerList()->prependSign(
+        $this->getHandlerList()->appendSign(
             UserAgentMiddleware::wrap($args),
             'user-agent'
         );

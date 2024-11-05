@@ -7,7 +7,7 @@ trait MetricsBuilderTestTrait
 {
     public function getMetricsAsArray(RequestInterface $request): array
     {
-        $regex = "/([mM]\/)([A-Za-z,]+)/";
+        $regex = "/([mM]\/)([A-Za-z,0-9]+)/";
         if (preg_match(
                 $regex,
                 $request->getHeaderLine('User-Agent'),

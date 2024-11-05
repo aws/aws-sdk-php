@@ -6,11 +6,33 @@ use Aws\EndpointDiscovery\Configuration;
 use Closure;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Builds and injects the user agent header values.
+ * This middleware must be appended into step where all the
+ * metrics to be gathered are already resolved. As of now it should be
+ * after the signing step.
+ */
 class UserAgentMiddleware
 {
     const AGENT_VERSION = 2.1;
-    /** @var callable  */
+    static $userAgentFnList = [
+        'sdkVersion',
+        'userAgentVersion',
+        'hhvmVersion',
+        'osName',
+        'langVersion',
+        'execEnv',
+        'endpointDiscovery',
+        'appId',
+        'metrics'
+    ];
+    static $metricsFnList = [
+        'endpointMetric',
+        'accountIdModeMetric',
+        'retryConfigMetric',
+    ];
 
+    /** @var callable  */
     private $nextHandler;
     /** @var array */
     private $args;
@@ -100,19 +122,8 @@ class UserAgentMiddleware
      */
     private function buildUserAgentValue(): array
     {
-        static $fnList = [
-            'sdkVersion',
-            'userAgentVersion',
-            'hhvmVersion',
-            'osName',
-            'langVersion',
-            'execEnv',
-            'endpointDiscovery',
-            'appId',
-            'metrics'
-        ];
         $userAgentValue = [];
-        foreach ($fnList as $fn) {
+        foreach (self::$userAgentFnList as $fn) {
             $val = $this->{$fn}();
             if (!empty($val)) {
                 $userAgentValue[] = $val;
@@ -201,6 +212,12 @@ class UserAgentMiddleware
         return "";
     }
 
+    /**
+     * Returns the user agent value for endpoint discovery as cfg.
+     * This feature is deprecated.
+     *
+     * @return string
+     */
     private function endpointDiscovery(): string
     {
         $args = $this->args;
@@ -242,12 +259,7 @@ class UserAgentMiddleware
      */
     private function metrics(): string
     {
-        static $metricsFn = [
-            'endpointMetric',
-            'accountIdModeMetric',
-            'retryConfigMetric'
-        ];
-        foreach ($metricsFn as $fn) {
+        foreach (self::$metricsFnList as $fn) {
             $this->{$fn}();
         }
 

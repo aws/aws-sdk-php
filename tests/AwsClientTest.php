@@ -999,25 +999,6 @@ EOT
         $client->TestOperation();
     }
 
-    public function testAppendsC2jMetricsCaptureMiddleware()
-    {
-        $client = new S3Client([
-            'region' => 'us-east-2',
-            'http_handler' => function (RequestInterface $request) {
-                $this->assertTrue(
-                    in_array(
-                        MetricsBuilder::RESOURCE_MODEL,
-                        $this->getMetricsAsArray($request)
-                    )
-                );
-
-                return new Response();
-            }
-        ]);
-
-        $client->listBuckets();
-    }
-
     public function testAppendsUserAgentMiddleware()
     {
         $client = new S3Client([
