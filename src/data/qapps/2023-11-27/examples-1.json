@@ -21,6 +21,56 @@
         "title": "Links an Amazon Q App to the invoker's list of apps"
       }
     ],
+    "BatchCreateCategory": [
+      {
+        "input": {
+          "categories": [
+            {
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR"
+            },
+            {
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Marketing"
+            }
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Creates the categories for the library"
+      }
+    ],
+    "BatchDeleteCategory": [
+      {
+        "input": {
+          "categories": [
+            "9c871ed4-1c41-4065-aefe-321cd4b61cf8"
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Deletes the categories in the library"
+      }
+    ],
+    "BatchUpdateCategory": [
+      {
+        "input": {
+          "categories": [
+            {
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR Management"
+            },
+            {
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Sales"
+            }
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Updates the categories in the library"
+      }
+    ],
     "CreateLibraryItem": [
       {
         "input": {
@@ -226,11 +276,11 @@
           "cardStatus": {
             "1e6caeac-b481-45ff-a082-8b9a4a0b72e8": {
               "currentState": "COMPLETED",
-              "currentValue": "Earth's circumference is 24,901 miles"
+              "currentValue": "Based on the responses, the most popular color is red, with 1 vote from the user \"user1\"."
             },
             "6fb5b404-3b7b-48a4-8a8b-56406922a606": {
               "currentState": "COMPLETED",
-              "currentValue": "What is the circumference of Earth?"
+              "currentValue": ""
             }
           },
           "sessionArn": "arn:aws:qapps:us-west-2:0123456789012:application/a929ecd6-5765-4ec7-bd3e-2ca90098b18e/qapp/65e7dce7-226a-47f9-b689-22850becef89/session/1fca878e-64c5-4dc4-b1d9-c93effed4e82",
@@ -272,6 +322,31 @@
         },
         "id": "example-2",
         "title": "Upload a file into a application"
+      }
+    ],
+    "ListCategories": [
+      {
+        "input": {
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "output": {
+          "categories": [
+            {
+              "appCount": 10,
+              "color": "#FF6600",
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR"
+            },
+            {
+              "appCount": 11,
+              "color": "#FFFF00",
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Marketing"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List categories available for the library items in this instance"
       }
     ],
     "ListLibraryItems": [

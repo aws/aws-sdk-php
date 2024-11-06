@@ -10,7 +10,8 @@
     "serviceId":"LakeFormation",
     "signatureVersion":"v4",
     "signingName":"lakeformation",
-    "uid":"lakeformation-2017-03-31"
+    "uid":"lakeformation-2017-03-31",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddLFTagsToResource":{
@@ -142,6 +143,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateLFTagExpression":{
+      "name":"CreateLFTagExpression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateLFTagExpression"
+      },
+      "input":{"shape":"CreateLFTagExpressionRequest"},
+      "output":{"shape":"CreateLFTagExpressionResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"EntityNotFoundException"}
+      ]
+    },
     "CreateLakeFormationIdentityCenterConfiguration":{
       "name":"CreateLakeFormationIdentityCenterConfiguration",
       "http":{
@@ -200,6 +218,22 @@
       },
       "input":{"shape":"DeleteLFTagRequest"},
       "output":{"shape":"DeleteLFTagResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DeleteLFTagExpression":{
+      "name":"DeleteLFTagExpression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteLFTagExpression"
+      },
+      "input":{"shape":"DeleteLFTagExpressionRequest"},
+      "output":{"shape":"DeleteLFTagExpressionResponse"},
       "errors":[
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
@@ -415,6 +449,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetLFTagExpression":{
+      "name":"GetLFTagExpression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetLFTagExpression"
+      },
+      "input":{"shape":"GetLFTagExpressionRequest"},
+      "output":{"shape":"GetLFTagExpressionResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetQueryState":{
       "name":"GetQueryState",
       "http":{
@@ -581,6 +631,22 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListLFTagExpressions":{
+      "name":"ListLFTagExpressions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListLFTagExpressions"
+      },
+      "input":{"shape":"ListLFTagExpressionsRequest"},
+      "output":{"shape":"ListLFTagExpressionsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -830,6 +896,23 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateLFTagExpression":{
+      "name":"UpdateLFTagExpression",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateLFTagExpression"
+      },
+      "input":{"shape":"UpdateLFTagExpressionRequest"},
+      "output":{"shape":"UpdateLFTagExpressionResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
         {"shape":"AccessDeniedException"}
       ]
     },
@@ -1167,6 +1250,24 @@
       "members":{
       }
     },
+    "CreateLFTagExpressionRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Expression"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "CreateLFTagExpressionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "CreateLFTagRequest":{
       "type":"structure",
       "required":[
@@ -1280,7 +1381,8 @@
         "LF_TAG",
         "LF_TAG_POLICY",
         "LF_TAG_POLICY_DATABASE",
-        "LF_TAG_POLICY_TABLE"
+        "LF_TAG_POLICY_TABLE",
+        "LF_NAMED_TAG_EXPRESSION"
       ]
     },
     "DataLakeSettings":{
@@ -1332,6 +1434,19 @@
       }
     },
     "DeleteDataCellsFilterResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteLFTagExpressionRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"}
+      }
+    },
+    "DeleteLFTagExpressionResponse":{
       "type":"structure",
       "members":{
       }
@@ -1628,6 +1743,23 @@
       "members":{
         "Permissions":{"shape":"PrincipalResourcePermissionsList"},
         "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetLFTagExpressionRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "CatalogId":{"shape":"CatalogIdString"}
+      }
+    },
+    "GetLFTagExpressionResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Expression":{"shape":"Expression"}
       }
     },
     "GetLFTagRequest":{
@@ -1929,6 +2061,27 @@
       "type":"list",
       "member":{"shape":"LFTagError"}
     },
+    "LFTagExpression":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "LFTagExpressionResource":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "LFTagExpressionsList":{
+      "type":"list",
+      "member":{"shape":"LFTagExpression"}
+    },
     "LFTagKey":{
       "type":"string",
       "max":128,
@@ -1961,14 +2114,12 @@
     },
     "LFTagPolicyResource":{
       "type":"structure",
-      "required":[
-        "ResourceType",
-        "Expression"
-      ],
+      "required":["ResourceType"],
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "ResourceType":{"shape":"ResourceType"},
-        "Expression":{"shape":"Expression"}
+        "Expression":{"shape":"Expression"},
+        "ExpressionName":{"shape":"NameString"}
       }
     },
     "LFTagValue":{
@@ -2009,6 +2160,21 @@
       "type":"structure",
       "members":{
         "DataCellsFilters":{"shape":"DataCellsFilterList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListLFTagExpressionsRequest":{
+      "type":"structure",
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "MaxResults":{"shape":"PageSize"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListLFTagExpressionsResponse":{
+      "type":"structure",
+      "members":{
+        "LFTagExpressions":{"shape":"LFTagExpressionsList"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -2213,7 +2379,8 @@
         "DATA_LOCATION_ACCESS",
         "CREATE_LF_TAG",
         "ASSOCIATE",
-        "GRANT_WITH_LF_TAG_EXPRESSION"
+        "GRANT_WITH_LF_TAG_EXPRESSION",
+        "CREATE_LF_TAG_EXPRESSION"
       ]
     },
     "PermissionList":{
@@ -2384,7 +2551,8 @@
         "DataLocation":{"shape":"DataLocationResource"},
         "DataCellsFilter":{"shape":"DataCellsFilterResource"},
         "LFTag":{"shape":"LFTagKeyResource"},
-        "LFTagPolicy":{"shape":"LFTagPolicyResource"}
+        "LFTagPolicy":{"shape":"LFTagPolicyResource"},
+        "LFTagExpression":{"shape":"LFTagExpressionResource"}
       }
     },
     "ResourceArnString":{"type":"string"},
@@ -2780,6 +2948,24 @@
       }
     },
     "UpdateDataCellsFilterResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLFTagExpressionRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Expression"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"DescriptionString"},
+        "CatalogId":{"shape":"CatalogIdString"},
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "UpdateLFTagExpressionResponse":{
       "type":"structure",
       "members":{
       }

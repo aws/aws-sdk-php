@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Amazon Verified Permissions is a permissions management service from Amazon Web Services. You can use Verified Permissions to manage permissions for your application, and authorize user access based on those permissions. Using Verified Permissions, application developers can grant access based on information about the users, resources, and requested actions. You can also evaluate additional information like group membership, attributes of the resources, and session context, such as time of request and IP addresses. Verified Permissions manages these permissions by letting you create and store authorization policies for your applications, such as consumer-facing web sites and enterprise business systems.</p> <p>Verified Permissions uses Cedar as the policy language to express your permission requirements. Cedar supports both role-based access control (RBAC) and attribute-based access control (ABAC) authorization models.</p> <p>For more information about configuring, administering, and using Amazon Verified Permissions in your applications, see the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/\">Amazon Verified Permissions User Guide</a>.</p> <p>For more information about the Cedar policy language, see the <a href=\"https://docs.cedarpolicy.com/\">Cedar Policy Language Guide</a>.</p> <important> <p>When you write Cedar policies that reference principals, resources and actions, you can define the unique identifiers used for each of those elements. We strongly recommend that you follow these best practices:</p> <ul> <li> <p> <b>Use values like universally unique identifiers (UUIDs) for all principal and resource identifiers.</b> </p> <p>For example, if user <code>jane</code> leaves the company, and you later let someone else use the name <code>jane</code>, then that new user automatically gets access to everything granted by policies that still reference <code>User::\"jane\"</code>. Cedar can’t distinguish between the new user and the old. This applies to both principal and resource identifiers. Always use identifiers that are guaranteed unique and never reused to ensure that you don’t unintentionally grant access because of the presence of an old identifier in a policy.</p> <p>Where you use a UUID for an entity, we recommend that you follow it with the // comment specifier and the ‘friendly’ name of your entity. This helps to make your policies easier to understand. For example: principal == User::\"a1b2c3d4-e5f6-a1b2-c3d4-EXAMPLE11111\", // alice</p> </li> <li> <p> <b>Do not include personally identifying, confidential, or sensitive information as part of the unique identifier for your principals or resources.</b> These identifiers are included in log entries shared in CloudTrail trails.</p> </li> </ul> </important> <p>Several operations return structures that appear similar, but have different purposes. As new functionality is added to the product, the structure used in a parameter of one operation might need to change in a way that wouldn't make sense for the same parameter in a different operation. To help you understand the purpose of each, the following naming convention is used for the structures:</p> <ul> <li> <p>Parameter type structures that end in <code>Detail</code> are used in <code>Get</code> operations.</p> </li> <li> <p>Parameter type structures that end in <code>Item</code> are used in <code>List</code> operations.</p> </li> <li> <p>Parameter type structures that use neither suffix are used in the mutating (create and update) operations.</p> </li> </ul>",
   "operations": {
+    "BatchGetPolicy": "<p>Retrieves information about a group (batch) of policies.</p> <note> <p>The <code>BatchGetPolicy</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>verifiedpermissions:GetPolicy</code> in their IAM policies.</p> </note>",
     "BatchIsAuthorized": "<p>Makes a series of decisions about multiple authorization requests for one principal or resource. Each request contains the equivalent content of an <code>IsAuthorized</code> request: principal, action, resource, and context. Either the <code>principal</code> or the <code>resource</code> parameter must be identical across all requests. For example, Verified Permissions won't evaluate a pair of requests where <code>bob</code> views <code>photo1</code> and <code>alice</code> views <code>photo2</code>. Authorization of <code>bob</code> to view <code>photo1</code> and <code>photo2</code>, or <code>bob</code> and <code>alice</code> to view <code>photo1</code>, are valid batches. </p> <p>The request is evaluated against all policies in the specified policy store that match the entities that you declare. The result of the decisions is a series of <code>Allow</code> or <code>Deny</code> responses, along with the IDs of the policies that produced each decision.</p> <p>The <code>entities</code> of a <code>BatchIsAuthorized</code> API request can contain up to 100 principals and up to 100 resources. The <code>requests</code> of a <code>BatchIsAuthorized</code> API request can contain up to 30 requests.</p> <note> <p>The <code>BatchIsAuthorized</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>verifiedpermissions:IsAuthorized</code> in their IAM policies.</p> </note>",
     "BatchIsAuthorizedWithToken": "<p>Makes a series of decisions about multiple authorization requests for one token. The principal in this request comes from an external identity source in the form of an identity or access token, formatted as a <a href=\"https://wikipedia.org/wiki/JSON_Web_Token\">JSON web token (JWT)</a>. The information in the parameters can also define additional context that Verified Permissions can include in the evaluations.</p> <p>The request is evaluated against all policies in the specified policy store that match the entities that you provide in the entities declaration and in the token. The result of the decisions is a series of <code>Allow</code> or <code>Deny</code> responses, along with the IDs of the policies that produced each decision.</p> <p>The <code>entities</code> of a <code>BatchIsAuthorizedWithToken</code> API request can contain up to 100 resources and up to 99 user groups. The <code>requests</code> of a <code>BatchIsAuthorizedWithToken</code> API request can contain up to 30 requests.</p> <note> <p>The <code>BatchIsAuthorizedWithToken</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>verifiedpermissions:IsAuthorizedWithToken</code> in their IAM policies.</p> </note>",
     "CreateIdentitySource": "<p>Adds an identity source to a policy store–an Amazon Cognito user pool or OpenID Connect (OIDC) identity provider (IdP). </p> <p>After you create an identity source, you can use the identities provided by the IdP as proxies for the principal in authorization queries that use the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> or <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorizedWithToken.html\">BatchIsAuthorizedWithToken</a> API operations. These identities take the form of tokens that contain claims about the user, such as IDs, attributes and group memberships. Identity sources provide identity (ID) tokens and access tokens. Verified Permissions derives information about your user and session from token claims. Access tokens provide action <code>context</code> to your policies, and ID tokens provide principal <code>Attributes</code>.</p> <important> <p>Tokens from an identity source user continue to be usable until they expire. Token revocation and resource deletion have no effect on the validity of a token in your policy store</p> </important> <note> <p>To reference a user from this identity source in your Cedar policies, refer to the following syntax examples.</p> <ul> <li> <p>Amazon Cognito user pool: <code>Namespace::[Entity type]::[User pool ID]|[user principal attribute]</code>, for example <code>MyCorp::User::us-east-1_EXAMPLE|a1b2c3d4-5678-90ab-cdef-EXAMPLE11111</code>.</p> </li> <li> <p>OpenID Connect (OIDC) provider: <code>Namespace::[Entity type]::[entityIdPrefix]|[user principal attribute]</code>, for example <code>MyCorp::User::MyOIDCProvider|a1b2c3d4-5678-90ab-cdef-EXAMPLE22222</code>.</p> </li> </ul> </note> <note> <p>Verified Permissions is <i> <a href=\"https://wikipedia.org/wiki/Eventual_consistency\">eventually consistent</a> </i>. It can take a few seconds for a new or changed element to propagate through the service and be visible in the results of other Verified Permissions operations.</p> </note>",
@@ -90,6 +91,58 @@
         "UpdateOpenIdConnectAccessTokenConfiguration$audiences": "<p>The access token <code>aud</code> claim values that you want to accept in your policy store. For example, <code>https://myapp.example.com, https://myapp2.example.com</code>.</p>"
       }
     },
+    "BatchGetPolicyErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchGetPolicyErrorItem$code": "<p>The error code that was returned.</p>"
+      }
+    },
+    "BatchGetPolicyErrorItem": {
+      "base": "<p>Contains the information about an error resulting from a <code>BatchGetPolicy</code> API call.</p>",
+      "refs": {
+        "BatchGetPolicyErrorList$member": null
+      }
+    },
+    "BatchGetPolicyErrorList": {
+      "base": null,
+      "refs": {
+        "BatchGetPolicyOutput$errors": "<p>Information about the policies from the request that resulted in an error. These results are returned in the order they were requested.</p>"
+      }
+    },
+    "BatchGetPolicyInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetPolicyInputItem": {
+      "base": "<p>Information about a policy that you include in a <code>BatchGetPolicy</code> API request.</p>",
+      "refs": {
+        "BatchGetPolicyInputList$member": null
+      }
+    },
+    "BatchGetPolicyInputList": {
+      "base": null,
+      "refs": {
+        "BatchGetPolicyInput$requests": "<p>An array of up to 100 policies you want information about.</p>"
+      }
+    },
+    "BatchGetPolicyOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetPolicyOutputItem": {
+      "base": "<p>Contains information about a policy returned from a <code>BatchGetPolicy</code> API request.</p>",
+      "refs": {
+        "BatchGetPolicyOutputList$member": null
+      }
+    },
+    "BatchGetPolicyOutputList": {
+      "base": null,
+      "refs": {
+        "BatchGetPolicyOutput$results": "<p>Information about the policies listed in the request that were successfully returned. These results are returned in the order they were requested.</p>"
+      }
+    },
     "BatchIsAuthorizedInput": {
       "base": null,
       "refs": {
@@ -122,7 +175,7 @@
     "BatchIsAuthorizedOutputList": {
       "base": null,
       "refs": {
-        "BatchIsAuthorizedOutput$results": "<p>A series of <code>Allow</code> or <code>Deny</code> decisions for each request, and the policies that produced them.</p>"
+        "BatchIsAuthorizedOutput$results": "<p>A series of <code>Allow</code> or <code>Deny</code> decisions for each request, and the policies that produced them. These results are returned in the order they were requested.</p>"
       }
     },
     "BatchIsAuthorizedWithTokenInput": {
@@ -157,7 +210,7 @@
     "BatchIsAuthorizedWithTokenOutputList": {
       "base": null,
       "refs": {
-        "BatchIsAuthorizedWithTokenOutput$results": "<p>A series of <code>Allow</code> or <code>Deny</code> decisions for each request, and the policies that produced them.</p>"
+        "BatchIsAuthorizedWithTokenOutput$results": "<p>A series of <code>Allow</code> or <code>Deny</code> decisions for each request, and the policies that produced them. These results are returned in the order they were requested.</p>"
       }
     },
     "Boolean": {
@@ -322,6 +375,12 @@
     "CreatePolicyTemplateOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "Decimal": {
+      "base": null,
+      "refs": {
+        "AttributeValue$decimal": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-decimal\">decimal</a> type.</p> <p>Example: <code>{\"decimal\": \"1.1\"}</code> </p>"
       }
     },
     "Decision": {
@@ -621,6 +680,12 @@
       "refs": {
       }
     },
+    "IpAddr": {
+      "base": null,
+      "refs": {
+        "AttributeValue$ipaddr": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-ipaddr\">ipaddr</a> type.</p> <p>Example: <code>{\"ip\": \"192.168.1.100\"}</code> </p>"
+      }
+    },
     "IsAuthorizedInput": {
       "base": null,
       "refs": {
@@ -850,6 +915,7 @@
     "PolicyDefinitionDetail": {
       "base": "<p>A structure that describes a policy definition. It must always have either an <code>static</code> or a <code>templateLinked</code> element.</p> <p>This data type is used as a response parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_GetPolicy.html\">GetPolicy</a> operation.</p>",
       "refs": {
+        "BatchGetPolicyOutputItem$definition": "<p>The policy definition of an item in the list of policies returned.</p>",
         "GetPolicyOutput$definition": "<p>The definition of the requested policy.</p>"
       }
     },
@@ -877,6 +943,8 @@
     "PolicyId": {
       "base": null,
       "refs": {
+        "BatchGetPolicyInputItem$policyId": "<p>The identifier of the policy you want information about.</p>",
+        "BatchGetPolicyOutputItem$policyId": "<p>The identifier of the policy you want information about.</p>",
         "CreatePolicyOutput$policyId": "<p>The unique ID of the new policy.</p>",
         "DeletePolicyInput$policyId": "<p>Specifies the ID of the policy that you want to delete.</p>",
         "DeterminingPolicyItem$policyId": "<p>The Id of a policy that determined to an authorization decision.</p> <p>Example: <code>\"policyId\":\"SPEXAMPLEabcdefg111111\"</code> </p>",
@@ -922,6 +990,8 @@
     "PolicyStoreId": {
       "base": null,
       "refs": {
+        "BatchGetPolicyInputItem$policyStoreId": "<p>The identifier of the policy store where the policy you want information about is stored.</p>",
+        "BatchGetPolicyOutputItem$policyStoreId": "<p>The identifier of the policy store where the policy you want information about is stored.</p>",
         "BatchIsAuthorizedInput$policyStoreId": "<p>Specifies the ID of the policy store. Policies in this policy store will be used to make the authorization decisions for the input.</p>",
         "BatchIsAuthorizedWithTokenInput$policyStoreId": "<p>Specifies the ID of the policy store. Policies in this policy store will be used to make an authorization decision for the input.</p>",
         "CreateIdentitySourceInput$policyStoreId": "<p>Specifies the ID of the policy store in which you want to store this identity source. Only policies and requests made using this policy store can reference identities from the identity provider configured in the new identity source.</p>",
@@ -951,7 +1021,7 @@
         "ListIdentitySourcesInput$policyStoreId": "<p>Specifies the ID of the policy store that contains the identity sources that you want to list.</p>",
         "ListPoliciesInput$policyStoreId": "<p>Specifies the ID of the policy store you want to list policies from.</p>",
         "ListPolicyTemplatesInput$policyStoreId": "<p>Specifies the ID of the policy store that contains the policy templates you want to list.</p>",
-        "PolicyItem$policyStoreId": "<p>The identifier of the PolicyStore where the policy you want information about is stored.</p>",
+        "PolicyItem$policyStoreId": "<p>The identifier of the policy store where the policy you want information about is stored.</p>",
         "PolicyStoreItem$policyStoreId": "<p>The unique identifier of the policy store.</p>",
         "PolicyTemplateItem$policyStoreId": "<p>The unique identifier of the policy store that contains the template.</p>",
         "PutSchemaInput$policyStoreId": "<p>Specifies the ID of the policy store in which to place the schema.</p>",
@@ -1018,6 +1088,7 @@
     "PolicyType": {
       "base": null,
       "refs": {
+        "BatchGetPolicyOutputItem$policyType": "<p>The type of the policy. This is one of the following values:</p> <ul> <li> <p> <code>STATIC</code> </p> </li> <li> <p> <code>TEMPLATE_LINKED</code> </p> </li> </ul>",
         "CreatePolicyOutput$policyType": "<p>The policy type of the new policy.</p>",
         "GetPolicyOutput$policyType": "<p>The type of the policy.</p>",
         "PolicyFilter$policyType": "<p>Filters the output to only policies of the specified type.</p>",
@@ -1140,6 +1211,9 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "BatchGetPolicyErrorItem$policyStoreId": "<p>The identifier of the policy store associated with the failed request.</p>",
+        "BatchGetPolicyErrorItem$policyId": "<p>The identifier of the policy associated with the failed request.</p>",
+        "BatchGetPolicyErrorItem$message": "<p>A detailed error message.</p>",
         "ConflictException$message": null,
         "ContextMap$key": null,
         "EntityAttributes$key": null,
@@ -1193,6 +1267,8 @@
     "TimestampFormat": {
       "base": null,
       "refs": {
+        "BatchGetPolicyOutputItem$createdDate": "<p>The date and time the policy was created.</p>",
+        "BatchGetPolicyOutputItem$lastUpdatedDate": "<p>The date and time the policy was most recently updated.</p>",
         "CreateIdentitySourceOutput$createdDate": "<p>The date and time the identity source was originally created.</p>",
         "CreateIdentitySourceOutput$lastUpdatedDate": "<p>The date and time the identity source was most recently updated.</p>",
         "CreatePolicyOutput$createdDate": "<p>The date and time the policy was originally created.</p>",

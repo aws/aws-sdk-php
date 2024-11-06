@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - GuardDuty RDS Protection expands support for Amazon Aurora PostgreSQL Limitless Databases.
+* `Aws\S3Control` - Fix ListStorageLensConfigurations and ListStorageLensGroups deserialization for Smithy SDKs.
+* `Aws\LakeFormation` - API changes for new named tag expressions feature.
+* `Aws\CodeBuild` - AWS CodeBuild now adds additional compute types for reserved capacity fleet.
+* `Aws\VerifiedPermissions` - Adding BatchGetPolicy API which supports the retrieval of multiple policies across multiple policy stores within a single request.
+* `Aws\QApps` - Introduces category apis in AmazonQApps. Web experience users use Categories to tag and filter library items.
+
 ## 3.325.2 - 2024-11-01
 
 * `Aws\DocDBElastic` - Amazon DocumentDB Elastic Clusters adds support for pending maintenance actions feature with APIs GetPendingMaintenanceAction, ListPendingMaintenanceActions and ApplyPendingMaintenanceAction

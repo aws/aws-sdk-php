@@ -4592,8 +4592,12 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"ContinuationToken"},
-        "StorageLensConfigurationList":{"shape":"StorageLensConfigurationList"}
-      }
+        "StorageLensConfigurationList":{
+          "shape":"StorageLensConfigurationList",
+          "locationName":"StorageLensConfiguration"
+        }
+      },
+      "locationName":"ListStorageLensConfigurationResult"
     },
     "ListStorageLensGroupEntry":{
       "type":"structure",
@@ -4630,7 +4634,10 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"ContinuationToken"},
-        "StorageLensGroupList":{"shape":"StorageLensGroupList"}
+        "StorageLensGroupList":{
+          "shape":"StorageLensGroupList",
+          "locationName":"StorageLensGroup"
+        }
       }
     },
     "ListTagsForResourceRequest":{

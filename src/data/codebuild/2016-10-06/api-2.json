@@ -1105,6 +1105,15 @@
       "type":"list",
       "member":{"shape":"CodeCoverage"}
     },
+    "ComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "vCpu":{"shape":"WrapperLong"},
+        "memory":{"shape":"WrapperLong"},
+        "disk":{"shape":"WrapperLong"},
+        "machineType":{"shape":"MachineType"}
+      }
+    },
     "ComputeType":{
       "type":"string",
       "enum":[
@@ -1117,7 +1126,8 @@
         "BUILD_LAMBDA_2GB",
         "BUILD_LAMBDA_4GB",
         "BUILD_LAMBDA_8GB",
-        "BUILD_LAMBDA_10GB"
+        "BUILD_LAMBDA_10GB",
+        "ATTRIBUTE_BASED_COMPUTE"
       ]
     },
     "ComputeTypesAllowed":{
@@ -1137,6 +1147,7 @@
         "baseCapacity":{"shape":"FleetCapacity"},
         "environmentType":{"shape":"EnvironmentType"},
         "computeType":{"shape":"ComputeType"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
@@ -1485,6 +1496,7 @@
         "baseCapacity":{"shape":"FleetCapacity"},
         "environmentType":{"shape":"EnvironmentType"},
         "computeType":{"shape":"ComputeType"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "scalingConfiguration":{"shape":"ScalingConfigurationOutput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},
@@ -1964,6 +1976,13 @@
         "s3Logs":{"shape":"S3LogsConfig"}
       }
     },
+    "MachineType":{
+      "type":"string",
+      "enum":[
+        "GENERAL",
+        "NVME"
+      ]
+    },
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -2123,6 +2142,7 @@
         "type":{"shape":"EnvironmentType"},
         "image":{"shape":"NonEmptyString"},
         "computeType":{"shape":"ComputeType"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "fleet":{"shape":"ProjectFleet"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "privilegedMode":{"shape":"WrapperBoolean"},
@@ -2814,6 +2834,7 @@
         "baseCapacity":{"shape":"FleetCapacity"},
         "environmentType":{"shape":"EnvironmentType"},
         "computeType":{"shape":"ComputeType"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"},
         "scalingConfiguration":{"shape":"ScalingConfigurationInput"},
         "overflowBehavior":{"shape":"FleetOverflowBehavior"},
         "vpcConfig":{"shape":"VpcConfig"},

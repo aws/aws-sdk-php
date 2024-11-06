@@ -50,6 +50,60 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "BatchCreateCategory":{
+      "name":"BatchCreateCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/catalog.createCategories",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchCreateCategoryInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "BatchDeleteCategory":{
+      "name":"BatchDeleteCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/catalog.deleteCategories",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchDeleteCategoryInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "BatchUpdateCategory":{
+      "name":"BatchUpdateCategory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/catalog.updateCategories",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateCategoryInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateLibraryItem":{
       "name":"CreateLibraryItem",
       "http":{
@@ -234,6 +288,24 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ContentTooLargeException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListCategories":{
+      "name":"ListCategories",
+      "http":{
+        "method":"GET",
+        "requestUri":"/catalog.listCategories",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCategoriesInput"},
+      "output":{"shape":"ListCategoriesOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -572,6 +644,78 @@
       "type":"list",
       "member":{"shape":"AttributeFilter"}
     },
+    "BatchCreateCategoryInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "categories"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "categories":{"shape":"BatchCreateCategoryInputCategoryList"}
+      }
+    },
+    "BatchCreateCategoryInputCategory":{
+      "type":"structure",
+      "required":["title"],
+      "members":{
+        "id":{"shape":"UUID"},
+        "title":{"shape":"BatchCreateCategoryInputCategoryTitleString"},
+        "color":{"shape":"BatchCreateCategoryInputCategoryColorString"}
+      }
+    },
+    "BatchCreateCategoryInputCategoryColorString":{
+      "type":"string",
+      "max":7,
+      "min":4,
+      "pattern":"#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})"
+    },
+    "BatchCreateCategoryInputCategoryList":{
+      "type":"list",
+      "member":{"shape":"BatchCreateCategoryInputCategory"},
+      "max":10,
+      "min":0
+    },
+    "BatchCreateCategoryInputCategoryTitleString":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*"
+    },
+    "BatchDeleteCategoryInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "categories"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "categories":{"shape":"DeleteCategoryInputList"}
+      }
+    },
+    "BatchUpdateCategoryInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "categories"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "categories":{"shape":"CategoryListInput"}
+      }
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -662,6 +806,12 @@
       "max":5000,
       "min":0
     },
+    "CategoriesList":{
+      "type":"list",
+      "member":{"shape":"Category"},
+      "max":10,
+      "min":0
+    },
     "Category":{
       "type":"structure",
       "required":[
@@ -670,7 +820,9 @@
       ],
       "members":{
         "id":{"shape":"UUID"},
-        "title":{"shape":"String"}
+        "title":{"shape":"String"},
+        "color":{"shape":"String"},
+        "appCount":{"shape":"Integer"}
       }
     },
     "CategoryIdList":{
@@ -679,10 +831,40 @@
       "max":3,
       "min":0
     },
+    "CategoryInput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "title"
+      ],
+      "members":{
+        "id":{"shape":"UUID"},
+        "title":{"shape":"CategoryInputTitleString"},
+        "color":{"shape":"CategoryInputColorString"}
+      }
+    },
+    "CategoryInputColorString":{
+      "type":"string",
+      "max":7,
+      "min":4,
+      "pattern":"#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})"
+    },
+    "CategoryInputTitleString":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*"
+    },
     "CategoryList":{
       "type":"list",
       "member":{"shape":"Category"},
       "max":3,
+      "min":0
+    },
+    "CategoryListInput":{
+      "type":"list",
+      "member":{"shape":"CategoryInput"},
+      "max":10,
       "min":0
     },
     "ConflictException":{
@@ -826,6 +1008,12 @@
     "Default":{
       "type":"string",
       "max":500,
+      "min":0
+    },
+    "DeleteCategoryInputList":{
+      "type":"list",
+      "member":{"shape":"UUID"},
+      "max":10,
       "min":0
     },
     "DeleteLibraryItemInput":{
@@ -1216,6 +1404,23 @@
         "PUBLISHED",
         "DISABLED"
       ]
+    },
+    "ListCategoriesInput":{
+      "type":"structure",
+      "required":["instanceId"],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        }
+      }
+    },
+    "ListCategoriesOutput":{
+      "type":"structure",
+      "members":{
+        "categories":{"shape":"CategoriesList"}
+      }
     },
     "ListLibraryItemsInput":{
       "type":"structure",
@@ -1678,7 +1883,7 @@
     },
     "UUID":{
       "type":"string",
-      "pattern":"[\\da-f]{8}-[\\da-f]{4}-4[\\da-f]{3}-[89ABab][\\da-f]{3}-[\\da-f]{12}"
+      "pattern":"[\\da-f]{8}-[\\da-f]{4}-[45][\\da-f]{3}-[89ABab][\\da-f]{3}-[\\da-f]{12}"
     },
     "UnauthorizedException":{
       "type":"structure",

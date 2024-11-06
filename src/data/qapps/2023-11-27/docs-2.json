@@ -4,6 +4,9 @@
   "operations": {
     "AssociateLibraryItemReview": "<p>Associates a rating or review for a library item with the user submitting the request. This increments the rating count for the specified library item.</p>",
     "AssociateQAppWithUser": "<p>This operation creates a link between the user's identity calling the operation and a specific Q App. This is useful to mark the Q App as a <i>favorite</i> for the user if the user doesn't own the Amazon Q App so they can still run it and see it in their inventory of Q Apps.</p>",
+    "BatchCreateCategory": "<p>Creates Categories for the Amazon Q Business application environment instance. Web experience users use Categories to tag and filter library items. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
+    "BatchDeleteCategory": "<p>Deletes Categories for the Amazon Q Business application environment instance. Web experience users use Categories to tag and filter library items. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
+    "BatchUpdateCategory": "<p>Updates Categories for the Amazon Q Business application environment instance. Web experience users use Categories to tag and filter library items. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
     "CreateLibraryItem": "<p>Creates a new library item for an Amazon Q App, allowing it to be discovered and used by other allowed users. </p>",
     "CreateQApp": "<p>Creates a new Amazon Q App based on the provided definition. The Q App definition specifies the cards and flow of the Q App. This operation also calculates the dependencies between the cards by inspecting the references in the prompts. </p>",
     "DeleteLibraryItem": "<p>Deletes a library item for an Amazon Q App, removing it from the library so it can no longer be discovered or used by other users.</p>",
@@ -14,6 +17,7 @@
     "GetQApp": "<p>Retrieves the full details of an Q App, including its definition specifying the cards and flow.</p>",
     "GetQAppSession": "<p>Retrieves the current state and results for an active session of an Amazon Q App.</p>",
     "ImportDocument": "<p>Uploads a file that can then be used either as a default in a <code>FileUploadCard</code> from Q App definition or as a file that is used inside a single Q App run. The purpose of the document is determined by a scope parameter that indicates whether it is at the app definition level or at the app session level.</p>",
+    "ListCategories": "<p>Lists the categories of a Amazon Q Business application environment instance. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qapps-custom-labels.html\">Custom labels for Amazon Q Apps</a>.</p>",
     "ListLibraryItems": "<p>Lists the library items for Amazon Q Apps that are published and available for users in your Amazon Web Services account.</p>",
     "ListQApps": "<p>Lists the Amazon Q Apps owned by or associated with the user either because they created it or because they used it from the library in the past. The user identity is extracted from the credentials used to invoke this operation..</p>",
     "ListTagsForResource": "<p>Lists the tags associated with an Amazon Q Apps resource.</p>",
@@ -125,6 +129,45 @@
         "AttributeFilter$orAllFilters": "<p> Performs a logical <code>OR</code> operation on all supplied filters. </p>"
       }
     },
+    "BatchCreateCategoryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateCategoryInputCategory": {
+      "base": "<p>The category object to be created.</p>",
+      "refs": {
+        "BatchCreateCategoryInputCategoryList$member": null
+      }
+    },
+    "BatchCreateCategoryInputCategoryColorString": {
+      "base": null,
+      "refs": {
+        "BatchCreateCategoryInputCategory$color": "<p>The color to be associated with a category. The color must be a hexadecimal value of either 3 or 6 digits.</p>"
+      }
+    },
+    "BatchCreateCategoryInputCategoryList": {
+      "base": null,
+      "refs": {
+        "BatchCreateCategoryInput$categories": "<p>The list of category objects to be created</p>"
+      }
+    },
+    "BatchCreateCategoryInputCategoryTitleString": {
+      "base": null,
+      "refs": {
+        "BatchCreateCategoryInputCategory$title": "<p>The name of the category.</p>"
+      }
+    },
+    "BatchDeleteCategoryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateCategoryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -218,9 +261,16 @@
         "CardValue$value": "<p>The value or result associated with the card.</p>"
       }
     },
+    "CategoriesList": {
+      "base": null,
+      "refs": {
+        "ListCategoriesOutput$categories": "<p>The categories of a Amazon Q Business application environment instance.</p>"
+      }
+    },
     "Category": {
       "base": "<p>A category used to classify and filter library items for Amazon Q Apps.</p>",
       "refs": {
+        "CategoriesList$member": null,
         "CategoryList$member": null
       }
     },
@@ -231,12 +281,36 @@
         "UpdateLibraryItemInput$categories": "<p>The new categories to associate with the library item.</p>"
       }
     },
+    "CategoryInput": {
+      "base": "<p>A label that web experience users associate with a library item. Web experience users use Categories to tag and filter library items.</p>",
+      "refs": {
+        "CategoryListInput$member": null
+      }
+    },
+    "CategoryInputColorString": {
+      "base": null,
+      "refs": {
+        "CategoryInput$color": "<p>The color of the category, represented as a hexadecimal value of either 3 or 6 digits.</p>"
+      }
+    },
+    "CategoryInputTitleString": {
+      "base": null,
+      "refs": {
+        "CategoryInput$title": "<p>The name of the category.</p>"
+      }
+    },
     "CategoryList": {
       "base": null,
       "refs": {
         "GetLibraryItemOutput$categories": "<p>The categories associated with the library item for discovery.</p>",
         "LibraryItemMember$categories": "<p>The categories associated with the library item.</p>",
         "UpdateLibraryItemOutput$categories": "<p>The categories associated with the updated library item.</p>"
+      }
+    },
+    "CategoryListInput": {
+      "base": null,
+      "refs": {
+        "BatchUpdateCategoryInput$categories": "<p>The list of categories to be updated with their new values.</p>"
       }
     },
     "ConflictException": {
@@ -286,6 +360,12 @@
       "refs": {
         "TextInputCard$defaultValue": "<p>The default value to pre-populate in the text input field.</p>",
         "TextInputCardInput$defaultValue": "<p>The default value to pre-populate in the text input field.</p>"
+      }
+    },
+    "DeleteCategoryInputList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteCategoryInput$categories": "<p>The list of IDs of the categories to be deleted.</p>"
       }
     },
     "DeleteLibraryItemInput": {
@@ -451,6 +531,9 @@
       "refs": {
         "AssociateLibraryItemReviewInput$instanceId": "<p>The unique identifier for the Amazon Q Business application environment instance.</p>",
         "AssociateQAppWithUserInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
+        "BatchCreateCategoryInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
+        "BatchDeleteCategoryInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
+        "BatchUpdateCategoryInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "CreateLibraryItemInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "CreateQAppInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "DeleteLibraryItemInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
@@ -461,6 +544,7 @@
         "GetQAppInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "GetQAppSessionInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "ImportDocumentInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
+        "ListCategoriesInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "ListLibraryItemsInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "ListQAppsInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
         "PredictQAppInput$instanceId": "<p>The unique identifier of the Amazon Q Business application environment instance.</p>",
@@ -475,6 +559,7 @@
     "Integer": {
       "base": null,
       "refs": {
+        "Category$appCount": "<p>The number of published Amazon Q Apps associated with a category</p>",
         "CreateLibraryItemOutput$ratingCount": "<p>The number of ratings the library item has received from users.</p>",
         "GetLibraryItemOutput$ratingCount": "<p>The number of ratings the library item has received from users.</p>",
         "GetLibraryItemOutput$userCount": "<p>The number of users who have associated the Q App with their account.</p>",
@@ -507,6 +592,16 @@
       "base": null,
       "refs": {
         "UpdateLibraryItemInput$status": "<p>The new status to set for the library item, such as \"Published\" or \"Hidden\".</p>"
+      }
+    },
+    "ListCategoriesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCategoriesOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ListLibraryItemsInput": {
@@ -709,6 +804,7 @@
         "AppDefinition$appDefinitionVersion": "<p>The version of the app definition schema or specification.</p>",
         "CardStatus$currentValue": "<p>The current value or result associated with the card.</p>",
         "Category$title": "<p>The title or name of the category.</p>",
+        "Category$color": "<p>The color of the category</p>",
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The unique identifier of the resource</p>",
         "ConflictException$resourceType": "<p>The type of the resource</p>",
@@ -858,13 +954,16 @@
       "refs": {
         "AssociateLibraryItemReviewInput$libraryItemId": "<p>The unique identifier of the library item to associate the review with.</p>",
         "AssociateQAppWithUserInput$appId": "<p>The ID of the Amazon Q App to associate with the user.</p>",
+        "BatchCreateCategoryInputCategory$id": "<p>The unique identifier to be associated with a category. If you don't include a value, the category is automatically assigned a unique identifier.</p>",
         "CardStatusMap$key": null,
         "CardValue$cardId": "<p>The unique identifier of the card.</p>",
         "Category$id": "<p>The unique identifier of the category.</p>",
         "CategoryIdList$member": null,
+        "CategoryInput$id": "<p>The unique identifier of the category.</p>",
         "CreateLibraryItemInput$appId": "<p>The unique identifier of the Amazon Q App to publish to the library.</p>",
         "CreateLibraryItemOutput$libraryItemId": "<p>The unique identifier of the new library item.</p>",
         "CreateQAppOutput$appId": "<p>The unique identifier of the new Q App.</p>",
+        "DeleteCategoryInputList$member": null,
         "DeleteLibraryItemInput$libraryItemId": "<p>The unique identifier of the library item to delete.</p>",
         "DeleteQAppInput$appId": "<p>The unique identifier of the Q App to delete.</p>",
         "DisassociateLibraryItemReviewInput$libraryItemId": "<p>The unique identifier of the library item to remove the review from.</p>",
