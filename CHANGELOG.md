@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.3 - 2024-11-06
 
 * `Aws\GuardDuty` - GuardDuty RDS Protection expands support for Amazon Aurora PostgreSQL Limitless Databases.
 * `Aws\S3Control` - Fix ListStorageLensConfigurations and ListStorageLensGroups deserialization for Smithy SDKs.
