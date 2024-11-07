@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.4 - 2024-11-07
 
 * `Aws\ResourceExplorer2` - Add GetManagedView, ListManagedViews APIs.
 * `Aws\BedrockAgent` - Add prompt support for chat template configuration and agent generative AI resource. Add support for configuring an optional guardrail in Prompt and Knowledge Base nodes in Prompt Flows. Add API to validate flow definition
