@@ -260,7 +260,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)|(^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?))"
     },
     "ConverseMetrics":{
       "type":"structure",
@@ -278,10 +278,7 @@
     },
     "ConverseRequest":{
       "type":"structure",
-      "required":[
-        "modelId",
-        "messages"
-      ],
+      "required":["modelId"],
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
@@ -294,6 +291,7 @@
         "toolConfig":{"shape":"ToolConfiguration"},
         "guardrailConfig":{"shape":"GuardrailConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
+        "promptVariables":{"shape":"PromptVariableMap"},
         "additionalModelResponseFieldPaths":{"shape":"ConverseRequestAdditionalModelResponseFieldPathsList"}
       }
     },
@@ -364,10 +362,7 @@
     },
     "ConverseStreamRequest":{
       "type":"structure",
-      "required":[
-        "modelId",
-        "messages"
-      ],
+      "required":["modelId"],
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
@@ -380,6 +375,7 @@
         "toolConfig":{"shape":"ToolConfiguration"},
         "guardrailConfig":{"shape":"GuardrailStreamConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
+        "promptVariables":{"shape":"PromptVariableMap"},
         "additionalModelResponseFieldPaths":{"shape":"ConverseStreamRequestAdditionalModelResponseFieldPathsList"}
       }
     },
@@ -1048,14 +1044,11 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)$|(^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?))"
     },
     "InvokeModelRequest":{
       "type":"structure",
-      "required":[
-        "body",
-        "modelId"
-      ],
+      "required":["modelId"],
       "members":{
         "body":{"shape":"Body"},
         "contentType":{
@@ -1109,10 +1102,7 @@
     },
     "InvokeModelWithResponseStreamRequest":{
       "type":"structure",
-      "required":[
-        "body",
-        "modelId"
-      ],
+      "required":["modelId"],
       "members":{
         "body":{"shape":"Body"},
         "contentType":{
@@ -1280,6 +1270,19 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "PromptVariableMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"PromptVariableValues"},
+      "sensitive":true
+    },
+    "PromptVariableValues":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "union":true
     },
     "ResourceNotFoundException":{
       "type":"structure",

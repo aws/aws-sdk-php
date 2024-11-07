@@ -376,6 +376,14 @@
         "PutNotificationConfigurationType$NotificationTypes": "<p>The type of event that causes the notification to be sent. To query the notification types supported by Amazon EC2 Auto Scaling, call the <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DescribeAutoScalingNotificationTypes.html\">DescribeAutoScalingNotificationTypes</a> API.</p>"
       }
     },
+    "AvailabilityZoneDistribution": {
+      "base": "<p> Describes an Availability Zone distribution. </p>",
+      "refs": {
+        "AutoScalingGroup$AvailabilityZoneDistribution": "<p> The instance capacity distribution across Availability Zones. </p>",
+        "CreateAutoScalingGroupType$AvailabilityZoneDistribution": "<p>The instance capacity distribution across Availability Zones.</p>",
+        "UpdateAutoScalingGroupType$AvailabilityZoneDistribution": "<p> The instance capacity distribution across Availability Zones. </p>"
+      }
+    },
     "AvailabilityZones": {
       "base": null,
       "refs": {
@@ -485,6 +493,12 @@
     "CancelInstanceRefreshType": {
       "base": null,
       "refs": {
+      }
+    },
+    "CapacityDistributionStrategy": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneDistribution$CapacityDistributionStrategy": "<p> If launches fail in an Availability Zone, the following strategies are available. The default is <code>balanced-best-effort</code>. </p> <ul> <li> <p> <code>balanced-only</code> - If launches fail in an Availability Zone, Auto Scaling will continue to attempt to launch in the unhealthy zone to preserve a balanced distribution.</p> </li> <li> <p> <code>balanced-best-effort</code> - If launches fail in an Availability Zone, Auto Scaling will attempt to launch in another healthy Availability Zone instead.</p> </li> </ul>"
       }
     },
     "CapacityForecast": {

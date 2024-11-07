@@ -1543,6 +1543,13 @@
         "CreateAccountSubscriptionRequest$AuthenticationMethod": "<p>The method that you want to use to authenticate your Amazon QuickSight account.</p> <p>If you choose <code>ACTIVE_DIRECTORY</code>, provide an <code>ActiveDirectoryName</code> and an <code>AdminGroup</code> associated with your Active Directory.</p> <p>If you choose <code>IAM_IDENTITY_CENTER</code>, provide an <code>AdminGroup</code> associated with your IAM Identity Center account.</p>"
       }
     },
+    "AuthenticationType": {
+      "base": null,
+      "refs": {
+        "SnowflakeParameters$AuthenticationType": "<p>The authentication type that you want to use for your connection. This parameter accepts OAuth and non-OAuth authentication types.</p>",
+        "StarburstParameters$AuthenticationType": "<p>The authentication type that you want to use for your connection. This parameter accepts OAuth and non-OAuth authentication types.</p>"
+      }
+    },
     "AuthorSpecifiedAggregation": {
       "base": null,
       "refs": {
@@ -3933,6 +3940,13 @@
         "SnowflakeParameters$Database": "<p>Database.</p>",
         "SqlServerParameters$Database": "<p>Database.</p>",
         "TeradataParameters$Database": "<p>Database.</p>"
+      }
+    },
+    "DatabaseAccessControlRole": {
+      "base": null,
+      "refs": {
+        "SnowflakeParameters$DatabaseAccessControlRole": "<p>The database access control role.</p>",
+        "StarburstParameters$DatabaseAccessControlRole": "<p>The database access control role.</p>"
       }
     },
     "DatabaseGroup": {
@@ -6722,6 +6736,12 @@
         "IdentityMap$value": null
       }
     },
+    "IdentityProviderResourceUri": {
+      "base": null,
+      "refs": {
+        "OAuthParameters$IdentityProviderResourceUri": "<p>The resource uri of the identity provider.</p>"
+      }
+    },
     "IdentityStore": {
       "base": null,
       "refs": {
@@ -8411,6 +8431,19 @@
       "base": "<p>The measure type field with numerical type columns.</p>",
       "refs": {
         "MeasureField$NumericalMeasureField": "<p>The measure type field with numerical type columns.</p>"
+      }
+    },
+    "OAuthParameters": {
+      "base": "<p>An object that contains information needed to create a data source connection that uses OAuth client credentials. This option is available for data source connections that are made with Snowflake and Starburst.</p>",
+      "refs": {
+        "SnowflakeParameters$OAuthParameters": "<p>An object that contains information needed to create a data source connection between an Amazon QuickSight account and Snowflake.</p>",
+        "StarburstParameters$OAuthParameters": "<p>An object that contains information needed to create a data source connection between an Amazon QuickSight account and Starburst.</p>"
+      }
+    },
+    "OAuthScope": {
+      "base": null,
+      "refs": {
+        "OAuthParameters$OAuthScope": "<p>The OAuth scope.</p>"
       }
     },
     "OnClause": {
@@ -12678,6 +12711,12 @@
         "WhatIfRangeScenario$EndDate": "<p>The end date in the date range that you need the forecast results for.</p>"
       }
     },
+    "TokenProviderUrl": {
+      "base": null,
+      "refs": {
+        "OAuthParameters$TokenProviderUrl": "<p>The token endpoint URL of the identity provider.</p>"
+      }
+    },
     "TooltipItem": {
       "base": "<p>The tooltip.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
@@ -14179,6 +14218,7 @@
         "AssetBundleImportJobDataSourceOverrideParameters$VpcConnectionProperties": null,
         "CreateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>",
         "DataSource$VpcConnectionProperties": "<p>The VPC connection information. You need to use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>",
+        "OAuthParameters$IdentityProviderVpcConnectionProperties": null,
         "UpdateDataSourceRequest$VpcConnectionProperties": "<p>Use this parameter only when you want Amazon QuickSight to use a VPC connection when connecting to your underlying source.</p>"
       }
     },

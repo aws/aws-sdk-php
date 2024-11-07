@@ -4613,6 +4613,14 @@
         "IAM_IDENTITY_CENTER"
       ]
     },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "PASSWORD",
+        "TOKEN",
+        "X509"
+      ]
+    },
     "AuthorSpecifiedAggregation":{
       "type":"string",
       "enum":[
@@ -7847,6 +7855,10 @@
       "type":"string",
       "max":128,
       "min":1
+    },
+    "DatabaseAccessControlRole":{
+      "type":"string",
+      "max":128
     },
     "DatabaseGroup":{
       "type":"string",
@@ -12727,6 +12739,11 @@
       "type":"list",
       "member":{"shape":"IdentityName"}
     },
+    "IdentityProviderResourceUri":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "IdentityStore":{
       "type":"string",
       "enum":["QUICKSIGHT"]
@@ -15432,6 +15449,21 @@
         "AggregationFunction":{"shape":"NumericalAggregationFunction"},
         "FormatConfiguration":{"shape":"NumberFormatConfiguration"}
       }
+    },
+    "OAuthParameters":{
+      "type":"structure",
+      "required":["TokenProviderUrl"],
+      "members":{
+        "TokenProviderUrl":{"shape":"TokenProviderUrl"},
+        "OAuthScope":{"shape":"OAuthScope"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"},
+        "IdentityProviderResourceUri":{"shape":"IdentityProviderResourceUri"}
+      }
+    },
+    "OAuthScope":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "OnClause":{
       "type":"string",
@@ -18367,7 +18399,10 @@
       "members":{
         "Host":{"shape":"Host"},
         "Database":{"shape":"Database"},
-        "Warehouse":{"shape":"Warehouse"}
+        "Warehouse":{"shape":"Warehouse"},
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "DatabaseAccessControlRole":{"shape":"DatabaseAccessControlRole"},
+        "OAuthParameters":{"shape":"OAuthParameters"}
       }
     },
     "SortDirection":{
@@ -18445,7 +18480,10 @@
         "Host":{"shape":"Host"},
         "Port":{"shape":"Port"},
         "Catalog":{"shape":"Catalog"},
-        "ProductType":{"shape":"StarburstProductType"}
+        "ProductType":{"shape":"StarburstProductType"},
+        "DatabaseAccessControlRole":{"shape":"DatabaseAccessControlRole"},
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "OAuthParameters":{"shape":"OAuthParameters"}
       }
     },
     "StarburstProductType":{
@@ -19589,6 +19627,11 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenProviderUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "TooltipItem":{
       "type":"structure",
       "members":{

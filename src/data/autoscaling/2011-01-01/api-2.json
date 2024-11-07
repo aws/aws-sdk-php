@@ -1247,7 +1247,8 @@
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
         "TrafficSources":{"shape":"TrafficSources"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1321,6 +1322,12 @@
     "AutoScalingNotificationTypes":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
+    },
+    "AvailabilityZoneDistribution":{
+      "type":"structure",
+      "members":{
+        "CapacityDistributionStrategy":{"shape":"CapacityDistributionStrategy"}
+      }
     },
     "AvailabilityZones":{
       "type":"list",
@@ -1437,6 +1444,13 @@
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
       }
     },
+    "CapacityDistributionStrategy":{
+      "type":"string",
+      "enum":[
+        "balanced-only",
+        "balanced-best-effort"
+      ]
+    },
     "CapacityForecast":{
       "type":"structure",
       "required":[
@@ -1531,7 +1545,8 @@
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
         "TrafficSources":{"shape":"TrafficSources"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -3556,7 +3571,8 @@
         "Context":{"shape":"Context"},
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"}
       }
     },
     "UpdatePlacementGroupParam":{

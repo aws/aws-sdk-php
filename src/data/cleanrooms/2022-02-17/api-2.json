@@ -1443,7 +1443,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:([\\d]{12}|\\*):membership/[\\*\\d\\w-]+/configuredaudiencemodelassociation/[\\*\\d\\w-]+"
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:([\\d]{12}|\\*):membership\\/[\\*\\d\\w-]+\\/configuredaudiencemodelassociation\\/[\\*\\d\\w-]+$|^arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:([0-9]{12}|\\*):membership\\/[\\*\\d\\w-]+\\/configured-model-algorithm-association\\/([-a-zA-Z0-9_\\/.]+|\\*)"
     },
     "AggregateColumn":{
       "type":"structure",
@@ -2795,6 +2795,7 @@
         "name":{"shape":"CollaborationName"},
         "description":{"shape":"CollaborationDescription"},
         "creatorMemberAbilities":{"shape":"MemberAbilities"},
+        "creatorMLMemberAbilities":{"shape":"MLMemberAbilities"},
         "creatorDisplayName":{"shape":"DisplayName"},
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
         "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
@@ -3045,6 +3046,18 @@
       "members":{
         "privacyBudgetTemplate":{"shape":"PrivacyBudgetTemplate"}
       }
+    },
+    "CustomMLMemberAbilities":{
+      "type":"list",
+      "member":{"shape":"CustomMLMemberAbility"},
+      "min":1
+    },
+    "CustomMLMemberAbility":{
+      "type":"string",
+      "enum":[
+        "CAN_RECEIVE_MODEL_OUTPUT",
+        "CAN_RECEIVE_INFERENCE_OUTPUT"
+      ]
     },
     "DataEncryptionMetadata":{
       "type":"structure",
@@ -4872,6 +4885,20 @@
       "type":"long",
       "box":true
     },
+    "MLMemberAbilities":{
+      "type":"structure",
+      "required":["customMLMemberAbilities"],
+      "members":{
+        "customMLMemberAbilities":{"shape":"CustomMLMemberAbilities"}
+      }
+    },
+    "MLPaymentConfig":{
+      "type":"structure",
+      "members":{
+        "modelTraining":{"shape":"ModelTrainingPaymentConfig"},
+        "modelInference":{"shape":"ModelInferencePaymentConfig"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -4905,6 +4932,7 @@
       "members":{
         "accountId":{"shape":"AccountId"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "displayName":{"shape":"DisplayName"},
         "paymentConfiguration":{"shape":"PaymentConfiguration"}
       }
@@ -4934,6 +4962,7 @@
         "status":{"shape":"MemberStatus"},
         "displayName":{"shape":"DisplayName"},
         "abilities":{"shape":"MemberAbilities"},
+        "mlAbilities":{"shape":"MLMemberAbilities"},
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"},
         "membershipId":{"shape":"UUID"},
@@ -4974,6 +5003,7 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"MembershipStatus"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "queryLogStatus":{"shape":"MembershipQueryLogStatus"},
         "defaultResultConfiguration":{"shape":"MembershipProtectedQueryResultConfiguration"},
         "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
@@ -4991,11 +5021,33 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "MembershipMLPaymentConfig":{
+      "type":"structure",
+      "members":{
+        "modelTraining":{"shape":"MembershipModelTrainingPaymentConfig"},
+        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"}
+      }
+    },
+    "MembershipModelInferencePaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "MembershipModelTrainingPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
     "MembershipPaymentConfiguration":{
       "type":"structure",
       "required":["queryCompute"],
       "members":{
-        "queryCompute":{"shape":"MembershipQueryComputePaymentConfig"}
+        "queryCompute":{"shape":"MembershipQueryComputePaymentConfig"},
+        "machineLearning":{"shape":"MembershipMLPaymentConfig"}
       }
     },
     "MembershipProtectedQueryOutputConfiguration":{
@@ -5063,12 +5115,27 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"MembershipStatus"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
       }
     },
     "MembershipSummaryList":{
       "type":"list",
       "member":{"shape":"MembershipSummary"}
+    },
+    "ModelInferencePaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "ModelTrainingPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
     },
     "PaginationToken":{
       "type":"string",
@@ -5128,7 +5195,8 @@
       "type":"structure",
       "required":["queryCompute"],
       "members":{
-        "queryCompute":{"shape":"QueryComputePaymentConfig"}
+        "queryCompute":{"shape":"QueryComputePaymentConfig"},
+        "machineLearning":{"shape":"MLPaymentConfig"}
       }
     },
     "PopulateIdMappingTableInput":{

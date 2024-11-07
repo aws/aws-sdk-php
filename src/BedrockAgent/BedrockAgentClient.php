@@ -129,5 +129,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateKnowledgeBaseAsync(array $args = [])
  * @method \Aws\Result updatePrompt(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePromptAsync(array $args = [])
+ * @method \Aws\Result validateFlowDefinition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise validateFlowDefinitionAsync(array $args = [])
  */
 class BedrockAgentClient extends AwsClient {}

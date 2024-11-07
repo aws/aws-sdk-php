@@ -63,7 +63,8 @@
     "UpdateFlow": "<p>Modifies a flow. Include both fields that you want to keep and fields that you want to change. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-how-it-works.html\">How it works</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-create.html\">Create a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "UpdateFlowAlias": "<p>Modifies the alias of a flow. Include both fields that you want to keep and ones that you want to change. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-deploy.html\">Deploy a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
     "UpdateKnowledgeBase": "<p>Updates the configuration of a knowledge base with the fields that you specify. Because all fields will be overwritten, you must include the same values for fields that you want to keep the same.</p> <p>You can change the following fields:</p> <ul> <li> <p> <code>name</code> </p> </li> <li> <p> <code>description</code> </p> </li> <li> <p> <code>roleArn</code> </p> </li> </ul> <p>You can't change the <code>knowledgeBaseConfiguration</code> or <code>storageConfiguration</code> fields, so you must specify the same configurations as when you created the knowledge base. You can send a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_GetKnowledgeBase.html\">GetKnowledgeBase</a> request and copy the same configurations.</p>",
-    "UpdatePrompt": "<p>Modifies a prompt in your prompt library. Include both fields that you want to keep and fields that you want to replace. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-edit\">Edit prompts in your prompt library</a> in the Amazon Bedrock User Guide.</p>"
+    "UpdatePrompt": "<p>Modifies a prompt in your prompt library. Include both fields that you want to keep and fields that you want to replace. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-edit\">Edit prompts in your prompt library</a> in the Amazon Bedrock User Guide.</p>",
+    "ValidateFlowDefinition": "<p>Validates the definition of a flow.</p>"
   },
   "shapes": {
     "APISchema": {
@@ -144,7 +145,8 @@
       "base": null,
       "refs": {
         "AgentAlias$agentAliasArn": "<p>The Amazon Resource Name (ARN) of the alias of the agent.</p>",
-        "AgentFlowNodeConfiguration$agentAliasArn": "<p>The Amazon Resource Name (ARN) of the alias of the agent to invoke.</p>"
+        "AgentFlowNodeConfiguration$agentAliasArn": "<p>The Amazon Resource Name (ARN) of the alias of the agent to invoke.</p>",
+        "PromptAgentResource$agentIdentifier": "<p>The ARN of the agent with which to use the prompt.</p>"
       }
     },
     "AgentAliasHistoryEvent": {
@@ -290,6 +292,12 @@
         "AgentVersionSummaries$member": null
       }
     },
+    "AnyToolChoice": {
+      "base": "<p>Defines tools, at least one of which must be requested by the model. No text is generated but the results of tool use are sent back to the model to help generate a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolChoice$any": "<p>Defines tools, at least one of which must be requested by the model. No text is generated but the results of tool use are sent back to the model to help generate a response.</p>"
+      }
+    },
     "AssociateAgentKnowledgeBaseRequest": {
       "base": null,
       "refs": {
@@ -298,6 +306,12 @@
     "AssociateAgentKnowledgeBaseResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "AutoToolChoice": {
+      "base": "<p>Defines tools. The model automatically decides whether to call a tool or to generate text instead. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolChoice$auto": "<p>Defines tools. The model automatically decides whether to call a tool or to generate text instead.</p>"
       }
     },
     "BasePromptTemplate": {
@@ -345,6 +359,12 @@
       "base": null,
       "refs": {
         "S3DataSourceConfiguration$bucketOwnerAccountId": "<p>The account ID for the owner of the S3 bucket.</p>"
+      }
+    },
+    "ChatPromptTemplateConfiguration": {
+      "base": "<p>Contains configurations to use a prompt in a conversational format. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
+      "refs": {
+        "PromptTemplateConfiguration$chat": "<p>Contains configurations to use the prompt in a conversational format.</p>"
       }
     },
     "ChunkingConfiguration": {
@@ -432,6 +452,24 @@
       "base": "<p>The endpoint information to connect to your Confluence data source.</p>",
       "refs": {
         "ConfluenceDataSourceConfiguration$sourceConfiguration": "<p>The endpoint information to connect to your Confluence data source.</p>"
+      }
+    },
+    "ContentBlock": {
+      "base": "<p>Contains the content for the message you pass to, or receive from a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
+      "refs": {
+        "ContentBlocks$member": null
+      }
+    },
+    "ContentBlocks": {
+      "base": null,
+      "refs": {
+        "Message$content": "<p>The content in the message.</p>"
+      }
+    },
+    "ConversationRole": {
+      "base": null,
+      "refs": {
+        "Message$role": "<p>The role that the message belongs to.</p>"
       }
     },
     "CrawlFilterConfiguration": {
@@ -565,6 +603,12 @@
       "base": "<p>Settings for customizing steps in the data source content ingestion pipeline.</p> <p>You can configure the data source to process documents with a Lambda function after they are parsed and converted into chunks. When you add a post-chunking transformation, the service stores chunked documents in an S3 bucket and invokes a Lambda function to process them.</p> <p>To process chunked documents with a Lambda function, define an S3 bucket path for input and output objects, and a transformation that specifies the Lambda function to invoke. You can use the Lambda function to customize how chunks are split, and the metadata for each chunk. </p>",
       "refs": {
         "VectorIngestionConfiguration$customTransformationConfiguration": "<p>A custom document transformer for parsed data source documents.</p>"
+      }
+    },
+    "CyclicConnectionFlowValidationDetails": {
+      "base": "<p>Details about a cyclic connection detected in the flow.</p>",
+      "refs": {
+        "FlowValidationDetails$cyclicConnection": "<p>Details about a cyclic connection in the flow.</p>"
       }
     },
     "DataDeletionPolicy": {
@@ -841,8 +885,9 @@
     "Document": {
       "base": null,
       "refs": {
-        "PromptFlowNodeInlineConfiguration$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>",
-        "PromptVariant$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>"
+        "PromptFlowNodeInlineConfiguration$additionalModelRequestFields": "<p>Additional fields to be included in the model request for the Prompt node.</p>",
+        "PromptVariant$additionalModelRequestFields": "<p>Contains model-specific inference configurations that aren't in the <code>inferenceConfiguration</code> field. To see model-specific inference parameters, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference request parameters and response fields for foundation models</a>.</p>",
+        "ToolInputSchema$json": "<p>A JSON object defining the input schema for the tool.</p>"
       }
     },
     "DraftVersion": {
@@ -861,6 +906,18 @@
         "UpdateFlowResponse$version": "<p>The version of the flow. When you update a flow, the version updated is the <code>DRAFT</code> version.</p>"
       }
     },
+    "DuplicateConditionExpressionFlowValidationDetails": {
+      "base": "<p>Details about duplicate condition expressions found in a condition node.</p>",
+      "refs": {
+        "FlowValidationDetails$duplicateConditionExpression": "<p>Details about duplicate condition expressions in a node.</p>"
+      }
+    },
+    "DuplicateConnectionsFlowValidationDetails": {
+      "base": "<p>Details about duplicate connections found between two nodes in the flow.</p>",
+      "refs": {
+        "FlowValidationDetails$duplicateConnections": "<p>Details about duplicate connections between nodes.</p>"
+      }
+    },
     "EmbeddingModelConfiguration": {
       "base": "<p>The configuration details for the embeddings model.</p>",
       "refs": {
@@ -871,6 +928,13 @@
       "base": null,
       "refs": {
         "MemoryConfiguration$enabledMemoryTypes": "<p>The type of memory that is stored. </p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "MalformedConditionExpressionFlowValidationDetails$cause": "<p>The error message describing why the condition expression is malformed.</p>",
+        "MalformedNodeInputExpressionFlowValidationDetails$cause": "<p>The error message describing why the input expression is malformed.</p>"
       }
     },
     "FailureReason": {
@@ -1022,6 +1086,7 @@
     "FlowConditionExpression": {
       "base": null,
       "refs": {
+        "DuplicateConditionExpressionFlowValidationDetails$expression": "<p>The duplicated condition expression.</p>",
         "FlowCondition$expression": "<p>Defines the condition. You must refer to at least one of the inputs in the condition. For more information, expand the Condition node section in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-how-it-works.html#flows-nodes\">Node types in prompt flows</a>.</p>"
       }
     },
@@ -1029,7 +1094,8 @@
       "base": null,
       "refs": {
         "FlowCondition$name": "<p>A name for the condition that you can reference.</p>",
-        "FlowConditionalConnectionConfiguration$condition": "<p>The condition that triggers this connection. For more information about how to write conditions, see the <b>Condition</b> node type in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/node-types.html\">Node types</a> topic in the Amazon Bedrock User Guide.</p>"
+        "FlowConditionalConnectionConfiguration$condition": "<p>The condition that triggers this connection. For more information about how to write conditions, see the <b>Condition</b> node type in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/node-types.html\">Node types</a> topic in the Amazon Bedrock User Guide.</p>",
+        "MalformedConditionExpressionFlowValidationDetails$condition": "<p>The name of the malformed condition.</p>"
       }
     },
     "FlowConditionalConnectionConfiguration": {
@@ -1059,7 +1125,16 @@
     "FlowConnectionName": {
       "base": null,
       "refs": {
-        "FlowConnection$name": "<p>A name for the connection that you can reference.</p>"
+        "CyclicConnectionFlowValidationDetails$connection": "<p>The name of the connection that causes the cycle in the flow.</p>",
+        "FlowConnection$name": "<p>A name for the connection that you can reference.</p>",
+        "IncompatibleConnectionDataTypeFlowValidationDetails$connection": "<p>The name of the connection with incompatible data types.</p>",
+        "MissingConnectionConfigurationFlowValidationDetails$connection": "<p>The name of the connection missing configuration.</p>",
+        "UnknownConnectionConditionFlowValidationDetails$connection": "<p>The name of the connection with the unknown condition.</p>",
+        "UnknownConnectionSourceFlowValidationDetails$connection": "<p>The name of the connection with the unknown source.</p>",
+        "UnknownConnectionSourceOutputFlowValidationDetails$connection": "<p>The name of the connection with the unknown source output.</p>",
+        "UnknownConnectionTargetFlowValidationDetails$connection": "<p>The name of the connection with the unknown target.</p>",
+        "UnknownConnectionTargetInputFlowValidationDetails$connection": "<p>The name of the connection with the unknown target input.</p>",
+        "UnsatisfiedConnectionConditionsFlowValidationDetails$connection": "<p>The name of the connection with unsatisfied conditions.</p>"
       }
     },
     "FlowConnectionType": {
@@ -1089,7 +1164,8 @@
         "GetFlowResponse$definition": "<p>The definition of the nodes and connections between the nodes in the flow.</p>",
         "GetFlowVersionResponse$definition": "<p>The definition of the nodes and connections between nodes in the flow.</p>",
         "UpdateFlowRequest$definition": "<p>A definition of the nodes and the connections between the nodes in the flow.</p>",
-        "UpdateFlowResponse$definition": "<p>A definition of the nodes and the connections between nodes in the flow.</p>"
+        "UpdateFlowResponse$definition": "<p>A definition of the nodes and the connections between nodes in the flow.</p>",
+        "ValidateFlowDefinitionRequest$definition": "<p>The definition of a flow to validate.</p>"
       }
     },
     "FlowDescription": {
@@ -1184,7 +1260,9 @@
       "base": null,
       "refs": {
         "FlowNodeInput$type": "<p>The data type of the input. If the input doesn't match this type at runtime, a validation error will be thrown.</p>",
-        "FlowNodeOutput$type": "<p>The data type of the output. If the output doesn't match this type at runtime, a validation error will be thrown.</p>"
+        "FlowNodeOutput$type": "<p>The data type of the output. If the output doesn't match this type at runtime, a validation error will be thrown.</p>",
+        "MismatchedNodeInputTypeFlowValidationDetails$expectedType": "<p>The expected data type for the node input.</p>",
+        "MismatchedNodeOutputTypeFlowValidationDetails$expectedType": "<p>The expected data type for the node output.</p>"
       }
     },
     "FlowNodeInput": {
@@ -1203,7 +1281,12 @@
       "base": null,
       "refs": {
         "FlowDataConnectionConfiguration$targetInput": "<p>The name of the input in the target node that the connection ends at.</p>",
-        "FlowNodeInput$name": "<p>A name for the input that you can reference.</p>"
+        "FlowNodeInput$name": "<p>A name for the input that you can reference.</p>",
+        "MalformedNodeInputExpressionFlowValidationDetails$input": "<p>The name of the input with the malformed expression.</p>",
+        "MismatchedNodeInputTypeFlowValidationDetails$input": "<p>The name of the input with the mismatched data type.</p>",
+        "MissingNodeInputFlowValidationDetails$input": "<p>The name of the missing input.</p>",
+        "MultipleNodeInputConnectionsFlowValidationDetails$input": "<p>The name of the input with multiple connections to it.</p>",
+        "UnfulfilledNodeInputFlowValidationDetails$input": "<p>The name of the unfulfilled input. An input is unfulfilled if there are no data connections to it.</p>"
       }
     },
     "FlowNodeInputs": {
@@ -1215,9 +1298,23 @@
     "FlowNodeName": {
       "base": null,
       "refs": {
+        "DuplicateConditionExpressionFlowValidationDetails$node": "<p>The name of the node containing the duplicate condition expressions.</p>",
+        "DuplicateConnectionsFlowValidationDetails$source": "<p>The name of the source node where the duplicate connection starts.</p>",
+        "DuplicateConnectionsFlowValidationDetails$target": "<p>The name of the target node where the duplicate connection ends.</p>",
         "FlowConnection$source": "<p>The node that the connection starts at.</p>",
         "FlowConnection$target": "<p>The node that the connection ends at.</p>",
-        "FlowNode$name": "<p>A name for the node.</p>"
+        "FlowNode$name": "<p>A name for the node.</p>",
+        "MalformedConditionExpressionFlowValidationDetails$node": "<p>The name of the node containing the malformed condition expression.</p>",
+        "MalformedNodeInputExpressionFlowValidationDetails$node": "<p>The name of the node containing the malformed input expression.</p>",
+        "MismatchedNodeInputTypeFlowValidationDetails$node": "<p>The name of the node containing the input with the mismatched data type.</p>",
+        "MismatchedNodeOutputTypeFlowValidationDetails$node": "<p>The name of the node containing the output with the mismatched data type.</p>",
+        "MissingDefaultConditionFlowValidationDetails$node": "<p>The name of the node missing the default condition.</p>",
+        "MissingNodeConfigurationFlowValidationDetails$node": "<p>The name of the node missing configuration.</p>",
+        "MissingNodeInputFlowValidationDetails$node": "<p>The name of the node missing the required input.</p>",
+        "MissingNodeOutputFlowValidationDetails$node": "<p>The name of the node missing the required output.</p>",
+        "MultipleNodeInputConnectionsFlowValidationDetails$node": "<p>The name of the node containing the input with multiple connections.</p>",
+        "UnfulfilledNodeInputFlowValidationDetails$node": "<p>The name of the node containing the unfulfilled input.</p>",
+        "UnreachableNodeFlowValidationDetails$node": "<p>The name of the unreachable node.</p>"
       }
     },
     "FlowNodeOutput": {
@@ -1230,7 +1327,9 @@
       "base": null,
       "refs": {
         "FlowDataConnectionConfiguration$sourceOutput": "<p>The name of the output in the source node that the connection begins from.</p>",
-        "FlowNodeOutput$name": "<p>A name for the output that you can reference.</p>"
+        "FlowNodeOutput$name": "<p>A name for the output that you can reference.</p>",
+        "MismatchedNodeOutputTypeFlowValidationDetails$output": "<p>The name of the output with the mismatched data type.</p>",
+        "MissingNodeOutputFlowValidationDetails$output": "<p>The name of the missing output.</p>"
       }
     },
     "FlowNodeOutputs": {
@@ -1282,16 +1381,29 @@
         "FlowValidations$member": null
       }
     },
+    "FlowValidationDetails": {
+      "base": "<p>A union type containing various possible validation issues in the flow.</p>",
+      "refs": {
+        "FlowValidation$details": "<p>Specific details about the validation issue encountered in the flow.</p>"
+      }
+    },
     "FlowValidationSeverity": {
       "base": null,
       "refs": {
         "FlowValidation$severity": "<p>The severity of the issue described in the message.</p>"
       }
     },
+    "FlowValidationType": {
+      "base": null,
+      "refs": {
+        "FlowValidation$type": "<p>The type of validation issue encountered in the flow.</p>"
+      }
+    },
     "FlowValidations": {
       "base": null,
       "refs": {
-        "GetFlowResponse$validations": "<p>A list of validation error messages related to the last failed operation on the flow.</p>"
+        "GetFlowResponse$validations": "<p>A list of validation error messages related to the last failed operation on the flow.</p>",
+        "ValidateFlowDefinitionResponse$validations": "<p>Contains an array of objects, each of which contains an error identified by validation.</p>"
       }
     },
     "FlowVersionSummaries": {
@@ -1453,13 +1565,15 @@
       }
     },
     "GuardrailConfiguration": {
-      "base": "<p>Details about the guardrail associated with an agent.</p>",
+      "base": "<p>Details about a guardrail associated with a resource.</p>",
       "refs": {
         "Agent$guardrailConfiguration": "<p>Details about the guardrail associated with the agent.</p>",
         "AgentSummary$guardrailConfiguration": "<p>Details about the guardrail associated with the agent.</p>",
         "AgentVersion$guardrailConfiguration": "<p>Details about the guardrail associated with the agent.</p>",
         "AgentVersionSummary$guardrailConfiguration": "<p>Details about the guardrail associated with the agent.</p>",
         "CreateAgentRequest$guardrailConfiguration": "<p>The unique Guardrail configuration assigned to the agent when it is created.</p>",
+        "KnowledgeBaseFlowNodeConfiguration$guardrailConfiguration": "<p>Contains configurations for a guardrail to apply during query and response generation for the knowledge base in this configuration.</p>",
+        "PromptFlowNodeConfiguration$guardrailConfiguration": "<p>Contains configurations for a guardrail to apply to the prompt in this node and the response generated from it.</p>",
         "UpdateAgentRequest$guardrailConfiguration": "<p>The unique Guardrail configuration assigned to the agent when it is updated.</p>"
       }
     },
@@ -1596,6 +1710,12 @@
         "UpdateDataSourceRequest$dataSourceId": "<p>The unique identifier of the data source.</p>",
         "UpdateDataSourceRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for the data source.</p>",
         "UpdateKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to update.</p>"
+      }
+    },
+    "IncompatibleConnectionDataTypeFlowValidationDetails": {
+      "base": "<p>Details about incompatible data types in a connection between nodes.</p>",
+      "refs": {
+        "FlowValidationDetails$incompatibleConnectionDataType": "<p>Details about incompatible data types in a connection.</p>"
       }
     },
     "InferenceConfiguration": {
@@ -1776,7 +1896,7 @@
       }
     },
     "KnowledgeBaseModelIdentifier": {
-      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
+      "base": null,
       "refs": {
         "KnowledgeBaseFlowNodeConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use to generate a response from the query results. Omit this field if you want to return the retrieved results as an array.</p>"
       }
@@ -1993,6 +2113,18 @@
       "refs": {
       }
     },
+    "MalformedConditionExpressionFlowValidationDetails": {
+      "base": "<p>Details about a malformed condition expression in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$malformedConditionExpression": "<p>Details about a malformed condition expression in a node.</p>"
+      }
+    },
+    "MalformedNodeInputExpressionFlowValidationDetails": {
+      "base": "<p>Details about a malformed input expression in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$malformedNodeInputExpression": "<p>Details about a malformed input expression in a node.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -2032,14 +2164,80 @@
         "EnabledMemoryTypes$member": null
       }
     },
+    "Message": {
+      "base": "<p>A message input or response from a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
+      "refs": {
+        "Messages$member": null
+      }
+    },
+    "Messages": {
+      "base": null,
+      "refs": {
+        "ChatPromptTemplateConfiguration$messages": "<p>Contains messages in the chat for the prompt.</p>"
+      }
+    },
     "Microsoft365TenantId": {
       "base": null,
       "refs": {
         "SharePointSourceConfiguration$tenantId": "<p>The identifier of your Microsoft 365 tenant.</p>"
       }
     },
+    "MismatchedNodeInputTypeFlowValidationDetails": {
+      "base": "<p>Details about mismatched input data types in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$mismatchedNodeInputType": "<p>Details about mismatched input data types in a node.</p>"
+      }
+    },
+    "MismatchedNodeOutputTypeFlowValidationDetails": {
+      "base": "<p>Details about mismatched output data types in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$mismatchedNodeOutputType": "<p>Details about mismatched output data types in a node.</p>"
+      }
+    },
+    "MissingConnectionConfigurationFlowValidationDetails": {
+      "base": "<p>Details about a connection missing required configuration.</p>",
+      "refs": {
+        "FlowValidationDetails$missingConnectionConfiguration": "<p>Details about missing configuration for a connection.</p>"
+      }
+    },
+    "MissingDefaultConditionFlowValidationDetails": {
+      "base": "<p>Details about a missing default condition in a conditional node.</p>",
+      "refs": {
+        "FlowValidationDetails$missingDefaultCondition": "<p>Details about a missing default condition in a conditional node.</p>"
+      }
+    },
+    "MissingEndingNodesFlowValidationDetails": {
+      "base": "<p>Details about missing ending nodes (such as FlowOutputNode) in the flow.</p>",
+      "refs": {
+        "FlowValidationDetails$missingEndingNodes": "<p>Details about missing ending nodes in the flow.</p>"
+      }
+    },
+    "MissingNodeConfigurationFlowValidationDetails": {
+      "base": "<p>Details about a node missing required configuration.</p>",
+      "refs": {
+        "FlowValidationDetails$missingNodeConfiguration": "<p>Details about missing configuration for a node.</p>"
+      }
+    },
+    "MissingNodeInputFlowValidationDetails": {
+      "base": "<p>Details about a missing required input in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$missingNodeInput": "<p>Details about a missing required input in a node.</p>"
+      }
+    },
+    "MissingNodeOutputFlowValidationDetails": {
+      "base": "<p>Details about a missing required output in a node.</p>",
+      "refs": {
+        "FlowValidationDetails$missingNodeOutput": "<p>Details about a missing required output in a node.</p>"
+      }
+    },
+    "MissingStartingNodesFlowValidationDetails": {
+      "base": "<p>Details about missing starting nodes (such as FlowInputNode) in the flow.</p>",
+      "refs": {
+        "FlowValidationDetails$missingStartingNodes": "<p>Details about missing starting nodes in the flow.</p>"
+      }
+    },
     "ModelIdentifier": {
-      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
+      "base": null,
       "refs": {
         "Agent$foundationModel": "<p>The foundation model used for orchestration by the agent.</p>",
         "AgentVersion$foundationModel": "<p>The foundation model that the version invokes.</p>",
@@ -2087,6 +2285,12 @@
       "base": null,
       "refs": {
         "MongoDbAtlasConfiguration$vectorIndexName": "<p>The name of the MongoDB Atlas vector search index.</p>"
+      }
+    },
+    "MultipleNodeInputConnectionsFlowValidationDetails": {
+      "base": "<p>Details about multiple connections to a single node input.</p>",
+      "refs": {
+        "FlowValidationDetails$multipleNodeInputConnections": "<p>Details about multiple connections to a single node input.</p>"
       }
     },
     "Name": {
@@ -2166,6 +2370,13 @@
         "ValidationException$message": null,
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>",
         "ValidationExceptionField$name": "<p>The name of the field.</p>"
+      }
+    },
+    "NonEmptyString": {
+      "base": null,
+      "refs": {
+        "SystemContentBlock$text": "<p>The text in the system prompt.</p>",
+        "ToolSpecification$description": "<p>The description of the tool.</p>"
       }
     },
     "NumericalVersion": {
@@ -2337,6 +2548,12 @@
         "IngestionJobStatistics$numberOfNewDocumentsIndexed": "<p>The number of new source documents in the data source that were successfully indexed.</p>"
       }
     },
+    "PromptAgentResource": {
+      "base": "<p>Contains specifications for an Amazon Bedrock agent with which to use the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html\">Automate tasks in your application using conversational agents</a>.</p>",
+      "refs": {
+        "PromptGenAiResource$agent": "<p>Specifies an Amazon Bedrock agent with which to use the prompt.</p>"
+      }
+    },
     "PromptArn": {
       "base": null,
       "refs": {
@@ -2397,6 +2614,12 @@
         "PromptFlowNodeConfiguration$sourceConfiguration": "<p>Specifies whether the prompt is from Prompt management or defined inline.</p>"
       }
     },
+    "PromptGenAiResource": {
+      "base": "<p>Contains specifications for a generative AI resource with which to use the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
+      "refs": {
+        "PromptVariant$genAiResource": "<p>Specifies a generative AI resource with which to use the prompt.</p>"
+      }
+    },
     "PromptId": {
       "base": null,
       "refs": {
@@ -2440,6 +2663,7 @@
     "PromptInputVariablesList": {
       "base": null,
       "refs": {
+        "ChatPromptTemplateConfiguration$inputVariables": "<p>An array of the variables in the prompt template.</p>",
         "TextPromptTemplateConfiguration$inputVariables": "<p>An array of the variables in the prompt template.</p>"
       }
     },
@@ -2458,7 +2682,7 @@
     "PromptMetadataList": {
       "base": null,
       "refs": {
-        "PromptVariant$metadata": "<p>An array of objects, each containing a key-value pair that defines a metadata tag and value to attach to a prompt variant. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>"
+        "PromptVariant$metadata": "<p>An array of objects, each containing a key-value pair that defines a metadata tag and value to attach to a prompt variant.</p>"
       }
     },
     "PromptMetadataValue": {
@@ -2468,7 +2692,7 @@
       }
     },
     "PromptModelIdentifier": {
-      "base": "<p>ARN or Id of a Bedrock Foundational Model or Inference Profile, or the ARN of a jumpstart model or imported model, or a provisioned throughput ARN for custom models.</p>",
+      "base": null,
       "refs": {
         "PromptFlowNodeInlineConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to run inference with.</p>",
         "PromptVariant$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> with which to run inference on the prompt.</p>"
@@ -2520,7 +2744,7 @@
       }
     },
     "PromptTemplateConfiguration": {
-      "base": "<p>Contains the message for a prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Prompt management in Amazon Bedrock</a>.</p>",
+      "base": "<p>Contains the message for a prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html\">Construct and store reusable prompts with Prompt management in Amazon Bedrock</a>.</p>",
       "refs": {
         "PromptFlowNodeInlineConfiguration$templateConfiguration": "<p>Contains a prompt and variables in the prompt that can be replaced with values at runtime.</p>",
         "PromptVariant$templateConfiguration": "<p>Contains configurations for the prompt template.</p>"
@@ -2868,6 +3092,12 @@
         "IngestionJobSortBy$order": "<p>The order for sorting the data.</p>"
       }
     },
+    "SpecificToolChoice": {
+      "base": "<p>Defines a specific tool that the model must request. No text is generated but the results of tool use are sent back to the model to help generate a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolChoice$tool": "<p>Defines a specific tool that the model must request. No text is generated but the results of tool use are sent back to the model to help generate a response.</p>"
+      }
+    },
     "StartIngestionJobRequest": {
       "base": null,
       "refs": {
@@ -2936,7 +3166,20 @@
     "String": {
       "base": null,
       "refs": {
+        "ContentBlock$text": "<p>The text in the message.</p>",
         "StopSequences$member": null
+      }
+    },
+    "SystemContentBlock": {
+      "base": "<p>Contains a system prompt to provide context to the model or to describe how it should behave. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-create.html\">Create a prompt using Prompt management</a>.</p>",
+      "refs": {
+        "SystemContentBlocks$member": null
+      }
+    },
+    "SystemContentBlocks": {
+      "base": null,
+      "refs": {
+        "ChatPromptTemplateConfiguration$system": "<p>Contains system prompts to provide context to the model or to describe how it should behave.</p>"
       }
     },
     "TagKey": {
@@ -3014,6 +3257,49 @@
       "refs": {
       }
     },
+    "Tool": {
+      "base": "<p>Contains configurations for a tool that a model can use when generating a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolConfigurationToolsList$member": null
+      }
+    },
+    "ToolChoice": {
+      "base": "<p>Defines which tools the model should request when invoked. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolConfiguration$toolChoice": "<p>Defines which tools the model should request when invoked.</p>"
+      }
+    },
+    "ToolConfiguration": {
+      "base": "<p>Configuration information for the tools that the model can use when generating a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ChatPromptTemplateConfiguration$toolConfiguration": "<p>Configuration information for the tools that the model can use when generating a response.</p>"
+      }
+    },
+    "ToolConfigurationToolsList": {
+      "base": null,
+      "refs": {
+        "ToolConfiguration$tools": "<p>An array of tools to pass to a model.</p>"
+      }
+    },
+    "ToolInputSchema": {
+      "base": "<p>The input schema for the tool. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "ToolSpecification$inputSchema": "<p>The input schema for the tool.</p>"
+      }
+    },
+    "ToolName": {
+      "base": null,
+      "refs": {
+        "SpecificToolChoice$name": "<p>The name of the tool.</p>",
+        "ToolSpecification$name": "<p>The name of the tool.</p>"
+      }
+    },
+    "ToolSpecification": {
+      "base": "<p>Contains a specification for a tool. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
+      "refs": {
+        "Tool$toolSpec": "<p>The specification for the tool.</p>"
+      }
+    },
     "TopK": {
       "base": null,
       "refs": {
@@ -3055,6 +3341,60 @@
       "base": null,
       "refs": {
         "ParameterDetail$type": "<p>The data type of the parameter.</p>"
+      }
+    },
+    "UnfulfilledNodeInputFlowValidationDetails": {
+      "base": "<p>Details about an unfulfilled node input with no valid connections.</p>",
+      "refs": {
+        "FlowValidationDetails$unfulfilledNodeInput": "<p>Details about an unfulfilled node input with no valid connections.</p>"
+      }
+    },
+    "UnknownConnectionConditionFlowValidationDetails": {
+      "base": "<p>Details about an unknown condition for a connection.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownConnectionCondition": "<p>Details about an unknown condition for a connection.</p>"
+      }
+    },
+    "UnknownConnectionSourceFlowValidationDetails": {
+      "base": "<p>Details about an unknown source node for a connection.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownConnectionSource": "<p>Details about an unknown source node for a connection.</p>"
+      }
+    },
+    "UnknownConnectionSourceOutputFlowValidationDetails": {
+      "base": "<p>Details about an unknown source output for a connection.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownConnectionSourceOutput": "<p>Details about an unknown source output for a connection.</p>"
+      }
+    },
+    "UnknownConnectionTargetFlowValidationDetails": {
+      "base": "<p>Details about an unknown target node for a connection.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownConnectionTarget": "<p>Details about an unknown target node for a connection.</p>"
+      }
+    },
+    "UnknownConnectionTargetInputFlowValidationDetails": {
+      "base": "<p>Details about an unknown target input for a connection.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownConnectionTargetInput": "<p>Details about an unknown target input for a connection.</p>"
+      }
+    },
+    "UnreachableNodeFlowValidationDetails": {
+      "base": "<p>Details about an unreachable node in the flow. A node is unreachable when there are no paths to it from any starting node.</p>",
+      "refs": {
+        "FlowValidationDetails$unreachableNode": "<p>Details about an unreachable node in the flow.</p>"
+      }
+    },
+    "UnsatisfiedConnectionConditionsFlowValidationDetails": {
+      "base": "<p>Details about unsatisfied conditions for a connection. A condition is unsatisfied if it can never be true, for example two branches of condition node cannot be simultaneously true.</p>",
+      "refs": {
+        "FlowValidationDetails$unsatisfiedConnectionConditions": "<p>Details about unsatisfied conditions for a connection.</p>"
+      }
+    },
+    "UnspecifiedFlowValidationDetails": {
+      "base": "<p>Details about an unspecified validation that doesn't fit other categories.</p>",
+      "refs": {
+        "FlowValidationDetails$unspecified": "<p>Details about an unspecified validation.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -3167,6 +3507,16 @@
       "base": "<p>The configuration of web URLs that you want to crawl. You should be authorized to crawl the URLs.</p>",
       "refs": {
         "WebSourceConfiguration$urlConfiguration": "<p>The configuration of the URL/URLs.</p>"
+      }
+    },
+    "ValidateFlowDefinitionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidateFlowDefinitionResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ValidationException": {

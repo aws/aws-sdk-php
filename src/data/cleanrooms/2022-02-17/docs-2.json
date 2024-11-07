@@ -563,7 +563,11 @@
         "IdMappingConfig$allowUseAsDimensionColumn": "<p>An indicator as to whether you can use your column as a dimension column in the ID mapping table (<code>TRUE</code>) or not (<code>FALSE</code>).</p> <p>Default is <code>FALSE</code>.</p>",
         "IdMappingTableInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID mapping table resource. </p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID mapping table resource.</p>",
         "IdNamespaceAssociationInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID namespace association resource.</p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID namespace association resource.</p>",
+        "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
+        "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
+        "ModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model inference costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model inference costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model inference costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model inference costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
+        "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
         "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
       }
@@ -1172,6 +1176,18 @@
     "CreatePrivacyBudgetTemplateOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "CustomMLMemberAbilities": {
+      "base": null,
+      "refs": {
+        "MLMemberAbilities$customMLMemberAbilities": "<p>The custom ML member abilities for a collaboration member. The inference feature is not available in the custom ML modeling beta.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>"
+      }
+    },
+    "CustomMLMemberAbility": {
+      "base": null,
+      "refs": {
+        "CustomMLMemberAbilities$member": null
       }
     },
     "DataEncryptionMetadata": {
@@ -2096,6 +2112,22 @@
         "ProtectedQueryStatistics$totalDurationInMillis": "<p>The duration of the protected query, from creation until query completion.</p>"
       }
     },
+    "MLMemberAbilities": {
+      "base": "<p>The ML member abilities for a collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+      "refs": {
+        "CreateCollaborationInput$creatorMLMemberAbilities": "<p>The ML abilities granted to the collaboration creator.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+        "MemberSpecification$mlMemberAbilities": "<p>The ML abilities granted to the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+        "MemberSummary$mlAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+        "Membership$mlMemberAbilities": "<p>Specifies the ML member abilities that are granted to a collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+        "MembershipSummary$mlMemberAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>"
+      }
+    },
+    "MLPaymentConfig": {
+      "base": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "PaymentConfiguration$machineLearning": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -2255,6 +2287,24 @@
         "UpdateProtectedQueryInput$membershipIdentifier": "<p>The identifier for a member of a protected query instance.</p>"
       }
     },
+    "MembershipMLPaymentConfig": {
+      "base": "<p>An object representing the collaboration member's machine learning payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "MembershipPaymentConfiguration$machineLearning": "<p>The payment responsibilities accepted by the collaboration member for machine learning costs.</p>"
+      }
+    },
+    "MembershipModelInferencePaymentConfig": {
+      "base": "<p>An object representing the collaboration member's model inference payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "MembershipMLPaymentConfig$modelInference": "<p>The payment responsibilities accepted by the member for model inference.</p>"
+      }
+    },
+    "MembershipModelTrainingPaymentConfig": {
+      "base": "<p>An object representing the collaboration member's model training payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "MembershipMLPaymentConfig$modelTraining": "<p>The payment responsibilities accepted by the member for model training.</p>"
+      }
+    },
     "MembershipPaymentConfiguration": {
       "base": "<p>An object representing the payment responsibilities accepted by the collaboration member.</p>",
       "refs": {
@@ -2309,6 +2359,18 @@
       "base": null,
       "refs": {
         "ListMembershipsOutput$membershipSummaries": "<p>The list of memberships returned from the ListMemberships operation.</p>"
+      }
+    },
+    "ModelInferencePaymentConfig": {
+      "base": "<p>An object representing the collaboration member's model inference payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "MLPaymentConfig$modelInference": "<p>The payment responsibilities accepted by the member for model inference.</p>"
+      }
+    },
+    "ModelTrainingPaymentConfig": {
+      "base": "<p>An object representing the collaboration member's model training payment responsibilities set by the collaboration creator.</p>",
+      "refs": {
+        "MLPaymentConfig$modelTraining": "<p>The payment responsibilities accepted by the member for model training.</p>"
       }
     },
     "PaginationToken": {

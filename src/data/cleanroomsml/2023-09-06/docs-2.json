@@ -2,28 +2,61 @@
   "version": "2.0",
   "service": "<p>Welcome to the <i>Amazon Web Services Clean Rooms ML API Reference</i>.</p> <p>Amazon Web Services Clean Rooms ML provides a privacy-enhancing method for two parties to identify similar users in their data without the need to share their data with each other. The first party brings the training data to Clean Rooms so that they can create and configure an audience model (lookalike model) and associate it with a collaboration. The second party then brings their seed data to Clean Rooms and generates an audience (lookalike segment) that resembles the training data.</p> <p>To learn more about Amazon Web Services Clean Rooms ML concepts, procedures, and best practices, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/machine-learning.html\">Clean Rooms User Guide</a>.</p> <p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html\">Clean Rooms SQL Reference</a>.</p>",
   "operations": {
+    "CancelTrainedModel": "<p>Submits a request to cancel the trained model job.</p>",
+    "CancelTrainedModelInferenceJob": "<p>Submits a request to cancel a trained model inference job.</p>",
     "CreateAudienceModel": "<p>Defines the information necessary to create an audience model. An audience model is a machine learning model that Clean Rooms ML trains to measure similarity between users. Clean Rooms ML manages training and storing the audience model. The audience model can be used in multiple calls to the <a>StartAudienceGenerationJob</a> API.</p>",
     "CreateConfiguredAudienceModel": "<p>Defines the information necessary to create a configured audience model.</p>",
+    "CreateConfiguredModelAlgorithm": "<p>Creates a configured model algorithm using a container image stored in an ECR repository.</p>",
+    "CreateConfiguredModelAlgorithmAssociation": "<p>Associates a configured model algorithm to a collaboration for use by any member of the collaboration.</p>",
+    "CreateMLInputChannel": "<p>Provides the information to create an ML input channel. An ML input channel is the result of a query that can be used for ML modeling.</p>",
+    "CreateTrainedModel": "<p>Creates a trained model from an associated configured model algorithm using data from any member of the collaboration.</p>",
     "CreateTrainingDataset": "<p>Defines the information necessary to create a training dataset. In Clean Rooms ML, the <code>TrainingDataset</code> is metadata that points to a Glue table, which is read only during <code>AudienceModel</code> creation.</p>",
     "DeleteAudienceGenerationJob": "<p>Deletes the specified audience generation job, and removes all data associated with the job.</p>",
     "DeleteAudienceModel": "<p>Specifies an audience model that you want to delete. You can't delete an audience model if there are any configured audience models that depend on the audience model.</p>",
     "DeleteConfiguredAudienceModel": "<p>Deletes the specified configured audience model. You can't delete a configured audience model if there are any lookalike models that use the configured audience model. If you delete a configured audience model, it will be removed from any collaborations that it is associated to.</p>",
     "DeleteConfiguredAudienceModelPolicy": "<p>Deletes the specified configured audience model policy.</p>",
+    "DeleteConfiguredModelAlgorithm": "<p>Deletes a configured model algorithm.</p>",
+    "DeleteConfiguredModelAlgorithmAssociation": "<p>Deletes a configured model algorithm association.</p>",
+    "DeleteMLConfiguration": "<p>Deletes a ML modeling configuration.</p>",
+    "DeleteMLInputChannelData": "<p>Provides the information necessary to delete an ML input channel.</p>",
+    "DeleteTrainedModelOutput": "<p>Deletes the output of a trained model.</p>",
     "DeleteTrainingDataset": "<p>Specifies a training dataset that you want to delete. You can't delete a training dataset if there are any audience models that depend on the training dataset. In Clean Rooms ML, the <code>TrainingDataset</code> is metadata that points to a Glue table, which is read only during <code>AudienceModel</code> creation. This action deletes the metadata.</p>",
     "GetAudienceGenerationJob": "<p>Returns information about an audience generation job.</p>",
     "GetAudienceModel": "<p>Returns information about an audience model</p>",
+    "GetCollaborationConfiguredModelAlgorithmAssociation": "<p>Returns information about the configured model algorithm association in a collaboration.</p>",
+    "GetCollaborationMLInputChannel": "<p>Returns information about a specific ML input channel in a collaboration.</p>",
+    "GetCollaborationTrainedModel": "<p>Returns information about a trained model in a collaboration.</p>",
     "GetConfiguredAudienceModel": "<p>Returns information about a specified configured audience model.</p>",
     "GetConfiguredAudienceModelPolicy": "<p>Returns information about a configured audience model policy.</p>",
+    "GetConfiguredModelAlgorithm": "<p>Returns information about a configured model algorithm.</p>",
+    "GetConfiguredModelAlgorithmAssociation": "<p>Returns information about a configured model algorithm association.</p>",
+    "GetMLConfiguration": "<p>Returns information about a specific ML configuration.</p>",
+    "GetMLInputChannel": "<p>Returns information about an ML input channel.</p>",
+    "GetTrainedModel": "<p>Returns information about a trained model.</p>",
+    "GetTrainedModelInferenceJob": "<p>Returns information about a trained model inference job.</p>",
     "GetTrainingDataset": "<p>Returns information about a training dataset.</p>",
     "ListAudienceExportJobs": "<p>Returns a list of the audience export jobs.</p>",
     "ListAudienceGenerationJobs": "<p>Returns a list of audience generation jobs.</p>",
     "ListAudienceModels": "<p>Returns a list of audience models.</p>",
+    "ListCollaborationConfiguredModelAlgorithmAssociations": "<p>Returns a list of the configured model algorithm associations in a collaboration.</p>",
+    "ListCollaborationMLInputChannels": "<p>Returns a list of the ML input channels in a collaboration.</p>",
+    "ListCollaborationTrainedModelExportJobs": "<p>Returns a list of the export jobs for a trained model in a collaboration.</p>",
+    "ListCollaborationTrainedModelInferenceJobs": "<p>Returns a list of trained model inference jobs in a specified collaboration.</p>",
+    "ListCollaborationTrainedModels": "<p>Returns a list of the trained models in a collaboration.</p>",
     "ListConfiguredAudienceModels": "<p>Returns a list of the configured audience models.</p>",
+    "ListConfiguredModelAlgorithmAssociations": "<p>Returns a list of configured model algorithm associations.</p>",
+    "ListConfiguredModelAlgorithms": "<p>Returns a list of configured model algorithms.</p>",
+    "ListMLInputChannels": "<p>Returns a list of ML input channels.</p>",
     "ListTagsForResource": "<p>Returns a list of tags for a provided resource.</p>",
+    "ListTrainedModelInferenceJobs": "<p>Returns a list of trained model inference jobs that match the request parameters.</p>",
+    "ListTrainedModels": "<p>Returns a list of trained models.</p>",
     "ListTrainingDatasets": "<p>Returns a list of training datasets.</p>",
     "PutConfiguredAudienceModelPolicy": "<p>Create or update the resource policy for a configured audience model.</p>",
+    "PutMLConfiguration": "<p>Assigns information about an ML configuration.</p>",
     "StartAudienceExportJob": "<p>Export an audience of a specified size after you have generated an audience.</p>",
     "StartAudienceGenerationJob": "<p>Information necessary to start the audience generation job.</p>",
+    "StartTrainedModelExportJob": "<p>Provides the information necessary to start a trained model export job.</p>",
+    "StartTrainedModelInferenceJob": "<p>Defines the information necessary to begin a trained model inference job.</p>",
     "TagResource": "<p>Adds metadata tags to a specified resource.</p>",
     "UntagResource": "<p>Removes metadata tags from a specified resource.</p>",
     "UpdateConfiguredAudienceModel": "<p>Provides the information necessary to update a configured audience model. Updates that impact audience generation jobs take effect when a new job starts, but do not impact currently running jobs.</p>"
@@ -38,8 +71,31 @@
       "base": null,
       "refs": {
         "AudienceGenerationJobSummary$startedBy": "<p>The AWS Account that submitted the job.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$creatorAccountId": "<p>The account ID of the member that created the configured model algorithm association.</p>",
+        "CollaborationMLInputChannelSummary$creatorAccountId": "<p>The account ID of the member who created the ML input channel.</p>",
+        "CollaborationTrainedModelExportJobSummary$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$creatorAccountId": "<p>The account ID that created the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
         "GetAudienceGenerationJobResponse$startedBy": "<p>The AWS account that started this audience generation job.</p>",
-        "GlueDataSource$catalogId": "<p>The Glue catalog that contains the training data.</p>"
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$creatorAccountId": "<p>The account ID of the member that created the configured model algorithm association.</p>",
+        "GetCollaborationMLInputChannelResponse$creatorAccountId": "<p>The account ID of the member who created the ML input channel.</p>",
+        "GetCollaborationTrainedModelResponse$creatorAccountId": "<p>The account ID of the member that created the trained model.</p>",
+        "GlueDataSource$catalogId": "<p>The Glue catalog that contains the training data.</p>",
+        "InferenceReceiverMember$accountId": "<p>The account ID of the member that can receive inference results.</p>",
+        "TrainedModelExportReceiverMember$accountId": "<p>The account ID of the member who will receive trained model exports.</p>"
+      }
+    },
+    "AccountIdList": {
+      "base": null,
+      "refs": {
+        "LogsConfigurationPolicy$allowedAccountIds": "<p>A list of account IDs that are allowed to access the logs.</p>"
+      }
+    },
+    "AlgorithmImage": {
+      "base": null,
+      "refs": {
+        "ContainerConfig$imageUri": "<p>The registry path of the docker image that contains the algorithm. Clean Rooms ML supports both <code>registry/repository[:tag]</code> and <code>registry/repositry[@digest]</code> image path formats. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>",
+        "InferenceContainerConfig$imageUri": "<p>The registry path of the docker image that contains the inference algorithm. Clean Rooms ML supports both <code>registry/repository[:tag]</code> and <code>registry/repositry[@digest]</code> image path formats. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>"
       }
     },
     "AnalysisTemplateArn": {
@@ -150,6 +206,12 @@
         "GetAudienceGenerationJobResponse$metrics": "<p>The relevance scores for different audience sizes and the recall score of the generated audience. </p>"
       }
     },
+    "AudienceQualityMetricsRecallMetricDouble": {
+      "base": null,
+      "refs": {
+        "AudienceQualityMetrics$recallMetric": "<p>The recall score of the generated audience. Recall is the percentage of the most similar users (by default, the most similar 20%) from a sample of the training data that are included in the seed audience by the audience generation job. Values range from 0-1, larger values indicate a better audience. A recall value approximately equal to the maximum bin size indicates that the audience model is equivalent to random selection. </p>"
+      }
+    },
     "AudienceSize": {
       "base": "<p>The size of the generated audience. Must match one of the sizes in the configured audience model.</p>",
       "refs": {
@@ -193,6 +255,82 @@
         "StartAudienceGenerationJobRequest$includeSeedInOutput": "<p>Whether the seed audience is included in the audience generation output.</p>"
       }
     },
+    "CancelTrainedModelInferenceJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelTrainedModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CollaborationConfiguredModelAlgorithmAssociationList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationConfiguredModelAlgorithmAssociationsResponse$collaborationConfiguredModelAlgorithmAssociations": "<p>The configured model algorithm associations that belong to this collaboration.</p>"
+      }
+    },
+    "CollaborationConfiguredModelAlgorithmAssociationSummary": {
+      "base": "<p>Provides summary information about a configured model algorithm in a collaboration.</p>",
+      "refs": {
+        "CollaborationConfiguredModelAlgorithmAssociationList$member": null
+      }
+    },
+    "CollaborationMLInputChannelSummary": {
+      "base": "<p>Provides summary information about an ML input channel in a collaboration.</p>",
+      "refs": {
+        "CollaborationMLInputChannelsList$member": null
+      }
+    },
+    "CollaborationMLInputChannelSummaryConfiguredModelAlgorithmAssociationsList": {
+      "base": null,
+      "refs": {
+        "CollaborationMLInputChannelSummary$configuredModelAlgorithmAssociations": "<p>The associated configured model algorithms used to create the ML input channel.</p>"
+      }
+    },
+    "CollaborationMLInputChannelsList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationMLInputChannelsResponse$collaborationMLInputChannelsList": "<p>The list of ML input channels that you wanted.</p>"
+      }
+    },
+    "CollaborationTrainedModelExportJobList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationTrainedModelExportJobsResponse$collaborationTrainedModelExportJobs": "<p>The exports jobs that exist for the requested trained model in the requested collaboration.</p>"
+      }
+    },
+    "CollaborationTrainedModelExportJobSummary": {
+      "base": "<p>Provides summary information about a trained model export job in a collaboration.</p>",
+      "refs": {
+        "CollaborationTrainedModelExportJobList$member": null
+      }
+    },
+    "CollaborationTrainedModelInferenceJobList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationTrainedModelInferenceJobsResponse$collaborationTrainedModelInferenceJobs": "<p>The trained model inference jobs that you are interested in.</p>"
+      }
+    },
+    "CollaborationTrainedModelInferenceJobSummary": {
+      "base": "<p>Provides summary information about a trained model inference job in a collaboration.</p>",
+      "refs": {
+        "CollaborationTrainedModelInferenceJobList$member": null
+      }
+    },
+    "CollaborationTrainedModelList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationTrainedModelsResponse$collaborationTrainedModels": "<p>The trained models in the collaboration that you requested.</p>"
+      }
+    },
+    "CollaborationTrainedModelSummary": {
+      "base": "<p>Provides summary information about a trained model in a collaboration.</p>",
+      "refs": {
+        "CollaborationTrainedModelList$member": null
+      }
+    },
     "ColumnName": {
       "base": null,
       "refs": {
@@ -215,6 +353,12 @@
       "base": null,
       "refs": {
         "ColumnSchema$columnTypes": "<p>The data type of column.</p>"
+      }
+    },
+    "ComputeConfiguration": {
+      "base": "<p>Provides configuration information for the instances that will perform the compute work.</p>",
+      "refs": {
+        "ProtectedQueryInputParameters$computeConfiguration": "<p>Provides configuration information for the workers that will perform the protected query.</p>"
       }
     },
     "ConfiguredAudienceModelArn": {
@@ -265,9 +409,106 @@
         "ConfiguredAudienceModelList$member": null
       }
     },
+    "ConfiguredModelAlgorithmArn": {
+      "base": null,
+      "refs": {
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that is associated to the collaboration.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that is being associated.</p>",
+        "ConfiguredModelAlgorithmSummary$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm.</p>",
+        "CreateConfiguredModelAlgorithmAssociationRequest$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that you want to associate.</p>",
+        "CreateConfiguredModelAlgorithmResponse$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm.</p>",
+        "DeleteConfiguredModelAlgorithmRequest$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that you want to delete.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that was associated to the collaboration.</p>",
+        "GetConfiguredModelAlgorithmRequest$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm that you want to return information about.</p>",
+        "GetConfiguredModelAlgorithmResponse$configuredModelAlgorithmArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm.</p>"
+      }
+    },
+    "ConfiguredModelAlgorithmAssociationArn": {
+      "base": null,
+      "refs": {
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "CollaborationMLInputChannelSummaryConfiguredModelAlgorithmAssociationsList$member": null,
+        "CollaborationTrainedModelInferenceJobSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that is used for the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that is used for this trained model.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "CreateConfiguredModelAlgorithmAssociationResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "CreateMLInputChannelRequestConfiguredModelAlgorithmAssociationsList$member": null,
+        "CreateTrainedModelRequest$configuredModelAlgorithmAssociationArn": "<p>The associated configured model algorithm used to train this model.</p>",
+        "DeleteConfiguredModelAlgorithmAssociationRequest$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that you want to delete.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationRequest$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that you want to return information about.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "GetCollaborationMLInputChannelResponseConfiguredModelAlgorithmAssociationsList$member": null,
+        "GetCollaborationTrainedModelResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that was used to create this trained model.</p>",
+        "GetConfiguredModelAlgorithmAssociationRequest$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that you want to return information about.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association.</p>",
+        "GetMLInputChannelResponseConfiguredModelAlgorithmAssociationsList$member": null,
+        "GetTrainedModelInferenceJobResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that was used for the trained model inference job.</p>",
+        "GetTrainedModelResponse$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that was used to create the trained model.</p>",
+        "MLInputChannelSummaryConfiguredModelAlgorithmAssociationsList$member": null,
+        "StartTrainedModelInferenceJobRequest$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that is used for this trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that is used for the trained model inference job.</p>",
+        "TrainedModelSummary$configuredModelAlgorithmAssociationArn": "<p>The Amazon Resource Name (ARN) of the configured model algorithm association that was used to create this trained model.</p>"
+      }
+    },
+    "ConfiguredModelAlgorithmAssociationList": {
+      "base": null,
+      "refs": {
+        "ListConfiguredModelAlgorithmAssociationsResponse$configuredModelAlgorithmAssociations": "<p>The list of configured model algorithm associations.</p>"
+      }
+    },
+    "ConfiguredModelAlgorithmAssociationSummary": {
+      "base": "<p>Provides summary information about the configured model algorithm association.</p>",
+      "refs": {
+        "ConfiguredModelAlgorithmAssociationList$member": null
+      }
+    },
+    "ConfiguredModelAlgorithmList": {
+      "base": null,
+      "refs": {
+        "ListConfiguredModelAlgorithmsResponse$configuredModelAlgorithms": "<p>The list of configured model algorithms.</p>"
+      }
+    },
+    "ConfiguredModelAlgorithmSummary": {
+      "base": "<p>Provides summary information about a configured model algorithm.</p>",
+      "refs": {
+        "ConfiguredModelAlgorithmList$member": null
+      }
+    },
     "ConflictException": {
       "base": "<p>You can't complete this action because another resource depends on this resource.</p>",
       "refs": {
+      }
+    },
+    "ContainerArgument": {
+      "base": null,
+      "refs": {
+        "ContainerArguments$member": null
+      }
+    },
+    "ContainerArguments": {
+      "base": null,
+      "refs": {
+        "ContainerConfig$arguments": "<p>The arguments for a container used to run a training job. See How Amazon SageMaker Runs Your Training Image for additional information. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-training-algo-dockerfile.html\">How Sagemaker runs your training image</a>.</p>"
+      }
+    },
+    "ContainerConfig": {
+      "base": "<p>Provides configuration information for the dockerized container where the model algorithm is stored.</p>",
+      "refs": {
+        "CreateConfiguredModelAlgorithmRequest$trainingContainerConfig": "<p>Configuration information for the training container, including entrypoints and arguments.</p>",
+        "GetConfiguredModelAlgorithmResponse$trainingContainerConfig": "<p>The configuration information of the training container for the configured model algorithm.</p>"
+      }
+    },
+    "ContainerEntrypoint": {
+      "base": null,
+      "refs": {
+        "ContainerConfig$entrypoint": "<p>The entrypoint script for a Docker container used to run a training job. This script takes precedence over the default train processing instructions. See How Amazon SageMaker Runs Your Training Image for additional information. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-training-algo-dockerfile.html\">How Sagemaker runs your training image</a>.</p>"
+      }
+    },
+    "ContainerEntrypointString": {
+      "base": null,
+      "refs": {
+        "ContainerEntrypoint$member": null
       }
     },
     "CreateAudienceModelRequest": {
@@ -286,6 +527,58 @@
       }
     },
     "CreateConfiguredAudienceModelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConfiguredModelAlgorithmAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConfiguredModelAlgorithmAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConfiguredModelAlgorithmRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConfiguredModelAlgorithmResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMLInputChannelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMLInputChannelRequestConfiguredModelAlgorithmAssociationsList": {
+      "base": null,
+      "refs": {
+        "CreateMLInputChannelRequest$configuredModelAlgorithmAssociations": "<p>The associated configured model algorithms that are necessary to create this ML input channel.</p>"
+      }
+    },
+    "CreateMLInputChannelRequestRetentionInDaysInteger": {
+      "base": null,
+      "refs": {
+        "CreateMLInputChannelRequest$retentionInDays": "<p>The number of days that the data in the ML input channel is retained.</p>"
+      }
+    },
+    "CreateMLInputChannelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateTrainedModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateTrainedModelResponse": {
       "base": null,
       "refs": {
       }
@@ -363,16 +656,59 @@
       "refs": {
       }
     },
+    "DeleteConfiguredModelAlgorithmAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteConfiguredModelAlgorithmRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteMLConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteMLInputChannelDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTrainedModelOutputRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteTrainingDatasetRequest": {
       "base": null,
       "refs": {
       }
     },
-    "Double": {
+    "Destination": {
+      "base": "<p>The Amazon S3 location where the exported model artifacts are stored.</p>",
+      "refs": {
+        "MLOutputConfiguration$destination": "<p>The Amazon S3 location where exported model artifacts are stored.</p>"
+      }
+    },
+    "Environment": {
       "base": null,
       "refs": {
-        "AudienceQualityMetrics$recallMetric": "<p>The recall score of the generated audience. Recall is the percentage of the most similar users (by default, the most similar 20%) from a sample of the training data that are included in the seed audience by the audience generation job. Values range from 0-1, larger values indicate a better audience. A recall value approximately equal to the maximum bin size indicates that the audience model is equivalent to random selection. </p>",
-        "RelevanceMetric$score": "<p>The relevance score of the generated audience.</p>"
+        "CreateTrainedModelRequest$environment": "<p>The environment variables to set in the Docker container.</p>",
+        "GetTrainedModelResponse$environment": "<p>The EC2 environment that was used to create the trained model.</p>"
+      }
+    },
+    "EnvironmentKeyString": {
+      "base": null,
+      "refs": {
+        "Environment$key": null
+      }
+    },
+    "EnvironmentValueString": {
+      "base": null,
+      "refs": {
+        "Environment$value": null
       }
     },
     "GetAudienceGenerationJobRequest": {
@@ -395,6 +731,54 @@
       "refs": {
       }
     },
+    "GetCollaborationConfiguredModelAlgorithmAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCollaborationConfiguredModelAlgorithmAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCollaborationMLInputChannelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCollaborationMLInputChannelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCollaborationMLInputChannelResponseConfiguredModelAlgorithmAssociationsList": {
+      "base": null,
+      "refs": {
+        "GetCollaborationMLInputChannelResponse$configuredModelAlgorithmAssociations": "<p>The configured model algorithm associations that were used to create the ML input channel.</p>"
+      }
+    },
+    "GetCollaborationMLInputChannelResponseNumberOfRecordsLong": {
+      "base": null,
+      "refs": {
+        "GetCollaborationMLInputChannelResponse$numberOfRecords": "<p>The number of records in the ML input channel.</p>"
+      }
+    },
+    "GetCollaborationMLInputChannelResponseRetentionInDaysInteger": {
+      "base": null,
+      "refs": {
+        "GetCollaborationMLInputChannelResponse$retentionInDays": "<p>The number of days to retain the data for the ML input channel.</p>"
+      }
+    },
+    "GetCollaborationTrainedModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCollaborationTrainedModelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetConfiguredAudienceModelPolicyRequest": {
       "base": null,
       "refs": {
@@ -411,6 +795,96 @@
       }
     },
     "GetConfiguredAudienceModelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConfiguredModelAlgorithmAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConfiguredModelAlgorithmAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConfiguredModelAlgorithmRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConfiguredModelAlgorithmResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMLConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMLConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMLInputChannelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMLInputChannelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMLInputChannelResponseConfiguredModelAlgorithmAssociationsList": {
+      "base": null,
+      "refs": {
+        "GetMLInputChannelResponse$configuredModelAlgorithmAssociations": "<p>The configured model algorithm associations that were used to create the ML input channel.</p>"
+      }
+    },
+    "GetMLInputChannelResponseNumberOfFilesDouble": {
+      "base": null,
+      "refs": {
+        "GetMLInputChannelResponse$numberOfFiles": "<p>The number of files in the ML input channel.</p>"
+      }
+    },
+    "GetMLInputChannelResponseNumberOfRecordsLong": {
+      "base": null,
+      "refs": {
+        "GetMLInputChannelResponse$numberOfRecords": "<p>The number of records in the ML input channel.</p>"
+      }
+    },
+    "GetMLInputChannelResponseRetentionInDaysInteger": {
+      "base": null,
+      "refs": {
+        "GetMLInputChannelResponse$retentionInDays": "<p>The number of days to keep the data in the ML input channel.</p>"
+      }
+    },
+    "GetMLInputChannelResponseSizeInGbDouble": {
+      "base": null,
+      "refs": {
+        "GetMLInputChannelResponse$sizeInGb": "<p>The size, in GB, of the ML input channel.</p>"
+      }
+    },
+    "GetTrainedModelInferenceJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTrainedModelInferenceJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTrainedModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTrainedModelResponse": {
       "base": null,
       "refs": {
       }
@@ -451,20 +925,155 @@
         "PutConfiguredAudienceModelPolicyResponse$policyHash": "<p>A cryptographic hash of the contents of the policy used to prevent unexpected concurrent modification of the policy.</p>"
       }
     },
+    "HyperParameters": {
+      "base": null,
+      "refs": {
+        "CreateTrainedModelRequest$hyperparameters": "<p>Algorithm-specific parameters that influence the quality of the model. You set hyperparameters before you start the learning process.</p>",
+        "GetTrainedModelResponse$hyperparameters": "<p>The hyperparameters that were used to create the trained model.</p>"
+      }
+    },
+    "HyperParametersKeyString": {
+      "base": null,
+      "refs": {
+        "HyperParameters$key": null
+      }
+    },
+    "HyperParametersValueString": {
+      "base": null,
+      "refs": {
+        "HyperParameters$value": null
+      }
+    },
     "IamRoleArn": {
       "base": null,
       "refs": {
         "AudienceGenerationJobDataSource$roleArn": "<p>The ARN of the IAM role that can read the Amazon S3 bucket where the seed audience is stored.</p>",
         "ConfiguredAudienceModelOutputConfig$roleArn": "<p>The ARN of the IAM role that can write the Amazon S3 bucket.</p>",
+        "CreateConfiguredModelAlgorithmRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the role that is used to access the repository.</p>",
         "CreateTrainingDatasetRequest$roleArn": "<p>The ARN of the IAM role that Clean Rooms ML can assume to read the data referred to in the <code>dataSource</code> field of each dataset.</p> <p>Passing a role across AWS accounts is not allowed. If you pass a role that isn't in your account, you get an <code>AccessDeniedException</code> error.</p>",
-        "GetTrainingDatasetResponse$roleArn": "<p>The IAM role used to read the training data.</p>"
+        "GetConfiguredModelAlgorithmResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the service role that was used to create the configured model algorithm.</p>",
+        "GetTrainingDatasetResponse$roleArn": "<p>The IAM role used to read the training data.</p>",
+        "InputChannel$roleArn": "<p>The ARN of the IAM role that Clean Rooms ML can assume to read the data referred to in the <code>dataSource</code> field the input channel.</p> <p>Passing a role across AWS accounts is not allowed. If you pass a role that isn't in your account, you get an <code>AccessDeniedException</code> error.</p>",
+        "MLOutputConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of the service access role that is used to store the model artifacts.</p>"
+      }
+    },
+    "InferenceContainerConfig": {
+      "base": "<p>Provides configuration information for the inference container.</p>",
+      "refs": {
+        "CreateConfiguredModelAlgorithmRequest$inferenceContainerConfig": "<p>Configuration information for the inference container that is used when you run an inference job on a configured model algorithm.</p>",
+        "GetConfiguredModelAlgorithmResponse$inferenceContainerConfig": "<p>Configuration information for the inference container.</p>"
+      }
+    },
+    "InferenceContainerExecutionParameters": {
+      "base": "<p>Provides execution parameters for the inference container.</p>",
+      "refs": {
+        "GetTrainedModelInferenceJobResponse$containerExecutionParameters": "<p>The execution parameters for the model inference job container.</p>",
+        "StartTrainedModelInferenceJobRequest$containerExecutionParameters": "<p>The execution parameters for the container.</p>"
+      }
+    },
+    "InferenceContainerExecutionParametersMaxPayloadInMBInteger": {
+      "base": null,
+      "refs": {
+        "InferenceContainerExecutionParameters$maxPayloadInMB": "<p>The maximum size of the inference container payload, specified in MB. </p>"
+      }
+    },
+    "InferenceEnvironmentMap": {
+      "base": null,
+      "refs": {
+        "GetTrainedModelInferenceJobResponse$environment": "<p>The environment variables to set in the Docker container.</p>",
+        "StartTrainedModelInferenceJobRequest$environment": "<p>The environment variables to set in the Docker container.</p>"
+      }
+    },
+    "InferenceEnvironmentMapKeyString": {
+      "base": null,
+      "refs": {
+        "InferenceEnvironmentMap$key": null
+      }
+    },
+    "InferenceEnvironmentMapValueString": {
+      "base": null,
+      "refs": {
+        "InferenceEnvironmentMap$value": null
+      }
+    },
+    "InferenceInstanceType": {
+      "base": null,
+      "refs": {
+        "InferenceResourceConfig$instanceType": "<p>The type of instance that is used to perform model inference.</p>"
+      }
+    },
+    "InferenceOutputConfiguration": {
+      "base": "<p>Configuration information about how the inference output is stored.</p>",
+      "refs": {
+        "CollaborationTrainedModelInferenceJobSummary$outputConfiguration": "<p>Returns output configuration information for the trained model inference job.</p>",
+        "GetTrainedModelInferenceJobResponse$outputConfiguration": "<p>The output configuration information for the trained model inference job.</p>",
+        "StartTrainedModelInferenceJobRequest$outputConfiguration": "<p>Defines the output configuration information for the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$outputConfiguration": "<p>The output configuration information of the trained model job.</p>"
+      }
+    },
+    "InferenceOutputConfigurationAcceptString": {
+      "base": null,
+      "refs": {
+        "InferenceOutputConfiguration$accept": "<p>The MIME type used to specify the output data.</p>"
+      }
+    },
+    "InferenceReceiverMember": {
+      "base": "<p>Defines who will receive inference results.</p>",
+      "refs": {
+        "InferenceReceiverMembers$member": null
+      }
+    },
+    "InferenceReceiverMembers": {
+      "base": null,
+      "refs": {
+        "InferenceOutputConfiguration$members": "<p>Defines the members that can receive inference output.</p>"
+      }
+    },
+    "InferenceResourceConfig": {
+      "base": "<p>Defines the resources used to perform model inference.</p>",
+      "refs": {
+        "GetTrainedModelInferenceJobResponse$resourceConfig": "<p>The resource configuration information for the trained model inference job.</p>",
+        "StartTrainedModelInferenceJobRequest$resourceConfig": "<p>Defines the resource configuration for the trained model inference job.</p>"
+      }
+    },
+    "InferenceResourceConfigInstanceCountInteger": {
+      "base": null,
+      "refs": {
+        "InferenceResourceConfig$instanceCount": "<p>The number of instances to use.</p>"
+      }
+    },
+    "InputChannel": {
+      "base": "<p>Provides information about the data source that is used to create an ML input channel.</p>",
+      "refs": {
+        "CreateMLInputChannelRequest$inputChannel": "<p>The input data that is used to create this ML input channel.</p>",
+        "GetMLInputChannelResponse$inputChannel": "<p>The input channel that was used to create the ML input channel.</p>"
+      }
+    },
+    "InputChannelDataSource": {
+      "base": "<p>Provides the data source that is used to define an input channel.</p>",
+      "refs": {
+        "InputChannel$dataSource": "<p>The data source that is used to create the ML input channel.</p>"
+      }
+    },
+    "InstanceType": {
+      "base": null,
+      "refs": {
+        "ResourceConfig$instanceType": "<p>The instance type that is used to train the model.</p>"
       }
     },
     "KmsKeyArn": {
       "base": null,
       "refs": {
         "CreateAudienceModelRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the trained ML model and the associated data.</p>",
-        "GetAudienceModelResponse$kmsKeyArn": "<p>The KMS key ARN used for the audience model.</p>"
+        "CreateConfiguredModelAlgorithmRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the configured ML model algorithm and associated data.</p>",
+        "CreateMLInputChannelRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that is used to access the input channel.</p>",
+        "CreateTrainedModelRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the trained ML model and the associated data.</p>",
+        "GetAudienceModelResponse$kmsKeyArn": "<p>The KMS key ARN used for the audience model.</p>",
+        "GetConfiguredModelAlgorithmResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the configured ML model and associated data.</p>",
+        "GetMLInputChannelResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key that was used to create the ML input channel.</p>",
+        "GetTrainedModelInferenceJobResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the ML inference job and associated data.</p>",
+        "GetTrainedModelResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the trained ML model and associated data.</p>",
+        "StartTrainedModelInferenceJobRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key. This key is used to encrypt and decrypt customer-owned data in the ML inference job and associated data.</p>"
       }
     },
     "ListAudienceExportJobsRequest": {
@@ -497,12 +1106,92 @@
       "refs": {
       }
     },
+    "ListCollaborationConfiguredModelAlgorithmAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationConfiguredModelAlgorithmAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationMLInputChannelsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationMLInputChannelsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelExportJobsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelExportJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelInferenceJobsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelInferenceJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCollaborationTrainedModelsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListConfiguredAudienceModelsRequest": {
       "base": null,
       "refs": {
       }
     },
     "ListConfiguredAudienceModelsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConfiguredModelAlgorithmAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConfiguredModelAlgorithmAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConfiguredModelAlgorithmsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConfiguredModelAlgorithmsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMLInputChannelsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMLInputChannelsResponse": {
       "base": null,
       "refs": {
       }
@@ -517,6 +1206,26 @@
       "refs": {
       }
     },
+    "ListTrainedModelInferenceJobsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTrainedModelInferenceJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTrainedModelsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTrainedModelsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTrainingDatasetsRequest": {
       "base": null,
       "refs": {
@@ -527,14 +1236,132 @@
       "refs": {
       }
     },
+    "LogsConfigurationPolicy": {
+      "base": "<p>Provides the information necessary for a user to access the logs.</p>",
+      "refs": {
+        "LogsConfigurationPolicyList$member": null
+      }
+    },
+    "LogsConfigurationPolicyFilterPatternString": {
+      "base": null,
+      "refs": {
+        "LogsConfigurationPolicy$filterPattern": "<p>A regular expression pattern that is used to parse the logs and return information that matches the pattern.</p>"
+      }
+    },
+    "LogsConfigurationPolicyList": {
+      "base": null,
+      "refs": {
+        "TrainedModelInferenceJobsConfigurationPolicy$containerLogs": "<p>The logs container for the trained model inference job.</p>",
+        "TrainedModelsConfigurationPolicy$containerLogs": "<p>The container for the logs of the trained model.</p>"
+      }
+    },
+    "LogsStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelInferenceJobSummary$logsStatus": "<p>The trained model inference job logs status.</p>",
+        "GetCollaborationTrainedModelResponse$logsStatus": "<p>Status information for the logs.</p>",
+        "GetTrainedModelInferenceJobResponse$logsStatus": "<p>The logs status for the trained model inference job.</p>",
+        "GetTrainedModelResponse$logsStatus": "<p>The logs status for the trained model.</p>",
+        "TrainedModelInferenceJobSummary$logsStatus": "<p>The log status of the trained model inference job.</p>"
+      }
+    },
+    "MLInputChannelArn": {
+      "base": null,
+      "refs": {
+        "CollaborationMLInputChannelSummary$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel.</p>",
+        "CreateMLInputChannelResponse$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel.</p>",
+        "DeleteMLInputChannelDataRequest$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel that you want to delete.</p>",
+        "GetCollaborationMLInputChannelRequest$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel that you want to get.</p>",
+        "GetCollaborationMLInputChannelResponse$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel.</p>",
+        "GetMLInputChannelRequest$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel that you want to get.</p>",
+        "GetMLInputChannelResponse$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel.</p>",
+        "MLInputChannelSummary$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel.</p>",
+        "ModelInferenceDataSource$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel for this model inference data source.</p>",
+        "ModelTrainingDataChannel$mlInputChannelArn": "<p>The Amazon Resource Name (ARN) of the ML input channel for this model training data channel.</p>"
+      }
+    },
+    "MLInputChannelStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationMLInputChannelSummary$status": "<p>The status of the ML input channel.</p>",
+        "GetCollaborationMLInputChannelResponse$status": "<p>The status of the ML input channel.</p>",
+        "GetMLInputChannelResponse$status": "<p>The status of the ML input channel.</p>",
+        "MLInputChannelSummary$status": "<p>The status of the ML input channel.</p>"
+      }
+    },
+    "MLInputChannelSummary": {
+      "base": "<p>Provides summary information about the ML input channel.</p>",
+      "refs": {
+        "MLInputChannelsList$member": null
+      }
+    },
+    "MLInputChannelSummaryConfiguredModelAlgorithmAssociationsList": {
+      "base": null,
+      "refs": {
+        "MLInputChannelSummary$configuredModelAlgorithmAssociations": "<p>The associated configured model algorithms used to create the ML input channel.</p>"
+      }
+    },
+    "MLInputChannelsList": {
+      "base": null,
+      "refs": {
+        "ListMLInputChannelsResponse$mlInputChannelsList": "<p>The list of ML input channels that you wanted.</p>"
+      }
+    },
+    "MLOutputConfiguration": {
+      "base": "<p>Configuration information about how the exported model artifacts are stored.</p>",
+      "refs": {
+        "GetMLConfigurationResponse$defaultOutputLocation": "<p>The Amazon S3 location where ML model output is stored.</p>",
+        "PutMLConfigurationRequest$defaultOutputLocation": "<p>The default Amazon S3 location where ML output is stored for the specified member.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
         "ListAudienceExportJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListAudienceGenerationJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListAudienceModelsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListCollaborationConfiguredModelAlgorithmAssociationsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListCollaborationMLInputChannelsRequest$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListCollaborationTrainedModelExportJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListCollaborationTrainedModelInferenceJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListCollaborationTrainedModelsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListConfiguredAudienceModelsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListConfiguredModelAlgorithmAssociationsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListConfiguredModelAlgorithmsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListMLInputChannelsRequest$maxResults": "<p>The maximum number of ML input channels to return.</p>",
+        "ListTrainedModelInferenceJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListTrainedModelsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListTrainingDatasetsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>"
+      }
+    },
+    "MetricDefinition": {
+      "base": "<p>Information about the model metric that is reported for a trained model.</p>",
+      "refs": {
+        "MetricDefinitionList$member": null
+      }
+    },
+    "MetricDefinitionList": {
+      "base": null,
+      "refs": {
+        "ContainerConfig$metricDefinitions": "<p>A list of metric definition objects. Each object specifies the metric name and regular expressions used to parse algorithm logs. Amazon Web Services Clean Rooms ML publishes each metric to all members' Amazon CloudWatch using IAM role configured in <a>PutMLConfiguration</a>.</p>"
+      }
+    },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$name": "<p>The name of the model metric.</p>"
+      }
+    },
+    "MetricRegex": {
+      "base": null,
+      "refs": {
+        "MetricDefinition$regex": "<p>The regular expression statement that defines how the model metric is reported.</p>"
+      }
+    },
+    "MetricsConfigurationPolicy": {
+      "base": "<p>Provides the configuration policy for metrics generation.</p>",
+      "refs": {
+        "TrainedModelsConfigurationPolicy$containerMetrics": "<p>The container for the metrics of the trained model.</p>"
       }
     },
     "MetricsList": {
@@ -545,6 +1372,16 @@
         "UpdateConfiguredAudienceModelRequest$sharedAudienceMetrics": "<p>The new value for whether to share audience metrics.</p>"
       }
     },
+    "MetricsStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelInferenceJobSummary$metricsStatus": "<p>the trained model inference job metrics status.</p>",
+        "GetCollaborationTrainedModelResponse$metricsStatus": "<p>The status of the model metrics.</p>",
+        "GetTrainedModelInferenceJobResponse$metricsStatus": "<p>The metrics status for the trained model inference job.</p>",
+        "GetTrainedModelResponse$metricsStatus": "<p>The status of the model metrics.</p>",
+        "TrainedModelInferenceJobSummary$metricsStatus": "<p>The metric status of the trained model inference job.</p>"
+      }
+    },
     "MinMatchingSeedSize": {
       "base": null,
       "refs": {
@@ -553,22 +1390,72 @@
         "UpdateConfiguredAudienceModelRequest$minMatchingSeedSize": "<p>The minimum number of users from the seed audience that must match with users in the training data of the audience model.</p>"
       }
     },
+    "ModelInferenceDataSource": {
+      "base": "<p>Defines information about the data source used for model inference.</p>",
+      "refs": {
+        "GetTrainedModelInferenceJobResponse$dataSource": "<p>The data source that was used for the trained model inference job.</p>",
+        "StartTrainedModelInferenceJobRequest$dataSource": "<p>Defines he data source that is used for the trained model inference job.</p>"
+      }
+    },
+    "ModelTrainingDataChannel": {
+      "base": "<p>Information about the model training data channel. A training data channel is a named data source that the training algorithms can consume. </p>",
+      "refs": {
+        "ModelTrainingDataChannels$member": null
+      }
+    },
+    "ModelTrainingDataChannelName": {
+      "base": null,
+      "refs": {
+        "ModelTrainingDataChannel$channelName": "<p>The name of the training data channel.</p>"
+      }
+    },
+    "ModelTrainingDataChannels": {
+      "base": null,
+      "refs": {
+        "CreateTrainedModelRequest$dataChannels": "<p>Defines the data channels that are used as input for the trained model request.</p>",
+        "GetTrainedModelResponse$dataChannels": "<p>The data channels that were used for the trained model.</p>"
+      }
+    },
     "NameString": {
       "base": null,
       "refs": {
         "AudienceExportJobSummary$name": "<p>The name of the audience export job.</p>",
         "AudienceGenerationJobSummary$name": "<p>The name of the audience generation job.</p>",
         "AudienceModelSummary$name": "<p>The name of the audience model.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$name": "<p>The name of the configured model algorithm association.</p>",
+        "CollaborationMLInputChannelSummary$name": "<p>The name of the ML input channel.</p>",
+        "CollaborationTrainedModelExportJobSummary$name": "<p>The name of the trained model export job.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$name": "<p>The name of the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$name": "<p>The name of the trained model.</p>",
         "ConfiguredAudienceModelSummary$name": "<p>The name of the configured audience model.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$name": "<p>The name of the configured model algorithm association.</p>",
+        "ConfiguredModelAlgorithmSummary$name": "<p>The name of the configured model algorithm.</p>",
         "CreateAudienceModelRequest$name": "<p>The name of the audience model resource.</p>",
         "CreateConfiguredAudienceModelRequest$name": "<p>The name of the configured audience model.</p>",
+        "CreateConfiguredModelAlgorithmAssociationRequest$name": "<p>The name of the configured model algorithm association.</p>",
+        "CreateConfiguredModelAlgorithmRequest$name": "<p>The name of the configured model algorithm.</p>",
+        "CreateMLInputChannelRequest$name": "<p>The name of the ML input channel.</p>",
+        "CreateTrainedModelRequest$name": "<p>The name of the trained model.</p>",
         "CreateTrainingDatasetRequest$name": "<p>The name of the training dataset. This name must be unique in your account and region.</p>",
         "GetAudienceGenerationJobResponse$name": "<p>The name of the audience generation job.</p>",
         "GetAudienceModelResponse$name": "<p>The name of the audience model.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$name": "<p>The name of the configured model algorithm association.</p>",
+        "GetCollaborationMLInputChannelResponse$name": "<p>The name of the ML input channel.</p>",
+        "GetCollaborationTrainedModelResponse$name": "<p>The name of the trained model.</p>",
         "GetConfiguredAudienceModelResponse$name": "<p>The name of the configured audience model.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$name": "<p>The name of the configured model algorithm association.</p>",
+        "GetConfiguredModelAlgorithmResponse$name": "<p>The name of the configured model algorithm.</p>",
+        "GetMLInputChannelResponse$name": "<p>The name of the ML input channel.</p>",
+        "GetTrainedModelInferenceJobResponse$name": "<p>The name of the trained model inference job.</p>",
+        "GetTrainedModelResponse$name": "<p>The name of the trained model.</p>",
         "GetTrainingDatasetResponse$name": "<p>The name of the training dataset.</p>",
+        "MLInputChannelSummary$name": "<p>The name of the ML input channel.</p>",
         "StartAudienceExportJobRequest$name": "<p>The name of the audience export job.</p>",
         "StartAudienceGenerationJobRequest$name": "<p>The name of the audience generation job.</p>",
+        "StartTrainedModelExportJobRequest$name": "<p>The name of the trained model export job.</p>",
+        "StartTrainedModelInferenceJobRequest$name": "<p>The name of the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$name": "<p>The name of the trained model inference job.</p>",
+        "TrainedModelSummary$name": "<p>The name of the trained model.</p>",
         "TrainingDatasetSummary$name": "<p>The name of the training dataset.</p>"
       }
     },
@@ -576,15 +1463,41 @@
       "base": null,
       "refs": {
         "ListAudienceExportJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListAudienceExportJobsResponse$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListAudienceExportJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListAudienceGenerationJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListAudienceGenerationJobsResponse$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListAudienceGenerationJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListAudienceModelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListAudienceModelsResponse$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListAudienceModelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListCollaborationConfiguredModelAlgorithmAssociationsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationConfiguredModelAlgorithmAssociationsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListCollaborationMLInputChannelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationMLInputChannelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListCollaborationTrainedModelExportJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationTrainedModelExportJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListCollaborationTrainedModelInferenceJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationTrainedModelInferenceJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListCollaborationTrainedModelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListCollaborationTrainedModelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListConfiguredAudienceModelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListConfiguredAudienceModelsResponse$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListConfiguredAudienceModelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListConfiguredModelAlgorithmAssociationsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListConfiguredModelAlgorithmAssociationsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListConfiguredModelAlgorithmsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListConfiguredModelAlgorithmsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListMLInputChannelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListMLInputChannelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListTrainedModelInferenceJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListTrainedModelInferenceJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListTrainedModelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
+        "ListTrainedModelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListTrainingDatasetsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
-        "ListTrainingDatasetsResponse$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>"
+        "ListTrainingDatasetsResponse$nextToken": "<p>The token value used to access the next page of results.</p>"
+      }
+    },
+    "NoiseLevelType": {
+      "base": null,
+      "refs": {
+        "MetricsConfigurationPolicy$noiseLevel": "<p>The noise level for the generated metrics.</p>"
       }
     },
     "ParameterKey": {
@@ -611,10 +1524,31 @@
         "PutConfiguredAudienceModelPolicyRequest$policyExistenceCondition": "<p>Use this to prevent unexpected concurrent modification of the policy.</p>"
       }
     },
+    "PrivacyConfiguration": {
+      "base": "<p>Information about the privacy configuration for a configured model algorithm association.</p>",
+      "refs": {
+        "CreateConfiguredModelAlgorithmAssociationRequest$privacyConfiguration": "<p>Specifies the privacy configuration information for the configured model algorithm association. This information includes the maximum data size that can be exported.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$privacyConfiguration": null,
+        "GetConfiguredModelAlgorithmAssociationResponse$privacyConfiguration": "<p>The privacy configuration information for the configured model algorithm association.</p>"
+      }
+    },
+    "PrivacyConfigurationPolicies": {
+      "base": "<p>Information about the privacy configuration policies for a configured model algorithm association.</p>",
+      "refs": {
+        "PrivacyConfiguration$policies": "<p>The privacy configuration policies for a configured model algorithm association.</p>"
+      }
+    },
+    "ProtectedQueryInputParameters": {
+      "base": "<p>Provides information necessary to perform the protected query.</p>",
+      "refs": {
+        "InputChannelDataSource$protectedQueryInputParameters": null
+      }
+    },
     "ProtectedQuerySQLParameters": {
       "base": "<p>The parameters for the SQL type Protected Query.</p>",
       "refs": {
-        "AudienceGenerationJobDataSource$sqlParameters": "<p>The protected SQL query parameters.</p>"
+        "AudienceGenerationJobDataSource$sqlParameters": "<p>The protected SQL query parameters.</p>",
+        "ProtectedQueryInputParameters$sqlParameters": null
       }
     },
     "ProtectedQuerySQLParametersQueryStringString": {
@@ -633,10 +1567,21 @@
       "refs": {
       }
     },
+    "PutMLConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "RelevanceMetric": {
       "base": "<p>The relevance score of a generated audience.</p>",
       "refs": {
         "RelevanceMetrics$member": null
+      }
+    },
+    "RelevanceMetricScoreDouble": {
+      "base": null,
+      "refs": {
+        "RelevanceMetric$score": "<p>The relevance score of the generated audience.</p>"
       }
     },
     "RelevanceMetrics": {
@@ -645,22 +1590,66 @@
         "AudienceQualityMetrics$relevanceMetrics": "<p>The relevance scores of the generated audience.</p>"
       }
     },
+    "ResourceConfig": {
+      "base": "<p>Information about the EC2 resources that are used to train the model.</p>",
+      "refs": {
+        "CreateTrainedModelRequest$resourceConfig": "<p>Information about the EC2 resources that are used to train this model.</p>",
+        "GetCollaborationTrainedModelResponse$resourceConfig": "<p>The EC2 resource configuration that was used to train this model.</p>",
+        "GetTrainedModelResponse$resourceConfig": "<p>The EC2 resource configuration that was used to create the trained model.</p>"
+      }
+    },
+    "ResourceConfigInstanceCountInteger": {
+      "base": null,
+      "refs": {
+        "ResourceConfig$instanceCount": "<p>The number of resources that are used to train the model.</p>"
+      }
+    },
+    "ResourceConfigVolumeSizeInGBInteger": {
+      "base": null,
+      "refs": {
+        "ResourceConfig$volumeSizeInGB": "<p>The maximum size of the instance that is used to train the model.</p>"
+      }
+    },
     "ResourceDescription": {
       "base": null,
       "refs": {
         "AudienceExportJobSummary$description": "<p>The description of the audience export job.</p>",
         "AudienceGenerationJobSummary$description": "<p>The description of the audience generation job.</p>",
         "AudienceModelSummary$description": "<p>The description of the audience model.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$description": "<p>The description of the configured model algorithm association.</p>",
+        "CollaborationMLInputChannelSummary$description": "<p>The description of the ML input channel.</p>",
+        "CollaborationTrainedModelExportJobSummary$description": "<p>The description of the trained model.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$description": "<p>The description of the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$description": "<p>The description of the trained model.</p>",
         "ConfiguredAudienceModelSummary$description": "<p>The description of the configured audience model.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$description": "<p>The description of the configured model algorithm association.</p>",
+        "ConfiguredModelAlgorithmSummary$description": "<p>The description of the configured model algorithm.</p>",
         "CreateAudienceModelRequest$description": "<p>The description of the audience model.</p>",
         "CreateConfiguredAudienceModelRequest$description": "<p>The description of the configured audience model.</p>",
+        "CreateConfiguredModelAlgorithmAssociationRequest$description": "<p>The description of the configured model algorithm association.</p>",
+        "CreateConfiguredModelAlgorithmRequest$description": "<p>The description of the configured model algorithm.</p>",
+        "CreateMLInputChannelRequest$description": "<p>The description of the ML input channel.</p>",
+        "CreateTrainedModelRequest$description": "<p>The description of the trained model.</p>",
         "CreateTrainingDatasetRequest$description": "<p>The description of the training dataset.</p>",
         "GetAudienceGenerationJobResponse$description": "<p>The description of the audience generation job.</p>",
         "GetAudienceModelResponse$description": "<p>The description of the audience model.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$description": "<p>The description of the configured model algorithm association.</p>",
+        "GetCollaborationMLInputChannelResponse$description": "<p>The description of the ML input channel.</p>",
+        "GetCollaborationTrainedModelResponse$description": "<p>The description of the trained model.</p>",
         "GetConfiguredAudienceModelResponse$description": "<p>The description of the configured audience model.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$description": "<p>The description of the configured model algorithm association.</p>",
+        "GetConfiguredModelAlgorithmResponse$description": "<p>The description of the configured model algorithm.</p>",
+        "GetMLInputChannelResponse$description": "<p>The description of the ML input channel.</p>",
+        "GetTrainedModelInferenceJobResponse$description": "<p>The description of the trained model inference job.</p>",
+        "GetTrainedModelResponse$description": "<p>The description of the trained model.</p>",
         "GetTrainingDatasetResponse$description": "<p>The description of the training dataset.</p>",
+        "MLInputChannelSummary$description": "<p>The description of the ML input channel.</p>",
         "StartAudienceExportJobRequest$description": "<p>The description of the audience export job.</p>",
         "StartAudienceGenerationJobRequest$description": "<p>The description of the audience generation job.</p>",
+        "StartTrainedModelExportJobRequest$description": "<p>The description of the trained model export job.</p>",
+        "StartTrainedModelInferenceJobRequest$description": "<p>The description of the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$description": "<p>The description of the trained model inference job.</p>",
+        "TrainedModelSummary$description": "<p>The description of the trained model.</p>",
         "TrainingDatasetSummary$description": "<p>The description of the training dataset.</p>",
         "UpdateConfiguredAudienceModelRequest$description": "<p>The new description of the configured audience model.</p>"
       }
@@ -682,7 +1671,8 @@
       "base": "<p>Provides information about an Amazon S3 bucket and path.</p>",
       "refs": {
         "AudienceDestination$s3Destination": "<p>The Amazon S3 bucket and path for the configured audience.</p>",
-        "AudienceGenerationJobDataSource$dataSource": "<p>Defines the Amazon S3 bucket where the seed audience for the generating audience is stored. A valid data source is a JSON line file in the following format:</p> <p> <code>{\"user_id\": \"111111\"}</code> </p> <p> <code>{\"user_id\": \"222222\"}</code> </p> <p> <code>...</code> </p>"
+        "AudienceGenerationJobDataSource$dataSource": "<p>Defines the Amazon S3 bucket where the seed audience for the generating audience is stored. A valid data source is a JSON line file in the following format:</p> <p> <code>{\"user_id\": \"111111\"}</code> </p> <p> <code>{\"user_id\": \"222222\"}</code> </p> <p> <code>...</code> </p>",
+        "Destination$s3Destination": null
       }
     },
     "S3Path": {
@@ -718,24 +1708,73 @@
       "refs": {
       }
     },
+    "StartTrainedModelExportJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartTrainedModelInferenceJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartTrainedModelInferenceJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StatusDetails": {
       "base": "<p>Details about the status of a resource.</p>",
       "refs": {
         "AudienceExportJobSummary$statusDetails": null,
+        "CollaborationTrainedModelExportJobSummary$statusDetails": null,
         "GetAudienceGenerationJobResponse$statusDetails": "<p>Details about the status of the audience generation job.</p>",
-        "GetAudienceModelResponse$statusDetails": "<p>Details about the status of the audience model.</p>"
+        "GetAudienceModelResponse$statusDetails": "<p>Details about the status of the audience model.</p>",
+        "GetCollaborationMLInputChannelResponse$statusDetails": null,
+        "GetCollaborationTrainedModelResponse$statusDetails": null,
+        "GetMLInputChannelResponse$statusDetails": null,
+        "GetTrainedModelInferenceJobResponse$statusDetails": null,
+        "GetTrainedModelResponse$statusDetails": null
+      }
+    },
+    "StoppingCondition": {
+      "base": "<p>The criteria used to stop model training.</p>",
+      "refs": {
+        "CreateTrainedModelRequest$stoppingCondition": "<p>The criteria that is used to stop model training.</p>",
+        "GetCollaborationTrainedModelResponse$stoppingCondition": "<p>The stopping condition that determined when model training ended.</p>",
+        "GetTrainedModelResponse$stoppingCondition": "<p>The stopping condition that was used to terminate model training.</p>"
+      }
+    },
+    "StoppingConditionMaxRuntimeInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "StoppingCondition$maxRuntimeInSeconds": "<p>The maximum amount of time, in seconds, that model training can run before it is terminated.</p>"
       }
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "AccountIdList$member": null,
+        "CollaborationTrainedModelInferenceJobSummary$metricsStatusDetails": "<p>Details about the metrics status for trained model inference job.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$logsStatusDetails": "<p>Details about the logs status for the trained model inference job.</p>",
         "ConflictException$message": null,
         "GetAudienceGenerationJobResponse$protectedQueryIdentifier": "<p>The unique identifier of the protected query for this audience generation job.</p>",
+        "GetCollaborationTrainedModelResponse$metricsStatusDetails": "<p>Details about the status information for the model metrics.</p>",
+        "GetCollaborationTrainedModelResponse$logsStatusDetails": "<p>Details about the status information for the logs.</p>",
+        "GetCollaborationTrainedModelResponse$trainingContainerImageDigest": "<p>Information about the training container image.</p>",
+        "GetTrainedModelInferenceJobResponse$inferenceContainerImageDigest": "<p>Information about the training container image.</p>",
+        "GetTrainedModelInferenceJobResponse$metricsStatusDetails": "<p>Details about the metrics status for the trained model inference job.</p>",
+        "GetTrainedModelInferenceJobResponse$logsStatusDetails": "<p>Details about the logs status for the trained model inference job.</p>",
+        "GetTrainedModelResponse$metricsStatusDetails": "<p>Details about the metrics status for the trained model.</p>",
+        "GetTrainedModelResponse$logsStatusDetails": "<p>Details about the logs status for the trained model.</p>",
+        "GetTrainedModelResponse$trainingContainerImageDigest": "<p>Information about the training image container.</p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
         "StatusDetails$statusCode": "<p>The status code that was returned. The status code is intended for programmatic error handling. Clean Rooms ML will not change the status code for existing error conditions.</p>",
         "StatusDetails$message": "<p>The error message that was returned. The message is intended for human consumption and can change at any time. Use the <code>statusCode</code> for programmatic error handling.</p>",
+        "TrainedModelInferenceJobSummary$metricsStatusDetails": "<p>Details about the metrics status for the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$logsStatusDetails": "<p>Details about the log status for the trained model inference job.</p>",
         "ValidationException$message": null
       }
     },
@@ -748,8 +1787,22 @@
         "AudienceGenerationJobSummary$updateTime": "<p>The most recent time at which the audience generation job was updated.</p>",
         "AudienceModelSummary$createTime": "<p>The time at which the audience model was created.</p>",
         "AudienceModelSummary$updateTime": "<p>The most recent time at which the audience model was updated.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$createTime": "<p>The time at which the configured model algorithm association was created.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$updateTime": "<p>The most recent time at which the configured model algorithm association was updated.</p>",
+        "CollaborationMLInputChannelSummary$createTime": "<p>The time at which the ML input channel was created.</p>",
+        "CollaborationMLInputChannelSummary$updateTime": "<p>The most recent time at which the ML input channel was updated.</p>",
+        "CollaborationTrainedModelExportJobSummary$createTime": "<p>The time at which the trained model export job was created.</p>",
+        "CollaborationTrainedModelExportJobSummary$updateTime": "<p>The most recent time at which the trained model export job was updated.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$createTime": "<p>The time at which the trained model inference job was created.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$updateTime": "<p>The most recent time at which the trained model inference job was updated.</p>",
+        "CollaborationTrainedModelSummary$createTime": "<p>The time at which the trained model was created.</p>",
+        "CollaborationTrainedModelSummary$updateTime": "<p>The most recent time at which the trained model was updated.</p>",
         "ConfiguredAudienceModelSummary$createTime": "<p>The time at which the configured audience model was created.</p>",
         "ConfiguredAudienceModelSummary$updateTime": "<p>The most recent time at which the configured audience model was updated.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$createTime": "<p>The time at which the configured model algorithm association was created.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$updateTime": "<p>The most recent time at which the configured model algorithm association was updated.</p>",
+        "ConfiguredModelAlgorithmSummary$createTime": "<p>The time at which the configured model algorithm was created.</p>",
+        "ConfiguredModelAlgorithmSummary$updateTime": "<p>The most recent time at which the configured model algorithm was updated.</p>",
         "CreateAudienceModelRequest$trainingDataStartTime": "<p>The start date and time of the training window.</p>",
         "CreateAudienceModelRequest$trainingDataEndTime": "<p>The end date and time of the training window.</p>",
         "GetAudienceGenerationJobResponse$createTime": "<p>The time at which the audience generation job was created.</p>",
@@ -758,10 +1811,34 @@
         "GetAudienceModelResponse$updateTime": "<p>The most recent time at which the audience model was updated.</p>",
         "GetAudienceModelResponse$trainingDataStartTime": "<p>The start date specified for the training window.</p>",
         "GetAudienceModelResponse$trainingDataEndTime": "<p>The end date specified for the training window.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$createTime": "<p>The time at which the configured model algorithm association was created.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$updateTime": "<p>The most recent time at which the configured model algorithm association was updated.</p>",
+        "GetCollaborationMLInputChannelResponse$createTime": "<p>The time at which the ML input channel was created.</p>",
+        "GetCollaborationMLInputChannelResponse$updateTime": "<p>The most recent time at which the ML input channel was updated.</p>",
+        "GetCollaborationTrainedModelResponse$createTime": "<p>The time at which the trained model was created.</p>",
+        "GetCollaborationTrainedModelResponse$updateTime": "<p>The most recent time at which the trained model was updated.</p>",
         "GetConfiguredAudienceModelResponse$createTime": "<p>The time at which the configured audience model was created.</p>",
         "GetConfiguredAudienceModelResponse$updateTime": "<p>The most recent time at which the configured audience model was updated.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$createTime": "<p>The time at which the configured model algorithm association was created.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$updateTime": "<p>The most recent time at which the configured model algorithm association was updated.</p>",
+        "GetConfiguredModelAlgorithmResponse$createTime": "<p>The time at which the configured model algorithm was created.</p>",
+        "GetConfiguredModelAlgorithmResponse$updateTime": "<p>The most recent time at which the configured model algorithm was updated.</p>",
+        "GetMLConfigurationResponse$createTime": "<p>The time at which the ML configuration was created.</p>",
+        "GetMLConfigurationResponse$updateTime": "<p>The most recent time at which the ML configuration was updated.</p>",
+        "GetMLInputChannelResponse$createTime": "<p>The time at which the ML input channel was created.</p>",
+        "GetMLInputChannelResponse$updateTime": "<p>The most recent time at which the ML input channel was updated.</p>",
+        "GetTrainedModelInferenceJobResponse$createTime": "<p>The time at which the trained model inference job was created.</p>",
+        "GetTrainedModelInferenceJobResponse$updateTime": "<p>The most recent time at which the trained model inference job was updated.</p>",
+        "GetTrainedModelResponse$createTime": "<p>The time at which the trained model was created.</p>",
+        "GetTrainedModelResponse$updateTime": "<p>The most recent time at which the trained model was updated.</p>",
         "GetTrainingDatasetResponse$createTime": "<p>The time at which the training dataset was created.</p>",
         "GetTrainingDatasetResponse$updateTime": "<p>The most recent time at which the training dataset was updated.</p>",
+        "MLInputChannelSummary$createTime": "<p>The time at which the ML input channel was created.</p>",
+        "MLInputChannelSummary$updateTime": "<p>The most recent time at which the ML input channel was updated.</p>",
+        "TrainedModelInferenceJobSummary$createTime": "<p>The time at which the trained model inference job was created.</p>",
+        "TrainedModelInferenceJobSummary$updateTime": "<p>The most recent time at which the trained model inference job was updated.</p>",
+        "TrainedModelSummary$createTime": "<p>The time at which the trained model was created.</p>",
+        "TrainedModelSummary$updateTime": "<p>The most recent time at which the trained model was updated.</p>",
         "TrainingDatasetSummary$createTime": "<p>The time at which the training dataset was created.</p>",
         "TrainingDatasetSummary$updateTime": "<p>The most recent time at which the training dataset was updated.</p>"
       }
@@ -784,13 +1861,23 @@
       "refs": {
         "CreateAudienceModelRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
         "CreateConfiguredAudienceModelRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "CreateConfiguredModelAlgorithmAssociationRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "CreateConfiguredModelAlgorithmRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "CreateMLInputChannelRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "CreateTrainedModelRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
         "CreateTrainingDatasetRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
         "GetAudienceGenerationJobResponse$tags": "<p>The tags that are associated to this audience generation job.</p>",
         "GetAudienceModelResponse$tags": "<p>The tags that are assigned to the audience model.</p>",
         "GetConfiguredAudienceModelResponse$tags": "<p>The tags that are associated to this configured audience model.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$tags": "<p>The optional metadata that you applied to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "GetConfiguredModelAlgorithmResponse$tags": "<p>The optional metadata that you applied to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "GetMLInputChannelResponse$tags": "<p>The optional metadata that you applied to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "GetTrainedModelInferenceJobResponse$tags": "<p>The optional metadata that you applied to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "GetTrainedModelResponse$tags": "<p>The optional metadata that you applied to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
         "GetTrainingDatasetResponse$tags": "<p>The tags that are assigned to this training dataset.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags that are associated with the resource.</p>",
         "StartAudienceGenerationJobRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
+        "StartTrainedModelInferenceJobRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms ML considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>",
         "TagResourceRequest$tags": "<p>The optional metadata that you apply to the resource to help you categorize and organize them. Each tag consists of a key and an optional value, both of which you define.</p> <p>The following basic restrictions apply to tags:</p> <ul> <li> <p>Maximum number of tags per resource - 50.</p> </li> <li> <p>For each resource, each tag key must be unique, and each tag key can have only one value.</p> </li> <li> <p>Maximum key length - 128 Unicode characters in UTF-8.</p> </li> <li> <p>Maximum value length - 256 Unicode characters in UTF-8.</p> </li> <li> <p>If your tagging schema is used across multiple services and resources, remember that other services may have restrictions on allowed characters. Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following characters: + - = . _ : / @.</p> </li> <li> <p>Tag keys and values are case sensitive.</p> </li> <li> <p>Do not use aws:, AWS:, or any upper or lowercase combination of such as a prefix for keys as it is reserved for AWS use. You cannot edit or delete tag keys with this prefix. Values can have this prefix. If a tag value has aws as its prefix but the key does not, then Clean Rooms considers it to be a user tag and will count against the limit of 50 tags. Tags with only the key prefix of aws do not count against your tags per resource limit.</p> </li> </ul>"
       }
     },
@@ -823,6 +1910,172 @@
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you are interested in.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to assign tags.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to remove tags from.</p>"
+      }
+    },
+    "TrainedModelArn": {
+      "base": null,
+      "refs": {
+        "CancelTrainedModelRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model job that you want to cancel.</p>",
+        "CollaborationTrainedModelExportJobSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is being exported.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is used for the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>",
+        "CreateTrainedModelResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>",
+        "DeleteTrainedModelOutputRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model whose output you want to delete.</p>",
+        "GetCollaborationTrainedModelRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that you want to return information about.</p>",
+        "GetCollaborationTrainedModelResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>",
+        "GetTrainedModelInferenceJobResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) for the trained model that was used for the trained model inference job.</p>",
+        "GetTrainedModelRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that you are interested in.</p>",
+        "GetTrainedModelResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>",
+        "ListCollaborationTrainedModelExportJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that was used to create the export jobs that you are interested in.</p>",
+        "ListCollaborationTrainedModelInferenceJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that was used to create the trained model inference jobs that you are interested in.</p>",
+        "ListTrainedModelInferenceJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of a trained model that was used to create the trained model inference jobs that you are interested in.</p>",
+        "StartTrainedModelExportJobRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that you want to export.</p>",
+        "StartTrainedModelInferenceJobRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is used for this trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is used for the trained model inference job.</p>",
+        "TrainedModelSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>"
+      }
+    },
+    "TrainedModelExportFileType": {
+      "base": null,
+      "refs": {
+        "TrainedModelExportFileTypeList$member": null
+      }
+    },
+    "TrainedModelExportFileTypeList": {
+      "base": null,
+      "refs": {
+        "TrainedModelExportsConfigurationPolicy$filesToExport": "<p>The files that are exported during the trained model export job.</p>"
+      }
+    },
+    "TrainedModelExportJobStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelExportJobSummary$status": "<p>The status of the trained model.</p>"
+      }
+    },
+    "TrainedModelExportOutputConfiguration": {
+      "base": "<p>Information about the output of the trained model export job.</p>",
+      "refs": {
+        "CollaborationTrainedModelExportJobSummary$outputConfiguration": null,
+        "StartTrainedModelExportJobRequest$outputConfiguration": "<p>The output configuration information for the trained model export job.</p>"
+      }
+    },
+    "TrainedModelExportReceiverMember": {
+      "base": "<p>Provides information about the member who will receive trained model exports.</p>",
+      "refs": {
+        "TrainedModelExportReceiverMembers$member": null
+      }
+    },
+    "TrainedModelExportReceiverMembers": {
+      "base": null,
+      "refs": {
+        "TrainedModelExportOutputConfiguration$members": "<p>The members that will received the exported trained model output.</p>"
+      }
+    },
+    "TrainedModelExportsConfigurationPolicy": {
+      "base": "<p>Information about how the trained model exports are configured.</p>",
+      "refs": {
+        "PrivacyConfigurationPolicies$trainedModelExports": "<p>Specifies who will receive the trained model export.</p>"
+      }
+    },
+    "TrainedModelExportsMaxSize": {
+      "base": "<p>The maximum size of the trained model metrics that can be exported. If the trained model metrics dataset is larger than this value, it will not be exported.</p>",
+      "refs": {
+        "TrainedModelExportsConfigurationPolicy$maxSize": "<p>The maximum size of the data that can be exported.</p>"
+      }
+    },
+    "TrainedModelExportsMaxSizeUnitType": {
+      "base": null,
+      "refs": {
+        "TrainedModelExportsMaxSize$unit": "<p>The unit of measurement for the data size.</p>"
+      }
+    },
+    "TrainedModelExportsMaxSizeValue": {
+      "base": null,
+      "refs": {
+        "TrainedModelExportsMaxSize$value": "<p>The maximum size of the dataset to export.</p>"
+      }
+    },
+    "TrainedModelInferenceJobArn": {
+      "base": null,
+      "refs": {
+        "CancelTrainedModelInferenceJobRequest$trainedModelInferenceJobArn": "<p>The Amazon Resource Name (ARN) of the trained model inference job that you want to cancel.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$trainedModelInferenceJobArn": "<p>The Amazon Resource Name (ARN) of the trained model inference job.</p>",
+        "GetTrainedModelInferenceJobRequest$trainedModelInferenceJobArn": "<p>Provides the Amazon Resource Name (ARN) of the trained model inference job that you are interested in.</p>",
+        "GetTrainedModelInferenceJobResponse$trainedModelInferenceJobArn": "<p>The Amazon Resource Name (ARN) of the trained model inference job.</p>",
+        "StartTrainedModelInferenceJobResponse$trainedModelInferenceJobArn": "<p>The Amazon Resource Name (ARN) of the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$trainedModelInferenceJobArn": "<p>The Amazon Resource Name (ARN) of the trained model inference job.</p>"
+      }
+    },
+    "TrainedModelInferenceJobList": {
+      "base": null,
+      "refs": {
+        "ListTrainedModelInferenceJobsResponse$trainedModelInferenceJobs": "<p>Returns the requested trained model inference jobs.</p>"
+      }
+    },
+    "TrainedModelInferenceJobStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelInferenceJobSummary$status": "<p>The status of the trained model inference job.</p>",
+        "GetTrainedModelInferenceJobResponse$status": "<p>The status of the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$status": "<p>The status of the trained model inference job.</p>"
+      }
+    },
+    "TrainedModelInferenceJobSummary": {
+      "base": "<p>Provides information about the trained model inference job.</p>",
+      "refs": {
+        "TrainedModelInferenceJobList$member": null
+      }
+    },
+    "TrainedModelInferenceJobsConfigurationPolicy": {
+      "base": "<p>Provides configuration information for the trained model inference job.</p>",
+      "refs": {
+        "PrivacyConfigurationPolicies$trainedModelInferenceJobs": "<p>Specifies who will receive the trained model inference jobs.</p>"
+      }
+    },
+    "TrainedModelInferenceMaxOutputSize": {
+      "base": "<p>Information about the maximum output size for a trained model inference job.</p>",
+      "refs": {
+        "TrainedModelInferenceJobsConfigurationPolicy$maxOutputSize": "<p>The maximum allowed size of the output of the trained model inference job.</p>"
+      }
+    },
+    "TrainedModelInferenceMaxOutputSizeUnitType": {
+      "base": null,
+      "refs": {
+        "TrainedModelInferenceMaxOutputSize$unit": "<p>The measurement unit to use.</p>"
+      }
+    },
+    "TrainedModelInferenceMaxOutputSizeValue": {
+      "base": null,
+      "refs": {
+        "TrainedModelInferenceMaxOutputSize$value": "<p>The maximum output size value.</p>"
+      }
+    },
+    "TrainedModelList": {
+      "base": null,
+      "refs": {
+        "ListTrainedModelsResponse$trainedModels": "<p>The list of trained models.</p>"
+      }
+    },
+    "TrainedModelStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelSummary$status": "<p>The status of the trained model.</p>",
+        "GetCollaborationTrainedModelResponse$status": "<p>The status of the trained model.</p>",
+        "GetTrainedModelResponse$status": "<p>The status of the trained model.</p>",
+        "TrainedModelSummary$status": "<p>The status of the trained model.</p>"
+      }
+    },
+    "TrainedModelSummary": {
+      "base": "<p>Summary information about the trained model.</p>",
+      "refs": {
+        "TrainedModelList$member": null
+      }
+    },
+    "TrainedModelsConfigurationPolicy": {
+      "base": "<p>The configuration policy for the trained models.</p>",
+      "refs": {
+        "PrivacyConfigurationPolicies$trainedModels": "<p>Specifies who will receive the trained models.</p>"
       }
     },
     "TrainingDatasetArn": {
@@ -861,9 +2114,72 @@
       "base": null,
       "refs": {
         "AudienceGenerationJobSummary$collaborationId": "<p>The identifier of the collaboration that contains this audience generation job.</p>",
+        "CancelTrainedModelInferenceJobRequest$membershipIdentifier": "<p>The membership ID of the trained model inference job that you want to cancel.</p>",
+        "CancelTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the trained model job that you want to cancel.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
+        "CollaborationConfiguredModelAlgorithmAssociationSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
+        "CollaborationMLInputChannelSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
+        "CollaborationMLInputChannelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
+        "CollaborationTrainedModelExportJobSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model export job.</p>",
+        "CollaborationTrainedModelExportJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model export job.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
+        "CollaborationTrainedModelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
+        "ConfiguredModelAlgorithmAssociationSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
+        "CreateConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member who is associating this configured model algorithm.</p>",
+        "CreateMLInputChannelRequest$membershipIdentifier": "<p>The membership ID of the member that is creating the ML input channel.</p>",
+        "CreateTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the member that is creating the trained model.</p>",
+        "DeleteConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member that is deleting the configured model algorithm association.</p>",
+        "DeleteMLConfigurationRequest$membershipIdentifier": "<p>The membership ID of the of the member that is deleting the ML modeling configuration.</p>",
+        "DeleteMLInputChannelDataRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel you want to delete.</p>",
+        "DeleteTrainedModelOutputRequest$membershipIdentifier": "<p>The membership ID of the member that is deleting the trained model output.</p>",
         "GetAudienceGenerationJobResponse$collaborationId": "<p>The identifier of the collaboration that this audience generation job is associated with.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationRequest$collaborationIdentifier": "<p>The collaboration ID for the collaboration that contains the configured model algorithm association that you want to return information about.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
+        "GetCollaborationConfiguredModelAlgorithmAssociationResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
+        "GetCollaborationMLInputChannelRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel that you want to get.</p>",
+        "GetCollaborationMLInputChannelResponse$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
+        "GetCollaborationMLInputChannelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
+        "GetCollaborationTrainedModelRequest$collaborationIdentifier": "<p>The collaboration ID that contains the trained model that you want to return information about.</p>",
+        "GetCollaborationTrainedModelResponse$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
+        "GetCollaborationTrainedModelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
+        "GetConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
+        "GetConfiguredModelAlgorithmAssociationResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
+        "GetMLConfigurationRequest$membershipIdentifier": "<p>The membership ID of the member that owns the ML configuration you want to return information about.</p>",
+        "GetMLConfigurationResponse$membershipIdentifier": "<p>The membership ID of the member that owns the ML configuration you requested.</p>",
+        "GetMLInputChannelRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel that you want to get.</p>",
+        "GetMLInputChannelResponse$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
+        "GetMLInputChannelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
+        "GetMLInputChannelResponse$protectedQueryIdentifier": "<p>The ID of the protected query that was used to create the ML input channel.</p>",
+        "GetTrainedModelInferenceJobRequest$membershipIdentifier": "<p>Provides the membership ID of the membership that contains the trained model inference job that you are interested in.</p>",
+        "GetTrainedModelInferenceJobResponse$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "GetTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the member that created the trained model that you are interested in.</p>",
+        "GetTrainedModelResponse$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
+        "GetTrainedModelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
         "ListAudienceGenerationJobsRequest$collaborationId": "<p>The identifier of the collaboration that contains the audience generation jobs that you are interested in.</p>",
-        "StartAudienceGenerationJobRequest$collaborationId": "<p>The identifier of the collaboration that contains the audience generation job.</p>"
+        "ListCollaborationConfiguredModelAlgorithmAssociationsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm associations that you are interested in.</p>",
+        "ListCollaborationMLInputChannelsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channels that you want to list.</p>",
+        "ListCollaborationTrainedModelExportJobsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model export jobs that you are interested in.</p>",
+        "ListCollaborationTrainedModelInferenceJobsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference jobs that you are interested in.</p>",
+        "ListCollaborationTrainedModelsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained models you are interested in.</p>",
+        "ListConfiguredModelAlgorithmAssociationsRequest$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm associations you are interested in.</p>",
+        "ListMLInputChannelsRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channels that you want to list.</p>",
+        "ListTrainedModelInferenceJobsRequest$membershipIdentifier": "<p>The membership </p>",
+        "ListTrainedModelsRequest$membershipIdentifier": "<p>The membership ID of the member that created the trained models you are interested in.</p>",
+        "MLInputChannelSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
+        "MLInputChannelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
+        "MLInputChannelSummary$protectedQueryIdentifier": "<p>The ID of the protected query that was used to create the ML input channel.</p>",
+        "PutMLConfigurationRequest$membershipIdentifier": "<p>The membership ID of the member that is being configured.</p>",
+        "StartAudienceGenerationJobRequest$collaborationId": "<p>The identifier of the collaboration that contains the audience generation job.</p>",
+        "StartTrainedModelExportJobRequest$membershipIdentifier": "<p>The membership ID of the member that is receiving the exported trained model artifacts.</p>",
+        "StartTrainedModelInferenceJobRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference job.</p>",
+        "TrainedModelSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
+        "TrainedModelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -889,6 +2205,24 @@
     "ValidationException": {
       "base": "<p>The request parameters for this request are incorrect.</p>",
       "refs": {
+      }
+    },
+    "WorkerComputeConfiguration": {
+      "base": "<p>Configuration information about the compute workers that perform the transform job.</p>",
+      "refs": {
+        "ComputeConfiguration$worker": "<p>The worker instances that will perform the compute work.</p>"
+      }
+    },
+    "WorkerComputeConfigurationNumberInteger": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfiguration$number": "<p>The number of compute workers that are used.</p>"
+      }
+    },
+    "WorkerComputeType": {
+      "base": null,
+      "refs": {
+        "WorkerComputeConfiguration$type": "<p>The instance type of the compute workers that are used.</p>"
       }
     }
   }

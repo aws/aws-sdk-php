@@ -1149,6 +1149,22 @@
         {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
+    },
+    "ValidateFlowDefinition":{
+      "name":"ValidateFlowDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/flows/validate-definition",
+        "responseCode":200
+      },
+      "input":{"shape":"ValidateFlowDefinitionRequest"},
+      "output":{"shape":"ValidateFlowDefinitionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
     }
   },
   "shapes":{
@@ -1535,6 +1551,11 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "AnyToolChoice":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "AssociateAgentKnowledgeBaseRequest":{
       "type":"structure",
       "required":[
@@ -1564,6 +1585,11 @@
       "required":["agentKnowledgeBase"],
       "members":{
         "agentKnowledgeBase":{"shape":"AgentKnowledgeBase"}
+      }
+    },
+    "AutoToolChoice":{
+      "type":"structure",
+      "members":{
       }
     },
     "BasePromptTemplate":{
@@ -1607,6 +1633,17 @@
       "max":12,
       "min":12,
       "pattern":"^[0-9]{12}$"
+    },
+    "ChatPromptTemplateConfiguration":{
+      "type":"structure",
+      "required":["messages"],
+      "members":{
+        "inputVariables":{"shape":"PromptInputVariablesList"},
+        "messages":{"shape":"Messages"},
+        "system":{"shape":"SystemContentBlocks"},
+        "toolConfiguration":{"shape":"ToolConfiguration"}
+      },
+      "sensitive":true
     },
     "ChunkingConfiguration":{
       "type":"structure",
@@ -1701,6 +1738,25 @@
         "hostType":{"shape":"ConfluenceHostType"},
         "hostUrl":{"shape":"HttpsUrl"}
       }
+    },
+    "ContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ContentBlocks":{
+      "type":"list",
+      "member":{"shape":"ContentBlock"}
+    },
+    "ConversationRole":{
+      "type":"string",
+      "enum":[
+        "user",
+        "assistant"
+      ]
     },
     "CrawlFilterConfiguration":{
       "type":"structure",
@@ -2098,6 +2154,13 @@
       "members":{
         "intermediateStorage":{"shape":"IntermediateStorage"},
         "transformations":{"shape":"Transformations"}
+      }
+    },
+    "CyclicConnectionFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
       }
     },
     "DataDeletionPolicy":{
@@ -2539,6 +2602,28 @@
       "min":5,
       "pattern":"^DRAFT$"
     },
+    "DuplicateConditionExpressionFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "expression",
+        "node"
+      ],
+      "members":{
+        "expression":{"shape":"FlowConditionExpression"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "DuplicateConnectionsFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target"
+      ],
+      "members":{
+        "source":{"shape":"FlowNodeName"},
+        "target":{"shape":"FlowNodeName"}
+      }
+    },
     "EmbeddingModelConfiguration":{
       "type":"structure",
       "members":{
@@ -2550,6 +2635,11 @@
       "member":{"shape":"MemoryType"},
       "max":1,
       "min":1
+    },
+    "ErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "FailureReason":{
       "type":"string",
@@ -2942,15 +3032,78 @@
         "severity"
       ],
       "members":{
+        "details":{"shape":"FlowValidationDetails"},
         "message":{"shape":"NonBlankString"},
-        "severity":{"shape":"FlowValidationSeverity"}
+        "severity":{"shape":"FlowValidationSeverity"},
+        "type":{"shape":"FlowValidationType"}
       }
+    },
+    "FlowValidationDetails":{
+      "type":"structure",
+      "members":{
+        "cyclicConnection":{"shape":"CyclicConnectionFlowValidationDetails"},
+        "duplicateConditionExpression":{"shape":"DuplicateConditionExpressionFlowValidationDetails"},
+        "duplicateConnections":{"shape":"DuplicateConnectionsFlowValidationDetails"},
+        "incompatibleConnectionDataType":{"shape":"IncompatibleConnectionDataTypeFlowValidationDetails"},
+        "malformedConditionExpression":{"shape":"MalformedConditionExpressionFlowValidationDetails"},
+        "malformedNodeInputExpression":{"shape":"MalformedNodeInputExpressionFlowValidationDetails"},
+        "mismatchedNodeInputType":{"shape":"MismatchedNodeInputTypeFlowValidationDetails"},
+        "mismatchedNodeOutputType":{"shape":"MismatchedNodeOutputTypeFlowValidationDetails"},
+        "missingConnectionConfiguration":{"shape":"MissingConnectionConfigurationFlowValidationDetails"},
+        "missingDefaultCondition":{"shape":"MissingDefaultConditionFlowValidationDetails"},
+        "missingEndingNodes":{"shape":"MissingEndingNodesFlowValidationDetails"},
+        "missingNodeConfiguration":{"shape":"MissingNodeConfigurationFlowValidationDetails"},
+        "missingNodeInput":{"shape":"MissingNodeInputFlowValidationDetails"},
+        "missingNodeOutput":{"shape":"MissingNodeOutputFlowValidationDetails"},
+        "missingStartingNodes":{"shape":"MissingStartingNodesFlowValidationDetails"},
+        "multipleNodeInputConnections":{"shape":"MultipleNodeInputConnectionsFlowValidationDetails"},
+        "unfulfilledNodeInput":{"shape":"UnfulfilledNodeInputFlowValidationDetails"},
+        "unknownConnectionCondition":{"shape":"UnknownConnectionConditionFlowValidationDetails"},
+        "unknownConnectionSource":{"shape":"UnknownConnectionSourceFlowValidationDetails"},
+        "unknownConnectionSourceOutput":{"shape":"UnknownConnectionSourceOutputFlowValidationDetails"},
+        "unknownConnectionTarget":{"shape":"UnknownConnectionTargetFlowValidationDetails"},
+        "unknownConnectionTargetInput":{"shape":"UnknownConnectionTargetInputFlowValidationDetails"},
+        "unreachableNode":{"shape":"UnreachableNodeFlowValidationDetails"},
+        "unsatisfiedConnectionConditions":{"shape":"UnsatisfiedConnectionConditionsFlowValidationDetails"},
+        "unspecified":{"shape":"UnspecifiedFlowValidationDetails"}
+      },
+      "union":true
     },
     "FlowValidationSeverity":{
       "type":"string",
       "enum":[
         "Warning",
         "Error"
+      ]
+    },
+    "FlowValidationType":{
+      "type":"string",
+      "enum":[
+        "CyclicConnection",
+        "DuplicateConnections",
+        "DuplicateConditionExpression",
+        "UnreachableNode",
+        "UnknownConnectionSource",
+        "UnknownConnectionSourceOutput",
+        "UnknownConnectionTarget",
+        "UnknownConnectionTargetInput",
+        "UnknownConnectionCondition",
+        "MalformedConditionExpression",
+        "MalformedNodeInputExpression",
+        "MismatchedNodeInputType",
+        "MismatchedNodeOutputType",
+        "IncompatibleConnectionDataType",
+        "MissingConnectionConfiguration",
+        "MissingDefaultCondition",
+        "MissingEndingNodes",
+        "MissingNodeConfiguration",
+        "MissingNodeInput",
+        "MissingNodeOutput",
+        "MissingStartingNodes",
+        "MultipleNodeInputConnections",
+        "UnfulfilledNodeInput",
+        "UnsatisfiedConnectionConditions",
+        "Unspecified"
       ]
     },
     "FlowValidations":{
@@ -3439,6 +3592,13 @@
       "type":"string",
       "pattern":"^[0-9a-zA-Z]{10}$"
     },
+    "IncompatibleConnectionDataTypeFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
     "InferenceConfiguration":{
       "type":"structure",
       "members":{
@@ -3659,6 +3819,7 @@
       "type":"structure",
       "required":["knowledgeBaseId"],
       "members":{
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "knowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "modelId":{"shape":"KnowledgeBaseModelIdentifier"}
       }
@@ -3673,7 +3834,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
+      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
     },
     "KnowledgeBaseRoleArn":{
       "type":"string",
@@ -4076,6 +4237,32 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "MalformedConditionExpressionFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "cause",
+        "condition",
+        "node"
+      ],
+      "members":{
+        "cause":{"shape":"ErrorMessage"},
+        "condition":{"shape":"FlowConditionName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "MalformedNodeInputExpressionFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "cause",
+        "input",
+        "node"
+      ],
+      "members":{
+        "cause":{"shape":"ErrorMessage"},
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -4100,11 +4287,105 @@
       "type":"string",
       "enum":["SESSION_SUMMARY"]
     },
+    "Message":{
+      "type":"structure",
+      "required":[
+        "content",
+        "role"
+      ],
+      "members":{
+        "content":{"shape":"ContentBlocks"},
+        "role":{"shape":"ConversationRole"}
+      }
+    },
+    "Messages":{
+      "type":"list",
+      "member":{"shape":"Message"}
+    },
     "Microsoft365TenantId":{
       "type":"string",
       "max":36,
       "min":36,
       "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "MismatchedNodeInputTypeFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "expectedType",
+        "input",
+        "node"
+      ],
+      "members":{
+        "expectedType":{"shape":"FlowNodeIODataType"},
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "MismatchedNodeOutputTypeFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "expectedType",
+        "node",
+        "output"
+      ],
+      "members":{
+        "expectedType":{"shape":"FlowNodeIODataType"},
+        "node":{"shape":"FlowNodeName"},
+        "output":{"shape":"FlowNodeOutputName"}
+      }
+    },
+    "MissingConnectionConfigurationFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "MissingDefaultConditionFlowValidationDetails":{
+      "type":"structure",
+      "required":["node"],
+      "members":{
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "MissingEndingNodesFlowValidationDetails":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "MissingNodeConfigurationFlowValidationDetails":{
+      "type":"structure",
+      "required":["node"],
+      "members":{
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "MissingNodeInputFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "input",
+        "node"
+      ],
+      "members":{
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "MissingNodeOutputFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "node",
+        "output"
+      ],
+      "members":{
+        "node":{"shape":"FlowNodeName"},
+        "output":{"shape":"FlowNodeOutputName"}
+      }
+    },
+    "MissingStartingNodesFlowValidationDetails":{
+      "type":"structure",
+      "members":{
+      }
     },
     "ModelIdentifier":{
       "type":"string",
@@ -4175,6 +4456,17 @@
       "min":0,
       "pattern":"^.*$"
     },
+    "MultipleNodeInputConnectionsFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "input",
+        "node"
+      ],
+      "members":{
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
     "Name":{
       "type":"string",
       "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
@@ -4188,6 +4480,10 @@
     "NonBlankString":{
       "type":"string",
       "pattern":"^[\\s\\S]+$"
+    },
+    "NonEmptyString":{
+      "type":"string",
+      "min":1
     },
     "NumericalVersion":{
       "type":"string",
@@ -4392,6 +4688,14 @@
       }
     },
     "PrimitiveLong":{"type":"long"},
+    "PromptAgentResource":{
+      "type":"structure",
+      "required":["agentIdentifier"],
+      "members":{
+        "agentIdentifier":{"shape":"AgentAliasArn"}
+      },
+      "sensitive":true
+    },
     "PromptArn":{
       "type":"string",
       "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?)$"
@@ -4422,6 +4726,7 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "sourceConfiguration":{"shape":"PromptFlowNodeSourceConfiguration"}
       }
     },
@@ -4453,6 +4758,14 @@
         "inline":{"shape":"PromptFlowNodeInlineConfiguration"},
         "resource":{"shape":"PromptFlowNodeResourceConfiguration"}
       },
+      "union":true
+    },
+    "PromptGenAiResource":{
+      "type":"structure",
+      "members":{
+        "agent":{"shape":"PromptAgentResource"}
+      },
+      "sensitive":true,
       "union":true
     },
     "PromptId":{
@@ -4524,7 +4837,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)|([a-zA-Z0-9-:.]+)$"
+      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
     },
     "PromptModelInferenceConfiguration":{
       "type":"structure",
@@ -4584,13 +4897,17 @@
     "PromptTemplateConfiguration":{
       "type":"structure",
       "members":{
+        "chat":{"shape":"ChatPromptTemplateConfiguration"},
         "text":{"shape":"TextPromptTemplateConfiguration"}
       },
       "union":true
     },
     "PromptTemplateType":{
       "type":"string",
-      "enum":["TEXT"]
+      "enum":[
+        "TEXT",
+        "CHAT"
+      ]
     },
     "PromptType":{
       "type":"string",
@@ -4610,6 +4927,7 @@
       ],
       "members":{
         "additionalModelRequestFields":{"shape":"Document"},
+        "genAiResource":{"shape":"PromptGenAiResource"},
         "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
         "metadata":{"shape":"PromptMetadataList"},
         "modelId":{"shape":"PromptModelIdentifier"},
@@ -4991,6 +5309,13 @@
         "DESCENDING"
       ]
     },
+    "SpecificToolChoice":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"ToolName"}
+      }
+    },
     "StartIngestionJobRequest":{
       "type":"structure",
       "required":[
@@ -5104,6 +5429,18 @@
       "union":true
     },
     "String":{"type":"string"},
+    "SystemContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"NonEmptyString"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "SystemContentBlocks":{
+      "type":"list",
+      "member":{"shape":"SystemContentBlock"}
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -5185,6 +5522,62 @@
       },
       "exception":true
     },
+    "Tool":{
+      "type":"structure",
+      "members":{
+        "toolSpec":{"shape":"ToolSpecification"}
+      },
+      "union":true
+    },
+    "ToolChoice":{
+      "type":"structure",
+      "members":{
+        "any":{"shape":"AnyToolChoice"},
+        "auto":{"shape":"AutoToolChoice"},
+        "tool":{"shape":"SpecificToolChoice"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ToolConfiguration":{
+      "type":"structure",
+      "required":["tools"],
+      "members":{
+        "toolChoice":{"shape":"ToolChoice"},
+        "tools":{"shape":"ToolConfigurationToolsList"}
+      }
+    },
+    "ToolConfigurationToolsList":{
+      "type":"list",
+      "member":{"shape":"Tool"},
+      "min":1,
+      "sensitive":true
+    },
+    "ToolInputSchema":{
+      "type":"structure",
+      "members":{
+        "json":{"shape":"Document"}
+      },
+      "union":true
+    },
+    "ToolName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9_]*$"
+    },
+    "ToolSpecification":{
+      "type":"structure",
+      "required":[
+        "inputSchema",
+        "name"
+      ],
+      "members":{
+        "description":{"shape":"NonEmptyString"},
+        "inputSchema":{"shape":"ToolInputSchema"},
+        "name":{"shape":"ToolName"}
+      }
+    },
     "TopK":{
       "type":"integer",
       "box":true,
@@ -5237,6 +5630,71 @@
         "boolean",
         "array"
       ]
+    },
+    "UnfulfilledNodeInputFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "input",
+        "node"
+      ],
+      "members":{
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "UnknownConnectionConditionFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnknownConnectionSourceFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnknownConnectionSourceOutputFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnknownConnectionTargetFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnknownConnectionTargetInputFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnreachableNodeFlowValidationDetails":{
+      "type":"structure",
+      "required":["node"],
+      "members":{
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "UnsatisfiedConnectionConditionsFlowValidationDetails":{
+      "type":"structure",
+      "required":["connection"],
+      "members":{
+        "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnspecifiedFlowValidationDetails":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -5604,6 +6062,20 @@
       "type":"structure",
       "members":{
         "seedUrls":{"shape":"SeedUrls"}
+      }
+    },
+    "ValidateFlowDefinitionRequest":{
+      "type":"structure",
+      "required":["definition"],
+      "members":{
+        "definition":{"shape":"FlowDefinition"}
+      }
+    },
+    "ValidateFlowDefinitionResponse":{
+      "type":"structure",
+      "required":["validations"],
+      "members":{
+        "validations":{"shape":"FlowValidations"}
       }
     },
     "ValidationException":{
