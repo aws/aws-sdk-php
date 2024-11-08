@@ -1597,8 +1597,22 @@
       "members":{
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
-        "version":{"shape":"String"}
+        "version":{"shape":"String"},
+        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"}
       }
+    },
+    "LaunchTemplateSpecificationOverride":{
+      "type":"structure",
+      "members":{
+        "launchTemplateId":{"shape":"String"},
+        "launchTemplateName":{"shape":"String"},
+        "version":{"shape":"String"},
+        "targetInstanceTypes":{"shape":"StringList"}
+      }
+    },
+    "LaunchTemplateSpecificationOverrideList":{
+      "type":"list",
+      "member":{"shape":"LaunchTemplateSpecificationOverride"}
     },
     "LinuxParameters":{
       "type":"structure",

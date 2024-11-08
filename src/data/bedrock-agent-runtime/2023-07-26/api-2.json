@@ -295,7 +295,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]{1,10})?:bedrock:[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]{1,20}/)?)?([a-z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"^(arn:aws(-[^:]+)?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
     },
     "Boolean":{
       "type":"boolean",
@@ -670,6 +670,7 @@
         "dependencyFailedException":{"shape":"DependencyFailedException"},
         "flowCompletionEvent":{"shape":"FlowCompletionEvent"},
         "flowOutputEvent":{"shape":"FlowOutputEvent"},
+        "flowTraceEvent":{"shape":"FlowTraceEvent"},
         "internalServerException":{"shape":"InternalServerException"},
         "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
         "serviceQuotaExceededException":{"shape":"ServiceQuotaExceededException"},
@@ -677,6 +678,131 @@
         "validationException":{"shape":"ValidationException"}
       },
       "eventstream":true
+    },
+    "FlowTrace":{
+      "type":"structure",
+      "members":{
+        "conditionNodeResultTrace":{"shape":"FlowTraceConditionNodeResultEvent"},
+        "nodeInputTrace":{"shape":"FlowTraceNodeInputEvent"},
+        "nodeOutputTrace":{"shape":"FlowTraceNodeOutputEvent"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "FlowTraceCondition":{
+      "type":"structure",
+      "required":["conditionName"],
+      "members":{
+        "conditionName":{"shape":"String"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceConditionNodeResultEvent":{
+      "type":"structure",
+      "required":[
+        "nodeName",
+        "satisfiedConditions",
+        "timestamp"
+      ],
+      "members":{
+        "nodeName":{"shape":"NodeName"},
+        "satisfiedConditions":{"shape":"FlowTraceConditions"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceConditions":{
+      "type":"list",
+      "member":{"shape":"FlowTraceCondition"},
+      "max":5,
+      "min":1
+    },
+    "FlowTraceEvent":{
+      "type":"structure",
+      "required":["trace"],
+      "members":{
+        "trace":{"shape":"FlowTrace"}
+      },
+      "event":true
+    },
+    "FlowTraceNodeInputContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "FlowTraceNodeInputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"FlowTraceNodeInputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceNodeInputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "nodeInputName"
+      ],
+      "members":{
+        "content":{"shape":"FlowTraceNodeInputContent"},
+        "nodeInputName":{"shape":"NodeInputName"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceNodeInputFields":{
+      "type":"list",
+      "member":{"shape":"FlowTraceNodeInputField"},
+      "max":5,
+      "min":1
+    },
+    "FlowTraceNodeOutputContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "union":true
+    },
+    "FlowTraceNodeOutputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"FlowTraceNodeOutputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceNodeOutputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "nodeOutputName"
+      ],
+      "members":{
+        "content":{"shape":"FlowTraceNodeOutputContent"},
+        "nodeOutputName":{"shape":"NodeOutputName"}
+      },
+      "sensitive":true
+    },
+    "FlowTraceNodeOutputFields":{
+      "type":"list",
+      "member":{"shape":"FlowTraceNodeOutputField"},
+      "max":2,
+      "min":1
     },
     "Function":{
       "type":"string",
@@ -1201,6 +1327,7 @@
         "inputs"
       ],
       "members":{
+        "enableTrace":{"shape":"Boolean"},
         "flowAliasIdentifier":{
           "shape":"FlowAliasIdentifier",
           "location":"uri",
@@ -1409,6 +1536,10 @@
       "max":2048,
       "min":1,
       "pattern":"^\\S*$"
+    },
+    "NodeInputName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){0,99}$"
     },
     "NodeName":{
       "type":"string",

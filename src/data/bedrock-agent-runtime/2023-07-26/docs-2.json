@@ -162,6 +162,7 @@
         "CodeInterpreterInvocationOutput$executionTimeout": "<p>Indicates if the execution of the code timed out.</p>",
         "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
+        "InvokeFlowRequest$enableTrace": "<p>Specifies whether to return the trace for the flow or not. Traces track inputs and outputs for nodes in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
         "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>"
       }
     },
@@ -251,6 +252,9 @@
     "DateTimestamp": {
       "base": "<p>Time Stamp.</p>",
       "refs": {
+        "FlowTraceConditionNodeResultEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "FlowTraceNodeInputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "FlowTraceNodeOutputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "MemorySessionSummary$sessionExpiryTime": "<p>The time when the memory duration for the session is set to end.</p>",
         "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>"
       }
@@ -276,7 +280,9 @@
       "base": null,
       "refs": {
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
-        "FlowOutputContent$document": "<p>The content in the output.</p>"
+        "FlowOutputContent$document": "<p>The content in the output.</p>",
+        "FlowTraceNodeInputContent$document": "<p>The content of the node input.</p>",
+        "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>"
       }
     },
     "Double": {
@@ -417,7 +423,7 @@
       }
     },
     "FlowCompletionEvent": {
-      "base": "<p>Contains information about why a flow completed.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_ResponseSyntax\">InvokeFlow response</a> </p> </li> </ul>",
+      "base": "<p>Contains information about why a flow completed.</p>",
       "refs": {
         "FlowResponseStream$flowCompletionEvent": "<p>Contains information about why the flow completed.</p>"
       }
@@ -435,13 +441,13 @@
       }
     },
     "FlowInput": {
-      "base": "<p>Contains information about an input into the prompt flow and where to send it.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
+      "base": "<p>Contains information about an input into the prompt flow and where to send it.</p>",
       "refs": {
         "FlowInputs$member": null
       }
     },
     "FlowInputContent": {
-      "base": "<p>Contains information about an input into the flow.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
+      "base": "<p>Contains information about an input into the flow.</p>",
       "refs": {
         "FlowInput$content": "<p>Contains information about an input into the prompt flow.</p>"
       }
@@ -453,21 +459,99 @@
       }
     },
     "FlowOutputContent": {
-      "base": "<p>Contains information about the content in an output from prompt flow invocation.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_RequestSyntax\">InvokeFlow request</a> </p> </li> </ul>",
+      "base": "<p>Contains information about the content in an output from prompt flow invocation.</p>",
       "refs": {
         "FlowOutputEvent$content": "<p>The content in the output.</p>"
       }
     },
     "FlowOutputEvent": {
-      "base": "<p>Contains information about an output from prompt flow invoction.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_ResponseSyntax\">InvokeFlow response</a> </p> </li> </ul>",
+      "base": "<p>Contains information about an output from prompt flow invoction.</p>",
       "refs": {
         "FlowResponseStream$flowOutputEvent": "<p>Contains information about an output from flow invocation.</p>"
       }
     },
     "FlowResponseStream": {
-      "base": "<p>The output of the flow.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeFlow.html#API_agent_InvokeFlow_ResponseSyntax\">InvokeFlow response</a> </p> </li> </ul>",
+      "base": "<p>The output of the flow.</p>",
       "refs": {
         "InvokeFlowResponse$responseStream": "<p>The output of the flow, returned as a stream. If there's an error, the error is returned.</p>"
+      }
+    },
+    "FlowTrace": {
+      "base": "<p>Contains information about an input or output for a node in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceEvent$trace": "<p>The trace object containing information about an input or output for a node in the flow.</p>"
+      }
+    },
+    "FlowTraceCondition": {
+      "base": "<p>Contains information about a condition that was satisfied. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceConditions$member": null
+      }
+    },
+    "FlowTraceConditionNodeResultEvent": {
+      "base": "<p>Contains information about an output from a condition node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTrace$conditionNodeResultTrace": "<p>Contains information about an output from a condition node.</p>"
+      }
+    },
+    "FlowTraceConditions": {
+      "base": null,
+      "refs": {
+        "FlowTraceConditionNodeResultEvent$satisfiedConditions": "<p>An array of objects containing information about the conditions that were satisfied.</p>"
+      }
+    },
+    "FlowTraceEvent": {
+      "base": "<p>Contains information about a trace, which tracks an input or output for a node in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowResponseStream$flowTraceEvent": "<p>Contains information about a trace, which tracks an input or output for a node in the flow.</p>"
+      }
+    },
+    "FlowTraceNodeInputContent": {
+      "base": "<p>Contains the content of the node input. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceNodeInputField$content": "<p>The content of the node input.</p>"
+      }
+    },
+    "FlowTraceNodeInputEvent": {
+      "base": "<p>Contains information about the input into a node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTrace$nodeInputTrace": "<p>Contains information about the input into a node.</p>"
+      }
+    },
+    "FlowTraceNodeInputField": {
+      "base": "<p>Contains information about a field in the input into a node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceNodeInputFields$member": null
+      }
+    },
+    "FlowTraceNodeInputFields": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputEvent$fields": "<p>An array of objects containing information about each field in the input.</p>"
+      }
+    },
+    "FlowTraceNodeOutputContent": {
+      "base": "<p>Contains the content of the node output. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceNodeOutputField$content": "<p>The content of the node output.</p>"
+      }
+    },
+    "FlowTraceNodeOutputEvent": {
+      "base": "<p>Contains information about the output from a node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTrace$nodeOutputTrace": "<p>Contains information about the output from a node.</p>"
+      }
+    },
+    "FlowTraceNodeOutputField": {
+      "base": "<p>Contains information about a field in the output from a node. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
+      "refs": {
+        "FlowTraceNodeOutputFields$member": null
+      }
+    },
+    "FlowTraceNodeOutputFields": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeOutputEvent$fields": "<p>An array of objects containing information about each field in the output.</p>"
       }
     },
     "Function": {
@@ -1012,17 +1096,27 @@
         "RetrieveResponse$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>"
       }
     },
+    "NodeInputName": {
+      "base": null,
+      "refs": {
+        "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>"
+      }
+    },
     "NodeName": {
       "base": null,
       "refs": {
         "FlowInput$nodeName": "<p>The name of the flow input node that begins the prompt flow.</p>",
-        "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>"
+        "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>",
+        "FlowTraceConditionNodeResultEvent$nodeName": "<p>The name of the condition node.</p>",
+        "FlowTraceNodeInputEvent$nodeName": "<p>The name of the node that received the input.</p>",
+        "FlowTraceNodeOutputEvent$nodeName": "<p>The name of the node that yielded the output.</p>"
       }
     },
     "NodeOutputName": {
       "base": null,
       "refs": {
-        "FlowInput$nodeOutputName": "<p>The name of the output from the flow input node that begins the prompt flow.</p>"
+        "FlowInput$nodeOutputName": "<p>The name of the output from the flow input node that begins the prompt flow.</p>",
+        "FlowTraceNodeOutputField$nodeOutputName": "<p>The name of the node output.</p>"
       }
     },
     "NodeType": {
@@ -1167,8 +1261,8 @@
       "base": "<p>Contains the template for the prompt that's sent to the model for response generation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt\">Knowledge base prompt templates</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>filter</code> field</p> </li> </ul>",
       "refs": {
         "ExternalSourcesGenerationConfiguration$promptTemplate": "<p>Contain the textPromptTemplate string for the external source wrapper object.</p>",
-        "GenerationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation.</p>",
-        "OrchestrationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation.</p>"
+        "GenerationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model for response generation. Generation prompts must include the <code>$search_results$</code> variable. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Use placeholder variables</a> in the user guide.</p>",
+        "OrchestrationConfiguration$promptTemplate": "<p>Contains the template for the prompt that's sent to the model. Orchestration prompts must include the <code>$conversation_history$</code> and <code>$output_format_instructions$</code> variables. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Use placeholder variables</a> in the user guide.</p>"
       }
     },
     "PromptText": {
@@ -1540,6 +1634,7 @@
         "ContentBody$body": "<p>The body of the API response.</p>",
         "ContentMap$key": null,
         "Files$member": null,
+        "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
         "FunctionInvocationInput$actionGroup": "<p>The action group that the function belongs to.</p>",
         "FunctionInvocationInput$function": "<p>The name of the function.</p>",
         "FunctionParameter$name": "<p>The name of the parameter.</p>",

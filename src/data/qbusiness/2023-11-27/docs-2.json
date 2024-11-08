@@ -6,7 +6,7 @@
     "BatchPutDocument": "<p>Adds one or more documents to an Amazon Q Business index.</p> <p>You use this API to:</p> <ul> <li> <p>ingest your structured and unstructured documents and documents stored in an Amazon S3 bucket into an Amazon Q Business index.</p> </li> <li> <p>add custom attributes to documents in an Amazon Q Business index.</p> </li> <li> <p>attach an access control list to the documents added to an Amazon Q Business index.</p> </li> </ul> <p>You can see the progress of the deletion, and any error messages related to the process, by using CloudWatch.</p>",
     "Chat": "<p>Starts or continues a streaming Amazon Q Business conversation.</p>",
     "ChatSync": "<p>Starts or continues a non-streaming Amazon Q Business conversation.</p>",
-    "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users.</p> </note>",
+    "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users. </p> <p> A Amazon Q Apps service linked role will be created if it's absent in the Amazon Web Services account when the QAppsConfiguration is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps </a> </p> </note>",
     "CreateDataSource": "<p>Creates a data source connector for an Amazon Q Business application.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p>",
     "CreateIndex": "<p>Creates an Amazon Q Business index.</p> <p>To determine if index creation has completed, check the <code>Status</code> field returned from a call to <code>DescribeIndex</code>. The <code>Status</code> field is set to <code>ACTIVE</code> when the index is ready to use.</p> <p>Once the index is active, you can index your documents using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_BatchPutDocument.html\"> <code>BatchPutDocument</code> </a> API or the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_CreateDataSource.html\"> <code>CreateDataSource</code> </a> API.</p>",
     "CreatePlugin": "<p>Creates an Amazon Q Business plugin.</p>",
@@ -50,7 +50,7 @@
     "StopDataSourceSyncJob": "<p>Stops an Amazon Q Business data source connector synchronization job already in progress.</p>",
     "TagResource": "<p>Adds the specified tag to the specified Amazon Q Business application or data source resource. If the tag already exists, the existing value is replaced with the new value.</p>",
     "UntagResource": "<p>Removes a tag from an Amazon Q Business application or a data source.</p>",
-    "UpdateApplication": "<p>Updates an existing Amazon Q Business application.</p>",
+    "UpdateApplication": "<p>Updates an existing Amazon Q Business application.</p> <note> <p> A Amazon Q Apps service-linked role will be created if it's absent in the Amazon Web Services account when the QAppsConfiguration is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps </a> </p> </note>",
     "UpdateChatControlsConfiguration": "<p>Updates an set of chat controls configured for an existing Amazon Q Business application.</p>",
     "UpdateDataSource": "<p>Updates an existing Amazon Q Business data source connector.</p>",
     "UpdateIndex": "<p>Updates an Amazon Q Business index.</p>",
@@ -2264,6 +2264,7 @@
         "HookConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of a role with permission to run <code>PreExtractionHookConfiguration</code> and <code>PostExtractionHookConfiguration</code> for altering document metadata and content during the document ingestion process.</p>",
         "OAuth2ClientCredentialConfiguration$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the OAuth 2.0 authentication credentials stored in a Secrets Manager secret.</p>",
         "OpenIDConnectProviderConfiguration$secretsRole": "<p>An IAM role with permissions to access KMS to decrypt the Secrets Manager secret containing your OIDC client secret.</p>",
+        "PutGroupRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.</p>",
         "SamlConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role assumed by users when they authenticate into their Amazon Q Business web experience, containing the relevant Amazon Q Business permissions for conversing with Amazon Q Business.</p>",
         "UpdateApplicationRequest$roleArn": "<p>An Amazon Web Services Identity and Access Management (IAM) role that gives Amazon Q Business permission to access Amazon CloudWatch logs and metrics.</p>",
         "UpdateDataSourceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources.</p>",
@@ -2299,7 +2300,8 @@
       "base": "<p>Information required for Amazon Q Business to find a specific file in an Amazon S3 bucket.</p>",
       "refs": {
         "APISchema$s3": "<p>Contains details about the S3 object containing the OpenAPI schema for a custom plugin. The schema could be in either JSON or YAML format.</p>",
-        "DocumentContent$s3": "<p>The path to the document in an Amazon S3 bucket.</p>"
+        "DocumentContent$s3": "<p>The path to the document in an Amazon S3 bucket.</p>",
+        "GroupMembers$s3PathForGroupMembers": null
       }
     },
     "S3BucketName": {

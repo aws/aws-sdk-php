@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PinpointSMSVoiceV2` - Added the RequiresAuthenticationTimestamp field to the RegistrationVersionStatusHistory data type.
+* `Aws\EKS` - Adds new error code `Ec2InstanceTypeDoesNotExist` for Amazon EKS managed node groups
+* `Aws\Lambda` - This release adds support for using AWS KMS customer managed keys to encrypt AWS Lambda .zip deployment packages.
+* `Aws\QBusiness` - Adds S3 path option to pass group member list for PutGroup API.
+* `Aws\ControlCatalog` - AWS Control Catalog GetControl public API returns additional data in output, including Implementation and Parameters
+* `Aws\Batch` - This feature allows override LaunchTemplates to be specified in an AWS Batch Compute Environment.
+* `Aws\ChimeSDKMediaPipelines` - Added support for Media Capture Pipeline and Media Concatenation Pipeline for customer managed server side encryption. Now Media Capture Pipeline can use IAM sink role to get access to KMS key and encrypt/decrypt recorded artifacts. KMS key ID can also be supplied with encryption context.
+* `Aws\Firehose` - Amazon Data Firehose / Features : Adds support for a new DeliveryStreamType, DatabaseAsSource. DatabaseAsSource hoses allow customers to stream CDC events from their RDS and Amazon EC2 hosted databases, running MySQL and PostgreSQL database engines, to Iceberg Table destinations.
+* `Aws\BedrockAgentRuntime` - This release adds trace functionality to Bedrock Prompt Flows
+
 ## 3.325.4 - 2024-11-07
 
 * `Aws\ResourceExplorer2` - Add GetManagedView, ListManagedViews APIs.

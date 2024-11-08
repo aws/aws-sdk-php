@@ -2101,7 +2101,8 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
-        "ImageUri":{"shape":"String"}
+        "ImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "FunctionCodeLocation":{
@@ -2110,7 +2111,8 @@
         "RepositoryType":{"shape":"String"},
         "Location":{"shape":"String"},
         "ImageUri":{"shape":"String"},
-        "ResolvedImageUri":{"shape":"String"}
+        "ResolvedImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"String"}
       }
     },
     "FunctionConfiguration":{
@@ -4512,7 +4514,8 @@
         "Publish":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
         "RevisionId":{"shape":"String"},
-        "Architectures":{"shape":"ArchitecturesList"}
+        "Architectures":{"shape":"ArchitecturesList"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "UpdateFunctionConfigurationRequest":{
