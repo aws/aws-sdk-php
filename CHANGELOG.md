@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.5 - 2024-11-08
 
 * `Aws\PinpointSMSVoiceV2` - Added the RequiresAuthenticationTimestamp field to the RegistrationVersionStatusHistory data type.
 * `Aws\EKS` - Adds new error code `Ec2InstanceTypeDoesNotExist` for Amazon EKS managed node groups
