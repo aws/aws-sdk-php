@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.6 - 2024-11-11
 
 * `Aws\OpenSearchService` - Adds Support for new AssociatePackages and DissociatePackages API in Amazon OpenSearch Service that allows association and dissociation operations to be carried out on multiple packages at the same time.
 * `Aws\CloudFront` - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
