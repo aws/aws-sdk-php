@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpenSearchService` - Adds Support for new AssociatePackages and DissociatePackages API in Amazon OpenSearch Service that allows association and dissociation operations to be carried out on multiple packages at the same time.
+* `Aws\CloudFront` - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
+* `Aws\Outposts` - This release updates StartCapacityTask to allow an active Outpost to be modified. It also adds a new API to list all running EC2 instances on the Outpost.
+* `Aws\Lambda` - Add Python 3.13 (python3.13) support to AWS Lambda
+* `Aws\Inspector2` - Adds support for filePath filter.
+
 ## 3.325.5 - 2024-11-08
 
 * `Aws\PinpointSMSVoiceV2` - Added the RequiresAuthenticationTimestamp field to the RegistrationVersionStatusHistory data type.

@@ -75,6 +75,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "AssociatePackages":{
+      "name":"AssociatePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/associateMultiple"
+      },
+      "input":{"shape":"AssociatePackagesRequest"},
+      "output":{"shape":"AssociatePackagesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "AuthorizeVpcEndpointAccess":{
       "name":"AuthorizeVpcEndpointAccess",
       "http":{
@@ -562,6 +579,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "DissociatePackages":{
+      "name":"DissociatePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/dissociateMultiple"
+      },
+      "input":{"shape":"DissociatePackagesRequest"},
+      "output":{"shape":"DissociatePackagesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "GetApplication":{
       "name":"GetApplication",
       "http":{
@@ -1038,6 +1072,22 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdatePackageScope":{
+      "name":"UpdatePackageScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/updateScope"
+      },
+      "input":{"shape":"UpdatePackageScopeRequest"},
+      "output":{"shape":"UpdatePackageScopeResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "UpdateScheduledAction":{
       "name":"UpdateScheduledAction",
       "http":{
@@ -1367,13 +1417,32 @@
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
-        }
+        },
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
       }
     },
     "AssociatePackageResponse":{
       "type":"structure",
       "members":{
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
+      }
+    },
+    "AssociatePackagesRequest":{
+      "type":"structure",
+      "required":[
+        "PackageList",
+        "DomainName"
+      ],
+      "members":{
+        "PackageList":{"shape":"PackageDetailsForAssociationList"},
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "AssociatePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
       }
     },
     "AuthorizeVpcEndpointAccessRequest":{
@@ -1870,7 +1939,11 @@
         "PackageName":{"shape":"PackageName"},
         "PackageType":{"shape":"PackageType"},
         "PackageDescription":{"shape":"PackageDescription"},
-        "PackageSource":{"shape":"PackageSource"}
+        "PackageSource":{"shape":"PackageSource"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"},
+        "EngineVersion":{"shape":"EngineVersion"},
+        "PackageVendingOptions":{"shape":"PackageVendingOptions"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
     },
     "CreatePackageResponse":{
@@ -2349,7 +2422,8 @@
         "PackageName",
         "PackageStatus",
         "PackageType",
-        "EngineVersion"
+        "EngineVersion",
+        "PackageOwner"
       ]
     },
     "DescribePackagesFilterValue":{
@@ -2480,6 +2554,23 @@
       "type":"structure",
       "members":{
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
+      }
+    },
+    "DissociatePackagesRequest":{
+      "type":"structure",
+      "required":[
+        "PackageList",
+        "DomainName"
+      ],
+      "members":{
+        "PackageList":{"shape":"PackageIDList"},
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "DissociatePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
       }
     },
     "DomainArn":{
@@ -2626,8 +2717,10 @@
         "DomainName":{"shape":"DomainName"},
         "DomainPackageStatus":{"shape":"DomainPackageStatus"},
         "PackageVersion":{"shape":"PackageVersion"},
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
         "ReferencePath":{"shape":"ReferencePath"},
-        "ErrorDetails":{"shape":"ErrorDetails"}
+        "ErrorDetails":{"shape":"ErrorDetails"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
       }
     },
     "DomainPackageDetailsList":{
@@ -3259,6 +3352,14 @@
         "PublicKey":{"shape":"String"}
       }
     },
+    "KeyStoreAccessOption":{
+      "type":"structure",
+      "required":["KeyStoreAccessEnabled"],
+      "members":{
+        "KeyAccessRoleArn":{"shape":"RoleArn"},
+        "KeyStoreAccessEnabled":{"shape":"Boolean"}
+      }
+    },
     "KmsKeyId":{
       "type":"string",
       "max":500,
@@ -3266,6 +3367,11 @@
       "pattern":".*"
     },
     "LastUpdated":{"type":"timestamp"},
+    "LicenseFilepath":{
+      "type":"string",
+      "max":256,
+      "pattern":"^(?!.*\\/\\.{2,})(?!.*\\.\\.)[a-zA-Z0-9_.-]+(?:\\/[a-zA-Z0-9_.-]+)*$"
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -4047,6 +4153,25 @@
       "min":12,
       "pattern":"[0-9]+"
     },
+    "PackageAssociationConfiguration":{
+      "type":"structure",
+      "members":{
+        "KeyStoreAccessOption":{"shape":"KeyStoreAccessOption"}
+      }
+    },
+    "PackageConfiguration":{
+      "type":"structure",
+      "required":[
+        "LicenseRequirement",
+        "ConfigurationRequirement"
+      ],
+      "members":{
+        "LicenseRequirement":{"shape":"RequirementLevel"},
+        "LicenseFilepath":{"shape":"LicenseFilepath"},
+        "ConfigurationRequirement":{"shape":"RequirementLevel"},
+        "RequiresRestartForConfigurationUpdate":{"shape":"Boolean"}
+      }
+    },
     "PackageDescription":{
       "type":"string",
       "max":1024
@@ -4064,22 +4189,64 @@
         "AvailablePackageVersion":{"shape":"PackageVersion"},
         "ErrorDetails":{"shape":"ErrorDetails"},
         "EngineVersion":{"shape":"EngineVersion"},
-        "AvailablePluginProperties":{"shape":"PluginProperties"}
+        "AvailablePluginProperties":{"shape":"PluginProperties"},
+        "AvailablePackageConfiguration":{"shape":"PackageConfiguration"},
+        "AllowListedUserList":{"shape":"PackageUserList"},
+        "PackageOwner":{"shape":"PackageOwner"},
+        "PackageVendingOptions":{"shape":"PackageVendingOptions"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
+    },
+    "PackageDetailsForAssociation":{
+      "type":"structure",
+      "required":["PackageID"],
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
+      }
+    },
+    "PackageDetailsForAssociationList":{
+      "type":"list",
+      "member":{"shape":"PackageDetailsForAssociation"}
     },
     "PackageDetailsList":{
       "type":"list",
       "member":{"shape":"PackageDetails"}
     },
+    "PackageEncryptionOptions":{
+      "type":"structure",
+      "required":["EncryptionEnabled"],
+      "members":{
+        "KmsKeyIdentifier":{"shape":"KmsKeyId"},
+        "EncryptionEnabled":{"shape":"Boolean"}
+      }
+    },
     "PackageID":{
       "type":"string",
-      "pattern":"^([FG][0-9]+)$"
+      "pattern":"^([FG][0-9]+)$|^(pkg-[a-f0-9]+)$"
+    },
+    "PackageIDList":{
+      "type":"list",
+      "member":{"shape":"PackageID"}
     },
     "PackageName":{
       "type":"string",
       "max":256,
       "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
+    },
+    "PackageOwner":{
+      "type":"string",
+      "max":1024
+    },
+    "PackageScopeOperationEnum":{
+      "type":"string",
+      "enum":[
+        "ADD",
+        "OVERRIDE",
+        "REMOVE"
+      ]
     },
     "PackageSource":{
       "type":"structure",
@@ -4105,8 +4272,27 @@
       "type":"string",
       "enum":[
         "TXT-DICTIONARY",
-        "ZIP-PLUGIN"
+        "ZIP-PLUGIN",
+        "PACKAGE-LICENSE",
+        "PACKAGE-CONFIG"
       ]
+    },
+    "PackageUser":{
+      "type":"string",
+      "max":12,
+      "min":6,
+      "pattern":"^[0-9]{12}$|^GLOBAL$"
+    },
+    "PackageUserList":{
+      "type":"list",
+      "member":{"shape":"PackageUser"}
+    },
+    "PackageVendingOptions":{
+      "type":"structure",
+      "required":["VendingEnabled"],
+      "members":{
+        "VendingEnabled":{"shape":"Boolean"}
+      }
     },
     "PackageVersion":{"type":"string"},
     "PackageVersionHistory":{
@@ -4115,7 +4301,8 @@
         "PackageVersion":{"shape":"PackageVersion"},
         "CommitMessage":{"shape":"CommitMessage"},
         "CreatedAt":{"shape":"CreatedAt"},
-        "PluginProperties":{"shape":"PluginProperties"}
+        "PluginProperties":{"shape":"PluginProperties"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"}
       }
     },
     "PackageVersionHistoryList":{
@@ -4245,6 +4432,14 @@
       "max":100,
       "min":1,
       "pattern":"^([\\s\\S]*)$"
+    },
+    "RequirementLevel":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "OPTIONAL",
+        "NONE"
+      ]
     },
     "ReservationToken":{
       "type":"string",
@@ -4786,13 +4981,36 @@
         "PackageID":{"shape":"PackageID"},
         "PackageSource":{"shape":"PackageSource"},
         "PackageDescription":{"shape":"PackageDescription"},
-        "CommitMessage":{"shape":"CommitMessage"}
+        "CommitMessage":{"shape":"CommitMessage"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
     },
     "UpdatePackageResponse":{
       "type":"structure",
       "members":{
         "PackageDetails":{"shape":"PackageDetails"}
+      }
+    },
+    "UpdatePackageScopeRequest":{
+      "type":"structure",
+      "required":[
+        "PackageID",
+        "Operation",
+        "PackageUserList"
+      ],
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "Operation":{"shape":"PackageScopeOperationEnum"},
+        "PackageUserList":{"shape":"PackageUserList"}
+      }
+    },
+    "UpdatePackageScopeResponse":{
+      "type":"structure",
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "Operation":{"shape":"PackageScopeOperationEnum"},
+        "PackageUserList":{"shape":"PackageUserList"}
       }
     },
     "UpdateScheduledActionRequest":{

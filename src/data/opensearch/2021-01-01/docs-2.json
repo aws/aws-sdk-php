@@ -6,6 +6,7 @@
     "AddDataSource": "<p>Creates a new direct-query data source to the specified domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Creating Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain. Tags are a set of case-sensitive key-value pairs. A domain can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>. </p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "AssociatePackages": "<p>Operation in the Amazon OpenSearch Service API for associating multiple packages with a domain simultaneously.</p>",
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "CancelDomainConfigChange": "<p>Cancels a pending configuration change on an Amazon OpenSearch Service domain.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
@@ -37,6 +38,7 @@
     "DescribeReservedInstances": "<p>Describes the Amazon OpenSearch Service instances that you have reserved in a given Region. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/ri.html\">Reserved Instances in Amazon OpenSearch Service</a>.</p>",
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "DissociatePackages": "<p>Dissociates multiple packages from a domain simulatneously.</p>",
     "GetApplication": "<p>Check the configuration and status of an existing OpenSearch Application.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
@@ -67,6 +69,7 @@
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
+    "UpdatePackageScope": "<p>Updates the scope of a package. Scope of the package defines users who can view and associate a package.</p>",
     "UpdateScheduledAction": "<p>Reschedules a planned domain configuration change for a later time. This change can be a scheduled <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software update</a> or a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancement</a>.</p>",
     "UpdateVpcEndpoint": "<p>Modifies an Amazon OpenSearch Service-managed interface VPC endpoint.</p>",
     "UpgradeDomain": "<p>Allows you to either upgrade your Amazon OpenSearch Service domain or perform an upgrade eligibility check to a compatible version of OpenSearch or Elasticsearch.</p>"
@@ -310,6 +313,16 @@
       "refs": {
       }
     },
+    "AssociatePackagesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociatePackagesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AuthorizeVpcEndpointAccessRequest": {
       "base": null,
       "refs": {
@@ -498,12 +511,16 @@
         "InstanceTypeDetails$WarmEnabled": "<p>Whether UltraWarm is supported for the instance type.</p>",
         "JWTOptionsInput$Enabled": "<p>True to enable JWT authentication and authorization for a domain.</p>",
         "JWTOptionsOutput$Enabled": "<p>True if JWT use is enabled.</p>",
+        "KeyStoreAccessOption$KeyStoreAccessEnabled": "<p>This indicates whether Key Store access is enabled </p>",
         "ListInstanceTypeDetailsRequest$RetrieveAZs": "<p>An optional parameter that specifies the Availability Zones for the domain.</p>",
         "LogPublishingOption$Enabled": "<p>Whether the log should be published.</p>",
         "NodeConfig$Enabled": "<p>A boolean that indicates whether a particular node type is enabled or not.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>True to enable node-to-node encryption.</p>",
         "OffPeakWindowOptions$Enabled": "<p>Whether to enable an off-peak window.</p> <p>This option is only available when modifying a domain created prior to February 16, 2023, not when creating a new domain. All domains created after this date have the off-peak window enabled by default. You can't disable the off-peak window after it's enabled for a domain.</p>",
         "OptionStatus$PendingDeletion": "<p>Indicates whether the entity is being deleted.</p>",
+        "PackageConfiguration$RequiresRestartForConfigurationUpdate": "<p>This indicates whether a B/G deployment is required for updating the configuration that the plugin is prerequisite for.</p>",
+        "PackageEncryptionOptions$EncryptionEnabled": "<p>This indicates whether encryption is enabled for the package.</p>",
+        "PackageVendingOptions$VendingEnabled": "<p>This indicates whether vending is enabled for the package to determine if package can be used by other users. </p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
         "ScheduledAction$Mandatory": "<p>Whether the action is required or optional.</p>",
@@ -1139,6 +1156,16 @@
       "refs": {
       }
     },
+    "DissociatePackagesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DissociatePackagesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DomainArn": {
       "base": null,
       "refs": {
@@ -1224,6 +1251,7 @@
         "AWSDomainInformation$DomainName": "<p>Name of the domain.</p>",
         "AddDataSourceRequest$DomainName": "<p>The name of the domain to add the data source to.</p>",
         "AssociatePackageRequest$DomainName": "<p>Name of the domain to associate the package with.</p>",
+        "AssociatePackagesRequest$DomainName": null,
         "AuthorizeVpcEndpointAccessRequest$DomainName": "<p>The name of the OpenSearch Service domain to provide access to.</p>",
         "CancelDomainConfigChangeRequest$DomainName": null,
         "CancelServiceSoftwareUpdateRequest$DomainName": "<p>Name of the OpenSearch Service domain that you want to cancel the service software update on.</p>",
@@ -1239,6 +1267,7 @@
         "DescribeDryRunProgressRequest$DomainName": "<p>The name of the domain.</p>",
         "DescribeInstanceTypeLimitsRequest$DomainName": "<p>The name of the domain. Only specify if you need the limits for an existing domain.</p>",
         "DissociatePackageRequest$DomainName": "<p>Name of the domain to dissociate the package from.</p>",
+        "DissociatePackagesRequest$DomainName": null,
         "DomainInfo$DomainName": "<p>Name of the domain.</p>",
         "DomainMaintenanceDetails$DomainName": "<p>The name of the domain.</p>",
         "DomainNameList$member": null,
@@ -1301,6 +1330,8 @@
     "DomainPackageDetailsList": {
       "base": null,
       "refs": {
+        "AssociatePackagesResponse$DomainPackageDetailsList": "<p>List of information about packages that are associated with a domain. </p>",
+        "DissociatePackagesResponse$DomainPackageDetailsList": "<p>A list of package details for the packages that were dissociated from the domain.</p>",
         "ListDomainsForPackageResponse$DomainPackageDetailsList": "<p>Information about all domains associated with a package.</p>",
         "ListPackagesForDomainResponse$DomainPackageDetailsList": "<p>List of all packages associated with a domain.</p>"
       }
@@ -1443,6 +1474,7 @@
     "EngineVersion": {
       "base": null,
       "refs": {
+        "CreatePackageRequest$EngineVersion": "<p>The version of the Amazon OpenSearch Service engine for which is compatible with the package. This can only be specified for package type <code>ZIP-PLUGIN</code> </p>",
         "PackageDetails$EngineVersion": "<p>Version of OpenSearch or Elasticsearch, in the format Elasticsearch_X.Y or OpenSearch_X.Y. Defaults to the latest version of OpenSearch.</p>"
       }
     },
@@ -1822,10 +1854,17 @@
         "AdvancedSecurityOptions$JWTOptions": "<p>Container for information about the JWT configuration of the Amazon OpenSearch Service.</p>"
       }
     },
+    "KeyStoreAccessOption": {
+      "base": "<p>The configuration parameters to enable access to the key store required by the package.</p>",
+      "refs": {
+        "PackageAssociationConfiguration$KeyStoreAccessOption": "<p>The configuration parameters to enable accessing the key store required by the package.</p>"
+      }
+    },
     "KmsKeyId": {
       "base": null,
       "refs": {
-        "EncryptionAtRestOptions$KmsKeyId": "<p>The KMS key ID. Takes the form <code>1a2a3a4-1a2a-3a4a-5a6a-1a2a3a4a5a6a</code>.</p>"
+        "EncryptionAtRestOptions$KmsKeyId": "<p>The KMS key ID. Takes the form <code>1a2a3a4-1a2a-3a4a-5a6a-1a2a3a4a5a6a</code>.</p>",
+        "PackageEncryptionOptions$KmsKeyIdentifier": "<p> KMS key ID for encrypting the package.</p>"
       }
     },
     "LastUpdated": {
@@ -1834,6 +1873,12 @@
         "ChangeProgressStage$LastUpdated": "<p>The most recent updated timestamp of the stage.</p>",
         "DomainPackageDetails$LastUpdated": "<p>Timestamp of the most recent update to the package association status.</p>",
         "PackageDetails$LastUpdatedAt": "<p>Date and time when the package was last updated.</p>"
+      }
+    },
+    "LicenseFilepath": {
+      "base": null,
+      "refs": {
+        "PackageConfiguration$LicenseFilepath": "<p>The relative file path for the license associated with the package.</p>"
       }
     },
     "LimitExceededException": {
@@ -2389,6 +2434,23 @@
         "AWSDomainInformation$OwnerId": "<p>The Amazon Web Services account ID of the domain owner.</p>"
       }
     },
+    "PackageAssociationConfiguration": {
+      "base": "<p>The configuration for associating a package with a domain.</p>",
+      "refs": {
+        "AssociatePackageRequest$AssociationConfiguration": "<p>The configuration for associating a package with an Amazon OpenSearch Service domain.</p>",
+        "DomainPackageDetails$AssociationConfiguration": "<p>The configuration for associating a package with an Amazon OpenSearch Service domain.</p>",
+        "PackageDetailsForAssociation$AssociationConfiguration": "<p>The configuration parameters for associating the package with a domain.</p>"
+      }
+    },
+    "PackageConfiguration": {
+      "base": "<p> The configuration parameters for a package.</p>",
+      "refs": {
+        "CreatePackageRequest$PackageConfiguration": "<p> The configuration parameters for the package being created.</p>",
+        "PackageDetails$AvailablePackageConfiguration": "<p>This represents the available configuration parameters for the package.</p>",
+        "PackageVersionHistory$PackageConfiguration": "<p>The configuration details for a specific version of a package.</p>",
+        "UpdatePackageRequest$PackageConfiguration": "<p>The updated configuration details for a package.</p>"
+      }
+    },
     "PackageDescription": {
       "base": null,
       "refs": {
@@ -2406,10 +2468,30 @@
         "UpdatePackageResponse$PackageDetails": "<p>Information about a package.</p>"
       }
     },
+    "PackageDetailsForAssociation": {
+      "base": "<p> Details of a package that is associated with a domain.</p>",
+      "refs": {
+        "PackageDetailsForAssociationList$member": null
+      }
+    },
+    "PackageDetailsForAssociationList": {
+      "base": null,
+      "refs": {
+        "AssociatePackagesRequest$PackageList": "<p>A list of packages and their prerequisites to be associated with a domain.</p>"
+      }
+    },
     "PackageDetailsList": {
       "base": null,
       "refs": {
         "DescribePackagesResponse$PackageDetailsList": "<p>Basic information about a package.</p>"
+      }
+    },
+    "PackageEncryptionOptions": {
+      "base": "<p>Encryption options for a package.</p>",
+      "refs": {
+        "CreatePackageRequest$PackageEncryptionOptions": "<p>The encryption parameters for the package being created.</p>",
+        "PackageDetails$PackageEncryptionOptions": "<p>Package Encryption Options for a package.</p>",
+        "UpdatePackageRequest$PackageEncryptionOptions": "<p>Encryption options for a package.</p>"
       }
     },
     "PackageID": {
@@ -2423,7 +2505,20 @@
         "GetPackageVersionHistoryResponse$PackageID": "<p>The unique identifier of the package.</p>",
         "ListDomainsForPackageRequest$PackageID": "<p>The unique identifier of the package for which to list associated domains.</p>",
         "PackageDetails$PackageID": "<p>The unique identifier of the package.</p>",
-        "UpdatePackageRequest$PackageID": "<p>The unique identifier for the package.</p>"
+        "PackageDetailsForAssociation$PackageID": "<p>Internal ID of the package that you want to associate with a domain.</p>",
+        "PackageIDList$member": null,
+        "UpdatePackageRequest$PackageID": "<p>The unique identifier for the package.</p>",
+        "UpdatePackageScopeRequest$PackageID": "<p>ID of the package whose scope is being updated.</p>",
+        "UpdatePackageScopeResponse$PackageID": "<p> ID of the package whose scope was updated.</p>"
+      }
+    },
+    "PackageIDList": {
+      "base": null,
+      "refs": {
+        "AssociatePackageRequest$PrerequisitePackageIDList": "<p>A list of package IDs that must be associated with the domain before the package specified in the request can be associated.</p>",
+        "DissociatePackagesRequest$PackageList": "<p>A list of package IDs to be dissociated from a domain.</p>",
+        "DomainPackageDetails$PrerequisitePackageIDList": "<p>A list of package IDs that must be associated with the domain before or with the package can be associated.</p>",
+        "PackageDetailsForAssociation$PrerequisitePackageIDList": "<p>List of package IDs that must be associated with the domain with or before the package can be associated.</p>"
       }
     },
     "PackageName": {
@@ -2432,6 +2527,19 @@
         "CreatePackageRequest$PackageName": "<p>Unique name for the package.</p>",
         "DomainPackageDetails$PackageName": "<p>User-specified name of the package.</p>",
         "PackageDetails$PackageName": "<p>The user-specified name of the package.</p>"
+      }
+    },
+    "PackageOwner": {
+      "base": null,
+      "refs": {
+        "PackageDetails$PackageOwner": "<p>The owner of the package who is allowed to create/update a package and add users to the package scope.</p>"
+      }
+    },
+    "PackageScopeOperationEnum": {
+      "base": null,
+      "refs": {
+        "UpdatePackageScopeRequest$Operation": "<p> The operation to perform on the package scope (e.g., add/remove/override users).</p>",
+        "UpdatePackageScopeResponse$Operation": "<p>The operation that was performed on the package scope.</p>"
       }
     },
     "PackageSource": {
@@ -2453,6 +2561,27 @@
         "CreatePackageRequest$PackageType": "<p>The type of package.</p>",
         "DomainPackageDetails$PackageType": "<p>The type of package.</p>",
         "PackageDetails$PackageType": "<p>The type of package.</p>"
+      }
+    },
+    "PackageUser": {
+      "base": null,
+      "refs": {
+        "PackageUserList$member": null
+      }
+    },
+    "PackageUserList": {
+      "base": null,
+      "refs": {
+        "PackageDetails$AllowListedUserList": "<p> A list of users who are allowed to view and associate the package. This field is only visible to the owner of a package.</p>",
+        "UpdatePackageScopeRequest$PackageUserList": "<p> List of users to be added or removed from the package scope.</p>",
+        "UpdatePackageScopeResponse$PackageUserList": "<p> List of users who have access to the package after the scope update.</p>"
+      }
+    },
+    "PackageVendingOptions": {
+      "base": "<p>The vending options for a package to determine if the package can be used by other users. </p>",
+      "refs": {
+        "CreatePackageRequest$PackageVendingOptions": "<p> The vending options for the package being created. They determine if the package can be vended to other users.</p>",
+        "PackageDetails$PackageVendingOptions": "<p>Package Vending Options for a package.</p>"
       }
     },
     "PackageVersion": {
@@ -2591,6 +2720,13 @@
         "StartDomainMaintenanceResponse$MaintenanceId": "<p>The request ID of requested action.</p>"
       }
     },
+    "RequirementLevel": {
+      "base": null,
+      "refs": {
+        "PackageConfiguration$LicenseRequirement": "<p>The license requirements for the package.</p>",
+        "PackageConfiguration$ConfigurationRequirement": "<p>The configuration requirements for the package.</p>"
+      }
+    },
     "ReservationToken": {
       "base": null,
       "refs": {
@@ -2656,6 +2792,7 @@
         "CognitoOptions$RoleArn": "<p>The <code>AmazonOpenSearchServiceCognitoAccess</code> role that allows OpenSearch Service to configure your user pool and identity pool.</p>",
         "IamIdentityCenterOptions$iamRoleForIdentityCenterApplicationArn": "<p>Amazon Resource Name of the IAM Identity Center's Application created for the OpenSearch Application after enabling IAM Identity Center.</p>",
         "IamIdentityCenterOptionsInput$iamRoleForIdentityCenterApplicationArn": "<p>Amazon Resource Name of IAM Identity Center's application.</p>",
+        "KeyStoreAccessOption$KeyAccessRoleArn": "<p>Role ARN to access the KeyStore Key</p>",
         "S3GlueDataCatalog$RoleArn": "<p>&gt;The Amazon Resource Name (ARN) for the S3 Glue Data Catalog.</p>"
       }
     },
@@ -3113,6 +3250,16 @@
     },
     "UpdatePackageResponse": {
       "base": "<p>Container for the response returned by the <code>UpdatePackage</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "UpdatePackageScopeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdatePackageScopeResponse": {
+      "base": null,
       "refs": {
       }
     },

@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-05-31",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cloudfront",
     "globalEndpoint":"cloudfront.amazonaws.com",
     "protocol":"rest-xml",
@@ -10,8 +11,8 @@
     "serviceFullName":"Amazon CloudFront",
     "serviceId":"CloudFront",
     "signatureVersion":"v4",
-    "uid":"cloudfront-2020-05-31",
-    "auth":["aws.auth#sigv4"]
+    "signingName":"cloudfront",
+    "uid":"cloudfront-2020-05-31"
   },
   "operations":{
     "AssociateAlias":{
@@ -23,11 +24,11 @@
       },
       "input":{"shape":"AssociateAliasRequest"},
       "errors":[
-        {"shape":"InvalidArgument"},
         {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
         {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"AccessDenied"}
+        {"shape":"IllegalUpdate"}
       ]
     },
     "CopyDistribution":{
@@ -44,70 +45,70 @@
       },
       "output":{"shape":"CopyDistributionResult"},
       "errors":[
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"DistributionAlreadyExists"},
-        {"shape":"InvalidOrigin"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchDistribution"},
-        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
-        {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InvalidViewerCertificate"},
-        {"shape":"InvalidMinimumProtocolVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"TooManyDistributions"},
-        {"shape":"InvalidDefaultRootObject"},
-        {"shape":"InvalidRelativePath"},
-        {"shape":"InvalidErrorCode"},
-        {"shape":"InvalidResponseCode"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidRequiredProtocol"},
-        {"shape":"NoSuchOrigin"},
-        {"shape":"TooManyOrigins"},
-        {"shape":"TooManyOriginGroupsPerDistribution"},
-        {"shape":"TooManyCacheBehaviors"},
-        {"shape":"TooManyCookieNamesInWhiteList"},
-        {"shape":"InvalidForwardCookies"},
-        {"shape":"TooManyHeadersInForwardedValues"},
-        {"shape":"InvalidHeadersForS3Origin"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"TooManyCertificates"},
-        {"shape":"InvalidLocationCode"},
-        {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"InvalidProtocolSettings"},
-        {"shape":"InvalidTTLOrder"},
-        {"shape":"InvalidWebACLId"},
-        {"shape":"TooManyOriginCustomHeaders"},
-        {"shape":"TooManyQueryStringParameters"},
-        {"shape":"InvalidQueryStringParameters"},
-        {"shape":"TooManyDistributionsWithLambdaAssociations"},
-        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
-        {"shape":"TooManyLambdaFunctionAssociations"},
-        {"shape":"InvalidLambdaFunctionAssociation"},
-        {"shape":"TooManyDistributionsWithFunctionAssociations"},
-        {"shape":"TooManyFunctionAssociations"},
-        {"shape":"InvalidFunctionAssociation"},
-        {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"InvalidOriginKeepaliveTimeout"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
-        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
-        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
-        {"shape":"NoSuchCachePolicy"},
-        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
-        {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidQueryStringParameters"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"InvalidProtocolSettings"},
+        {"shape":"TooManyFunctionAssociations"},
+        {"shape":"TooManyOriginCustomHeaders"},
+        {"shape":"InvalidOrigin"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
+        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"TooManyDistributionsWithFunctionAssociations"},
+        {"shape":"TooManyOriginGroupsPerDistribution"},
+        {"shape":"TooManyDistributions"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
+        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginReadTimeout"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidWebACLId"},
+        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"TooManyLambdaFunctionAssociations"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
+        {"shape":"TooManyQueryStringParameters"},
+        {"shape":"RealtimeLogConfigOwnerMismatch"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidLambdaFunctionAssociation"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"TooManyCertificates"},
         {"shape":"TrustedKeyGroupDoesNotExist"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"NoSuchRealtimeLogConfig"},
-        {"shape":"RealtimeLogConfigOwnerMismatch"}
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidFunctionAssociation"},
+        {"shape":"TooManyDistributionsWithLambdaAssociations"},
+        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"DistributionAlreadyExists"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyCacheBehaviors"}
       ]
     },
     "CreateCachePolicy":{
@@ -121,12 +122,12 @@
       "output":{"shape":"CreateCachePolicyResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"CachePolicyAlreadyExists"},
-        {"shape":"TooManyCachePolicies"},
         {"shape":"TooManyHeadersInCachePolicy"},
+        {"shape":"CachePolicyAlreadyExists"},
         {"shape":"TooManyCookiesInCachePolicy"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"TooManyCachePolicies"},
+        {"shape":"InvalidArgument"},
         {"shape":"TooManyQueryStringsInCachePolicy"}
       ]
     },
@@ -140,11 +141,11 @@
       "input":{"shape":"CreateCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"CreateCloudFrontOriginAccessIdentityResult"},
       "errors":[
-        {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"},
         {"shape":"MissingBody"},
         {"shape":"TooManyCloudFrontOriginAccessIdentities"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"InvalidArgument"},
-        {"shape":"InconsistentQuantities"}
+        {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"}
       ]
     },
     "CreateContinuousDeploymentPolicy":{
@@ -158,11 +159,11 @@
       "output":{"shape":"CreateContinuousDeploymentPolicyResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
+        {"shape":"TooManyContinuousDeploymentPolicies"},
+        {"shape":"StagingDistributionInUse"},
         {"shape":"InconsistentQuantities"},
         {"shape":"ContinuousDeploymentPolicyAlreadyExists"},
-        {"shape":"TooManyContinuousDeploymentPolicies"},
-        {"shape":"StagingDistributionInUse"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateDistribution":{
@@ -175,71 +176,71 @@
       "input":{"shape":"CreateDistributionRequest"},
       "output":{"shape":"CreateDistributionResult"},
       "errors":[
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"DistributionAlreadyExists"},
-        {"shape":"InvalidOrigin"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
-        {"shape":"IllegalOriginAccessConfiguration"},
-        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"AccessDenied"},
-        {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InvalidViewerCertificate"},
-        {"shape":"InvalidMinimumProtocolVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"TooManyDistributions"},
+        {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
         {"shape":"InvalidDefaultRootObject"},
-        {"shape":"InvalidRelativePath"},
-        {"shape":"InvalidErrorCode"},
-        {"shape":"InvalidResponseCode"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidRequiredProtocol"},
-        {"shape":"NoSuchOrigin"},
-        {"shape":"TooManyOrigins"},
-        {"shape":"TooManyOriginGroupsPerDistribution"},
-        {"shape":"TooManyCacheBehaviors"},
-        {"shape":"TooManyCookieNamesInWhiteList"},
-        {"shape":"InvalidForwardCookies"},
-        {"shape":"TooManyHeadersInForwardedValues"},
-        {"shape":"InvalidHeadersForS3Origin"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"TooManyCertificates"},
-        {"shape":"InvalidLocationCode"},
-        {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"InvalidProtocolSettings"},
-        {"shape":"InvalidTTLOrder"},
-        {"shape":"InvalidWebACLId"},
-        {"shape":"TooManyOriginCustomHeaders"},
-        {"shape":"TooManyQueryStringParameters"},
+        {"shape":"InvalidDomainNameForOriginAccessControl"},
         {"shape":"InvalidQueryStringParameters"},
-        {"shape":"TooManyDistributionsWithLambdaAssociations"},
-        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
-        {"shape":"TooManyLambdaFunctionAssociations"},
-        {"shape":"InvalidLambdaFunctionAssociation"},
-        {"shape":"TooManyDistributionsWithFunctionAssociations"},
-        {"shape":"TooManyFunctionAssociations"},
-        {"shape":"InvalidFunctionAssociation"},
-        {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
         {"shape":"NoSuchFieldLevelEncryptionConfig"},
-        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
-        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"IllegalOriginAccessConfiguration"},
+        {"shape":"InvalidProtocolSettings"},
+        {"shape":"TooManyFunctionAssociations"},
+        {"shape":"TooManyOriginCustomHeaders"},
+        {"shape":"InvalidOrigin"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"InvalidMinimumProtocolVersion"},
         {"shape":"NoSuchCachePolicy"},
-        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
-        {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
         {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
-        {"shape":"TrustedKeyGroupDoesNotExist"},
-        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"TooManyDistributionsWithFunctionAssociations"},
+        {"shape":"TooManyOriginGroupsPerDistribution"},
+        {"shape":"TooManyDistributions"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
+        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginReadTimeout"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidWebACLId"},
+        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"TooManyLambdaFunctionAssociations"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"NoSuchContinuousDeploymentPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
+        {"shape":"TooManyQueryStringParameters"},
         {"shape":"RealtimeLogConfigOwnerMismatch"},
         {"shape":"ContinuousDeploymentPolicyInUse"},
-        {"shape":"NoSuchContinuousDeploymentPolicy"},
-        {"shape":"InvalidDomainNameForOriginAccessControl"}
+        {"shape":"MissingBody"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidLambdaFunctionAssociation"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"TooManyCertificates"},
+        {"shape":"TrustedKeyGroupDoesNotExist"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidFunctionAssociation"},
+        {"shape":"TooManyDistributionsWithLambdaAssociations"},
+        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"DistributionAlreadyExists"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyCacheBehaviors"}
       ]
     },
     "CreateDistributionWithTags":{
@@ -252,72 +253,72 @@
       "input":{"shape":"CreateDistributionWithTagsRequest"},
       "output":{"shape":"CreateDistributionWithTagsResult"},
       "errors":[
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"DistributionAlreadyExists"},
-        {"shape":"InvalidOrigin"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
-        {"shape":"IllegalOriginAccessConfiguration"},
         {"shape":"AccessDenied"},
-        {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InvalidViewerCertificate"},
-        {"shape":"InvalidMinimumProtocolVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"TooManyDistributions"},
-        {"shape":"InvalidDefaultRootObject"},
-        {"shape":"InvalidRelativePath"},
-        {"shape":"InvalidErrorCode"},
-        {"shape":"InvalidResponseCode"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidRequiredProtocol"},
-        {"shape":"NoSuchOrigin"},
-        {"shape":"TooManyOrigins"},
-        {"shape":"TooManyOriginGroupsPerDistribution"},
-        {"shape":"TooManyCacheBehaviors"},
-        {"shape":"TooManyCookieNamesInWhiteList"},
-        {"shape":"InvalidForwardCookies"},
-        {"shape":"TooManyHeadersInForwardedValues"},
-        {"shape":"InvalidHeadersForS3Origin"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"TooManyCertificates"},
-        {"shape":"InvalidLocationCode"},
-        {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"InvalidProtocolSettings"},
-        {"shape":"InvalidTTLOrder"},
-        {"shape":"InvalidWebACLId"},
-        {"shape":"TooManyOriginCustomHeaders"},
-        {"shape":"InvalidTagging"},
-        {"shape":"TooManyQueryStringParameters"},
-        {"shape":"InvalidQueryStringParameters"},
-        {"shape":"TooManyDistributionsWithLambdaAssociations"},
-        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
-        {"shape":"TooManyLambdaFunctionAssociations"},
-        {"shape":"InvalidLambdaFunctionAssociation"},
-        {"shape":"TooManyDistributionsWithFunctionAssociations"},
-        {"shape":"TooManyFunctionAssociations"},
-        {"shape":"InvalidFunctionAssociation"},
-        {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"InvalidOriginKeepaliveTimeout"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
-        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
-        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
-        {"shape":"NoSuchCachePolicy"},
-        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
-        {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidDomainNameForOriginAccessControl"},
+        {"shape":"InvalidQueryStringParameters"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"IllegalOriginAccessConfiguration"},
+        {"shape":"InvalidProtocolSettings"},
+        {"shape":"TooManyFunctionAssociations"},
+        {"shape":"TooManyOriginCustomHeaders"},
+        {"shape":"InvalidOrigin"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
-        {"shape":"TrustedKeyGroupDoesNotExist"},
-        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"TooManyDistributionsWithFunctionAssociations"},
+        {"shape":"TooManyOriginGroupsPerDistribution"},
+        {"shape":"TooManyDistributions"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
+        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginReadTimeout"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidWebACLId"},
+        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"TooManyLambdaFunctionAssociations"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"InvalidTagging"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"NoSuchContinuousDeploymentPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
+        {"shape":"TooManyQueryStringParameters"},
         {"shape":"RealtimeLogConfigOwnerMismatch"},
         {"shape":"ContinuousDeploymentPolicyInUse"},
-        {"shape":"NoSuchContinuousDeploymentPolicy"},
-        {"shape":"InvalidDomainNameForOriginAccessControl"}
+        {"shape":"MissingBody"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidLambdaFunctionAssociation"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"TooManyCertificates"},
+        {"shape":"TrustedKeyGroupDoesNotExist"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidFunctionAssociation"},
+        {"shape":"TooManyDistributionsWithLambdaAssociations"},
+        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"DistributionAlreadyExists"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyCacheBehaviors"}
       ]
     },
     "CreateFieldLevelEncryptionConfig":{
@@ -330,14 +331,14 @@
       "input":{"shape":"CreateFieldLevelEncryptionConfigRequest"},
       "output":{"shape":"CreateFieldLevelEncryptionConfigResult"},
       "errors":[
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"NoSuchFieldLevelEncryptionProfile"},
-        {"shape":"FieldLevelEncryptionConfigAlreadyExists"},
-        {"shape":"TooManyFieldLevelEncryptionConfigs"},
+        {"shape":"QueryArgProfileEmpty"},
         {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
         {"shape":"TooManyFieldLevelEncryptionContentTypeProfiles"},
-        {"shape":"QueryArgProfileEmpty"}
+        {"shape":"FieldLevelEncryptionConfigAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"TooManyFieldLevelEncryptionConfigs"},
+        {"shape":"NoSuchFieldLevelEncryptionProfile"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateFieldLevelEncryptionProfile":{
@@ -350,14 +351,14 @@
       "input":{"shape":"CreateFieldLevelEncryptionProfileRequest"},
       "output":{"shape":"CreateFieldLevelEncryptionProfileResult"},
       "errors":[
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"NoSuchPublicKey"},
+        {"shape":"TooManyFieldLevelEncryptionFieldPatterns"},
         {"shape":"FieldLevelEncryptionProfileAlreadyExists"},
+        {"shape":"NoSuchPublicKey"},
         {"shape":"FieldLevelEncryptionProfileSizeExceeded"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"TooManyFieldLevelEncryptionProfiles"},
         {"shape":"TooManyFieldLevelEncryptionEncryptionEntities"},
-        {"shape":"TooManyFieldLevelEncryptionFieldPatterns"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateFunction":{
@@ -374,11 +375,11 @@
       },
       "output":{"shape":"CreateFunctionResult"},
       "errors":[
-        {"shape":"TooManyFunctions"},
         {"shape":"FunctionAlreadyExists"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"FunctionSizeLimitExceeded"},
         {"shape":"InvalidArgument"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"TooManyFunctions"}
       ]
     },
     "CreateInvalidation":{
@@ -391,13 +392,13 @@
       "input":{"shape":"CreateInvalidationRequest"},
       "output":{"shape":"CreateInvalidationResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"MissingBody"},
-        {"shape":"InvalidArgument"},
         {"shape":"NoSuchDistribution"},
-        {"shape":"BatchTooLarge"},
+        {"shape":"AccessDenied"},
         {"shape":"TooManyInvalidationsInProgress"},
-        {"shape":"InconsistentQuantities"}
+        {"shape":"MissingBody"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"BatchTooLarge"}
       ]
     },
     "CreateKeyGroup":{
@@ -410,17 +411,17 @@
       "input":{"shape":"CreateKeyGroupRequest"},
       "output":{"shape":"CreateKeyGroupResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"KeyGroupAlreadyExists"},
+        {"shape":"TooManyPublicKeysInKeyGroup"},
         {"shape":"TooManyKeyGroups"},
-        {"shape":"TooManyPublicKeysInKeyGroup"}
+        {"shape":"InvalidArgument"},
+        {"shape":"KeyGroupAlreadyExists"}
       ]
     },
     "CreateKeyValueStore":{
       "name":"CreateKeyValueStore2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/key-value-store/",
+        "requestUri":"/2020-05-31/key-value-store",
         "responseCode":201
       },
       "input":{
@@ -431,24 +432,25 @@
       "output":{"shape":"CreateKeyValueStoreResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"EntityLimitExceeded"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"EntityAlreadyExists"},
-        {"shape":"EntitySizeLimitExceeded"},
         {"shape":"InvalidArgument"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"EntitySizeLimitExceeded"}
       ]
     },
     "CreateMonitoringSubscription":{
       "name":"CreateMonitoringSubscription2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription/"
+        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription",
+        "responseCode":200
       },
       "input":{"shape":"CreateMonitoringSubscriptionRequest"},
       "output":{"shape":"CreateMonitoringSubscriptionResult"},
       "errors":[
-        {"shape":"AccessDenied"},
         {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"},
         {"shape":"MonitoringSubscriptionAlreadyExists"},
         {"shape":"UnsupportedOperation"}
       ]
@@ -479,13 +481,13 @@
       "output":{"shape":"CreateOriginRequestPolicyResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"OriginRequestPolicyAlreadyExists"},
-        {"shape":"TooManyOriginRequestPolicies"},
         {"shape":"TooManyHeadersInOriginRequestPolicy"},
         {"shape":"TooManyCookiesInOriginRequestPolicy"},
-        {"shape":"TooManyQueryStringsInOriginRequestPolicy"}
+        {"shape":"InconsistentQuantities"},
+        {"shape":"OriginRequestPolicyAlreadyExists"},
+        {"shape":"TooManyQueryStringsInOriginRequestPolicy"},
+        {"shape":"InvalidArgument"},
+        {"shape":"TooManyOriginRequestPolicies"}
       ]
     },
     "CreatePublicKey":{
@@ -498,9 +500,9 @@
       "input":{"shape":"CreatePublicKeyRequest"},
       "output":{"shape":"CreatePublicKeyResult"},
       "errors":[
+        {"shape":"TooManyPublicKeys"},
         {"shape":"PublicKeyAlreadyExists"},
-        {"shape":"InvalidArgument"},
-        {"shape":"TooManyPublicKeys"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateRealtimeLogConfig":{
@@ -517,10 +519,10 @@
       },
       "output":{"shape":"CreateRealtimeLogConfigResult"},
       "errors":[
+        {"shape":"AccessDenied"},
         {"shape":"RealtimeLogConfigAlreadyExists"},
         {"shape":"TooManyRealtimeLogConfigs"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateResponseHeadersPolicy":{
@@ -534,13 +536,13 @@
       "output":{"shape":"CreateResponseHeadersPolicyResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"ResponseHeadersPolicyAlreadyExists"},
-        {"shape":"TooManyResponseHeadersPolicies"},
         {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"},
+        {"shape":"ResponseHeadersPolicyAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"TooLongCSPInResponseHeadersPolicy"},
-        {"shape":"TooManyRemoveHeadersInResponseHeadersPolicy"}
+        {"shape":"InvalidArgument"},
+        {"shape":"TooManyRemoveHeadersInResponseHeadersPolicy"},
+        {"shape":"TooManyResponseHeadersPolicies"}
       ]
     },
     "CreateStreamingDistribution":{
@@ -553,19 +555,19 @@
       "input":{"shape":"CreateStreamingDistributionRequest"},
       "output":{"shape":"CreateStreamingDistributionResult"},
       "errors":[
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"StreamingDistributionAlreadyExists"},
-        {"shape":"InvalidOrigin"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
         {"shape":"AccessDenied"},
+        {"shape":"StreamingDistributionAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"InvalidArgument"},
         {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"TooManyStreamingDistributions"},
         {"shape":"MissingBody"},
         {"shape":"TooManyStreamingDistributionCNAMEs"},
-        {"shape":"TooManyStreamingDistributions"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InconsistentQuantities"}
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"InvalidOrigin"}
       ]
     },
     "CreateStreamingDistributionWithTags":{
@@ -578,20 +580,20 @@
       "input":{"shape":"CreateStreamingDistributionWithTagsRequest"},
       "output":{"shape":"CreateStreamingDistributionWithTagsResult"},
       "errors":[
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"StreamingDistributionAlreadyExists"},
-        {"shape":"InvalidOrigin"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
         {"shape":"AccessDenied"},
+        {"shape":"StreamingDistributionAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
         {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"TooManyStreamingDistributions"},
         {"shape":"MissingBody"},
         {"shape":"TooManyStreamingDistributionCNAMEs"},
-        {"shape":"TooManyStreamingDistributions"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidTagging"}
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"InvalidOrigin"}
       ]
     },
     "DeleteCachePolicy":{
@@ -603,12 +605,12 @@
       },
       "input":{"shape":"DeleteCachePolicyRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
         {"shape":"IllegalDelete"},
-        {"shape":"CachePolicyInUse"}
+        {"shape":"CachePolicyInUse"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteCloudFrontOriginAccessIdentity":{
@@ -620,10 +622,10 @@
       },
       "input":{"shape":"DeleteCloudFrontOriginAccessIdentityRequest"},
       "errors":[
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
-        {"shape":"PreconditionFailed"},
         {"shape":"CloudFrontOriginAccessIdentityInUse"}
       ]
     },
@@ -636,12 +638,12 @@
       },
       "input":{"shape":"DeleteContinuousDeploymentPolicyRequest"},
       "errors":[
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"},
-        {"shape":"PreconditionFailed"},
         {"shape":"ContinuousDeploymentPolicyInUse"},
-        {"shape":"NoSuchContinuousDeploymentPolicy"}
+        {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchContinuousDeploymentPolicy"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteDistribution":{
@@ -653,11 +655,11 @@
       },
       "input":{"shape":"DeleteDistributionRequest"},
       "errors":[
+        {"shape":"NoSuchDistribution"},
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
         {"shape":"DistributionNotDisabled"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchDistribution"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteFieldLevelEncryptionConfig":{
@@ -669,11 +671,11 @@
       },
       "input":{"shape":"DeleteFieldLevelEncryptionConfigRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
         {"shape":"PreconditionFailed"},
-        {"shape":"FieldLevelEncryptionConfigInUse"}
+        {"shape":"AccessDenied"},
+        {"shape":"FieldLevelEncryptionConfigInUse"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteFieldLevelEncryptionProfile":{
@@ -685,11 +687,11 @@
       },
       "input":{"shape":"DeleteFieldLevelEncryptionProfileRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFieldLevelEncryptionProfile"},
         {"shape":"PreconditionFailed"},
-        {"shape":"FieldLevelEncryptionProfileInUse"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchFieldLevelEncryptionProfile"},
+        {"shape":"FieldLevelEncryptionProfileInUse"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteFunction":{
@@ -701,11 +703,11 @@
       },
       "input":{"shape":"DeleteFunctionRequest"},
       "errors":[
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFunctionExists"},
-        {"shape":"FunctionInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"FunctionInUse"},
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteKeyGroup":{
@@ -717,10 +719,10 @@
       },
       "input":{"shape":"DeleteKeyGroupRequest"},
       "errors":[
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchResource"},
+        {"shape":"ResourceInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"ResourceInUse"}
+        {"shape":"NoSuchResource"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteKeyValueStore":{
@@ -732,12 +734,12 @@
       },
       "input":{"shape":"DeleteKeyValueStoreRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"EntityNotFound"},
         {"shape":"CannotDeleteEntityWhileInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidIfMatchVersion"}
       ],
       "idempotent":true
     },
@@ -745,15 +747,16 @@
       "name":"DeleteMonitoringSubscription2020_05_31",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription/"
+        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription",
+        "responseCode":200
       },
       "input":{"shape":"DeleteMonitoringSubscriptionRequest"},
       "output":{"shape":"DeleteMonitoringSubscriptionResult"},
       "errors":[
-        {"shape":"AccessDenied"},
         {"shape":"NoSuchDistribution"},
-        {"shape":"NoSuchMonitoringSubscription"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"NoSuchMonitoringSubscription"}
       ]
     },
     "DeleteOriginAccessControl":{
@@ -765,11 +768,11 @@
       },
       "input":{"shape":"DeleteOriginAccessControlRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchOriginAccessControl"},
         {"shape":"PreconditionFailed"},
-        {"shape":"OriginAccessControlInUse"}
+        {"shape":"AccessDenied"},
+        {"shape":"OriginAccessControlInUse"},
+        {"shape":"NoSuchOriginAccessControl"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteOriginRequestPolicy":{
@@ -781,11 +784,11 @@
       },
       "input":{"shape":"DeleteOriginRequestPolicyRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
         {"shape":"IllegalDelete"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"InvalidIfMatchVersion"},
         {"shape":"OriginRequestPolicyInUse"}
       ]
     },
@@ -798,18 +801,18 @@
       },
       "input":{"shape":"DeletePublicKeyRequest"},
       "errors":[
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
-        {"shape":"PublicKeyInUse"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchPublicKey"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"PublicKeyInUse"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteRealtimeLogConfig":{
       "name":"DeleteRealtimeLogConfig2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/delete-realtime-log-config/",
+        "requestUri":"/2020-05-31/delete-realtime-log-config",
         "responseCode":204
       },
       "input":{
@@ -818,10 +821,10 @@
         "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
       },
       "errors":[
-        {"shape":"NoSuchRealtimeLogConfig"},
-        {"shape":"RealtimeLogConfigInUse"},
+        {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"RealtimeLogConfigInUse"},
+        {"shape":"NoSuchRealtimeLogConfig"}
       ]
     },
     "DeleteResponseHeadersPolicy":{
@@ -833,12 +836,12 @@
       },
       "input":{"shape":"DeleteResponseHeadersPolicyRequest"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"ResponseHeadersPolicyInUse"},
         {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
         {"shape":"IllegalDelete"},
-        {"shape":"ResponseHeadersPolicyInUse"}
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DeleteStreamingDistribution":{
@@ -850,98 +853,105 @@
       },
       "input":{"shape":"DeleteStreamingDistributionRequest"},
       "errors":[
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
         {"shape":"StreamingDistributionNotDisabled"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchStreamingDistribution"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "DescribeFunction":{
       "name":"DescribeFunction2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/function/{Name}/describe"
+        "requestUri":"/2020-05-31/function/{Name}/describe",
+        "responseCode":200
       },
       "input":{"shape":"DescribeFunctionRequest"},
       "output":{"shape":"DescribeFunctionResult"},
       "errors":[
-        {"shape":"NoSuchFunctionExists"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"NoSuchFunctionExists"}
       ]
     },
     "DescribeKeyValueStore":{
       "name":"DescribeKeyValueStore2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/key-value-store/{Name}"
+        "requestUri":"/2020-05-31/key-value-store/{Name}",
+        "responseCode":200
       },
       "input":{"shape":"DescribeKeyValueStoreRequest"},
       "output":{"shape":"DescribeKeyValueStoreResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
         {"shape":"EntityNotFound"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "GetCachePolicy":{
       "name":"GetCachePolicy2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/cache-policy/{Id}"
+        "requestUri":"/2020-05-31/cache-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetCachePolicyRequest"},
       "output":{"shape":"GetCachePolicyResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"NoSuchCachePolicy"}
+        {"shape":"NoSuchCachePolicy"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetCachePolicyConfig":{
       "name":"GetCachePolicyConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/cache-policy/{Id}/config"
+        "requestUri":"/2020-05-31/cache-policy/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetCachePolicyConfigRequest"},
       "output":{"shape":"GetCachePolicyConfigResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"NoSuchCachePolicy"}
+        {"shape":"NoSuchCachePolicy"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetCloudFrontOriginAccessIdentity":{
       "name":"GetCloudFrontOriginAccessIdentity2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}"
+        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityResult"},
       "errors":[
-        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
     "GetCloudFrontOriginAccessIdentityConfig":{
       "name":"GetCloudFrontOriginAccessIdentityConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetCloudFrontOriginAccessIdentityConfigRequest"},
       "output":{"shape":"GetCloudFrontOriginAccessIdentityConfigResult"},
       "errors":[
-        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
     "GetContinuousDeploymentPolicy":{
       "name":"GetContinuousDeploymentPolicy2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}"
+        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetContinuousDeploymentPolicyRequest"},
       "output":{"shape":"GetContinuousDeploymentPolicyResult"},
@@ -954,7 +964,8 @@
       "name":"GetContinuousDeploymentPolicyConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}/config"
+        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetContinuousDeploymentPolicyConfigRequest"},
       "output":{"shape":"GetContinuousDeploymentPolicyConfigResult"},
@@ -967,7 +978,8 @@
       "name":"GetDistribution2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distribution/{Id}"
+        "requestUri":"/2020-05-31/distribution/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetDistributionRequest"},
       "output":{"shape":"GetDistributionResult"},
@@ -980,7 +992,8 @@
       "name":"GetDistributionConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distribution/{Id}/config"
+        "requestUri":"/2020-05-31/distribution/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetDistributionConfigRequest"},
       "output":{"shape":"GetDistributionConfigResult"},
@@ -993,7 +1006,8 @@
       "name":"GetFieldLevelEncryption2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption/{Id}"
+        "requestUri":"/2020-05-31/field-level-encryption/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetFieldLevelEncryptionRequest"},
       "output":{"shape":"GetFieldLevelEncryptionResult"},
@@ -1006,7 +1020,8 @@
       "name":"GetFieldLevelEncryptionConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption/{Id}/config"
+        "requestUri":"/2020-05-31/field-level-encryption/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetFieldLevelEncryptionConfigRequest"},
       "output":{"shape":"GetFieldLevelEncryptionConfigResult"},
@@ -1019,7 +1034,8 @@
       "name":"GetFieldLevelEncryptionProfile2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}"
+        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetFieldLevelEncryptionProfileRequest"},
       "output":{"shape":"GetFieldLevelEncryptionProfileResult"},
@@ -1032,7 +1048,8 @@
       "name":"GetFieldLevelEncryptionProfileConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}/config"
+        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetFieldLevelEncryptionProfileConfigRequest"},
       "output":{"shape":"GetFieldLevelEncryptionProfileConfigResult"},
@@ -1045,34 +1062,37 @@
       "name":"GetFunction2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/function/{Name}"
+        "requestUri":"/2020-05-31/function/{Name}",
+        "responseCode":200
       },
       "input":{"shape":"GetFunctionRequest"},
       "output":{"shape":"GetFunctionResult"},
       "errors":[
-        {"shape":"NoSuchFunctionExists"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"NoSuchFunctionExists"}
       ]
     },
     "GetInvalidation":{
       "name":"GetInvalidation2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distribution/{DistributionId}/invalidation/{Id}"
+        "requestUri":"/2020-05-31/distribution/{DistributionId}/invalidation/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetInvalidationRequest"},
       "output":{"shape":"GetInvalidationResult"},
       "errors":[
-        {"shape":"NoSuchInvalidation"},
         {"shape":"NoSuchDistribution"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchInvalidation"}
       ]
     },
     "GetKeyGroup":{
       "name":"GetKeyGroup2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/key-group/{Id}"
+        "requestUri":"/2020-05-31/key-group/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetKeyGroupRequest"},
       "output":{"shape":"GetKeyGroupResult"},
@@ -1084,7 +1104,8 @@
       "name":"GetKeyGroupConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/key-group/{Id}/config"
+        "requestUri":"/2020-05-31/key-group/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetKeyGroupConfigRequest"},
       "output":{"shape":"GetKeyGroupConfigResult"},
@@ -1096,48 +1117,52 @@
       "name":"GetMonitoringSubscription2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription/"
+        "requestUri":"/2020-05-31/distributions/{DistributionId}/monitoring-subscription",
+        "responseCode":200
       },
       "input":{"shape":"GetMonitoringSubscriptionRequest"},
       "output":{"shape":"GetMonitoringSubscriptionResult"},
       "errors":[
-        {"shape":"AccessDenied"},
         {"shape":"NoSuchDistribution"},
-        {"shape":"NoSuchMonitoringSubscription"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"NoSuchMonitoringSubscription"}
       ]
     },
     "GetOriginAccessControl":{
       "name":"GetOriginAccessControl2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-control/{Id}"
+        "requestUri":"/2020-05-31/origin-access-control/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetOriginAccessControlRequest"},
       "output":{"shape":"GetOriginAccessControlResult"},
       "errors":[
-        {"shape":"NoSuchOriginAccessControl"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchOriginAccessControl"}
       ]
     },
     "GetOriginAccessControlConfig":{
       "name":"GetOriginAccessControlConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-control/{Id}/config"
+        "requestUri":"/2020-05-31/origin-access-control/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetOriginAccessControlConfigRequest"},
       "output":{"shape":"GetOriginAccessControlConfigResult"},
       "errors":[
-        {"shape":"NoSuchOriginAccessControl"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchOriginAccessControl"}
       ]
     },
     "GetOriginRequestPolicy":{
       "name":"GetOriginRequestPolicy2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-request-policy/{Id}"
+        "requestUri":"/2020-05-31/origin-request-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetOriginRequestPolicyRequest"},
       "output":{"shape":"GetOriginRequestPolicyResult"},
@@ -1150,7 +1175,8 @@
       "name":"GetOriginRequestPolicyConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-request-policy/{Id}/config"
+        "requestUri":"/2020-05-31/origin-request-policy/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetOriginRequestPolicyConfigRequest"},
       "output":{"shape":"GetOriginRequestPolicyConfigResult"},
@@ -1163,7 +1189,8 @@
       "name":"GetPublicKey2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/public-key/{Id}"
+        "requestUri":"/2020-05-31/public-key/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetPublicKeyRequest"},
       "output":{"shape":"GetPublicKeyResult"},
@@ -1176,7 +1203,8 @@
       "name":"GetPublicKeyConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/public-key/{Id}/config"
+        "requestUri":"/2020-05-31/public-key/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetPublicKeyConfigRequest"},
       "output":{"shape":"GetPublicKeyConfigResult"},
@@ -1189,7 +1217,8 @@
       "name":"GetRealtimeLogConfig2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/get-realtime-log-config/"
+        "requestUri":"/2020-05-31/get-realtime-log-config",
+        "responseCode":200
       },
       "input":{
         "shape":"GetRealtimeLogConfigRequest",
@@ -1198,16 +1227,17 @@
       },
       "output":{"shape":"GetRealtimeLogConfigResult"},
       "errors":[
-        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"NoSuchRealtimeLogConfig"}
       ]
     },
     "GetResponseHeadersPolicy":{
       "name":"GetResponseHeadersPolicy2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/response-headers-policy/{Id}"
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetResponseHeadersPolicyRequest"},
       "output":{"shape":"GetResponseHeadersPolicyResult"},
@@ -1220,7 +1250,8 @@
       "name":"GetResponseHeadersPolicyConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/response-headers-policy/{Id}/config"
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetResponseHeadersPolicyConfigRequest"},
       "output":{"shape":"GetResponseHeadersPolicyConfigResult"},
@@ -1233,39 +1264,42 @@
       "name":"GetStreamingDistribution2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/streaming-distribution/{Id}"
+        "requestUri":"/2020-05-31/streaming-distribution/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"GetStreamingDistributionRequest"},
       "output":{"shape":"GetStreamingDistributionResult"},
       "errors":[
-        {"shape":"NoSuchStreamingDistribution"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchStreamingDistribution"}
       ]
     },
     "GetStreamingDistributionConfig":{
       "name":"GetStreamingDistributionConfig2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/streaming-distribution/{Id}/config"
+        "requestUri":"/2020-05-31/streaming-distribution/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"GetStreamingDistributionConfigRequest"},
       "output":{"shape":"GetStreamingDistributionConfigResult"},
       "errors":[
-        {"shape":"NoSuchStreamingDistribution"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchStreamingDistribution"}
       ]
     },
     "ListCachePolicies":{
       "name":"ListCachePolicies2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/cache-policy"
+        "requestUri":"/2020-05-31/cache-policy",
+        "responseCode":200
       },
       "input":{"shape":"ListCachePoliciesRequest"},
       "output":{"shape":"ListCachePoliciesResult"},
       "errors":[
-        {"shape":"AccessDenied"},
         {"shape":"NoSuchCachePolicy"},
+        {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1273,7 +1307,8 @@
       "name":"ListCloudFrontOriginAccessIdentities2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-identity/cloudfront"
+        "requestUri":"/2020-05-31/origin-access-identity/cloudfront",
+        "responseCode":200
       },
       "input":{"shape":"ListCloudFrontOriginAccessIdentitiesRequest"},
       "output":{"shape":"ListCloudFrontOriginAccessIdentitiesResult"},
@@ -1291,21 +1326,22 @@
       "input":{"shape":"ListConflictingAliasesRequest"},
       "output":{"shape":"ListConflictingAliasesResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"NoSuchDistribution"}
+        {"shape":"NoSuchDistribution"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListContinuousDeploymentPolicies":{
       "name":"ListContinuousDeploymentPolicies2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/continuous-deployment-policy"
+        "requestUri":"/2020-05-31/continuous-deployment-policy",
+        "responseCode":200
       },
       "input":{"shape":"ListContinuousDeploymentPoliciesRequest"},
       "output":{"shape":"ListContinuousDeploymentPoliciesResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
         {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
         {"shape":"NoSuchContinuousDeploymentPolicy"}
       ]
     },
@@ -1313,7 +1349,8 @@
       "name":"ListDistributions2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distribution"
+        "requestUri":"/2020-05-31/distribution",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsRequest"},
       "output":{"shape":"ListDistributionsResult"},
@@ -1325,48 +1362,52 @@
       "name":"ListDistributionsByCachePolicyId2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributionsByCachePolicyId/{CachePolicyId}"
+        "requestUri":"/2020-05-31/distributionsByCachePolicyId/{CachePolicyId}",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsByCachePolicyIdRequest"},
       "output":{"shape":"ListDistributionsByCachePolicyIdResult"},
       "errors":[
         {"shape":"NoSuchCachePolicy"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributionsByKeyGroup":{
       "name":"ListDistributionsByKeyGroup2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributionsByKeyGroupId/{KeyGroupId}"
+        "requestUri":"/2020-05-31/distributionsByKeyGroupId/{KeyGroupId}",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsByKeyGroupRequest"},
       "output":{"shape":"ListDistributionsByKeyGroupResult"},
       "errors":[
-        {"shape":"NoSuchResource"},
-        {"shape":"InvalidArgument"}
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchResource"}
       ]
     },
     "ListDistributionsByOriginRequestPolicyId":{
       "name":"ListDistributionsByOriginRequestPolicyId2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributionsByOriginRequestPolicyId/{OriginRequestPolicyId}"
+        "requestUri":"/2020-05-31/distributionsByOriginRequestPolicyId/{OriginRequestPolicyId}",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsByOriginRequestPolicyIdRequest"},
       "output":{"shape":"ListDistributionsByOriginRequestPolicyIdResult"},
       "errors":[
+        {"shape":"AccessDenied"},
         {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributionsByRealtimeLogConfig":{
       "name":"ListDistributionsByRealtimeLogConfig2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/distributionsByRealtimeLogConfig/"
+        "requestUri":"/2020-05-31/distributionsByRealtimeLogConfig",
+        "responseCode":200
       },
       "input":{
         "shape":"ListDistributionsByRealtimeLogConfigRequest",
@@ -1382,34 +1423,37 @@
       "name":"ListDistributionsByResponseHeadersPolicyId2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributionsByResponseHeadersPolicyId/{ResponseHeadersPolicyId}"
+        "requestUri":"/2020-05-31/distributionsByResponseHeadersPolicyId/{ResponseHeadersPolicyId}",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsByResponseHeadersPolicyIdRequest"},
       "output":{"shape":"ListDistributionsByResponseHeadersPolicyIdResult"},
       "errors":[
+        {"shape":"AccessDenied"},
         {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributionsByWebACLId":{
       "name":"ListDistributionsByWebACLId2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distributionsByWebACLId/{WebACLId}"
+        "requestUri":"/2020-05-31/distributionsByWebACLId/{WebACLId}",
+        "responseCode":200
       },
       "input":{"shape":"ListDistributionsByWebACLIdRequest"},
       "output":{"shape":"ListDistributionsByWebACLIdResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidWebACLId"}
+        {"shape":"InvalidWebACLId"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListFieldLevelEncryptionConfigs":{
       "name":"ListFieldLevelEncryptionConfigs2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption"
+        "requestUri":"/2020-05-31/field-level-encryption",
+        "responseCode":200
       },
       "input":{"shape":"ListFieldLevelEncryptionConfigsRequest"},
       "output":{"shape":"ListFieldLevelEncryptionConfigsResult"},
@@ -1421,7 +1465,8 @@
       "name":"ListFieldLevelEncryptionProfiles2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/field-level-encryption-profile"
+        "requestUri":"/2020-05-31/field-level-encryption-profile",
+        "responseCode":200
       },
       "input":{"shape":"ListFieldLevelEncryptionProfilesRequest"},
       "output":{"shape":"ListFieldLevelEncryptionProfilesResult"},
@@ -1433,34 +1478,37 @@
       "name":"ListFunctions2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/function"
+        "requestUri":"/2020-05-31/function",
+        "responseCode":200
       },
       "input":{"shape":"ListFunctionsRequest"},
       "output":{"shape":"ListFunctionsResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListInvalidations":{
       "name":"ListInvalidations2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/distribution/{DistributionId}/invalidation"
+        "requestUri":"/2020-05-31/distribution/{DistributionId}/invalidation",
+        "responseCode":200
       },
       "input":{"shape":"ListInvalidationsRequest"},
       "output":{"shape":"ListInvalidationsResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
         {"shape":"NoSuchDistribution"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListKeyGroups":{
       "name":"ListKeyGroups2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/key-group"
+        "requestUri":"/2020-05-31/key-group",
+        "responseCode":200
       },
       "input":{"shape":"ListKeyGroupsRequest"},
       "output":{"shape":"ListKeyGroupsResult"},
@@ -1472,21 +1520,23 @@
       "name":"ListKeyValueStores2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/key-value-store"
+        "requestUri":"/2020-05-31/key-value-store",
+        "responseCode":200
       },
       "input":{"shape":"ListKeyValueStoresRequest"},
       "output":{"shape":"ListKeyValueStoresResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListOriginAccessControls":{
       "name":"ListOriginAccessControls2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-access-control"
+        "requestUri":"/2020-05-31/origin-access-control",
+        "responseCode":200
       },
       "input":{"shape":"ListOriginAccessControlsRequest"},
       "output":{"shape":"ListOriginAccessControlsResult"},
@@ -1498,7 +1548,8 @@
       "name":"ListOriginRequestPolicies2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/origin-request-policy"
+        "requestUri":"/2020-05-31/origin-request-policy",
+        "responseCode":200
       },
       "input":{"shape":"ListOriginRequestPoliciesRequest"},
       "output":{"shape":"ListOriginRequestPoliciesResult"},
@@ -1512,7 +1563,8 @@
       "name":"ListPublicKeys2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/public-key"
+        "requestUri":"/2020-05-31/public-key",
+        "responseCode":200
       },
       "input":{"shape":"ListPublicKeysRequest"},
       "output":{"shape":"ListPublicKeysResult"},
@@ -1524,13 +1576,14 @@
       "name":"ListRealtimeLogConfigs2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/realtime-log-config"
+        "requestUri":"/2020-05-31/realtime-log-config",
+        "responseCode":200
       },
       "input":{"shape":"ListRealtimeLogConfigsRequest"},
       "output":{"shape":"ListRealtimeLogConfigsResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
         {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
         {"shape":"NoSuchRealtimeLogConfig"}
       ]
     },
@@ -1538,7 +1591,8 @@
       "name":"ListResponseHeadersPolicies2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/response-headers-policy"
+        "requestUri":"/2020-05-31/response-headers-policy",
+        "responseCode":200
       },
       "input":{"shape":"ListResponseHeadersPoliciesRequest"},
       "output":{"shape":"ListResponseHeadersPoliciesResult"},
@@ -1552,7 +1606,8 @@
       "name":"ListStreamingDistributions2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/streaming-distribution"
+        "requestUri":"/2020-05-31/streaming-distribution",
+        "responseCode":200
       },
       "input":{"shape":"ListStreamingDistributionsRequest"},
       "output":{"shape":"ListStreamingDistributionsResult"},
@@ -1564,14 +1619,15 @@
       "name":"ListTagsForResource2020_05_31",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-05-31/tagging"
+        "requestUri":"/2020-05-31/tagging",
+        "responseCode":200
       },
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
         {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
         {"shape":"NoSuchResource"}
       ]
     },
@@ -1579,16 +1635,17 @@
       "name":"PublishFunction2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/function/{Name}/publish"
+        "requestUri":"/2020-05-31/function/{Name}/publish",
+        "responseCode":200
       },
       "input":{"shape":"PublishFunctionRequest"},
       "output":{"shape":"PublishFunctionResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFunctionExists"},
         {"shape":"PreconditionFailed"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "TagResource":{
@@ -1601,8 +1658,8 @@
       "input":{"shape":"TagResourceRequest"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
         {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
         {"shape":"NoSuchResource"}
       ]
     },
@@ -1610,7 +1667,8 @@
       "name":"TestFunction2020_05_31",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-05-31/function/{Name}/test"
+        "requestUri":"/2020-05-31/function/{Name}/test",
+        "responseCode":200
       },
       "input":{
         "shape":"TestFunctionRequest",
@@ -1619,11 +1677,11 @@
       },
       "output":{"shape":"TestFunctionResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFunctionExists"},
         {"shape":"TestFunctionFailed"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UntagResource":{
@@ -1636,8 +1694,8 @@
       "input":{"shape":"UntagResourceRequest"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
         {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
         {"shape":"NoSuchResource"}
       ]
     },
@@ -1645,260 +1703,268 @@
       "name":"UpdateCachePolicy2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/cache-policy/{Id}"
+        "requestUri":"/2020-05-31/cache-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"UpdateCachePolicyRequest"},
       "output":{"shape":"UpdateCachePolicyResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"PreconditionFailed"},
-        {"shape":"CachePolicyAlreadyExists"},
+        {"shape":"AccessDenied"},
         {"shape":"TooManyHeadersInCachePolicy"},
+        {"shape":"CachePolicyAlreadyExists"},
         {"shape":"TooManyCookiesInCachePolicy"},
-        {"shape":"TooManyQueryStringsInCachePolicy"}
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"TooManyQueryStringsInCachePolicy"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateCloudFrontOriginAccessIdentity":{
       "name":"UpdateCloudFrontOriginAccessIdentity2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}/config"
+        "requestUri":"/2020-05-31/origin-access-identity/cloudfront/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateCloudFrontOriginAccessIdentityRequest"},
       "output":{"shape":"UpdateCloudFrontOriginAccessIdentityResult"},
       "errors":[
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
+        {"shape":"MissingBody"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
         {"shape":"InvalidIfMatchVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
-        {"shape":"PreconditionFailed"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InconsistentQuantities"}
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
     "UpdateContinuousDeploymentPolicy":{
       "name":"UpdateContinuousDeploymentPolicy2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}"
+        "requestUri":"/2020-05-31/continuous-deployment-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"UpdateContinuousDeploymentPolicyRequest"},
       "output":{"shape":"UpdateContinuousDeploymentPolicyResult"},
       "errors":[
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"},
-        {"shape":"InconsistentQuantities"},
         {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
         {"shape":"StagingDistributionInUse"},
-        {"shape":"NoSuchContinuousDeploymentPolicy"}
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchContinuousDeploymentPolicy"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateDistribution":{
       "name":"UpdateDistribution2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/distribution/{Id}/config"
+        "requestUri":"/2020-05-31/distribution/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateDistributionRequest"},
       "output":{"shape":"UpdateDistributionResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"NoSuchDistribution"},
-        {"shape":"PreconditionFailed"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"InvalidDefaultRootObject"},
-        {"shape":"InvalidRelativePath"},
-        {"shape":"InvalidErrorCode"},
-        {"shape":"InvalidResponseCode"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
-        {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InvalidViewerCertificate"},
-        {"shape":"InvalidMinimumProtocolVersion"},
-        {"shape":"InvalidRequiredProtocol"},
-        {"shape":"NoSuchOrigin"},
-        {"shape":"TooManyOrigins"},
-        {"shape":"TooManyOriginGroupsPerDistribution"},
-        {"shape":"TooManyCacheBehaviors"},
-        {"shape":"TooManyCookieNamesInWhiteList"},
-        {"shape":"InvalidForwardCookies"},
-        {"shape":"TooManyHeadersInForwardedValues"},
-        {"shape":"InvalidHeadersForS3Origin"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"TooManyCertificates"},
-        {"shape":"InvalidLocationCode"},
-        {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"InvalidTTLOrder"},
-        {"shape":"InvalidWebACLId"},
-        {"shape":"TooManyOriginCustomHeaders"},
-        {"shape":"TooManyQueryStringParameters"},
-        {"shape":"InvalidQueryStringParameters"},
-        {"shape":"TooManyDistributionsWithLambdaAssociations"},
-        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
-        {"shape":"TooManyLambdaFunctionAssociations"},
-        {"shape":"InvalidLambdaFunctionAssociation"},
-        {"shape":"TooManyDistributionsWithFunctionAssociations"},
-        {"shape":"TooManyFunctionAssociations"},
-        {"shape":"InvalidFunctionAssociation"},
-        {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"InvalidOriginKeepaliveTimeout"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
-        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
-        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
-        {"shape":"NoSuchCachePolicy"},
-        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
-        {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
-        {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
-        {"shape":"TrustedKeyGroupDoesNotExist"},
-        {"shape":"NoSuchRealtimeLogConfig"},
-        {"shape":"RealtimeLogConfigOwnerMismatch"},
-        {"shape":"ContinuousDeploymentPolicyInUse"},
-        {"shape":"NoSuchContinuousDeploymentPolicy"},
-        {"shape":"StagingDistributionInUse"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidDomainNameForOriginAccessControl"},
+        {"shape":"InvalidQueryStringParameters"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"InvalidErrorCode"},
         {"shape":"IllegalOriginAccessConfiguration"},
-        {"shape":"InvalidDomainNameForOriginAccessControl"}
+        {"shape":"TooManyFunctionAssociations"},
+        {"shape":"TooManyOriginCustomHeaders"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"NoSuchCachePolicy"},
+        {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
+        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"TooManyDistributionsWithFunctionAssociations"},
+        {"shape":"TooManyOriginGroupsPerDistribution"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
+        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginReadTimeout"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"StagingDistributionInUse"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidWebACLId"},
+        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"TooManyLambdaFunctionAssociations"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"NoSuchContinuousDeploymentPolicy"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
+        {"shape":"TooManyQueryStringParameters"},
+        {"shape":"RealtimeLogConfigOwnerMismatch"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"ContinuousDeploymentPolicyInUse"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidLambdaFunctionAssociation"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"TooManyCertificates"},
+        {"shape":"TrustedKeyGroupDoesNotExist"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidFunctionAssociation"},
+        {"shape":"TooManyDistributionsWithLambdaAssociations"},
+        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyCacheBehaviors"}
       ]
     },
     "UpdateDistributionWithStagingConfig":{
       "name":"UpdateDistributionWithStagingConfig2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/distribution/{Id}/promote-staging-config"
+        "requestUri":"/2020-05-31/distribution/{Id}/promote-staging-config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateDistributionWithStagingConfigRequest"},
       "output":{"shape":"UpdateDistributionWithStagingConfigResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"NoSuchDistribution"},
-        {"shape":"PreconditionFailed"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"InvalidDefaultRootObject"},
-        {"shape":"InvalidRelativePath"},
-        {"shape":"InvalidErrorCode"},
-        {"shape":"InvalidResponseCode"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
-        {"shape":"TooManyTrustedSigners"},
-        {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InvalidViewerCertificate"},
-        {"shape":"InvalidMinimumProtocolVersion"},
-        {"shape":"InvalidRequiredProtocol"},
-        {"shape":"NoSuchOrigin"},
-        {"shape":"TooManyOrigins"},
-        {"shape":"TooManyOriginGroupsPerDistribution"},
-        {"shape":"TooManyCacheBehaviors"},
-        {"shape":"TooManyCookieNamesInWhiteList"},
-        {"shape":"InvalidForwardCookies"},
-        {"shape":"TooManyHeadersInForwardedValues"},
-        {"shape":"InvalidHeadersForS3Origin"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"TooManyCertificates"},
-        {"shape":"InvalidLocationCode"},
-        {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"InvalidTTLOrder"},
-        {"shape":"InvalidWebACLId"},
-        {"shape":"TooManyOriginCustomHeaders"},
-        {"shape":"TooManyQueryStringParameters"},
-        {"shape":"InvalidQueryStringParameters"},
-        {"shape":"TooManyDistributionsWithLambdaAssociations"},
-        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
-        {"shape":"TooManyLambdaFunctionAssociations"},
-        {"shape":"InvalidLambdaFunctionAssociation"},
-        {"shape":"TooManyDistributionsWithFunctionAssociations"},
-        {"shape":"TooManyFunctionAssociations"},
-        {"shape":"InvalidFunctionAssociation"},
-        {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"InvalidOriginKeepaliveTimeout"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
-        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
-        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
-        {"shape":"NoSuchCachePolicy"},
-        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginAccessControl"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
-        {"shape":"NoSuchOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
-        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"InvalidDefaultRootObject"},
+        {"shape":"InvalidQueryStringParameters"},
+        {"shape":"TooManyTrustedSigners"},
+        {"shape":"TooManyCookieNamesInWhiteList"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"InvalidErrorCode"},
+        {"shape":"TooManyFunctionAssociations"},
+        {"shape":"TooManyOriginCustomHeaders"},
+        {"shape":"InvalidForwardCookies"},
+        {"shape":"InvalidMinimumProtocolVersion"},
+        {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyKeyGroupsAssociatedToDistribution"},
+        {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"InvalidRequiredProtocol"},
+        {"shape":"TooManyDistributionsWithFunctionAssociations"},
+        {"shape":"TooManyOriginGroupsPerDistribution"},
+        {"shape":"InvalidTTLOrder"},
+        {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
+        {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidOriginReadTimeout"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidHeadersForS3Origin"},
+        {"shape":"TrustedSignerDoesNotExist"},
+        {"shape":"InvalidWebACLId"},
+        {"shape":"TooManyDistributionsWithSingleFunctionARN"},
+        {"shape":"InvalidRelativePath"},
+        {"shape":"TooManyLambdaFunctionAssociations"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"NoSuchOriginRequestPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidLocationCode"},
+        {"shape":"InvalidOriginAccessIdentity"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
+        {"shape":"TooManyQueryStringParameters"},
+        {"shape":"RealtimeLogConfigOwnerMismatch"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyHeadersInForwardedValues"},
+        {"shape":"InvalidLambdaFunctionAssociation"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"TooManyCertificates"},
         {"shape":"TrustedKeyGroupDoesNotExist"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"NoSuchRealtimeLogConfig"},
-        {"shape":"RealtimeLogConfigOwnerMismatch"}
+        {"shape":"InvalidResponseCode"},
+        {"shape":"InvalidGeoRestrictionParameter"},
+        {"shape":"TooManyOrigins"},
+        {"shape":"InvalidViewerCertificate"},
+        {"shape":"InvalidFunctionAssociation"},
+        {"shape":"TooManyDistributionsWithLambdaAssociations"},
+        {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"NoSuchOrigin"},
+        {"shape":"TooManyCacheBehaviors"}
       ]
     },
     "UpdateFieldLevelEncryptionConfig":{
       "name":"UpdateFieldLevelEncryptionConfig2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/field-level-encryption/{Id}/config"
+        "requestUri":"/2020-05-31/field-level-encryption/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateFieldLevelEncryptionConfigRequest"},
       "output":{"shape":"UpdateFieldLevelEncryptionConfigResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFieldLevelEncryptionProfile"},
-        {"shape":"NoSuchFieldLevelEncryptionConfig"},
+        {"shape":"QueryArgProfileEmpty"},
         {"shape":"PreconditionFailed"},
+        {"shape":"AccessDenied"},
         {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
+        {"shape":"NoSuchFieldLevelEncryptionConfig"},
         {"shape":"TooManyFieldLevelEncryptionContentTypeProfiles"},
-        {"shape":"QueryArgProfileEmpty"}
+        {"shape":"InconsistentQuantities"},
+        {"shape":"NoSuchFieldLevelEncryptionProfile"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateFieldLevelEncryptionProfile":{
       "name":"UpdateFieldLevelEncryptionProfile2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}/config"
+        "requestUri":"/2020-05-31/field-level-encryption-profile/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateFieldLevelEncryptionProfileRequest"},
       "output":{"shape":"UpdateFieldLevelEncryptionProfileResult"},
       "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"TooManyFieldLevelEncryptionFieldPatterns"},
         {"shape":"AccessDenied"},
         {"shape":"FieldLevelEncryptionProfileAlreadyExists"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchPublicKey"},
-        {"shape":"NoSuchFieldLevelEncryptionProfile"},
-        {"shape":"PreconditionFailed"},
         {"shape":"FieldLevelEncryptionProfileSizeExceeded"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"NoSuchFieldLevelEncryptionProfile"},
         {"shape":"TooManyFieldLevelEncryptionEncryptionEntities"},
-        {"shape":"TooManyFieldLevelEncryptionFieldPatterns"}
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateFunction":{
       "name":"UpdateFunction2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/function/{Name}"
+        "requestUri":"/2020-05-31/function/{Name}",
+        "responseCode":200
       },
       "input":{
         "shape":"UpdateFunctionRequest",
@@ -1907,36 +1973,38 @@
       },
       "output":{"shape":"UpdateFunctionResult"},
       "errors":[
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchFunctionExists"},
         {"shape":"PreconditionFailed"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"FunctionSizeLimitExceeded"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateKeyGroup":{
       "name":"UpdateKeyGroup2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/key-group/{Id}"
+        "requestUri":"/2020-05-31/key-group/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"UpdateKeyGroupRequest"},
       "output":{"shape":"UpdateKeyGroupResult"},
       "errors":[
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchResource"},
         {"shape":"PreconditionFailed"},
-        {"shape":"KeyGroupAlreadyExists"},
+        {"shape":"TooManyPublicKeysInKeyGroup"},
         {"shape":"InvalidArgument"},
-        {"shape":"TooManyPublicKeysInKeyGroup"}
+        {"shape":"NoSuchResource"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"KeyGroupAlreadyExists"}
       ]
     },
     "UpdateKeyValueStore":{
       "name":"UpdateKeyValueStore2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/key-value-store/{Name}"
+        "requestUri":"/2020-05-31/key-value-store/{Name}",
+        "responseCode":200
       },
       "input":{
         "shape":"UpdateKeyValueStoreRequest",
@@ -1945,12 +2013,12 @@
       },
       "output":{"shape":"UpdateKeyValueStoreResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
-        {"shape":"EntityNotFound"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"PreconditionFailed"},
-        {"shape":"UnsupportedOperation"}
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
       ],
       "idempotent":true
     },
@@ -1958,65 +2026,69 @@
       "name":"UpdateOriginAccessControl2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/origin-access-control/{Id}/config"
+        "requestUri":"/2020-05-31/origin-access-control/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateOriginAccessControlRequest"},
       "output":{"shape":"UpdateOriginAccessControlResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"OriginAccessControlAlreadyExists"},
-        {"shape":"NoSuchOriginAccessControl"},
         {"shape":"PreconditionFailed"},
-        {"shape":"InvalidArgument"}
+        {"shape":"OriginAccessControlAlreadyExists"},
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchOriginAccessControl"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateOriginRequestPolicy":{
       "name":"UpdateOriginRequestPolicy2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/origin-request-policy/{Id}"
+        "requestUri":"/2020-05-31/origin-request-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"UpdateOriginRequestPolicyRequest"},
       "output":{"shape":"UpdateOriginRequestPolicyResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"PreconditionFailed"},
-        {"shape":"OriginRequestPolicyAlreadyExists"},
+        {"shape":"AccessDenied"},
         {"shape":"TooManyHeadersInOriginRequestPolicy"},
+        {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"TooManyCookiesInOriginRequestPolicy"},
-        {"shape":"TooManyQueryStringsInOriginRequestPolicy"}
+        {"shape":"InconsistentQuantities"},
+        {"shape":"OriginRequestPolicyAlreadyExists"},
+        {"shape":"TooManyQueryStringsInOriginRequestPolicy"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdatePublicKey":{
       "name":"UpdatePublicKey2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/public-key/{Id}/config"
+        "requestUri":"/2020-05-31/public-key/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdatePublicKeyRequest"},
       "output":{"shape":"UpdatePublicKeyResult"},
       "errors":[
+        {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
+        {"shape":"NoSuchPublicKey"},
         {"shape":"CannotChangeImmutablePublicKeyFields"},
         {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
         {"shape":"IllegalUpdate"},
-        {"shape":"NoSuchPublicKey"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateRealtimeLogConfig":{
       "name":"UpdateRealtimeLogConfig2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/realtime-log-config/"
+        "requestUri":"/2020-05-31/realtime-log-config",
+        "responseCode":200
       },
       "input":{
         "shape":"UpdateRealtimeLogConfigRequest",
@@ -2025,56 +2097,58 @@
       },
       "output":{"shape":"UpdateRealtimeLogConfigResult"},
       "errors":[
-        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"},
-        {"shape":"AccessDenied"}
+        {"shape":"NoSuchRealtimeLogConfig"}
       ]
     },
     "UpdateResponseHeadersPolicy":{
       "name":"UpdateResponseHeadersPolicy2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/response-headers-policy/{Id}"
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}",
+        "responseCode":200
       },
       "input":{"shape":"UpdateResponseHeadersPolicyRequest"},
       "output":{"shape":"UpdateResponseHeadersPolicyResult"},
       "errors":[
-        {"shape":"AccessDenied"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"PreconditionFailed"},
-        {"shape":"ResponseHeadersPolicyAlreadyExists"},
+        {"shape":"AccessDenied"},
         {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"},
+        {"shape":"ResponseHeadersPolicyAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"TooLongCSPInResponseHeadersPolicy"},
-        {"shape":"TooManyRemoveHeadersInResponseHeadersPolicy"}
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidArgument"},
+        {"shape":"TooManyRemoveHeadersInResponseHeadersPolicy"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateStreamingDistribution":{
       "name":"UpdateStreamingDistribution2020_05_31",
       "http":{
         "method":"PUT",
-        "requestUri":"/2020-05-31/streaming-distribution/{Id}/config"
+        "requestUri":"/2020-05-31/streaming-distribution/{Id}/config",
+        "responseCode":200
       },
       "input":{"shape":"UpdateStreamingDistributionRequest"},
       "output":{"shape":"UpdateStreamingDistributionResult"},
       "errors":[
         {"shape":"AccessDenied"},
-        {"shape":"CNAMEAlreadyExists"},
-        {"shape":"IllegalUpdate"},
-        {"shape":"InvalidIfMatchVersion"},
-        {"shape":"MissingBody"},
-        {"shape":"NoSuchStreamingDistribution"},
-        {"shape":"PreconditionFailed"},
-        {"shape":"TooManyStreamingDistributionCNAMEs"},
-        {"shape":"InvalidArgument"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"InvalidOriginAccessIdentity"},
-        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
         {"shape":"TooManyTrustedSigners"},
+        {"shape":"InvalidOriginAccessControl"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"MissingBody"},
+        {"shape":"TooManyStreamingDistributionCNAMEs"},
         {"shape":"TrustedSignerDoesNotExist"},
-        {"shape":"InconsistentQuantities"}
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"NoSuchStreamingDistribution"}
       ]
     }
   },
@@ -2112,7 +2186,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":403},
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "ActiveTrustedKeyGroups":{
@@ -2211,7 +2288,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":413},
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
       "exception":true
     },
     "CNAMEAlreadyExists":{
@@ -2219,7 +2299,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CacheBehavior":{
@@ -2296,7 +2379,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CachePolicyConfig":{
@@ -2351,7 +2437,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CachePolicyList":{
@@ -2425,7 +2514,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "CannotDeleteEntityWhileInUse":{
@@ -2433,7 +2525,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CertificateSource":{
@@ -2461,7 +2556,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CloudFrontOriginAccessIdentityConfig":{
@@ -2480,7 +2578,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CloudFrontOriginAccessIdentityList":{
@@ -2601,7 +2702,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ContinuousDeploymentPolicyConfig":{
@@ -2621,7 +2725,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ContinuousDeploymentPolicyList":{
@@ -3066,8 +3173,8 @@
     "CreateMonitoringSubscriptionRequest":{
       "type":"structure",
       "required":[
-        "MonitoringSubscription",
-        "DistributionId"
+        "DistributionId",
+        "MonitoringSubscription"
       ],
       "members":{
         "DistributionId":{
@@ -3472,8 +3579,8 @@
     "DeleteFunctionRequest":{
       "type":"structure",
       "required":[
-        "IfMatch",
-        "Name"
+        "Name",
+        "IfMatch"
       ],
       "members":{
         "Name":{
@@ -3507,8 +3614,8 @@
     "DeleteKeyValueStoreRequest":{
       "type":"structure",
       "required":[
-        "IfMatch",
-        "Name"
+        "Name",
+        "IfMatch"
       ],
       "members":{
         "Name":{
@@ -3706,7 +3813,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "DistributionConfig":{
@@ -3797,7 +3907,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "DistributionSummary":{
@@ -3899,7 +4012,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "EntityLimitExceeded":{
@@ -3907,7 +4023,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "EntityNotFound":{
@@ -3915,7 +4034,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "EntitySizeLimitExceeded":{
@@ -3923,7 +4045,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":413},
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
       "exception":true
     },
     "EventType":{
@@ -3963,7 +4088,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FieldLevelEncryptionConfigInUse":{
@@ -3971,7 +4099,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FieldLevelEncryptionList":{
@@ -4005,7 +4136,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FieldLevelEncryptionProfileConfig":{
@@ -4027,7 +4161,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FieldLevelEncryptionProfileList":{
@@ -4048,7 +4185,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "FieldLevelEncryptionProfileSummary":{
@@ -4144,14 +4284,18 @@
     "FunctionARN":{
       "type":"string",
       "max":108,
-      "pattern":"arn:aws:cloudfront::[0-9]{12}:function\\/[a-zA-Z0-9-_]{1,64}$"
+      "min":0,
+      "pattern":"arn:aws:cloudfront::[0-9]{12}:function\\/[a-zA-Z0-9-_]{1,64}"
     },
     "FunctionAlreadyExists":{
       "type":"structure",
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FunctionAssociation":{
@@ -4201,6 +4345,7 @@
     "FunctionEventObject":{
       "type":"blob",
       "max":40960,
+      "min":0,
       "sensitive":true
     },
     "FunctionExecutionLogList":{
@@ -4213,7 +4358,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "FunctionList":{
@@ -4246,7 +4394,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_]{1,64}$"
+      "pattern":"[a-zA-Z0-9-_]{1,64}"
     },
     "FunctionRuntime":{
       "type":"string",
@@ -4260,7 +4408,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":413},
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
       "exception":true
     },
     "FunctionStage":{
@@ -4990,7 +5141,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior":{
@@ -4998,7 +5152,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "IllegalOriginAccessConfiguration":{
@@ -5006,7 +5163,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "IllegalUpdate":{
@@ -5014,7 +5174,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "ImportSource":{
@@ -5037,7 +5200,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidArgument":{
@@ -5045,7 +5211,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidDefaultRootObject":{
@@ -5053,7 +5222,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidDomainNameForOriginAccessControl":{
@@ -5061,7 +5233,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidErrorCode":{
@@ -5069,7 +5244,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidForwardCookies":{
@@ -5077,7 +5255,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidFunctionAssociation":{
@@ -5085,7 +5266,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidGeoRestrictionParameter":{
@@ -5093,7 +5277,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidHeadersForS3Origin":{
@@ -5101,7 +5288,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidIfMatchVersion":{
@@ -5109,7 +5299,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidLambdaFunctionAssociation":{
@@ -5117,7 +5310,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidLocationCode":{
@@ -5125,7 +5321,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidMinimumProtocolVersion":{
@@ -5133,7 +5332,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidOrigin":{
@@ -5141,7 +5343,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidOriginAccessControl":{
@@ -5149,7 +5354,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidOriginAccessIdentity":{
@@ -5157,7 +5365,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidOriginKeepaliveTimeout":{
@@ -5165,7 +5376,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidOriginReadTimeout":{
@@ -5173,7 +5387,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidProtocolSettings":{
@@ -5181,7 +5398,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidQueryStringParameters":{
@@ -5189,7 +5409,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidRelativePath":{
@@ -5197,7 +5420,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidRequiredProtocol":{
@@ -5205,7 +5431,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidResponseCode":{
@@ -5213,7 +5442,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidTTLOrder":{
@@ -5221,7 +5453,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidTagging":{
@@ -5229,7 +5464,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidViewerCertificate":{
@@ -5237,7 +5475,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidWebACLId":{
@@ -5245,7 +5486,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "Invalidation":{
@@ -5351,7 +5595,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "KeyGroupConfig":{
@@ -5429,7 +5676,8 @@
     "KeyValueStoreARN":{
       "type":"string",
       "max":85,
-      "pattern":"arn:aws:cloudfront::[0-9]{12}:key-value-store\\/[0-9a-fA-F-]{36}$"
+      "min":0,
+      "pattern":"arn:aws:cloudfront::[0-9]{12}:key-value-store\\/[0-9a-fA-F-]{36}"
     },
     "KeyValueStoreAssociation":{
       "type":"structure",
@@ -5455,7 +5703,8 @@
     },
     "KeyValueStoreComment":{
       "type":"string",
-      "max":128
+      "max":128,
+      "min":0
     },
     "KeyValueStoreList":{
       "type":"structure",
@@ -5474,7 +5723,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_]{1,64}$"
+      "pattern":"[a-zA-Z0-9-_]{1,64}"
     },
     "KeyValueStoreSummaryList":{
       "type":"list",
@@ -6174,7 +6423,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "MonitoringSubscription":{
@@ -6188,7 +6440,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchCachePolicy":{
@@ -6196,7 +6451,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchCloudFrontOriginAccessIdentity":{
@@ -6204,7 +6462,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchContinuousDeploymentPolicy":{
@@ -6212,7 +6473,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchDistribution":{
@@ -6220,7 +6484,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchFieldLevelEncryptionConfig":{
@@ -6228,7 +6495,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchFieldLevelEncryptionProfile":{
@@ -6236,7 +6506,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchFunctionExists":{
@@ -6244,7 +6517,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchInvalidation":{
@@ -6252,7 +6528,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchMonitoringSubscription":{
@@ -6260,7 +6539,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchOrigin":{
@@ -6268,7 +6550,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchOriginAccessControl":{
@@ -6276,7 +6561,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchOriginRequestPolicy":{
@@ -6284,7 +6572,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchPublicKey":{
@@ -6292,7 +6583,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchRealtimeLogConfig":{
@@ -6300,7 +6594,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchResource":{
@@ -6308,7 +6605,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchResponseHeadersPolicy":{
@@ -6316,7 +6616,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "NoSuchStreamingDistribution":{
@@ -6324,7 +6627,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "Origin":{
@@ -6359,7 +6665,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "OriginAccessControlConfig":{
@@ -6383,7 +6692,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "OriginAccessControlList":{
@@ -6564,7 +6876,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "OriginRequestPolicyConfig":{
@@ -6623,7 +6938,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "OriginRequestPolicyList":{
@@ -6753,7 +7071,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":412},
+      "error":{
+        "httpStatusCode":412,
+        "senderFault":true
+      },
       "exception":true
     },
     "PriceClass":{
@@ -6782,7 +7103,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "PublicKeyConfig":{
@@ -6811,7 +7135,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "PublicKeyList":{
@@ -6900,7 +7227,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "QueryArgProfileList":{
@@ -6970,7 +7300,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "RealtimeLogConfigInUse":{
@@ -6978,7 +7311,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "RealtimeLogConfigList":{
@@ -6990,7 +7326,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":401},
+      "error":{
+        "httpStatusCode":401,
+        "senderFault":true
+      },
       "exception":true
     },
     "RealtimeLogConfigs":{
@@ -7044,7 +7383,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResponseHeadersPolicy":{
@@ -7119,7 +7461,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResponseHeadersPolicyConfig":{
@@ -7216,7 +7561,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResponseHeadersPolicyList":{
@@ -7370,6 +7718,7 @@
     },
     "SamplingRate":{
       "type":"double",
+      "box":true,
       "max":100.0,
       "min":0.0
     },
@@ -7434,7 +7783,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "StatusCodeList":{
@@ -7481,7 +7833,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "StreamingDistributionConfig":{
@@ -7537,7 +7892,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "StreamingDistributionSummary":{
@@ -7601,7 +7959,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeyList":{
       "type":"list",
@@ -7647,7 +8005,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "Tags":{
       "type":"structure",
@@ -7661,7 +8019,8 @@
         "Message":{"shape":"string"}
       },
       "error":{"httpStatusCode":500},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "TestFunctionRequest":{
       "type":"structure",
@@ -7707,7 +8066,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCacheBehaviors":{
@@ -7715,7 +8077,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCachePolicies":{
@@ -7723,7 +8088,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCertificates":{
@@ -7731,7 +8099,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCloudFrontOriginAccessIdentities":{
@@ -7739,7 +8110,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyContinuousDeploymentPolicies":{
@@ -7747,7 +8121,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCookieNamesInWhiteList":{
@@ -7755,7 +8132,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCookiesInCachePolicy":{
@@ -7763,7 +8143,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCookiesInOriginRequestPolicy":{
@@ -7771,7 +8154,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyCustomHeadersInResponseHeadersPolicy":{
@@ -7779,7 +8165,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionCNAMEs":{
@@ -7787,7 +8176,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributions":{
@@ -7795,7 +8187,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToCachePolicy":{
@@ -7803,7 +8198,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToFieldLevelEncryptionConfig":{
@@ -7811,7 +8209,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToKeyGroup":{
@@ -7819,7 +8220,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToOriginAccessControl":{
@@ -7827,7 +8231,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToOriginRequestPolicy":{
@@ -7835,7 +8242,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsAssociatedToResponseHeadersPolicy":{
@@ -7843,7 +8253,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsWithFunctionAssociations":{
@@ -7851,7 +8264,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsWithLambdaAssociations":{
@@ -7859,7 +8275,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyDistributionsWithSingleFunctionARN":{
@@ -7867,7 +8286,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionConfigs":{
@@ -7875,7 +8297,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionContentTypeProfiles":{
@@ -7883,7 +8308,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionEncryptionEntities":{
@@ -7891,7 +8319,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionFieldPatterns":{
@@ -7899,7 +8330,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionProfiles":{
@@ -7907,7 +8341,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFieldLevelEncryptionQueryArgProfiles":{
@@ -7915,7 +8352,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFunctionAssociations":{
@@ -7923,7 +8363,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyFunctions":{
@@ -7931,7 +8374,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyHeadersInCachePolicy":{
@@ -7939,7 +8385,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyHeadersInForwardedValues":{
@@ -7947,7 +8396,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyHeadersInOriginRequestPolicy":{
@@ -7955,7 +8407,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyInvalidationsInProgress":{
@@ -7963,7 +8418,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyKeyGroups":{
@@ -7971,7 +8429,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyKeyGroupsAssociatedToDistribution":{
@@ -7979,7 +8440,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyLambdaFunctionAssociations":{
@@ -7987,7 +8451,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyOriginAccessControls":{
@@ -7995,7 +8462,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyOriginCustomHeaders":{
@@ -8003,7 +8473,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyOriginGroupsPerDistribution":{
@@ -8011,7 +8484,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyOriginRequestPolicies":{
@@ -8019,7 +8495,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyOrigins":{
@@ -8027,7 +8506,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyPublicKeys":{
@@ -8035,7 +8517,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyPublicKeysInKeyGroup":{
@@ -8043,7 +8528,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyQueryStringParameters":{
@@ -8051,7 +8539,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyQueryStringsInCachePolicy":{
@@ -8059,7 +8550,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyQueryStringsInOriginRequestPolicy":{
@@ -8067,7 +8561,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyRealtimeLogConfigs":{
@@ -8075,7 +8572,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyRemoveHeadersInResponseHeadersPolicy":{
@@ -8083,7 +8583,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyResponseHeadersPolicies":{
@@ -8091,7 +8594,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyStreamingDistributionCNAMEs":{
@@ -8099,7 +8605,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyStreamingDistributions":{
@@ -8107,7 +8616,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TooManyTrustedSigners":{
@@ -8115,7 +8627,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TrafficConfig":{
@@ -8132,7 +8647,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TrustedKeyGroupIdList":{
@@ -8159,7 +8677,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "TrustedSigners":{
@@ -8179,7 +8700,10 @@
       "members":{
         "Message":{"shape":"string"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "UntagResourceRequest":{
@@ -8460,10 +8984,10 @@
     "UpdateFunctionRequest":{
       "type":"structure",
       "required":[
+        "Name",
         "IfMatch",
         "FunctionConfig",
-        "FunctionCode",
-        "Name"
+        "FunctionCode"
       ],
       "members":{
         "Name":{
@@ -8791,20 +9315,35 @@
     },
     "aliasString":{
       "type":"string",
-      "max":253
+      "max":253,
+      "min":0
     },
-    "boolean":{"type":"boolean"},
+    "boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "distributionIdString":{
       "type":"string",
-      "max":25
+      "max":25,
+      "min":0
     },
-    "float":{"type":"float"},
-    "integer":{"type":"integer"},
+    "float":{
+      "type":"float",
+      "box":true
+    },
+    "integer":{
+      "type":"integer",
+      "box":true
+    },
     "listConflictingAliasesMaxItemsInteger":{
       "type":"integer",
+      "box":true,
       "max":100
     },
-    "long":{"type":"long"},
+    "long":{
+      "type":"long",
+      "box":true
+    },
     "sensitiveStringType":{
       "type":"string",
       "sensitive":true
