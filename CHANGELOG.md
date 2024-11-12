@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.325.7 - 2024-11-12
 
 * `Aws\FIS` - This release adds support for generating experiment reports with the experiment report configuration
 * `Aws\ControlTower` - Added ResetEnabledControl API.
