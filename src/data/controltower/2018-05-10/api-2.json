@@ -377,6 +377,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ResetEnabledControl":{
+      "name":"ResetEnabledControl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/reset-enabled-control",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetEnabledControlInput"},
+      "output":{"shape":"ResetEnabledControlOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ResetLandingZone":{
       "name":"ResetLandingZone",
       "http":{
@@ -636,7 +655,8 @@
       "enum":[
         "ENABLE_CONTROL",
         "DISABLE_CONTROL",
-        "UPDATE_ENABLED_CONTROL"
+        "UPDATE_ENABLED_CONTROL",
+        "RESET_ENABLED_CONTROL"
       ]
     },
     "ControlOperationTypes":{
@@ -1393,6 +1413,20 @@
       }
     },
     "ResetEnabledBaselineOutput":{
+      "type":"structure",
+      "required":["operationIdentifier"],
+      "members":{
+        "operationIdentifier":{"shape":"OperationIdentifier"}
+      }
+    },
+    "ResetEnabledControlInput":{
+      "type":"structure",
+      "required":["enabledControlIdentifier"],
+      "members":{
+        "enabledControlIdentifier":{"shape":"Arn"}
+      }
+    },
+    "ResetEnabledControlOutput":{
       "type":"structure",
       "required":["operationIdentifier"],
       "members":{

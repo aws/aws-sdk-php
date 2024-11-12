@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FIS` - This release adds support for generating experiment reports with the experiment report configuration
+* `Aws\ControlTower` - Added ResetEnabledControl API.
+* `Aws\RDS` - Updates Amazon RDS documentation for Amazon RDS Extended Support for Amazon Aurora MySQL.
+* `Aws\CodeBuild` - AWS CodeBuild now supports non-containerized Linux and Windows builds on Reserved Capacity.
+* `Aws\GameLift` - Amazon GameLift releases container fleets support for general availability. Deploy Linux-based containerized game server software for hosting on Amazon GameLift.
+* `Aws\PaymentCryptography` - Updated ListAliases API with KeyArn filter.
+
 ## 3.325.6 - 2024-11-11
 
 * `Aws\OpenSearchService` - Adds Support for new AssociatePackages and DissociatePackages API in Amazon OpenSearch Service that allows association and dissociation operations to be carried out on multiple packages at the same time.

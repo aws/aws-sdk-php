@@ -992,6 +992,7 @@
     "ListAliasesInput":{
       "type":"structure",
       "members":{
+        "KeyArn":{"shape":"KeyArn"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
       }
@@ -1152,7 +1153,10 @@
     "String":{"type":"string"},
     "Tag":{
       "type":"structure",
-      "required":["Key"],
+      "required":[
+        "Key",
+        "Value"
+      ],
       "members":{
         "Key":{"shape":"TagKey"},
         "Value":{"shape":"TagValue"}
@@ -1188,7 +1192,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":1
     },
     "Tags":{
       "type":"list",
@@ -1219,7 +1223,8 @@
       "type":"string",
       "max":4096,
       "min":2,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "TrustedCertificatePublicKey":{
       "type":"structure",
@@ -1291,7 +1296,8 @@
       "type":"string",
       "max":4096,
       "min":16,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "WrappedKeyMaterialFormat":{
       "type":"string",
