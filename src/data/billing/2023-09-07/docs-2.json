@@ -1,0 +1,135 @@
+{
+  "version": "2.0",
+  "service": "<p> You can use the Billing API to programatically list the billing views available to you for a given time period. A billing view represents a set of billing data. </p> <p>The Billing API provides the following endpoint:</p> <p> <code>https://billing.us-east-1.api.aws</code> </p>",
+  "operations": {
+    "ListBillingViews": "<p>Lists the billing views available for a given time period. </p> <p>Every Amazon Web Services account has a unique <code>PRIMARY</code> billing view that represents the billing data available by default. Accounts that use Billing Conductor also have <code>BILLING_GROUP</code> billing views representing pro forma costs associated with each created billing group.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "BillingViewListElement$ownerAccountId": "<p> The list of owners of the Billing view. </p>"
+      }
+    },
+    "ActiveTimeRange": {
+      "base": "<p>A time range with a start and end time.</p>",
+      "refs": {
+        "ListBillingViewsRequest$activeTimeRange": "<p> The time range for the billing views listed. <code>PRIMARY</code> billing view is always listed. <code>BILLING_GROUP</code> billing views are listed for time ranges when the associated billing group resource in Billing Conductor is active. The time range must be within one calendar month. </p>"
+      }
+    },
+    "BillingViewArn": {
+      "base": null,
+      "refs": {
+        "BillingViewListElement$arn": "<p>The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>"
+      }
+    },
+    "BillingViewList": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsResponse$billingViews": "<p>A list of <code>BillingViewListElement</code> retrieved.</p>"
+      }
+    },
+    "BillingViewListElement": {
+      "base": "<p>A representation of a billing view.</p>",
+      "refs": {
+        "BillingViewList$member": null
+      }
+    },
+    "BillingViewName": {
+      "base": null,
+      "refs": {
+        "BillingViewListElement$name": "<p> A list of names of the Billing view. </p>"
+      }
+    },
+    "BillingViewType": {
+      "base": null,
+      "refs": {
+        "BillingViewListElement$billingViewType": "<p>The type of billing view.</p>"
+      }
+    },
+    "BillingViewsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$maxResults": "<p>The maximum number of billing views to retrieve. Default is 100. </p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "InternalServerException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$message": "<p>The message describing why the field failed validation.</p>"
+      }
+    },
+    "FieldName": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$name": "<p>The name of the field.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing failed because of an unknown error, exception, or failure. </p>",
+      "refs": {
+      }
+    },
+    "ListBillingViewsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillingViewsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PageToken": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$nextToken": "<p>The pagination token that is used on subsequent calls to list billing views.</p>",
+        "ListBillingViewsResponse$nextToken": "<p>The pagination token to use on subsequent calls to list billing views. </p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. </p>",
+      "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "ActiveTimeRange$activeAfterInclusive": "<p>The inclusive time range start date.</p>",
+        "ActiveTimeRange$activeBeforeInclusive": "<p> The inclusive time range end date. </p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>The field's information of a request that resulted in an exception. </p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"
+      }
+    }
+  }
+}

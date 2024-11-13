@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2019-11-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"access-analyzer",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -723,7 +724,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "AccessPreviewFindingId":{"type":"string"},
@@ -1291,7 +1293,8 @@
         "condition":{"shape":"ConditionKeyMap"},
         "isPublic":{"shape":"Boolean"},
         "principal":{"shape":"PrincipalMap"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FilterCriteriaMap":{
@@ -1325,7 +1328,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FindingChangeType":{
@@ -1425,7 +1429,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FindingSummaryV2":{
@@ -2283,7 +2288,8 @@
       "enum":[
         "IDENTITY_POLICY",
         "RESOURCE_POLICY",
-        "SERVICE_CONTROL_POLICY"
+        "SERVICE_CONTROL_POLICY",
+        "RESOURCE_CONTROL_POLICY"
       ]
     },
     "Position":{
@@ -2426,6 +2432,14 @@
     "ResourceArn":{
       "type":"string",
       "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
+    },
+    "ResourceControlPolicyRestriction":{
+      "type":"string",
+      "enum":[
+        "APPLICABLE",
+        "FAILED_TO_EVALUATE_RCP",
+        "NOT_APPLICABLE"
+      ]
     },
     "ResourceNotFoundException":{
       "type":"structure",

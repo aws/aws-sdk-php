@@ -354,6 +354,26 @@
         {"shape":"EventDataStoreFederationEnabledException"}
       ]
     },
+    "GenerateQuery":{
+      "name":"GenerateQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GenerateQueryRequest"},
+      "output":{"shape":"GenerateQueryResponse"},
+      "errors":[
+        {"shape":"EventDataStoreARNInvalidException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"GenerateResponseException"},
+        {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"NoManagementAccountSLRExistsException"}
+      ],
+      "idempotent":true
+    },
     "GetChannel":{
       "name":"GetChannel",
       "http":{
@@ -810,7 +830,8 @@
         {"shape":"UnsupportedOperationException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"NotOrganizationMasterAccountException"},
-        {"shape":"NoManagementAccountSLRExistsException"}
+        {"shape":"NoManagementAccountSLRExistsException"},
+        {"shape":"ConflictException"}
       ],
       "idempotent":true
     },
@@ -1524,7 +1545,8 @@
         "QueryStatistics":{"shape":"QueryStatisticsForDescribeQuery"},
         "ErrorMessage":{"shape":"ErrorMessage"},
         "DeliveryS3Uri":{"shape":"DeliveryS3Uri"},
-        "DeliveryStatus":{"shape":"DeliveryStatus"}
+        "DeliveryStatus":{"shape":"DeliveryStatus"},
+        "Prompt":{"shape":"Prompt"}
       }
     },
     "DescribeTrailsRequest":{
@@ -1710,6 +1732,12 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9._/\\-:]+$"
     },
+    "EventDataStoreList":{
+      "type":"list",
+      "member":{"shape":"EventDataStoreArn"},
+      "max":1,
+      "min":1
+    },
     "EventDataStoreMaxLimitExceededException":{
       "type":"structure",
       "members":{
@@ -1794,6 +1822,30 @@
         "DISABLING",
         "DISABLED"
       ]
+    },
+    "GenerateQueryRequest":{
+      "type":"structure",
+      "required":[
+        "EventDataStores",
+        "Prompt"
+      ],
+      "members":{
+        "EventDataStores":{"shape":"EventDataStoreList"},
+        "Prompt":{"shape":"Prompt"}
+      }
+    },
+    "GenerateQueryResponse":{
+      "type":"structure",
+      "members":{
+        "QueryStatement":{"shape":"QueryStatement"},
+        "QueryAlias":{"shape":"QueryAlias"}
+      }
+    },
+    "GenerateResponseException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "GetChannelRequest":{
       "type":"structure",
@@ -2658,6 +2710,12 @@
       "max":255,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "Prompt":{
+      "type":"string",
+      "max":500,
+      "min":3,
+      "pattern":"^[ -~\\n]*$"
     },
     "PublicKey":{
       "type":"structure",

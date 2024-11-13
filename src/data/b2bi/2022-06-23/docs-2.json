@@ -11,6 +11,7 @@
     "DeletePartnership": "<p>Deletes the specified partnership. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
     "DeleteProfile": "<p>Deletes the specified profile. A profile is the mechanism used to create the concept of a private network.</p>",
     "DeleteTransformer": "<p>Deletes the specified transformer. A transformer can take an EDI file as input and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform it into an EDI file.</p>",
+    "GenerateMapping": "<p>Takes sample input and output documents and uses Amazon Bedrock to generate a mapping automatically. Depending on the accuracy and other factors, you can then edit the mapping for your needs.</p> <note> <p>Before you can use the AI-assisted feature for Amazon Web Services B2B Data Interchange you must enable models in Amazon Bedrock. For details, see <a href=\"https://docs.aws.amazon.com/b2bi/latest/userguide/ai-assisted-mapping.html#ai-assist-prereq\">AI-assisted template mapping prerequisites</a> in the <i>Amazon Web Services B2B Data Interchange User guide</i>.</p> </note>",
     "GetCapability": "<p>Retrieves the details for the specified capability. A trading capability contains the information required to transform incoming EDI documents into JSON or XML outputs.</p>",
     "GetPartnership": "<p>Retrieves the details for a partnership, based on the partner and profile IDs specified. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
     "GetProfile": "<p>Retrieves the details for the profile specified by the profile ID. A profile is the mechanism used to create the concept of a private network.</p>",
@@ -345,6 +346,34 @@
         "InputConversion$fromFormat": "<p>The format for the transformer input: currently on <code>X12</code> is supported.</p>"
       }
     },
+    "GenerateMappingInputFileContent": {
+      "base": null,
+      "refs": {
+        "GenerateMappingRequest$inputFileContent": "<p>Provide the contents of a sample X12 EDI file (for inbound EDI) or JSON/XML file (for outbound EDI) to use as a starting point for the mapping.</p>"
+      }
+    },
+    "GenerateMappingOutputFileContent": {
+      "base": null,
+      "refs": {
+        "GenerateMappingRequest$outputFileContent": "<p>Provide the contents of a sample X12 EDI file (for outbound EDI) or JSON/XML file (for inbound EDI) to use as a target for the mapping.</p>"
+      }
+    },
+    "GenerateMappingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMappingResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMappingResponseMappingAccuracyFloat": {
+      "base": null,
+      "refs": {
+        "GenerateMappingResponse$mappingAccuracy": "<p>Returns a percentage that estimates the accuracy of the generated mapping.</p>"
+      }
+    },
     "GetCapabilityRequest": {
       "base": null,
       "refs": {
@@ -548,7 +577,8 @@
     "MappingType": {
       "base": null,
       "refs": {
-        "CreateStarterMappingTemplateRequest$mappingType": "<p>Specify the format for the mapping template: either JSONATA or XSLT.</p>"
+        "CreateStarterMappingTemplateRequest$mappingType": "<p>Specify the format for the mapping template: either JSONATA or XSLT.</p>",
+        "GenerateMappingRequest$mappingType": "<p>Specify the mapping type: either <code>JSONATA</code> or <code>XSLT.</code> </p>"
       }
     },
     "MaxResults": {
@@ -804,6 +834,7 @@
         "CreateProfileRequest$clientToken": "<p>Reserved for future use.</p>",
         "CreateStarterMappingTemplateResponse$mappingTemplate": "<p>Returns a string that represents the mapping template.</p>",
         "CreateTransformerRequest$clientToken": "<p>Reserved for future use.</p>",
+        "GenerateMappingResponse$mappingTemplate": "<p>Returns a mapping template based on your inputs.</p>",
         "GetTransformerJobResponse$message": "<p>Returns an optional error message, which gets populated when the job is not run successfully.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The ID for the resource that exceeded the quota, which caused the exception.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The resource type (profile, partnership, transformer, or capability) that exceeded the quota, which caused the exception.</p>",
@@ -970,7 +1001,7 @@
         "CreateTransformerResponse$status": "<p>Returns the state of the newly created transformer. The transformer can be either <code>active</code> or <code>inactive</code>. For the transformer to be used in a capability, its status must <code>active</code>.</p>",
         "GetTransformerResponse$status": "<p>Returns the state of the newly created transformer. The transformer can be either <code>active</code> or <code>inactive</code>. For the transformer to be used in a capability, its status must <code>active</code>.</p>",
         "TransformerSummary$status": "<p>Returns the state of the newly created transformer. The transformer can be either <code>active</code> or <code>inactive</code>. For the transformer to be used in a capability, its status must <code>active</code>.</p>",
-        "UpdateTransformerRequest$status": "<p>Specifies the transformer's status. You can update the state of the transformer, from <code>active</code> to <code>inactive</code>, or <code>inactive</code> to <code>active</code>.</p>",
+        "UpdateTransformerRequest$status": "<p>Specifies the transformer's status. You can update the state of the transformer from <code>inactive</code> to <code>active</code>.</p>",
         "UpdateTransformerResponse$status": "<p>Returns the state of the newly created transformer. The transformer can be either <code>active</code> or <code>inactive</code>. For the transformer to be used in a capability, its status must <code>active</code>.</p>"
       }
     },

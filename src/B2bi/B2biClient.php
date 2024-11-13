@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteProfileAsync(array $args = [])
  * @method \Aws\Result deleteTransformer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTransformerAsync(array $args = [])
+ * @method \Aws\Result generateMapping(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise generateMappingAsync(array $args = [])
  * @method \Aws\Result getCapability(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCapabilityAsync(array $args = [])
  * @method \Aws\Result getPartnership(array $args = [])

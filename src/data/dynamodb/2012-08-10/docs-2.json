@@ -1388,6 +1388,13 @@
         "UpdateTableInput$GlobalSecondaryIndexUpdates": "<p>An array of one or more global secondary indexes for the table. For each index in the array, you can request one action:</p> <ul> <li> <p> <code>Create</code> - add a new global secondary index to the table.</p> </li> <li> <p> <code>Update</code> - modify the provisioned throughput settings of an existing global secondary index.</p> </li> <li> <p> <code>Delete</code> - remove a global secondary index from the table.</p> </li> </ul> <p>You can create or delete only one global secondary index per <code>UpdateTable</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.OnlineOps.html\">Managing Global Secondary Indexes</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p>"
       }
     },
+    "GlobalSecondaryIndexWarmThroughputDescription": {
+      "base": "<p>The description of the warm throughput value on a global secondary index.</p>",
+      "refs": {
+        "GlobalSecondaryIndexDescription$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index.</p>",
+        "ReplicaGlobalSecondaryIndexDescription$WarmThroughput": "<p>Represents the warm throughput of the global secondary index for this replica.</p>"
+      }
+    },
     "GlobalSecondaryIndexes": {
       "base": null,
       "refs": {
@@ -1580,6 +1587,7 @@
       "base": null,
       "refs": {
         "GlobalSecondaryIndexDescription$IndexStatus": "<p>The current state of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul>",
+        "GlobalSecondaryIndexWarmThroughputDescription$Status": "<p>Represents the warm throughput status being created or updated on a global secondary index. The status can only be <code>UPDATING</code> or <code>ACTIVE</code>.</p>",
         "ReplicaGlobalSecondaryIndexAutoScalingDescription$IndexStatus": "<p>The current state of the replica global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code> </p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul>",
         "ReplicaGlobalSecondaryIndexSettingsDescription$IndexStatus": "<p> The current status of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The global secondary index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The global secondary index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The global secondary index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The global secondary index is ready for use.</p> </li> </ul>"
       }
@@ -1996,7 +2004,9 @@
         "OnDemandThroughputOverride$MaxReadRequestUnits": "<p>Maximum number of read request units for the specified replica table.</p>",
         "SourceTableDetails$TableSizeBytes": "<p>Size of the table in bytes. Note that this is an approximate value.</p>",
         "TableDescription$TableSizeBytes": "<p>The total size of the specified table, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>",
-        "TableDescription$ItemCount": "<p>The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>"
+        "TableDescription$ItemCount": "<p>The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>",
+        "WarmThroughput$ReadUnitsPerSecond": "<p>Represents the number of read operations your base table can instantaneously support.</p>",
+        "WarmThroughput$WriteUnitsPerSecond": "<p>Represents the number of write operations your base table can instantaneously support.</p>"
       }
     },
     "MapAttributeValue": {
@@ -2178,6 +2188,8 @@
         "DescribeLimitsOutput$AccountMaxWriteCapacityUnits": "<p>The maximum total write capacity units that your account allows you to provision across all of your tables in this Region.</p>",
         "DescribeLimitsOutput$TableMaxReadCapacityUnits": "<p>The maximum read capacity units that your account allows you to provision for a new table that you are creating in this Region, including the read capacity units provisioned for its global secondary indexes (GSIs).</p>",
         "DescribeLimitsOutput$TableMaxWriteCapacityUnits": "<p>The maximum write capacity units that your account allows you to provision for a new table that you are creating in this Region, including the write capacity units provisioned for its global secondary indexes (GSIs).</p>",
+        "GlobalSecondaryIndexWarmThroughputDescription$ReadUnitsPerSecond": "<p>Represents warm throughput read units per second value for a global secondary index.</p>",
+        "GlobalSecondaryIndexWarmThroughputDescription$WriteUnitsPerSecond": "<p>Represents warm throughput write units per second value for a global secondary index.</p>",
         "GlobalTableGlobalSecondaryIndexSettingsUpdate$ProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException.</code> </p>",
         "ProvisionedThroughput$ReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>",
         "ProvisionedThroughput$WriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>",
@@ -2187,6 +2199,8 @@
         "ReplicaGlobalSecondaryIndexSettingsDescription$ProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "ReplicaGlobalSecondaryIndexSettingsUpdate$ProvisionedReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "ReplicaSettingsUpdate$ReplicaProvisionedReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p>",
+        "TableWarmThroughputDescription$ReadUnitsPerSecond": "<p>Represents the base table's warm throughput value in read units per second.</p>",
+        "TableWarmThroughputDescription$WriteUnitsPerSecond": "<p>Represents the base table's warm throughput value in write units per second.</p>",
         "UpdateGlobalTableSettingsInput$GlobalTableProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException.</code> </p>"
       }
     },
@@ -3018,7 +3032,15 @@
       "base": null,
       "refs": {
         "TableAutoScalingDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table is being updated.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> </ul>",
-        "TableDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code>.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> <li> <p> <code>INACCESSIBLE_ENCRYPTION_CREDENTIALS</code> - The KMS key used to encrypt the table in inaccessible. Table operations may fail due to failure to use the KMS key. DynamoDB will initiate the table archival process when a table's KMS key remains inaccessible for more than seven days. </p> </li> <li> <p> <code>ARCHIVING</code> - The table is being archived. Operations are not allowed until archival is complete. </p> </li> <li> <p> <code>ARCHIVED</code> - The table has been archived. See the ArchivalReason for more information. </p> </li> </ul>"
+        "TableDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code>.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> <li> <p> <code>INACCESSIBLE_ENCRYPTION_CREDENTIALS</code> - The KMS key used to encrypt the table in inaccessible. Table operations may fail due to failure to use the KMS key. DynamoDB will initiate the table archival process when a table's KMS key remains inaccessible for more than seven days. </p> </li> <li> <p> <code>ARCHIVING</code> - The table is being archived. Operations are not allowed until archival is complete. </p> </li> <li> <p> <code>ARCHIVED</code> - The table has been archived. See the ArchivalReason for more information. </p> </li> </ul>",
+        "TableWarmThroughputDescription$Status": "<p>Represents warm throughput value of the base table..</p>"
+      }
+    },
+    "TableWarmThroughputDescription": {
+      "base": "<p>Represents the warm throughput value (in read units per second and write units per second) of the base table.</p>",
+      "refs": {
+        "ReplicaDescription$WarmThroughput": "<p>Represents the warm throughput value for this replica.</p>",
+        "TableDescription$WarmThroughput": "<p>Describes the warm throughput value of the base table.</p>"
       }
     },
     "Tag": {
@@ -3288,6 +3310,16 @@
     "UpdateTimeToLiveOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "WarmThroughput": {
+      "base": "<p>Provides visibility into the number of read and write operations your table or secondary index can instantaneously support. The settings can be modified using the <code>UpdateTable</code> operation to meet the throughput requirements of an upcoming peak event.</p>",
+      "refs": {
+        "CreateGlobalSecondaryIndexAction$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) when creating a secondary index.</p>",
+        "CreateTableInput$WarmThroughput": "<p>Represents the warm throughput (in read units per second and write units per second) for creating a table.</p>",
+        "GlobalSecondaryIndex$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index. If you use this parameter, you must specify <code>ReadUnitsPerSecond</code>, <code>WriteUnitsPerSecond</code>, or both.</p>",
+        "UpdateGlobalSecondaryIndexAction$WarmThroughput": "<p>Represents the warm throughput value of the new provisioned throughput settings to be applied to a global secondary index.</p>",
+        "UpdateTableInput$WarmThroughput": "<p>Represents the warm throughput (in read units per second and write units per second) for updating a table.</p>"
       }
     },
     "WriteRequest": {

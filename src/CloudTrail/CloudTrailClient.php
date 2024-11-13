@@ -34,6 +34,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableFederationAsync(array $args = [])
  * @method \Aws\Result enableFederation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableFederationAsync(array $args = [])
+ * @method \Aws\Result generateQuery(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise generateQueryAsync(array $args = [])
  * @method \Aws\Result getChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getChannelAsync(array $args = [])
  * @method \Aws\Result getEventDataStore(array $args = [])

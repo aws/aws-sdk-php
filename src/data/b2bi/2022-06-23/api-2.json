@@ -175,6 +175,22 @@
       ],
       "idempotent":true
     },
+    "GenerateMapping":{
+      "name":"GenerateMapping",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GenerateMappingRequest"},
+      "output":{"shape":"GenerateMappingResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "GetCapability":{
       "name":"GetCapability",
       "http":{
@@ -940,6 +956,43 @@
     "FromFormat":{
       "type":"string",
       "enum":["X12"]
+    },
+    "GenerateMappingInputFileContent":{
+      "type":"string",
+      "max":5000000,
+      "min":0
+    },
+    "GenerateMappingOutputFileContent":{
+      "type":"string",
+      "max":5000000,
+      "min":0
+    },
+    "GenerateMappingRequest":{
+      "type":"structure",
+      "required":[
+        "inputFileContent",
+        "outputFileContent",
+        "mappingType"
+      ],
+      "members":{
+        "inputFileContent":{"shape":"GenerateMappingInputFileContent"},
+        "outputFileContent":{"shape":"GenerateMappingOutputFileContent"},
+        "mappingType":{"shape":"MappingType"}
+      }
+    },
+    "GenerateMappingResponse":{
+      "type":"structure",
+      "required":["mappingTemplate"],
+      "members":{
+        "mappingTemplate":{"shape":"String"},
+        "mappingAccuracy":{"shape":"GenerateMappingResponseMappingAccuracyFloat"}
+      }
+    },
+    "GenerateMappingResponseMappingAccuracyFloat":{
+      "type":"float",
+      "box":true,
+      "max":1.0,
+      "min":0.0
     },
     "GetCapabilityRequest":{
       "type":"structure",

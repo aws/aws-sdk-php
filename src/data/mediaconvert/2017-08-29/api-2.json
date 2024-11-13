@@ -7135,7 +7135,7 @@
           "locationName": "contentReference"
         },
         "CredentialsSecretName": {
-          "shape": "__stringMin1Max512PatternAZAZ09",
+          "shape": "__stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09",
           "locationName": "credentialsSecretName"
         },
         "FileOffset": {
@@ -12439,6 +12439,12 @@
       "min": 1,
       "max": 20
     },
+    "__stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09": {
+      "type": "string",
+      "min": 1,
+      "max": 2048,
+      "pattern": "^(arn:(aws|aws-us-gov|aws-cn):secretsmanager:(us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-\\d:\\d{12}:secret:)?[a-zA-Z0-9_\\/_+=.@-]*$"
+    },
     "__stringMin1Max256": {
       "type": "string",
       "min": 1,
@@ -12453,12 +12459,6 @@
       "type": "string",
       "min": 1,
       "max": 50,
-      "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
-    },
-    "__stringMin1Max512PatternAZAZ09": {
-      "type": "string",
-      "min": 1,
-      "max": 512,
       "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
     },
     "__stringMin24Max512PatternAZaZ0902": {

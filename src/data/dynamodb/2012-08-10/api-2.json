@@ -1531,7 +1531,8 @@
         "KeySchema":{"shape":"KeySchema"},
         "Projection":{"shape":"Projection"},
         "ProvisionedThroughput":{"shape":"ProvisionedThroughput"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"WarmThroughput"}
       }
     },
     "CreateGlobalTableInput":{
@@ -1590,6 +1591,7 @@
         "Tags":{"shape":"TagList"},
         "TableClass":{"shape":"TableClass"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "WarmThroughput":{"shape":"WarmThroughput"},
         "ResourcePolicy":{"shape":"ResourcePolicy"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"}
       }
@@ -2228,7 +2230,8 @@
         "KeySchema":{"shape":"KeySchema"},
         "Projection":{"shape":"Projection"},
         "ProvisionedThroughput":{"shape":"ProvisionedThroughput"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"WarmThroughput"}
       }
     },
     "GlobalSecondaryIndexAutoScalingUpdate":{
@@ -2255,7 +2258,8 @@
         "IndexSizeBytes":{"shape":"LongObject"},
         "ItemCount":{"shape":"LongObject"},
         "IndexArn":{"shape":"String"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"GlobalSecondaryIndexWarmThroughputDescription"}
       }
     },
     "GlobalSecondaryIndexDescriptionList":{
@@ -2287,6 +2291,14 @@
     "GlobalSecondaryIndexUpdateList":{
       "type":"list",
       "member":{"shape":"GlobalSecondaryIndexUpdate"}
+    },
+    "GlobalSecondaryIndexWarmThroughputDescription":{
+      "type":"structure",
+      "members":{
+        "ReadUnitsPerSecond":{"shape":"PositiveLongObject"},
+        "WriteUnitsPerSecond":{"shape":"PositiveLongObject"},
+        "Status":{"shape":"IndexStatus"}
+      }
     },
     "GlobalSecondaryIndexes":{
       "type":"list",
@@ -3215,6 +3227,7 @@
         "KMSMasterKeyId":{"shape":"KMSMasterKeyId"},
         "ProvisionedThroughputOverride":{"shape":"ProvisionedThroughputOverride"},
         "OnDemandThroughputOverride":{"shape":"OnDemandThroughputOverride"},
+        "WarmThroughput":{"shape":"TableWarmThroughputDescription"},
         "GlobalSecondaryIndexes":{"shape":"ReplicaGlobalSecondaryIndexDescriptionList"},
         "ReplicaInaccessibleDateTime":{"shape":"Date"},
         "ReplicaTableClassSummary":{"shape":"TableClassSummary"}
@@ -3262,7 +3275,8 @@
       "members":{
         "IndexName":{"shape":"IndexName"},
         "ProvisionedThroughputOverride":{"shape":"ProvisionedThroughputOverride"},
-        "OnDemandThroughputOverride":{"shape":"OnDemandThroughputOverride"}
+        "OnDemandThroughputOverride":{"shape":"OnDemandThroughputOverride"},
+        "WarmThroughput":{"shape":"GlobalSecondaryIndexWarmThroughputDescription"}
       }
     },
     "ReplicaGlobalSecondaryIndexDescriptionList":{
@@ -3782,7 +3796,8 @@
         "ArchivalSummary":{"shape":"ArchivalSummary"},
         "TableClassSummary":{"shape":"TableClassSummary"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"TableWarmThroughputDescription"}
       }
     },
     "TableId":{
@@ -3824,6 +3839,14 @@
         "ARCHIVING",
         "ARCHIVED"
       ]
+    },
+    "TableWarmThroughputDescription":{
+      "type":"structure",
+      "members":{
+        "ReadUnitsPerSecond":{"shape":"PositiveLongObject"},
+        "WriteUnitsPerSecond":{"shape":"PositiveLongObject"},
+        "Status":{"shape":"TableStatus"}
+      }
     },
     "Tag":{
       "type":"structure",
@@ -4057,7 +4080,8 @@
       "members":{
         "IndexName":{"shape":"IndexName"},
         "ProvisionedThroughput":{"shape":"ProvisionedThroughput"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"WarmThroughput"}
       }
     },
     "UpdateGlobalTableInput":{
@@ -4179,7 +4203,8 @@
         "ReplicaUpdates":{"shape":"ReplicationGroupUpdateList"},
         "TableClass":{"shape":"TableClass"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "OnDemandThroughput":{"shape":"OnDemandThroughput"}
+        "OnDemandThroughput":{"shape":"OnDemandThroughput"},
+        "WarmThroughput":{"shape":"WarmThroughput"}
       }
     },
     "UpdateTableOutput":{
@@ -4219,6 +4244,13 @@
       "type":"structure",
       "members":{
         "TimeToLiveSpecification":{"shape":"TimeToLiveSpecification"}
+      }
+    },
+    "WarmThroughput":{
+      "type":"structure",
+      "members":{
+        "ReadUnitsPerSecond":{"shape":"LongObject"},
+        "WriteUnitsPerSecond":{"shape":"LongObject"}
       }
     },
     "WriteRequest":{
