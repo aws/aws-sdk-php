@@ -1318,12 +1318,13 @@ class ClientResolver
         }
     }
 
-    public static function _default_sigv4a_signing_region_set(array &$args)
+    public static function _default_sigv4a_signing_region_set(array $args)
     {
         return ConfigurationResolver::resolve(
             'sigv4a_signing_region_set',
             '',
-            'string'
+            'string',
+            $args
         );
     }
 
@@ -1335,9 +1336,14 @@ class ClientResolver
         $args['region'] = $value;
     }
 
-    public static function _default_region(&$args)
+    public static function _default_region($args)
     {
-        return ConfigurationResolver::resolve('region', '', 'string');
+        return ConfigurationResolver::resolve(
+            'region',
+            '',
+            'string',
+            $args
+        );
     }
 
     public static function _missing_region(array $args)

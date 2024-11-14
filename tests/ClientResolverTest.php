@@ -8,6 +8,7 @@ use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -1695,5 +1696,169 @@ EOF;
         } finally {
             putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
         }
+    }
+
+    /**
+     * @dataProvider defaultRegionUseAwsSharedFileProvider
+     *
+     * @param $args
+     * @param $region
+     * @param $expected
+     * @return void
+     */
+    public function testDefaultRegionHonorUseAwsSharedFiles(
+        $args,
+        $region,
+        $expected
+    ): void
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/default_region_test";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($tempHomeDir, 0777, true);
+            mkdir($awsDir, 0777, true);
+        }
+        $configPath = $awsDir . "/config";
+        $config = <<<EOF
+[default]
+region=$region
+EOF;
+        $currentEnvConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        putenv(
+            ConfigurationResolver::ENV_CONFIG_FILE
+            . "="
+            . $configPath
+        );
+        try {
+            file_put_contents($configPath, $config);
+            $resolvedRegion = ClientResolver::_default_region($args);
+
+            $this->assertEquals($expected, $resolvedRegion);
+        } finally {
+            if ($currentEnvConfigFile) {
+                putenv(
+                    ConfigurationResolver::ENV_CONFIG_FILE
+                    . "="
+                    . $currentEnvConfigFile
+                );
+            } else {
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            }
+            unlink($configPath);
+            rmdir($awsDir);
+            rmdir($tempHomeDir);
+        }
+    }
+
+    /**
+     * @return array[]
+     */
+    public function defaultRegionUseAwsSharedFileProvider(): array
+    {
+        $configRegion = 'test-region';
+
+        return [
+            'expect_region' => [
+                'args' => [
+                    'use_aws_shared_config_files' => true,
+                ],
+                'region' => $configRegion,
+                'expected' => $configRegion
+            ],
+            'expect_region_when_flag_not_present' => [
+                'args' => [
+                ],
+                'region' => $configRegion,
+                'expected' => $configRegion
+            ],
+            'expect_region_to_be_empty' => [
+                'args' => [
+                    'use_aws_shared_config_files' => false,
+                ],
+                'region' => $configRegion,
+                'expected' => '' // empty
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider defaultSigv4aSigningRegionSetUseAwsSharedFileProvider
+     *
+     * @param $args
+     * @param $sigv4aSigningRegionSet
+     * @param $expected
+     * @return void
+     */
+    public function testDefaultSigv4aSigningRegionSetHonorUseAwsSharedFiles(
+        $args,
+        $sigv4aSigningRegionSet,
+        $expected
+    ): void
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/default_sigv4a_signing_region_set_test";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($tempHomeDir, 0777, true);
+            mkdir($awsDir, 0777, true);
+        }
+        $configPath = $awsDir . "/config";
+        $config = <<<EOF
+[default]
+sigv4a_signing_region_set=$sigv4aSigningRegionSet
+EOF;
+        $currentEnvConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        putenv(
+            ConfigurationResolver::ENV_CONFIG_FILE
+            . "="
+            . $configPath
+        );
+        try {
+            file_put_contents($configPath, $config);
+            $resolved =
+                ClientResolver::_default_sigv4a_signing_region_set($args);
+
+            $this->assertEquals($expected, $resolved);
+        } finally {
+            if ($currentEnvConfigFile) {
+                putenv(
+                    ConfigurationResolver::ENV_CONFIG_FILE
+                    . "="
+                    . $currentEnvConfigFile
+                );
+            } else {
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            }
+            unlink($configPath);
+            rmdir($awsDir);
+            rmdir($tempHomeDir);
+        }
+    }
+
+    public function defaultSigv4aSigningRegionSetUseAwsSharedFileProvider(): array
+    {
+        $configSigv4aSigningRegionSet = 'test-sigv4-signing-region-set';
+
+        return [
+            'expect_sigv4a_signing_region_set' => [
+                'args' => [
+                    'use_aws_shared_config_files' => true,
+                ],
+                'sigv4a_signing_region_set' => $configSigv4aSigningRegionSet,
+                'expected' => $configSigv4aSigningRegionSet
+            ],
+            'expect_sigv4a_signing_region_set_when_flag_not_present' => [
+                'args' => [
+                ],
+                'sigv4a_signing_region_set' => $configSigv4aSigningRegionSet,
+                'expected' => $configSigv4aSigningRegionSet
+            ],
+            'eexpect_sigv4a_signing_region_set_to_be_empty' => [
+                'args' => [
+                    'use_aws_shared_config_files' => false,
+                ],
+                'sigv4a_signing_region_set' => $configSigv4aSigningRegionSet,
+                'expected' => '' // empty
+            ]
+        ];
     }
 }
