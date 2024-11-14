@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.327.0 - 2024-11-14
 
 * `Aws\AccessAnalyzer` - Expand analyzer configuration capabilities for unused access analyzers. Unused access analyzer configurations now support the ability to exclude accounts and resource tags from analysis providing more granular control over the scope of analysis.
 * `Aws\Redshift` - Adds support for Amazon Redshift S3AccessGrants
