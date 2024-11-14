@@ -5,7 +5,7 @@ namespace Aws\Credentials;
 /**
  * @internal
  */
-class CredentialSources
+final class CredentialSources
 {
     const STATIC = 'static';
     const ENVIRONMENT = 'env';

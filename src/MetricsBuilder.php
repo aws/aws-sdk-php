@@ -132,7 +132,6 @@ final class MetricsBuilder
         static $appendMetricFns = [
             'signature' => 'appendSignatureMetric',
             'request_compression' => 'appendRequestCompressionMetric',
-            'account_id_endpoint' => 'appendAccountIdEndpoint',
             'request_checksum' => 'appendRequestChecksumMetric',
             'credentials' => 'appendCredentialsMetric'
         ];
@@ -168,22 +167,6 @@ final class MetricsBuilder
     {
         if ($format === 'gzip') {
             $this->append(MetricsBuilder::GZIP_REQUEST_COMPRESSION);
-        }
-    }
-
-    /**
-     * Appends the account id endpoint metric by validating if the
-     * endpoint contains an account id in its URL.
-     *
-     * @param string $endpoint
-     *
-     * @return void
-     */
-    private function appendAccountIdEndpoint(string $endpoint): void
-    {
-        $regex = "/^(https?:\/\/\d{12}\.[^\s\/$.?#].\S*)$/";
-        if (preg_match($regex, $endpoint)) {
-            $this->append(MetricsBuilder::ACCOUNT_ID_ENDPOINT);
         }
     }
 
@@ -227,30 +210,34 @@ final class MetricsBuilder
             return;
         }
 
-        if ($source === CredentialSources::STATIC) {
-            $this->append(MetricsBuilder::CREDENTIALS_CODE);
-        } elseif ($source === CredentialSources::ENVIRONMENT) {
-            $this->append(MetricsBuilder::CREDENTIALS_ENV_VARS);
-        } elseif ($source === CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN) {
-            $this->append(MetricsBuilder::CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN);
-        } elseif ($source === CredentialSources::STS_ASSUME_ROLE) {
-            $this->append(MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE);
-        } elseif ($source === CredentialSources::STS_WEB_ID_TOKEN) {
-            $this->append(MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE_WEB_ID);
-        } elseif ($source === CredentialSources::PROFILE) {
-            $this->append(MetricsBuilder::CREDENTIALS_PROFILE);
-        } elseif ($source === CredentialSources::IMDS) {
-            $this->append(MetricsBuilder::CREDENTIALS_IMDS);
-        } elseif ($source === CredentialSources::ECS) {
-            $this->append(MetricsBuilder::CREDENTIALS_HTTP);
-        } elseif ($source === CredentialSources::PROFILE_STS_WEB_ID_TOKEN) {
-            $this->append(MetricsBuilder::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN);
-        } elseif ($source === CredentialSources::PROCESS) {
-            $this->append(MetricsBuilder::CREDENTIALS_PROCESS);
-        } elseif ($source === CredentialSources::SSO) {
-            $this->append(MetricsBuilder::CREDENTIALS_SSO);
-        } elseif ($source === CredentialSources::SSO_LEGACY) {
-            $this->append(MetricsBuilder::CREDENTIALS_SSO_LEGACY);
+        static $credentialsMetricMapping = [
+            CredentialSources::STATIC =>
+                MetricsBuilder::CREDENTIALS_CODE,
+            CredentialSources::ENVIRONMENT =>
+                MetricsBuilder::CREDENTIALS_ENV_VARS,
+            CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN =>
+                MetricsBuilder::CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN,
+            CredentialSources::STS_ASSUME_ROLE =>
+                MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE,
+            CredentialSources::STS_WEB_ID_TOKEN =>
+                MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE_WEB_ID,
+            CredentialSources::PROFILE =>
+                MetricsBuilder::CREDENTIALS_PROFILE,
+            CredentialSources::IMDS =>
+                MetricsBuilder::CREDENTIALS_IMDS,
+            CredentialSources::ECS =>
+                MetricsBuilder::CREDENTIALS_HTTP,
+            CredentialSources::PROFILE_STS_WEB_ID_TOKEN =>
+                MetricsBuilder::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN,
+            CredentialSources::PROCESS =>
+                MetricsBuilder::CREDENTIALS_PROCESS,
+            CredentialSources::SSO =>
+                MetricsBuilder::CREDENTIALS_SSO,
+            CredentialSources::SSO_LEGACY =>
+                MetricsBuilder::CREDENTIALS_SSO_LEGACY,
+        ];
+        if (isset($credentialsMetricMapping[$source])) {
+            $this->append($credentialsMetricMapping[$source]);
         }
     }
 
@@ -269,25 +256,18 @@ final class MetricsBuilder
      */
     private function canMetricBeAppended(string $newMetric): bool
     {
+        if ($newMetric === "") {
+            return false;
+        }
+
         if ($this->metricsSize
             + (strlen($newMetric) + strlen(self::$METRIC_SEPARATOR))
             > self::$MAX_METRICS_SIZE
         ) {
-            @trigger_error(
-                "The metric `{$newMetric}` "
-                . "can not be added due to size constraints",
-                E_USER_WARNING
-            );
-
             return false;
         }
 
         if (isset($this->metrics[$newMetric])) {
-            @trigger_error(
-                'The metric ' . $newMetric. ' is already appended!',
-                E_USER_WARNING
-            );
-
             return false;
         }
 

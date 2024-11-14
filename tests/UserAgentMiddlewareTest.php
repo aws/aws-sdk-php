@@ -651,41 +651,6 @@ class UserAgentMiddlewareTest extends TestCase
     }
 
     /**
-     * Tests user agent captures the account id endpoint metric.
-     *
-     * @return void
-     */
-    public function testUserAgentCaptureAccountIdEndpointMetric()
-    {
-        $dynamoDbClient = new DynamoDbClient([
-            'region' => 'us-east-2',
-            'credentials' => new Credentials(
-                'foo',
-                'foo',
-                'foo',
-                null,
-                '123456789012'
-            ),
-            'http_handler' => function (
-                RequestInterface $request
-            ) {
-                $metrics = $this->getMetricsAsArray($request);
-
-                $this->assertTrue(
-                    in_array(MetricsBuilder::ACCOUNT_ID_ENDPOINT, $metrics)
-                );
-
-                return new Response(
-                    200,
-                    [],
-                    '{}'
-                );
-            }
-        ]);
-        $dynamoDbClient->listTables();
-    }
-
-    /**
      * Tests user agent captures a resolved account id metric.
      *
      * @return void

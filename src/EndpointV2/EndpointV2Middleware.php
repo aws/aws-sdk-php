@@ -103,10 +103,6 @@ class EndpointV2Middleware
             $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
         }
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
-        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
-            'account_id_endpoint',
-            $endpoint->getUrl()
-        );
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
                 $authSchemes,

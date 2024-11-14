@@ -16,20 +16,20 @@ class UserAgentMiddleware
 {
     const AGENT_VERSION = 2.1;
     static $userAgentFnList = [
-        'sdkVersion',
-        'userAgentVersion',
-        'hhvmVersion',
-        'osName',
-        'langVersion',
-        'execEnv',
-        'endpointDiscovery',
-        'appId',
-        'metrics'
+        'getSdkVersion',
+        'getUserAgentVersion',
+        'getHhvmVersion',
+        'getOsName',
+        'getLangVersion',
+        'getExecEnv',
+        'getEndpointDiscovery',
+        'getAppId',
+        'getMetrics'
     ];
     static $metricsFnList = [
-        'endpointMetric',
-        'accountIdModeMetric',
-        'retryConfigMetric',
+        'appendEndpointMetric',
+        'appendAccountIdModeMetric',
+        'appendRetryConfigMetric',
     ];
 
     /** @var callable  */
@@ -138,7 +138,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function sdkVersion(): string
+    private function getSdkVersion(): string
     {
         return 'aws-sdk-php/' . Sdk::VERSION;
     }
@@ -148,7 +148,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function userAgentVersion(): string
+    private function getUserAgentVersion(): string
     {
         return 'ua/' . self::AGENT_VERSION;
     }
@@ -159,7 +159,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function hhvmVersion(): string
+    private function getHhvmVersion(): string
     {
         if (defined('HHVM_VERSION')) {
             return 'HHVM/' . HHVM_VERSION;
@@ -173,7 +173,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function osName(): string
+    private function getOsName(): string
     {
         $disabledFunctions = explode(',', ini_get('disable_functions'));
         if (function_exists('php_uname')
@@ -193,7 +193,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function langVersion(): string
+    private function getLangVersion(): string
     {
         return 'lang/php#' . phpversion();
     }
@@ -203,7 +203,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function execEnv(): string
+    private function getExecEnv(): string
     {
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             return $executionEnvironment;
@@ -218,7 +218,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function endpointDiscovery(): string
+    private function getEndpointDiscovery(): string
     {
         $args = $this->args;
         if (isset($args['endpoint_discovery'])) {
@@ -243,7 +243,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function appId(): string
+    private function getAppId(): string
     {
         if (empty($this->args['app_id'])) {
             return "";
@@ -257,7 +257,7 @@ class UserAgentMiddleware
      *
      * @return string
      */
-    private function metrics(): string
+    private function getMetrics(): string
     {
         foreach (self::$metricsFnList as $fn) {
             $this->{$fn}();
@@ -275,7 +275,7 @@ class UserAgentMiddleware
      * Appends the endpoint metric into the metrics builder,
      * just if a custom endpoint was provided at client construction.
      */
-    private function endpointMetric(): void
+    private function appendEndpointMetric(): void
     {
         if (!empty($this->args['endpoint'])) {
             $this->metricsBuilder->append(MetricsBuilder::ENDPOINT_OVERRIDE);
@@ -286,7 +286,7 @@ class UserAgentMiddleware
      * Appends the account id endpoint mode metric into the metrics builder,
      * based on the account id endpoint mode provide as client argument.
      */
-    private function accountIdModeMetric(): void
+    private function appendAccountIdModeMetric(): void
     {
         $accountIdMode = $this->args['account_id_endpoint_mode'] ?? null;
         if ($accountIdMode === null) {
@@ -306,7 +306,7 @@ class UserAgentMiddleware
      * Appends the retry mode metric into the metrics builder,
      * based on the resolved retry config mode.
      */
-    private function retryConfigMetric(): void
+    private function appendRetryConfigMetric(): void
     {
         $retries = $this->args['retries'] ?? null;
         if ($retries === null) {

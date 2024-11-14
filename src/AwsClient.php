@@ -440,7 +440,6 @@ class AwsClient implements AwsClientInterface
         $name = $this->config['signing_name'];
         $region = $this->config['signing_region'];
         $signingRegionSet = $this->signingRegionSet;
-        $handlerList = $this->getHandlerList();
 
         if (isset($args['signature_version'])
          || isset($this->config['configured_signature_version'])
@@ -459,8 +458,7 @@ class AwsClient implements AwsClientInterface
                 $region,
                 $signatureVersion,
                 $configuredSignatureVersion,
-                $signingRegionSet,
-            $handlerList
+                $signingRegionSet
         ) {
             if (!$configuredSignatureVersion) {
                 if (!empty($command['@context']['signing_region'])) {

@@ -61,29 +61,6 @@ class MetricsBuilderTest extends TestCase
         }
     }
 
-    public function testEmitMetricsSizeConstraintWarning()
-    {
-        try {
-            // Prevent deprecation warning for expectWarning
-            set_error_handler(
-                static function ( $errno, $errstr ) {
-                    throw new \Exception( $errstr, $errno );
-                },
-                E_ALL
-            );
-            $this->expectException(Exception::class);
-            $this->expectExceptionMessage(
-                "The metric `A` can not be added due to size constraints"
-            );
-            $metricsBuilder = new MetricsBuilder();
-            $firstMetric = str_repeat("*", 1024);
-            $metricsBuilder->append($firstMetric);
-            $metricsBuilder->append("A");
-        } finally {
-            restore_error_handler();
-        }
-    }
-
     public function testGetMetricsBuilderFromCommand()
     {
         $command = new Command('TestCommand', [], new HandlerList());

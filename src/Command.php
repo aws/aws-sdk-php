@@ -121,7 +121,8 @@ class Command implements CommandInterface
     }
 
     /**
-     * @inheridoc
+     * Returns the metrics builder instance tied up to this command.
+     *
      * @internal
      *
      * @return MetricsBuilder
