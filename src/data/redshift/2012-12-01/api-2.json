@@ -6465,6 +6465,13 @@
         "ResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
+    "ReadWriteAccess":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
+      }
+    },
     "RebootClusterMessage":{
       "type":"structure",
       "required":["ClusterIdentifier"],
@@ -7072,6 +7079,17 @@
         "Cluster":{"shape":"Cluster"}
       }
     },
+    "S3AccessGrantsScopeUnion":{
+      "type":"structure",
+      "members":{
+        "ReadWriteAccess":{"shape":"ReadWriteAccess"}
+      },
+      "union":true
+    },
+    "S3AccessGrantsServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"S3AccessGrantsScopeUnion"}
+    },
     "S3KeyPrefixValue":{
       "type":"string",
       "max":256,
@@ -7295,7 +7313,8 @@
     "ServiceIntegrationsUnion":{
       "type":"structure",
       "members":{
-        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"}
+        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"},
+        "S3AccessGrants":{"shape":"S3AccessGrantsServiceIntegrations"}
       },
       "union":true
     },

@@ -2815,6 +2815,12 @@
       "refs": {
       }
     },
+    "ReadWriteAccess": {
+      "base": "<p>The S3 Access Grants scope.</p>",
+      "refs": {
+        "S3AccessGrantsScopeUnion$ReadWriteAccess": "<p>The S3 Access Grants scope.</p>"
+      }
+    },
     "RebootClusterMessage": {
       "base": "<p/>",
       "refs": {
@@ -3168,6 +3174,18 @@
       "refs": {
       }
     },
+    "S3AccessGrantsScopeUnion": {
+      "base": "<p>A list of scopes set up for S3 Access Grants integration.</p>",
+      "refs": {
+        "S3AccessGrantsServiceIntegrations$member": null
+      }
+    },
+    "S3AccessGrantsServiceIntegrations": {
+      "base": null,
+      "refs": {
+        "ServiceIntegrationsUnion$S3AccessGrants": "<p>A list of scopes set up for S3 Access Grants integration.</p>"
+      }
+    },
     "S3KeyPrefixValue": {
       "base": null,
       "refs": {
@@ -3316,7 +3334,8 @@
     "ServiceAuthorization": {
       "base": null,
       "refs": {
-        "LakeFormationQuery$Authorization": "<p>Determines whether the query scope is enabled or disabled.</p>"
+        "LakeFormationQuery$Authorization": "<p>Determines whether the query scope is enabled or disabled.</p>",
+        "ReadWriteAccess$Authorization": "<p>Determines whether the read/write scope is enabled or disabled.</p>"
       }
     },
     "ServiceIntegrationList": {

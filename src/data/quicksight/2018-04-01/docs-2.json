@@ -8,6 +8,8 @@
     "CreateAccountCustomization": "<p>Creates Amazon QuickSight customizations for the current Amazon Web Services Region. Currently, you can add a custom default theme by using the <code>CreateAccountCustomization</code> or <code>UpdateAccountCustomization</code> API operation. To further customize Amazon QuickSight by removing Amazon QuickSight sample assets and videos for all new users, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-quicksight.html\">Customizing Amazon QuickSight</a> in the <i>Amazon QuickSight User Guide.</i> </p> <p>You can create customizations for your Amazon Web Services account or, if you specify a namespace, for a QuickSight namespace instead. Customizations that apply to a namespace always override customizations that apply to an Amazon Web Services account. To find out which customizations apply, use the <code>DescribeAccountCustomization</code> API operation.</p> <p>Before you use the <code>CreateAccountCustomization</code> API operation to add a theme as the namespace default, make sure that you first share the theme with the namespace. If you don't share it with the namespace, the theme isn't visible to your users even if you make it the default theme. To check if the theme is shared, view the current permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeThemePermissions.html\">DescribeThemePermissions</a> </code> API operation. To share the theme, grant permissions by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateThemePermissions.html\">UpdateThemePermissions</a> </code> API operation. </p>",
     "CreateAccountSubscription": "<p>Creates an Amazon QuickSight account, or subscribes to Amazon QuickSight Q.</p> <p>The Amazon Web Services Region for the account is derived from what is configured in the CLI or SDK.</p> <p>Before you use this operation, make sure that you can connect to an existing Amazon Web Services account. If you don't have an Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/setting-up-aws-sign-up.html\">Sign up for Amazon Web Services</a> in the <i>Amazon QuickSight User Guide</i>. The person who signs up for Amazon QuickSight needs to have the correct Identity and Access Management (IAM) permissions. For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/iam-policy-examples.html\">IAM Policy Examples for Amazon QuickSight</a> in the <i>Amazon QuickSight User Guide</i>.</p> <p>If your IAM policy includes both the <code>Subscribe</code> and <code>CreateAccountSubscription</code> actions, make sure that both actions are set to <code>Allow</code>. If either action is set to <code>Deny</code>, the <code>Deny</code> action prevails and your API call fails.</p> <p>You can't pass an existing IAM role to access other Amazon Web Services services using this API operation. To pass your existing IAM role to Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html#security-create-iam-role\">Passing IAM roles to Amazon QuickSight</a> in the <i>Amazon QuickSight User Guide</i>.</p> <p>You can't set default resource access on the new account from the Amazon QuickSight API. Instead, add default resource access from the Amazon QuickSight console. For more information about setting default resource access to Amazon Web Services services, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/scoping-policies-defaults.html\">Setting default resource access to Amazon Web Services services</a> in the <i>Amazon QuickSight User Guide</i>.</p>",
     "CreateAnalysis": "<p>Creates an analysis in Amazon QuickSight. Analyses can be created either from a template or from an <code>AnalysisDefinition</code>.</p>",
+    "CreateBrand": "<p>Creates an Amazon QuickSight brand.</p>",
+    "CreateCustomPermissions": "<p>Creates a custom permissions profile.</p>",
     "CreateDashboard": "<p>Creates a dashboard from either a template or directly with a <code>DashboardDefinition</code>. To first create a template, see the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_CreateTemplate.html\">CreateTemplate</a> </code> API operation.</p> <p>A dashboard is an entity in Amazon QuickSight that identifies Amazon QuickSight reports, created from analyses. You can share Amazon QuickSight dashboards. With the right permissions, you can create scheduled email reports from them. If you have the correct permissions, you can create a dashboard from a template that exists in a different Amazon Web Services account.</p>",
     "CreateDataSet": "<p>Creates a dataset. This operation doesn't support datasets that include uploaded files as a source.</p>",
     "CreateDataSource": "<p>Creates a data source.</p>",
@@ -30,6 +32,9 @@
     "DeleteAccountCustomization": "<p>Deletes all Amazon QuickSight customizations in this Amazon Web Services Region for the specified Amazon Web Services account and Amazon QuickSight namespace.</p>",
     "DeleteAccountSubscription": "<p>Use the <code>DeleteAccountSubscription</code> operation to delete an Amazon QuickSight account. This operation will result in an error message if you have configured your account termination protection settings to <code>True</code>. To change this setting and delete your account, call the <code>UpdateAccountSettings</code> API and set the value of the <code>TerminationProtectionEnabled</code> parameter to <code>False</code>, then make another call to the <code>DeleteAccountSubscription</code> API.</p>",
     "DeleteAnalysis": "<p>Deletes an analysis from Amazon QuickSight. You can optionally include a recovery window during which you can restore the analysis. If you don't specify a recovery window value, the operation defaults to 30 days. Amazon QuickSight attaches a <code>DeletionTime</code> stamp to the response that specifies the end of the recovery window. At the end of the recovery window, Amazon QuickSight deletes the analysis permanently.</p> <p>At any time before recovery window ends, you can use the <code>RestoreAnalysis</code> API operation to remove the <code>DeletionTime</code> stamp and cancel the deletion of the analysis. The analysis remains visible in the API until it's deleted, so you can describe it but you can't make a template from it.</p> <p>An analysis that's scheduled for deletion isn't accessible in the Amazon QuickSight console. To access it in the console, restore it. Deleting an analysis doesn't delete the dashboards that you publish from it.</p>",
+    "DeleteBrand": "<p>Deletes an Amazon QuickSight brand.</p>",
+    "DeleteBrandAssignment": "<p>Deletes a brand assignment.</p>",
+    "DeleteCustomPermissions": "<p>Deletes a custom permissions profile.</p>",
     "DeleteDashboard": "<p>Deletes a dashboard.</p>",
     "DeleteDataSet": "<p>Deletes a dataset.</p>",
     "DeleteDataSetRefreshProperties": "<p>Deletes the dataset refresh properties of the dataset.</p>",
@@ -52,6 +57,7 @@
     "DeleteTopicRefreshSchedule": "<p>Deletes a topic refresh schedule.</p>",
     "DeleteUser": "<p>Deletes the Amazon QuickSight user that is associated with the identity of the IAM user or role that's making the call. The IAM user isn't deleted as a result of this call. </p>",
     "DeleteUserByPrincipalId": "<p>Deletes a user identified by its principal ID. </p>",
+    "DeleteUserCustomPermission": "<p>Deletes a custom permissions profile from a user.</p>",
     "DeleteVPCConnection": "<p>Deletes a VPC connection.</p>",
     "DescribeAccountCustomization": "<p>Describes the customizations associated with the provided Amazon Web Services account and Amazon Amazon QuickSight namespace in an Amazon Web Services Region. The Amazon QuickSight console evaluates which customizations to apply by running this API operation with the <code>Resolved</code> flag included. </p> <p>To determine what customizations display when you run this command, it can help to visualize the relationship of the entities involved. </p> <ul> <li> <p> <code>Amazon Web Services account</code> - The Amazon Web Services account exists at the top of the hierarchy. It has the potential to use all of the Amazon Web Services Regions and Amazon Web Services Services. When you subscribe to Amazon QuickSight, you choose one Amazon Web Services Region to use as your home Region. That's where your free SPICE capacity is located. You can use Amazon QuickSight in any supported Amazon Web Services Region. </p> </li> <li> <p> <code>Amazon Web Services Region</code> - In each Amazon Web Services Region where you sign in to Amazon QuickSight at least once, Amazon QuickSight acts as a separate instance of the same service. If you have a user directory, it resides in us-east-1, which is the US East (N. Virginia). Generally speaking, these users have access to Amazon QuickSight in any Amazon Web Services Region, unless they are constrained to a namespace. </p> <p>To run the command in a different Amazon Web Services Region, you change your Region settings. If you're using the CLI, you can use one of the following options:</p> <ul> <li> <p>Use <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-options.html\">command line options</a>. </p> </li> <li> <p>Use <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html\">named profiles</a>. </p> </li> <li> <p>Run <code>aws configure</code> to change your default Amazon Web Services Region. Use Enter to key the same settings for your keys. For more information, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html\">Configuring the CLI</a>.</p> </li> </ul> </li> <li> <p> <code>Namespace</code> - A QuickSight namespace is a partition that contains users and assets (data sources, datasets, dashboards, and so on). To access assets that are in a specific namespace, users and groups must also be part of the same namespace. People who share a namespace are completely isolated from users and assets in other namespaces, even if they are in the same Amazon Web Services account and Amazon Web Services Region.</p> </li> <li> <p> <code>Applied customizations</code> - Within an Amazon Web Services Region, a set of Amazon QuickSight customizations can apply to an Amazon Web Services account or to a namespace. Settings that you apply to a namespace override settings that you apply to an Amazon Web Services account. All settings are isolated to a single Amazon Web Services Region. To apply them in other Amazon Web Services Regions, run the <code>CreateAccountCustomization</code> command in each Amazon Web Services Region where you want to apply the same customizations. </p> </li> </ul>",
     "DescribeAccountSettings": "<p>Describes the settings that were used when your Amazon QuickSight subscription was first created in this Amazon Web Services account.</p>",
@@ -61,6 +67,10 @@
     "DescribeAnalysisPermissions": "<p>Provides the read and write permissions for an analysis.</p>",
     "DescribeAssetBundleExportJob": "<p>Describes an existing export job.</p> <p>Poll job descriptions after a job starts to know the status of the job. When a job succeeds, a URL is provided to download the exported assets' data from. Download URLs are valid for five minutes after they are generated. You can call the <code>DescribeAssetBundleExportJob</code> API for a new download URL as needed.</p> <p>Job descriptions are available for 14 days after the job starts.</p>",
     "DescribeAssetBundleImportJob": "<p>Describes an existing import job.</p> <p>Poll job descriptions after starting a job to know when it has succeeded or failed. Job descriptions are available for 14 days after job starts.</p>",
+    "DescribeBrand": "<p>Describes a brand.</p>",
+    "DescribeBrandAssignment": "<p>Describes a brand assignment.</p>",
+    "DescribeBrandPublishedVersion": "<p>Describes the published version of the brand.</p>",
+    "DescribeCustomPermissions": "<p>Describes a custom permissions profile.</p>",
     "DescribeDashboard": "<p>Provides a summary for a dashboard.</p>",
     "DescribeDashboardDefinition": "<p>Provides a detailed description of the definition of a dashboard.</p> <note> <p>If you do not need to know details about the content of a dashboard, for instance if you are trying to check the status of a recently created or updated dashboard, use the <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeDashboard.html\"> <code>DescribeDashboard</code> </a> instead. </p> </note>",
     "DescribeDashboardPermissions": "<p>Describes read and write permissions for a dashboard.</p>",
@@ -104,6 +114,8 @@
     "ListAnalyses": "<p>Lists Amazon QuickSight analyses that exist in the specified Amazon Web Services account.</p>",
     "ListAssetBundleExportJobs": "<p>Lists all asset bundle export jobs that have been taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleExportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
     "ListAssetBundleImportJobs": "<p>Lists all asset bundle import jobs that have taken place in the last 14 days. Jobs created more than 14 days ago are deleted forever and are not returned. If you are using the same job ID for multiple jobs, <code>ListAssetBundleImportJobs</code> only returns the most recent job that uses the repeated job ID.</p>",
+    "ListBrands": "<p>Lists all brands in an Amazon QuickSight account.</p>",
+    "ListCustomPermissions": "<p>Returns a list of all the custom permissions profiles.</p>",
     "ListDashboardVersions": "<p>Lists all the versions of the dashboards in the Amazon QuickSight subscription.</p>",
     "ListDashboards": "<p>Lists dashboards in an Amazon Web Services account.</p>",
     "ListDataSets": "<p>Lists all of the datasets belonging to the current Amazon Web Services account in an Amazon Web Services Region.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/*</code>.</p>",
@@ -152,6 +164,10 @@
     "UpdateAccountSettings": "<p>Updates the Amazon QuickSight settings in your Amazon Web Services account.</p>",
     "UpdateAnalysis": "<p>Updates an analysis in Amazon QuickSight</p>",
     "UpdateAnalysisPermissions": "<p>Updates the read and write permissions for an analysis.</p>",
+    "UpdateBrand": "<p>Updates a brand.</p>",
+    "UpdateBrandAssignment": "<p>Updates a brand assignment.</p>",
+    "UpdateBrandPublishedVersion": "<p>Updates the published version of a brand.</p>",
+    "UpdateCustomPermissions": "<p>Updates a custom permissions profile.</p>",
     "UpdateDashboard": "<p>Updates a dashboard in an Amazon Web Services account.</p> <note> <p>Updating a Dashboard creates a new dashboard version but does not immediately publish the new version. You can update the published version of a dashboard by using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateDashboardPublishedVersion.html\">UpdateDashboardPublishedVersion</a> </code> API operation.</p> </note>",
     "UpdateDashboardLinks": "<p>Updates the linked analyses on a dashboard.</p>",
     "UpdateDashboardPermissions": "<p>Updates read and write permissions on a dashboard.</p>",
@@ -182,6 +198,7 @@
     "UpdateTopicPermissions": "<p>Updates the permissions of a topic.</p>",
     "UpdateTopicRefreshSchedule": "<p>Updates a topic refresh schedule.</p>",
     "UpdateUser": "<p>Updates an Amazon QuickSight user.</p>",
+    "UpdateUserCustomPermission": "<p>Updates a custom permissions profile for a user.</p>",
     "UpdateVPCConnection": "<p>Updates a VPC connection.</p>"
   },
   "shapes": {
@@ -349,6 +366,12 @@
       "base": "<p>An empty object that represents that the <code>AllSheets</code> option is the chosen value for the <code>FilterScopeConfiguration</code> parameter. This structure applies the filter to all visuals on all sheets of an Analysis, Dashboard, or Template.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
         "FilterScopeConfiguration$AllSheets": "<p>The configuration that applies a filter to all sheets. When you choose <code>AllSheets</code> as the value for a <code>FilterScopeConfiguration</code>, this filter is applied to all visuals of all sheets in an Analysis, Dashboard, or Template. The <code>AllSheetsFilterScopeConfiguration</code> is chosen.</p>"
+      }
+    },
+    "AltText": {
+      "base": null,
+      "refs": {
+        "Logo$AltText": "<p>The alt text for the logo.</p>"
       }
     },
     "AmazonElasticsearchParameters": {
@@ -570,6 +593,12 @@
         "BatchDeleteTopicReviewedAnswerRequest$AnswerIds": "<p>The Answer IDs of the Answers to be deleted.</p>"
       }
     },
+    "ApplicationTheme": {
+      "base": "<p>The application theme.</p>",
+      "refs": {
+        "BrandDefinition$ApplicationTheme": "<p>The application theme of the brand.</p>"
+      }
+    },
     "ArcAxisConfiguration": {
       "base": "<p>The arc axis configuration of a <code>GaugeChartVisual</code>.</p>",
       "refs": {
@@ -635,10 +664,13 @@
         "AssetBundleResourceArns$member": null,
         "BatchCreateTopicReviewedAnswerResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
         "BatchDeleteTopicReviewedAnswerResponse$TopicArn": "<p>The Amazon Resource Name (ARN) of the topic.</p>",
+        "BrandDetail$Arn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
+        "BrandSummary$Arn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
         "CancelIngestionResponse$Arn": "<p>The Amazon Resource Name (ARN) for the data ingestion.</p>",
         "CreateAccountCustomizationResponse$Arn": "<p>The Amazon Resource Name (ARN) for the customization that you created for this Amazon Web Services account.</p>",
         "CreateAnalysisRequest$ThemeArn": "<p>The ARN for the theme to apply to the analysis that you're creating. To see the theme in the Amazon QuickSight console, make sure that you have access to it.</p>",
         "CreateAnalysisResponse$Arn": "<p>The ARN for the analysis.</p>",
+        "CreateCustomPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
         "CreateDashboardRequest$ThemeArn": "<p>The Amazon Resource Name (ARN) of the theme that is being used for this dashboard. If you add a value for this field, it overrides the value that is used in the source entity. The theme ARN must exist in the same Amazon Web Services account where you create the dashboard.</p>",
         "CreateDashboardResponse$Arn": "<p>The ARN of the dashboard.</p>",
         "CreateDashboardResponse$VersionArn": "<p>The ARN of the dashboard, including the version number of the first version that is created.</p>",
@@ -663,6 +695,7 @@
         "CreateTopicResponse$RefreshArn": "<p>The Amazon Resource Name (ARN) of the topic refresh.</p>",
         "CreateTopicReviewedAnswer$DatasetArn": "<p>The Dataset arn for the <code>CreateTopicReviewedAnswer</code>.</p>",
         "CreateVPCConnectionResponse$Arn": "<p>The Amazon Resource Name (ARN) of the VPC connection.</p>",
+        "CustomPermissions$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
         "CustomSql$DataSourceArn": "<p>The Amazon Resource Name (ARN) of the data source.</p>",
         "Dashboard$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "DashboardSourceTemplate$Arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
@@ -681,6 +714,7 @@
         "DataSourceSummary$Arn": "<p>The arn of the datasource.</p>",
         "DatasetMetadata$DatasetArn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DeleteAnalysisResponse$Arn": "<p>The Amazon Resource Name (ARN) of the deleted analysis.</p>",
+        "DeleteCustomPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
         "DeleteDashboardResponse$Arn": "<p>The Secure Socket Layer (SSL) properties that apply for the resource.</p>",
         "DeleteDataSetResponse$Arn": "<p>The Amazon Resource Name (ARN) of the dataset.</p>",
         "DeleteDataSourceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the data source that you deleted.</p>",
@@ -699,6 +733,7 @@
         "DescribeAnalysisPermissionsResponse$AnalysisArn": "<p>The Amazon Resource Name (ARN) of the analysis whose permissions you're describing.</p>",
         "DescribeAssetBundleExportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the export job.</p>",
         "DescribeAssetBundleImportJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the import job.</p>",
+        "DescribeBrandAssignmentResponse$BrandArn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
         "DescribeDashboardDefinitionResponse$ThemeArn": "<p>The ARN of the theme of the dashboard.</p>",
         "DescribeDashboardPermissionsResponse$DashboardArn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
         "DescribeDashboardSnapshotJobResponse$Arn": "<p>The Amazon Resource Name (ARN) for the snapshot job. The job ARN is generated when you start a new job with a <code>StartDashboardSnapshotJob</code> API call.</p>",
@@ -767,6 +802,9 @@
         "UpdateAnalysisPermissionsResponse$AnalysisArn": "<p>The Amazon Resource Name (ARN) of the analysis that you updated.</p>",
         "UpdateAnalysisRequest$ThemeArn": "<p>The Amazon Resource Name (ARN) for the theme to apply to the analysis that you're creating. To see the theme in the Amazon QuickSight console, make sure that you have access to it.</p>",
         "UpdateAnalysisResponse$Arn": "<p>The ARN of the analysis that you're updating.</p>",
+        "UpdateBrandAssignmentRequest$BrandArn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
+        "UpdateBrandAssignmentResponse$BrandArn": "<p>The Amazon Resource Name (ARN) of the brand.</p>",
+        "UpdateCustomPermissionsResponse$Arn": "<p>The Amazon Resource Name (ARN) of the custom permissions profile.</p>",
         "UpdateDashboardLinksResponse$DashboardArn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
         "UpdateDashboardPermissionsResponse$DashboardArn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
         "UpdateDashboardPublishedVersionResponse$DashboardArn": "<p>The Amazon Resource Name (ARN) of the dashboard.</p>",
@@ -1594,6 +1632,8 @@
         "CreateAccountCustomizationResponse$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to customize Amazon QuickSight for.</p>",
         "CreateAccountSubscriptionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that you're using to create your Amazon QuickSight account.</p>",
         "CreateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you are creating an analysis.</p>",
+        "CreateBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "CreateCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that you want to create the custom permissions profile in.</p>",
         "CreateDashboardRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to create the dashboard.</p>",
         "CreateDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "CreateDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -1616,6 +1656,9 @@
         "DeleteAccountCustomizationRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to delete Amazon QuickSight customizations from in this Amazon Web Services Region.</p>",
         "DeleteAccountSubscriptionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that you want to delete.</p>",
         "DeleteAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account where you want to delete an analysis.</p>",
+        "DeleteBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
+        "DeleteBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "DeleteCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permissions profile that you want to delete.</p>",
         "DeleteDashboardRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're deleting.</p>",
         "DeleteDataSetRefreshPropertiesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -1637,6 +1680,7 @@
         "DeleteTopicRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteTopicRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to delete.</p>",
         "DeleteUserByPrincipalIdRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
+        "DeleteUserCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permission configuration that you want to delete.</p>",
         "DeleteUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "DeleteVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account where you want to delete a VPC connection.</p>",
         "DescribeAccountCustomizationRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to describe Amazon QuickSight customizations for.</p>",
@@ -1650,6 +1694,10 @@
         "DescribeAssetBundleExportJobResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export job was executed in. </p>",
         "DescribeAssetBundleImportJobRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account the import job was executed in. </p>",
         "DescribeAssetBundleImportJobResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account the import job was executed in. </p>",
+        "DescribeBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
+        "DescribeBrandPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "DescribeBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "DescribeCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permissions profile that you want described.</p>",
         "DescribeDashboardDefinitionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're describing.</p>",
         "DescribeDashboardPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're describing permissions for.</p>",
         "DescribeDashboardRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're describing.</p>",
@@ -1696,6 +1744,8 @@
         "ListAnalysesRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analyses.</p>",
         "ListAssetBundleExportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the export jobs were executed in. </p>",
         "ListAssetBundleImportJobsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the import jobs were executed in.</p>",
+        "ListBrandsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brands that you want to list.</p>",
+        "ListCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permissions profiles that you want to list.</p>",
         "ListDashboardVersionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're listing versions for.</p>",
         "ListDashboardsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboards that you're listing.</p>",
         "ListDataSetsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -1742,6 +1792,10 @@
         "UpdateAccountSettingsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Amazon QuickSight settings that you want to list.</p>",
         "UpdateAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're updating. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "UpdateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis that you're updating.</p>",
+        "UpdateBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
+        "UpdateBrandPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "UpdateBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
+        "UpdateCustomPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permissions profile that you want to update.</p>",
         "UpdateDashboardLinksRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard whose links you want to update.</p>",
         "UpdateDashboardPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard whose permissions you're updating.</p>",
         "UpdateDashboardPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the dashboard that you're updating.</p>",
@@ -1772,6 +1826,7 @@
         "UpdateTopicPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update the permissions for.</p>",
         "UpdateTopicRefreshScheduleRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic whose refresh schedule you want to update.</p>",
         "UpdateTopicRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the topic that you want to update.</p>",
+        "UpdateUserCustomPermissionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the custom permission configuration that you want to update.</p>",
         "UpdateUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "UpdateVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connection that you want to update.</p>"
       }
@@ -2202,6 +2257,63 @@
         "Visual$BoxPlotVisual": "<p>A box plot.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/box-plots.html\">Using box plots</a> in the <i>Amazon QuickSight User Guide</i>.</p>"
       }
     },
+    "BrandColorPalette": {
+      "base": "<p>The color palette.</p>",
+      "refs": {
+        "ApplicationTheme$BrandColorPalette": "<p>The color palette.</p>"
+      }
+    },
+    "BrandDefinition": {
+      "base": "<p>The definition of the brand.</p>",
+      "refs": {
+        "CreateBrandRequest$BrandDefinition": "<p>The definition of the brand.</p>",
+        "CreateBrandResponse$BrandDefinition": "<p>The definition of the brand.</p>",
+        "DescribeBrandPublishedVersionResponse$BrandDefinition": "<p>The definition of the brand.</p>",
+        "DescribeBrandResponse$BrandDefinition": "<p>The definition of the brand.</p>",
+        "UpdateBrandRequest$BrandDefinition": "<p>The definition of the brand.</p>",
+        "UpdateBrandResponse$BrandDefinition": "<p>The definition of the brand.</p>"
+      }
+    },
+    "BrandDetail": {
+      "base": "<p>The details of the brand.</p>",
+      "refs": {
+        "CreateBrandResponse$BrandDetail": "<p>The details of the brand.</p>",
+        "DescribeBrandPublishedVersionResponse$BrandDetail": "<p>The details of the brand.</p>",
+        "DescribeBrandResponse$BrandDetail": "<p>The details of the brand.</p>",
+        "UpdateBrandResponse$BrandDetail": "<p>The details of the brand.</p>"
+      }
+    },
+    "BrandElementStyle": {
+      "base": "<p>The element style.</p>",
+      "refs": {
+        "ApplicationTheme$BrandElementStyle": "<p>The element style.</p>"
+      }
+    },
+    "BrandStatus": {
+      "base": null,
+      "refs": {
+        "BrandDetail$BrandStatus": "<p>The status of the brand.</p>",
+        "BrandSummary$BrandStatus": "<p>The status of the brand.</p>"
+      }
+    },
+    "BrandSummary": {
+      "base": "<p>A summary of the brand.</p>",
+      "refs": {
+        "BrandSummaryList$member": null
+      }
+    },
+    "BrandSummaryList": {
+      "base": null,
+      "refs": {
+        "ListBrandsResponse$Brands": "<p>A list of all brands in your Amazon Web Services account. This structure provides basic information about each brand.</p>"
+      }
+    },
+    "BrandVersionStatus": {
+      "base": null,
+      "refs": {
+        "BrandDetail$VersionStatus": "<p>The status of the version.</p>"
+      }
+    },
     "CIDR": {
       "base": null,
       "refs": {
@@ -2260,6 +2372,36 @@
     "CancelIngestionResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "Capabilities": {
+      "base": "<p>A set of actions that correspond to Amazon QuickSight permissions.</p>",
+      "refs": {
+        "CreateCustomPermissionsRequest$Capabilities": "<p>A set of actions to include in the custom permissions profile.</p>",
+        "CustomPermissions$Capabilities": "<p>A set of actions in the custom permissions profile.</p>",
+        "UpdateCustomPermissionsRequest$Capabilities": "<p>A set of actions to include in the custom permissions profile.</p>"
+      }
+    },
+    "CapabilityState": {
+      "base": null,
+      "refs": {
+        "Capabilities$ExportToCsv": "<p>The ability to export to CSV files.</p>",
+        "Capabilities$ExportToExcel": "<p>The ability to export to Excel files.</p>",
+        "Capabilities$CreateAndUpdateThemes": "<p>The ability to export to Create and Update themes.</p>",
+        "Capabilities$AddOrRunAnomalyDetectionForAnalyses": "<p>The ability to add or run anomaly detection.</p>",
+        "Capabilities$ShareAnalyses": "<p>The ability to share analyses.</p>",
+        "Capabilities$CreateAndUpdateDatasets": "<p>The ability to create and update datasets.</p>",
+        "Capabilities$ShareDatasets": "<p>The ability to share datasets.</p>",
+        "Capabilities$SubscribeDashboardEmailReports": "<p>The ability to subscribe to email reports.</p>",
+        "Capabilities$CreateAndUpdateDashboardEmailReports": "<p>The ability to create and update email reports.</p>",
+        "Capabilities$ShareDashboards": "<p>The ability to share dashboards.</p>",
+        "Capabilities$CreateAndUpdateThresholdAlerts": "<p>The ability to create and update threshold alerts.</p>",
+        "Capabilities$RenameSharedFolders": "<p>The ability to rename shared folders.</p>",
+        "Capabilities$CreateSharedFolders": "<p>The ability to create shared folders.</p>",
+        "Capabilities$CreateAndUpdateDataSources": "<p>The ability to create and update data sources.</p>",
+        "Capabilities$ShareDataSources": "<p>The ability to share data sources.</p>",
+        "Capabilities$ViewAccountSPICECapacity": "<p>The ability to view account SPICE capacity.</p>",
+        "Capabilities$CreateSPICEDataset": "<p>The ability to create a SPICE dataset.</p>"
       }
     },
     "CascadingControlConfiguration": {
@@ -3052,10 +3194,30 @@
       "refs": {
       }
     },
+    "CreateBrandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBrandResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateColumnsOperation": {
       "base": "<p>A transform operation that creates calculated columns. Columns created in one such operation form a lexical closure.</p>",
       "refs": {
         "TransformOperation$CreateColumnsOperation": "<p>An operation that creates calculated columns. Columns created in one such operation form a lexical closure.</p>"
+      }
+    },
+    "CreateCustomPermissionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCustomPermissionsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateDashboardRequest": {
@@ -3379,6 +3541,30 @@
       "base": "<p>The customized parameter values.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
         "CustomValuesConfiguration$CustomValues": null
+      }
+    },
+    "CustomPermissions": {
+      "base": "<p>The custom permissions profile.</p>",
+      "refs": {
+        "CustomPermissionsList$member": null,
+        "DescribeCustomPermissionsResponse$CustomPermissions": "<p>The custom permissions profile.</p>"
+      }
+    },
+    "CustomPermissionsList": {
+      "base": null,
+      "refs": {
+        "ListCustomPermissionsResponse$CustomPermissionsList": "<p>A list of custom permissions profiles.</p>"
+      }
+    },
+    "CustomPermissionsName": {
+      "base": null,
+      "refs": {
+        "CreateCustomPermissionsRequest$CustomPermissionsName": "<p>The name of the custom permissions profile that you want to create.</p>",
+        "CustomPermissions$CustomPermissionsName": "<p>The name of the custom permissions profile.</p>",
+        "DeleteCustomPermissionsRequest$CustomPermissionsName": "<p>The name of the custom permissions profile that you want to delete.</p>",
+        "DescribeCustomPermissionsRequest$CustomPermissionsName": "<p>The name of the custom permissions profile to describe.</p>",
+        "UpdateCustomPermissionsRequest$CustomPermissionsName": "<p>The name of the custom permissions profile that you want to update.</p>",
+        "UpdateUserCustomPermissionRequest$CustomPermissionsName": "<p>The name of the custom permissions that you want to update.</p>"
       }
     },
     "CustomSql": {
@@ -4387,6 +4573,36 @@
       "refs": {
       }
     },
+    "DeleteBrandAssignmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBrandAssignmentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBrandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBrandResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCustomPermissionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCustomPermissionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteDashboardRequest": {
       "base": null,
       "refs": {
@@ -4597,6 +4813,16 @@
       "refs": {
       }
     },
+    "DeleteUserCustomPermissionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUserCustomPermissionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteUserRequest": {
       "base": null,
       "refs": {
@@ -4699,6 +4925,46 @@
       }
     },
     "DescribeAssetBundleImportJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandAssignmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandAssignmentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandPublishedVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandPublishedVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeBrandResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCustomPermissionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCustomPermissionsResponse": {
       "base": null,
       "refs": {
       }
@@ -5063,6 +5329,13 @@
       "refs": {
       }
     },
+    "Description": {
+      "base": null,
+      "refs": {
+        "BrandDefinition$Description": "<p>The description of the brand.</p>",
+        "BrandSummary$Description": "<p>The description of the brand.</p>"
+      }
+    },
     "DestinationParameterValueConfiguration": {
       "base": "<p>The configuration of destination parameter values.</p> <p>This is a union type structure. For this structure to be valid, only one of the attributes can be defined.</p>",
       "refs": {
@@ -5294,6 +5567,18 @@
       "base": "<p>Error information for the SPICE ingestion of a dataset.</p>",
       "refs": {
         "Ingestion$ErrorInfo": "<p>Error information for this ingestion.</p>"
+      }
+    },
+    "ErrorList": {
+      "base": null,
+      "refs": {
+        "BrandDetail$Errors": "<p>A list of errors that occurred during the most recent brand operation.</p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "ErrorList$member": null
       }
     },
     "ExasolParameters": {
@@ -6531,6 +6816,8 @@
         "GradientStop$Color": "<p>Determines the color.</p>",
         "KPISparklineOptions$Color": "<p>The color of the sparkline.</p>",
         "LineChartMarkerStyleSettings$MarkerColor": "<p>Color of marker in the series.</p>",
+        "Palette$Foreground": "<p>The foreground color.</p>",
+        "Palette$Background": "<p>The background color.</p>",
         "RadarChartConfiguration$AlternateBandEvenColor": "<p>The color of the even-numbered alternate bands of a radar chart.</p>",
         "RadarChartConfiguration$AlternateBandOddColor": "<p>The color of the odd-numbered alternate bands of a radar chart.</p>",
         "ReferenceLineLabelConfiguration$FontColor": "<p>The font color configuration of the label in a reference line.</p>",
@@ -6762,6 +7049,41 @@
       "refs": {
       }
     },
+    "Image": {
+      "base": "<p>The logo image.</p>",
+      "refs": {
+        "ImageSet$Original": "<p>The original image.</p>",
+        "ImageSet$Height64": "<p>The image with the height set to 64 pixels.</p>",
+        "ImageSet$Height32": "<p>The image with the height set to 32 pixels.</p>"
+      }
+    },
+    "ImageConfiguration": {
+      "base": "<p>The logo image configuration.</p>",
+      "refs": {
+        "ImageSetConfiguration$Original": "<p>The original image.</p>"
+      }
+    },
+    "ImageSet": {
+      "base": "<p>The image set.</p>",
+      "refs": {
+        "LogoSet$Primary": "<p>The primary logo.</p>",
+        "LogoSet$Favicon": "<p>The favicon logo.</p>"
+      }
+    },
+    "ImageSetConfiguration": {
+      "base": "<p>The image set configuration.</p>",
+      "refs": {
+        "LogoSetConfiguration$Primary": "<p>The primary logo.</p>",
+        "LogoSetConfiguration$Favicon": "<p>The favicon logo.</p>"
+      }
+    },
+    "ImageSource": {
+      "base": "<p>The source of the image.</p>",
+      "refs": {
+        "Image$Source": "<p>The source of the logo image.</p>",
+        "ImageConfiguration$Source": "<p>The source of the image.</p>"
+      }
+    },
     "IncludeFolderMembers": {
       "base": null,
       "refs": {
@@ -6958,6 +7280,11 @@
     },
     "InternalFailureException": {
       "base": "<p>An internal failure occurred.</p>",
+      "refs": {
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>An internal service exception.</p>",
       "refs": {
       }
     },
@@ -7445,6 +7772,16 @@
       "refs": {
       }
     },
+    "ListBrandsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBrandsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListControlDisplayOptions": {
       "base": "<p>The display options of a control.</p>",
       "refs": {
@@ -7464,6 +7801,16 @@
       "refs": {
         "DropDownControlDisplayOptions$SelectAllOptions": "<p>The configuration of the <code>Select all</code> options in a dropdown control.</p>",
         "ListControlDisplayOptions$SelectAllOptions": "<p>The configuration of the <code>Select all</code> options in a list control.</p>"
+      }
+    },
+    "ListCustomPermissionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCustomPermissionsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListDashboardVersionsRequest": {
@@ -7808,6 +8155,30 @@
         "LogicalTable$Source": "<p>Source of this logical table.</p>"
       }
     },
+    "Logo": {
+      "base": "<p>The logo configuration.</p>",
+      "refs": {
+        "BrandDetail$Logo": "<p>The logo details.</p>"
+      }
+    },
+    "LogoConfiguration": {
+      "base": "<p>The logo configuration.</p>",
+      "refs": {
+        "BrandDefinition$LogoConfiguration": "<p>The logo configuration of the brand.</p>"
+      }
+    },
+    "LogoSet": {
+      "base": "<p>A set of logos.</p>",
+      "refs": {
+        "Logo$LogoSet": "<p>A set of configured logos.</p>"
+      }
+    },
+    "LogoSetConfiguration": {
+      "base": "<p>The logo set configuration.</p>",
+      "refs": {
+        "LogoConfiguration$LogoSet": "<p>A set of configured logos.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -7905,6 +8276,8 @@
         "ListAnalysesRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListAssetBundleExportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListAssetBundleImportJobsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
+        "ListBrandsRequest$MaxResults": "<p>The maximum number of results to be returned in a single request.</p>",
+        "ListCustomPermissionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListDashboardVersionsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDashboardsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
         "ListDataSetsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>",
@@ -8051,6 +8424,13 @@
         "DataSourceParameters$MySqlParameters": "<p>The parameters for MySQL.</p>"
       }
     },
+    "Name": {
+      "base": null,
+      "refs": {
+        "BrandDefinition$BrandName": "<p>The name of the brand.</p>",
+        "BrandSummary$BrandName": "<p>The name of the brand.</p>"
+      }
+    },
     "NamedEntityAggType": {
       "base": null,
       "refs": {
@@ -8115,6 +8495,7 @@
         "DeleteRoleCustomPermissionRequest$Namespace": "<p>The namespace that includes the role.</p>",
         "DeleteRoleMembershipRequest$Namespace": "<p>The namespace that contains the role.</p>",
         "DeleteUserByPrincipalIdRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
+        "DeleteUserCustomPermissionRequest$Namespace": "<p>The namespace that the user belongs to.</p>",
         "DeleteUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "DescribeAccountCustomizationRequest$Namespace": "<p>The Amazon QuickSight namespace that you want to describe Amazon QuickSight customizations for.</p>",
         "DescribeAccountCustomizationResponse$Namespace": "<p>The Amazon QuickSight namespace that you're describing. </p>",
@@ -8145,6 +8526,7 @@
         "UpdateGroupRequest$Namespace": "<p>The namespace of the group that you want to update.</p>",
         "UpdateIAMPolicyAssignmentRequest$Namespace": "<p>The namespace of the assignment.</p>",
         "UpdateRoleCustomPermissionRequest$Namespace": "<p>The namespace that contains the role that you want to update.</p>",
+        "UpdateUserCustomPermissionRequest$Namespace": "<p>The namespace that the user belongs to.</p>",
         "UpdateUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>"
       }
     },
@@ -8184,6 +8566,12 @@
       "base": null,
       "refs": {
         "CustomNarrativeOptions$Narrative": "<p>The string input of custom narrative.</p>"
+      }
+    },
+    "NavbarStyle": {
+      "base": "<p>The navigation bar style.</p>",
+      "refs": {
+        "BrandElementStyle$NavbarStyle": "<p>The navigation bar style.</p>"
       }
     },
     "NegativeFormat": {
@@ -8505,6 +8893,22 @@
       "refs": {
         "BoxPlotSortConfiguration$PaginationConfiguration": "<p>The pagination configuration of a table visual or box plot.</p>",
         "TableSortConfiguration$PaginationConfiguration": "<p>The pagination configuration (page size, page number) for the table.</p>"
+      }
+    },
+    "Palette": {
+      "base": "<p>The color palette.</p>",
+      "refs": {
+        "BrandColorPalette$Primary": "<p>The primary color.</p>",
+        "BrandColorPalette$Secondary": "<p>The secondary color.</p>",
+        "BrandColorPalette$Accent": "<p>The color that is used for accent elements.</p>",
+        "BrandColorPalette$Measure": "<p>The color that is used for measure elements.</p>",
+        "BrandColorPalette$Dimension": "<p>The color that is used for dimension elements.</p>",
+        "BrandColorPalette$Success": "<p>The color that is used for success elements.</p>",
+        "BrandColorPalette$Info": "<p>The color that is used for info elements.</p>",
+        "BrandColorPalette$Warning": "<p>The color that is used for warning elements.</p>",
+        "BrandColorPalette$Danger": "<p>The color that is used for danger elements.</p>",
+        "NavbarStyle$GlobalNavbar": "<p>The global navigation bar style.</p>",
+        "NavbarStyle$ContextualNavbar": "<p>The contextual navigation bar style.</p>"
       }
     },
     "PanelBorderStyle": {
@@ -10634,10 +11038,14 @@
         "BarChartVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers.</p>",
         "BodySectionConfiguration$SectionId": "<p>The unique identifier of a body section.</p>",
         "BoxPlotVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers..</p>",
+        "BrandDetail$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
+        "BrandDetail$VersionId": "<p>The ID of the version.</p>",
+        "BrandSummary$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
         "CategoryFilter$FilterId": "<p>An identifier that uniquely identifies a filter within a dashboard, analysis, or template.</p>",
         "ComboChartVisual$VisualId": "<p>The unique identifier of a visual. This identifier must be unique within the context of a dashboard, template, or analysis. Two dashboards, analyses, or templates can have visuals with the same identifiers.</p>",
         "CreateAnalysisRequest$AnalysisId": "<p>The ID for the analysis that you're creating. This ID displays in the URL of the analysis.</p>",
         "CreateAnalysisResponse$AnalysisId": "<p>The ID of the analysis.</p>",
+        "CreateBrandRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
         "CreateDashboardRequest$DashboardId": "<p>The ID for the dashboard, also added to the IAM policy.</p>",
         "CreateDashboardResponse$DashboardId": "<p>The ID for the dashboard.</p>",
         "CreateTemplateAliasRequest$TemplateId": "<p>An ID for the template.</p>",
@@ -10655,6 +11063,7 @@
         "DashboardVisualId$VisualId": "<p>The ID of the visual that you want to embed. The <code>VisualID</code> can be found in the <code>IDs for developers</code> section of the <code>Embed visual</code> pane of the visual's on-visual menu of the Amazon QuickSight console.</p>",
         "DeleteAnalysisRequest$AnalysisId": "<p>The ID of the analysis that you're deleting.</p>",
         "DeleteAnalysisResponse$AnalysisId": "<p>The ID of the deleted analysis.</p>",
+        "DeleteBrandRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
         "DeleteDashboardRequest$DashboardId": "<p>The ID for the dashboard.</p>",
         "DeleteDashboardResponse$DashboardId": "<p>The ID of the dashboard.</p>",
         "DeleteTemplateAliasRequest$TemplateId": "<p>The ID for the template that the specified alias is for.</p>",
@@ -10674,6 +11083,9 @@
         "DescribeAssetBundleExportJobResponse$AssetBundleExportJobId": "<p>The ID of the job. The job ID is set when you start a new job with a <code>StartAssetBundleExportJob</code> API call.</p>",
         "DescribeAssetBundleImportJobRequest$AssetBundleImportJobId": "<p>The ID of the job. The job ID is set when you start a new job with a <code>StartAssetBundleImportJob</code> API call.</p>",
         "DescribeAssetBundleImportJobResponse$AssetBundleImportJobId": "<p>The ID of the job. The job ID is set when you start a new job with a <code>StartAssetBundleImportJob</code> API call.</p>",
+        "DescribeBrandPublishedVersionRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
+        "DescribeBrandRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
+        "DescribeBrandRequest$VersionId": "<p>The ID of the specific version. The default value is the latest version.</p>",
         "DescribeDashboardDefinitionRequest$DashboardId": "<p>The ID for the dashboard.</p>",
         "DescribeDashboardDefinitionResponse$DashboardId": "<p>The ID of the dashboard described.</p>",
         "DescribeDashboardPermissionsRequest$DashboardId": "<p>The ID for the dashboard, also added to the IAM policy.</p>",
@@ -10792,6 +11204,10 @@
         "UpdateAnalysisPermissionsResponse$AnalysisId": "<p>The ID of the analysis that you updated permissions for.</p>",
         "UpdateAnalysisRequest$AnalysisId": "<p>The ID for the analysis that you're updating. This ID displays in the URL of the analysis.</p>",
         "UpdateAnalysisResponse$AnalysisId": "<p>The ID of the analysis.</p>",
+        "UpdateBrandPublishedVersionRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
+        "UpdateBrandPublishedVersionRequest$VersionId": "<p>The ID of the published version.</p>",
+        "UpdateBrandPublishedVersionResponse$VersionId": "<p>The ID of the published version.</p>",
+        "UpdateBrandRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
         "UpdateDashboardLinksRequest$DashboardId": "<p>The ID for the dashboard.</p>",
         "UpdateDashboardPermissionsRequest$DashboardId": "<p>The ID for the dashboard.</p>",
         "UpdateDashboardPermissionsResponse$DashboardId": "<p>The ID for the dashboard.</p>",
@@ -11234,6 +11650,7 @@
         "CreateAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateAccountSubscriptionResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
+        "CreateCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateDashboardResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "CreateDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11256,6 +11673,7 @@
         "DeleteAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteAccountSubscriptionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDashboardResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDataSetRefreshPropertiesResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11277,6 +11695,7 @@
         "DeleteTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteTopicResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteUserByPrincipalIdResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteUserCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeAccountCustomizationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11287,6 +11706,7 @@
         "DescribeAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeAssetBundleExportJobResponse$Status": "<p>The HTTP status of the response.</p>",
         "DescribeAssetBundleImportJobResponse$Status": "<p>The HTTP status of the response.</p>",
+        "DescribeCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDashboardDefinitionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDashboardPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDashboardResponse$Status": "<p>The HTTP status of this request.</p>",
@@ -11331,6 +11751,7 @@
         "ListAnalysesResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListAssetBundleExportJobsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListAssetBundleImportJobsResponse$Status": "<p>The HTTP status of the response.</p>",
+        "ListCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListDashboardVersionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListDashboardsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListDataSetsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11380,6 +11801,7 @@
         "UpdateAccountSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateAnalysisPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDashboardLinksResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDashboardPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDashboardPublishedVersionResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -11408,6 +11830,7 @@
         "UpdateTopicPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTopicRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateTopicResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateUserCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateVPCConnectionResponse$Status": "<p>The HTTP status of the request.</p>"
       }
@@ -11460,6 +11883,8 @@
         "CreateAccountSubscriptionRequest$IAMIdentityCenterInstanceArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>",
         "CreateAccountSubscriptionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "CreateCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "CreateDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11494,6 +11919,9 @@
         "DeleteAccountCustomizationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteAccountSubscriptionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSetRefreshPropertiesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11519,6 +11947,7 @@
         "DeleteTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteUserByPrincipalIdRequest$PrincipalId": "<p>The principal ID of the user.</p>",
         "DeleteUserByPrincipalIdResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteUserCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteVPCConnectionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAccountCustomizationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11527,6 +11956,10 @@
         "DescribeAnalysisDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDashboardDefinitionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDashboardPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDashboardResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11589,8 +12022,12 @@
         "IdentityMap$key": null,
         "IdentityTypeNotSupportedException$Message": null,
         "IdentityTypeNotSupportedException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "Image$GeneratedImageUrl": "<p>The URL that points to the generated logo image.</p>",
+        "ImageSource$PublicUrl": "<p>The public URL that points to the source image.</p>",
+        "ImageSource$S3Uri": "<p>The Amazon S3 URI that points to the source image.</p>",
         "InternalFailureException$Message": null,
         "InternalFailureException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "InternalServerException$Message": null,
         "InvalidNextTokenException$Message": null,
         "InvalidNextTokenException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
         "InvalidParameterValueException$Message": null,
@@ -11607,6 +12044,11 @@
         "ListAssetBundleExportJobsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListAssetBundleImportJobsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListAssetBundleImportJobsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListBrandsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListBrandsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListCustomPermissionsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListCustomPermissionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
+        "ListCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "ListDashboardVersionsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListDashboardVersionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListDashboardVersionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11687,6 +12129,7 @@
         "ListVPCConnectionsRequest$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListVPCConnectionsResponse$NextToken": "<p>The token for the next set of results, or null if there are no more results.</p>",
         "ListVPCConnectionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "LogoConfiguration$AltText": "<p>The alt text for the logo.</p>",
         "LookbackWindow$ColumnName": "<p>The name of the lookback window column.</p>",
         "MaximumMinimumComputation$Name": "<p>The name of a computation.</p>",
         "MetricComparisonComputation$Name": "<p>The name of a computation.</p>",
@@ -11776,6 +12219,10 @@
         "UpdateAccountSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateCustomPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDashboardLinksResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDashboardPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDashboardPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -11807,6 +12254,7 @@
         "UpdateTopicRefreshScheduleRequest$DatasetId": "<p>The ID of the dataset.</p>",
         "UpdateTopicRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateTopicResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateUserCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateUserRequest$Email": "<p>The email address of the user that you want to update.</p>",
         "UpdateUserRequest$ExternalLoginFederationProviderType": "<p>The type of supported external login provider that provides identity to let a user federate into Amazon QuickSight with an associated Identity and Access Management(IAM) role. The type of supported external login provider can be one of the following.</p> <ul> <li> <p> <code>COGNITO</code>: Amazon Cognito. The provider URL is cognito-identity.amazonaws.com. When choosing the <code>COGNITO</code> provider type, don’t use the \"CustomFederationProviderUrl\" parameter which is only needed when the external provider is custom.</p> </li> <li> <p> <code>CUSTOM_OIDC</code>: Custom OpenID Connect (OIDC) provider. When choosing <code>CUSTOM_OIDC</code> type, use the <code>CustomFederationProviderUrl</code> parameter to provide the custom OIDC provider URL.</p> </li> <li> <p> <code>NONE</code>: This clears all the previously saved external login information for a user. Use the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DescribeUser.html\">DescribeUser</a> </code> API operation to check the external login information.</p> </li> </ul>",
         "UpdateUserRequest$CustomFederationProviderUrl": "<p>The URL of the custom OpenID Connect (OIDC) provider that provides identity to let a user federate into Amazon QuickSight with an associated Identity and Access Management(IAM) role. This parameter should only be used when <code>ExternalLoginFederationProviderType</code> parameter is set to <code>CUSTOM_OIDC</code>.</p>",
@@ -12274,6 +12722,8 @@
         "AssetBundleImportJobVPCConnectionOverrideTags$Tags": "<p>A list of tags for the VPC connections that you want to apply overrides to.</p>",
         "CreateAccountCustomizationRequest$Tags": "<p>A list of the tags that you want to attach to this resource.</p>",
         "CreateAnalysisRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the analysis.</p>",
+        "CreateBrandRequest$Tags": "<p>A map of the key-value pairs that are assigned to the brand.</p>",
+        "CreateCustomPermissionsRequest$Tags": "<p>The tags to associate with the custom permissions profile.</p>",
         "CreateDashboardRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the dashboard.</p>",
         "CreateDataSetRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the dataset.</p>",
         "CreateDataSourceRequest$Tags": "<p>Contains a map of the key-value pairs for the resource tag or tags assigned to the data source.</p>",
@@ -12656,6 +13106,10 @@
         "AssetBundleExportJobSummary$CreatedTime": "<p>The time that the export job was created.</p>",
         "AssetBundleImportJobRefreshScheduleOverrideParameters$StartAfterDateTime": "<p>An override for the <code>StartAfterDateTime</code> of a <code>RefreshSchedule</code>. Make sure that the <code>StartAfterDateTime</code> is set to a time that takes place in the future.</p>",
         "AssetBundleImportJobSummary$CreatedTime": "<p>The time that the import job was created.</p>",
+        "BrandDetail$CreatedTime": "<p>The time that the brand was created.</p>",
+        "BrandDetail$LastUpdatedTime": "<p>The last time the brand was updated.</p>",
+        "BrandSummary$CreatedTime": "<p>The time that the brand was created.</p>",
+        "BrandSummary$LastUpdatedTime": "<p>The time when the brand was last updated.</p>",
         "Dashboard$CreatedTime": "<p>The time that this dashboard was created.</p>",
         "Dashboard$LastPublishedTime": "<p>The last time that this dashboard was published.</p>",
         "Dashboard$LastUpdatedTime": "<p>The last time that this dashboard was updated.</p>",
@@ -13410,6 +13864,46 @@
       "refs": {
       }
     },
+    "UpdateBrandAssignmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBrandAssignmentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBrandPublishedVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBrandPublishedVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBrandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBrandResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCustomPermissionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCustomPermissionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateDashboardLinksRequest": {
       "base": null,
       "refs": {
@@ -13730,6 +14224,16 @@
       "refs": {
       }
     },
+    "UpdateUserCustomPermissionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateUserCustomPermissionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateUserRequest": {
       "base": null,
       "refs": {
@@ -13774,11 +14278,13 @@
     "UserName": {
       "base": null,
       "refs": {
+        "DeleteUserCustomPermissionRequest$UserName": "<p>The username of the user that you want to remove custom permissions from.</p>",
         "DeleteUserRequest$UserName": "<p>The name of the user that you want to delete.</p>",
         "DescribeUserRequest$UserName": "<p>The name of the user that you want to describe.</p>",
         "ListIAMPolicyAssignmentsForUserRequest$UserName": "<p>The name of the user.</p>",
         "ListUserGroupsRequest$UserName": "<p>The Amazon QuickSight user name that you want to list group memberships for.</p>",
         "RegisterUserRequest$UserName": "<p>The Amazon QuickSight user name that you want to create for the user you are registering.</p>",
+        "UpdateUserCustomPermissionRequest$UserName": "<p>The username of the user that you want to update custom permissions for.</p>",
         "UpdateUserRequest$UserName": "<p>The Amazon QuickSight user name that you want to update.</p>",
         "User$UserName": "<p>The user's user name. This value is required if you are registering a user that will be managed in Amazon QuickSight. In the output, the value for <code>UserName</code> is <code>N/A</code> when the value for <code>IdentityType</code> is <code>IAM</code> and the corresponding IAM user is deleted.</p>"
       }

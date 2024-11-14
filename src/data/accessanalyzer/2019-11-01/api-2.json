@@ -565,6 +565,25 @@
       ],
       "idempotent":true
     },
+    "UpdateAnalyzer":{
+      "name":"UpdateAnalyzer",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/analyzer/{analyzerName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAnalyzerRequest"},
+      "output":{"shape":"UpdateAnalyzerResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateArchiveRule":{
       "name":"UpdateArchiveRule",
       "http":{
@@ -785,6 +804,10 @@
       "max":100,
       "min":0
     },
+    "AccountIdsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "AclCanonicalId":{"type":"string"},
     "AclGrantee":{
       "type":"structure",
@@ -809,6 +832,23 @@
     "ActionList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "AnalysisRule":{
+      "type":"structure",
+      "members":{
+        "exclusions":{"shape":"AnalysisRuleCriteriaList"}
+      }
+    },
+    "AnalysisRuleCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"AccountIdsList"},
+        "resourceTags":{"shape":"TagsList"}
+      }
+    },
+    "AnalysisRuleCriteriaList":{
+      "type":"list",
+      "member":{"shape":"AnalysisRuleCriteria"}
     },
     "AnalyzedResource":{
       "type":"structure",
@@ -2477,7 +2517,8 @@
         "AWS::SNS::Topic",
         "AWS::S3Express::DirectoryBucket",
         "AWS::DynamoDB::Table",
-        "AWS::DynamoDB::Stream"
+        "AWS::DynamoDB::Stream",
+        "AWS::IAM::User"
       ]
     },
     "RetiringPrincipal":{"type":"string"},
@@ -2690,6 +2731,10 @@
       "members":{
       }
     },
+    "TagsList":{
+      "type":"list",
+      "member":{"shape":"TagsMap"}
+    },
     "TagsMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -2793,7 +2838,8 @@
     "UnusedAccessConfiguration":{
       "type":"structure",
       "members":{
-        "unusedAccessAge":{"shape":"Integer"}
+        "unusedAccessAge":{"shape":"Integer"},
+        "analysisRule":{"shape":"AnalysisRule"}
       }
     },
     "UnusedAction":{
@@ -2845,6 +2891,24 @@
         "recommendedAction":{"shape":"RecommendedRemediationAction"},
         "recommendedPolicy":{"shape":"String"},
         "existingPolicyId":{"shape":"String"}
+      }
+    },
+    "UpdateAnalyzerRequest":{
+      "type":"structure",
+      "required":["analyzerName"],
+      "members":{
+        "analyzerName":{
+          "shape":"Name",
+          "location":"uri",
+          "locationName":"analyzerName"
+        },
+        "configuration":{"shape":"AnalyzerConfiguration"}
+      }
+    },
+    "UpdateAnalyzerResponse":{
+      "type":"structure",
+      "members":{
+        "configuration":{"shape":"AnalyzerConfiguration"}
       }
     },
     "UpdateArchiveRuleRequest":{

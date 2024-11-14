@@ -1937,6 +1937,14 @@
     }
   },
   "shapes":{
+    "AcceleratorCapabilities":{
+      "type":"structure",
+      "required":["selections"],
+      "members":{
+        "selections":{"shape":"AcceleratorSelections"},
+        "count":{"shape":"AcceleratorCountRange"}
+      }
+    },
     "AcceleratorCountRange":{
       "type":"structure",
       "required":["min"],
@@ -1944,6 +1952,32 @@
         "min":{"shape":"MinZeroMaxInteger"},
         "max":{"shape":"MinZeroMaxInteger"}
       }
+    },
+    "AcceleratorName":{
+      "type":"string",
+      "enum":[
+        "t4",
+        "a10g",
+        "l4",
+        "l40s"
+      ]
+    },
+    "AcceleratorRuntime":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AcceleratorSelection":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"AcceleratorName"},
+        "runtime":{"shape":"AcceleratorRuntime"}
+      }
+    },
+    "AcceleratorSelections":{
+      "type":"list",
+      "member":{"shape":"AcceleratorSelection"}
     },
     "AcceleratorTotalMemoryMiBRange":{
       "type":"structure",
@@ -7070,6 +7104,7 @@
         "osFamily":{"shape":"ServiceManagedFleetOperatingSystemFamily"},
         "cpuArchitectureType":{"shape":"CpuArchitectureType"},
         "rootEbsVolume":{"shape":"Ec2EbsVolume"},
+        "acceleratorCapabilities":{"shape":"AcceleratorCapabilities"},
         "allowedInstanceTypes":{"shape":"InstanceTypes"},
         "excludedInstanceTypes":{"shape":"InstanceTypes"},
         "customAmounts":{"shape":"CustomFleetAmountCapabilities"},
@@ -7366,7 +7401,9 @@
     },
     "StepAmountCapabilities":{
       "type":"list",
-      "member":{"shape":"StepAmountCapability"}
+      "member":{"shape":"StepAmountCapability"},
+      "max":25,
+      "min":1
     },
     "StepAmountCapability":{
       "type":"structure",
@@ -7380,7 +7417,9 @@
     },
     "StepAttributeCapabilities":{
       "type":"list",
-      "member":{"shape":"StepAttributeCapability"}
+      "member":{"shape":"StepAttributeCapability"},
+      "max":25,
+      "min":1
     },
     "StepAttributeCapability":{
       "type":"structure",

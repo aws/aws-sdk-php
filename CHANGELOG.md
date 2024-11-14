@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - Expand analyzer configuration capabilities for unused access analyzers. Unused access analyzer configurations now support the ability to exclude accounts and resource tags from analysis providing more granular control over the scope of analysis.
+* `Aws\Redshift` - Adds support for Amazon Redshift S3AccessGrants
+* `Aws\S3` - This release updates the ListBuckets API Reference documentation in support of the new 10,000 general purpose bucket default quota on all AWS accounts. To increase your bucket quota from 10,000 to up to 1 million buckets, simply request a quota increase via Service Quotas.
+* `Aws\QuickSight` - This release adds APIs for Custom Permissions management in QuickSight, and APIs to support QuickSight Branding.
+* `Aws\IVS` - IVS now offers customers the ability to stream multitrack video to Channels.
+* `Aws\SageMaker` - Add support for Neuron instance types [ trn1/trn1n/inf2 ] on SageMaker Notebook Instances Platform.
+* `Aws\PartnerCentralSelling` - Announcing AWS Partner Central API for Selling: This service launch Introduces new APIs for co-selling opportunity management and related functions. Key features include notifications, a dynamic sandbox for testing, and streamlined validations.
+* `Aws\LicenseManagerUserSubscriptions` - New and updated API operations to support License Included User-based Subscription of Microsoft Remote Desktop Services (RDS).
+* `Aws\STS` - This release introduces the new API 'AssumeRoot', which returns short-term credentials that you can use to perform privileged tasks.
+* `Aws\IoTWireless` - New FuotaTask resource type to enable logging for your FUOTA tasks. A ParticipatingGatewaysforMulticast parameter to choose the list of gateways to receive the multicast downlink message and the transmission interval between them. Descriptor field which will be sent to devices during FUOTA transfer.
+* `Aws\CloudControlApi` - Added support for CloudFormation Hooks with Cloud Control API. The GetResourceRequestStatus API response now includes an optional HooksProgressEvent and HooksRequestToken parameter for Hooks Invocation Progress as part of resource operation with Cloud Control.
+* `Aws\IAM` - This release includes support for five new APIs and changes to existing APIs that give AWS Organizations customers the ability to use temporary root credentials, targeted to member accounts in the organization.
+* `Aws\Deadline` - Adds support for select GPU accelerated instance types when creating new service-managed fleets.
+
 ## 3.326.0 - 2024-11-13
 
 * `Aws\DynamoDB` - This release includes supports the new WarmThroughput feature for DynamoDB. You can now provide an optional WarmThroughput attribute for CreateTable or UpdateTable APIs to pre-warm your table or global secondary index. You can also use DescribeTable to see the latest WarmThroughput value.
