@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.328.0 - 2024-11-15
 
 * `Aws\EC2` - Remove non-functional enum variants for FleetCapacityReservationUsageStrategy
 * `Aws\IoT` - This release allows AWS IoT Core users to enrich MQTT messages with propagating attributes, to associate a thing to a connection, and to enable Online Certificate Status Protocol (OCSP) stapling for TLS X.509 server certificates through private endpoints.
