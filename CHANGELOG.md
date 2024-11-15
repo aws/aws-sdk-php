@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.327.1 - 2024-11-15
 
 * `Aws\PartnerCentralSelling` - Announcing AWS Partner Central API for Selling: This service launch Introduces new APIs for co-selling opportunity management and related functions. Key features include notifications, a dynamic sandbox for testing, and streamlined validations.
 
