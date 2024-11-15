@@ -43,9 +43,9 @@ final class MetricsBuilder
     const CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN = "q";
     const CREDENTIALS_HTTP = "z";
     const CREDENTIALS_IMDS = "0";
-    const CREDENTIALS_PROCESS = "w";
-    const CREDENTIALS_SSO = "s";
-    const CREDENTIALS_SSO_LEGACY = "u";
+    const CREDENTIALS_PROFILE_PROCESS = "v";
+    const CREDENTIALS_PROFILE_SSO = "r";
+    const CREDENTIALS_PROFILE_SSO_LEGACY = "t";
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B
@@ -229,12 +229,12 @@ final class MetricsBuilder
                 MetricsBuilder::CREDENTIALS_HTTP,
             CredentialSources::PROFILE_STS_WEB_ID_TOKEN =>
                 MetricsBuilder::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN,
-            CredentialSources::PROCESS =>
-                MetricsBuilder::CREDENTIALS_PROCESS,
-            CredentialSources::SSO =>
-                MetricsBuilder::CREDENTIALS_SSO,
-            CredentialSources::SSO_LEGACY =>
-                MetricsBuilder::CREDENTIALS_SSO_LEGACY,
+            CredentialSources::PROFILE_PROCESS =>
+                MetricsBuilder::CREDENTIALS_PROFILE_PROCESS,
+            CredentialSources::PROFILE_SSO =>
+                MetricsBuilder::CREDENTIALS_PROFILE_SSO,
+            CredentialSources::PROFILE_SSO_LEGACY =>
+                MetricsBuilder::CREDENTIALS_PROFILE_SSO_LEGACY,
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);

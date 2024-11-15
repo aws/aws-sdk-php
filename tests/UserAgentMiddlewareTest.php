@@ -1272,7 +1272,8 @@ EOF;
                 $metrics = $this->getMetricsAsArray($request);
 
                 $this->assertTrue(
-                    in_array(MetricsBuilder::CREDENTIALS_PROCESS, $metrics)
+                    in_array(MetricsBuilder::CREDENTIALS_PROFILE_PROCESS,
+                        $metrics)
                 );
 
                 return new Response(
@@ -1357,7 +1358,7 @@ EOF;
                 $metrics = $this->getMetricsAsArray($request);
 
                 $this->assertTrue(
-                    in_array(MetricsBuilder::CREDENTIALS_SSO, $metrics)
+                    in_array(MetricsBuilder::CREDENTIALS_PROFILE_SSO, $metrics)
                 );
 
                 return new Response(
@@ -1437,7 +1438,8 @@ EOF;
                 $metrics = $this->getMetricsAsArray($request);
 
                 $this->assertTrue(
-                    in_array(MetricsBuilder::CREDENTIALS_SSO_LEGACY, $metrics)
+                    in_array(MetricsBuilder::CREDENTIALS_PROFILE_SSO_LEGACY,
+                        $metrics)
                 );
 
                 return new Response(

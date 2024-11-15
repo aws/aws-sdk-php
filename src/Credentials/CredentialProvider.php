@@ -646,7 +646,7 @@ class CredentialProvider
                     $processData['SessionToken'],
                     $expires,
                     $accountId,
-                    CredentialSources::PROCESS
+                    CredentialSources::PROFILE_PROCESS
                 )
             );
         };
@@ -927,7 +927,7 @@ class CredentialProvider
                 $ssoCredentials['sessionToken'],
                 $expiration,
                 $ssoProfile['sso_account_id'],
-                CredentialSources::SSO
+                CredentialSources::PROFILE_SSO
             )
         );
     }
@@ -988,7 +988,7 @@ class CredentialProvider
                 $ssoCredentials['sessionToken'],
                 $expiration,
                 $ssoProfile['sso_account_id'],
-                CredentialSources::SSO_LEGACY
+                CredentialSources::PROFILE_SSO_LEGACY
             )
         );
     }

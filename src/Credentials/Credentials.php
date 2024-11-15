@@ -41,7 +41,7 @@ class Credentials extends AwsCredentialIdentity implements
         $this->token = $token;
         $this->expires = $expires;
         $this->accountId = $accountId;
-        $this->source = $source;
+        $this->source = $source ?? CredentialSources::STATIC;
     }
 
     public static function __set_state(array $state)

@@ -16,7 +16,7 @@ final class CredentialSources
     const PROFILE = 'profile';
     const IMDS = 'instance_profile_provider';
     const ECS = 'ecs';
-    const SSO = 'sso';
-    const SSO_LEGACY = 'sso_legacy';
-    const PROCESS = 'process';
+    const PROFILE_SSO = 'profile_sso';
+    const PROFILE_SSO_LEGACY = 'profile_sso_legacy';
+    const PROFILE_PROCESS = 'profile_process';
 }
