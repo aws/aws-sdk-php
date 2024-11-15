@@ -181,6 +181,7 @@
     "ListPolicyVersions": "<p>Lists the versions of the specified policy and identifies the default version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPolicyVersions</a> action.</p>",
     "ListPrincipalPolicies": "<p>Lists the policies attached to the specified principal. If you use an Cognito identity, the ID must be in <a href=\"https://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html#API_GetCredentialsForIdentity_RequestSyntax\">AmazonCognito Identity format</a>.</p> <p> <b>Note:</b> This action is deprecated and works as expected for backward compatibility, but we won't add enhancements. Use <a>ListAttachedPolicies</a> instead.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalPolicies</a> action.</p>",
     "ListPrincipalThings": "<p>Lists the things associated with the specified principal. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalThings</a> action.</p>",
+    "ListPrincipalThingsV2": "<p>Lists the things associated with the specified principal. A principal can be an X.509 certificate or an Amazon Cognito ID.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalThings</a> action.</p>",
     "ListProvisioningTemplateVersions": "<p>A list of provisioning template versions.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplateVersions</a> action.</p>",
     "ListProvisioningTemplates": "<p>Lists the provisioning templates in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplates</a> action.</p>",
     "ListRelatedResourcesForAuditFinding": "<p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p> <ul> <li> <p>DEVICE_CERTIFICATE</p> </li> <li> <p>CA_CERTIFICATE</p> </li> <li> <p>IOT_POLICY</p> </li> <li> <p>COGNITO_IDENTITY_POOL</p> </li> <li> <p>CLIENT_ID</p> </li> <li> <p>ACCOUNT_SETTINGS</p> </li> <li> <p>ROLE_ALIAS</p> </li> <li> <p>IAM_ROLE</p> </li> <li> <p>ISSUER_CERTIFICATE</p> </li> </ul> <note> <p>This API is similar to DescribeAuditFinding's <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p> </note>",
@@ -196,6 +197,7 @@
     "ListThingGroups": "<p>List the thing groups in your account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingGroups</a> action.</p>",
     "ListThingGroupsForThing": "<p>List the thing groups to which the specified thing belongs.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingGroupsForThing</a> action.</p>",
     "ListThingPrincipals": "<p>Lists the principals associated with the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingPrincipals</a> action.</p>",
+    "ListThingPrincipalsV2": "<p>Lists the principals associated with the specified thing. A principal can be an X.509 certificate or an Amazon Cognito ID.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingPrincipals</a> action.</p>",
     "ListThingRegistrationTaskReports": "<p>Information about the thing registration tasks.</p>",
     "ListThingRegistrationTasks": "<p>List bulk thing provisioning tasks.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingRegistrationTasks</a> action.</p>",
     "ListThingTypes": "<p>Lists the existing thing types.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingTypes</a> action.</p>",
@@ -258,6 +260,7 @@
     "UpdateThing": "<p>Updates the data for a thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThing</a> action.</p>",
     "UpdateThingGroup": "<p>Update a thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingGroup</a> action.</p>",
     "UpdateThingGroupsForThing": "<p>Updates the groups to which the thing belongs.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingGroupsForThing</a> action.</p>",
+    "UpdateThingType": "<p>Updates a thing type.</p>",
     "UpdateTopicRuleDestination": "<p>Updates a topic rule destination. You use this to change the status, endpoint URL, or confirmation URL of the destination.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateTopicRuleDestination</a> action.</p>",
     "ValidateSecurityProfileBehaviors": "<p>Validates a Device Defender security profile behaviors specification.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ValidateSecurityProfileBehaviors</a> action.</p>"
   },
@@ -306,6 +309,7 @@
       "refs": {
         "CreateDomainConfigurationRequest$validationCertificateArn": "<p>The certificate used to validate the server certificate and prove domain name ownership. This certificate must be signed by a public certificate authority. This value is not required for Amazon Web Services-managed domains.</p>",
         "ServerCertificateArns$member": null,
+        "ServerCertificateConfig$ocspAuthorizedResponderArn": "<p>The Amazon Resource Name (ARN) for an X.509 certificate stored in Amazon Web Services Certificate Manager (ACM). If provided, Amazon Web Services IoT Core will use this certificate to validate the signature of the received OCSP response. The OCSP responder must sign responses using either this authorized responder certificate or the issuing certificate, depending on whether the ARN is provided or not. The certificate must be in the same Amazon Web Services region and account as the domain configuration. </p>",
         "ServerCertificateSummary$serverCertificateArn": "<p>The ARN of the server certificate.</p>"
       }
     },
@@ -665,6 +669,7 @@
       "refs": {
         "Attributes$key": null,
         "ListThingsRequest$attributeName": "<p>The attribute name used to search for things.</p>",
+        "PropagatingAttribute$thingAttribute": "<p>The user-defined thing attribute that is propagating for MQTT 5 message enrichment.</p>",
         "SearchableAttributes$member": null
       }
     },
@@ -1903,6 +1908,12 @@
     "ConflictingResourceUpdateException": {
       "base": "<p>A conflicting resource update exception. This exception is thrown when two pending updates cause a conflict.</p>",
       "refs": {
+      }
+    },
+    "ConnectionAttributeName": {
+      "base": null,
+      "refs": {
+        "PropagatingAttribute$connectionAttribute": "<p>The attribute associated with the connection between a device and Amazon Web Services IoT Core.</p>"
       }
     },
     "ConnectivityTimestamp": {
@@ -3523,7 +3534,7 @@
     "EnableOCSPCheck": {
       "base": null,
       "refs": {
-        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html\">Configuring OCSP server-certificate stapling in domain configuration</a> from Amazon Web Services IoT Core Developer Guide.</p>"
+        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html\"> Server certificate configuration for OCSP stapling</a> from Amazon Web Services IoT Core Developer Guide.</p>"
       }
     },
     "EnableTopicRuleRequest": {
@@ -5102,6 +5113,16 @@
       "refs": {
       }
     },
+    "ListPrincipalThingsV2Request": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPrincipalThingsV2Response": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListProvisioningTemplateVersionsRequest": {
       "base": null,
       "refs": {
@@ -5262,6 +5283,16 @@
     },
     "ListThingPrincipalsResponse": {
       "base": "<p>The output from the ListThingPrincipals operation.</p>",
+      "refs": {
+      }
+    },
+    "ListThingPrincipalsV2Request": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListThingPrincipalsV2Response": {
+      "base": null,
       "refs": {
       }
     },
@@ -5794,6 +5825,12 @@
         "BehaviorModelTrainingSummary$modelStatus": "<p> The status of the behavior model. </p>"
       }
     },
+    "Mqtt5Configuration": {
+      "base": "<p>The configuration to add user-defined properties to enrich MQTT 5 messages.</p>",
+      "refs": {
+        "ThingTypeProperties$mqtt5Configuration": "<p>The configuration to add user-defined properties to enrich MQTT 5 messages.</p>"
+      }
+    },
     "MqttClientId": {
       "base": null,
       "refs": {
@@ -5908,6 +5945,8 @@
         "ListPackagesResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListPrincipalThingsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListPrincipalThingsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListPrincipalThingsV2Request$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListPrincipalThingsV2Response$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListProvisioningTemplateVersionsRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplateVersionsResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
@@ -5934,6 +5973,8 @@
         "ListThingGroupsResponse$nextToken": "<p>The token to use to get the next set of results. Will not be returned if operation has returned all results.</p>",
         "ListThingPrincipalsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListThingPrincipalsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingPrincipalsV2Request$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingPrincipalsV2Response$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListThingRegistrationTaskReportsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListThingRegistrationTaskReportsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListThingRegistrationTasksRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
@@ -6013,6 +6054,12 @@
       "refs": {
         "RateIncreaseCriteria$numberOfNotifiedThings": "<p>The threshold for number of notified things that will initiate the increase in rate of rollout.</p>",
         "RateIncreaseCriteria$numberOfSucceededThings": "<p>The threshold for number of succeeded things that will initiate the increase in rate of rollout.</p>"
+      }
+    },
+    "OCSPLambdaArn": {
+      "base": null,
+      "refs": {
+        "ServerCertificateConfig$ocspLambdaArn": "<p>The Amazon Resource Name (ARN) for a Lambda function that acts as a Request for Comments (RFC) 6960-compliant Online Certificate Status Protocol (OCSP) responder, supporting basic OCSP responses. The Lambda function accepts a JSON string that's Base64-encoded. Therefore, you must convert your OCSP response, which is typically in the Distinguished Encoding Rules (DER) format, into a JSON string that's Base64-encoded. The Lambda function's response is also a Base64-encoded JSON string and the response payload must not exceed 8 kilobytes (KiB) in size. The Lambda function must be in the same Amazon Web Services region and account as the domain configuration.</p>"
       }
     },
     "OTAUpdateArn": {
@@ -6543,7 +6590,9 @@
         "GetEffectivePoliciesRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ListPrincipalPoliciesRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ListPrincipalThingsRequest$principal": "<p>The principal.</p>",
-        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>"
+        "ListPrincipalThingsV2Request$principal": "<p>The principal. A principal can be an X.509 certificate or an Amazon Cognito ID.</p>",
+        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
+        "ThingPrincipalObject$principal": "<p>The principal of the thing principal object.</p>"
       }
     },
     "PrincipalArn": {
@@ -6556,6 +6605,18 @@
       "base": null,
       "refs": {
         "TestInvokeAuthorizerResponse$principalId": "<p>The principal ID.</p>"
+      }
+    },
+    "PrincipalThingObject": {
+      "base": "<p>An object that represents the thing and the type of relation it has with the principal.</p>",
+      "refs": {
+        "PrincipalThingObjects$member": null
+      }
+    },
+    "PrincipalThingObjects": {
+      "base": null,
+      "refs": {
+        "ListPrincipalThingsV2Response$principalThingObjects": "<p>A list of <code>thingPrincipalObject</code> that represents the principal and the type of relation it has with the thing.</p>"
       }
     },
     "Principals": {
@@ -6581,6 +6642,18 @@
       "base": null,
       "refs": {
         "JobProcessDetails$processingTargets": "<p>The target devices to which the job execution is being rolled out. This value will be null after the job execution has finished rolling out to all the target devices.</p>"
+      }
+    },
+    "PropagatingAttribute": {
+      "base": "<p>An object that represents the connection attribute, thing attribute, and the user property key.</p>",
+      "refs": {
+        "PropagatingAttributeList$member": null
+      }
+    },
+    "PropagatingAttributeList": {
+      "base": null,
+      "refs": {
+        "Mqtt5Configuration$propagatingAttributes": "<p>An object that represents the propagating thing attributes and the connection attributes.</p>"
       }
     },
     "Protocol": {
@@ -6862,9 +6935,11 @@
       "refs": {
         "ListBillingGroupsRequest$maxResults": "<p>The maximum number of results to return per request.</p>",
         "ListPrincipalThingsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
+        "ListPrincipalThingsV2Request$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingGroupsForThingRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingGroupsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingPrincipalsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
+        "ListThingPrincipalsV2Request$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingRegistrationTaskReportsRequest$maxResults": "<p>The maximum number of results to return per request.</p>",
         "ListThingRegistrationTasksRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingTypesRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
@@ -8520,6 +8595,8 @@
         "ListJobExecutionsForThingRequest$thingName": "<p>The thing name.</p>",
         "ListThingGroupsForThingRequest$thingName": "<p>The thing name.</p>",
         "ListThingPrincipalsRequest$thingName": "<p>The name of the thing.</p>",
+        "ListThingPrincipalsV2Request$thingName": "<p>The name of the thing.</p>",
+        "PrincipalThingObject$thingName": "<p>The name of the thing.</p>",
         "RemoveThingFromBillingGroupRequest$thingName": "<p>The name of the thing to be removed from the billing group.</p>",
         "RemoveThingFromThingGroupRequest$thingName": "<p>The name of the thing to remove from the group.</p>",
         "ThingAttribute$thingName": "<p>The name of the thing.</p>",
@@ -8535,6 +8612,28 @@
         "ListPrincipalThingsResponse$things": "<p>The things.</p>",
         "ListThingsInBillingGroupResponse$things": "<p>A list of things in the billing group.</p>",
         "ListThingsInThingGroupResponse$things": "<p>The things in the specified thing group.</p>"
+      }
+    },
+    "ThingPrincipalObject": {
+      "base": "<p>An object that represents the principal and the type of relation it has with the thing.</p>",
+      "refs": {
+        "ThingPrincipalObjects$member": null
+      }
+    },
+    "ThingPrincipalObjects": {
+      "base": null,
+      "refs": {
+        "ListThingPrincipalsV2Response$thingPrincipalObjects": "<p>A list of <code>thingPrincipalObject</code> that represents the principal and the type of relation it has with the thing.</p>"
+      }
+    },
+    "ThingPrincipalType": {
+      "base": null,
+      "refs": {
+        "AttachThingPrincipalRequest$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ListPrincipalThingsV2Request$thingPrincipalType": "<p>The type of the relation you want to filter in the response. If no value is provided in this field, the response will list all things, including both the <code>EXCLUSIVE_THING</code> and <code>NON_EXCLUSIVE_THING</code> attachment types.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ListThingPrincipalsV2Request$thingPrincipalType": "<p>The type of the relation you want to filter in the response. If no value is provided in this field, the response will list all principals, including both the <code>EXCLUSIVE_THING</code> and <code>NON_EXCLUSIVE_THING</code> attachment types.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "PrincipalThingObject$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing. The value defaults to <code>NON_EXCLUSIVE_THING</code>.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ThingPrincipalObject$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing. The value defaults to <code>NON_EXCLUSIVE_THING</code>.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>"
       }
     },
     "ThingTypeArn": {
@@ -8593,15 +8692,17 @@
         "ThingAttribute$thingTypeName": "<p>The name of the thing type, if the thing has been associated with a type.</p>",
         "ThingDocument$thingTypeName": "<p>The thing type name.</p>",
         "ThingTypeDefinition$thingTypeName": "<p>The name of the thing type.</p>",
-        "UpdateThingRequest$thingTypeName": "<p>The name of the thing type.</p>"
+        "UpdateThingRequest$thingTypeName": "<p>The name of the thing type.</p>",
+        "UpdateThingTypeRequest$thingTypeName": "<p>The name of a thing type.</p>"
       }
     },
     "ThingTypeProperties": {
       "base": "<p>The ThingTypeProperties contains information about the thing type including: a thing type description, and a list of searchable thing attribute names.</p>",
       "refs": {
         "CreateThingTypeRequest$thingTypeProperties": "<p>The ThingTypeProperties for the thing type to create. It contains information about the new thing type including a description, and a list of searchable thing attribute names.</p>",
-        "DescribeThingTypeResponse$thingTypeProperties": "<p>The ThingTypeProperties contains information about the thing type including description, and a list of searchable thing attribute names.</p>",
-        "ThingTypeDefinition$thingTypeProperties": "<p>The ThingTypeProperties for the thing type.</p>"
+        "DescribeThingTypeResponse$thingTypeProperties": "<p>The ThingTypeProperties contains information about the thing type including description, a list of searchable thing attribute names, and MQTT5 configuration.</p>",
+        "ThingTypeDefinition$thingTypeProperties": "<p>The ThingTypeProperties for the thing type.</p>",
+        "UpdateThingTypeRequest$thingTypeProperties": null
       }
     },
     "ThrottlingException": {
@@ -9205,6 +9306,16 @@
       "refs": {
       }
     },
+    "UpdateThingTypeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateThingTypeResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateTopicRuleDestinationRequest": {
       "base": null,
       "refs": {
@@ -9247,6 +9358,12 @@
       "base": null,
       "refs": {
         "UserProperty$key": "<p>A key to be specified in <code>UserProperty</code>.</p>"
+      }
+    },
+    "UserPropertyKeyName": {
+      "base": null,
+      "refs": {
+        "PropagatingAttribute$userPropertyKey": "<p>The key of the user property key-value pair.</p>"
       }
     },
     "UserPropertyValue": {

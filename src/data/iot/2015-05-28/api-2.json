@@ -2903,6 +2903,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListPrincipalThingsV2":{
+      "name":"ListPrincipalThingsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/principals/things-v2"
+      },
+      "input":{"shape":"ListPrincipalThingsV2Request"},
+      "output":{"shape":"ListPrincipalThingsV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListProvisioningTemplateVersions":{
       "name":"ListProvisioningTemplateVersions",
       "http":{
@@ -3127,6 +3144,23 @@
       },
       "input":{"shape":"ListThingPrincipalsRequest"},
       "output":{"shape":"ListThingPrincipalsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListThingPrincipalsV2":{
+      "name":"ListThingPrincipalsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/things/{thingName}/principals-v2"
+      },
+      "input":{"shape":"ListThingPrincipalsV2Request"},
+      "output":{"shape":"ListThingPrincipalsV2Response"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
@@ -4140,6 +4174,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateThingType":{
+      "name":"UpdateThingType",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/thing-types/{thingTypeName}"
+      },
+      "input":{"shape":"UpdateThingTypeRequest"},
+      "output":{"shape":"UpdateThingTypeResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateTopicRuleDestination":{
       "name":"UpdateTopicRuleDestination",
       "http":{
@@ -4603,6 +4654,11 @@
           "shape":"Principal",
           "location":"header",
           "locationName":"x-amzn-principal"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
         }
       }
     },
@@ -4627,7 +4683,7 @@
     "AttributeValue":{
       "type":"string",
       "max":800,
-      "pattern":"[a-zA-Z0-9_.,@/:#-]*"
+      "pattern":"[a-zA-Z0-9_.,@/:#=\\[\\]-]*"
     },
     "Attributes":{
       "type":"map",
@@ -5699,6 +5755,11 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ConnectionAttributeName":{
+      "type":"string",
+      "max":128,
+      "pattern":"[a-zA-Z0-9:.]+"
     },
     "ConnectivityTimestamp":{"type":"long"},
     "ConsecutiveDatapointsToAlarm":{
@@ -10791,6 +10852,39 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPrincipalThingsV2Request":{
+      "type":"structure",
+      "required":["principal"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"RegistryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "principal":{
+          "shape":"Principal",
+          "location":"header",
+          "locationName":"x-amzn-principal"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
+        }
+      }
+    },
+    "ListPrincipalThingsV2Response":{
+      "type":"structure",
+      "members":{
+        "principalThingObjects":{"shape":"PrincipalThingObjects"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListProvisioningTemplateVersionsRequest":{
       "type":"structure",
       "required":["templateName"],
@@ -11222,6 +11316,39 @@
       "type":"structure",
       "members":{
         "principals":{"shape":"Principals"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThingPrincipalsV2Request":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"RegistryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "thingName":{
+          "shape":"ThingName",
+          "location":"uri",
+          "locationName":"thingName"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
+        }
+      }
+    },
+    "ListThingPrincipalsV2Response":{
+      "type":"structure",
+      "members":{
+        "thingPrincipalObjects":{"shape":"ThingPrincipalObjects"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -11879,6 +12006,12 @@
         "EXPIRED"
       ]
     },
+    "Mqtt5Configuration":{
+      "type":"structure",
+      "members":{
+        "propagatingAttributes":{"shape":"PropagatingAttributeList"}
+      }
+    },
     "MqttClientId":{
       "type":"string",
       "max":65535,
@@ -11968,6 +12101,10 @@
     "NumberOfThings":{
       "type":"integer",
       "min":1
+    },
+    "OCSPLambdaArn":{
+      "type":"string",
+      "max":140
     },
     "OTAUpdateArn":{"type":"string"},
     "OTAUpdateDescription":{
@@ -12314,6 +12451,18 @@
       "min":1,
       "pattern":"[a-zA-Z0-9]+"
     },
+    "PrincipalThingObject":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "thingName":{"shape":"ThingName"},
+        "thingPrincipalType":{"shape":"ThingPrincipalType"}
+      }
+    },
+    "PrincipalThingObjects":{
+      "type":"list",
+      "member":{"shape":"PrincipalThingObject"}
+    },
     "Principals":{
       "type":"list",
       "member":{"shape":"PrincipalArn"}
@@ -12327,6 +12476,18 @@
     "ProcessingTargetNameList":{
       "type":"list",
       "member":{"shape":"ProcessingTargetName"}
+    },
+    "PropagatingAttribute":{
+      "type":"structure",
+      "members":{
+        "userPropertyKey":{"shape":"UserPropertyKeyName"},
+        "thingAttribute":{"shape":"AttributeName"},
+        "connectionAttribute":{"shape":"ConnectionAttributeName"}
+      }
+    },
+    "PropagatingAttributeList":{
+      "type":"list",
+      "member":{"shape":"PropagatingAttribute"}
     },
     "Protocol":{
       "type":"string",
@@ -13120,7 +13281,9 @@
     "ServerCertificateConfig":{
       "type":"structure",
       "members":{
-        "enableOCSPCheck":{"shape":"EnableOCSPCheck"}
+        "enableOCSPCheck":{"shape":"EnableOCSPCheck"},
+        "ocspLambdaArn":{"shape":"OCSPLambdaArn"},
+        "ocspAuthorizedResponderArn":{"shape":"AcmCertificateArn"}
       }
     },
     "ServerCertificateStatus":{
@@ -13951,6 +14114,25 @@
       "type":"list",
       "member":{"shape":"ThingName"}
     },
+    "ThingPrincipalObject":{
+      "type":"structure",
+      "required":["principal"],
+      "members":{
+        "principal":{"shape":"Principal"},
+        "thingPrincipalType":{"shape":"ThingPrincipalType"}
+      }
+    },
+    "ThingPrincipalObjects":{
+      "type":"list",
+      "member":{"shape":"ThingPrincipalObject"}
+    },
+    "ThingPrincipalType":{
+      "type":"string",
+      "enum":[
+        "EXCLUSIVE_THING",
+        "NON_EXCLUSIVE_THING"
+      ]
+    },
     "ThingTypeArn":{"type":"string"},
     "ThingTypeDefinition":{
       "type":"structure",
@@ -13989,7 +14171,8 @@
       "type":"structure",
       "members":{
         "thingTypeDescription":{"shape":"ThingTypeDescription"},
-        "searchableAttributes":{"shape":"SearchableAttributes"}
+        "searchableAttributes":{"shape":"SearchableAttributes"},
+        "mqtt5Configuration":{"shape":"Mqtt5Configuration"}
       }
     },
     "ThrottlingException":{
@@ -14893,6 +15076,23 @@
       "members":{
       }
     },
+    "UpdateThingTypeRequest":{
+      "type":"structure",
+      "required":["thingTypeName"],
+      "members":{
+        "thingTypeName":{
+          "shape":"ThingTypeName",
+          "location":"uri",
+          "locationName":"thingTypeName"
+        },
+        "thingTypeProperties":{"shape":"ThingTypeProperties"}
+      }
+    },
+    "UpdateThingTypeResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateTopicRuleDestinationRequest":{
       "type":"structure",
       "required":[
@@ -14935,6 +15135,11 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "UserPropertyKeyName":{
+      "type":"string",
+      "max":128,
+      "pattern":"[a-zA-Z0-9:$.]+"
     },
     "UserPropertyValue":{
       "type":"string",

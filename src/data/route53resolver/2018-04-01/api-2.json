@@ -241,6 +241,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServiceErrorException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1292,6 +1293,14 @@
       ]
     },
     "Boolean":{"type":"boolean"},
+    "ConfidenceThreshold":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1353,7 +1362,6 @@
       "required":[
         "CreatorRequestId",
         "FirewallRuleGroupId",
-        "FirewallDomainListId",
         "Priority",
         "Action",
         "Name"
@@ -1364,7 +1372,10 @@
           "idempotencyToken":true
         },
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Priority":{"shape":"Priority"},
         "Action":{"shape":"Action"},
         "BlockResponse":{
@@ -1390,6 +1401,14 @@
         },
         "Qtype":{
           "shape":"Qtype",
+          "box":true
+        },
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
           "box":true
         }
       }
@@ -1567,13 +1586,17 @@
     },
     "DeleteFirewallRuleRequest":{
       "type":"structure",
-      "required":[
-        "FirewallRuleGroupId",
-        "FirewallDomainListId"
-      ],
+      "required":["FirewallRuleGroupId"],
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Qtype":{"shape":"Qtype"}
       }
     },
@@ -1704,6 +1727,13 @@
         "ResolverRuleAssociation":{"shape":"ResolverRuleAssociation"}
       }
     },
+    "DnsThreatProtection":{
+      "type":"string",
+      "enum":[
+        "DGA",
+        "DNS_TUNNELING"
+      ]
+    },
     "DomainListFileUrl":{
       "type":"string",
       "max":1024,
@@ -1833,6 +1863,7 @@
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
         "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallThreatProtectionId":{"shape":"ResourceId"},
         "Name":{"shape":"Name"},
         "Priority":{"shape":"Priority"},
         "Action":{"shape":"Action"},
@@ -1844,7 +1875,9 @@
         "CreationTime":{"shape":"Rfc3339TimeString"},
         "ModificationTime":{"shape":"Rfc3339TimeString"},
         "FirewallDomainRedirectionAction":{"shape":"FirewallDomainRedirectionAction"},
-        "Qtype":{"shape":"Qtype"}
+        "Qtype":{"shape":"Qtype"},
+        "DnsThreatProtection":{"shape":"DnsThreatProtection"},
+        "ConfidenceThreshold":{"shape":"ConfidenceThreshold"}
       }
     },
     "FirewallRuleGroup":{
@@ -3342,13 +3375,17 @@
     },
     "UpdateFirewallRuleRequest":{
       "type":"structure",
-      "required":[
-        "FirewallRuleGroupId",
-        "FirewallDomainListId"
-      ],
+      "required":["FirewallRuleGroupId"],
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Priority":{
           "shape":"Priority",
           "box":true
@@ -3381,7 +3418,15 @@
           "shape":"FirewallDomainRedirectionAction",
           "box":true
         },
-        "Qtype":{"shape":"Qtype"}
+        "Qtype":{"shape":"Qtype"},
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
+          "box":true
+        }
       }
     },
     "UpdateFirewallRuleResponse":{

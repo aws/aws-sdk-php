@@ -190,6 +190,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionConnect(array $args = [])
  * @method \Aws\ConnectCampaignService\ConnectCampaignServiceClient createConnectCampaignService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConnectCampaignService(array $args = [])
+ * @method \Aws\ConnectCampaignsV2\ConnectCampaignsV2Client createConnectCampaignsV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionConnectCampaignsV2(array $args = [])
  * @method \Aws\ConnectCases\ConnectCasesClient createConnectCases(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConnectCases(array $args = [])
  * @method \Aws\ConnectContactLens\ConnectContactLensClient createConnectContactLens(array $args = [])

@@ -403,6 +403,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteProtectConfigurationRuleSetNumberOverride":{
+      "name":"DeleteProtectConfigurationRuleSetNumberOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteProtectConfigurationRuleSetNumberOverrideRequest"},
+      "output":{"shape":"DeleteProtectConfigurationRuleSetNumberOverrideResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteRegistration":{
       "name":"DeleteRegistration",
       "http":{
@@ -914,6 +930,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListProtectConfigurationRuleSetNumberOverrides":{
+      "name":"ListProtectConfigurationRuleSetNumberOverrides",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListProtectConfigurationRuleSetNumberOverridesRequest"},
+      "output":{"shape":"ListProtectConfigurationRuleSetNumberOverridesResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListRegistrationAssociations":{
       "name":"ListRegistrationAssociations",
       "http":{
@@ -964,6 +996,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "PutMessageFeedback":{
+      "name":"PutMessageFeedback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutMessageFeedbackRequest"},
+      "output":{"shape":"PutMessageFeedbackResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "PutOptedOutNumber":{
       "name":"PutOptedOutNumber",
       "http":{
@@ -977,6 +1025,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "PutProtectConfigurationRuleSetNumberOverride":{
+      "name":"PutProtectConfigurationRuleSetNumberOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutProtectConfigurationRuleSetNumberOverrideRequest"},
+      "output":{"shape":"PutProtectConfigurationRuleSetNumberOverrideResult"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1162,6 +1227,22 @@
       },
       "input":{"shape":"SetAccountDefaultProtectConfigurationRequest"},
       "output":{"shape":"SetAccountDefaultProtectConfigurationResult"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "SetDefaultMessageFeedbackEnabled":{
+      "name":"SetDefaultMessageFeedbackEnabled",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetDefaultMessageFeedbackEnabledRequest"},
+      "output":{"shape":"SetDefaultMessageFeedbackEnabledResult"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -1610,6 +1691,7 @@
         "matching-event-types",
         "default-message-type",
         "default-sender-id",
+        "default-message-feedback-enabled",
         "protect-configuration-id"
       ]
     },
@@ -1627,6 +1709,7 @@
         "EventDestinations":{"shape":"EventDestinationList"},
         "DefaultMessageType":{"shape":"MessageType"},
         "DefaultSenderId":{"shape":"SenderId"},
+        "DefaultMessageFeedbackEnabled":{"shape":"Boolean"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"}
       }
@@ -1700,7 +1783,8 @@
         "PROTECT_CONFIGURATION_IS_ACCOUNT_DEFAULT",
         "PROTECT_CONFIGURATION_ASSOCIATED_WITH_CONFIGURATION_SET",
         "PROTECT_CONFIGURATION_NOT_ASSOCIATED_WITH_CONFIGURATION_SET",
-        "DESTINATION_COUNTRY_BLOCKED_BY_PROTECT_CONFIGURATION"
+        "DESTINATION_COUNTRY_BLOCKED_BY_PROTECT_CONFIGURATION",
+        "DESTINATION_PHONE_NUMBER_BLOCKED_BY_PROTECT_NUMBER_OVERRIDE"
       ]
     },
     "ContextKey":{
@@ -2036,6 +2120,7 @@
         "EventDestinations":{"shape":"EventDestinationList"},
         "DefaultMessageType":{"shape":"MessageType"},
         "DefaultSenderId":{"shape":"SenderId"},
+        "DefaultMessageFeedbackEnabled":{"shape":"Boolean"},
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
@@ -2201,6 +2286,36 @@
         "CreatedTimestamp":{"shape":"Timestamp"},
         "AccountDefault":{"shape":"PrimitiveBoolean"},
         "DeletionProtectionEnabled":{"shape":"PrimitiveBoolean"}
+      }
+    },
+    "DeleteProtectConfigurationRuleSetNumberOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "ProtectConfigurationId",
+        "DestinationPhoneNumber"
+      ],
+      "members":{
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "DestinationPhoneNumber":{"shape":"PhoneNumber"}
+      }
+    },
+    "DeleteProtectConfigurationRuleSetNumberOverrideResult":{
+      "type":"structure",
+      "required":[
+        "ProtectConfigurationArn",
+        "ProtectConfigurationId",
+        "DestinationPhoneNumber",
+        "CreatedTimestamp",
+        "Action"
+      ],
+      "members":{
+        "ProtectConfigurationArn":{"shape":"ProtectConfigurationArn"},
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationId"},
+        "DestinationPhoneNumber":{"shape":"PhoneNumber"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Action":{"shape":"ProtectConfigurationRuleOverrideAction"},
+        "IsoCountryCode":{"shape":"IsoCountryCode"},
+        "ExpirationTimestamp":{"shape":"Timestamp"}
       }
     },
     "DeleteRegistrationAttachmentRequest":{
@@ -2845,6 +2960,7 @@
         "TEXT_SPAM",
         "TEXT_UNKNOWN",
         "TEXT_TTL_EXPIRED",
+        "TEXT_PROTECT_BLOCKED",
         "VOICE_ALL",
         "VOICE_INITIATED",
         "VOICE_RINGING",
@@ -2911,7 +3027,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[/\\.:A-Za-z0-9_-]+"
+      "pattern":"[/\\.:A-Za-z0-9+_-]+"
     },
     "FilterValueList":{
       "type":"list",
@@ -3098,6 +3214,35 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListProtectConfigurationRuleSetNumberOverrideFilter":{
+      "type":"list",
+      "member":{"shape":"ProtectConfigurationRuleSetNumberOverrideFilterItem"},
+      "max":100,
+      "min":0
+    },
+    "ListProtectConfigurationRuleSetNumberOverridesRequest":{
+      "type":"structure",
+      "required":["ProtectConfigurationId"],
+      "members":{
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "Filters":{"shape":"ListProtectConfigurationRuleSetNumberOverrideFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListProtectConfigurationRuleSetNumberOverridesResult":{
+      "type":"structure",
+      "required":[
+        "ProtectConfigurationArn",
+        "ProtectConfigurationId"
+      ],
+      "members":{
+        "ProtectConfigurationArn":{"shape":"ProtectConfigurationArn"},
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationId"},
+        "RuleSetNumberOverrides":{"shape":"ProtectConfigurationRuleSetNumberOverrideList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRegistrationAssociationsRequest":{
       "type":"structure",
       "required":["RegistrationId"],
@@ -3173,6 +3318,19 @@
       "max":2048,
       "min":1,
       "pattern":"s3://([a-z0-9\\.-]{3,63})/(.+)"
+    },
+    "MessageFeedbackStatus":{
+      "type":"string",
+      "enum":[
+        "RECEIVED",
+        "FAILED"
+      ]
+    },
+    "MessageId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9_:/-]+"
     },
     "MessageType":{
       "type":"string",
@@ -3643,6 +3801,57 @@
       "max":100,
       "min":1
     },
+    "ProtectConfigurationRuleOverrideAction":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "BLOCK"
+      ]
+    },
+    "ProtectConfigurationRuleSetNumberOverride":{
+      "type":"structure",
+      "required":[
+        "DestinationPhoneNumber",
+        "CreatedTimestamp",
+        "Action"
+      ],
+      "members":{
+        "DestinationPhoneNumber":{"shape":"PhoneNumber"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Action":{"shape":"ProtectConfigurationRuleOverrideAction"},
+        "IsoCountryCode":{"shape":"IsoCountryCode"},
+        "ExpirationTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "ProtectConfigurationRuleSetNumberOverrideFilterItem":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"ProtectConfigurationRuleSetNumberOverrideFilterName"},
+        "Values":{"shape":"FilterValueList"}
+      }
+    },
+    "ProtectConfigurationRuleSetNumberOverrideFilterName":{
+      "type":"string",
+      "enum":[
+        "iso-country-code",
+        "destination-phone-number-begins-with",
+        "action",
+        "expires-before",
+        "expires-after",
+        "created-before",
+        "created-after"
+      ]
+    },
+    "ProtectConfigurationRuleSetNumberOverrideList":{
+      "type":"list",
+      "member":{"shape":"ProtectConfigurationRuleSetNumberOverride"},
+      "max":100,
+      "min":1
+    },
     "ProtectStatus":{
       "type":"string",
       "enum":[
@@ -3674,6 +3883,28 @@
         "KeywordAction":{"shape":"KeywordAction"}
       }
     },
+    "PutMessageFeedbackRequest":{
+      "type":"structure",
+      "required":[
+        "MessageId",
+        "MessageFeedbackStatus"
+      ],
+      "members":{
+        "MessageId":{"shape":"MessageId"},
+        "MessageFeedbackStatus":{"shape":"MessageFeedbackStatus"}
+      }
+    },
+    "PutMessageFeedbackResult":{
+      "type":"structure",
+      "required":[
+        "MessageId",
+        "MessageFeedbackStatus"
+      ],
+      "members":{
+        "MessageId":{"shape":"MessageId"},
+        "MessageFeedbackStatus":{"shape":"MessageFeedbackStatus"}
+      }
+    },
     "PutOptedOutNumberRequest":{
       "type":"structure",
       "required":[
@@ -3693,6 +3924,43 @@
         "OptedOutNumber":{"shape":"PhoneNumber"},
         "OptedOutTimestamp":{"shape":"Timestamp"},
         "EndUserOptedOut":{"shape":"PrimitiveBoolean"}
+      }
+    },
+    "PutProtectConfigurationRuleSetNumberOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "ProtectConfigurationId",
+        "DestinationPhoneNumber",
+        "Action"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "DestinationPhoneNumber":{"shape":"PhoneNumber"},
+        "Action":{"shape":"ProtectConfigurationRuleOverrideAction"},
+        "ExpirationTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "PutProtectConfigurationRuleSetNumberOverrideResult":{
+      "type":"structure",
+      "required":[
+        "ProtectConfigurationArn",
+        "ProtectConfigurationId",
+        "DestinationPhoneNumber",
+        "CreatedTimestamp",
+        "Action"
+      ],
+      "members":{
+        "ProtectConfigurationArn":{"shape":"ProtectConfigurationArn"},
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationId"},
+        "DestinationPhoneNumber":{"shape":"PhoneNumber"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Action":{"shape":"ProtectConfigurationRuleOverrideAction"},
+        "IsoCountryCode":{"shape":"IsoCountryCode"},
+        "ExpirationTimestamp":{"shape":"Timestamp"}
       }
     },
     "PutRegistrationFieldValueRequest":{
@@ -4371,7 +4639,8 @@
         "registration-attachment",
         "verified-destination-number",
         "protect-configuration",
-        "policy"
+        "policy",
+        "message"
       ]
     },
     "SectionPath":{
@@ -4462,7 +4731,8 @@
         "TimeToLive":{"shape":"TimeToLive"},
         "Context":{"shape":"ContextMap"},
         "DryRun":{"shape":"PrimitiveBoolean"},
-        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"}
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "MessageFeedbackEnabled":{"shape":"Boolean"}
       }
     },
     "SendMediaMessageResult":{
@@ -4486,7 +4756,8 @@
         "Context":{"shape":"ContextMap"},
         "DestinationCountryParameters":{"shape":"DestinationCountryParameters"},
         "DryRun":{"shape":"PrimitiveBoolean"},
-        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"}
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "MessageFeedbackEnabled":{"shape":"Boolean"}
       }
     },
     "SendTextMessageResult":{
@@ -4512,7 +4783,8 @@
         "TimeToLive":{"shape":"TimeToLive"},
         "Context":{"shape":"ContextMap"},
         "DryRun":{"shape":"PrimitiveBoolean"},
-        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"}
+        "ProtectConfigurationId":{"shape":"ProtectConfigurationIdOrArn"},
+        "MessageFeedbackEnabled":{"shape":"Boolean"}
       }
     },
     "SendVoiceMessageResult":{
@@ -4655,6 +4927,25 @@
       "members":{
         "DefaultProtectConfigurationArn":{"shape":"ProtectConfigurationArn"},
         "DefaultProtectConfigurationId":{"shape":"ProtectConfigurationId"}
+      }
+    },
+    "SetDefaultMessageFeedbackEnabledRequest":{
+      "type":"structure",
+      "required":[
+        "ConfigurationSetName",
+        "MessageFeedbackEnabled"
+      ],
+      "members":{
+        "ConfigurationSetName":{"shape":"ConfigurationSetNameOrArn"},
+        "MessageFeedbackEnabled":{"shape":"Boolean"}
+      }
+    },
+    "SetDefaultMessageFeedbackEnabledResult":{
+      "type":"structure",
+      "members":{
+        "ConfigurationSetArn":{"shape":"String"},
+        "ConfigurationSetName":{"shape":"ConfigurationSetName"},
+        "MessageFeedbackEnabled":{"shape":"Boolean"}
       }
     },
     "SetDefaultMessageTypeRequest":{
