@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PartnerCentralSelling` - Announcing AWS Partner Central API for Selling: This service launch Introduces new APIs for co-selling opportunity management and related functions. Key features include notifications, a dynamic sandbox for testing, and streamlined validations.
+
 ## 3.327.0 - 2024-11-14
 
 * `Aws\AccessAnalyzer` - Expand analyzer configuration capabilities for unused access analyzers. Unused access analyzer configurations now support the ability to exclude accounts and resource tags from analysis providing more granular control over the scope of analysis.

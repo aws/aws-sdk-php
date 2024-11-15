@@ -1208,7 +1208,8 @@
         "ZAR",
         "ZMW",
         "ZWL"
-      ]
+      ],
+      "sensitive":true
     },
     "Customer":{
       "type":"structure",
@@ -1372,15 +1373,11 @@
         "TargetCompany"
       ],
       "members":{
-        "Amount":{"shape":"ExpectedCustomerSpendAmountString"},
+        "Amount":{"shape":"String"},
         "CurrencyCode":{"shape":"ExpectedCustomerSpendCurrencyCodeEnum"},
         "Frequency":{"shape":"PaymentFrequency"},
         "TargetCompany":{"shape":"ExpectedCustomerSpendTargetCompanyString"}
       }
-    },
-    "ExpectedCustomerSpendAmountString":{
-      "type":"string",
-      "pattern":"^(0|([1-9][0-9]{0,30}))(\\.[0-9]{0,2})?$"
     },
     "ExpectedCustomerSpendCurrencyCodeEnum":{
       "type":"string",
@@ -1554,7 +1551,8 @@
         "ZMW",
         "ZWL"
       ],
-      "pattern":"^USD$"
+      "pattern":"^USD$",
+      "sensitive":true
     },
     "ExpectedCustomerSpendList":{
       "type":"list",
@@ -2188,7 +2186,8 @@
         "EngagementInvitationConflict",
         "InternalError",
         "OpportunityValidationFailed",
-        "OpportunityConflict"
+        "OpportunityConflict",
+        "ResourceSnapshotAccessDenied"
       ]
     },
     "Receiver":{
@@ -2435,7 +2434,8 @@
     },
     "StartEngagementByAcceptingInvitationTaskRequestClientTokenString":{
       "type":"string",
-      "min":1
+      "min":1,
+      "pattern":"^[!-~]{1,64}$"
     },
     "StartEngagementByAcceptingInvitationTaskResponse":{
       "type":"structure",
@@ -2470,7 +2470,8 @@
     },
     "StartEngagementFromOpportunityTaskRequestClientTokenString":{
       "type":"string",
-      "min":1
+      "min":1,
+      "pattern":"^[!-~]{1,64}$"
     },
     "StartEngagementFromOpportunityTaskResponse":{
       "type":"structure",
