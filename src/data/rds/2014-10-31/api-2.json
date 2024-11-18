@@ -1227,7 +1227,8 @@
         "resultWrapper":"DescribeDBLogFilesResult"
       },
       "errors":[
-        {"shape":"DBInstanceNotFoundFault"}
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBInstanceNotReadyFault"}
       ]
     },
     "DescribeDBParameterGroups":{
@@ -1693,6 +1694,7 @@
       },
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBInstanceNotReadyFault"},
         {"shape":"DBLogFileNotFoundFault"}
       ]
     },
@@ -4698,7 +4700,8 @@
         "SupportsCertificateRotationWithoutRestart":{"shape":"BooleanOptional"},
         "SupportedCACertificateIdentifiers":{"shape":"CACertificateIdentifiersList"},
         "SupportsLocalWriteForwarding":{"shape":"BooleanOptional"},
-        "SupportsIntegrations":{"shape":"Boolean"}
+        "SupportsIntegrations":{"shape":"Boolean"},
+        "ServerlessV2FeaturesSupport":{"shape":"ServerlessV2FeaturesSupport"}
       }
     },
     "DBEngineVersionList":{
@@ -4926,6 +4929,16 @@
         "code":"DBInstanceNotFound",
         "httpStatusCode":404,
         "senderFault":true
+      },
+      "exception":true
+    },
+    "DBInstanceNotReadyFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"DBInstanceNotReady",
+        "httpStatusCode":503
       },
       "exception":true
     },
@@ -9516,18 +9529,27 @@
       "type":"string",
       "sensitive":true
     },
-    "ServerlessV2ScalingConfiguration":{
+    "ServerlessV2FeaturesSupport":{
       "type":"structure",
       "members":{
         "MinCapacity":{"shape":"DoubleOptional"},
         "MaxCapacity":{"shape":"DoubleOptional"}
       }
     },
+    "ServerlessV2ScalingConfiguration":{
+      "type":"structure",
+      "members":{
+        "MinCapacity":{"shape":"DoubleOptional"},
+        "MaxCapacity":{"shape":"DoubleOptional"},
+        "SecondsUntilAutoPause":{"shape":"IntegerOptional"}
+      }
+    },
     "ServerlessV2ScalingConfigurationInfo":{
       "type":"structure",
       "members":{
         "MinCapacity":{"shape":"DoubleOptional"},
-        "MaxCapacity":{"shape":"DoubleOptional"}
+        "MaxCapacity":{"shape":"DoubleOptional"},
+        "SecondsUntilAutoPause":{"shape":"IntegerOptional"}
       }
     },
     "SharedSnapshotQuotaExceededFault":{

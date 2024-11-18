@@ -2804,6 +2804,7 @@
         "OnDemandOptions$SingleAvailabilityZone": "<p>Indicates that the fleet launches all On-Demand Instances into a single Availability Zone.</p> <p>Supported only for fleets of type <code>instant</code>.</p>",
         "OnDemandOptionsRequest$SingleInstanceType": "<p>Indicates that the fleet uses a single instance type to launch all On-Demand Instances in the fleet.</p> <p>Supported only for fleets of type <code>instant</code>.</p>",
         "OnDemandOptionsRequest$SingleAvailabilityZone": "<p>Indicates that the fleet launches all On-Demand Instances into a single Availability Zone.</p> <p>Supported only for fleets of type <code>instant</code>.</p>",
+        "OperatorResponse$Managed": "<p>If <code>true</code>, the resource is managed by an entity.</p>",
         "PeeringConnectionOptions$AllowDnsResolutionFromRemoteVpc": "<p>If true, the public DNS hostnames of instances in the specified VPC resolve to private IP addresses when queried from instances in the peer VPC.</p>",
         "PeeringConnectionOptions$AllowEgressFromLocalClassicLinkToRemoteVpc": "<p>Deprecated.</p>",
         "PeeringConnectionOptions$AllowEgressFromLocalVpcToRemoteClassicLink": "<p>Deprecated.</p>",
@@ -16640,6 +16641,31 @@
         "ModifySnapshotAttributeRequest$OperationType": "<p>The type of operation to perform to the attribute.</p>"
       }
     },
+    "OperatorRequest": {
+      "base": "<p>The entity that manages the resource.</p>",
+      "refs": {
+        "CreateLaunchTemplateRequest$Operator": "<p>Reserved for internal use.</p>",
+        "CreateNetworkInterfaceRequest$Operator": "<p>Reserved for internal use.</p>",
+        "CreateVolumeRequest$Operator": "<p>Reserved for internal use.</p>",
+        "RequestLaunchTemplateData$Operator": "<p>The entity that manages the launch template.</p>",
+        "RunInstancesRequest$Operator": "<p>Reserved for internal use.</p>"
+      }
+    },
+    "OperatorResponse": {
+      "base": "<p>Describes whether the resource is managed by an entity and, if so, describes the entity that manages it.</p>",
+      "refs": {
+        "EbsInstanceBlockDevice$Operator": "<p>The entity that manages the EBS volume.</p>",
+        "Instance$Operator": "<p>The entity that manages the instance.</p>",
+        "InstanceImageMetadata$Operator": "<p>The entity that manages the instance.</p>",
+        "InstanceNetworkInterface$Operator": "<p>The entity that manages the network interface.</p>",
+        "InstanceStatus$Operator": "<p>The entity that manages the instance.</p>",
+        "LaunchTemplate$Operator": "<p>The entity that manages the launch template.</p>",
+        "LaunchTemplateVersion$Operator": "<p>The entity that manages the launch template.</p>",
+        "NetworkInterface$Operator": "<p>The entity that manages the network interface.</p>",
+        "ResponseLaunchTemplateData$Operator": "<p>The entity that manages the launch template.</p>",
+        "Volume$Operator": "<p>The entity that manages the volume.</p>"
+      }
+    },
     "OrganizationArnStringList": {
       "base": null,
       "refs": {
@@ -21277,6 +21303,8 @@
         "OidcOptions$Scope": "<p>The OpenID Connect (OIDC) scope specified.</p>",
         "OnDemandOptions$MaxTotalPrice": "<p>The maximum amount per hour for On-Demand Instances that you're willing to pay.</p> <note> <p>If your fleet includes T instances that are configured as <code>unlimited</code>, and if their average CPU usage exceeds the baseline utilization, you will incur a charge for surplus credits. The <code>maxTotalPrice</code> does not account for surplus credits, and, if you use surplus credits, your final cost might be higher than what you specified for <code>maxTotalPrice</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-unlimited-mode-concepts.html#unlimited-mode-surplus-credits\">Surplus credits can incur charges</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
         "OnDemandOptionsRequest$MaxTotalPrice": "<p>The maximum amount per hour for On-Demand Instances that you're willing to pay.</p> <note> <p>If your fleet includes T instances that are configured as <code>unlimited</code>, and if their average CPU usage exceeds the baseline utilization, you will incur a charge for surplus credits. The <code>MaxTotalPrice</code> does not account for surplus credits, and, if you use surplus credits, your final cost might be higher than what you specified for <code>MaxTotalPrice</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-unlimited-mode-concepts.html#unlimited-mode-surplus-credits\">Surplus credits can incur charges</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
+        "OperatorRequest$Principal": "<p>The entity that manages the resource.</p>",
+        "OperatorResponse$Principal": "<p>If <code>managed</code> is <code>true</code>, then the principal is returned. The principal is the entity that manages the resource.</p>",
         "OrganizationArnStringList$member": null,
         "OrganizationalUnitArnStringList$member": null,
         "OwnerStringList$member": null,

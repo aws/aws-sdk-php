@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDSDataService` - Add support for the automatic pause/resume feature of Aurora Serverless v2.
+* `Aws\CloudFormation` - This release adds a new API, ListHookResults, that allows retrieving CloudFormation Hooks invocation results for hooks invoked during a create change set operation or Cloud Control API operation
+* `Aws\CustomerProfiles` - This release introduces Segmentation APIs and new Calculated Attribute Event Filters as part of Amazon Connect Customer Profiles service.
+* `Aws\AppConfig` - AWS AppConfig has added a new extension action point, AT_DEPLOYMENT_TICK, to support third-party monitors to trigger an automatic rollback during a deployment.
+* `Aws\Connect` - Adds CreateContactFlowVersion and ListContactFlowVersions APIs to create and view the versions of a contact flow.
+* `Aws\EC2` - Adding request and response elements for managed resources.
+* `Aws\RDS` - Add support for the automatic pause/resume feature of Aurora Serverless v2.
+* `Aws\QConnect` - This release introduces MessageTemplate as a resource in Amazon Q in Connect, along with APIs to create, read, search, update, and delete MessageTemplate resources.
+* `Aws\ECS` - This release adds support for adding VPC Lattice configurations in ECS CreateService/UpdateService APIs. The configuration allows for associating VPC Lattice target groups with ECS Services.
+* `Aws\IoTSiteWise` - The release introduces a generative AI Assistant in AWS IoT SiteWise. It includes: 1) InvokeAssistant API - Invoke the Assistant to get alarm summaries and ask questions. 2) Dataset APIs - Manage knowledge base configuration for the Assistant. 3) Portal APIs enhancement - Manage AI-aware dashboards.
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports Amazon Application Recovery Controller (ARC) zonal shift and zonal autoshift to help you quickly recover an impaired application from failures in an Availability Zone (AZ).
+
 ## 3.328.0 - 2024-11-15
 
 * `Aws\EC2` - Remove non-functional enum variants for FleetCapacityReservationUsageStrategy

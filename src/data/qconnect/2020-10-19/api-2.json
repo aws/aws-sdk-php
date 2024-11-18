@@ -14,6 +14,23 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "ActivateMessageTemplate":{
+      "name":"ActivateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/activate",
+        "responseCode":200
+      },
+      "input":{"shape":"ActivateMessageTemplateRequest"},
+      "output":{"shape":"ActivateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateAIAgent":{
       "name":"CreateAIAgent",
       "http":{
@@ -178,6 +195,62 @@
       ],
       "idempotent":true
     },
+    "CreateMessageTemplate":{
+      "name":"CreateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateRequest"},
+      "output":{"shape":"CreateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateMessageTemplateAttachment":{
+      "name":"CreateMessageTemplateAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/attachments",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateAttachmentRequest"},
+      "output":{"shape":"CreateMessageTemplateAttachmentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateMessageTemplateVersion":{
+      "name":"CreateMessageTemplateVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateVersionRequest"},
+      "output":{"shape":"CreateMessageTemplateVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateQuickResponse":{
       "name":"CreateQuickResponse",
       "http":{
@@ -212,6 +285,23 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
+    },
+    "DeactivateMessageTemplate":{
+      "name":"DeactivateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/deactivate",
+        "responseCode":200
+      },
+      "input":{"shape":"DeactivateMessageTemplateRequest"},
+      "output":{"shape":"DeactivateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "DeleteAIAgent":{
       "name":"DeleteAIAgent",
@@ -381,6 +471,42 @@
       ],
       "idempotent":true
     },
+    "DeleteMessageTemplate":{
+      "name":"DeleteMessageTemplate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMessageTemplateRequest"},
+      "output":{"shape":"DeleteMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteMessageTemplateAttachment":{
+      "name":"DeleteMessageTemplateAttachment",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/attachments/{attachmentId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMessageTemplateAttachmentRequest"},
+      "output":{"shape":"DeleteMessageTemplateAttachmentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteQuickResponse":{
       "name":"DeleteQuickResponse",
       "http":{
@@ -532,6 +658,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetMessageTemplate":{
+      "name":"GetMessageTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMessageTemplateRequest"},
+      "output":{"shape":"GetMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetQuickResponse":{
@@ -732,6 +874,38 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListMessageTemplateVersions":{
+      "name":"ListMessageTemplateVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessageTemplateVersionsRequest"},
+      "output":{"shape":"ListMessageTemplateVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListMessageTemplates":{
+      "name":"ListMessageTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessageTemplatesRequest"},
+      "output":{"shape":"ListMessageTemplatesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListQuickResponses":{
       "name":"ListQuickResponses",
       "http":{
@@ -842,6 +1016,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RenderMessageTemplate":{
+      "name":"RenderMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/render",
+        "responseCode":200
+      },
+      "input":{"shape":"RenderMessageTemplateRequest"},
+      "output":{"shape":"RenderMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "SearchContent":{
       "name":"SearchContent",
       "http":{
@@ -855,6 +1045,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "SearchMessageTemplates":{
+      "name":"SearchMessageTemplates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/search/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchMessageTemplatesRequest"},
+      "output":{"shape":"SearchMessageTemplatesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "SearchQuickResponses":{
@@ -1031,6 +1237,40 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateMessageTemplate":{
+      "name":"UpdateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMessageTemplateRequest"},
+      "output":{"shape":"UpdateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateMessageTemplateMetadata":{
+      "name":"UpdateMessageTemplateMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/metadata",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMessageTemplateMetadataRequest"},
+      "output":{"shape":"UpdateMessageTemplateMetadataResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateQuickResponse":{
@@ -1306,6 +1546,47 @@
       },
       "exception":true
     },
+    "ActivateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "ActivateMessageTemplateResponse":{
+      "type":"structure",
+      "required":[
+        "messageTemplateArn",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AgentAttributes":{
+      "type":"structure",
+      "members":{
+        "firstName":{"shape":"MessageTemplateAttributeValue"},
+        "lastName":{"shape":"MessageTemplateAttributeValue"}
+      }
+    },
     "AmazonConnectGuideAssociationData":{
       "type":"structure",
       "members":{
@@ -1336,6 +1617,10 @@
     "Arn":{
       "type":"string",
       "pattern":"^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}$"
+    },
+    "ArnWithQualifier":{
+      "type":"string",
+      "pattern":"^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}(:[A-Z0-9_$]+){0,1}$"
     },
     "AssistantAssociationData":{
       "type":"structure",
@@ -1502,6 +1787,13 @@
       "type":"string",
       "enum":["KNOWLEDGE_BASE"]
     },
+    "AttachmentFileName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{M}\\p{N}_\\s&@()+,;=\\-]+\\.[A-Za-z0-9]+$",
+      "sensitive":true
+    },
     "BedrockFoundationModelConfigurationForParsing":{
       "type":"structure",
       "required":["modelArn"],
@@ -1525,6 +1817,13 @@
       "max":10,
       "min":1,
       "sensitive":true
+    },
+    "ChannelSubtype":{
+      "type":"string",
+      "enum":[
+        "EMAIL",
+        "SMS"
+      ]
     },
     "Channels":{
       "type":"list",
@@ -1705,6 +2004,10 @@
         "rankingData":{"shape":"RankingData"},
         "textData":{"shape":"TextData"}
       }
+    },
+    "ContentDisposition":{
+      "type":"string",
+      "enum":["ATTACHMENT"]
     },
     "ContentFeedbackData":{
       "type":"structure",
@@ -2062,6 +2365,98 @@
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
       }
     },
+    "CreateMessageTemplateAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "body",
+        "contentDisposition",
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "body":{"shape":"NonEmptyUnlimitedString"},
+        "clientToken":{"shape":"ClientToken"},
+        "contentDisposition":{"shape":"ContentDisposition"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "name":{"shape":"AttachmentFileName"}
+      }
+    },
+    "CreateMessageTemplateAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "attachment":{"shape":"MessageTemplateAttachment"}
+      }
+    },
+    "CreateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "knowledgeBaseId",
+        "name"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "language":{"shape":"LanguageCode"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
+      }
+    },
+    "CreateMessageTemplateVersionRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "CreateMessageTemplateVersionResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"ExtendedMessageTemplateData"}
+      }
+    },
     "CreateQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -2126,6 +2521,75 @@
         "session":{"shape":"SessionData"}
       }
     },
+    "CustomAttributes":{
+      "type":"map",
+      "key":{"shape":"MessageTemplateAttributeKey"},
+      "value":{"shape":"MessageTemplateAttributeValue"},
+      "sensitive":true
+    },
+    "CustomerProfileAttributes":{
+      "type":"structure",
+      "members":{
+        "accountNumber":{"shape":"MessageTemplateAttributeValue"},
+        "additionalInformation":{"shape":"MessageTemplateAttributeValue"},
+        "address1":{"shape":"MessageTemplateAttributeValue"},
+        "address2":{"shape":"MessageTemplateAttributeValue"},
+        "address3":{"shape":"MessageTemplateAttributeValue"},
+        "address4":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "billingCity":{"shape":"MessageTemplateAttributeValue"},
+        "billingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "billingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "billingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "billingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "billingState":{"shape":"MessageTemplateAttributeValue"},
+        "birthDate":{"shape":"MessageTemplateAttributeValue"},
+        "businessEmailAddress":{"shape":"MessageTemplateAttributeValue"},
+        "businessName":{"shape":"MessageTemplateAttributeValue"},
+        "businessPhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "city":{"shape":"MessageTemplateAttributeValue"},
+        "country":{"shape":"MessageTemplateAttributeValue"},
+        "county":{"shape":"MessageTemplateAttributeValue"},
+        "custom":{"shape":"CustomAttributes"},
+        "emailAddress":{"shape":"MessageTemplateAttributeValue"},
+        "firstName":{"shape":"MessageTemplateAttributeValue"},
+        "gender":{"shape":"MessageTemplateAttributeValue"},
+        "homePhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "lastName":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCity":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "mailingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "mailingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "mailingState":{"shape":"MessageTemplateAttributeValue"},
+        "middleName":{"shape":"MessageTemplateAttributeValue"},
+        "mobilePhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "partyType":{"shape":"MessageTemplateAttributeValue"},
+        "phoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "postalCode":{"shape":"MessageTemplateAttributeValue"},
+        "profileARN":{"shape":"MessageTemplateAttributeValue"},
+        "profileId":{"shape":"MessageTemplateAttributeValue"},
+        "province":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCity":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "shippingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "shippingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "shippingState":{"shape":"MessageTemplateAttributeValue"},
+        "state":{"shape":"MessageTemplateAttributeValue"}
+      }
+    },
     "DataDetails":{
       "type":"structure",
       "members":{
@@ -2158,6 +2622,40 @@
     "DataSummaryList":{
       "type":"list",
       "member":{"shape":"DataSummary"}
+    },
+    "DeactivateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "DeactivateMessageTemplateResponse":{
+      "type":"structure",
+      "required":[
+        "messageTemplateArn",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "versionNumber":{"shape":"Version"}
+      }
     },
     "DeleteAIAgentRequest":{
       "type":"structure",
@@ -2401,6 +2899,60 @@
       "members":{
       }
     },
+    "DeleteMessageTemplateAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "attachmentId",
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "attachmentId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"attachmentId"
+        },
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "DeleteMessageTemplateAttachmentResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "DeleteMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -2445,6 +2997,85 @@
       "members":{
         "highlights":{"shape":"Highlights"},
         "text":{"shape":"SensitiveString"}
+      }
+    },
+    "EmailHeader":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"EmailHeaderKey"},
+        "value":{"shape":"EmailHeaderValue"}
+      }
+    },
+    "EmailHeaderKey":{
+      "type":"string",
+      "max":126,
+      "min":1,
+      "pattern":"^[!-9;-@A-~]+$"
+    },
+    "EmailHeaderValue":{
+      "type":"string",
+      "max":870,
+      "min":1,
+      "pattern":"[ -~]*",
+      "sensitive":true
+    },
+    "EmailHeaders":{
+      "type":"list",
+      "member":{"shape":"EmailHeader"},
+      "max":15,
+      "min":0
+    },
+    "EmailMessageTemplateContent":{
+      "type":"structure",
+      "members":{
+        "body":{"shape":"EmailMessageTemplateContentBody"},
+        "headers":{"shape":"EmailHeaders"},
+        "subject":{"shape":"NonEmptyUnlimitedString"}
+      }
+    },
+    "EmailMessageTemplateContentBody":{
+      "type":"structure",
+      "members":{
+        "html":{"shape":"MessageTemplateBodyContentProvider"},
+        "plainText":{"shape":"MessageTemplateBodyContentProvider"}
+      }
+    },
+    "ExtendedMessageTemplateData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateContentSha256",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "attachments":{"shape":"MessageTemplateAttachmentList"},
+        "attributeTypes":{"shape":"MessageTemplateAttributeTypeList"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"},
+        "versionNumber":{"shape":"Version"}
       }
     },
     "ExternalSource":{
@@ -2761,6 +3392,31 @@
       "type":"structure",
       "members":{
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
+      }
+    },
+    "GetMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "GetMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"ExtendedMessageTemplateData"}
       }
     },
     "GetQuickResponseRequest":{
@@ -3440,6 +4096,72 @@
         "nextToken":{"shape":"NonEmptyString"}
       }
     },
+    "ListMessageTemplateVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMessageTemplateVersionsResponse":{
+      "type":"structure",
+      "required":["messageTemplateVersionSummaries"],
+      "members":{
+        "messageTemplateVersionSummaries":{"shape":"MessageTemplateVersionSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMessageTemplatesRequest":{
+      "type":"structure",
+      "required":["knowledgeBaseId"],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMessageTemplatesResponse":{
+      "type":"structure",
+      "required":["messageTemplateSummaries"],
+      "members":{
+        "messageTemplateSummaries":{"shape":"MessageTemplateSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListQuickResponsesRequest":{
       "type":"structure",
       "required":["knowledgeBaseId"],
@@ -3511,6 +4233,309 @@
       "max":100,
       "min":1
     },
+    "MessageTemplateAttachment":{
+      "type":"structure",
+      "required":[
+        "attachmentId",
+        "contentDisposition",
+        "name",
+        "uploadedTime",
+        "url",
+        "urlExpiry"
+      ],
+      "members":{
+        "attachmentId":{"shape":"Uuid"},
+        "contentDisposition":{"shape":"ContentDisposition"},
+        "name":{"shape":"AttachmentFileName"},
+        "uploadedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "url":{"shape":"Url"},
+        "urlExpiry":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "MessageTemplateAttachmentList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttachment"}
+    },
+    "MessageTemplateAttributeKey":{
+      "type":"string",
+      "max":32767,
+      "min":1
+    },
+    "MessageTemplateAttributeKeyList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttributeKey"},
+      "sensitive":true
+    },
+    "MessageTemplateAttributeType":{
+      "type":"string",
+      "enum":[
+        "SYSTEM",
+        "AGENT",
+        "CUSTOMER_PROFILE",
+        "CUSTOM"
+      ]
+    },
+    "MessageTemplateAttributeTypeList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttributeType"}
+    },
+    "MessageTemplateAttributeValue":{
+      "type":"string",
+      "max":32767,
+      "min":1,
+      "sensitive":true
+    },
+    "MessageTemplateAttributes":{
+      "type":"structure",
+      "members":{
+        "agentAttributes":{"shape":"AgentAttributes"},
+        "customAttributes":{"shape":"CustomAttributes"},
+        "customerProfileAttributes":{"shape":"CustomerProfileAttributes"},
+        "systemAttributes":{"shape":"SystemAttributes"}
+      }
+    },
+    "MessageTemplateBodyContentProvider":{
+      "type":"structure",
+      "members":{
+        "content":{"shape":"NonEmptyUnlimitedString"}
+      },
+      "union":true
+    },
+    "MessageTemplateContentProvider":{
+      "type":"structure",
+      "members":{
+        "email":{"shape":"EmailMessageTemplateContent"},
+        "sms":{"shape":"SMSMessageTemplateContent"}
+      },
+      "union":true
+    },
+    "MessageTemplateContentSha256":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]+$"
+    },
+    "MessageTemplateData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateContentSha256",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "attributeTypes":{"shape":"MessageTemplateAttributeTypeList"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "MessageTemplateFilterField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "operator"
+      ],
+      "members":{
+        "includeNoExistence":{"shape":"Boolean"},
+        "name":{"shape":"NonEmptyString"},
+        "operator":{"shape":"MessageTemplateFilterOperator"},
+        "values":{"shape":"MessageTemplateFilterValueList"}
+      }
+    },
+    "MessageTemplateFilterFieldList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateFilterField"},
+      "max":10,
+      "min":0
+    },
+    "MessageTemplateFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "PREFIX"
+      ]
+    },
+    "MessageTemplateFilterValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MessageTemplateFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateFilterValue"},
+      "max":5,
+      "min":1
+    },
+    "MessageTemplateOrderField":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "order":{"shape":"Order"}
+      }
+    },
+    "MessageTemplateQueryField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "operator",
+        "values"
+      ],
+      "members":{
+        "allowFuzziness":{"shape":"Boolean"},
+        "name":{"shape":"NonEmptyString"},
+        "operator":{"shape":"MessageTemplateQueryOperator"},
+        "priority":{"shape":"Priority"},
+        "values":{"shape":"MessageTemplateQueryValueList"}
+      }
+    },
+    "MessageTemplateQueryFieldList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateQueryField"},
+      "max":4,
+      "min":0
+    },
+    "MessageTemplateQueryOperator":{
+      "type":"string",
+      "enum":[
+        "CONTAINS",
+        "CONTAINS_AND_PREFIX"
+      ]
+    },
+    "MessageTemplateQueryValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "MessageTemplateQueryValueList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateQueryValue"},
+      "max":5,
+      "min":1
+    },
+    "MessageTemplateSearchExpression":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"MessageTemplateFilterFieldList"},
+        "orderOnField":{"shape":"MessageTemplateOrderField"},
+        "queries":{"shape":"MessageTemplateQueryFieldList"}
+      }
+    },
+    "MessageTemplateSearchResultData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "MessageTemplateSearchResultsList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateSearchResultData"}
+    },
+    "MessageTemplateSummary":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "activeVersionNumber":{"shape":"Version"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"Description"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "MessageTemplateSummaryList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateSummary"}
+    },
+    "MessageTemplateVersionSummary":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "isActive",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name",
+        "versionNumber"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "MessageTemplateVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateVersionSummary"}
+    },
     "Name":{
       "type":"string",
       "max":255,
@@ -3532,6 +4557,11 @@
       "type":"string",
       "max":4096,
       "min":1
+    },
+    "NonEmptyUnlimitedString":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
     },
     "NotifyRecommendationsReceivedError":{
       "type":"structure",
@@ -4191,6 +5221,36 @@
       "members":{
       }
     },
+    "RenderMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "attributes",
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "attributes":{"shape":"MessageTemplateAttributes"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "RenderMessageTemplateResponse":{
+      "type":"structure",
+      "required":["content"],
+      "members":{
+        "attachments":{"shape":"MessageTemplateAttachmentList"},
+        "attributesNotInterpolated":{"shape":"MessageTemplateAttributeKeyList"},
+        "content":{"shape":"MessageTemplateContentProvider"}
+      }
+    },
     "RenderingConfiguration":{
       "type":"structure",
       "members":{
@@ -4256,6 +5316,18 @@
       },
       "union":true
     },
+    "SMSMessageTemplateContent":{
+      "type":"structure",
+      "members":{
+        "body":{"shape":"SMSMessageTemplateContentBody"}
+      }
+    },
+    "SMSMessageTemplateContentBody":{
+      "type":"structure",
+      "members":{
+        "plainText":{"shape":"MessageTemplateBodyContentProvider"}
+      }
+    },
     "SearchContentRequest":{
       "type":"structure",
       "required":[
@@ -4294,6 +5366,39 @@
       "required":["filters"],
       "members":{
         "filters":{"shape":"FilterList"}
+      }
+    },
+    "SearchMessageTemplatesRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "searchExpression"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "searchExpression":{"shape":"MessageTemplateSearchExpression"}
+      }
+    },
+    "SearchMessageTemplatesResponse":{
+      "type":"structure",
+      "required":["results"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "results":{"shape":"MessageTemplateSearchResultsList"}
       }
     },
     "SearchQuickResponsesRequest":{
@@ -4587,9 +5692,27 @@
         "CREATE_IN_PROGRESS"
       ]
     },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "SyntheticTimestamp_epoch_seconds":{
       "type":"timestamp",
       "timestampFormat":"unixTimestamp"
+    },
+    "SystemAttributes":{
+      "type":"structure",
+      "members":{
+        "customerEndpoint":{"shape":"SystemEndpointAttributes"},
+        "name":{"shape":"MessageTemplateAttributeValue"},
+        "systemEndpoint":{"shape":"SystemEndpointAttributes"}
+      }
+    },
+    "SystemEndpointAttributes":{
+      "type":"structure",
+      "members":{
+        "address":{"shape":"MessageTemplateAttributeValue"}
+      }
     },
     "TagCondition":{
       "type":"structure",
@@ -4871,6 +5994,62 @@
       "type":"structure",
       "members":{
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
+      }
+    },
+    "UpdateMessageTemplateMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "name":{"shape":"Name"}
+      }
+    },
+    "UpdateMessageTemplateMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
+      }
+    },
+    "UpdateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "language":{"shape":"LanguageCode"},
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "UpdateMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
       }
     },
     "UpdateQuickResponseRequest":{

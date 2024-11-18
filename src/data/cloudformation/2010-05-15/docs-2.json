@@ -51,6 +51,7 @@
     "ListChangeSets": "<p>Returns the ID and status of each active change set for a stack. For example, CloudFormation lists change sets that are in the <code>CREATE_IN_PROGRESS</code> or <code>CREATE_PENDING</code> state.</p>",
     "ListExports": "<p>Lists all exported output values in the account and Region in which you call this action. Use this action to see the exported output values that you can import into other stacks. To import values, use the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html\"> Fn::ImportValue</a> function.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-exports.html\">Get exported outputs from a deployed CloudFormation stack</a>.</p>",
     "ListGeneratedTemplates": "<p>Lists your generated templates in this Region.</p>",
+    "ListHookResults": "<p>Returns summaries of invoked Hooks when a change set or Cloud Control API operation target is provided.</p>",
     "ListImports": "<p>Lists all stacks that are importing an exported output value. To modify or remove an exported output value, first use this action to see which stacks are using it. To see the exported output values in your account, see <a>ListExports</a>.</p> <p>For more information about importing an exported output value, see the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html\">Fn::ImportValue</a> function.</p>",
     "ListResourceScanRelatedResources": "<p>Lists the related resources for a list of resources from a resource scan. The response indicates whether each returned resource is already managed by CloudFormation.</p>",
     "ListResourceScanResources": "<p>Lists the resources from a resource scan. The results can be filtered by resource identifier, resource type prefix, tag key, and tag value. Only resources that match all specified filters are returned. The response indicates whether each returned resource is already managed by CloudFormation.</p>",
@@ -1216,6 +1217,7 @@
       "base": null,
       "refs": {
         "ChangeSetHook$FailureMode": "<p>Specify the hook failure mode for non-compliant resources in the followings ways.</p> <ul> <li> <p> <code>FAIL</code> Stops provisioning resources.</p> </li> <li> <p> <code>WARN</code> Allows provisioning to continue with a warning message.</p> </li> </ul>",
+        "HookResultSummary$FailureMode": "<p>The failure mode of the invocation. The following are potential modes:</p> <ul> <li> <p> <code>FAIL</code>: If the hook invocation returns a failure, then the requested target operation should fail.</p> </li> <li> <p> <code>WARN</code>: If the hook invocation returns a failure, then the requested target operation should warn.</p> </li> </ul>",
         "StackEvent$HookFailureMode": "<p>Specify the hook failure mode for non-compliant resources in the followings ways.</p> <ul> <li> <p> <code>FAIL</code> Stops provisioning resources.</p> </li> <li> <p> <code>WARN</code> Allows provisioning to continue with a warning message.</p> </li> </ul>"
       }
     },
@@ -1229,18 +1231,45 @@
       "base": null,
       "refs": {
         "ChangeSetHook$InvocationPoint": "<p>Specifies the points in provisioning logic where a hook is invoked.</p>",
+        "HookResultSummary$InvocationPoint": "<p>The exact point in the provisioning logic where the Hook runs.</p>",
         "StackEvent$HookInvocationPoint": "<p>Invocation points are points in provisioning logic where hooks are initiated.</p>"
+      }
+    },
+    "HookResultId": {
+      "base": null,
+      "refs": {
+        "ListHookResultsInput$TargetId": "<p>The logical ID of the target the operation is acting on by the Hook. If the target is a change set, it's the ARN of the change set.</p> <p>If the target is a Cloud Control API operation, this will be the <code>HookRequestToken</code> returned by the Cloud Control API operation request. For more information on the <code>HookRequestToken</code>, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_ProgressEvent.html\">ProgressEvent</a>.</p>",
+        "ListHookResultsOutput$TargetId": "<p>The logical ID of the target the operation is acting on by the Hook. If the target is a change set, it's the ARN of the change set.</p> <p>If the target is a Cloud Control API operation, this will be the <code>HooksRequestToken</code> returned by the Cloud Control API operation request. For more information on the <code>HooksRequestToken</code>, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_ProgressEvent.html\">ProgressEvent</a>.</p>"
+      }
+    },
+    "HookResultNotFoundException": {
+      "base": "<p>The specified target doesn't have any requested Hook invocations.</p>",
+      "refs": {
+      }
+    },
+    "HookResultSummaries": {
+      "base": null,
+      "refs": {
+        "ListHookResultsOutput$HookResults": "<p>A list of <code>HookResultSummary</code> structures that provides the status and Hook status reason for each Hook invocation for the specified target.</p>"
+      }
+    },
+    "HookResultSummary": {
+      "base": "<p>Describes a Hook invocation, its status, and the reason for its status.</p>",
+      "refs": {
+        "HookResultSummaries$member": null
       }
     },
     "HookStatus": {
       "base": null,
       "refs": {
+        "HookResultSummary$Status": "<p>The state of the Hook invocation.</p>",
         "StackEvent$HookStatus": "<p>Provides the status of the change set hook.</p>"
       }
     },
     "HookStatusReason": {
       "base": null,
       "refs": {
+        "HookResultSummary$HookStatusReason": "<p>A description of the Hook results status. For example, if the Hook result is in a <code>FAILED</code> state, this may contain additional information for the <code>FAILED</code> state.</p>",
         "StackEvent$HookStatusReason": "<p>Provides the reason for the hook status.</p>"
       }
     },
@@ -1265,19 +1294,22 @@
     "HookTypeConfigurationVersionId": {
       "base": null,
       "refs": {
-        "ChangeSetHook$TypeConfigurationVersionId": "<p>The version ID of the type configuration.</p>"
+        "ChangeSetHook$TypeConfigurationVersionId": "<p>The version ID of the type configuration.</p>",
+        "HookResultSummary$TypeConfigurationVersionId": "<p>The version of the Hook type configuration.</p>"
       }
     },
     "HookTypeName": {
       "base": null,
       "refs": {
-        "ChangeSetHook$TypeName": "<p>The unique name for your hook. Specifies a three-part namespace for your hook, with a recommended pattern of <code>Organization::Service::Hook</code>.</p> <note> <p>The following organization namespaces are reserved and can't be used in your hook type names:</p> <ul> <li> <p> <code>Alexa</code> </p> </li> <li> <p> <code>AMZN</code> </p> </li> <li> <p> <code>Amazon</code> </p> </li> <li> <p> <code>ASK</code> </p> </li> <li> <p> <code>AWS</code> </p> </li> <li> <p> <code>Custom</code> </p> </li> <li> <p> <code>Dev</code> </p> </li> </ul> </note>"
+        "ChangeSetHook$TypeName": "<p>The unique name for your hook. Specifies a three-part namespace for your hook, with a recommended pattern of <code>Organization::Service::Hook</code>.</p> <note> <p>The following organization namespaces are reserved and can't be used in your hook type names:</p> <ul> <li> <p> <code>Alexa</code> </p> </li> <li> <p> <code>AMZN</code> </p> </li> <li> <p> <code>Amazon</code> </p> </li> <li> <p> <code>ASK</code> </p> </li> <li> <p> <code>AWS</code> </p> </li> <li> <p> <code>Custom</code> </p> </li> <li> <p> <code>Dev</code> </p> </li> </ul> </note>",
+        "HookResultSummary$TypeName": "<p>The type name of the Hook being invoked.</p>"
       }
     },
     "HookTypeVersionId": {
       "base": null,
       "refs": {
-        "ChangeSetHook$TypeVersionId": "<p>The version ID of the type specified.</p>"
+        "ChangeSetHook$TypeVersionId": "<p>The version ID of the type specified.</p>",
+        "HookResultSummary$TypeVersionId": "<p>The version of the Hook being invoked.</p>"
       }
     },
     "IdentityProvider": {
@@ -1462,6 +1494,23 @@
     "ListGeneratedTemplatesOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "ListHookResultsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListHookResultsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListHookResultsTargetType": {
+      "base": null,
+      "refs": {
+        "ListHookResultsInput$TargetType": "<p>The type of operation being targeted by the Hook.</p>",
+        "ListHookResultsOutput$TargetType": "<p>The type of operation being targeted by the Hook.</p>"
       }
     },
     "ListImportsInput": {
@@ -1768,6 +1817,8 @@
         "ListExportsOutput$NextToken": "<p>If the output exceeds 100 exported output values, a string that identifies the next page of exports. If there is no additional page, this value is null.</p>",
         "ListGeneratedTemplatesInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",
         "ListGeneratedTemplatesOutput$NextToken": "<p>If the request doesn't return all the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListGeneratedTemplates</code> again and use that value for the <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to an empty string.</p>",
+        "ListHookResultsInput$NextToken": "<p>A string that identifies the next page of events that you want to retrieve.</p>",
+        "ListHookResultsOutput$NextToken": "<p>Pagination token, <code>null</code> or empty if no more results.</p>",
         "ListImportsInput$NextToken": "<p>A string (provided by the <a>ListImports</a> response output) that identifies the next page of stacks that are importing the specified exported output value.</p>",
         "ListImportsOutput$NextToken": "<p>A string that identifies the next page of exports. If there is no additional page, this value is null.</p>",
         "ListResourceScanRelatedResourcesInput$NextToken": "<p>A string that identifies the next page of resource scan results.</p>",

@@ -1558,7 +1558,8 @@
         "propagateTags":{"shape":"PropagateTags"},
         "enableExecuteCommand":{"shape":"Boolean"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
-        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "CreateServiceResponse":{
@@ -1728,7 +1729,8 @@
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"}
+        "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "DeploymentAlarms":{
@@ -3484,7 +3486,8 @@
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
         "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"},
-        "createdAt":{"shape":"Timestamp"}
+        "createdAt":{"shape":"Timestamp"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "ServiceRevisionSummary":{
@@ -4229,7 +4232,8 @@
         "propagateTags":{"shape":"PropagateTags"},
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
-        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "UpdateServiceResponse":{
@@ -4313,6 +4317,23 @@
     "VolumeList":{
       "type":"list",
       "member":{"shape":"Volume"}
+    },
+    "VpcLatticeConfiguration":{
+      "type":"structure",
+      "required":[
+        "roleArn",
+        "targetGroupArn",
+        "portName"
+      ],
+      "members":{
+        "roleArn":{"shape":"IAMRoleArn"},
+        "targetGroupArn":{"shape":"String"},
+        "portName":{"shape":"String"}
+      }
+    },
+    "VpcLatticeConfigurations":{
+      "type":"list",
+      "member":{"shape":"VpcLatticeConfiguration"}
     }
   }
 }

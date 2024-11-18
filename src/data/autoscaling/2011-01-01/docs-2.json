@@ -384,6 +384,14 @@
         "UpdateAutoScalingGroupType$AvailabilityZoneDistribution": "<p> The instance capacity distribution across Availability Zones. </p>"
       }
     },
+    "AvailabilityZoneImpairmentPolicy": {
+      "base": "<p> Describes an Availability Zone impairment policy. </p>",
+      "refs": {
+        "AutoScalingGroup$AvailabilityZoneImpairmentPolicy": "<p> The Availability Zone impairment policy. </p>",
+        "CreateAutoScalingGroupType$AvailabilityZoneImpairmentPolicy": "<p> The policy for Availability Zone impairment. </p>",
+        "UpdateAutoScalingGroupType$AvailabilityZoneImpairmentPolicy": "<p> The policy for Availability Zone impairment. </p>"
+      }
+    },
     "AvailabilityZones": {
       "base": null,
       "refs": {
@@ -975,6 +983,12 @@
       "refs": {
         "ExecutePolicyType$HonorCooldown": "<p>Indicates whether Amazon EC2 Auto Scaling waits for the cooldown period to complete before executing the policy.</p> <p>Valid only if the policy type is <code>SimpleScaling</code>. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scaling-cooldowns.html\">Scaling cooldowns for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
         "SetDesiredCapacityType$HonorCooldown": "<p>Indicates whether Amazon EC2 Auto Scaling waits for the cooldown period to complete before initiating a scaling activity to set your Auto Scaling group to its new capacity. By default, Amazon EC2 Auto Scaling does not honor the cooldown period during manual scaling activities.</p>"
+      }
+    },
+    "ImpairedZoneHealthCheckBehavior": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneImpairmentPolicy$ImpairedZoneHealthCheckBehavior": "<p> Specifies the health check behavior for the impaired Availability Zone in an active zonal shift. If you select <code>Replace unhealthy</code>, instances that appear unhealthy will be replaced in all Availability Zones. If you select <code>Ignore unhealthy</code>, instances will not be replaced in the Availability Zone with the active zonal shift. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html\">Auto Scaling group zonal shift</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. </p>"
       }
     },
     "IncludeDeletedGroups": {
@@ -2149,6 +2163,14 @@
         "RefreshPreferences$SkipMatching": "<p>(Optional) Indicates whether skip matching is enabled. If enabled (<code>true</code>), then Amazon EC2 Auto Scaling skips replacing instances that match the desired configuration. If no desired configuration is specified, then it skips replacing instances that have the same launch template and instance types that the Auto Scaling group was using before the start of the instance refresh. The default is <code>false</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh-skip-matching.html\">Use an instance refresh with skip matching</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>"
       }
     },
+    "SkipZonalShiftValidation": {
+      "base": null,
+      "refs": {
+        "AttachTrafficSourcesType$SkipZonalShiftValidation": "<p> If you enable zonal shift with cross-zone disabled load balancers, capacity could become imbalanced across Availability Zones. To skip the validation, specify <code>true</code>. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html\">Auto Scaling group zonal shift</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. </p>",
+        "CreateAutoScalingGroupType$SkipZonalShiftValidation": "<p> If you enable zonal shift with cross-zone disabled load balancers, capacity could become imbalanced across Availability Zones. To skip the validation, specify <code>true</code>. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html\">Auto Scaling group zonal shift</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. </p>",
+        "UpdateAutoScalingGroupType$SkipZonalShiftValidation": "<p> If you enable zonal shift with cross-zone disabled load balancers, capacity could become imbalanced across Availability Zones. To skip the validation, specify <code>true</code>. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html\">Auto Scaling group zonal shift</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. </p>"
+      }
+    },
     "SpotInstancePools": {
       "base": null,
       "refs": {
@@ -2724,6 +2746,12 @@
       "refs": {
         "CreateLaunchConfigurationType$UserData": "<p>The user data to make available to the launched EC2 instances. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html\">Instance metadata and user data</a> (Linux) and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-instance-metadata.html\">Instance metadata and user data</a> (Windows). If you are using a command line tool, base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide base64-encoded text. User data is limited to 16 KB.</p>",
         "LaunchConfiguration$UserData": "<p>The user data to make available to the launched EC2 instances. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html\">Instance metadata and user data</a> (Linux) and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-instance-metadata.html\">Instance metadata and user data</a> (Windows). If you are using a command line tool, base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide base64-encoded text. User data is limited to 16 KB.</p>"
+      }
+    },
+    "ZonalShiftEnabled": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneImpairmentPolicy$ZonalShiftEnabled": "<p> If <code>true</code>, enable zonal shift for your Auto Scaling group. </p>"
       }
     }
   }

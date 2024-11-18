@@ -436,6 +436,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContactFlowVersion":{
+      "name":"CreateContactFlowVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/version"
+      },
+      "input":{"shape":"CreateContactFlowVersionRequest"},
+      "output":{"shape":"CreateContactFlowVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateEvaluationForm":{
       "name":"CreateEvaluationForm",
       "http":{
@@ -2106,6 +2124,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListContactFlowVersions":{
+      "name":"ListContactFlowVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/versions"
+      },
+      "input":{"shape":"ListContactFlowVersionsRequest"},
+      "output":{"shape":"ListContactFlowVersionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListContactFlows":{
@@ -5496,7 +5531,13 @@
         "Status":{"shape":"ContactFlowStatus"},
         "Description":{"shape":"ContactFlowDescription"},
         "Content":{"shape":"ContactFlowContent"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "IsDefault":{"shape":"Boolean"},
+        "FlowContentSha256":{"shape":"FlowContentSha256"},
+        "Version":{"shape":"ResourceVersion"},
+        "VersionDescription":{"shape":"ContactFlowDescription"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
     "ContactFlowContent":{"type":"string"},
@@ -5673,6 +5714,18 @@
       "type":"list",
       "member":{"shape":"ContactFlowType"},
       "max":10
+    },
+    "ContactFlowVersionSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "VersionDescription":{"shape":"ContactFlowDescription"},
+        "Version":{"shape":"ResourceVersion"}
+      }
+    },
+    "ContactFlowVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowVersionSummary"}
     },
     "ContactId":{
       "type":"string",
@@ -5914,7 +5967,38 @@
       "type":"structure",
       "members":{
         "ContactFlowId":{"shape":"ContactFlowId"},
-        "ContactFlowArn":{"shape":"ARN"}
+        "ContactFlowArn":{"shape":"ARN"},
+        "FlowContentSha256":{"shape":"FlowContentSha256"}
+      }
+    },
+    "CreateContactFlowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Description":{"shape":"ContactFlowDescription"},
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "FlowContentSha256":{"shape":"FlowContentSha256"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "CreateContactFlowVersionResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowArn":{"shape":"ARN"},
+        "Version":{"shape":"ResourceVersion"}
       }
     },
     "CreateEvaluationFormRequest":{
@@ -9001,6 +9085,12 @@
       "type":"list",
       "member":{"shape":"FlowAssociationSummary"}
     },
+    "FlowContentSha256":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]{64}$"
+    },
     "FunctionArn":{
       "type":"string",
       "max":140,
@@ -9909,6 +9999,7 @@
         "WISDOM_ASSISTANT",
         "WISDOM_KNOWLEDGE_BASE",
         "WISDOM_QUICK_RESPONSES",
+        "Q_MESSAGE_TEMPLATES",
         "CASES_DOMAIN",
         "APPLICATION",
         "FILE_SCANNER"
@@ -10324,6 +10415,43 @@
       "type":"structure",
       "members":{
         "ContactFlowModulesSummaryList":{"shape":"ContactFlowModulesSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContactFlowVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListContactFlowVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowVersionSummaryList":{"shape":"ContactFlowVersionSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -13449,6 +13577,10 @@
     "ResourceTypeList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "ResourceVersion":{
+      "type":"long",
+      "min":1
     },
     "ResumeContactRecordingRequest":{
       "type":"structure",
