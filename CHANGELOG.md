@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.328.1 - 2024-11-18
 
 * `Aws\RDSDataService` - Add support for the automatic pause/resume feature of Aurora Serverless v2.
 * `Aws\CloudFormation` - This release adds a new API, ListHookResults, that allows retrieving CloudFormation Hooks invocation results for hooks invoked during a create change set operation or Cloud Control API operation
