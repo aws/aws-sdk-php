@@ -33,6 +33,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
+    use TestServiceTrait;
 
     private function getApiProvider()
     {
@@ -981,5 +982,18 @@ EOT
         $builtIns = $client->getClientBuiltIns();
 
         self::assertEquals($expectedAccountIdEndpointMode, $builtIns['AWS::Auth::AccountIdEndpointMode']);
+    }
+
+    public function testQueryModeHeaderAdded(): void
+    {
+        $service = $this->generateTestService('json', ['awsQueryCompatible' => true]);
+        $client = $this->generateTestClient($service);
+        $list = $client->getHandlerList();
+        $list->setHandler(new MockHandler([new Result()]));
+        $list->appendSign(Middleware::tap(function($cmd, $req) {
+           $this->assertTrue($req->hasHeader('x-amzn-query-mode'));
+           $this->assertEquals(true, $req->getHeaderLine('x-amzn-query-mode'));
+        }));
+        $client->TestOperation();
     }
 }

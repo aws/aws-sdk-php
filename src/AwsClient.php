@@ -12,6 +12,7 @@ use Aws\EndpointV2\EndpointV2Middleware;
 use Aws\Exception\AwsException;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Default AWS client implementation
@@ -275,6 +276,7 @@ class AwsClient implements AwsClientInterface
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
+            $this->addQueryModeHeader();
         }
 
         if (isset($args['with_resolved'])) {
@@ -522,6 +524,20 @@ class AwsClient implements AwsClientInterface
                 QueryCompatibleInputMiddleware::wrap($api),
                 'query-compatible-input'
             );
+    }
+
+    private function addQueryModeHeader(): void
+    {
+        $list = $this->getHandlerList();
+        $list->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $r) {
+                return $r->withHeader(
+                    'x-amzn-query-mode',
+                    true
+                );
+            }),
+            'x-amzn-query-mode-header'
+        );
     }
 
     private function addInvocationId()
