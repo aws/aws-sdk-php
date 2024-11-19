@@ -44,7 +44,7 @@
     "CreateSecurityConfiguration": "<p>Creates a new security configuration. A security configuration is a set of security properties that can be used by Glue. You can use a security configuration to encrypt data at rest. For information about using security configurations in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/encryption-security-configuration.html\">Encrypting Data Written by Crawlers, Jobs, and Development Endpoints</a>.</p>",
     "CreateSession": "<p>Creates a new session.</p>",
     "CreateTable": "<p>Creates a new table definition in the Data Catalog.</p>",
-    "CreateTableOptimizer": "<p>Creates a new table optimizer for a specific function. <code>compaction</code> is the only currently supported optimizer type.</p>",
+    "CreateTableOptimizer": "<p>Creates a new table optimizer for a specific function. </p>",
     "CreateTrigger": "<p>Creates a new trigger.</p>",
     "CreateUsageProfile": "<p>Creates an Glue usage profile.</p>",
     "CreateUserDefinedFunction": "<p>Creates a new function definition in the Data Catalog.</p>",
@@ -8979,12 +8979,18 @@
       "refs": {
         "BatchGetTableOptimizerEntry$type": "<p>The type of table optimizer.</p>",
         "BatchGetTableOptimizerError$type": "<p>The type of table optimizer.</p>",
-        "CreateTableOptimizerRequest$Type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>",
+        "CreateTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>",
         "DeleteTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>",
         "GetTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>",
-        "ListTableOptimizerRunsRequest$Type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>",
+        "ListTableOptimizerRunsRequest$Type": "<p>The type of table optimizer.</p>",
         "TableOptimizer$type": "<p>The type of table optimizer. The valid values are:</p> <ul> <li> <p> <code>compaction</code>: for managing compaction with a table optimizer.</p> </li> <li> <p> <code>retention</code>: for managing the retention of snapshot with a table optimizer.</p> </li> <li> <p> <code>orphan_file_deletion</code>: for managing the deletion of orphan files with a table optimizer.</p> </li> </ul>",
-        "UpdateTableOptimizerRequest$Type": "<p>The type of table optimizer. Currently, the only valid value is <code>compaction</code>.</p>"
+        "UpdateTableOptimizerRequest$Type": "<p>The type of table optimizer.</p>"
+      }
+    },
+    "TableOptimizerVpcConfiguration": {
+      "base": "<p>An object that describes the VPC configuration for a table optimizer.</p> <p>This configuration is necessary to perform optimization on tables that are in a customer VPC.</p>",
+      "refs": {
+        "TableOptimizerConfiguration$vpcConfiguration": "<p>A <code>TableOptimizerVpcConfiguration</code> object representing the VPC configuration for a table optimizer.</p> <p>This configuration is necessary to perform optimization on tables that are in a customer VPC.</p>"
       }
     },
     "TablePrefix": {
@@ -10283,6 +10289,12 @@
         "IcebergCompactionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
         "IcebergOrphanFileDeletionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
         "IcebergRetentionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>"
+      }
+    },
+    "glueConnectionNameString": {
+      "base": null,
+      "refs": {
+        "TableOptimizerVpcConfiguration$glueConnectionName": "<p>The name of the Glue connection used for the VPC for the table optimizer.</p>"
       }
     },
     "metricCounts": {

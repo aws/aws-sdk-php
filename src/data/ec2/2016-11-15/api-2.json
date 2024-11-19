@@ -1223,6 +1223,15 @@
       "input":{"shape":"CreateVpcRequest"},
       "output":{"shape":"CreateVpcResult"}
     },
+    "CreateVpcBlockPublicAccessExclusion":{
+      "name":"CreateVpcBlockPublicAccessExclusion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateVpcBlockPublicAccessExclusionRequest"},
+      "output":{"shape":"CreateVpcBlockPublicAccessExclusionResult"}
+    },
     "CreateVpcEndpoint":{
       "name":"CreateVpcEndpoint",
       "http":{
@@ -1880,6 +1889,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteVpcRequest"}
+    },
+    "DeleteVpcBlockPublicAccessExclusion":{
+      "name":"DeleteVpcBlockPublicAccessExclusion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteVpcBlockPublicAccessExclusionRequest"},
+      "output":{"shape":"DeleteVpcBlockPublicAccessExclusionResult"}
     },
     "DeleteVpcEndpointConnectionNotifications":{
       "name":"DeleteVpcEndpointConnectionNotifications",
@@ -3298,6 +3316,24 @@
       },
       "input":{"shape":"DescribeVpcAttributeRequest"},
       "output":{"shape":"DescribeVpcAttributeResult"}
+    },
+    "DescribeVpcBlockPublicAccessExclusions":{
+      "name":"DescribeVpcBlockPublicAccessExclusions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpcBlockPublicAccessExclusionsRequest"},
+      "output":{"shape":"DescribeVpcBlockPublicAccessExclusionsResult"}
+    },
+    "DescribeVpcBlockPublicAccessOptions":{
+      "name":"DescribeVpcBlockPublicAccessOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpcBlockPublicAccessOptionsRequest"},
+      "output":{"shape":"DescribeVpcBlockPublicAccessOptionsResult"}
     },
     "DescribeVpcClassicLink":{
       "name":"DescribeVpcClassicLink",
@@ -4955,6 +4991,24 @@
         "requestUri":"/"
       },
       "input":{"shape":"ModifyVpcAttributeRequest"}
+    },
+    "ModifyVpcBlockPublicAccessExclusion":{
+      "name":"ModifyVpcBlockPublicAccessExclusion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVpcBlockPublicAccessExclusionRequest"},
+      "output":{"shape":"ModifyVpcBlockPublicAccessExclusionResult"}
+    },
+    "ModifyVpcBlockPublicAccessOptions":{
+      "name":"ModifyVpcBlockPublicAccessOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVpcBlockPublicAccessOptionsRequest"},
+      "output":{"shape":"ModifyVpcBlockPublicAccessOptionsResult"}
     },
     "ModifyVpcEndpoint":{
       "name":"ModifyVpcEndpoint",
@@ -8317,6 +8371,23 @@
       "member":{
         "shape":"BlockDeviceMapping",
         "locationName":"BlockDeviceMapping"
+      }
+    },
+    "BlockPublicAccessMode":{
+      "type":"string",
+      "enum":[
+        "off",
+        "block-bidirectional",
+        "block-ingress"
+      ]
+    },
+    "BlockPublicAccessStates":{
+      "type":"structure",
+      "members":{
+        "InternetGatewayBlockMode":{
+          "shape":"BlockPublicAccessMode",
+          "locationName":"internetGatewayBlockMode"
+        }
       }
     },
     "Boolean":{"type":"boolean"},
@@ -13051,6 +13122,29 @@
         }
       }
     },
+    "CreateVpcBlockPublicAccessExclusionRequest":{
+      "type":"structure",
+      "required":["InternetGatewayExclusionMode"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "SubnetId":{"shape":"SubnetId"},
+        "VpcId":{"shape":"VpcId"},
+        "InternetGatewayExclusionMode":{"shape":"InternetGatewayExclusionMode"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateVpcBlockPublicAccessExclusionResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessExclusion":{
+          "shape":"VpcBlockPublicAccessExclusion",
+          "locationName":"vpcBlockPublicAccessExclusion"
+        }
+      }
+    },
     "CreateVpcEndpointConnectionNotificationRequest":{
       "type":"structure",
       "required":[
@@ -14830,6 +14924,23 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DeleteVpcBlockPublicAccessExclusionRequest":{
+      "type":"structure",
+      "required":["ExclusionId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ExclusionId":{"shape":"VpcBlockPublicAccessExclusionId"}
+      }
+    },
+    "DeleteVpcBlockPublicAccessExclusionResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessExclusion":{
+          "shape":"VpcBlockPublicAccessExclusion",
+          "locationName":"vpcBlockPublicAccessExclusion"
         }
       }
     },
@@ -19757,6 +19868,55 @@
         "VpcId":{
           "shape":"String",
           "locationName":"vpcId"
+        }
+      }
+    },
+    "DescribeVpcBlockPublicAccessExclusionsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "DescribeVpcBlockPublicAccessExclusionsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "ExclusionIds":{
+          "shape":"VpcBlockPublicAccessExclusionIdList",
+          "locationName":"ExclusionId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeVpcBlockPublicAccessExclusionsMaxResults"}
+      }
+    },
+    "DescribeVpcBlockPublicAccessExclusionsResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessExclusions":{
+          "shape":"VpcBlockPublicAccessExclusionList",
+          "locationName":"vpcBlockPublicAccessExclusionSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeVpcBlockPublicAccessOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeVpcBlockPublicAccessOptionsResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessOptions":{
+          "shape":"VpcBlockPublicAccessOptions",
+          "locationName":"vpcBlockPublicAccessOptions"
         }
       }
     },
@@ -29799,6 +29959,21 @@
         "locationName":"item"
       }
     },
+    "InternetGatewayBlockMode":{
+      "type":"string",
+      "enum":[
+        "off",
+        "block-bidirectional",
+        "block-ingress"
+      ]
+    },
+    "InternetGatewayExclusionMode":{
+      "type":"string",
+      "enum":[
+        "allow-bidirectional",
+        "allow-egress"
+      ]
+    },
     "InternetGatewayId":{"type":"string"},
     "InternetGatewayIdList":{
       "type":"list",
@@ -34936,6 +35111,44 @@
           "locationName":"vpcId"
         },
         "EnableNetworkAddressUsageMetrics":{"shape":"AttributeBooleanValue"}
+      }
+    },
+    "ModifyVpcBlockPublicAccessExclusionRequest":{
+      "type":"structure",
+      "required":[
+        "ExclusionId",
+        "InternetGatewayExclusionMode"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ExclusionId":{"shape":"VpcBlockPublicAccessExclusionId"},
+        "InternetGatewayExclusionMode":{"shape":"InternetGatewayExclusionMode"}
+      }
+    },
+    "ModifyVpcBlockPublicAccessExclusionResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessExclusion":{
+          "shape":"VpcBlockPublicAccessExclusion",
+          "locationName":"vpcBlockPublicAccessExclusion"
+        }
+      }
+    },
+    "ModifyVpcBlockPublicAccessOptionsRequest":{
+      "type":"structure",
+      "required":["InternetGatewayBlockMode"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "InternetGatewayBlockMode":{"shape":"InternetGatewayBlockMode"}
+      }
+    },
+    "ModifyVpcBlockPublicAccessOptionsResult":{
+      "type":"structure",
+      "members":{
+        "VpcBlockPublicAccessOptions":{
+          "shape":"VpcBlockPublicAccessOptions",
+          "locationName":"vpcBlockPublicAccessOptions"
+        }
       }
     },
     "ModifyVpcEndpointConnectionNotificationRequest":{
@@ -43533,6 +43746,10 @@
           "shape":"PrivateDnsNameOptionsOnLaunch",
           "locationName":"privateDnsNameOptionsOnLaunch"
         },
+        "BlockPublicAccessStates":{
+          "shape":"BlockPublicAccessStates",
+          "locationName":"blockPublicAccessStates"
+        },
         "SubnetId":{
           "shape":"String",
           "locationName":"subnetId"
@@ -47709,6 +47926,10 @@
           "shape":"TagList",
           "locationName":"tagSet"
         },
+        "BlockPublicAccessStates":{
+          "shape":"BlockPublicAccessStates",
+          "locationName":"blockPublicAccessStates"
+        },
         "VpcId":{
           "shape":"String",
           "locationName":"vpcId"
@@ -47753,6 +47974,114 @@
         "enableDnsSupport",
         "enableDnsHostnames",
         "enableNetworkAddressUsageMetrics"
+      ]
+    },
+    "VpcBlockPublicAccessExclusion":{
+      "type":"structure",
+      "members":{
+        "ExclusionId":{
+          "shape":"VpcBlockPublicAccessExclusionId",
+          "locationName":"exclusionId"
+        },
+        "InternetGatewayExclusionMode":{
+          "shape":"InternetGatewayExclusionMode",
+          "locationName":"internetGatewayExclusionMode"
+        },
+        "ResourceArn":{
+          "shape":"ResourceArn",
+          "locationName":"resourceArn"
+        },
+        "State":{
+          "shape":"VpcBlockPublicAccessExclusionState",
+          "locationName":"state"
+        },
+        "Reason":{
+          "shape":"String",
+          "locationName":"reason"
+        },
+        "CreationTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"creationTimestamp"
+        },
+        "LastUpdateTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastUpdateTimestamp"
+        },
+        "DeletionTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"deletionTimestamp"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "VpcBlockPublicAccessExclusionId":{"type":"string"},
+    "VpcBlockPublicAccessExclusionIdList":{
+      "type":"list",
+      "member":{
+        "shape":"VpcBlockPublicAccessExclusionId",
+        "locationName":"item"
+      }
+    },
+    "VpcBlockPublicAccessExclusionList":{
+      "type":"list",
+      "member":{
+        "shape":"VpcBlockPublicAccessExclusion",
+        "locationName":"item"
+      }
+    },
+    "VpcBlockPublicAccessExclusionState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "update-in-progress",
+        "update-complete",
+        "update-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "disable-in-progress",
+        "disable-complete"
+      ]
+    },
+    "VpcBlockPublicAccessOptions":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{
+          "shape":"String",
+          "locationName":"awsAccountId"
+        },
+        "AwsRegion":{
+          "shape":"String",
+          "locationName":"awsRegion"
+        },
+        "State":{
+          "shape":"VpcBlockPublicAccessState",
+          "locationName":"state"
+        },
+        "InternetGatewayBlockMode":{
+          "shape":"InternetGatewayBlockMode",
+          "locationName":"internetGatewayBlockMode"
+        },
+        "Reason":{
+          "shape":"String",
+          "locationName":"reason"
+        },
+        "LastUpdateTimestamp":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastUpdateTimestamp"
+        }
+      }
+    },
+    "VpcBlockPublicAccessState":{
+      "type":"string",
+      "enum":[
+        "default-state",
+        "update-in-progress",
+        "update-complete"
       ]
     },
     "VpcCidrAssociationId":{"type":"string"},

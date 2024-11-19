@@ -295,6 +295,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateKeyspace":{
+      "name":"UpdateKeyspace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateKeyspaceRequest"},
+      "output":{"shape":"UpdateKeyspaceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateTable":{
       "name":"UpdateTable",
       "http":{
@@ -613,7 +630,8 @@
         "keyspaceName":{"shape":"KeyspaceName"},
         "resourceArn":{"shape":"ARN"},
         "replicationStrategy":{"shape":"rs"},
-        "replicationRegions":{"shape":"RegionList"}
+        "replicationRegions":{"shape":"RegionList"},
+        "replicationGroupStatuses":{"shape":"ReplicationGroupStatusList"}
       }
     },
     "GetTableAutoScalingSettingsRequest":{
@@ -721,6 +739,15 @@
       "max":48,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
+    },
+    "KeyspaceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "UPDATING",
+        "DELETING"
+      ]
     },
     "KeyspaceSummary":{
       "type":"structure",
@@ -894,6 +921,24 @@
       "member":{"shape":"ReplicaSpecificationSummary"},
       "min":0
     },
+    "ReplicationGroupStatus":{
+      "type":"structure",
+      "required":[
+        "region",
+        "keyspaceStatus"
+      ],
+      "members":{
+        "region":{"shape":"region"},
+        "keyspaceStatus":{"shape":"KeyspaceStatus"},
+        "tablesReplicationProgress":{"shape":"TablesReplicationProgress"}
+      }
+    },
+    "ReplicationGroupStatusList":{
+      "type":"list",
+      "member":{"shape":"ReplicationGroupStatus"},
+      "max":6,
+      "min":2
+    },
     "ReplicationSpecification":{
       "type":"structure",
       "required":["replicationStrategy"],
@@ -1017,6 +1062,12 @@
       "type":"list",
       "member":{"shape":"TableSummary"}
     },
+    "TablesReplicationProgress":{
+      "type":"string",
+      "max":7,
+      "min":2,
+      "pattern":"[0-9]{1,3}(?:[.][0-9]{1,2})?%"
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -1121,6 +1172,25 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateKeyspaceRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "replicationSpecification"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "replicationSpecification":{"shape":"ReplicationSpecification"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
+      }
+    },
+    "UpdateKeyspaceResponse":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"ARN"}
       }
     },
     "UpdateTableRequest":{

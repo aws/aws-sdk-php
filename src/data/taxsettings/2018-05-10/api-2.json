@@ -29,6 +29,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "BatchGetTaxExemptions":{
+      "name":"BatchGetTaxExemptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/BatchGetTaxExemptions",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetTaxExemptionsRequest"},
+      "output":{"shape":"BatchGetTaxExemptionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "BatchPutTaxRegistration":{
       "name":"BatchPutTaxRegistration",
       "http":{
@@ -72,6 +87,36 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetTaxExemptionTypes":{
+      "name":"GetTaxExemptionTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTaxExemptionTypes",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTaxExemptionTypesRequest"},
+      "output":{"shape":"GetTaxExemptionTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetTaxInheritance":{
+      "name":"GetTaxInheritance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTaxInheritance",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTaxInheritanceRequest"},
+      "output":{"shape":"GetTaxInheritanceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
@@ -120,6 +165,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListTaxExemptions":{
+      "name":"ListTaxExemptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListTaxExemptions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTaxExemptionsRequest"},
+      "output":{"shape":"ListTaxExemptionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListTaxRegistrations":{
       "name":"ListTaxRegistrations",
       "http":{
@@ -150,6 +210,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "PutTaxExemption":{
+      "name":"PutTaxExemption",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutTaxExemption",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTaxExemptionRequest"},
+      "output":{"shape":"PutTaxExemptionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"CaseCreationLimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AttachmentUploadException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "PutTaxInheritance":{
+      "name":"PutTaxInheritance",
+      "http":{
+        "method":"POST",
+        "requestUri":"/PutTaxInheritance",
+        "responseCode":200
+      },
+      "input":{"shape":"PutTaxInheritanceRequest"},
+      "output":{"shape":"PutTaxInheritanceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "PutTaxRegistration":{
       "name":"PutTaxRegistration",
       "http":{
@@ -167,6 +261,18 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":401,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "AccountDetails":{
       "type":"structure",
       "members":{
@@ -298,6 +404,30 @@
         "ContactAddress"
       ]
     },
+    "AttachmentUploadException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "Authorities":{
+      "type":"list",
+      "member":{"shape":"Authority"}
+    },
+    "Authority":{
+      "type":"structure",
+      "required":["country"],
+      "members":{
+        "country":{"shape":"CountryCode"},
+        "state":{"shape":"State"}
+      }
+    },
     "BatchDeleteTaxRegistrationError":{
       "type":"structure",
       "required":[
@@ -326,6 +456,20 @@
       "required":["errors"],
       "members":{
         "errors":{"shape":"BatchDeleteTaxRegistrationErrors"}
+      }
+    },
+    "BatchGetTaxExemptionsRequest":{
+      "type":"structure",
+      "required":["accountIds"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"}
+      }
+    },
+    "BatchGetTaxExemptionsResponse":{
+      "type":"structure",
+      "members":{
+        "failedAccounts":{"shape":"AccountIds"},
+        "taxExemptionDetailsMap":{"shape":"TaxExemptionDetailsMap"}
       }
     },
     "BatchPutTaxRegistrationError":{
@@ -406,6 +550,18 @@
     "CanadaRetailSalesTaxNumberString":{
       "type":"string",
       "pattern":"^([0-9]{6}-[0-9]{1})$"
+    },
+    "CaseCreationLimitExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
+      "exception":true
     },
     "CcmCode":{
       "type":"string",
@@ -494,11 +650,26 @@
         "prefix":{"shape":"S3Prefix"}
       }
     },
+    "DisplayName":{
+      "type":"string",
+      "max":50,
+      "min":0,
+      "pattern":"^[\\s\\S]*$"
+    },
     "District":{
       "type":"string",
       "max":50,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "EntityExemptionAccountStatus":{
+      "type":"string",
+      "enum":[
+        "None",
+        "Valid",
+        "Expired",
+        "Pending"
+      ]
     },
     "ErrorCode":{
       "type":"string",
@@ -520,9 +691,36 @@
         "registryCommercialCode":{"shape":"RegistryCommercialCode"}
       }
     },
+    "ExemptionCertificate":{
+      "type":"structure",
+      "required":[
+        "documentFile",
+        "documentName"
+      ],
+      "members":{
+        "documentFile":{"shape":"ExemptionFileBlob"},
+        "documentName":{"shape":"ExemptionDocumentName"}
+      }
+    },
+    "ExemptionDocumentName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^([A-Za-z0-9-_.]+).(pdf|jpg|png)$"
+    },
+    "ExemptionFileBlob":{
+      "type":"blob",
+      "max":4194304,
+      "min":1
+    },
     "FieldName":{
       "type":"string",
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "FileBlob":{
+      "type":"blob",
+      "max":5242880,
+      "min":1
     },
     "GenericString":{
       "type":"string",
@@ -537,12 +735,31 @@
         "personType":{"shape":"PersonType"}
       }
     },
+    "GetTaxExemptionTypesRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetTaxExemptionTypesResponse":{
+      "type":"structure",
+      "members":{
+        "taxExemptionTypes":{"shape":"TaxExemptionTypes"}
+      }
+    },
+    "GetTaxInheritanceRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetTaxInheritanceResponse":{
+      "type":"structure",
+      "members":{
+        "heritageStatus":{"shape":"HeritageStatus"}
+      }
+    },
     "GetTaxRegistrationDocumentRequest":{
       "type":"structure",
-      "required":[
-        "destinationS3Location",
-        "taxDocumentMetadata"
-      ],
+      "required":["taxDocumentMetadata"],
       "members":{
         "destinationS3Location":{"shape":"DestinationS3Location"},
         "taxDocumentMetadata":{"shape":"TaxDocumentMetadata"}
@@ -551,7 +768,8 @@
     "GetTaxRegistrationDocumentResponse":{
       "type":"structure",
       "members":{
-        "destinationFilePath":{"shape":"DestinationFilePath"}
+        "destinationFilePath":{"shape":"DestinationFilePath"},
+        "presignedS3Url":{"shape":"Url"}
       }
     },
     "GetTaxRegistrationRequest":{
@@ -565,6 +783,13 @@
       "members":{
         "taxRegistration":{"shape":"TaxRegistration"}
       }
+    },
+    "HeritageStatus":{
+      "type":"string",
+      "enum":[
+        "OptIn",
+        "OptOut"
+      ]
     },
     "IndiaAdditionalInfo":{
       "type":"structure",
@@ -697,6 +922,20 @@
         "taxRegistrations":{"shape":"SupplementalTaxRegistrationList"}
       }
     },
+    "ListTaxExemptionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"PaginationTokenString"}
+      }
+    },
+    "ListTaxExemptionsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationTokenString"},
+        "taxExemptionDetailsMap":{"shape":"TaxExemptionDetailsMap"}
+      }
+    },
     "ListTaxRegistrationsRequest":{
       "type":"structure",
       "members":{
@@ -790,6 +1029,38 @@
         "status":{"shape":"TaxRegistrationStatus"}
       }
     },
+    "PutTaxExemptionRequest":{
+      "type":"structure",
+      "required":[
+        "accountIds",
+        "authority",
+        "exemptionCertificate",
+        "exemptionType"
+      ],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "authority":{"shape":"Authority"},
+        "exemptionCertificate":{"shape":"ExemptionCertificate"},
+        "exemptionType":{"shape":"GenericString"}
+      }
+    },
+    "PutTaxExemptionResponse":{
+      "type":"structure",
+      "members":{
+        "caseId":{"shape":"GenericString"}
+      }
+    },
+    "PutTaxInheritanceRequest":{
+      "type":"structure",
+      "members":{
+        "heritageStatus":{"shape":"HeritageStatus"}
+      }
+    },
+    "PutTaxInheritanceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutTaxRegistrationRequest":{
       "type":"structure",
       "required":["taxRegistrationEntry"],
@@ -806,7 +1077,7 @@
     },
     "RegistrationId":{
       "type":"string",
-      "max":20,
+      "max":200,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
     },
@@ -1008,6 +1279,51 @@
       "type":"string",
       "pattern":"^[\\s\\S]*$"
     },
+    "TaxExemption":{
+      "type":"structure",
+      "required":[
+        "authority",
+        "taxExemptionType"
+      ],
+      "members":{
+        "authority":{"shape":"Authority"},
+        "effectiveDate":{"shape":"Timestamp"},
+        "expirationDate":{"shape":"Timestamp"},
+        "status":{"shape":"EntityExemptionAccountStatus"},
+        "systemEffectiveDate":{"shape":"Timestamp"},
+        "taxExemptionType":{"shape":"TaxExemptionType"}
+      }
+    },
+    "TaxExemptionDetails":{
+      "type":"structure",
+      "members":{
+        "heritageObtainedDetails":{"shape":"Boolean"},
+        "heritageObtainedParentEntity":{"shape":"GenericString"},
+        "heritageObtainedReason":{"shape":"GenericString"},
+        "taxExemptions":{"shape":"TaxExemptions"}
+      }
+    },
+    "TaxExemptionDetailsMap":{
+      "type":"map",
+      "key":{"shape":"AccountId"},
+      "value":{"shape":"TaxExemptionDetails"}
+    },
+    "TaxExemptionType":{
+      "type":"structure",
+      "members":{
+        "applicableJurisdictions":{"shape":"Authorities"},
+        "description":{"shape":"GenericString"},
+        "displayName":{"shape":"DisplayName"}
+      }
+    },
+    "TaxExemptionTypes":{
+      "type":"list",
+      "member":{"shape":"TaxExemptionType"}
+    },
+    "TaxExemptions":{
+      "type":"list",
+      "member":{"shape":"TaxExemption"}
+    },
     "TaxInformationNumber":{
       "type":"string",
       "pattern":"^[A-Z]{1,2}[0-9]{1,11}$"
@@ -1045,10 +1361,21 @@
       },
       "sensitive":true
     },
+    "TaxRegistrationDocFile":{
+      "type":"structure",
+      "required":[
+        "fileContent",
+        "fileName"
+      ],
+      "members":{
+        "fileContent":{"shape":"FileBlob"},
+        "fileName":{"shape":"TaxDocumentName"}
+      }
+    },
     "TaxRegistrationDocument":{
       "type":"structure",
-      "required":["s3Location"],
       "members":{
+        "file":{"shape":"TaxRegistrationDocFile"},
         "s3Location":{"shape":"SourceS3Location"}
       }
     },
@@ -1126,6 +1453,7 @@
       },
       "sensitive":true
     },
+    "Timestamp":{"type":"timestamp"},
     "TurkeyAdditionalInfo":{
       "type":"structure",
       "members":{
@@ -1148,6 +1476,12 @@
         "Business",
         "Individual"
       ]
+    },
+    "Url":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^https.*\\S.*$"
     },
     "ValidationException":{
       "type":"structure",

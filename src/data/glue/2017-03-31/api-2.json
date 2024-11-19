@@ -13473,6 +13473,7 @@
       "members":{
         "roleArn":{"shape":"ArnString"},
         "enabled":{"shape":"NullableBoolean"},
+        "vpcConfiguration":{"shape":"TableOptimizerVpcConfiguration"},
         "retentionConfiguration":{"shape":"RetentionConfiguration"},
         "orphanFileDeletionConfiguration":{"shape":"OrphanFileDeletionConfiguration"}
       }
@@ -13515,6 +13516,13 @@
         "retention",
         "orphan_file_deletion"
       ]
+    },
+    "TableOptimizerVpcConfiguration":{
+      "type":"structure",
+      "members":{
+        "glueConnectionName":{"shape":"glueConnectionNameString"}
+      },
+      "union":true
     },
     "TablePrefix":{
       "type":"string",
@@ -14833,6 +14841,10 @@
     "double":{"type":"double"},
     "dpuCounts":{"type":"integer"},
     "dpuDurationInHour":{"type":"double"},
+    "glueConnectionNameString":{
+      "type":"string",
+      "min":1
+    },
     "metricCounts":{"type":"long"},
     "tableNameString":{
       "type":"string",

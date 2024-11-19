@@ -1341,6 +1341,7 @@
         "dependsOn":{"shape":"ContainerDependencies"},
         "startTimeout":{"shape":"BoxedInteger"},
         "stopTimeout":{"shape":"BoxedInteger"},
+        "versionConsistency":{"shape":"VersionConsistency"},
         "hostname":{"shape":"String"},
         "user":{"shape":"String"},
         "workingDirectory":{"shape":"String"},
@@ -4283,6 +4284,13 @@
       "members":{
         "taskSet":{"shape":"TaskSet"}
       }
+    },
+    "VersionConsistency":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "VersionInfo":{
       "type":"structure",

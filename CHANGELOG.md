@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds opt-in header for query-compatible services
+* `Aws\Keyspaces` - Amazon Keyspaces Multi-Region Replication: Adds support to add new regions to multi and single-region keyspaces.
+* `Aws\B2bi` - Add new X12 transactions sets and versions
+* `Aws\WorkSpaces` - Releasing new ErrorCodes for Image Validation failure during CreateWorkspaceImage process
+* `Aws\MWAA` - Amazon MWAA now supports a new environment class, mw1.micro, ideal for workloads requiring fewer resources than mw1.small. This class supports a single instance of each Airflow component: Scheduler, Worker, and Webserver.
+* `Aws\Glue` - AWS Glue Data Catalog now enhances managed table optimizations of Apache Iceberg tables that can be accessed only from a specific Amazon Virtual Private Cloud (VPC) environment.
+* `Aws\TaxSettings` - Release Tax Inheritance APIs, Tax Exemption APIs, and functionality update for some existing Tax Registration APIs
+* `Aws\EFS` - Add support for the new parameters in EFS replication APIs
+* `Aws\EC2` - This release adds VPC Block Public Access (VPC BPA), a new declarative control which blocks resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways.
+* `Aws\ECS` - This release introduces support for configuring the version consistency feature for individual containers defined within a task definition. The configuration allows to specify whether ECS should resolve the container image tag specified in the container definition to an image digest.
+
 ## 3.328.1 - 2024-11-18
 
 * `Aws\RDSDataService` - Add support for the automatic pause/resume feature of Aurora Serverless v2.
