@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.328.2 - 2024-11-19
 
 * `Aws\` - Adds opt-in header for query-compatible services
 * `Aws\Keyspaces` - Amazon Keyspaces Multi-Region Replication: Adds support to add new regions to multi and single-region keyspaces.
