@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.328.3 - 2024-11-20
 
 * `Aws\` - Adds support for psr/simple-cache v2 and v3
 * `Aws\WorkSpacesWeb` - Added data protection settings with support for inline data redaction.
