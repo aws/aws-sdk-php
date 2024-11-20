@@ -8,7 +8,6 @@ use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
-use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
 use GuzzleHttp\Psr7;
@@ -43,7 +42,6 @@ abstract class RestSerializer
 
     /**
      * @param CommandInterface $command Command to serialize into a request.
-     * @param $endpointProvider Provider used for dynamic endpoint resolution.
      * @param $clientArgs Client arguments used for dynamic endpoint resolution.
      *
      * @return RequestInterface
@@ -198,6 +196,7 @@ abstract class RestSerializer
 
     private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
+        $isModifiedModel = $this->api->isModifiedModel();
         // Create an associative array of variable definitions used in expansions
         $varDefinitions = $this->getVarDefinitions($operation, $args);
 
@@ -226,11 +225,7 @@ abstract class RestSerializer
 
         $path = $this->endpoint->getPath();
 
-        //Accounts for trailing '/' in path when custom endpoint
-        //is provided to endpointProviderV2
-        if ($this->api->isModifiedModel()
-            && $this->api->getServiceName() === 's3'
-        ) {
+        if ($isModifiedModel && $this->api->getServiceName() === 's3') {
             if (substr($path, -1) === '/' && $relative[0] === '/') {
                 $path = rtrim($path, '/');
             }
@@ -246,6 +241,11 @@ abstract class RestSerializer
                 return new Uri($this->endpoint->withPath('') . $relative);
             }
         }
+
+        if (!$isModifiedModel) {
+            $relative = $this->prependPath($relative, $path);
+        }
+
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         if ($path && $relative[0] === '/') {
             $relative = substr($relative, 1);
@@ -253,9 +253,7 @@ abstract class RestSerializer
 
         //Append path to endpoint when leading '//...'
         // present as uri cannot be properly resolved
-        if ($this->api->isModifiedModel()
-            && strpos($relative, '//') === 0
-        ) {
+        if ($isModifiedModel && strpos($relative, '//') === 0) {
             return new Uri($this->endpoint . $relative);
         }
 
@@ -306,5 +304,34 @@ abstract class RestSerializer
             }
         }
         return $varDefinitions;
+    }
+
+    /**
+     * If non-empty path with at least one segment present, compare
+     * with relative and prepend if starting segments are not duplicated
+     *
+     * @param string $relative
+     * @param string $path
+     *
+     * @return string
+     */
+    private function prependPath(string $relative, string $path): string
+    {
+        if (empty($relative) || $relative === '/'
+            || empty($path) || $path === '/'
+        ) {
+            return $relative;
+        }
+
+        $normalizedPath = rtrim($path, '/');
+        $normalizedRelative = ltrim($relative, '/');
+
+        // Check if $relative starts with $path
+        if (strpos($normalizedRelative, ltrim($normalizedPath, '/')) === 0) {
+            // $relative already starts with $path, return $relative
+            return $relative;
+        }
+
+        return $normalizedPath . '/' . $normalizedRelative;
     }
 }
