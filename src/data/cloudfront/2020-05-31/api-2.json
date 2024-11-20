@@ -111,6 +111,28 @@
         {"shape":"TooManyCacheBehaviors"}
       ]
     },
+    "CreateAnycastIpList":{
+      "name":"CreateAnycastIpList2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/anycast-ip-list",
+        "responseCode":202
+      },
+      "input":{
+        "shape":"CreateAnycastIpListRequest",
+        "locationName":"CreateAnycastIpListRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateAnycastIpListResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"}
+      ]
+    },
     "CreateCachePolicy":{
       "name":"CreateCachePolicy2020_05_31",
       "http":{
@@ -205,6 +227,7 @@
         {"shape":"InvalidArgument"},
         {"shape":"InvalidOriginReadTimeout"},
         {"shape":"InvalidOriginAccessControl"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidHeadersForS3Origin"},
         {"shape":"TrustedSignerDoesNotExist"},
         {"shape":"InvalidWebACLId"},
@@ -282,6 +305,7 @@
         {"shape":"InvalidArgument"},
         {"shape":"InvalidOriginReadTimeout"},
         {"shape":"InvalidOriginAccessControl"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidHeadersForS3Origin"},
         {"shape":"TrustedSignerDoesNotExist"},
         {"shape":"InvalidWebACLId"},
@@ -596,6 +620,48 @@
         {"shape":"InvalidOrigin"}
       ]
     },
+    "CreateVpcOrigin":{
+      "name":"CreateVpcOrigin2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/vpc-origin",
+        "responseCode":202
+      },
+      "input":{
+        "shape":"CreateVpcOriginRequest",
+        "locationName":"CreateVpcOriginRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateVpcOriginResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"}
+      ]
+    },
+    "DeleteAnycastIpList":{
+      "name":"DeleteAnycastIpList2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/anycast-ip-list/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAnycastIpListRequest"},
+      "errors":[
+        {"shape":"CannotDeleteEntityWhileInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"IllegalDelete"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "DeleteCachePolicy":{
       "name":"DeleteCachePolicy2020_05_31",
       "http":{
@@ -860,6 +926,26 @@
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
+    "DeleteVpcOrigin":{
+      "name":"DeleteVpcOrigin2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/vpc-origin/{Id}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteVpcOriginRequest"},
+      "output":{"shape":"DeleteVpcOriginResult"},
+      "errors":[
+        {"shape":"CannotDeleteEntityWhileInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"IllegalDelete"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "DescribeFunction":{
       "name":"DescribeFunction2020_05_31",
       "http":{
@@ -883,6 +969,22 @@
       },
       "input":{"shape":"DescribeKeyValueStoreRequest"},
       "output":{"shape":"DescribeKeyValueStoreResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "GetAnycastIpList":{
+      "name":"GetAnycastIpList2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/anycast-ip-list/{Id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAnycastIpListRequest"},
+      "output":{"shape":"GetAnycastIpListResult"},
       "errors":[
         {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
@@ -1288,6 +1390,38 @@
         {"shape":"NoSuchStreamingDistribution"}
       ]
     },
+    "GetVpcOrigin":{
+      "name":"GetVpcOrigin2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/vpc-origin/{Id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVpcOriginRequest"},
+      "output":{"shape":"GetVpcOriginResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListAnycastIpLists":{
+      "name":"ListAnycastIpLists2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/anycast-ip-list",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAnycastIpListsRequest"},
+      "output":{"shape":"ListAnycastIpListsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListCachePolicies":{
       "name":"ListCachePolicies2020_05_31",
       "http":{
@@ -1355,6 +1489,22 @@
       "input":{"shape":"ListDistributionsRequest"},
       "output":{"shape":"ListDistributionsResult"},
       "errors":[
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListDistributionsByAnycastIpListId":{
+      "name":"ListDistributionsByAnycastIpListId2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByAnycastIpListId/{AnycastIpListId}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDistributionsByAnycastIpListIdRequest"},
+      "output":{"shape":"ListDistributionsByAnycastIpListIdResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1431,6 +1581,22 @@
       "errors":[
         {"shape":"AccessDenied"},
         {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListDistributionsByVpcOriginId":{
+      "name":"ListDistributionsByVpcOriginId2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByVpcOriginId/{VpcOriginId}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDistributionsByVpcOriginIdRequest"},
+      "output":{"shape":"ListDistributionsByVpcOriginIdResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1631,6 +1797,22 @@
         {"shape":"NoSuchResource"}
       ]
     },
+    "ListVpcOrigins":{
+      "name":"ListVpcOrigins2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/vpc-origin",
+        "responseCode":200
+      },
+      "input":{"shape":"ListVpcOriginsRequest"},
+      "output":{"shape":"ListVpcOriginsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "PublishFunction":{
       "name":"PublishFunction2020_05_31",
       "http":{
@@ -1798,6 +1980,7 @@
         {"shape":"InvalidOriginReadTimeout"},
         {"shape":"IllegalUpdate"},
         {"shape":"InvalidOriginAccessControl"},
+        {"shape":"EntityNotFound"},
         {"shape":"StagingDistributionInUse"},
         {"shape":"InvalidHeadersForS3Origin"},
         {"shape":"TrustedSignerDoesNotExist"},
@@ -1874,6 +2057,7 @@
         {"shape":"InvalidOriginReadTimeout"},
         {"shape":"IllegalUpdate"},
         {"shape":"InvalidOriginAccessControl"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidHeadersForS3Origin"},
         {"shape":"TrustedSignerDoesNotExist"},
         {"shape":"InvalidWebACLId"},
@@ -2150,6 +2334,29 @@
         {"shape":"CNAMEAlreadyExists"},
         {"shape":"NoSuchStreamingDistribution"}
       ]
+    },
+    "UpdateVpcOrigin":{
+      "name":"UpdateVpcOrigin2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/vpc-origin/{Id}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateVpcOriginRequest"},
+      "output":{"shape":"UpdateVpcOriginResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"CannotUpdateEntityWhileInUse"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
     }
   },
   "shapes":{
@@ -2257,6 +2464,83 @@
         "CachedMethods":{"shape":"CachedMethods"}
       }
     },
+    "AnycastIpList":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name",
+        "Status",
+        "Arn",
+        "AnycastIps",
+        "IpCount",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Name":{"shape":"AnycastIpListName"},
+        "Status":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "AnycastIps":{"shape":"AnycastIps"},
+        "IpCount":{"shape":"integer"},
+        "LastModifiedTime":{"shape":"timestamp"}
+      }
+    },
+    "AnycastIpListCollection":{
+      "type":"structure",
+      "required":[
+        "Marker",
+        "MaxItems",
+        "IsTruncated",
+        "Quantity"
+      ],
+      "members":{
+        "Items":{"shape":"AnycastIpListSummaries"},
+        "Marker":{"shape":"string"},
+        "NextMarker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"},
+        "IsTruncated":{"shape":"boolean"},
+        "Quantity":{"shape":"integer"}
+      }
+    },
+    "AnycastIpListName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]{1,64}"
+    },
+    "AnycastIpListSummaries":{
+      "type":"list",
+      "member":{
+        "shape":"AnycastIpListSummary",
+        "locationName":"AnycastIpListSummary"
+      }
+    },
+    "AnycastIpListSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name",
+        "Status",
+        "Arn",
+        "IpCount",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Name":{"shape":"AnycastIpListName"},
+        "Status":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "IpCount":{"shape":"integer"},
+        "LastModifiedTime":{"shape":"timestamp"}
+      }
+    },
+    "AnycastIps":{
+      "type":"list",
+      "member":{
+        "shape":"string",
+        "locationName":"AnycastIp"
+      }
+    },
     "AssociateAliasRequest":{
       "type":"structure",
       "required":[
@@ -2328,6 +2612,7 @@
         "CachePolicyId":{"shape":"string"},
         "OriginRequestPolicyId":{"shape":"string"},
         "ResponseHeadersPolicyId":{"shape":"string"},
+        "GrpcConfig":{"shape":"GrpcConfig"},
         "ForwardedValues":{
           "shape":"ForwardedValues",
           "deprecated":true
@@ -2521,6 +2806,17 @@
       "exception":true
     },
     "CannotDeleteEntityWhileInUse":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CannotUpdateEntityWhileInUse":{
       "type":"structure",
       "members":{
         "Message":{"shape":"string"}
@@ -2849,6 +3145,30 @@
         }
       },
       "payload":"Distribution"
+    },
+    "CreateAnycastIpListRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "IpCount"
+      ],
+      "members":{
+        "Name":{"shape":"AnycastIpListName"},
+        "IpCount":{"shape":"integer"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateAnycastIpListResult":{
+      "type":"structure",
+      "members":{
+        "AnycastIpList":{"shape":"AnycastIpList"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"AnycastIpList"
     },
     "CreateCachePolicyRequest":{
       "type":"structure",
@@ -3392,6 +3712,31 @@
       },
       "payload":"StreamingDistribution"
     },
+    "CreateVpcOriginRequest":{
+      "type":"structure",
+      "required":["VpcOriginEndpointConfig"],
+      "members":{
+        "VpcOriginEndpointConfig":{"shape":"VpcOriginEndpointConfig"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateVpcOriginResult":{
+      "type":"structure",
+      "members":{
+        "VpcOrigin":{"shape":"VpcOrigin"},
+        "Location":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"Location"
+        },
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"VpcOrigin"
+    },
     "CustomErrorResponse":{
       "type":"structure",
       "required":["ErrorCode"],
@@ -3462,6 +3807,7 @@
         "CachePolicyId":{"shape":"string"},
         "OriginRequestPolicyId":{"shape":"string"},
         "ResponseHeadersPolicyId":{"shape":"string"},
+        "GrpcConfig":{"shape":"GrpcConfig"},
         "ForwardedValues":{
           "shape":"ForwardedValues",
           "deprecated":true
@@ -3477,6 +3823,25 @@
         "MaxTTL":{
           "shape":"long",
           "deprecated":true
+        }
+      }
+    },
+    "DeleteAnycastIpListRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
         }
       }
     },
@@ -3733,6 +4098,37 @@
         }
       }
     },
+    "DeleteVpcOriginRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "DeleteVpcOriginResult":{
+      "type":"structure",
+      "members":{
+        "VpcOrigin":{"shape":"VpcOrigin"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"VpcOrigin"
+    },
     "DescribeFunctionRequest":{
       "type":"structure",
       "required":["Name"],
@@ -3847,7 +4243,8 @@
         "HttpVersion":{"shape":"HttpVersion"},
         "IsIPV6Enabled":{"shape":"boolean"},
         "ContinuousDeploymentPolicyId":{"shape":"string"},
-        "Staging":{"shape":"boolean"}
+        "Staging":{"shape":"boolean"},
+        "AnycastIpListId":{"shape":"string"}
       }
     },
     "DistributionConfigWithTags":{
@@ -3957,7 +4354,8 @@
         "HttpVersion":{"shape":"HttpVersion"},
         "IsIPV6Enabled":{"shape":"boolean"},
         "AliasICPRecordals":{"shape":"AliasICPRecordals"},
-        "Staging":{"shape":"boolean"}
+        "Staging":{"shape":"boolean"},
+        "AnycastIpListId":{"shape":"string"}
       }
     },
     "DistributionSummaryList":{
@@ -4461,6 +4859,29 @@
         "whitelist",
         "none"
       ]
+    },
+    "GetAnycastIpListRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetAnycastIpListResult":{
+      "type":"structure",
+      "members":{
+        "AnycastIpList":{"shape":"AnycastIpList"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"AnycastIpList"
     },
     "GetCachePolicyConfigRequest":{
       "type":"structure",
@@ -5103,6 +5524,36 @@
         }
       },
       "payload":"StreamingDistribution"
+    },
+    "GetVpcOriginRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetVpcOriginResult":{
+      "type":"structure",
+      "members":{
+        "VpcOrigin":{"shape":"VpcOrigin"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"VpcOrigin"
+    },
+    "GrpcConfig":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"boolean"}
+      }
     },
     "HeaderList":{
       "type":"list",
@@ -5771,6 +6222,31 @@
         "Items":{"shape":"LambdaFunctionAssociationList"}
       }
     },
+    "ListAnycastIpListsRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"integer",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListAnycastIpListsResult":{
+      "type":"structure",
+      "members":{
+        "AnycastIpLists":{
+          "shape":"AnycastIpListCollection",
+          "locationName":"AnycastIpListCollection"
+        }
+      },
+      "payload":"AnycastIpLists"
+    },
     "ListCachePoliciesRequest":{
       "type":"structure",
       "members":{
@@ -5877,6 +6353,34 @@
         "ContinuousDeploymentPolicyList":{"shape":"ContinuousDeploymentPolicyList"}
       },
       "payload":"ContinuousDeploymentPolicyList"
+    },
+    "ListDistributionsByAnycastIpListIdRequest":{
+      "type":"structure",
+      "required":["AnycastIpListId"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "AnycastIpListId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"AnycastIpListId"
+        }
+      }
+    },
+    "ListDistributionsByAnycastIpListIdResult":{
+      "type":"structure",
+      "members":{
+        "DistributionList":{"shape":"DistributionList"}
+      },
+      "payload":"DistributionList"
     },
     "ListDistributionsByCachePolicyIdRequest":{
       "type":"structure",
@@ -6000,6 +6504,34 @@
       }
     },
     "ListDistributionsByResponseHeadersPolicyIdResult":{
+      "type":"structure",
+      "members":{
+        "DistributionIdList":{"shape":"DistributionIdList"}
+      },
+      "payload":"DistributionIdList"
+    },
+    "ListDistributionsByVpcOriginIdRequest":{
+      "type":"structure",
+      "required":["VpcOriginId"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "VpcOriginId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"VpcOriginId"
+        }
+      }
+    },
+    "ListDistributionsByVpcOriginIdResult":{
       "type":"structure",
       "members":{
         "DistributionIdList":{"shape":"DistributionIdList"}
@@ -6365,6 +6897,28 @@
       },
       "payload":"Tags"
     },
+    "ListVpcOriginsRequest":{
+      "type":"structure",
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListVpcOriginsResult":{
+      "type":"structure",
+      "members":{
+        "VpcOriginList":{"shape":"VpcOriginList"}
+      },
+      "payload":"VpcOriginList"
+    },
     "LocationList":{
       "type":"list",
       "member":{
@@ -6374,15 +6928,15 @@
     },
     "LoggingConfig":{
       "type":"structure",
-      "required":[
-        "Enabled",
-        "IncludeCookies",
-        "Bucket",
-        "Prefix"
-      ],
       "members":{
-        "Enabled":{"shape":"boolean"},
-        "IncludeCookies":{"shape":"boolean"},
+        "Enabled":{
+          "shape":"boolean",
+          "box":true
+        },
+        "IncludeCookies":{
+          "shape":"boolean",
+          "box":true
+        },
         "Bucket":{"shape":"string"},
         "Prefix":{"shape":"string"}
       }
@@ -6646,6 +7200,7 @@
         "CustomHeaders":{"shape":"CustomHeaders"},
         "S3OriginConfig":{"shape":"S3OriginConfig"},
         "CustomOriginConfig":{"shape":"CustomOriginConfig"},
+        "VpcOriginConfig":{"shape":"VpcOriginConfig"},
         "ConnectionAttempts":{"shape":"integer"},
         "ConnectionTimeout":{"shape":"integer"},
         "OriginShield":{"shape":"OriginShield"},
@@ -9287,6 +9842,44 @@
       },
       "payload":"StreamingDistribution"
     },
+    "UpdateVpcOriginRequest":{
+      "type":"structure",
+      "required":[
+        "VpcOriginEndpointConfig",
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "VpcOriginEndpointConfig":{
+          "shape":"VpcOriginEndpointConfig",
+          "locationName":"VpcOriginEndpointConfig",
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        },
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      },
+      "payload":"VpcOriginEndpointConfig"
+    },
+    "UpdateVpcOriginResult":{
+      "type":"structure",
+      "members":{
+        "VpcOrigin":{"shape":"VpcOrigin"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"VpcOrigin"
+    },
     "ViewerCertificate":{
       "type":"structure",
       "members":{
@@ -9312,6 +9905,95 @@
         "https-only",
         "redirect-to-https"
       ]
+    },
+    "VpcOrigin":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Arn",
+        "Status",
+        "CreatedTime",
+        "LastModifiedTime",
+        "VpcOriginEndpointConfig"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "Status":{"shape":"string"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "VpcOriginEndpointConfig":{"shape":"VpcOriginEndpointConfig"}
+      }
+    },
+    "VpcOriginConfig":{
+      "type":"structure",
+      "required":["VpcOriginId"],
+      "members":{
+        "VpcOriginId":{"shape":"string"}
+      }
+    },
+    "VpcOriginEndpointConfig":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Arn",
+        "HTTPPort",
+        "HTTPSPort",
+        "OriginProtocolPolicy"
+      ],
+      "members":{
+        "Name":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "HTTPPort":{"shape":"integer"},
+        "HTTPSPort":{"shape":"integer"},
+        "OriginProtocolPolicy":{"shape":"OriginProtocolPolicy"},
+        "OriginSslProtocols":{"shape":"OriginSslProtocols"}
+      }
+    },
+    "VpcOriginList":{
+      "type":"structure",
+      "required":[
+        "Marker",
+        "MaxItems",
+        "IsTruncated",
+        "Quantity"
+      ],
+      "members":{
+        "Marker":{"shape":"string"},
+        "NextMarker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"},
+        "IsTruncated":{"shape":"boolean"},
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"VpcOriginSummaryList"}
+      }
+    },
+    "VpcOriginSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name",
+        "Status",
+        "CreatedTime",
+        "LastModifiedTime",
+        "Arn",
+        "OriginEndpointArn"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Status":{"shape":"string"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "Arn":{"shape":"string"},
+        "OriginEndpointArn":{"shape":"string"}
+      }
+    },
+    "VpcOriginSummaryList":{
+      "type":"list",
+      "member":{
+        "shape":"VpcOriginSummary",
+        "locationName":"VpcOriginSummary"
+      }
     },
     "aliasString":{
       "type":"string",

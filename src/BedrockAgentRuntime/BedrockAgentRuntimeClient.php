@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise invokeAgentAsync(array $args = [])
  * @method \Aws\Result invokeFlow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeFlowAsync(array $args = [])
+ * @method \Aws\Result optimizePrompt(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise optimizePromptAsync(array $args = [])
  * @method \Aws\Result retrieve(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retrieveAsync(array $args = [])
  * @method \Aws\Result retrieveAndGenerate(array $args = [])

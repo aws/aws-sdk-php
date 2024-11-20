@@ -8301,6 +8301,21 @@
       }
     },
     "BaselineIops":{"type":"integer"},
+    "BaselinePerformanceFactors":{
+      "type":"structure",
+      "members":{
+        "Cpu":{
+          "shape":"CpuPerformanceFactor",
+          "locationName":"cpu"
+        }
+      }
+    },
+    "BaselinePerformanceFactorsRequest":{
+      "type":"structure",
+      "members":{
+        "Cpu":{"shape":"CpuPerformanceFactorRequest"}
+      }
+    },
     "BaselineThroughputInMBps":{"type":"double"},
     "BatchState":{
       "type":"string",
@@ -9347,6 +9362,7 @@
     "CapacityReservationPreference":{
       "type":"string",
       "enum":[
+        "capacity-reservations-only",
         "open",
         "none"
       ]
@@ -10542,7 +10558,8 @@
       "enum":[
         "intel",
         "amd",
-        "amazon-web-services"
+        "amazon-web-services",
+        "apple"
       ]
     },
     "CpuManufacturerName":{"type":"string"},
@@ -10576,6 +10593,24 @@
         "CoreCount":{"shape":"Integer"},
         "ThreadsPerCore":{"shape":"Integer"},
         "AmdSevSnp":{"shape":"AmdSevSnpSpecification"}
+      }
+    },
+    "CpuPerformanceFactor":{
+      "type":"structure",
+      "members":{
+        "References":{
+          "shape":"PerformanceFactorReferenceSet",
+          "locationName":"referenceSet"
+        }
+      }
+    },
+    "CpuPerformanceFactorRequest":{
+      "type":"structure",
+      "members":{
+        "References":{
+          "shape":"PerformanceFactorReferenceSetRequest",
+          "locationName":"Reference"
+        }
       }
     },
     "CreateCapacityReservationBySplittingRequest":{
@@ -28465,6 +28500,10 @@
         "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{
           "shape":"Integer",
           "locationName":"maxSpotPriceAsPercentageOfOptimalOnDemandPrice"
+        },
+        "BaselinePerformanceFactors":{
+          "shape":"BaselinePerformanceFactors",
+          "locationName":"baselinePerformanceFactors"
         }
       }
     },
@@ -28522,7 +28561,8 @@
           "shape":"AllowedInstanceTypeSet",
           "locationName":"AllowedInstanceType"
         },
-        "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{"shape":"Integer"}
+        "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice":{"shape":"Integer"},
+        "BaselinePerformanceFactors":{"shape":"BaselinePerformanceFactorsRequest"}
       }
     },
     "InstanceRequirementsWithMetadataRequest":{
@@ -37292,6 +37332,35 @@
           "shape":"String",
           "locationName":"region"
         }
+      }
+    },
+    "PerformanceFactorReference":{
+      "type":"structure",
+      "members":{
+        "InstanceFamily":{
+          "shape":"String",
+          "locationName":"instanceFamily"
+        }
+      }
+    },
+    "PerformanceFactorReferenceRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceFamily":{"shape":"String"}
+      }
+    },
+    "PerformanceFactorReferenceSet":{
+      "type":"list",
+      "member":{
+        "shape":"PerformanceFactorReference",
+        "locationName":"item"
+      }
+    },
+    "PerformanceFactorReferenceSetRequest":{
+      "type":"list",
+      "member":{
+        "shape":"PerformanceFactorReferenceRequest",
+        "locationName":"item"
       }
     },
     "PeriodType":{

@@ -219,6 +219,7 @@
     "AsciiStringMaxLen255": {
       "base": null,
       "refs": {
+        "CapacityReservationIds$member": null,
         "CompleteLifecycleActionType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
         "DeleteLifecycleHookType$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
         "LifecycleHook$LifecycleHookName": "<p>The name of the lifecycle hook.</p>",
@@ -418,6 +419,12 @@
         "InstanceRequirements$BaselineEbsBandwidthMbps": "<p>The minimum and maximum baseline bandwidth performance for an instance type, in Mbps. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-optimized.html\">Amazon EBS–optimized instances</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> <p>Default: No minimum or maximum limits</p>"
       }
     },
+    "BaselinePerformanceFactorsRequest": {
+      "base": "<p> The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Auto Scaling uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application. </p> <p>Currently, this parameter only supports CPU performance as a baseline performance factor. For example, specifying <code>c6i</code> uses the CPU performance of the <code>c6i</code> family as the baseline reference.</p>",
+      "refs": {
+        "InstanceRequirements$BaselinePerformanceFactors": "<p> The baseline performance factors for the instance requirements. </p>"
+      }
+    },
     "BatchDeleteScheduledActionAnswer": {
       "base": null,
       "refs": {
@@ -523,6 +530,38 @@
         "UpdateAutoScalingGroupType$CapacityRebalance": "<p>Enables or disables Capacity Rebalancing. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-capacity-rebalancing.html\">Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>"
       }
     },
+    "CapacityReservationIds": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$CapacityReservationIds": "<p> The Capacity Reservation IDs to launch instances into. </p>"
+      }
+    },
+    "CapacityReservationPreference": {
+      "base": null,
+      "refs": {
+        "CapacityReservationSpecification$CapacityReservationPreference": "<p> The capacity reservation preference. The following options are available: </p> <ul> <li> <p> <code>capacity-reservations-only</code> - Auto Scaling will only launch instances into a Capacity Reservation or Capacity Reservation resource group. If capacity isn't available, instances will fail to launch.</p> </li> <li> <p> <code>capacity-reservations-first</code> - Auto Scaling will try to launch instances into a Capacity Reservation or Capacity Reservation resource group first. If capacity isn't available, instances will run in On-Demand capacity.</p> </li> <li> <p> <code>none</code> - Auto Scaling will not launch instances into a Capacity Reservation. Instances will run in On-Demand capacity. </p> </li> <li> <p> <code>default</code> - Auto Scaling uses the Capacity Reservation preference from your launch template or an open Capacity Reservation.</p> </li> </ul>"
+      }
+    },
+    "CapacityReservationResourceGroupArns": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$CapacityReservationResourceGroupArns": "<p> The resource group ARNs of the Capacity Reservation to launch instances into. </p>"
+      }
+    },
+    "CapacityReservationSpecification": {
+      "base": "<p> Describes the Capacity Reservation preference and targeting options. If you specify <code>open</code> or <code>none</code> for <code>CapacityReservationPreference</code>, do not specify a <code>CapacityReservationTarget</code>. </p>",
+      "refs": {
+        "AutoScalingGroup$CapacityReservationSpecification": "<p> The capacity reservation specification. </p>",
+        "CreateAutoScalingGroupType$CapacityReservationSpecification": "<p> The capacity reservation specification for the Auto Scaling group. </p>",
+        "UpdateAutoScalingGroupType$CapacityReservationSpecification": "<p> The capacity reservation specification for the Auto Scaling group. </p>"
+      }
+    },
+    "CapacityReservationTarget": {
+      "base": "<p> The target for the Capacity Reservation. Specify Capacity Reservations IDs or Capacity Reservation resource group ARNs. </p>",
+      "refs": {
+        "CapacityReservationSpecification$CapacityReservationTarget": "<p> Describes a target Capacity Reservation or Capacity Reservation resource group. </p>"
+      }
+    },
     "CheckpointDelay": {
       "base": null,
       "refs": {
@@ -580,6 +619,12 @@
       "base": null,
       "refs": {
         "InstanceRequirements$CpuManufacturers": "<p>Lists which specific CPU manufacturers to include.</p> <ul> <li> <p>For instance types with Intel CPUs, specify <code>intel</code>.</p> </li> <li> <p>For instance types with AMD CPUs, specify <code>amd</code>.</p> </li> <li> <p>For instance types with Amazon Web Services CPUs, specify <code>amazon-web-services</code>.</p> </li> </ul> <note> <p>Don't confuse the CPU hardware manufacturer with the CPU hardware architecture. Instances will be launched with a compatible CPU architecture based on the Amazon Machine Image (AMI) that you specify in your launch template. </p> </note> <p>Default: Any manufacturer</p>"
+      }
+    },
+    "CpuPerformanceFactorRequest": {
+      "base": "<p> The CPU performance to consider, using an instance family as the baseline reference. </p>",
+      "refs": {
+        "BaselinePerformanceFactorsRequest$Cpu": "<p> The CPU performance to consider, using an instance family as the baseline reference. </p>"
       }
     },
     "CreateAutoScalingGroupType": {
@@ -1721,6 +1766,18 @@
         "LaunchTemplate$Overrides": "<p>Any properties that you specify override the same properties in the launch template.</p>"
       }
     },
+    "PerformanceFactorReferenceRequest": {
+      "base": "<p> Specify an instance family to use as the baseline reference for CPU performance. All instance types that All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences. </p> <note> <p>Currently only one instance family can be specified in the list.</p> </note>",
+      "refs": {
+        "PerformanceFactorReferenceSetRequest$member": null
+      }
+    },
+    "PerformanceFactorReferenceSetRequest": {
+      "base": null,
+      "refs": {
+        "CpuPerformanceFactorRequest$References": "<p> Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences. </p> <note> <p>Currently only one instance family can be specified in the list.</p> </note>"
+      }
+    },
     "PoliciesType": {
       "base": null,
       "refs": {
@@ -1992,6 +2049,7 @@
         "Alarm$AlarmARN": "<p>The Amazon Resource Name (ARN) of the alarm.</p>",
         "AutoScalingGroup$AutoScalingGroupARN": "<p>The Amazon Resource Name (ARN) of the Auto Scaling group.</p>",
         "AutoScalingGroup$ServiceLinkedRoleARN": "<p>The Amazon Resource Name (ARN) of the service-linked role that the Auto Scaling group uses to call other Amazon Web Services on your behalf.</p>",
+        "CapacityReservationResourceGroupArns$member": null,
         "CompleteLifecycleActionType$AutoScalingGroupName": "<p>The name of the Auto Scaling group.</p>",
         "CreateAutoScalingGroupType$ServiceLinkedRoleARN": "<p>The Amazon Resource Name (ARN) of the service-linked role that the Auto Scaling group uses to call other Amazon Web Services service on your behalf. By default, Amazon EC2 Auto Scaling uses a service-linked role named <code>AWSServiceRoleForAutoScaling</code>, which it creates if it does not exist. For more information, see <a href=\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/autoscaling-service-linked-role.html\">Service-linked roles</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>",
         "DeletePolicyType$PolicyName": "<p>The name or Amazon Resource Name (ARN) of the policy.</p>",
@@ -2211,6 +2269,12 @@
       "refs": {
         "PutScalingPolicyType$StepAdjustments": "<p>A set of adjustments that enable you to scale based on the size of the alarm breach.</p> <p>Required if the policy type is <code>StepScaling</code>. (Not used with any other policy type.) </p>",
         "ScalingPolicy$StepAdjustments": "<p>A set of adjustments that enable you to scale based on the size of the alarm breach.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "PerformanceFactorReferenceRequest$InstanceFamily": "<p> The instance family to use as a baseline reference. </p> <note> <p>Make sure that you specify the correct value for the instance family. The instance family is everything before the period (.) in the instance type name. For example, in the instance <code>c6i.large</code>, the instance family is <code>c6i</code>, not <code>c6</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html\">Amazon EC2 instance type naming conventions</a> in <i>Amazon EC2 Instance Types</i>.</p> </note> <p>The following instance types are <i>not supported</i> for performance protection.</p> <ul> <li> <p> <code>c1</code> </p> </li> <li> <p> <code>g3| g3s</code> </p> </li> <li> <p> <code>hpc7g</code> </p> </li> <li> <p> <code>m1| m2</code> </p> </li> <li> <p> <code>mac1 | mac2 | mac2-m1ultra | mac2-m2 | mac2-m2pro</code> </p> </li> <li> <p> <code>p3dn | p4d | p5</code> </p> </li> <li> <p> <code>t1</code> </p> </li> <li> <p> <code>u-12tb1 | u-18tb1 | u-24tb1 | u-3tb1 | u-6tb1 | u-9tb1 | u7i-12tb | u7in-16tb | u7in-24tb | u7in-32tb</code> </p> </li> </ul> <p>If you performance protection by specifying a supported instance family, the returned instance types will exclude the preceding unsupported instance families.</p> <p>If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response.</p>"
       }
     },
     "SuspendedProcess": {

@@ -233,6 +233,27 @@
       ],
       "endpoint":{"hostPrefix":"control-storage-"}
     },
+    "CreateRunCache":{
+      "name":"CreateRunCache",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runCache",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRunCacheRequest"},
+      "output":{"shape":"CreateRunCacheResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
     "CreateRunGroup":{
       "name":"CreateRunGroup",
       "http":{
@@ -424,6 +445,27 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteRunRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "idempotent":true
+    },
+    "DeleteRunCache":{
+      "name":"DeleteRunCache",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/runCache/{id}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteRunCacheRequest"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -778,6 +820,27 @@
       },
       "input":{"shape":"GetRunRequest"},
       "output":{"shape":"GetRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
+    "GetRunCache":{
+      "name":"GetRunCache",
+      "http":{
+        "method":"GET",
+        "requestUri":"/runCache/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRunCacheRequest"},
+      "output":{"shape":"GetRunCacheResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -1155,6 +1218,27 @@
         {"shape":"RequestTimeoutException"}
       ],
       "endpoint":{"hostPrefix":"control-storage-"}
+    },
+    "ListRunCaches":{
+      "name":"ListRunCaches",
+      "http":{
+        "method":"GET",
+        "requestUri":"/runCache",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRunCachesRequest"},
+      "output":{"shape":"ListRunCachesResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
     },
     "ListRunGroups":{
       "name":"ListRunGroups",
@@ -1553,6 +1637,26 @@
       ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
+    "UpdateRunCache":{
+      "name":"UpdateRunCache",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runCache/{id}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateRunCacheRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
     "UpdateRunGroup":{
       "name":"UpdateRunGroup",
       "http":{
@@ -1909,6 +2013,12 @@
       "max":10,
       "min":1
     },
+    "AwsAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"[0-9]+"
+    },
     "BatchDeleteReadSetRequest":{
       "type":"structure",
       "required":[
@@ -1934,6 +2044,15 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CacheBehavior":{
+      "type":"string",
+      "enum":[
+        "CACHE_ON_FAILURE",
+        "CACHE_ALWAYS"
+      ],
+      "max":64,
+      "min":1
     },
     "CancelAnnotationImportRequest":{
       "type":"structure",
@@ -2212,6 +2331,34 @@
         "creationTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
+    "CreateRunCacheRequest":{
+      "type":"structure",
+      "required":[
+        "cacheS3Location",
+        "requestId"
+      ],
+      "members":{
+        "cacheBehavior":{"shape":"CacheBehavior"},
+        "cacheS3Location":{"shape":"S3UriForBucketOrObject"},
+        "description":{"shape":"UserCustomDescription"},
+        "name":{"shape":"UserCustomName"},
+        "requestId":{
+          "shape":"RunCacheRequestId",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"},
+        "cacheBucketOwnerId":{"shape":"AwsAccountId"}
+      }
+    },
+    "CreateRunCacheResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"RunCacheArn"},
+        "id":{"shape":"RunCacheId"},
+        "status":{"shape":"RunCacheStatus"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "CreateRunGroupRequest":{
       "type":"structure",
       "required":["requestId"],
@@ -2479,6 +2626,17 @@
       "members":{
       }
     },
+    "DeleteRunCacheRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"RunCacheId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
     "DeleteRunGroupRequest":{
       "type":"structure",
       "required":["id"],
@@ -2615,6 +2773,10 @@
     "EngineLogStream":{
       "type":"string",
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "EngineVersion":{
+      "type":"string",
+      "pattern":"[0-9]{2}.[0-9]{2}.[0-9]"
     },
     "EscapeChar":{
       "type":"string",
@@ -3267,6 +3429,32 @@
         "creationTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
+    "GetRunCacheRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"RunCacheId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetRunCacheResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"RunCacheArn"},
+        "cacheBehavior":{"shape":"CacheBehavior"},
+        "cacheBucketOwnerId":{"shape":"AwsAccountId"},
+        "cacheS3Uri":{"shape":"S3UriForBucketOrObject"},
+        "creationTime":{"shape":"RunCacheTimestamp"},
+        "description":{"shape":"UserCustomDescription"},
+        "id":{"shape":"RunCacheId"},
+        "name":{"shape":"UserCustomName"},
+        "status":{"shape":"RunCacheStatus"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "GetRunGroupRequest":{
       "type":"structure",
       "required":["id"],
@@ -3337,6 +3525,9 @@
       "members":{
         "arn":{"shape":"RunArn"},
         "id":{"shape":"RunId"},
+        "cacheId":{"shape":"NumericIdInArn"},
+        "cacheBehavior":{"shape":"CacheBehavior"},
+        "engineVersion":{"shape":"EngineVersion"},
         "status":{"shape":"RunStatus"},
         "workflowId":{"shape":"WorkflowId"},
         "workflowType":{"shape":"WorkflowType"},
@@ -3406,6 +3597,8 @@
         "status":{"shape":"TaskStatus"},
         "name":{"shape":"TaskName"},
         "cpus":{"shape":"GetRunTaskResponseCpusInteger"},
+        "cacheHit":{"shape":"Boolean"},
+        "cacheS3Uri":{"shape":"S3UriForBucketOrObject"},
         "memory":{"shape":"GetRunTaskResponseMemoryInteger"},
         "creationTime":{"shape":"TaskTimestamp"},
         "startTime":{"shape":"TaskTimestamp"},
@@ -4225,6 +4418,34 @@
         "references":{"shape":"ReferenceList"}
       }
     },
+    "ListRunCachesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListRunCachesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "startingToken":{
+          "shape":"ListToken",
+          "location":"querystring",
+          "locationName":"startingToken"
+        }
+      }
+    },
+    "ListRunCachesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListRunCachesResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"RunCacheList"},
+        "nextToken":{"shape":"ListToken"}
+      }
+    },
     "ListRunGroupsRequest":{
       "type":"structure",
       "members":{
@@ -4413,6 +4634,12 @@
       "members":{
         "tags":{"shape":"TagMap"}
       }
+    },
+    "ListToken":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "ListVariantImportJobsFilter":{
       "type":"structure",
@@ -4604,6 +4831,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "NumericIdInArn":{
+      "type":"string",
+      "max":18,
+      "min":1,
+      "pattern":"[0-9]+"
     },
     "PrimitiveBoolean":{"type":"boolean"},
     "Quote":{
@@ -5124,6 +5357,54 @@
       "min":1,
       "pattern":"arn:.+"
     },
+    "RunCacheArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:.+"
+    },
+    "RunCacheId":{
+      "type":"string",
+      "max":18,
+      "min":1,
+      "pattern":"[0-9]+"
+    },
+    "RunCacheList":{
+      "type":"list",
+      "member":{"shape":"RunCacheListItem"}
+    },
+    "RunCacheListItem":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"RunCacheArn"},
+        "cacheBehavior":{"shape":"CacheBehavior"},
+        "cacheS3Uri":{"shape":"S3UriForBucketOrObject"},
+        "creationTime":{"shape":"RunCacheTimestamp"},
+        "id":{"shape":"RunCacheId"},
+        "name":{"shape":"UserCustomName"},
+        "status":{"shape":"RunCacheStatus"}
+      }
+    },
+    "RunCacheRequestId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "RunCacheStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DELETED",
+        "FAILED"
+      ],
+      "max":64,
+      "min":1
+    },
+    "RunCacheTimestamp":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "RunExport":{
       "type":"string",
       "enum":["DEFINITION"],
@@ -5387,6 +5668,10 @@
     "S3Uri":{
       "type":"string",
       "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/(.{1,1024})"
+    },
+    "S3UriForBucketOrObject":{
+      "type":"string",
+      "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])(/(.{0,1024}))?"
     },
     "SampleId":{
       "type":"string",
@@ -5807,6 +6092,8 @@
         "runId":{"shape":"RunId"},
         "roleArn":{"shape":"RunRoleArn"},
         "name":{"shape":"RunName"},
+        "cacheId":{"shape":"NumericIdInArn"},
+        "cacheBehavior":{"shape":"CacheBehavior"},
         "runGroupId":{"shape":"RunGroupId"},
         "priority":{"shape":"StartRunRequestPriorityInteger"},
         "parameters":{"shape":"RunParameters"},
@@ -6011,6 +6298,8 @@
         "status":{"shape":"TaskStatus"},
         "name":{"shape":"TaskName"},
         "cpus":{"shape":"TaskListItemCpusInteger"},
+        "cacheHit":{"shape":"Boolean"},
+        "cacheS3Uri":{"shape":"S3UriForBucketOrObject"},
         "memory":{"shape":"TaskListItemMemoryInteger"},
         "creationTime":{"shape":"TaskTimestamp"},
         "startTime":{"shape":"TaskTimestamp"},
@@ -6226,6 +6515,20 @@
         "updateTime":{"shape":"UpdateTime"}
       }
     },
+    "UpdateRunCacheRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "cacheBehavior":{"shape":"CacheBehavior"},
+        "description":{"shape":"UserCustomDescription"},
+        "id":{
+          "shape":"RunCacheId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "name":{"shape":"UserCustomName"}
+      }
+    },
     "UpdateRunGroupRequest":{
       "type":"structure",
       "required":["id"],
@@ -6368,6 +6671,18 @@
       "members":{
         "checksum":{"shape":"String"}
       }
+    },
+    "UserCustomDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "UserCustomName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "ValidationException":{
       "type":"structure",

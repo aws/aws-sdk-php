@@ -530,6 +530,27 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "CreateRule":{
+      "name":"CreateRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/rules",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateRuleInput"},
+      "output":{"shape":"CreateRuleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "CreateSubscriptionGrant":{
       "name":"CreateSubscriptionGrant",
       "http":{
@@ -931,6 +952,26 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRule":{
+      "name":"DeleteRule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/rules/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteRuleInput"},
+      "output":{"shape":"DeleteRuleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ],
@@ -1449,6 +1490,24 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "GetRule":{
+      "name":"GetRule",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/rules/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetRuleInput"},
+      "output":{"shape":"GetRuleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "GetSubscription":{
       "name":"GetSubscription",
       "http":{
@@ -1912,6 +1971,24 @@
       "output":{"shape":"ListProjectsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListRules":{
+      "name":"ListRules",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/list-rules/{targetType}/{targetIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListRulesInput"},
+      "output":{"shape":"ListRulesOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -2569,6 +2646,27 @@
       ],
       "idempotent":true
     },
+    "UpdateRule":{
+      "name":"UpdateRule",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/rules/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateRuleInput"},
+      "output":{"shape":"UpdateRuleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateSubscriptionGrantStatus":{
       "name":"UpdateSubscriptionGrantStatus",
       "http":{
@@ -2758,7 +2856,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataForms":{"shape":"MetadataForms"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},
@@ -3106,6 +3206,10 @@
       "min":1,
       "pattern":"^(?!\\.)[\\w\\.]*\\w$"
     },
+    "AssetTypeIdentifiers":{
+      "type":"list",
+      "member":{"shape":"AssetTypeIdentifier"}
+    },
     "AssetTypeItem":{
       "type":"structure",
       "required":[
@@ -3128,6 +3232,14 @@
         "revision":{"shape":"Revision"},
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "AssetTypesForRule":{
+      "type":"structure",
+      "required":["selectionMode"],
+      "members":{
+        "selectionMode":{"shape":"RuleScopeSelectionMode"},
+        "specificAssetTypes":{"shape":"RuleAssetTypeList"}
       }
     },
     "AssociateEnvironmentRoleInput":{
@@ -4258,6 +4370,61 @@
         "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
+    "CreateRuleInput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "detail",
+        "domainIdentifier",
+        "name",
+        "scope",
+        "target"
+      ],
+      "members":{
+        "action":{"shape":"RuleAction"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"Description"},
+        "detail":{"shape":"RuleDetail"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "name":{"shape":"RuleName"},
+        "scope":{"shape":"RuleScope"},
+        "target":{"shape":"RuleTarget"}
+      }
+    },
+    "CreateRuleOutput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "createdAt",
+        "createdBy",
+        "detail",
+        "identifier",
+        "name",
+        "ruleType",
+        "scope",
+        "target"
+      ],
+      "members":{
+        "action":{"shape":"RuleAction"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "detail":{"shape":"RuleDetail"},
+        "identifier":{"shape":"RuleId"},
+        "name":{"shape":"RuleName"},
+        "ruleType":{"shape":"RuleType"},
+        "scope":{"shape":"RuleScope"},
+        "target":{"shape":"RuleTarget"},
+        "targetType":{"shape":"RuleTargetType"}
+      }
+    },
     "CreateSubscriptionGrantInput":{
       "type":"structure",
       "required":[
@@ -4330,6 +4497,7 @@
           "location":"uri",
           "locationName":"domainIdentifier"
         },
+        "metadataForms":{"shape":"MetadataFormInputs"},
         "requestReason":{"shape":"RequestReason"},
         "subscribedListings":{"shape":"SubscribedListingInputs"},
         "subscribedPrincipals":{"shape":"SubscribedPrincipalInputs"}
@@ -4353,7 +4521,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataForms":{"shape":"MetadataForms"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},
@@ -5273,6 +5443,30 @@
       "members":{
       }
     },
+    "DeleteRuleInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "DeleteRuleOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteSubscriptionGrantInput":{
       "type":"structure",
       "required":[
@@ -5643,6 +5837,14 @@
       "members":{
         "id":{"shape":"DomainUnitId"},
         "name":{"shape":"String"}
+      }
+    },
+    "DomainUnitTarget":{
+      "type":"structure",
+      "required":["domainUnitId"],
+      "members":{
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "includeChildDomainUnits":{"shape":"Boolean"}
       }
     },
     "DomainUnitUserProperties":{
@@ -6037,7 +6239,7 @@
         "content":{"shape":"FormInputContentString"},
         "formName":{"shape":"FormName"},
         "typeIdentifier":{"shape":"FormTypeIdentifier"},
-        "typeRevision":{"shape":"Revision"}
+        "typeRevision":{"shape":"RevisionInput"}
       },
       "sensitive":true
     },
@@ -7104,6 +7306,63 @@
         "projectStatus":{"shape":"ProjectStatus"}
       }
     },
+    "GetRuleInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "revision":{
+          "shape":"Revision",
+          "location":"querystring",
+          "locationName":"revision"
+        }
+      }
+    },
+    "GetRuleOutput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "createdAt",
+        "createdBy",
+        "detail",
+        "identifier",
+        "lastUpdatedBy",
+        "name",
+        "revision",
+        "ruleType",
+        "scope",
+        "target",
+        "updatedAt"
+      ],
+      "members":{
+        "action":{"shape":"RuleAction"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "detail":{"shape":"RuleDetail"},
+        "identifier":{"shape":"RuleId"},
+        "lastUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"RuleName"},
+        "revision":{"shape":"Revision"},
+        "ruleType":{"shape":"RuleType"},
+        "scope":{"shape":"RuleScope"},
+        "target":{"shape":"RuleTarget"},
+        "targetType":{"shape":"RuleTargetType"},
+        "updatedAt":{"shape":"UpdatedAt"}
+      }
+    },
     "GetSubscriptionGrantInput":{
       "type":"structure",
       "required":[
@@ -7235,7 +7494,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataForms":{"shape":"MetadataForms"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},
@@ -8722,6 +8983,85 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListRulesInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "targetIdentifier",
+        "targetType"
+      ],
+      "members":{
+        "action":{
+          "shape":"RuleAction",
+          "location":"querystring",
+          "locationName":"ruleAction"
+        },
+        "assetTypes":{
+          "shape":"AssetTypeIdentifiers",
+          "location":"querystring",
+          "locationName":"assetTypes"
+        },
+        "dataProduct":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"dataProduct"
+        },
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "includeCascaded":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeCascaded"
+        },
+        "maxResults":{
+          "shape":"ListRulesInputMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "projectIds":{
+          "shape":"ProjectIds",
+          "location":"querystring",
+          "locationName":"projectIds"
+        },
+        "ruleType":{
+          "shape":"RuleType",
+          "location":"querystring",
+          "locationName":"ruleType"
+        },
+        "targetIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"targetIdentifier"
+        },
+        "targetType":{
+          "shape":"RuleTargetType",
+          "location":"uri",
+          "locationName":"targetType"
+        }
+      }
+    },
+    "ListRulesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":25
+    },
+    "ListRulesOutput":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"RuleSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListSubscriptionGrantsInput":{
       "type":"structure",
       "required":["domainIdentifier"],
@@ -9158,6 +9498,47 @@
       "min":0,
       "sensitive":true
     },
+    "MetadataFormEnforcementDetail":{
+      "type":"structure",
+      "members":{
+        "requiredMetadataForms":{"shape":"RequiredMetadataFormList"}
+      }
+    },
+    "MetadataFormInputs":{
+      "type":"list",
+      "member":{"shape":"FormInput"}
+    },
+    "MetadataFormReference":{
+      "type":"structure",
+      "required":[
+        "typeIdentifier",
+        "typeRevision"
+      ],
+      "members":{
+        "typeIdentifier":{"shape":"FormTypeIdentifier"},
+        "typeRevision":{"shape":"Revision"}
+      }
+    },
+    "MetadataFormSummary":{
+      "type":"structure",
+      "required":[
+        "typeName",
+        "typeRevision"
+      ],
+      "members":{
+        "formName":{"shape":"FormName"},
+        "typeName":{"shape":"FormTypeName"},
+        "typeRevision":{"shape":"Revision"}
+      }
+    },
+    "MetadataForms":{
+      "type":"list",
+      "member":{"shape":"FormOutput"}
+    },
+    "MetadataFormsSummary":{
+      "type":"list",
+      "member":{"shape":"MetadataFormSummary"}
+    },
     "MetadataGenerationRunIdentifier":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
@@ -9536,6 +9917,10 @@
       "type":"string",
       "pattern":"^[a-zA-Z0-9_-]{1,36}$"
     },
+    "ProjectIds":{
+      "type":"list",
+      "member":{"shape":"ProjectId"}
+    },
     "ProjectMember":{
       "type":"structure",
       "required":[
@@ -9598,6 +9983,14 @@
         "name":{"shape":"ProjectName"},
         "projectStatus":{"shape":"ProjectStatus"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "ProjectsForRule":{
+      "type":"structure",
+      "required":["selectionMode"],
+      "members":{
+        "selectionMode":{"shape":"RuleScopeSelectionMode"},
+        "specificProjects":{"shape":"RuleProjectIdentifierList"}
       }
     },
     "ProvisioningConfiguration":{
@@ -9894,7 +10287,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataForms":{"shape":"MetadataForms"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},
@@ -10019,6 +10414,12 @@
       "min":1,
       "sensitive":true
     },
+    "RequiredMetadataFormList":{
+      "type":"list",
+      "member":{"shape":"MetadataFormReference"},
+      "max":5,
+      "min":1
+    },
     "Resource":{
       "type":"structure",
       "required":[
@@ -10052,6 +10453,12 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "RevisionInput":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_-]+$"
     },
     "RevokeSubscriptionInput":{
       "type":"structure",
@@ -10141,6 +10548,87 @@
     "RowFilterList":{
       "type":"list",
       "member":{"shape":"RowFilter"}
+    },
+    "RuleAction":{
+      "type":"string",
+      "enum":["CREATE_SUBSCRIPTION_REQUEST"]
+    },
+    "RuleAssetTypeList":{
+      "type":"list",
+      "member":{"shape":"AssetTypeIdentifier"},
+      "min":1
+    },
+    "RuleDetail":{
+      "type":"structure",
+      "members":{
+        "metadataFormEnforcementDetail":{"shape":"MetadataFormEnforcementDetail"}
+      },
+      "union":true
+    },
+    "RuleId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "RuleName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\w -]+$",
+      "sensitive":true
+    },
+    "RuleProjectIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ProjectId"},
+      "min":1
+    },
+    "RuleScope":{
+      "type":"structure",
+      "members":{
+        "assetType":{"shape":"AssetTypesForRule"},
+        "dataProduct":{"shape":"Boolean"},
+        "project":{"shape":"ProjectsForRule"}
+      }
+    },
+    "RuleScopeSelectionMode":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "SPECIFIC"
+      ]
+    },
+    "RuleSummaries":{
+      "type":"list",
+      "member":{"shape":"RuleSummary"}
+    },
+    "RuleSummary":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"RuleAction"},
+        "identifier":{"shape":"RuleId"},
+        "lastUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"RuleName"},
+        "revision":{"shape":"Revision"},
+        "ruleType":{"shape":"RuleType"},
+        "scope":{"shape":"RuleScope"},
+        "target":{"shape":"RuleTarget"},
+        "targetType":{"shape":"RuleTargetType"},
+        "updatedAt":{"shape":"UpdatedAt"}
+      }
+    },
+    "RuleTarget":{
+      "type":"structure",
+      "members":{
+        "domainUnitTarget":{"shape":"DomainUnitTarget"}
+      },
+      "union":true
+    },
+    "RuleTargetType":{
+      "type":"string",
+      "enum":["DOMAIN_UNIT"]
+    },
+    "RuleType":{
+      "type":"string",
+      "enum":["METADATA_FORM_ENFORCEMENT"]
     },
     "RunStatisticsForAssets":{
       "type":"structure",
@@ -10798,7 +11286,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataFormsSummary":{"shape":"MetadataFormsSummary"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},
@@ -11756,6 +12246,62 @@
         "projectStatus":{"shape":"ProjectStatus"}
       }
     },
+    "UpdateRuleInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "description":{"shape":"Description"},
+        "detail":{"shape":"RuleDetail"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"RuleId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "includeChildDomainUnits":{"shape":"Boolean"},
+        "name":{"shape":"RuleName"},
+        "scope":{"shape":"RuleScope"}
+      }
+    },
+    "UpdateRuleOutput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "createdAt",
+        "createdBy",
+        "detail",
+        "identifier",
+        "lastUpdatedBy",
+        "name",
+        "revision",
+        "ruleType",
+        "scope",
+        "target",
+        "updatedAt"
+      ],
+      "members":{
+        "action":{"shape":"RuleAction"},
+        "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "detail":{"shape":"RuleDetail"},
+        "identifier":{"shape":"RuleId"},
+        "lastUpdatedBy":{"shape":"UpdatedBy"},
+        "name":{"shape":"RuleName"},
+        "revision":{"shape":"Revision"},
+        "ruleType":{"shape":"RuleType"},
+        "scope":{"shape":"RuleScope"},
+        "target":{"shape":"RuleTarget"},
+        "updatedAt":{"shape":"UpdatedAt"}
+      }
+    },
     "UpdateSubscriptionGrantStatusInput":{
       "type":"structure",
       "required":[
@@ -11854,7 +12400,9 @@
         "createdBy":{"shape":"CreatedBy"},
         "decisionComment":{"shape":"DecisionComment"},
         "domainId":{"shape":"DomainId"},
+        "existingSubscriptionId":{"shape":"SubscriptionId"},
         "id":{"shape":"SubscriptionRequestId"},
+        "metadataForms":{"shape":"MetadataForms"},
         "requestReason":{"shape":"RequestReason"},
         "reviewerId":{"shape":"String"},
         "status":{"shape":"SubscriptionRequestStatus"},

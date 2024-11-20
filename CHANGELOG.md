@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for psr/simple-cache v2 and v3
+* `Aws\WorkSpacesWeb` - Added data protection settings with support for inline data redaction.
+* `Aws\DataZone` - This release supports Metadata Enforcement Rule feature for Create Subscription Request action.
+* `Aws\Omics` - Enabling call caching feature that allows customers to reuse previously computed results from a set of completed tasks in a new workflow run.
+* `Aws\TimestreamQuery` - This release adds support for Provisioning Timestream Compute Units (TCUs), a new feature that allows provisioning dedicated compute resources for your queries, providing predictable and cost-effective query performance.
+* `Aws\Lambda` - Add Node 22.x (node22.x) support to AWS Lambda
+* `Aws\WorkSpaces` - Added support for Rocky Linux 8 on Amazon WorkSpaces Personal.
+* `Aws\RDS` - This release adds support for scale storage on the DB instance using a Blue/Green Deployment.
+* `Aws\ElasticLoadBalancingv2` - This release adds support for configuring Load balancer Capacity Unit reservations
+* `Aws\RecycleBin` - This release adds support for exclusion tags for Recycle Bin, which allows you to identify resources that are to be excluded, or ignored, by a Region-level retention rule.
+* `Aws\CostOptimizationHub` - This release adds action type "Delete" to the GetRecommendation, ListRecommendations and ListRecommendationSummaries APIs to support new EBS and ECS recommendations with action type "Delete".
+* `Aws\ApplicationDiscoveryService` - Add support to import data from commercially available discovery tools without file manipulation.
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate optimization recommendations for Amazon Aurora database instances. It also enables Compute Optimizer to identify idle Amazon EC2 instances, Amazon EBS volumes, Amazon ECS services running on Fargate, and Amazon RDS databases.
+* `Aws\BedrockAgentRuntime` - Releasing new Prompt Optimization to enhance your prompts for improved performance
+* `Aws\ECS` - This release adds support for the Availability Zone rebalancing feature on Amazon ECS.
+* `Aws\EC2` - With this release, customers can express their desire to launch instances only in an ODCR or ODCR group rather than OnDemand capacity. Customers can express their baseline instances' CPU-performance in attribute-based Instance Requirements configuration by referencing an instance family.
+* `Aws\AutoScaling` - With this release, customers can prioritize launching instances into ODCRs using targets from ASGs or Launch Templates. Customers can express their baseline instances' CPU-performance in attribute-based Instance Requirements configuration by referencing an instance family that meets their needs.
+* `Aws\ControlTower` - Adds support for child enabled baselines which allow you to see the enabled baseline status for individual accounts.
+* `Aws\MediaConvert` - This release adds the ability to reconfigure concurrent job settings for existing queues and create queues with custom concurrent job settings.
+* `Aws\CloudFront` - Add support for gRPC, VPC origins, and Anycast IP Lists. Allow LoggingConfig IncludeCookies to be set regardless of whether the LoggingConfig is enabled.
+* `Aws\MediaPackageV2` - MediaPackage v2 now supports the Media Quality Confidence Score (MQCS) published from MediaLive. Customers can control input switching based on the MQCS and publishing HTTP Headers for the MQCS via the API.
+
 ## 3.328.2 - 2024-11-19
 
 * `Aws\` - Adds opt-in header for query-compatible services

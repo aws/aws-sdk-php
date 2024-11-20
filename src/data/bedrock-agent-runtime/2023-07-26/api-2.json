@@ -99,6 +99,24 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "OptimizePrompt":{
+      "name":"OptimizePrompt",
+      "http":{
+        "method":"POST",
+        "requestUri":"/optimize-prompt",
+        "responseCode":200
+      },
+      "input":{"shape":"OptimizePromptRequest"},
+      "output":{"shape":"OptimizePromptResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "Retrieve":{
       "name":"Retrieve",
       "http":{
@@ -222,6 +240,14 @@
       "max":5,
       "min":1,
       "pattern":"^(DRAFT|[0-9]{0,4}[1-9][0-9]{0,4})$"
+    },
+    "AnalyzePromptEvent":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "event":true,
+      "sensitive":true
     },
     "ApiContentMap":{
       "type":"map",
@@ -1201,6 +1227,13 @@
       "type":"list",
       "member":{"shape":"InputFile"}
     },
+    "InputPrompt":{
+      "type":"structure",
+      "members":{
+        "textPrompt":{"shape":"TextPrompt"}
+      },
+      "union":true
+    },
     "InputText":{
       "type":"string",
       "max":25000000,
@@ -1577,6 +1610,60 @@
         "type":{"shape":"Type"}
       },
       "sensitive":true
+    },
+    "OptimizePromptRequest":{
+      "type":"structure",
+      "required":[
+        "input",
+        "targetModelId"
+      ],
+      "members":{
+        "input":{"shape":"InputPrompt"},
+        "targetModelId":{"shape":"OptimizePromptRequestTargetModelIdString"}
+      }
+    },
+    "OptimizePromptRequestTargetModelIdString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)$"
+    },
+    "OptimizePromptResponse":{
+      "type":"structure",
+      "required":["optimizedPrompt"],
+      "members":{
+        "optimizedPrompt":{"shape":"OptimizedPromptStream"}
+      },
+      "payload":"optimizedPrompt"
+    },
+    "OptimizedPrompt":{
+      "type":"structure",
+      "members":{
+        "textPrompt":{"shape":"TextPrompt"}
+      },
+      "union":true
+    },
+    "OptimizedPromptEvent":{
+      "type":"structure",
+      "members":{
+        "optimizedPrompt":{"shape":"OptimizedPrompt"}
+      },
+      "event":true,
+      "sensitive":true
+    },
+    "OptimizedPromptStream":{
+      "type":"structure",
+      "members":{
+        "accessDeniedException":{"shape":"AccessDeniedException"},
+        "analyzePromptEvent":{"shape":"AnalyzePromptEvent"},
+        "badGatewayException":{"shape":"BadGatewayException"},
+        "dependencyFailedException":{"shape":"DependencyFailedException"},
+        "internalServerException":{"shape":"InternalServerException"},
+        "optimizedPromptEvent":{"shape":"OptimizedPromptEvent"},
+        "throttlingException":{"shape":"ThrottlingException"},
+        "validationException":{"shape":"ValidationException"}
+      },
+      "eventstream":true
     },
     "OrchestrationConfiguration":{
       "type":"structure",
@@ -2174,11 +2261,24 @@
         "topP":{"shape":"TopP"}
       }
     },
+    "TextPrompt":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"TextPromptTextString"}
+      },
+      "sensitive":true
+    },
     "TextPromptTemplate":{
       "type":"string",
       "max":4000,
       "min":1,
       "sensitive":true
+    },
+    "TextPromptTextString":{
+      "type":"string",
+      "max":200000,
+      "min":1
     },
     "TextResponsePart":{
       "type":"structure",

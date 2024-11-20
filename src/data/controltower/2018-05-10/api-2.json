@@ -574,6 +574,10 @@
       "type":"list",
       "member":{"shape":"BaselineSummary"}
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -831,6 +835,7 @@
         "baselineIdentifier":{"shape":"String"},
         "baselineVersion":{"shape":"String"},
         "parameters":{"shape":"EnabledBaselineParameterSummaries"},
+        "parentIdentifier":{"shape":"Arn"},
         "statusSummary":{"shape":"EnablementStatusSummary"},
         "targetIdentifier":{"shape":"String"}
       }
@@ -839,6 +844,7 @@
       "type":"structure",
       "members":{
         "baselineIdentifiers":{"shape":"EnabledBaselineBaselineIdentifiers"},
+        "parentIdentifiers":{"shape":"EnabledBaselineParentIdentifiers"},
         "targetIdentifiers":{"shape":"EnabledBaselineTargetIdentifiers"}
       }
     },
@@ -878,6 +884,12 @@
       "type":"list",
       "member":{"shape":"EnabledBaselineParameter"}
     },
+    "EnabledBaselineParentIdentifiers":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":5,
+      "min":1
+    },
     "EnabledBaselineSummary":{
       "type":"structure",
       "required":[
@@ -890,6 +902,7 @@
         "arn":{"shape":"Arn"},
         "baselineIdentifier":{"shape":"String"},
         "baselineVersion":{"shape":"String"},
+        "parentIdentifier":{"shape":"Arn"},
         "statusSummary":{"shape":"EnablementStatusSummary"},
         "targetIdentifier":{"shape":"String"}
       }
@@ -1270,6 +1283,7 @@
       "type":"structure",
       "members":{
         "filter":{"shape":"EnabledBaselineFilter"},
+        "includeChildren":{"shape":"Boolean"},
         "maxResults":{"shape":"ListEnabledBaselinesMaxResults"},
         "nextToken":{"shape":"ListEnabledBaselinesNextToken"}
       }

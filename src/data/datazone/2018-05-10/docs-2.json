@@ -28,6 +28,7 @@
     "CreateListingChangeSet": "<p>Publishes a listing (a record of an asset at a given time) or removes a listing from the catalog. </p>",
     "CreateProject": "<p>Creates an Amazon DataZone project.</p>",
     "CreateProjectMembership": "<p>Creates a project membership in Amazon DataZone.</p>",
+    "CreateRule": "<p>Creates a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "CreateSubscriptionGrant": "<p>Creates a subsscription grant in Amazon DataZone.</p>",
     "CreateSubscriptionRequest": "<p>Creates a subscription request in Amazon DataZone.</p>",
     "CreateSubscriptionTarget": "<p>Creates a subscription target in Amazon DataZone.</p>",
@@ -49,6 +50,7 @@
     "DeleteListing": "<p>Deletes a listing (a record of an asset at a given time).</p>",
     "DeleteProject": "<p>Deletes a project in Amazon DataZone. </p>",
     "DeleteProjectMembership": "<p>Deletes project membership in Amazon DataZone.</p>",
+    "DeleteRule": "<p>Deletes a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "DeleteSubscriptionGrant": "<p>Deletes and subscription grant in Amazon DataZone.</p>",
     "DeleteSubscriptionRequest": "<p>Deletes a subscription request in Amazon DataZone.</p>",
     "DeleteSubscriptionTarget": "<p>Deletes a subscription target in Amazon DataZone.</p>",
@@ -77,6 +79,7 @@
     "GetListing": "<p>Gets a listing (a record of an asset at a given time). If you specify a listing version, only details that are specific to that version are returned.</p>",
     "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
+    "GetRule": "<p>Gets the details of a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "GetSubscription": "<p>Gets a subscription in Amazon DataZone.</p>",
     "GetSubscriptionGrant": "<p>Gets the subscription grant in Amazon DataZone.</p>",
     "GetSubscriptionRequestDetails": "<p>Gets the details of the specified subscription request.</p>",
@@ -103,6 +106,7 @@
     "ListPolicyGrants": "<p>Lists policy grants.</p>",
     "ListProjectMemberships": "<p>Lists all members of the specified project.</p>",
     "ListProjects": "<p>Lists Amazon DataZone projects.</p>",
+    "ListRules": "<p>Lists existing rules. In Amazon DataZone, a rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "ListSubscriptionGrants": "<p>Lists subscription grants.</p>",
     "ListSubscriptionRequests": "<p>Lists Amazon DataZone subscription requests.</p>",
     "ListSubscriptionTargets": "<p>Lists subscription targets in Amazon DataZone.</p>",
@@ -137,6 +141,7 @@
     "UpdateGlossaryTerm": "<p>Updates a business glossary term in Amazon DataZone.</p>",
     "UpdateGroupProfile": "<p>Updates the specified group profile in Amazon DataZone.</p>",
     "UpdateProject": "<p>Updates the specified project in Amazon DataZone.</p>",
+    "UpdateRule": "<p>Updates a rule. In Amazon DataZone, a rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
     "UpdateSubscriptionGrantStatus": "<p>Updates the status of the specified subscription grant status in Amazon DataZone.</p>",
     "UpdateSubscriptionRequest": "<p>Updates a specified subscription request in Amazon DataZone.</p>",
     "UpdateSubscriptionTarget": "<p>Updates the specified subscription target in Amazon DataZone.</p>",
@@ -442,18 +447,32 @@
       "base": null,
       "refs": {
         "AssetItem$typeIdentifier": "<p>The identifier of the asset type of the specified Amazon DataZone inventory asset.</p>",
+        "AssetTypeIdentifiers$member": null,
         "CreateAssetInput$typeIdentifier": "<p>The unique identifier of this asset's type.</p>",
         "CreateAssetOutput$typeIdentifier": "<p>The identifier of the created asset type.</p>",
         "CreateAssetRevisionOutput$typeIdentifier": "<p>The identifier of the revision type.</p>",
         "DeleteAssetTypeInput$identifier": "<p>The identifier of the asset type that is deleted.</p>",
         "GetAssetOutput$typeIdentifier": "<p>The ID of the asset type.</p>",
-        "GetAssetTypeInput$identifier": "<p>The ID of the asset type.</p>"
+        "GetAssetTypeInput$identifier": "<p>The ID of the asset type.</p>",
+        "RuleAssetTypeList$member": null
+      }
+    },
+    "AssetTypeIdentifiers": {
+      "base": null,
+      "refs": {
+        "ListRulesInput$assetTypes": "<p>The asset types of the rule.</p>"
       }
     },
     "AssetTypeItem": {
       "base": "<p>The details of the asset type.</p>",
       "refs": {
         "SearchTypesResultItem$assetTypeItem": "<p>The asset type included in the results of the <code>SearchTypes</code> action.</p>"
+      }
+    },
+    "AssetTypesForRule": {
+      "base": "<p>The asset type for the rule details.</p>",
+      "refs": {
+        "RuleScope$assetType": "<p>The asset type included in the rule scope.</p>"
       }
     },
     "AssociateEnvironmentRoleInput": {
@@ -559,6 +578,7 @@
         "DeleteProjectInput$skipDeletionCheck": "<p>Specifies the optional flag to delete all child entities within the project.</p>",
         "Deployment$isDeploymentComplete": "<p>Specifies whether the last deployment of the environment is complete.</p>",
         "DomainUnitFilterForProject$includeChildDomainUnits": "<p>Specifies whether to include child domain units.</p>",
+        "DomainUnitTarget$includeChildDomainUnits": "<p>Specifies whether to apply a rule to the child domain units.</p>",
         "FormEntryInput$required": "<p>Specifies whether a form entry is required.</p>",
         "FormEntryOutput$required": "<p>Specifies whether a form entry is required.</p>",
         "GetDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
@@ -566,18 +586,22 @@
         "GlueRunConfigurationInput$autoImportDataQualityResult": "<p>Specifies whether to automatically import data quality metrics as part of the data source run.</p>",
         "GlueRunConfigurationOutput$autoImportDataQualityResult": "<p>Specifies whether to automatically import data quality metrics as part of the data source run.</p>",
         "ListEnvironmentBlueprintsInput$managed": "<p>Specifies whether the environment blueprint is managed by Amazon DataZone.</p>",
+        "ListRulesInput$dataProduct": "<p>The data product of the rule.</p>",
+        "ListRulesInput$includeCascaded": "<p>Specifies whether to include cascading rules in the results.</p>",
         "OverrideDomainUnitOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "OverrideProjectOwnersPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy is inherited by child domain units.</p>",
         "RecommendationConfiguration$enableBusinessNameGeneration": "<p>Specifies whether automatic business name generation is to be enabled or not as part of the recommendation configuration.</p>",
         "RevokeSubscriptionInput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
         "RevokeSubscriptionOutput$retainPermissions": "<p>Specifies whether permissions are retained when the subscription is revoked.</p>",
         "RowFilterConfiguration$sensitive": "<p>Specifies whether the row filter is sensitive.</p>",
+        "RuleScope$dataProduct": "<p>The data product included in the rule scope.</p>",
         "SearchTypesInput$managed": "<p>Specifies whether the search is managed.</p>",
         "SubscriptionSummary$retainPermissions": "<p>The retain permissions included in the subscription.</p>",
         "UpdateDataSourceInput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "UpdateDataSourceOutput$publishOnImport": "<p>The publish on import setting to be updated as part of the <code>UpdateDataSource</code> action.</p>",
-        "UpdateDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>"
+        "UpdateDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
+        "UpdateRuleInput$includeChildDomainUnits": "<p>Specifies whether to update this rule in the child domain units.</p>"
       }
     },
     "BusinessNameGenerationConfiguration": {
@@ -626,6 +650,7 @@
         "CreateGlossaryInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateGlossaryTermInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "CreateListingChangeSetInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
+        "CreateRuleInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "DeleteTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This field is automatically populated if not provided.</p>",
         "PostLineageEventInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
         "PostTimeSeriesDataPointsInput$clientToken": "<p>A unique, case-sensitive identifier that is provided to ensure the idempotency of the request.</p>",
@@ -913,6 +938,16 @@
         "PolicyGrantDetail$createProject": "<p>Specifies that this is a create project policy.</p>"
       }
     },
+    "CreateRuleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRuleOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateSubscriptionGrantInput": {
       "base": null,
       "refs": {
@@ -988,6 +1023,7 @@
         "CreateDataProductRevisionOutput$createdAt": "<p>The timestamp at which the data product revision is created.</p>",
         "CreateDataProductRevisionOutput$firstRevisionCreatedAt": "<p>The timestamp at which the first revision of the data product is created.</p>",
         "CreateDomainUnitOutput$createdAt": "<p>The timestamp at which the domain unit was created.</p>",
+        "CreateRuleOutput$createdAt": "<p>The timestamp at which the rule is created.</p>",
         "CreateSubscriptionGrantOutput$createdAt": "<p>A timestamp of when the subscription grant is created.</p>",
         "CreateSubscriptionRequestOutput$createdAt": "<p>A timestamp of when the subscription request is created.</p>",
         "CreateSubscriptionTargetOutput$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
@@ -1013,6 +1049,7 @@
         "GetLineageNodeOutput$createdAt": "<p>The timestamp at which the data lineage node was created.</p>",
         "GetListingOutput$createdAt": "<p>The timestamp of when the listing was created.</p>",
         "GetMetadataGenerationRunOutput$createdAt": "<p>The timestamp of when the metadata generation run was start.</p>",
+        "GetRuleOutput$createdAt": "<p>The timestamp at which the rule was created.</p>",
         "GetSubscriptionGrantOutput$createdAt": "<p>The timestamp of when the subscription grant is created.</p>",
         "GetSubscriptionOutput$createdAt": "<p>The timestamp of when the subscription was created.</p>",
         "GetSubscriptionRequestDetailsOutput$createdAt": "<p>The timestamp of when the specified subscription request was created.</p>",
@@ -1032,6 +1069,7 @@
         "SubscriptionTargetSummary$createdAt": "<p>The timestamp of when the subscription target was created.</p>",
         "UpdateAssetFilterOutput$createdAt": "<p>The timestamp at which the asset filter was created.</p>",
         "UpdateDomainUnitOutput$createdAt": "<p>The time stamp at which the domain unit that you want to update was created.</p>",
+        "UpdateRuleOutput$createdAt": "<p>The timestamp at which the rule was created.</p>",
         "UpdateSubscriptionGrantStatusOutput$createdAt": "<p>The timestamp of when the subscription grant status was created.</p>",
         "UpdateSubscriptionRequestOutput$createdAt": "<p>The timestamp of when the subscription request was created.</p>",
         "UpdateSubscriptionTargetOutput$createdAt": "<p>The timestamp of when a subscription target was created.</p>"
@@ -1058,6 +1096,7 @@
         "CreateDataProductRevisionOutput$firstRevisionCreatedBy": "<p>The user who created the first revision of the data product.</p>",
         "CreateDomainUnitOutput$createdBy": "<p>The user who created the domain unit.</p>",
         "CreateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
+        "CreateRuleOutput$createdBy": "<p>The user who creates the rule.</p>",
         "CreateSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "CreateSubscriptionTargetOutput$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
@@ -1080,6 +1119,7 @@
         "GetListingOutput$createdBy": "<p>The Amazon DataZone user who created the listing.</p>",
         "GetMetadataGenerationRunOutput$createdBy": "<p>The Amazon DataZone user who started the metadata generation run.</p>",
         "GetProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
+        "GetRuleOutput$createdBy": "<p>The user who created the rule.</p>",
         "GetSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant.</p>",
         "GetSubscriptionOutput$createdBy": "<p>The Amazon DataZone user who created the subscription.</p>",
         "GetSubscriptionRequestDetailsOutput$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
@@ -1100,6 +1140,7 @@
         "SubscriptionTargetSummary$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
         "UpdateDomainUnitOutput$createdBy": "<p>The user who created the domain unit that you want to update.</p>",
         "UpdateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
+        "UpdateRuleOutput$createdBy": "<p>The user who created the rule.</p>",
         "UpdateSubscriptionGrantStatusOutput$createdBy": "<p>The Amazon DataZone domain user who created the subscription grant status.</p>",
         "UpdateSubscriptionRequestOutput$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "UpdateSubscriptionTargetOutput$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>"
@@ -1608,6 +1649,16 @@
       "refs": {
       }
     },
+    "DeleteRuleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRuleOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteSubscriptionGrantInput": {
       "base": null,
       "refs": {
@@ -1715,6 +1766,8 @@
         "CreateFormTypeOutput$description": "<p>The description of this Amazon DataZone metadata form type.</p>",
         "CreateProjectInput$description": "<p>The description of the Amazon DataZone project.</p>",
         "CreateProjectOutput$description": "<p>The description of the project.</p>",
+        "CreateRuleInput$description": "<p>The description of the rule.</p>",
+        "CreateRuleOutput$description": "<p>The description of the rule.</p>",
         "CustomParameter$description": "<p>The description of the parameter.</p>",
         "DataProductListingItem$description": "<p>The description of the asset of the asset of the data product. </p>",
         "DataSourceRunActivity$technicalDescription": "<p>The technical description included in the data source run activity.</p>",
@@ -1733,6 +1786,7 @@
         "GetFormTypeOutput$description": "<p>The description of the metadata form type.</p>",
         "GetListingOutput$description": "<p>The description of the listing.</p>",
         "GetProjectOutput$description": "<p>The description of the project.</p>",
+        "GetRuleOutput$description": "<p>The description of the rule.</p>",
         "ProjectSummary$description": "<p>The description of a project.</p>",
         "SubscribedListing$description": "<p>The description of the published asset for which the subscription grant is created.</p>",
         "UpdateAssetFilterInput$description": "<p>The description of the asset filter.</p>",
@@ -1742,7 +1796,9 @@
         "UpdateEnvironmentOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentProfileOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
         "UpdateProjectInput$description": "<p>The description to be updated as part of the <code>UpdateProject</code> action.</p>",
-        "UpdateProjectOutput$description": "<p>The description of the project that is to be updated.</p>"
+        "UpdateProjectOutput$description": "<p>The description of the project that is to be updated.</p>",
+        "UpdateRuleInput$description": "<p>The description of the rule.</p>",
+        "UpdateRuleOutput$description": "<p>The description of the rule.</p>"
       }
     },
     "DetailedGlossaryTerm": {
@@ -1835,6 +1891,7 @@
         "CreateProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which this project is created.</p>",
         "CreateProjectMembershipInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which project membership is created.</p>",
         "CreateProjectOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the project was created.</p>",
+        "CreateRuleInput$domainIdentifier": "<p>The ID of the domain where the rule is created.</p>",
         "CreateSubscriptionGrantInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription grant is created.</p>",
         "CreateSubscriptionGrantOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the subscription grant is created.</p>",
         "CreateSubscriptionRequestInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription request is created.</p>",
@@ -1864,6 +1921,7 @@
         "DeleteListingInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain.</p>",
         "DeleteProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project is deleted.</p>",
         "DeleteProjectMembershipInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where project membership is deleted.</p>",
+        "DeleteRuleInput$domainIdentifier": "<p>The ID of the domain that where the rule is to be deleted.</p>",
         "DeleteSubscriptionGrantInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where the subscription grant is deleted.</p>",
         "DeleteSubscriptionGrantOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the subscription grant is deleted.</p>",
         "DeleteSubscriptionRequestInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription request is deleted.</p>",
@@ -1922,6 +1980,7 @@
         "GetMetadataGenerationRunOutput$domainId": "<p>The ID of the Amazon DataZone domain the metadata generation run of which you want to get.</p>",
         "GetProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
         "GetProjectOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the project exists.</p>",
+        "GetRuleInput$domainIdentifier": "<p>The ID of the domain where the <code>GetRule</code> action is to be invoked.</p>",
         "GetSubscriptionGrantInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription grant exists.</p>",
         "GetSubscriptionGrantOutput$domainId": "<p>The ID of the Amazon DataZone domain in which the subscription grant exists.</p>",
         "GetSubscriptionInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription exists.</p>",
@@ -1958,6 +2017,7 @@
         "ListPolicyGrantsInput$domainIdentifier": "<p>The ID of the domain where you want to list policy grants.</p>",
         "ListProjectMembershipsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which you want to list project memberships.</p>",
         "ListProjectsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
+        "ListRulesInput$domainIdentifier": "<p>The ID of the domain in which the rules are to be listed.</p>",
         "ListSubscriptionGrantsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListSubscriptionRequestsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain.</p>",
         "ListSubscriptionTargetsInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain where you want to list subscription targets.</p>",
@@ -2014,6 +2074,7 @@
         "UpdateGroupProfileOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a group profile is updated.</p>",
         "UpdateProjectInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain where a project is being updated.</p>",
         "UpdateProjectOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a project is updated.</p>",
+        "UpdateRuleInput$domainIdentifier": "<p>The ID of the domain in which a rule is to be updated.</p>",
         "UpdateSubscriptionGrantStatusInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a subscription grant status is to be updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription grant status is to be updated.</p>",
         "UpdateSubscriptionRequestInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which a subscription request is to be updated.</p>",
@@ -2102,6 +2163,7 @@
         "DomainUnitIds$member": null,
         "DomainUnitPolicyGrantPrincipal$domainUnitIdentifier": "<p>The ID of the domain unit.</p>",
         "DomainUnitSummary$id": "<p>The ID of the domain unit summary.</p>",
+        "DomainUnitTarget$domainUnitId": "<p>The ID of the domain unit.</p>",
         "GetDomainOutput$rootDomainUnitId": "<p>The ID of the root domain in Amazon Datazone.</p>",
         "GetDomainUnitInput$identifier": "<p>The identifier of the domain unit that you want to get.</p>",
         "GetDomainUnitOutput$id": "<p>The ID of the domain unit.</p>",
@@ -2162,6 +2224,12 @@
       "base": "<p>The summary of the domain unit.</p>",
       "refs": {
         "DomainUnitSummaries$member": null
+      }
+    },
+    "DomainUnitTarget": {
+      "base": "<p>The target for the domain unit.</p>",
+      "refs": {
+        "RuleTarget$domainUnitTarget": "<p>The ID of the domain unit.</p>"
       }
     },
     "DomainUnitUserProperties": {
@@ -2610,7 +2678,8 @@
     "FormInput": {
       "base": "<p>The details of a metadata form.</p>",
       "refs": {
-        "FormInputList$member": null
+        "FormInputList$member": null,
+        "MetadataFormInputs$member": null
       }
     },
     "FormInputContentString": {
@@ -2637,13 +2706,15 @@
         "FormOutput$formName": "<p>The name of the metadata form.</p>",
         "FormsInputMap$key": null,
         "FormsOutputMap$key": null,
+        "MetadataFormSummary$formName": "<p>The form name of the metadata form.</p>",
         "SubscriptionTargetForm$formName": "<p>The form name included in the subscription target configuration.</p>"
       }
     },
     "FormOutput": {
       "base": "<p>The details of a metadata form.</p>",
       "refs": {
-        "FormOutputList$member": null
+        "FormOutputList$member": null,
+        "MetadataForms$member": null
       }
     },
     "FormOutputList": {
@@ -2680,6 +2751,7 @@
         "FormEntryInput$typeIdentifier": "<p>The type ID of the form entry.</p>",
         "FormInput$typeIdentifier": "<p>The ID of the metadata form type.</p>",
         "GetFormTypeInput$formTypeIdentifier": "<p>The ID of the metadata form type.</p>",
+        "MetadataFormReference$typeIdentifier": "<p>The type ID of the metadata form reference.</p>",
         "TimeSeriesDataPointFormInput$typeIdentifier": "<p>The ID of the type of the time series data points form.</p>",
         "TimeSeriesDataPointFormOutput$typeIdentifier": "<p>The ID of the type of the time series data points form.</p>",
         "TimeSeriesDataPointSummaryFormOutput$typeIdentifier": "<p>The type ID of the time series data points summary form.</p>"
@@ -2694,7 +2766,8 @@
         "FormOutput$typeName": "<p>The name of the metadata form type.</p>",
         "FormTypeData$name": "<p>The name of the form type.</p>",
         "GetFormTypeOutput$name": "<p>The name of the metadata form type.</p>",
-        "Import$name": "<p>The name of the import.</p>"
+        "Import$name": "<p>The name of the import.</p>",
+        "MetadataFormSummary$typeName": "<p>The type name of the metadata form.</p>"
       }
     },
     "FormTypeStatus": {
@@ -2956,6 +3029,16 @@
       }
     },
     "GetProjectOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRuleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRuleOutput": {
       "base": null,
       "refs": {
       }
@@ -3673,6 +3756,22 @@
       "refs": {
       }
     },
+    "ListRulesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListRulesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRulesInput$maxResults": "<p>The maximum number of rules to return in a single call to <code>ListRules</code>. When the number of rules to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListRules</code> to list the next set of rules.</p>"
+      }
+    },
+    "ListRulesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListSubscriptionGrantsInput": {
       "base": null,
       "refs": {
@@ -3887,6 +3986,46 @@
       "base": null,
       "refs": {
         "NotificationOutput$message": "<p>The message included in the notification.</p>"
+      }
+    },
+    "MetadataFormEnforcementDetail": {
+      "base": "<p>The enforcement details of a metadata form.</p>",
+      "refs": {
+        "RuleDetail$metadataFormEnforcementDetail": "<p>The enforcement detail of the metadata form.</p>"
+      }
+    },
+    "MetadataFormInputs": {
+      "base": null,
+      "refs": {
+        "CreateSubscriptionRequestInput$metadataForms": "<p>The metadata form included in the subscription request.</p>"
+      }
+    },
+    "MetadataFormReference": {
+      "base": "<p>The reference of a metadata form.</p>",
+      "refs": {
+        "RequiredMetadataFormList$member": null
+      }
+    },
+    "MetadataFormSummary": {
+      "base": "<p>The summary of the metadata form.</p>",
+      "refs": {
+        "MetadataFormsSummary$member": null
+      }
+    },
+    "MetadataForms": {
+      "base": null,
+      "refs": {
+        "AcceptSubscriptionRequestOutput$metadataForms": "<p>The metadata form in the subscription request.</p>",
+        "CreateSubscriptionRequestOutput$metadataForms": "<p>The metadata form included in the subscription request.</p>",
+        "GetSubscriptionRequestDetailsOutput$metadataForms": "<p>The metadata forms included in the subscription request.</p>",
+        "RejectSubscriptionRequestOutput$metadataForms": "<p>Metadata forms included in the subscription request.</p>",
+        "UpdateSubscriptionRequestOutput$metadataForms": "<p>Metadata forms included in the subscription request.</p>"
+      }
+    },
+    "MetadataFormsSummary": {
+      "base": null,
+      "refs": {
+        "SubscriptionRequestSummary$metadataFormsSummary": "<p>The summary of the metadata forms.</p>"
       }
     },
     "MetadataGenerationRunIdentifier": {
@@ -4126,6 +4265,8 @@
         "ListProjectMembershipsOutput$nextToken": "<p>When the number of memberships is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of memberships, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListProjectMemberships</code> to list the next set of memberships.</p>",
         "ListProjectsInput$nextToken": "<p>When the number of projects is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of projects, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListProjects</code> to list the next set of projects.</p>",
         "ListProjectsOutput$nextToken": "<p>When the number of projects is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of projects, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListProjects</code> to list the next set of projects.</p>",
+        "ListRulesInput$nextToken": "<p>When the number of rules is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of rules, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListRules</code> to list the next set of rules.</p>",
+        "ListRulesOutput$nextToken": "<p>When the number of rules is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of rules, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListRules</code> to list the next set of rules.</p>",
         "ListSubscriptionGrantsInput$nextToken": "<p>When the number of subscription grants is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of subscription grants, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListSubscriptionGrants</code> to list the next set of subscription grants.</p>",
         "ListSubscriptionGrantsOutput$nextToken": "<p>When the number of subscription grants is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of subscription grants, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListSubscriptionGrants</code> to list the next set of subscription grants.</p>",
         "ListSubscriptionRequestsInput$nextToken": "<p>When the number of subscription requests is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of subscription requests, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListSubscriptionRequests</code> to list the next set of subscription requests.</p>",
@@ -4295,8 +4436,10 @@
         "ListSubscriptionsInput$approverProjectId": "<p>The identifier of the project for the subscription's approver.</p>",
         "ListSubscriptionsInput$owningProjectId": "<p>The identifier of the owning project.</p>",
         "MetadataGenerationRunItem$owningProjectId": "<p>The ID of the project that owns the asset for which the metadata generation was ran.</p>",
+        "ProjectIds$member": null,
         "ProjectPolicyGrantPrincipal$projectIdentifier": "<p>The project ID of the project policy grant principal.</p>",
         "ProjectSummary$id": "<p>The identifier of a project.</p>",
+        "RuleProjectIdentifierList$member": null,
         "SearchInput$owningProjectIdentifier": "<p>The identifier of the owning project specified for the search.</p>",
         "StartDataSourceRunOutput$projectId": "<p>The identifier of the project.</p>",
         "StartMetadataGenerationRunInput$owningProjectIdentifier": "<p>The ID of the project that owns the asset for which you want to start a metadata generation run.</p>",
@@ -4312,6 +4455,12 @@
         "UpdateProjectInput$identifier": "<p>The identifier of the project that is to be updated.</p>",
         "UpdateProjectOutput$id": "<p>The identifier of the project that is to be updated.</p>",
         "UpdateSubscriptionTargetOutput$projectId": "<p>The identifier of the project in which a subscription target is to be updated.</p>"
+      }
+    },
+    "ProjectIds": {
+      "base": null,
+      "refs": {
+        "ListRulesInput$projectIds": "<p>The IDs of projects in which rules are to be listed.</p>"
       }
     },
     "ProjectMember": {
@@ -4364,6 +4513,12 @@
       "base": "<p>The details of a Amazon DataZone project.</p>",
       "refs": {
         "ProjectSummaries$member": null
+      }
+    },
+    "ProjectsForRule": {
+      "base": "<p>Specifies projects in which the rule is created.</p>",
+      "refs": {
+        "RuleScope$project": "<p>The project included in the rule scope.</p>"
       }
     },
     "ProvisioningConfiguration": {
@@ -4635,6 +4790,12 @@
         "UpdateSubscriptionRequestOutput$requestReason": "<p>The reason for the <code>UpdateSubscriptionRequest</code> action.</p>"
       }
     },
+    "RequiredMetadataFormList": {
+      "base": null,
+      "refs": {
+        "MetadataFormEnforcementDetail$requiredMetadataForms": "<p>The required metadata forms.</p>"
+      }
+    },
     "Resource": {
       "base": "<p>The details of a provisioned resource of this Amazon DataZone environment.</p>",
       "refs": {
@@ -4684,7 +4845,6 @@
         "DataProductRevision$revision": "<p>The data product revision.</p>",
         "FormEntryInput$typeRevision": "<p>The type revision of the form entry.</p>",
         "FormEntryOutput$typeRevision": "<p>The type revision of the form entry.</p>",
-        "FormInput$typeRevision": "<p>The revision of the metadata form type.</p>",
         "FormOutput$typeRevision": "<p>The revision of the metadata form type.</p>",
         "FormTypeData$revision": "<p>The revision of the form type.</p>",
         "GetAssetInput$revision": "<p>The revision of the Amazon DataZone asset.</p>",
@@ -4699,6 +4859,8 @@
         "GetLineageNodeOutput$typeRevision": "<p>The revision type of the specified data lineage node.</p>",
         "GetListingInput$listingRevision": "<p>The revision of the listing.</p>",
         "GetListingOutput$listingRevision": "<p>The revision of a listing.</p>",
+        "GetRuleInput$revision": "<p>The revision of the rule.</p>",
+        "GetRuleOutput$revision": "<p>The revision of the rule.</p>",
         "Import$revision": "<p>The revision of the import.</p>",
         "LineageNodeSummary$typeRevision": "<p>The type of the revision of the data lineage node.</p>",
         "LineageNodeTypeItem$revision": "<p>The revision of the data lineage node type.</p>",
@@ -4706,16 +4868,26 @@
         "ListingRevisionInput$revision": "<p>The details of a revision to be made to an asset published in a Amazon DataZone catalog.</p>",
         "ListingSummary$listingRevision": "<p>The revision of the data product listing.</p>",
         "ListingSummaryItem$listingRevision": "<p>The revision of the data product listing.</p>",
+        "MetadataFormReference$typeRevision": "<p>The type revision of the metadata form reference.</p>",
+        "MetadataFormSummary$typeRevision": "<p>The type revision of the metadata form.</p>",
         "MetadataGenerationRunTarget$revision": "<p>The revision of the asset for which metadata was generated.</p>",
         "RejectPredictionsInput$revision": "<p>The revision that is to be made to the asset.</p>",
         "RejectPredictionsOutput$assetRevision": "<p>The revision that is to be made to the asset.</p>",
+        "RuleSummary$revision": "<p>The revision of the rule.</p>",
         "SubscribedAsset$assetRevision": "<p>The revision of the asset for which the subscription grant is created.</p>",
         "SubscribedAssetListing$entityRevision": "<p>The revision of the published asset for which the subscription grant is created.</p>",
         "SubscribedListing$revision": "<p>The revision of the published asset for which the subscription grant is created.</p>",
         "SubscribedProductListing$entityRevision": "<p>The revision of the data product listing.</p>",
         "TimeSeriesDataPointFormInput$typeRevision": "<p>The revision type of the time series data points form.</p>",
         "TimeSeriesDataPointFormOutput$typeRevision": "<p>The revision type of the time series data points form.</p>",
-        "TimeSeriesDataPointSummaryFormOutput$typeRevision": "<p>The type revision of the time series data points summary form.</p>"
+        "TimeSeriesDataPointSummaryFormOutput$typeRevision": "<p>The type revision of the time series data points summary form.</p>",
+        "UpdateRuleOutput$revision": "<p>The revision of the rule.</p>"
+      }
+    },
+    "RevisionInput": {
+      "base": null,
+      "refs": {
+        "FormInput$typeRevision": "<p>The revision of the metadata form type.</p>"
       }
     },
     "RevokeSubscriptionInput": {
@@ -4771,6 +4943,121 @@
       "refs": {
         "RowFilter$and": "<p>The 'and' clause of the row filter.</p>",
         "RowFilter$or": "<p>The 'or' clause of the row filter.</p>"
+      }
+    },
+    "RuleAction": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$action": "<p>The action of the rule.</p>",
+        "CreateRuleOutput$action": "<p>The action of the rule.</p>",
+        "GetRuleOutput$action": "<p>The action of the rule.</p>",
+        "ListRulesInput$action": "<p>The action of the rule.</p>",
+        "RuleSummary$action": "<p>The action of the rule.</p>",
+        "UpdateRuleOutput$action": "<p>The action of the rule.</p>"
+      }
+    },
+    "RuleAssetTypeList": {
+      "base": null,
+      "refs": {
+        "AssetTypesForRule$specificAssetTypes": "<p>The specific asset types that are included in the rule.</p>"
+      }
+    },
+    "RuleDetail": {
+      "base": "<p>The details of a rule.</p>",
+      "refs": {
+        "CreateRuleInput$detail": "<p>The detail of the rule.</p>",
+        "CreateRuleOutput$detail": "<p>The detail of the rule.</p>",
+        "GetRuleOutput$detail": "<p>The detail of the rule.</p>",
+        "UpdateRuleInput$detail": "<p>The detail of the rule.</p>",
+        "UpdateRuleOutput$detail": "<p>The detail of the rule.</p>"
+      }
+    },
+    "RuleId": {
+      "base": null,
+      "refs": {
+        "CreateRuleOutput$identifier": "<p>The ID of the rule.</p>",
+        "DeleteRuleInput$identifier": "<p>The ID of the rule that is to be deleted.</p>",
+        "GetRuleInput$identifier": "<p>The ID of the rule.</p>",
+        "GetRuleOutput$identifier": "<p>The ID of the rule.</p>",
+        "RuleSummary$identifier": "<p>The ID of the rule.</p>",
+        "UpdateRuleInput$identifier": "<p>The ID of the rule that is to be updated</p>",
+        "UpdateRuleOutput$identifier": "<p>The ID of the rule.</p>"
+      }
+    },
+    "RuleName": {
+      "base": null,
+      "refs": {
+        "CreateRuleInput$name": "<p>The name of the rule.</p>",
+        "CreateRuleOutput$name": "<p>The name of the rule.</p>",
+        "GetRuleOutput$name": "<p>The name of the rule.</p>",
+        "RuleSummary$name": "<p>The name of the rule.</p>",
+        "UpdateRuleInput$name": "<p>The name of the rule.</p>",
+        "UpdateRuleOutput$name": "<p>The name of the rule.</p>"
+      }
+    },
+    "RuleProjectIdentifierList": {
+      "base": null,
+      "refs": {
+        "ProjectsForRule$specificProjects": "<p>The specific projects in which the rule is created.</p>"
+      }
+    },
+    "RuleScope": {
+      "base": "<p>The scope of a rule.</p>",
+      "refs": {
+        "CreateRuleInput$scope": "<p>The scope of the rule.</p>",
+        "CreateRuleOutput$scope": "<p>The scope of the rule.</p>",
+        "GetRuleOutput$scope": "<p>The scope of the rule.</p>",
+        "RuleSummary$scope": "<p>The scope of the rule.</p>",
+        "UpdateRuleInput$scope": "<p>The scrope of the rule.</p>",
+        "UpdateRuleOutput$scope": "<p>The scope of the rule.</p>"
+      }
+    },
+    "RuleScopeSelectionMode": {
+      "base": null,
+      "refs": {
+        "AssetTypesForRule$selectionMode": "<p>The selection mode for the rule.</p>",
+        "ProjectsForRule$selectionMode": "<p>The selection mode of the rule.</p>"
+      }
+    },
+    "RuleSummaries": {
+      "base": null,
+      "refs": {
+        "ListRulesOutput$items": "<p>The results of the <code>ListRules</code> action.</p>"
+      }
+    },
+    "RuleSummary": {
+      "base": "<p>The summary of the rule.</p>",
+      "refs": {
+        "RuleSummaries$member": null
+      }
+    },
+    "RuleTarget": {
+      "base": "<p>The target of the rule.</p>",
+      "refs": {
+        "CreateRuleInput$target": "<p>The target of the rule.</p>",
+        "CreateRuleOutput$target": "<p>The target of the rule.</p>",
+        "GetRuleOutput$target": "<p>The target of the rule.</p>",
+        "RuleSummary$target": "<p>The target of the rule.</p>",
+        "UpdateRuleOutput$target": "<p>The target of the rule.</p>"
+      }
+    },
+    "RuleTargetType": {
+      "base": null,
+      "refs": {
+        "CreateRuleOutput$targetType": "<p>The target type of the rule.</p>",
+        "GetRuleOutput$targetType": "<p>The target type of the rule.</p>",
+        "ListRulesInput$targetType": "<p>The target type of the rule.</p>",
+        "RuleSummary$targetType": "<p>The target type of the rule.</p>"
+      }
+    },
+    "RuleType": {
+      "base": null,
+      "refs": {
+        "CreateRuleOutput$ruleType": "<p>The type of the rule.</p>",
+        "GetRuleOutput$ruleType": "<p>The type of the rule.</p>",
+        "ListRulesInput$ruleType": "<p>The type of the rule.</p>",
+        "RuleSummary$ruleType": "<p>The type of the rule.</p>",
+        "UpdateRuleOutput$ruleType": "<p>The type of the rule.</p>"
       }
     },
     "RunStatisticsForAssets": {
@@ -5203,6 +5490,7 @@
         "ListPolicyGrantsInput$entityIdentifier": "<p>The ID of the entity for which you want to list policy grants.</p>",
         "ListProjectsInput$groupIdentifier": "<p>The identifier of a group.</p>",
         "ListProjectsInput$userIdentifier": "<p>The identifier of the Amazon DataZone user.</p>",
+        "ListRulesInput$targetIdentifier": "<p>The target ID of the rule.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource whose tags you want to list.</p>",
         "Member$groupIdentifier": "<p>The ID of the group of a project member.</p>",
         "Member$userIdentifier": "<p>The user ID of a project member.</p>",
@@ -5429,19 +5717,25 @@
     "SubscriptionId": {
       "base": null,
       "refs": {
+        "AcceptSubscriptionRequestOutput$existingSubscriptionId": "<p>The ID of the existing subscription.</p>",
         "CancelSubscriptionInput$identifier": "<p>The unique identifier of the subscription that is being cancelled.</p>",
         "CancelSubscriptionOutput$id": "<p>The identifier of the subscription.</p>",
         "CreateSubscriptionGrantOutput$subscriptionId": "<p>The identifier of the subscription grant.</p>",
+        "CreateSubscriptionRequestOutput$existingSubscriptionId": "<p>The ID of the existing subscription.</p>",
         "DeleteSubscriptionGrantOutput$subscriptionId": "<p>The identifier of the subsctiption whose subscription grant is to be deleted.</p>",
         "GetSubscriptionGrantOutput$subscriptionId": "<p>The identifier of the subscription.</p>",
         "GetSubscriptionInput$identifier": "<p>The ID of the subscription.</p>",
         "GetSubscriptionOutput$id": "<p>The ID of the subscription.</p>",
+        "GetSubscriptionRequestDetailsOutput$existingSubscriptionId": "<p>The ID of the existing subscription.</p>",
         "ListSubscriptionGrantsInput$subscriptionId": "<p>The identifier of the subscription.</p>",
+        "RejectSubscriptionRequestOutput$existingSubscriptionId": "<p>The ID of the existing subscription.</p>",
         "RevokeSubscriptionInput$identifier": "<p>The identifier of the revoked subscription.</p>",
         "RevokeSubscriptionOutput$id": "<p>The identifier of the revoked subscription.</p>",
         "SubscriptionGrantSummary$subscriptionId": "<p>The ID of the subscription.</p>",
+        "SubscriptionRequestSummary$existingSubscriptionId": "<p>The ID of the existing subscription.</p>",
         "SubscriptionSummary$id": "<p>The identifier of the subscription.</p>",
-        "UpdateSubscriptionGrantStatusOutput$subscriptionId": "<p>The identifier of the subscription.</p>"
+        "UpdateSubscriptionGrantStatusOutput$subscriptionId": "<p>The identifier of the subscription.</p>",
+        "UpdateSubscriptionRequestOutput$existingSubscriptionId": "<p>The ID of the existing subscription.</p>"
       }
     },
     "SubscriptionRequestId": {
@@ -5991,6 +6285,16 @@
       "refs": {
       }
     },
+    "UpdateRuleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateRuleOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateSubscriptionGrantStatusInput": {
       "base": null,
       "refs": {
@@ -6062,6 +6366,7 @@
         "GetGlossaryTermOutput$updatedAt": "<p>The timestamp of when the business glossary term was updated.</p>",
         "GetLineageNodeOutput$updatedAt": "<p>The timestamp at which the data lineage node was updated.</p>",
         "GetListingOutput$updatedAt": "<p>The timestamp of when the listing was updated.</p>",
+        "GetRuleOutput$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedAt": "<p>The timestamp of when the subscription grant was upated.</p>",
         "GetSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
         "GetSubscriptionRequestDetailsOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
@@ -6072,12 +6377,14 @@
         "LineageNodeTypeItem$updatedAt": "<p>The timestamp at which the data lineage node type was updated.</p>",
         "RejectSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "RevokeSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was revoked.</p>",
+        "RuleSummary$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "SubscriptionGrantSummary$updatedAt": "<p>The timestampf of when the subscription grant was updated.</p>",
         "SubscriptionRequestSummary$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "SubscriptionSummary$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
         "SubscriptionTargetSummary$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",
         "UpdateDomainOutput$lastUpdatedAt": "<p>Specifies the timestamp of when the domain was last updated.</p>",
         "UpdateDomainUnitOutput$lastUpdatedAt": "<p>The timestamp at which the domain unit was last updated.</p>",
+        "UpdateRuleOutput$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$updatedAt": "<p>The timestamp of when the subscription grant status is to be updated.</p>",
         "UpdateSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "UpdateSubscriptionTargetOutput$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>"
@@ -6102,6 +6409,7 @@
         "GetGlossaryTermOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary term.</p>",
         "GetLineageNodeOutput$updatedBy": "<p>The user who updated the data lineage node.</p>",
         "GetListingOutput$updatedBy": "<p>The Amazon DataZone user who updated the listing.</p>",
+        "GetRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "GetSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "GetSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",
         "GetSubscriptionRequestDetailsOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
@@ -6112,11 +6420,13 @@
         "LineageNodeTypeItem$updatedBy": "<p>The user who updated the data lineage node type.</p>",
         "RejectSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "RevokeSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user who revoked the subscription.</p>",
+        "RuleSummary$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "SubscriptionGrantSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "SubscriptionRequestSummary$updatedBy": "<p>The identifier of the Amazon DataZone user who updated the subscription request.</p>",
         "SubscriptionSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",
         "SubscriptionTargetSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
         "UpdateDomainUnitOutput$lastUpdatedBy": "<p>The user who last updated the domain unit.</p>",
+        "UpdateRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant status.</p>",
         "UpdateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "UpdateSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>"

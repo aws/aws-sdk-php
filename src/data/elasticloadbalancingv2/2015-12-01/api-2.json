@@ -323,6 +323,21 @@
         "resultWrapper":"DescribeAccountLimitsResult"
       }
     },
+    "DescribeCapacityReservation":{
+      "name":"DescribeCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityReservationInput"},
+      "output":{
+        "shape":"DescribeCapacityReservationOutput",
+        "resultWrapper":"DescribeCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"LoadBalancerNotFoundException"}
+      ]
+    },
     "DescribeListenerAttributes":{
       "name":"DescribeListenerAttributes",
       "http":{
@@ -589,6 +604,28 @@
       "errors":[
         {"shape":"TrustStoreNotFoundException"},
         {"shape":"RevocationIdNotFoundException"}
+      ]
+    },
+    "ModifyCapacityReservation":{
+      "name":"ModifyCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyCapacityReservationInput"},
+      "output":{
+        "shape":"ModifyCapacityReservationOutput",
+        "resultWrapper":"ModifyCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"LoadBalancerNotFoundException"},
+        {"shape":"InvalidConfigurationRequestException"},
+        {"shape":"CapacityUnitsLimitExceededException"},
+        {"shape":"CapacityReservationPendingException"},
+        {"shape":"InsufficientCapacityException"},
+        {"shape":"CapacityDecreaseRequestsLimitExceededException"},
+        {"shape":"PriorRequestNotCompleteException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "ModifyListener":{
@@ -868,7 +905,8 @@
         {"shape":"SubnetNotFoundException"},
         {"shape":"InvalidSubnetException"},
         {"shape":"AllocationIdNotFoundException"},
-        {"shape":"AvailabilityZoneNotSupportedException"}
+        {"shape":"AvailabilityZoneNotSupportedException"},
+        {"shape":"CapacityReservationPendingException"}
       ]
     }
   },
@@ -1128,6 +1166,57 @@
       "exception":true
     },
     "CanonicalHostedZoneId":{"type":"string"},
+    "CapacityDecreaseRequestsLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityDecreaseRequestLimitExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CapacityReservationPendingException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityReservationPending",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CapacityReservationStateEnum":{
+      "type":"string",
+      "enum":[
+        "provisioned",
+        "pending",
+        "rebalancing",
+        "failed"
+      ]
+    },
+    "CapacityReservationStatus":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"CapacityReservationStateEnum"},
+        "Reason":{"shape":"StateReason"}
+      }
+    },
+    "CapacityUnits":{"type":"integer"},
+    "CapacityUnitsDouble":{"type":"double"},
+    "CapacityUnitsLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityUnitsLimitExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "Certificate":{
       "type":"structure",
       "members":{
@@ -1293,6 +1382,7 @@
       "pattern":"^(ipv4pool-coip-)[a-zA-Z0-9]+$"
     },
     "DNSName":{"type":"string"},
+    "DecreaseRequestsRemaining":{"type":"integer"},
     "Default":{"type":"boolean"},
     "DeleteAssociationSameAccountException":{
       "type":"structure",
@@ -1409,6 +1499,22 @@
       "members":{
         "Limits":{"shape":"Limits"},
         "NextMarker":{"shape":"Marker"}
+      }
+    },
+    "DescribeCapacityReservationInput":{
+      "type":"structure",
+      "required":["LoadBalancerArn"],
+      "members":{
+        "LoadBalancerArn":{"shape":"LoadBalancerArn"}
+      }
+    },
+    "DescribeCapacityReservationOutput":{
+      "type":"structure",
+      "members":{
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "DecreaseRequestsRemaining":{"shape":"DecreaseRequestsRemaining"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "CapacityReservationState":{"shape":"ZonalCapacityReservationStates"}
       }
     },
     "DescribeListenerAttributesInput":{
@@ -1850,6 +1956,16 @@
       },
       "exception":true
     },
+    "InsufficientCapacityException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InsufficientCapacity",
+        "httpStatusCode":500
+      },
+      "exception":true
+    },
     "InvalidCaCertificatesBundleException":{
       "type":"structure",
       "members":{
@@ -1948,6 +2064,7 @@
       ]
     },
     "IsDefault":{"type":"boolean"},
+    "LastModifiedTime":{"type":"timestamp"},
     "Limit":{
       "type":"structure",
       "members":{
@@ -2138,6 +2255,12 @@
       }
     },
     "Max":{"type":"string"},
+    "MinimumLoadBalancerCapacity":{
+      "type":"structure",
+      "members":{
+        "CapacityUnits":{"shape":"CapacityUnits"}
+      }
+    },
     "MitigationInEffectEnum":{
       "type":"string",
       "enum":[
@@ -2146,6 +2269,24 @@
       ]
     },
     "Mode":{"type":"string"},
+    "ModifyCapacityReservationInput":{
+      "type":"structure",
+      "required":["LoadBalancerArn"],
+      "members":{
+        "LoadBalancerArn":{"shape":"LoadBalancerArn"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "ResetCapacityReservation":{"shape":"ResetCapacityReservation"}
+      }
+    },
+    "ModifyCapacityReservationOutput":{
+      "type":"structure",
+      "members":{
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "DecreaseRequestsRemaining":{"shape":"DecreaseRequestsRemaining"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "CapacityReservationState":{"shape":"ZonalCapacityReservationStates"}
+      }
+    },
     "ModifyListenerAttributesInput":{
       "type":"structure",
       "required":[
@@ -2323,6 +2464,17 @@
       "max":65535,
       "min":1
     },
+    "PriorRequestNotCompleteException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"PriorRequestNotComplete",
+        "httpStatusCode":429,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "PriorityInUseException":{
       "type":"structure",
       "members":{
@@ -2468,6 +2620,7 @@
       "members":{
       }
     },
+    "ResetCapacityReservation":{"type":"boolean"},
     "ResourceArn":{"type":"string"},
     "ResourceArns":{
       "type":"list",
@@ -3248,6 +3401,18 @@
       "exception":true
     },
     "VpcId":{"type":"string"},
+    "ZonalCapacityReservationState":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"CapacityReservationStatus"},
+        "AvailabilityZone":{"shape":"ZoneName"},
+        "EffectiveCapacityUnits":{"shape":"CapacityUnitsDouble"}
+      }
+    },
+    "ZonalCapacityReservationStates":{
+      "type":"list",
+      "member":{"shape":"ZonalCapacityReservationState"}
+    },
     "ZoneName":{"type":"string"}
   }
 }

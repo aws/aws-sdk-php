@@ -3469,6 +3469,12 @@
       "refs": {
       }
     },
+    "ServiceOverride": {
+      "base": "A service override applied by MediaConvert to the settings that you have configured. If you see any overrides, we recommend that you contact AWS Support.",
+      "refs": {
+        "__listOfServiceOverride$member": null
+      }
+    },
     "SimulateReservedQueue": {
       "base": "Enable this setting when you run a test job to estimate how many reserved transcoding slots (RTS) you need. When this is enabled, MediaConvert runs your job from an on-demand queue with similar performance to what you will see with one RTS in a reserved queue. This setting is disabled by default.",
       "refs": {
@@ -4233,7 +4239,12 @@
         "WarningGroup$Code": "Warning code that identifies a specific warning in the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/warning_codes.html",
         "WarningGroup$Count": "The number of times this warning occurred in the job.",
         "Queue$ProgressingJobsCount": "The estimated number of jobs with a PROGRESSING status.",
-        "Queue$SubmittedJobsCount": "The estimated number of jobs with a SUBMITTED status."
+        "Queue$SubmittedJobsCount": "The estimated number of jobs with a SUBMITTED status.",
+        "Queue$ConcurrentJobs": "The maximum number of jobs your queue can process concurrently.",
+        "CreateQueueRequest$ConcurrentJobs": "Specify the maximum number of jobs your queue can process concurrently. For on-demand queues, the value you enter is constrained by your service quotas for Maximum concurrent jobs, per on-demand queue and Maximum concurrent jobs, per account. For reserved queues, specify the number of jobs you can process concurrently in your reservation plan instead.",
+        "UpdateQueueRequest$ConcurrentJobs": "Specify the maximum number of jobs your queue can process concurrently. For on-demand queues, the value you enter is constrained by your service quotas for Maximum concurrent jobs, per on-demand queue and Maximum concurrent jobs, per account. For reserved queues, update your reservation plan instead in order to increase your yearly commitment.",
+        "ListQueuesResponse$TotalConcurrentJobs": "The maximum number of jobs that MediaConvert can process at one time, across all of your on-demand queues in the current AWS Region.",
+        "ListQueuesResponse$UnallocatedConcurrentJobs": "The remaining number of concurrent jobs that are not associated with a queue and are available to allocate to a queue. You can allocate these jobs when you create or update a queue."
       }
     },
     "__integerMin0Max0": {
@@ -5277,6 +5288,12 @@
         "Job$QueueTransitions": "The job's queue hopping history."
       }
     },
+    "__listOfServiceOverride": {
+      "base": null,
+      "refs": {
+        "Queue$ServiceOverrides": "A list of any service overrides applied by MediaConvert to the settings that you have configured. If you see any overrides, we recommend that you contact AWS Support."
+      }
+    },
     "__listOfTeletextPageType": {
       "base": null,
       "refs": {
@@ -5501,6 +5518,10 @@
         "SearchJobsRequest$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of jobs.",
         "SearchJobsRequest$Queue": "Optional. Provide a queue name, or a queue ARN, to return only jobs from that queue.",
         "SearchJobsResponse$NextToken": "Use this string to request the next batch of jobs.",
+        "ServiceOverride$Message": "Details about the service override that MediaConvert has applied.",
+        "ServiceOverride$Name": "The name of the setting that MediaConvert has applied an override to.",
+        "ServiceOverride$OverrideValue": "The current value of the service override that MediaConvert has applied.",
+        "ServiceOverride$Value": "The value of the setting that you configured, prior to any overrides that MediaConvert has applied.",
         "SpekeKeyProvider$ResourceId": "Specify the resource ID that your SPEKE-compliant key provider uses to identify this content.",
         "StaticKeyProvider$Url": "Relates to DRM implementation. The location of the license server used for protecting content.",
         "TagResourceRequest$Arn": "The Amazon Resource Name (ARN) of the resource that you want to tag. To get the ARN, send a GET request with the resource name.",

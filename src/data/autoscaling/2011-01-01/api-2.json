@@ -1250,7 +1250,8 @@
         "TrafficSources":{"shape":"TrafficSources"},
         "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
-        "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"}
+        "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1360,6 +1361,12 @@
       "members":{
         "Min":{"shape":"NullablePositiveInteger"},
         "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
+    "BaselinePerformanceFactorsRequest":{
+      "type":"structure",
+      "members":{
+        "Cpu":{"shape":"CpuPerformanceFactorRequest"}
       }
     },
     "BatchDeleteScheduledActionAnswer":{
@@ -1472,6 +1479,37 @@
       }
     },
     "CapacityRebalanceEnabled":{"type":"boolean"},
+    "CapacityReservationIds":{
+      "type":"list",
+      "member":{"shape":"AsciiStringMaxLen255"}
+    },
+    "CapacityReservationPreference":{
+      "type":"string",
+      "enum":[
+        "capacity-reservations-only",
+        "capacity-reservations-first",
+        "none",
+        "default"
+      ]
+    },
+    "CapacityReservationResourceGroupArns":{
+      "type":"list",
+      "member":{"shape":"ResourceName"}
+    },
+    "CapacityReservationSpecification":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationPreference":{"shape":"CapacityReservationPreference"},
+        "CapacityReservationTarget":{"shape":"CapacityReservationTarget"}
+      }
+    },
+    "CapacityReservationTarget":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationIds":{"shape":"CapacityReservationIds"},
+        "CapacityReservationResourceGroupArns":{"shape":"CapacityReservationResourceGroupArns"}
+      }
+    },
     "CheckpointDelay":{
       "type":"integer",
       "max":172800,
@@ -1519,6 +1557,15 @@
       "type":"list",
       "member":{"shape":"CpuManufacturer"}
     },
+    "CpuPerformanceFactorRequest":{
+      "type":"structure",
+      "members":{
+        "References":{
+          "shape":"PerformanceFactorReferenceSetRequest",
+          "locationName":"Reference"
+        }
+      }
+    },
     "CreateAutoScalingGroupType":{
       "type":"structure",
       "required":[
@@ -1557,7 +1604,8 @@
         "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
-        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"}
+        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -2296,7 +2344,8 @@
         "AcceleratorNames":{"shape":"AcceleratorNames"},
         "AcceleratorTotalMemoryMiB":{"shape":"AcceleratorTotalMemoryMiBRequest"},
         "NetworkBandwidthGbps":{"shape":"NetworkBandwidthGbpsRequest"},
-        "AllowedInstanceTypes":{"shape":"AllowedInstanceTypes"}
+        "AllowedInstanceTypes":{"shape":"AllowedInstanceTypes"},
+        "BaselinePerformanceFactors":{"shape":"BaselinePerformanceFactorsRequest"}
       }
     },
     "InstanceReusePolicy":{
@@ -2810,6 +2859,19 @@
     "Overrides":{
       "type":"list",
       "member":{"shape":"LaunchTemplateOverrides"}
+    },
+    "PerformanceFactorReferenceRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceFamily":{"shape":"String"}
+      }
+    },
+    "PerformanceFactorReferenceSetRequest":{
+      "type":"list",
+      "member":{
+        "shape":"PerformanceFactorReferenceRequest",
+        "locationName":"item"
+      }
     },
     "PoliciesType":{
       "type":"structure",
@@ -3413,6 +3475,7 @@
       "type":"list",
       "member":{"shape":"StepAdjustment"}
     },
+    "String":{"type":"string"},
     "SuspendedProcess":{
       "type":"structure",
       "members":{
@@ -3593,7 +3656,8 @@
         "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
         "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
         "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
-        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"}
+        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
     },
     "UpdatePlacementGroupParam":{

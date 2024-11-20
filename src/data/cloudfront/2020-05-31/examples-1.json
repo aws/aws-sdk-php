@@ -55,7 +55,7 @@
         "input": {
           "Comment": "my-key-valuestore-comment",
           "ImportSource": {
-            "SourceARN": "arn:aws:s3:::my-bucket/validJSON.json",
+            "SourceARN": "arn:aws:s3:::amzn-s3-demo-bucket/validJSON.json",
             "SourceType": "S3"
           },
           "Name": "my-keyvaluestore-name"
@@ -77,6 +77,54 @@
         "title": "To create a KeyValueStore"
       }
     ],
+    "CreateVpcOrigin": [
+      {
+        "input": {
+          "VpcOriginEndpointConfig": {
+            "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "Name": "my-vpcorigin-name",
+            "OriginProtocolPolicy": "match-viewer",
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.1",
+                "TLSv1.2"
+              ],
+              "Quantity": 2
+            }
+          }
+        },
+        "output": {
+          "ETag": "E23ZP02F085DFQ",
+          "Location": "https://cloudfront.amazonaws.com/2020-05-31/vpc-origin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:19:42.318Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command creates a VPC origin:",
+        "id": "example-1",
+        "title": "To create a VPC origin"
+      }
+    ],
     "DeleteKeyValueStore": [
       {
         "input": {
@@ -86,6 +134,41 @@
         "description": "Use the following command to delete a KeyValueStore.",
         "id": "example-1",
         "title": "To delete a KeyValueStore"
+      }
+    ],
+    "DeleteVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "IfMatch": "E1F83G8C2ARO7P"
+        },
+        "output": {
+          "ETag": "E1PA6795UKMFR9",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:57:08.965Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command deletes a VPC origin:",
+        "id": "example-1",
+        "title": "To delete a VPC origin"
       }
     ],
     "DescribeKeyValueStore": [
@@ -107,6 +190,61 @@
         "description": "Use the following command to describe a KeyValueStore.",
         "id": "example-1",
         "title": "To describe a KeyValueStore"
+      }
+    ],
+    "GetVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM"
+        },
+        "output": {
+          "ETag": "ETVPDKIKX0DER",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:24:35.188Z",
+            "Status": "Deployed",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command gets a VPC origin:",
+        "id": "example-1",
+        "title": "To get a VPC origin"
+      }
+    ],
+    "ListDistributionsByVpcOriginId": [
+      {
+        "input": {
+          "VpcOriginId": "vo_BQwjxxQxjCaBcQLzJUFkDM"
+        },
+        "output": {
+          "DistributionIdList": {
+            "IsTruncated": false,
+            "Items": [
+
+            ],
+            "Marker": "a",
+            "MaxItems": 100,
+            "Quantity": 0
+          }
+        },
+        "description": "The following command lists distributions by VPC origin ID:",
+        "id": "example-1",
+        "title": "To list distributions by VPC origin ID"
       }
     ],
     "ListKeyValueStores": [
@@ -134,6 +272,34 @@
         "description": "The following command retrieves a list of KeyValueStores with READY status.",
         "id": "example-1",
         "title": "To get a list of KeyValueStores"
+      }
+    ],
+    "ListVpcOrigins": [
+      {
+        "input": {
+        },
+        "output": {
+          "VpcOriginList": {
+            "IsTruncated": true,
+            "Items": [
+              {
+                "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+                "CreatedTime": "2024-10-15T17:19:42.318Z",
+                "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+                "LastModifiedTime": "2024-10-15T17:24:35.188Z",
+                "Name": "my-vpcorigin-name",
+                "OriginEndpointArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+                "Status": "Deployed"
+              }
+            ],
+            "Marker": "a",
+            "MaxItems": 100,
+            "Quantity": 1
+          }
+        },
+        "description": "The following command lists VPC origins:",
+        "id": "example-1",
+        "title": "To list VPC origins"
       }
     ],
     "UpdateFunction": [
@@ -206,6 +372,55 @@
         "description": "Use the following command to update a KeyValueStore.",
         "id": "example-1",
         "title": "To update a KeyValueStore"
+      }
+    ],
+    "UpdateVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "IfMatch": "ETVPDKIKX0DER",
+          "VpcOriginEndpointConfig": {
+            "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "Name": "my-vpcorigin-name",
+            "OriginProtocolPolicy": "match-viewer",
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.1",
+                "TLSv1.2"
+              ],
+              "Quantity": 2
+            }
+          }
+        },
+        "output": {
+          "ETag": "E3UN6WX5RRO2AG",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:47:08.133Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command updates a VPC origin:",
+        "id": "example-1",
+        "title": "To update a VPC origin"
       }
     ]
   }

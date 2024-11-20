@@ -519,7 +519,7 @@
     "ModifyIdentityIdFormat": "<p>Modifies the ID format of a resource for a specified IAM user, IAM role, or the root user for an account; or all IAM users, IAM roles, and the root user for an account. You can specify that resources should receive longer IDs (17-character IDs) when they are created. </p> <p>This request can only be used to modify longer ID settings for resource types that are within the opt-in period. Resources currently in their opt-in period include: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html\">Resource IDs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p> <p>This setting applies to the principal specified in the request; it does not apply to the principal that makes the request. </p> <p>Resources created with longer IDs are visible to all IAM roles and users, regardless of these settings and provided that they have permission to use the relevant <code>Describe</code> command for the resource type.</p>",
     "ModifyImageAttribute": "<p>Modifies the specified attribute of the specified AMI. You can specify only one attribute at a time.</p> <p>To specify the attribute, you can use the <code>Attribute</code> parameter, or one of the following parameters: <code>Description</code>, <code>ImdsSupport</code>, or <code>LaunchPermission</code>.</p> <p>Images with an Amazon Web Services Marketplace product code cannot be made public.</p> <p>To enable the SriovNetSupport enhanced networking attribute of an image, enable SriovNetSupport on an instance and create an AMI from the instance.</p>",
     "ModifyInstanceAttribute": "<p>Modifies the specified attribute of the specified instance. You can specify only one attribute at a time.</p> <p> <b>Note: </b>Using this action to change the security groups associated with an elastic network interface (ENI) attached to an instance can result in an error if the instance has more than one ENI. To change the security groups associated with an ENI attached to an instance that has multiple ENIs, we recommend that you use the <a>ModifyNetworkInterfaceAttribute</a> action.</p> <p>To modify some attributes, the instance must be stopped. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html\">Modify a stopped instance</a> in the <i>Amazon EC2 User Guide</i>.</p>",
-    "ModifyInstanceCapacityReservationAttributes": "<p>Modifies the Capacity Reservation settings for a stopped instance. Use this action to configure an instance to target a specific Capacity Reservation, run in any <code>open</code> Capacity Reservation with matching attributes, or run On-Demand Instance capacity.</p>",
+    "ModifyInstanceCapacityReservationAttributes": "<p>Modifies the Capacity Reservation settings for a stopped instance. Use this action to configure an instance to target a specific Capacity Reservation, run in any <code>open</code> Capacity Reservation with matching attributes, run in On-Demand Instance capacity, or only run in a Capacity Reservation.</p>",
     "ModifyInstanceCpuOptions": "<p>By default, all vCPUs for the instance type are active when you launch an instance. When you configure the number of active vCPUs for the instance, it can help you save on licensing costs and optimize performance. The base cost of the instance remains unchanged.</p> <p>The number of active vCPUs equals the number of threads per CPU core multiplied by the number of cores. The instance must be in a <code>Stopped</code> state before you make changes.</p> <note> <p>Some instance type options do not support this capability. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">Supported CPU options</a> in the <i>Amazon EC2 User Guide</i>.</p> </note>",
     "ModifyInstanceCreditSpecification": "<p>Modifies the credit option for CPU usage on a running or stopped burstable performance instance. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\">Burstable performance instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "ModifyInstanceEventStartTime": "<p>Modifies the start time for a scheduled Amazon EC2 instance event.</p>",
@@ -1952,6 +1952,18 @@
       "base": null,
       "refs": {
         "EbsOptimizedInfo$BaselineIops": "<p>The baseline input/output storage operations per seconds for an EBS-optimized instance type.</p>"
+      }
+    },
+    "BaselinePerformanceFactors": {
+      "base": "<p>The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application.</p> <p>Currently, this parameter only supports CPU performance as a baseline performance factor. For example, specifying <code>c6i</code> would use the CPU performance of the <code>c6i</code> family as the baseline reference.</p>",
+      "refs": {
+        "InstanceRequirements$BaselinePerformanceFactors": "<p>The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application. Currently, this parameter only supports CPU performance as a baseline performance factor. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-attribute-based-instance-type-selection.html#ec2fleet-abis-performance-protection\">Performance protection</a> in the <i>Amazon EC2 User Guide</i>.</p>"
+      }
+    },
+    "BaselinePerformanceFactorsRequest": {
+      "base": "<p>The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application.</p> <p>Currently, this parameter only supports CPU performance as a baseline performance factor. For example, specifying <code>c6i</code> would use the CPU performance of the <code>c6i</code> family as the baseline reference.</p>",
+      "refs": {
+        "InstanceRequirementsRequest$BaselinePerformanceFactors": "<p>The baseline performance to consider, using an instance family as a baseline reference. The instance family establishes the lowest acceptable level of performance. Amazon EC2 uses this baseline to guide instance type selection, but there is no guarantee that the selected instance types will always exceed the baseline for every application. Currently, this parameter only supports CPU performance as a baseline performance factor. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-attribute-based-instance-type-selection.html#ec2fleet-abis-performance-protection\">Performance protection</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "BaselineThroughputInMBps": {
@@ -3496,7 +3508,7 @@
     "CapacityReservationPreference": {
       "base": null,
       "refs": {
-        "CapacityReservationSpecification$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance.</p> </li> </ul>",
+        "CapacityReservationSpecification$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>capacity-reservations-only</code> - The instance will only run in a Capacity Reservation or Capacity Reservation group. If capacity isn't available, the instance will fail to launch.</p> </li> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone, and tenancy). If capacity isn't available, the instance runs as an On-Demand Instance.</p> </li> <li> <p> <code>none</code> - The instance doesn't run in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance.</p> </li> </ul>",
         "CapacityReservationSpecificationResponse$CapacityReservationPreference": "<p>Describes the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>",
         "LaunchTemplateCapacityReservationSpecificationRequest$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>",
         "LaunchTemplateCapacityReservationSpecificationResponse$CapacityReservationPreference": "<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>"
@@ -3509,10 +3521,10 @@
       }
     },
     "CapacityReservationSpecification": {
-      "base": "<p>Describes an instance's Capacity Reservation targeting option. You can specify only one parameter at a time. If you specify <code>CapacityReservationPreference</code> and <code>CapacityReservationTarget</code>, the request fails.</p> <p>Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run as an On-Demand Instance or to run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation or a Capacity Reservation group.</p>",
+      "base": "<p>Describes an instance's Capacity Reservation targeting option. </p> <p>Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run as an On-Demand Instance, to run in any <code>open</code> Capacity Reservation that has matching attributes, or to run only in a Capacity Reservation or Capacity Reservation group. Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation or a Capacity Reservation group.</p> <p>You can only specify <code>CapacityReservationPreference</code> and <code>CapacityReservationTarget</code> if the <code>CapacityReservationPreference</code> is <code>capacity-reservations-only</code>.</p>",
       "refs": {
         "ModifyInstanceCapacityReservationAttributesRequest$CapacityReservationSpecification": "<p>Information about the Capacity Reservation targeting option.</p>",
-        "RunInstancesRequest$CapacityReservationSpecification": "<p>Information about the Capacity Reservation targeting option. If you do not specify this parameter, the instance's Capacity Reservation preference defaults to <code>open</code>, which enables it to run in any open Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p>"
+        "RunInstancesRequest$CapacityReservationSpecification": "<p>Information about the Capacity Reservation targeting option. If you do not specify this parameter, the instance's Capacity Reservation preference defaults to <code>open</code>, which enables it to run in any open Capacity Reservation that has matching attributes (instance type, platform, Availability Zone, and tenancy).</p>"
       }
     },
     "CapacityReservationSpecificationResponse": {
@@ -4226,6 +4238,18 @@
       "base": "<p>The CPU options for the instance. Both the core count and threads per core must be specified in the request.</p>",
       "refs": {
         "RunInstancesRequest$CpuOptions": "<p>The CPU options for the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\">Optimize CPU options</a> in the <i>Amazon EC2 User Guide</i>.</p>"
+      }
+    },
+    "CpuPerformanceFactor": {
+      "base": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>",
+      "refs": {
+        "BaselinePerformanceFactors$Cpu": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>"
+      }
+    },
+    "CpuPerformanceFactorRequest": {
+      "base": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>",
+      "refs": {
+        "BaselinePerformanceFactorsRequest$Cpu": "<p>The CPU performance to consider, using an instance family as the baseline reference.</p>"
       }
     },
     "CreateCapacityReservationBySplittingRequest": {
@@ -16925,6 +16949,30 @@
         "TransitGatewayPeeringAttachment$AccepterTgwInfo": "<p>Information about the accepter transit gateway.</p>"
       }
     },
+    "PerformanceFactorReference": {
+      "base": "<p>Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture.</p> <note> <p>Currently, only one instance family can be specified in the list.</p> </note>",
+      "refs": {
+        "PerformanceFactorReferenceSet$member": null
+      }
+    },
+    "PerformanceFactorReferenceRequest": {
+      "base": "<p>Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture.</p> <note> <p>Currently, only one instance family can be specified in the list.</p> </note>",
+      "refs": {
+        "PerformanceFactorReferenceSetRequest$member": null
+      }
+    },
+    "PerformanceFactorReferenceSet": {
+      "base": null,
+      "refs": {
+        "CpuPerformanceFactor$References": "<p>Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences.</p> <note> <p>Currently, only one instance family can be specified in the list.</p> </note>"
+      }
+    },
+    "PerformanceFactorReferenceSetRequest": {
+      "base": null,
+      "refs": {
+        "CpuPerformanceFactorRequest$References": "<p>Specify an instance family to use as the baseline reference for CPU performance. All instance types that match your specified attributes will be compared against the CPU performance of the referenced instance family, regardless of CPU manufacturer or architecture differences.</p> <note> <p>Currently, only one instance family can be specified in the list.</p> </note>"
+      }
+    },
     "PeriodType": {
       "base": null,
       "refs": {
@@ -21433,6 +21481,8 @@
         "PeeringTgwInfo$CoreNetworkId": "<p>The ID of the core network where the transit gateway peer is located.</p>",
         "PeeringTgwInfo$OwnerId": "<p>The ID of the Amazon Web Services account that owns the transit gateway.</p>",
         "PeeringTgwInfo$Region": "<p>The Region of the transit gateway.</p>",
+        "PerformanceFactorReference$InstanceFamily": "<p>The instance family to use as a baseline reference.</p> <note> <p>Ensure that you specify the correct value for the instance family. The instance family is everything before the period (<code>.</code>) in the instance type name. For example, in the instance type <code>c6i.large</code>, the instance family is <code>c6i</code>, not <code>c6</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html\">Amazon EC2 instance type naming conventions</a> in <i>Amazon EC2 Instance Types</i>.</p> </note> <p>The following instance families are <i>not supported</i> for performance protection:</p> <ul> <li> <p> <code>c1</code> </p> </li> <li> <p> <code>g3</code> | <code>g3s</code> </p> </li> <li> <p> <code>hpc7g</code> </p> </li> <li> <p> <code>m1</code> | <code>m2</code> </p> </li> <li> <p> <code>mac1</code> | <code>mac2</code> | <code>mac2-m1ultra</code> | <code>mac2-m2</code> | <code>mac2-m2pro</code> </p> </li> <li> <p> <code>p3dn</code> | <code>p4d</code> | <code>p5</code> </p> </li> <li> <p> <code>t1</code> </p> </li> <li> <p> <code>u-12tb1</code> | <code>u-18tb1</code> | <code>u-24tb1</code> | <code>u-3tb1</code> | <code>u-6tb1</code> | <code>u-9tb1</code> | <code>u7i-12tb</code> | <code>u7in-16tb</code> | <code>u7in-24tb</code> | <code>u7in-32tb</code> </p> </li> </ul> <p>If you enable performance protection by specifying a supported instance family, the returned instance types will exclude the above unsupported instance families.</p> <p>If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response for and an exception for , , , and .</p>",
+        "PerformanceFactorReferenceRequest$InstanceFamily": "<p>The instance family to use as a baseline reference.</p> <note> <p>Ensure that you specify the correct value for the instance family. The instance family is everything before the period (<code>.</code>) in the instance type name. For example, in the instance type <code>c6i.large</code>, the instance family is <code>c6i</code>, not <code>c6</code>. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html\">Amazon EC2 instance type naming conventions</a> in <i>Amazon EC2 Instance Types</i>.</p> </note> <p>The following instance families are <i>not supported</i> for performance protection:</p> <ul> <li> <p> <code>c1</code> </p> </li> <li> <p> <code>g3</code> | <code>g3s</code> </p> </li> <li> <p> <code>hpc7g</code> </p> </li> <li> <p> <code>m1</code> | <code>m2</code> </p> </li> <li> <p> <code>mac1</code> | <code>mac2</code> | <code>mac2-m1ultra</code> | <code>mac2-m2</code> | <code>mac2-m2pro</code> </p> </li> <li> <p> <code>p3dn</code> | <code>p4d</code> | <code>p5</code> </p> </li> <li> <p> <code>t1</code> </p> </li> <li> <p> <code>u-12tb1</code> | <code>u-18tb1</code> | <code>u-24tb1</code> | <code>u-3tb1</code> | <code>u-6tb1</code> | <code>u-9tb1</code> | <code>u7i-12tb</code> | <code>u7in-16tb</code> | <code>u7in-24tb</code> | <code>u7in-32tb</code> </p> </li> </ul> <p>If you enable performance protection by specifying a supported instance family, the returned instance types will exclude the above unsupported instance families.</p> <p>If you specify an unsupported instance family as a value for baseline performance, the API returns an empty response for and an exception for , , , and .</p>",
         "Phase1EncryptionAlgorithmsListValue$Value": "<p>The value for the encryption algorithm.</p>",
         "Phase1EncryptionAlgorithmsRequestListValue$Value": "<p>The value for the encryption algorithm.</p>",
         "Phase1IntegrityAlgorithmsListValue$Value": "<p>The value for the integrity algorithm.</p>",

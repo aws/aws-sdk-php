@@ -711,6 +711,8 @@
         },
         "InputType":{"shape":"InputType"},
         "Description":{"shape":"ResourceDescription"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -736,7 +738,9 @@
         "IngestEndpoints":{"shape":"IngestEndpointList"},
         "InputType":{"shape":"InputType"},
         "ETag":{"shape":"EntityTag"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "CreateDashManifestConfiguration":{
@@ -1372,7 +1376,9 @@
         "IngestEndpoints":{"shape":"IngestEndpointList"},
         "InputType":{"shape":"InputType"},
         "ETag":{"shape":"EntityTag"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "GetDashManifestConfiguration":{
@@ -1717,6 +1723,12 @@
       "type":"list",
       "member":{"shape":"IngestEndpoint"}
     },
+    "InputSwitchConfiguration":{
+      "type":"structure",
+      "members":{
+        "MQCSInputSwitching":{"shape":"Boolean"}
+      }
+    },
     "InputType":{
       "type":"string",
       "enum":[
@@ -1981,6 +1993,12 @@
     "OriginEndpointsList":{
       "type":"list",
       "member":{"shape":"OriginEndpointListConfiguration"}
+    },
+    "OutputHeaderConfiguration":{
+      "type":"structure",
+      "members":{
+        "PublishMQCS":{"shape":"Boolean"}
+      }
     },
     "PolicyText":{
       "type":"string",
@@ -2375,7 +2393,9 @@
           "location":"header",
           "locationName":"x-amzn-update-if-match"
         },
-        "Description":{"shape":"ResourceDescription"}
+        "Description":{"shape":"ResourceDescription"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "UpdateChannelResponse":{
@@ -2400,7 +2420,9 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
-        }
+        },
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "UpdateOriginEndpointRequest":{
@@ -2549,7 +2571,9 @@
         "HARVEST_JOB_UNABLE_TO_WRITE_TO_S3_DESTINATION",
         "HARVEST_JOB_CUSTOMER_ENDPOINT_READ_ACCESS_DENIED",
         "CLIP_START_TIME_WITH_START_OR_END",
-        "START_TAG_TIME_OFFSET_INVALID"
+        "START_TAG_TIME_OFFSET_INVALID",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION"
       ]
     }
   }

@@ -288,6 +288,14 @@
       "exception":true,
       "synthetic":true
     },
+    "AccountSettingsNotificationConfiguration":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "SnsConfiguration":{"shape":"SnsConfiguration"},
+        "RoleArn":{"shape":"AmazonResourceName"}
+      }
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":2048,
@@ -329,6 +337,13 @@
     "ColumnInfoList":{
       "type":"list",
       "member":{"shape":"ColumnInfo"}
+    },
+    "ComputeMode":{
+      "type":"string",
+      "enum":[
+        "ON_DEMAND",
+        "PROVISIONED"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -400,7 +415,8 @@
       "type":"structure",
       "members":{
         "MaxQueryTCU":{"shape":"MaxQueryCapacity"},
-        "QueryPricingModel":{"shape":"QueryPricingModel"}
+        "QueryPricingModel":{"shape":"QueryPricingModel"},
+        "QueryCompute":{"shape":"QueryComputeResponse"}
       }
     },
     "DescribeEndpointsRequest":{
@@ -518,6 +534,22 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "LastUpdate":{
+      "type":"structure",
+      "members":{
+        "TargetQueryTCU":{"shape":"QueryTCU"},
+        "Status":{"shape":"LastUpdateStatus"},
+        "StatusMessage":{"shape":"String"}
+      }
+    },
+    "LastUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "FAILED",
+        "SUCCEEDED"
+      ]
     },
     "ListScheduledQueriesRequest":{
       "type":"structure",
@@ -681,6 +713,36 @@
         "Parameters":{"shape":"ParameterMappingList"}
       }
     },
+    "ProvisionedCapacityRequest":{
+      "type":"structure",
+      "required":["TargetQueryTCU"],
+      "members":{
+        "TargetQueryTCU":{"shape":"QueryTCU"},
+        "NotificationConfiguration":{"shape":"AccountSettingsNotificationConfiguration"}
+      }
+    },
+    "ProvisionedCapacityResponse":{
+      "type":"structure",
+      "members":{
+        "ActiveQueryTCU":{"shape":"QueryTCU"},
+        "NotificationConfiguration":{"shape":"AccountSettingsNotificationConfiguration"},
+        "LastUpdate":{"shape":"LastUpdate"}
+      }
+    },
+    "QueryComputeRequest":{
+      "type":"structure",
+      "members":{
+        "ComputeMode":{"shape":"ComputeMode"},
+        "ProvisionedCapacity":{"shape":"ProvisionedCapacityRequest"}
+      }
+    },
+    "QueryComputeResponse":{
+      "type":"structure",
+      "members":{
+        "ComputeMode":{"shape":"ComputeMode"},
+        "ProvisionedCapacity":{"shape":"ProvisionedCapacityResponse"}
+      }
+    },
     "QueryExecutionException":{
       "type":"structure",
       "members":{
@@ -804,6 +866,7 @@
       "min":1,
       "sensitive":true
     },
+    "QueryTCU":{"type":"integer"},
     "QueryTemporalRange":{
       "type":"structure",
       "members":{
@@ -1210,14 +1273,16 @@
       "type":"structure",
       "members":{
         "MaxQueryTCU":{"shape":"MaxQueryCapacity"},
-        "QueryPricingModel":{"shape":"QueryPricingModel"}
+        "QueryPricingModel":{"shape":"QueryPricingModel"},
+        "QueryCompute":{"shape":"QueryComputeRequest"}
       }
     },
     "UpdateAccountSettingsResponse":{
       "type":"structure",
       "members":{
         "MaxQueryTCU":{"shape":"MaxQueryCapacity"},
-        "QueryPricingModel":{"shape":"QueryPricingModel"}
+        "QueryPricingModel":{"shape":"QueryPricingModel"},
+        "QueryCompute":{"shape":"QueryComputeResponse"}
       }
     },
     "UpdateScheduledQueryRequest":{

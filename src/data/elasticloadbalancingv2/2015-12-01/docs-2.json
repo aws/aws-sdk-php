@@ -18,6 +18,7 @@
     "DeleteTrustStore": "<p>Deletes a trust store.</p>",
     "DeregisterTargets": "<p>Deregisters the specified targets from the specified target group. After the targets are deregistered, they no longer receive traffic from the load balancer.</p> <p>The load balancer stops sending requests to targets that are deregistering, but uses connection draining to ensure that in-flight traffic completes on the existing connections. This deregistration delay is configured by default but can be updated for each target group.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Application Load Balancers User Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Network Load Balancers User Guide</i> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/target-groups.html#deregistration-delay\"> Deregistration delay</a> in the <i>Gateway Load Balancers User Guide</i> </p> </li> </ul> <p>Note: If the specified target does not exist, the action returns successfully.</p>",
     "DescribeAccountLimits": "<p>Describes the current Elastic Load Balancing resource limits for your Amazon Web Services account.</p> <p>For more information, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html\">Quotas for your Application Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-limits.html\">Quotas for your Network Load Balancers</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/quotas-limits.html\">Quotas for your Gateway Load Balancers</a> </p> </li> </ul>",
+    "DescribeCapacityReservation": "<p>Describes the capacity reservation status for the specified load balancer.</p>",
     "DescribeListenerAttributes": "<p>Describes the attributes for the specified listener.</p>",
     "DescribeListenerCertificates": "<p>Describes the default certificate and the certificate list for the specified HTTPS or TLS listener.</p> <p>If the default certificate is also in the certificate list, it appears twice in the results (once with <code>IsDefault</code> set to true and once with <code>IsDefault</code> set to false).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-https-listener.html#https-listener-certificates\">SSL certificates</a> in the <i>Application Load Balancers Guide</i> or <a href=\"https://docs.aws.amazon.com/elasticloadbalancing/latest/network/create-tls-listener.html#tls-listener-certificate\">Server certificates</a> in the <i>Network Load Balancers Guide</i>.</p>",
     "DescribeListeners": "<p>Describes the specified listeners or the listeners for the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer. You must specify either a load balancer or one or more listeners.</p>",
@@ -35,6 +36,7 @@
     "GetResourcePolicy": "<p>Retrieves the resource policy for a specified resource.</p>",
     "GetTrustStoreCaCertificatesBundle": "<p>Retrieves the ca certificate bundle.</p> <p>This action returns a pre-signed S3 URI which is active for ten minutes.</p>",
     "GetTrustStoreRevocationContent": "<p>Retrieves the specified revocation file.</p> <p>This action returns a pre-signed S3 URI which is active for ten minutes.</p>",
+    "ModifyCapacityReservation": "<p>Modifies the capacity reservation of the specified load balancer.</p> <p>When modifying capacity reservation, you must include at least one <code>MinimumLoadBalancerCapacity</code> or <code>ResetCapacityReservation</code>.</p>",
     "ModifyListener": "<p>Replaces the specified properties of the specified listener. Any properties that you do not specify remain unchanged.</p> <p>Changing the protocol from HTTPS to HTTP, or from TLS to TCP, removes the security policy and default certificate properties. If you change the protocol from HTTP to HTTPS, or from TCP to TLS, you must add the security policy and default certificate properties.</p> <p>To add an item to a list, remove an item from a list, or update an item in a list, you must provide the entire list. For example, to add an action, specify a list with the current actions plus the new action.</p>",
     "ModifyListenerAttributes": "<p>Modifies the specified attributes of the specified listener.</p>",
     "ModifyLoadBalancerAttributes": "<p>Modifies the specified attributes of the specified Application Load Balancer, Network Load Balancer, or Gateway Load Balancer.</p> <p>If any of the specified attributes can't be modified as requested, the call fails. Any existing attributes that you do not modify retain their current values.</p>",
@@ -345,6 +347,45 @@
         "LoadBalancer$CanonicalHostedZoneId": "<p>The ID of the Amazon Route 53 hosted zone associated with the load balancer.</p>"
       }
     },
+    "CapacityDecreaseRequestsLimitExceededException": {
+      "base": "<p>You've exceeded the daily capacity decrease limit for this reservation.</p>",
+      "refs": {
+      }
+    },
+    "CapacityReservationPendingException": {
+      "base": "<p>There is a pending capacity reservation.</p>",
+      "refs": {
+      }
+    },
+    "CapacityReservationStateEnum": {
+      "base": null,
+      "refs": {
+        "CapacityReservationStatus$Code": "<p>The status code.</p>"
+      }
+    },
+    "CapacityReservationStatus": {
+      "base": "<p>The status of a capacity reservation.</p>",
+      "refs": {
+        "ZonalCapacityReservationState$State": "<p>The state of the capacity reservation.</p>"
+      }
+    },
+    "CapacityUnits": {
+      "base": null,
+      "refs": {
+        "MinimumLoadBalancerCapacity$CapacityUnits": "<p>The number of capacity units.</p>"
+      }
+    },
+    "CapacityUnitsDouble": {
+      "base": null,
+      "refs": {
+        "ZonalCapacityReservationState$EffectiveCapacityUnits": "<p>The number of effective capacity units.</p>"
+      }
+    },
+    "CapacityUnitsLimitExceededException": {
+      "base": "<p>You've exceeded the capacity units limit.</p>",
+      "refs": {
+      }
+    },
     "Certificate": {
       "base": "<p>Information about an SSL server certificate.</p>",
       "refs": {
@@ -473,6 +514,13 @@
         "LoadBalancer$DNSName": "<p>The public DNS name of the load balancer.</p>"
       }
     },
+    "DecreaseRequestsRemaining": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationOutput$DecreaseRequestsRemaining": "<p>The amount of daily capacity decreases remaining.</p>",
+        "ModifyCapacityReservationOutput$DecreaseRequestsRemaining": "<p>The amount of daily capacity decreases remaining.</p>"
+      }
+    },
     "Default": {
       "base": null,
       "refs": {
@@ -560,6 +608,16 @@
       }
     },
     "DescribeAccountLimitsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityReservationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityReservationOutput": {
       "base": null,
       "refs": {
       }
@@ -939,6 +997,11 @@
       "refs": {
       }
     },
+    "InsufficientCapacityException": {
+      "base": "<p>There is insufficient capacity to reserve.</p>",
+      "refs": {
+      }
+    },
     "InvalidCaCertificatesBundleException": {
       "base": "<p>The specified ca certificate bundle is in an invalid format, or corrupt.</p>",
       "refs": {
@@ -1000,6 +1063,13 @@
       "base": null,
       "refs": {
         "Rule$IsDefault": "<p>Indicates whether this is the default rule.</p>"
+      }
+    },
+    "LastModifiedTime": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationOutput$LastModifiedTime": "<p>The last time the capacity reservation was modified.</p>",
+        "ModifyCapacityReservationOutput$LastModifiedTime": "<p>The last time the capacity reservation was modified.</p>"
       }
     },
     "Limit": {
@@ -1122,12 +1192,14 @@
       "refs": {
         "CreateListenerInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "DeleteLoadBalancerInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
+        "DescribeCapacityReservationInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "DescribeListenersInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "DescribeLoadBalancerAttributesInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "DescribeTargetGroupsInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "Listener$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "LoadBalancer$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "LoadBalancerArns$member": null,
+        "ModifyCapacityReservationInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "ModifyLoadBalancerAttributesInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "SetIpAddressTypeInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
         "SetSecurityGroupsInput$LoadBalancerArn": "<p>The Amazon Resource Name (ARN) of the load balancer.</p>",
@@ -1266,6 +1338,14 @@
         "Limit$Max": "<p>The maximum value of the limit.</p>"
       }
     },
+    "MinimumLoadBalancerCapacity": {
+      "base": "<p>The minimum capacity for a load balancer.</p>",
+      "refs": {
+        "DescribeCapacityReservationOutput$MinimumLoadBalancerCapacity": "<p>The requested minimum capacity reservation for the load balancer</p>",
+        "ModifyCapacityReservationInput$MinimumLoadBalancerCapacity": "<p>The minimum load balancer capacity reserved.</p>",
+        "ModifyCapacityReservationOutput$MinimumLoadBalancerCapacity": "<p>The requested minimum capacity reservation for the load balancer</p>"
+      }
+    },
     "MitigationInEffectEnum": {
       "base": null,
       "refs": {
@@ -1276,6 +1356,16 @@
       "base": null,
       "refs": {
         "MutualAuthenticationAttributes$Mode": "<p>The client certificate handling method. Options are <code>off</code>, <code>passthrough</code> or <code>verify</code>. The default value is <code>off</code>.</p>"
+      }
+    },
+    "ModifyCapacityReservationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyCapacityReservationOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ModifyListenerAttributesInput": {
@@ -1432,6 +1522,11 @@
         "TargetGroup$Port": "<p>The port on which the targets are listening. This parameter is not used if the target is a Lambda function.</p>"
       }
     },
+    "PriorRequestNotCompleteException": {
+      "base": "<p>This operation is not allowed while a prior request has not been completed.</p>",
+      "refs": {
+      }
+    },
     "PriorityInUseException": {
       "base": "<p>The specified priority is in use.</p>",
       "refs": {
@@ -1562,6 +1657,12 @@
     "RemoveTrustStoreRevocationsOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "ResetCapacityReservation": {
+      "base": null,
+      "refs": {
+        "ModifyCapacityReservationInput$ResetCapacityReservation": "<p>Resets the capacity reservation.</p>"
       }
     },
     "ResourceArn": {
@@ -1852,6 +1953,7 @@
     "StateReason": {
       "base": null,
       "refs": {
+        "CapacityReservationStatus$Reason": "<p>The reason code for the status.</p>",
         "LoadBalancerState$Reason": "<p>A description of the state.</p>"
       }
     },
@@ -2344,11 +2446,25 @@
         "TargetGroup$VpcId": "<p>The ID of the VPC for the targets.</p>"
       }
     },
+    "ZonalCapacityReservationState": {
+      "base": "<p>The capacity reservation status for each availability zone.</p>",
+      "refs": {
+        "ZonalCapacityReservationStates$member": null
+      }
+    },
+    "ZonalCapacityReservationStates": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityReservationOutput$CapacityReservationState": "<p>The state of the capacity reservation.</p>",
+        "ModifyCapacityReservationOutput$CapacityReservationState": "<p>The state of the capacity reservation.</p>"
+      }
+    },
     "ZoneName": {
       "base": null,
       "refs": {
         "AvailabilityZone$ZoneName": "<p>The name of the Availability Zone.</p>",
-        "TargetDescription$AvailabilityZone": "<p>An Availability Zone or <code>all</code>. This determines whether the target receives traffic from the load balancer nodes in the specified Availability Zone or from all enabled Availability Zones for the load balancer.</p> <p>For Application Load Balancer target groups, the specified Availability Zone value is only applicable when cross-zone load balancing is off. Otherwise the parameter is ignored and treated as <code>all</code>.</p> <p>This parameter is not supported if the target type of the target group is <code>instance</code> or <code>alb</code>.</p> <p>If the target type is <code>ip</code> and the IP address is in a subnet of the VPC for the target group, the Availability Zone is automatically detected and this parameter is optional. If the IP address is outside the VPC, this parameter is required.</p> <p>For Application Load Balancer target groups with cross-zone load balancing off, if the target type is <code>ip</code> and the IP address is outside of the VPC for the target group, this should be an Availability Zone inside the VPC for the target group.</p> <p>If the target type is <code>lambda</code>, this parameter is optional and the only supported value is <code>all</code>.</p>"
+        "TargetDescription$AvailabilityZone": "<p>An Availability Zone or <code>all</code>. This determines whether the target receives traffic from the load balancer nodes in the specified Availability Zone or from all enabled Availability Zones for the load balancer.</p> <p>For Application Load Balancer target groups, the specified Availability Zone value is only applicable when cross-zone load balancing is off. Otherwise the parameter is ignored and treated as <code>all</code>.</p> <p>This parameter is not supported if the target type of the target group is <code>instance</code> or <code>alb</code>.</p> <p>If the target type is <code>ip</code> and the IP address is in a subnet of the VPC for the target group, the Availability Zone is automatically detected and this parameter is optional. If the IP address is outside the VPC, this parameter is required.</p> <p>For Application Load Balancer target groups with cross-zone load balancing off, if the target type is <code>ip</code> and the IP address is outside of the VPC for the target group, this should be an Availability Zone inside the VPC for the target group.</p> <p>If the target type is <code>lambda</code>, this parameter is optional and the only supported value is <code>all</code>.</p>",
+        "ZonalCapacityReservationState$AvailabilityZone": "<p>Information about the availability zone.</p>"
       }
     }
   }

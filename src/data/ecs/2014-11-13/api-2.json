@@ -1059,6 +1059,13 @@
         "managedDraining":{"shape":"ManagedDraining"}
       }
     },
+    "AvailabilityZoneRebalancing":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AwsVpcConfiguration":{
       "type":"structure",
       "required":["subnets"],
@@ -1539,6 +1546,7 @@
         "cluster":{"shape":"String"},
         "serviceName":{"shape":"String"},
         "taskDefinition":{"shape":"String"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"},
         "loadBalancers":{"shape":"LoadBalancers"},
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "desiredCount":{"shape":"BoxedInteger"},
@@ -3255,7 +3263,8 @@
         "createdBy":{"shape":"String"},
         "enableECSManagedTags":{"shape":"Boolean"},
         "propagateTags":{"shape":"PropagateTags"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"}
       }
     },
     "ServiceConnectClientAlias":{
@@ -4221,6 +4230,7 @@
         "taskDefinition":{"shape":"String"},
         "capacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
         "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "placementConstraints":{"shape":"PlacementConstraints"},
         "placementStrategy":{"shape":"PlacementStrategies"},

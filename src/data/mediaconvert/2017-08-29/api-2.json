@@ -3384,6 +3384,10 @@
     "CreateQueueRequest": {
       "type": "structure",
       "members": {
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "Description": {
           "shape": "__string",
           "locationName": "description"
@@ -7541,6 +7545,14 @@
         "Queues": {
           "shape": "__listOfQueue",
           "locationName": "queues"
+        },
+        "TotalConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "totalConcurrentJobs"
+        },
+        "UnallocatedConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "unallocatedConcurrentJobs"
         }
       }
     },
@@ -9487,6 +9499,10 @@
           "shape": "__string",
           "locationName": "arn"
         },
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "CreatedAt": {
           "shape": "__timestampUnix",
           "locationName": "createdAt"
@@ -9514,6 +9530,10 @@
         "ReservationPlan": {
           "shape": "ReservationPlan",
           "locationName": "reservationPlan"
+        },
+        "ServiceOverrides": {
+          "shape": "__listOfServiceOverride",
+          "locationName": "serviceOverrides"
         },
         "Status": {
           "shape": "QueueStatus",
@@ -9864,6 +9884,27 @@
         "NextToken": {
           "shape": "__string",
           "locationName": "nextToken"
+        }
+      }
+    },
+    "ServiceOverride": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "OverrideValue": {
+          "shape": "__string",
+          "locationName": "overrideValue"
+        },
+        "Value": {
+          "shape": "__string",
+          "locationName": "value"
         }
       }
     },
@@ -10389,6 +10430,10 @@
     "UpdateQueueRequest": {
       "type": "structure",
       "members": {
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "Description": {
           "shape": "__string",
           "locationName": "description"
@@ -12250,6 +12295,12 @@
       "type": "list",
       "member": {
         "shape": "QueueTransition"
+      }
+    },
+    "__listOfServiceOverride": {
+      "type": "list",
+      "member": {
+        "shape": "ServiceOverride"
       }
     },
     "__listOfTeletextPageType": {

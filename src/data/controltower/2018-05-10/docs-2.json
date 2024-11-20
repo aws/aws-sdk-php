@@ -50,7 +50,10 @@
         "EnableControlOutput$arn": "<p>The ARN of the <code>EnabledControl</code> resource.</p>",
         "EnabledBaselineBaselineIdentifiers$member": null,
         "EnabledBaselineDetails$arn": "<p>The ARN of the <code>EnabledBaseline</code> resource.</p>",
+        "EnabledBaselineDetails$parentIdentifier": "<p>An ARN that represents the parent <code>EnabledBaseline</code> at the Organizational Unit (OU) level, from which the child <code>EnabledBaseline</code> inherits its configuration. The value is returned by <code>GetEnabledBaseline</code>.</p>",
+        "EnabledBaselineParentIdentifiers$member": null,
         "EnabledBaselineSummary$arn": "<p>The ARN of the <code>EnabledBaseline</code> resource</p>",
+        "EnabledBaselineSummary$parentIdentifier": "<p>An ARN that represents an object returned by <code>ListEnabledBaseline</code>, to describe an enabled baseline.</p>",
         "EnabledBaselineTargetIdentifiers$member": null,
         "EnabledControlDetails$arn": "<p>The ARN of the enabled control.</p>",
         "EnabledControlIdentifiers$member": null,
@@ -110,6 +113,12 @@
       "base": null,
       "refs": {
         "ListBaselinesOutput$baselines": "<p>A list of <code>Baseline</code> object details.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ListEnabledBaselinesInput$includeChildren": "<p>A value that can be set to include the child enabled baselines in responses. The default value is false.</p>"
       }
     },
     "ConflictException": {
@@ -323,6 +332,12 @@
       "refs": {
         "EnableBaselineInput$parameters": "<p>A list of <code>key-value</code> objects that specify enablement parameters, where <code>key</code> is a string and <code>value</code> is a document of any type.</p>",
         "UpdateEnabledBaselineInput$parameters": "<p>Parameters to apply when making an update.</p>"
+      }
+    },
+    "EnabledBaselineParentIdentifiers": {
+      "base": null,
+      "refs": {
+        "EnabledBaselineFilter$parentIdentifiers": "<p>An optional filter that sets up a list of <code>parentIdentifiers</code> to filter the results of the <code>ListEnabledBaseline</code> output.</p>"
       }
     },
     "EnabledBaselineSummary": {

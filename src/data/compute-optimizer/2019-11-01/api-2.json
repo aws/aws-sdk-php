@@ -129,6 +129,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ExportIdleRecommendations":{
+      "name":"ExportIdleRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportIdleRecommendationsRequest"},
+      "output":{"shape":"ExportIdleRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ExportLambdaFunctionRecommendations":{
       "name":"ExportLambdaFunctionRecommendations",
       "http":{
@@ -349,6 +368,25 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetIdleRecommendations":{
+      "name":"GetIdleRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIdleRecommendationsRequest"},
+      "output":{"shape":"GetIdleRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"MissingAuthenticationToken"},
         {"shape":"ThrottlingException"}
       ]
@@ -703,6 +741,7 @@
         "P99_5"
       ]
     },
+    "DBClusterIdentifier":{"type":"string"},
     "DBInstanceClass":{"type":"string"},
     "DBStorageConfiguration":{
       "type":"structure",
@@ -751,6 +790,13 @@
     "DestinationBucket":{"type":"string"},
     "DestinationKey":{"type":"string"},
     "DestinationKeyPrefix":{"type":"string"},
+    "Dimension":{
+      "type":"string",
+      "enum":[
+        "SavingsValue",
+        "SavingsValueAfterDiscount"
+      ]
+    },
     "EBSEffectiveRecommendationPreferences":{
       "type":"structure",
       "members":{
@@ -1151,6 +1197,25 @@
         "s3Destination":{"shape":"S3Destination"}
       }
     },
+    "ExportIdleRecommendationsRequest":{
+      "type":"structure",
+      "required":["s3DestinationConfig"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "filters":{"shape":"IdleRecommendationFilters"},
+        "fieldsToExport":{"shape":"ExportableIdleFields"},
+        "s3DestinationConfig":{"shape":"S3DestinationConfig"},
+        "fileFormat":{"shape":"FileFormat"},
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+      }
+    },
+    "ExportIdleRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "s3Destination":{"shape":"S3Destination"}
+      }
+    },
     "ExportLambdaFunctionRecommendationsRequest":{
       "type":"structure",
       "required":["s3DestinationConfig"],
@@ -1321,6 +1386,35 @@
       "type":"list",
       "member":{"shape":"ExportableECSServiceField"}
     },
+    "ExportableIdleField":{
+      "type":"string",
+      "enum":[
+        "AccountId",
+        "ResourceArn",
+        "ResourceId",
+        "ResourceType",
+        "LastRefreshTimestamp",
+        "LookbackPeriodInDays",
+        "SavingsOpportunity",
+        "SavingsOpportunityAfterDiscount",
+        "UtilizationMetricsCpuMaximum",
+        "UtilizationMetricsMemoryMaximum",
+        "UtilizationMetricsNetworkOutBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkInBytesPerSecondMaximum",
+        "UtilizationMetricsDatabaseConnectionsMaximum",
+        "UtilizationMetricsEBSVolumeReadIOPSMaximum",
+        "UtilizationMetricsEBSVolumeWriteIOPSMaximum",
+        "UtilizationMetricsVolumeReadOpsPerSecondMaximum",
+        "UtilizationMetricsVolumeWriteOpsPerSecondMaximum",
+        "Finding",
+        "FindingDescription",
+        "Tags"
+      ]
+    },
+    "ExportableIdleFields":{
+      "type":"list",
+      "member":{"shape":"ExportableIdleField"}
+    },
     "ExportableInstanceField":{
       "type":"string",
       "enum":[
@@ -1489,6 +1583,7 @@
         "CurrentInstanceOnDemandHourlyPrice",
         "CurrentStorageOnDemandMonthlyPrice",
         "LookbackPeriodInDays",
+        "CurrentInstancePerformanceRisk",
         "UtilizationMetricsCpuMaximum",
         "UtilizationMetricsMemoryMaximum",
         "UtilizationMetricsEBSVolumeStorageSpaceUtilizationMaximum",
@@ -1499,6 +1594,14 @@
         "UtilizationMetricsEBSVolumeReadThroughputMaximum",
         "UtilizationMetricsEBSVolumeWriteThroughputMaximum",
         "UtilizationMetricsDatabaseConnectionsMaximum",
+        "UtilizationMetricsStorageNetworkReceiveThroughputMaximum",
+        "UtilizationMetricsStorageNetworkTransmitThroughputMaximum",
+        "UtilizationMetricsAuroraMemoryHealthStateMaximum",
+        "UtilizationMetricsAuroraMemoryNumDeclinedSqlTotalMaximum",
+        "UtilizationMetricsAuroraMemoryNumKillConnTotalMaximum",
+        "UtilizationMetricsAuroraMemoryNumKillQueryTotalMaximum",
+        "UtilizationMetricsReadIOPSEphemeralStorageMaximum",
+        "UtilizationMetricsWriteIOPSEphemeralStorageMaximum",
         "InstanceFinding",
         "InstanceFindingReasonCodes",
         "StorageFinding",
@@ -1532,7 +1635,9 @@
         "EffectiveRecommendationPreferencesLookBackPeriod",
         "EffectiveRecommendationPreferencesSavingsEstimationMode",
         "LastRefreshTimestamp",
-        "Tags"
+        "Tags",
+        "DBClusterIdentifier",
+        "PromotionTier"
       ]
     },
     "ExportableRDSDBFields":{
@@ -1841,6 +1946,25 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "GetIdleRecommendationsRequest":{
+      "type":"structure",
+      "members":{
+        "resourceArns":{"shape":"ResourceArns"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"IdleMaxResults"},
+        "filters":{"shape":"IdleRecommendationFilters"},
+        "accountIds":{"shape":"AccountIds"},
+        "orderBy":{"shape":"OrderBy"}
+      }
+    },
+    "GetIdleRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "idleRecommendations":{"shape":"IdleRecommendations"},
+        "errors":{"shape":"IdleRecommendationErrors"}
+      }
+    },
     "GetLambdaFunctionRecommendationsRequest":{
       "type":"structure",
       "members":{
@@ -1990,6 +2114,140 @@
         "True",
         "False"
       ]
+    },
+    "IdleEstimatedMonthlySavings":{
+      "type":"structure",
+      "members":{
+        "currency":{"shape":"Currency"},
+        "value":{"shape":"Value"}
+      }
+    },
+    "IdleFinding":{
+      "type":"string",
+      "enum":[
+        "Idle",
+        "Unattached"
+      ]
+    },
+    "IdleFindingDescription":{"type":"string"},
+    "IdleMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":0
+    },
+    "IdleMetricName":{
+      "type":"string",
+      "enum":[
+        "CPU",
+        "Memory",
+        "NetworkOutBytesPerSecond",
+        "NetworkInBytesPerSecond",
+        "DatabaseConnections",
+        "EBSVolumeReadIOPS",
+        "EBSVolumeWriteIOPS",
+        "VolumeReadOpsPerSecond",
+        "VolumeWriteOpsPerSecond"
+      ]
+    },
+    "IdleRecommendation":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ResourceArn"},
+        "resourceId":{"shape":"ResourceId"},
+        "resourceType":{"shape":"IdleRecommendationResourceType"},
+        "accountId":{"shape":"AccountId"},
+        "finding":{"shape":"IdleFinding"},
+        "findingDescription":{"shape":"IdleFindingDescription"},
+        "savingsOpportunity":{"shape":"IdleSavingsOpportunity"},
+        "savingsOpportunityAfterDiscounts":{"shape":"IdleSavingsOpportunityAfterDiscounts"},
+        "utilizationMetrics":{"shape":"IdleUtilizationMetrics"},
+        "lookBackPeriodInDays":{"shape":"LookBackPeriodInDays"},
+        "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "IdleRecommendationError":{
+      "type":"structure",
+      "members":{
+        "identifier":{"shape":"Identifier"},
+        "code":{"shape":"Code"},
+        "message":{"shape":"Message"},
+        "resourceType":{"shape":"IdleRecommendationResourceType"}
+      }
+    },
+    "IdleRecommendationErrors":{
+      "type":"list",
+      "member":{"shape":"IdleRecommendationError"}
+    },
+    "IdleRecommendationFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"IdleRecommendationFilterName"},
+        "values":{"shape":"FilterValues"}
+      }
+    },
+    "IdleRecommendationFilterName":{
+      "type":"string",
+      "enum":[
+        "Finding",
+        "ResourceType"
+      ]
+    },
+    "IdleRecommendationFilters":{
+      "type":"list",
+      "member":{"shape":"IdleRecommendationFilter"}
+    },
+    "IdleRecommendationResourceType":{
+      "type":"string",
+      "enum":[
+        "EC2Instance",
+        "AutoScalingGroup",
+        "EBSVolume",
+        "ECSService",
+        "RDSDBInstance"
+      ]
+    },
+    "IdleRecommendations":{
+      "type":"list",
+      "member":{"shape":"IdleRecommendation"}
+    },
+    "IdleSavingsOpportunity":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"IdleEstimatedMonthlySavings"}
+      }
+    },
+    "IdleSavingsOpportunityAfterDiscounts":{
+      "type":"structure",
+      "members":{
+        "savingsOpportunityPercentage":{"shape":"SavingsOpportunityPercentage"},
+        "estimatedMonthlySavings":{"shape":"IdleEstimatedMonthlySavings"}
+      }
+    },
+    "IdleSummaries":{
+      "type":"list",
+      "member":{"shape":"IdleSummary"}
+    },
+    "IdleSummary":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"IdleFinding"},
+        "value":{"shape":"SummaryValue"}
+      }
+    },
+    "IdleUtilizationMetric":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"IdleMetricName"},
+        "statistic":{"shape":"MetricStatistic"},
+        "value":{"shape":"MetricValue"}
+      }
+    },
+    "IdleUtilizationMetrics":{
+      "type":"list",
+      "member":{"shape":"IdleUtilizationMetric"}
     },
     "IncludeMemberAccounts":{"type":"boolean"},
     "InferredWorkloadSaving":{
@@ -2592,6 +2850,20 @@
       "exception":true,
       "synthetic":true
     },
+    "Order":{
+      "type":"string",
+      "enum":[
+        "Asc",
+        "Desc"
+      ]
+    },
+    "OrderBy":{
+      "type":"structure",
+      "members":{
+        "dimension":{"shape":"Dimension"},
+        "order":{"shape":"Order"}
+      }
+    },
     "PerformanceRisk":{
       "type":"double",
       "max":4,
@@ -2650,6 +2922,7 @@
       "type":"list",
       "member":{"shape":"UtilizationMetric"}
     },
+    "PromotionTier":{"type":"integer"},
     "PutRecommendationPreferencesRequest":{
       "type":"structure",
       "required":["resourceType"],
@@ -2669,6 +2942,15 @@
       "type":"structure",
       "members":{
       }
+    },
+    "RDSCurrentInstancePerformanceRisk":{
+      "type":"string",
+      "enum":[
+        "VeryLow",
+        "Low",
+        "Medium",
+        "High"
+      ]
     },
     "RDSDBInstanceRecommendationOption":{
       "type":"structure",
@@ -2697,7 +2979,15 @@
         "EBSVolumeWriteIOPS",
         "EBSVolumeReadThroughput",
         "EBSVolumeWriteThroughput",
-        "DatabaseConnections"
+        "DatabaseConnections",
+        "StorageNetworkReceiveThroughput",
+        "StorageNetworkTransmitThroughput",
+        "AuroraMemoryHealthState",
+        "AuroraMemoryNumDeclinedSql",
+        "AuroraMemoryNumKillConnTotal",
+        "AuroraMemoryNumKillQueryTotal",
+        "ReadIOPSEphemeralStorage",
+        "WriteIOPSEphemeralStorage"
       ]
     },
     "RDSDBMetricStatistic":{
@@ -2719,12 +3009,15 @@
         "accountId":{"shape":"AccountId"},
         "engine":{"shape":"Engine"},
         "engineVersion":{"shape":"EngineVersion"},
+        "promotionTier":{"shape":"PromotionTier"},
         "currentDBInstanceClass":{"shape":"CurrentDBInstanceClass"},
         "currentStorageConfiguration":{"shape":"DBStorageConfiguration"},
+        "dbClusterIdentifier":{"shape":"DBClusterIdentifier"},
         "idle":{"shape":"Idle"},
         "instanceFinding":{"shape":"RDSInstanceFinding"},
         "storageFinding":{"shape":"RDSStorageFinding"},
         "instanceFindingReasonCodes":{"shape":"RDSInstanceFindingReasonCodes"},
+        "currentInstancePerformanceRisk":{"shape":"RDSCurrentInstancePerformanceRisk"},
         "storageFindingReasonCodes":{"shape":"RDSStorageFindingReasonCodes"},
         "instanceRecommendationOptions":{"shape":"RDSDBInstanceRecommendationOptions"},
         "storageRecommendationOptions":{"shape":"RDSDBStorageRecommendationOptions"},
@@ -2839,12 +3132,17 @@
         "CPUOverprovisioned",
         "NetworkBandwidthOverprovisioned",
         "EBSIOPSOverprovisioned",
+        "EBSIOPSUnderprovisioned",
         "EBSThroughputOverprovisioned",
         "CPUUnderprovisioned",
         "NetworkBandwidthUnderprovisioned",
         "EBSThroughputUnderprovisioned",
         "NewGenerationDBInstanceClassAvailable",
-        "NewEngineVersionAvailable"
+        "NewEngineVersionAvailable",
+        "DBClusterWriterUnderprovisioned",
+        "MemoryUnderprovisioned",
+        "InstanceStorageReadIOPSUnderprovisioned",
+        "InstanceStorageWriteIOPSUnderprovisioned"
       ]
     },
     "RDSInstanceFindingReasonCodes":{
@@ -3012,9 +3310,12 @@
       "type":"structure",
       "members":{
         "summaries":{"shape":"Summaries"},
+        "idleSummaries":{"shape":"IdleSummaries"},
         "recommendationResourceType":{"shape":"RecommendationSourceType"},
         "accountId":{"shape":"AccountId"},
         "savingsOpportunity":{"shape":"SavingsOpportunity"},
+        "idleSavingsOpportunity":{"shape":"SavingsOpportunity"},
+        "aggregatedSavingsOpportunity":{"shape":"SavingsOpportunity"},
         "currentPerformanceRiskRatings":{"shape":"CurrentPerformanceRiskRatings"},
         "inferredWorkloadSavings":{"shape":"InferredWorkloadSavings"}
       }
@@ -3038,6 +3339,7 @@
       "type":"list",
       "member":{"shape":"ResourceArn"}
     },
+    "ResourceId":{"type":"string"},
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -3056,7 +3358,8 @@
         "NotApplicable",
         "EcsService",
         "License",
-        "RdsDBInstance"
+        "RdsDBInstance",
+        "Idle"
       ]
     },
     "RootVolume":{"type":"boolean"},

@@ -5,7 +5,8 @@
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
     "InvokeAgent": "<note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeAgent</code>.</p> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response is returned in the <code>bytes</code> field of the <code>chunk</code> object.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
-    "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
+    "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
+    "OptimizePrompt": "<p>Optimizes a prompt for the task that you specify. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-optimize.html\">Optimize a prompt</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
     "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>"
   },
@@ -14,11 +15,12 @@
       "base": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
       "refs": {
         "FlowResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
+        "OptimizedPromptStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
         "ResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>"
       }
     },
     "ActionGroupInvocationInput": {
-      "base": "<p>Contains information about the action group being invoked. For more information about the possible structures, see the InvocationInput tab in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-orchestration.html\">OrchestrationTrace</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains information about the action group being invoked. For more information about the possible structures, see the InvocationInput tab in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-orchestration.html\">OrchestrationTrace</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
       "refs": {
         "InvocationInput$actionGroupInvocationInput": "<p>Contains information about the action group to be invoked.</p>"
       }
@@ -92,6 +94,12 @@
         "TracePart$agentVersion": "<p>The version of the agent.</p>"
       }
     },
+    "AnalyzePromptEvent": {
+      "base": "<p>An event in which the prompt was analyzed in preparation for optimization.</p>",
+      "refs": {
+        "OptimizedPromptStream$analyzePromptEvent": "<p>An event in which the prompt was analyzed in preparation for optimization.</p>"
+      }
+    },
     "ApiContentMap": {
       "base": null,
       "refs": {
@@ -146,6 +154,7 @@
       "base": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
       "refs": {
         "FlowResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
+        "OptimizedPromptStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
         "ResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>"
       }
     },
@@ -273,6 +282,7 @@
       "base": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
       "refs": {
         "FlowResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
+        "OptimizedPromptStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
         "ResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>"
       }
     },
@@ -840,6 +850,12 @@
         "SessionState$files": "<p>Contains information about the files used by code interpreter.</p>"
       }
     },
+    "InputPrompt": {
+      "base": "<p>Contains information about the prompt to optimize.</p>",
+      "refs": {
+        "OptimizePromptRequest$input": "<p>Contains the prompt to optimize.</p>"
+      }
+    },
     "InputText": {
       "base": null,
       "refs": {
@@ -858,6 +874,7 @@
       "base": "<p>An internal server error occurred. Retry your request.</p>",
       "refs": {
         "FlowResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
+        "OptimizedPromptStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "ResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
       }
     },
@@ -1145,6 +1162,40 @@
       "base": "<p>Contains the result or output of an action group or knowledge base, or the response to the user.</p>",
       "refs": {
         "OrchestrationTrace$observation": "<p>Details about the observation (the output of the action group Lambda or knowledge base) made by the agent.</p>"
+      }
+    },
+    "OptimizePromptRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "OptimizePromptRequestTargetModelIdString": {
+      "base": null,
+      "refs": {
+        "OptimizePromptRequest$targetModelId": "<p>The unique identifier of the model that you want to optimize the prompt for.</p>"
+      }
+    },
+    "OptimizePromptResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "OptimizedPrompt": {
+      "base": "<p>Contains information about the optimized prompt.</p>",
+      "refs": {
+        "OptimizedPromptEvent$optimizedPrompt": "<p>Contains information about the optimized prompt.</p>"
+      }
+    },
+    "OptimizedPromptEvent": {
+      "base": "<p>An event in which the prompt was optimized.</p>",
+      "refs": {
+        "OptimizedPromptStream$optimizedPromptEvent": "<p>An event in which the prompt was optimized.</p>"
+      }
+    },
+    "OptimizedPromptStream": {
+      "base": "<p>The stream containing events in the prompt optimization process.</p>",
+      "refs": {
+        "OptimizePromptResponse$optimizedPrompt": "<p>The prompt after being optimized for the task.</p>"
       }
     },
     "OrchestrationConfiguration": {
@@ -1620,6 +1671,7 @@
       "base": null,
       "refs": {
         "ActionGroupInvocationInput$invocationId": "<p>The unique identifier of the invocation. Only returned if the <code>executionType</code> is <code>RETURN_CONTROL</code>.</p>",
+        "AnalyzePromptEvent$message": "<p>A message describing the analysis of the prompt.</p>",
         "ApiContentMap$key": null,
         "ApiInvocationInput$actionGroup": "<p>The action group that the API operation belongs to.</p>",
         "ApiInvocationInput$httpMethod": "<p>The HTTP method of the API operation.</p>",
@@ -1693,10 +1745,23 @@
         "InferenceConfig$textInferenceConfig": "<p> Configuration settings specific to text generation while generating responses using RetrieveAndGenerate. </p>"
       }
     },
+    "TextPrompt": {
+      "base": "<p>Contains information about the text prompt to optimize.</p>",
+      "refs": {
+        "InputPrompt$textPrompt": "<p>Contains information about the text prompt to optimize.</p>",
+        "OptimizedPrompt$textPrompt": "<p>Contains information about the text in the prompt that was optimized.</p>"
+      }
+    },
     "TextPromptTemplate": {
       "base": null,
       "refs": {
         "PromptTemplate$textPromptTemplate": "<p>The template for the prompt that's sent to the model for response generation. You can include prompt placeholders, which become replaced before the prompt is sent to the model to provide instructions and context to the model. In addition, you can include XML tags to delineate meaningful sections of the prompt template.</p> <p>For more information, see the following resources:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt\">Knowledge base prompt templates</a> </p> </li> <li> <p> <a href=\"https://docs.anthropic.com/claude/docs/use-xml-tags\">Use XML tags with Anthropic Claude models</a> </p> </li> </ul>"
+      }
+    },
+    "TextPromptTextString": {
+      "base": null,
+      "refs": {
+        "TextPrompt$text": "<p>The text in the text prompt to optimize.</p>"
       }
     },
     "TextResponsePart": {
@@ -1709,6 +1774,7 @@
       "base": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
       "refs": {
         "FlowResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
+        "OptimizedPromptStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>",
         "ResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>"
       }
     },
@@ -1773,6 +1839,7 @@
       "base": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
       "refs": {
         "FlowResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
+        "OptimizedPromptStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
         "ResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>"
       }
     },
