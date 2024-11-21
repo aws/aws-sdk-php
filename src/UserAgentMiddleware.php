@@ -15,6 +15,7 @@ use Psr\Http\Message\RequestInterface;
 class UserAgentMiddleware
 {
     const AGENT_VERSION = 2.1;
+
     static $userAgentFnList = [
         'getSdkVersion',
         'getUserAgentVersion',
@@ -26,6 +27,7 @@ class UserAgentMiddleware
         'getAppId',
         'getMetrics'
     ];
+
     static $metricsFnList = [
         'appendEndpointMetric',
         'appendAccountIdModeMetric',
@@ -34,8 +36,10 @@ class UserAgentMiddleware
 
     /** @var callable  */
     private $nextHandler;
+
     /** @var array */
     private $args;
+
     /** @var MetricsBuilder */
     private $metricsBuilder;
 
@@ -68,6 +72,7 @@ class UserAgentMiddleware
     /**
      * When invoked, its injects the user agent header into the
      * request headers.
+     *
      * @param CommandInterface $command
      * @param RequestInterface $request
      *

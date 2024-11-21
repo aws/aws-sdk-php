@@ -49,10 +49,13 @@ final class MetricsBuilder
 
     /** @var int */
     private static $MAX_METRICS_SIZE = 1024; // 1KB or 1024 B
+
     /** @var string */
     private static $METRIC_SEPARATOR = ",";
+
     /** @var array $metrics */
     private $metrics;
+
     /** @var int $metricsSize */
     private $metricsSize;
 
