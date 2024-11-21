@@ -1143,6 +1143,12 @@
       },
       "input":{"shape":"PutObjectRequest"},
       "output":{"shape":"PutObjectOutput"},
+      "errors":[
+        {"shape":"InvalidRequest"},
+        {"shape":"InvalidWriteOffset"},
+        {"shape":"TooManyParts"},
+        {"shape":"EncryptionTypeMismatch"}
+      ],
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
@@ -1360,6 +1366,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "IfMatchInitiatedTime":{
+          "shape":"IfMatchInitiatedTime",
+          "location":"header",
+          "locationName":"x-amz-if-match-initiated-time"
         }
       }
     },
@@ -2994,6 +3005,21 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "IfMatch":{
+          "shape":"IfMatch",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "IfMatchLastModifiedTime":{
+          "shape":"IfMatchLastModifiedTime",
+          "location":"header",
+          "locationName":"x-amz-if-match-last-modified-time"
+        },
+        "IfMatchSize":{
+          "shape":"IfMatchSize",
+          "location":"header",
+          "locationName":"x-amz-if-match-size"
         }
       }
     },
@@ -3174,6 +3200,13 @@
       "members":{
         "ReplicaKmsKeyID":{"shape":"ReplicaKmsKeyID"}
       }
+    },
+    "EncryptionTypeMismatch":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "End":{
       "type":"long",
@@ -4952,6 +4985,18 @@
     "HttpRedirectCode":{"type":"string"},
     "ID":{"type":"string"},
     "IfMatch":{"type":"string"},
+    "IfMatchInitiatedTime":{
+      "type":"timestamp",
+      "timestampFormat":"rfc822"
+    },
+    "IfMatchLastModifiedTime":{
+      "type":"timestamp",
+      "timestampFormat":"rfc822"
+    },
+    "IfMatchSize":{
+      "type":"long",
+      "box":true
+    },
     "IfModifiedSince":{"type":"timestamp"},
     "IfNoneMatch":{"type":"string"},
     "IfUnmodifiedSince":{"type":"timestamp"},
@@ -5046,6 +5091,20 @@
         "AccessTier":{"shape":"IntelligentTieringAccessTier"}
       },
       "error":{"httpStatusCode":403},
+      "exception":true
+    },
+    "InvalidRequest":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "InvalidWriteOffset":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{"httpStatusCode":400},
       "exception":true
     },
     "InventoryConfiguration":{
@@ -5239,6 +5298,10 @@
       "flattened":true
     },
     "LastModified":{"type":"timestamp"},
+    "LastModifiedTime":{
+      "type":"timestamp",
+      "timestampFormat":"rfc822"
+    },
     "LifecycleConfiguration":{
       "type":"structure",
       "required":["Rules"],
@@ -6210,7 +6273,10 @@
       "required":["Key"],
       "members":{
         "Key":{"shape":"ObjectKey"},
-        "VersionId":{"shape":"ObjectVersionId"}
+        "VersionId":{"shape":"ObjectVersionId"},
+        "ETag":{"shape":"ETag"},
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "Size":{"shape":"Size"}
       }
     },
     "ObjectIdentifierList":{
@@ -7546,6 +7612,11 @@
           "location":"header",
           "locationName":"x-amz-server-side-encryption-bucket-key-enabled"
         },
+        "Size":{
+          "shape":"Size",
+          "location":"header",
+          "locationName":"x-amz-object-size"
+        },
         "RequestCharged":{
           "shape":"RequestCharged",
           "location":"header",
@@ -7670,6 +7741,11 @@
           "contextParam":{"name":"Key"},
           "location":"uri",
           "locationName":"Key"
+        },
+        "WriteOffsetBytes":{
+          "shape":"WriteOffsetBytes",
+          "location":"header",
+          "locationName":"x-amz-write-offset-bytes"
         },
         "Metadata":{
           "shape":"Metadata",
@@ -8692,6 +8768,13 @@
       "flattened":true
     },
     "Token":{"type":"string"},
+    "TooManyParts":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "TopicArn":{"type":"string"},
     "TopicConfiguration":{
       "type":"structure",
@@ -9323,6 +9406,10 @@
         }
       },
       "payload":"Body"
+    },
+    "WriteOffsetBytes":{
+      "type":"long",
+      "box":true
     },
     "Years":{
       "type":"integer",

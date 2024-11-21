@@ -374,6 +374,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateCommand":{
+      "name":"CreateCommand",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"CreateCommandRequest"},
+      "output":{"shape":"CreateCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateCustomMetric":{
       "name":"CreateCustomMetric",
       "http":{
@@ -939,6 +955,36 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteCommand":{
+      "name":"DeleteCommand",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"DeleteCommandRequest"},
+      "output":{"shape":"DeleteCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteCommandExecution":{
+      "name":"DeleteCommandExecution",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/command-executions/{executionId}"
+      },
+      "input":{"shape":"DeleteCommandExecutionRequest"},
+      "output":{"shape":"DeleteCommandExecutionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "DeleteCustomMetric":{
@@ -2090,6 +2136,36 @@
         {"shape":"IndexNotReadyException"}
       ]
     },
+    "GetCommand":{
+      "name":"GetCommand",
+      "http":{
+        "method":"GET",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"GetCommandRequest"},
+      "output":{"shape":"GetCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetCommandExecution":{
+      "name":"GetCommandExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/command-executions/{executionId}"
+      },
+      "input":{"shape":"GetCommandExecutionRequest"},
+      "output":{"shape":"GetCommandExecutionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetEffectivePolicies":{
       "name":"GetEffectivePolicies",
       "http":{
@@ -2546,6 +2622,35 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListCommandExecutions":{
+      "name":"ListCommandExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/command-executions"
+      },
+      "input":{"shape":"ListCommandExecutionsRequest"},
+      "output":{"shape":"ListCommandExecutionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCommands":{
+      "name":"ListCommands",
+      "http":{
+        "method":"GET",
+        "requestUri":"/commands"
+      },
+      "input":{"shape":"ListCommandsRequest"},
+      "output":{"shape":"ListCommandsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListCustomMetrics":{
@@ -3844,6 +3949,22 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateCommand":{
+      "name":"UpdateCommand",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"UpdateCommandRequest"},
+      "output":{"shape":"UpdateCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "UpdateCustomMetric":{
@@ -5235,8 +5356,18 @@
         "billingGroupDescription":{"shape":"BillingGroupDescription"}
       }
     },
+    "BinaryCommandExecutionResult":{
+      "type":"blob",
+      "min":1
+    },
+    "BinaryParameterValue":{
+      "type":"blob",
+      "min":1
+    },
     "Boolean":{"type":"boolean"},
+    "BooleanCommandExecutionResult":{"type":"boolean"},
     "BooleanKey":{"type":"boolean"},
+    "BooleanParameterValue":{"type":"boolean"},
     "BooleanWrapperObject":{"type":"boolean"},
     "Bucket":{
       "type":"structure",
@@ -5683,6 +5814,155 @@
       }
     },
     "CognitoIdentityPoolId":{"type":"string"},
+    "CommandArn":{"type":"string"},
+    "CommandDescription":{
+      "type":"string",
+      "max":2028,
+      "pattern":"[^\\p{C}]*"
+    },
+    "CommandExecutionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandExecutionParameterMap":{
+      "type":"map",
+      "key":{"shape":"CommandParameterName"},
+      "value":{"shape":"CommandParameterValue"},
+      "min":1
+    },
+    "CommandExecutionResult":{
+      "type":"structure",
+      "members":{
+        "S":{"shape":"StringCommandExecutionResult"},
+        "B":{"shape":"BooleanCommandExecutionResult"},
+        "BIN":{"shape":"BinaryCommandExecutionResult"}
+      }
+    },
+    "CommandExecutionResultMap":{
+      "type":"map",
+      "key":{"shape":"CommandExecutionResultName"},
+      "value":{"shape":"CommandExecutionResult"},
+      "min":1
+    },
+    "CommandExecutionResultName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "REJECTED",
+        "TIMED_OUT"
+      ]
+    },
+    "CommandExecutionSummary":{
+      "type":"structure",
+      "members":{
+        "commandArn":{"shape":"CommandArn"},
+        "executionId":{"shape":"CommandExecutionId"},
+        "targetArn":{"shape":"TargetArn"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "createdAt":{"shape":"DateType"},
+        "startedAt":{"shape":"DateType"},
+        "completedAt":{"shape":"DateType"}
+      }
+    },
+    "CommandExecutionSummaryList":{
+      "type":"list",
+      "member":{"shape":"CommandExecutionSummary"}
+    },
+    "CommandExecutionTimeoutInSeconds":{
+      "type":"long",
+      "min":1
+    },
+    "CommandId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "CommandNamespace":{
+      "type":"string",
+      "enum":[
+        "AWS-IoT",
+        "AWS-IoT-FleetWise"
+      ]
+    },
+    "CommandParameter":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"CommandParameterName"},
+        "value":{"shape":"CommandParameterValue"},
+        "defaultValue":{"shape":"CommandParameterValue"},
+        "description":{"shape":"CommandParameterDescription"}
+      }
+    },
+    "CommandParameterDescription":{
+      "type":"string",
+      "max":2028,
+      "pattern":"[^\\p{C}]*"
+    },
+    "CommandParameterList":{
+      "type":"list",
+      "member":{"shape":"CommandParameter"},
+      "min":1
+    },
+    "CommandParameterName":{
+      "type":"string",
+      "max":192,
+      "min":1,
+      "pattern":"^[.$a-zA-Z0-9_-]+$"
+    },
+    "CommandParameterValue":{
+      "type":"structure",
+      "members":{
+        "S":{"shape":"StringParameterValue"},
+        "B":{"shape":"BooleanParameterValue"},
+        "I":{"shape":"IntegerParameterValue"},
+        "L":{"shape":"LongParameterValue"},
+        "D":{"shape":"DoubleParameterValue"},
+        "BIN":{"shape":"BinaryParameterValue"},
+        "UL":{"shape":"UnsignedLongParameterValue"}
+      }
+    },
+    "CommandPayload":{
+      "type":"structure",
+      "members":{
+        "content":{"shape":"CommandPayloadBlob"},
+        "contentType":{"shape":"MimeType"}
+      }
+    },
+    "CommandPayloadBlob":{"type":"blob"},
+    "CommandSummary":{
+      "type":"structure",
+      "members":{
+        "commandArn":{"shape":"CommandArn"},
+        "commandId":{"shape":"CommandId"},
+        "displayName":{"shape":"DisplayName"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "pendingDeletion":{"shape":"BooleanWrapperObject"}
+      }
+    },
+    "CommandSummaryList":{
+      "type":"list",
+      "member":{"shape":"CommandSummary"}
+    },
     "Comment":{
       "type":"string",
       "max":2028,
@@ -5903,6 +6183,31 @@
       "members":{
         "certificateProviderName":{"shape":"CertificateProviderName"},
         "certificateProviderArn":{"shape":"CertificateProviderArn"}
+      }
+    },
+    "CreateCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        },
+        "namespace":{"shape":"CommandNamespace"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "payload":{"shape":"CommandPayload"},
+        "mandatoryParameters":{"shape":"CommandParameterList"},
+        "roleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "commandArn":{"shape":"CommandArn"}
       }
     },
     "CreateCustomMetricRequest":{
@@ -6794,6 +7099,50 @@
         }
       }
     },
+    "DeleteCommandExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetArn"
+      ],
+      "members":{
+        "executionId":{
+          "shape":"CommandExecutionId",
+          "location":"uri",
+          "locationName":"executionId"
+        },
+        "targetArn":{
+          "shape":"TargetArn",
+          "location":"querystring",
+          "locationName":"targetArn"
+        }
+      }
+    },
+    "DeleteCommandExecutionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        }
+      }
+    },
+    "DeleteCommandResponse":{
+      "type":"structure",
+      "members":{
+        "statusCode":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DeleteConflictException":{
       "type":"structure",
       "members":{
@@ -7330,6 +7679,7 @@
       }
     },
     "DeprecationDate":{"type":"timestamp"},
+    "DeprecationFlag":{"type":"boolean"},
     "DescribeAccountAuditConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -8355,6 +8705,11 @@
       }
     },
     "DisconnectReason":{"type":"string"},
+    "DisplayName":{
+      "type":"string",
+      "max":64,
+      "pattern":"[^\\p{C}]*"
+    },
     "DocumentParameter":{
       "type":"structure",
       "members":{
@@ -8409,6 +8764,7 @@
         "CUSTOMER_MANAGED"
       ]
     },
+    "DoubleParameterValue":{"type":"double"},
     "DurationInMinutes":{
       "type":"integer",
       "max":1430,
@@ -8824,6 +9180,76 @@
       "type":"structure",
       "members":{
         "cardinality":{"shape":"Count"}
+      }
+    },
+    "GetCommandExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetArn"
+      ],
+      "members":{
+        "executionId":{
+          "shape":"CommandExecutionId",
+          "location":"uri",
+          "locationName":"executionId"
+        },
+        "targetArn":{
+          "shape":"TargetArn",
+          "location":"querystring",
+          "locationName":"targetArn"
+        },
+        "includeResult":{
+          "shape":"BooleanWrapperObject",
+          "location":"querystring",
+          "locationName":"includeResult"
+        }
+      }
+    },
+    "GetCommandExecutionResponse":{
+      "type":"structure",
+      "members":{
+        "executionId":{"shape":"CommandExecutionId"},
+        "commandArn":{"shape":"CommandArn"},
+        "targetArn":{"shape":"TargetArn"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "result":{"shape":"CommandExecutionResultMap"},
+        "parameters":{"shape":"CommandExecutionParameterMap"},
+        "executionTimeoutSeconds":{"shape":"CommandExecutionTimeoutInSeconds"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "startedAt":{"shape":"DateType"},
+        "completedAt":{"shape":"DateType"},
+        "timeToLive":{"shape":"DateType"}
+      }
+    },
+    "GetCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        }
+      }
+    },
+    "GetCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "commandArn":{"shape":"CommandArn"},
+        "namespace":{"shape":"CommandNamespace"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "mandatoryParameters":{"shape":"CommandParameterList"},
+        "payload":{"shape":"CommandPayload"},
+        "roleArn":{"shape":"RoleArn"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "pendingDeletion":{"shape":"BooleanWrapperObject"}
       }
     },
     "GetEffectivePoliciesRequest":{
@@ -9276,6 +9702,7 @@
       "max":128,
       "min":1
     },
+    "IntegerParameterValue":{"type":"integer"},
     "InternalException":{
       "type":"structure",
       "members":{
@@ -10148,6 +10575,72 @@
       "members":{
         "certificates":{"shape":"Certificates"},
         "nextMarker":{"shape":"Marker"}
+      }
+    },
+    "ListCommandExecutionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"CommandMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "namespace":{"shape":"CommandNamespace"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "sortOrder":{"shape":"SortOrder"},
+        "startedTimeFilter":{"shape":"TimeFilter"},
+        "completedTimeFilter":{"shape":"TimeFilter"},
+        "targetArn":{"shape":"TargetArn"},
+        "commandArn":{"shape":"CommandArn"}
+      }
+    },
+    "ListCommandExecutionsResponse":{
+      "type":"structure",
+      "members":{
+        "commandExecutions":{"shape":"CommandExecutionSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCommandsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"CommandMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "namespace":{
+          "shape":"CommandNamespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "commandParameterName":{
+          "shape":"CommandParameterName",
+          "location":"querystring",
+          "locationName":"commandParameterName"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListCommandsResponse":{
+      "type":"structure",
+      "members":{
+        "commands":{"shape":"CommandSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCustomMetricsRequest":{
@@ -11763,6 +12256,7 @@
         "logLevel":{"shape":"LogLevel"}
       }
     },
+    "LongParameterValue":{"type":"long"},
     "MachineLearningDetectionConfig":{
       "type":"structure",
       "required":["confidenceLevel"],
@@ -11921,6 +12415,10 @@
         "mqttTopic":{"shape":"MqttTopic"},
         "roleArn":{"shape":"RoleArn"}
       }
+    },
+    "MimeType":{
+      "type":"string",
+      "min":1
     },
     "Minimum":{"type":"double"},
     "MinimumNumberOfExecutedThings":{
@@ -13455,6 +13953,13 @@
       "type":"string",
       "max":350
     },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
+    },
     "SqlParseException":{
       "type":"structure",
       "members":{
@@ -13629,6 +14134,25 @@
         "Cancelling"
       ]
     },
+    "StatusCode":{"type":"integer"},
+    "StatusReason":{
+      "type":"structure",
+      "required":["reasonCode"],
+      "members":{
+        "reasonCode":{"shape":"StatusReasonCode"},
+        "reasonDescription":{"shape":"StatusReasonDescription"}
+      }
+    },
+    "StatusReasonCode":{
+      "type":"string",
+      "max":64,
+      "pattern":"[A-Z0-9_-]+"
+    },
+    "StatusReasonDescription":{
+      "type":"string",
+      "max":1024,
+      "pattern":"[^\\p{C}]*"
+    },
     "StdDeviation":{"type":"double"},
     "StepFunctionsAction":{
       "type":"structure",
@@ -13723,6 +14247,10 @@
       "member":{"shape":"StreamSummary"}
     },
     "String":{"type":"string"},
+    "StringCommandExecutionResult":{
+      "type":"string",
+      "min":1
+    },
     "StringDateTime":{
       "type":"string",
       "max":64,
@@ -13736,6 +14264,10 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "StringParameterValue":{
+      "type":"string",
+      "min":1
     },
     "SubnetId":{"type":"string"},
     "SubnetIdList":{
@@ -14183,6 +14715,13 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "TimeFilter":{
+      "type":"structure",
+      "members":{
+        "after":{"shape":"StringDateTime"},
+        "before":{"shape":"StringDateTime"}
+      }
+    },
     "TimedOutThings":{"type":"integer"},
     "TimeoutConfig":{
       "type":"structure",
@@ -14447,6 +14986,12 @@
       "type":"long",
       "min":0
     },
+    "UnsignedLongParameterValue":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[0-9]*$"
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -14607,6 +15152,30 @@
           "location":"querystring",
           "locationName":"newStatus"
         }
+      }
+    },
+    "UpdateCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        },
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "deprecated":{"shape":"DeprecationFlag"}
+      }
+    },
+    "UpdateCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "lastUpdatedAt":{"shape":"DateType"}
       }
     },
     "UpdateCustomMetricRequest":{

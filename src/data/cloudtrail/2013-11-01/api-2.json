@@ -88,6 +88,26 @@
         {"shape":"UnsupportedOperationException"}
       ]
     },
+    "CreateDashboard":{
+      "name":"CreateDashboard",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDashboardRequest"},
+      "output":{"shape":"CreateDashboardResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"InvalidTagParameterException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"InvalidQueryStatementException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
     "CreateEventDataStore":{
       "name":"CreateEventDataStore",
       "http":{
@@ -177,6 +197,21 @@
         {"shape":"UnsupportedOperationException"}
       ]
     },
+    "DeleteDashboard":{
+      "name":"DeleteDashboard",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDashboardRequest"},
+      "output":{"shape":"DeleteDashboardResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteEventDataStore":{
       "name":"DeleteEventDataStore",
       "http":{
@@ -215,6 +250,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourcePolicyNotFoundException"},
         {"shape":"ResourceTypeNotSupportedException"},
+        {"shape":"ConflictException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"}
       ],
@@ -390,6 +426,20 @@
       ],
       "idempotent":true
     },
+    "GetDashboard":{
+      "name":"GetDashboard",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetDashboardRequest"},
+      "output":{"shape":"GetDashboardResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
     "GetEventDataStore":{
       "name":"GetEventDataStore",
       "http":{
@@ -548,6 +598,19 @@
       "errors":[
         {"shape":"InvalidNextTokenException"},
         {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "ListDashboards":{
+      "name":"ListDashboards",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDashboardsRequest"},
+      "output":{"shape":"ListDashboardsResponse"},
+      "errors":[
         {"shape":"UnsupportedOperationException"}
       ],
       "idempotent":true
@@ -778,6 +841,7 @@
         {"shape":"ResourcePolicyNotValidException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceTypeNotSupportedException"},
+        {"shape":"ConflictException"},
         {"shape":"OperationNotPermittedException"},
         {"shape":"UnsupportedOperationException"}
       ],
@@ -858,6 +922,23 @@
         {"shape":"NoManagementAccountSLRExistsException"},
         {"shape":"OrganizationNotInAllFeaturesModeException"}
       ]
+    },
+    "StartDashboardRefresh":{
+      "name":"StartDashboardRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartDashboardRefreshRequest"},
+      "output":{"shape":"StartDashboardRefreshResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
     },
     "StartEventDataStoreIngestion":{
       "name":"StartEventDataStoreIngestion",
@@ -1031,6 +1112,26 @@
         {"shape":"InactiveEventDataStoreException"},
         {"shape":"InvalidParameterException"},
         {"shape":"OperationNotPermittedException"},
+        {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateDashboard":{
+      "name":"UpdateDashboard",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDashboardRequest"},
+      "output":{"shape":"UpdateDashboardResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"EventDataStoreNotFoundException"},
+        {"shape":"InactiveEventDataStoreException"},
+        {"shape":"InsufficientEncryptionPolicyException"},
+        {"shape":"InvalidQueryStatementException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"UnsupportedOperationException"}
       ],
       "idempotent":true
@@ -1214,7 +1315,8 @@
           "deprecated":true,
           "deprecatedMessage":"EventDataStore is no longer required by CancelQueryRequest"
         },
-        "QueryId":{"shape":"UUID"}
+        "QueryId":{"shape":"UUID"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "CancelQueryResponse":{
@@ -1225,7 +1327,8 @@
       ],
       "members":{
         "QueryId":{"shape":"UUID"},
-        "QueryStatus":{"shape":"QueryStatus"}
+        "QueryStatus":{"shape":"QueryStatus"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "CannotDelegateManagementAccountException":{
@@ -1347,6 +1450,29 @@
         "Tags":{"shape":"TagsList"}
       }
     },
+    "CreateDashboardRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"DashboardName"},
+        "RefreshSchedule":{"shape":"RefreshSchedule"},
+        "TagsList":{"shape":"TagsList"},
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
+        "Widgets":{"shape":"RequestWidgetList"}
+      }
+    },
+    "CreateDashboardResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardArn":{"shape":"DashboardArn"},
+        "Name":{"shape":"DashboardName"},
+        "Type":{"shape":"DashboardType"},
+        "Widgets":{"shape":"WidgetList"},
+        "TagsList":{"shape":"TagsList"},
+        "RefreshSchedule":{"shape":"RefreshSchedule"},
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"}
+      }
+    },
     "CreateEventDataStoreRequest":{
       "type":"structure",
       "required":["Name"],
@@ -1423,6 +1549,44 @@
         "IsOrganizationTrail":{"shape":"Boolean"}
       }
     },
+    "DashboardArn":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
+    "DashboardDetail":{
+      "type":"structure",
+      "members":{
+        "DashboardArn":{"shape":"DashboardArn"},
+        "Type":{"shape":"DashboardType"}
+      }
+    },
+    "DashboardName":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9_\\-]+$"
+    },
+    "DashboardStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATED",
+        "UPDATING",
+        "UPDATED",
+        "DELETING"
+      ]
+    },
+    "DashboardType":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "CUSTOM"
+      ]
+    },
+    "Dashboards":{
+      "type":"list",
+      "member":{"shape":"DashboardDetail"}
+    },
     "DataResource":{
       "type":"structure",
       "members":{
@@ -1453,6 +1617,18 @@
       }
     },
     "DeleteChannelResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteDashboardRequest":{
+      "type":"structure",
+      "required":["DashboardId"],
+      "members":{
+        "DashboardId":{"shape":"DashboardArn"}
+      }
+    },
+    "DeleteDashboardResponse":{
       "type":"structure",
       "members":{
       }
@@ -1533,7 +1709,9 @@
           "deprecatedMessage":"EventDataStore is no longer required by DescribeQueryRequest"
         },
         "QueryId":{"shape":"UUID"},
-        "QueryAlias":{"shape":"QueryAlias"}
+        "QueryAlias":{"shape":"QueryAlias"},
+        "RefreshId":{"shape":"RefreshId"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "DescribeQueryResponse":{
@@ -1546,7 +1724,8 @@
         "ErrorMessage":{"shape":"ErrorMessage"},
         "DeliveryS3Uri":{"shape":"DeliveryS3Uri"},
         "DeliveryStatus":{"shape":"DeliveryStatus"},
-        "Prompt":{"shape":"Prompt"}
+        "Prompt":{"shape":"Prompt"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "DescribeTrailsRequest":{
@@ -1838,7 +2017,8 @@
       "type":"structure",
       "members":{
         "QueryStatement":{"shape":"QueryStatement"},
-        "QueryAlias":{"shape":"QueryAlias"}
+        "QueryAlias":{"shape":"QueryAlias"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "GenerateResponseException":{
@@ -1863,6 +2043,28 @@
         "SourceConfig":{"shape":"SourceConfig"},
         "Destinations":{"shape":"Destinations"},
         "IngestionStatus":{"shape":"IngestionStatus"}
+      }
+    },
+    "GetDashboardRequest":{
+      "type":"structure",
+      "required":["DashboardId"],
+      "members":{
+        "DashboardId":{"shape":"DashboardArn"}
+      }
+    },
+    "GetDashboardResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardArn":{"shape":"DashboardArn"},
+        "Type":{"shape":"DashboardType"},
+        "Status":{"shape":"DashboardStatus"},
+        "Widgets":{"shape":"WidgetList"},
+        "RefreshSchedule":{"shape":"RefreshSchedule"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"},
+        "LastRefreshId":{"shape":"RefreshId"},
+        "LastRefreshFailureReason":{"shape":"ErrorMessage"},
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"}
       }
     },
     "GetEventDataStoreRequest":{
@@ -1955,7 +2157,8 @@
         },
         "QueryId":{"shape":"UUID"},
         "NextToken":{"shape":"PaginationToken"},
-        "MaxQueryResults":{"shape":"MaxQueryResults"}
+        "MaxQueryResults":{"shape":"MaxQueryResults"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "GetQueryResultsResponse":{
@@ -1979,7 +2182,8 @@
       "type":"structure",
       "members":{
         "ResourceArn":{"shape":"ResourceArn"},
-        "ResourcePolicy":{"shape":"ResourcePolicy"}
+        "ResourcePolicy":{"shape":"ResourcePolicy"},
+        "DelegatedAdminResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
     "GetTrailRequest":{
@@ -2389,6 +2593,27 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListDashboardsMaxResultsCount":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "ListDashboardsRequest":{
+      "type":"structure",
+      "members":{
+        "NamePrefix":{"shape":"DashboardName"},
+        "Type":{"shape":"DashboardType"},
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"ListDashboardsMaxResultsCount"}
+      }
+    },
+    "ListDashboardsResponse":{
+      "type":"structure",
+      "members":{
+        "Dashboards":{"shape":"Dashboards"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListEventDataStoresMaxResultsCount":{
       "type":"integer",
       "max":1000,
@@ -2781,7 +3006,8 @@
       "type":"structure",
       "members":{
         "ResourceArn":{"shape":"ResourceArn"},
-        "ResourcePolicy":{"shape":"ResourcePolicy"}
+        "ResourcePolicy":{"shape":"ResourcePolicy"},
+        "DelegatedAdminResourcePolicy":{"shape":"ResourcePolicy"}
       }
     },
     "Queries":{
@@ -2813,6 +3039,23 @@
       "max":1024,
       "min":1,
       "pattern":".*"
+    },
+    "QueryParameterKey":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._/\\-:$]+$"
+    },
+    "QueryParameterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9._/\\-:]+$"
+    },
+    "QueryParameterValues":{
+      "type":"map",
+      "key":{"shape":"QueryParameterKey"},
+      "value":{"shape":"QueryParameterValue"}
     },
     "QueryParameters":{
       "type":"list",
@@ -2878,6 +3121,42 @@
         "All"
       ]
     },
+    "RefreshId":{
+      "type":"string",
+      "max":20,
+      "min":10,
+      "pattern":"\\d+"
+    },
+    "RefreshSchedule":{
+      "type":"structure",
+      "members":{
+        "Frequency":{"shape":"RefreshScheduleFrequency"},
+        "Status":{"shape":"RefreshScheduleStatus"},
+        "TimeOfDay":{"shape":"TimeOfDay"}
+      }
+    },
+    "RefreshScheduleFrequency":{
+      "type":"structure",
+      "members":{
+        "Unit":{"shape":"RefreshScheduleFrequencyUnit"},
+        "Value":{"shape":"RefreshScheduleFrequencyValue"}
+      }
+    },
+    "RefreshScheduleFrequencyUnit":{
+      "type":"string",
+      "enum":[
+        "HOURS",
+        "DAYS"
+      ]
+    },
+    "RefreshScheduleFrequencyValue":{"type":"integer"},
+    "RefreshScheduleStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "RegisterOrganizationDelegatedAdminRequest":{
       "type":"structure",
       "required":["MemberAccountId"],
@@ -2905,6 +3184,22 @@
       "type":"structure",
       "members":{
       }
+    },
+    "RequestWidget":{
+      "type":"structure",
+      "required":[
+        "QueryStatement",
+        "ViewProperties"
+      ],
+      "members":{
+        "QueryStatement":{"shape":"QueryStatement"},
+        "QueryParameters":{"shape":"QueryParameters"},
+        "ViewProperties":{"shape":"ViewPropertiesMap"}
+      }
+    },
+    "RequestWidgetList":{
+      "type":"list",
+      "member":{"shape":"RequestWidget"}
     },
     "Resource":{
       "type":"structure",
@@ -3033,6 +3328,12 @@
       "min":0,
       "pattern":".*"
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "Source":{
       "type":"string",
       "max":256,
@@ -3044,6 +3345,20 @@
       "members":{
         "ApplyToAllRegions":{"shape":"Boolean"},
         "AdvancedEventSelectors":{"shape":"AdvancedEventSelectors"}
+      }
+    },
+    "StartDashboardRefreshRequest":{
+      "type":"structure",
+      "required":["DashboardId"],
+      "members":{
+        "DashboardId":{"shape":"DashboardArn"},
+        "QueryParameterValues":{"shape":"QueryParameterValues"}
+      }
+    },
+    "StartDashboardRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "RefreshId":{"shape":"RefreshId"}
       }
     },
     "StartEventDataStoreIngestionRequest":{
@@ -3099,13 +3414,15 @@
         "QueryStatement":{"shape":"QueryStatement"},
         "DeliveryS3Uri":{"shape":"DeliveryS3Uri"},
         "QueryAlias":{"shape":"QueryAlias"},
-        "QueryParameters":{"shape":"QueryParameters"}
+        "QueryParameters":{"shape":"QueryParameters"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "StartQueryResponse":{
       "type":"structure",
       "members":{
-        "QueryId":{"shape":"UUID"}
+        "QueryId":{"shape":"UUID"},
+        "EventDataStoreOwnerAccountId":{"shape":"AccountId"}
       }
     },
     "StopEventDataStoreIngestionRequest":{
@@ -3189,6 +3506,10 @@
       "members":{
       },
       "exception":true
+    },
+    "TimeOfDay":{
+      "type":"string",
+      "pattern":"^[0-9]{2}:[0-9]{2}"
     },
     "Timestamps":{
       "type":"list",
@@ -3286,6 +3607,29 @@
         "Destinations":{"shape":"Destinations"}
       }
     },
+    "UpdateDashboardRequest":{
+      "type":"structure",
+      "required":["DashboardId"],
+      "members":{
+        "DashboardId":{"shape":"DashboardArn"},
+        "Widgets":{"shape":"RequestWidgetList"},
+        "RefreshSchedule":{"shape":"RefreshSchedule"},
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"}
+      }
+    },
+    "UpdateDashboardResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardArn":{"shape":"DashboardArn"},
+        "Name":{"shape":"DashboardName"},
+        "Type":{"shape":"DashboardType"},
+        "Widgets":{"shape":"WidgetList"},
+        "RefreshSchedule":{"shape":"RefreshSchedule"},
+        "TerminationProtectionEnabled":{"shape":"TerminationProtectionEnabled"},
+        "CreatedTimestamp":{"shape":"Date"},
+        "UpdatedTimestamp":{"shape":"Date"}
+      }
+    },
     "UpdateEventDataStoreRequest":{
       "type":"structure",
       "required":["EventDataStore"],
@@ -3357,6 +3701,36 @@
         "KmsKeyId":{"shape":"String"},
         "IsOrganizationTrail":{"shape":"Boolean"}
       }
+    },
+    "ViewPropertiesKey":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9._\\-]+$"
+    },
+    "ViewPropertiesMap":{
+      "type":"map",
+      "key":{"shape":"ViewPropertiesKey"},
+      "value":{"shape":"ViewPropertiesValue"}
+    },
+    "ViewPropertiesValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9._\\- ]+$"
+    },
+    "Widget":{
+      "type":"structure",
+      "members":{
+        "QueryAlias":{"shape":"QueryAlias"},
+        "QueryStatement":{"shape":"QueryStatement"},
+        "QueryParameters":{"shape":"QueryParameters"},
+        "ViewProperties":{"shape":"ViewPropertiesMap"}
+      }
+    },
+    "WidgetList":{
+      "type":"list",
+      "member":{"shape":"Widget"}
     }
   }
 }

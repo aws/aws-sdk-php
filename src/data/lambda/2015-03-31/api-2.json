@@ -1551,7 +1551,8 @@
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
-        "KMSKeyArn":{"shape":"KMSKeyArn"}
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
       }
     },
     "CreateFunctionRequest":{
@@ -2002,7 +2003,24 @@
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
         "FilterCriteriaError":{"shape":"FilterCriteriaError"},
-        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"}
+        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
+      }
+    },
+    "EventSourceMappingMetric":{
+      "type":"string",
+      "enum":["EventCount"]
+    },
+    "EventSourceMappingMetricList":{
+      "type":"list",
+      "member":{"shape":"EventSourceMappingMetric"},
+      "max":1,
+      "min":0
+    },
+    "EventSourceMappingMetricsConfig":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"EventSourceMappingMetricList"}
       }
     },
     "EventSourceMappingsList":{
@@ -4496,7 +4514,8 @@
         "FunctionResponseTypes":{"shape":"FunctionResponseTypeList"},
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
-        "KMSKeyArn":{"shape":"KMSKeyArn"}
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
       }
     },
     "UpdateFunctionCodeRequest":{

@@ -423,6 +423,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DescribeMetricsExport":{
+      "name":"DescribeMetricsExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/describe-metrics-export",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeMetricsExportRequest"},
+      "output":{"shape":"DescribeMetricsExportResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeResiliencyPolicy":{
       "name":"DescribeResiliencyPolicy",
       "http":{
@@ -678,6 +695,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListMetrics":{
+      "name":"ListMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-metrics",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMetricsRequest"},
+      "output":{"shape":"ListMetricsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListRecommendationTemplates":{
       "name":"ListRecommendationTemplates",
       "http":{
@@ -917,6 +950,24 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartMetricsExport":{
+      "name":"StartMetricsExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-metrics-export",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMetricsExportRequest"},
+      "output":{"shape":"StartMetricsExportResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
@@ -1532,7 +1583,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[A-za-z0-9_.-]{0,63}$"
+      "pattern":"^[A-Za-z0-9_.-]{0,63}$"
     },
     "ComplianceDrift":{
       "type":"structure",
@@ -1582,6 +1633,35 @@
     "ComponentRecommendationList":{
       "type":"list",
       "member":{"shape":"ComponentRecommendation"}
+    },
+    "Condition":{
+      "type":"structure",
+      "required":[
+        "field",
+        "operator"
+      ],
+      "members":{
+        "field":{"shape":"String255"},
+        "operator":{"shape":"ConditionOperatorType"},
+        "value":{"shape":"String255"}
+      }
+    },
+    "ConditionList":{
+      "type":"list",
+      "member":{"shape":"Condition"},
+      "max":50,
+      "min":0
+    },
+    "ConditionOperatorType":{
+      "type":"string",
+      "enum":[
+        "Equals",
+        "NotEquals",
+        "GreaterThen",
+        "GreaterOrEquals",
+        "LessThen",
+        "LessOrEquals"
+      ]
     },
     "ConfigRecommendation":{
       "type":"structure",
@@ -2153,6 +2233,26 @@
         "statusChangeTime":{"shape":"TimeStamp"}
       }
     },
+    "DescribeMetricsExportRequest":{
+      "type":"structure",
+      "required":["metricsExportId"],
+      "members":{
+        "metricsExportId":{"shape":"String255"}
+      }
+    },
+    "DescribeMetricsExportResponse":{
+      "type":"structure",
+      "required":[
+        "metricsExportId",
+        "status"
+      ],
+      "members":{
+        "errorMessage":{"shape":"String500"},
+        "exportLocation":{"shape":"S3Location"},
+        "metricsExportId":{"shape":"String255"},
+        "status":{"shape":"MetricsExportStatusType"}
+      }
+    },
     "DescribeResiliencyPolicyRequest":{
       "type":"structure",
       "required":["policyArn"],
@@ -2394,6 +2494,30 @@
         "rpoInSecs":{"shape":"Seconds"},
         "rtoInSecs":{"shape":"Seconds"}
       }
+    },
+    "Field":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "aggregation":{"shape":"FieldAggregationType"},
+        "name":{"shape":"String255"}
+      }
+    },
+    "FieldAggregationType":{
+      "type":"string",
+      "enum":[
+        "Min",
+        "Max",
+        "Sum",
+        "Avg",
+        "Count"
+      ]
+    },
+    "FieldList":{
+      "type":"list",
+      "member":{"shape":"Field"},
+      "max":50,
+      "min":0
     },
     "GroupingAppComponent":{
       "type":"structure",
@@ -2850,6 +2974,25 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListMetricsRequest":{
+      "type":"structure",
+      "members":{
+        "conditions":{"shape":"ConditionList"},
+        "dataSource":{"shape":"String255"},
+        "fields":{"shape":"FieldList"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "sorts":{"shape":"SortList"}
+      }
+    },
+    "ListMetricsResponse":{
+      "type":"structure",
+      "required":["rows"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "rows":{"shape":"RowList"}
+      }
+    },
     "ListRecommendationTemplatesRequest":{
       "type":"structure",
       "members":{
@@ -3074,6 +3217,15 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MetricsExportStatusType":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "InProgress",
+        "Failed",
+        "Success"
+      ]
     },
     "NextToken":{
       "type":"string",
@@ -3559,6 +3711,14 @@
       "type":"integer",
       "box":true
     },
+    "Row":{
+      "type":"list",
+      "member":{"shape":"String255"}
+    },
+    "RowList":{
+      "type":"list",
+      "member":{"shape":"Row"}
+    },
     "S3Location":{
       "type":"structure",
       "members":{
@@ -3628,6 +3788,20 @@
       "type":"string",
       "enum":["SSM"]
     },
+    "Sort":{
+      "type":"structure",
+      "required":["field"],
+      "members":{
+        "ascending":{"shape":"BooleanOptional"},
+        "field":{"shape":"String255"}
+      }
+    },
+    "SortList":{
+      "type":"list",
+      "member":{"shape":"Sort"},
+      "max":50,
+      "min":0
+    },
     "SpecReferenceId":{
       "type":"string",
       "max":500,
@@ -3656,6 +3830,27 @@
       "required":["assessment"],
       "members":{
         "assessment":{"shape":"AppAssessment"}
+      }
+    },
+    "StartMetricsExportRequest":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"EntityName"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartMetricsExportResponse":{
+      "type":"structure",
+      "required":[
+        "metricsExportId",
+        "status"
+      ],
+      "members":{
+        "metricsExportId":{"shape":"String255"},
+        "status":{"shape":"MetricsExportStatusType"}
       }
     },
     "StartResourceGroupingRecommendationTaskRequest":{

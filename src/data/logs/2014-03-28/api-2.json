@@ -226,6 +226,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteIndexPolicy":{
+      "name":"DeleteIndexPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIndexPolicyRequest"},
+      "output":{"shape":"DeleteIndexPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DeleteLogAnomalyDetector":{
       "name":"DeleteLogAnomalyDetector",
       "http":{
@@ -337,6 +353,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteTransformer":{
+      "name":"DeleteTransformer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTransformerRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "DescribeAccountPolicies":{
       "name":"DescribeAccountPolicies",
       "http":{
@@ -435,6 +466,38 @@
       "output":{"shape":"DescribeExportTasksResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeFieldIndexes":{
+      "name":"DescribeFieldIndexes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFieldIndexesRequest"},
+      "output":{"shape":"DescribeFieldIndexesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeIndexPolicies":{
+      "name":"DescribeIndexPolicies",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIndexPoliciesRequest"},
+      "output":{"shape":"DescribeIndexPoliciesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -711,6 +774,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetTransformer":{
+      "name":"GetTransformer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTransformerRequest"},
+      "output":{"shape":"GetTransformerResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "ListAnomalies":{
       "name":"ListAnomalies",
       "http":{
@@ -739,6 +817,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"OperationAbortedException"}
+      ]
+    },
+    "ListLogGroupsForQuery":{
+      "name":"ListLogGroupsForQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLogGroupsForQueryRequest"},
+      "output":{"shape":"ListLogGroupsForQueryResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "ListTagsForResource":{
@@ -877,6 +970,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "PutIndexPolicy":{
+      "name":"PutIndexPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutIndexPolicyRequest"},
+      "output":{"shape":"PutIndexPolicyResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "PutLogEvents":{
       "name":"PutLogEvents",
       "http":{
@@ -906,7 +1015,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "PutQueryDefinition":{
@@ -964,7 +1074,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"OperationAbortedException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
+    "PutTransformer":{
+      "name":"PutTransformer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutTransformerRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "StartLiveTail":{
@@ -1053,6 +1180,20 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "TestTransformer":{
+      "name":"TestTransformer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TestTransformerRequest"},
+      "output":{"shape":"TestTransformerResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidOperationException"}
       ]
     },
     "UntagLogGroup":{
@@ -1167,6 +1308,36 @@
       }
     },
     "AccountPolicyDocument":{"type":"string"},
+    "AddKeyEntries":{
+      "type":"list",
+      "member":{"shape":"AddKeyEntry"},
+      "max":5,
+      "min":1
+    },
+    "AddKeyEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"Key"},
+        "value":{"shape":"AddKeyValue"},
+        "overwriteIfExists":{"shape":"OverwriteIfExists"}
+      }
+    },
+    "AddKeyValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AddKeys":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"AddKeyEntries"}
+      }
+    },
     "AllowedActionForAllowVendedLogsDeliveryForResource":{"type":"string"},
     "AllowedFieldDelimiters":{
       "type":"list",
@@ -1270,6 +1441,7 @@
       "max":90,
       "min":7
     },
+    "ApplyOnTransformedLogs":{"type":"boolean"},
     "Arn":{"type":"string"},
     "AssociateKmsKeyRequest":{
       "type":"structure",
@@ -1282,6 +1454,15 @@
     },
     "Baseline":{"type":"boolean"},
     "Boolean":{"type":"boolean"},
+    "CSV":{
+      "type":"structure",
+      "members":{
+        "quoteCharacter":{"shape":"QuoteCharacter"},
+        "delimiter":{"shape":"Delimiter"},
+        "columns":{"shape":"Columns"},
+        "source":{"shape":"Source"}
+      }
+    },
     "CancelExportTaskRequest":{
       "type":"structure",
       "required":["taskId"],
@@ -1294,6 +1475,16 @@
       "max":128,
       "min":36,
       "pattern":"\\S{36,128}"
+    },
+    "Column":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "Columns":{
+      "type":"list",
+      "member":{"shape":"Column"},
+      "max":100
     },
     "ConfigurationTemplate":{
       "type":"structure",
@@ -1327,6 +1518,31 @@
       "members":{
       },
       "exception":true
+    },
+    "CopyValue":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"CopyValueEntries"}
+      }
+    },
+    "CopyValueEntries":{
+      "type":"list",
+      "member":{"shape":"CopyValueEntry"},
+      "max":5,
+      "min":1
+    },
+    "CopyValueEntry":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "target":{"shape":"Target"},
+        "overwriteIfExists":{"shape":"OverwriteIfExists"}
+      }
     },
     "Count":{"type":"long"},
     "CreateDeliveryRequest":{
@@ -1431,6 +1647,23 @@
         "DISABLED"
       ]
     },
+    "DateTimeConverter":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target",
+        "matchPatterns"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "target":{"shape":"Target"},
+        "targetFormat":{"shape":"TargetFormat"},
+        "matchPatterns":{"shape":"MatchPatterns"},
+        "sourceTimezone":{"shape":"SourceTimezone"},
+        "targetTimezone":{"shape":"TargetTimezone"},
+        "locale":{"shape":"Locale"}
+      }
+    },
     "Days":{"type":"integer"},
     "DefaultValue":{"type":"double"},
     "DeleteAccountPolicyRequest":{
@@ -1484,6 +1717,25 @@
       "required":["destinationName"],
       "members":{
         "destinationName":{"shape":"DestinationName"}
+      }
+    },
+    "DeleteIndexPolicyRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
+      }
+    },
+    "DeleteIndexPolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteKeys":{
+      "type":"structure",
+      "required":["withKeys"],
+      "members":{
+        "withKeys":{"shape":"DeleteWithKeys"}
       }
     },
     "DeleteLogAnomalyDetectorRequest":{
@@ -1558,6 +1810,24 @@
         "logGroupName":{"shape":"LogGroupName"},
         "filterName":{"shape":"FilterName"}
       }
+    },
+    "DeleteTransformerRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
+      }
+    },
+    "DeleteWithKeys":{
+      "type":"list",
+      "member":{"shape":"WithKey"},
+      "max":5,
+      "min":1
+    },
+    "Delimiter":{
+      "type":"string",
+      "max":1,
+      "min":1
     },
     "Deliveries":{
       "type":"list",
@@ -1663,13 +1933,15 @@
       "members":{
         "policyType":{"shape":"PolicyType"},
         "policyName":{"shape":"PolicyName"},
-        "accountIdentifiers":{"shape":"AccountIds"}
+        "accountIdentifiers":{"shape":"AccountIds"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "DescribeAccountPoliciesResponse":{
       "type":"structure",
       "members":{
-        "accountPolicies":{"shape":"AccountPolicies"}
+        "accountPolicies":{"shape":"AccountPolicies"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "DescribeConfigurationTemplatesRequest":{
@@ -1760,6 +2032,48 @@
       "type":"structure",
       "members":{
         "exportTasks":{"shape":"ExportTasks"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeFieldIndexesLogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"},
+      "max":100,
+      "min":1
+    },
+    "DescribeFieldIndexesRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifiers"],
+      "members":{
+        "logGroupIdentifiers":{"shape":"DescribeFieldIndexesLogGroupIdentifiers"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeFieldIndexesResponse":{
+      "type":"structure",
+      "members":{
+        "fieldIndexes":{"shape":"FieldIndexes"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeIndexPoliciesLogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"},
+      "max":1,
+      "min":1
+    },
+    "DescribeIndexPoliciesRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifiers"],
+      "members":{
+        "logGroupIdentifiers":{"shape":"DescribeIndexPoliciesLogGroupIdentifiers"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeIndexPoliciesResponse":{
+      "type":"structure",
+      "members":{
+        "indexPolicies":{"shape":"IndexPolicies"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -1908,6 +2222,11 @@
     },
     "DestinationArn":{
       "type":"string",
+      "min":1
+    },
+    "DestinationField":{
+      "type":"string",
+      "max":128,
       "min":1
     },
     "DestinationName":{
@@ -2116,6 +2435,26 @@
       "max":64,
       "min":1
     },
+    "FieldIndex":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "fieldIndexName":{"shape":"FieldIndexName"},
+        "lastScanTime":{"shape":"Timestamp"},
+        "firstEventTime":{"shape":"Timestamp"},
+        "lastEventTime":{"shape":"Timestamp"}
+      }
+    },
+    "FieldIndexName":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "FieldIndexes":{
+      "type":"list",
+      "member":{"shape":"FieldIndex"}
+    },
     "FilterCount":{"type":"integer"},
     "FilterLogEventsRequest":{
       "type":"structure",
@@ -2170,7 +2509,20 @@
       "type":"list",
       "member":{"shape":"FilteredLogEvent"}
     },
+    "Flatten":{"type":"boolean"},
+    "FlattenedElement":{
+      "type":"string",
+      "enum":[
+        "first",
+        "last"
+      ]
+    },
     "ForceUpdate":{"type":"boolean"},
+    "FromKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "GetDataProtectionPolicyRequest":{
       "type":"structure",
       "required":["logGroupIdentifier"],
@@ -2326,12 +2678,62 @@
         "encryptionKey":{"shape":"EncryptionKey"}
       }
     },
+    "GetTransformerRequest":{
+      "type":"structure",
+      "required":["logGroupIdentifier"],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"}
+      }
+    },
+    "GetTransformerResponse":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "transformerConfig":{"shape":"Processors"}
+      }
+    },
+    "Grok":{
+      "type":"structure",
+      "required":["match"],
+      "members":{
+        "source":{"shape":"Source"},
+        "match":{"shape":"GrokMatch"}
+      }
+    },
+    "GrokMatch":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Histogram":{
       "type":"map",
       "key":{"shape":"Time"},
       "value":{"shape":"Count"}
     },
     "IncludeLinkedAccounts":{"type":"boolean"},
+    "IndexPolicies":{
+      "type":"list",
+      "member":{"shape":"IndexPolicy"}
+    },
+    "IndexPolicy":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "lastUpdateTime":{"shape":"Timestamp"},
+        "policyDocument":{"shape":"PolicyDocument"},
+        "policyName":{"shape":"PolicyName"},
+        "source":{"shape":"IndexSource"}
+      }
+    },
+    "IndexSource":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "LOG_GROUP"
+      ]
+    },
     "InferredTokenName":{
       "type":"string",
       "min":1
@@ -2389,6 +2791,21 @@
       "exception":true
     },
     "IsSampled":{"type":"boolean"},
+    "Key":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "KeyPrefix":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "KeyValueDelimiter":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "KmsKeyId":{
       "type":"string",
       "max":256
@@ -2440,6 +2857,27 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListLogGroupsForQueryMaxResults":{
+      "type":"integer",
+      "max":500,
+      "min":50
+    },
+    "ListLogGroupsForQueryRequest":{
+      "type":"structure",
+      "required":["queryId"],
+      "members":{
+        "queryId":{"shape":"QueryId"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListLogGroupsForQueryMaxResults"}
+      }
+    },
+    "ListLogGroupsForQueryResponse":{
+      "type":"structure",
+      "members":{
+        "logGroupIdentifiers":{"shape":"LogGroupIdentifiers"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -2469,6 +2907,21 @@
       },
       "deprecated":true,
       "deprecatedMessage":"Please use the generic tagging API model ListTagsForResourceRequest and ListTagsForResourceResponse"
+    },
+    "ListToMap":{
+      "type":"structure",
+      "required":[
+        "source",
+        "key"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "key":{"shape":"Key"},
+        "valueKey":{"shape":"ValueKey"},
+        "target":{"shape":"Target"},
+        "flatten":{"shape":"Flatten"},
+        "flattenedElement":{"shape":"FlattenedElement"}
+      }
     },
     "LiveTailSessionLogEvent":{
       "type":"structure",
@@ -2509,6 +2962,10 @@
         "sessionResults":{"shape":"LiveTailSessionResults"}
       },
       "event":true
+    },
+    "Locale":{
+      "type":"string",
+      "min":1
     },
     "LogEvent":{
       "type":"structure",
@@ -2642,12 +3099,35 @@
       "max":10,
       "min":1
     },
+    "LowerCaseString":{
+      "type":"structure",
+      "required":["withKeys"],
+      "members":{
+        "withKeys":{"shape":"LowerCaseStringWithKeys"}
+      }
+    },
+    "LowerCaseStringWithKeys":{
+      "type":"list",
+      "member":{"shape":"WithKey"},
+      "max":10,
+      "min":1
+    },
     "MalformedQueryException":{
       "type":"structure",
       "members":{
         "queryCompileError":{"shape":"QueryCompileError"}
       },
       "exception":true
+    },
+    "MatchPattern":{
+      "type":"string",
+      "min":1
+    },
+    "MatchPatterns":{
+      "type":"list",
+      "member":{"shape":"MatchPattern"},
+      "max":5,
+      "min":1
     },
     "Message":{"type":"string"},
     "MetricFilter":{
@@ -2657,7 +3137,8 @@
         "filterPattern":{"shape":"FilterPattern"},
         "metricTransformations":{"shape":"MetricTransformations"},
         "creationTime":{"shape":"Timestamp"},
-        "logGroupName":{"shape":"LogGroupName"}
+        "logGroupName":{"shape":"LogGroupName"},
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
       }
     },
     "MetricFilterMatchRecord":{
@@ -2712,8 +3193,38 @@
       "type":"string",
       "max":100
     },
+    "MoveKeyEntries":{
+      "type":"list",
+      "member":{"shape":"MoveKeyEntry"},
+      "max":5,
+      "min":1
+    },
+    "MoveKeyEntry":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "target":{"shape":"Target"},
+        "overwriteIfExists":{"shape":"OverwriteIfExists"}
+      }
+    },
+    "MoveKeys":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"MoveKeyEntries"}
+      }
+    },
     "NextToken":{
       "type":"string",
+      "min":1
+    },
+    "NonMatchValue":{
+      "type":"string",
+      "max":128,
       "min":1
     },
     "OperationAbortedException":{
@@ -2754,6 +3265,61 @@
     "OutputLogEvents":{
       "type":"list",
       "member":{"shape":"OutputLogEvent"}
+    },
+    "OverwriteIfExists":{"type":"boolean"},
+    "ParseCloudfront":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"}
+      }
+    },
+    "ParseJSON":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"},
+        "destination":{"shape":"DestinationField"}
+      }
+    },
+    "ParseKeyValue":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"},
+        "destination":{"shape":"DestinationField"},
+        "fieldDelimiter":{"shape":"ParserFieldDelimiter"},
+        "keyValueDelimiter":{"shape":"KeyValueDelimiter"},
+        "keyPrefix":{"shape":"KeyPrefix"},
+        "nonMatchValue":{"shape":"NonMatchValue"},
+        "overwriteIfExists":{"shape":"OverwriteIfExists"}
+      }
+    },
+    "ParsePostgres":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"}
+      }
+    },
+    "ParseRoute53":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"}
+      }
+    },
+    "ParseVPC":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"}
+      }
+    },
+    "ParseWAF":{
+      "type":"structure",
+      "members":{
+        "source":{"shape":"Source"}
+      }
+    },
+    "ParserFieldDelimiter":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "PatternId":{
       "type":"string",
@@ -2803,11 +3369,46 @@
       "type":"string",
       "enum":[
         "DATA_PROTECTION_POLICY",
-        "SUBSCRIPTION_FILTER_POLICY"
+        "SUBSCRIPTION_FILTER_POLICY",
+        "FIELD_INDEX_POLICY",
+        "TRANSFORMER_POLICY"
       ]
     },
     "Priority":{
       "type":"string",
+      "min":1
+    },
+    "Processor":{
+      "type":"structure",
+      "members":{
+        "addKeys":{"shape":"AddKeys"},
+        "copyValue":{"shape":"CopyValue"},
+        "csv":{"shape":"CSV"},
+        "dateTimeConverter":{"shape":"DateTimeConverter"},
+        "deleteKeys":{"shape":"DeleteKeys"},
+        "grok":{"shape":"Grok"},
+        "listToMap":{"shape":"ListToMap"},
+        "lowerCaseString":{"shape":"LowerCaseString"},
+        "moveKeys":{"shape":"MoveKeys"},
+        "parseCloudfront":{"shape":"ParseCloudfront"},
+        "parseJSON":{"shape":"ParseJSON"},
+        "parseKeyValue":{"shape":"ParseKeyValue"},
+        "parseRoute53":{"shape":"ParseRoute53"},
+        "parsePostgres":{"shape":"ParsePostgres"},
+        "parseVPC":{"shape":"ParseVPC"},
+        "parseWAF":{"shape":"ParseWAF"},
+        "renameKeys":{"shape":"RenameKeys"},
+        "splitString":{"shape":"SplitString"},
+        "substituteString":{"shape":"SubstituteString"},
+        "trimString":{"shape":"TrimString"},
+        "typeConverter":{"shape":"TypeConverter"},
+        "upperCaseString":{"shape":"UpperCaseString"}
+      }
+    },
+    "Processors":{
+      "type":"list",
+      "member":{"shape":"Processor"},
+      "max":20,
       "min":1
     },
     "PutAccountPolicyRequest":{
@@ -2938,6 +3539,23 @@
         "destination":{"shape":"Destination"}
       }
     },
+    "PutIndexPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupIdentifier",
+        "policyDocument"
+      ],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "policyDocument":{"shape":"PolicyDocument"}
+      }
+    },
+    "PutIndexPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "indexPolicy":{"shape":"IndexPolicy"}
+      }
+    },
     "PutLogEventsRequest":{
       "type":"structure",
       "required":[
@@ -2973,7 +3591,8 @@
         "logGroupName":{"shape":"LogGroupName"},
         "filterName":{"shape":"FilterName"},
         "filterPattern":{"shape":"FilterPattern"},
-        "metricTransformations":{"shape":"MetricTransformations"}
+        "metricTransformations":{"shape":"MetricTransformations"},
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
       }
     },
     "PutQueryDefinitionRequest":{
@@ -3037,7 +3656,19 @@
         "filterPattern":{"shape":"FilterPattern"},
         "destinationArn":{"shape":"DestinationArn"},
         "roleArn":{"shape":"RoleArn"},
-        "distribution":{"shape":"Distribution"}
+        "distribution":{"shape":"Distribution"},
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
+      }
+    },
+    "PutTransformerRequest":{
+      "type":"structure",
+      "required":[
+        "logGroupIdentifier",
+        "transformerConfig"
+      ],
+      "members":{
+        "logGroupIdentifier":{"shape":"LogGroupIdentifier"},
+        "transformerConfig":{"shape":"Processors"}
       }
     },
     "QueryCharOffset":{"type":"integer"},
@@ -3112,7 +3743,10 @@
       "members":{
         "recordsMatched":{"shape":"StatsValue"},
         "recordsScanned":{"shape":"StatsValue"},
-        "bytesScanned":{"shape":"StatsValue"}
+        "estimatedRecordsSkipped":{"shape":"StatsValue"},
+        "bytesScanned":{"shape":"StatsValue"},
+        "estimatedBytesSkipped":{"shape":"StatsValue"},
+        "logGroupsScanned":{"shape":"StatsValue"}
       }
     },
     "QueryStatus":{
@@ -3131,6 +3765,11 @@
       "type":"string",
       "max":10000,
       "min":0
+    },
+    "QuoteCharacter":{
+      "type":"string",
+      "max":1,
+      "min":1
     },
     "RecordField":{
       "type":"structure",
@@ -3159,6 +3798,36 @@
         "tooOldLogEventEndIndex":{"shape":"LogEventIndex"},
         "expiredLogEventEndIndex":{"shape":"LogEventIndex"}
       }
+    },
+    "RenameKeyEntries":{
+      "type":"list",
+      "member":{"shape":"RenameKeyEntry"},
+      "max":5,
+      "min":1
+    },
+    "RenameKeyEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "renameTo"
+      ],
+      "members":{
+        "key":{"shape":"Key"},
+        "renameTo":{"shape":"RenameTo"},
+        "overwriteIfExists":{"shape":"OverwriteIfExists"}
+      }
+    },
+    "RenameKeys":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"RenameKeyEntries"}
+      }
+    },
+    "RenameTo":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "RequestId":{
       "type":"string",
@@ -3294,6 +3963,39 @@
       },
       "exception":true
     },
+    "Source":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SourceTimezone":{
+      "type":"string",
+      "min":1
+    },
+    "SplitString":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"SplitStringEntries"}
+      }
+    },
+    "SplitStringEntries":{
+      "type":"list",
+      "member":{"shape":"SplitStringEntry"},
+      "max":10,
+      "min":1
+    },
+    "SplitStringEntry":{
+      "type":"structure",
+      "required":[
+        "source",
+        "delimiter"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "delimiter":{"shape":"Delimiter"}
+      }
+    },
     "StandardUnit":{
       "type":"string",
       "enum":[
@@ -3417,12 +4119,39 @@
         "destinationArn":{"shape":"DestinationArn"},
         "roleArn":{"shape":"RoleArn"},
         "distribution":{"shape":"Distribution"},
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
         "creationTime":{"shape":"Timestamp"}
       }
     },
     "SubscriptionFilters":{
       "type":"list",
       "member":{"shape":"SubscriptionFilter"}
+    },
+    "SubstituteString":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"SubstituteStringEntries"}
+      }
+    },
+    "SubstituteStringEntries":{
+      "type":"list",
+      "member":{"shape":"SubstituteStringEntry"},
+      "max":10,
+      "min":1
+    },
+    "SubstituteStringEntry":{
+      "type":"structure",
+      "required":[
+        "source",
+        "from",
+        "to"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "from":{"shape":"FromKey"},
+        "to":{"shape":"ToKey"}
+      }
     },
     "Success":{"type":"boolean"},
     "SuppressionPeriod":{
@@ -3507,7 +4236,21 @@
       "max":50,
       "min":1
     },
+    "Target":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "TargetArn":{
+      "type":"string",
+      "min":1
+    },
+    "TargetFormat":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "TargetTimezone":{
       "type":"string",
       "min":1
     },
@@ -3534,6 +4277,23 @@
         "matches":{"shape":"MetricFilterMatches"}
       }
     },
+    "TestTransformerRequest":{
+      "type":"structure",
+      "required":[
+        "transformerConfig",
+        "logEventMessages"
+      ],
+      "members":{
+        "transformerConfig":{"shape":"Processors"},
+        "logEventMessages":{"shape":"TestEventMessages"}
+      }
+    },
+    "TestTransformerResponse":{
+      "type":"structure",
+      "members":{
+        "transformedLogs":{"shape":"TransformedLogs"}
+      }
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -3548,6 +4308,11 @@
       "type":"long",
       "min":0
     },
+    "ToKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Token":{"type":"string"},
     "TokenString":{
       "type":"string",
@@ -3561,6 +4326,68 @@
         "resourceName":{"shape":"AmazonResourceName"}
       },
       "exception":true
+    },
+    "TransformedEventMessage":{
+      "type":"string",
+      "min":1
+    },
+    "TransformedLogRecord":{
+      "type":"structure",
+      "members":{
+        "eventNumber":{"shape":"EventNumber"},
+        "eventMessage":{"shape":"EventMessage"},
+        "transformedEventMessage":{"shape":"TransformedEventMessage"}
+      }
+    },
+    "TransformedLogs":{
+      "type":"list",
+      "member":{"shape":"TransformedLogRecord"}
+    },
+    "TrimString":{
+      "type":"structure",
+      "required":["withKeys"],
+      "members":{
+        "withKeys":{"shape":"TrimStringWithKeys"}
+      }
+    },
+    "TrimStringWithKeys":{
+      "type":"list",
+      "member":{"shape":"WithKey"},
+      "max":10,
+      "min":1
+    },
+    "Type":{
+      "type":"string",
+      "enum":[
+        "boolean",
+        "integer",
+        "double",
+        "string"
+      ]
+    },
+    "TypeConverter":{
+      "type":"structure",
+      "required":["entries"],
+      "members":{
+        "entries":{"shape":"TypeConverterEntries"}
+      }
+    },
+    "TypeConverterEntries":{
+      "type":"list",
+      "member":{"shape":"TypeConverterEntry"},
+      "max":5,
+      "min":1
+    },
+    "TypeConverterEntry":{
+      "type":"structure",
+      "required":[
+        "key",
+        "type"
+      ],
+      "members":{
+        "key":{"shape":"Key"},
+        "type":{"shape":"Type"}
+      }
     },
     "Unmask":{"type":"boolean"},
     "UnrecognizedClientException":{
@@ -3634,12 +4461,34 @@
         "enabled":{"shape":"Boolean"}
       }
     },
+    "UpperCaseString":{
+      "type":"structure",
+      "required":["withKeys"],
+      "members":{
+        "withKeys":{"shape":"UpperCaseStringWithKeys"}
+      }
+    },
+    "UpperCaseStringWithKeys":{
+      "type":"list",
+      "member":{"shape":"WithKey"},
+      "max":10,
+      "min":1
+    },
     "ValidationException":{
       "type":"structure",
       "members":{
       },
       "exception":true
     },
-    "Value":{"type":"string"}
+    "Value":{"type":"string"},
+    "ValueKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "WithKey":{
+      "type":"string",
+      "min":1
+    }
   }
 }

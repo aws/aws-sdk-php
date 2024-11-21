@@ -2111,6 +2111,24 @@
       "input":{"shape":"DescribeByoipCidrsRequest"},
       "output":{"shape":"DescribeByoipCidrsResult"}
     },
+    "DescribeCapacityBlockExtensionHistory":{
+      "name":"DescribeCapacityBlockExtensionHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityBlockExtensionHistoryRequest"},
+      "output":{"shape":"DescribeCapacityBlockExtensionHistoryResult"}
+    },
+    "DescribeCapacityBlockExtensionOfferings":{
+      "name":"DescribeCapacityBlockExtensionOfferings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityBlockExtensionOfferingsRequest"},
+      "output":{"shape":"DescribeCapacityBlockExtensionOfferingsResult"}
+    },
     "DescribeCapacityBlockOfferings":{
       "name":"DescribeCapacityBlockOfferings",
       "http":{
@@ -5190,6 +5208,15 @@
       "input":{"shape":"PurchaseCapacityBlockRequest"},
       "output":{"shape":"PurchaseCapacityBlockResult"}
     },
+    "PurchaseCapacityBlockExtension":{
+      "name":"PurchaseCapacityBlockExtension",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PurchaseCapacityBlockExtensionRequest"},
+      "output":{"shape":"PurchaseCapacityBlockExtensionResult"}
+    },
     "PurchaseHostReservation":{
       "name":"PurchaseHostReservation",
       "http":{
@@ -6178,6 +6205,18 @@
       "type":"list",
       "member":{"shape":"AddIpamOperatingRegion"},
       "max":50,
+      "min":0
+    },
+    "AddIpamOrganizationalUnitExclusion":{
+      "type":"structure",
+      "members":{
+        "OrganizationsEntityPath":{"shape":"String"}
+      }
+    },
+    "AddIpamOrganizationalUnitExclusionSet":{
+      "type":"list",
+      "member":{"shape":"AddIpamOrganizationalUnitExclusion"},
+      "max":10,
       "min":0
     },
     "AddPrefixListEntries":{
@@ -8962,6 +9001,138 @@
         "locationName":"item"
       }
     },
+    "CapacityBlockExtension":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"capacityReservationId"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "CapacityBlockExtensionOfferingId":{
+          "shape":"OfferingId",
+          "locationName":"capacityBlockExtensionOfferingId"
+        },
+        "CapacityBlockExtensionDurationHours":{
+          "shape":"Integer",
+          "locationName":"capacityBlockExtensionDurationHours"
+        },
+        "CapacityBlockExtensionStatus":{
+          "shape":"CapacityBlockExtensionStatus",
+          "locationName":"capacityBlockExtensionStatus"
+        },
+        "CapacityBlockExtensionPurchaseDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"capacityBlockExtensionPurchaseDate"
+        },
+        "CapacityBlockExtensionStartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"capacityBlockExtensionStartDate"
+        },
+        "CapacityBlockExtensionEndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"capacityBlockExtensionEndDate"
+        },
+        "UpfrontFee":{
+          "shape":"String",
+          "locationName":"upfrontFee"
+        },
+        "CurrencyCode":{
+          "shape":"String",
+          "locationName":"currencyCode"
+        }
+      }
+    },
+    "CapacityBlockExtensionOffering":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockExtensionOfferingId":{
+          "shape":"OfferingId",
+          "locationName":"capacityBlockExtensionOfferingId"
+        },
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "InstanceCount":{
+          "shape":"Integer",
+          "locationName":"instanceCount"
+        },
+        "AvailabilityZone":{
+          "shape":"AvailabilityZoneName",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "CapacityBlockExtensionStartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"capacityBlockExtensionStartDate"
+        },
+        "CapacityBlockExtensionEndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"capacityBlockExtensionEndDate"
+        },
+        "CapacityBlockExtensionDurationHours":{
+          "shape":"Integer",
+          "locationName":"capacityBlockExtensionDurationHours"
+        },
+        "UpfrontFee":{
+          "shape":"String",
+          "locationName":"upfrontFee"
+        },
+        "CurrencyCode":{
+          "shape":"String",
+          "locationName":"currencyCode"
+        },
+        "Tenancy":{
+          "shape":"CapacityReservationTenancy",
+          "locationName":"tenancy"
+        }
+      }
+    },
+    "CapacityBlockExtensionOfferingSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockExtensionOffering",
+        "locationName":"item"
+      }
+    },
+    "CapacityBlockExtensionSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockExtension",
+        "locationName":"item"
+      }
+    },
+    "CapacityBlockExtensionStatus":{
+      "type":"string",
+      "enum":[
+        "payment-pending",
+        "payment-failed",
+        "payment-succeeded"
+      ]
+    },
     "CapacityBlockOffering":{
       "type":"structure",
       "members":{
@@ -9004,6 +9175,10 @@
         "Tenancy":{
           "shape":"CapacityReservationTenancy",
           "locationName":"tenancy"
+        },
+        "CapacityBlockDurationMinutes":{
+          "shape":"Integer",
+          "locationName":"capacityBlockDurationMinutes"
         }
       }
     },
@@ -9116,6 +9291,14 @@
         "UnusedReservationBillingOwnerId":{
           "shape":"AccountID",
           "locationName":"unusedReservationBillingOwnerId"
+        },
+        "CommitmentInfo":{
+          "shape":"CapacityReservationCommitmentInfo",
+          "locationName":"commitmentInfo"
+        },
+        "DeliveryPreference":{
+          "shape":"CapacityReservationDeliveryPreference",
+          "locationName":"deliveryPreference"
         }
       }
     },
@@ -9168,6 +9351,31 @@
         "cancelled",
         "revoked",
         "expired"
+      ]
+    },
+    "CapacityReservationCommitmentDuration":{
+      "type":"long",
+      "max":200000000,
+      "min":1
+    },
+    "CapacityReservationCommitmentInfo":{
+      "type":"structure",
+      "members":{
+        "CommittedInstanceCount":{
+          "shape":"Integer",
+          "locationName":"committedInstanceCount"
+        },
+        "CommitmentEndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"commitmentEndDate"
+        }
+      }
+    },
+    "CapacityReservationDeliveryPreference":{
+      "type":"string",
+      "enum":[
+        "fixed",
+        "incremental"
       ]
     },
     "CapacityReservationFleet":{
@@ -9404,7 +9612,10 @@
         "failed",
         "scheduled",
         "payment-pending",
-        "payment-failed"
+        "payment-failed",
+        "assessing",
+        "delayed",
+        "unsupported"
       ]
     },
     "CapacityReservationTarget":{
@@ -10749,7 +10960,10 @@
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "DryRun":{"shape":"Boolean"},
         "OutpostArn":{"shape":"OutpostArn"},
-        "PlacementGroupArn":{"shape":"PlacementGroupArn"}
+        "PlacementGroupArn":{"shape":"PlacementGroupArn"},
+        "StartDate":{"shape":"MillisecondDateTime"},
+        "CommitmentDuration":{"shape":"CapacityReservationCommitmentDuration"},
+        "DeliveryPreference":{"shape":"CapacityReservationDeliveryPreference"}
       }
     },
     "CreateCapacityReservationResult":{
@@ -15504,6 +15718,67 @@
         }
       }
     },
+    "DescribeCapacityBlockExtensionHistoryRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationIds":{
+          "shape":"CapacityReservationIdSet",
+          "locationName":"CapacityReservationId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeFutureCapacityMaxResults"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeCapacityBlockExtensionHistoryResult":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockExtensions":{
+          "shape":"CapacityBlockExtensionSet",
+          "locationName":"capacityBlockExtensionSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityBlockExtensionOfferingsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeCapacityBlockExtensionOfferingsRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityBlockExtensionDurationHours",
+        "CapacityReservationId"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "CapacityBlockExtensionDurationHours":{"shape":"Integer"},
+        "CapacityReservationId":{"shape":"CapacityReservationId"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeCapacityBlockExtensionOfferingsMaxResults"}
+      }
+    },
+    "DescribeCapacityBlockExtensionOfferingsResult":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockExtensionOfferings":{
+          "shape":"CapacityBlockExtensionOfferingSet",
+          "locationName":"capacityBlockExtensionOfferingSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribeCapacityBlockOfferingsMaxResults":{
       "type":"integer",
       "max":1000,
@@ -16536,6 +16811,11 @@
           "locationName":"nextToken"
         }
       }
+    },
+    "DescribeFutureCapacityMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
     },
     "DescribeHostReservationOfferingsRequest":{
       "type":"structure",
@@ -30328,6 +30608,10 @@
         "LastSuccessfulDiscoveryTime":{
           "shape":"MillisecondDateTime",
           "locationName":"lastSuccessfulDiscoveryTime"
+        },
+        "OrganizationalUnitId":{
+          "shape":"String",
+          "locationName":"organizationalUnitId"
         }
       }
     },
@@ -30622,6 +30906,22 @@
       "type":"list",
       "member":{
         "shape":"IpamOperatingRegion",
+        "locationName":"item"
+      }
+    },
+    "IpamOrganizationalUnitExclusion":{
+      "type":"structure",
+      "members":{
+        "OrganizationsEntityPath":{
+          "shape":"String",
+          "locationName":"organizationsEntityPath"
+        }
+      }
+    },
+    "IpamOrganizationalUnitExclusionSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamOrganizationalUnitExclusion",
         "locationName":"item"
       }
     },
@@ -31139,6 +31439,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "OrganizationalUnitExclusions":{
+          "shape":"IpamOrganizationalUnitExclusionSet",
+          "locationName":"organizationalUnitExclusionSet"
         }
       }
     },
@@ -34395,6 +34699,14 @@
         "RemoveOperatingRegions":{
           "shape":"RemoveIpamOperatingRegionSet",
           "locationName":"RemoveOperatingRegion"
+        },
+        "AddOrganizationalUnitExclusions":{
+          "shape":"AddIpamOrganizationalUnitExclusionSet",
+          "locationName":"AddOrganizationalUnitExclusion"
+        },
+        "RemoveOrganizationalUnitExclusions":{
+          "shape":"RemoveIpamOrganizationalUnitExclusionSet",
+          "locationName":"RemoveOrganizationalUnitExclusion"
         }
       }
     },
@@ -38479,6 +38791,27 @@
         }
       }
     },
+    "PurchaseCapacityBlockExtensionRequest":{
+      "type":"structure",
+      "required":[
+        "CapacityBlockExtensionOfferingId",
+        "CapacityReservationId"
+      ],
+      "members":{
+        "CapacityBlockExtensionOfferingId":{"shape":"OfferingId"},
+        "CapacityReservationId":{"shape":"CapacityReservationId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "PurchaseCapacityBlockExtensionResult":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockExtensions":{
+          "shape":"CapacityBlockExtensionSet",
+          "locationName":"capacityBlockExtensionSet"
+        }
+      }
+    },
     "PurchaseCapacityBlockRequest":{
       "type":"structure",
       "required":[
@@ -39077,6 +39410,18 @@
       "type":"list",
       "member":{"shape":"RemoveIpamOperatingRegion"},
       "max":50,
+      "min":0
+    },
+    "RemoveIpamOrganizationalUnitExclusion":{
+      "type":"structure",
+      "members":{
+        "OrganizationsEntityPath":{"shape":"String"}
+      }
+    },
+    "RemoveIpamOrganizationalUnitExclusionSet":{
+      "type":"list",
+      "member":{"shape":"RemoveIpamOrganizationalUnitExclusion"},
+      "max":10,
       "min":0
     },
     "RemovePrefixListEntries":{
