@@ -59,6 +59,13 @@ class RestJsonSerializerTest extends TestCase
                     'boolHeader' => [
                         'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BoolHeaderInput']
+                    ],
+                    'requestUriOperation' =>[
+                        'http' => [
+                            'method' => 'POST',
+                            'requestUri' => 'foo/{PathSegment}'
+                        ],
+                        'input' => ['shape' => 'RequestUriOperationInput'],
                     ]
                 ],
                 'shapes' => [
@@ -74,6 +81,17 @@ class RestJsonSerializerTest extends TestCase
                             "DocumentValue" => [
                                 "shape" => "DocumentType",
                             ]
+                        ]
+                    ],
+                    'RequestUriOperationInput' => [
+                        'required' => ['PathSegment'],
+                        'type' => 'structure',
+                        'members' => [
+                            "PathSegment" => [
+                                "shape" => "PathSegmentShape",
+                                "location" => 'uri'
+                            ],
+                            'baz' => ['shape' => 'BazShape']
                         ]
                     ],
                     "DocumentType" => [
@@ -139,6 +157,7 @@ class RestJsonSerializerTest extends TestCase
                     'BlobShape' => ['type' => 'blob'],
                     'BazShape'  => ['type' => 'string'],
                     'BoolShape' => ['type' => 'boolean'],
+                    'PathSegmentShape'  => ['type' => 'string'],
                 ]
             ],
             function () {}
@@ -153,11 +172,12 @@ class RestJsonSerializerTest extends TestCase
         return $j($command);
     }
 
-    private function getPathEndpointRequest($commandName, $input)
+    private function getPathEndpointRequest($commandName, $input, $options = [])
     {
         $service = $this->getTestService();
         $command = new Command($commandName, $input);
-        $j = new RestJsonSerializer($service, 'http://foo.com/bar');
+        $path = $options['path'] ?? 'bar';
+        $j = new RestJsonSerializer($service, 'http://foo.com/' . $path);
         return $j($command);
     }
 
@@ -178,6 +198,41 @@ class RestJsonSerializerTest extends TestCase
         $request = $this->getPathEndpointRequest('foo', ['baz' => 'bar']);
         $this->assertSame('POST', $request->getMethod());
         $this->assertSame('http://foo.com/bar', (string) $request->getUri());
+        $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+    public function testPreparesRequestsWithEndpointWithRequestUriAndPath(): void
+    {
+        $request = $this->getPathEndpointRequest(
+            'requestUriOperation',
+            ['PathSegment' => 'bar', 'baz' => 'bar']
+        );
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/bar/foo/bar', (string) $request->getUri());
+        $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+    /**
+     * Simulates a custom endpoint provided with a starting path segment matching the
+     * modeled `RequestUri` starting path segment
+     */
+    public function testPreparesRequestsWithEndpointWithDuplicateRequestUriAndPath(): void
+    {
+        $request = $this->getPathEndpointRequest(
+            'requestUriOperation',
+            ['PathSegment' => 'bar', 'baz' => 'bar'],
+            ['path' => 'foo']
+        );
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/foo/bar', (string) $request->getUri());
         $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
         $this->assertSame(
             'application/json',
