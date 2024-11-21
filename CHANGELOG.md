@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.329.0 - 2024-11-21
 
 * `Aws\Api` - Fixes issue with path resolution in rest protocol services
 * `Aws\APIGateway` - Added support for custom domain names for private APIs.
