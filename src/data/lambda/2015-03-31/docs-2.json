@@ -1640,6 +1640,12 @@
         "UpdateFunctionEventInvokeConfigRequest$MaximumEventAgeInSeconds": "<p>The maximum age of a request that Lambda sends to a function for processing.</p>"
       }
     },
+    "MaximumNumberOfPollers": {
+      "base": null,
+      "refs": {
+        "ProvisionedPollerConfig$MaximumPollers": "<p>The maximum number of event pollers this event source can scale up to.</p>"
+      }
+    },
     "MaximumRecordAgeInSeconds": {
       "base": null,
       "refs": {
@@ -1676,6 +1682,12 @@
       "base": null,
       "refs": {
         "AllowMethodsList$member": null
+      }
+    },
+    "MinimumNumberOfPollers": {
+      "base": null,
+      "refs": {
+        "ProvisionedPollerConfig$MinimumPollers": "<p>The minimum number of event pollers this event source can scale down to.</p>"
       }
     },
     "NameSpacedFunctionArn": {
@@ -1822,6 +1834,14 @@
         "GetProvisionedConcurrencyConfigResponse$Status": "<p>The status of the allocation process.</p>",
         "ProvisionedConcurrencyConfigListItem$Status": "<p>The status of the allocation process.</p>",
         "PutProvisionedConcurrencyConfigResponse$Status": "<p>The status of the allocation process.</p>"
+      }
+    },
+    "ProvisionedPollerConfig": {
+      "base": "<p>The <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\"> Provisioned Mode</a> configuration for the event source. Use Provisioned Mode to customize the minimum and maximum number of event pollers for your event source. An event poller is a compute unit that provides approximately 5 MBps of throughput.</p>",
+      "refs": {
+        "CreateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">Provisioned Mode</a>.</p>",
+        "EventSourceMappingConfiguration$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">Provisioned Mode</a>.</p>",
+        "UpdateEventSourceMappingRequest$ProvisionedPollerConfig": "<p>(Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode\">Provisioned Mode</a>.</p>"
       }
     },
     "PublishLayerVersionRequest": {

@@ -500,6 +500,27 @@
       "endpoint":{"hostPrefix":"workflows-"},
       "idempotent":true
     },
+    "DeleteS3AccessPolicy":{
+      "name":"DeleteS3AccessPolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/s3accesspolicy/{s3AccessPointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteS3AccessPolicyRequest"},
+      "output":{"shape":"DeleteS3AccessPolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"NotSupportedOperationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"control-storage-"},
+      "idempotent":true
+    },
     "DeleteSequenceStore":{
       "name":"DeleteSequenceStore",
       "http":{
@@ -894,6 +915,27 @@
         {"shape":"RequestTimeoutException"}
       ],
       "endpoint":{"hostPrefix":"workflows-"}
+    },
+    "GetS3AccessPolicy":{
+      "name":"GetS3AccessPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/s3accesspolicy/{s3AccessPointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetS3AccessPolicyRequest"},
+      "output":{"shape":"GetS3AccessPolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"NotSupportedOperationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"control-storage-"}
     },
     "GetSequenceStore":{
       "name":"GetSequenceStore",
@@ -1419,6 +1461,26 @@
       ],
       "endpoint":{"hostPrefix":"workflows-"}
     },
+    "PutS3AccessPolicy":{
+      "name":"PutS3AccessPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/s3accesspolicy/{s3AccessPointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"PutS3AccessPolicyRequest"},
+      "output":{"shape":"PutS3AccessPolicyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"NotSupportedOperationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"control-storage-"}
+    },
     "StartAnnotationImportJob":{
       "name":"StartAnnotationImportJob",
       "http":{
@@ -1677,6 +1739,26 @@
       ],
       "endpoint":{"hostPrefix":"workflows-"}
     },
+    "UpdateSequenceStore":{
+      "name":"UpdateSequenceStore",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/sequencestore/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSequenceStoreRequest"},
+      "output":{"shape":"UpdateSequenceStoreResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"control-storage-"}
+    },
     "UpdateVariantStore":{
       "name":"UpdateVariantStore",
       "http":{
@@ -1798,6 +1880,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccessLogLocation":{
+      "type":"string",
+      "pattern":"$|^s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,800})/)?"
     },
     "ActivateReadSetFilter":{
       "type":"structure",
@@ -2415,9 +2501,14 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "tags":{"shape":"TagMap"},
-        "clientToken":{"shape":"ClientToken"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "fallbackLocation":{"shape":"S3Destination"},
-        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
+        "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
+        "s3AccessConfig":{"shape":"S3AccessConfig"}
       }
     },
     "CreateSequenceStoreResponse":{
@@ -2435,7 +2526,11 @@
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
         "fallbackLocation":{"shape":"S3Destination"},
-        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
+        "status":{"shape":"SequenceStoreStatus"},
+        "statusMessage":{"shape":"SequenceStoreStatusMessage"},
+        "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
+        "s3Access":{"shape":"SequenceStoreS3Access"}
       }
     },
     "CreateShareRequest":{
@@ -2657,6 +2752,22 @@
           "location":"uri",
           "locationName":"id"
         }
+      }
+    },
+    "DeleteS3AccessPolicyRequest":{
+      "type":"structure",
+      "required":["s3AccessPointArn"],
+      "members":{
+        "s3AccessPointArn":{
+          "shape":"S3AccessPointArn",
+          "location":"uri",
+          "locationName":"s3AccessPointArn"
+        }
+      }
+    },
+    "DeleteS3AccessPolicyResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteSequenceStoreRequest":{
@@ -3625,6 +3736,31 @@
       "box":true,
       "min":1
     },
+    "GetS3AccessPolicyRequest":{
+      "type":"structure",
+      "required":["s3AccessPointArn"],
+      "members":{
+        "s3AccessPointArn":{
+          "shape":"S3AccessPointArn",
+          "location":"uri",
+          "locationName":"s3AccessPointArn"
+        }
+      }
+    },
+    "GetS3AccessPolicyResponse":{
+      "type":"structure",
+      "required":["s3AccessPolicy"],
+      "members":{
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"},
+        "storeId":{"shape":"StoreId"},
+        "storeType":{"shape":"StoreType"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "s3AccessPolicy":{
+          "shape":"S3AccessPolicy",
+          "jsonvalue":true
+        }
+      }
+    },
     "GetSequenceStoreRequest":{
       "type":"structure",
       "required":["id"],
@@ -3652,7 +3788,11 @@
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
         "fallbackLocation":{"shape":"S3Destination"},
         "s3Access":{"shape":"SequenceStoreS3Access"},
-        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
+        "status":{"shape":"SequenceStoreStatus"},
+        "statusMessage":{"shape":"SequenceStoreStatusMessage"},
+        "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "GetShareRequest":{
@@ -4839,6 +4979,38 @@
       "pattern":"[0-9]+"
     },
     "PrimitiveBoolean":{"type":"boolean"},
+    "PropagatedSetLevelTags":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":0
+    },
+    "PutS3AccessPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "s3AccessPointArn",
+        "s3AccessPolicy"
+      ],
+      "members":{
+        "s3AccessPointArn":{
+          "shape":"S3AccessPointArn",
+          "location":"uri",
+          "locationName":"s3AccessPointArn"
+        },
+        "s3AccessPolicy":{
+          "shape":"S3AccessPolicy",
+          "jsonvalue":true
+        }
+      }
+    },
+    "PutS3AccessPolicyResponse":{
+      "type":"structure",
+      "members":{
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"},
+        "storeId":{"shape":"StoreId"},
+        "storeType":{"shape":"StoreType"}
+      }
+    },
     "Quote":{
       "type":"string",
       "max":1,
@@ -5655,11 +5827,22 @@
       "min":1,
       "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
+    "S3AccessConfig":{
+      "type":"structure",
+      "members":{
+        "accessLogLocation":{"shape":"AccessLogLocation"}
+      }
+    },
     "S3AccessPointArn":{
       "type":"string",
       "max":1024,
       "min":1,
       "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
+    },
+    "S3AccessPolicy":{
+      "type":"string",
+      "max":100000,
+      "min":1
     },
     "S3Destination":{
       "type":"string",
@@ -5742,7 +5925,10 @@
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
         "fallbackLocation":{"shape":"S3Destination"},
-        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
+        "status":{"shape":"SequenceStoreStatus"},
+        "statusMessage":{"shape":"SequenceStoreStatusMessage"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "SequenceStoreDetailList":{
@@ -5754,7 +5940,10 @@
       "members":{
         "name":{"shape":"SequenceStoreName"},
         "createdAfter":{"shape":"SyntheticTimestamp_date_time"},
-        "createdBefore":{"shape":"SyntheticTimestamp_date_time"}
+        "createdBefore":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"SequenceStoreStatus"},
+        "updatedAfter":{"shape":"SyntheticTimestamp_date_time"},
+        "updatedBefore":{"shape":"SyntheticTimestamp_date_time"}
       }
     },
     "SequenceStoreId":{
@@ -5773,8 +5962,25 @@
       "type":"structure",
       "members":{
         "s3Uri":{"shape":"S3Uri"},
-        "s3AccessPointArn":{"shape":"S3AccessPointArn"}
+        "s3AccessPointArn":{"shape":"S3AccessPointArn"},
+        "accessLogLocation":{"shape":"AccessLogLocation"}
       }
+    },
+    "SequenceStoreStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "SequenceStoreStatusMessage":{
+      "type":"string",
+      "max":127,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -6183,6 +6389,12 @@
         "VCF"
       ]
     },
+    "StoreId":{
+      "type":"string",
+      "max":36,
+      "min":10,
+      "pattern":"[0-9]+"
+    },
     "StoreName":{
       "type":"string",
       "max":255,
@@ -6204,6 +6416,13 @@
         "DELETING",
         "ACTIVE",
         "FAILED"
+      ]
+    },
+    "StoreType":{
+      "type":"string",
+      "enum":[
+        "SEQUENCE_STORE",
+        "REFERENCE_STORE"
       ]
     },
     "String":{"type":"string"},
@@ -6568,6 +6787,49 @@
       "box":true,
       "max":100000,
       "min":1
+    },
+    "UpdateSequenceStoreRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"SequenceStoreId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "name":{"shape":"SequenceStoreName"},
+        "description":{"shape":"SequenceStoreDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "fallbackLocation":{"shape":"S3Destination"},
+        "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
+        "s3AccessConfig":{"shape":"S3AccessConfig"}
+      }
+    },
+    "UpdateSequenceStoreResponse":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "creationTime"
+      ],
+      "members":{
+        "id":{"shape":"SequenceStoreId"},
+        "arn":{"shape":"SequenceStoreArn"},
+        "name":{"shape":"SequenceStoreName"},
+        "description":{"shape":"SequenceStoreDescription"},
+        "sseConfig":{"shape":"SseConfig"},
+        "creationTime":{"shape":"SyntheticTimestamp_date_time"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
+        "status":{"shape":"SequenceStoreStatus"},
+        "statusMessage":{"shape":"SequenceStoreStatusMessage"},
+        "fallbackLocation":{"shape":"S3Destination"},
+        "s3Access":{"shape":"SequenceStoreS3Access"},
+        "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
+      }
     },
     "UpdateTime":{
       "type":"timestamp",

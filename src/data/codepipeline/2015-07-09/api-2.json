@@ -818,7 +818,8 @@
         "externalExecutionId":{"shape":"ExecutionId"},
         "externalExecutionUrl":{"shape":"Url"},
         "percentComplete":{"shape":"Percentage"},
-        "errorDetails":{"shape":"ErrorDetails"}
+        "errorDetails":{"shape":"ErrorDetails"},
+        "logStreamARN":{"shape":"LogStreamARN"}
       }
     },
     "ActionExecutionDetail":{
@@ -875,7 +876,8 @@
         "externalExecutionId":{"shape":"ExternalExecutionId"},
         "externalExecutionSummary":{"shape":"ExternalExecutionSummary"},
         "externalExecutionUrl":{"shape":"Url"},
-        "errorDetails":{"shape":"ErrorDetails"}
+        "errorDetails":{"shape":"ErrorDetails"},
+        "logStreamARN":{"shape":"LogStreamARN"}
       }
     },
     "ActionExecutionStatus":{
@@ -2214,6 +2216,11 @@
         "webhooks":{"shape":"WebhookList"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "LogStreamARN":{
+      "type":"string",
+      "max":250,
+      "min":1
     },
     "MatchEquals":{
       "type":"string",

@@ -1348,6 +1348,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeDashboardsQAConfiguration":{
+      "name":"DescribeDashboardsQAConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards-qa-configuration"
+      },
+      "input":{"shape":"DescribeDashboardsQAConfigurationRequest"},
+      "output":{"shape":"DescribeDashboardsQAConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeDataSet":{
       "name":"DescribeDataSet",
       "http":{
@@ -2710,6 +2727,23 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "SearchTopics":{
+      "name":"SearchTopics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/topics"
+      },
+      "input":{"shape":"SearchTopicsRequest"},
+      "output":{"shape":"SearchTopicsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "StartAssetBundleExportJob":{
       "name":"StartAssetBundleExportJob",
       "http":{
@@ -3032,6 +3066,23 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateDashboardsQAConfiguration":{
+      "name":"UpdateDashboardsQAConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards-qa-configuration"
+      },
+      "input":{"shape":"UpdateDashboardsQAConfigurationRequest"},
+      "output":{"shape":"UpdateDashboardsQAConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -3767,7 +3818,8 @@
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
         "Options":{"shape":"AssetOptions"},
-        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"}
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "AnalysisError":{
@@ -5181,7 +5233,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"BarChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "BarsArrangement":{
@@ -5484,7 +5537,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"BoxPlotChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "BrandColorPalette":{
@@ -6212,7 +6266,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"ComboChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "CommitMode":{
@@ -7334,7 +7389,8 @@
         },
         "TopicId":{"shape":"TopicId"},
         "Topic":{"shape":"TopicDetails"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "FolderArns":{"shape":"FolderArnList"}
       }
     },
     "CreateTopicResponse":{
@@ -7538,7 +7594,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"CustomContentConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "DataSetIdentifier":{"shape":"DataSetIdentifier"}
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "CustomFilterConfiguration":{
@@ -7810,7 +7867,8 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "DashboardVersionSummary":{
@@ -7847,6 +7905,13 @@
       "members":{
         "ExportHiddenFieldsOption":{"shape":"ExportHiddenFieldsOption"}
       }
+    },
+    "DashboardsQAStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DataAggregation":{
       "type":"structure",
@@ -10434,6 +10499,28 @@
         }
       }
     },
+    "DescribeDashboardsQAConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeDashboardsQAConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DescribeDataSetPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -11972,7 +12059,8 @@
         "ChartConfiguration":{"shape":"FilledMapConfiguration"},
         "ConditionalFormatting":{"shape":"FilledMapConditionalFormatting"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "Filter":{
@@ -12359,7 +12447,8 @@
         "FontDecoration":{"shape":"FontDecoration"},
         "FontColor":{"shape":"HexColor"},
         "FontWeight":{"shape":"FontWeight"},
-        "FontStyle":{"shape":"FontStyle"}
+        "FontStyle":{"shape":"FontStyle"},
+        "FontFamily":{"shape":"String"}
       }
     },
     "FontDecoration":{
@@ -12377,7 +12466,8 @@
     "FontSize":{
       "type":"structure",
       "members":{
-        "Relative":{"shape":"RelativeFontSize"}
+        "Relative":{"shape":"RelativeFontSize"},
+        "Absolute":{"shape":"PixelLength"}
       }
     },
     "FontStyle":{
@@ -12614,7 +12704,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"FunnelChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "GaugeChartArcConditionalFormatting":{
@@ -12693,7 +12784,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"GaugeChartConfiguration"},
         "ConditionalFormatting":{"shape":"GaugeChartConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "GenerateEmbedUrlForAnonymousUserRequest":{
@@ -12799,6 +12891,61 @@
         "LATITUDE"
       ]
     },
+    "GeospatialCategoricalColor":{
+      "type":"structure",
+      "required":["CategoryDataColors"],
+      "members":{
+        "CategoryDataColors":{"shape":"GeospatialCategoricalDataColorList"},
+        "NullDataVisibility":{"shape":"Visibility"},
+        "NullDataSettings":{"shape":"GeospatialNullDataSettings"},
+        "DefaultOpacity":{"shape":"Opacity"}
+      }
+    },
+    "GeospatialCategoricalDataColor":{
+      "type":"structure",
+      "required":[
+        "Color",
+        "DataValue"
+      ],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "DataValue":{"shape":"String"}
+      }
+    },
+    "GeospatialCategoricalDataColorList":{
+      "type":"list",
+      "member":{"shape":"GeospatialCategoricalDataColor"}
+    },
+    "GeospatialCircleRadius":{
+      "type":"structure",
+      "members":{
+        "Radius":{"shape":"GeospatialRadius"}
+      }
+    },
+    "GeospatialCircleSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "StrokeColor":{"shape":"GeospatialColor"},
+        "StrokeWidth":{"shape":"GeospatialLineWidth"},
+        "CircleRadius":{"shape":"GeospatialCircleRadius"}
+      }
+    },
+    "GeospatialColor":{
+      "type":"structure",
+      "members":{
+        "Solid":{"shape":"GeospatialSolidColor"},
+        "Gradient":{"shape":"GeospatialGradientColor"},
+        "Categorical":{"shape":"GeospatialCategoricalColor"}
+      }
+    },
+    "GeospatialColorState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "GeospatialCoordinateBounds":{
       "type":"structure",
       "required":[
@@ -12813,6 +12960,39 @@
         "West":{"shape":"Longitude"},
         "East":{"shape":"Longitude"}
       }
+    },
+    "GeospatialDataSourceItem":{
+      "type":"structure",
+      "members":{
+        "StaticFileDataSource":{"shape":"GeospatialStaticFileSource"}
+      }
+    },
+    "GeospatialGradientColor":{
+      "type":"structure",
+      "required":["StepColors"],
+      "members":{
+        "StepColors":{"shape":"GeospatialGradientStepColorList"},
+        "NullDataVisibility":{"shape":"Visibility"},
+        "NullDataSettings":{"shape":"GeospatialNullDataSettings"},
+        "DefaultOpacity":{"shape":"Opacity"}
+      }
+    },
+    "GeospatialGradientStepColor":{
+      "type":"structure",
+      "required":[
+        "Color",
+        "DataValue"
+      ],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "DataValue":{"shape":"Double"}
+      }
+    },
+    "GeospatialGradientStepColorList":{
+      "type":"list",
+      "member":{"shape":"GeospatialGradientStepColor"},
+      "max":3,
+      "min":2
     },
     "GeospatialHeatmapColorScale":{
       "type":"structure",
@@ -12838,6 +13018,98 @@
       "member":{"shape":"GeospatialHeatmapDataColor"},
       "max":2,
       "min":2
+    },
+    "GeospatialLayerColorField":{
+      "type":"structure",
+      "members":{
+        "ColorDimensionsFields":{"shape":"GeospatialLayerDimensionFieldList"},
+        "ColorValuesFields":{"shape":"GeospatialLayerMeasureFieldList"}
+      }
+    },
+    "GeospatialLayerDefinition":{
+      "type":"structure",
+      "members":{
+        "PointLayer":{"shape":"GeospatialPointLayer"},
+        "LineLayer":{"shape":"GeospatialLineLayer"},
+        "PolygonLayer":{"shape":"GeospatialPolygonLayer"}
+      }
+    },
+    "GeospatialLayerDimensionFieldList":{
+      "type":"list",
+      "member":{"shape":"DimensionField"},
+      "max":1
+    },
+    "GeospatialLayerItem":{
+      "type":"structure",
+      "required":["LayerId"],
+      "members":{
+        "LayerId":{"shape":"String"},
+        "LayerType":{"shape":"GeospatialLayerType"},
+        "DataSource":{"shape":"GeospatialDataSourceItem"},
+        "Label":{"shape":"String"},
+        "Visibility":{"shape":"Visibility"},
+        "LayerDefinition":{"shape":"GeospatialLayerDefinition"},
+        "Tooltip":{"shape":"TooltipOptions"},
+        "JoinDefinition":{"shape":"GeospatialLayerJoinDefinition"},
+        "Actions":{"shape":"LayerCustomActionList"}
+      }
+    },
+    "GeospatialLayerJoinDefinition":{
+      "type":"structure",
+      "members":{
+        "ShapeKeyField":{"shape":"String"},
+        "DatasetKeyField":{"shape":"UnaggregatedField"},
+        "ColorField":{"shape":"GeospatialLayerColorField"}
+      }
+    },
+    "GeospatialLayerMapConfiguration":{
+      "type":"structure",
+      "members":{
+        "Legend":{"shape":"LegendOptions"},
+        "MapLayers":{"shape":"GeospatialMapLayerList"},
+        "MapState":{"shape":"GeospatialMapState"},
+        "MapStyle":{"shape":"GeospatialMapStyle"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
+      }
+    },
+    "GeospatialLayerMeasureFieldList":{
+      "type":"list",
+      "member":{"shape":"MeasureField"},
+      "max":1
+    },
+    "GeospatialLayerType":{
+      "type":"string",
+      "enum":[
+        "POINT",
+        "LINE",
+        "POLYGON"
+      ]
+    },
+    "GeospatialLineLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialLineStyle"}
+      }
+    },
+    "GeospatialLineStyle":{
+      "type":"structure",
+      "members":{
+        "LineSymbolStyle":{"shape":"GeospatialLineSymbolStyle"}
+      }
+    },
+    "GeospatialLineSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "LineWidth":{"shape":"GeospatialLineWidth"}
+      }
+    },
+    "GeospatialLineWidth":{
+      "type":"structure",
+      "members":{
+        "LineWidth":{"shape":"GeospatialWidth"}
+      }
     },
     "GeospatialMapAggregatedFieldWells":{
       "type":"structure",
@@ -12866,6 +13138,32 @@
         "GeospatialMapAggregatedFieldWells":{"shape":"GeospatialMapAggregatedFieldWells"}
       }
     },
+    "GeospatialMapLayerList":{
+      "type":"list",
+      "member":{"shape":"GeospatialLayerItem"}
+    },
+    "GeospatialMapNavigation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "GeospatialMapState":{
+      "type":"structure",
+      "members":{
+        "Bounds":{"shape":"GeospatialCoordinateBounds"},
+        "MapNavigation":{"shape":"GeospatialMapNavigation"}
+      }
+    },
+    "GeospatialMapStyle":{
+      "type":"structure",
+      "members":{
+        "BaseMapStyle":{"shape":"BaseMapStyleType"},
+        "BackgroundColor":{"shape":"HexColorWithTransparency"},
+        "BaseMapVisibility":{"shape":"Visibility"}
+      }
+    },
     "GeospatialMapStyleOptions":{
       "type":"structure",
       "members":{
@@ -12881,7 +13179,36 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"GeospatialMapConfiguration"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
+    "GeospatialNullDataSettings":{
+      "type":"structure",
+      "required":["SymbolStyle"],
+      "members":{
+        "SymbolStyle":{"shape":"GeospatialNullSymbolStyle"}
+      }
+    },
+    "GeospatialNullSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"HexColorWithTransparency"},
+        "StrokeColor":{"shape":"HexColorWithTransparency"},
+        "StrokeWidth":{"shape":"GeospatialWidth"}
+      }
+    },
+    "GeospatialPointLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialPointStyle"}
+      }
+    },
+    "GeospatialPointStyle":{
+      "type":"structure",
+      "members":{
+        "CircleSymbolStyle":{"shape":"GeospatialCircleSymbolStyle"}
       }
     },
     "GeospatialPointStyleOptions":{
@@ -12892,6 +13219,31 @@
         "HeatmapConfiguration":{"shape":"GeospatialHeatmapConfiguration"}
       }
     },
+    "GeospatialPolygonLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialPolygonStyle"}
+      }
+    },
+    "GeospatialPolygonStyle":{
+      "type":"structure",
+      "members":{
+        "PolygonSymbolStyle":{"shape":"GeospatialPolygonSymbolStyle"}
+      }
+    },
+    "GeospatialPolygonSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "StrokeColor":{"shape":"GeospatialColor"},
+        "StrokeWidth":{"shape":"GeospatialLineWidth"}
+      }
+    },
+    "GeospatialRadius":{
+      "type":"double",
+      "min":0
+    },
     "GeospatialSelectedPointStyle":{
       "type":"string",
       "enum":[
@@ -12899,6 +13251,25 @@
         "CLUSTER",
         "HEATMAP"
       ]
+    },
+    "GeospatialSolidColor":{
+      "type":"structure",
+      "required":["Color"],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "State":{"shape":"GeospatialColorState"}
+      }
+    },
+    "GeospatialStaticFileSource":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "GeospatialWidth":{
+      "type":"double",
+      "min":0
     },
     "GeospatialWindowOptions":{
       "type":"structure",
@@ -13281,7 +13652,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"HeatMapConfiguration"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "HexColor":{
@@ -13355,7 +13727,8 @@
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"HistogramConfiguration"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "HorizontalTextAlignment":{
@@ -13504,6 +13877,66 @@
         "Source":{"shape":"ImageSource"}
       }
     },
+    "ImageCustomAction":{
+      "type":"structure",
+      "required":[
+        "CustomActionId",
+        "Name",
+        "Trigger",
+        "ActionOperations"
+      ],
+      "members":{
+        "CustomActionId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"ImageCustomActionName"},
+        "Status":{"shape":"WidgetStatus"},
+        "Trigger":{"shape":"ImageCustomActionTrigger"},
+        "ActionOperations":{"shape":"ImageCustomActionOperationList"}
+      }
+    },
+    "ImageCustomActionList":{
+      "type":"list",
+      "member":{"shape":"ImageCustomAction"},
+      "max":10,
+      "min":0
+    },
+    "ImageCustomActionName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ImageCustomActionOperation":{
+      "type":"structure",
+      "members":{
+        "NavigationOperation":{"shape":"CustomActionNavigationOperation"},
+        "URLOperation":{"shape":"CustomActionURLOperation"},
+        "SetParametersOperation":{"shape":"CustomActionSetParametersOperation"}
+      }
+    },
+    "ImageCustomActionOperationList":{
+      "type":"list",
+      "member":{"shape":"ImageCustomActionOperation"},
+      "max":2,
+      "min":1
+    },
+    "ImageCustomActionTrigger":{
+      "type":"string",
+      "enum":[
+        "CLICK",
+        "MENU"
+      ]
+    },
+    "ImageInteractionOptions":{
+      "type":"structure",
+      "members":{
+        "ImageMenuOption":{"shape":"ImageMenuOption"}
+      }
+    },
+    "ImageMenuOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
     "ImageSet":{
       "type":"structure",
       "required":["Original"],
@@ -13527,6 +13960,14 @@
         "S3Uri":{"shape":"String"}
       },
       "union":true
+    },
+    "ImageStaticFile":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"StaticFileSource"}
+      }
     },
     "IncludeFolderMembers":{
       "type":"string",
@@ -13725,7 +14166,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "InsightConfiguration":{"shape":"InsightConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "DataSetIdentifier":{"shape":"DataSetIdentifier"}
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "InstanceId":{
@@ -14044,7 +14486,8 @@
         "ChartConfiguration":{"shape":"KPIConfiguration"},
         "ConditionalFormatting":{"shape":"KPIConditionalFormatting"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "KPIVisualLayoutOptions":{
@@ -14084,6 +14527,69 @@
       "max":90,
       "min":-90
     },
+    "LayerCustomAction":{
+      "type":"structure",
+      "required":[
+        "CustomActionId",
+        "Name",
+        "Trigger",
+        "ActionOperations"
+      ],
+      "members":{
+        "CustomActionId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"LayerCustomActionName"},
+        "Status":{"shape":"WidgetStatus"},
+        "Trigger":{"shape":"LayerCustomActionTrigger"},
+        "ActionOperations":{"shape":"LayerCustomActionOperationList"}
+      }
+    },
+    "LayerCustomActionList":{
+      "type":"list",
+      "member":{"shape":"LayerCustomAction"},
+      "max":10
+    },
+    "LayerCustomActionName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "LayerCustomActionOperation":{
+      "type":"structure",
+      "members":{
+        "FilterOperation":{"shape":"CustomActionFilterOperation"},
+        "NavigationOperation":{"shape":"CustomActionNavigationOperation"},
+        "URLOperation":{"shape":"CustomActionURLOperation"},
+        "SetParametersOperation":{"shape":"CustomActionSetParametersOperation"}
+      }
+    },
+    "LayerCustomActionOperationList":{
+      "type":"list",
+      "member":{"shape":"LayerCustomActionOperation"},
+      "max":2,
+      "min":1
+    },
+    "LayerCustomActionTrigger":{
+      "type":"string",
+      "enum":[
+        "DATA_POINT_CLICK",
+        "DATA_POINT_MENU"
+      ]
+    },
+    "LayerMapVisual":{
+      "type":"structure",
+      "required":[
+        "VisualId",
+        "DataSetIdentifier"
+      ],
+      "members":{
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "Title":{"shape":"VisualTitleLabelOptions"},
+        "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
+        "ChartConfiguration":{"shape":"GeospatialLayerMapConfiguration"},
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
     "Layout":{
       "type":"structure",
       "required":["Configuration"],
@@ -14105,7 +14611,8 @@
         "VISUAL",
         "FILTER_CONTROL",
         "PARAMETER_CONTROL",
-        "TEXT_BOX"
+        "TEXT_BOX",
+        "IMAGE"
       ]
     },
     "LayoutList":{
@@ -14121,7 +14628,8 @@
         "Title":{"shape":"LabelOptions"},
         "Position":{"shape":"LegendPosition"},
         "Width":{"shape":"PixelLength"},
-        "Height":{"shape":"PixelLength"}
+        "Height":{"shape":"PixelLength"},
+        "ValueFontConfiguration":{"shape":"FontConfiguration"}
       }
     },
     "LegendPosition":{
@@ -14267,7 +14775,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"LineChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "LineInterpolation":{
@@ -16020,7 +16529,9 @@
         "CapacityRegion":{"shape":"String"},
         "CreationStatus":{"shape":"NamespaceStatus"},
         "IdentityStore":{"shape":"IdentityStore"},
-        "NamespaceError":{"shape":"NamespaceError"}
+        "NamespaceError":{"shape":"NamespaceError"},
+        "IamIdentityCenterApplicationArn":{"shape":"String"},
+        "IamIdentityCenterInstanceArn":{"shape":"String"}
       }
     },
     "NamespaceStatus":{
@@ -16356,6 +16867,11 @@
       "type":"string",
       "max":512,
       "min":1
+    },
+    "Opacity":{
+      "type":"double",
+      "max":1,
+      "min":0
     },
     "OperandList":{
       "type":"list",
@@ -16808,7 +17324,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"PieChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "PivotFieldSortOptions":{
@@ -17081,7 +17598,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"PivotTableConfiguration"},
         "ConditionalFormatting":{"shape":"PivotTableConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "PivotTotalOptions":{
@@ -17098,6 +17616,89 @@
       }
     },
     "PixelLength":{"type":"string"},
+    "PluginVisual":{
+      "type":"structure",
+      "required":[
+        "VisualId",
+        "PluginArn"
+      ],
+      "members":{
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "PluginArn":{"shape":"Arn"},
+        "Title":{"shape":"VisualTitleLabelOptions"},
+        "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
+        "ChartConfiguration":{"shape":"PluginVisualConfiguration"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
+    "PluginVisualAxisName":{
+      "type":"string",
+      "enum":[
+        "GROUP_BY",
+        "VALUE"
+      ]
+    },
+    "PluginVisualConfiguration":{
+      "type":"structure",
+      "members":{
+        "FieldWells":{"shape":"PluginVisualFieldWells"},
+        "VisualOptions":{"shape":"PluginVisualOptions"},
+        "SortConfiguration":{"shape":"PluginVisualSortConfiguration"}
+      }
+    },
+    "PluginVisualFieldWell":{
+      "type":"structure",
+      "members":{
+        "AxisName":{"shape":"PluginVisualAxisName"},
+        "Dimensions":{"shape":"DimensionFieldList"},
+        "Measures":{"shape":"MeasureFieldList"},
+        "Unaggregated":{"shape":"UnaggregatedFieldList"}
+      }
+    },
+    "PluginVisualFieldWells":{
+      "type":"list",
+      "member":{"shape":"PluginVisualFieldWell"},
+      "max":10
+    },
+    "PluginVisualItemsLimitConfiguration":{
+      "type":"structure",
+      "members":{
+        "ItemsLimit":{
+          "shape":"Long",
+          "box":true
+        }
+      }
+    },
+    "PluginVisualOptions":{
+      "type":"structure",
+      "members":{
+        "VisualProperties":{"shape":"PluginVisualPropertiesList"}
+      }
+    },
+    "PluginVisualPropertiesList":{
+      "type":"list",
+      "member":{"shape":"PluginVisualProperty"}
+    },
+    "PluginVisualProperty":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "PluginVisualSortConfiguration":{
+      "type":"structure",
+      "members":{
+        "PluginVisualTableQuerySort":{"shape":"PluginVisualTableQuerySort"}
+      }
+    },
+    "PluginVisualTableQuerySort":{
+      "type":"structure",
+      "members":{
+        "RowSort":{"shape":"RowSortList"},
+        "ItemsLimitConfiguration":{"shape":"PluginVisualItemsLimitConfiguration"}
+      }
+    },
     "Port":{
       "type":"integer",
       "max":65535,
@@ -17409,7 +18010,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"RadarChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "RangeConstant":{
@@ -18190,7 +18792,8 @@
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"SankeyDiagramChartConfiguration"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "ScatterPlotCategoricallyAggregatedFieldWells":{
@@ -18251,7 +18854,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"ScatterPlotConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "ScheduleRefreshOnEntity":{
@@ -18470,6 +19074,38 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "SearchTopicsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"TopicSearchFilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        }
+      }
+    },
+    "SearchTopicsResponse":{
+      "type":"structure",
+      "members":{
+        "TopicSummaryList":{"shape":"TopicSummaries"},
+        "NextToken":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
       }
     },
     "Seasonality":{
@@ -18772,7 +19408,8 @@
       "type":"structure",
       "members":{
         "SheetId":{"shape":"ShortRestrictiveResourceId"},
-        "Name":{"shape":"SheetName"}
+        "Name":{"shape":"SheetName"},
+        "Images":{"shape":"SheetImageList"}
       }
     },
     "SheetContentType":{
@@ -18857,6 +19494,7 @@
         "FilterControls":{"shape":"FilterControlList"},
         "Visuals":{"shape":"VisualList"},
         "TextBoxes":{"shape":"SheetTextBoxList"},
+        "Images":{"shape":"SheetImageList"},
         "Layouts":{"shape":"LayoutList"},
         "SheetControlLayouts":{"shape":"SheetControlLayoutList"},
         "ContentType":{"shape":"SheetContentType"}
@@ -18893,6 +19531,69 @@
       "type":"list",
       "member":{"shape":"SheetElementRenderingRule"},
       "max":10000
+    },
+    "SheetImage":{
+      "type":"structure",
+      "required":[
+        "SheetImageId",
+        "Source"
+      ],
+      "members":{
+        "SheetImageId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"SheetImageSource"},
+        "Scaling":{"shape":"SheetImageScalingConfiguration"},
+        "Tooltip":{"shape":"SheetImageTooltipConfiguration"},
+        "ImageContentAltText":{"shape":"LongPlainText"},
+        "Interactions":{"shape":"ImageInteractionOptions"},
+        "Actions":{"shape":"ImageCustomActionList"}
+      }
+    },
+    "SheetImageList":{
+      "type":"list",
+      "member":{"shape":"SheetImage"},
+      "max":10,
+      "min":0
+    },
+    "SheetImageScalingConfiguration":{
+      "type":"structure",
+      "members":{
+        "ScalingType":{"shape":"SheetImageScalingType"}
+      }
+    },
+    "SheetImageScalingType":{
+      "type":"string",
+      "enum":[
+        "SCALE_TO_WIDTH",
+        "SCALE_TO_HEIGHT",
+        "SCALE_TO_CONTAINER",
+        "SCALE_NONE"
+      ]
+    },
+    "SheetImageSource":{
+      "type":"structure",
+      "members":{
+        "SheetImageStaticFileSource":{"shape":"SheetImageStaticFileSource"}
+      }
+    },
+    "SheetImageStaticFileSource":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "SheetImageTooltipConfiguration":{
+      "type":"structure",
+      "members":{
+        "TooltipText":{"shape":"SheetImageTooltipText"},
+        "Visibility":{"shape":"Visibility"}
+      }
+    },
+    "SheetImageTooltipText":{
+      "type":"structure",
+      "members":{
+        "PlainText":{"shape":"LongPlainText"}
+      }
     },
     "SheetLayoutElementMaximizationOption":{
       "type":"structure",
@@ -19326,6 +20027,14 @@
         "Port":{"shape":"Port"}
       }
     },
+    "SpatialStaticFile":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"StaticFileSource"}
+      }
+    },
     "SpecialValue":{
       "type":"string",
       "enum":[
@@ -19536,6 +20245,46 @@
       "required":["Enabled"],
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "StaticFile":{
+      "type":"structure",
+      "members":{
+        "ImageStaticFile":{"shape":"ImageStaticFile"},
+        "SpatialStaticFile":{"shape":"SpatialStaticFile"}
+      }
+    },
+    "StaticFileList":{
+      "type":"list",
+      "member":{"shape":"StaticFile"},
+      "max":200,
+      "min":0
+    },
+    "StaticFileS3SourceOptions":{
+      "type":"structure",
+      "required":[
+        "BucketName",
+        "ObjectKey",
+        "Region"
+      ],
+      "members":{
+        "BucketName":{"shape":"String"},
+        "ObjectKey":{"shape":"String"},
+        "Region":{"shape":"String"}
+      }
+    },
+    "StaticFileSource":{
+      "type":"structure",
+      "members":{
+        "UrlOptions":{"shape":"StaticFileUrlSourceOptions"},
+        "S3Options":{"shape":"StaticFileS3SourceOptions"}
+      }
+    },
+    "StaticFileUrlSourceOptions":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"String"}
       }
     },
     "Status":{
@@ -19996,7 +20745,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"TableConfiguration"},
         "ConditionalFormatting":{"shape":"TableConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "Tag":{
@@ -20196,7 +20946,8 @@
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
         "Options":{"shape":"AssetOptions"},
-        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"}
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "TemplateVersionSummary":{
@@ -20765,6 +21516,25 @@
         "RelativeDateFilter":{"shape":"TopicRelativeDateFilter"}
       }
     },
+    "TopicFilterAttribute":{
+      "type":"string",
+      "enum":[
+        "QUICKSIGHT_USER",
+        "QUICKSIGHT_VIEWER_OR_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
+        "QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER",
+        "TOPIC_NAME"
+      ]
+    },
+    "TopicFilterOperator":{
+      "type":"string",
+      "enum":[
+        "StringEquals",
+        "StringLike"
+      ]
+    },
     "TopicFilters":{
       "type":"list",
       "member":{"shape":"TopicFilter"}
@@ -21038,6 +21808,25 @@
         "MONTHLY"
       ]
     },
+    "TopicSearchFilter":{
+      "type":"structure",
+      "required":[
+        "Operator",
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Operator":{"shape":"TopicFilterOperator"},
+        "Name":{"shape":"TopicFilterAttribute"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "TopicSearchFilterList":{
+      "type":"list",
+      "member":{"shape":"TopicSearchFilter"},
+      "max":1,
+      "min":1
+    },
     "TopicSingularFilterConstant":{
       "type":"structure",
       "members":{
@@ -21229,7 +22018,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"TreeMapConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "TrendArrowOptions":{
@@ -21791,6 +22581,32 @@
         "CreationStatus":{"shape":"ResourceStatus"},
         "Status":{"shape":"StatusCode"},
         "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateDashboardsQAConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DashboardsQAStatus"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"}
+      }
+    },
+    "UpdateDashboardsQAConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "UpdateDataSetPermissionsRequest":{
@@ -22970,6 +23786,7 @@
         "TreeMapVisual":{"shape":"TreeMapVisual"},
         "GeospatialMapVisual":{"shape":"GeospatialMapVisual"},
         "FilledMapVisual":{"shape":"FilledMapVisual"},
+        "LayerMapVisual":{"shape":"LayerMapVisual"},
         "FunnelChartVisual":{"shape":"FunnelChartVisual"},
         "ScatterPlotVisual":{"shape":"ScatterPlotVisual"},
         "ComboChartVisual":{"shape":"ComboChartVisual"},
@@ -22981,7 +23798,8 @@
         "SankeyDiagramVisual":{"shape":"SankeyDiagramVisual"},
         "CustomContentVisual":{"shape":"CustomContentVisual"},
         "EmptyVisual":{"shape":"EmptyVisual"},
-        "RadarChartVisual":{"shape":"RadarChartVisual"}
+        "RadarChartVisual":{"shape":"RadarChartVisual"},
+        "PluginVisual":{"shape":"PluginVisual"}
       }
     },
     "VisualAxisSortOption":{
@@ -23203,7 +24021,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"WaterfallChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "WhatIfPointScenario":{
@@ -23309,7 +24128,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"WordCloudChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "WordCloudWordCasing":{

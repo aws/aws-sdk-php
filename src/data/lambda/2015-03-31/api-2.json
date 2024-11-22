@@ -1552,7 +1552,8 @@
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
-        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "CreateFunctionRequest":{
@@ -2004,7 +2005,8 @@
         "KMSKeyArn":{"shape":"KMSKeyArn"},
         "FilterCriteriaError":{"shape":"FilterCriteriaError"},
         "EventSourceMappingArn":{"shape":"EventSourceMappingArn"},
-        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "EventSourceMappingMetric":{
@@ -3495,6 +3497,11 @@
       "max":21600,
       "min":60
     },
+    "MaximumNumberOfPollers":{
+      "type":"integer",
+      "max":2000,
+      "min":1
+    },
     "MaximumRecordAgeInSeconds":{
       "type":"integer",
       "max":604800,
@@ -3519,6 +3526,11 @@
       "type":"string",
       "max":6,
       "pattern":".*"
+    },
+    "MinimumNumberOfPollers":{
+      "type":"integer",
+      "max":200,
+      "min":1
     },
     "NameSpacedFunctionArn":{
       "type":"string",
@@ -3646,6 +3658,13 @@
         "READY",
         "FAILED"
       ]
+    },
+    "ProvisionedPollerConfig":{
+      "type":"structure",
+      "members":{
+        "MinimumPollers":{"shape":"MinimumNumberOfPollers"},
+        "MaximumPollers":{"shape":"MaximumNumberOfPollers"}
+      }
     },
     "PublishLayerVersionRequest":{
       "type":"structure",
@@ -4515,7 +4534,8 @@
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
-        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"}
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "UpdateFunctionCodeRequest":{

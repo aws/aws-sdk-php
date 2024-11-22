@@ -7655,10 +7655,10 @@
       }
     },
     "InferenceComponentComputeResourceRequirements": {
-      "base": "<p>Defines the compute resources to allocate to run a model that you assign to an inference component. These resources include CPU cores, accelerators, and memory.</p>",
+      "base": "<p>Defines the compute resources to allocate to run a model, plus any adapter models, that you assign to an inference component. These resources include CPU cores, accelerators, and memory.</p>",
       "refs": {
-        "InferenceComponentSpecification$ComputeResourceRequirements": "<p>The compute resources allocated to run the model assigned to the inference component.</p>",
-        "InferenceComponentSpecificationSummary$ComputeResourceRequirements": "<p>The compute resources allocated to run the model assigned to the inference component.</p>"
+        "InferenceComponentSpecification$ComputeResourceRequirements": "<p>The compute resources allocated to run the model, plus any adapter models, that you assign to the inference component.</p> <p>Omit this parameter if your request is meant to create an adapter inference component. An adapter inference component is loaded by a base inference component, and it uses the compute resources of the base inference component.</p>",
+        "InferenceComponentSpecificationSummary$ComputeResourceRequirements": "<p>The compute resources allocated to run the model, plus any adapter models, that you assign to the inference component.</p>"
       }
     },
     "InferenceComponentContainerSpecification": {
@@ -7688,6 +7688,8 @@
         "DeleteInferenceComponentInput$InferenceComponentName": "<p>The name of the inference component to delete.</p>",
         "DescribeInferenceComponentInput$InferenceComponentName": "<p>The name of the inference component.</p>",
         "DescribeInferenceComponentOutput$InferenceComponentName": "<p>The name of the inference component.</p>",
+        "InferenceComponentSpecification$BaseInferenceComponentName": "<p>The name of an existing inference component that is to contain the inference component that you're creating with your request.</p> <p>Specify this parameter only if your request is meant to create an adapter inference component. An adapter inference component contains the path to an adapter model. The purpose of the adapter model is to tailor the inference output of a base foundation model, which is hosted by the base inference component. The adapter inference component uses the compute resources that you assigned to the base inference component.</p> <p>When you create an adapter inference component, use the <code>Container</code> parameter to specify the location of the adapter artifacts. In the parameter value, use the <code>ArtifactUrl</code> parameter of the <code>InferenceComponentContainerSpecification</code> data type.</p> <p>Before you can create an adapter inference component, you must have an existing inference component that contains the foundation model that you want to adapt.</p>",
+        "InferenceComponentSpecificationSummary$BaseInferenceComponentName": "<p>The name of the base inference component that contains this inference component.</p>",
         "InferenceComponentSummary$InferenceComponentName": "<p>The name of the inference component.</p>",
         "UpdateInferenceComponentInput$InferenceComponentName": "<p>The name of the inference component.</p>",
         "UpdateInferenceComponentRuntimeConfigInput$InferenceComponentName": "<p>The name of the inference component to update.</p>"
@@ -10613,6 +10615,12 @@
         "RecommendationMetrics$ModelSetupTime": "<p>The time it takes to launch new compute resources for a serverless endpoint. The time can vary depending on the model size, how long it takes to download the model, and the start-up time of the container.</p> <p> <code>NaN</code> indicates that the value is not available.</p>"
       }
     },
+    "ModelShardingConfig": {
+      "base": "<p>Settings for the model sharding technique that's applied by a model optimization job.</p>",
+      "refs": {
+        "OptimizationConfig$ModelShardingConfig": "<p>Settings for the model sharding technique that's applied by a model optimization job.</p>"
+      }
+    },
     "ModelSortKey": {
       "base": null,
       "refs": {
@@ -11765,6 +11773,7 @@
       "refs": {
         "ModelCompilationConfig$Image": "<p>The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to run the optimization.</p>",
         "ModelQuantizationConfig$Image": "<p>The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to run the optimization.</p>",
+        "ModelShardingConfig$Image": "<p>The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to run the optimization.</p>",
         "OptimizationOutput$RecommendedInferenceImage": "<p>The image that SageMaker recommends that you use to host the optimized model that you created with an optimization job.</p>"
       }
     },
@@ -11790,7 +11799,8 @@
         "CreateOptimizationJobRequest$OptimizationEnvironment": "<p>The environment variables to set in the model container.</p>",
         "DescribeOptimizationJobResponse$OptimizationEnvironment": "<p>The environment variables to set in the model container.</p>",
         "ModelCompilationConfig$OverrideEnvironment": "<p>Environment variables that override the default ones in the model container.</p>",
-        "ModelQuantizationConfig$OverrideEnvironment": "<p>Environment variables that override the default ones in the model container.</p>"
+        "ModelQuantizationConfig$OverrideEnvironment": "<p>Environment variables that override the default ones in the model container.</p>",
+        "ModelShardingConfig$OverrideEnvironment": "<p>Environment variables that override the default ones in the model container.</p>"
       }
     },
     "OptimizationJobModelSource": {
@@ -17339,6 +17349,9 @@
       "base": "<p>Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker jobs, hosted models, and compute resources have access to. You can control access to and from your resources by configuring a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html\">Give SageMaker Access to Resources in your Amazon VPC</a>. </p>",
       "refs": {
         "AutoMLSecurityConfig$VpcConfig": "<p>The VPC configuration.</p>",
+        "ClusterInstanceGroupDetails$OverrideVpcConfig": null,
+        "ClusterInstanceGroupSpecification$OverrideVpcConfig": null,
+        "ClusterNodeDetails$OverrideVpcConfig": null,
         "CreateClusterRequest$VpcConfig": null,
         "CreateEndpointConfigInput$VpcConfig": null,
         "CreateModelInput$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that you want your model to connect to. Control access to and from your model container by configuring the VPC. <code>VpcConfig</code> is used in hosting services and in batch transform. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html\">Protect Endpoints by Using an Amazon Virtual Private Cloud</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-vpc.html\">Protect Data in Batch Transform Jobs by Using an Amazon Virtual Private Cloud</a>.</p>",

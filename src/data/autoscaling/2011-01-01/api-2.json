@@ -1648,6 +1648,7 @@
         "Dimensions":{"shape":"MetricDimensions"},
         "Statistic":{"shape":"MetricStatistic"},
         "Unit":{"shape":"MetricUnit"},
+        "Period":{"shape":"MetricGranularityInSeconds"},
         "Metrics":{"shape":"TargetTrackingMetricDataQueries"}
       }
     },
@@ -2738,6 +2739,10 @@
       "type":"list",
       "member":{"shape":"MetricDimension"}
     },
+    "MetricGranularityInSeconds":{
+      "type":"integer",
+      "min":1
+    },
     "MetricGranularityType":{
       "type":"structure",
       "members":{
@@ -3561,6 +3566,7 @@
         "Expression":{"shape":"XmlStringMaxLen2047"},
         "MetricStat":{"shape":"TargetTrackingMetricStat"},
         "Label":{"shape":"XmlStringMetricLabel"},
+        "Period":{"shape":"MetricGranularityInSeconds"},
         "ReturnData":{"shape":"ReturnData"}
       }
     },
@@ -3573,7 +3579,8 @@
       "members":{
         "Metric":{"shape":"Metric"},
         "Stat":{"shape":"XmlStringMetricStat"},
-        "Unit":{"shape":"MetricUnit"}
+        "Unit":{"shape":"MetricUnit"},
+        "Period":{"shape":"MetricGranularityInSeconds"}
       }
     },
     "TerminateInstanceInAutoScalingGroupType":{

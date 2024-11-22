@@ -5998,7 +5998,8 @@
         "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
-        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"},
+        "OverrideVpcConfig":{"shape":"VpcConfig"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -6028,7 +6029,8 @@
         "ExecutionRole":{"shape":"RoleArn"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
-        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"}
+        "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"},
+        "OverrideVpcConfig":{"shape":"VpcConfig"}
       }
     },
     "ClusterInstanceGroupSpecifications":{
@@ -6174,6 +6176,7 @@
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LaunchTime":{"shape":"Timestamp"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
+        "OverrideVpcConfig":{"shape":"VpcConfig"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
         "PrivatePrimaryIp":{"shape":"ClusterPrivatePrimaryIp"},
@@ -7382,9 +7385,7 @@
       "required":[
         "InferenceComponentName",
         "EndpointName",
-        "VariantName",
-        "Specification",
-        "RuntimeConfig"
+        "Specification"
       ],
       "members":{
         "InferenceComponentName":{"shape":"InferenceComponentName"},
@@ -13726,7 +13727,7 @@
     "ImageVersionArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image-version/[a-z0-9]([-.]?[a-z0-9])*/[0-9]+$"
+      "pattern":"^(arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image-version/[a-z0-9]([-.]?[a-z0-9])*/[0-9]+|None)$"
     },
     "ImageVersionNumber":{
       "type":"integer",
@@ -13868,12 +13869,12 @@
     },
     "InferenceComponentSpecification":{
       "type":"structure",
-      "required":["ComputeResourceRequirements"],
       "members":{
         "ModelName":{"shape":"ModelName"},
         "Container":{"shape":"InferenceComponentContainerSpecification"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
-        "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"}
+        "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
+        "BaseInferenceComponentName":{"shape":"InferenceComponentName"}
       }
     },
     "InferenceComponentSpecificationSummary":{
@@ -13882,7 +13883,8 @@
         "ModelName":{"shape":"ModelName"},
         "Container":{"shape":"InferenceComponentContainerSpecificationSummary"},
         "StartupParameters":{"shape":"InferenceComponentStartupParameters"},
-        "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"}
+        "ComputeResourceRequirements":{"shape":"InferenceComponentComputeResourceRequirements"},
+        "BaseInferenceComponentName":{"shape":"InferenceComponentName"}
       }
     },
     "InferenceComponentStartupParameters":{
@@ -16627,7 +16629,7 @@
     },
     "ManagedInstanceScalingMinInstanceCount":{
       "type":"integer",
-      "min":1
+      "min":0
     },
     "ManagedInstanceScalingStatus":{
       "type":"string",
@@ -17745,6 +17747,13 @@
       "type":"integer",
       "min":0
     },
+    "ModelShardingConfig":{
+      "type":"structure",
+      "members":{
+        "Image":{"shape":"OptimizationContainerImage"},
+        "OverrideEnvironment":{"shape":"OptimizationJobEnvironmentVariables"}
+      }
+    },
     "ModelSortKey":{
       "type":"string",
       "enum":[
@@ -18693,7 +18702,8 @@
       "type":"structure",
       "members":{
         "ModelQuantizationConfig":{"shape":"ModelQuantizationConfig"},
-        "ModelCompilationConfig":{"shape":"ModelCompilationConfig"}
+        "ModelCompilationConfig":{"shape":"ModelCompilationConfig"},
+        "ModelShardingConfig":{"shape":"ModelShardingConfig"}
       },
       "union":true
     },
@@ -19774,6 +19784,24 @@
         "ml.c6i.16xlarge",
         "ml.c6i.24xlarge",
         "ml.c6i.32xlarge",
+        "ml.m6i.large",
+        "ml.m6i.xlarge",
+        "ml.m6i.2xlarge",
+        "ml.m6i.4xlarge",
+        "ml.m6i.8xlarge",
+        "ml.m6i.12xlarge",
+        "ml.m6i.16xlarge",
+        "ml.m6i.24xlarge",
+        "ml.m6i.32xlarge",
+        "ml.r6i.large",
+        "ml.r6i.xlarge",
+        "ml.r6i.2xlarge",
+        "ml.r6i.4xlarge",
+        "ml.r6i.8xlarge",
+        "ml.r6i.12xlarge",
+        "ml.r6i.16xlarge",
+        "ml.r6i.24xlarge",
+        "ml.r6i.32xlarge",
         "ml.g5.xlarge",
         "ml.g5.2xlarge",
         "ml.g5.4xlarge",
@@ -19790,6 +19818,14 @@
         "ml.g6.16xlarge",
         "ml.g6.24xlarge",
         "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
         "ml.p4d.24xlarge",
         "ml.c7g.large",
         "ml.c7g.xlarge",
@@ -19851,11 +19887,13 @@
         "ml.trn1.2xlarge",
         "ml.trn1.32xlarge",
         "ml.trn1n.32xlarge",
+        "ml.trn2.48xlarge",
         "ml.inf2.xlarge",
         "ml.inf2.8xlarge",
         "ml.inf2.24xlarge",
         "ml.inf2.48xlarge",
         "ml.p5.48xlarge",
+        "ml.p5e.48xlarge",
         "ml.m7i.large",
         "ml.m7i.xlarge",
         "ml.m7i.2xlarge",

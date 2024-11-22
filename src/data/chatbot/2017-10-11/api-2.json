@@ -13,6 +13,22 @@
     "uid":"chatbot-2017-10-11"
   },
   "operations":{
+    "AssociateToConfiguration":{
+      "name":"AssociateToConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/associate-to-configuration",
+        "responseCode":201
+      },
+      "input":{"shape":"AssociateToConfigurationRequest"},
+      "output":{"shape":"AssociateToConfigurationResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "CreateChimeWebhookConfiguration":{
       "name":"CreateChimeWebhookConfiguration",
       "http":{
@@ -29,6 +45,24 @@
         {"shape":"LimitExceededException"},
         {"shape":"CreateChimeWebhookConfigurationException"}
       ]
+    },
+    "CreateCustomAction":{
+      "name":"CreateCustomAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/create-custom-action",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateCustomActionRequest"},
+      "output":{"shape":"CreateCustomActionResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
     },
     "CreateMicrosoftTeamsChannelConfiguration":{
       "name":"CreateMicrosoftTeamsChannelConfiguration",
@@ -79,6 +113,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"DeleteChimeWebhookConfigurationException"}
       ]
+    },
+    "DeleteCustomAction":{
+      "name":"DeleteCustomAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/delete-custom-action",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteCustomActionRequest"},
+      "output":{"shape":"DeleteCustomActionResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
     },
     "DeleteMicrosoftTeamsChannelConfiguration":{
       "name":"DeleteMicrosoftTeamsChannelConfiguration",
@@ -230,6 +281,22 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DisassociateFromConfiguration":{
+      "name":"DisassociateFromConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/disassociate-from-configuration",
+        "responseCode":204
+      },
+      "input":{"shape":"DisassociateFromConfigurationRequest"},
+      "output":{"shape":"DisassociateFromConfigurationResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "GetAccountPreferences":{
       "name":"GetAccountPreferences",
       "http":{
@@ -242,6 +309,22 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"GetAccountPreferencesException"}
+      ]
+    },
+    "GetCustomAction":{
+      "name":"GetCustomAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-custom-action",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCustomActionRequest"},
+      "output":{"shape":"GetCustomActionResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "GetMicrosoftTeamsChannelConfiguration":{
@@ -257,6 +340,31 @@
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
         {"shape":"GetTeamsChannelConfigurationException"}
+      ]
+    },
+    "ListAssociations":{
+      "name":"ListAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-associations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAssociationsRequest"},
+      "output":{"shape":"ListAssociationsResult"}
+    },
+    "ListCustomActions":{
+      "name":"ListCustomActions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-custom-actions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCustomActionsRequest"},
+      "output":{"shape":"ListCustomActionsResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "ListMicrosoftTeamsChannelConfigurations":{
@@ -381,6 +489,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateCustomAction":{
+      "name":"UpdateCustomAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/update-custom-action",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCustomActionRequest"},
+      "output":{"shape":"UpdateCustomActionResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "UpdateMicrosoftTeamsChannelConfiguration":{
       "name":"UpdateMicrosoftTeamsChannelConfiguration",
       "http":{
@@ -434,6 +558,33 @@
       "min":12,
       "pattern":"arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
+    "AssociateToConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Resource",
+        "ChatConfiguration"
+      ],
+      "members":{
+        "Resource":{"shape":"ResourceIdentifier"},
+        "ChatConfiguration":{"shape":"ChatConfigurationArn"}
+      }
+    },
+    "AssociateToConfigurationResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "AssociationList":{
+      "type":"list",
+      "member":{"shape":"AssociationListing"}
+    },
+    "AssociationListing":{
+      "type":"structure",
+      "required":["Resource"],
+      "members":{
+        "Resource":{"shape":"Arn"}
+      }
+    },
     "AwsUserIdentity":{
       "type":"string",
       "max":1101,
@@ -486,6 +637,12 @@
       "min":1,
       "pattern":"https://hooks\\.chime\\.aws/incomingwebhooks/[A-Za-z0-9\\-]+?\\?token=[A-Za-z0-9\\-]+",
       "sensitive":true
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":126,
+      "min":33,
+      "pattern":"[\\x21-\\x7F]+"
     },
     "ConfigurationName":{
       "type":"string",
@@ -554,6 +711,31 @@
       "type":"structure",
       "members":{
         "WebhookConfiguration":{"shape":"ChimeWebhookConfiguration"}
+      }
+    },
+    "CreateCustomActionRequest":{
+      "type":"structure",
+      "required":[
+        "Definition",
+        "ActionName"
+      ],
+      "members":{
+        "Definition":{"shape":"CustomActionDefinition"},
+        "AliasName":{"shape":"CustomActionAliasName"},
+        "Attachments":{"shape":"CustomActionAttachmentList"},
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ActionName":{"shape":"CustomActionName"}
+      }
+    },
+    "CreateCustomActionResult":{
+      "type":"structure",
+      "required":["CustomActionArn"],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"}
       }
     },
     "CreateSlackChannelConfigurationException":{
@@ -631,6 +813,136 @@
         "ChannelConfiguration":{"shape":"TeamsChannelConfiguration"}
       }
     },
+    "CustomAction":{
+      "type":"structure",
+      "required":[
+        "CustomActionArn",
+        "Definition"
+      ],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"},
+        "Definition":{"shape":"CustomActionDefinition"},
+        "AliasName":{"shape":"CustomActionAliasName"},
+        "Attachments":{"shape":"CustomActionAttachmentList"},
+        "ActionName":{"shape":"CustomActionName"}
+      }
+    },
+    "CustomActionAliasName":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_]+"
+    },
+    "CustomActionArn":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:aws:chatbot:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:custom-action/[a-zA-Z0-9_-]{1,64}"
+    },
+    "CustomActionArnList":{
+      "type":"list",
+      "member":{"shape":"CustomActionArn"}
+    },
+    "CustomActionAttachment":{
+      "type":"structure",
+      "members":{
+        "NotificationType":{"shape":"CustomActionAttachmentNotificationType"},
+        "ButtonText":{"shape":"CustomActionButtonText"},
+        "Criteria":{"shape":"CustomActionAttachmentCriteriaList"},
+        "Variables":{"shape":"CustomActionAttachmentVariables"}
+      }
+    },
+    "CustomActionAttachmentCriteria":{
+      "type":"structure",
+      "required":[
+        "Operator",
+        "VariableName"
+      ],
+      "members":{
+        "Operator":{"shape":"CustomActionAttachmentCriteriaOperator"},
+        "VariableName":{"shape":"CustomActionAttachmentCriteriaVariableNameString"},
+        "Value":{"shape":"CustomActionAttachmentCriteriaValueString"}
+      }
+    },
+    "CustomActionAttachmentCriteriaList":{
+      "type":"list",
+      "member":{"shape":"CustomActionAttachmentCriteria"},
+      "max":5,
+      "min":1
+    },
+    "CustomActionAttachmentCriteriaOperator":{
+      "type":"string",
+      "enum":[
+        "HAS_VALUE",
+        "EQUALS"
+      ]
+    },
+    "CustomActionAttachmentCriteriaValueString":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]+"
+    },
+    "CustomActionAttachmentCriteriaVariableNameString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_]+"
+    },
+    "CustomActionAttachmentList":{
+      "type":"list",
+      "member":{"shape":"CustomActionAttachment"}
+    },
+    "CustomActionAttachmentNotificationType":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+"
+    },
+    "CustomActionAttachmentVariables":{
+      "type":"map",
+      "key":{"shape":"CustomActionAttachmentVariablesKeyString"},
+      "value":{"shape":"CustomActionAttachmentVariablesValueString"},
+      "max":5,
+      "min":1
+    },
+    "CustomActionAttachmentVariablesKeyString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[A-Za-z0-9-_]+"
+    },
+    "CustomActionAttachmentVariablesValueString":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\x21-\\x7F]+"
+    },
+    "CustomActionButtonText":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[\\S\\s]+"
+    },
+    "CustomActionDefinition":{
+      "type":"structure",
+      "required":["CommandText"],
+      "members":{
+        "CommandText":{"shape":"CustomActionDefinitionCommandTextString"}
+      }
+    },
+    "CustomActionDefinitionCommandTextString":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\S\\s]+"
+    },
+    "CustomActionName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]{1,64}"
+    },
     "CustomerCwLogLevel":{
       "type":"string",
       "max":5,
@@ -654,6 +966,18 @@
       }
     },
     "DeleteChimeWebhookConfigurationResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteCustomActionRequest":{
+      "type":"structure",
+      "required":["CustomActionArn"],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"}
+      }
+    },
+    "DeleteCustomActionResult":{
       "type":"structure",
       "members":{
       }
@@ -889,6 +1213,22 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "DisassociateFromConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Resource",
+        "ChatConfiguration"
+      ],
+      "members":{
+        "Resource":{"shape":"ResourceIdentifier"},
+        "ChatConfiguration":{"shape":"ChatConfigurationArn"}
+      }
+    },
+    "DisassociateFromConfigurationResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ErrorMessage":{"type":"string"},
     "GetAccountPreferencesException":{
       "type":"structure",
@@ -908,6 +1248,19 @@
       "type":"structure",
       "members":{
         "AccountPreferences":{"shape":"AccountPreferences"}
+      }
+    },
+    "GetCustomActionRequest":{
+      "type":"structure",
+      "required":["CustomActionArn"],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"}
+      }
+    },
+    "GetCustomActionResult":{
+      "type":"structure",
+      "members":{
+        "CustomAction":{"shape":"CustomAction"}
       }
     },
     "GetTeamsChannelConfigurationException":{
@@ -983,6 +1336,74 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ListAssociationsRequest":{
+      "type":"structure",
+      "required":["ChatConfiguration"],
+      "members":{
+        "ChatConfiguration":{"shape":"ChatConfigurationArn"},
+        "MaxResults":{"shape":"ListAssociationsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"ListAssociationsRequestNextTokenString"}
+      }
+    },
+    "ListAssociationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListAssociationsRequestNextTokenString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x20-\\x7F]+"
+    },
+    "ListAssociationsResult":{
+      "type":"structure",
+      "required":["Associations"],
+      "members":{
+        "Associations":{"shape":"AssociationList"},
+        "NextToken":{"shape":"ListAssociationsResultNextTokenString"}
+      }
+    },
+    "ListAssociationsResultNextTokenString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x20-\\x7F]+"
+    },
+    "ListCustomActionsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListCustomActionsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"ListCustomActionsRequestNextTokenString"}
+      }
+    },
+    "ListCustomActionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListCustomActionsRequestNextTokenString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x20-\\x7F]+"
+    },
+    "ListCustomActionsResult":{
+      "type":"structure",
+      "required":["CustomActions"],
+      "members":{
+        "CustomActions":{"shape":"CustomActionArnList"},
+        "NextToken":{"shape":"ListCustomActionsResultNextTokenString"}
+      }
+    },
+    "ListCustomActionsResultNextTokenString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\x20-\\x7F]+"
     },
     "ListMicrosoftTeamsConfiguredTeamsException":{
       "type":"structure",
@@ -1079,6 +1500,12 @@
       "max":1276,
       "min":1,
       "pattern":"[a-zA-Z0-9=\\/+_.\\-,#:\\\\\"{}]{4,1276}"
+    },
+    "ResourceIdentifier":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:aws:chatbot:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:custom-action/[a-zA-Z0-9_-]{1,64}"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1352,6 +1779,17 @@
       "min":36,
       "pattern":"[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}"
     },
+    "UnauthorizedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1415,6 +1853,26 @@
       "type":"structure",
       "members":{
         "WebhookConfiguration":{"shape":"ChimeWebhookConfiguration"}
+      }
+    },
+    "UpdateCustomActionRequest":{
+      "type":"structure",
+      "required":[
+        "CustomActionArn",
+        "Definition"
+      ],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"},
+        "Definition":{"shape":"CustomActionDefinition"},
+        "AliasName":{"shape":"CustomActionAliasName"},
+        "Attachments":{"shape":"CustomActionAttachmentList"}
+      }
+    },
+    "UpdateCustomActionResult":{
+      "type":"structure",
+      "required":["CustomActionArn"],
+      "members":{
+        "CustomActionArn":{"shape":"CustomActionArn"}
       }
     },
     "UpdateSlackChannelConfigurationException":{
