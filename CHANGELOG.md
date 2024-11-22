@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.330.0 - 2024-11-22
 
 * `Aws\NeptuneGraph` - Add 4 new APIs to support new Export features, allowing Parquet and CSV formats. Add new arguments in Import APIs to support Parquet import. Add a new query "neptune.read" to run algorithms without loading data into database
 * `Aws\Inspector2` - Extend inspector2 service model to include ServiceQuotaExceededException.
