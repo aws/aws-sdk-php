@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.330.1 - 2024-11-25
 
 * `Aws\DirectConnect` - Update DescribeDirectConnectGatewayAssociations API to return associated core network information if a Direct Connect gateway is attached to a Cloud WAN core network.
 * `Aws\NetworkManager` - This release adds native Direct Connect integration on Cloud WAN enabling customers to directly attach their Direct Connect gateways to Cloud WAN without the need for an intermediate Transit Gateway.
