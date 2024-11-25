@@ -197,6 +197,7 @@ abstract class RestSerializer
     private function buildEndpoint(Operation $operation, array $args, array $opts)
     {
         $isModifiedModel = $this->api->isModifiedModel();
+        $serviceName = $this->api->getServiceName();
         // Create an associative array of variable definitions used in expansions
         $varDefinitions = $this->getVarDefinitions($operation, $args);
 
@@ -225,7 +226,7 @@ abstract class RestSerializer
 
         $path = $this->endpoint->getPath();
 
-        if ($isModifiedModel && $this->api->getServiceName() === 's3') {
+        if ($isModifiedModel && $serviceName === 's3') {
             if (substr($path, -1) === '/' && $relative[0] === '/') {
                 $path = rtrim($path, '/');
             }
@@ -242,7 +243,9 @@ abstract class RestSerializer
             }
         }
 
-        if (!$isModifiedModel) {
+        if (!$isModifiedModel
+            && $serviceName !== 's3'
+        ) {
             $relative = $this->prependPath($relative, $path);
         }
 
