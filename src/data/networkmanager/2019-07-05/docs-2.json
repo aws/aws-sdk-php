@@ -12,6 +12,7 @@
     "CreateConnection": "<p>Creates a connection between two devices. The devices can be a physical or virtual appliance that connects to a third-party appliance in a VPC, or a physical appliance that connects to another physical appliance in an on-premises network.</p>",
     "CreateCoreNetwork": "<p>Creates a core network as part of your global network, and optionally, with a core network policy.</p>",
     "CreateDevice": "<p>Creates a new device in a global network. If you specify both a site ID and a location, the location of the site is used for visualization in the Network Manager console.</p>",
+    "CreateDirectConnectGatewayAttachment": "<p>Creates an Amazon Web Services Direct Connect gateway attachment </p>",
     "CreateGlobalNetwork": "<p>Creates a new, empty global network.</p>",
     "CreateLink": "<p>Creates a new link for a specified site.</p>",
     "CreateSite": "<p>Creates a new site in a global network.</p>",
@@ -47,6 +48,7 @@
     "GetCoreNetworkPolicy": "<p>Returns details about a core network policy. You can get details about your current live policy or any previous policy version.</p>",
     "GetCustomerGatewayAssociations": "<p>Gets the association information for customer gateways that are associated with devices and links in your global network.</p>",
     "GetDevices": "<p>Gets information about one or more of your devices in a global network.</p>",
+    "GetDirectConnectGatewayAttachment": "<p>Returns information about a specific Amazon Web Services Direct Connect gateway attachment.</p>",
     "GetLinkAssociations": "<p>Gets the link associations for a device or a link. Either the device ID or the link ID must be specified.</p>",
     "GetLinks": "<p>Gets information about one or more links in a specified global network.</p> <p>If you specify the site ID, you cannot specify the type or provider in the same request. You can specify the type and provider in the same request.</p>",
     "GetNetworkResourceCounts": "<p>Gets the count of network resources, by resource type, for the specified global network.</p>",
@@ -82,6 +84,7 @@
     "UpdateConnection": "<p>Updates the information for an existing connection. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateCoreNetwork": "<p>Updates the description of a core network.</p>",
     "UpdateDevice": "<p>Updates the details for an existing device. To remove information for any of the parameters, specify an empty string.</p>",
+    "UpdateDirectConnectGatewayAttachment": "<p>Updates the edge locations associated with an Amazon Web Services Direct Connect gateway attachment. </p>",
     "UpdateGlobalNetwork": "<p>Updates an existing global network. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateLink": "<p>Updates the details for an existing link. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateNetworkResourceMetadata": "<p>Updates the resource metadata for the specified global network.</p>",
@@ -197,6 +200,7 @@
         "AttachmentList$member": null,
         "ConnectAttachment$Attachment": "<p>The attachment details.</p>",
         "DeleteAttachmentResponse$Attachment": "<p>Information about the deleted attachment.</p>",
+        "DirectConnectGatewayAttachment$Attachment": null,
         "RejectAttachmentResponse$Attachment": "<p>Describes the rejected attachment request.</p>",
         "SiteToSiteVpnAttachment$Attachment": "<p>Provides details about a site-to-site VPN attachment.</p>",
         "TransitGatewayRouteTableAttachment$Attachment": null,
@@ -234,12 +238,14 @@
         "CreateConnectPeerRequest$ConnectAttachmentId": "<p>The ID of the connection attachment.</p>",
         "DeleteAttachmentRequest$AttachmentId": "<p>The ID of the attachment to delete.</p>",
         "GetConnectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "GetDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment that you want to see details about.</p>",
         "GetSiteToSiteVpnAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "GetTransitGatewayRouteTableAttachmentRequest$AttachmentId": "<p>The ID of the transit gateway route table attachment.</p>",
         "GetVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "ListConnectPeersRequest$ConnectAttachmentId": "<p>The ID of the attachment.</p>",
         "NetworkRouteDestination$CoreNetworkAttachmentId": "<p>The ID of a core network attachment.</p>",
         "RejectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "UpdateDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment for the updated edge locations. </p>",
         "UpdateVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>"
       }
     },
@@ -322,6 +328,7 @@
         "CreateConnectAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateConnectPeerRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateCoreNetworkRequest$ClientToken": "<p>The client token associated with a core network request.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$ClientToken": "<p>client token</p>",
         "CreateSiteToSiteVpnAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayPeeringRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayRouteTableAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
@@ -709,6 +716,7 @@
         "CoreNetworkSegmentEdgeIdentifier$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CoreNetworkSummary$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateConnectAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you want to create the attachment. </p>",
+        "CreateDirectConnectGatewayAttachmentRequest$CoreNetworkId": "<p>The ID of the Cloud WAN core network that the Direct Connect gateway attachment should be attached to.</p>",
         "CreateSiteToSiteVpnAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you're creating a site-to-site VPN attachment.</p>",
         "CreateTransitGatewayPeeringRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateVpcAttachmentRequest$CoreNetworkId": "<p>The ID of a core network for the VPC attachment.</p>",
@@ -891,6 +899,16 @@
       }
     },
     "CreateDeviceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentResponse": {
       "base": null,
       "refs": {
       }
@@ -1210,6 +1228,21 @@
         "Device$State": "<p>The device state.</p>"
       }
     },
+    "DirectConnectGatewayArn": {
+      "base": null,
+      "refs": {
+        "CreateDirectConnectGatewayAttachmentRequest$DirectConnectGatewayArn": "<p>The ARN of the Direct Connect gateway attachment.</p>",
+        "DirectConnectGatewayAttachment$DirectConnectGatewayArn": "<p>The Direct Connect gateway attachment ARN.</p>"
+      }
+    },
+    "DirectConnectGatewayAttachment": {
+      "base": "<p>Describes a Direct Connect gateway attachment.</p>",
+      "refs": {
+        "CreateDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Describes the details of a <code>CreateDirectConnectGatewayAttachment</code> request.</p>",
+        "GetDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Shows details about the Direct Connect gateway attachment. </p>",
+        "UpdateDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Returns details of the Direct Connect gateway attachment with the updated edge locations.</p>"
+      }
+    },
     "DisassociateConnectPeerRequest": {
       "base": null,
       "refs": {
@@ -1299,7 +1332,7 @@
     "ExternalRegionCode": {
       "base": null,
       "refs": {
-        "Attachment$EdgeLocation": "<p>The Region where the edge is located.</p>",
+        "Attachment$EdgeLocation": "<p>The Region where the edge is located. This is returned for all attachment types except a Direct Connect gateway attachment, which instead returns <code>EdgeLocations</code>.</p>",
         "ConnectPeer$EdgeLocation": "<p>The Connect peer Regions where edges are located.</p>",
         "ConnectPeerSummary$EdgeLocation": "<p>The Region where the edge is located.</p>",
         "CoreNetworkChangeEventValues$EdgeLocation": "<p>The edge location for the core network change event.</p>",
@@ -1322,9 +1355,12 @@
     "ExternalRegionCodeList": {
       "base": null,
       "refs": {
+        "Attachment$EdgeLocations": "<p>The edge locations that the Direct Connect gateway is associated with. This is returned only for Direct Connect gateway attachments. All other attachment types retrun <code>EdgeLocation</code>.</p>",
         "CoreNetworkChangeValues$EdgeLocations": "<p>The Regions where edges are located in a core network. </p>",
         "CoreNetworkNetworkFunctionGroup$EdgeLocations": "<p>The core network edge locations.</p>",
-        "CoreNetworkSegment$EdgeLocations": "<p>The Regions where the edges are located.</p>"
+        "CoreNetworkSegment$EdgeLocations": "<p>The Regions where the edges are located.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$EdgeLocations": "<p>One or more core network edge locations that the Direct Connect gateway attachment is associated with. </p>",
+        "UpdateDirectConnectGatewayAttachmentRequest$EdgeLocations": "<p>One or more edge locations to update for the Direct Connect gateway attachment. The updated array of edge locations overwrites the previous array of locations. <code>EdgeLocations</code> is only used for Direct Connect gateway attachments. Do</p>"
       }
     },
     "FilterMap": {
@@ -1447,6 +1483,16 @@
       }
     },
     "GetDevicesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDirectConnectGatewayAttachmentResponse": {
       "base": null,
       "refs": {
       }
@@ -2609,6 +2655,7 @@
         "CreateConnectionRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateCoreNetworkRequest$Tags": "<p>Key-value tags associated with a core network request.</p>",
         "CreateDeviceRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$Tags": "<p>The key value tags to apply to the Direct Connect gateway attachment during creation.</p>",
         "CreateGlobalNetworkRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateLinkRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateSiteRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
@@ -2812,6 +2859,16 @@
       }
     },
     "UpdateDeviceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentResponse": {
       "base": null,
       "refs": {
       }
