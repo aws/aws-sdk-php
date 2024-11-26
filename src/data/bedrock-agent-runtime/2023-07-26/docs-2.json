@@ -215,7 +215,8 @@
         "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. <pre><code> &lt;/p&gt; </code></pre>",
         "InvokeInlineAgentRequest$endSession": "<p> Specifies whether to end the session with the inline agent or not. </p>",
         "ParameterDetail$required": "<p> Whether the parameter is required for the agent to complete the function for action group invocation. </p>",
-        "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>"
+        "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>",
+        "StreamingConfigurations$streamFinalResponse": "<p> Specifies whether to enable streaming for the final response. This is set to <code>false</code> by default. </p>"
       }
     },
     "ByteContentBlob": {
@@ -308,6 +309,18 @@
       "base": null,
       "refs": {
         "ActionGroupExecutor$customControl": "<p> To return the action group invocation results directly in the <code>InvokeInlineAgent</code> response, specify <code>RETURN_CONTROL</code>. </p>"
+      }
+    },
+    "CustomOrchestrationTrace": {
+      "base": "<p> The trace behavior for the custom orchestration. </p>",
+      "refs": {
+        "Trace$customOrchestrationTrace": "<p> Details about the custom orchestration step in which the agent determines the order in which actions are executed. </p>"
+      }
+    },
+    "CustomOrchestrationTraceEvent": {
+      "base": "<p> The event in the custom orchestration sequence. </p>",
+      "refs": {
+        "CustomOrchestrationTrace$event": "<p> The trace event details used with the custom orchestration. </p>"
       }
     },
     "DateTimestamp": {
@@ -1963,6 +1976,18 @@
         "InferenceConfiguration$stopSequences": "<p>A list of stop sequences. A stop sequence is a sequence of characters that causes the model to stop generating the response.</p>"
       }
     },
+    "StreamingConfigurations": {
+      "base": "<p> Configurations for streaming. </p>",
+      "refs": {
+        "InvokeAgentRequest$streamingConfigurations": "<p> Specifies the configurations for streaming. </p>"
+      }
+    },
+    "StreamingConfigurationsApplyGuardrailIntervalInteger": {
+      "base": null,
+      "refs": {
+        "StreamingConfigurations$applyGuardrailInterval": "<p> The guardrail interval to apply as response is generated. </p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1981,6 +2006,7 @@
         "CodeInterpreterInvocationOutput$executionOutput": "<p>Contains the successful output returned from code execution</p>",
         "ContentBody$body": "<p>The body of the API response.</p>",
         "ContentMap$key": null,
+        "CustomOrchestrationTraceEvent$text": "<p> The text that prompted the event at this step. </p>",
         "Files$member": null,
         "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
         "FunctionInvocationInput$actionGroup": "<p>The action group that the function belongs to.</p>",
@@ -2100,6 +2126,7 @@
     "TraceId": {
       "base": null,
       "refs": {
+        "CustomOrchestrationTrace$traceId": "<p> The unique identifier of the trace. </p>",
         "FailureTrace$traceId": "<p>The unique identifier of the trace.</p>",
         "GuardrailTrace$traceId": "<p>The details of the trace Id used in the Guardrail Trace.</p>",
         "InvocationInput$traceId": "<p>The unique identifier of the trace.</p>",

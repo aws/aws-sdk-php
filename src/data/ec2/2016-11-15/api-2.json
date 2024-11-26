@@ -10476,6 +10476,10 @@
         "ConnectionNotificationState":{
           "shape":"ConnectionNotificationState",
           "locationName":"connectionNotificationState"
+        },
+        "ServiceRegion":{
+          "shape":"String",
+          "locationName":"serviceRegion"
         }
       }
     },
@@ -10728,6 +10732,7 @@
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
         },
+        "CompletionDurationMinutes":{"shape":"SnapshotCompletionDurationMinutesRequest"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -13457,7 +13462,8 @@
         "SubnetConfigurations":{
           "shape":"SubnetConfigurationsList",
           "locationName":"SubnetConfiguration"
-        }
+        },
+        "ServiceRegion":{"shape":"String"}
       }
     },
     "CreateVpcEndpointResult":{
@@ -13490,6 +13496,10 @@
         "SupportedIpAddressTypes":{
           "shape":"ValueStringList",
           "locationName":"SupportedIpAddressType"
+        },
+        "SupportedRegions":{
+          "shape":"ValueStringList",
+          "locationName":"SupportedRegion"
         },
         "ClientToken":{"shape":"String"},
         "TagSpecifications":{
@@ -20418,7 +20428,11 @@
           "locationName":"Filter"
         },
         "MaxResults":{"shape":"Integer"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "ServiceRegions":{
+          "shape":"ValueStringList",
+          "locationName":"ServiceRegion"
+        }
       }
     },
     "DescribeVpcEndpointServicesResult":{
@@ -35604,6 +35618,14 @@
         "RemoveSupportedIpAddressTypes":{
           "shape":"ValueStringList",
           "locationName":"RemoveSupportedIpAddressType"
+        },
+        "AddSupportedRegions":{
+          "shape":"ValueStringList",
+          "locationName":"AddSupportedRegion"
+        },
+        "RemoveSupportedRegions":{
+          "shape":"ValueStringList",
+          "locationName":"RemoveSupportedRegion"
         }
       }
     },
@@ -42620,6 +42642,14 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "SupportedRegions":{
+          "shape":"SupportedRegionSet",
+          "locationName":"supportedRegionSet"
+        },
+        "RemoteAccessEnabled":{
+          "shape":"Boolean",
+          "locationName":"remoteAccessEnabled"
         }
       }
     },
@@ -42651,6 +42681,10 @@
         "ServiceType":{
           "shape":"ServiceTypeDetailSet",
           "locationName":"serviceType"
+        },
+        "ServiceRegion":{
+          "shape":"String",
+          "locationName":"serviceRegion"
         },
         "AvailabilityZones":{
           "shape":"ValueStringList",
@@ -42795,6 +42829,18 @@
           "shape":"SSEType",
           "locationName":"sseType"
         },
+        "TransferType":{
+          "shape":"TransferType",
+          "locationName":"transferType"
+        },
+        "CompletionDurationMinutes":{
+          "shape":"SnapshotCompletionDurationMinutesResponse",
+          "locationName":"completionDurationMinutes"
+        },
+        "CompletionTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"completionTime"
+        },
         "SnapshotId":{
           "shape":"String",
           "locationName":"snapshotId"
@@ -42860,6 +42906,12 @@
         "unblocked"
       ]
     },
+    "SnapshotCompletionDurationMinutesRequest":{
+      "type":"integer",
+      "max":2880,
+      "min":1
+    },
+    "SnapshotCompletionDurationMinutesResponse":{"type":"integer"},
     "SnapshotDetail":{
       "type":"structure",
       "members":{
@@ -44455,6 +44507,26 @@
       "max":2,
       "min":0
     },
+    "SupportedRegionDetail":{
+      "type":"structure",
+      "members":{
+        "Region":{
+          "shape":"String",
+          "locationName":"region"
+        },
+        "ServiceState":{
+          "shape":"String",
+          "locationName":"serviceState"
+        }
+      }
+    },
+    "SupportedRegionSet":{
+      "type":"list",
+      "member":{
+        "shape":"SupportedRegionDetail",
+        "locationName":"item"
+      }
+    },
     "Tag":{
       "type":"structure",
       "members":{
@@ -45176,6 +45248,13 @@
         "ACCEPT",
         "REJECT",
         "ALL"
+      ]
+    },
+    "TransferType":{
+      "type":"string",
+      "enum":[
+        "time-based",
+        "standard"
       ]
     },
     "TransitAssociationGatewayId":{"type":"string"},
@@ -48656,6 +48735,10 @@
         "LastError":{
           "shape":"LastError",
           "locationName":"lastError"
+        },
+        "ServiceRegion":{
+          "shape":"String",
+          "locationName":"serviceRegion"
         }
       }
     },
@@ -48705,6 +48788,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "VpcEndpointRegion":{
+          "shape":"String",
+          "locationName":"vpcEndpointRegion"
         }
       }
     },

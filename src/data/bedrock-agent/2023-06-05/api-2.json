@@ -1253,6 +1253,7 @@
         "agentVersion":{"shape":"DraftVersion"},
         "clientToken":{"shape":"ClientToken"},
         "createdAt":{"shape":"DateTimestamp"},
+        "customOrchestration":{"shape":"CustomOrchestration"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "description":{"shape":"Description"},
         "failureReasons":{"shape":"FailureReasons"},
@@ -1261,6 +1262,7 @@
         "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
         "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "orchestrationType":{"shape":"OrchestrationType"},
         "preparedAt":{"shape":"DateTimestamp"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
         "recommendedActions":{"shape":"RecommendedActions"},
@@ -1847,6 +1849,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
+        "customOrchestration":{"shape":"CustomOrchestration"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "description":{"shape":"Description"},
         "foundationModel":{"shape":"ModelIdentifier"},
@@ -1854,6 +1857,7 @@
         "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
         "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "orchestrationType":{"shape":"OrchestrationType"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
         "tags":{"shape":"TagsMap"}
       }
@@ -2144,6 +2148,12 @@
     "CustomControlMethod":{
       "type":"string",
       "enum":["RETURN_CONTROL"]
+    },
+    "CustomOrchestration":{
+      "type":"structure",
+      "members":{
+        "executor":{"shape":"OrchestrationExecutor"}
+      }
     },
     "CustomTransformationConfiguration":{
       "type":"structure",
@@ -4527,6 +4537,20 @@
       "min":0,
       "pattern":"^.*$"
     },
+    "OrchestrationExecutor":{
+      "type":"structure",
+      "members":{
+        "lambda":{"shape":"LambdaArn"}
+      },
+      "union":true
+    },
+    "OrchestrationType":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "CUSTOM_ORCHESTRATION"
+      ]
+    },
     "OutputFlowNodeConfiguration":{
       "type":"structure",
       "members":{
@@ -5840,6 +5864,7 @@
         },
         "agentName":{"shape":"Name"},
         "agentResourceRoleArn":{"shape":"AgentRoleArn"},
+        "customOrchestration":{"shape":"CustomOrchestration"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "description":{"shape":"Description"},
         "foundationModel":{"shape":"ModelIdentifier"},
@@ -5847,6 +5872,7 @@
         "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
         "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "orchestrationType":{"shape":"OrchestrationType"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"}
       }
     },

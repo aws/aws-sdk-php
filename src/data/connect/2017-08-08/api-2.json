@@ -5782,7 +5782,6 @@
         "Description":{"shape":"ContactFlowDescription"},
         "Content":{"shape":"ContactFlowContent"},
         "Tags":{"shape":"TagMap"},
-        "IsDefault":{"shape":"Boolean"},
         "FlowContentSha256":{"shape":"FlowContentSha256"},
         "Version":{"shape":"ResourceVersion"},
         "VersionDescription":{"shape":"ContactFlowDescription"},
@@ -15283,8 +15282,16 @@
     "SegmentAttributeValue":{
       "type":"structure",
       "members":{
-        "ValueString":{"shape":"SegmentAttributeValueString"}
+        "ValueString":{"shape":"SegmentAttributeValueString"},
+        "ValueMap":{"shape":"SegmentAttributeValueMap"},
+        "ValueInteger":{"shape":"SegmentAttributeValueInteger"}
       }
+    },
+    "SegmentAttributeValueInteger":{"type":"integer"},
+    "SegmentAttributeValueMap":{
+      "type":"map",
+      "key":{"shape":"SegmentAttributeName"},
+      "value":{"shape":"SegmentAttributeValue"}
     },
     "SegmentAttributeValueString":{
       "type":"string",

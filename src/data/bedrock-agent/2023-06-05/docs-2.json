@@ -599,6 +599,14 @@
         "ActionGroupExecutor$customControl": "<p>To return the action group invocation results directly in the <code>InvokeAgent</code> response, specify <code>RETURN_CONTROL</code>.</p>"
       }
     },
+    "CustomOrchestration": {
+      "base": "<p> Details of custom orchestration. </p>",
+      "refs": {
+        "Agent$customOrchestration": "<p> Contains custom orchestration configurations for the agent. </p>",
+        "CreateAgentRequest$customOrchestration": "<p> Contains details of the custom orchestration configured for the agent. </p>",
+        "UpdateAgentRequest$customOrchestration": "<p> Contains details of the custom orchestration configured for the agent. </p>"
+      }
+    },
     "CustomTransformationConfiguration": {
       "base": "<p>Settings for customizing steps in the data source content ingestion pipeline.</p> <p>You can configure the data source to process documents with a Lambda function after they are parsed and converted into chunks. When you add a post-chunking transformation, the service stores chunked documents in an S3 bucket and invokes a Lambda function to process them.</p> <p>To process chunked documents with a Lambda function, define an S3 bucket path for input and output objects, and a transformation that specifies the Lambda function to invoke. You can use the Lambda function to customize how chunks are split, and the metadata for each chunk. </p>",
       "refs": {
@@ -1955,6 +1963,7 @@
       "refs": {
         "ActionGroupExecutor$lambda": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action.</p>",
         "LambdaFunctionFlowNodeConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to invoke.</p>",
+        "OrchestrationExecutor$lambda": "<p> The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action. </p>",
         "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Amazon Bedrock Agents</a>.</p>",
         "TransformationLambdaConfiguration$lambdaArn": "<p>The function's ARN identifier.</p>"
       }
@@ -2418,6 +2427,20 @@
       "base": null,
       "refs": {
         "OpenSearchServerlessConfiguration$vectorIndexName": "<p>The name of the vector store.</p>"
+      }
+    },
+    "OrchestrationExecutor": {
+      "base": "<p> Contains details about the Lambda function containing the orchestration logic carried out upon invoking the custom orchestration. </p>",
+      "refs": {
+        "CustomOrchestration$executor": "<p> The structure of the executor invoking the actions in custom orchestration. </p>"
+      }
+    },
+    "OrchestrationType": {
+      "base": null,
+      "refs": {
+        "Agent$orchestrationType": "<p> Specifies the orchestration strategy for the agent. </p>",
+        "CreateAgentRequest$orchestrationType": "<p> Specifies the type of orchestration strategy for the agent. This is set to <code>DEFAULT</code> orchestration type, by default. </p>",
+        "UpdateAgentRequest$orchestrationType": "<p> Specifies the type of orchestration strategy for the agent. This is set to <code>DEFAULT</code> orchestration type, by default. </p>"
       }
     },
     "OutputFlowNodeConfiguration": {

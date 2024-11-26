@@ -123,6 +123,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreatePresignedUrl":{
+      "name":"CreatePresignedUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/apps.createPresignedUrl",
+        "responseCode":200
+      },
+      "input":{"shape":"CreatePresignedUrlInput"},
+      "output":{"shape":"CreatePresignedUrlOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateQApp":{
       "name":"CreateQApp",
       "http":{
@@ -180,6 +197,24 @@
       ],
       "idempotent":true
     },
+    "DescribeQAppPermissions":{
+      "name":"DescribeQAppPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/apps.describeQAppPermissions",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeQAppPermissionsInput"},
+      "output":{"shape":"DescribeQAppPermissionsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DisassociateLibraryItemReview":{
       "name":"DisassociateLibraryItemReview",
       "http":{
@@ -213,6 +248,26 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ExportQAppSessionData":{
+      "name":"ExportQAppSessionData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runtime.exportQAppSessionData",
+        "responseCode":200
+      },
+      "input":{"shape":"ExportQAppSessionDataInput"},
+      "output":{"shape":"ExportQAppSessionDataOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -261,6 +316,25 @@
       },
       "input":{"shape":"GetQAppSessionInput"},
       "output":{"shape":"GetQAppSessionOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetQAppSessionMetadata":{
+      "name":"GetQAppSessionMetadata",
+      "http":{
+        "method":"GET",
+        "requestUri":"/runtime.getQAppSessionMetadata",
+        "responseCode":200
+      },
+      "input":{"shape":"GetQAppSessionMetadataInput"},
+      "output":{"shape":"GetQAppSessionMetadataOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -324,6 +398,25 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListQAppSessionData":{
+      "name":"ListQAppSessionData",
+      "http":{
+        "method":"GET",
+        "requestUri":"/runtime.listQAppSessionData",
+        "responseCode":200
+      },
+      "input":{"shape":"ListQAppSessionDataInput"},
+      "output":{"shape":"ListQAppSessionDataOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -509,6 +602,24 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateQAppPermissions":{
+      "name":"UpdateQAppPermissions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/apps.updateQAppPermissions",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateQAppPermissionsInput"},
+      "output":{"shape":"UpdateQAppPermissionsOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateQAppSession":{
       "name":"UpdateQAppSession",
       "http":{
@@ -518,6 +629,25 @@
       },
       "input":{"shape":"UpdateQAppSessionInput"},
       "output":{"shape":"UpdateQAppSessionOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateQAppSessionMetadata":{
+      "name":"UpdateQAppSessionMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/runtime.updateQAppSessionMetadata",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateQAppSessionMetadataInput"},
+      "output":{"shape":"UpdateQAppSessionMetadataOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -726,7 +856,8 @@
         "textInput":{"shape":"TextInputCard"},
         "qQuery":{"shape":"QQueryCard"},
         "qPlugin":{"shape":"QPluginCard"},
-        "fileUpload":{"shape":"FileUploadCard"}
+        "fileUpload":{"shape":"FileUploadCard"},
+        "formInput":{"shape":"FormInputCard"}
       },
       "union":true
     },
@@ -736,7 +867,8 @@
         "textInput":{"shape":"TextInputCardInput"},
         "qQuery":{"shape":"QQueryCardInput"},
         "qPlugin":{"shape":"QPluginCardInput"},
-        "fileUpload":{"shape":"FileUploadCardInput"}
+        "fileUpload":{"shape":"FileUploadCardInput"},
+        "formInput":{"shape":"FormInputCardInput"}
       },
       "union":true
     },
@@ -767,7 +899,8 @@
       ],
       "members":{
         "currentState":{"shape":"ExecutionStatus"},
-        "currentValue":{"shape":"String"}
+        "currentValue":{"shape":"String"},
+        "submissions":{"shape":"SubmissionList"}
       }
     },
     "CardStatusMap":{
@@ -781,7 +914,8 @@
         "text-input",
         "q-query",
         "file-upload",
-        "q-plugin"
+        "q-plugin",
+        "form-input"
       ]
     },
     "CardValue":{
@@ -792,7 +926,8 @@
       ],
       "members":{
         "cardId":{"shape":"UUID"},
-        "value":{"shape":"CardValueValueString"}
+        "value":{"shape":"CardValueValueString"},
+        "submissionMutation":{"shape":"SubmissionMutation"}
       }
     },
     "CardValueList":{
@@ -803,7 +938,7 @@
     },
     "CardValueValueString":{
       "type":"string",
-      "max":5000,
+      "max":40000,
       "min":0
     },
     "CategoriesList":{
@@ -958,6 +1093,49 @@
         "isVerified":{"shape":"Boolean"}
       }
     },
+    "CreatePresignedUrlInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "cardId",
+        "appId",
+        "fileContentsSha256",
+        "fileName",
+        "scope"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "cardId":{"shape":"UUID"},
+        "appId":{"shape":"UUID"},
+        "fileContentsSha256":{"shape":"CreatePresignedUrlInputFileContentsSha256String"},
+        "fileName":{"shape":"Filename"},
+        "scope":{"shape":"DocumentScope"},
+        "sessionId":{"shape":"UUID"}
+      }
+    },
+    "CreatePresignedUrlInputFileContentsSha256String":{
+      "type":"string",
+      "pattern":"[A-Za-z0-9+/]{43}=$|^[A-Za-z0-9+/]{42}==$|^[A-Za-z0-9+/]{44}"
+    },
+    "CreatePresignedUrlOutput":{
+      "type":"structure",
+      "required":[
+        "fileId",
+        "presignedUrl",
+        "presignedUrlFields",
+        "presignedUrlExpiration"
+      ],
+      "members":{
+        "fileId":{"shape":"String"},
+        "presignedUrl":{"shape":"String"},
+        "presignedUrlFields":{"shape":"PresignedUrlFields"},
+        "presignedUrlExpiration":{"shape":"QAppsTimestamp"}
+      }
+    },
     "CreateQAppInput":{
       "type":"structure",
       "required":[
@@ -1050,6 +1228,33 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "DescribeQAppPermissionsInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "appId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "appId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"appId"
+        }
+      }
+    },
+    "DescribeQAppPermissionsOutput":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"String"},
+        "appId":{"shape":"String"},
+        "permissions":{"shape":"PermissionsOutputList"}
+      }
+    },
     "Description":{
       "type":"string",
       "max":500,
@@ -1084,6 +1289,12 @@
         },
         "appId":{"shape":"UUID"}
       }
+    },
+    "Document":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "DocumentAttribute":{
       "type":"structure",
@@ -1133,8 +1344,37 @@
       "enum":[
         "IN_PROGRESS",
         "WAITING",
-        "COMPLETED"
+        "COMPLETED",
+        "ERROR"
       ]
+    },
+    "ExportQAppSessionDataInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "sessionId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "sessionId":{"shape":"UUID"}
+      }
+    },
+    "ExportQAppSessionDataOutput":{
+      "type":"structure",
+      "required":[
+        "csvFileLink",
+        "expiresAt",
+        "sessionArn"
+      ],
+      "members":{
+        "csvFileLink":{"shape":"String"},
+        "expiresAt":{"shape":"QAppsTimestamp"},
+        "sessionArn":{"shape":"String"}
+      }
     },
     "FileUploadCard":{
       "type":"structure",
@@ -1174,6 +1414,53 @@
       "type":"string",
       "max":100,
       "min":0
+    },
+    "FormInputCard":{
+      "type":"structure",
+      "required":[
+        "id",
+        "title",
+        "dependencies",
+        "type",
+        "metadata"
+      ],
+      "members":{
+        "id":{"shape":"UUID"},
+        "title":{"shape":"Title"},
+        "dependencies":{"shape":"DependencyList"},
+        "type":{"shape":"CardType"},
+        "metadata":{"shape":"FormInputCardMetadata"},
+        "computeMode":{"shape":"InputCardComputeMode"}
+      }
+    },
+    "FormInputCardInput":{
+      "type":"structure",
+      "required":[
+        "title",
+        "id",
+        "type",
+        "metadata"
+      ],
+      "members":{
+        "title":{"shape":"Title"},
+        "id":{"shape":"UUID"},
+        "type":{"shape":"CardType"},
+        "metadata":{"shape":"FormInputCardMetadata"},
+        "computeMode":{"shape":"InputCardComputeMode"}
+      }
+    },
+    "FormInputCardMetadata":{
+      "type":"structure",
+      "required":["schema"],
+      "members":{
+        "schema":{"shape":"FormInputCardMetadataSchema"}
+      }
+    },
+    "FormInputCardMetadataSchema":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "GetLibraryItemInput":{
       "type":"structure",
@@ -1243,6 +1530,11 @@
           "shape":"UUID",
           "location":"querystring",
           "locationName":"appId"
+        },
+        "appVersion":{
+          "shape":"AppVersion",
+          "location":"querystring",
+          "locationName":"appVersion"
         }
       }
     },
@@ -1295,6 +1587,40 @@
         }
       }
     },
+    "GetQAppSessionMetadataInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "sessionId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "sessionId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "GetQAppSessionMetadataOutput":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "sessionArn",
+        "sharingConfiguration"
+      ],
+      "members":{
+        "sessionId":{"shape":"UUID"},
+        "sessionArn":{"shape":"String"},
+        "sessionName":{"shape":"SessionName"},
+        "sharingConfiguration":{"shape":"SessionSharingConfiguration"},
+        "sessionOwner":{"shape":"Boolean"}
+      }
+    },
     "GetQAppSessionOutput":{
       "type":"structure",
       "required":[
@@ -1306,8 +1632,12 @@
       "members":{
         "sessionId":{"shape":"String"},
         "sessionArn":{"shape":"String"},
+        "sessionName":{"shape":"SessionName"},
+        "appVersion":{"shape":"AppVersion"},
+        "latestPublishedAppVersion":{"shape":"AppVersion"},
         "status":{"shape":"ExecutionStatus"},
-        "cardStatus":{"shape":"CardStatusMap"}
+        "cardStatus":{"shape":"CardStatusMap"},
+        "userIsHost":{"shape":"Boolean"}
       }
     },
     "ImportDocumentInput":{
@@ -1344,6 +1674,13 @@
       "type":"string",
       "max":10000,
       "min":0
+    },
+    "InputCardComputeMode":{
+      "type":"string",
+      "enum":[
+        "append",
+        "replace"
+      ]
     },
     "InstanceId":{"type":"string"},
     "Integer":{
@@ -1455,6 +1792,38 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListQAppSessionDataInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "sessionId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "sessionId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "ListQAppSessionDataOutput":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "sessionArn"
+      ],
+      "members":{
+        "sessionId":{"shape":"UUID"},
+        "sessionArn":{"shape":"String"},
+        "sessionData":{"shape":"QAppSessionDataList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListQAppsInput":{
       "type":"structure",
       "required":["instanceId"],
@@ -1505,6 +1874,10 @@
       "type":"long",
       "box":true
     },
+    "MemoryReferenceList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "PageLimit":{
       "type":"integer",
       "box":true,
@@ -1515,6 +1888,55 @@
       "type":"string",
       "max":300,
       "min":0
+    },
+    "PermissionInput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "principal"
+      ],
+      "members":{
+        "action":{"shape":"PermissionInputActionEnum"},
+        "principal":{"shape":"PermissionInputPrincipalString"}
+      }
+    },
+    "PermissionInputActionEnum":{
+      "type":"string",
+      "enum":[
+        "read",
+        "write"
+      ],
+      "max":20,
+      "min":1
+    },
+    "PermissionInputPrincipalString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "PermissionOutput":{
+      "type":"structure",
+      "required":[
+        "action",
+        "principal"
+      ],
+      "members":{
+        "action":{"shape":"PermissionOutputActionEnum"},
+        "principal":{"shape":"PrincipalOutput"}
+      }
+    },
+    "PermissionOutputActionEnum":{
+      "type":"string",
+      "enum":[
+        "read",
+        "write"
+      ],
+      "max":20,
+      "min":1
+    },
+    "PermissionsOutputList":{
+      "type":"list",
+      "member":{"shape":"PermissionOutput"}
     },
     "Placeholder":{
       "type":"string",
@@ -1595,10 +2017,60 @@
         "problemStatement":{"shape":"String"}
       }
     },
+    "PresignedUrlFields":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "PrincipalOutput":{
+      "type":"structure",
+      "members":{
+        "userId":{"shape":"PrincipalOutputUserIdString"},
+        "userType":{"shape":"PrincipalOutputUserTypeEnum"},
+        "email":{"shape":"PrincipalOutputEmailString"}
+      }
+    },
+    "PrincipalOutputEmailString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "PrincipalOutputUserIdString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "PrincipalOutputUserTypeEnum":{
+      "type":"string",
+      "enum":[
+        "owner",
+        "user"
+      ],
+      "max":256,
+      "min":1
+    },
     "Prompt":{
       "type":"string",
-      "max":7000,
+      "max":50000,
       "min":0
+    },
+    "QAppSessionData":{
+      "type":"structure",
+      "required":[
+        "cardId",
+        "user"
+      ],
+      "members":{
+        "cardId":{"shape":"UUID"},
+        "value":{"shape":"Document"},
+        "user":{"shape":"User"},
+        "submissionId":{"shape":"UUID"},
+        "timestamp":{"shape":"QAppsTimestamp"}
+      }
+    },
+    "QAppSessionDataList":{
+      "type":"list",
+      "member":{"shape":"QAppSessionData"}
     },
     "QAppsTimestamp":{
       "type":"timestamp",
@@ -1659,7 +2131,8 @@
         "type":{"shape":"CardType"},
         "prompt":{"shape":"Prompt"},
         "outputSource":{"shape":"CardOutputSource"},
-        "attributeFilter":{"shape":"AttributeFilter"}
+        "attributeFilter":{"shape":"AttributeFilter"},
+        "memoryReferences":{"shape":"MemoryReferenceList"}
       }
     },
     "QQueryCardInput":{
@@ -1726,6 +2199,32 @@
       },
       "exception":true
     },
+    "SessionName":{
+      "type":"string",
+      "max":100,
+      "min":0
+    },
+    "SessionSharingAcceptResponses":{
+      "type":"boolean",
+      "box":true
+    },
+    "SessionSharingConfiguration":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"SessionSharingEnabled"},
+        "acceptResponses":{"shape":"SessionSharingAcceptResponses"},
+        "revealCards":{"shape":"SessionSharingRevealCards"}
+      }
+    },
+    "SessionSharingEnabled":{
+      "type":"boolean",
+      "box":true
+    },
+    "SessionSharingRevealCards":{
+      "type":"boolean",
+      "box":true
+    },
     "StartQAppSessionInput":{
       "type":"structure",
       "required":[
@@ -1742,6 +2241,7 @@
         "appId":{"shape":"UUID"},
         "appVersion":{"shape":"AppVersion"},
         "initialValues":{"shape":"CardValueList"},
+        "sessionId":{"shape":"String"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1772,6 +2272,37 @@
       }
     },
     "String":{"type":"string"},
+    "Submission":{
+      "type":"structure",
+      "members":{
+        "value":{"shape":"Document"},
+        "submissionId":{"shape":"UUID"},
+        "timestamp":{"shape":"QAppsTimestamp"}
+      }
+    },
+    "SubmissionList":{
+      "type":"list",
+      "member":{"shape":"Submission"}
+    },
+    "SubmissionMutation":{
+      "type":"structure",
+      "required":[
+        "submissionId",
+        "mutationType"
+      ],
+      "members":{
+        "submissionId":{"shape":"UUID"},
+        "mutationType":{"shape":"SubmissionMutationKind"}
+      }
+    },
+    "SubmissionMutationKind":{
+      "type":"string",
+      "enum":[
+        "edit",
+        "delete",
+        "add"
+      ]
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -2028,6 +2559,43 @@
         "requiredCapabilities":{"shape":"AppRequiredCapabilities"}
       }
     },
+    "UpdateQAppPermissionsInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "appId"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "appId":{"shape":"UUID"},
+        "grantPermissions":{"shape":"UpdateQAppPermissionsInputGrantPermissionsList"},
+        "revokePermissions":{"shape":"UpdateQAppPermissionsInputRevokePermissionsList"}
+      }
+    },
+    "UpdateQAppPermissionsInputGrantPermissionsList":{
+      "type":"list",
+      "member":{"shape":"PermissionInput"},
+      "max":100,
+      "min":0
+    },
+    "UpdateQAppPermissionsInputRevokePermissionsList":{
+      "type":"list",
+      "member":{"shape":"PermissionInput"},
+      "max":100,
+      "min":0
+    },
+    "UpdateQAppPermissionsOutput":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"String"},
+        "appId":{"shape":"String"},
+        "permissions":{"shape":"PermissionsOutputList"}
+      }
+    },
     "UpdateQAppSessionInput":{
       "type":"structure",
       "required":[
@@ -2044,6 +2612,38 @@
         "values":{"shape":"CardValueList"}
       }
     },
+    "UpdateQAppSessionMetadataInput":{
+      "type":"structure",
+      "required":[
+        "instanceId",
+        "sessionId",
+        "sharingConfiguration"
+      ],
+      "members":{
+        "instanceId":{
+          "shape":"InstanceId",
+          "location":"header",
+          "locationName":"instance-id"
+        },
+        "sessionId":{"shape":"UUID"},
+        "sessionName":{"shape":"SessionName"},
+        "sharingConfiguration":{"shape":"SessionSharingConfiguration"}
+      }
+    },
+    "UpdateQAppSessionMetadataOutput":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "sessionArn",
+        "sharingConfiguration"
+      ],
+      "members":{
+        "sessionId":{"shape":"UUID"},
+        "sessionArn":{"shape":"String"},
+        "sessionName":{"shape":"SessionName"},
+        "sharingConfiguration":{"shape":"SessionSharingConfiguration"}
+      }
+    },
     "UpdateQAppSessionOutput":{
       "type":"structure",
       "required":[
@@ -2053,6 +2653,12 @@
       "members":{
         "sessionId":{"shape":"String"},
         "sessionArn":{"shape":"String"}
+      }
+    },
+    "User":{
+      "type":"structure",
+      "members":{
+        "userId":{"shape":"UserId"}
       }
     },
     "UserAppItem":{
@@ -2078,6 +2684,7 @@
       "type":"list",
       "member":{"shape":"UserAppItem"}
     },
+    "UserId":{"type":"string"},
     "ValidationException":{
       "type":"structure",
       "required":["message"],

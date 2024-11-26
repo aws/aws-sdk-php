@@ -494,6 +494,21 @@
       "type":"string",
       "enum":["RETURN_CONTROL"]
     },
+    "CustomOrchestrationTrace":{
+      "type":"structure",
+      "members":{
+        "event":{"shape":"CustomOrchestrationTraceEvent"},
+        "traceId":{"shape":"TraceId"}
+      },
+      "sensitive":true
+    },
+    "CustomOrchestrationTraceEvent":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "sensitive":true
+    },
     "DateTimestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -1509,7 +1524,8 @@
           "location":"uri",
           "locationName":"sessionId"
         },
-        "sessionState":{"shape":"SessionState"}
+        "sessionState":{"shape":"SessionState"},
+        "streamingConfigurations":{"shape":"StreamingConfigurations"}
       }
     },
     "InvokeAgentResponse":{
@@ -2618,6 +2634,18 @@
       "max":4,
       "min":0
     },
+    "StreamingConfigurations":{
+      "type":"structure",
+      "members":{
+        "applyGuardrailInterval":{"shape":"StreamingConfigurationsApplyGuardrailIntervalInteger"},
+        "streamFinalResponse":{"shape":"Boolean"}
+      }
+    },
+    "StreamingConfigurationsApplyGuardrailIntervalInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "String":{"type":"string"},
     "SummaryText":{
       "type":"string",
@@ -2692,6 +2720,7 @@
     "Trace":{
       "type":"structure",
       "members":{
+        "customOrchestrationTrace":{"shape":"CustomOrchestrationTrace"},
         "failureTrace":{"shape":"FailureTrace"},
         "guardrailTrace":{"shape":"GuardrailTrace"},
         "orchestrationTrace":{"shape":"OrchestrationTrace"},
