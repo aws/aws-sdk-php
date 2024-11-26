@@ -1701,23 +1701,13 @@ EOF;
      * Tests the flag `use_aws_shared_config_files` is applied to the method
      * for resolving a default value for a config.
      *
-     * @param $resolverDefinition
-     * @param $args
-     * @param $expected
-     *
-     * @dataProvider methodAppliesUserAwsSharedFilesProvider
-     *
      * @return void
      */
-    public function testMethodAppliesUseAwsSharedFiles(
-        $resolverDefinition,
-        $args,
-        $expected
-    ): void
+    public function testResolveFromEnvIniUseAwsSharedFiles(): void
     {
         // The config being tested
-        $configKey = array_key_first($resolverDefinition);
-        $configValue = $expected ?? 'foo_value';
+        $configKey = 'foo-config-key';
+        $configValue = 'foo-config-value';
         // Populate config file
         $tempDir = sys_get_temp_dir();
         $awsDir = $tempDir . "/.aws";
@@ -1734,12 +1724,49 @@ EOF;
         putenv(ConfigurationResolver::ENV_CONFIG_FILE . "=" . $configFile);
 
         try {
-            $resolver = new ClientResolver($resolverDefinition);
-            $resolvedArgs = $resolver->resolve($args, new HandlerList());
-            if ($expected) {
-                $this->assertEquals($expected, $resolvedArgs[$configKey]);
-            } else {
-                $this->assertNull($resolvedArgs[$configKey]);
+            $resolver = new ClientResolver([
+                $configKey => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'fn' => function ($value, array &$args) use ($configKey) {
+                        if (empty($value)) {
+                            $args[$configKey] = null;
+
+                            return;
+                        }
+
+                        $args[$configKey] = $value;
+                    },
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI
+                ]
+            ]);
+            $testCases = [
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => true
+                    ],
+                    'expected' => $configValue
+                ],
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => false
+                    ],
+                    'expected' => null
+                ]
+            ];
+            foreach ($testCases as $case) {
+                $resolvedArgs = $resolver->resolve(
+                    $case['args'],
+                    new HandlerList()
+                );
+                if ($case['expected']) {
+                    $this->assertEquals(
+                        $case['expected'],
+                        $resolvedArgs[$configKey]
+                    );
+                } else {
+                    $this->assertNull($resolvedArgs[$configKey]);
+                }
             }
         } finally {
             unlink($configFile);
@@ -1754,105 +1781,5 @@ EOF;
                 putenv(ConfigurationResolver::ENV_CONFIG_FILE);
             }
         }
-    }
-
-    /**
-     * @return array[]
-     */
-    public function methodAppliesUserAwsSharedFilesProvider(): array
-    {
-        // We use a custom apply function to prevent validation
-        // errors, since every apply method may have a
-        // different validation logic.
-        $customApplyFn = function ($config) {
-            return static function ($value, array &$args) use ($config) {
-                if (empty($value)) {
-                    $args[$config] = null;
-
-                    return;
-                }
-
-                $args[$config] = $value;
-            };
-        };
-
-        return [
-            'resolve_region_from_config' => [
-                'resolver_definition' => [
-                    'region' => [
-                        'type'     => 'value',
-                        'valid'    => ['string'],
-                        'fn'       => $customApplyFn(
-                            'region'
-                        ),
-                        'default'  => [
-                            ClientResolver::class,
-                            '_default_region'
-                        ]
-                    ]
-                ],
-                'args' => [
-                    'use_aws_shared_config_files' => true,
-                ],
-                'expected' => 'foo-region'
-            ],
-            'not_resolve_region_from_config' => [
-                'resolver_definition' => [
-                    'region' => [
-                        'type'     => 'value',
-                        'valid'    => ['string'],
-                        'fn'       => $customApplyFn(
-                            'region'
-                        ),
-                        'default'  => [
-                            ClientResolver::class,
-                            '_default_region'
-                        ]
-                    ]
-                ],
-                'args' => [
-                    'use_aws_shared_config_files' => false,
-                ],
-                'expected' => null
-            ],
-            'resolve_sigv4a_signing_region_set_from_config' => [
-                'resolver_definition' => [
-                    'sigv4a_signing_region_set' => [
-                        'type'     => 'value',
-                        'valid'    => ['string'],
-                        'fn'       => $customApplyFn(
-                            'sigv4a_signing_region_set'
-                        ),
-                        'default'  => [
-                            ClientResolver::class,
-                            '_default_sigv4a_signing_region_set'
-                        ]
-                    ]
-                ],
-                'args' => [
-                    'use_aws_shared_config_files' => true,
-                ],
-                'expected' => 'foo-region'
-            ],
-            'not_resolve_sigv4a_signing_region_set_from_config' => [
-                'resolver_definition' => [
-                    'sigv4a_signing_region_set' => [
-                        'type'     => 'value',
-                        'valid'    => ['string'],
-                        'fn'       => $customApplyFn(
-                            'sigv4a_signing_region_set'
-                        ),
-                        'default'  => [
-                            ClientResolver::class,
-                            '_default_sigv4a_signing_region_set'
-                        ]
-                    ]
-                ],
-                'args' => [
-                    'use_aws_shared_config_files' => false,
-                ],
-                'expected' => null
-            ]
-        ];
     }
 }
