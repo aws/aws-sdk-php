@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.330.2 - 2024-11-26
 
 * `Aws\BedrockAgent` - Custom Orchestration API release for AWSBedrockAgents.
 * `Aws\EC2` - Adds support for Time-based Copy for EBS Snapshots and Cross Region PrivateLink. Time-based Copy ensures that EBS Snapshots are copied within and across AWS Regions in a specified timeframe. Cross Region PrivateLink enables customers to connect to VPC endpoint services hosted in other AWS Regions.
