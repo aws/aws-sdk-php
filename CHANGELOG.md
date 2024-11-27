@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.331.0 - 2024-11-27
 
 * `Aws\` - Standarize how config from env->ini is resolved.
 * `Aws\ConfigService` - AWS Config adds support for service-linked recorders, a new type of Config recorder managed by AWS services to record specific subsets of resource configuration data and functioning independently from customer managed AWS Config recorders.
