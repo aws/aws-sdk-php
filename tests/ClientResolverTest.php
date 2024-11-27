@@ -2,12 +2,12 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
-use Aws\Auth\AuthSchemeResolver;
 use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -1694,6 +1694,92 @@ EOF;
             $r->resolve(['service' => 'sqs', 'region' => 'x'], new HandlerList());
         } finally {
             putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        }
+    }
+
+    /**
+     * Tests the flag `use_aws_shared_config_files` is applied to the method
+     * for resolving a default value for a config.
+     *
+     * @return void
+     */
+    public function testResolveFromEnvIniUseAwsSharedFiles(): void
+    {
+        // The config being tested
+        $configKey = 'foo-config-key';
+        $configValue = 'foo-config-value';
+        // Populate config file
+        $tempDir = sys_get_temp_dir();
+        $awsDir = $tempDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $configFile = $awsDir . "/config";
+        $configData = <<<EOF
+[default]
+$configKey=$configValue
+EOF;
+        file_put_contents($configFile, $configData);
+        $currentEnvConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        putenv(ConfigurationResolver::ENV_CONFIG_FILE . "=" . $configFile);
+
+        try {
+            $resolver = new ClientResolver([
+                $configKey => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'fn' => function ($value, array &$args) use ($configKey) {
+                        if (empty($value)) {
+                            $args[$configKey] = null;
+
+                            return;
+                        }
+
+                        $args[$configKey] = $value;
+                    },
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI
+                ]
+            ]);
+            $testCases = [
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => true
+                    ],
+                    'expected' => $configValue
+                ],
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => false
+                    ],
+                    'expected' => null
+                ]
+            ];
+            foreach ($testCases as $case) {
+                $resolvedArgs = $resolver->resolve(
+                    $case['args'],
+                    new HandlerList()
+                );
+                if ($case['expected']) {
+                    $this->assertEquals(
+                        $case['expected'],
+                        $resolvedArgs[$configKey]
+                    );
+                } else {
+                    $this->assertNull($resolvedArgs[$configKey]);
+                }
+            }
+        } finally {
+            unlink($configFile);
+            rmdir($awsDir);
+            if ($currentEnvConfigFile) {
+                putenv(
+                    ConfigurationResolver::ENV_CONFIG_FILE
+                    . "="
+                    . $currentEnvConfigFile
+                );
+            } else {
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            }
         }
     }
 }
