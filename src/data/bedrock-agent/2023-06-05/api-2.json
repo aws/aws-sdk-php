@@ -1609,7 +1609,8 @@
     "BedrockEmbeddingModelConfiguration":{
       "type":"structure",
       "members":{
-        "dimensions":{"shape":"Dimensions"}
+        "dimensions":{"shape":"Dimensions"},
+        "embeddingDataType":{"shape":"EmbeddingDataType"}
       }
     },
     "BedrockFoundationModelConfiguration":{
@@ -2633,6 +2634,13 @@
         "source":{"shape":"FlowNodeName"},
         "target":{"shape":"FlowNodeName"}
       }
+    },
+    "EmbeddingDataType":{
+      "type":"string",
+      "enum":[
+        "FLOAT32",
+        "BINARY"
+      ]
     },
     "EmbeddingModelConfiguration":{
       "type":"structure",
