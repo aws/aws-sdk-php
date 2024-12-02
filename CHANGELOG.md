@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.332.0 - 2024-12-02
 
 * `Aws\RDS` - Amazon RDS supports CloudWatch Database Insights. You can use the SDK to create, modify, and describe the DatabaseInsightsMode for your DB instances and clusters.
 * `Aws\EventBridge` - Call private APIs by configuring Connections with VPC connectivity through PrivateLink and VPC Lattice
