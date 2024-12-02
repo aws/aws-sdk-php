@@ -242,6 +242,21 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeleteIntegration":{
+      "name":"DeleteIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIntegrationRequest"},
+      "output":{"shape":"DeleteIntegrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DeleteLogAnomalyDetector":{
       "name":"DeleteLogAnomalyDetector",
       "http":{
@@ -701,6 +716,20 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetIntegration":{
+      "name":"GetIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIntegrationRequest"},
+      "output":{"shape":"GetIntegrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetLogAnomalyDetector":{
       "name":"GetLogAnomalyDetector",
       "http":{
@@ -802,6 +831,19 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"OperationAbortedException"}
+      ]
+    },
+    "ListIntegrations":{
+      "name":"ListIntegrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListIntegrationsRequest"},
+      "output":{"shape":"ListIntegrationsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "ListLogAnomalyDetectors":{
@@ -984,6 +1026,21 @@
         {"shape":"LimitExceededException"},
         {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "PutIntegration":{
+      "name":"PutIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutIntegrationRequest"},
+      "output":{"shape":"PutIntegrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"}
       ]
     },
     "PutLogEvents":{
@@ -1476,6 +1533,11 @@
       "min":36,
       "pattern":"\\S{36,128}"
     },
+    "CollectionRetentionDays":{
+      "type":"integer",
+      "max":30,
+      "min":1
+    },
     "Column":{
       "type":"string",
       "max":128,
@@ -1630,6 +1692,10 @@
         "logStreamName":{"shape":"LogStreamName"}
       }
     },
+    "DashboardViewerPrincipals":{
+      "type":"list",
+      "member":{"shape":"Arn"}
+    },
     "DataAlreadyAcceptedException":{
       "type":"structure",
       "members":{
@@ -1727,6 +1793,19 @@
       }
     },
     "DeleteIndexPolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIntegrationRequest":{
+      "type":"structure",
+      "required":["integrationName"],
+      "members":{
+        "integrationName":{"shape":"IntegrationName"},
+        "force":{"shape":"Force"}
+      }
+    },
+    "DeleteIntegrationResponse":{
       "type":"structure",
       "members":{
       }
@@ -2149,7 +2228,8 @@
         "logGroupName":{"shape":"LogGroupName"},
         "status":{"shape":"QueryStatus"},
         "maxResults":{"shape":"DescribeQueriesMaxResults"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "queryLanguage":{"shape":"QueryLanguage"}
       }
     },
     "DescribeQueriesResponse":{
@@ -2162,6 +2242,7 @@
     "DescribeQueryDefinitionsRequest":{
       "type":"structure",
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "queryDefinitionNamePrefix":{"shape":"QueryDefinitionName"},
         "maxResults":{"shape":"QueryListMaxResults"},
         "nextToken":{"shape":"NextToken"}
@@ -2517,6 +2598,7 @@
         "last"
       ]
     },
+    "Force":{"type":"boolean"},
     "ForceUpdate":{"type":"boolean"},
     "FromKey":{
       "type":"string",
@@ -2588,6 +2670,22 @@
       "type":"structure",
       "members":{
         "deliverySource":{"shape":"DeliverySource"}
+      }
+    },
+    "GetIntegrationRequest":{
+      "type":"structure",
+      "required":["integrationName"],
+      "members":{
+        "integrationName":{"shape":"IntegrationName"}
+      }
+    },
+    "GetIntegrationResponse":{
+      "type":"structure",
+      "members":{
+        "integrationName":{"shape":"IntegrationName"},
+        "integrationType":{"shape":"IntegrationType"},
+        "integrationStatus":{"shape":"IntegrationStatus"},
+        "integrationDetails":{"shape":"IntegrationDetails"}
       }
     },
     "GetLogAnomalyDetectorRequest":{
@@ -2672,6 +2770,7 @@
     "GetQueryResultsResponse":{
       "type":"structure",
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "results":{"shape":"QueryResults"},
         "statistics":{"shape":"QueryStatistics"},
         "status":{"shape":"QueryStatus"},
@@ -2770,6 +2869,53 @@
       "min":1
     },
     "Integer":{"type":"integer"},
+    "IntegrationDetails":{
+      "type":"structure",
+      "members":{
+        "openSearchIntegrationDetails":{"shape":"OpenSearchIntegrationDetails"}
+      },
+      "union":true
+    },
+    "IntegrationName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "IntegrationNamePrefix":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "IntegrationStatus":{
+      "type":"string",
+      "enum":[
+        "PROVISIONING",
+        "ACTIVE",
+        "FAILED"
+      ]
+    },
+    "IntegrationStatusMessage":{
+      "type":"string",
+      "min":1
+    },
+    "IntegrationSummaries":{
+      "type":"list",
+      "member":{"shape":"IntegrationSummary"}
+    },
+    "IntegrationSummary":{
+      "type":"structure",
+      "members":{
+        "integrationName":{"shape":"IntegrationName"},
+        "integrationType":{"shape":"IntegrationType"},
+        "integrationStatus":{"shape":"IntegrationStatus"}
+      }
+    },
+    "IntegrationType":{
+      "type":"string",
+      "enum":["OPENSEARCH"]
+    },
     "Interleaved":{"type":"boolean"},
     "InvalidOperationException":{
       "type":"structure",
@@ -2835,6 +2981,20 @@
       "members":{
         "anomalies":{"shape":"Anomalies"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListIntegrationsRequest":{
+      "type":"structure",
+      "members":{
+        "integrationNamePrefix":{"shape":"IntegrationNamePrefix"},
+        "integrationType":{"shape":"IntegrationType"},
+        "integrationStatus":{"shape":"IntegrationStatus"}
+      }
+    },
+    "ListIntegrationsResponse":{
+      "type":"structure",
+      "members":{
+        "integrationSummaries":{"shape":"IntegrationSummaries"}
       }
     },
     "ListLogAnomalyDetectorsLimit":{
@@ -3227,6 +3387,144 @@
       "max":128,
       "min":1
     },
+    "OpenSearchApplication":{
+      "type":"structure",
+      "members":{
+        "applicationEndpoint":{"shape":"OpenSearchApplicationEndpoint"},
+        "applicationArn":{"shape":"Arn"},
+        "applicationId":{"shape":"OpenSearchApplicationId"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchApplicationEndpoint":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^https://[\\.\\-_/#:A-Za-z0-9]+\\.com$"
+    },
+    "OpenSearchApplicationId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "OpenSearchCollection":{
+      "type":"structure",
+      "members":{
+        "collectionEndpoint":{"shape":"OpenSearchCollectionEndpoint"},
+        "collectionArn":{"shape":"Arn"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchCollectionEndpoint":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^https://[\\.\\-_/#:A-Za-z0-9]+\\.com$"
+    },
+    "OpenSearchDataAccessPolicy":{
+      "type":"structure",
+      "members":{
+        "policyName":{"shape":"OpenSearchPolicyName"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchDataSource":{
+      "type":"structure",
+      "members":{
+        "dataSourceName":{"shape":"OpenSearchDataSourceName"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchDataSourceName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "OpenSearchEncryptionPolicy":{
+      "type":"structure",
+      "members":{
+        "policyName":{"shape":"OpenSearchPolicyName"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchIntegrationDetails":{
+      "type":"structure",
+      "members":{
+        "dataSource":{"shape":"OpenSearchDataSource"},
+        "application":{"shape":"OpenSearchApplication"},
+        "collection":{"shape":"OpenSearchCollection"},
+        "workspace":{"shape":"OpenSearchWorkspace"},
+        "encryptionPolicy":{"shape":"OpenSearchEncryptionPolicy"},
+        "networkPolicy":{"shape":"OpenSearchNetworkPolicy"},
+        "accessPolicy":{"shape":"OpenSearchDataAccessPolicy"},
+        "lifecyclePolicy":{"shape":"OpenSearchLifecyclePolicy"}
+      }
+    },
+    "OpenSearchLifecyclePolicy":{
+      "type":"structure",
+      "members":{
+        "policyName":{"shape":"OpenSearchPolicyName"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchNetworkPolicy":{
+      "type":"structure",
+      "members":{
+        "policyName":{"shape":"OpenSearchPolicyName"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchPolicyName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
+    "OpenSearchResourceConfig":{
+      "type":"structure",
+      "required":[
+        "dataSourceRoleArn",
+        "dashboardViewerPrincipals",
+        "retentionDays"
+      ],
+      "members":{
+        "kmsKeyArn":{"shape":"Arn"},
+        "dataSourceRoleArn":{"shape":"Arn"},
+        "dashboardViewerPrincipals":{"shape":"DashboardViewerPrincipals"},
+        "applicationArn":{"shape":"Arn"},
+        "retentionDays":{"shape":"CollectionRetentionDays"}
+      }
+    },
+    "OpenSearchResourceStatus":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"OpenSearchResourceStatusType"},
+        "statusMessage":{"shape":"IntegrationStatusMessage"}
+      }
+    },
+    "OpenSearchResourceStatusType":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "NOT_FOUND",
+        "ERROR"
+      ]
+    },
+    "OpenSearchWorkspace":{
+      "type":"structure",
+      "members":{
+        "workspaceId":{"shape":"OpenSearchWorkspaceId"},
+        "status":{"shape":"OpenSearchResourceStatus"}
+      }
+    },
+    "OpenSearchWorkspaceId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\.\\-_/#A-Za-z0-9]+"
+    },
     "OperationAbortedException":{
       "type":"structure",
       "members":{
@@ -3556,6 +3854,26 @@
         "indexPolicy":{"shape":"IndexPolicy"}
       }
     },
+    "PutIntegrationRequest":{
+      "type":"structure",
+      "required":[
+        "integrationName",
+        "resourceConfig",
+        "integrationType"
+      ],
+      "members":{
+        "integrationName":{"shape":"IntegrationName"},
+        "resourceConfig":{"shape":"ResourceConfig"},
+        "integrationType":{"shape":"IntegrationType"}
+      }
+    },
+    "PutIntegrationResponse":{
+      "type":"structure",
+      "members":{
+        "integrationName":{"shape":"IntegrationName"},
+        "integrationStatus":{"shape":"IntegrationStatus"}
+      }
+    },
     "PutLogEventsRequest":{
       "type":"structure",
       "required":[
@@ -3602,6 +3920,7 @@
         "queryString"
       ],
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "name":{"shape":"QueryDefinitionName"},
         "queryDefinitionId":{"shape":"QueryId"},
         "logGroupNames":{"shape":"LogGroupNames"},
@@ -3689,6 +4008,7 @@
     "QueryDefinition":{
       "type":"structure",
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "queryDefinitionId":{"shape":"QueryId"},
         "name":{"shape":"QueryDefinitionName"},
         "queryString":{"shape":"QueryDefinitionString"},
@@ -3718,6 +4038,7 @@
     "QueryInfo":{
       "type":"structure",
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "queryId":{"shape":"QueryId"},
         "queryString":{"shape":"QueryString"},
         "status":{"shape":"QueryStatus"},
@@ -3728,6 +4049,14 @@
     "QueryInfoList":{
       "type":"list",
       "member":{"shape":"QueryInfo"}
+    },
+    "QueryLanguage":{
+      "type":"string",
+      "enum":[
+        "CWLI",
+        "SQL",
+        "PPL"
+      ]
     },
     "QueryListMaxResults":{
       "type":"integer",
@@ -3843,6 +4172,13 @@
     "ResourceArns":{
       "type":"list",
       "member":{"shape":"Arn"}
+    },
+    "ResourceConfig":{
+      "type":"structure",
+      "members":{
+        "openSearchResourceConfig":{"shape":"OpenSearchResourceConfig"}
+      },
+      "union":true
     },
     "ResourceIdentifier":{
       "type":"string",
@@ -4069,6 +4405,7 @@
         "queryString"
       ],
       "members":{
+        "queryLanguage":{"shape":"QueryLanguage"},
         "logGroupName":{"shape":"LogGroupName"},
         "logGroupNames":{"shape":"LogGroupNames"},
         "logGroupIdentifiers":{"shape":"LogGroupIdentifiers"},

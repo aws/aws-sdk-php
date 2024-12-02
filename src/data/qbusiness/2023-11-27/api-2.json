@@ -118,6 +118,9 @@
                     "shape": "ConflictException"
                 },
                 {
+                    "shape": "ExternalResourceException"
+                },
+                {
                     "shape": "ThrottlingException"
                 },
                 {
@@ -896,6 +899,43 @@
                 }
             ]
         },
+        "GetMedia": {
+            "name": "GetMedia",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/conversations\/{conversationId}\/messages\/{messageId}\/media\/{mediaId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetMediaRequest"
+            },
+            "output": {
+                "shape": "GetMediaResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "MediaTooLargeException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "GetPlugin": {
             "name": "GetPlugin",
             "http": {
@@ -1051,6 +1091,40 @@
                 }
             ]
         },
+        "ListAttachments": {
+            "name": "ListAttachments",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/attachments",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListAttachmentsRequest"
+            },
+            "output": {
+                "shape": "ListAttachmentsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "ListConversations": {
             "name": "ListConversations",
             "http": {
@@ -1104,6 +1178,9 @@
                 },
                 {
                     "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -1523,6 +1600,9 @@
                 },
                 {
                     "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -2234,18 +2314,56 @@
                 }
             }
         },
-        "AttachmentInput": {
+        "Attachment": {
             "type": "structure",
-            "required": [
-                "name",
-                "data"
-            ],
             "members": {
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId"
+                },
                 "name": {
                     "shape": "AttachmentName"
                 },
+                "copyFrom": {
+                    "shape": "CopyFromSource"
+                },
+                "fileType": {
+                    "shape": "String"
+                },
+                "fileSize": {
+                    "shape": "Integer"
+                },
+                "md5chksum": {
+                    "shape": "String"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "status": {
+                    "shape": "AttachmentStatus"
+                },
+                "error": {
+                    "shape": "ErrorDetail"
+                }
+            }
+        },
+        "AttachmentId": {
+            "type": "string",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+        },
+        "AttachmentInput": {
+            "type": "structure",
+            "members": {
                 "data": {
                     "shape": "Blob"
+                },
+                "name": {
+                    "shape": "AttachmentName"
+                },
+                "copyFrom": {
+                    "shape": "CopyFromSource"
                 }
             }
         },
@@ -2257,6 +2375,12 @@
                 }
             },
             "event": true
+        },
+        "AttachmentList": {
+            "type": "list",
+            "member": {
+                "shape": "Attachment"
+            }
         },
         "AttachmentName": {
             "type": "string",
@@ -2275,6 +2399,12 @@
                 },
                 "error": {
                     "shape": "ErrorDetail"
+                },
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId"
                 }
             }
         },
@@ -2282,7 +2412,7 @@
             "type": "string",
             "enum": [
                 "FAILED",
-                "SUCCEEDED"
+                "SUCCESS"
             ]
         },
         "AttachmentsConfiguration": {
@@ -2557,9 +2687,7 @@
             "type": "list",
             "member": {
                 "shape": "BlockedPhrase"
-            },
-            "max": 5,
-            "min": 0
+            }
         },
         "BlockedPhrasesConfiguration": {
             "type": "structure",
@@ -2594,6 +2722,32 @@
             "type": "long",
             "box": true,
             "max": 999999999,
+            "min": 0
+        },
+        "BrowserExtension": {
+            "type": "string",
+            "enum": [
+                "FIREFOX",
+                "CHROME"
+            ]
+        },
+        "BrowserExtensionConfiguration": {
+            "type": "structure",
+            "required": [
+                "enabledBrowserExtensions"
+            ],
+            "members": {
+                "enabledBrowserExtensions": {
+                    "shape": "BrowserExtensionList"
+                }
+            }
+        },
+        "BrowserExtensionList": {
+            "type": "list",
+            "member": {
+                "shape": "BrowserExtension"
+            },
+            "max": 2,
             "min": 0
         },
         "ChatInput": {
@@ -2796,7 +2950,8 @@
         "ClientIdForOIDC": {
             "type": "string",
             "max": 255,
-            "min": 1
+            "min": 1,
+            "pattern": "[a-zA-Z0-9_.:\/()*?=-]*"
         },
         "ClientIdsForOIDC": {
             "type": "list",
@@ -2901,6 +3056,21 @@
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
         },
+        "ConversationSource": {
+            "type": "structure",
+            "required": [
+                "conversationId",
+                "attachmentId"
+            ],
+            "members": {
+                "conversationId": {
+                    "shape": "ConversationId"
+                },
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                }
+            }
+        },
         "ConversationTitle": {
             "type": "string"
         },
@@ -2909,6 +3079,15 @@
             "member": {
                 "shape": "Conversation"
             }
+        },
+        "CopyFromSource": {
+            "type": "structure",
+            "members": {
+                "conversation": {
+                    "shape": "ConversationSource"
+                }
+            },
+            "union": true
         },
         "CreateApplicationRequest": {
             "type": "structure",
@@ -2926,7 +3105,7 @@
                     "shape": "IdentityType"
                 },
                 "iamIdentityProviderArn": {
-                    "shape": "IamIdentityProviderArn"
+                    "shape": "IAMIdentityProviderArn"
                 },
                 "identityCenterInstanceArn": {
                     "shape": "InstanceArn"
@@ -3015,6 +3194,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -3044,11 +3226,11 @@
                 "displayName": {
                     "shape": "IndexName"
                 },
-                "type": {
-                    "shape": "IndexType"
-                },
                 "description": {
                     "shape": "Description"
+                },
+                "type": {
+                    "shape": "IndexType"
                 },
                 "tags": {
                     "shape": "Tags"
@@ -3245,6 +3427,9 @@
                 },
                 "identityProviderConfiguration": {
                     "shape": "IdentityProviderConfiguration"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
                 }
             }
         },
@@ -3727,7 +3912,7 @@
             "type": "string",
             "max": 1000,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "Document": {
             "type": "structure",
@@ -3755,6 +3940,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -4074,7 +4262,7 @@
             "type": "string",
             "max": 2048,
             "min": 1,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "ExampleChatMessage": {
             "type": "string",
@@ -4095,6 +4283,22 @@
             "max": 36,
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "ExternalResourceException": {
+            "type": "structure",
+            "required": [
+                "message"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 424,
+                "senderFault": true
+            },
+            "exception": true
         },
         "FailedAttachmentEvent": {
             "type": "structure",
@@ -4163,7 +4367,7 @@
                     "shape": "IdentityType"
                 },
                 "iamIdentityProviderArn": {
-                    "shape": "IamIdentityProviderArn"
+                    "shape": "IAMIdentityProviderArn"
                 },
                 "identityCenterApplicationArn": {
                     "shape": "IdcApplicationArn"
@@ -4324,6 +4528,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -4399,14 +4606,14 @@
                 "displayName": {
                     "shape": "IndexName"
                 },
-                "type": {
-                    "shape": "IndexType"
-                },
                 "indexArn": {
                     "shape": "IndexArn"
                 },
                 "status": {
                     "shape": "IndexStatus"
+                },
+                "type": {
+                    "shape": "IndexType"
                 },
                 "description": {
                     "shape": "Description"
@@ -4428,6 +4635,48 @@
                 },
                 "indexStatistics": {
                     "shape": "IndexStatistics"
+                }
+            }
+        },
+        "GetMediaRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "conversationId",
+                "messageId",
+                "mediaId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId",
+                    "location": "uri",
+                    "locationName": "conversationId"
+                },
+                "messageId": {
+                    "shape": "MessageId",
+                    "location": "uri",
+                    "locationName": "messageId"
+                },
+                "mediaId": {
+                    "shape": "MediaId",
+                    "location": "uri",
+                    "locationName": "mediaId"
+                }
+            }
+        },
+        "GetMediaResponse": {
+            "type": "structure",
+            "members": {
+                "mediaBytes": {
+                    "shape": "Blob"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
                 }
             }
         },
@@ -4643,6 +4892,9 @@
                 },
                 "error": {
                     "shape": "ErrorDetail"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
                 }
             }
         },
@@ -4727,7 +4979,7 @@
                 }
             }
         },
-        "IamIdentityProviderArn": {
+        "IAMIdentityProviderArn": {
             "type": "string",
             "max": 2048,
             "min": 20,
@@ -4757,6 +5009,24 @@
                 "AWS_IAM_IDP_SAML",
                 "AWS_IAM_IDP_OIDC",
                 "AWS_IAM_IDC"
+            ]
+        },
+        "ImageExtractionConfiguration": {
+            "type": "structure",
+            "required": [
+                "imageExtractionStatus"
+            ],
+            "members": {
+                "imageExtractionStatus": {
+                    "shape": "ImageExtractionStatus"
+                }
+            }
+        },
+        "ImageExtractionStatus": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
             ]
         },
         "Index": {
@@ -4967,6 +5237,50 @@
                 },
                 "applications": {
                     "shape": "Applications"
+                }
+            }
+        },
+        "ListAttachmentsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId",
+                    "location": "querystring",
+                    "locationName": "conversationId"
+                },
+                "userId": {
+                    "shape": "UserId",
+                    "location": "querystring",
+                    "locationName": "userId"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListAttachments",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListAttachmentsResponse": {
+            "type": "structure",
+            "members": {
+                "attachments": {
+                    "shape": "AttachmentList"
+                },
+                "nextToken": {
+                    "shape": "NextToken"
                 }
             }
         },
@@ -5424,6 +5738,12 @@
             "max": 100,
             "min": 1
         },
+        "MaxResultsIntegerForListAttachments": {
+            "type": "integer",
+            "box": true,
+            "max": 100,
+            "min": 1
+        },
         "MaxResultsIntegerForListConversations": {
             "type": "integer",
             "box": true,
@@ -5484,6 +5804,36 @@
             "max": 100,
             "min": 1
         },
+        "MediaExtractionConfiguration": {
+            "type": "structure",
+            "members": {
+                "imageExtractionConfiguration": {
+                    "shape": "ImageExtractionConfiguration"
+                }
+            }
+        },
+        "MediaId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "MediaTooLargeException": {
+            "type": "structure",
+            "required": [
+                "message"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 400,
+                "senderFault": true
+            },
+            "exception": true
+        },
         "MemberGroup": {
             "type": "structure",
             "required": [
@@ -5502,9 +5852,7 @@
             "type": "list",
             "member": {
                 "shape": "MemberGroup"
-            },
-            "max": 1000,
-            "min": 1
+            }
         },
         "MemberRelation": {
             "type": "string",
@@ -5531,9 +5879,7 @@
             "type": "list",
             "member": {
                 "shape": "MemberUser"
-            },
-            "max": 1000,
-            "min": 1
+            }
         },
         "MembershipType": {
             "type": "string",
@@ -6350,6 +6696,12 @@
                 }
             }
         },
+        "SourceAttributionMediaId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
         "SourceAttributions": {
             "type": "list",
             "member": {
@@ -6498,7 +6850,7 @@
             "type": "string",
             "max": 998,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "SystemMessageId": {
             "type": "string",
@@ -6626,6 +6978,12 @@
                 },
                 "snippetExcerpt": {
                     "shape": "SnippetExcerpt"
+                },
+                "mediaId": {
+                    "shape": "SourceAttributionMediaId"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
                 }
             }
         },
@@ -6843,6 +7201,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -7036,6 +7397,9 @@
                 },
                 "origins": {
                     "shape": "WebExperienceOrigins"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
                 }
             }
         },
@@ -7091,9 +7455,7 @@
             }
         },
         "UserMessage": {
-            "type": "string",
-            "max": 7000,
-            "min": 1
+            "type": "string"
         },
         "UsersAndGroups": {
             "type": "structure",
@@ -7228,13 +7590,13 @@
             "type": "string",
             "max": 500,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "WebExperienceTitle": {
             "type": "string",
             "max": 500,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "WebExperienceWelcomeMessage": {
             "type": "string",

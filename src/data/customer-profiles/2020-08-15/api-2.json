@@ -111,6 +111,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateEventTrigger":{
+      "name":"CreateEventTrigger",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/event-triggers/{EventTriggerName}"
+      },
+      "input":{"shape":"CreateEventTriggerRequest"},
+      "output":{"shape":"CreateEventTriggerResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateIntegrationWorkflow":{
       "name":"CreateIntegrationWorkflow",
       "http":{
@@ -241,6 +257,22 @@
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "DeleteEventTrigger":{
+      "name":"DeleteEventTrigger",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/event-triggers/{EventTriggerName}"
+      },
+      "input":{"shape":"DeleteEventTriggerRequest"},
+      "output":{"shape":"DeleteEventTriggerResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "DeleteIntegration":{
       "name":"DeleteIntegration",
@@ -444,6 +476,22 @@
       },
       "input":{"shape":"GetEventStreamRequest"},
       "output":{"shape":"GetEventStreamResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetEventTrigger":{
+      "name":"GetEventTrigger",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/event-triggers/{EventTriggerName}"
+      },
+      "input":{"shape":"GetEventTriggerRequest"},
+      "output":{"shape":"GetEventTriggerResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -719,6 +767,22 @@
       },
       "input":{"shape":"ListEventStreamsRequest"},
       "output":{"shape":"ListEventStreamsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListEventTriggers":{
+      "name":"ListEventTriggers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/event-triggers"
+      },
+      "input":{"shape":"ListEventTriggersRequest"},
+      "output":{"shape":"ListEventTriggersResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -1033,6 +1097,22 @@
       },
       "input":{"shape":"UpdateDomainRequest"},
       "output":{"shape":"UpdateDomainResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateEventTrigger":{
+      "name":"UpdateEventTrigger",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/event-triggers/{EventTriggerName}"
+      },
+      "input":{"shape":"UpdateEventTriggerRequest"},
+      "output":{"shape":"UpdateEventTriggerResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -1513,6 +1593,26 @@
       "key":{"shape":"typeName"},
       "value":{"shape":"CalculatedAttributeDimension"}
     },
+    "ComparisonOperator":{
+      "type":"string",
+      "enum":[
+        "INCLUSIVE",
+        "EXCLUSIVE",
+        "CONTAINS",
+        "BEGINS_WITH",
+        "ENDS_WITH",
+        "GREATER_THAN",
+        "LESS_THAN",
+        "GREATER_THAN_OR_EQUAL",
+        "LESS_THAN_OR_EQUAL",
+        "EQUAL",
+        "BEFORE",
+        "AFTER",
+        "ON",
+        "BETWEEN",
+        "NOT_BETWEEN"
+      ]
+    },
     "ConditionOverrides":{
       "type":"structure",
       "members":{
@@ -1676,6 +1776,47 @@
       "required":["EventStreamArn"],
       "members":{
         "EventStreamArn":{"shape":"string1To255"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateEventTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "EventTriggerName",
+        "ObjectTypeName",
+        "EventTriggerConditions"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "EventTriggerName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"EventTriggerName"
+        },
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveText"},
+        "EventTriggerConditions":{"shape":"EventTriggerConditions"},
+        "SegmentFilter":{"shape":"name"},
+        "EventTriggerLimits":{"shape":"EventTriggerLimits"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateEventTriggerResponse":{
+      "type":"structure",
+      "members":{
+        "EventTriggerName":{"shape":"name"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveText"},
+        "EventTriggerConditions":{"shape":"EventTriggerConditions"},
+        "SegmentFilter":{"shape":"name"},
+        "EventTriggerLimits":{"shape":"EventTriggerLimits"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1988,6 +2129,32 @@
     "DeleteEventStreamResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DeleteEventTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "EventTriggerName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "EventTriggerName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"EventTriggerName"
+        }
+      }
+    },
+    "DeleteEventTriggerResponse":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"message"}
       }
     },
     "DeleteIntegrationRequest":{
@@ -2315,6 +2482,80 @@
     "EventStreamSummaryList":{
       "type":"list",
       "member":{"shape":"EventStreamSummary"}
+    },
+    "EventTriggerCondition":{
+      "type":"structure",
+      "required":[
+        "EventTriggerDimensions",
+        "LogicalOperator"
+      ],
+      "members":{
+        "EventTriggerDimensions":{"shape":"EventTriggerDimensions"},
+        "LogicalOperator":{"shape":"EventTriggerLogicalOperator"}
+      }
+    },
+    "EventTriggerConditions":{
+      "type":"list",
+      "member":{"shape":"EventTriggerCondition"},
+      "max":5,
+      "min":1,
+      "sensitive":true
+    },
+    "EventTriggerDimension":{
+      "type":"structure",
+      "required":["ObjectAttributes"],
+      "members":{
+        "ObjectAttributes":{"shape":"ObjectAttributes"}
+      }
+    },
+    "EventTriggerDimensions":{
+      "type":"list",
+      "member":{"shape":"EventTriggerDimension"},
+      "max":10,
+      "min":1
+    },
+    "EventTriggerLimits":{
+      "type":"structure",
+      "members":{
+        "EventExpiration":{"shape":"optionalLong"},
+        "Periods":{"shape":"Periods"}
+      }
+    },
+    "EventTriggerLogicalOperator":{
+      "type":"string",
+      "enum":[
+        "ANY",
+        "ALL",
+        "NONE"
+      ]
+    },
+    "EventTriggerNames":{
+      "type":"list",
+      "member":{"shape":"name"},
+      "max":1,
+      "min":1
+    },
+    "EventTriggerSummaryItem":{
+      "type":"structure",
+      "members":{
+        "ObjectTypeName":{"shape":"typeName"},
+        "EventTriggerName":{"shape":"name"},
+        "Description":{"shape":"text"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "EventTriggerSummaryList":{
+      "type":"list",
+      "member":{"shape":"EventTriggerSummaryItem"},
+      "sensitive":true
+    },
+    "EventTriggerValues":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":10,
+      "min":1
     },
     "ExportingConfig":{
       "type":"structure",
@@ -2678,6 +2919,39 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "GetEventTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "EventTriggerName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "EventTriggerName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"EventTriggerName"
+        }
+      }
+    },
+    "GetEventTriggerResponse":{
+      "type":"structure",
+      "members":{
+        "EventTriggerName":{"shape":"name"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveText"},
+        "EventTriggerConditions":{"shape":"EventTriggerConditions"},
+        "SegmentFilter":{"shape":"name"},
+        "EventTriggerLimits":{"shape":"EventTriggerLimits"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "GetIdentityResolutionJobRequest":{
       "type":"structure",
       "required":[
@@ -2746,7 +3020,8 @@
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "EventTriggerNames":{"shape":"EventTriggerNames"}
       }
     },
     "GetMatchesRequest":{
@@ -3451,6 +3726,34 @@
         "NextToken":{"shape":"token"}
       }
     },
+    "ListEventTriggersRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListEventTriggersResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"EventTriggerSummaryList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "ListIdentityResolutionJobsRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -3497,7 +3800,8 @@
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "EventTriggerNames":{"shape":"EventTriggerNames"}
       }
     },
     "ListIntegrationsRequest":{
@@ -3977,6 +4281,25 @@
       "max":512,
       "pattern":"\\S+"
     },
+    "ObjectAttribute":{
+      "type":"structure",
+      "required":[
+        "ComparisonOperator",
+        "Values"
+      ],
+      "members":{
+        "Source":{"shape":"text"},
+        "FieldName":{"shape":"fieldName"},
+        "ComparisonOperator":{"shape":"ComparisonOperator"},
+        "Values":{"shape":"EventTriggerValues"}
+      }
+    },
+    "ObjectAttributes":{
+      "type":"list",
+      "member":{"shape":"ObjectAttribute"},
+      "max":10,
+      "min":1
+    },
     "ObjectCount":{
       "type":"integer",
       "max":100,
@@ -4061,6 +4384,34 @@
         "OTHER"
       ],
       "sensitive":true
+    },
+    "Period":{
+      "type":"structure",
+      "required":[
+        "Unit",
+        "Value"
+      ],
+      "members":{
+        "Unit":{"shape":"PeriodUnit"},
+        "Value":{"shape":"maxSize24"},
+        "MaxInvocationsPerProfile":{"shape":"maxSize1000"},
+        "Unlimited":{"shape":"boolean"}
+      }
+    },
+    "PeriodUnit":{
+      "type":"string",
+      "enum":[
+        "HOURS",
+        "DAYS",
+        "WEEKS",
+        "MONTHS"
+      ]
+    },
+    "Periods":{
+      "type":"list",
+      "member":{"shape":"Period"},
+      "max":4,
+      "min":1
     },
     "PhoneNumberList":{
       "type":"list",
@@ -4335,7 +4686,8 @@
         "Tags":{"shape":"TagMap"},
         "FlowDefinition":{"shape":"FlowDefinition"},
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "EventTriggerNames":{"shape":"EventTriggerNames"}
       }
     },
     "PutIntegrationResponse":{
@@ -4356,7 +4708,8 @@
         "ObjectTypeNames":{"shape":"ObjectTypeNames"},
         "WorkflowId":{"shape":"string1To255"},
         "IsUnstructured":{"shape":"optionalBoolean"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "EventTriggerNames":{"shape":"EventTriggerNames"}
       }
     },
     "PutProfileObjectRequest":{
@@ -5140,6 +5493,44 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "UpdateEventTriggerRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "EventTriggerName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "EventTriggerName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"EventTriggerName"
+        },
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveText"},
+        "EventTriggerConditions":{"shape":"EventTriggerConditions"},
+        "SegmentFilter":{"shape":"name"},
+        "EventTriggerLimits":{"shape":"EventTriggerLimits"}
+      }
+    },
+    "UpdateEventTriggerResponse":{
+      "type":"structure",
+      "members":{
+        "EventTriggerName":{"shape":"name"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "Description":{"shape":"sensitiveText"},
+        "EventTriggerConditions":{"shape":"EventTriggerConditions"},
+        "SegmentFilter":{"shape":"name"},
+        "EventTriggerLimits":{"shape":"EventTriggerLimits"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "UpdateProfileRequest":{
       "type":"structure",
       "required":[
@@ -5287,6 +5678,12 @@
       "max":1098,
       "min":1
     },
+    "fieldName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.-]+$"
+    },
     "foundByList":{
       "type":"list",
       "member":{"shape":"FoundByKeyValue"},
@@ -5310,6 +5707,16 @@
       "max":100,
       "min":1
     },
+    "maxSize1000":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "maxSize24":{
+      "type":"integer",
+      "max":24,
+      "min":1
+    },
     "message":{"type":"string"},
     "minSize0":{
       "type":"integer",
@@ -5320,6 +5727,7 @@
       "min":1
     },
     "optionalBoolean":{"type":"boolean"},
+    "optionalLong":{"type":"long"},
     "requestValueList":{
       "type":"list",
       "member":{"shape":"string1To255"}

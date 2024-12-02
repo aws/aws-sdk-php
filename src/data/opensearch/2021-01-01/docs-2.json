@@ -4,7 +4,8 @@
   "operations": {
     "AcceptInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to accept an inbound cross-cluster search connection request. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "AddDataSource": "<p>Creates a new direct-query data source to the specified domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Creating Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
-    "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain. Tags are a set of case-sensitive key-value pairs. A domain can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>. </p>",
+    "AddDirectQueryDataSource": "<p> Adds a new data source in Amazon OpenSearch Service so that you can perform direct queries on external data. </p>",
+    "AddTags": "<p>Attaches tags to an existing Amazon OpenSearch Service domain, data source, or application. </p> <p>Tags are a set of case-sensitive key-value pairs. A domain, data source, or application can have up to 10 tags. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service resources</a>. </p>",
     "AssociatePackage": "<p>Associates a package with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "AssociatePackages": "<p>Operation in the Amazon OpenSearch Service API for associating multiple packages with a domain simultaneously.</p>",
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
@@ -17,6 +18,7 @@
     "CreateVpcEndpoint": "<p>Creates an Amazon OpenSearch Service-managed VPC endpoint.</p>",
     "DeleteApplication": "<p>Deletes an existing OpenSearch Application.</p>",
     "DeleteDataSource": "<p>Deletes a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-delete.html\">Deleting an Amazon OpenSearch Service data source with Amazon S3</a>.</p>",
+    "DeleteDirectQueryDataSource": "<p> Deletes a previously configured direct query data source from Amazon OpenSearch Service. </p>",
     "DeleteDomain": "<p>Deletes an Amazon OpenSearch Service domain and all of its data. You can't recover a domain after you delete it.</p>",
     "DeleteInboundConnection": "<p>Allows the destination Amazon OpenSearch Service domain owner to delete an existing inbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "DeleteOutboundConnection": "<p>Allows the source Amazon OpenSearch Service domain owner to delete an existing outbound cross-cluster search connection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
@@ -42,31 +44,34 @@
     "GetApplication": "<p>Check the configuration and status of an existing OpenSearch Application.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
+    "GetDirectQueryDataSource": "<p> Returns detailed configuration information for a specific direct query data source in Amazon OpenSearch Service. </p>",
     "GetDomainMaintenanceStatus": "<p>The status of the maintenance action.</p>",
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
     "ListApplications": "<p>List all OpenSearch Applications under your account.</p>",
     "ListDataSources": "<p>Lists direct-query data sources for a specific domain. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html\">Working with Amazon OpenSearch Service direct queries with Amazon S3</a>.</p>",
+    "ListDirectQueryDataSources": "<p> Lists an inventory of all the direct query data sources that you have configured within Amazon OpenSearch Service. </p>",
     "ListDomainMaintenances": "<p>A list of maintenance actions for the domain.</p>",
     "ListDomainNames": "<p>Returns the names of all Amazon OpenSearch Service domains owned by the current user in the active Region.</p>",
     "ListDomainsForPackage": "<p>Lists all Amazon OpenSearch Service domains associated with a given package. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListInstanceTypeDetails": "<p>Lists all instance types and available features for a given OpenSearch or Elasticsearch version.</p>",
     "ListPackagesForDomain": "<p>Lists all packages associated with an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "ListScheduledActions": "<p>Retrieves a list of configuration changes that are scheduled for a domain. These changes can be <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">service software updates</a> or <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/auto-tune.html#auto-tune-types\">blue/green Auto-Tune enhancements</a>.</p>",
-    "ListTags": "<p>Returns all resource tags for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service domains</a>.</p>",
+    "ListTags": "<p>Returns all resource tags for an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html\">Tagging Amazon OpenSearch Service resources</a>.</p>",
     "ListVersions": "<p>Lists all versions of OpenSearch and Elasticsearch that Amazon OpenSearch Service supports.</p>",
     "ListVpcEndpointAccess": "<p>Retrieves information about each Amazon Web Services principal that is allowed to access a given Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "ListVpcEndpoints": "<p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints in the current Amazon Web Services account and Region.</p>",
     "ListVpcEndpointsForDomain": "<p>Retrieves all Amazon OpenSearch Service-managed VPC endpoints associated with a particular domain.</p>",
     "PurchaseReservedInstanceOffering": "<p>Allows you to purchase Amazon OpenSearch Service Reserved Instances.</p>",
     "RejectInboundConnection": "<p>Allows the remote Amazon OpenSearch Service domain owner to reject an inbound cross-cluster connection request.</p>",
-    "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service domains</a>.</p>",
+    "RemoveTags": "<p>Removes the specified set of tags from an Amazon OpenSearch Service domain, data source, or application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging\"> Tagging Amazon OpenSearch Service resources</a>.</p>",
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
     "UpdateApplication": "<p>Update the OpenSearch Application. </p>",
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
+    "UpdateDirectQueryDataSource": "<p> Updates the configuration or properties of an existing direct query data source in Amazon OpenSearch Service. </p>",
     "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
     "UpdatePackage": "<p>Updates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "UpdatePackageScope": "<p>Updates the scope of a package. Scope of the package defines users who can view and associate a package.</p>",
@@ -98,19 +103,20 @@
     "ARN": {
       "base": "<p>The Amazon Resource Name (ARN) of the domain. See <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/index.html\">Identifiers for IAM Entities </a> in <i>Using Amazon Web Services Identity and Access Management</i> for more information. </p>",
       "refs": {
-        "AddTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the OpenSearch Service domain to which you want to attach resource tags.</p>",
+        "AddTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the OpenSearch Service domain, data source, or application to which you want to attach resource tags.</p>",
         "ApplicationSummary$arn": null,
         "CreateApplicationResponse$arn": null,
         "DataSource$dataSourceArn": null,
+        "DirectQueryOpenSearchARNList$member": null,
         "DomainEndpointOptions$CustomEndpointCertificateArn": "<p>The ARN for your security certificate, managed in Amazon Web Services Certificate Manager (ACM).</p>",
         "DomainStatus$ARN": "<p>The Amazon Resource Name (ARN) of the domain. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html\">IAM identifiers </a> in the <i>AWS Identity and Access Management User Guide</i>.</p>",
         "GetApplicationResponse$arn": null,
         "IamIdentityCenterOptions$iamIdentityCenterInstanceArn": null,
         "IamIdentityCenterOptions$iamIdentityCenterApplicationArn": null,
         "IamIdentityCenterOptionsInput$iamIdentityCenterInstanceArn": null,
-        "ListTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the domain to view tags for.</p>",
+        "ListTagsRequest$ARN": "<p>Amazon Resource Name (ARN) for the domain, data source, or application to view tags for.</p>",
         "MasterUserOptions$MasterUserARN": "<p>Amazon Resource Name (ARN) for the master user. Only specify if <code>InternalUserDatabaseEnabled</code> is <code>false</code>.</p>",
-        "RemoveTagsRequest$ARN": "<p>The Amazon Resource Name (ARN) of the domain from which you want to delete the specified tags.</p>",
+        "RemoveTagsRequest$ARN": "<p>The Amazon Resource Name (ARN) of the domain, data source, or application from which you want to delete the specified tags.</p>",
         "UpdateApplicationResponse$arn": null
       }
     },
@@ -185,8 +191,18 @@
       "refs": {
       }
     },
+    "AddDirectQueryDataSourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AddDirectQueryDataSourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AddTagsRequest": {
-      "base": "<p>Container for the parameters to the <code>AddTags</code> operation. Specifies the tags to attach to the domain.</p>",
+      "base": "<p>Container for the parameters to the <code>AddTags</code> operation. Specifies the tags to attach to the domain, data source, or application.</p>",
       "refs": {
       }
     },
@@ -610,6 +626,12 @@
         "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>"
       }
     },
+    "CloudWatchDirectQueryDataSource": {
+      "base": "<p> Configuration details for a CloudWatch Logs data source that can be used for direct queries. </p>",
+      "refs": {
+        "DirectQueryDataSourceType$CloudWatchLog": "<p> Specifies CloudWatch Logs as a type of data source for direct queries. </p>"
+      }
+    },
     "CloudWatchLogsLogGroupArn": {
       "base": "<p>ARN of the Cloudwatch log group to publish logs to.</p>",
       "refs": {
@@ -876,6 +898,11 @@
       "refs": {
       }
     },
+    "DeleteDirectQueryDataSourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteDomainRequest": {
       "base": "<p>Container for the parameters to the <code>DeleteDomain</code> operation.</p>",
       "refs": {
@@ -1133,6 +1160,63 @@
       "base": null,
       "refs": {
         "ChangeProgressStage$Description": "<p>The description of the stage.</p>"
+      }
+    },
+    "DirectQueryDataSource": {
+      "base": "<p> The configuration details for a data source that can be directly queried. </p>",
+      "refs": {
+        "DirectQueryDataSourceList$member": null
+      }
+    },
+    "DirectQueryDataSourceDescription": {
+      "base": null,
+      "refs": {
+        "AddDirectQueryDataSourceRequest$Description": "<p> An optional text field for providing additional context and details about the data source. </p>",
+        "DirectQueryDataSource$Description": "<p> A description that provides additional context and details about the data source.</p>",
+        "GetDirectQueryDataSourceResponse$Description": "<p> A description that provides additional context and details about the data source. </p>",
+        "UpdateDirectQueryDataSourceRequest$Description": "<p> An optional text field for providing additional context and details about the data source. </p>"
+      }
+    },
+    "DirectQueryDataSourceList": {
+      "base": null,
+      "refs": {
+        "ListDirectQueryDataSourcesResponse$DirectQueryDataSources": "<p> A list of the direct query data sources that are returned by the <code>ListDirectQueryDataSources</code> API operation. </p>"
+      }
+    },
+    "DirectQueryDataSourceName": {
+      "base": null,
+      "refs": {
+        "AddDirectQueryDataSourceRequest$DataSourceName": "<p> A unique, user-defined label to identify the data source within your OpenSearch Service environment. </p>",
+        "DeleteDirectQueryDataSourceRequest$DataSourceName": "<p> A unique, user-defined label to identify the data source within your OpenSearch Service environment. </p>",
+        "DirectQueryDataSource$DataSourceName": "<p> A unique, user-defined label to identify the data source within your OpenSearch Service environment. </p>",
+        "GetDirectQueryDataSourceRequest$DataSourceName": "<p> A unique, user-defined label that identifies the data source within your OpenSearch Service environment. </p>",
+        "GetDirectQueryDataSourceResponse$DataSourceName": "<p> A unique, user-defined label to identify the data source within your OpenSearch Service environment. </p>",
+        "UpdateDirectQueryDataSourceRequest$DataSourceName": "<p> A unique, user-defined label to identify the data source within your OpenSearch Service environment. </p>"
+      }
+    },
+    "DirectQueryDataSourceRoleArn": {
+      "base": null,
+      "refs": {
+        "CloudWatchDirectQueryDataSource$RoleArn": "<p> The unique identifier of the IAM role that grants OpenSearch Service permission to access the specified data source. </p>",
+        "SecurityLakeDirectQueryDataSource$RoleArn": "<p> The unique identifier of the IAM role that grants OpenSearch Service permission to access the specified data source. </p>"
+      }
+    },
+    "DirectQueryDataSourceType": {
+      "base": "<p> The type of data source that is used for direct queries. This is a supported Amazon Web Services service, such as CloudWatch Logs or Security Lake. </p>",
+      "refs": {
+        "AddDirectQueryDataSourceRequest$DataSourceType": "<p> The supported Amazon Web Services service that you want to use as the source for direct queries in OpenSearch Service. </p>",
+        "DirectQueryDataSource$DataSourceType": "<p> The supported Amazon Web Services service that is used as the source for direct queries in OpenSearch Service. </p>",
+        "GetDirectQueryDataSourceResponse$DataSourceType": "<p> The supported Amazon Web Services service that is used as the source for direct queries in OpenSearch Service. </p>",
+        "UpdateDirectQueryDataSourceRequest$DataSourceType": "<p> The supported Amazon Web Services service that you want to use as the source for direct queries in OpenSearch Service. </p>"
+      }
+    },
+    "DirectQueryOpenSearchARNList": {
+      "base": null,
+      "refs": {
+        "AddDirectQueryDataSourceRequest$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
+        "DirectQueryDataSource$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
+        "GetDirectQueryDataSourceResponse$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>",
+        "UpdateDirectQueryDataSourceRequest$OpenSearchArns": "<p> A list of Amazon Resource Names (ARNs) for the OpenSearch collections that are associated with the direct query data source. </p>"
       }
     },
     "DisableTimestamp": {
@@ -1576,6 +1660,16 @@
       "refs": {
       }
     },
+    "GetDirectQueryDataSourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDirectQueryDataSourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetDomainMaintenanceStatusRequest": {
       "base": "<p>Container for the parameters to the <code>GetDomainMaintenanceStatus</code> operation.</p>",
       "refs": {
@@ -1938,6 +2032,16 @@
       "refs": {
       }
     },
+    "ListDirectQueryDataSourcesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDirectQueryDataSourcesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListDomainMaintenancesRequest": {
       "base": "<p>Container for the parameters to the <code>ListDomainMaintenances</code> operation.</p>",
       "refs": {
@@ -2215,6 +2319,8 @@
         "GetUpgradeHistoryRequest$NextToken": "<p>If your initial <code>GetUpgradeHistory</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>GetUpgradeHistory</code> operations, which returns results in the next page.</p>",
         "ListApplicationsRequest$nextToken": null,
         "ListApplicationsResponse$nextToken": null,
+        "ListDirectQueryDataSourcesRequest$NextToken": null,
+        "ListDirectQueryDataSourcesResponse$NextToken": null,
         "ListDomainMaintenancesRequest$NextToken": "<p>If your initial <code>ListDomainMaintenances</code> operation returns a <code>nextToken</code>, include the returned <code>nextToken</code> in subsequent <code>ListDomainMaintenances</code> operations, which returns results in the next page.</p>",
         "ListDomainMaintenancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "ListDomainsForPackageRequest$NextToken": "<p>If your initial <code>ListDomainsForPackage</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListDomainsForPackage</code> operations, which returns results in the next page.</p>",
@@ -2914,6 +3020,12 @@
         "ScheduledAction$ScheduledBy": "<p>Whether the action was scheduled manually (<code>CUSTOMER</code>, or by OpenSearch Service automatically (<code>SYSTEM</code>).</p>"
       }
     },
+    "SecurityLakeDirectQueryDataSource": {
+      "base": "<p> Configuration details for a Security Lake data source that can be used for direct queries. </p>",
+      "refs": {
+        "DirectQueryDataSourceType$SecurityLake": "<p> Specifies Security Lake as a type of data source for direct queries. </p>"
+      }
+    },
     "ServiceSoftwareOptions": {
       "base": "<p>The current status of the service software for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
       "refs": {
@@ -3062,6 +3174,7 @@
       "base": null,
       "refs": {
         "AddDataSourceResponse$Message": "<p>A message associated with creation of the data source.</p>",
+        "AddDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "AdvancedOptions$key": null,
         "AdvancedOptions$value": null,
         "ApplicationSummary$endpoint": "<p>Endpoint URL of an OpenSearch Application.</p>",
@@ -3075,11 +3188,13 @@
         "DeleteDataSourceResponse$Message": "<p>A message associated with deletion of the data source.</p>",
         "DescribePackagesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "DescribeReservedInstancesResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
+        "DirectQueryDataSource$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source.</p>",
         "DryRunProgressStatus$DryRunStatus": "<p>The current status of the dry run.</p>",
         "DryRunProgressStatus$CreationDate": "<p>The timestamp when the dry run was initiated.</p>",
         "DryRunProgressStatus$UpdateDate": "<p>The timestamp when the dry run was last updated.</p>",
         "EndpointsMap$key": null,
         "GetApplicationResponse$endpoint": "<p>Endpoint URL of the checked OpenSearch Application.</p>",
+        "GetDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "GetPackageVersionHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "JWTOptionsInput$PublicKey": "<p>Element of the JWT assertion used by the cluster to verify JWT signatures.</p>",
@@ -3107,6 +3222,7 @@
         "ServiceSoftwareOptions$Description": "<p>A description of the service software update status.</p>",
         "StringList$member": null,
         "UpdateDataSourceResponse$Message": "<p>A message associated with the updated data source.</p>",
+        "UpdateDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "UpdateScheduledActionRequest$ActionID": "<p>The unique identifier of the action to reschedule. To retrieve this ID, send a <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/APIReference/API_ListScheduledActions.html\">ListScheduledActions</a> request.</p>",
         "UpgradeDomainResponse$UpgradeId": "<p>The unique identifier of the domain upgrade.</p>",
         "VPCDerivedInfo$VPCId": "<p>The ID for your VPC. Amazon VPC generates this value when you create a VPC.</p>",
@@ -3121,7 +3237,7 @@
       "refs": {
         "ChangeProgressStatusDetails$PendingProperties": "<p>The list of properties in the domain configuration change that are still pending.</p>",
         "ChangeProgressStatusDetails$CompletedProperties": "<p>The list of properties in the domain configuration change that have completed.</p>",
-        "RemoveTagsRequest$TagKeys": "<p>The list of tag keys to remove from the domain.</p>",
+        "RemoveTagsRequest$TagKeys": "<p>The list of tag keys to remove from the domain, data source, or application.</p>",
         "VPCDerivedInfo$SubnetIds": "<p>A list of subnet IDs associated with the VPC endpoints for the domain.</p>",
         "VPCDerivedInfo$AvailabilityZones": "<p>The list of Availability Zones associated with the VPC subnets.</p>",
         "VPCDerivedInfo$SecurityGroupIds": "<p>The list of security group IDs associated with the VPC endpoints for the domain.</p>",
@@ -3163,11 +3279,13 @@
     "TagList": {
       "base": "<p>A list of tags attached to a domain.</p>",
       "refs": {
+        "AddDirectQueryDataSourceRequest$TagList": null,
         "AddTagsRequest$TagList": "<p>List of resource tags.</p>",
         "CreateApplicationRequest$tagList": null,
         "CreateApplicationResponse$tagList": null,
         "CreateDomainRequest$TagList": "<p>List of tags to add to the domain upon creation.</p>",
-        "ListTagsResponse$TagList": "<p>List of resource tags associated with the specified domain.</p>"
+        "DirectQueryDataSource$TagList": "<p> A list of tags attached to a direct query data source.</p>",
+        "ListTagsResponse$TagList": "<p>List of resource tags associated with the specified domain, data source, or application.</p>"
       }
     },
     "TagValue": {
@@ -3230,6 +3348,16 @@
     },
     "UpdateDataSourceResponse": {
       "base": "<p>The result of an <code>UpdateDataSource</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "UpdateDirectQueryDataSourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDirectQueryDataSourceResponse": {
+      "base": null,
       "refs": {
       }
     },

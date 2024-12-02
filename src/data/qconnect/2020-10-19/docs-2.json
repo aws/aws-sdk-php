@@ -5,6 +5,8 @@
     "ActivateMessageTemplate": "<p>Activates a specific version of the Amazon Q in Connect message template. After the version is activated, the previous active version will be deactivated automatically. You can use the <code>$ACTIVE_VERSION</code> qualifier later to reference the version that is in active status.</p>",
     "CreateAIAgent": "<p>Creates an Amazon Q in Connect AI Agent.</p>",
     "CreateAIAgentVersion": "<p>Creates and Amazon Q in Connect AI Agent version.</p>",
+    "CreateAIGuardrail": "<p>Creates an Amazon Q in Connect AI Guardrail.</p>",
+    "CreateAIGuardrailVersion": "<p>Creates an Amazon Q in Connect AI Guardrail version.</p>",
     "CreateAIPrompt": "<p>Creates an Amazon Q in Connect AI Prompt.</p>",
     "CreateAIPromptVersion": "<p>Creates an Amazon Q in Connect AI Prompt version.</p>",
     "CreateAssistant": "<p>Creates an Amazon Q in Connect assistant.</p>",
@@ -20,6 +22,8 @@
     "DeactivateMessageTemplate": "<p>Deactivates a specific version of the Amazon Q in Connect message template . After the version is deactivated, you can no longer use the <code>$ACTIVE_VERSION</code> qualifier to reference the version in active status.</p>",
     "DeleteAIAgent": "<p>Deletes an Amazon Q in Connect AI Agent.</p>",
     "DeleteAIAgentVersion": "<p>Deletes an Amazon Q in Connect AI Agent Version.</p>",
+    "DeleteAIGuardrail": "<p>Deletes an Amazon Q in Connect AI Guardrail.</p>",
+    "DeleteAIGuardrailVersion": "<p>Delete and Amazon Q in Connect AI Guardrail version.</p>",
     "DeleteAIPrompt": "<p>Deletes an Amazon Q in Connect AI Prompt.</p>",
     "DeleteAIPromptVersion": "<p>Delete and Amazon Q in Connect AI Prompt version.</p>",
     "DeleteAssistant": "<p>Deletes an assistant.</p>",
@@ -32,6 +36,7 @@
     "DeleteMessageTemplateAttachment": "<p>Deletes the attachment file from the Amazon Q in Connect message template that is referenced by <code>$LATEST</code> qualifier. Attachments on available message template versions will remain unchanged.</p>",
     "DeleteQuickResponse": "<p>Deletes a quick response.</p>",
     "GetAIAgent": "<p>Gets an Amazon Q in Connect AI Agent.</p>",
+    "GetAIGuardrail": "<p>Gets the Amazon Q in Connect AI Guardrail.</p>",
     "GetAIPrompt": "<p>Gets and Amazon Q in Connect AI Prompt.</p>",
     "GetAssistant": "<p>Retrieves information about an assistant.</p>",
     "GetAssistantAssociation": "<p>Retrieves information about an assistant association.</p>",
@@ -41,11 +46,14 @@
     "GetImportJob": "<p>Retrieves the started import job.</p>",
     "GetKnowledgeBase": "<p>Retrieves information about the knowledge base.</p>",
     "GetMessageTemplate": "<p>Retrieves the Amazon Q in Connect message template. The message template identifier can contain an optional qualifier, for example, <code>&lt;message-template-id&gt;:&lt;qualifier&gt;</code>, which is either an actual version number or an Amazon Q Connect managed qualifier <code>$ACTIVE_VERSION</code> | <code>$LATEST</code>. If it is not supplied, then <code>$LATEST</code> is assumed implicitly.</p>",
+    "GetNextMessage": "<p>Retrieves next message on an Amazon Q in Connect session.</p>",
     "GetQuickResponse": "<p>Retrieves the quick response.</p>",
     "GetRecommendations": "<important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Retrieves recommendations for the specified session. To avoid retrieving the same recommendations in subsequent calls, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_NotifyRecommendationsReceived.html\">NotifyRecommendationsReceived</a>. This API supports long-polling behavior with the <code>waitTimeSeconds</code> parameter. Short poll is the default behavior and only returns recommendations already available. To perform a manual query against an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_QueryAssistant.html\">QueryAssistant</a>.</p>",
     "GetSession": "<p>Retrieves information for a specified session.</p>",
     "ListAIAgentVersions": "<p>List AI Agent versions.</p>",
     "ListAIAgents": "<p>Lists AI Agents.</p>",
+    "ListAIGuardrailVersions": "<p>Lists AI Guardrail versions.</p>",
+    "ListAIGuardrails": "<p>Lists the AI Guardrails available on the Amazon Q in Connect assistant.</p>",
     "ListAIPromptVersions": "<p>Lists AI Prompt versions.</p>",
     "ListAIPrompts": "<p>Lists the AI Prompts available on the Amazon Q in Connect assistant.</p>",
     "ListAssistantAssociations": "<p>Lists information about assistant associations.</p>",
@@ -56,6 +64,7 @@
     "ListKnowledgeBases": "<p>Lists the knowledge bases.</p>",
     "ListMessageTemplateVersions": "<p>Lists all the available versions for the specified Amazon Q in Connect message template.</p>",
     "ListMessageTemplates": "<p>Lists all the available Amazon Q in Connect message templates for the specified knowledge base.</p>",
+    "ListMessages": "<p>Lists messages on an Amazon Q in Connect session.</p>",
     "ListQuickResponses": "<p>Lists information about quick response.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
@@ -68,11 +77,13 @@
     "SearchMessageTemplates": "<p>Searches for Amazon Q in Connect message templates in the specified knowledge base.</p>",
     "SearchQuickResponses": "<p>Searches existing Amazon Q in Connect quick responses in an Amazon Q in Connect knowledge base.</p>",
     "SearchSessions": "<p>Searches for sessions.</p>",
+    "SendMessage": "<p>Submits a message to the Amazon Q in Connect session.</p>",
     "StartContentUpload": "<p>Get a URL to upload content to a knowledge base. To upload content, first make a PUT request to the returned URL with your file, making sure to include the required headers. Then use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_CreateContent.html\">CreateContent</a> to finalize the content creation process or <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_UpdateContent.html\">UpdateContent</a> to modify an existing resource. You can only upload content to a knowledge base of type CUSTOM.</p>",
     "StartImportJob": "<p>Start an asynchronous job to import Amazon Q in Connect resources from an uploaded source file. Before calling this API, use <a href=\"https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html\">StartContentUpload</a> to upload an asset that contains the resource data.</p> <ul> <li> <p>For importing Amazon Q in Connect quick responses, you need to upload a csv file including the quick responses. For information about how to format the csv file for importing quick responses, see <a href=\"https://docs.aws.amazon.com/console/connect/quick-responses/add-data\">Import quick responses</a>.</p> </li> </ul>",
     "TagResource": "<p>Adds the specified tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAIAgent": "<p>Updates an AI Agent.</p>",
+    "UpdateAIGuardrail": "<p>Updates an AI Guardrail.</p>",
     "UpdateAIPrompt": "<p>Updates an AI Prompt.</p>",
     "UpdateAssistantAIAgent": "<p>Updates the AI Agent that is set for use by defafult on an Amazon Q in Connect Assistant.</p>",
     "UpdateContent": "<p>Updates information about the content.</p>",
@@ -159,6 +170,100 @@
       "base": "<p>The summary of the AI Agent version.</p>",
       "refs": {
         "AIAgentVersionSummariesList$member": null
+      }
+    },
+    "AIGuardrailBlockedMessaging": {
+      "base": "<p>Messaging for when violations are detected in text</p>",
+      "refs": {
+        "AIGuardrailData$blockedInputMessaging": "<p>The message to return when the AI Guardrail blocks a prompt.</p>",
+        "AIGuardrailData$blockedOutputsMessaging": "<p>The message to return when the AI Guardrail blocks a model response.</p>",
+        "CreateAIGuardrailRequest$blockedInputMessaging": "<p>The message to return when the AI Guardrail blocks a prompt.</p>",
+        "CreateAIGuardrailRequest$blockedOutputsMessaging": "<p>The message to return when the AI Guardrail blocks a model response.</p>",
+        "UpdateAIGuardrailRequest$blockedInputMessaging": "<p>The message to return when the AI Guardrail blocks a prompt.</p>",
+        "UpdateAIGuardrailRequest$blockedOutputsMessaging": "<p>The message to return when the AI Guardrail blocks a model response.</p>"
+      }
+    },
+    "AIGuardrailContentPolicyConfig": {
+      "base": "<p>Contains details about how to handle harmful content.</p>",
+      "refs": {
+        "AIGuardrailData$contentPolicyConfig": "<p>Contains details about how to handle harmful content.</p>",
+        "CreateAIGuardrailRequest$contentPolicyConfig": "<p>The content filter policies to configure for the AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$contentPolicyConfig": "<p>The content filter policies to configure for the AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailContextualGroundingPolicyConfig": {
+      "base": "<p>The policy configuration details for the AI Guardrail's contextual grounding policy.</p>",
+      "refs": {
+        "AIGuardrailData$contextualGroundingPolicyConfig": "<p>The policy configuration details for the AI Guardrail's contextual grounding policy.</p>",
+        "CreateAIGuardrailRequest$contextualGroundingPolicyConfig": "<p>The contextual grounding policy configuration used to create an AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$contextualGroundingPolicyConfig": "<p>The contextual grounding policy configuration used to create an AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailData": {
+      "base": "<p>The data for the AI Guardrail</p>",
+      "refs": {
+        "CreateAIGuardrailResponse$aiGuardrail": "<p>The data of the AI Guardrail.</p>",
+        "CreateAIGuardrailVersionResponse$aiGuardrail": "<p>The data of the AI Guardrail version.</p>",
+        "GetAIGuardrailResponse$aiGuardrail": "<p>The data of the AI Guardrail.</p>",
+        "UpdateAIGuardrailResponse$aiGuardrail": "<p>The data of the updated Amazon Q in Connect AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailDescription": {
+      "base": "<p>Description of the guardrail or its version</p>",
+      "refs": {
+        "AIGuardrailData$description": "<p>A description of the AI Guardrail.</p>",
+        "AIGuardrailSummary$description": "<p>A description of the AI Guardrail.</p>",
+        "CreateAIGuardrailRequest$description": "<p>A description of the AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$description": "<p>A description of the AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailSensitiveInformationPolicyConfig": {
+      "base": "<p>Contains details about PII entities and regular expressions to configure for the AI Guardrail.</p>",
+      "refs": {
+        "AIGuardrailData$sensitiveInformationPolicyConfig": "<p>Contains details about PII entities and regular expressions to configure for the AI Guardrail.</p>",
+        "CreateAIGuardrailRequest$sensitiveInformationPolicyConfig": "<p>The sensitive information policy to configure for the AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$sensitiveInformationPolicyConfig": "<p>The sensitive information policy to configure for the AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailSummariesList": {
+      "base": null,
+      "refs": {
+        "ListAIGuardrailsResponse$aiGuardrailSummaries": "<p>The summaries of the AI Guardrails.</p>"
+      }
+    },
+    "AIGuardrailSummary": {
+      "base": "<p>The summary of the AI Guardrail.</p>",
+      "refs": {
+        "AIGuardrailSummariesList$member": null,
+        "AIGuardrailVersionSummary$aiGuardrailSummary": "<p>The data for the summary of the AI Guardrail version.</p>"
+      }
+    },
+    "AIGuardrailTopicPolicyConfig": {
+      "base": "<p>Contains details about topics that the AI Guardrail should identify and deny.</p>",
+      "refs": {
+        "AIGuardrailData$topicPolicyConfig": "<p>Contains details about topics that the AI Guardrail should identify and deny.</p>",
+        "CreateAIGuardrailRequest$topicPolicyConfig": "<p>The topic policies to configure for the AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$topicPolicyConfig": "<p>The topic policies to configure for the AI Guardrail.</p>"
+      }
+    },
+    "AIGuardrailVersionSummariesList": {
+      "base": null,
+      "refs": {
+        "ListAIGuardrailVersionsResponse$aiGuardrailVersionSummaries": "<p>The summaries of the AI Guardrail versions.</p>"
+      }
+    },
+    "AIGuardrailVersionSummary": {
+      "base": "<p>The summary of the AI Guardrail version.</p>",
+      "refs": {
+        "AIGuardrailVersionSummariesList$member": null
+      }
+    },
+    "AIGuardrailWordPolicyConfig": {
+      "base": "<p>Contains details about the word policy to configured for the AI Guardrail.</p>",
+      "refs": {
+        "AIGuardrailData$wordPolicyConfig": "<p>Contains details about the word policy to configured for the AI Guardrail.</p>",
+        "CreateAIGuardrailRequest$wordPolicyConfig": "<p>The word policy you configure for the AI Guardrail.</p>",
+        "UpdateAIGuardrailRequest$wordPolicyConfig": "<p>The word policy you configure for the AI Guardrail.</p>"
       }
     },
     "AIPromptAPIFormat": {
@@ -288,6 +393,10 @@
         "AIAgentData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AIAgentSummary$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
         "AIAgentSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "AIGuardrailData$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
+        "AIGuardrailData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "AIGuardrailSummary$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
+        "AIGuardrailSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AIPromptData$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
         "AIPromptData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AIPromptSummary$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
@@ -450,7 +559,8 @@
       "base": null,
       "refs": {
         "AnswerRecommendationAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>",
-        "ManualSearchAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>"
+        "ManualSearchAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>",
+        "SelfServiceAIAgentConfiguration$associationConfigurations": "<p>The association configurations for overriding behavior on this AI Agent.</p>"
       }
     },
     "AssociationType": {
@@ -558,6 +668,8 @@
       "refs": {
         "CreateAIAgentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "CreateAIAgentVersionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
+        "CreateAIGuardrailRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
+        "CreateAIGuardrailVersionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "CreateAIPromptRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "CreateAIPromptVersionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "CreateAssistantAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -566,7 +678,9 @@
         "CreateMessageTemplateAttachmentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateMessageTemplateRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateSessionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "SendMessageRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the AWS SDK populates this field.For more information about idempotency, see Making retries safe with idempotent APIs.</p>",
         "UpdateAIAgentRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
+        "UpdateAIGuardrailRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>",
         "UpdateAIPromptRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>..</p>"
       }
     },
@@ -733,6 +847,30 @@
         "StartContentUploadRequest$contentType": "<p>The type of content to upload.</p>"
       }
     },
+    "ConversationContext": {
+      "base": "<p>The conversation context to include in SendMessage.</p>",
+      "refs": {
+        "SendMessageRequest$conversationContext": "<p>The conversation context before the Amazon Q in Connect session.</p>"
+      }
+    },
+    "ConversationState": {
+      "base": "<p>The conversation state associated to a message.</p>",
+      "refs": {
+        "GetNextMessageResponse$conversationState": "<p>The state of current conversation.</p>"
+      }
+    },
+    "ConversationStatus": {
+      "base": null,
+      "refs": {
+        "ConversationState$status": "<p>The status of the conversation state.</p>"
+      }
+    },
+    "ConversationStatusReason": {
+      "base": null,
+      "refs": {
+        "ConversationState$reason": "<p>The reason of the conversation state.</p>"
+      }
+    },
     "CreateAIAgentRequest": {
       "base": null,
       "refs": {
@@ -749,6 +887,26 @@
       }
     },
     "CreateAIAgentVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAIGuardrailRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAIGuardrailResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAIGuardrailVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAIGuardrailVersionResponse": {
       "base": null,
       "refs": {
       }
@@ -938,6 +1096,26 @@
       }
     },
     "DeleteAIAgentVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAIGuardrailRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAIGuardrailResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAIGuardrailVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAIGuardrailVersionResponse": {
       "base": null,
       "refs": {
       }
@@ -1245,6 +1423,16 @@
       "refs": {
       }
     },
+    "GetAIGuardrailRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAIGuardrailResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetAIPromptRequest": {
       "base": null,
       "refs": {
@@ -1335,6 +1523,16 @@
       "refs": {
       }
     },
+    "GetNextMessageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetNextMessageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetQuickResponseRequest": {
       "base": null,
       "refs": {
@@ -1395,6 +1593,188 @@
       "base": null,
       "refs": {
         "GroupingConfiguration$values": "<p>The list of values that define different groups of Amazon Q in Connect users.</p> <ul> <li> <p>When setting <code>criteria</code> to <code>RoutingProfileArn</code>, you need to provide a list of ARNs of <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_RoutingProfile.html\">Amazon Connect routing profiles</a> as values of this parameter.</p> </li> </ul>"
+      }
+    },
+    "GuardrailContentFilterConfig": {
+      "base": "<p>Contains filter strengths for harmful content. AI Guardrail's support the following content filters to detect and filter harmful user inputs and FM-generated outputs.</p> <ul> <li> <p> <b>Hate</b>: Describes input prompts and model responses that discriminate, criticize, insult, denounce, or dehumanize a person or group on the basis of an identity (such as race, ethnicity, gender, religion, sexual orientation, ability, and national origin).</p> </li> <li> <p> <b>Insults</b>: Describes input prompts and model responses that includes demeaning, humiliating, mocking, insulting, or belittling language. This type of language is also labeled as bullying.</p> </li> <li> <p> <b>Sexual</b>: Describes input prompts and model responses that indicates sexual interest, activity, or arousal using direct or indirect references to body parts, physical traits, or sex.</p> </li> <li> <p> <b>Violence</b>: Describes input prompts and model responses that includes glorification of, or threats to inflict physical pain, hurt, or injury toward a person, group, or thing.</p> </li> </ul> <p>Content filtering depends on the confidence classification of user inputs and FM responses across each of the four harmful categories. All input and output statements are classified into one of four confidence levels (NONE, LOW, MEDIUM, HIGH) for each harmful category. For example, if a statement is classified as <i>Hate</i> with HIGH confidence, the likelihood of the statement representing hateful content is high. A single statement can be classified across multiple categories with varying confidence levels. For example, a single statement can be classified as <i>Hate</i> with HIGH confidence, <i> Insults</i> with LOW confidence, <i>Sexual</i> with NONE confidence, and <i>Violence</i> with MEDIUM confidence.</p>",
+      "refs": {
+        "GuardrailContentFiltersConfig$member": null
+      }
+    },
+    "GuardrailContentFilterType": {
+      "base": "<p>Type of text to text filter in content policy</p>",
+      "refs": {
+        "GuardrailContentFilterConfig$type": "<p>The harmful category that the content filter is applied to.</p>"
+      }
+    },
+    "GuardrailContentFiltersConfig": {
+      "base": "<p>List of content filter configs in content policy.</p>",
+      "refs": {
+        "AIGuardrailContentPolicyConfig$filtersConfig": "<p>Contains the type of the content filter and how strongly it should apply to prompts and model responses.</p>"
+      }
+    },
+    "GuardrailContextualGroundingFilterConfig": {
+      "base": "<p>The filter configuration details for the AI Guardrail's contextual grounding filter.</p>",
+      "refs": {
+        "GuardrailContextualGroundingFiltersConfig$member": null
+      }
+    },
+    "GuardrailContextualGroundingFilterThreshold": {
+      "base": "<p>The threshold for this filter.</p>",
+      "refs": {
+        "GuardrailContextualGroundingFilterConfig$threshold": "<p>The threshold details for the AI Guardrail's contextual grounding filter.</p>"
+      }
+    },
+    "GuardrailContextualGroundingFilterType": {
+      "base": "<p>Type of contextual grounding filter</p>",
+      "refs": {
+        "GuardrailContextualGroundingFilterConfig$type": "<p>The filter type for the AI Guardrail's contextual grounding filter.</p>"
+      }
+    },
+    "GuardrailContextualGroundingFiltersConfig": {
+      "base": "<p>List of contextual grounding filter configs.</p>",
+      "refs": {
+        "AIGuardrailContextualGroundingPolicyConfig$filtersConfig": "<p>The filter configuration details for the AI Guardrails contextual grounding policy.</p>"
+      }
+    },
+    "GuardrailFilterStrength": {
+      "base": "<p>Strength for filters</p>",
+      "refs": {
+        "GuardrailContentFilterConfig$inputStrength": "<p>The strength of the content filter to apply to prompts. As you increase the filter strength, the likelihood of filtering harmful content increases and the probability of seeing harmful content in your application reduces.</p>",
+        "GuardrailContentFilterConfig$outputStrength": "<p>The strength of the content filter to apply to model responses. As you increase the filter strength, the likelihood of filtering harmful content increases and the probability of seeing harmful content in your application reduces.</p>"
+      }
+    },
+    "GuardrailManagedWordListsConfig": {
+      "base": "<p>A config for the list of managed words.</p>",
+      "refs": {
+        "AIGuardrailWordPolicyConfig$managedWordListsConfig": "<p>A list of managed words to configure for the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailManagedWordsConfig": {
+      "base": "<p>The managed word list to configure for the AI Guardrail.</p>",
+      "refs": {
+        "GuardrailManagedWordListsConfig$member": null
+      }
+    },
+    "GuardrailManagedWordsType": {
+      "base": "<p>Options for managed words.</p>",
+      "refs": {
+        "GuardrailManagedWordsConfig$type": "<p>The managed word type to configure for the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailPiiEntitiesConfig": {
+      "base": "<p>List of entities.</p>",
+      "refs": {
+        "AIGuardrailSensitiveInformationPolicyConfig$piiEntitiesConfig": "<p>A list of PII entities to configure to the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailPiiEntityConfig": {
+      "base": "<p>The PII entity to configure for the AI Guardrail.</p>",
+      "refs": {
+        "GuardrailPiiEntitiesConfig$member": null
+      }
+    },
+    "GuardrailPiiEntityType": {
+      "base": "<p>The currently supported PII entities</p>",
+      "refs": {
+        "GuardrailPiiEntityConfig$type": "<p>Configure AI Guardrail type when the PII entity is detected.</p> <p>The following PIIs are used to block or mask sensitive information:</p> <ul> <li> <p> <b>General</b> </p> <ul> <li> <p> <b>ADDRESS</b> </p> <p>A physical address, such as \"100 Main Street, Anytown, USA\" or \"Suite #12, Building 123\". An address can include information such as the street, building, location, city, state, country, county, zip code, precinct, and neighborhood. </p> </li> <li> <p> <b>AGE</b> </p> <p>An individual's age, including the quantity and unit of time. For example, in the phrase \"I am 40 years old,\" Guarrails recognizes \"40 years\" as an age. </p> </li> <li> <p> <b>NAME</b> </p> <p>An individual's name. This entity type does not include titles, such as Dr., Mr., Mrs., or Miss. AI Guardrail doesn't apply this entity type to names that are part of organizations or addresses. For example, AI Guardrail recognizes the \"John Doe Organization\" as an organization, and it recognizes \"Jane Doe Street\" as an address. </p> </li> <li> <p> <b>EMAIL</b> </p> <p>An email address, such as <i>marymajor@email.com</i>.</p> </li> <li> <p> <b>PHONE</b> </p> <p>A phone number. This entity type also includes fax and pager numbers. </p> </li> <li> <p> <b>USERNAME</b> </p> <p>A user name that identifies an account, such as a login name, screen name, nick name, or handle. </p> </li> <li> <p> <b>PASSWORD</b> </p> <p>An alphanumeric string that is used as a password, such as \"*<i> very20special#pass*</i>\". </p> </li> <li> <p> <b>DRIVER_ID</b> </p> <p>The number assigned to a driver's license, which is an official document permitting an individual to operate one or more motorized vehicles on a public road. A driver's license number consists of alphanumeric characters. </p> </li> <li> <p> <b>LICENSE_PLATE</b> </p> <p>A license plate for a vehicle is issued by the state or country where the vehicle is registered. The format for passenger vehicles is typically five to eight digits, consisting of upper-case letters and numbers. The format varies depending on the location of the issuing state or country. </p> </li> <li> <p> <b>VEHICLE_IDENTIFICATION_NUMBER</b> </p> <p>A Vehicle Identification Number (VIN) uniquely identifies a vehicle. VIN content and format are defined in the <i>ISO 3779</i> specification. Each country has specific codes and formats for VINs. </p> </li> </ul> </li> <li> <p> <b>Finance</b> </p> <ul> <li> <p> <b>REDIT_DEBIT_CARD_CVV</b> </p> <p>A three-digit card verification code (CVV) that is present on VISA, MasterCard, and Discover credit and debit cards. For American Express credit or debit cards, the CVV is a four-digit numeric code. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_EXPIRY</b> </p> <p>The expiration date for a credit or debit card. This number is usually four digits long and is often formatted as <i>month/year</i> or <i>MM/YY</i>. AI Guardrail recognizes expiration dates such as <i>01/21</i>, <i>01/2021</i>, and <i>Jan 2021</i>. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_NUMBER</b> </p> <p>The number for a credit or debit card. These numbers can vary from 13 to 16 digits in length. However, Amazon Comprehend also recognizes credit or debit card numbers when only the last four digits are present. </p> </li> <li> <p> <b>PIN</b> </p> <p>A four-digit personal identification number (PIN) with which you can access your bank account. </p> </li> <li> <p> <b>INTERNATIONAL_BANK_ACCOUNT_NUMBER</b> </p> <p>An International Bank Account Number has specific formats in each country. For more information, see <a href=\"https://www.iban.com/structure\"> www.iban.com/structure</a>.</p> </li> <li> <p> <b>SWIFT_CODE</b> </p> <p>A SWIFT code is a standard format of Bank Identifier Code (BIC) used to specify a particular bank or branch. Banks use these codes for money transfers such as international wire transfers.</p> <p>SWIFT codes consist of eight or 11 characters. The 11-digit codes refer to specific branches, while eight-digit codes (or 11-digit codes ending in 'XXX') refer to the head or primary office.</p> </li> </ul> </li> <li> <p> <b>IT</b> </p> <ul> <li> <p> <b>IP_ADDRESS</b> </p> <p>An IPv4 address, such as <i>198.51.100.0</i>. </p> </li> <li> <p> <b>MAC_ADDRESS</b> </p> <p>A <i>media access control</i> (MAC) address is a unique identifier assigned to a network interface controller (NIC). </p> </li> <li> <p> <b>URL</b> </p> <p>A web address, such as <i>www.example.com</i>. </p> </li> <li> <p> <b>AWS_ACCESS_KEY</b> </p> <p>A unique identifier that's associated with a secret access key; you use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> <li> <p> <b>AWS_SECRET_KEY</b> </p> <p>A unique identifier that's associated with an access key. You use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> </ul> </li> <li> <p> <b>USA specific</b> </p> <ul> <li> <p> <b>US_BANK_ACCOUNT_NUMBER</b> </p> <p>A US bank account number, which is typically 10 to 12 digits long. </p> </li> <li> <p> <b>US_BANK_ROUTING_NUMBER</b> </p> <p>A US bank account routing number. These are typically nine digits long, </p> </li> <li> <p> <b>US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER</b> </p> <p>A US Individual Taxpayer Identification Number (ITIN) is a nine-digit number that starts with a \"9\" and contain a \"7\" or \"8\" as the fourth digit. An ITIN can be formatted with a space or a dash after the third and forth digits. </p> </li> <li> <p> <b>US_PASSPORT_NUMBER</b> </p> <p>A US passport number. Passport numbers range from six to nine alphanumeric characters. </p> </li> <li> <p> <b>US_SOCIAL_SECURITY_NUMBER</b> </p> <p>A US Social Security Number (SSN) is a nine-digit number that is issued to US citizens, permanent residents, and temporary working residents. </p> </li> </ul> </li> <li> <p> <b>Canada specific</b> </p> <ul> <li> <p> <b>CA_HEALTH_NUMBER</b> </p> <p>A Canadian Health Service Number is a 10-digit unique identifier, required for individuals to access healthcare benefits. </p> </li> <li> <p> <b>CA_SOCIAL_INSURANCE_NUMBER</b> </p> <p>A Canadian Social Insurance Number (SIN) is a nine-digit unique identifier, required for individuals to access government programs and benefits.</p> <p>The SIN is formatted as three groups of three digits, such as <i> 123-456-789</i>. A SIN can be validated through a simple check-digit process called the <a href=\"https://www.wikipedia.org/wiki/Luhn_algorithm\">Luhn algorithm</a> .</p> </li> </ul> </li> <li> <p> <b>UK Specific</b> </p> <ul> <li> <p> <b>UK_NATIONAL_HEALTH_SERVICE_NUMBER</b> </p> <p>A UK National Health Service Number is a 10-17 digit number, such as <i>485 555 3456</i>. The current system formats the 10-digit number with spaces after the third and sixth digits. The final digit is an error-detecting checksum.</p> </li> <li> <p> <b>UK_NATIONAL_INSURANCE_NUMBER</b> </p> <p>A UK National Insurance Number (NINO) provides individuals with access to National Insurance (social security) benefits. It is also used for some purposes in the UK tax system.</p> <p>The number is nine digits long and starts with two letters, followed by six numbers and one letter. A NINO can be formatted with a space or a dash after the two letters and after the second, forth, and sixth digits.</p> </li> <li> <p> <b>UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER</b> </p> <p>A UK Unique Taxpayer Reference (UTR) is a 10-digit number that identifies a taxpayer or a business. </p> </li> </ul> </li> <li> <p> <b>Custom</b> </p> <ul> <li> <p> <b>Regex filter</b> - You can use a regular expressions to define patterns for an AI Guardrail to recognize and act upon such as serial number, booking ID etc..</p> </li> </ul> </li> </ul>"
+      }
+    },
+    "GuardrailRegexConfig": {
+      "base": "<p>The regular expression to configure for the AI Guardrail.</p>",
+      "refs": {
+        "GuardrailRegexesConfig$member": null
+      }
+    },
+    "GuardrailRegexDescription": {
+      "base": "<p>The regex description.</p>",
+      "refs": {
+        "GuardrailRegexConfig$description": "<p>The description of the regular expression to configure for the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailRegexName": {
+      "base": "<p>The regex name.</p>",
+      "refs": {
+        "GuardrailRegexConfig$name": "<p>The name of the regular expression to configure for the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailRegexPattern": {
+      "base": "<p>The regex pattern.</p>",
+      "refs": {
+        "GuardrailRegexConfig$pattern": "<p>The regular expression pattern to configure for the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailRegexesConfig": {
+      "base": "<p>List of regex.</p>",
+      "refs": {
+        "AIGuardrailSensitiveInformationPolicyConfig$regexesConfig": "<p>A list of regular expressions to configure to the AI Guardrail.</p>"
+      }
+    },
+    "GuardrailSensitiveInformationAction": {
+      "base": "<p>Options for sensitive information action.</p>",
+      "refs": {
+        "GuardrailPiiEntityConfig$action": "<p>Configure AI Guardrail's action when the PII entity is detected.</p>",
+        "GuardrailRegexConfig$action": "<p>The AI Guardrail action to configure when matching regular expression is detected.</p>"
+      }
+    },
+    "GuardrailTopicConfig": {
+      "base": "<p>Details about topics for the AI Guardrail to identify and deny.</p>",
+      "refs": {
+        "GuardrailTopicsConfig$member": null
+      }
+    },
+    "GuardrailTopicDefinition": {
+      "base": "<p>Definition of topic in topic policy</p>",
+      "refs": {
+        "GuardrailTopicConfig$definition": "<p>A definition of the topic to deny.</p>"
+      }
+    },
+    "GuardrailTopicExample": {
+      "base": "<p>Text example in topic policy</p>",
+      "refs": {
+        "GuardrailTopicExamples$member": null
+      }
+    },
+    "GuardrailTopicExamples": {
+      "base": "<p>List of text examples</p>",
+      "refs": {
+        "GuardrailTopicConfig$examples": "<p>A list of prompts, each of which is an example of a prompt that can be categorized as belonging to the topic.</p>"
+      }
+    },
+    "GuardrailTopicName": {
+      "base": "<p>Name of topic in topic policy</p>",
+      "refs": {
+        "GuardrailTopicConfig$name": "<p>The name of the topic to deny.</p>"
+      }
+    },
+    "GuardrailTopicType": {
+      "base": "<p>Type of topic in a policy</p>",
+      "refs": {
+        "GuardrailTopicConfig$type": "<p>Specifies to deny the topic.</p>"
+      }
+    },
+    "GuardrailTopicsConfig": {
+      "base": "<p>List of topic configs in topic policy.</p>",
+      "refs": {
+        "AIGuardrailTopicPolicyConfig$topicsConfig": "<p>A list of policies related to topics that the AI Guardrail should deny.</p>"
+      }
+    },
+    "GuardrailWordConfig": {
+      "base": "<p>A word to configure for the AI Guardrail.</p>",
+      "refs": {
+        "GuardrailWordsConfig$member": null
+      }
+    },
+    "GuardrailWordText": {
+      "base": "<p>The custom word text.</p>",
+      "refs": {
+        "GuardrailWordConfig$text": "<p>Text of the word configured for the AI Guardrail to block.</p>"
+      }
+    },
+    "GuardrailWordsConfig": {
+      "base": "<p>List of custom word configs.</p>",
+      "refs": {
+        "AIGuardrailWordPolicyConfig$wordsConfig": "<p>A list of words to configure for the AI Guardrail.</p>"
       }
     },
     "Headers": {
@@ -1484,6 +1864,12 @@
         "ImportJobData$importJobType": "<p>The type of the import job.</p>",
         "ImportJobSummary$importJobType": "<p>The type of import job.</p>",
         "StartImportJobRequest$importJobType": "<p>The type of the import job.</p> <ul> <li> <p>For importing quick response resource, set the value to <code>QUICK_RESPONSES</code>.</p> </li> </ul>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "SelfServiceConversationHistory$turnNumber": "<p>The number of turn of the conversation history data.</p>"
       }
     },
     "IntentDetectedDataDetails": {
@@ -1582,6 +1968,26 @@
       }
     },
     "ListAIAgentsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAIGuardrailVersionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAIGuardrailVersionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAIGuardrailsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAIGuardrailsResponse": {
       "base": null,
       "refs": {
       }
@@ -1686,6 +2092,16 @@
       "refs": {
       }
     },
+    "ListMessagesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMessagesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListQuickResponsesRequest": {
       "base": null,
       "refs": {
@@ -1731,6 +2147,8 @@
         "KnowledgeBaseAssociationConfigurationData$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAIAgentVersionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAIAgentsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListAIGuardrailVersionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListAIGuardrailsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAIPromptVersionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAIPromptsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListAssistantAssociationsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
@@ -1741,12 +2159,39 @@
         "ListKnowledgeBasesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMessageTemplateVersionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListMessageTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListMessagesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQuickResponsesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "QueryAssistantRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContentRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchMessageTemplatesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchQuickResponsesRequest$maxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchSessionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
+      }
+    },
+    "MessageData": {
+      "base": "<p>The message data.</p>",
+      "refs": {
+        "MessageInput$value": "<p>The message input value.</p>",
+        "MessageOutput$value": "<p>The value of a message data.</p>"
+      }
+    },
+    "MessageInput": {
+      "base": "<p>The message input.</p>",
+      "refs": {
+        "SendMessageRequest$message": "<p>The message data to submit to the Amazon Q in Connect session.</p>"
+      }
+    },
+    "MessageList": {
+      "base": null,
+      "refs": {
+        "ListMessagesResponse$messages": "<p>The message information.</p>"
+      }
+    },
+    "MessageOutput": {
+      "base": "<p>The message output.</p>",
+      "refs": {
+        "GetNextMessageResponse$response": "<p>The message response to the requested message.</p>",
+        "MessageList$member": null
       }
     },
     "MessageTemplateAttachment": {
@@ -2008,11 +2453,20 @@
         "ListMessageTemplateVersionsResponse$messageTemplateVersionSummaries": "<p>Summary information about the versions of a message template.</p>"
       }
     },
+    "MessageType": {
+      "base": null,
+      "refs": {
+        "GetNextMessageResponse$type": "<p>The type of message response.</p>",
+        "SendMessageRequest$type": "<p>The message type.</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
         "AIAgentData$name": "<p>The name of the AI Agent.</p>",
         "AIAgentSummary$name": "<p>The name of the AI Agent.</p>",
+        "AIGuardrailData$name": "<p>The name of the AI Guardrail.</p>",
+        "AIGuardrailSummary$name": "<p>The name of the AI Guardrail.</p>",
         "AIPromptData$name": "<p>The name of the AI Prompt</p>",
         "AIPromptSummary$name": "<p>The name of the AI Prompt.</p>",
         "AssistantData$name": "<p>The name.</p>",
@@ -2020,6 +2474,7 @@
         "ContentData$name": "<p>The name of the content.</p>",
         "ContentSummary$name": "<p>The name of the content.</p>",
         "CreateAIAgentRequest$name": "<p>The name of the AI Agent.</p>",
+        "CreateAIGuardrailRequest$name": "<p>The name of the AI Guardrail.</p>",
         "CreateAIPromptRequest$name": "<p>The name of the AI Prompt.</p>",
         "CreateAssistantRequest$name": "<p>The name of the assistant.</p>",
         "CreateContentRequest$name": "<p>The name of the content. Each piece of content in a knowledge base must have a unique name. You can retrieve a piece of content using only its knowledge base and its name with the <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_SearchContent.html\">SearchContent</a> API.</p>",
@@ -2040,10 +2495,16 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "GetNextMessageRequest$nextMessageToken": "<p>The token for the next message. Use the value returned in the SendMessage or previous response in the next request to retrieve the next message.</p>",
+        "GetNextMessageResponse$nextMessageToken": "<p>The token for the next message.</p>",
         "ListAIAgentVersionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIAgentVersionsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIAgentsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIAgentsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListAIGuardrailVersionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListAIGuardrailVersionsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListAIGuardrailsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListAIGuardrailsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIPromptVersionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIPromptVersionsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIPromptsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2060,6 +2521,8 @@
         "ListMessageTemplateVersionsResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListMessageTemplatesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListMessageTemplatesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListMessagesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListMessagesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "QueryAssistantRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "QueryAssistantResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchContentRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2067,7 +2530,8 @@
         "SearchMessageTemplatesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchMessageTemplatesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchSessionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
-        "SearchSessionsResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>"
+        "SearchSessionsResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "SendMessageResponse$nextMessageToken": "<p>The token for the next message, used by GetNextMessage.</p>"
       }
     },
     "NonEmptySensitiveString": {
@@ -2209,6 +2673,12 @@
       "base": null,
       "refs": {
         "ParsingConfiguration$parsingStrategy": "<p>The parsing strategy for the data source.</p>"
+      }
+    },
+    "Participant": {
+      "base": null,
+      "refs": {
+        "MessageOutput$participant": "<p>The participant of a message.</p>"
       }
     },
     "PreconditionFailedException": {
@@ -2643,6 +3113,7 @@
     "RuntimeSessionDataList": {
       "base": null,
       "refs": {
+        "GetNextMessageResponse$conversationSessionData": "<p>The conversation data stored on an Amazon Q in Connect Session.</p>",
         "UpdateSessionDataRequest$data": "<p>The data stored on the Amazon Q in Connect Session.</p>",
         "UpdateSessionDataResponse$data": "<p>Data stored in the session.</p>"
       }
@@ -2724,6 +3195,24 @@
         "UrlConfiguration$seedUrls": "<p>List of URLs for crawling.</p>"
       }
     },
+    "SelfServiceAIAgentConfiguration": {
+      "base": "<p>The configuration for AI Agents of type SELF_SERVICE.</p>",
+      "refs": {
+        "AIAgentConfiguration$selfServiceAIAgentConfiguration": "<p>The configuration for AI Agents of type SELF_SERVICE.</p>"
+      }
+    },
+    "SelfServiceConversationHistory": {
+      "base": "<p>The conversation history data to included in conversation context data before the the Amazon Q in Connect session..</p>",
+      "refs": {
+        "SelfServiceConversationHistoryList$member": null
+      }
+    },
+    "SelfServiceConversationHistoryList": {
+      "base": null,
+      "refs": {
+        "ConversationContext$selfServiceConversationHistory": "<p>The self service conversation history before the Amazon Q in Connect session.</p>"
+      }
+    },
     "SemanticChunkingConfiguration": {
       "base": "<p>Settings for semantic document chunking for a data source. Semantic chunking splits a document into smaller documents based on groups of similar content derived from the text with natural language processing.</p>",
       "refs": {
@@ -2748,12 +3237,24 @@
         "SemanticChunkingConfiguration$maxTokens": "<p>The maximum number of tokens that a chunk can contain.</p>"
       }
     },
+    "SendMessageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendMessageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "SensitiveString": {
       "base": null,
       "refs": {
         "DocumentText$text": "<p>Text in the document.</p>",
         "GenerativeDataDetails$completion": "<p>The LLM response.</p>",
-        "IntentDetectedDataDetails$intent": "<p>The detected intent.</p>"
+        "IntentDetectedDataDetails$intent": "<p>The detected intent.</p>",
+        "SelfServiceConversationHistory$botResponse": "<p>The bot response of the conversation history data.</p>",
+        "SelfServiceConversationHistory$inputTranscript": "<p>The input transcript of the conversation history data.</p>"
       }
     },
     "ServerSideEncryptionConfiguration": {
@@ -2859,6 +3360,8 @@
       "refs": {
         "AIAgentData$status": "<p>The status of the AI Agent.</p>",
         "AIAgentSummary$status": "<p>The status of the AI Agent.</p>",
+        "AIGuardrailData$status": "<p>The status of the AI Guardrail.</p>",
+        "AIGuardrailSummary$status": "<p>The status of the AI Guardrail.</p>",
         "AIPromptData$status": "<p>The status of the AI Prompt.</p>",
         "AIPromptSummary$status": "<p>The status of the AI Prompt.</p>"
       }
@@ -2986,6 +3489,8 @@
       "refs": {
         "AIAgentData$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "AIAgentSummary$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "AIGuardrailData$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "AIGuardrailSummary$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "AIPromptData$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "AIPromptSummary$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "AssistantAssociationData$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2997,6 +3502,7 @@
         "ContentData$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ContentSummary$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateAIAgentRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateAIGuardrailRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateAIPromptRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateAssistantAssociationRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateAssistantRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -3046,6 +3552,18 @@
         "AIPromptTemplateConfiguration$textFullAIPromptEditTemplateConfiguration": "<p>The configuration for a prompt template that supports full textual prompt configuration using a YAML prompt.</p>"
       }
     },
+    "TextMessage": {
+      "base": "<p>The message data in text type.</p>",
+      "refs": {
+        "MessageData$text": "<p>The message data in text type.</p>"
+      }
+    },
+    "TextMessageValueString": {
+      "base": null,
+      "refs": {
+        "TextMessage$value": "<p>The value of the message data in text type.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The throttling limit has been exceeded.</p>",
       "refs": {
@@ -3062,10 +3580,14 @@
       "refs": {
         "AIAgentData$modifiedTime": "<p>The time the AI Agent was last modified.</p>",
         "AIAgentSummary$modifiedTime": "<p>The time the AI Agent was last modified.</p>",
+        "AIGuardrailData$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
+        "AIGuardrailSummary$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
         "AIPromptData$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
         "AIPromptSummary$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
         "CreateAIAgentVersionRequest$modifiedTime": "<p>The modification time of the AI Agent should be tracked for version creation. This field should be specified to avoid version creation when simultaneous update to the underlying AI Agent are possible. The value should be the modifiedTime returned from the request to create or update an AI Agent so that version creation can fail if an update to the AI Agent post the specified modification time has been made.</p>",
-        "CreateAIPromptVersionRequest$modifiedTime": "<p>The time the AI Prompt was last modified.</p>"
+        "CreateAIGuardrailVersionRequest$modifiedTime": "<p>The time the AI Guardrail was last modified.</p>",
+        "CreateAIPromptVersionRequest$modifiedTime": "<p>The time the AI Prompt was last modified.</p>",
+        "MessageOutput$timestamp": "<p>The timestamp of a message.</p>"
       }
     },
     "TooManyTagsException": {
@@ -3089,6 +3611,16 @@
       }
     },
     "UpdateAIAgentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAIGuardrailRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAIGuardrailResponse": {
       "base": null,
       "refs": {
       }
@@ -3240,6 +3772,10 @@
         "AIAgentData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "AIAgentSummary$aiAgentId": "<p>The identifier of the AI Agent.</p>",
         "AIAgentSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "AIGuardrailData$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
+        "AIGuardrailData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "AIGuardrailSummary$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
+        "AIGuardrailSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "AIPromptData$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "AIPromptData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "AIPromptSummary$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
@@ -3272,6 +3808,7 @@
         "ExtendedMessageTemplateData$messageTemplateId": "<p>The identifier of the message template.</p>",
         "GenerativeReference$generationId": "<p> The identifier of the LLM model. </p>",
         "GetImportJobRequest$importJobId": "<p>The identifier of the import job to retrieve.</p>",
+        "GetNextMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
         "ImportJobData$importJobId": "<p>The identifier of the import job.</p>",
         "ImportJobData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "ImportJobSummary$importJobId": "<p>The identifier of the import job.</p>",
@@ -3281,6 +3818,7 @@
         "KnowledgeBaseAssociationData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "KnowledgeBaseData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "KnowledgeBaseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "MessageOutput$messageId": "<p>The identifier of a message.</p>",
         "MessageTemplateAttachment$attachmentId": "<p>The identifier of the attachment file.</p>",
         "MessageTemplateData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageTemplateData$messageTemplateId": "<p>The identifier of the message template.</p>",
@@ -3301,6 +3839,7 @@
         "QuickResponseSummary$quickResponseId": "<p>The identifier of the quick response.</p>",
         "RecommendationTrigger$id": "<p>The identifier of the recommendation trigger.</p>",
         "ResultData$resultId": "<p>The identifier of the result data.</p>",
+        "SendMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
         "SessionData$sessionId": "<p>The identifier of the session.</p>",
         "SessionSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "SessionSummary$sessionId": "<p>The identifier of the session.</p>",
@@ -3314,6 +3853,8 @@
         "ActivateMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIAgentVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "CreateAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "CreateAIGuardrailVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIPromptVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAssistantAssociationRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3328,6 +3869,8 @@
         "DeactivateMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIAgentVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteAIGuardrailVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIPromptVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAssistantAssociationRequest$assistantAssociationId": "<p>The identifier of the assistant association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3345,6 +3888,7 @@
         "DeleteQuickResponseRequest$knowledgeBaseId": "<p>The knowledge base from which the quick response is deleted. The identifier of the knowledge base.</p>",
         "DeleteQuickResponseRequest$quickResponseId": "<p>The identifier of the quick response to delete.</p>",
         "GetAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "GetAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetAssistantAssociationRequest$assistantAssociationId": "<p>The identifier of the assistant association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetAssistantAssociationRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3359,6 +3903,8 @@
         "GetImportJobRequest$knowledgeBaseId": "<p>The identifier of the knowledge base that the import job belongs to.</p>",
         "GetKnowledgeBaseRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "GetNextMessageRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
+        "GetNextMessageRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
         "GetQuickResponseRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should be a QUICK_RESPONSES type knowledge base.</p>",
         "GetQuickResponseRequest$quickResponseId": "<p>The identifier of the quick response.</p>",
         "GetRecommendationsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3367,6 +3913,8 @@
         "GetSessionRequest$sessionId": "<p>The identifier of the session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAIAgentVersionsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAIAgentsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "ListAIGuardrailVersionsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "ListAIGuardrailsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAIPromptVersionsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAIPromptsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAssistantAssociationsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3376,6 +3924,8 @@
         "ListImportJobsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListMessageTemplateVersionsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListMessageTemplatesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "ListMessagesRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
+        "ListMessagesRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
         "ListQuickResponsesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "NotifyRecommendationsReceivedRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "NotifyRecommendationsReceivedRequest$sessionId": "<p>The identifier of the session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3390,9 +3940,12 @@
         "SearchMessageTemplatesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "SearchQuickResponsesRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "SearchSessionsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "SendMessageRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
+        "SendMessageRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
         "StartContentUploadRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "StartImportJobRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p> <ul> <li> <p>For importing Amazon Q in Connect quick responses, this should be a <code>QUICK_RESPONSES</code> type knowledge base.</p> </li> </ul>",
         "UpdateAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "UpdateAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateAssistantAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3413,24 +3966,30 @@
       "refs": {
         "ActivateMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "CreateAIAgentVersionRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent.</p>",
+        "CreateAIGuardrailVersionRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "CreateAIPromptVersionRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "CreateMessageTemplateAttachmentRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "CreateMessageTemplateVersionRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "DeactivateMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "DeleteAIAgentRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIAgentVersionRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteAIGuardrailRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteAIGuardrailVersionRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "DeleteAIPromptRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAIPromptVersionRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "DeleteMessageTemplateAttachmentRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "DeleteMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN.</p>",
         "GetAIAgentRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent (with or without a version qualifier). Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "GetAIGuardrailRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "GetAIPromptRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "GetMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN.</p>",
         "ListAIAgentVersionsRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent for which versions are to be listed.</p>",
+        "ListAIGuardrailVersionsRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail for which versions are to be listed.</p>",
         "ListAIPromptVersionsRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt for which versions are to be listed.</p>",
         "ListMessageTemplateVersionsRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "RenderMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN.</p>",
         "UpdateAIAgentRequest$aiAgentId": "<p>The identifier of the Amazon Q in Connect AI Agent.</p>",
+        "UpdateAIGuardrailRequest$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "UpdateAIPromptRequest$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI Prompt.</p>",
         "UpdateMessageTemplateMetadataRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>",
         "UpdateMessageTemplateRequest$messageTemplateId": "<p>The identifier of the message template. Can be either the ID or the ARN. It cannot contain any qualifier.</p>"
@@ -3440,10 +3999,15 @@
       "base": null,
       "refs": {
         "AIAgentConfigurationData$aiAgentId": "<p>The ID of the AI Agent to be configured.</p>",
+        "AnswerRecommendationAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation Guardrail used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$intentLabelingGenerationAIPromptId": "<p>The AI Prompt identifier for the Intent Labeling prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$queryReformulationAIPromptId": "<p>The AI Prompt identifier for the Query Reformulation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
-        "ManualSearchAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the MANUAL_SEARCH AI Agent.</p>"
+        "ManualSearchAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation guardrail used by the MANUAL_SEARCH AI Agent.</p>",
+        "ManualSearchAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the MANUAL_SEARCH AI Agent.</p>",
+        "SelfServiceAIAgentConfiguration$selfServiceAIGuardrailId": "<p>The AI Guardrail identifier used by the SELF_SERVICE AI Agent.</p>",
+        "SelfServiceAIAgentConfiguration$selfServiceAnswerGenerationAIPromptId": "<p>The AI Prompt identifier for the Self Service Answer Generation prompt used by the SELF_SERVICE AI Agent</p>",
+        "SelfServiceAIAgentConfiguration$selfServicePreProcessingAIPromptId": "<p>The AI Prompt identifier for the Self Service Pre-Processing prompt used by the SELF_SERVICE AI Agent</p>"
       }
     },
     "ValidationException": {
@@ -3463,17 +4027,21 @@
       "base": null,
       "refs": {
         "AIAgentVersionSummary$versionNumber": "<p>The version number for this AI Agent version.</p>",
+        "AIGuardrailVersionSummary$versionNumber": "<p>The version number for this AI Guardrail version.</p>",
         "AIPromptVersionSummary$versionNumber": "<p>The version number for this AI Prompt version.</p>",
         "ActivateMessageTemplateRequest$versionNumber": "<p>The version number of the message template version to activate.</p>",
         "ActivateMessageTemplateResponse$versionNumber": "<p>The version number of the message template version that is activated.</p>",
         "CreateAIAgentVersionResponse$versionNumber": "<p>The version number of the AI Agent version.</p>",
+        "CreateAIGuardrailVersionResponse$versionNumber": "<p>The version number of the AI Guardrail version.</p>",
         "CreateAIPromptVersionResponse$versionNumber": "<p>The version number of the AI Prompt version.</p>",
         "DeactivateMessageTemplateRequest$versionNumber": "<p>The version number of the message template version to deactivate.</p>",
         "DeactivateMessageTemplateResponse$versionNumber": "<p>The version number of the message template version that has been deactivated.</p>",
         "DeleteAIAgentVersionRequest$versionNumber": "<p>The version number of the AI Agent version.</p>",
+        "DeleteAIGuardrailVersionRequest$versionNumber": "<p>The version number of the AI Guardrail version to be deleted.</p>",
         "DeleteAIPromptVersionRequest$versionNumber": "<p>The version number of the AI Prompt version to be deleted.</p>",
         "ExtendedMessageTemplateData$versionNumber": "<p>The version number of the message template version.</p>",
         "GetAIAgentResponse$versionNumber": "<p>The version number of the AI Agent version (returned if an AI Agent version was specified via use of a qualifier for the <code>aiAgentId</code> on the request). </p>",
+        "GetAIGuardrailResponse$versionNumber": "<p>The version number of the AI Guardrail version (returned if an AI Guardrail version was specified via use of a qualifier for the <code>aiGuardrailId</code> on the request). </p>",
         "GetAIPromptResponse$versionNumber": "<p>The version number of the AI Prompt version (returned if an AI Prompt version was specified via use of a qualifier for the <code>aiPromptId</code> on the request). </p>",
         "MessageTemplateSearchResultData$versionNumber": "<p>The version number of the message template version.</p>",
         "MessageTemplateSummary$activeVersionNumber": "<p>The version number of the message template version that is activated.</p>",
@@ -3485,11 +4053,15 @@
       "refs": {
         "AIAgentData$visibilityStatus": "<p>The visibility status of the AI Agent.</p>",
         "AIAgentSummary$visibilityStatus": "<p>The visibility status of the AI Agent.</p>",
+        "AIGuardrailData$visibilityStatus": "<p>The visibility status of the AI Guardrail.</p>",
+        "AIGuardrailSummary$visibilityStatus": "<p>The visibility status of the AI Guardrail.</p>",
         "AIPromptData$visibilityStatus": "<p>The visibility status of the AI Prompt.</p>",
         "AIPromptSummary$visibilityStatus": "<p>The visibility status of the AI Prompt.</p>",
         "CreateAIAgentRequest$visibilityStatus": "<p>The visibility status of the AI Agent.</p>",
+        "CreateAIGuardrailRequest$visibilityStatus": "<p>The visibility status of the AI Guardrail.</p>",
         "CreateAIPromptRequest$visibilityStatus": "<p>The visibility status of the AI Prompt.</p>",
         "UpdateAIAgentRequest$visibilityStatus": "<p>The visbility status of the Amazon Q in Connect AI Agent.</p>",
+        "UpdateAIGuardrailRequest$visibilityStatus": "<p>The visibility status of the Amazon Q in Connect AI Guardrail.</p>",
         "UpdateAIPromptRequest$visibilityStatus": "<p>The visibility status of the Amazon Q in Connect AI prompt.</p>"
       }
     },

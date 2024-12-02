@@ -35,6 +35,7 @@
     "GetInfrastructureConfiguration": "<p>Gets an infrastructure configuration.</p>",
     "GetLifecycleExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the lifecycle policy.</p>",
     "GetLifecyclePolicy": "<p>Get details for the specified image lifecycle policy.</p>",
+    "GetMarketplaceResource": "<p>Verify the subscription and perform resource dependency checks on the requested Amazon Web Services Marketplace resource. For Amazon Web Services Marketplace components, the response contains fields to download the components and their artifacts.</p>",
     "GetWorkflow": "<p>Get a workflow resource object.</p>",
     "GetWorkflowExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow.</p>",
     "GetWorkflowStepExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow step.</p>",
@@ -345,14 +346,15 @@
     "ComponentState": {
       "base": "<p>A group of fields that describe the current status of components.</p>",
       "refs": {
-        "Component$state": "<p>Describes the current status of the component. This is used for components that are no longer active.</p>",
+        "Component$state": "<p>Describes the current status of the component.</p>",
         "ComponentSummary$state": "<p>Describes the current status of the component.</p>"
       }
     },
     "ComponentStatus": {
       "base": null,
       "refs": {
-        "ComponentState$status": "<p>The current state of the component.</p>"
+        "ComponentState$status": "<p>The current state of the component.</p>",
+        "ComponentVersion$status": "<p>Describes the current status of the component version.</p>"
       }
     },
     "ComponentSummary": {
@@ -1069,6 +1071,16 @@
       "refs": {
       }
     },
+    "GetMarketplaceResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMarketplaceResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetWorkflowExecutionRequest": {
       "base": null,
       "refs": {
@@ -1172,6 +1184,8 @@
         "ContainerRecipeSummary$arn": "<p>The Amazon Resource Name (ARN) of the container recipe.</p>",
         "DistributionConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the distribution configuration.</p>",
         "DistributionConfigurationSummary$arn": "<p>The Amazon Resource Name (ARN) of the distribution configuration.</p>",
+        "GetMarketplaceResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies an Amazon Web Services Marketplace resource.</p>",
+        "GetMarketplaceResourceResponse$resourceArn": "<p>The Amazon Resource Name (ARN) for the Amazon Web Services Marketplace resource that was requested.</p>",
         "Image$arn": "<p>The Amazon Resource Name (ARN) of the image.</p> <note> <p>Semantic versioning is included in each object's Amazon Resource Name (ARN), at the level that applies to that object as follows:</p> <ol> <li> <p>Versionless ARNs and Name ARNs do not include specific values in any of the nodes. The nodes are either left off entirely, or they are specified as wildcards, for example: x.x.x.</p> </li> <li> <p>Version ARNs have only the first three nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</p> </li> <li> <p>Build version ARNs have all four nodes, and point to a specific build for a specific version of an object.</p> </li> </ol> </note>",
         "ImagePipeline$arn": "<p>The Amazon Resource Name (ARN) of the image pipeline.</p>",
         "ImageRecipe$arn": "<p>The Amazon Resource Name (ARN) of the image recipe.</p>",
@@ -1187,7 +1201,7 @@
       }
     },
     "ImagePackage": {
-      "base": "<p>Represents a package installed on an Image Builder image.</p>",
+      "base": "<p>A software package that's installed on top of the base image to create a customized image.</p>",
       "refs": {
         "ImagePackageList$member": null
       }
@@ -1378,7 +1392,7 @@
     "ImageTestsTimeoutMinutes": {
       "base": null,
       "refs": {
-        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeoutMinutes attribute is not currently active. This value is ignored.</p> </note>"
+        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeout attribute is not currently active. This value is ignored.</p> </note>"
       }
     },
     "ImageType": {
@@ -2092,6 +2106,18 @@
         "UpdateInfrastructureConfigurationRequest$logging": "<p>The logging configuration of the infrastructure configuration.</p>"
       }
     },
+    "MarketplaceResourceLocation": {
+      "base": null,
+      "refs": {
+        "GetMarketplaceResourceRequest$resourceLocation": "<p>The bucket path that you can specify to download the resource from Amazon S3.</p>"
+      }
+    },
+    "MarketplaceResourceType": {
+      "base": null,
+      "refs": {
+        "GetMarketplaceResourceRequest$resourceType": "<p>Specifies which type of Amazon Web Services Marketplace resource Image Builder retrieves.</p>"
+      }
+    },
     "MaxParallelLaunches": {
       "base": null,
       "refs": {
@@ -2193,11 +2219,13 @@
         "GetImageRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetImageResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetInfrastructureConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
+        "GetMarketplaceResourceResponse$url": "<p>The obfuscated S3 URL to download the component artifact from.</p>",
+        "GetMarketplaceResourceResponse$data": "<p>Returns obfuscated data that contains the YAML content of the component.</p>",
         "GetWorkflowExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetWorkflowStepExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetWorkflowStepExecutionResponse$onFailure": "<p>The action to perform if the workflow step fails.</p>",
-        "ImagePackage$packageName": "<p>The name of the package as reported to the operating system package manager.</p>",
-        "ImagePackage$packageVersion": "<p>The version of the package as reported to the operating system package manager.</p>",
+        "ImagePackage$packageName": "<p>The name of the package that's reported to the operating system package manager.</p>",
+        "ImagePackage$packageVersion": "<p>The version of the package that's reported to the operating system package manager.</p>",
         "ImagePipeline$description": "<p>The description of the image pipeline.</p>",
         "ImageRecipe$description": "<p>The description of the image recipe.</p>",
         "ImageRecipe$owner": "<p>The owner of the image recipe.</p>",
@@ -2284,7 +2312,7 @@
         "SendWorkflowStepActionRequest$reason": "<p>The reason why this action is sent.</p>",
         "StartImagePipelineExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "StringList$member": null,
-        "TargetContainerRepository$repositoryName": "<p>The name of the container repository where the output container image is stored. This name is prefixed by the repository location.</p>",
+        "TargetContainerRepository$repositoryName": "<p>The name of the container repository where the output container image is stored. This name is prefixed by the repository location. For example, <code>&lt;repository location url&gt;/repository_name</code>.</p>",
         "UpdateDistributionConfigurationRequest$description": "<p>The description of the distribution configuration.</p>",
         "UpdateDistributionConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "UpdateImagePipelineRequest$description": "<p>The description of the image pipeline.</p>",
@@ -2527,6 +2555,31 @@
         "ImageVersion$platform": "<p>The operating system platform of the image version, for example \"Windows\" or \"Linux\".</p>",
         "ImportComponentRequest$platform": "<p>The platform of the component.</p>",
         "ImportVmImageRequest$platform": "<p>The operating system platform for the imported VM.</p>"
+      }
+    },
+    "ProductCodeId": {
+      "base": null,
+      "refs": {
+        "ProductCodeListItem$productCodeId": "<p>For Amazon Web Services Marketplace components, this contains the product code ID that can be stamped onto an EC2 AMI to ensure that components are billed correctly. If this property is empty, it might mean that the component is not published.</p>"
+      }
+    },
+    "ProductCodeList": {
+      "base": null,
+      "refs": {
+        "Component$productCodes": "<p>Contains product codes that are used for billing purposes for Amazon Web Services Marketplace components.</p>",
+        "ComponentVersion$productCodes": "<p>Contains product codes that are used for billing purposes for Amazon Web Services Marketplace components.</p>"
+      }
+    },
+    "ProductCodeListItem": {
+      "base": "<p>Information about a single product code.</p>",
+      "refs": {
+        "ProductCodeList$member": null
+      }
+    },
+    "ProductCodeType": {
+      "base": null,
+      "refs": {
+        "ProductCodeListItem$productCodeType": "<p>The owner of the product code that's billed. If this property is empty, it might mean that the component is not published.</p>"
       }
     },
     "PutComponentPolicyRequest": {

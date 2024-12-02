@@ -479,6 +479,36 @@
         "CreateCollaborationInput$analyticsEngine": "<p> The analytics engine.</p>"
       }
     },
+    "AthenaDatabaseName": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$databaseName": "<p> The database name.</p>"
+      }
+    },
+    "AthenaOutputLocation": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$outputLocation": "<p> The output location for the Athena table.</p>"
+      }
+    },
+    "AthenaTableName": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$tableName": "<p> The table reference.</p>"
+      }
+    },
+    "AthenaTableReference": {
+      "base": "<p> A reference to a table within Athena.</p>",
+      "refs": {
+        "TableReference$athena": "<p> If present, a reference to the Athena table referred to by this table reference.</p>"
+      }
+    },
+    "AthenaWorkGroup": {
+      "base": null,
+      "refs": {
+        "AthenaTableReference$workGroup": "<p> The workgroup of the Athena table reference.</p>"
+      }
+    },
     "BatchGetCollaborationAnalysisTemplateError": {
       "base": "<p>Details of errors thrown by the call to retrieve multiple analysis templates within a collaboration by their identifiers.</p>",
       "refs": {
@@ -777,7 +807,7 @@
       }
     },
     "Column": {
-      "base": "<p>A column within a schema relation, derived from the underlying Glue table.</p>",
+      "base": "<p>A column within a schema relation, derived from the underlying table.</p>",
       "refs": {
         "ColumnList$member": null
       }
@@ -793,13 +823,15 @@
       "base": null,
       "refs": {
         "AllowedColumnList$member": null,
-        "Column$name": "<p>The name of the column.</p>"
+        "Column$name": "<p>The name of the column.</p>",
+        "SnowflakeTableSchemaV1$columnName": "<p> The column name.</p>"
       }
     },
     "ColumnTypeString": {
       "base": null,
       "refs": {
-        "Column$type": "<p>The type of the column.</p>"
+        "Column$type": "<p>The type of the column.</p>",
+        "SnowflakeTableSchemaV1$columnType": "<p> The column's data type. Supported data types: <code>ARRAY</code>, <code>BIGINT</code>, <code>BOOLEAN</code>, <code>CHAR</code>, <code>DATE</code>, <code>DECIMAL</code>, <code>DOUBLE</code>, <code>DOUBLE PRECISION</code>, <code>FLOAT</code>, <code>FLOAT4</code>, <code>INT</code>, <code>INTEGER</code>, <code>MAP</code>, <code>NUMERIC</code>, <code>NUMBER</code>, <code>REAL</code>, <code>SMALLINT</code>, <code>STRING</code>, <code>TIMESTAMP</code>, <code>TIMESTAMP_LTZ</code>, <code>TIMESTAMP_NTZ</code>, <code>DATETIME</code>, <code>TINYINT</code>, <code>VARCHAR</code>, <code>TEXT</code>, <code>CHARACTER</code>.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -2946,9 +2978,63 @@
         "Schema$schemaTypeProperties": "<p>The schema type properties.</p>"
       }
     },
+    "SecretsManagerArn": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableReference$secretArn": "<p> The secret ARN of the Snowflake table reference.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Request denied because service quota has been exceeded.</p>",
       "refs": {
+      }
+    },
+    "SnowflakeAccountIdentifier": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableReference$accountIdentifier": "<p> The account identifier for the Snowflake table reference.</p>"
+      }
+    },
+    "SnowflakeDatabaseName": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableReference$databaseName": "<p> The name of the database the Snowflake table belongs to.</p>"
+      }
+    },
+    "SnowflakeSchemaName": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableReference$schemaName": "<p> The schema name of the Snowflake table reference.</p>"
+      }
+    },
+    "SnowflakeTableName": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableReference$tableName": "<p> The name of the Snowflake table.</p>"
+      }
+    },
+    "SnowflakeTableReference": {
+      "base": "<p> A reference to a table within Snowflake.</p>",
+      "refs": {
+        "TableReference$snowflake": "<p> If present, a reference to the Snowflake table referred to by this table reference.</p>"
+      }
+    },
+    "SnowflakeTableSchema": {
+      "base": "<p> The schema of a Snowflake table.</p>",
+      "refs": {
+        "SnowflakeTableReference$tableSchema": "<p> The schema of the Snowflake table.</p>"
+      }
+    },
+    "SnowflakeTableSchemaList": {
+      "base": null,
+      "refs": {
+        "SnowflakeTableSchema$v1": "<p> The schema of a Snowflake table.</p>"
+      }
+    },
+    "SnowflakeTableSchemaV1": {
+      "base": "<p> The Snowflake table schema.</p>",
+      "refs": {
+        "SnowflakeTableSchemaList$member": null
       }
     },
     "StartProtectedQueryInput": {
@@ -3029,10 +3115,10 @@
       }
     },
     "TableReference": {
-      "base": "<p>A pointer to the dataset that underlies this table. Currently, this can only be an Glue table.</p>",
+      "base": "<p>A pointer to the dataset that underlies this table.</p>",
       "refs": {
-        "ConfiguredTable$tableReference": "<p>The Glue table that this configured table represents.</p>",
-        "CreateConfiguredTableInput$tableReference": "<p>A reference to the Glue table being configured.</p>"
+        "ConfiguredTable$tableReference": "<p>The table that this configured table represents.</p>",
+        "CreateConfiguredTableInput$tableReference": "<p>A reference to the table being configured.</p>"
       }
     },
     "TagKey": {

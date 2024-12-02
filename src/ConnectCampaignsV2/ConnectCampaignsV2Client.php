@@ -43,6 +43,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putConnectInstanceIntegrationAsync(array $args = [])
  * @method \Aws\Result putOutboundRequestBatch(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putOutboundRequestBatchAsync(array $args = [])
+ * @method \Aws\Result putProfileOutboundRequestBatch(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putProfileOutboundRequestBatchAsync(array $args = [])
  * @method \Aws\Result resumeCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resumeCampaignAsync(array $args = [])
  * @method \Aws\Result startCampaign(array $args = [])

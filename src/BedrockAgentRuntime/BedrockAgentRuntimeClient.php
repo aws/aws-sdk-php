@@ -17,9 +17,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise invokeInlineAgentAsync(array $args = [])
  * @method \Aws\Result optimizePrompt(array $args = [])
  * @method \GuzzleHttp\Promise\Promise optimizePromptAsync(array $args = [])
+ * @method \Aws\Result rerank(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rerankAsync(array $args = [])
  * @method \Aws\Result retrieve(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retrieveAsync(array $args = [])
  * @method \Aws\Result retrieveAndGenerate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise retrieveAndGenerateAsync(array $args = [])
+ * @method \Aws\Result retrieveAndGenerateStream(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise retrieveAndGenerateStreamAsync(array $args = [])
  */
 class BedrockAgentRuntimeClient extends AwsClient {}

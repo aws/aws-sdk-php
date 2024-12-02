@@ -400,6 +400,25 @@
       ],
       "idempotent":true
     },
+    "DeleteKnowledgeBaseDocuments":{
+      "name":"DeleteKnowledgeBaseDocuments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents/deleteDocuments",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteKnowledgeBaseDocumentsRequest"},
+      "output":{"shape":"DeleteKnowledgeBaseDocumentsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
     "DeletePrompt":{
       "name":"DeletePrompt",
       "http":{
@@ -625,6 +644,24 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetKnowledgeBaseDocuments":{
+      "name":"GetKnowledgeBaseDocuments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents/getDocuments",
+        "responseCode":200
+      },
+      "input":{"shape":"GetKnowledgeBaseDocumentsRequest"},
+      "output":{"shape":"GetKnowledgeBaseDocumentsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "GetPrompt":{
       "name":"GetPrompt",
       "http":{
@@ -641,6 +678,25 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "IngestKnowledgeBaseDocuments":{
+      "name":"IngestKnowledgeBaseDocuments",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents",
+        "responseCode":202
+      },
+      "input":{"shape":"IngestKnowledgeBaseDocumentsRequest"},
+      "output":{"shape":"IngestKnowledgeBaseDocumentsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
     },
     "ListAgentActionGroups":{
       "name":"ListAgentActionGroups",
@@ -808,6 +864,24 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListKnowledgeBaseDocuments":{
+      "name":"ListKnowledgeBaseDocuments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents",
+        "responseCode":200
+      },
+      "input":{"shape":"ListKnowledgeBaseDocumentsRequest"},
+      "output":{"shape":"ListKnowledgeBaseDocumentsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "ListKnowledgeBases":{
@@ -1637,6 +1711,27 @@
       "min":12,
       "pattern":"^[0-9]{12}$"
     },
+    "ByteContentBlob":{
+      "type":"blob",
+      "max":5242880,
+      "min":1,
+      "sensitive":true
+    },
+    "ByteContentDoc":{
+      "type":"structure",
+      "required":[
+        "data",
+        "mimeType"
+      ],
+      "members":{
+        "data":{"shape":"ByteContentBlob"},
+        "mimeType":{"shape":"ByteContentDocMimeTypeString"}
+      }
+    },
+    "ByteContentDocMimeTypeString":{
+      "type":"string",
+      "pattern":"[a-z]{1,20}/.{1,20}"
+    },
     "ChatPromptTemplateConfiguration":{
       "type":"structure",
       "required":["messages"],
@@ -1753,6 +1848,13 @@
     "ContentBlocks":{
       "type":"list",
       "member":{"shape":"ContentBlock"}
+    },
+    "ContentDataSourceType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM",
+        "S3"
+      ]
     },
     "ConversationRole":{
       "type":"string",
@@ -2146,15 +2248,55 @@
         "OVERRIDDEN"
       ]
     },
+    "CustomContent":{
+      "type":"structure",
+      "required":[
+        "customDocumentIdentifier",
+        "sourceType"
+      ],
+      "members":{
+        "customDocumentIdentifier":{"shape":"CustomDocumentIdentifier"},
+        "inlineContent":{"shape":"InlineContent"},
+        "s3Location":{"shape":"CustomS3Location"},
+        "sourceType":{"shape":"CustomSourceType"}
+      }
+    },
     "CustomControlMethod":{
       "type":"string",
       "enum":["RETURN_CONTROL"]
+    },
+    "CustomDocumentIdentifier":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"CustomDocumentIdentifierIdString"}
+      }
+    },
+    "CustomDocumentIdentifierIdString":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "CustomOrchestration":{
       "type":"structure",
       "members":{
         "executor":{"shape":"OrchestrationExecutor"}
       }
+    },
+    "CustomS3Location":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"},
+        "uri":{"shape":"S3ObjectUri"}
+      }
+    },
+    "CustomSourceType":{
+      "type":"string",
+      "enum":[
+        "IN_LINE",
+        "S3_LOCATION"
+      ]
     },
     "CustomTransformationConfiguration":{
       "type":"structure",
@@ -2173,6 +2315,12 @@
       "members":{
         "connection":{"shape":"FlowConnectionName"}
       }
+    },
+    "Data":{
+      "type":"string",
+      "max":5242880,
+      "min":1,
+      "sensitive":true
     },
     "DataDeletionPolicy":{
       "type":"string",
@@ -2256,7 +2404,8 @@
         "WEB",
         "CONFLUENCE",
         "SALESFORCE",
-        "SHAREPOINT"
+        "SHAREPOINT",
+        "CUSTOM"
       ]
     },
     "DateTimestamp":{
@@ -2514,6 +2663,37 @@
         "version":{"shape":"NumericalVersion"}
       }
     },
+    "DeleteKnowledgeBaseDocumentsRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "documentIdentifiers",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "documentIdentifiers":{"shape":"DocumentIdentifiers"},
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        }
+      }
+    },
+    "DeleteKnowledgeBaseDocumentsResponse":{
+      "type":"structure",
+      "members":{
+        "documentDetails":{"shape":"KnowledgeBaseDocumentDetails"}
+      }
+    },
     "DeleteKnowledgeBaseRequest":{
       "type":"structure",
       "required":["knowledgeBaseId"],
@@ -2606,6 +2786,62 @@
       "members":{
       },
       "document":true
+    },
+    "DocumentContent":{
+      "type":"structure",
+      "required":["dataSourceType"],
+      "members":{
+        "custom":{"shape":"CustomContent"},
+        "dataSourceType":{"shape":"ContentDataSourceType"},
+        "s3":{"shape":"S3Content"}
+      }
+    },
+    "DocumentIdentifier":{
+      "type":"structure",
+      "required":["dataSourceType"],
+      "members":{
+        "custom":{"shape":"CustomDocumentIdentifier"},
+        "dataSourceType":{"shape":"ContentDataSourceType"},
+        "s3":{"shape":"S3Location"}
+      }
+    },
+    "DocumentIdentifiers":{
+      "type":"list",
+      "member":{"shape":"DocumentIdentifier"},
+      "max":10,
+      "min":1
+    },
+    "DocumentMetadata":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "inlineAttributes":{"shape":"DocumentMetadataInlineAttributesList"},
+        "s3Location":{"shape":"CustomS3Location"},
+        "type":{"shape":"MetadataSourceType"}
+      }
+    },
+    "DocumentMetadataInlineAttributesList":{
+      "type":"list",
+      "member":{"shape":"MetadataAttribute"},
+      "max":50,
+      "min":1
+    },
+    "DocumentStatus":{
+      "type":"string",
+      "enum":[
+        "INDEXED",
+        "PARTIALLY_INDEXED",
+        "PENDING",
+        "FAILED",
+        "METADATA_PARTIALLY_INDEXED",
+        "METADATA_UPDATE_FAILED",
+        "IGNORED",
+        "NOT_FOUND",
+        "STARTING",
+        "IN_PROGRESS",
+        "DELETING",
+        "DELETE_IN_PROGRESS"
+      ]
     },
     "DraftVersion":{
       "type":"string",
@@ -3493,6 +3729,33 @@
         "ingestionJob":{"shape":"IngestionJob"}
       }
     },
+    "GetKnowledgeBaseDocumentsRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "documentIdentifiers",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "documentIdentifiers":{"shape":"DocumentIdentifiers"},
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        }
+      }
+    },
+    "GetKnowledgeBaseDocumentsResponse":{
+      "type":"structure",
+      "members":{
+        "documentDetails":{"shape":"KnowledgeBaseDocumentDetails"}
+      }
+    },
     "GetKnowledgeBaseRequest":{
       "type":"structure",
       "required":["knowledgeBaseId"],
@@ -3627,6 +3890,37 @@
         "topP":{"shape":"TopP"}
       }
     },
+    "IngestKnowledgeBaseDocumentsRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "documents",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "documents":{"shape":"KnowledgeBaseDocuments"},
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        }
+      }
+    },
+    "IngestKnowledgeBaseDocumentsResponse":{
+      "type":"structure",
+      "members":{
+        "documentDetails":{"shape":"KnowledgeBaseDocumentDetails"}
+      }
+    },
     "IngestionJob":{
       "type":"structure",
       "required":[
@@ -3754,6 +4048,22 @@
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
+    "InlineContent":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "byteContent":{"shape":"ByteContentDoc"},
+        "textContent":{"shape":"TextContentDoc"},
+        "type":{"shape":"InlineContentType"}
+      }
+    },
+    "InlineContentType":{
+      "type":"string",
+      "enum":[
+        "BYTE",
+        "TEXT"
+      ]
+    },
     "InputFlowNodeConfiguration":{
       "type":"structure",
       "members":{
@@ -3785,6 +4095,12 @@
       "type":"structure",
       "members":{
       }
+    },
+    "Key":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
     },
     "KmsKeyArn":{
       "type":"string",
@@ -3832,6 +4148,41 @@
         "type":{"shape":"KnowledgeBaseType"},
         "vectorKnowledgeBaseConfiguration":{"shape":"VectorKnowledgeBaseConfiguration"}
       }
+    },
+    "KnowledgeBaseDocument":{
+      "type":"structure",
+      "required":["content"],
+      "members":{
+        "content":{"shape":"DocumentContent"},
+        "metadata":{"shape":"DocumentMetadata"}
+      }
+    },
+    "KnowledgeBaseDocumentDetail":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "identifier",
+        "knowledgeBaseId",
+        "status"
+      ],
+      "members":{
+        "dataSourceId":{"shape":"Id"},
+        "identifier":{"shape":"DocumentIdentifier"},
+        "knowledgeBaseId":{"shape":"Id"},
+        "status":{"shape":"DocumentStatus"},
+        "statusReason":{"shape":"String"},
+        "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "KnowledgeBaseDocumentDetails":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseDocumentDetail"}
+    },
+    "KnowledgeBaseDocuments":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseDocument"},
+      "max":10,
+      "min":1
     },
     "KnowledgeBaseFlowNodeConfiguration":{
       "type":"structure",
@@ -4195,6 +4546,35 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListKnowledgeBaseDocumentsRequest":{
+      "type":"structure",
+      "required":[
+        "dataSourceId",
+        "knowledgeBaseId"
+      ],
+      "members":{
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListKnowledgeBaseDocumentsResponse":{
+      "type":"structure",
+      "required":["documentDetails"],
+      "members":{
+        "documentDetails":{"shape":"KnowledgeBaseDocumentDetails"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListKnowledgeBasesRequest":{
       "type":"structure",
       "members":{
@@ -4319,6 +4699,50 @@
     "Messages":{
       "type":"list",
       "member":{"shape":"Message"}
+    },
+    "MetadataAttribute":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"Key"},
+        "value":{"shape":"MetadataAttributeValue"}
+      }
+    },
+    "MetadataAttributeValue":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "booleanValue":{"shape":"Boolean"},
+        "numberValue":{"shape":"NumberValue"},
+        "stringListValue":{"shape":"MetadataAttributeValueStringListValueList"},
+        "stringValue":{"shape":"StringValue"},
+        "type":{"shape":"MetadataValueType"}
+      }
+    },
+    "MetadataAttributeValueStringListValueList":{
+      "type":"list",
+      "member":{"shape":"StringValue"},
+      "max":10,
+      "min":1
+    },
+    "MetadataSourceType":{
+      "type":"string",
+      "enum":[
+        "IN_LINE_ATTRIBUTE",
+        "S3_LOCATION"
+      ]
+    },
+    "MetadataValueType":{
+      "type":"string",
+      "enum":[
+        "BOOLEAN",
+        "NUMBER",
+        "STRING",
+        "STRING_LIST"
+      ]
     },
     "Microsoft365TenantId":{
       "type":"string",
@@ -4502,6 +4926,11 @@
     "NonEmptyString":{
       "type":"string",
       "min":1
+    },
+    "NumberValue":{
+      "type":"double",
+      "box":true,
+      "sensitive":true
     },
     "NumericalVersion":{
       "type":"string",
@@ -5142,6 +5571,13 @@
       "min":1,
       "pattern":"^s3://.{1,128}$"
     },
+    "S3Content":{
+      "type":"structure",
+      "required":["s3Location"],
+      "members":{
+        "s3Location":{"shape":"S3Location"}
+      }
+    },
     "S3DataSourceConfiguration":{
       "type":"structure",
       "required":["bucketArn"],
@@ -5170,6 +5606,12 @@
       "max":1024,
       "min":1,
       "pattern":"^[\\.\\-\\!\\*\\_\\'\\(\\)a-zA-Z0-9][\\.\\-\\!\\*\\_\\'\\(\\)\\/a-zA-Z0-9]*$"
+    },
+    "S3ObjectUri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}$"
     },
     "S3Prefix":{
       "type":"string",
@@ -5461,6 +5903,12 @@
       "union":true
     },
     "String":{"type":"string"},
+    "StringValue":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
     "SystemContentBlock":{
       "type":"structure",
       "members":{
@@ -5527,6 +5975,13 @@
       "box":true,
       "max":1,
       "min":0
+    },
+    "TextContentDoc":{
+      "type":"structure",
+      "required":["data"],
+      "members":{
+        "data":{"shape":"Data"}
+      }
     },
     "TextPrompt":{
       "type":"string",

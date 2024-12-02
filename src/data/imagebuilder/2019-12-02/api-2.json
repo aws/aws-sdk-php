@@ -629,6 +629,23 @@
         {"shape":"CallRateLimitExceededException"}
       ]
     },
+    "GetMarketplaceResource":{
+      "name":"GetMarketplaceResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetMarketplaceResource"
+      },
+      "input":{"shape":"GetMarketplaceResourceRequest"},
+      "output":{"shape":"GetMarketplaceResourceResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
     "GetWorkflow":{
       "name":"GetWorkflow",
       "http":{
@@ -1503,7 +1520,8 @@
         "dateCreated":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
         "publisher":{"shape":"NonEmptyString"},
-        "obfuscate":{"shape":"Boolean"}
+        "obfuscate":{"shape":"Boolean"},
+        "productCodes":{"shape":"ProductCodeList"}
       }
     },
     "ComponentBuildVersionArn":{
@@ -1597,7 +1615,11 @@
     },
     "ComponentStatus":{
       "type":"string",
-      "enum":["DEPRECATED"]
+      "enum":[
+        "DEPRECATED",
+        "DISABLED",
+        "ACTIVE"
+      ]
     },
     "ComponentSummary":{
       "type":"structure",
@@ -1640,7 +1662,9 @@
         "supportedOsVersions":{"shape":"OsVersionList"},
         "type":{"shape":"ComponentType"},
         "owner":{"shape":"NonEmptyString"},
-        "dateCreated":{"shape":"DateTime"}
+        "dateCreated":{"shape":"DateTime"},
+        "status":{"shape":"ComponentStatus"},
+        "productCodes":{"shape":"ProductCodeList"}
       }
     },
     "ComponentVersionArn":{
@@ -2390,7 +2414,7 @@
     },
     "FilterValue":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z./_ :-]{1,1024}$"
+      "pattern":"^[0-9a-zA-Z./_ :,{}\"-]{1,1024}$"
     },
     "FilterValues":{
       "type":"list",
@@ -2636,6 +2660,26 @@
       "type":"structure",
       "members":{
         "lifecyclePolicy":{"shape":"LifecyclePolicy"}
+      }
+    },
+    "GetMarketplaceResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "resourceArn"
+      ],
+      "members":{
+        "resourceType":{"shape":"MarketplaceResourceType"},
+        "resourceArn":{"shape":"ImageBuilderArn"},
+        "resourceLocation":{"shape":"MarketplaceResourceLocation"}
+      }
+    },
+    "GetMarketplaceResourceResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ImageBuilderArn"},
+        "url":{"shape":"NonEmptyString"},
+        "data":{"shape":"NonEmptyString"}
       }
     },
     "GetWorkflowExecutionRequest":{
@@ -4059,6 +4103,18 @@
         "s3Logs":{"shape":"S3Logs"}
       }
     },
+    "MarketplaceResourceLocation":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^s3://[^/]+/.+[^/]$"
+    },
+    "MarketplaceResourceType":{
+      "type":"string",
+      "enum":[
+        "COMPONENT_DATA",
+        "COMPONENT_ARTIFACT"
+      ]
+    },
     "MaxParallelLaunches":{
       "type":"integer",
       "min":1
@@ -4128,7 +4184,8 @@
         "Self",
         "Shared",
         "Amazon",
-        "ThirdParty"
+        "ThirdParty",
+        "AWSMarketplace"
       ]
     },
     "PackageArchitecture":{"type":"string"},
@@ -4190,6 +4247,29 @@
         "Linux",
         "macOS"
       ]
+    },
+    "ProductCodeId":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9]{1,25}$"
+    },
+    "ProductCodeList":{
+      "type":"list",
+      "member":{"shape":"ProductCodeListItem"}
+    },
+    "ProductCodeListItem":{
+      "type":"structure",
+      "required":[
+        "productCodeId",
+        "productCodeType"
+      ],
+      "members":{
+        "productCodeId":{"shape":"ProductCodeId"},
+        "productCodeType":{"shape":"ProductCodeType"}
+      }
+    },
+    "ProductCodeType":{
+      "type":"string",
+      "enum":["marketplace"]
     },
     "PutComponentPolicyRequest":{
       "type":"structure",

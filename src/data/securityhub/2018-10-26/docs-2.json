@@ -193,6 +193,36 @@
         "DescribeActionTargetsResponse$ActionTargets": "<p>A list of <code>ActionTarget</code> objects. Each object includes the <code>ActionTargetArn</code>, <code>Description</code>, and <code>Name</code> of a custom action target available in Security Hub.</p>"
       }
     },
+    "Actor": {
+      "base": "<p> Information about the threat actor identified in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
+      "refs": {
+        "ActorsList$member": null
+      }
+    },
+    "ActorSession": {
+      "base": "<p> Contains information about the authenticated session used by the threat actor identified in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
+      "refs": {
+        "Actor$Session": "<p> Contains information about the user session where the activity initiated.</p>"
+      }
+    },
+    "ActorSessionMfaStatus": {
+      "base": null,
+      "refs": {
+        "ActorSession$MfaStatus": "<p> Indicates whether multi-factor authentication (MFA) was used for authentication during the session.</p> <p>In CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.mfaAuthenticated</code>.</p>"
+      }
+    },
+    "ActorUser": {
+      "base": "<p> Contains information about the credentials used by the threat actor identified in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
+      "refs": {
+        "Actor$User": "<p> Contains information about the user credentials used by the threat actor.</p>"
+      }
+    },
+    "ActorsList": {
+      "base": null,
+      "refs": {
+        "Sequence$Actors": "<p> Provides information about the actors involved in the attack sequence. </p>"
+      }
+    },
     "Adjustment": {
       "base": "<p>An adjustment to the CVSS metric.</p>",
       "refs": {
@@ -4819,6 +4849,12 @@
         "ListConfigurationPoliciesResponse$ConfigurationPolicySummaries": "<p> Provides metadata for each of your configuration policies. </p>"
       }
     },
+    "ConnectionDirection": {
+      "base": null,
+      "refs": {
+        "NetworkConnection$Direction": "<p> The direction in which the network traffic is flowing. </p>"
+      }
+    },
     "ContainerDetails": {
       "base": "<p>Container details related to a finding.</p>",
       "refs": {
@@ -5125,6 +5161,12 @@
       "refs": {
       }
     },
+    "Detection": {
+      "base": "<p> A top-level object field that provides details about an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
+      "refs": {
+        "AwsSecurityFinding$Detection": "<p> Provides details about an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>"
+      }
+    },
     "DisableImportFindingsForProductRequest": {
       "base": null,
       "refs": {
@@ -5216,6 +5258,8 @@
         "DoubleConfigurationOptions$Max": "<p> The maximum valid value for a control parameter that is a double. </p>",
         "GeoLocation$Lon": "<p>The longitude of the location.</p>",
         "GeoLocation$Lat": "<p>The latitude of the location.</p>",
+        "NetworkGeoLocation$Lat": "<p> The latitude information of the endpoint location. </p>",
+        "NetworkGeoLocation$Lon": "<p> The longitude information of the endpoint location. </p>",
         "NumberFilter$Gte": "<p>The greater-than-equal condition to be applied to a single field when querying for findings. </p>",
         "NumberFilter$Lte": "<p>The less-than-equal condition to be applied to a single field when querying for findings. </p>",
         "NumberFilter$Eq": "<p>The equal-to condition to be applied to a single field when querying for findings.</p>",
@@ -5224,6 +5268,7 @@
         "ParameterValue$Double": "<p> A control parameter that is a double. </p>",
         "Severity$Product": "<p>Deprecated. This attribute isn't included in findings. Instead of providing <code>Product</code>, provide <code>Original</code>.</p> <p>The native severity as defined by the Amazon Web Services service or integrated partner product that generated the finding.</p>",
         "SeverityUpdate$Product": "<p>The native severity as defined by the Amazon Web Services service or integrated partner product that generated the finding.</p>",
+        "Signal$Severity": "<p>The severity associated with the signal. For more information about severity, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
         "Vulnerability$EpssScore": "<p>The Exploit Prediction Scoring System (EPSS) score for a finding. </p>"
       }
     },
@@ -5585,6 +5630,19 @@
         "BatchImportFindingsResponse$FailedFindings": "<p>The list of findings that failed to import.</p>"
       }
     },
+    "Indicator": {
+      "base": "<p> Contains information about the indicators observed in an Amazon GuardDuty Extended Threat Detection attack sequence. Indicators include a set of signals, which can be API activities or findings that GuardDuty uses to detect an attack sequence finding. GuardDuty generates an attack sequence finding when multiple signals align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "IndicatorsList$member": null
+      }
+    },
+    "IndicatorsList": {
+      "base": null,
+      "refs": {
+        "Sequence$SequenceIndicators": "<p> Contains information about the indicators observed in the attack sequence. The values for <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_Signal.html\">SignalIndicators</a> are a subset of the values for <code>SequenceIndicators</code>, but the values for these fields don't always match 1:1.</p>",
+        "Signal$SignalIndicators": "<p> Contains information about the indicators associated with the signals in this attack sequence finding. The values for <code>SignalIndicators</code> are a subset of the values for <a href=\"https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_Sequence.html\">SequenceIndicators</a>, but the values for these fields don't always match 1:1. </p>"
+      }
+    },
     "Insight": {
       "base": "<p>Contains information about a Security Hub insight.</p>",
       "refs": {
@@ -5841,6 +5899,8 @@
         "IpOrganizationDetails$Asn": "<p>The Autonomous System Number (ASN) of the internet provider</p>",
         "Network$SourcePort": "<p>The source port of network-related information about a finding.</p>",
         "Network$DestinationPort": "<p>The destination port of network-related information about a finding.</p>",
+        "NetworkAutonomousSystem$Number": "<p> The unique number that identifies the AS. </p>",
+        "NetworkEndpoint$Port": "<p> The port number associated with the network endpoint. </p>",
         "ParameterValue$Integer": "<p> A control parameter that is an integer. </p>",
         "PatchSummary$InstalledCount": "<p>The number of patches from the compliance standard that were installed successfully.</p> <p>The value can be an integer from <code>0</code> to <code>100000</code>.</p>",
         "PatchSummary$MissingCount": "<p>The number of patches that are part of the compliance standard but are not installed. The count includes patches that failed to install.</p> <p>The value can be an integer from <code>0</code> to <code>100000</code>.</p>",
@@ -5861,6 +5921,7 @@
         "RuleGroupSourceStatelessRuleMatchAttributesSourcePorts$ToPort": "<p>The ending port value for the port range.</p>",
         "RuleGroupSourceStatelessRulesDetails$Priority": "<p>Indicates the order in which to run this rule relative to all of the rules in the stateless rule group.</p>",
         "Severity$Normalized": "<p>Deprecated. The normalized severity of a finding. Instead of providing <code>Normalized</code>, provide <code>Label</code>.</p> <p>The value of <code>Normalized</code> can be an integer between <code>0</code> and <code>100</code>.</p> <p>If you provide <code>Label</code> and don't provide <code>Normalized</code>, then <code>Normalized</code> is set automatically as follows.</p> <ul> <li> <p> <code>INFORMATIONAL</code> - 0</p> </li> <li> <p> <code>LOW</code> - 1</p> </li> <li> <p> <code>MEDIUM</code> - 40</p> </li> <li> <p> <code>HIGH</code> - 70</p> </li> <li> <p> <code>CRITICAL</code> - 90</p> </li> </ul>",
+        "Signal$Count": "<p> The number of times this signal was observed. </p>",
         "StringListConfigurationOptions$MaxItems": "<p> The maximum number of list items that a string list control parameter can accept. </p>",
         "Threat$ItemCount": "<p>This total number of items in which the threat has been detected. </p>",
         "UnprocessedAutomationRule$ErrorCode": "<p> The error code associated with the unprocessed automation rule. </p>"
@@ -6110,6 +6171,7 @@
     "Long": {
       "base": null,
       "refs": {
+        "ActorSession$CreatedTime": "<p>The timestamp for when the session was created. </p> <p>In CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.creationDate</code>.</p>",
         "AwsAppSyncGraphQlApiOpenIdConnectConfigDetails$AuthTtL": "<p> The number of milliseconds that a token is valid after being authenticated. </p>",
         "AwsAppSyncGraphQlApiOpenIdConnectConfigDetails$IatTtL": "<p> The number of milliseconds that a token is valid after it's issued to a user. </p>",
         "AwsBackupBackupPlanLifecycleDetails$DeleteAfterDays": "<p>Specifies the number of days after creation that a recovery point is deleted. Must be greater than 90 days plus <code>MoveToColdStorageAfterDays</code>. </p>",
@@ -6142,7 +6204,11 @@
         "Range$StartColumn": "<p>In the line where the sensitive data starts, the column within the line where the sensitive data starts.</p>",
         "Record$RecordIndex": "<p>The record index, starting from 0, for the record that contains the data.</p>",
         "SensitiveDataDetections$Count": "<p>The total number of occurrences of sensitive data that were detected.</p>",
-        "SensitiveDataResult$TotalCount": "<p>The total number of occurrences of sensitive data.</p>"
+        "SensitiveDataResult$TotalCount": "<p>The total number of occurrences of sensitive data.</p>",
+        "Signal$CreatedAt": "<p> The timestamp when the first finding or activity related to this signal was observed. </p>",
+        "Signal$UpdatedAt": "<p> The timestamp when this signal was last observed. </p>",
+        "Signal$FirstSeenAt": "<p> The timestamp when the first finding or activity related to this signal was observed. </p>",
+        "Signal$LastSeenAt": "<p> The timestamp when the last finding or activity related to this signal was observed. </p>"
       }
     },
     "Malware": {
@@ -6232,6 +6298,18 @@
         "AwsSecurityFinding$Network": "<p>The details of network-related information about a finding.</p>"
       }
     },
+    "NetworkAutonomousSystem": {
+      "base": "<p> Contains information about the Autonomous System (AS) of the network endpoints involved in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "NetworkEndpoint$AutonomousSystem": "<p> The Autonomous System Number (ASN) of the network endpoint. </p>"
+      }
+    },
+    "NetworkConnection": {
+      "base": "<p> Contains information about the network connection involved in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "NetworkEndpoint$Connection": "<p> Information about the network connection. </p>"
+      }
+    },
     "NetworkConnectionAction": {
       "base": "<p>Provided if <code>ActionType</code> is <code>NETWORK_CONNECTION</code>. It provides details about the attempted network connection that was detected.</p>",
       "refs": {
@@ -6242,6 +6320,24 @@
       "base": null,
       "refs": {
         "Network$Direction": "<p>The direction of network traffic associated with a finding.</p>"
+      }
+    },
+    "NetworkEndpoint": {
+      "base": "<p> Contains information about network endpoints involved in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p> <p>This field can provide information about the network endpoints associated with the resource in the attack sequence finding, or about a specific network endpoint used for the attack.</p>",
+      "refs": {
+        "NetworkEndpointsList$member": null
+      }
+    },
+    "NetworkEndpointsList": {
+      "base": null,
+      "refs": {
+        "Sequence$Endpoints": "<p> Contains information about the network endpoints that were used in the attack sequence. </p>"
+      }
+    },
+    "NetworkGeoLocation": {
+      "base": "<p> Contains information about the location of a network endpoint involved in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "NetworkEndpoint$Location": "<p> Information about the location of the network endpoint. </p>"
       }
     },
     "NetworkHeader": {
@@ -6329,6 +6425,13 @@
         "ActionTarget$ActionTargetArn": "<p>The ARN for the target action.</p>",
         "ActionTarget$Name": "<p>The name of the action target.</p>",
         "ActionTarget$Description": "<p>The description of the target action.</p>",
+        "Actor$Id": "<p> The ID of the threat actor. </p>",
+        "ActorSession$Uid": "<p> Unique identifier of the session. </p>",
+        "ActorSession$Issuer": "<p> The issuer of the session. </p> <p>In CloudTrail, you can find this value as <code>userIdentity.sessionContext.sessionIssuer.arn</code>.</p>",
+        "ActorUser$Name": "<p> The name of the threat actor. </p>",
+        "ActorUser$Uid": "<p> The unique identifier of the threat actor. </p>",
+        "ActorUser$Type": "<p> The type of user. </p>",
+        "ActorUser$CredentialUid": "<p> Unique identifier of the threat actor’s user credentials. </p>",
         "Adjustment$Metric": "<p>The metric to adjust.</p>",
         "Adjustment$Reason": "<p>The reason for the adjustment.</p>",
         "AdminAccount$AccountId": "<p>The Amazon Web Services account identifier of the Security Hub administrator account.</p>",
@@ -7757,6 +7860,9 @@
         "ImportFindingsError$Id": "<p>The identifier of the finding that could not be updated.</p>",
         "ImportFindingsError$ErrorCode": "<p>The code of the error returned by the <code>BatchImportFindings</code> operation.</p>",
         "ImportFindingsError$ErrorMessage": "<p>The message of the error returned by the <code>BatchImportFindings</code> operation.</p>",
+        "Indicator$Key": "<p> The name of the indicator that’s present in the attack sequence finding. </p>",
+        "Indicator$Title": "<p> The title describing the indicator. </p>",
+        "Indicator$Type": "<p> The type of indicator. </p>",
         "Insight$InsightArn": "<p>The ARN of a Security Hub insight.</p>",
         "Insight$Name": "<p>The name of a Security Hub insight.</p>",
         "Insight$GroupByAttribute": "<p>The grouping attribute for the insight's findings. Indicates how to group the matching findings, and identifies the type of item that the insight applies to. For example, if an insight is grouped by resource identifier, then the insight produces a list of resource identifiers.</p>",
@@ -7803,8 +7909,14 @@
         "Network$DestinationIpV4": "<p>The destination IPv4 address of network-related information about a finding.</p>",
         "Network$DestinationIpV6": "<p>The destination IPv6 address of network-related information about a finding.</p>",
         "Network$DestinationDomain": "<p>The destination domain of network-related information about a finding.</p> <p>Length Constraints: Minimum of 1. Maximum of 128.</p>",
+        "NetworkAutonomousSystem$Name": "<p> The name associated with the AS. </p>",
         "NetworkConnectionAction$ConnectionDirection": "<p>The direction of the network connection request (<code>IN</code> or <code>OUT</code>).</p>",
         "NetworkConnectionAction$Protocol": "<p>The protocol used to make the network connection request.</p> <p>Length Constraints: Minimum length of 1. Maximum length of 64.</p>",
+        "NetworkEndpoint$Id": "<p> The identifier of the network endpoint involved in the attack sequence. </p>",
+        "NetworkEndpoint$Ip": "<p> The IP address used in the network endpoint. </p>",
+        "NetworkEndpoint$Domain": "<p> The domain information for the network endpoint. </p>",
+        "NetworkGeoLocation$City": "<p> The name of the city. </p>",
+        "NetworkGeoLocation$Country": "<p> The name of the country. </p>",
         "NetworkHeader$Protocol": "<p>The protocol used for the component.</p> <p>Length Constraints: Minimum of 1. Maximum of 16.</p>",
         "NetworkPathComponent$ComponentId": "<p>The identifier of a component in the network path.</p> <p>Length Constraints: Minimum of 1. Maximum of 32.</p>",
         "NetworkPathComponent$ComponentType": "<p>The type of component.</p> <p>Length Constraints: Minimum of 1. Maximum of 32.</p>",
@@ -7901,7 +8013,13 @@
         "SecurityGroups$member": null,
         "SensitiveDataDetections$Type": "<p>The type of sensitive data that was detected. For example, the type might indicate that the data is an email address.</p>",
         "SensitiveDataResult$Category": "<p>The category of sensitive data that was detected. For example, the category can indicate that the sensitive data involved credentials, financial information, or personal information.</p>",
+        "Sequence$Uid": "<p> Unique identifier of the attack sequence. </p>",
         "Severity$Original": "<p>The native severity from the finding product that generated the finding.</p> <p>Length Constraints: Minimum length of 1. Maximum length of 64.</p>",
+        "Signal$Type": "<p> The type of the signal used to identify an attack sequence. </p> <p>Signals can be GuardDuty findings or activities observed in data sources that GuardDuty monitors. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html\">GuardDuty foundational data sources</a> in the <i>Amazon GuardDuty User Guide</i>.</p> <p>A signal type can be one of the following values. Here are the related descriptions:</p> <ul> <li> <p> <code>FINDING</code> - Individually generated GuardDuty finding.</p> </li> <li> <p> <code>CLOUD_TRAIL</code> - Activity observed from CloudTrail logs</p> </li> <li> <p> <code>S3_DATA_EVENTS</code> - Activity observed from CloudTrail data events for Amazon Simple Storage Service (S3). Activities associated with this type will show up only when you have enabled GuardDuty S3 Protection feature in your account. For more information about S3 Protection and the steps to enable it, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html\">S3 Protection</a> in the <i>Amazon GuardDuty User Guide</i>.</p> </li> </ul>",
+        "Signal$Id": "<p> The identifier of the signal. </p>",
+        "Signal$Title": "<p> The description of the GuardDuty finding. </p>",
+        "Signal$ProductArn": "<p> The Amazon Resource Name (ARN) of the product that generated the signal. </p>",
+        "Signal$Name": "<p> The name of the GuardDuty signal. For example, when signal type is <code>FINDING</code>, the signal name is the name of the finding. </p>",
         "SoftwarePackage$Name": "<p>The name of the software package.</p>",
         "SoftwarePackage$Version": "<p>The version of the software package.</p>",
         "SoftwarePackage$Epoch": "<p>The epoch of the software package.</p>",
@@ -7955,7 +8073,7 @@
         "StartConfigurationPolicyAssociationResponse$AssociationStatusMessage": "<p> An explanation for a <code>FAILED</code> value for <code>AssociationStatus</code>. </p>",
         "StartConfigurationPolicyDisassociationRequest$ConfigurationPolicyIdentifier": "<p> The Amazon Resource Name (ARN) of a configuration policy, the universally unique identifier (UUID) of a configuration policy, or a value of <code>SELF_MANAGED_SECURITY_HUB</code> for a self-managed configuration. </p>",
         "StatelessCustomPublishMetricActionDimension$Value": "<p>The value to use for the custom metric dimension.</p>",
-        "StatusReason$ReasonCode": "<p>A code that represents a reason for the control status. For the list of status reason codes and their meanings, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-results.html#securityhub-standards-results-asff\">Standards-related information in the ASFF</a> in the <i>Security Hub User Guide</i>. </p>",
+        "StatusReason$ReasonCode": "<p>A code that represents a reason for the control status. For the list of status reason codes and their meanings, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/controls-findings-create-update.html#control-findings-asff-compliance\">Compliance details for control findings</a> in the <i>Security Hub User Guide</i>. </p>",
         "StatusReason$Description": "<p>The corresponding description for the status reason code.</p>",
         "StringConfigurationOptions$DefaultValue": "<p> The Security Hub default value for a control parameter that is a string. </p>",
         "StringConfigurationOptions$Re2Expression": "<p> An RE2 regular expression that Security Hub uses to validate a user-provided control parameter string. </p>",
@@ -8007,6 +8125,8 @@
         "UpdateSecurityControlRequest$SecurityControlId": "<p> The Amazon Resource Name (ARN) or ID of the control to update. </p>",
         "UpdateStandardsControlRequest$StandardsControlArn": "<p>The ARN of the security standard control to enable or disable.</p>",
         "UpdateStandardsControlRequest$DisabledReason": "<p>A description of the reason why you are disabling a security standard control. If you are disabling a control, then this is required.</p>",
+        "UserAccount$Uid": "<p> The unique identifier of the user account involved in the attack sequence. </p>",
+        "UserAccount$Name": "<p> The name of the user account involved in the attack sequence. </p>",
         "VolumeMount$Name": "<p>The name of the volume. </p>",
         "VolumeMount$MountPath": "<p>The path in the container at which the volume should be mounted. </p>",
         "VpcInfoCidrBlockSetDetails$CidrBlock": "<p>The IPv4 CIDR block for the VPC. </p>",
@@ -8101,13 +8221,17 @@
         "AwsSageMakerNotebookInstanceDetails$SecurityGroups": "<p> The VPC security group IDs. </p>",
         "FirewallPolicyDetails$StatelessDefaultActions": "<p>The actions to take on a packet if it doesn't match any of the stateless rules in the policy.</p> <p>You must specify a standard action (<code>aws:pass</code>, <code>aws:drop</code>, <code>aws:forward_to_sfe</code>), and can optionally include a custom action from <code>StatelessCustomActions</code>. </p>",
         "FirewallPolicyDetails$StatelessFragmentDefaultActions": "<p>The actions to take on a fragmented UDP packet if it doesn't match any of the stateless rules in the policy.</p> <p>You must specify a standard action (<code>aws:pass</code>, <code>aws:drop</code>, <code>aws:forward_to_sfe</code>), and can optionally include a custom action from <code>StatelessCustomActions</code>. </p>",
+        "Indicator$Values": "<p>Values associated with each indicator key. For example, if the indicator key is <code>SUSPICIOUS_NETWORK</code>, then the value will be the name of the network. If the indicator key is <code>ATTACK_TACTIC</code>, then the value will be one of the MITRE tactics.</p>",
         "RuleGroupSourceListDetails$TargetTypes": "<p>The protocols that you want to inspect. Specify <code>LS_SNI</code> for HTTPS. Specify <code>HTTP_HOST</code> for HTTP. You can specify either or both.</p>",
         "RuleGroupSourceListDetails$Targets": "<p>The domains that you want to inspect for in your traffic flows. You can provide full domain names, or use the '.' prefix as a wildcard. For example, <code>.example.com</code> matches all domains that end with <code>example.com</code>.</p>",
         "RuleGroupSourceStatelessRuleDefinition$Actions": "<p>The actions to take on a packet that matches one of the stateless rule definition's match attributes. You must specify a standard action (<code>aws:pass</code>, <code>aws:drop</code>, or <code>aws:forward_to_sfe</code>). You can then add custom actions.</p>",
         "RuleGroupSourceStatelessRuleMatchAttributesTcpFlags$Flags": "<p>Defines the flags from the <code>Masks</code> setting that must be set in order for the packet to match. Flags that are listed must be set. Flags that are not listed must not be set.</p>",
         "RuleGroupSourceStatelessRuleMatchAttributesTcpFlags$Masks": "<p>The set of flags to consider in the inspection. If not specified, then all flags are inspected.</p>",
         "RuleGroupVariablesIpSetsDetails$Definition": "<p>The list of IP addresses and ranges.</p>",
-        "RuleGroupVariablesPortSetsDetails$Definition": "<p>The list of port ranges.</p>"
+        "RuleGroupVariablesPortSetsDetails$Definition": "<p>The list of port ranges.</p>",
+        "Signal$ResourceIds": "<p> The ARN or ID of the Amazon Web Services resource associated with the signal. </p>",
+        "Signal$ActorIds": "<p> The IDs of the threat actors involved in the signal. </p>",
+        "Signal$EndpointIds": "<p>Information about the endpoint IDs associated with this signal.</p>"
       }
     },
     "Note": {
@@ -8771,6 +8895,12 @@
         "ClassificationResult$SensitiveData": "<p>Provides details about sensitive data that was identified based on built-in configuration.</p>"
       }
     },
+    "Sequence": {
+      "base": "<p> Contains information about an Amazon GuardDuty Extended Threat Detection attack sequence finding. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "Detection$Sequence": "<p> Provides details about an attack sequence. </p>"
+      }
+    },
     "Severity": {
       "base": "<p>The severity of the finding.</p> <p>The finding provider can provide the initial severity. The finding provider can only update the severity if it hasn't been updated using <code>BatchUpdateFindings</code>.</p> <p>The finding must have either <code>Label</code> or <code>Normalized</code> populated. If only one of these attributes is populated, then Security Hub automatically populates the other one. If neither attribute is populated, then the finding is invalid. <code>Label</code> is the preferred attribute.</p>",
       "refs": {
@@ -8798,6 +8928,18 @@
       "refs": {
         "AutomationRulesFindingFieldsUpdate$Severity": null,
         "BatchUpdateFindingsRequest$Severity": "<p>Used to update the finding severity.</p>"
+      }
+    },
+    "Signal": {
+      "base": "<p> Contains information about the signals involved in an Amazon GuardDuty Extended Threat Detection attack sequence. An attack sequence is a type of threat detected by GuardDuty. GuardDuty generates an attack sequence finding when multiple events, or signals, align to a potentially suspicious activity. When GuardDuty and Security Hub are integrated, GuardDuty sends attack sequence findings to Security Hub.</p> <p>A signal can be an API activity or a finding that GuardDuty uses to detect an attack sequence finding.</p>",
+      "refs": {
+        "SignalsList$member": null
+      }
+    },
+    "SignalsList": {
+      "base": null,
+      "refs": {
+        "Sequence$Signals": "<p> Contains information about the signals involved in the attack sequence. </p>"
       }
     },
     "SizeBytes": {
@@ -9536,6 +9678,12 @@
       "base": null,
       "refs": {
         "SecurityControl$UpdateStatus": "<p> Identifies whether customizable properties of a security control are reflected in Security Hub findings. A status of <code>READY</code> indicates that Security Hub uses the current control parameter values when running security checks of the control. A status of <code>UPDATING</code> indicates that all security checks might not use the current parameter values. </p>"
+      }
+    },
+    "UserAccount": {
+      "base": "<p> Provides Amazon Web Services account information of the user involved in an Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty generates an attack sequence finding when multiple events align to a potentially suspicious activity. To receive GuardDuty attack sequence findings in Security Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html\">GuardDuty Extended Threat Detection </a> in the <i>Amazon GuardDuty User Guide</i>. </p>",
+      "refs": {
+        "ActorUser$Account": "<p> The account of the threat actor. </p>"
       }
     },
     "VerificationState": {

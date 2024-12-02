@@ -109,10 +109,22 @@
       "refs": {
       }
     },
+    "AccessKey": {
+      "base": "<p>Contains information about the access keys.</p>",
+      "refs": {
+        "ResourceData$AccessKey": "<p>Contains information about the IAM access key details of a user that involved in the GuardDuty finding.</p>"
+      }
+    },
     "AccessKeyDetails": {
       "base": "<p>Contains information about the access keys.</p>",
       "refs": {
         "Resource$AccessKeyDetails": "<p>The IAM access key details (user information) of a user that engaged in the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
+    "Account": {
+      "base": "<p>Contains information about the account.</p>",
+      "refs": {
+        "User$Account": "<p>Contains information about the Amazon Web Services account.</p>"
       }
     },
     "AccountDetail": {
@@ -189,6 +201,24 @@
       "base": "<p>Contains information about actions.</p>",
       "refs": {
         "Service$Action": "<p>Information about the activity that is described in a finding.</p>"
+      }
+    },
+    "Actor": {
+      "base": "<p>Information about the actors involved in an attack sequence.</p>",
+      "refs": {
+        "Actors$member": null
+      }
+    },
+    "ActorIds": {
+      "base": null,
+      "refs": {
+        "Signal$ActorIds": "<p>Information about the IDs of the threat actors involved in the signal.</p>"
+      }
+    },
+    "Actors": {
+      "base": null,
+      "refs": {
+        "Sequence$Actors": "<p>Contains information about the actors involved in the attack sequence.</p>"
       }
     },
     "AddonDetails": {
@@ -291,6 +321,12 @@
       "refs": {
         "DescribeOrganizationConfigurationResponse$AutoEnableOrganizationMembers": "<p>Indicates the auto-enablement configuration of GuardDuty or any of the corresponding protection plans for the member accounts in the organization.</p> <ul> <li> <p> <code>NEW</code>: Indicates that when a new account joins the organization, they will have GuardDuty or any of the corresponding protection plans enabled automatically. </p> </li> <li> <p> <code>ALL</code>: Indicates that all accounts in the organization have GuardDuty and any of the corresponding protection plans enabled automatically. This includes <code>NEW</code> accounts that join the organization and accounts that may have been suspended or removed from the organization in GuardDuty.</p> </li> <li> <p> <code>NONE</code>: Indicates that GuardDuty or any of the corresponding protection plans will not be automatically enabled for any account in the organization. The administrator must manage GuardDuty for each account in the organization individually.</p> <p>When you update the auto-enable setting from <code>ALL</code> or <code>NEW</code> to <code>NONE</code>, this action doesn't disable the corresponding option for your existing accounts. This configuration will apply to the new accounts that join the organization. After you update the auto-enable settings, no new account will have the corresponding option as enabled.</p> </li> </ul>",
         "UpdateOrganizationConfigurationRequest$AutoEnableOrganizationMembers": "<p>Indicates the auto-enablement configuration of GuardDuty for the member accounts in the organization. You must provide a value for either <code>autoEnableOrganizationMembers</code> or <code>autoEnable</code>. </p> <p>Use one of the following configuration values for <code>autoEnableOrganizationMembers</code>:</p> <ul> <li> <p> <code>NEW</code>: Indicates that when a new account joins the organization, they will have GuardDuty enabled automatically. </p> </li> <li> <p> <code>ALL</code>: Indicates that all accounts in the organization have GuardDuty enabled automatically. This includes <code>NEW</code> accounts that join the organization and accounts that may have been suspended or removed from the organization in GuardDuty.</p> <p>It may take up to 24 hours to update the configuration for all the member accounts.</p> </li> <li> <p> <code>NONE</code>: Indicates that GuardDuty will not be automatically enabled for any account in the organization. The administrator must manage GuardDuty for each account in the organization individually.</p> <p>When you update the auto-enable setting from <code>ALL</code> or <code>NEW</code> to <code>NONE</code>, this action doesn't disable the corresponding option for your existing accounts. This configuration will apply to the new accounts that join the organization. After you update the auto-enable settings, no new account will have the corresponding option as enabled.</p> </li> </ul>"
+      }
+    },
+    "AutonomousSystem": {
+      "base": "<p>Contains information about the Autonomous System (AS) associated with the network endpoints involved in an attack sequence.</p>",
+      "refs": {
+        "NetworkEndpoint$AutonomousSystem": "<p>The Autonomous System (AS) of the network endpoint.</p>"
       }
     },
     "AwsApiCallAction": {
@@ -1083,7 +1119,10 @@
         "Finding$Severity": "<p>The severity of the finding.</p>",
         "GeoLocation$Lat": "<p>The latitude information of the remote IP address.</p>",
         "GeoLocation$Lon": "<p>The longitude information of the remote IP address.</p>",
-        "SeverityStatistics$Severity": "<p>The severity level associated with each finding type.</p>"
+        "NetworkGeoLocation$Latitude": "<p>The latitude information of the endpoint location.</p>",
+        "NetworkGeoLocation$Longitude": "<p>The longitude information of the endpoint location.</p>",
+        "SeverityStatistics$Severity": "<p>The severity level associated with each finding type.</p>",
+        "Signal$Severity": "<p>The severity associated with the signal. For more information about severity, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html\">Findings severity levels</a> in the <i>GuardDuty User Guide</i>.</p>"
       }
     },
     "EbsSnapshotPreservation": {
@@ -1109,6 +1148,24 @@
       "base": "<p>Describes the configuration of scanning EBS volumes as a data source.</p>",
       "refs": {
         "ScanEc2InstanceWithFindingsResult$EbsVolumes": "<p>Describes the configuration of scanning EBS volumes as a data source.</p>"
+      }
+    },
+    "Ec2Instance": {
+      "base": "<p>Details about the potentially impacted Amazon EC2 instance resource.</p>",
+      "refs": {
+        "ResourceData$Ec2Instance": "<p>Contains information about the Amazon EC2 instance.</p>"
+      }
+    },
+    "Ec2NetworkInterface": {
+      "base": "<p>Contains information about the elastic network interface of the Amazon EC2 instance.</p>",
+      "refs": {
+        "ResourceData$Ec2NetworkInterface": "<p>Contains information about the elastic network interface of the Amazon EC2 instance.</p>"
+      }
+    },
+    "Ec2NetworkInterfaceUids": {
+      "base": null,
+      "refs": {
+        "Ec2Instance$Ec2NetworkInterfaceUids": "<p>The ID of the network interface.</p>"
       }
     },
     "EcsClusterDetails": {
@@ -1144,6 +1201,12 @@
     "EnableOrganizationAdminAccountResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "EndpointIds": {
+      "base": null,
+      "refs": {
+        "Signal$EndpointIds": "<p>Information about the endpoint IDs associated with this signal.</p>"
       }
     },
     "Eq": {
@@ -1305,6 +1368,12 @@
         "CreateDetectorRequest$FindingPublishingFrequency": "<p>A value that specifies how frequently updated findings are exported.</p>",
         "GetDetectorResponse$FindingPublishingFrequency": "<p>The publishing frequency of the finding.</p>",
         "UpdateDetectorRequest$FindingPublishingFrequency": "<p>An enum value that specifies how frequently findings are exported, such as to CloudWatch Events.</p>"
+      }
+    },
+    "FindingResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceV2$ResourceType": "<p>The type of the Amazon Web Services resource.</p>"
       }
     },
     "FindingStatisticType": {
@@ -1617,6 +1686,7 @@
     "IamInstanceProfile": {
       "base": "<p>Contains information about the EC2 instance profile.</p>",
       "refs": {
+        "Ec2Instance$IamInstanceProfile": null,
         "InstanceDetails$IamInstanceProfile": "<p>The profile information of the EC2 instance.</p>"
       }
     },
@@ -1624,6 +1694,43 @@
       "base": "<p>Contains information about the impersonated user.</p>",
       "refs": {
         "KubernetesUserDetails$ImpersonatedUser": "<p>Information about the impersonated user.</p>"
+      }
+    },
+    "Indicator": {
+      "base": "<p>Contains information about the indicators that include a set of signals observed in an attack sequence.</p>",
+      "refs": {
+        "Indicators$member": null
+      }
+    },
+    "IndicatorTitle": {
+      "base": null,
+      "refs": {
+        "Indicator$Title": "<p>Title describing the indicator.</p>"
+      }
+    },
+    "IndicatorType": {
+      "base": null,
+      "refs": {
+        "Indicator$Key": "<p>Specific indicator keys observed in the attack sequence.</p>"
+      }
+    },
+    "IndicatorValueString": {
+      "base": null,
+      "refs": {
+        "IndicatorValues$member": null
+      }
+    },
+    "IndicatorValues": {
+      "base": null,
+      "refs": {
+        "Indicator$Values": "<p>Values associated with each indicator key. For example, if the indicator key is <code>SUSPICIOUS_NETWORK</code>, then the value will be the name of the network. If the indicator key is <code>ATTACK_TACTIC</code>, then the value will be one of the MITRE tactics. </p> <p>For more information about the values associated with the key, see GuardDuty Extended Threat Detection in the <i>GuardDuty User Guide.</i> </p>"
+      }
+    },
+    "Indicators": {
+      "base": null,
+      "refs": {
+        "Sequence$SequenceIndicators": "<p>Contains information about the indicators observed in the attack sequence.</p>",
+        "Signal$SignalIndicators": "<p>Contains information about the indicators associated with the signals.</p>"
       }
     },
     "InstanceArn": {
@@ -1642,6 +1749,7 @@
       "base": null,
       "refs": {
         "AccountStatistics$TotalFindings": "<p>The total number of findings associated with an account.</p>",
+        "AutonomousSystem$Number": "<p>The unique number that identifies the Autonomous System (AS).</p>",
         "Condition$Gt": "<p>Represents a <i>greater than</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Gte": "<p>Represents a <i>greater than or equal</i> condition to be applied to a single field when querying for findings.</p>",
         "Condition$Lt": "<p>Represents a <i>less than</i> condition to be applied to a single field when querying for findings.</p>",
@@ -1664,6 +1772,7 @@
         "LocalPortDetails$Port": "<p>The port number of the local connection.</p>",
         "LoginAttribute$FailedLoginAttempts": "<p>Represents the sum of failed (unsuccessful) login attempts made to establish a connection to the database instance.</p>",
         "LoginAttribute$SuccessfulLoginAttempts": "<p>Represents the sum of successful connections (a correct combination of login attributes) made to the database instance by the actor.</p>",
+        "NetworkEndpoint$Port": "<p>The port number associated with the network endpoint.</p>",
         "OrganizationFeatureStatistics$EnabledAccountsCount": "<p>Total number of accounts that have enabled a specific feature.</p>",
         "OrganizationFeatureStatisticsAdditionalConfiguration$EnabledAccountsCount": "<p>Total number of accounts that have enabled the additional configuration.</p>",
         "OrganizationStatistics$TotalAccountsCount": "<p>Total number of accounts in your Amazon Web Services organization.</p>",
@@ -1683,6 +1792,7 @@
         "ScannedItemCount$Volumes": "<p>Total number of scanned volumes.</p>",
         "Service$Count": "<p>The total count of the occurrences of this finding type.</p>",
         "SeverityStatistics$TotalFindings": "<p>The total number of findings associated with this severity.</p>",
+        "Signal$Count": "<p>The number of times this signal was observed.</p>",
         "ThreatDetectedByName$ItemCount": "<p>Total number of infected files identified.</p>",
         "ThreatDetectedByName$UniqueThreatNameCount": "<p>Total number of unique threats by name identified, as part of the malware scan.</p>",
         "ThreatsDetectedItemCount$Files": "<p>Total number of infected files.</p>",
@@ -1744,6 +1854,7 @@
     "Ipv6Addresses": {
       "base": null,
       "refs": {
+        "Ec2NetworkInterface$Ipv6Addresses": "<p>A list of IPv6 addresses for the Amazon EC2 instance.</p>",
         "NetworkInterface$Ipv6Addresses": "<p>A list of IPv6 addresses for the EC2 instance.</p>"
       }
     },
@@ -2239,6 +2350,12 @@
         "RuntimeContext$MemoryRegions": "<p>Specifies the Region of a process's address space such as stack and heap.</p>"
       }
     },
+    "MfaStatus": {
+      "base": null,
+      "refs": {
+        "Session$MfaStatus": "<p>Indicates whether or not multi-factor authencation (MFA) was used during authentication.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.mfaAuthenticated</code>.</p>"
+      }
+    },
     "Name": {
       "base": null,
       "refs": {
@@ -2256,10 +2373,40 @@
         "Condition$Neq": "<p>Represents the <i>not equal</i> condition to be applied to a single field when querying for findings.</p>"
       }
     },
+    "NetworkConnection": {
+      "base": "<p>Contains information about the network connection.</p>",
+      "refs": {
+        "NetworkEndpoint$Connection": "<p>Information about the network connection.</p>"
+      }
+    },
     "NetworkConnectionAction": {
       "base": "<p>Contains information about the NETWORK_CONNECTION action described in the finding.</p>",
       "refs": {
         "Action$NetworkConnectionAction": "<p>Information about the NETWORK_CONNECTION action described in this finding.</p>"
+      }
+    },
+    "NetworkDirection": {
+      "base": null,
+      "refs": {
+        "NetworkConnection$Direction": "<p>The direction in which the network traffic is flowing.</p>"
+      }
+    },
+    "NetworkEndpoint": {
+      "base": "<p>Contains information about network endpoints that were observed in the attack sequence.</p>",
+      "refs": {
+        "NetworkEndpoints$member": null
+      }
+    },
+    "NetworkEndpoints": {
+      "base": null,
+      "refs": {
+        "Sequence$Endpoints": "<p>Contains information about the network endpoints that were used in the attack sequence.</p>"
+      }
+    },
+    "NetworkGeoLocation": {
+      "base": "<p>Contains information about network endpoint location.</p>",
+      "refs": {
+        "NetworkEndpoint$Location": "<p>Information about the location of the network endpoint.</p>"
       }
     },
     "NetworkInterface": {
@@ -2561,6 +2708,7 @@
     "PrivateIpAddresses": {
       "base": null,
       "refs": {
+        "Ec2NetworkInterface$PrivateIpAddresses": "<p>Other private IP address information of the Amazon EC2 instance.</p>",
         "NetworkInterface$PrivateIpAddresses": "<p>Other private IP address information of the EC2 instance.</p>"
       }
     },
@@ -2581,6 +2729,7 @@
     "ProductCodes": {
       "base": null,
       "refs": {
+        "Ec2Instance$ProductCodes": "<p>The product code of the Amazon EC2 instance.</p>",
         "InstanceDetails$ProductCodes": "<p>The product code of the EC2 instance.</p>"
       }
     },
@@ -2600,6 +2749,34 @@
       "base": "<p>Describes the public access policies that apply to the S3 bucket.</p>",
       "refs": {
         "S3BucketDetail$PublicAccess": "<p>Describes the public access policies that apply to the S3 bucket.</p>"
+      }
+    },
+    "PublicAccessConfiguration": {
+      "base": "<p>Describes public access policies that apply to the Amazon S3 bucket.</p> <p>For information about each of the following settings, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html\">Blocking public access to your Amazon S3 storage</a> in the <i>Amazon S3 User Guide</i>.</p>",
+      "refs": {
+        "S3Bucket$AccountPublicAccess": "<p>Contains information about the public access policies that apply to the Amazon S3 bucket at the account level.</p>",
+        "S3Bucket$BucketPublicAccess": "<p>Contains information about public access policies that apply to the Amazon S3 bucket.</p>"
+      }
+    },
+    "PublicAccessStatus": {
+      "base": null,
+      "refs": {
+        "PublicAccessConfiguration$PublicAclAccess": "<p>Indicates whether or not there is a setting that allows public access to the Amazon S3 buckets through access control lists (ACLs).</p>",
+        "PublicAccessConfiguration$PublicPolicyAccess": "<p>Indicates whether or not there is a setting that allows public access to the Amazon S3 bucket policy.</p>",
+        "S3Bucket$PublicReadAccess": "<p>Indicates whether or not the public read access is allowed for an Amazon S3 bucket.</p>",
+        "S3Bucket$PublicWriteAccess": "<p>Indicates whether or not the public write access is allowed for an Amazon S3 bucket.</p>"
+      }
+    },
+    "PublicAclIgnoreBehavior": {
+      "base": null,
+      "refs": {
+        "PublicAccessConfiguration$PublicAclIgnoreBehavior": "<p>Indicates whether or not there is a setting that ignores all public access control lists (ACLs) on the Amazon S3 bucket and the objects that it contains.</p>"
+      }
+    },
+    "PublicBucketRestrictBehavior": {
+      "base": null,
+      "refs": {
+        "PublicAccessConfiguration$PublicBucketRestrictBehavior": "<p>Indicates whether or not there is a setting that restricts access to the bucket with specified policies.</p>"
       }
     },
     "PublishingStatus": {
@@ -2667,6 +2844,12 @@
         "StartMalwareScanRequest$ResourceArn": "<p>Amazon Resource Name (ARN) of the resource for which you invoked the API.</p>"
       }
     },
+    "ResourceData": {
+      "base": "<p>Contains information about the Amazon Web Services resource that is associated with the activity that prompted GuardDuty to generate a finding.</p>",
+      "refs": {
+        "ResourceV2$Data": "<p>Contains information about the Amazon Web Services resource associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "ResourceDetails": {
       "base": "<p>Represents the resources that were scanned in the scan entry.</p>",
       "refs": {
@@ -2697,6 +2880,24 @@
         "CoverageResourceDetails$ResourceType": "<p>The type of Amazon Web Services resource.</p>"
       }
     },
+    "ResourceUids": {
+      "base": null,
+      "refs": {
+        "Signal$ResourceUids": "<p>Information about the unique identifiers of the resources involved in the signal.</p>"
+      }
+    },
+    "ResourceV2": {
+      "base": "<p>Contains information about the Amazon Web Services resource that is associated with the GuardDuty finding.</p>",
+      "refs": {
+        "Resources$member": null
+      }
+    },
+    "Resources": {
+      "base": null,
+      "refs": {
+        "Sequence$Resources": "<p>Contains information about the resources involved in the attack sequence.</p>"
+      }
+    },
     "RuntimeContext": {
       "base": "<p>Additional information about the suspicious activity.</p>",
       "refs": {
@@ -2707,6 +2908,12 @@
       "base": "<p>Information about the process and any required context values for a specific finding.</p>",
       "refs": {
         "Service$RuntimeDetails": "<p>Information about the process and any required context values for a specific finding</p>"
+      }
+    },
+    "S3Bucket": {
+      "base": "<p>Contains information about the Amazon S3 bucket policies and encryption.</p>",
+      "refs": {
+        "ResourceData$S3Bucket": "<p>Contains information about the Amazon S3 bucket.</p>"
       }
     },
     "S3BucketDetail": {
@@ -2733,6 +2940,12 @@
         "DataSourceConfigurationsResult$S3Logs": "<p>An object that contains information on the status of S3 Data event logs as a data source.</p>"
       }
     },
+    "S3Object": {
+      "base": "<p>Contains information about the Amazon S3 object.</p>",
+      "refs": {
+        "ResourceData$S3Object": "<p>Contains information about the Amazon S3 object.</p>"
+      }
+    },
     "S3ObjectDetail": {
       "base": "<p>Information about the S3 object that was scanned</p>",
       "refs": {
@@ -2743,6 +2956,12 @@
       "base": null,
       "refs": {
         "S3BucketDetail$S3ObjectDetails": "<p>Information about the S3 object that was scanned.</p>"
+      }
+    },
+    "S3ObjectUids": {
+      "base": null,
+      "refs": {
+        "S3Bucket$S3ObjectUids": "<p>Represents a list of Amazon S3 object identifiers.</p>"
       }
     },
     "Scan": {
@@ -2871,6 +3090,7 @@
     "SecurityGroups": {
       "base": null,
       "refs": {
+        "Ec2NetworkInterface$SecurityGroups": "<p>The security groups associated with the Amazon EC2 instance.</p>",
         "NetworkInterface$SecurityGroups": "<p>The security groups associated with the EC2 instance.</p>",
         "VpcConfig$SecurityGroups": "<p>The identifier of the security group attached to the Lambda function.</p>"
       }
@@ -2886,6 +3106,18 @@
         "RemoteIpDetails$IpAddressV6": "<p>The IPv6 remote address of the connection.</p>"
       }
     },
+    "Sequence": {
+      "base": "<p>Contains information about the GuardDuty attack sequence finding.</p>",
+      "refs": {
+        "Detection$Sequence": "<p>The details about the attack sequence.</p>"
+      }
+    },
+    "SequenceDescription": {
+      "base": null,
+      "refs": {
+        "Sequence$Description": "<p>Description of the attack sequence.</p>"
+      }
+    },
     "Service": {
       "base": "<p>Contains additional information about the generated finding.</p>",
       "refs": {
@@ -2898,6 +3130,12 @@
         "Service$AdditionalInfo": "<p>Contains additional information about the generated finding.</p>"
       }
     },
+    "Session": {
+      "base": "<p>Contains information about the authenticated session.</p>",
+      "refs": {
+        "Actor$Session": "<p>Contains information about the user session where the activity initiated.</p>"
+      }
+    },
     "SessionNameList": {
       "base": null,
       "refs": {
@@ -2908,6 +3146,30 @@
       "base": "<p>Information about severity level for each finding type.</p>",
       "refs": {
         "GroupedBySeverity$member": null
+      }
+    },
+    "Signal": {
+      "base": "<p>Contains information about the signals involved in the attack sequence.</p>",
+      "refs": {
+        "Signals$member": null
+      }
+    },
+    "SignalDescription": {
+      "base": null,
+      "refs": {
+        "Signal$Description": "<p>The description of the signal.</p>"
+      }
+    },
+    "SignalType": {
+      "base": null,
+      "refs": {
+        "Signal$Type": "<p>The type of the signal used to identify an attack sequence.</p> <p>Signals can be GuardDuty findings or activities observed in data sources that GuardDuty monitors. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html\">Foundational data sources</a> in the <i>GuardDuty User Guide</i>.</p> <p>A signal type can be one of the valid values listed in this API. Here are the related descriptions:</p> <ul> <li> <p> <code>FINDING</code> - Individually generated GuardDuty finding.</p> </li> <li> <p> <code>CLOUD_TRAIL</code> - Activity observed from CloudTrail logs</p> </li> <li> <p> <code>S3_DATA_EVENTS</code> - Activity observed from CloudTrail data events for S3. Activities associated with this type will show up only when you have enabled GuardDuty S3 Protection feature in your account. For more information about S3 Protection and steps to enable it, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html\">S3 Protection</a> in the <i>GuardDuty User Guide</i>.</p> </li> </ul>"
+      }
+    },
+    "Signals": {
+      "base": null,
+      "refs": {
+        "Sequence$Signals": "<p>Contains information about the signals involved in the attack sequence.</p>"
       }
     },
     "SortCriteria": {
@@ -2969,13 +3231,20 @@
         "AcceptInvitationRequest$InvitationId": "<p>The value that is used to validate the administrator account to the member account.</p>",
         "AccessDeniedException$Message": "<p>The error message.</p>",
         "AccessDeniedException$Type": "<p>The error type.</p>",
+        "AccessKey$PrincipalId": "<p>Principal ID of the user.</p>",
+        "AccessKey$UserName": "<p>Name of the user.</p>",
+        "AccessKey$UserType": "<p>Type of the user.</p>",
         "AccessKeyDetails$AccessKeyId": "<p>The access key ID of the user.</p>",
         "AccessKeyDetails$PrincipalId": "<p>The principal ID of the user.</p>",
         "AccessKeyDetails$UserName": "<p>The name of the user.</p>",
         "AccessKeyDetails$UserType": "<p>The type of the user.</p>",
+        "Account$Uid": "<p>ID of the member's Amazon Web Services account</p>",
+        "Account$Name": "<p>Name of the member's Amazon Web Services account.</p>",
         "AccountFreeTrialInfo$AccountId": "<p>The account identifier of the GuardDuty member account.</p>",
         "AccountStatistics$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
         "Action$ActionType": "<p>The GuardDuty finding activity type.</p>",
+        "Actor$Id": "<p>ID of the threat actor.</p>",
+        "ActorIds$member": null,
         "AddonDetails$AddonVersion": "<p>Version of the installed EKS add-on.</p>",
         "AddonDetails$AddonStatus": "<p>Status of the installed EKS add-on.</p>",
         "AdminAccount$AdminAccountId": "<p>The Amazon Web Services account ID for the account.</p>",
@@ -2988,6 +3257,7 @@
         "AnomalyProfileFeatures$key": null,
         "AnomalyProfiles$key": null,
         "AnomalyUnusualBehaviorFeature$key": null,
+        "AutonomousSystem$Name": "<p>Name associated with the Autonomous System (AS).</p>",
         "AwsApiCallAction$Api": "<p>The Amazon Web Services API name.</p>",
         "AwsApiCallAction$CallerType": "<p>The Amazon Web Services API caller type.</p>",
         "AwsApiCallAction$ErrorCode": "<p>The error code of the failed Amazon Web Services API action.</p>",
@@ -3045,6 +3315,16 @@
         "EbsVolumeScanDetails$ScanId": "<p>Unique Id of the malware scan that generated the finding.</p>",
         "EbsVolumeScanDetails$TriggerFindingId": "<p>GuardDuty finding ID that triggered a malware scan.</p>",
         "EbsVolumesResult$Reason": "<p>Specifies the reason why scanning EBS volumes (Malware Protection) was not enabled as a data source.</p>",
+        "Ec2Instance$AvailabilityZone": "<p>The availability zone of the Amazon EC2 instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones\">Availability zones</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "Ec2Instance$ImageDescription": "<p>The image description of the Amazon EC2 instance.</p>",
+        "Ec2Instance$InstanceState": "<p>The state of the Amazon EC2 instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Amazon EC2 instance state changes</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "Ec2Instance$InstanceType": "<p>Type of the Amazon EC2 instance.</p>",
+        "Ec2Instance$OutpostArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Outpost. This shows applicable Amazon Web Services Outposts instances.</p>",
+        "Ec2Instance$Platform": "<p>The platform of the Amazon EC2 instance.</p>",
+        "Ec2NetworkInterface$PublicIp": "<p>The public IP address of the Amazon EC2 instance.</p>",
+        "Ec2NetworkInterface$SubNetId": "<p>The subnet ID of the Amazon EC2 instance.</p>",
+        "Ec2NetworkInterface$VpcId": "<p>The VPC ID of the Amazon EC2 instance.</p>",
+        "Ec2NetworkInterfaceUids$member": null,
         "EcsClusterDetails$Name": "<p>The name of the ECS Cluster.</p>",
         "EcsClusterDetails$Arn": "<p>The Amazon Resource Name (ARN) that identifies the cluster.</p>",
         "EcsClusterDetails$Status": "<p>The status of the ECS cluster.</p>",
@@ -3059,6 +3339,7 @@
         "EksClusterDetails$VpcId": "<p>The VPC ID to which the EKS cluster is attached.</p>",
         "EksClusterDetails$Status": "<p>The EKS cluster status.</p>",
         "EnableOrganizationAdminAccountRequest$AdminAccountId": "<p>The Amazon Web Services account ID for the organization account to be enabled as a GuardDuty delegated administrator.</p>",
+        "EndpointIds$member": null,
         "Eq$member": null,
         "Equals$member": null,
         "Finding$AccountId": "<p>The ID of the account in which the finding was generated.</p>",
@@ -3071,6 +3352,7 @@
         "Finding$SchemaVersion": "<p>The version of the schema used for the finding.</p>",
         "Finding$Title": "<p>The title of the finding.</p>",
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
+        "Finding$AssociatedAttackSequenceArn": "<p>Amazon Resource Name (ARN) associated with the attack sequence finding.</p>",
         "FindingTypeStatistics$FindingType": "<p>Name of the finding type.</p>",
         "FlagsList$member": null,
         "GetDetectorResponse$CreatedAt": "<p>The timestamp of when the detector was created.</p>",
@@ -3193,6 +3475,11 @@
         "NetworkConnectionAction$ConnectionDirection": "<p>The network connection direction.</p>",
         "NetworkConnectionAction$Protocol": "<p>The network connection protocol.</p>",
         "NetworkConnectionAction$LocalNetworkInterface": "<p>The EC2 instance's local elastic network interface utilized for the connection.</p>",
+        "NetworkEndpoint$Id": "<p>The ID of the network endpoint.</p>",
+        "NetworkEndpoint$Ip": "<p>The IP address associated with the network endpoint.</p>",
+        "NetworkEndpoint$Domain": "<p>The domain information for the network endpoint.</p>",
+        "NetworkGeoLocation$City": "<p>The name of the city.</p>",
+        "NetworkGeoLocation$Country": "<p>The name of the country.</p>",
         "NetworkInterface$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "NetworkInterface$PrivateDnsName": "<p>The private DNS name of the EC2 instance.</p>",
         "NetworkInterface$PublicDnsName": "<p>The public DNS name of the EC2 instance.</p>",
@@ -3242,6 +3529,13 @@
         "ResourceStatistics$AccountId": "<p>The ID of the Amazon Web Services account.</p>",
         "ResourceStatistics$ResourceId": "<p>ID associated with each resource. The following list provides the mapping of the resource type and resource ID.</p> <p class=\"title\"> <b>Mapping of resource and resource ID</b> </p> <ul> <li> <p>AccessKey - <code>resource.accessKeyDetails.accessKeyId</code> </p> </li> <li> <p>Container - <code>resource.containerDetails.id</code> </p> </li> <li> <p>ECSCluster - <code>resource.ecsClusterDetails.name</code> </p> </li> <li> <p>EKSCluster - <code>resource.eksClusterDetails.name</code> </p> </li> <li> <p>Instance - <code>resource.instanceDetails.instanceId</code> </p> </li> <li> <p>KubernetesCluster - <code>resource.kubernetesDetails.kubernetesWorkloadDetails.name</code> </p> </li> <li> <p>Lambda - <code>resource.lambdaDetails.functionName</code> </p> </li> <li> <p>RDSDBInstance - <code>resource.rdsDbInstanceDetails.dbInstanceIdentifier</code> </p> </li> <li> <p>S3Bucket - <code>resource.s3BucketDetails.name</code> </p> </li> <li> <p>S3Object - <code>resource.s3BucketDetails.name</code> </p> </li> </ul>",
         "ResourceStatistics$ResourceType": "<p>The type of resource.</p>",
+        "ResourceUids$member": null,
+        "ResourceV2$Uid": "<p>The unique identifier of the resource.</p>",
+        "ResourceV2$Name": "<p>The name of the resource.</p>",
+        "ResourceV2$AccountId": "<p>The Amazon Web Services account ID to which the resource belongs.</p>",
+        "ResourceV2$Region": "<p>The Amazon Web Services Region where the resource belongs.</p>",
+        "ResourceV2$Service": "<p>The Amazon Web Services service of the resource.</p>",
+        "ResourceV2$CloudPartition": "<p>The cloud partition within the Amazon Web Services Region to which the resource belongs.</p>",
         "RuntimeContext$ScriptPath": "<p>The path to the script that was executed.</p>",
         "RuntimeContext$LibraryPath": "<p>The path to the new library that was loaded.</p>",
         "RuntimeContext$LdPreloadValue": "<p>The value of the LD_PRELOAD environment variable.</p>",
@@ -3261,14 +3555,22 @@
         "RuntimeContext$ServiceName": "<p>Name of the security service that has been potentially disabled.</p>",
         "RuntimeContext$CommandLineExample": "<p>Example of the command line involved in the suspicious activity.</p>",
         "RuntimeContext$ThreatFilePath": "<p>The suspicious file path for which the threat intelligence details were found.</p>",
+        "S3Bucket$OwnerId": "<p>The owner ID of the associated S3Amazon S3bucket.</p>",
+        "S3Bucket$EncryptionType": "<p>The type of encryption used for the Amazon S3 buckets and its objects. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>.</p>",
+        "S3Bucket$EncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the encryption key that is used to encrypt the Amazon S3 bucket and its objects.</p>",
+        "S3Bucket$EffectivePermission": "<p>Describes the effective permissions on this S3 bucket, after factoring all the attached policies.</p>",
         "S3BucketDetail$Arn": "<p>The Amazon Resource Name (ARN) of the S3 bucket.</p>",
         "S3BucketDetail$Name": "<p>The name of the S3 bucket.</p>",
         "S3BucketDetail$Type": "<p>Describes whether the bucket is a source or destination bucket.</p>",
+        "S3Object$ETag": "<p>The entity tag is a hash of the Amazon S3 object. The ETag reflects changes only to the contents of an object, and not its metadata.</p>",
+        "S3Object$Key": "<p>The key of the Amazon S3 object.</p>",
+        "S3Object$VersionId": "<p>The version Id of the Amazon S3 object.</p>",
         "S3ObjectDetail$ObjectArn": "<p>Amazon Resource Name (ARN) of the S3 object.</p>",
         "S3ObjectDetail$Key": "<p>Key of the S3 object.</p>",
         "S3ObjectDetail$ETag": "<p>The entity tag is a hash of the S3 object. The ETag reflects changes only to the contents of an object, and not its metadata.</p>",
         "S3ObjectDetail$Hash": "<p>Hash of the threat detected in this finding.</p>",
         "S3ObjectDetail$VersionId": "<p>Version ID of the object.</p>",
+        "S3ObjectUids$member": null,
         "ScanFilePath$FilePath": "<p>The file path of the infected file.</p>",
         "ScanFilePath$VolumeArn": "<p>EBS volume ARN details of the infected file.</p>",
         "ScanFilePath$Hash": "<p>The hash value of the infected file.</p>",
@@ -3277,6 +3579,7 @@
         "ScanThreatName$Severity": "<p>Severity of threat identified as part of the malware scan.</p>",
         "SecurityGroup$GroupId": "<p>The security group ID of the EC2 instance.</p>",
         "SecurityGroup$GroupName": "<p>The security group name of the EC2 instance.</p>",
+        "Sequence$Uid": "<p>Unique identifier of the attack sequence.</p>",
         "Service$EventFirstSeen": "<p>The first-seen timestamp of the activity that prompted GuardDuty to generate this finding.</p>",
         "Service$EventLastSeen": "<p>The last-seen timestamp of the activity that prompted GuardDuty to generate this finding.</p>",
         "Service$ResourceRole": "<p>The resource role information for this finding.</p>",
@@ -3285,7 +3588,11 @@
         "Service$FeatureName": "<p>The name of the feature that generated a finding.</p>",
         "ServiceAdditionalInfo$Value": "<p>This field specifies the value of the additional information.</p>",
         "ServiceAdditionalInfo$Type": "<p>Describes the type of the additional information.</p>",
+        "Session$Uid": "<p>The unique identifier of the session.</p>",
+        "Session$Issuer": "<p>Identifier of the session issuer.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.sessionIssuer.arn</code>.</p>",
         "SessionNameList$member": null,
+        "Signal$Uid": "<p>The unique identifier of the signal.</p>",
+        "Signal$Name": "<p>The name of the signal. For example, when signal type is <code>FINDING</code>, the signal name is the name of the finding.</p>",
         "SortCriteria$AttributeName": "<p>Represents the finding attribute, such as <code>accountId</code>, that sorts the findings.</p>",
         "SourceIps$member": null,
         "Sources$member": null,
@@ -3309,6 +3616,10 @@
         "UpdatePublishingDestinationRequest$DestinationId": "<p>The ID of the publishing destination to update.</p>",
         "UpdateThreatIntelSetRequest$ThreatIntelSetId": "<p>The unique ID that specifies the ThreatIntelSet that you want to update.</p>",
         "UsageResourceResult$Resource": "<p>The Amazon Web Services resource that generated usage.</p>",
+        "User$Name": "<p>The name of the user.</p>",
+        "User$Uid": "<p>The unique identifier of the user.</p>",
+        "User$Type": "<p>The type of the user.</p>",
+        "User$CredentialUid": "<p>The credentials of the user ID.</p>",
         "Volume$Name": "<p>Volume name.</p>",
         "VolumeDetail$VolumeArn": "<p>EBS volume ARN information.</p>",
         "VolumeDetail$VolumeType": "<p>The EBS volume type.</p>",
@@ -3390,7 +3701,8 @@
         "InstanceDetails$Tags": "<p>The tags of the EC2 instance.</p>",
         "LambdaDetails$Tags": "<p>A list of tags attached to this resource, listed in the format of <code>key</code>:<code>value</code> pair.</p>",
         "RdsDbInstanceDetails$Tags": "<p>Information about the tag key-value pairs.</p>",
-        "RdsLimitlessDbDetails$Tags": "<p>Information about the tag-key value pair.</p>",
+        "RdsLimitlessDbDetails$Tags": "<p>Information about the tag key-value pair.</p>",
+        "ResourceV2$Tags": "<p>Contains information about the tags associated with the resource.</p>",
         "S3BucketDetail$Tags": "<p>All tags attached to the S3 bucket</p>"
       }
     },
@@ -3479,10 +3791,16 @@
         "ProcessDetails$StartTime": "<p>The time when the process started. This is in UTC format.</p>",
         "ResourceStatistics$LastGeneratedAt": "<p>The timestamp at which the statistics for this resource was last generated.</p>",
         "RuntimeContext$ModifiedAt": "<p>The timestamp at which the process modified the current process. The timestamp is in UTC date string format.</p>",
+        "S3Bucket$CreatedAt": "<p>The timestamp at which the Amazon S3 bucket was created.</p>",
         "S3BucketDetail$CreatedAt": "<p>The date and time the bucket was created at.</p>",
         "Scan$ScanStartTime": "<p>The timestamp of when the scan was triggered.</p>",
         "Scan$ScanEndTime": "<p>The timestamp of when the scan was finished.</p>",
-        "SeverityStatistics$LastGeneratedAt": "<p>The timestamp at which a finding type for a specific severity was last generated.</p>"
+        "Session$CreatedTime": "<p>The timestamp for when the session was created.</p> <p>In Amazon Web Services CloudTrail, you can find this value as <code>userIdentity.sessionContext.attributes.creationDate</code>.</p>",
+        "SeverityStatistics$LastGeneratedAt": "<p>The timestamp at which a finding type for a specific severity was last generated.</p>",
+        "Signal$CreatedAt": "<p>The timestamp when the first finding or activity related to this signal was observed.</p>",
+        "Signal$UpdatedAt": "<p>The timestamp when this signal was last observed.</p>",
+        "Signal$FirstSeenAt": "<p>The timestamp when the first finding or activity related to this signal was observed.</p>",
+        "Signal$LastSeenAt": "<p>The timestamp when the last finding or activity related to this signal was observed.</p>"
       }
     },
     "Total": {
@@ -3760,6 +4078,12 @@
       "base": null,
       "refs": {
         "UsageStatistics$TopAccountsByFeature": "<p>Lists the top 50 accounts by feature that have generated the most GuardDuty usage, in the order from most to least expensive.</p> <p>Currently, this doesn't support <code>RDS_LOGIN_EVENTS</code>.</p>"
+      }
+    },
+    "User": {
+      "base": "<p>Contains information about the user involved in the attack sequence.</p>",
+      "refs": {
+        "Actor$User": "<p>Contains information about the user credentials used by the threat actor.</p>"
       }
     },
     "Volume": {

@@ -138,6 +138,27 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "Rerank":{
+      "name":"Rerank",
+      "http":{
+        "method":"POST",
+        "requestUri":"/rerank",
+        "responseCode":200
+      },
+      "input":{"shape":"RerankRequest"},
+      "output":{"shape":"RerankResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "Retrieve":{
       "name":"Retrieve",
       "http":{
@@ -168,6 +189,27 @@
       },
       "input":{"shape":"RetrieveAndGenerateRequest"},
       "output":{"shape":"RetrieveAndGenerateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "RetrieveAndGenerateStream":{
+      "name":"RetrieveAndGenerateStream",
+      "http":{
+        "method":"POST",
+        "requestUri":"/retrieveAndGenerateStream",
+        "responseCode":200
+      },
+      "input":{"shape":"RetrieveAndGenerateStreamRequest"},
+      "output":{"shape":"RetrieveAndGenerateStreamResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
@@ -361,6 +403,15 @@
         "responseState":{"shape":"ResponseState"}
       }
     },
+    "AttributeType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "NUMBER",
+        "BOOLEAN",
+        "STRING_LIST"
+      ]
+    },
     "Attribution":{
       "type":"structure",
       "members":{
@@ -388,6 +439,34 @@
       "max":2048,
       "min":1,
       "pattern":"^(arn:aws(-[^:]+)?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+    },
+    "BedrockRerankingConfiguration":{
+      "type":"structure",
+      "required":["modelConfiguration"],
+      "members":{
+        "modelConfiguration":{"shape":"BedrockRerankingModelConfiguration"},
+        "numberOfResults":{"shape":"BedrockRerankingConfigurationNumberOfResultsInteger"}
+      }
+    },
+    "BedrockRerankingConfigurationNumberOfResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "BedrockRerankingModelArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/(.*))?$"
+    },
+    "BedrockRerankingModelConfiguration":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "modelArn":{"shape":"BedrockModelArn"}
+      }
     },
     "Boolean":{
       "type":"boolean",
@@ -429,6 +508,13 @@
         "generatedResponsePart":{"shape":"GeneratedResponsePart"},
         "retrievedReferences":{"shape":"RetrievedReferences"}
       }
+    },
+    "CitationEvent":{
+      "type":"structure",
+      "members":{
+        "citation":{"shape":"Citation"}
+      },
+      "event":true
     },
     "Citations":{
       "type":"list",
@@ -626,6 +712,25 @@
       },
       "sensitive":true
     },
+    "FieldForReranking":{
+      "type":"structure",
+      "required":["fieldName"],
+      "members":{
+        "fieldName":{"shape":"FieldForRerankingFieldNameString"}
+      }
+    },
+    "FieldForRerankingFieldNameString":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
+    "FieldsForReranking":{
+      "type":"list",
+      "member":{"shape":"FieldForReranking"},
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
     "FileBody":{
       "type":"blob",
       "max":1000000,
@@ -697,6 +802,10 @@
     "FinalResponseString":{
       "type":"string",
       "sensitive":true
+    },
+    "Float":{
+      "type":"float",
+      "box":true
     },
     "FlowAliasIdentifier":{
       "type":"string",
@@ -1161,6 +1270,13 @@
       "member":{"shape":"GuardrailCustomWord"},
       "sensitive":true
     },
+    "GuardrailEvent":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"GuadrailAction"}
+      },
+      "event":true
+    },
     "GuardrailIdentifierWithArn":{
       "type":"string",
       "max":2048,
@@ -1327,6 +1443,17 @@
       "max":1024,
       "min":1,
       "sensitive":true
+    },
+    "ImplicitFilterConfiguration":{
+      "type":"structure",
+      "required":[
+        "metadataAttributes",
+        "modelArn"
+      ],
+      "members":{
+        "metadataAttributes":{"shape":"MetadataAttributeSchemaList"},
+        "modelArn":{"shape":"BedrockModelArn"}
+      }
     },
     "InferenceConfig":{
       "type":"structure",
@@ -1744,11 +1871,13 @@
       "type":"structure",
       "members":{
         "filter":{"shape":"RetrievalFilter"},
+        "implicitFilterConfiguration":{"shape":"ImplicitFilterConfiguration"},
         "numberOfResults":{
           "shape":"KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger",
           "box":true
         },
-        "overrideSearchType":{"shape":"SearchType"}
+        "overrideSearchType":{"shape":"SearchType"},
+        "rerankingConfiguration":{"shape":"VectorSearchRerankingConfiguration"}
       }
     },
     "KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger":{
@@ -1823,6 +1952,46 @@
         "usage":{"shape":"Usage"}
       },
       "sensitive":true
+    },
+    "MetadataAttributeSchema":{
+      "type":"structure",
+      "required":[
+        "description",
+        "key",
+        "type"
+      ],
+      "members":{
+        "description":{"shape":"MetadataAttributeSchemaDescriptionString"},
+        "key":{"shape":"MetadataAttributeSchemaKeyString"},
+        "type":{"shape":"AttributeType"}
+      },
+      "sensitive":true
+    },
+    "MetadataAttributeSchemaDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[\\s\\S]+$"
+    },
+    "MetadataAttributeSchemaKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\s\\S]+$"
+    },
+    "MetadataAttributeSchemaList":{
+      "type":"list",
+      "member":{"shape":"MetadataAttributeSchema"},
+      "max":25,
+      "min":1
+    },
+    "MetadataConfigurationForReranking":{
+      "type":"structure",
+      "required":["selectionMode"],
+      "members":{
+        "selectionMode":{"shape":"RerankingMetadataSelectionMode"},
+        "selectiveModeConfiguration":{"shape":"RerankingMetadataSelectiveModeConfiguration"}
+      }
     },
     "MimeType":{"type":"string"},
     "ModelIdentifier":{
@@ -2241,6 +2410,155 @@
         "DISABLED"
       ]
     },
+    "RerankDocument":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "jsonDocument":{"shape":"Document"},
+        "textDocument":{"shape":"RerankTextDocument"},
+        "type":{"shape":"RerankDocumentType"}
+      },
+      "sensitive":true
+    },
+    "RerankDocumentType":{
+      "type":"string",
+      "enum":[
+        "TEXT",
+        "JSON"
+      ]
+    },
+    "RerankQueriesList":{
+      "type":"list",
+      "member":{"shape":"RerankQuery"},
+      "max":1,
+      "min":1,
+      "sensitive":true
+    },
+    "RerankQuery":{
+      "type":"structure",
+      "required":[
+        "textQuery",
+        "type"
+      ],
+      "members":{
+        "textQuery":{"shape":"RerankTextDocument"},
+        "type":{"shape":"RerankQueryContentType"}
+      },
+      "sensitive":true
+    },
+    "RerankQueryContentType":{
+      "type":"string",
+      "enum":["TEXT"]
+    },
+    "RerankRequest":{
+      "type":"structure",
+      "required":[
+        "queries",
+        "rerankingConfiguration",
+        "sources"
+      ],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "queries":{"shape":"RerankQueriesList"},
+        "rerankingConfiguration":{"shape":"RerankingConfiguration"},
+        "sources":{"shape":"RerankSourcesList"}
+      }
+    },
+    "RerankResponse":{
+      "type":"structure",
+      "required":["results"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "results":{"shape":"RerankResultsList"}
+      }
+    },
+    "RerankResult":{
+      "type":"structure",
+      "required":[
+        "index",
+        "relevanceScore"
+      ],
+      "members":{
+        "document":{"shape":"RerankDocument"},
+        "index":{"shape":"RerankResultIndexInteger"},
+        "relevanceScore":{"shape":"Float"}
+      }
+    },
+    "RerankResultIndexInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":0
+    },
+    "RerankResultsList":{
+      "type":"list",
+      "member":{"shape":"RerankResult"}
+    },
+    "RerankSource":{
+      "type":"structure",
+      "required":[
+        "inlineDocumentSource",
+        "type"
+      ],
+      "members":{
+        "inlineDocumentSource":{"shape":"RerankDocument"},
+        "type":{"shape":"RerankSourceType"}
+      },
+      "sensitive":true
+    },
+    "RerankSourceType":{
+      "type":"string",
+      "enum":["INLINE"]
+    },
+    "RerankSourcesList":{
+      "type":"list",
+      "member":{"shape":"RerankSource"},
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
+    "RerankTextDocument":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"RerankTextDocumentTextString"}
+      },
+      "sensitive":true
+    },
+    "RerankTextDocumentTextString":{
+      "type":"string",
+      "max":9000,
+      "min":1
+    },
+    "RerankingConfiguration":{
+      "type":"structure",
+      "required":[
+        "bedrockRerankingConfiguration",
+        "type"
+      ],
+      "members":{
+        "bedrockRerankingConfiguration":{"shape":"BedrockRerankingConfiguration"},
+        "type":{"shape":"RerankingConfigurationType"}
+      }
+    },
+    "RerankingConfigurationType":{
+      "type":"string",
+      "enum":["BEDROCK_RERANKING_MODEL"]
+    },
+    "RerankingMetadataSelectionMode":{
+      "type":"string",
+      "enum":[
+        "SELECTIVE",
+        "ALL"
+      ]
+    },
+    "RerankingMetadataSelectiveModeConfiguration":{
+      "type":"structure",
+      "members":{
+        "fieldsToExclude":{"shape":"FieldsForReranking"},
+        "fieldsToInclude":{"shape":"FieldsForReranking"}
+      },
+      "union":true
+    },
     "ResourceDescription":{
       "type":"string",
       "max":200,
@@ -2333,11 +2651,18 @@
       },
       "sensitive":true
     },
+    "RetrievalResultCustomDocumentLocation":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"}
+      }
+    },
     "RetrievalResultLocation":{
       "type":"structure",
       "required":["type"],
       "members":{
         "confluenceLocation":{"shape":"RetrievalResultConfluenceLocation"},
+        "customDocumentLocation":{"shape":"RetrievalResultCustomDocumentLocation"},
         "s3Location":{"shape":"RetrievalResultS3Location"},
         "salesforceLocation":{"shape":"RetrievalResultSalesforceLocation"},
         "sharePointLocation":{"shape":"RetrievalResultSharePointLocation"},
@@ -2353,7 +2678,8 @@
         "WEB",
         "CONFLUENCE",
         "SALESFORCE",
-        "SHAREPOINT"
+        "SHAREPOINT",
+        "CUSTOM"
       ]
     },
     "RetrievalResultMetadata":{
@@ -2428,6 +2754,15 @@
       },
       "sensitive":true
     },
+    "RetrieveAndGenerateOutputEvent":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "event":true,
+      "sensitive":true
+    },
     "RetrieveAndGenerateRequest":{
       "type":"structure",
       "required":["input"],
@@ -2458,6 +2793,50 @@
         "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
+    "RetrieveAndGenerateStreamRequest":{
+      "type":"structure",
+      "required":["input"],
+      "members":{
+        "input":{"shape":"RetrieveAndGenerateInput"},
+        "retrieveAndGenerateConfiguration":{"shape":"RetrieveAndGenerateConfiguration"},
+        "sessionConfiguration":{"shape":"RetrieveAndGenerateSessionConfiguration"},
+        "sessionId":{"shape":"SessionId"}
+      }
+    },
+    "RetrieveAndGenerateStreamResponse":{
+      "type":"structure",
+      "required":[
+        "sessionId",
+        "stream"
+      ],
+      "members":{
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"header",
+          "locationName":"x-amzn-bedrock-knowledge-base-session-id"
+        },
+        "stream":{"shape":"RetrieveAndGenerateStreamResponseOutput"}
+      },
+      "payload":"stream"
+    },
+    "RetrieveAndGenerateStreamResponseOutput":{
+      "type":"structure",
+      "members":{
+        "accessDeniedException":{"shape":"AccessDeniedException"},
+        "badGatewayException":{"shape":"BadGatewayException"},
+        "citation":{"shape":"CitationEvent"},
+        "conflictException":{"shape":"ConflictException"},
+        "dependencyFailedException":{"shape":"DependencyFailedException"},
+        "guardrail":{"shape":"GuardrailEvent"},
+        "internalServerException":{"shape":"InternalServerException"},
+        "output":{"shape":"RetrieveAndGenerateOutputEvent"},
+        "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
+        "serviceQuotaExceededException":{"shape":"ServiceQuotaExceededException"},
+        "throttlingException":{"shape":"ThrottlingException"},
+        "validationException":{"shape":"ValidationException"}
+      },
+      "eventstream":true
+    },
     "RetrieveAndGenerateType":{
       "type":"string",
       "enum":[
@@ -2472,6 +2851,7 @@
         "retrievalQuery"
       ],
       "members":{
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "knowledgeBaseId":{
           "shape":"KnowledgeBaseId",
           "location":"uri",
@@ -2486,6 +2866,7 @@
       "type":"structure",
       "required":["retrievalResults"],
       "members":{
+        "guardrailAction":{"shape":"GuadrailAction"},
         "nextToken":{"shape":"NextToken"},
         "retrievalResults":{"shape":"KnowledgeBaseRetrievalResults"}
       }
@@ -2779,6 +3160,41 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "VectorSearchBedrockRerankingConfiguration":{
+      "type":"structure",
+      "required":["modelConfiguration"],
+      "members":{
+        "metadataConfiguration":{"shape":"MetadataConfigurationForReranking"},
+        "modelConfiguration":{"shape":"VectorSearchBedrockRerankingModelConfiguration"},
+        "numberOfRerankedResults":{"shape":"VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger"}
+      }
+    },
+    "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "VectorSearchBedrockRerankingModelConfiguration":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "modelArn":{"shape":"BedrockRerankingModelArn"}
+      }
+    },
+    "VectorSearchRerankingConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "bedrockRerankingConfiguration":{"shape":"VectorSearchBedrockRerankingConfiguration"},
+        "type":{"shape":"VectorSearchRerankingConfigurationType"}
+      }
+    },
+    "VectorSearchRerankingConfigurationType":{
+      "type":"string",
+      "enum":["BEDROCK_RERANKING_MODEL"]
     },
     "Verb":{
       "type":"string",

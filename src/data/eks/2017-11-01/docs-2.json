@@ -272,6 +272,13 @@
       "refs": {
       }
     },
+    "BlockStorage": {
+      "base": "<p>Indicates the current configuration of the block storage capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account. For more information, see EKS Auto Mode block storage capability in the EKS User Guide.</p>",
+      "refs": {
+        "StorageConfigRequest$blockStorage": "<p>Request to configure EBS Block Storage settings for your EKS Auto Mode cluster.</p>",
+        "StorageConfigResponse$blockStorage": "<p>Indicates the current configuration of the block storage capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -291,8 +298,12 @@
       "base": null,
       "refs": {
         "AccessConfigResponse$bootstrapClusterCreatorAdminPermissions": "<p>Specifies whether or not the cluster creator IAM principal was set as a cluster admin access entry during cluster creation time.</p>",
+        "BlockStorage$enabled": "<p>Indicates if the block storage capability is enabled on your EKS Auto Mode cluster. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account.</p>",
+        "ComputeConfigRequest$enabled": "<p>Request to enable or disable the compute capability on your EKS Auto Mode cluster. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account.</p>",
+        "ComputeConfigResponse$enabled": "<p>Indicates if the compute capability is enabled on your EKS Auto Mode cluster. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account.</p>",
         "CreateAccessConfigRequest$bootstrapClusterCreatorAdminPermissions": "<p>Specifies whether or not the cluster creator IAM principal was set as a cluster admin access entry during cluster creation time. The default value is <code>true</code>.</p>",
         "CreateClusterRequest$bootstrapSelfManagedAddons": "<p>If you set this value to <code>False</code> when creating a cluster, the default networking add-ons will not be installed.</p> <p>The default networking addons include vpc-cni, coredns, and kube-proxy.</p> <p>Use this option when you plan to install third-party alternative add-ons or self-manage the default networking add-ons.</p>",
+        "ElasticLoadBalancing$enabled": "<p>Indicates if the load balancing capability is enabled on your EKS Auto Mode cluster. If the load balancing capability is enabled, EKS Auto Mode will create and delete load balancers in your Amazon Web Services account.</p>",
         "LogSetup$enabled": "<p>If a log type is enabled, that log type exports its control plane logs to CloudWatch Logs. If a log type isn't enabled, that log type doesn't export its control plane logs. Each individual log type can be enabled or disabled independently.</p>",
         "VpcConfigRequest$endpointPublicAccess": "<p>Set this value to <code>false</code> to disable public access to your cluster's Kubernetes API server endpoint. If you disable public access, your cluster's Kubernetes API server can only receive requests from within the cluster VPC. The default value for this parameter is <code>true</code>, which enables public access for your Kubernetes API server. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html\">Amazon EKS cluster endpoint access control</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p>",
         "VpcConfigRequest$endpointPrivateAccess": "<p>Set this value to <code>true</code> to enable private access for your cluster's Kubernetes API server endpoint. If you enable private access, Kubernetes API requests from within your cluster's VPC use the private VPC endpoint. The default value for this parameter is <code>false</code>, which disables private access for your Kubernetes API server. If you disable private access and you have nodes or Fargate pods in the cluster, then ensure that <code>publicAccessCidrs</code> includes the necessary CIDR blocks for communication with the nodes or Fargate pods. For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html\">Amazon EKS cluster endpoint access control</a> in the <i> <i>Amazon EKS User Guide</i> </i>.</p>",
@@ -420,6 +431,19 @@
       "base": "<p>Compatibility information.</p>",
       "refs": {
         "Compatibilities$member": null
+      }
+    },
+    "ComputeConfigRequest": {
+      "base": "<p>Request to update the configuration of the compute capability of your EKS Auto Mode cluster. For example, enable the capability. For more information, see EKS Auto Mode compute capability in the EKS User Guide.</p>",
+      "refs": {
+        "CreateClusterRequest$computeConfig": "<p>Enable or disable the compute capability of EKS Auto Mode when creating your EKS Auto Mode cluster. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account</p>",
+        "UpdateClusterConfigRequest$computeConfig": "<p>Update the configuration of the compute capability of your EKS Auto Mode cluster. For example, enable the capability.</p>"
+      }
+    },
+    "ComputeConfigResponse": {
+      "base": "<p>Indicates the status of the request to update the compute capability of your EKS Auto Mode cluster.</p>",
+      "refs": {
+        "Cluster$computeConfig": "<p>Indicates the current configuration of the compute capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled. If the compute capability is enabled, EKS Auto Mode will create and delete EC2 Managed Instances in your Amazon Web Services account. For more information, see EKS Auto Mode compute capability in the EKS User Guide.</p>"
       }
     },
     "ConnectorConfigProvider": {
@@ -820,6 +844,13 @@
         "EksAnywhereSubscriptionTerm$unit": "<p>The term unit of the subscription. Valid value is <code>MONTHS</code>.</p>"
       }
     },
+    "ElasticLoadBalancing": {
+      "base": "<p>Indicates the current configuration of the load balancing capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled. For more information, see EKS Auto Mode load balancing capability in the EKS User Guide.</p>",
+      "refs": {
+        "KubernetesNetworkConfigRequest$elasticLoadBalancing": "<p>Request to enable or disable the load balancing capability on your EKS Auto Mode cluster. For more information, see EKS Auto Mode load balancing capability in the EKS User Guide.</p>",
+        "KubernetesNetworkConfigResponse$elasticLoadBalancing": "<p>Indicates the current configuration of the load balancing capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled.</p>"
+      }
+    },
     "EncryptionConfig": {
       "base": "<p>The encryption configuration for the cluster.</p>",
       "refs": {
@@ -1051,7 +1082,8 @@
     "KubernetesNetworkConfigRequest": {
       "base": "<p>The Kubernetes network configuration for the cluster.</p>",
       "refs": {
-        "CreateClusterRequest$kubernetesNetworkConfig": "<p>The Kubernetes network configuration for the cluster.</p>"
+        "CreateClusterRequest$kubernetesNetworkConfig": "<p>The Kubernetes network configuration for the cluster.</p>",
+        "UpdateClusterConfigRequest$kubernetesNetworkConfig": null
       }
     },
     "KubernetesNetworkConfigResponse": {
@@ -1442,6 +1474,44 @@
         "Nodegroup$remoteAccess": "<p>If the node group wasn't deployed with a launch template, then this is the remote access configuration that is associated with the node group. If the node group was deployed with a launch template, then this is <code>null</code>.</p>"
       }
     },
+    "RemoteNetworkConfigRequest": {
+      "base": "<p>The configuration in the cluster for EKS Hybrid Nodes. You can't change or update this configuration after the cluster is created.</p>",
+      "refs": {
+        "CreateClusterRequest$remoteNetworkConfig": "<p>The configuration in the cluster for EKS Hybrid Nodes. You can't change or update this configuration after the cluster is created.</p>"
+      }
+    },
+    "RemoteNetworkConfigResponse": {
+      "base": "<p>The configuration in the cluster for EKS Hybrid Nodes. You can't change or update this configuration after the cluster is created.</p>",
+      "refs": {
+        "Cluster$remoteNetworkConfig": "<p>The configuration in the cluster for EKS Hybrid Nodes. You can't change or update this configuration after the cluster is created.</p>"
+      }
+    },
+    "RemoteNodeNetwork": {
+      "base": "<p>A network CIDR that can contain hybrid nodes.</p>",
+      "refs": {
+        "RemoteNodeNetworkList$member": null
+      }
+    },
+    "RemoteNodeNetworkList": {
+      "base": null,
+      "refs": {
+        "RemoteNetworkConfigRequest$remoteNodeNetworks": "<p>The list of network CIDRs that can contain hybrid nodes.</p>",
+        "RemoteNetworkConfigResponse$remoteNodeNetworks": "<p>The list of network CIDRs that can contain hybrid nodes.</p>"
+      }
+    },
+    "RemotePodNetwork": {
+      "base": "<p>A network CIDR that can contain pods that run Kubernetes webhooks on hybrid nodes.</p>",
+      "refs": {
+        "RemotePodNetworkList$member": null
+      }
+    },
+    "RemotePodNetworkList": {
+      "base": null,
+      "refs": {
+        "RemoteNetworkConfigRequest$remotePodNetworks": "<p>The list of network CIDRs that can contain pods that run Kubernetes webhooks on hybrid nodes.</p>",
+        "RemoteNetworkConfigResponse$remotePodNetworks": "<p>The list of network CIDRs that can contain pods that run Kubernetes webhooks on hybrid nodes.</p>"
+      }
+    },
     "ResolveConflicts": {
       "base": null,
       "refs": {
@@ -1484,6 +1554,19 @@
     "ServiceUnavailableException": {
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
       "refs": {
+      }
+    },
+    "StorageConfigRequest": {
+      "base": "<p>Request to update the configuration of the storage capability of your EKS Auto Mode cluster. For example, enable the capability. For more information, see EKS Auto Mode block storage capability in the EKS User Guide.</p>",
+      "refs": {
+        "CreateClusterRequest$storageConfig": "<p>Enable or disable the block storage capability of EKS Auto Mode when creating your EKS Auto Mode cluster. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account.</p>",
+        "UpdateClusterConfigRequest$storageConfig": "<p>Update the configuration of the block storage capability of your EKS Auto Mode cluster. For example, enable the capability.</p>"
+      }
+    },
+    "StorageConfigResponse": {
+      "base": "<p>Indicates the status of the request to update the block storage capability of your EKS Auto Mode cluster.</p>",
+      "refs": {
+        "Cluster$storageConfig": "<p>Indicates the current configuration of the block storage capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account. For more information, see EKS Auto Mode block storage capability in the EKS User Guide.</p>"
       }
     },
     "String": {
@@ -1544,6 +1627,8 @@
         "Cluster$id": "<p>The ID of your local Amazon EKS cluster on an Amazon Web Services Outpost. This property isn't available for an Amazon EKS cluster on the Amazon Web Services cloud.</p>",
         "ClusterIssue$message": "<p>A description of the issue.</p>",
         "Compatibility$clusterVersion": "<p>The supported Kubernetes version of the cluster.</p>",
+        "ComputeConfigRequest$nodeRoleArn": "<p>The ARN of the IAM Role EKS will assign to EC2 Managed Instances in your EKS Auto Mode cluster. This value cannot be changed after the compute capability of EKS Auto Mode is enabled. For more information, see the IAM Reference in the EKS User Guide.</p>",
+        "ComputeConfigResponse$nodeRoleArn": "<p>The ARN of the IAM Role EKS will assign to EC2 Managed Instances in your EKS Auto Mode cluster.</p>",
         "ConnectorConfigRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the role that is authorized to request the connector configuration.</p>",
         "ConnectorConfigResponse$activationId": "<p>A unique ID associated with the cluster for registration purposes.</p>",
         "ConnectorConfigResponse$activationCode": "<p>A unique code associated with the cluster for registration purposes.</p>",
@@ -1828,8 +1913,11 @@
         "AddonIssue$resourceIds": "<p>The resource IDs of the issue.</p>",
         "AddonPodIdentityConfiguration$recommendedManagedPolicies": "<p>A suggested IAM Policy for the addon.</p>",
         "AddonVersionInfo$architecture": "<p>The architectures that the version supports.</p>",
+        "AddonVersionInfo$computeTypes": "<p>Indicates the compute type of the addon version.</p>",
         "ClusterIssue$resourceIds": "<p>The resource IDs that the issue relates to.</p>",
         "Compatibility$platformVersions": "<p>The supported compute platform.</p>",
+        "ComputeConfigRequest$nodePools": "<p>Configuration for node pools that defines the compute resources for your EKS Auto Mode cluster. For more information, see EKS Auto Mode Node Pools in the EKS User Guide.</p>",
+        "ComputeConfigResponse$nodePools": "<p>Indicates the current configuration of node pools in your EKS Auto Mode cluster. For more information, see EKS Auto Mode Node Pools in the EKS User Guide.</p>",
         "CreateAccessEntryRequest$kubernetesGroups": "<p>The value for <code>name</code> that you've specified for <code>kind: Group</code> as a <code>subject</code> in a Kubernetes <code>RoleBinding</code> or <code>ClusterRoleBinding</code> object. Amazon EKS doesn't confirm that the value for <code>name</code> exists in any bindings on your cluster. You can specify one or more names.</p> <p>Kubernetes authorizes the <code>principalArn</code> of the access entry to access any cluster objects that you've specified in a Kubernetes <code>Role</code> or <code>ClusterRole</code> object that is also specified in a binding's <code>roleRef</code>. For more information about creating Kubernetes <code>RoleBinding</code>, <code>ClusterRoleBinding</code>, <code>Role</code>, or <code>ClusterRole</code> objects, see <a href=\"https://kubernetes.io/docs/reference/access-authn-authz/rbac/\">Using RBAC Authorization in the Kubernetes documentation</a>.</p> <p>If you want Amazon EKS to authorize the <code>principalArn</code> (instead of, or in addition to Kubernetes authorizing the <code>principalArn</code>), you can associate one or more access policies to the access entry using <code>AssociateAccessPolicy</code>. If you associate any access policies, the <code>principalARN</code> has all permissions assigned in the associated access policies and all permissions in any Kubernetes <code>Role</code> or <code>ClusterRole</code> objects that the group names are bound to.</p>",
         "CreateFargateProfileRequest$subnets": "<p>The IDs of subnets to launch a <code>Pod</code> into. A <code>Pod</code> running on Fargate isn't assigned a public IP address, so only private subnets (with no direct route to an Internet Gateway) are accepted for this parameter.</p>",
         "CreateNodegroupRequest$subnets": "<p>The subnets to use for the Auto Scaling group that is created for your node group. If you specify <code>launchTemplate</code>, then don't specify <code> <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNetworkInterface.html\">SubnetId</a> </code> in your launch template, or the node group deployment will fail. For more information about using launch templates with Amazon EKS, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html\">Customizing managed nodes with launch templates</a> in the <i>Amazon EKS User Guide</i>.</p>",
@@ -1855,6 +1943,8 @@
         "OutpostConfigRequest$outpostArns": "<p>The ARN of the Outpost that you want to use for your local Amazon EKS cluster on Outposts. Only a single Outpost ARN is supported.</p>",
         "OutpostConfigResponse$outpostArns": "<p>The ARN of the Outpost that you specified for use with your local Amazon EKS cluster on Outposts.</p>",
         "RemoteAccessConfig$sourceSecurityGroups": "<p>The security group IDs that are allowed SSH access (port 22) to the nodes. For Windows, the port is 3389. If you specify an Amazon EC2 SSH key but don't specify a source security group when you create a managed node group, then the port on the nodes is opened to the internet (<code>0.0.0.0/0</code>). For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html\">Security Groups for Your VPC</a> in the <i>Amazon Virtual Private Cloud User Guide</i>.</p>",
+        "RemoteNodeNetwork$cidrs": "<p>A network CIDR that can contain hybrid nodes.</p>",
+        "RemotePodNetwork$cidrs": "<p>A network CIDR that can contain pods that run Kubernetes webhooks on hybrid nodes.</p>",
         "UnsupportedAvailabilityZoneException$validZones": "<p>The supported Availability Zones for your account. Choose subnets in these Availability Zones for your cluster.</p>",
         "UpdateAccessEntryRequest$kubernetesGroups": "<p>The value for <code>name</code> that you've specified for <code>kind: Group</code> as a <code>subject</code> in a Kubernetes <code>RoleBinding</code> or <code>ClusterRoleBinding</code> object. Amazon EKS doesn't confirm that the value for <code>name</code> exists in any bindings on your cluster. You can specify one or more names.</p> <p>Kubernetes authorizes the <code>principalArn</code> of the access entry to access any cluster objects that you've specified in a Kubernetes <code>Role</code> or <code>ClusterRole</code> object that is also specified in a binding's <code>roleRef</code>. For more information about creating Kubernetes <code>RoleBinding</code>, <code>ClusterRoleBinding</code>, <code>Role</code>, or <code>ClusterRole</code> objects, see <a href=\"https://kubernetes.io/docs/reference/access-authn-authz/rbac/\">Using RBAC Authorization in the Kubernetes documentation</a>.</p> <p>If you want Amazon EKS to authorize the <code>principalArn</code> (instead of, or in addition to Kubernetes authorizing the <code>principalArn</code>), you can associate one or more access policies to the access entry using <code>AssociateAccessPolicy</code>. If you associate any access policies, the <code>principalARN</code> has all permissions assigned in the associated access policies and all permissions in any Kubernetes <code>Role</code> or <code>ClusterRole</code> objects that the group names are bound to.</p>",
         "VpcConfigRequest$subnetIds": "<p>Specify subnets for your Amazon EKS nodes. Amazon EKS creates cross-account elastic network interfaces in these subnets to allow communication between your nodes and the Kubernetes control plane.</p>",

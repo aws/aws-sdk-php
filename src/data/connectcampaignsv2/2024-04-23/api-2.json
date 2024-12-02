@@ -340,6 +340,26 @@
       ],
       "idempotent":true
     },
+    "PutProfileOutboundRequestBatch":{
+      "name":"PutProfileOutboundRequestBatch",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/campaigns/{id}/profile-outbound-requests",
+        "responseCode":200
+      },
+      "input":{"shape":"PutProfileOutboundRequestBatchRequest"},
+      "output":{"shape":"PutProfileOutboundRequestBatchResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidCampaignStateException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "ResumeCampaign":{
       "name":"ResumeCampaign",
       "http":{
@@ -1144,6 +1164,12 @@
       "type":"string",
       "enum":["KMS"]
     },
+    "EventTrigger":{
+      "type":"structure",
+      "members":{
+        "customerProfilesDomainArn":{"shape":"Arn"}
+      }
+    },
     "EventType":{
       "type":"string",
       "enum":[
@@ -1164,6 +1190,20 @@
       "type":"list",
       "member":{"shape":"FailedCampaignStateResponse"},
       "max":25,
+      "min":0
+    },
+    "FailedProfileOutboundRequest":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "id":{"shape":"ProfileOutboundRequestId"},
+        "failureCode":{"shape":"ProfileOutboundRequestFailureCode"}
+      }
+    },
+    "FailedProfileOutboundRequestList":{
+      "type":"list",
+      "member":{"shape":"FailedProfileOutboundRequest"},
+      "max":20,
       "min":0
     },
     "FailedRequest":{
@@ -1571,6 +1611,44 @@
         "bandwidthAllocation":{"shape":"BandwidthAllocation"}
       }
     },
+    "ProfileId":{
+      "type":"string",
+      "pattern":"[a-f0-9]{32}"
+    },
+    "ProfileOutboundRequest":{
+      "type":"structure",
+      "required":[
+        "clientToken",
+        "profileId"
+      ],
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "profileId":{"shape":"ProfileId"},
+        "expirationTime":{"shape":"TimeStamp"}
+      }
+    },
+    "ProfileOutboundRequestFailureCode":{
+      "type":"string",
+      "enum":[
+        "UnknownError",
+        "ResourceNotFound",
+        "Conflict",
+        "RequestThrottled",
+        "InvalidInput"
+      ]
+    },
+    "ProfileOutboundRequestId":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9_\\-.]*"
+    },
+    "ProfileOutboundRequestList":{
+      "type":"list",
+      "member":{"shape":"ProfileOutboundRequest"},
+      "max":20,
+      "min":1
+    },
     "ProgressiveConfig":{
       "type":"structure",
       "required":["bandwidthAllocation"],
@@ -1613,6 +1691,28 @@
       "members":{
         "successfulRequests":{"shape":"SuccessfulRequestList"},
         "failedRequests":{"shape":"FailedRequestList"}
+      }
+    },
+    "PutProfileOutboundRequestBatchRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "profileOutboundRequests"
+      ],
+      "members":{
+        "id":{
+          "shape":"CampaignId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "profileOutboundRequests":{"shape":"ProfileOutboundRequestList"}
+      }
+    },
+    "PutProfileOutboundRequestBatchResponse":{
+      "type":"structure",
+      "members":{
+        "successfulRequests":{"shape":"SuccessfulProfileOutboundRequestList"},
+        "failedRequests":{"shape":"FailedProfileOutboundRequestList"}
       }
     },
     "QConnectIntegrationConfig":{
@@ -1777,7 +1877,8 @@
     "Source":{
       "type":"structure",
       "members":{
-        "customerProfilesSegmentArn":{"shape":"Arn"}
+        "customerProfilesSegmentArn":{"shape":"Arn"},
+        "eventTrigger":{"shape":"EventTrigger"}
       },
       "union":true
     },
@@ -1841,6 +1942,19 @@
       "type":"list",
       "member":{"shape":"SuccessfulCampaignStateResponse"},
       "max":25,
+      "min":0
+    },
+    "SuccessfulProfileOutboundRequest":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "id":{"shape":"ProfileOutboundRequestId"}
+      }
+    },
+    "SuccessfulProfileOutboundRequestList":{
+      "type":"list",
+      "member":{"shape":"SuccessfulProfileOutboundRequest"},
+      "max":20,
       "min":0
     },
     "SuccessfulRequest":{

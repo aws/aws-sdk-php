@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLifecycleExecutionAsync(array $args = [])
  * @method \Aws\Result getLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLifecyclePolicyAsync(array $args = [])
+ * @method \Aws\Result getMarketplaceResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMarketplaceResourceAsync(array $args = [])
  * @method \Aws\Result getWorkflow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getWorkflowAsync(array $args = [])
  * @method \Aws\Result getWorkflowExecution(array $args = [])

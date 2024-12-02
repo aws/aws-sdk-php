@@ -8,8 +8,10 @@
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeInlineAgent</code>.</p> </note>",
     "OptimizePrompt": "<p>Optimizes a prompt for the task that you specify. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-optimize.html\">Optimize a prompt</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "Rerank": "<p>Reranks the relevance of sources based on queries. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html\">Improve the relevance of query responses with a reranker model</a>.</p>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
-    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>"
+    "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>",
+    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note>"
   },
   "shapes": {
     "APISchema": {
@@ -24,7 +26,8 @@
         "FlowResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
         "InlineAgentResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
         "OptimizedPromptStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
-        "ResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>"
+        "ResponseStream$accessDeniedException": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$accessDeniedException": "<p>The request is denied because you do not have sufficient permissions to perform the requested action. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-access-denied\">AccessDeniedException</a> in the Amazon Bedrock User Guide.</p>"
       }
     },
     "ActionGroupExecutor": {
@@ -73,9 +76,11 @@
     "AdditionalModelRequestFields": {
       "base": null,
       "refs": {
+        "BedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A JSON object whose keys are request fields for the model and whose values are values for those fields.</p>",
         "ExternalSourcesGenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and their corresponding values not included in the textInferenceConfig structure for an external source. Takes in custom model parameters specific to the language model being used. </p>",
         "GenerationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>",
-        "OrchestrationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>"
+        "OrchestrationConfiguration$additionalModelRequestFields": "<p> Additional model parameters and corresponding values not included in the textInferenceConfig structure for a knowledge base. This allows users to provide custom model parameters specific to the language model being used. </p>",
+        "VectorSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A JSON object whose keys are request fields for the model and whose values are values for those fields.</p>"
       }
     },
     "AdditionalModelRequestFieldsKey": {
@@ -176,6 +181,12 @@
         "InvocationResultMember$apiResult": "<p>The result from the API response from the action group invocation.</p>"
       }
     },
+    "AttributeType": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$type": "<p>The attribute's type.</p>"
+      }
+    },
     "Attribution": {
       "base": "<p>Contains citations for a part of an agent response.</p>",
       "refs": {
@@ -189,7 +200,8 @@
         "FlowResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
         "InlineAgentResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request. </p>",
         "OptimizedPromptStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
-        "ResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>"
+        "ResponseStream$badGatewayException": "<p>There was an issue with a dependency due to a server issue. Retry your request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$badGatewayException": "<p>The request failed due to a bad gateway error.</p>"
       }
     },
     "BasePromptTemplate": {
@@ -201,8 +213,34 @@
     "BedrockModelArn": {
       "base": null,
       "refs": {
+        "BedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the reranker model.</p>",
         "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The model Amazon Resource Name (ARN) for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
+        "ImplicitFilterConfiguration$modelArn": "<p>The model that generates the filter.</p>",
         "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate a response.</p>"
+      }
+    },
+    "BedrockRerankingConfiguration": {
+      "base": "<p>Contains configurations for an Amazon Bedrock reranker model.</p>",
+      "refs": {
+        "RerankingConfiguration$bedrockRerankingConfiguration": "<p>Contains configurations for an Amazon Bedrock reranker.</p>"
+      }
+    },
+    "BedrockRerankingConfigurationNumberOfResultsInteger": {
+      "base": null,
+      "refs": {
+        "BedrockRerankingConfiguration$numberOfResults": "<p>The number of results to return after reranking.</p>"
+      }
+    },
+    "BedrockRerankingModelArn": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingModelConfiguration$modelArn": "<p>The ARN of the reranker model to use.</p>"
+      }
+    },
+    "BedrockRerankingModelConfiguration": {
+      "base": "<p>Contains configurations for a reranker model.</p>",
+      "refs": {
+        "BedrockRerankingConfiguration$modelConfiguration": "<p>Contains configurations for a reranker model.</p>"
       }
     },
     "Boolean": {
@@ -241,7 +279,14 @@
     "Citation": {
       "base": "<p>An object containing a segment of the generated response that is based on a source in the knowledge base, alongside information about the source.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>citations</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>citations</code> field</p> </li> </ul>",
       "refs": {
+        "CitationEvent$citation": "<p>The citation.</p>",
         "Citations$member": null
+      }
+    },
+    "CitationEvent": {
+      "base": "<p>A citation event.</p>",
+      "refs": {
+        "RetrieveAndGenerateStreamResponseOutput$citation": "<p>A citation event.</p>"
       }
     },
     "Citations": {
@@ -275,7 +320,8 @@
       "refs": {
         "FlowResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>",
         "InlineAgentResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request. </p>",
-        "ResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>"
+        "ResponseStream$conflictException": "<p>There was a conflict performing an operation. Resolve the conflict and retry your request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$conflictException": "<p>Error occurred because of a conflict while performing an operation.</p>"
       }
     },
     "ContentBody": {
@@ -318,9 +364,9 @@
       }
     },
     "CustomOrchestrationTraceEvent": {
-      "base": "<p> The event in the custom orchestration sequence. </p>",
+      "base": "<p> The event in the custom orchestration sequence. Events are the responses which the custom orchestration Lambda function sends as response to the agent. </p>",
       "refs": {
-        "CustomOrchestrationTrace$event": "<p> The trace event details used with the custom orchestration. </p>"
+        "CustomOrchestrationTrace$event": "<p> The event details used with the custom orchestration. </p>"
       }
     },
     "DateTimestamp": {
@@ -349,7 +395,8 @@
         "FlowResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
         "InlineAgentResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
         "OptimizedPromptStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
-        "ResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>"
+        "ResponseStream$dependencyFailedException": "<p>There was an issue with a dependency. Check the resource configurations and retry the request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$dependencyFailedException": "<p>The request failed due to a dependency error.</p>"
       }
     },
     "Document": {
@@ -358,7 +405,8 @@
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
         "FlowOutputContent$document": "<p>The content in the output.</p>",
         "FlowTraceNodeInputContent$document": "<p>The content of the node input.</p>",
-        "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>"
+        "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>",
+        "RerankDocument$jsonDocument": "<p>Contains a JSON document to rerank.</p>"
       }
     },
     "Double": {
@@ -413,6 +461,25 @@
       "base": "<p>Contains information about the failure of the interaction.</p>",
       "refs": {
         "Trace$failureTrace": "<p>Contains information about the failure of the interaction.</p>"
+      }
+    },
+    "FieldForReranking": {
+      "base": "<p>Contains information for a metadata field to include in or exclude from consideration when reranking.</p>",
+      "refs": {
+        "FieldsForReranking$member": null
+      }
+    },
+    "FieldForRerankingFieldNameString": {
+      "base": null,
+      "refs": {
+        "FieldForReranking$fieldName": "<p>The name of a metadata field to include in or exclude from consideration when reranking.</p>"
+      }
+    },
+    "FieldsForReranking": {
+      "base": null,
+      "refs": {
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>An array of objects, each of which specifies a metadata field to exclude from consideration when reranking.</p>",
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>An array of objects, each of which specifies a metadata field to include in consideration when reranking. The remaining metadata fields are ignored.</p>"
       }
     },
     "FileBody": {
@@ -490,6 +557,12 @@
       "base": null,
       "refs": {
         "FinalResponse$text": "<p>The text in the response to the user.</p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "RerankResult$relevanceScore": "<p>The relevance score of the document.</p>"
       }
     },
     "FlowAliasIdentifier": {
@@ -709,7 +782,9 @@
     "GuadrailAction": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateResponse$guardrailAction": "<p>Specifies if there is a guardrail intervention in the response.</p>"
+        "GuardrailEvent$action": "<p>The guardrail action.</p>",
+        "RetrieveAndGenerateResponse$guardrailAction": "<p>Specifies if there is a guardrail intervention in the response.</p>",
+        "RetrieveResponse$guardrailAction": "<p>Specifies if there is a guardrail intervention in the response.</p>"
       }
     },
     "GuardrailAction": {
@@ -735,7 +810,8 @@
       "base": "<p>The configuration details for the guardrail.</p>",
       "refs": {
         "ExternalSourcesGenerationConfiguration$guardrailConfiguration": "<p>The configuration details for the guardrail.</p>",
-        "GenerationConfiguration$guardrailConfiguration": "<p>The configuration details for the guardrail.</p>"
+        "GenerationConfiguration$guardrailConfiguration": "<p>The configuration details for the guardrail.</p>",
+        "RetrieveRequest$guardrailConfiguration": "<p>Guardrail settings.</p>"
       }
     },
     "GuardrailConfigurationGuardrailIdString": {
@@ -802,6 +878,12 @@
       "base": null,
       "refs": {
         "GuardrailWordPolicyAssessment$customWords": "<p>The custom word details for words defined in the Guardrail filter.</p>"
+      }
+    },
+    "GuardrailEvent": {
+      "base": "<p>A guardrail event.</p>",
+      "refs": {
+        "RetrieveAndGenerateStreamResponseOutput$guardrail": "<p>A guardrail event.</p>"
       }
     },
     "GuardrailIdentifierWithArn": {
@@ -932,6 +1014,12 @@
         "ByteContentDoc$identifier": "<p>The file name of the document contained in the wrapper object.</p>"
       }
     },
+    "ImplicitFilterConfiguration": {
+      "base": "<p>Settings for implicit filtering, where a model generates a metadata filter based on the prompt.</p>",
+      "refs": {
+        "KnowledgeBaseVectorSearchConfiguration$implicitFilterConfiguration": "<p>Settings for implicit filtering.</p>"
+      }
+    },
     "InferenceConfig": {
       "base": "<p> The configuration for inference settings when generating responses using RetrieveAndGenerate. </p>",
       "refs": {
@@ -1029,7 +1117,8 @@
         "FlowResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "InlineAgentResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
         "OptimizedPromptStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
-        "ResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
+        "ResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
       }
     },
     "InvocationInput": {
@@ -1275,6 +1364,36 @@
         "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>"
       }
     },
+    "MetadataAttributeSchema": {
+      "base": "<p>Details about a metadata attribute.</p>",
+      "refs": {
+        "MetadataAttributeSchemaList$member": null
+      }
+    },
+    "MetadataAttributeSchemaDescriptionString": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$description": "<p>The attribute's description.</p>"
+      }
+    },
+    "MetadataAttributeSchemaKeyString": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$key": "<p>The attribute's key.</p>"
+      }
+    },
+    "MetadataAttributeSchemaList": {
+      "base": null,
+      "refs": {
+        "ImplicitFilterConfiguration$metadataAttributes": "<p>Metadata that can be used in a filter.</p>"
+      }
+    },
+    "MetadataConfigurationForReranking": {
+      "base": "<p>Contains configurations for the metadata to use in reranking.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>Contains configurations for the metadata to use in reranking.</p>"
+      }
+    },
     "MimeType": {
       "base": null,
       "refs": {
@@ -1303,6 +1422,8 @@
       "refs": {
         "GetAgentMemoryRequest$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "GetAgentMemoryResponse$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "RerankRequest$nextToken": "<p>If the total number of results was greater than could fit in a response, a token is returned in the <code>nextToken</code> field. You can enter that token in this field to return the next batch of results.</p>",
+        "RerankResponse$nextToken": "<p>If the total number of results is greater than can fit in the response, use this token in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "RetrieveRequest$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>",
         "RetrieveResponse$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>"
       }
@@ -1655,6 +1776,120 @@
         "FunctionDefinition$requireConfirmation": "<p> Contains information if user confirmation is required to invoke the function. </p>"
       }
     },
+    "RerankDocument": {
+      "base": "<p>Contains information about a document to rerank. Choose the <code>type</code> to define and include the field that corresponds to the type.</p>",
+      "refs": {
+        "RerankResult$document": "<p>Contains information about the document.</p>",
+        "RerankSource$inlineDocumentSource": "<p>Contains an inline definition of a source for reranking.</p>"
+      }
+    },
+    "RerankDocumentType": {
+      "base": null,
+      "refs": {
+        "RerankDocument$type": "<p>The type of document to rerank.</p>"
+      }
+    },
+    "RerankQueriesList": {
+      "base": null,
+      "refs": {
+        "RerankRequest$queries": "<p>An array of objects, each of which contains information about a query to submit to the reranker model.</p>"
+      }
+    },
+    "RerankQuery": {
+      "base": "<p>Contains information about a query to submit to the reranker model.</p>",
+      "refs": {
+        "RerankQueriesList$member": null
+      }
+    },
+    "RerankQueryContentType": {
+      "base": null,
+      "refs": {
+        "RerankQuery$type": "<p>The type of the query.</p>"
+      }
+    },
+    "RerankRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RerankResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RerankResult": {
+      "base": "<p>Contains information about a document that was reranked.</p>",
+      "refs": {
+        "RerankResultsList$member": null
+      }
+    },
+    "RerankResultIndexInteger": {
+      "base": null,
+      "refs": {
+        "RerankResult$index": "<p>The ranking of the document. The lower a number, the higher the document is ranked.</p>"
+      }
+    },
+    "RerankResultsList": {
+      "base": null,
+      "refs": {
+        "RerankResponse$results": "<p>An array of objects, each of which contains information about the results of reranking.</p>"
+      }
+    },
+    "RerankSource": {
+      "base": "<p>Contains information about a source for reranking.</p>",
+      "refs": {
+        "RerankSourcesList$member": null
+      }
+    },
+    "RerankSourceType": {
+      "base": null,
+      "refs": {
+        "RerankSource$type": "<p>The type of the source.</p>"
+      }
+    },
+    "RerankSourcesList": {
+      "base": null,
+      "refs": {
+        "RerankRequest$sources": "<p>An array of objects, each of which contains information about the sources to rerank.</p>"
+      }
+    },
+    "RerankTextDocument": {
+      "base": "<p>Contains information about a text document to rerank.</p>",
+      "refs": {
+        "RerankDocument$textDocument": "<p>Contains information about a text document to rerank.</p>",
+        "RerankQuery$textQuery": "<p>Contains information about a text query.</p>"
+      }
+    },
+    "RerankTextDocumentTextString": {
+      "base": null,
+      "refs": {
+        "RerankTextDocument$text": "<p>The text of the document.</p>"
+      }
+    },
+    "RerankingConfiguration": {
+      "base": "<p>Contains configurations for reranking.</p>",
+      "refs": {
+        "RerankRequest$rerankingConfiguration": "<p>Contains configurations for reranking.</p>"
+      }
+    },
+    "RerankingConfigurationType": {
+      "base": null,
+      "refs": {
+        "RerankingConfiguration$type": "<p>The type of reranker that the configurations apply to.</p>"
+      }
+    },
+    "RerankingMetadataSelectionMode": {
+      "base": null,
+      "refs": {
+        "MetadataConfigurationForReranking$selectionMode": "<p>Specifies whether to consider all metadata when reranking, or only the metadata that you select. If you specify <code>SELECTIVE</code>, include the <code>selectiveModeConfiguration</code> field.</p>"
+      }
+    },
+    "RerankingMetadataSelectiveModeConfiguration": {
+      "base": "<p>Contains configurations for the metadata fields to include or exclude when considering reranking. If you include the <code>fieldsToExclude</code> field, the reranker ignores all the metadata fields that you specify. If you include the <code>fieldsToInclude</code> field, the reranker uses only the metadata fields that you specify and ignores all others. You can include only one of these fields.</p>",
+      "refs": {
+        "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>Contains configurations for the metadata fields to include or exclude when considering reranking.</p>"
+      }
+    },
     "ResourceDescription": {
       "base": "<p>/ @documentation(&quot;Description of the using the resource.&quot;)</p>",
       "refs": {
@@ -1674,7 +1909,8 @@
       "refs": {
         "FlowResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
         "InlineAgentResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again. </p>",
-        "ResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>"
+        "ResponseStream$resourceNotFoundException": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$resourceNotFoundException": "<p>The specified resource ARN was not found. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-resource-not-found\">ResourceNotFound</a> in the Amazon Bedrock User Guide.</p>"
       }
     },
     "ResponseBody": {
@@ -1722,6 +1958,12 @@
       "refs": {
         "KnowledgeBaseRetrievalResult$content": "<p>Contains a chunk of text from a data source in the knowledge base.</p>",
         "RetrievedReference$content": "<p>Contains the cited text from the data source.</p>"
+      }
+    },
+    "RetrievalResultCustomDocumentLocation": {
+      "base": "<p>Contains information about the location of a document in a custom data source.</p>",
+      "refs": {
+        "RetrievalResultLocation$customDocumentLocation": "<p>Specifies the location of a document in a custom data source.</p>"
       }
     },
     "RetrievalResultLocation": {
@@ -1783,13 +2025,15 @@
     "RetrieveAndGenerateConfiguration": {
       "base": "<p>Contains details about the resource being queried.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>retrieveAndGenerateConfiguration</code> field</p> </li> </ul>",
       "refs": {
-        "RetrieveAndGenerateRequest$retrieveAndGenerateConfiguration": "<p>Contains configurations for the knowledge base query and retrieval process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>"
+        "RetrieveAndGenerateRequest$retrieveAndGenerateConfiguration": "<p>Contains configurations for the knowledge base query and retrieval process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>",
+        "RetrieveAndGenerateStreamRequest$retrieveAndGenerateConfiguration": "<p>Contains configurations for the knowledge base query and retrieval process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html\">Query configurations</a>.</p>"
       }
     },
     "RetrieveAndGenerateInput": {
       "base": "<p>Contains the query made to the knowledge base.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>input</code> field</p> </li> </ul>",
       "refs": {
-        "RetrieveAndGenerateRequest$input": "<p>Contains the query to be made to the knowledge base.</p>"
+        "RetrieveAndGenerateRequest$input": "<p>Contains the query to be made to the knowledge base.</p>",
+        "RetrieveAndGenerateStreamRequest$input": "<p>Contains the query to be made to the knowledge base.</p>"
       }
     },
     "RetrieveAndGenerateInputTextString": {
@@ -1802,6 +2046,12 @@
       "base": "<p>Contains the response generated from querying the knowledge base.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>output</code> field</p> </li> </ul>",
       "refs": {
         "RetrieveAndGenerateResponse$output": "<p>Contains the response generated from querying the knowledge base.</p>"
+      }
+    },
+    "RetrieveAndGenerateOutputEvent": {
+      "base": "<p>A retrieve and generate output event.</p>",
+      "refs": {
+        "RetrieveAndGenerateStreamResponseOutput$output": "<p>An output event.</p>"
       }
     },
     "RetrieveAndGenerateRequest": {
@@ -1817,7 +2067,24 @@
     "RetrieveAndGenerateSessionConfiguration": {
       "base": "<p>Contains configuration about the session with the knowledge base.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax\">RetrieveAndGenerate request</a> – in the <code>sessionConfiguration</code> field</p> </li> </ul>",
       "refs": {
-        "RetrieveAndGenerateRequest$sessionConfiguration": "<p>Contains details about the session with the knowledge base.</p>"
+        "RetrieveAndGenerateRequest$sessionConfiguration": "<p>Contains details about the session with the knowledge base.</p>",
+        "RetrieveAndGenerateStreamRequest$sessionConfiguration": "<p>Contains details about the session with the knowledge base.</p>"
+      }
+    },
+    "RetrieveAndGenerateStreamRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RetrieveAndGenerateStreamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RetrieveAndGenerateStreamResponseOutput": {
+      "base": "<p>A retrieve and generate stream response output.</p>",
+      "refs": {
+        "RetrieveAndGenerateStreamResponse$stream": "<p>A stream of events from the model.</p>"
       }
     },
     "RetrieveAndGenerateType": {
@@ -1910,7 +2177,8 @@
       "refs": {
         "FlowResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
         "InlineAgentResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
-        "ResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>"
+        "ResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$serviceQuotaExceededException": "<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>"
       }
     },
     "SessionAttributesMap": {
@@ -1931,6 +2199,8 @@
         "MemorySessionSummary$sessionId": "<p>The identifier for this session.</p>",
         "RetrieveAndGenerateRequest$sessionId": "<p>The unique identifier of the session. When you first make a <code>RetrieveAndGenerate</code> request, Amazon Bedrock automatically generates this value. You must reuse this value for all subsequent requests in the same conversational session. This value allows Amazon Bedrock to maintain context and knowledge from previous interactions. You can't explicitly set the <code>sessionId</code> yourself.</p>",
         "RetrieveAndGenerateResponse$sessionId": "<p>The unique identifier of the session. When you first make a <code>RetrieveAndGenerate</code> request, Amazon Bedrock automatically generates this value. You must reuse this value for all subsequent requests in the same conversational session. This value allows Amazon Bedrock to maintain context and knowledge from previous interactions. You can't explicitly set the <code>sessionId</code> yourself.</p>",
+        "RetrieveAndGenerateStreamRequest$sessionId": "<p>The unique identifier of the session. When you first make a <code>RetrieveAndGenerate</code> request, Amazon Bedrock automatically generates this value. You must reuse this value for all subsequent requests in the same conversational session. This value allows Amazon Bedrock to maintain context and knowledge from previous interactions. You can't explicitly set the <code>sessionId</code> yourself.</p>",
+        "RetrieveAndGenerateStreamResponse$sessionId": "<p>The session ID.</p>",
         "TracePart$sessionId": "<p>The unique identifier of the session with the agent.</p>"
       }
     },
@@ -2037,11 +2307,13 @@
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
         "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
+        "RetrievalResultCustomDocumentLocation$id": "<p>The ID of the document.</p>",
         "RetrievalResultS3Location$uri": "<p>The S3 URI for the data source location.</p>",
         "RetrievalResultSalesforceLocation$url": "<p>The Salesforce host URL for the data source location.</p>",
         "RetrievalResultSharePointLocation$url": "<p>The SharePoint site URL for the data source location.</p>",
         "RetrievalResultWebLocation$url": "<p>The web URL/URLs for the data source location.</p>",
         "RetrieveAndGenerateOutput$text": "<p>The response generated from querying the knowledge base.</p>",
+        "RetrieveAndGenerateOutputEvent$text": "<p>A text response.</p>",
         "ReturnControlPayload$invocationId": "<p>The identifier of the action group invocation.</p>",
         "SessionAttributesMap$key": null,
         "SessionAttributesMap$value": null,
@@ -2100,7 +2372,8 @@
         "FlowResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
         "InlineAgentResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
         "OptimizedPromptStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>",
-        "ResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>"
+        "ResponseStream$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$throttlingException": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide.</p>"
       }
     },
     "TopK": {
@@ -2168,7 +2441,38 @@
         "FlowResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
         "InlineAgentResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
         "OptimizedPromptStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
-        "ResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>"
+        "ResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
+        "RetrieveAndGenerateStreamResponseOutput$validationException": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfiguration": {
+      "base": "<p>Contains configurations for reranking with an Amazon Bedrock reranker model.</p>",
+      "refs": {
+        "VectorSearchRerankingConfiguration$bedrockRerankingConfiguration": "<p>Contains configurations for an Amazon Bedrock reranker model.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$numberOfRerankedResults": "<p>The number of results to return after reranking.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingModelConfiguration": {
+      "base": "<p>Contains configurations for an Amazon Bedrock reranker model.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$modelConfiguration": "<p>Contains configurations for the reranker model.</p>"
+      }
+    },
+    "VectorSearchRerankingConfiguration": {
+      "base": "<p>Contains configurations for reranking the retrieved results.</p>",
+      "refs": {
+        "KnowledgeBaseVectorSearchConfiguration$rerankingConfiguration": "<p>Contains configurations for reranking the retrieved results. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html\">Improve the relevance of query responses with a reranker model</a>.</p>"
+      }
+    },
+    "VectorSearchRerankingConfigurationType": {
+      "base": null,
+      "refs": {
+        "VectorSearchRerankingConfiguration$type": "<p>The type of reranker model.</p>"
       }
     },
     "Verb": {

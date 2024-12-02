@@ -8,6 +8,7 @@
     "CreateCalculatedAttributeDefinition": "<p>Creates a new calculated attribute definition. After creation, new object data ingested into Customer Profiles will be included in the calculated attribute, which can be retrieved for a profile using the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetCalculatedAttributeForProfile.html\">GetCalculatedAttributeForProfile</a> API. Defining a calculated attribute makes it available for all profiles within a domain. Each calculated attribute can only reference one <code>ObjectType</code> and at most, two fields from that <code>ObjectType</code>.</p>",
     "CreateDomain": "<p>Creates a domain, which is a container for all customer data, such as customer profile attributes, object types, profile keys, and encryption keys. You can create multiple domains, and each domain can have multiple third-party integrations.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <note> <p>It is not possible to associate a Customer Profiles domain with an Amazon Connect Instance directly from the API. If you would like to create a domain and associate a Customer Profiles domain, use the Amazon Connect admin website. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-customer-profiles.html#enable-customer-profiles-step1\">Enable Customer Profiles</a>.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p> </note>",
     "CreateEventStream": "<p>Creates an event stream, which is a subscription to real-time events, such as when profiles are created and updated through Amazon Connect Customer Profiles.</p> <p>Each event stream can be associated with only one Kinesis Data Stream destination in the same region and Amazon Web Services account as the customer profiles domain</p>",
+    "CreateEventTrigger": "<p>Creates an event trigger, which specifies the rules when to perform action based on customer's ingested data.</p> <p>Each event stream can be associated with only one integration in the same region and AWS account as the event stream. </p>",
     "CreateIntegrationWorkflow": "<p> Creates an integration workflow. An integration workflow is an async process which ingests historic data and sets up an integration for ongoing updates. The supported Amazon AppFlow sources are Salesforce, ServiceNow, and Marketo. </p>",
     "CreateProfile": "<p>Creates a standard profile.</p> <p>A standard profile represents the following attributes for a customer profile in a domain.</p>",
     "CreateSegmentDefinition": "<p>Creates a segment definition associated to the given domain.</p>",
@@ -16,6 +17,7 @@
     "DeleteCalculatedAttributeDefinition": "<p>Deletes an existing calculated attribute definition. Note that deleting a default calculated attribute is possible, however once deleted, you will be unable to undo that action and will need to recreate it on your own using the CreateCalculatedAttributeDefinition API if you want it back.</p>",
     "DeleteDomain": "<p>Deletes a specific domain and all of its customer data, such as customer profile attributes and their related objects.</p>",
     "DeleteEventStream": "<p>Disables and deletes the specified event stream.</p>",
+    "DeleteEventTrigger": "<p>Disable and deletes the Event Trigger.</p> <note> <p>You cannot delete an Event Trigger with an active Integration associated.</p> </note>",
     "DeleteIntegration": "<p>Removes an integration from a specific domain.</p>",
     "DeleteProfile": "<p>Deletes the standard customer profile and all data pertaining to the profile.</p>",
     "DeleteProfileKey": "<p>Removes a searchable key from a customer profile.</p>",
@@ -29,6 +31,7 @@
     "GetCalculatedAttributeForProfile": "<p>Retrieve a calculated attribute for a customer profile.</p>",
     "GetDomain": "<p>Returns information about a specific domain.</p>",
     "GetEventStream": "<p>Returns information about the specified event stream in a specific domain.</p>",
+    "GetEventTrigger": "<p>Get a specific Event Trigger from the domain.</p>",
     "GetIdentityResolutionJob": "<p>Returns information about an Identity Resolution Job in a specific domain. </p> <p>Identity Resolution Jobs are set up using the Amazon Connect admin console. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-identity-resolution.html\">Use Identity Resolution to consolidate similar profiles</a>.</p>",
     "GetIntegration": "<p>Returns an integration for a domain.</p>",
     "GetMatches": "<p>Before calling this API, use <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable identity resolution: set <code>Matching</code> to true.</p> <p>GetMatches returns potentially matching profiles, based on the results of the latest run of a machine learning process. </p> <important> <p>The process of matching duplicate profiles. If <code>Matching</code> = <code>true</code>, Amazon Connect Customer Profiles starts a weekly batch process called Identity Resolution Job. If you do not specify a date and time for Identity Resolution Job to run, by default it runs every Saturday at 12AM UTC to detect duplicate profiles in your domains. </p> <p>After the Identity Resolution Job completes, use the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">GetMatches</a> API to return and review the results. Or, if you have configured <code>ExportingConfig</code> in the <code>MatchingRequest</code>, you can download the results from S3.</p> </important> <p>Amazon Connect uses the following profile attributes to identify matches:</p> <ul> <li> <p>PhoneNumber</p> </li> <li> <p>HomePhoneNumber</p> </li> <li> <p>BusinessPhoneNumber</p> </li> <li> <p>MobilePhoneNumber</p> </li> <li> <p>EmailAddress</p> </li> <li> <p>PersonalEmailAddress</p> </li> <li> <p>BusinessEmailAddress</p> </li> <li> <p>FullName</p> </li> </ul> <p>For example, two or more profiles—with spelling mistakes such as <b>John Doe</b> and <b>Jhn Doe</b>, or different casing email addresses such as <b>JOHN_DOE@ANYCOMPANY.COM</b> and <b>johndoe@anycompany.com</b>, or different phone number formats such as <b>555-010-0000</b> and <b>+1-555-010-0000</b>—can be detected as belonging to the same customer <b>John Doe</b> and merged into a unified profile.</p>",
@@ -46,6 +49,7 @@
     "ListCalculatedAttributesForProfile": "<p>Retrieve a list of calculated attributes for a customer profile.</p>",
     "ListDomains": "<p>Returns a list of all the domains for an AWS account that have been created.</p>",
     "ListEventStreams": "<p>Returns a list of all the event streams in a specific domain.</p>",
+    "ListEventTriggers": "<p>List all Event Triggers under a domain.</p>",
     "ListIdentityResolutionJobs": "<p>Lists all of the Identity Resolution Jobs in your domain. The response sorts the list by <code>JobStartTime</code>.</p>",
     "ListIntegrations": "<p>Lists all of the integrations in your domain.</p>",
     "ListObjectTypeAttributes": "<p>Fetch the possible attribute values given the attribute name.</p>",
@@ -66,6 +70,7 @@
     "UntagResource": "<p>Removes one or more tags from the specified Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
     "UpdateCalculatedAttributeDefinition": "<p>Updates an existing calculated attribute definition. When updating the Conditions, note that increasing the date range of a calculated attribute will not trigger inclusion of historical data greater than the current date range.</p>",
     "UpdateDomain": "<p>Updates the properties of a domain, including creating or selecting a dead letter queue or an encryption key.</p> <p>After a domain is created, the name can’t be changed.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <p>To add or remove tags on an existing Domain, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\">TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
+    "UpdateEventTrigger": "<p>Update the properties of an Event Trigger.</p>",
     "UpdateProfile": "<p>Updates the properties of a profile. The ProfileId is required for updating a customer profile.</p> <p>When calling the UpdateProfile API, specifying an empty string value means that any existing value will be removed. Not specifying a string value means that any value already there will be kept.</p>"
   },
   "shapes": {
@@ -83,6 +88,11 @@
         "CreateDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
         "CreateEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateEventStreamRequest$EventStreamName": "<p>The name of the event stream.</p>",
+        "CreateEventTriggerRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateEventTriggerRequest$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "CreateEventTriggerRequest$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
+        "CreateEventTriggerResponse$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "CreateEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "CreateIntegrationWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -96,6 +106,8 @@
         "DeleteDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$EventStreamName": "<p>The name of the event stream</p>",
+        "DeleteEventTriggerRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteEventTriggerRequest$EventTriggerName": "<p>The unique name of the event trigger.</p>",
         "DeleteIntegrationRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteProfileKeyRequest$KeyName": "<p>A searchable identifier of a customer profile.</p>",
         "DeleteProfileKeyRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -108,6 +120,8 @@
         "DetectProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "EventStreamSummary$DomainName": "<p>The unique name of the domain.</p>",
         "EventStreamSummary$EventStreamName": "<p>The name of the event stream.</p>",
+        "EventTriggerNames$member": null,
+        "EventTriggerSummaryItem$EventTriggerName": "<p>The unique name of the event trigger.</p>",
         "FieldMap$key": null,
         "FieldNameList$member": null,
         "FoundByKeyValue$KeyName": "<p>A searchable identifier of a customer profile.</p>",
@@ -120,6 +134,10 @@
         "GetEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetEventStreamRequest$EventStreamName": "<p>The name of the event stream provided during create operations.</p>",
         "GetEventStreamResponse$DomainName": "<p>The unique name of the domain.</p>",
+        "GetEventTriggerRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetEventTriggerRequest$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "GetEventTriggerResponse$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "GetEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "GetIdentityResolutionJobRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetIdentityResolutionJobResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetIntegrationRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -150,6 +168,7 @@
         "ListCalculatedAttributesForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListDomainItem$DomainName": "<p>The unique name of the domain.</p>",
         "ListEventStreamsRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ListEventTriggersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListIdentityResolutionJobsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListIntegrationItem$DomainName": "<p>The unique name of the domain.</p>",
         "ListIntegrationsRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -180,6 +199,11 @@
         "UpdateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateEventTriggerRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateEventTriggerRequest$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "UpdateEventTriggerRequest$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
+        "UpdateEventTriggerResponse$EventTriggerName": "<p>The unique name of the event trigger.</p>",
+        "UpdateEventTriggerResponse$SegmentFilter": "<p>The destination is triggered only for profiles that meet the criteria of a segment definition.</p>",
         "UpdateProfileRequest$DomainName": "<p>The unique name of the domain.</p>"
       }
     },
@@ -463,6 +487,12 @@
         "Dimension$CalculatedAttributes": "<p>Object that holds the calculated attributes to segment on.</p>"
       }
     },
+    "ComparisonOperator": {
+      "base": null,
+      "refs": {
+        "ObjectAttribute$ComparisonOperator": "<p>The operator used to compare an attribute against a list of values.</p>"
+      }
+    },
     "ConditionOverrides": {
       "base": "<p>An object to override the original condition block of a calculated attribute.</p>",
       "refs": {
@@ -542,6 +572,16 @@
       }
     },
     "CreateEventStreamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventTriggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventTriggerResponse": {
       "base": null,
       "refs": {
       }
@@ -673,6 +713,16 @@
       }
     },
     "DeleteEventStreamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteEventTriggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteEventTriggerResponse": {
       "base": null,
       "refs": {
       }
@@ -869,6 +919,77 @@
         "ListEventStreamsResponse$Items": "<p>Contains summary information about an EventStream.</p>"
       }
     },
+    "EventTriggerCondition": {
+      "base": "<p>Specifies the circumstances under which the event should trigger the destination.</p>",
+      "refs": {
+        "EventTriggerConditions$member": null
+      }
+    },
+    "EventTriggerConditions": {
+      "base": null,
+      "refs": {
+        "CreateEventTriggerRequest$EventTriggerConditions": "<p>A list of conditions that determine when an event should trigger the destination.</p>",
+        "CreateEventTriggerResponse$EventTriggerConditions": "<p>A list of conditions that determine when an event should trigger the destination.</p>",
+        "GetEventTriggerResponse$EventTriggerConditions": "<p>A list of conditions that determine when an event should trigger the destination.</p>",
+        "UpdateEventTriggerRequest$EventTriggerConditions": "<p>A list of conditions that determine when an event should trigger the destination.</p>",
+        "UpdateEventTriggerResponse$EventTriggerConditions": "<p>A list of conditions that determine when an event should trigger the destination.</p>"
+      }
+    },
+    "EventTriggerDimension": {
+      "base": "<p>A specific event dimension to be assessed.</p>",
+      "refs": {
+        "EventTriggerDimensions$member": null
+      }
+    },
+    "EventTriggerDimensions": {
+      "base": null,
+      "refs": {
+        "EventTriggerCondition$EventTriggerDimensions": "<p>A list of dimensions to be evaluated for the event.</p>"
+      }
+    },
+    "EventTriggerLimits": {
+      "base": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>",
+      "refs": {
+        "CreateEventTriggerRequest$EventTriggerLimits": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>",
+        "CreateEventTriggerResponse$EventTriggerLimits": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>",
+        "GetEventTriggerResponse$EventTriggerLimits": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>",
+        "UpdateEventTriggerRequest$EventTriggerLimits": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>",
+        "UpdateEventTriggerResponse$EventTriggerLimits": "<p>Defines limits controlling whether an event triggers the destination, based on ingestion latency and the number of invocations per profile over specific time periods.</p>"
+      }
+    },
+    "EventTriggerLogicalOperator": {
+      "base": null,
+      "refs": {
+        "EventTriggerCondition$LogicalOperator": "<p>The operator used to combine multiple dimensions.</p>"
+      }
+    },
+    "EventTriggerNames": {
+      "base": null,
+      "refs": {
+        "GetIntegrationResponse$EventTriggerNames": "<p>A list of unique names for active event triggers associated with the integration. This list would be empty if no Event Trigger is associated with the integration.</p>",
+        "ListIntegrationItem$EventTriggerNames": "<p>A list of unique names for active event triggers associated with the integration.</p>",
+        "PutIntegrationRequest$EventTriggerNames": "<p>A list of unique names for active event triggers associated with the integration.</p>",
+        "PutIntegrationResponse$EventTriggerNames": "<p>A list of unique names for active event triggers associated with the integration. This list would be empty if no Event Trigger is associated with the integration.</p>"
+      }
+    },
+    "EventTriggerSummaryItem": {
+      "base": "<p>The summary of the event trigger.</p>",
+      "refs": {
+        "EventTriggerSummaryList$member": null
+      }
+    },
+    "EventTriggerSummaryList": {
+      "base": null,
+      "refs": {
+        "ListEventTriggersResponse$Items": "<p>The list of Event Triggers.</p>"
+      }
+    },
+    "EventTriggerValues": {
+      "base": null,
+      "refs": {
+        "ObjectAttribute$Values": "<p>A list of attribute values used for comparison.</p>"
+      }
+    },
     "ExportingConfig": {
       "base": "<p>Configuration information about the S3 bucket where Identity Resolution Jobs writes result files. </p> <note> <p>You need to give Customer Profiles service principal write permission to your S3 bucket. Otherwise, you'll get an exception in the API response. For an example policy, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html#customer-profiles-cross-service\">Amazon Connect Customer Profiles cross-service confused deputy prevention</a>. </p> </note>",
       "refs": {
@@ -1049,6 +1170,16 @@
       }
     },
     "GetEventStreamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEventTriggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEventTriggerResponse": {
       "base": null,
       "refs": {
       }
@@ -1365,6 +1496,16 @@
       "refs": {
       }
     },
+    "ListEventTriggersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListEventTriggersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListIdentityResolutionJobsRequest": {
       "base": null,
       "refs": {
@@ -1629,6 +1770,18 @@
         "ZendeskSourceProperties$Object": "<p>The object specified in the Zendesk flow source.</p>"
       }
     },
+    "ObjectAttribute": {
+      "base": "<p>The criteria that a specific object attribute must meet to trigger the destination.</p>",
+      "refs": {
+        "ObjectAttributes$member": null
+      }
+    },
+    "ObjectAttributes": {
+      "base": null,
+      "refs": {
+        "EventTriggerDimension$ObjectAttributes": "<p>A list of object attributes to be evaluated.</p>"
+      }
+    },
     "ObjectCount": {
       "base": null,
       "refs": {
@@ -1692,6 +1845,24 @@
         "CreateProfileRequest$PartyType": "<p>The type of profile used to describe the customer.</p>",
         "Profile$PartyType": "<p>The type of profile used to describe the customer.</p>",
         "UpdateProfileRequest$PartyType": "<p>The type of profile used to describe the customer.</p>"
+      }
+    },
+    "Period": {
+      "base": "<p>Defines a limit and the time period during which it is enforced.</p>",
+      "refs": {
+        "Periods$member": null
+      }
+    },
+    "PeriodUnit": {
+      "base": null,
+      "refs": {
+        "Period$Unit": "<p>The unit of time.</p>"
+      }
+    },
+    "Periods": {
+      "base": null,
+      "refs": {
+        "EventTriggerLimits$Periods": "<p>A list of time periods during which the limits apply.</p>"
       }
     },
     "PhoneNumberList": {
@@ -2167,13 +2338,17 @@
         "CreateDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateEventStreamRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateEventStreamResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateEventTriggerRequest$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
+        "CreateEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "CreateIntegrationWorkflowRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "EventStreamSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "EventTriggerSummaryItem$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetEventStreamResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "GetEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2190,7 +2365,8 @@
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateDomainRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
-        "UpdateDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>"
+        "UpdateDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "UpdateEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>"
       }
     },
     "TagResourceRequest": {
@@ -2325,6 +2501,16 @@
       "refs": {
       }
     },
+    "UpdateEventTriggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEventTriggerResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateProfileRequest": {
       "base": null,
       "refs": {
@@ -2425,6 +2611,7 @@
       "refs": {
         "GetProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "GetProfileObjectTypeTemplateResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
+        "Period$Unlimited": "<p>If set to true, there is no limit on the number of destination invocations per profile. The default is false.</p>",
         "PutProfileObjectTypeRequest$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "PutProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "SalesforceSourceProperties$EnableDynamicFieldUpdate": "<p>The flag that enables dynamic fetching of new (recently added) fields in the Salesforce objects while running a flow.</p>",
@@ -2471,6 +2658,12 @@
         "PutProfileObjectTypeResponse$ExpirationDays": "<p>The number of days until the data in the object expires.</p>",
         "UpdateDomainRequest$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
         "UpdateDomainResponse$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>"
+      }
+    },
+    "fieldName": {
+      "base": null,
+      "refs": {
+        "ObjectAttribute$FieldName": "<p>A field defined within an object type.</p>"
       }
     },
     "foundByList": {
@@ -2521,6 +2714,7 @@
         "ListCalculatedAttributesForProfileRequest$MaxResults": "<p>The maximum number of calculated attributes returned per page.</p>",
         "ListDomainsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListEventStreamsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListEventTriggersRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIdentityResolutionJobsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListObjectTypeAttributesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
@@ -2532,12 +2726,25 @@
         "SearchProfilesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p> <p>The default is 20 if this parameter is not included in the request.</p>"
       }
     },
+    "maxSize1000": {
+      "base": null,
+      "refs": {
+        "Period$MaxInvocationsPerProfile": "<p>The maximum allowed number of destination invocations per profile.</p>"
+      }
+    },
+    "maxSize24": {
+      "base": null,
+      "refs": {
+        "Period$Value": "<p>The amount of time of the specified unit.</p>"
+      }
+    },
     "message": {
       "base": null,
       "refs": {
         "AccessDeniedException$Message": null,
         "BadRequestException$Message": null,
         "DeleteDomainResponse$Message": "<p>A message that indicates the delete request is done.</p>",
+        "DeleteEventTriggerResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteIntegrationResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteProfileKeyResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteProfileObjectResponse$Message": "<p>A message that indicates the delete request is done.</p>",
@@ -2579,6 +2786,12 @@
         "PutIntegrationResponse$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
         "RuleBasedMatchingRequest$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>",
         "RuleBasedMatchingResponse$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>"
+      }
+    },
+    "optionalLong": {
+      "base": null,
+      "refs": {
+        "EventTriggerLimits$EventExpiration": "<p>In milliseconds. Specifies that an event will only trigger the destination if it is processed within a certain latency period.</p>"
       }
     },
     "requestValueList": {
@@ -2685,9 +2898,12 @@
       "refs": {
         "CreateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
         "CreateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "CreateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
+        "CreateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "CreateSegmentDefinitionRequest$Description": "<p>The description of the segment definition.</p>",
         "CreateSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
         "GetCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "GetEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "GetProfileObjectTypeResponse$Description": "<p>The description of the profile object type.</p>",
         "GetSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
         "ListCalculatedAttributeDefinitionItem$Description": "<p>The threshold for the calculated attribute.</p>",
@@ -2695,7 +2911,9 @@
         "PutProfileObjectTypeResponse$Description": "<p>Description of the profile object type.</p>",
         "SegmentDefinitionItem$Description": "<p>The description of the segment definition.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
-        "UpdateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>"
+        "UpdateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "UpdateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
+        "UpdateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>"
       }
     },
     "sqsQueueUrl": {
@@ -2778,6 +2996,7 @@
         "EmailList$member": null,
         "EventStreamDestinationDetails$Uri": "<p>The StreamARN of the destination to deliver profile events to. For example, arn:aws:kinesis:region:account-id:stream/stream-name.</p>",
         "EventStreamSummary$EventStreamArn": "<p>A unique identifier for the event stream.</p>",
+        "EventTriggerValues$member": null,
         "GetCalculatedAttributeForProfileResponse$IsDataPartial": "<p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>",
         "GetCalculatedAttributeForProfileResponse$Value": "<p>The value of the calculated attribute.</p>",
         "GetEventStreamResponse$EventStreamArn": "<p>A unique identifier for the event stream.</p>",
@@ -2845,7 +3064,9 @@
     "text": {
       "base": null,
       "refs": {
+        "EventTriggerSummaryItem$Description": "<p>The description of the event trigger.</p>",
         "ListProfileObjectTypeItem$Description": "<p>Description of the profile object type.</p>",
+        "ObjectAttribute$Source": "<p>An attribute contained within a source object.</p>",
         "ObjectTypeField$Source": "<p>A field of a ProfileObject. For example: _source.FirstName, where “_source” is a ProfileObjectType of a Zendesk user and “FirstName” is a field in that ObjectType.</p>",
         "ObjectTypeField$Target": "<p>The location of the data in the standard ProfileObject model. For example: _profile.Address.PostalCode.</p>"
       }
@@ -2861,16 +3082,22 @@
         "CreateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
         "CreateDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "CreateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "CreateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
+        "CreateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
         "CreateSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
         "DestinationSummary$UnhealthySince": "<p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>",
         "EventStreamDestinationDetails$UnhealthySince": "<p>The timestamp when the status last changed to <code>UNHEALHY</code>.</p>",
         "EventStreamSummary$StoppedSince": "<p>The timestamp when the <code>State</code> changed to <code>STOPPED</code>.</p>",
+        "EventTriggerSummaryItem$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
+        "EventTriggerSummaryItem$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
         "GetCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "GetCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
         "GetDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetEventStreamResponse$CreatedAt": "<p>The timestamp of when the export was created.</p>",
         "GetEventStreamResponse$StoppedSince": "<p>The timestamp when the <code>State</code> changed to <code>STOPPED</code>.</p>",
+        "GetEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
+        "GetEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
         "GetIdentityResolutionJobResponse$JobStartTime": "<p>The timestamp of when the Identity Resolution Job was started or will be started.</p>",
         "GetIdentityResolutionJobResponse$JobEndTime": "<p>The timestamp of when the Identity Resolution Job was completed.</p>",
         "GetIdentityResolutionJobResponse$LastUpdatedAt": "<p>The timestamp of when the Identity Resolution Job was most recently edited.</p>",
@@ -2906,7 +3133,9 @@
         "UpdateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
         "UpdateDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
-        "UpdateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>"
+        "UpdateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
+        "UpdateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
+        "UpdateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>"
       }
     },
     "token": {
@@ -2928,6 +3157,8 @@
         "ListDomainsResponse$NextToken": "<p>The pagination token from the previous ListDomains API call.</p>",
         "ListEventStreamsRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
         "ListEventStreamsResponse$NextToken": "<p>Identifies the next page of results to return.</p>",
+        "ListEventTriggersRequest$NextToken": "<p>The pagination token to use with ListEventTriggers.</p>",
+        "ListEventTriggersResponse$NextToken": "<p>The pagination token from the previous call to ListEventTriggers.</p>",
         "ListIdentityResolutionJobsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListIdentityResolutionJobsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListIntegrationsRequest$NextToken": "<p>The pagination token from the previous ListIntegrations API call.</p>",
@@ -2958,15 +3189,19 @@
         "CalculatedCustomAttributes$key": null,
         "CreateCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "CreateCalculatedAttributeDefinitionResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "CreateEventTriggerRequest$ObjectTypeName": "<p>The unique name of the object type.</p>",
+        "CreateEventTriggerResponse$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "CreateIntegrationWorkflowRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "CustomAttributes$key": null,
         "DeleteCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "DeleteProfileObjectRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "DeleteProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "EventTriggerSummaryItem$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "GetCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeDefinitionResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeForProfileRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetCalculatedAttributeForProfileResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "GetEventTriggerResponse$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "GetIntegrationResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
@@ -2984,7 +3219,9 @@
         "PutProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutProfileObjectTypeResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
-        "UpdateCalculatedAttributeDefinitionResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>"
+        "UpdateCalculatedAttributeDefinitionResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
+        "UpdateEventTriggerRequest$ObjectTypeName": "<p>The unique name of the object type.</p>",
+        "UpdateEventTriggerResponse$ObjectTypeName": "<p>The unique name of the object type.</p>"
       }
     },
     "uuid": {

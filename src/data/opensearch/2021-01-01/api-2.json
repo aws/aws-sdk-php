@@ -44,6 +44,23 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "AddDirectQueryDataSource":{
+      "name":"AddDirectQueryDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource"
+      },
+      "input":{"shape":"AddDirectQueryDataSourceRequest"},
+      "output":{"shape":"AddDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "AddTags":{
       "name":"AddTags",
       "http":{
@@ -260,6 +277,21 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "DeleteDirectQueryDataSource":{
+      "name":"DeleteDirectQueryDataSource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"DeleteDirectQueryDataSourceRequest"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "DeleteDomain":{
@@ -647,6 +679,22 @@
         {"shape":"DependencyFailureException"}
       ]
     },
+    "GetDirectQueryDataSource":{
+      "name":"GetDirectQueryDataSource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"GetDirectQueryDataSourceRequest"},
+      "output":{"shape":"GetDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "GetDomainMaintenanceStatus":{
       "name":"GetDomainMaintenanceStatus",
       "http":{
@@ -744,6 +792,22 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "ListDirectQueryDataSources":{
+      "name":"ListDirectQueryDataSources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource"
+      },
+      "input":{"shape":"ListDirectQueryDataSourcesRequest"},
+      "output":{"shape":"ListDirectQueryDataSourcesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "ListDomainMaintenances":{
@@ -1038,6 +1102,22 @@
         {"shape":"DependencyFailureException"}
       ]
     },
+    "UpdateDirectQueryDataSource":{
+      "name":"UpdateDirectQueryDataSource",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"UpdateDirectQueryDataSourceRequest"},
+      "output":{"shape":"UpdateDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "UpdateDomainConfig":{
       "name":"UpdateDomainConfig",
       "http":{
@@ -1268,6 +1348,27 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
+      }
+    },
+    "AddDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "DataSourceName",
+        "DataSourceType",
+        "OpenSearchArns"
+      ],
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "AddDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceArn":{"shape":"String"}
       }
     },
     "AddTagsRequest":{
@@ -1716,6 +1817,13 @@
       "max":64,
       "min":1
     },
+    "CloudWatchDirectQueryDataSource":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"}
+      }
+    },
     "CloudWatchLogsLogGroupArn":{
       "type":"string",
       "max":2048,
@@ -2066,6 +2174,17 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
+      }
+    },
+    "DeleteDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":["DataSourceName"],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        }
       }
     },
     "DeleteDomainRequest":{
@@ -2523,6 +2642,50 @@
       }
     },
     "Description":{"type":"string"},
+    "DirectQueryDataSource":{
+      "type":"structure",
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "DirectQueryDataSourceDescription":{
+      "type":"string",
+      "max":1000,
+      "pattern":"^([a-zA-Z0-9_])*[\\\\a-zA-Z0-9_@#%*+=:?./!\\s-]*$"
+    },
+    "DirectQueryDataSourceList":{
+      "type":"list",
+      "member":{"shape":"DirectQueryDataSource"}
+    },
+    "DirectQueryDataSourceName":{
+      "type":"string",
+      "max":80,
+      "min":3,
+      "pattern":"[a-z][a-z0-9_]+"
+    },
+    "DirectQueryDataSourceRoleArn":{
+      "type":"string",
+      "max":200,
+      "min":32,
+      "pattern":"^arn:aws[a-zA-Z-]*:iam::\\d{12}:role(\\/service-role)?\\/[A-Za-z0-9+=,.@\\-_]{1,64}$"
+    },
+    "DirectQueryDataSourceType":{
+      "type":"structure",
+      "members":{
+        "CloudWatchLog":{"shape":"CloudWatchDirectQueryDataSource"},
+        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"}
+      },
+      "union":true
+    },
+    "DirectQueryOpenSearchARNList":{
+      "type":"list",
+      "member":{"shape":"ARN"}
+    },
     "DisableTimestamp":{"type":"timestamp"},
     "DisabledOperationException":{
       "type":"structure",
@@ -3019,6 +3182,27 @@
         "Status":{"shape":"DataSourceStatus"}
       }
     },
+    "GetDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":["DataSourceName"],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        }
+      }
+    },
+    "GetDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceArn":{"shape":"String"}
+      }
+    },
     "GetDomainMaintenanceStatusRequest":{
       "type":"structure",
       "required":[
@@ -3440,6 +3624,23 @@
       "type":"structure",
       "members":{
         "DataSources":{"shape":"DataSourceList"}
+      }
+    },
+    "ListDirectQueryDataSourcesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        }
+      }
+    },
+    "ListDirectQueryDataSourcesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "DirectQueryDataSources":{"shape":"DirectQueryDataSourceList"}
       }
     },
     "ListDomainMaintenancesRequest":{
@@ -4675,6 +4876,13 @@
         "SYSTEM"
       ]
     },
+    "SecurityLakeDirectQueryDataSource":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"}
+      }
+    },
     "ServiceSoftwareOptions":{
       "type":"structure",
       "members":{
@@ -4929,6 +5137,30 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
+      }
+    },
+    "UpdateDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "DataSourceName",
+        "DataSourceType",
+        "OpenSearchArns"
+      ],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        },
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"}
+      }
+    },
+    "UpdateDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceArn":{"shape":"String"}
       }
     },
     "UpdateDomainConfigRequest":{

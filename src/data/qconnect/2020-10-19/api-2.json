@@ -69,6 +69,44 @@
       ],
       "idempotent":true
     },
+    "CreateAIGuardrail":{
+      "name":"CreateAIGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAIGuardrailRequest"},
+      "output":{"shape":"CreateAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAIGuardrailVersion":{
+      "name":"CreateAIGuardrailVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAIGuardrailVersionRequest"},
+      "output":{"shape":"CreateAIGuardrailVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateAIPrompt":{
       "name":"CreateAIPrompt",
       "http":{
@@ -338,6 +376,42 @@
       ],
       "idempotent":true
     },
+    "DeleteAIGuardrail":{
+      "name":"DeleteAIGuardrail",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAIGuardrailRequest"},
+      "output":{"shape":"DeleteAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAIGuardrailVersion":{
+      "name":"DeleteAIGuardrailVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions/{versionNumber}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAIGuardrailVersionRequest"},
+      "output":{"shape":"DeleteAIGuardrailVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteAIPrompt":{
       "name":"DeleteAIPrompt",
       "http":{
@@ -539,6 +613,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetAIGuardrail":{
+      "name":"GetAIGuardrail",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAIGuardrailRequest"},
+      "output":{"shape":"GetAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetAIPrompt":{
       "name":"GetAIPrompt",
       "http":{
@@ -676,6 +766,21 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetNextMessage":{
+      "name":"GetNextMessage",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/messages/next",
+        "responseCode":200
+      },
+      "input":{"shape":"GetNextMessageRequest"},
+      "output":{"shape":"GetNextMessageResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetQuickResponse":{
       "name":"GetQuickResponse",
       "http":{
@@ -748,6 +853,38 @@
       },
       "input":{"shape":"ListAIAgentsRequest"},
       "output":{"shape":"ListAIAgentsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAIGuardrailVersions":{
+      "name":"ListAIGuardrailVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAIGuardrailVersionsRequest"},
+      "output":{"shape":"ListAIGuardrailVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAIGuardrails":{
+      "name":"ListAIGuardrails",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAIGuardrailsRequest"},
+      "output":{"shape":"ListAIGuardrailsResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -904,6 +1041,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListMessages":{
+      "name":"ListMessages",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/messages",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessagesRequest"},
+      "output":{"shape":"ListMessagesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListQuickResponses":{
@@ -1094,6 +1246,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "SendMessage":{
+      "name":"SendMessage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/message",
+        "responseCode":200
+      },
+      "input":{"shape":"SendMessageRequest"},
+      "output":{"shape":"SendMessageResponse"},
+      "errors":[
+        {"shape":"RequestTimeoutException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "StartContentUpload":{
       "name":"StartContentUpload",
       "http":{
@@ -1165,6 +1336,24 @@
       },
       "input":{"shape":"UpdateAIAgentRequest"},
       "output":{"shape":"UpdateAIAgentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateAIGuardrail":{
+      "name":"UpdateAIGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAIGuardrailRequest"},
+      "output":{"shape":"UpdateAIGuardrailResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -1330,7 +1519,8 @@
       "type":"structure",
       "members":{
         "answerRecommendationAIAgentConfiguration":{"shape":"AnswerRecommendationAIAgentConfiguration"},
-        "manualSearchAIAgentConfiguration":{"shape":"ManualSearchAIAgentConfiguration"}
+        "manualSearchAIAgentConfiguration":{"shape":"ManualSearchAIAgentConfiguration"},
+        "selfServiceAIAgentConfiguration":{"shape":"SelfServiceAIAgentConfiguration"}
       },
       "union":true
     },
@@ -1409,7 +1599,8 @@
       "type":"string",
       "enum":[
         "MANUAL_SEARCH",
-        "ANSWER_RECOMMENDATION"
+        "ANSWER_RECOMMENDATION",
+        "SELF_SERVICE"
       ]
     },
     "AIAgentVersionSummariesList":{
@@ -1421,6 +1612,123 @@
       "members":{
         "aiAgentSummary":{"shape":"AIAgentSummary"},
         "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AIGuardrailBlockedMessaging":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "sensitive":true
+    },
+    "AIGuardrailContentPolicyConfig":{
+      "type":"structure",
+      "required":["filtersConfig"],
+      "members":{
+        "filtersConfig":{"shape":"GuardrailContentFiltersConfig"}
+      }
+    },
+    "AIGuardrailContextualGroundingPolicyConfig":{
+      "type":"structure",
+      "required":["filtersConfig"],
+      "members":{
+        "filtersConfig":{"shape":"GuardrailContextualGroundingFiltersConfig"}
+      }
+    },
+    "AIGuardrailData":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailArn",
+        "aiGuardrailId",
+        "assistantArn",
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailArn":{"shape":"Arn"},
+        "aiGuardrailId":{"shape":"Uuid"},
+        "assistantArn":{"shape":"Arn"},
+        "assistantId":{"shape":"Uuid"},
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "modifiedTime":{"shape":"Timestamp"},
+        "name":{"shape":"Name"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "status":{"shape":"Status"},
+        "tags":{"shape":"Tags"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "AIGuardrailDescription":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "AIGuardrailSensitiveInformationPolicyConfig":{
+      "type":"structure",
+      "members":{
+        "piiEntitiesConfig":{"shape":"GuardrailPiiEntitiesConfig"},
+        "regexesConfig":{"shape":"GuardrailRegexesConfig"}
+      }
+    },
+    "AIGuardrailSummariesList":{
+      "type":"list",
+      "member":{"shape":"AIGuardrailSummary"}
+    },
+    "AIGuardrailSummary":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailArn",
+        "aiGuardrailId",
+        "assistantArn",
+        "assistantId",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailArn":{"shape":"Arn"},
+        "aiGuardrailId":{"shape":"Uuid"},
+        "assistantArn":{"shape":"Arn"},
+        "assistantId":{"shape":"Uuid"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "modifiedTime":{"shape":"Timestamp"},
+        "name":{"shape":"Name"},
+        "status":{"shape":"Status"},
+        "tags":{"shape":"Tags"},
+        "visibilityStatus":{"shape":"VisibilityStatus"}
+      }
+    },
+    "AIGuardrailTopicPolicyConfig":{
+      "type":"structure",
+      "required":["topicsConfig"],
+      "members":{
+        "topicsConfig":{"shape":"GuardrailTopicsConfig"}
+      }
+    },
+    "AIGuardrailVersionSummariesList":{
+      "type":"list",
+      "member":{"shape":"AIGuardrailVersionSummary"}
+    },
+    "AIGuardrailVersionSummary":{
+      "type":"structure",
+      "members":{
+        "aiGuardrailSummary":{"shape":"AIGuardrailSummary"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AIGuardrailWordPolicyConfig":{
+      "type":"structure",
+      "members":{
+        "managedWordListsConfig":{"shape":"GuardrailManagedWordListsConfig"},
+        "wordsConfig":{"shape":"GuardrailWordsConfig"}
       }
     },
     "AIPromptAPIFormat":{
@@ -1521,7 +1829,9 @@
       "enum":[
         "ANSWER_GENERATION",
         "INTENT_LABELING_GENERATION",
-        "QUERY_REFORMULATION"
+        "QUERY_REFORMULATION",
+        "SELF_SERVICE_PRE_PROCESSING",
+        "SELF_SERVICE_ANSWER_GENERATION"
       ]
     },
     "AIPromptVersionSummariesList":{
@@ -1600,6 +1910,7 @@
     "AnswerRecommendationAIAgentConfiguration":{
       "type":"structure",
       "members":{
+        "answerGenerationAIGuardrailId":{"shape":"UuidWithQualifier"},
         "answerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
         "associationConfigurations":{"shape":"AssociationConfigurationList"},
         "intentLabelingGenerationAIPromptId":{"shape":"UuidWithQualifier"},
@@ -2087,6 +2398,37 @@
       "type":"string",
       "pattern":"^(text/(plain|html|csv))|(application/(pdf|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
     },
+    "ConversationContext":{
+      "type":"structure",
+      "required":["selfServiceConversationHistory"],
+      "members":{
+        "selfServiceConversationHistory":{"shape":"SelfServiceConversationHistoryList"}
+      }
+    },
+    "ConversationState":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "reason":{"shape":"ConversationStatusReason"},
+        "status":{"shape":"ConversationStatus"}
+      }
+    },
+    "ConversationStatus":{
+      "type":"string",
+      "enum":[
+        "CLOSED",
+        "READY",
+        "PROCESSING"
+      ]
+    },
+    "ConversationStatusReason":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "FAILED",
+        "REJECTED"
+      ]
+    },
     "CreateAIAgentRequest":{
       "type":"structure",
       "required":[
@@ -2148,6 +2490,75 @@
       "type":"structure",
       "members":{
         "aiAgent":{"shape":"AIAgentData"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "CreateAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "name":{"shape":"Name"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "tags":{"shape":"Tags"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "CreateAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"}
+      }
+    },
+    "CreateAIGuardrailVersionRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "modifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "CreateAIGuardrailVersionResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"},
         "versionNumber":{"shape":"Version"}
       }
     },
@@ -2711,6 +3122,60 @@
       "members":{
       }
     },
+    "DeleteAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        }
+      }
+    },
+    "DeleteAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteAIGuardrailVersionRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId",
+        "versionNumber"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "versionNumber":{
+          "shape":"Version",
+          "location":"uri",
+          "locationName":"versionNumber"
+        }
+      }
+    },
+    "DeleteAIGuardrailVersionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteAIPromptRequest":{
       "type":"structure",
       "required":[
@@ -3203,6 +3668,32 @@
         "versionNumber":{"shape":"Version"}
       }
     },
+    "GetAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        }
+      }
+    },
+    "GetAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
     "GetAIPromptRequest":{
       "type":"structure",
       "required":[
@@ -3419,6 +3910,48 @@
         "messageTemplate":{"shape":"ExtendedMessageTemplateData"}
       }
     },
+    "GetNextMessageRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "nextMessageToken",
+        "sessionId"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "nextMessageToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextMessageToken"
+        },
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "GetNextMessageResponse":{
+      "type":"structure",
+      "required":[
+        "conversationState",
+        "requestMessageId",
+        "response",
+        "type"
+      ],
+      "members":{
+        "conversationSessionData":{"shape":"RuntimeSessionDataList"},
+        "conversationState":{"shape":"ConversationState"},
+        "nextMessageToken":{"shape":"NextToken"},
+        "requestMessageId":{"shape":"Uuid"},
+        "response":{"shape":"MessageOutput"},
+        "type":{"shape":"MessageType"}
+      }
+    },
     "GetQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -3528,6 +4061,254 @@
     "GroupingValues":{
       "type":"list",
       "member":{"shape":"GroupingValue"}
+    },
+    "GuardrailContentFilterConfig":{
+      "type":"structure",
+      "required":[
+        "inputStrength",
+        "outputStrength",
+        "type"
+      ],
+      "members":{
+        "inputStrength":{"shape":"GuardrailFilterStrength"},
+        "outputStrength":{"shape":"GuardrailFilterStrength"},
+        "type":{"shape":"GuardrailContentFilterType"}
+      }
+    },
+    "GuardrailContentFilterType":{
+      "type":"string",
+      "enum":[
+        "SEXUAL",
+        "VIOLENCE",
+        "HATE",
+        "INSULTS",
+        "MISCONDUCT",
+        "PROMPT_ATTACK"
+      ],
+      "sensitive":true
+    },
+    "GuardrailContentFiltersConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentFilterConfig"},
+      "max":6,
+      "min":1
+    },
+    "GuardrailContextualGroundingFilterConfig":{
+      "type":"structure",
+      "required":[
+        "threshold",
+        "type"
+      ],
+      "members":{
+        "threshold":{"shape":"GuardrailContextualGroundingFilterThreshold"},
+        "type":{"shape":"GuardrailContextualGroundingFilterType"}
+      }
+    },
+    "GuardrailContextualGroundingFilterThreshold":{
+      "type":"double",
+      "min":0,
+      "sensitive":true
+    },
+    "GuardrailContextualGroundingFilterType":{
+      "type":"string",
+      "enum":[
+        "GROUNDING",
+        "RELEVANCE"
+      ],
+      "sensitive":true
+    },
+    "GuardrailContextualGroundingFiltersConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailContextualGroundingFilterConfig"},
+      "min":1
+    },
+    "GuardrailFilterStrength":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "sensitive":true
+    },
+    "GuardrailManagedWordListsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailManagedWordsConfig"}
+    },
+    "GuardrailManagedWordsConfig":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"GuardrailManagedWordsType"}
+      }
+    },
+    "GuardrailManagedWordsType":{
+      "type":"string",
+      "enum":["PROFANITY"],
+      "sensitive":true
+    },
+    "GuardrailPiiEntitiesConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailPiiEntityConfig"},
+      "min":1
+    },
+    "GuardrailPiiEntityConfig":{
+      "type":"structure",
+      "required":[
+        "action",
+        "type"
+      ],
+      "members":{
+        "action":{"shape":"GuardrailSensitiveInformationAction"},
+        "type":{"shape":"GuardrailPiiEntityType"}
+      }
+    },
+    "GuardrailPiiEntityType":{
+      "type":"string",
+      "enum":[
+        "ADDRESS",
+        "AGE",
+        "AWS_ACCESS_KEY",
+        "AWS_SECRET_KEY",
+        "CA_HEALTH_NUMBER",
+        "CA_SOCIAL_INSURANCE_NUMBER",
+        "CREDIT_DEBIT_CARD_CVV",
+        "CREDIT_DEBIT_CARD_EXPIRY",
+        "CREDIT_DEBIT_CARD_NUMBER",
+        "DRIVER_ID",
+        "EMAIL",
+        "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+        "IP_ADDRESS",
+        "LICENSE_PLATE",
+        "MAC_ADDRESS",
+        "NAME",
+        "PASSWORD",
+        "PHONE",
+        "PIN",
+        "SWIFT_CODE",
+        "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+        "UK_NATIONAL_INSURANCE_NUMBER",
+        "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER",
+        "URL",
+        "USERNAME",
+        "US_BANK_ACCOUNT_NUMBER",
+        "US_BANK_ROUTING_NUMBER",
+        "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+        "US_PASSPORT_NUMBER",
+        "US_SOCIAL_SECURITY_NUMBER",
+        "VEHICLE_IDENTIFICATION_NUMBER"
+      ],
+      "sensitive":true
+    },
+    "GuardrailRegexConfig":{
+      "type":"structure",
+      "required":[
+        "action",
+        "name",
+        "pattern"
+      ],
+      "members":{
+        "action":{"shape":"GuardrailSensitiveInformationAction"},
+        "description":{"shape":"GuardrailRegexDescription"},
+        "name":{"shape":"GuardrailRegexName"},
+        "pattern":{"shape":"GuardrailRegexPattern"}
+      }
+    },
+    "GuardrailRegexDescription":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexPattern":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexesConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailRegexConfig"},
+      "min":1
+    },
+    "GuardrailSensitiveInformationAction":{
+      "type":"string",
+      "enum":[
+        "BLOCK",
+        "ANONYMIZE"
+      ],
+      "sensitive":true
+    },
+    "GuardrailTopicConfig":{
+      "type":"structure",
+      "required":[
+        "definition",
+        "name",
+        "type"
+      ],
+      "members":{
+        "definition":{"shape":"GuardrailTopicDefinition"},
+        "examples":{"shape":"GuardrailTopicExamples"},
+        "name":{"shape":"GuardrailTopicName"},
+        "type":{"shape":"GuardrailTopicType"}
+      }
+    },
+    "GuardrailTopicDefinition":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailTopicExample":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailTopicExamples":{
+      "type":"list",
+      "member":{"shape":"GuardrailTopicExample"},
+      "min":0
+    },
+    "GuardrailTopicName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z-_ !?.]+$",
+      "sensitive":true
+    },
+    "GuardrailTopicType":{
+      "type":"string",
+      "enum":["DENY"],
+      "sensitive":true
+    },
+    "GuardrailTopicsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailTopicConfig"},
+      "min":1
+    },
+    "GuardrailWordConfig":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"GuardrailWordText"}
+      }
+    },
+    "GuardrailWordText":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailWordsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailWordConfig"},
+      "min":1
     },
     "Headers":{
       "type":"map",
@@ -3654,6 +4435,10 @@
     "ImportJobType":{
       "type":"string",
       "enum":["QUICK_RESPONSES"]
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "IntentDetectedDataDetails":{
       "type":"structure",
@@ -3847,6 +4632,72 @@
       "required":["aiAgentSummaries"],
       "members":{
         "aiAgentSummaries":{"shape":"AIAgentSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAIGuardrailVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAIGuardrailVersionsResponse":{
+      "type":"structure",
+      "required":["aiGuardrailVersionSummaries"],
+      "members":{
+        "aiGuardrailVersionSummaries":{"shape":"AIGuardrailVersionSummariesList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAIGuardrailsRequest":{
+      "type":"structure",
+      "required":["assistantId"],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAIGuardrailsResponse":{
+      "type":"structure",
+      "required":["aiGuardrailSummaries"],
+      "members":{
+        "aiGuardrailSummaries":{"shape":"AIGuardrailSummariesList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -4162,6 +5013,43 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListMessagesRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "sessionId"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "ListMessagesResponse":{
+      "type":"structure",
+      "required":["messages"],
+      "members":{
+        "messages":{"shape":"MessageList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListQuickResponsesRequest":{
       "type":"structure",
       "required":["knowledgeBaseId"],
@@ -4223,6 +5111,7 @@
     "ManualSearchAIAgentConfiguration":{
       "type":"structure",
       "members":{
+        "answerGenerationAIGuardrailId":{"shape":"UuidWithQualifier"},
         "answerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
         "associationConfigurations":{"shape":"AssociationConfigurationList"}
       }
@@ -4232,6 +5121,39 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MessageData":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"TextMessage"}
+      },
+      "union":true
+    },
+    "MessageInput":{
+      "type":"structure",
+      "required":["value"],
+      "members":{
+        "value":{"shape":"MessageData"}
+      }
+    },
+    "MessageList":{
+      "type":"list",
+      "member":{"shape":"MessageOutput"}
+    },
+    "MessageOutput":{
+      "type":"structure",
+      "required":[
+        "messageId",
+        "participant",
+        "timestamp",
+        "value"
+      ],
+      "members":{
+        "messageId":{"shape":"Uuid"},
+        "participant":{"shape":"Participant"},
+        "timestamp":{"shape":"Timestamp"},
+        "value":{"shape":"MessageData"}
+      }
     },
     "MessageTemplateAttachment":{
       "type":"structure",
@@ -4536,6 +5458,10 @@
       "type":"list",
       "member":{"shape":"MessageTemplateVersionSummary"}
     },
+    "MessageType":{
+      "type":"string",
+      "enum":["TEXT"]
+    },
     "Name":{
       "type":"string",
       "max":255,
@@ -4658,6 +5584,14 @@
     "ParsingStrategy":{
       "type":"string",
       "enum":["BEDROCK_FOUNDATION_MODEL"]
+    },
+    "Participant":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "AGENT",
+        "BOT"
+      ]
     },
     "PreconditionFailedException":{
       "type":"structure",
@@ -5480,6 +6414,30 @@
       "max":100,
       "min":1
     },
+    "SelfServiceAIAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "associationConfigurations":{"shape":"AssociationConfigurationList"},
+        "selfServiceAIGuardrailId":{"shape":"UuidWithQualifier"},
+        "selfServiceAnswerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
+        "selfServicePreProcessingAIPromptId":{"shape":"UuidWithQualifier"}
+      }
+    },
+    "SelfServiceConversationHistory":{
+      "type":"structure",
+      "required":["turnNumber"],
+      "members":{
+        "botResponse":{"shape":"SensitiveString"},
+        "inputTranscript":{"shape":"SensitiveString"},
+        "turnNumber":{"shape":"Integer"}
+      }
+    },
+    "SelfServiceConversationHistoryList":{
+      "type":"list",
+      "member":{"shape":"SelfServiceConversationHistory"},
+      "max":10,
+      "min":0
+    },
     "SemanticChunkingConfiguration":{
       "type":"structure",
       "required":[
@@ -5509,6 +6467,45 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "SendMessageRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "message",
+        "sessionId",
+        "type"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "conversationContext":{"shape":"ConversationContext"},
+        "message":{"shape":"MessageInput"},
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        },
+        "type":{"shape":"MessageType"}
+      }
+    },
+    "SendMessageResponse":{
+      "type":"structure",
+      "required":[
+        "nextMessageToken",
+        "requestMessageId"
+      ],
+      "members":{
+        "nextMessageToken":{"shape":"NextToken"},
+        "requestMessageId":{"shape":"Uuid"}
+      }
     },
     "SensitiveString":{
       "type":"string",
@@ -5800,6 +6797,18 @@
         "text":{"shape":"TextAIPrompt"}
       }
     },
+    "TextMessage":{
+      "type":"structure",
+      "members":{
+        "value":{"shape":"TextMessageValueString"}
+      }
+    },
+    "TextMessageValueString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -5886,6 +6895,47 @@
       "type":"structure",
       "members":{
         "aiAgent":{"shape":"AIAgentData"}
+      }
+    },
+    "UpdateAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "UpdateAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"}
       }
     },
     "UpdateAIPromptRequest":{

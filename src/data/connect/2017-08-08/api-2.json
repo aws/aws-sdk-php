@@ -3672,7 +3672,9 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateContactAttributes":{
@@ -6005,6 +6007,14 @@
       },
       "error":{"httpStatusCode":410},
       "exception":true
+    },
+    "ContactRecordingType":{
+      "type":"string",
+      "enum":[
+        "AGENT",
+        "IVR",
+        "SCREEN"
+      ]
     },
     "ContactReferences":{
       "type":"map",
@@ -9605,7 +9615,9 @@
       "enum":[
         "SMS_PHONE_NUMBER",
         "INBOUND_EMAIL",
-        "OUTBOUND_EMAIL"
+        "OUTBOUND_EMAIL",
+        "ANALYTICS_CONNECTOR",
+        "WHATSAPP_MESSAGING_PHONE_NUMBER"
       ]
     },
     "FlowAssociationSummary":{
@@ -10583,7 +10595,9 @@
         "CASES_DOMAIN",
         "APPLICATION",
         "FILE_SCANNER",
-        "SES_IDENTITY"
+        "SES_IDENTITY",
+        "ANALYTICS_CONNECTOR",
+        "CALL_TRANSFER_CONNECTOR"
       ]
     },
     "InternalServiceException":{
@@ -10671,6 +10685,10 @@
     "IpCidrList":{
       "type":"list",
       "member":{"shape":"IpCidr"}
+    },
+    "IvrRecordingTrack":{
+      "type":"string",
+      "enum":["ALL"]
     },
     "JoinToken":{
       "type":"string",
@@ -11240,9 +11258,11 @@
     "ListFlowAssociationResourceType":{
       "type":"string",
       "enum":[
+        "WHATSAPP_MESSAGING_PHONE_NUMBER",
         "VOICE_PHONE_NUMBER",
         "INBOUND_EMAIL",
-        "OUTBOUND_EMAIL"
+        "OUTBOUND_EMAIL",
+        "ANALYTICS_CONNECTOR"
       ]
     },
     "ListFlowAssociationsRequest":{
@@ -13536,6 +13556,12 @@
         "EnqueueTimestamp":{"shape":"timestamp"}
       }
     },
+    "QueueInfoInput":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"QueueId"}
+      }
+    },
     "QueueMaxContacts":{
       "type":"integer",
       "min":0
@@ -14304,7 +14330,8 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "ResumeContactRecordingResponse":{
@@ -15891,7 +15918,8 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "StopContactRecordingResponse":{
@@ -16051,7 +16079,8 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "SuspendContactRecordingResponse":{
@@ -16875,7 +16904,11 @@
         "Name":{"shape":"Name"},
         "Description":{"shape":"Description"},
         "References":{"shape":"ContactReferences"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "QueueInfo":{"shape":"QueueInfoInput"},
+        "UserInfo":{"shape":"UserInfo"},
+        "CustomerEndpoint":{"shape":"Endpoint"},
+        "SystemEndpoint":{"shape":"Endpoint"}
       }
     },
     "UpdateContactResponse":{
@@ -18365,7 +18398,8 @@
     "VoiceRecordingConfiguration":{
       "type":"structure",
       "members":{
-        "VoiceRecordingTrack":{"shape":"VoiceRecordingTrack"}
+        "VoiceRecordingTrack":{"shape":"VoiceRecordingTrack"},
+        "IvrRecordingTrack":{"shape":"IvrRecordingTrack"}
       }
     },
     "VoiceRecordingTrack":{

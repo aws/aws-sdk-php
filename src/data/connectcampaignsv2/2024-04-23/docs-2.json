@@ -21,6 +21,7 @@
     "PauseCampaign": "<p>Pauses a campaign for the specified Amazon Connect account.</p>",
     "PutConnectInstanceIntegration": "<p>Put or update the integration for the specified Amazon Connect instance.</p>",
     "PutOutboundRequestBatch": "<p>Creates outbound requests for the specified campaign Amazon Connect account. This API is idempotent.</p>",
+    "PutProfileOutboundRequestBatch": "<p>Takes in a list of profile outbound requests to be placed as part of an outbound campaign. This API is idempotent.</p>",
     "ResumeCampaign": "<p>Stops a campaign for the specified Amazon Connect account.</p>",
     "StartCampaign": "<p>Starts a campaign for the specified Amazon Connect account.</p>",
     "StartInstanceOnboardingJob": "<p>Onboard the specific Amazon Connect instance to Connect Campaigns.</p>",
@@ -67,6 +68,7 @@
         "CustomerProfilesIntegrationSummary$domainArn": null,
         "EmailChannelSubtypeParameters$templateArn": null,
         "EmailOutboundConfig$wisdomTemplateArn": null,
+        "EventTrigger$customerProfilesDomainArn": null,
         "ListTagsForResourceRequest$arn": null,
         "QConnectIntegrationConfig$knowledgeBaseArn": null,
         "QConnectIntegrationIdentifier$knowledgeBaseArn": null,
@@ -157,6 +159,7 @@
         "GetCampaignStateRequest$id": null,
         "PauseCampaignRequest$id": null,
         "PutOutboundRequestBatchRequest$id": null,
+        "PutProfileOutboundRequestBatchRequest$id": null,
         "ResumeCampaignRequest$id": null,
         "StartCampaignRequest$id": null,
         "StopCampaignRequest$id": null,
@@ -237,8 +240,11 @@
     "ClientToken": {
       "base": "<p>Client provided parameter used for idempotency. Its value must be unique for each request.</p>",
       "refs": {
+        "FailedProfileOutboundRequest$clientToken": null,
         "FailedRequest$clientToken": null,
         "OutboundRequest$clientToken": null,
+        "ProfileOutboundRequest$clientToken": null,
+        "SuccessfulProfileOutboundRequest$clientToken": null,
         "SuccessfulRequest$clientToken": null
       }
     },
@@ -479,6 +485,12 @@
         "EncryptionConfig$encryptionType": null
       }
     },
+    "EventTrigger": {
+      "base": "<p>Event trigger of the campaign</p>",
+      "refs": {
+        "Source$eventTrigger": null
+      }
+    },
     "EventType": {
       "base": "<p>Enumeration of Customer Profiles event type</p>",
       "refs": {
@@ -495,6 +507,18 @@
       "base": "<p>List of failed requests of campaign state</p>",
       "refs": {
         "GetCampaignStateBatchResponse$failedRequests": null
+      }
+    },
+    "FailedProfileOutboundRequest": {
+      "base": "<p>Failure details for a profile outbound request</p>",
+      "refs": {
+        "FailedProfileOutboundRequestList$member": null
+      }
+    },
+    "FailedProfileOutboundRequestList": {
+      "base": "<p>List of failed profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchResponse$failedRequests": null
       }
     },
     "FailedRequest": {
@@ -788,6 +812,37 @@
         "TelephonyOutboundMode$predictive": null
       }
     },
+    "ProfileId": {
+      "base": "<p>Identifier of the customer profile</p>",
+      "refs": {
+        "ProfileOutboundRequest$profileId": null
+      }
+    },
+    "ProfileOutboundRequest": {
+      "base": "<p>Information about a profile outbound request</p>",
+      "refs": {
+        "ProfileOutboundRequestList$member": null
+      }
+    },
+    "ProfileOutboundRequestFailureCode": {
+      "base": "<p>Predefined code indicating the error that caused the failure</p>",
+      "refs": {
+        "FailedProfileOutboundRequest$failureCode": null
+      }
+    },
+    "ProfileOutboundRequestId": {
+      "base": "<p>Identifier of the profile outbound request</p>",
+      "refs": {
+        "FailedProfileOutboundRequest$id": null,
+        "SuccessfulProfileOutboundRequest$id": null
+      }
+    },
+    "ProfileOutboundRequestList": {
+      "base": "<p>List of profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchRequest$profileOutboundRequests": null
+      }
+    },
     "ProgressiveConfig": {
       "base": "<p>Progressive config</p>",
       "refs": {
@@ -806,6 +861,16 @@
     },
     "PutOutboundRequestBatchResponse": {
       "base": "<p>The response for PutOutboundRequestBatch API.</p>",
+      "refs": {
+      }
+    },
+    "PutProfileOutboundRequestBatchRequest": {
+      "base": "<p>The request for PutProfileOutboundRequestBatch API</p>",
+      "refs": {
+      }
+    },
+    "PutProfileOutboundRequestBatchResponse": {
+      "base": "<p>The response for PutProfileOutboundRequestBatch API</p>",
       "refs": {
       }
     },
@@ -972,6 +1037,18 @@
         "GetCampaignStateBatchResponse$successfulRequests": null
       }
     },
+    "SuccessfulProfileOutboundRequest": {
+      "base": "<p>Success details for a profile outbound request</p>",
+      "refs": {
+        "SuccessfulProfileOutboundRequestList$member": null
+      }
+    },
+    "SuccessfulProfileOutboundRequestList": {
+      "base": "<p>List of successful profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchResponse$successfulRequests": null
+      }
+    },
     "SuccessfulRequest": {
       "base": "<p>A successful request identified by the unique client token.</p>",
       "refs": {
@@ -1063,6 +1140,7 @@
       "base": "<p>Timestamp with no UTC offset or timezone</p>",
       "refs": {
         "OutboundRequest$expirationTime": null,
+        "ProfileOutboundRequest$expirationTime": null,
         "Schedule$startTime": null,
         "Schedule$endTime": null
       }
