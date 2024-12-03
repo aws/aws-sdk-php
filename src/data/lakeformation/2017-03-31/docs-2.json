@@ -221,6 +221,7 @@
         "AddLFTagsToResourceRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "BatchGrantPermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "BatchRevokePermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "CatalogResource$Id": "<p>An identifier for the catalog resource.</p>",
         "CreateLFTagExpressionRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "CreateLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "CreateLakeFormationIdentityCenterConfigurationRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, view definitions, and other control information to manage your Lake Formation environment.</p>",
@@ -324,6 +325,13 @@
     "ConcurrentModificationException": {
       "base": "<p>Two processes are trying to modify a resource simultaneously.</p>",
       "refs": {
+      }
+    },
+    "Condition": {
+      "base": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+      "refs": {
+        "LakeFormationOptInsInfo$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
       }
     },
     "ContextKey": {
@@ -672,6 +680,12 @@
         "SearchDatabasesByLFTagsRequest$Expression": "<p>A list of conditions (<code>LFTag</code> structures) to search for in database resources.</p>",
         "SearchTablesByLFTagsRequest$Expression": "<p>A list of conditions (<code>LFTag</code> structures) to search for in table resources.</p>",
         "UpdateLFTagExpressionRequest$Expression": "<p>The LF-Tag expression body composed of one more LF-Tag key-value pairs.</p>"
+      }
+    },
+    "ExpressionString": {
+      "base": null,
+      "refs": {
+        "Condition$Expression": "<p>An expression written based on the Cedar Policy Language used to match the principal attributes.</p>"
       }
     },
     "ExtendTransactionRequest": {

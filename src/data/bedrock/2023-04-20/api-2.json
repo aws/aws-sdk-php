@@ -1217,8 +1217,7 @@
         "roleArn",
         "baseModelIdentifier",
         "trainingDataConfig",
-        "outputDataConfig",
-        "hyperParameters"
+        "outputDataConfig"
       ],
       "members":{
         "jobName":{"shape":"JobName"},
@@ -1237,7 +1236,8 @@
         "validationDataConfig":{"shape":"ValidationDataConfig"},
         "outputDataConfig":{"shape":"OutputDataConfig"},
         "hyperParameters":{"shape":"ModelCustomizationHyperParameters"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "customizationConfig":{"shape":"CustomizationConfig"}
       }
     },
     "CreateModelCustomizationJobResponse":{
@@ -1366,11 +1366,19 @@
       "type":"list",
       "member":{"shape":"CustomModelSummary"}
     },
+    "CustomizationConfig":{
+      "type":"structure",
+      "members":{
+        "distillationConfig":{"shape":"DistillationConfig"}
+      },
+      "union":true
+    },
     "CustomizationType":{
       "type":"string",
       "enum":[
         "FINE_TUNING",
-        "CONTINUED_PRE_TRAINING"
+        "CONTINUED_PRE_TRAINING",
+        "DISTILLATION"
       ]
     },
     "DeleteCustomModelRequest":{
@@ -1466,6 +1474,13 @@
     "DeleteProvisionedModelThroughputResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DistillationConfig":{
+      "type":"structure",
+      "required":["teacherModelConfig"],
+      "members":{
+        "teacherModelConfig":{"shape":"TeacherModelConfig"}
       }
     },
     "ErrorMessage":{
@@ -1905,7 +1920,8 @@
         "outputDataConfig":{"shape":"OutputDataConfig"},
         "trainingMetrics":{"shape":"TrainingMetrics"},
         "validationMetrics":{"shape":"ValidationMetrics"},
-        "creationTime":{"shape":"Timestamp"}
+        "creationTime":{"shape":"Timestamp"},
+        "customizationConfig":{"shape":"CustomizationConfig"}
       }
     },
     "GetEvaluationJobRequest":{
@@ -2129,7 +2145,6 @@
         "roleArn",
         "creationTime",
         "baseModelArn",
-        "hyperParameters",
         "trainingDataConfig",
         "validationDataConfig",
         "outputDataConfig"
@@ -2155,7 +2170,8 @@
         "outputModelKmsKeyArn":{"shape":"KmsKeyArn"},
         "trainingMetrics":{"shape":"TrainingMetrics"},
         "validationMetrics":{"shape":"ValidationMetrics"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "customizationConfig":{"shape":"CustomizationConfig"}
       }
     },
     "GetModelImportJobRequest":{
@@ -3063,6 +3079,10 @@
       "type":"boolean",
       "box":true
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -3071,6 +3091,22 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvocationLogSource":{
+      "type":"structure",
+      "members":{
+        "s3Uri":{"shape":"S3Uri"}
+      },
+      "union":true
+    },
+    "InvocationLogsConfig":{
+      "type":"structure",
+      "required":["invocationLogSource"],
+      "members":{
+        "usePromptResponse":{"shape":"UsePromptResponse"},
+        "invocationLogSource":{"shape":"InvocationLogSource"},
+        "requestMetadataFilters":{"shape":"RequestMetadataFilters"}
+      }
     },
     "JobName":{
       "type":"string",
@@ -3702,7 +3738,8 @@
         "s3Config":{"shape":"S3Config"},
         "textDataDeliveryEnabled":{"shape":"Boolean"},
         "imageDataDeliveryEnabled":{"shape":"Boolean"},
-        "embeddingDataDeliveryEnabled":{"shape":"Boolean"}
+        "embeddingDataDeliveryEnabled":{"shape":"Boolean"},
+        "videoDataDeliveryEnabled":{"shape":"Boolean"}
       }
     },
     "MaxResults":{
@@ -3780,7 +3817,8 @@
       "type":"string",
       "enum":[
         "FINE_TUNING",
-        "CONTINUED_PRE_TRAINING"
+        "CONTINUED_PRE_TRAINING",
+        "DISTILLATION"
       ]
     },
     "ModelCustomizationHyperParameters":{
@@ -4178,6 +4216,49 @@
       "max":1,
       "min":1
     },
+    "RequestMetadataBaseFilters":{
+      "type":"structure",
+      "members":{
+        "equals":{"shape":"RequestMetadataMap"},
+        "notEquals":{"shape":"RequestMetadataMap"}
+      }
+    },
+    "RequestMetadataFilters":{
+      "type":"structure",
+      "members":{
+        "equals":{"shape":"RequestMetadataMap"},
+        "notEquals":{"shape":"RequestMetadataMap"},
+        "andAll":{"shape":"RequestMetadataFiltersList"},
+        "orAll":{"shape":"RequestMetadataFiltersList"}
+      },
+      "union":true
+    },
+    "RequestMetadataFiltersList":{
+      "type":"list",
+      "member":{"shape":"RequestMetadataBaseFilters"},
+      "max":16,
+      "min":1
+    },
+    "RequestMetadataMap":{
+      "type":"map",
+      "key":{"shape":"RequestMetadataMapKeyString"},
+      "value":{"shape":"RequestMetadataMapValueString"},
+      "max":1,
+      "min":1,
+      "sensitive":true
+    },
+    "RequestMetadataMapKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+$@-]{1,256}"
+    },
+    "RequestMetadataMapValueString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s._:/=+$@-]{0,256}"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -4450,7 +4531,19 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job|custom-model)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:guardrail/[a-z0-9]+$)|(:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+$)|(:(provisioned-model|model-invocation-job|model-evaluation-job|evaluation-job|model-import-job|imported-model)/[a-z0-9]{12}$))).*"
+      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job|custom-model)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:guardrail/[a-z0-9]+$)|(:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+$)|(:(provisioned-model|model-invocation-job|model-evaluation-job|evaluation-job|model-import-job|imported-model|async-invoke)/[a-z0-9]{12}$))).*"
+    },
+    "TeacherModelConfig":{
+      "type":"structure",
+      "required":["teacherModelIdentifier"],
+      "members":{
+        "teacherModelIdentifier":{"shape":"TeacherModelIdentifier"},
+        "maxResponseLengthForInference":{"shape":"Integer"}
+      }
+    },
+    "TeacherModelIdentifier":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
     },
     "Temperature":{
       "type":"float",
@@ -4508,9 +4601,9 @@
     },
     "TrainingDataConfig":{
       "type":"structure",
-      "required":["s3Uri"],
       "members":{
-        "s3Uri":{"shape":"S3Uri"}
+        "s3Uri":{"shape":"S3Uri"},
+        "invocationLogsConfig":{"shape":"InvocationLogsConfig"}
       }
     },
     "TrainingMetrics":{
@@ -4594,6 +4687,7 @@
       "members":{
       }
     },
+    "UsePromptResponse":{"type":"boolean"},
     "ValidationDataConfig":{
       "type":"structure",
       "required":["validators"],

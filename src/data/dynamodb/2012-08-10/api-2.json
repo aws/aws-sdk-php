@@ -147,7 +147,8 @@
         {"shape":"ItemCollectionSizeLimitExceededException"},
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ReplicatedWriteConflictException"}
       ],
       "endpointdiscovery":{
       }
@@ -613,7 +614,8 @@
         {"shape":"ItemCollectionSizeLimitExceededException"},
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ReplicatedWriteConflictException"}
       ],
       "endpointdiscovery":{
       }
@@ -860,7 +862,8 @@
         {"shape":"ItemCollectionSizeLimitExceededException"},
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ReplicatedWriteConflictException"}
       ],
       "endpointdiscovery":{
       }
@@ -2890,6 +2893,13 @@
       "key":{"shape":"AttributeName"},
       "value":{"shape":"AttributeValue"}
     },
+    "MultiRegionConsistency":{
+      "type":"string",
+      "enum":[
+        "EVENTUAL",
+        "STRONG"
+      ]
+    },
     "NextTokenString":{"type":"string"},
     "NonKeyAttributeName":{
       "type":"string",
@@ -3391,6 +3401,13 @@
       "type":"list",
       "member":{"shape":"ReplicaUpdate"}
     },
+    "ReplicatedWriteConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
     "ReplicationGroupUpdate":{
       "type":"structure",
       "members":{
@@ -3797,7 +3814,8 @@
         "TableClassSummary":{"shape":"TableClassSummary"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
-        "WarmThroughput":{"shape":"TableWarmThroughputDescription"}
+        "WarmThroughput":{"shape":"TableWarmThroughputDescription"},
+        "MultiRegionConsistency":{"shape":"MultiRegionConsistency"}
       }
     },
     "TableId":{
@@ -4203,6 +4221,7 @@
         "ReplicaUpdates":{"shape":"ReplicationGroupUpdateList"},
         "TableClass":{"shape":"TableClass"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "MultiRegionConsistency":{"shape":"MultiRegionConsistency"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"WarmThroughput"}
       }

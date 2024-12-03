@@ -20,6 +20,12 @@
         "AgentActionGroup$apiSchema": "<p> Contains either details about the S3 object containing the OpenAPI schema for the action group or the JSON or YAML-formatted payload defining the schema. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html\">Action group OpenAPI schemas</a>. </p>"
       }
     },
+    "AWSResourceARN": {
+      "base": null,
+      "refs": {
+        "InvokeAgentRequest$sourceArn": "<p>The ARN of the resource making the request.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions. Check your permissions and retry your request.</p>",
       "refs": {
@@ -107,6 +113,14 @@
         "InvokeInlineAgentRequest$actionGroups": "<p> A list of action groups with each action group defining the action the inline agent needs to carry out. </p>"
       }
     },
+    "AgentAliasArn": {
+      "base": null,
+      "refs": {
+        "AgentCollaboratorInvocationInput$agentCollaboratorAliasArn": "<p>The collaborator's alias ARN.</p>",
+        "AgentCollaboratorInvocationOutput$agentCollaboratorAliasArn": "<p>The output's agent collaborator alias ARN.</p>",
+        "Caller$agentAliasArn": "<p>The caller's agent alias ARN.</p>"
+      }
+    },
     "AgentAliasId": {
       "base": null,
       "refs": {
@@ -114,6 +128,37 @@
         "GetAgentMemoryRequest$agentAliasId": "<p>The unique identifier of an alias of an agent.</p>",
         "InvokeAgentRequest$agentAliasId": "<p>The alias of the agent to use.</p>",
         "TracePart$agentAliasId": "<p>The unique identifier of the alias of the agent.</p>"
+      }
+    },
+    "AgentCollaboratorInputPayload": {
+      "base": "<p>Input for an agent collaborator. The input can be text or an action invocation result.</p>",
+      "refs": {
+        "AgentCollaboratorInvocationInput$input": "<p>Text or action invocation result input for the collaborator.</p>"
+      }
+    },
+    "AgentCollaboratorInvocationInput": {
+      "base": "<p>An agent collaborator invocation input.</p>",
+      "refs": {
+        "InvocationInput$agentCollaboratorInvocationInput": "<p>The collaborator's invocation input.</p>"
+      }
+    },
+    "AgentCollaboratorInvocationOutput": {
+      "base": "<p>Output from an agent collaborator.</p>",
+      "refs": {
+        "Observation$agentCollaboratorInvocationOutput": "<p>A collaborator's invocation output.</p>"
+      }
+    },
+    "AgentCollaboratorOutputPayload": {
+      "base": "<p>Output from an agent collaborator. The output can be text or an action invocation result.</p>",
+      "refs": {
+        "AgentCollaboratorInvocationOutput$output": "<p>The output's output.</p>"
+      }
+    },
+    "AgentCollaboratorPayloadString": {
+      "base": null,
+      "refs": {
+        "AgentCollaboratorInputPayload$text": "<p>Input text.</p>",
+        "AgentCollaboratorOutputPayload$text": "<p>Text output.</p>"
       }
     },
     "AgentId": {
@@ -276,6 +321,18 @@
         "FileSource$byteContent": "<p>The data and the text of the attached files.</p>"
       }
     },
+    "Caller": {
+      "base": "<p>Details about a caller.</p>",
+      "refs": {
+        "CallerChain$member": null
+      }
+    },
+    "CallerChain": {
+      "base": null,
+      "refs": {
+        "TracePart$callerChain": "<p>The part's caller chain.</p>"
+      }
+    },
     "Citation": {
       "base": "<p>An object containing a segment of the generated response that is based on a source in the knowledge base, alongside information about the source.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>citations</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>citations</code> field</p> </li> </ul>",
       "refs": {
@@ -324,6 +381,18 @@
         "RetrieveAndGenerateStreamResponseOutput$conflictException": "<p>Error occurred because of a conflict while performing an operation.</p>"
       }
     },
+    "ContentBlock": {
+      "base": "<p>A content block.</p>",
+      "refs": {
+        "ContentBlocks$member": null
+      }
+    },
+    "ContentBlocks": {
+      "base": null,
+      "refs": {
+        "Message$content": "<p>The message's content.</p>"
+      }
+    },
     "ContentBody": {
       "base": "<p>Contains the body of the API response.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p>In the <code>returnControlInvocationResults</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax\">InvokeAgent request</a> </p> </li> </ul>",
       "refs": {
@@ -340,6 +409,18 @@
       "base": null,
       "refs": {
         "ByteContentDoc$contentType": "<p>The MIME type of the document contained in the wrapper object.</p>"
+      }
+    },
+    "ConversationHistory": {
+      "base": "<p>A conversation history.</p>",
+      "refs": {
+        "SessionState$conversationHistory": "<p>The state's conversation history.</p>"
+      }
+    },
+    "ConversationRole": {
+      "base": null,
+      "refs": {
+        "Message$role": "<p>The message's role.</p>"
       }
     },
     "CreationMode": {
@@ -1124,7 +1205,8 @@
     "InvocationInput": {
       "base": "<p>Contains information pertaining to the action group or knowledge base that is being invoked.</p>",
       "refs": {
-        "OrchestrationTrace$invocationInput": "<p>Contains information pertaining to the action group or knowledge base that is being invoked.</p>"
+        "OrchestrationTrace$invocationInput": "<p>Contains information pertaining to the action group or knowledge base that is being invoked.</p>",
+        "RoutingClassifierTrace$invocationInput": "<p>The classifier's invocation input.</p>"
       }
     },
     "InvocationInputMember": {
@@ -1356,12 +1438,25 @@
         "GetAgentMemoryRequest$memoryType": "<p>The type of memory.</p>"
       }
     },
+    "Message": {
+      "base": "<p>Details about a message.</p>",
+      "refs": {
+        "Messages$member": null
+      }
+    },
+    "Messages": {
+      "base": null,
+      "refs": {
+        "ConversationHistory$messages": "<p>The conversation's messages.</p>"
+      }
+    },
     "Metadata": {
       "base": "<p>Provides details of the foundation model.</p>",
       "refs": {
         "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output from the orchestration step.</p>",
         "PostProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the post-processing step. </p>",
-        "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>"
+        "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>",
+        "RoutingClassifierModelInvocationOutput$metadata": "<p>The invocation's metadata.</p>"
       }
     },
     "MetadataAttributeSchema": {
@@ -1406,7 +1501,8 @@
     "ModelIdentifier": {
       "base": null,
       "refs": {
-        "InvokeInlineAgentRequest$foundationModel": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">model identifier (ID)</a> of the model to use for orchestration by the inline agent. For example, <code>meta.llama3-1-70b-instruct-v1:0</code>. </p>"
+        "InvokeInlineAgentRequest$foundationModel": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">model identifier (ID)</a> of the model to use for orchestration by the inline agent. For example, <code>meta.llama3-1-70b-instruct-v1:0</code>. </p>",
+        "ModelInvocationInput$foundationModel": "<p>The identifier of a foundation model.</p>"
       }
     },
     "ModelInvocationInput": {
@@ -1414,7 +1510,16 @@
       "refs": {
         "OrchestrationTrace$modelInvocationInput": "<p>The input for the orchestration step.</p> <ul> <li> <p>The <code>type</code> is <code>ORCHESTRATION</code>.</p> </li> <li> <p>The <code>text</code> contains the prompt.</p> </li> <li> <p>The <code>inferenceConfiguration</code>, <code>parserMode</code>, and <code>overrideLambda</code> values are set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object that was set when the agent was created or updated.</p> </li> </ul>",
         "PostProcessingTrace$modelInvocationInput": "<p>The input for the post-processing step.</p> <ul> <li> <p>The <code>type</code> is <code>POST_PROCESSING</code>.</p> </li> <li> <p>The <code>text</code> contains the prompt.</p> </li> <li> <p>The <code>inferenceConfiguration</code>, <code>parserMode</code>, and <code>overrideLambda</code> values are set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object that was set when the agent was created or updated.</p> </li> </ul>",
-        "PreProcessingTrace$modelInvocationInput": "<p>The input for the pre-processing step.</p> <ul> <li> <p>The <code>type</code> is <code>PRE_PROCESSING</code>.</p> </li> <li> <p>The <code>text</code> contains the prompt.</p> </li> <li> <p>The <code>inferenceConfiguration</code>, <code>parserMode</code>, and <code>overrideLambda</code> values are set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object that was set when the agent was created or updated.</p> </li> </ul>"
+        "PreProcessingTrace$modelInvocationInput": "<p>The input for the pre-processing step.</p> <ul> <li> <p>The <code>type</code> is <code>PRE_PROCESSING</code>.</p> </li> <li> <p>The <code>text</code> contains the prompt.</p> </li> <li> <p>The <code>inferenceConfiguration</code>, <code>parserMode</code>, and <code>overrideLambda</code> values are set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object that was set when the agent was created or updated.</p> </li> </ul>",
+        "RoutingClassifierTrace$modelInvocationInput": "<p>The classifier's model invocation input.</p>"
+      }
+    },
+    "Name": {
+      "base": null,
+      "refs": {
+        "ApiInvocationInput$collaboratorName": "<p>The agent collaborator's name.</p>",
+        "FunctionInvocationInput$collaboratorName": "<p>The collaborator's name.</p>",
+        "TracePart$collaboratorName": "<p>The part's collaborator name.</p>"
       }
     },
     "NextToken": {
@@ -1476,7 +1581,8 @@
     "Observation": {
       "base": "<p>Contains the result or output of an action group or knowledge base, or the response to the user.</p>",
       "refs": {
-        "OrchestrationTrace$observation": "<p>Details about the observation (the output of the action group Lambda or knowledge base) made by the agent.</p>"
+        "OrchestrationTrace$observation": "<p>Details about the observation (the output of the action group Lambda or knowledge base) made by the agent.</p>",
+        "RoutingClassifierTrace$observation": "<p>The classifier's observation.</p>"
       }
     },
     "OptimizePromptRequest": {
@@ -1619,6 +1725,13 @@
         "ResponseStream$chunk": "<p>Contains a part of an agent response and citations for it.</p>"
       }
     },
+    "PayloadType": {
+      "base": null,
+      "refs": {
+        "AgentCollaboratorInputPayload$type": "<p>The input type.</p>",
+        "AgentCollaboratorOutputPayload$type": "<p>The type of output.</p>"
+      }
+    },
     "PostProcessingModelInvocationOutput": {
       "base": "<p>The foundation model output from the post-processing step.</p>",
       "refs": {
@@ -1755,7 +1868,8 @@
       "refs": {
         "OrchestrationModelInvocationOutput$rawResponse": "<p>Contains details of the raw response from the foundation model output.</p>",
         "PostProcessingModelInvocationOutput$rawResponse": "<p> Details of the raw response from the foundation model output. </p>",
-        "PreProcessingModelInvocationOutput$rawResponse": "<p> Details of the raw response from the foundation model output. </p>"
+        "PreProcessingModelInvocationOutput$rawResponse": "<p> Details of the raw response from the foundation model output. </p>",
+        "RoutingClassifierModelInvocationOutput$rawResponse": "<p>The invocation's raw response.</p>"
       }
     },
     "RepromptResponse": {
@@ -2120,13 +2234,33 @@
       "base": null,
       "refs": {
         "InlineSessionState$returnControlInvocationResults": "<p> Contains information about the results from the action group invocation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a>. </p> <note> <p>If you include this field in the <code>sessionState</code> field, the <code>inputText</code> field will be ignored.</p> </note>",
+        "ReturnControlResults$returnControlInvocationResults": "<p>The action invocation result.</p>",
         "SessionState$returnControlInvocationResults": "<p>Contains information about the results from the action group invocation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p> <note> <p>If you include this field, the <code>inputText</code> field will be ignored.</p> </note>"
       }
     },
     "ReturnControlPayload": {
       "base": "<p>Contains information to return from the action group that the agent has predicted to invoke.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> </p> </li> </ul>",
       "refs": {
+        "AgentCollaboratorOutputPayload$returnControlPayload": "<p>An action invocation result.</p>",
         "ResponseStream$returnControl": "<p>Contains the parameters and information that the agent elicited from the customer to carry out an action. This information is returned to the system and can be used in your own setup for fulfilling the action.</p>"
+      }
+    },
+    "ReturnControlResults": {
+      "base": "<p>An action invocation result.</p>",
+      "refs": {
+        "AgentCollaboratorInputPayload$returnControlResults": "<p>An action invocation result.</p>"
+      }
+    },
+    "RoutingClassifierModelInvocationOutput": {
+      "base": "<p>Invocation output from a routing classifier model.</p>",
+      "refs": {
+        "RoutingClassifierTrace$modelInvocationOutput": "<p>The classifier's model invocation output.</p>"
+      }
+    },
+    "RoutingClassifierTrace": {
+      "base": "<p>A trace for a routing classifier.</p>",
+      "refs": {
+        "Trace$routingClassifierTrace": "<p>A routing classifier's trace.</p>"
       }
     },
     "S3BucketName": {
@@ -2262,29 +2396,36 @@
       "base": null,
       "refs": {
         "ActionGroupInvocationInput$invocationId": "<p>The unique identifier of the invocation. Only returned if the <code>executionType</code> is <code>RETURN_CONTROL</code>.</p>",
+        "AgentCollaboratorInvocationInput$agentCollaboratorName": "<p>The collaborator's name.</p>",
+        "AgentCollaboratorInvocationOutput$agentCollaboratorName": "<p>The output's agent collaborator name.</p>",
         "AnalyzePromptEvent$message": "<p>A message describing the analysis of the prompt.</p>",
         "ApiContentMap$key": null,
         "ApiInvocationInput$actionGroup": "<p>The action group that the API operation belongs to.</p>",
+        "ApiInvocationInput$agentId": "<p>The agent's ID.</p>",
         "ApiInvocationInput$httpMethod": "<p>The HTTP method of the API operation.</p>",
         "ApiParameter$name": "<p>The name of the parameter.</p>",
         "ApiParameter$type": "<p>The data type for the parameter.</p>",
         "ApiParameter$value": "<p>The value of the parameter.</p>",
         "ApiResult$actionGroup": "<p>The action group that the API operation belongs to.</p>",
+        "ApiResult$agentId": "<p>The agent's ID.</p>",
         "ApiResult$httpMethod": "<p>The HTTP method for the API operation.</p>",
         "CodeInterpreterInvocationInput$code": "<p>The code for the code interpreter to use.</p>",
         "CodeInterpreterInvocationOutput$executionError": "<p>Contains the error returned from code execution.</p>",
         "CodeInterpreterInvocationOutput$executionOutput": "<p>Contains the successful output returned from code execution</p>",
+        "ContentBlock$text": "<p>The block's text.</p>",
         "ContentBody$body": "<p>The body of the API response.</p>",
         "ContentMap$key": null,
         "CustomOrchestrationTraceEvent$text": "<p> The text that prompted the event at this step. </p>",
         "Files$member": null,
         "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
         "FunctionInvocationInput$actionGroup": "<p>The action group that the function belongs to.</p>",
+        "FunctionInvocationInput$agentId": "<p>The agent's ID.</p>",
         "FunctionInvocationInput$function": "<p>The name of the function.</p>",
         "FunctionParameter$name": "<p>The name of the parameter.</p>",
         "FunctionParameter$type": "<p>The data type of the parameter.</p>",
         "FunctionParameter$value": "<p>The value of the parameter.</p>",
         "FunctionResult$actionGroup": "<p>The action group that the function belongs to.</p>",
+        "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
@@ -2315,6 +2456,7 @@
         "RetrieveAndGenerateOutput$text": "<p>The response generated from querying the knowledge base.</p>",
         "RetrieveAndGenerateOutputEvent$text": "<p>A text response.</p>",
         "ReturnControlPayload$invocationId": "<p>The identifier of the action group invocation.</p>",
+        "ReturnControlResults$invocationId": "<p>The action's invocation ID.</p>",
         "SessionAttributesMap$key": null,
         "SessionAttributesMap$value": null,
         "SessionState$invocationId": "<p>The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
@@ -2408,7 +2550,8 @@
         "OrchestrationModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
         "PostProcessingModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
         "PreProcessingModelInvocationOutput$traceId": "<p>The unique identifier of the trace.</p>",
-        "Rationale$traceId": "<p>The unique identifier of the trace step.</p>"
+        "Rationale$traceId": "<p>The unique identifier of the trace step.</p>",
+        "RoutingClassifierModelInvocationOutput$traceId": "<p>The invocation's trace ID.</p>"
       }
     },
     "TraceKnowledgeBaseId": {

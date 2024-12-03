@@ -2,6 +2,7 @@
   "version": "2.0",
   "service": "<p>Describes the API operations for creating and managing Amazon Bedrock agents.</p>",
   "operations": {
+    "AssociateAgentCollaborator": "<p>Makes an agent a collaborator for another agent.</p>",
     "AssociateAgentKnowledgeBase": "<p>Associates a knowledge base with an agent. If a knowledge base is associated and its <code>indexState</code> is set to <code>Enabled</code>, the agent queries the knowledge base for information to augment its response to the user.</p>",
     "CreateAgent": "<p>Creates an agent that orchestrates interactions between foundation models, data sources, software applications, user conversations, and APIs to carry out tasks to help customers.</p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p> <code>agentResourceRoleArn</code> – The Amazon Resource Name (ARN) of the role with permissions to invoke API operations on an agent.</p> </li> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To enable your agent to retain conversational context across multiple sessions, include a <code>memoryConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-configure-memory.html\">Configure memory</a>.</p> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>If your agent fails to be created, the response returns a list of <code>failureReasons</code> alongside a list of <code>recommendedActions</code> for you to troubleshoot.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul>",
     "CreateAgentActionGroup": "<p>Creates an action group for an agent. An action group represents the actions that an agent can carry out for the customer by defining the APIs that an agent can call and the logic for calling them.</p> <p>To allow your agent to request the user for additional information when trying to complete a task, add an action group with the <code>parentActionGroupSignature</code> field set to <code>AMAZON.UserInput</code>. </p> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, add an action group with the <code>parentActionGroupSignature</code> field set to <code>AMAZON.CodeInterpreter</code>. </p> <p>You must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields blank for this action group. During orchestration, if your agent determines that it needs to invoke an API in an action group, but doesn't have enough information to complete the API request, it will invoke this action group instead and return an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html\">Observation</a> reprompting the user for more information.</p>",
@@ -24,10 +25,12 @@
     "DeleteKnowledgeBase": "<p>Deletes a knowledge base. Before deleting a knowledge base, you should disassociate the knowledge base from any agents that it is associated with by making a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_DisassociateAgentKnowledgeBase.html\">DisassociateAgentKnowledgeBase</a> request.</p>",
     "DeleteKnowledgeBaseDocuments": "<p>Deletes documents from a data source and syncs the changes to the knowledge base that is connected to it. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html\">Ingest documents into a knowledge base in real-time</a> in the Amazon Bedrock User Guide.</p>",
     "DeletePrompt": "<p>Deletes a prompt or a version of it, depending on whether you include the <code>promptVersion</code> field or not. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-manage.html#prompt-management-delete.html\">Delete prompts from the Prompt management tool</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-deploy.html#prompt-management-versions-delete.html\">Delete a version of a prompt from the Prompt management tool</a> in the Amazon Bedrock User Guide.</p>",
+    "DisassociateAgentCollaborator": "<p>Disassociates an agent collaborator.</p>",
     "DisassociateAgentKnowledgeBase": "<p>Disassociates a knowledge base from an agent.</p>",
     "GetAgent": "<p>Gets information about an agent.</p>",
     "GetAgentActionGroup": "<p>Gets information about an action group for an agent.</p>",
     "GetAgentAlias": "<p>Gets information about an alias of an agent.</p>",
+    "GetAgentCollaborator": "<p>Retrieves information about an agent's collaborator.</p>",
     "GetAgentKnowledgeBase": "<p>Gets information about a knowledge base associated with an agent.</p>",
     "GetAgentVersion": "<p>Gets details about a version of an agent.</p>",
     "GetDataSource": "<p>Gets information about a data source.</p>",
@@ -41,6 +44,7 @@
     "IngestKnowledgeBaseDocuments": "<p>Ingests documents directly into the knowledge base that is connected to the data source. The <code>dataSourceType</code> specified in the content for each document must match the type of the data source that you specify in the header. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html\">Ingest documents into a knowledge base in real-time</a> in the Amazon Bedrock User Guide.</p>",
     "ListAgentActionGroups": "<p>Lists the action groups for an agent and information about each one.</p>",
     "ListAgentAliases": "<p>Lists the aliases of an agent and information about each one.</p>",
+    "ListAgentCollaborators": "<p>Retrieve a list of an agent's collaborators.</p>",
     "ListAgentKnowledgeBases": "<p>Lists knowledge bases associated with an agent and information about each one.</p>",
     "ListAgentVersions": "<p>Lists the versions of an agent and information about each version.</p>",
     "ListAgents": "<p>Lists the agents belonging to an account and information about each agent.</p>",
@@ -62,6 +66,7 @@
     "UpdateAgent": "<p>Updates the configuration of an agent.</p>",
     "UpdateAgentActionGroup": "<p>Updates the configuration for an action group for an agent.</p>",
     "UpdateAgentAlias": "<p>Updates configurations for an alias of an agent.</p>",
+    "UpdateAgentCollaborator": "<p>Updates an agent's collaborator.</p>",
     "UpdateAgentKnowledgeBase": "<p>Updates the configuration for a knowledge base that has been associated with an agent.</p>",
     "UpdateDataSource": "<p>Updates the configurations for a data source connector.</p> <important> <p>You can't change the <code>chunkingConfiguration</code> after you create the data source connector. Specify the existing <code>chunkingConfiguration</code>.</p> </important>",
     "UpdateFlow": "<p>Modifies a flow. Include both fields that you want to keep and fields that you want to change. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-how-it-works.html\">How it works</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-create.html\">Create a flow in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p>",
@@ -149,6 +154,7 @@
       "base": null,
       "refs": {
         "AgentAlias$agentAliasArn": "<p>The Amazon Resource Name (ARN) of the alias of the agent.</p>",
+        "AgentDescriptor$aliasArn": "<p>The agent's alias ARN.</p>",
         "AgentFlowNodeConfiguration$agentAliasArn": "<p>The Amazon Resource Name (ARN) of the alias of the agent to invoke.</p>",
         "PromptAgentResource$agentIdentifier": "<p>The ARN of the agent with which to use the prompt.</p>"
       }
@@ -217,6 +223,44 @@
       "refs": {
         "Agent$agentArn": "<p>The Amazon Resource Name (ARN) of the agent.</p>",
         "AgentVersion$agentArn": "<p>The Amazon Resource Name (ARN) of the agent that the version belongs to.</p>"
+      }
+    },
+    "AgentCollaboration": {
+      "base": null,
+      "refs": {
+        "Agent$agentCollaboration": "<p>The agent's collaboration settings.</p>",
+        "AgentVersion$agentCollaboration": "<p>The agent's collaboration settings.</p>",
+        "CreateAgentRequest$agentCollaboration": "<p>The agent's collaboration role.</p>",
+        "UpdateAgentRequest$agentCollaboration": "<p>The agent's collaboration role.</p>"
+      }
+    },
+    "AgentCollaborator": {
+      "base": "<p>An agent collaborator.</p>",
+      "refs": {
+        "AssociateAgentCollaboratorResponse$agentCollaborator": "<p>Details about the collaborator.</p>",
+        "GetAgentCollaboratorResponse$agentCollaborator": "<p>Details about the collaborator.</p>",
+        "UpdateAgentCollaboratorResponse$agentCollaborator": "<p>Details about the collaborator.</p>"
+      }
+    },
+    "AgentCollaboratorSummaries": {
+      "base": null,
+      "refs": {
+        "ListAgentCollaboratorsResponse$agentCollaboratorSummaries": "<p>A list of collaborator summaries.</p>"
+      }
+    },
+    "AgentCollaboratorSummary": {
+      "base": "<p>An agent collaborator summary.</p>",
+      "refs": {
+        "AgentCollaboratorSummaries$member": null
+      }
+    },
+    "AgentDescriptor": {
+      "base": "<p>An agent descriptor.</p>",
+      "refs": {
+        "AgentCollaborator$agentDescriptor": "<p>The collaborator's agent descriptor.</p>",
+        "AgentCollaboratorSummary$agentDescriptor": "<p>The collaborator's agent descriptor.</p>",
+        "AssociateAgentCollaboratorRequest$agentDescriptor": "<p>The alias of the collaborator agent.</p>",
+        "UpdateAgentCollaboratorRequest$agentDescriptor": "<p>An agent descriptor for the agent collaborator.</p>"
       }
     },
     "AgentFlowNodeConfiguration": {
@@ -300,6 +344,16 @@
       "base": "<p>Defines tools, at least one of which must be requested by the model. No text is generated but the results of tool use are sent back to the model to help generate a response. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Use a tool to complete an Amazon Bedrock model response</a>.</p>",
       "refs": {
         "ToolChoice$any": "<p>Defines tools, at least one of which must be requested by the model. No text is generated but the results of tool use are sent back to the model to help generate a response.</p>"
+      }
+    },
+    "AssociateAgentCollaboratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateAgentCollaboratorResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "AssociateAgentKnowledgeBaseRequest": {
@@ -409,6 +463,8 @@
         "Agent$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "AgentActionGroup$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "AgentAlias$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "AgentCollaborator$clientToken": "<p>The collaborator's client token.</p>",
+        "AssociateAgentCollaboratorRequest$clientToken": "<p>A client token.</p>",
         "CreateAgentActionGroupRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateAgentAliasRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateAgentRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -422,6 +478,15 @@
         "DeleteKnowledgeBaseDocumentsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "IngestKnowledgeBaseDocumentsRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "StartIngestionJobRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>"
+      }
+    },
+    "CollaborationInstruction": {
+      "base": null,
+      "refs": {
+        "AgentCollaborator$collaborationInstruction": "<p>The collaborator's instructions.</p>",
+        "AgentCollaboratorSummary$collaborationInstruction": "<p>The collaborator's collaboration instruction.</p>",
+        "AssociateAgentCollaboratorRequest$collaborationInstruction": "<p>Instruction for the collaborator.</p>",
+        "UpdateAgentCollaboratorRequest$collaborationInstruction": "<p>Instruction for the collaborator.</p>"
       }
     },
     "CollectorFlowNodeConfiguration": {
@@ -755,6 +820,10 @@
         "AgentAliasHistoryEvent$startDate": "<p>The date that the alias began being associated to the version in the <code>routingConfiguration</code> object.</p>",
         "AgentAliasSummary$createdAt": "<p>The time at which the alias of the agent was created.</p>",
         "AgentAliasSummary$updatedAt": "<p>The time at which the alias was last updated.</p>",
+        "AgentCollaborator$createdAt": "<p>When the collaborator was created.</p>",
+        "AgentCollaborator$lastUpdatedAt": "<p>When the collaborator was updated.</p>",
+        "AgentCollaboratorSummary$createdAt": "<p>When the collaborator was created.</p>",
+        "AgentCollaboratorSummary$lastUpdatedAt": "<p>When the collaborator was last updated.</p>",
         "AgentKnowledgeBase$createdAt": "<p>The time at which the association between the agent and the knowledge base was created.</p>",
         "AgentKnowledgeBase$updatedAt": "<p>The time at which the association between the agent and the knowledge base was last updated.</p>",
         "AgentKnowledgeBaseSummary$updatedAt": "<p>The time at which the knowledge base associated with an agent was last updated.</p>",
@@ -962,6 +1031,16 @@
         "BedrockEmbeddingModelConfiguration$dimensions": "<p>The dimensions details for the vector configuration used on the Bedrock embeddings model.</p>"
       }
     },
+    "DisassociateAgentCollaboratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateAgentCollaboratorResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisassociateAgentKnowledgeBaseRequest": {
       "base": null,
       "refs": {
@@ -1022,14 +1101,17 @@
       "base": null,
       "refs": {
         "Agent$agentVersion": "<p>The version of the agent.</p>",
+        "AssociateAgentCollaboratorRequest$agentVersion": "<p>An agent version.</p>",
         "AssociateAgentKnowledgeBaseRequest$agentVersion": "<p>The version of the agent with which you want to associate the knowledge base.</p>",
         "CreateAgentActionGroupRequest$agentVersion": "<p>The version of the agent for which to create the action group.</p>",
         "CreateFlowResponse$version": "<p>The version of the flow. When you create a flow, the version created is the <code>DRAFT</code> version.</p>",
         "DeleteAgentActionGroupRequest$agentVersion": "<p>The version of the agent that the action group belongs to.</p>",
+        "DisassociateAgentCollaboratorRequest$agentVersion": "<p>The agent's version.</p>",
         "DisassociateAgentKnowledgeBaseRequest$agentVersion": "<p>The version of the agent from which to disassociate the knowledge base.</p>",
         "FlowSummary$version": "<p>The latest version of the flow.</p>",
         "GetFlowResponse$version": "<p>The version of the flow for which information was retrieved.</p>",
         "UpdateAgentActionGroupRequest$agentVersion": "<p>The unique identifier of the agent version for which to update the action group.</p>",
+        "UpdateAgentCollaboratorRequest$agentVersion": "<p>The agent's version.</p>",
         "UpdateAgentKnowledgeBaseRequest$agentVersion": "<p>The version of the agent associated with the knowledge base that you want to update.</p>",
         "UpdateFlowResponse$version": "<p>The version of the flow. When you update a flow, the version updated is the <code>DRAFT</code> version.</p>"
       }
@@ -1047,7 +1129,7 @@
       }
     },
     "EmbeddingDataType": {
-      "base": null,
+      "base": "<p>Bedrock models embedding data type. Can be either float32 or binary.</p>",
       "refs": {
         "BedrockEmbeddingModelConfiguration$embeddingDataType": "<p>The data type for the vectors when using a model to convert text into vector embeddings. The model must support the specified data type for vector embeddings. Floating-point (float32) is the default data type, and is supported by most models for vector embeddings. See <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-supported.html\">Supported embeddings models</a> for information on the available models and their vector data types.</p>"
       }
@@ -1598,6 +1680,16 @@
       "refs": {
       }
     },
+    "GetAgentCollaboratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAgentCollaboratorResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetAgentKnowledgeBaseRequest": {
       "base": null,
       "refs": {
@@ -1779,11 +1871,16 @@
         "AgentActionGroup$actionGroupId": "<p>The unique identifier of the action group.</p>",
         "AgentActionGroup$agentId": "<p>The unique identifier of the agent to which the action group belongs.</p>",
         "AgentAlias$agentId": "<p>The unique identifier of the agent.</p>",
+        "AgentCollaborator$agentId": "<p>The collaborator's agent ID.</p>",
+        "AgentCollaborator$collaboratorId": "<p>The collaborator's collaborator ID.</p>",
+        "AgentCollaboratorSummary$agentId": "<p>The collaborator's agent ID.</p>",
+        "AgentCollaboratorSummary$collaboratorId": "<p>The collaborator's ID.</p>",
         "AgentKnowledgeBase$agentId": "<p>The unique identifier of the agent with which the knowledge base is associated.</p>",
         "AgentKnowledgeBase$knowledgeBaseId": "<p>The unique identifier of the association between the agent and the knowledge base.</p>",
         "AgentKnowledgeBaseSummary$knowledgeBaseId": "<p>The unique identifier of the knowledge base associated with an agent.</p>",
         "AgentSummary$agentId": "<p>The unique identifier of the agent.</p>",
         "AgentVersion$agentId": "<p>The unique identifier of the agent that the version belongs to.</p>",
+        "AssociateAgentCollaboratorRequest$agentId": "<p>The agent's ID.</p>",
         "AssociateAgentKnowledgeBaseRequest$agentId": "<p>The unique identifier of the agent with which you want to associate the knowledge base.</p>",
         "AssociateAgentKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to associate with the agent.</p>",
         "CreateAgentActionGroupRequest$agentId": "<p>The unique identifier of the agent for which to create the action group.</p>",
@@ -1810,11 +1907,15 @@
         "DeleteKnowledgeBaseDocumentsRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that is connected to the data source.</p>",
         "DeleteKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to delete.</p>",
         "DeleteKnowledgeBaseResponse$knowledgeBaseId": "<p>The unique identifier of the knowledge base that was deleted.</p>",
+        "DisassociateAgentCollaboratorRequest$agentId": "<p>An agent ID.</p>",
+        "DisassociateAgentCollaboratorRequest$collaboratorId": "<p>The collaborator's ID.</p>",
         "DisassociateAgentKnowledgeBaseRequest$agentId": "<p>The unique identifier of the agent from which to disassociate the knowledge base.</p>",
         "DisassociateAgentKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to disassociate.</p>",
         "GetAgentActionGroupRequest$actionGroupId": "<p>The unique identifier of the action group for which to get information.</p>",
         "GetAgentActionGroupRequest$agentId": "<p>The unique identifier of the agent that the action group belongs to.</p>",
         "GetAgentAliasRequest$agentId": "<p>The unique identifier of the agent to which the alias to get information belongs.</p>",
+        "GetAgentCollaboratorRequest$agentId": "<p>The agent's ID.</p>",
+        "GetAgentCollaboratorRequest$collaboratorId": "<p>The collaborator's ID.</p>",
         "GetAgentKnowledgeBaseRequest$agentId": "<p>The unique identifier of the agent with which the knowledge base is associated.</p>",
         "GetAgentKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base associated with the agent.</p>",
         "GetAgentRequest$agentId": "<p>The unique identifier of the agent.</p>",
@@ -1841,6 +1942,7 @@
         "KnowledgeBaseSummary$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>",
         "ListAgentActionGroupsRequest$agentId": "<p>The unique identifier of the agent.</p>",
         "ListAgentAliasesRequest$agentId": "<p>The unique identifier of the agent.</p>",
+        "ListAgentCollaboratorsRequest$agentId": "<p>The agent's ID.</p>",
         "ListAgentKnowledgeBasesRequest$agentId": "<p>The unique identifier of the agent for which to return information about knowledge bases associated with it.</p>",
         "ListAgentVersionsRequest$agentId": "<p>The unique identifier of the agent.</p>",
         "ListDataSourcesRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base for which to return a list of information.</p>",
@@ -1858,6 +1960,8 @@
         "UpdateAgentActionGroupRequest$actionGroupId": "<p>The unique identifier of the action group.</p>",
         "UpdateAgentActionGroupRequest$agentId": "<p>The unique identifier of the agent for which to update the action group.</p>",
         "UpdateAgentAliasRequest$agentId": "<p>The unique identifier of the agent.</p>",
+        "UpdateAgentCollaboratorRequest$agentId": "<p>The agent's ID.</p>",
+        "UpdateAgentCollaboratorRequest$collaboratorId": "<p>The collaborator's ID.</p>",
         "UpdateAgentKnowledgeBaseRequest$agentId": "<p>The unique identifier of the agent associated with the knowledge base that you want to update.</p>",
         "UpdateAgentKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base that has been associated with an agent.</p>",
         "UpdateAgentRequest$agentId": "<p>The unique identifier of the agent.</p>",
@@ -2213,6 +2317,16 @@
       "refs": {
       }
     },
+    "ListAgentCollaboratorsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAgentCollaboratorsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListAgentKnowledgeBasesRequest": {
       "base": null,
       "refs": {
@@ -2350,6 +2464,7 @@
       "refs": {
         "ListAgentActionGroupsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListAgentAliasesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListAgentCollaboratorsRequest$maxResults": "<p>The maximum number of agent collaborators to return in one page of results.</p>",
         "ListAgentKnowledgeBasesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListAgentVersionsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListAgentsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
@@ -2493,6 +2608,7 @@
         "Agent$foundationModel": "<p>The foundation model used for orchestration by the agent.</p>",
         "AgentVersion$foundationModel": "<p>The foundation model that the version invokes.</p>",
         "CreateAgentRequest$foundationModel": "<p>The identifier for the model that you want to be used for orchestration by the agent you create.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
+        "PromptConfiguration$foundationModel": "<p>The agent's foundation model.</p>",
         "UpdateAgentRequest$foundationModel": "<p>The identifier for the model that you want to be used for orchestration by the agent you create.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>"
       }
     },
@@ -2552,9 +2668,12 @@
         "AgentActionGroup$actionGroupName": "<p>The name of the action group.</p>",
         "AgentAlias$agentAliasName": "<p>The name of the alias of the agent.</p>",
         "AgentAliasSummary$agentAliasName": "<p>The name of the alias.</p>",
+        "AgentCollaborator$collaboratorName": "<p>The collaborator's collaborator name.</p>",
+        "AgentCollaboratorSummary$collaboratorName": "<p>The collaborator's name.</p>",
         "AgentSummary$agentName": "<p>The name of the agent.</p>",
         "AgentVersion$agentName": "<p>The name of the agent that the version belongs to.</p>",
         "AgentVersionSummary$agentName": "<p>The name of the agent to which the version belongs.</p>",
+        "AssociateAgentCollaboratorRequest$collaboratorName": "<p>A name for the collaborator.</p>",
         "CreateAgentActionGroupRequest$actionGroupName": "<p>The name to give the action group.</p>",
         "CreateAgentAliasRequest$agentAliasName": "<p>The name of the alias.</p>",
         "CreateAgentRequest$agentName": "<p>A name for the agent that you create.</p>",
@@ -2572,6 +2691,7 @@
         "ParameterMap$key": null,
         "UpdateAgentActionGroupRequest$actionGroupName": "<p>Specifies a new name for the action group.</p>",
         "UpdateAgentAliasRequest$agentAliasName": "<p>Specifies a new name for the alias.</p>",
+        "UpdateAgentCollaboratorRequest$collaboratorName": "<p>The collaborator's name.</p>",
         "UpdateAgentRequest$agentName": "<p>Specifies a new name for the agent.</p>",
         "UpdateDataSourceRequest$name": "<p>Specifies a new name for the data source.</p>",
         "UpdateFlowAliasRequest$name": "<p>The name of the alias.</p>",
@@ -2586,6 +2706,8 @@
         "ListAgentActionGroupsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListAgentAliasesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListAgentAliasesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListAgentCollaboratorsRequest$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "ListAgentCollaboratorsResponse$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "ListAgentKnowledgeBasesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListAgentKnowledgeBasesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListAgentVersionsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
@@ -3137,8 +3259,17 @@
         "RedisEnterpriseCloudConfiguration$vectorIndexName": "<p>The name of the vector index.</p>"
       }
     },
+    "RelayConversationHistory": {
+      "base": null,
+      "refs": {
+        "AgentCollaborator$relayConversationHistory": "<p>The collaborator's relay conversation history.</p>",
+        "AgentCollaboratorSummary$relayConversationHistory": "<p>The collaborator's relay conversation history.</p>",
+        "AssociateAgentCollaboratorRequest$relayConversationHistory": "<p>A relay conversation history for the collaborator.</p>",
+        "UpdateAgentCollaboratorRequest$relayConversationHistory": "<p>A relay conversation history for the collaborator.</p>"
+      }
+    },
     "RequireConfirmation": {
-      "base": "<p>ENUM to check if action requires user confirmation</p>",
+      "base": "<p>Whether the action requires user confirmation.</p>",
       "refs": {
         "Function$requireConfirmation": "<p>Contains information if user confirmation is required to invoke the function.</p>"
       }
@@ -3728,6 +3859,16 @@
       "refs": {
       }
     },
+    "UpdateAgentCollaboratorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAgentCollaboratorResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateAgentKnowledgeBaseRequest": {
       "base": null,
       "refs": {
@@ -3856,6 +3997,8 @@
       "refs": {
         "AgentActionGroup$agentVersion": "<p>The version of the agent to which the action group belongs.</p>",
         "AgentAliasRoutingConfigurationListItem$agentVersion": "<p>The version of the agent with which the alias is associated.</p>",
+        "AgentCollaborator$agentVersion": "<p>The collaborator's agent version.</p>",
+        "AgentCollaboratorSummary$agentVersion": "<p>The collaborator's agent version.</p>",
         "AgentKnowledgeBase$agentVersion": "<p>The version of the agent with which the knowledge base is associated.</p>",
         "AgentSummary$latestAgentVersion": "<p>The latest version of the agent.</p>",
         "AgentVersionSummary$agentVersion": "<p>The version of the agent.</p>",
@@ -3863,10 +4006,12 @@
         "CreatePromptVersionResponse$version": "<p>The version of the prompt that was created. Versions are numbered incrementally, starting from 1.</p>",
         "FlowAliasRoutingConfigurationListItem$flowVersion": "<p>The version that the alias maps to.</p>",
         "GetAgentActionGroupRequest$agentVersion": "<p>The version of the agent that the action group belongs to.</p>",
+        "GetAgentCollaboratorRequest$agentVersion": "<p>The agent's version.</p>",
         "GetAgentKnowledgeBaseRequest$agentVersion": "<p>The version of the agent with which the knowledge base is associated.</p>",
         "GetPromptRequest$promptVersion": "<p>The version of the prompt about which you want to retrieve information. Omit this field to return information about the working draft of the prompt.</p>",
         "GetPromptResponse$version": "<p>The version of the prompt.</p>",
         "ListAgentActionGroupsRequest$agentVersion": "<p>The version of the agent.</p>",
+        "ListAgentCollaboratorsRequest$agentVersion": "<p>The agent's version.</p>",
         "ListAgentKnowledgeBasesRequest$agentVersion": "<p>The version of the agent for which to return information about knowledge bases associated with it.</p>",
         "PrepareAgentResponse$agentVersion": "<p>The version of the agent.</p>",
         "PromptSummary$version": "<p>The version of the prompt that this summary applies to.</p>",

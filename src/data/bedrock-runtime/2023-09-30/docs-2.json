@@ -2,16 +2,26 @@
   "version": "2.0",
   "service": "<p>Describes the API operations for running inference using Amazon Bedrock models.</p>",
   "operations": {
-    "ApplyGuardrail": "<p>The action to apply a guardrail.</p>",
+    "ApplyGuardrail": "<p>The action to apply a guardrail.</p> <p>For troubleshooting some of the common errors you might encounter when using the <code>ApplyGuardrail</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "Converse": "<p>Sends messages to the specified Amazon Bedrock model. <code>Converse</code> provides a consistent interface that works with all models that support messages. This allows you to write code once and use it with different models. If a model has unique inference parameters, you can also pass those unique parameters to the model.</p> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>You can submit a prompt by including it in the <code>messages</code> field, specifying the <code>modelId</code> of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.</p> <p>You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the <code>promptVariables</code> field. You can append more messages to the prompt by using the <code>messages</code> field. If you use a prompt from Prompt management, you can't include the following fields in the request: <code>additionalModelRequestFields</code>, <code>inferenceConfig</code>, <code>system</code>, or <code>toolConfig</code>. Instead, these fields must be defined through Prompt management. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html\">Use a prompt from Prompt management</a>.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Converse API examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action. </p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the base inference actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html\">InvokeModel</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html\">InvokeModelWithResponseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>Converse</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "ConverseStream": "<p>Sends messages to the specified Amazon Bedrock model and returns the response in a stream. <code>ConverseStream</code> provides a consistent API that works with all Amazon Bedrock models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model. </p> <p>To find out if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>ConverseStream</code>.</p> </note> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>You can submit a prompt by including it in the <code>messages</code> field, specifying the <code>modelId</code> of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.</p> <p>You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the <code>promptVariables</code> field. You can append more messages to the prompt by using the <code>messages</code> field. If you use a prompt from Prompt management, you can't include the following fields in the request: <code>additionalModelRequestFields</code>, <code>inferenceConfig</code>, <code>system</code>, or <code>toolConfig</code>. Instead, these fields must be defined through Prompt management. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html\">Use a prompt from Prompt management</a>.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Conversation streaming example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModelWithResponseStream</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the base inference actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html\">InvokeModel</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html\">InvokeModelWithResponseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>ConverseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
+    "GetAsyncInvoke": "<p>Retrieve information about an asynchronous invocation.</p>",
     "InvokeModel": "<p>Invokes the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. You use model inference to generate text, images, and embeddings.</p> <p>For example code, see <i>Invoke model code examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModel</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
-    "InvokeModelWithResponseStream": "<p>Invoke the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. The response is returned in a stream.</p> <p>To see if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>For example code, see <i>Invoke model with streaming code example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action. </p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModelWithResponseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>"
+    "InvokeModelWithResponseStream": "<p>Invoke the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. The response is returned in a stream.</p> <p>To see if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>For example code, see <i>Invoke model with streaming code example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permissions to perform the <code>bedrock:InvokeModelWithResponseStream</code> action. </p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModelWithResponseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
+    "ListAsyncInvokes": "<p>Lists asynchronous invocations.</p>",
+    "StartAsyncInvoke": "<p>Starts an asynchronous invocation.</p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>The request is denied because you do not have sufficient permissions to perform the requested action. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-access-denied\">AccessDeniedException</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeS3OutputDataConfig$bucketOwner": "<p>If the bucket belongs to another AWS account, specify that account's ID.</p>",
+        "S3Location$bucketOwner": "<p>If the bucket belongs to another AWS account, specify that account's ID.</p>"
       }
     },
     "AnyToolChoice": {
@@ -30,6 +40,68 @@
       "refs": {
       }
     },
+    "AsyncInvokeArn": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$modelArn": "<p>The invoked model's ARN.</p>",
+        "GetAsyncInvokeResponse$modelArn": "<p>The invocation's model ARN.</p>"
+      }
+    },
+    "AsyncInvokeIdempotencyToken": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$clientRequestToken": "<p>The invocation's idempotency token.</p>",
+        "GetAsyncInvokeResponse$clientRequestToken": "<p>The invocation's idempotency token.</p>",
+        "StartAsyncInvokeRequest$clientRequestToken": "<p>Specify idempotency token to ensure that requests are not duplicated.</p>"
+      }
+    },
+    "AsyncInvokeIdentifier": {
+      "base": null,
+      "refs": {
+        "StartAsyncInvokeRequest$modelId": "<p>The model to invoke.</p>"
+      }
+    },
+    "AsyncInvokeMessage": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$failureMessage": "<p>An error message.</p>",
+        "GetAsyncInvokeResponse$failureMessage": "<p>An error message.</p>"
+      }
+    },
+    "AsyncInvokeOutputDataConfig": {
+      "base": "<p>Asynchronous invocation output data settings.</p>",
+      "refs": {
+        "AsyncInvokeSummary$outputDataConfig": "<p>The invocation's output data settings.</p>",
+        "GetAsyncInvokeResponse$outputDataConfig": "<p>Output data settings.</p>",
+        "StartAsyncInvokeRequest$outputDataConfig": "<p>Where to store the output.</p>"
+      }
+    },
+    "AsyncInvokeS3OutputDataConfig": {
+      "base": "<p>Asynchronous invocation output data settings.</p>",
+      "refs": {
+        "AsyncInvokeOutputDataConfig$s3OutputDataConfig": "<p>A storage location for the output data in an S3 bucket</p>"
+      }
+    },
+    "AsyncInvokeStatus": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$status": "<p>The invocation's status.</p>",
+        "GetAsyncInvokeResponse$status": "<p>The invocation's status.</p>",
+        "ListAsyncInvokesRequest$statusEquals": "<p>Filter invocations by status.</p>"
+      }
+    },
+    "AsyncInvokeSummaries": {
+      "base": null,
+      "refs": {
+        "ListAsyncInvokesResponse$asyncInvokeSummaries": "<p>A list of invocation summaries.</p>"
+      }
+    },
+    "AsyncInvokeSummary": {
+      "base": "<p>A summary of an asynchronous invocation.</p>",
+      "refs": {
+        "AsyncInvokeSummaries$member": null
+      }
+    },
     "AutoToolChoice": {
       "base": "<p>The Model automatically decides if a tool should be called or whether to generate text instead. For example, <code>{\"auto\" : {}}</code>.</p>",
       "refs": {
@@ -42,6 +114,11 @@
         "InvokeModelRequest$body": "<p>The prompt and inference parameters in the format specified in the <code>contentType</code> in the header. You must provide the body in JSON format. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html\">Run inference</a> in the Bedrock User Guide.</p>",
         "InvokeModelResponse$body": "<p>Inference response from the model in the format specified in the <code>contentType</code> header. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>.</p>",
         "InvokeModelWithResponseStreamRequest$body": "<p>The prompt and inference parameters in the format specified in the <code>contentType</code> in the header. You must provide the body in JSON format. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html\">Run inference</a> in the Bedrock User Guide.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Error occurred because of a conflict while performing an operation.</p>",
+      "refs": {
       }
     },
     "ContentBlock": {
@@ -227,6 +304,16 @@
       "base": null,
       "refs": {
         "DocumentSource$bytes": "<p>The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.</p>"
+      }
+    },
+    "GetAsyncInvokeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAsyncInvokeResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GuardrailAction": {
@@ -724,6 +811,15 @@
         "ResponseStream$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
       }
     },
+    "InvocationArn": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$invocationArn": "<p>The invocation's ARN.</p>",
+        "GetAsyncInvokeRequest$invocationArn": "<p>The invocation's ARN.</p>",
+        "GetAsyncInvokeResponse$invocationArn": "<p>The invocation's ARN.</p>",
+        "StartAsyncInvokeResponse$invocationArn": "<p>The ARN of the invocation.</p>"
+      }
+    },
     "InvokeModelIdentifier": {
       "base": null,
       "refs": {
@@ -751,11 +847,33 @@
       "refs": {
       }
     },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeS3OutputDataConfig$kmsKeyId": "<p>A KMS encryption key ID.</p>"
+      }
+    },
+    "ListAsyncInvokesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAsyncInvokesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
         "ConverseMetrics$latencyMs": "<p>The latency of the call to <code>Converse</code>, in milliseconds. </p>",
         "ConverseStreamMetrics$latencyMs": "<p>The latency for the streaming request, in milliseconds.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListAsyncInvokesRequest$maxResults": "<p>The maximum number of invocations to return in one page of results.</p>"
       }
     },
     "Message": {
@@ -800,6 +918,12 @@
       "refs": {
       }
     },
+    "ModelInputPayload": {
+      "base": null,
+      "refs": {
+        "StartAsyncInvokeRequest$modelInput": "<p>Input to send to the model.</p>"
+      }
+    },
     "ModelNotReadyException": {
       "base": "<p>The model specified in the request is not ready to serve inference requests. The AWS SDK will automatically retry the operation up to 5 times. For information about configuring automatic retries, see <a href=\"https://docs.aws.amazon.com/sdkref/latest/guide/feature-retry-behavior.html\">Retry behavior</a> in the <i>AWS SDKs and Tools</i> reference guide.</p>",
       "refs": {
@@ -828,6 +952,7 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "ConflictException$message": null,
         "InternalServerException$message": null,
         "ModelErrorException$message": null,
         "ModelErrorException$resourceName": "<p>The resource name.</p>",
@@ -856,6 +981,13 @@
         "ContentBlockDeltaEvent$contentBlockIndex": "<p>The block index for a content block delta event. </p>",
         "ContentBlockStartEvent$contentBlockIndex": "<p>The index for a content block start event.</p>",
         "ContentBlockStopEvent$contentBlockIndex": "<p>The index for a content block.</p>"
+      }
+    },
+    "PaginationToken": {
+      "base": null,
+      "refs": {
+        "ListAsyncInvokesRequest$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "ListAsyncInvokesResponse$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>"
       }
     },
     "PartBody": {
@@ -902,6 +1034,25 @@
         "PromptVariableMap$value": null
       }
     },
+    "RequestMetadata": {
+      "base": null,
+      "refs": {
+        "ConverseRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>",
+        "ConverseStreamRequest$requestMetadata": "<p>Key-value pairs that you can use to filter invocation logs.</p>"
+      }
+    },
+    "RequestMetadataKeyString": {
+      "base": null,
+      "refs": {
+        "RequestMetadata$key": null
+      }
+    },
+    "RequestMetadataValueString": {
+      "base": null,
+      "refs": {
+        "RequestMetadata$value": null
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource ARN was not found. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-resource-not-found\">ResourceNotFound</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
@@ -911,6 +1062,19 @@
       "base": "<p>Definition of content in the response stream.</p>",
       "refs": {
         "InvokeModelWithResponseStreamResponse$body": "<p>Inference response from the model in the format specified by the <code>contentType</code> header. To see the format and content of this field for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>.</p>"
+      }
+    },
+    "S3Location": {
+      "base": "<p>A storage location in an S3 bucket.</p>",
+      "refs": {
+        "VideoSource$s3Location": "<p>The location of a video object in an S3 bucket.</p>"
+      }
+    },
+    "S3Uri": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeS3OutputDataConfig$s3Uri": "<p>An object URI starting with <code>s3://</code>.</p>",
+        "S3Location$uri": "<p>An object URI starting with <code>s3://</code>.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -925,10 +1089,32 @@
         "ResponseStream$serviceUnavailableException": "<p>The service isn't available. Try again later.</p>"
       }
     },
+    "SortAsyncInvocationBy": {
+      "base": null,
+      "refs": {
+        "ListAsyncInvokesRequest$sortBy": "<p>How to sort the response.</p>"
+      }
+    },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "ListAsyncInvokesRequest$sortOrder": "<p>The sorting order for the response.</p>"
+      }
+    },
     "SpecificToolChoice": {
       "base": "<p>The model must request a specific tool. For example, <code>{\"tool\" : {\"name\" : \"Your tool name\"}}</code>.</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>",
       "refs": {
         "ToolChoice$tool": "<p>The Model must request the specified tool. Only supported by Anthropic Claude 3 models. </p>"
+      }
+    },
+    "StartAsyncInvokeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAsyncInvokeResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "StatusCode": {
@@ -980,6 +1166,30 @@
         "ConverseStreamRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>"
       }
     },
+    "Tag": {
+      "base": "<p>A tag.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$key": "<p>The tag's key.</p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "StartAsyncInvokeRequest$tags": "<p>Tags to apply to the invocation.</p>"
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$value": "<p>The tag's value.</p>"
+      }
+    },
     "TextCharactersGuarded": {
       "base": null,
       "refs": {
@@ -995,8 +1205,21 @@
     "ThrottlingException": {
       "base": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
-        "ConverseStreamOutput$throttlingException": "<p>The number of requests exceeds the limit. Resubmit your request later.</p>",
+        "ConverseStreamOutput$throttlingException": "<p>Your request was denied due to exceeding the account quotas for <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception\">ThrottlingException</a> in the Amazon Bedrock User Guide</p>",
         "ResponseStream$throttlingException": "<p>Your request was throttled because of service-wide limitations. Resubmit your request later or in a different region. You can also purchase <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> to increase the rate or number of tokens you can process.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AsyncInvokeSummary$submitTime": "<p>When the invocation was submitted.</p>",
+        "AsyncInvokeSummary$lastModifiedTime": "<p>When the invocation was last modified.</p>",
+        "AsyncInvokeSummary$endTime": "<p>When the invocation ended.</p>",
+        "GetAsyncInvokeResponse$submitTime": "<p>When the invocation request was submitted.</p>",
+        "GetAsyncInvokeResponse$lastModifiedTime": "<p>The invocation's last modified time.</p>",
+        "GetAsyncInvokeResponse$endTime": "<p>When the invocation ended.</p>",
+        "ListAsyncInvokesRequest$submitTimeAfter": "<p>Include invocations submitted after this time.</p>",
+        "ListAsyncInvokesRequest$submitTimeBefore": "<p>Include invocations submitted before this time.</p>"
       }
     },
     "TokenUsage": {
@@ -1037,10 +1260,10 @@
       }
     },
     "ToolConfiguration": {
-      "base": "<p>Configuration information for the tools that you pass to a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p> <note> <p>This field is only supported by Anthropic Claude 3, Cohere Command R, Cohere Command R+, and Mistral Large models.</p> </note>",
+      "base": "<p>Configuration information for the tools that you pass to a model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html\">Tool use (function calling)</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
-        "ConverseRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response. </p> <note> <p>This field is only supported by Anthropic Claude 3, Cohere Command R, Cohere Command R+, and Mistral Large models.</p> </note>",
-        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <note> <p>This field is only supported by Anthropic Claude 3 models.</p> </note>"
+        "ConverseRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response. </p> <p>For information about models that support tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>",
+        "ConverseStreamRequest$toolConfig": "<p>Configuration information for the tools that the model can use when generating a response.</p> <p>For information about models that support streaming tool use, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features\">Supported models and model features</a>.</p>"
       }
     },
     "ToolConfigurationToolsList": {
@@ -1130,8 +1353,33 @@
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
-        "ConverseStreamOutput$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>",
+        "ConverseStreamOutput$validationException": "<p>The input fails to satisfy the constraints specified by <i>Amazon Bedrock</i>. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error\">ValidationError</a> in the Amazon Bedrock User Guide</p>",
         "ResponseStream$validationException": "<p>Input validation failed. Check your request parameters and retry the request.</p>"
+      }
+    },
+    "VideoBlock": {
+      "base": "<p>A video block.</p>",
+      "refs": {
+        "ContentBlock$video": "<p>Video to include in the message. </p>",
+        "ToolResultContentBlock$video": "<p>A tool result that is video.</p>"
+      }
+    },
+    "VideoFormat": {
+      "base": null,
+      "refs": {
+        "VideoBlock$format": "<p>The block's format.</p>"
+      }
+    },
+    "VideoSource": {
+      "base": "<p>A video source. You can upload a smaller video as a base64-encoded string as long as the encoded file is less than 25MB. You can also transfer videos up to 1GB in size from an S3 bucket.</p>",
+      "refs": {
+        "VideoBlock$source": "<p>The block's source.</p>"
+      }
+    },
+    "VideoSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "VideoSource$bytes": "<p>Video content encoded in base64.</p>"
       }
     }
   }

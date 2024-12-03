@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QuickSight` - This release includes API needed to support for Unstructured Data in Q in QuickSight Q&A (IDC).
+* `Aws\DynamoDB` - This change adds support for global tables with multi-Region strong consistency (in preview). The UpdateTable API now supports a new attribute MultiRegionConsistency to set consistency when creating global tables. The DescribeTable output now optionally includes the MultiRegionConsistency attribute.
+* `Aws\QApps` - Add support for 11 new plugins as action cards to help automate repetitive tasks and improve productivity.
+* `Aws\Glue` - This release includes(1)Zero-ETL integration to ingest data from 3P SaaS and DynamoDB to Redshift/Redlake (2)new properties on Connections to enable reuse; new connection APIs for retrieve/preview metadata (3)support of CRUD operations for Multi-catalog (4)support of automatic statistics collections
+* `Aws\S3Tables` - Amazon S3 Tables deliver the first cloud object store with built-in open table format support, and the easiest way to store tabular data at scale.
+* `Aws\BedrockRuntime` - Added support for Async Invoke Operations Start, List and Get. Support for invocation logs with `requestMetadata` field in Converse, ConverseStream, Invoke and InvokeStream. Video content blocks in Converse/ConverseStream accept raw bytes or S3 URI.
+* `Aws\BedrockAgent` - Releasing SDK for Multi-Agent Collaboration.
+* `Aws\DSQL` - Add new API operations for Amazon Aurora DSQL. Amazon Aurora DSQL is a serverless, distributed SQL database with virtually unlimited scale, highest availability, and zero infrastructure management.
+* `Aws\Redshift` - Adds support for Amazon Redshift RegisterNamespace and DeregisterNamespace APIs to share data to AWS Glue Data Catalog.
+* `Aws\S3` - Amazon S3 Metadata stores object metadata in read-only, fully managed Apache Iceberg metadata tables that you can query. You can create metadata table configurations for S3 general purpose buckets.
+* `Aws\QBusiness` - Amazon Q Business now supports customization options for your web experience, 11 new Plugins, and QuickSight support. Amazon Q index allows software providers to enrich their native generative AI experiences with their customer's enterprise knowledge and user context spanning multiple applications.
+* `Aws\BedrockAgentRuntime` - Releasing SDK for multi agent collaboration
+* `Aws\Bedrock` - Tagging support for Async Invoke resources. Added support for Distillation in CreateModelCustomizationJob API. Support for videoDataDeliveryEnabled flag in invocation logging.
+* `Aws\Athena` - Add FEDERATED type to CreateDataCatalog. This creates Athena Data Catalog, AWS Lambda connector, and AWS Glue connection. Create/DeleteDataCatalog returns DataCatalog. Add Status, ConnectionType, and Error to DataCatalog and DataCatalogSummary. Add DeleteCatalogOnly to delete Athena Catalog only.
+* `Aws\RedshiftServerless` - Adds support for the ListManagedWorkgroups API to get an overview of existing managed workgroups.
+* `Aws\LakeFormation` - This release added two new LakeFormation Permissions (CREATE_CATALOG, SUPER_USER) and added Id field for CatalogResource. It also added new conditon and expression field.
+* `Aws\DataZone` - Adds support for Connections, ProjectProfiles, and JobRuns APIs. Supports the new Lineage feature at GA. Adjusts optionality of a parameter for DataSource and SubscriptionTarget APIs which may adjust types in some clients.
+* `Aws\CloudWatch` - Support for configuring AiOps investigation as alarm action
+
 ## 3.332.2 - 2024-12-03
 
 * `Aws\BedrockRuntime` - Add an API parameter that allows customers to set performance configuration for invoking a model.

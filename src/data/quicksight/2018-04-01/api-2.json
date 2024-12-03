@@ -704,6 +704,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteDefaultQBusinessApplication":{
+      "name":"DeleteDefaultQBusinessApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"DeleteDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"DeleteDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DeleteFolder":{
       "name":"DeleteFolder",
       "http":{
@@ -1447,6 +1463,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeDefaultQBusinessApplication":{
+      "name":"DescribeDefaultQBusinessApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"DescribeDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"DescribeDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeFolder":{
       "name":"DescribeFolder",
       "http":{
@@ -1626,6 +1658,23 @@
       },
       "input":{"shape":"DescribeQPersonalizationConfigurationRequest"},
       "output":{"shape":"DescribeQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeQuickSightQSearchConfiguration":{
+      "name":"DescribeQuickSightQSearchConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+      },
+      "input":{"shape":"DescribeQuickSightQSearchConfigurationRequest"},
+      "output":{"shape":"DescribeQuickSightQSearchConfigurationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
@@ -1921,6 +1970,26 @@
       },
       "input":{"shape":"GenerateEmbedUrlForRegisteredUserRequest"},
       "output":{"shape":"GenerateEmbedUrlForRegisteredUserResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"QuickSightUserNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "GenerateEmbedUrlForRegisteredUserWithIdentity":{
+      "name":"GenerateEmbedUrlForRegisteredUserWithIdentity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/registered-user-with-identity"
+      },
+      "input":{"shape":"GenerateEmbedUrlForRegisteredUserWithIdentityRequest"},
+      "output":{"shape":"GenerateEmbedUrlForRegisteredUserWithIdentityResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterValueException"},
@@ -2563,6 +2632,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "PredictQAResults":{
+      "name":"PredictQAResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/qa/predict"
+      },
+      "input":{"shape":"PredictQAResultsRequest"},
+      "output":{"shape":"PredictQAResultsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "PutDataSetRefreshProperties":{
       "name":"PutDataSetRefreshProperties",
       "http":{
@@ -2922,6 +3006,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateApplicationWithTokenExchangeGrant":{
+      "name":"UpdateApplicationWithTokenExchangeGrant",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/application-with-token-exchange-grant"
+      },
+      "input":{"shape":"UpdateApplicationWithTokenExchangeGrantRequest"},
+      "output":{"shape":"UpdateApplicationWithTokenExchangeGrantResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateBrand":{
       "name":"UpdateBrand",
       "http":{
@@ -3157,6 +3259,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateDefaultQBusinessApplication":{
+      "name":"UpdateDefaultQBusinessApplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"UpdateDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"UpdateDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateFolder":{
       "name":"UpdateFolder",
       "http":{
@@ -3311,6 +3430,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "UpdateQuickSightQSearchConfiguration":{
+      "name":"UpdateQuickSightQSearchConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+      },
+      "input":{"shape":"UpdateQuickSightQSearchConfigurationRequest"},
+      "output":{"shape":"UpdateQuickSightQSearchConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "UpdateRefreshSchedule":{
@@ -7906,6 +8042,19 @@
         "ExportHiddenFieldsOption":{"shape":"ExportHiddenFieldsOption"}
       }
     },
+    "DashboardVisualResult":{
+      "type":"structure",
+      "members":{
+        "DashboardId":{"shape":"ShortRestrictiveResourceId"},
+        "DashboardName":{"shape":"DashboardName"},
+        "SheetId":{"shape":"ShortRestrictiveResourceId"},
+        "SheetName":{"shape":"SheetName"},
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "VisualTitle":{"shape":"VisualTitle"},
+        "VisualSubtitle":{"shape":"VisualSubtitle"},
+        "DashboardUrl":{"shape":"QAUrl"}
+      }
+    },
     "DashboardsQAStatus":{
       "type":"string",
       "enum":[
@@ -9213,6 +9362,32 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "DataSourceId":{"shape":"ResourceId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DeleteDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "DeleteDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -10675,6 +10850,33 @@
         }
       }
     },
+    "DescribeDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "DescribeDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "ApplicationId":{"shape":"String"}
+      }
+    },
     "DescribeFolderPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -11049,6 +11251,28 @@
       "type":"structure",
       "members":{
         "PersonalizationMode":{"shape":"PersonalizationMode"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "QSearchStatus":{"shape":"QSearchStatus"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -12863,6 +13087,60 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "ExperienceConfiguration":{"shape":"RegisteredUserEmbeddingExperienceConfiguration"},
+        "AllowedDomains":{"shape":"StringList"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "GeneratedAnswerResult":{
+      "type":"structure",
+      "members":{
+        "QuestionText":{"shape":"QAQueryText"},
+        "AnswerStatus":{"shape":"GeneratedAnswerStatus"},
+        "TopicId":{"shape":"TopicId"},
+        "TopicName":{"shape":"ResourceName"},
+        "Restatement":{"shape":"QAQueryText"},
+        "QuestionId":{"shape":"QuestionId"},
+        "AnswerId":{"shape":"AnswerId"},
+        "QuestionUrl":{"shape":"QAUrl"}
+      }
+    },
+    "GeneratedAnswerStatus":{
+      "type":"string",
+      "enum":[
+        "ANSWER_GENERATED",
+        "ANSWER_RETRIEVED",
+        "ANSWER_DOWNGRADE"
+      ]
+    },
     "GeoSpatialColumnGroup":{
       "type":"structure",
       "required":[
@@ -13975,6 +14253,20 @@
         "RECURSE",
         "ONE_LEVEL",
         "NONE"
+      ]
+    },
+    "IncludeGeneratedAnswer":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "IncludeQuickSightQIndex":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
       ]
     },
     "IncrementalRefresh":{
@@ -16317,6 +16609,11 @@
       "max":100,
       "min":1
     },
+    "MaxTopicsToConsider":{
+      "type":"integer",
+      "max":4,
+      "min":1
+    },
     "MaximumLabelType":{
       "type":"structure",
       "members":{
@@ -17752,6 +18049,36 @@
       "max":10,
       "min":1
     },
+    "PredictQAResultsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "QueryText"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "QueryText":{"shape":"QAQueryText"},
+        "IncludeQuickSightQIndex":{"shape":"IncludeQuickSightQIndex"},
+        "IncludeGeneratedAnswer":{"shape":"IncludeGeneratedAnswer"},
+        "MaxTopicsToConsider":{"shape":"MaxTopicsToConsider"}
+      }
+    },
+    "PredictQAResultsResponse":{
+      "type":"structure",
+      "members":{
+        "PrimaryResult":{"shape":"QAResult"},
+        "AdditionalResults":{"shape":"QAResults"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "PredictionInterval":{
       "type":"integer",
       "max":95,
@@ -17872,6 +18199,40 @@
         }
       }
     },
+    "QAQueryText":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
+    "QAResult":{
+      "type":"structure",
+      "members":{
+        "ResultType":{"shape":"QAResultType"},
+        "DashboardVisual":{"shape":"DashboardVisualResult"},
+        "GeneratedAnswer":{"shape":"GeneratedAnswerResult"}
+      }
+    },
+    "QAResultType":{
+      "type":"string",
+      "enum":[
+        "DASHBOARD_VISUAL",
+        "GENERATED_ANSWER",
+        "NO_ANSWER"
+      ]
+    },
+    "QAResults":{
+      "type":"list",
+      "member":{"shape":"QAResult"}
+    },
+    "QAUrl":{"type":"string"},
+    "QSearchStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Query":{
       "type":"string",
       "max":256,
@@ -17889,6 +18250,11 @@
       "members":{
         "QueryExecutionMode":{"shape":"QueryExecutionMode"}
       }
+    },
+    "QuestionId":{
+      "type":"string",
+      "max":64,
+      "pattern":"^[a-zA-Z0-9-]+$"
     },
     "QueueInfo":{
       "type":"structure",
@@ -19316,7 +19682,10 @@
     },
     "ServiceType":{
       "type":"string",
-      "enum":["REDSHIFT"]
+      "enum":[
+        "REDSHIFT",
+        "QBUSINESS"
+      ]
     },
     "SessionLifetimeInMinutes":{
       "type":"long",
@@ -22331,6 +22700,35 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "UpdateApplicationWithTokenExchangeGrantRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "UpdateApplicationWithTokenExchangeGrantResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "UpdateBrandAssignmentRequest":{
       "type":"structure",
       "required":[
@@ -22760,6 +23158,36 @@
         }
       }
     },
+    "UpdateDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "ApplicationId":{"shape":"LimitedString"}
+      }
+    },
+    "UpdateDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateFolderPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -23029,6 +23457,32 @@
       "type":"structure",
       "members":{
         "PersonalizationMode":{"shape":"PersonalizationMode"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "QSearchStatus"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "QSearchStatus":{"shape":"QSearchStatus"}
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "QSearchStatus":{"shape":"QSearchStatus"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -23897,12 +24351,22 @@
         "FRAGMENT"
       ]
     },
+    "VisualSubtitle":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "VisualSubtitleLabelOptions":{
       "type":"structure",
       "members":{
         "Visibility":{"shape":"Visibility"},
         "FormatText":{"shape":"LongFormatText"}
       }
+    },
+    "VisualTitle":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "VisualTitleLabelOptions":{
       "type":"structure",

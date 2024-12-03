@@ -672,6 +672,11 @@
       },
       "exception":true
     },
+    "ActionIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -1960,7 +1965,18 @@
         "SALESFORCE",
         "JIRA",
         "ZENDESK",
-        "CUSTOM"
+        "CUSTOM",
+        "ASANA",
+        "ATLASSIAN_CONFLUENCE",
+        "GOOGLE_CALENDAR",
+        "JIRA_CLOUD",
+        "MICROSOFT_EXCHANGE",
+        "MICROSOFT_TEAMS",
+        "PAGERDUTY_ADVANCE",
+        "SALESFORCE_CRM",
+        "SERVICENOW_NOW_PLATFORM",
+        "SMARTSHEET",
+        "ZENDESK_SUITE"
       ]
     },
     "PredictAppDefinition":{
@@ -2094,7 +2110,8 @@
         "type":{"shape":"CardType"},
         "prompt":{"shape":"Prompt"},
         "pluginType":{"shape":"PluginType"},
-        "pluginId":{"shape":"String"}
+        "pluginId":{"shape":"String"},
+        "actionIdentifier":{"shape":"ActionIdentifier"}
       }
     },
     "QPluginCardInput":{
@@ -2111,7 +2128,8 @@
         "id":{"shape":"UUID"},
         "type":{"shape":"CardType"},
         "prompt":{"shape":"Prompt"},
-        "pluginId":{"shape":"PluginId"}
+        "pluginId":{"shape":"PluginId"},
+        "actionIdentifier":{"shape":"ActionIdentifier"}
       }
     },
     "QQueryCard":{

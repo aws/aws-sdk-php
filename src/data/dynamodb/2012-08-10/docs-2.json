@@ -1059,6 +1059,7 @@
         "ProvisionedThroughputExceededException$message": "<p>You exceeded your maximum allowed provisioned throughput.</p>",
         "ReplicaAlreadyExistsException$message": null,
         "ReplicaNotFoundException$message": null,
+        "ReplicatedWriteConflictException$message": null,
         "RequestLimitExceeded$message": null,
         "ResourceInUseException$message": "<p>The resource which is being attempted to be changed is in use.</p>",
         "ResourceNotFoundException$message": "<p>The resource which is being requested does not exist.</p>",
@@ -2015,6 +2016,13 @@
         "AttributeValue$M": "<p>An attribute of type Map. For example:</p> <p> <code>\"M\": {\"Name\": {\"S\": \"Joe\"}, \"Age\": {\"N\": \"35\"}}</code> </p>"
       }
     },
+    "MultiRegionConsistency": {
+      "base": null,
+      "refs": {
+        "TableDescription$MultiRegionConsistency": "<p>Indicates one of the following consistency modes for a global table:</p> <ul> <li> <p> <code>EVENTUAL</code>: Indicates that the global table is configured for multi-Region eventual consistency.</p> </li> <li> <p> <code>STRONG</code>: Indicates that the global table is configured for multi-Region strong consistency (preview).</p> <note> <p>Multi-Region strong consistency (MRSC) is a new DynamoDB global tables capability currently available in preview mode. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt\">Global tables multi-Region strong consistency</a>.</p> </note> </li> </ul> <p>If you don't specify this field, the global table consistency mode defaults to <code>EVENTUAL</code>.</p>",
+        "UpdateTableInput$MultiRegionConsistency": "<p>Specifies the consistency mode for a new global table. This parameter is only valid when you create a global table by specifying one or more <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create\">Create</a> actions in the <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates\">ReplicaUpdates</a> action list.</p> <p>You can specify one of the following consistency modes:</p> <ul> <li> <p> <code>EVENTUAL</code>: Configures a new global table for multi-Region eventual consistency. This is the default consistency mode for global tables.</p> </li> <li> <p> <code>STRONG</code>: Configures a new global table for multi-Region strong consistency (preview).</p> <note> <p>Multi-Region strong consistency (MRSC) is a new DynamoDB global tables capability currently available in preview mode. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt\">Global tables multi-Region strong consistency</a>.</p> </note> </li> </ul> <p>If you don't specify this parameter, the global table consistency mode defaults to <code>EVENTUAL</code>.</p>"
+      }
+    },
     "NextTokenString": {
       "base": null,
       "refs": {
@@ -2538,6 +2546,11 @@
       "base": null,
       "refs": {
         "UpdateGlobalTableInput$ReplicaUpdates": "<p>A list of Regions that should be added or removed from the global table.</p>"
+      }
+    },
+    "ReplicatedWriteConflictException": {
+      "base": "<p>The request was rejected because one or more items in the request are being modified by a request in another Region. </p>",
+      "refs": {
       }
     },
     "ReplicationGroupUpdate": {

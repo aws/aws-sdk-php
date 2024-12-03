@@ -232,6 +232,12 @@
       },
       "union":true
     },
+    "AWSResourceARN":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent/[0-9a-zA-Z]{10}$"
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -325,11 +331,53 @@
       "type":"list",
       "member":{"shape":"AgentActionGroup"}
     },
+    "AgentAliasArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent-alias/[0-9a-zA-Z]{10}/[0-9a-zA-Z]{10}$"
+    },
     "AgentAliasId":{
       "type":"string",
       "max":10,
       "min":0,
       "pattern":"^[0-9a-zA-Z]+$"
+    },
+    "AgentCollaboratorInputPayload":{
+      "type":"structure",
+      "members":{
+        "returnControlResults":{"shape":"ReturnControlResults"},
+        "text":{"shape":"AgentCollaboratorPayloadString"},
+        "type":{"shape":"PayloadType"}
+      }
+    },
+    "AgentCollaboratorInvocationInput":{
+      "type":"structure",
+      "members":{
+        "agentCollaboratorAliasArn":{"shape":"AgentAliasArn"},
+        "agentCollaboratorName":{"shape":"String"},
+        "input":{"shape":"AgentCollaboratorInputPayload"}
+      }
+    },
+    "AgentCollaboratorInvocationOutput":{
+      "type":"structure",
+      "members":{
+        "agentCollaboratorAliasArn":{"shape":"AgentAliasArn"},
+        "agentCollaboratorName":{"shape":"String"},
+        "output":{"shape":"AgentCollaboratorOutputPayload"}
+      }
+    },
+    "AgentCollaboratorOutputPayload":{
+      "type":"structure",
+      "members":{
+        "returnControlPayload":{"shape":"ReturnControlPayload"},
+        "text":{"shape":"AgentCollaboratorPayloadString"},
+        "type":{"shape":"PayloadType"}
+      }
+    },
+    "AgentCollaboratorPayloadString":{
+      "type":"string",
+      "sensitive":true
     },
     "AgentId":{
       "type":"string",
@@ -362,7 +410,9 @@
       "members":{
         "actionGroup":{"shape":"String"},
         "actionInvocationType":{"shape":"ActionInvocationType"},
+        "agentId":{"shape":"String"},
         "apiPath":{"shape":"ApiPath"},
+        "collaboratorName":{"shape":"Name"},
         "httpMethod":{"shape":"String"},
         "parameters":{"shape":"ApiParameters"},
         "requestBody":{"shape":"ApiRequestBody"}
@@ -395,6 +445,7 @@
       "required":["actionGroup"],
       "members":{
         "actionGroup":{"shape":"String"},
+        "agentId":{"shape":"String"},
         "apiPath":{"shape":"ApiPath"},
         "confirmationState":{"shape":"ConfirmationState"},
         "httpMethod":{"shape":"String"},
@@ -502,6 +553,17 @@
         "mediaType":{"shape":"MimeType"}
       }
     },
+    "Caller":{
+      "type":"structure",
+      "members":{
+        "agentAliasArn":{"shape":"AgentAliasArn"}
+      },
+      "union":true
+    },
+    "CallerChain":{
+      "type":"list",
+      "member":{"shape":"Caller"}
+    },
     "Citation":{
       "type":"structure",
       "members":{
@@ -554,6 +616,18 @@
       },
       "exception":true
     },
+    "ContentBlock":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ContentBlocks":{
+      "type":"list",
+      "member":{"shape":"ContentBlock"}
+    },
     "ContentBody":{
       "type":"structure",
       "members":{
@@ -568,6 +642,19 @@
     "ContentType":{
       "type":"string",
       "pattern":"[a-z]{1,20}/.{1,20}"
+    },
+    "ConversationHistory":{
+      "type":"structure",
+      "members":{
+        "messages":{"shape":"Messages"}
+      }
+    },
+    "ConversationRole":{
+      "type":"string",
+      "enum":[
+        "user",
+        "assistant"
+      ]
     },
     "CreationMode":{
       "type":"string",
@@ -1049,6 +1136,8 @@
       "members":{
         "actionGroup":{"shape":"String"},
         "actionInvocationType":{"shape":"ActionInvocationType"},
+        "agentId":{"shape":"String"},
+        "collaboratorName":{"shape":"Name"},
         "function":{"shape":"String"},
         "parameters":{"shape":"FunctionParameters"}
       }
@@ -1070,6 +1159,7 @@
       "required":["actionGroup"],
       "members":{
         "actionGroup":{"shape":"String"},
+        "agentId":{"shape":"String"},
         "confirmationState":{"shape":"ConfirmationState"},
         "function":{"shape":"String"},
         "responseBody":{"shape":"ResponseBody"},
@@ -1586,6 +1676,7 @@
       "type":"structure",
       "members":{
         "actionGroupInvocationInput":{"shape":"ActionGroupInvocationInput"},
+        "agentCollaboratorInvocationInput":{"shape":"AgentCollaboratorInvocationInput"},
         "codeInterpreterInvocationInput":{"shape":"CodeInterpreterInvocationInput"},
         "invocationType":{"shape":"InvocationType"},
         "knowledgeBaseLookupInput":{"shape":"KnowledgeBaseLookupInput"},
@@ -1621,7 +1712,8 @@
         "ACTION_GROUP",
         "KNOWLEDGE_BASE",
         "FINISH",
-        "ACTION_GROUP_CODE_INTERPRETER"
+        "ACTION_GROUP_CODE_INTERPRETER",
+        "AGENT_COLLABORATOR"
       ]
     },
     "InvokeAgentRequest":{
@@ -1652,6 +1744,11 @@
           "locationName":"sessionId"
         },
         "sessionState":{"shape":"SessionState"},
+        "sourceArn":{
+          "shape":"AWSResourceARN",
+          "location":"header",
+          "locationName":"x-amz-source-arn"
+        },
         "streamingConfigurations":{"shape":"StreamingConfigurations"}
       }
     },
@@ -1946,6 +2043,21 @@
       "type":"string",
       "enum":["SESSION_SUMMARY"]
     },
+    "Message":{
+      "type":"structure",
+      "required":[
+        "content",
+        "role"
+      ],
+      "members":{
+        "content":{"shape":"ContentBlocks"},
+        "role":{"shape":"ConversationRole"}
+      }
+    },
+    "Messages":{
+      "type":"list",
+      "member":{"shape":"Message"}
+    },
     "Metadata":{
       "type":"structure",
       "members":{
@@ -2003,6 +2115,7 @@
     "ModelInvocationInput":{
       "type":"structure",
       "members":{
+        "foundationModel":{"shape":"ModelIdentifier"},
         "inferenceConfiguration":{"shape":"InferenceConfiguration"},
         "overrideLambda":{"shape":"LambdaArn"},
         "parserMode":{"shape":"CreationMode"},
@@ -2011,6 +2124,11 @@
         "traceId":{"shape":"TraceId"},
         "type":{"shape":"PromptType"}
       },
+      "sensitive":true
+    },
+    "Name":{
+      "type":"string",
+      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$",
       "sensitive":true
     },
     "NextToken":{
@@ -2051,6 +2169,7 @@
       "type":"structure",
       "members":{
         "actionGroupInvocationOutput":{"shape":"ActionGroupInvocationOutput"},
+        "agentCollaboratorInvocationOutput":{"shape":"AgentCollaboratorInvocationOutput"},
         "codeInterpreterInvocationOutput":{"shape":"CodeInterpreterInvocationOutput"},
         "finalResponse":{"shape":"FinalResponse"},
         "knowledgeBaseLookupOutput":{"shape":"KnowledgeBaseLookupOutput"},
@@ -2230,6 +2349,13 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "PayloadType":{
+      "type":"string",
+      "enum":[
+        "TEXT",
+        "RETURN_CONTROL"
+      ]
     },
     "PostProcessingModelInvocationOutput":{
       "type":"structure",
@@ -2898,6 +3024,33 @@
       "event":true,
       "sensitive":true
     },
+    "ReturnControlResults":{
+      "type":"structure",
+      "members":{
+        "invocationId":{"shape":"String"},
+        "returnControlInvocationResults":{"shape":"ReturnControlInvocationResults"}
+      }
+    },
+    "RoutingClassifierModelInvocationOutput":{
+      "type":"structure",
+      "members":{
+        "metadata":{"shape":"Metadata"},
+        "rawResponse":{"shape":"RawResponse"},
+        "traceId":{"shape":"TraceId"}
+      },
+      "sensitive":true
+    },
+    "RoutingClassifierTrace":{
+      "type":"structure",
+      "members":{
+        "invocationInput":{"shape":"InvocationInput"},
+        "modelInvocationInput":{"shape":"ModelInvocationInput"},
+        "modelInvocationOutput":{"shape":"RoutingClassifierModelInvocationOutput"},
+        "observation":{"shape":"Observation"}
+      },
+      "sensitive":true,
+      "union":true
+    },
     "S3BucketName":{
       "type":"string",
       "max":63,
@@ -2969,6 +3122,7 @@
     "SessionState":{
       "type":"structure",
       "members":{
+        "conversationHistory":{"shape":"ConversationHistory"},
         "files":{"shape":"InputFiles"},
         "invocationId":{"shape":"String"},
         "knowledgeBaseConfigurations":{"shape":"KnowledgeBaseConfigurations"},
@@ -3106,7 +3260,8 @@
         "guardrailTrace":{"shape":"GuardrailTrace"},
         "orchestrationTrace":{"shape":"OrchestrationTrace"},
         "postProcessingTrace":{"shape":"PostProcessingTrace"},
-        "preProcessingTrace":{"shape":"PreProcessingTrace"}
+        "preProcessingTrace":{"shape":"PreProcessingTrace"},
+        "routingClassifierTrace":{"shape":"RoutingClassifierTrace"}
       },
       "sensitive":true,
       "union":true
@@ -3126,6 +3281,8 @@
         "agentAliasId":{"shape":"AgentAliasId"},
         "agentId":{"shape":"AgentId"},
         "agentVersion":{"shape":"AgentVersion"},
+        "callerChain":{"shape":"CallerChain"},
+        "collaboratorName":{"shape":"Name"},
         "sessionId":{"shape":"SessionId"},
         "trace":{"shape":"Trace"}
       },
@@ -3136,6 +3293,7 @@
       "type":"string",
       "enum":[
         "ACTION_GROUP",
+        "AGENT_COLLABORATOR",
         "KNOWLEDGE_BASE",
         "FINISH",
         "ASK_USER",

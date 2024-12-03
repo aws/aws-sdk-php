@@ -39,6 +39,7 @@
     "DeleteDataSet": "<p>Deletes a dataset.</p>",
     "DeleteDataSetRefreshProperties": "<p>Deletes the dataset refresh properties of the dataset.</p>",
     "DeleteDataSource": "<p>Deletes the data source permanently. This operation breaks all the datasets that reference the deleted data source.</p>",
+    "DeleteDefaultQBusinessApplication": "<p>Deletes a linked Amazon Q Business application from an Amazon QuickSight account</p>",
     "DeleteFolder": "<p>Deletes an empty folder.</p>",
     "DeleteFolderMembership": "<p>Removes an asset, such as a dashboard, analysis, or dataset, from a folder.</p>",
     "DeleteGroup": "<p>Removes a user group from Amazon QuickSight. </p>",
@@ -82,6 +83,7 @@
     "DescribeDataSetRefreshProperties": "<p>Describes the refresh properties of a dataset.</p>",
     "DescribeDataSource": "<p>Describes a data source.</p>",
     "DescribeDataSourcePermissions": "<p>Describes the resource permissions for a data source.</p>",
+    "DescribeDefaultQBusinessApplication": "<p>Describes a Amazon Q Business application that is linked to an Amazon QuickSight account.</p>",
     "DescribeFolder": "<p>Describes a folder.</p>",
     "DescribeFolderPermissions": "<p>Describes permissions for a folder.</p>",
     "DescribeFolderResolvedPermissions": "<p>Describes the folder resolved permissions. Permissions consists of both folder direct permissions and the inherited permissions from the ancestor folders.</p>",
@@ -93,6 +95,7 @@
     "DescribeKeyRegistration": "<p>Describes all customer managed key registrations in a Amazon QuickSight account.</p>",
     "DescribeNamespace": "<p>Describes the current namespace.</p>",
     "DescribeQPersonalizationConfiguration": "<p>Describes a personalization configuration.</p>",
+    "DescribeQuickSightQSearchConfiguration": "<p>Describes the state of a Amazon QuickSight Q Search configuration.</p>",
     "DescribeRefreshSchedule": "<p>Provides a summary of a refresh schedule.</p>",
     "DescribeRoleCustomPermission": "<p>Describes all custom permissions that are mapped to a role.</p>",
     "DescribeTemplate": "<p>Describes a template's metadata.</p>",
@@ -110,6 +113,7 @@
     "DescribeVPCConnection": "<p>Describes a VPC connection.</p>",
     "GenerateEmbedUrlForAnonymousUser": "<p>Generates an embed URL that you can use to embed an Amazon QuickSight dashboard or visual in your website, without having to register any reader users. Before you use this action, make sure that you have configured the dashboards and permissions.</p> <p>The following rules apply to the generated URL:</p> <ul> <li> <p>It contains a temporary bearer token. It is valid for 5 minutes after it is generated. Once redeemed within this period, it cannot be re-used again.</p> </li> <li> <p>The URL validity period should not be confused with the actual session lifetime that can be customized using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GenerateEmbedUrlForAnonymousUser.html#QS-GenerateEmbedUrlForAnonymousUser-request-SessionLifetimeInMinutes\">SessionLifetimeInMinutes</a> </code> parameter. The resulting user session is valid for 15 minutes (minimum) to 10 hours (maximum). The default session duration is 10 hours.</p> </li> <li> <p>You are charged only when the URL is used or there is interaction with Amazon QuickSight.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedded Analytics</a> in the <i>Amazon QuickSight User Guide</i>.</p> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon QuickSight Developer Portal</a>.</p>",
     "GenerateEmbedUrlForRegisteredUser": "<p>Generates an embed URL that you can use to embed an Amazon QuickSight experience in your website. This action can be used for any type of user registered in an Amazon QuickSight account. Before you use this action, make sure that you have configured the relevant Amazon QuickSight resource and permissions.</p> <p>The following rules apply to the generated URL:</p> <ul> <li> <p>It contains a temporary bearer token. It is valid for 5 minutes after it is generated. Once redeemed within this period, it cannot be re-used again.</p> </li> <li> <p>The URL validity period should not be confused with the actual session lifetime that can be customized using the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GenerateEmbedUrlForRegisteredUser.html#QS-GenerateEmbedUrlForRegisteredUser-request-SessionLifetimeInMinutes\">SessionLifetimeInMinutes</a> </code> parameter.</p> <p>The resulting user session is valid for 15 minutes (minimum) to 10 hours (maximum). The default session duration is 10 hours.</p> </li> <li> <p>You are charged only when the URL is used or there is interaction with Amazon QuickSight.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedded Analytics</a> in the <i>Amazon QuickSight User Guide</i>.</p> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon QuickSight Developer Portal</a>.</p>",
+    "GenerateEmbedUrlForRegisteredUserWithIdentity": "<p>Generates an embed URL that you can use to embed an Amazon QuickSight experience in your website. This action can be used for any type of user that is registered in an Amazon QuickSight account that uses IAM Identity Center for authentication. This API requires <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overview.html#types-identity-enhanced-iam-role-sessions\">identity-enhanced IAM Role sessions</a> for the authenticated user that the API call is being made for.</p> <p>This API uses <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation.html\">trusted identity propagation</a> to ensure that an end user is authenticated and receives the embed URL that is specific to that user. The IAM Identity Center application that the user has logged into needs to have <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-using-customermanagedapps-specify-trusted-apps.html\">trusted Identity Propagation enabled for Amazon QuickSight</a> with the scope value set to <code>quicksight:read</code>. Before you use this action, make sure that you have configured the relevant Amazon QuickSight resource and permissions.</p>",
     "GetDashboardEmbedUrl": "<p>Generates a temporary session URL and authorization code(bearer token) that you can use to embed an Amazon QuickSight read-only dashboard in your website or application. Before you use this command, make sure that you have configured the dashboards and permissions. </p> <p>Currently, you can use <code>GetDashboardEmbedURL</code> only from the server, not from the user's browser. The following rules apply to the generated URL:</p> <ul> <li> <p>They must be used together.</p> </li> <li> <p>They can be used one time only.</p> </li> <li> <p>They are valid for 5 minutes after you run this command.</p> </li> <li> <p>You are charged only when the URL is used or there is interaction with Amazon QuickSight.</p> </li> <li> <p>The resulting user session is valid for 15 minutes (default) up to 10 hours (maximum). You can use the optional <code>SessionLifetimeInMinutes</code> parameter to customize session duration.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics-deprecated.html\">Embedding Analytics Using GetDashboardEmbedUrl</a> in the <i>Amazon QuickSight User Guide</i>.</p> <p>For more information about the high-level steps for embedding and for an interactive demo of the ways you can customize embedding, visit the <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-portal.html\">Amazon QuickSight Developer Portal</a>.</p>",
     "GetSessionEmbedUrl": "<p>Generates a session URL and authorization code that you can use to embed the Amazon Amazon QuickSight console in your web server code. Use <code>GetSessionEmbedUrl</code> where you want to provide an authoring portal that allows users to create data sources, datasets, analyses, and dashboards. The users who access an embedded Amazon QuickSight console need belong to the author or admin security cohort. If you want to restrict permissions to some of these features, add a custom permissions profile to the user with the <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateUser.html\">UpdateUser</a> </code> API operation. Use <code> <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_RegisterUser.html\">RegisterUser</a> </code> API operation to add a new user with a custom permission profile attached. For more information, see the following sections in the <i>Amazon QuickSight User Guide</i>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/embedded-analytics.html\">Embedding Analytics</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/customizing-permissions-to-the-quicksight-console.html\">Customizing Access to the Amazon QuickSight Console</a> </p> </li> </ul>",
     "ListAnalyses": "<p>Lists Amazon QuickSight analyses that exist in the specified Amazon Web Services account.</p>",
@@ -146,6 +150,7 @@
     "ListUserGroups": "<p>Lists the Amazon QuickSight groups that an Amazon QuickSight user is a member of.</p>",
     "ListUsers": "<p>Returns a list of all of the Amazon QuickSight users belonging to this account. </p>",
     "ListVPCConnections": "<p>Lists all of the VPC connections in the current set Amazon Web Services Region of an Amazon Web Services account.</p>",
+    "PredictQAResults": "<p>Predicts existing visuals or generates new visuals to answer a given query.</p>",
     "PutDataSetRefreshProperties": "<p>Creates or updates the dataset refresh properties for the dataset.</p>",
     "RegisterUser": "<p>Creates an Amazon QuickSight user whose identity is associated with the Identity and Access Management (IAM) identity or role specified in the request. When you register a new user from the Amazon QuickSight API, Amazon QuickSight generates a registration URL. The user accesses this registration URL to create their account. Amazon QuickSight doesn't send a registration email to users who are registered from the Amazon QuickSight API. If you want new users to receive a registration email, then add those users in the Amazon QuickSight console. For more information on registering a new user in the Amazon QuickSight console, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/managing-users.html#inviting-users\"> Inviting users to access Amazon QuickSight</a>.</p>",
     "RestoreAnalysis": "<p>Restores an analysis.</p>",
@@ -166,6 +171,7 @@
     "UpdateAccountSettings": "<p>Updates the Amazon QuickSight settings in your Amazon Web Services account.</p>",
     "UpdateAnalysis": "<p>Updates an analysis in Amazon QuickSight</p>",
     "UpdateAnalysisPermissions": "<p>Updates the read and write permissions for an analysis.</p>",
+    "UpdateApplicationWithTokenExchangeGrant": "<p>Updates an Amazon QuickSight application with a token exchange grant. This operation only supports Amazon QuickSight applications that are registered with IAM Identity Center.</p>",
     "UpdateBrand": "<p>Updates a brand.</p>",
     "UpdateBrandAssignment": "<p>Updates a brand assignment.</p>",
     "UpdateBrandPublishedVersion": "<p>Updates the published version of a brand.</p>",
@@ -179,6 +185,7 @@
     "UpdateDataSetPermissions": "<p>Updates the permissions on a dataset.</p> <p>The permissions resource is <code>arn:aws:quicksight:region:aws-account-id:dataset/data-set-id</code>.</p>",
     "UpdateDataSource": "<p>Updates a data source.</p>",
     "UpdateDataSourcePermissions": "<p>Updates the permissions to a data source.</p>",
+    "UpdateDefaultQBusinessApplication": "<p>Updates a Amazon Q Business application that is linked to a Amazon QuickSight account.</p>",
     "UpdateFolder": "<p>Updates the name of a folder.</p>",
     "UpdateFolderPermissions": "<p>Updates permissions of a folder.</p>",
     "UpdateGroup": "<p>Changes a group description. </p>",
@@ -188,6 +195,7 @@
     "UpdateKeyRegistration": "<p>Updates a customer managed key in a Amazon QuickSight account.</p>",
     "UpdatePublicSharingSettings": "<p>Use the <code>UpdatePublicSharingSettings</code> operation to turn on or turn off the public sharing settings of an Amazon QuickSight dashboard.</p> <p>To use this operation, turn on session capacity pricing for your Amazon QuickSight account.</p> <p>Before you can turn on public sharing on your account, make sure to give public sharing permissions to an administrative user in the Identity and Access Management (IAM) console. For more information on using IAM with Amazon QuickSight, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/security_iam_service-with-iam.html\">Using Amazon QuickSight with IAM</a> in the <i>Amazon QuickSight User Guide</i>.</p>",
     "UpdateQPersonalizationConfiguration": "<p>Updates a personalization configuration.</p>",
+    "UpdateQuickSightQSearchConfiguration": "<p>Updates the state of a Amazon QuickSight Q Search configuration.</p>",
     "UpdateRefreshSchedule": "<p>Updates a refresh schedule for a dataset.</p>",
     "UpdateRoleCustomPermission": "<p>Updates the custom permissions that are associated with a role.</p>",
     "UpdateSPICECapacityConfiguration": "<p>Updates the SPICE capacity configuration for a Amazon QuickSight account.</p>",
@@ -585,6 +593,7 @@
       "refs": {
         "AnswerIds$member": null,
         "CreateTopicReviewedAnswer$AnswerId": "<p>The answer ID for the <code>CreateTopicReviewedAnswer</code>.</p>",
+        "GeneratedAnswerResult$AnswerId": "<p>The ID of the answer.</p>",
         "InvalidTopicReviewedAnswer$AnswerId": "<p>The answer ID for the <code>InvalidTopicReviewedAnswer</code>.</p>",
         "SucceededTopicReviewedAnswer$AnswerId": "<p>The answer ID for the <code>SucceededTopicReviewedAnswer</code>.</p>",
         "TopicReviewedAnswer$AnswerId": "<p>The answer ID of the reviewed answer.</p>"
@@ -1667,6 +1676,7 @@
         "DeleteDataSetRefreshPropertiesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DeleteDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "DeleteDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Amazon QuickSight account that you want to disconnect from a Amazon Q Business application.</p>",
         "DeleteFolderMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DeleteFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DeleteGroupMembershipRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
@@ -1714,6 +1724,7 @@
         "DescribeDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeDataSourcePermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "DescribeDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Amazon QuickSight account that is linked to the Amazon Q Business application that you want described.</p>",
         "DescribeFolderPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DescribeFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
         "DescribeFolderResolvedPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder.</p>",
@@ -1727,6 +1738,7 @@
         "DescribeKeyRegistrationResponse$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration specified in the request.</p>",
         "DescribeNamespaceRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Amazon QuickSight namespace that you want to describe.</p>",
         "DescribeQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the personalization configuration that the user wants described.</p>",
+        "DescribeQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Amazon QuickSight Q Search configuration that the user wants described.</p>",
         "DescribeRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "DescribeRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "DescribeTemplateAliasRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the template alias that you're describing.</p>",
@@ -1743,6 +1755,7 @@
         "DescribeVPCConnectionRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connection that you want described.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
         "GenerateEmbedUrlForRegisteredUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityRequest$AwsAccountId": "<p>The ID of the Amazon Web Services registered user.</p>",
         "GetDashboardEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the dashboard that you're embedding.</p>",
         "GetSessionEmbedUrlRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account associated with your Amazon QuickSight subscription.</p>",
         "IAMPolicyAssignment$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
@@ -1779,6 +1792,7 @@
         "ListUserGroupsRequest$AwsAccountId": "<p>The Amazon Web Services account ID that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "ListUsersRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "ListVPCConnectionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID of the account that contains the VPC connections that you want to list.</p>",
+        "PredictQAResultsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that the user wants to execute Predict QA results in.</p>",
         "PutDataSetRefreshPropertiesRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "RegisterUserRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the user is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "RestoreAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis.</p>",
@@ -1798,6 +1812,7 @@
         "UpdateAccountSettingsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the Amazon QuickSight settings that you want to list.</p>",
         "UpdateAnalysisPermissionsRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis whose permissions you're updating. You must be using the Amazon Web Services account that the analysis is in.</p>",
         "UpdateAnalysisRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the analysis that you're updating.</p>",
+        "UpdateApplicationWithTokenExchangeGrantRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account to be updated with a token exchange grant.</p>",
         "UpdateBrandAssignmentRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand assignment.</p>",
         "UpdateBrandPublishedVersionRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
         "UpdateBrandRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that owns the brand.</p>",
@@ -1811,6 +1826,7 @@
         "UpdateDataSetRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateDataSourcePermissionsRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateDataSourceRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
+        "UpdateDefaultQBusinessApplicationRequest$AwsAccountId": "<p>The ID of the Amazon QuickSight account that is connected to the Amazon Q Business application that you want to update.</p>",
         "UpdateFolderPermissionsRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder to update.</p>",
         "UpdateFolderRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that contains the folder to update.</p>",
         "UpdateGroupRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that the group is in. Currently, you use the ID for the Amazon Web Services account that contains your Amazon QuickSight account.</p>",
@@ -1821,6 +1837,7 @@
         "UpdateKeyRegistrationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the customer managed key registration that you want to update.</p>",
         "UpdatePublicSharingSettingsRequest$AwsAccountId": "<p>The Amazon Web Services account ID associated with your Amazon QuickSight subscription.</p>",
         "UpdateQPersonalizationConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account account that contains the personalization configuration that the user wants to update.</p>",
+        "UpdateQuickSightQSearchConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the Amazon QuickSight Q Search configuration that you want to update.</p>",
         "UpdateRefreshScheduleRequest$AwsAccountId": "<p>The Amazon Web Services account ID.</p>",
         "UpdateRoleCustomPermissionRequest$AwsAccountId": "<p>The ID for the Amazon Web Services account that you want to create a group in. The Amazon Web Services account ID that you provide must be the same Amazon Web Services account that contains your Amazon QuickSight account.</p>",
         "UpdateSPICECapacityConfigurationRequest$AwsAccountId": "<p>The ID of the Amazon Web Services account that contains the SPICE configuration that you want to update.</p>",
@@ -3659,6 +3676,7 @@
         "CreateDashboardRequest$Name": "<p>The display name of the dashboard.</p>",
         "Dashboard$Name": "<p>A display name for the dashboard.</p>",
         "DashboardSummary$Name": "<p>A display name for the dashboard.</p>",
+        "DashboardVisualResult$DashboardName": "<p>The name of the dashboard.</p>",
         "DescribeDashboardDefinitionResponse$Name": "<p>The display name of the dashboard.</p>",
         "UpdateDashboardRequest$Name": "<p>The display name of the dashboard.</p>"
       }
@@ -3752,6 +3770,12 @@
       "base": "<p>The visual publish options of a visual in a dashboard</p>",
       "refs": {
         "DashboardPublishOptions$VisualPublishOptions": "<p>The visual publish options of a visual in a dashboard.</p>"
+      }
+    },
+    "DashboardVisualResult": {
+      "base": "<p>The QA result that is made from dashboard visual.</p>",
+      "refs": {
+        "QAResult$DashboardVisual": "<p>The representation of a dashboard visual result.</p>"
       }
     },
     "DashboardsQAStatus": {
@@ -4668,6 +4692,16 @@
       "refs": {
       }
     },
+    "DeleteDefaultQBusinessApplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteDefaultQBusinessApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteFolderMembershipRequest": {
       "base": null,
       "refs": {
@@ -5104,6 +5138,16 @@
       "refs": {
       }
     },
+    "DescribeDefaultQBusinessApplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeDefaultQBusinessApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeFolderPermissionsRequest": {
       "base": null,
       "refs": {
@@ -5210,6 +5254,16 @@
       }
     },
     "DescribeQPersonalizationConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -5565,6 +5619,7 @@
       "refs": {
         "GenerateEmbedUrlForAnonymousUserResponse$EmbedUrl": "<p>The embed URL for the dashboard.</p>",
         "GenerateEmbedUrlForRegisteredUserResponse$EmbedUrl": "<p>The embed URL for the Amazon QuickSight dashboard, visual, Q search bar, Generative Q&amp;A experience, or console.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityResponse$EmbedUrl": "<p>The generated embed URL for the registered user.</p>",
         "GetDashboardEmbedUrlResponse$EmbedUrl": "<p>A single-use URL that you can put into your server-side webpage to embed your dashboard. This URL is valid for 5 minutes. The API operation provides the URL with an <code>auth_code</code> value that enables one (and only one) sign-on to a user session that is valid for 10 hours. </p>",
         "GetSessionEmbedUrlResponse$EmbedUrl": "<p>A single-use URL that you can put into your server-side web page to embed your Amazon QuickSight session. This URL is valid for 5 minutes. The API operation provides the URL with an <code>auth_code</code> value that enables one (and only one) sign-on to a user session that is valid for 10 hours. </p>"
       }
@@ -6461,6 +6516,28 @@
     "GenerateEmbedUrlForRegisteredUserResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GeneratedAnswerResult": {
+      "base": "<p>The QA result that is made from generated answer.</p>",
+      "refs": {
+        "QAResult$GeneratedAnswer": "<p>The representation of a generated answer result.</p>"
+      }
+    },
+    "GeneratedAnswerStatus": {
+      "base": null,
+      "refs": {
+        "GeneratedAnswerResult$AnswerStatus": "<p>The answer status of the generated answer.</p>"
       }
     },
     "GeoSpatialColumnGroup": {
@@ -7428,6 +7505,18 @@
         "StartAssetBundleExportJobRequest$IncludeFolderMembers": "<p>A setting that indicates whether you want to include folder assets. You can also use this setting to recusrsively include all subfolders of an exported folder.</p>"
       }
     },
+    "IncludeGeneratedAnswer": {
+      "base": null,
+      "refs": {
+        "PredictQAResultsRequest$IncludeGeneratedAnswer": "<p>Indicates whether generated answers are included or excluded.</p>"
+      }
+    },
+    "IncludeQuickSightQIndex": {
+      "base": null,
+      "refs": {
+        "PredictQAResultsRequest$IncludeQuickSightQIndex": "<p>Indicates whether Q indicies are included or excluded.</p>"
+      }
+    },
     "IncrementalRefresh": {
       "base": "<p>The incremental refresh configuration for a dataset.</p>",
       "refs": {
@@ -8008,6 +8097,7 @@
         "TopicVisual$VisualId": "<p>The visual ID for the <code>TopicVisual</code>.</p>",
         "TypeParameters$key": null,
         "TypeParameters$value": null,
+        "UpdateDefaultQBusinessApplicationRequest$ApplicationId": "<p>The ID of the Amazon Q Business application that you want to update.</p>",
         "VisualOptions$type": "<p>The type for a <code>VisualOptions</code>.</p>"
       }
     },
@@ -8717,6 +8807,12 @@
         "SearchTopicsRequest$MaxResults": "<p>The maximum number of results to be returned per request.</p>"
       }
     },
+    "MaxTopicsToConsider": {
+      "base": null,
+      "refs": {
+        "PredictQAResultsRequest$MaxTopicsToConsider": "<p>The number of maximum topics to be considered to predict QA results.</p>"
+      }
+    },
     "MaximumLabelType": {
       "base": "<p>The maximum label of a data path label.</p>",
       "refs": {
@@ -8898,6 +8994,7 @@
         "CreateNamespaceResponse$Name": "<p>The name of the new namespace that you created.</p>",
         "CreateRoleMembershipRequest$Namespace": "<p>The namespace that the role belongs to.</p>",
         "DeleteAccountCustomizationRequest$Namespace": "<p>The Amazon QuickSight namespace that you're deleting the customizations from.</p>",
+        "DeleteDefaultQBusinessApplicationRequest$Namespace": "<p>The Amazon QuickSight namespace that you want to delete a linked Amazon Q Business application from. If this field is left blank, the Amazon Q Business application is deleted from the default namespace. Currently, the default namespace is the only valid value for this parameter.</p>",
         "DeleteGroupMembershipRequest$Namespace": "<p>The namespace of the group that you want to remove a user from.</p>",
         "DeleteGroupRequest$Namespace": "<p>The namespace of the group that you want to delete.</p>",
         "DeleteIAMPolicyAssignmentRequest$Namespace": "<p>The namespace that contains the assignment.</p>",
@@ -8909,6 +9006,7 @@
         "DeleteUserRequest$Namespace": "<p>The namespace. Currently, you should set this to <code>default</code>.</p>",
         "DescribeAccountCustomizationRequest$Namespace": "<p>The Amazon QuickSight namespace that you want to describe Amazon QuickSight customizations for.</p>",
         "DescribeAccountCustomizationResponse$Namespace": "<p>The Amazon QuickSight namespace that you're describing. </p>",
+        "DescribeDefaultQBusinessApplicationRequest$Namespace": "<p>The Amazon QuickSight namespace that contains the linked Amazon Q Business application. If this field is left blank, the default namespace is used. Currently, the default namespace is the only valid value for this parameter.</p>",
         "DescribeFolderPermissionsRequest$Namespace": "<p>The namespace of the folder whose permissions you want described.</p>",
         "DescribeFolderResolvedPermissionsRequest$Namespace": "<p>The namespace of the folder whose permissions you want described.</p>",
         "DescribeGroupMembershipRequest$Namespace": "<p>The namespace that includes the group you are searching within.</p>",
@@ -8933,6 +9031,8 @@
         "UpdateAccountCustomizationRequest$Namespace": "<p>The namespace that you want to update Amazon QuickSight customizations for.</p>",
         "UpdateAccountCustomizationResponse$Namespace": "<p>The namespace associated with the customization that you're updating.</p>",
         "UpdateAccountSettingsRequest$DefaultNamespace": "<p>The default namespace for this Amazon Web Services account. Currently, the default is <code>default</code>. IAM users that register for the first time with Amazon QuickSight provide an email address that becomes associated with the default namespace. </p>",
+        "UpdateApplicationWithTokenExchangeGrantRequest$Namespace": "<p>The namespace of the Amazon QuickSight application.</p>",
+        "UpdateDefaultQBusinessApplicationRequest$Namespace": "<p>The Amazon QuickSight namespace that contains the linked Amazon Q Business application. If this field is left blank, the default namespace is used. Currently, the default namespace is the only valid value for this parameter.</p>",
         "UpdateGroupRequest$Namespace": "<p>The namespace of the group that you want to update.</p>",
         "UpdateIAMPolicyAssignmentRequest$Namespace": "<p>The namespace of the assignment.</p>",
         "UpdateRoleCustomPermissionRequest$Namespace": "<p>The namespace that contains the role that you want to update.</p>",
@@ -9981,6 +10081,16 @@
         "PredefinedHierarchy$Columns": "<p>The list of columns that define the predefined hierarchy.</p>"
       }
     },
+    "PredictQAResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PredictQAResultsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "PredictionInterval": {
       "base": null,
       "refs": {
@@ -10074,6 +10184,48 @@
       "refs": {
       }
     },
+    "QAQueryText": {
+      "base": null,
+      "refs": {
+        "GeneratedAnswerResult$QuestionText": "<p>The question text.</p>",
+        "GeneratedAnswerResult$Restatement": "<p>The restatement for the answer.</p>",
+        "PredictQAResultsRequest$QueryText": "<p>The query text to be used to predict QA results.</p>"
+      }
+    },
+    "QAResult": {
+      "base": "<p>The QA result that is made from the <code>DashboardVisual</code> or <code>GeneratedAnswer</code>.</p>",
+      "refs": {
+        "PredictQAResultsResponse$PrimaryResult": "<p>The primary visual response.</p>",
+        "QAResults$member": null
+      }
+    },
+    "QAResultType": {
+      "base": null,
+      "refs": {
+        "QAResult$ResultType": "<p>The type of QA result.</p>"
+      }
+    },
+    "QAResults": {
+      "base": null,
+      "refs": {
+        "PredictQAResultsResponse$AdditionalResults": "<p>Additional visual responses.</p>"
+      }
+    },
+    "QAUrl": {
+      "base": null,
+      "refs": {
+        "DashboardVisualResult$DashboardUrl": "<p>The URL of the dashboard.</p>",
+        "GeneratedAnswerResult$QuestionUrl": "<p>The URL of the question.</p>"
+      }
+    },
+    "QSearchStatus": {
+      "base": null,
+      "refs": {
+        "DescribeQuickSightQSearchConfigurationResponse$QSearchStatus": "<p>The status of Amazon QuickSight Q Search configuration.</p>",
+        "UpdateQuickSightQSearchConfigurationRequest$QSearchStatus": "<p>The status of the Amazon QuickSight Q Search configuration that the user wants to update.</p>",
+        "UpdateQuickSightQSearchConfigurationResponse$QSearchStatus": "<p>The status of the Amazon QuickSight Q Search configuration.</p>"
+      }
+    },
     "Query": {
       "base": null,
       "refs": {
@@ -10091,6 +10243,12 @@
       "refs": {
         "AnalysisDefinition$QueryExecutionOptions": null,
         "TemplateVersionDefinition$QueryExecutionOptions": null
+      }
+    },
+    "QuestionId": {
+      "base": null,
+      "refs": {
+        "GeneratedAnswerResult$QuestionId": "<p>The ID of the question.</p>"
       }
     },
     "QueueInfo": {
@@ -10381,7 +10539,8 @@
     "RegisteredUserEmbeddingExperienceConfiguration": {
       "base": "<p>The type of experience you want to embed. For registered users, you can embed Amazon QuickSight dashboards or the Amazon QuickSight console.</p> <note> <p>Exactly one of the experience configurations is required. You can choose <code>Dashboard</code> or <code>QuickSightConsole</code>. You cannot choose more than one experience configuration.</p> </note>",
       "refs": {
-        "GenerateEmbedUrlForRegisteredUserRequest$ExperienceConfiguration": "<p>The experience that you want to embed. For registered users, you can embed Amazon QuickSight dashboards, Amazon QuickSight visuals, the Amazon QuickSight Q search bar, the Amazon QuickSight Generative Q&amp;A experience, or the entire Amazon QuickSight console.</p>"
+        "GenerateEmbedUrlForRegisteredUserRequest$ExperienceConfiguration": "<p>The experience that you want to embed. For registered users, you can embed Amazon QuickSight dashboards, Amazon QuickSight visuals, the Amazon QuickSight Q search bar, the Amazon QuickSight Generative Q&amp;A experience, or the entire Amazon QuickSight console.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityRequest$ExperienceConfiguration": null
       }
     },
     "RegisteredUserGenerativeQnAEmbeddingConfiguration": {
@@ -10535,6 +10694,7 @@
         "DataSetSummary$Name": "<p>A display name for the dataset.</p>",
         "DataSource$Name": "<p>A display name for the data source.</p>",
         "DataSourceSummary$Name": "<p>The name of the data source.</p>",
+        "GeneratedAnswerResult$TopicName": "<p>The name of the topic.</p>",
         "TopicDetails$Name": "<p>The name of the topic.</p>",
         "TopicSummary$Name": "<p>The name of the topic.</p>",
         "UpdateDataSetRequest$Name": "<p>The display name for the dataset.</p>",
@@ -11231,6 +11391,7 @@
       "refs": {
         "GenerateEmbedUrlForAnonymousUserRequest$SessionLifetimeInMinutes": "<p>How many minutes the session is valid. The session lifetime must be in [15-600] minutes range.</p>",
         "GenerateEmbedUrlForRegisteredUserRequest$SessionLifetimeInMinutes": "<p>How many minutes the session is valid. The session lifetime must be in [15-600] minutes range.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityRequest$SessionLifetimeInMinutes": "<p>The validity of the session in minutes.</p>",
         "GetDashboardEmbedUrlRequest$SessionLifetimeInMinutes": "<p>How many minutes the session is valid. The session lifetime must be 15-600 minutes.</p>",
         "GetSessionEmbedUrlRequest$SessionLifetimeInMinutes": "<p>How many minutes the session is valid. The session lifetime must be 15-600 minutes.</p>"
       }
@@ -11512,6 +11673,7 @@
     "SheetName": {
       "base": null,
       "refs": {
+        "DashboardVisualResult$SheetName": "<p>The name of the sheet.</p>",
         "Sheet$Name": "<p>The name of a sheet. This name is displayed on the sheet's tab in the Amazon QuickSight console.</p>",
         "SheetDefinition$Name": "<p>The name of the sheet. This name is displayed on the sheet's tab in the Amazon QuickSight console.</p>"
       }
@@ -11605,6 +11767,9 @@
         "DashboardVisualId$DashboardId": "<p>The ID of the dashboard that has the visual that you want to embed. The <code>DashboardId</code> can be found in the <code>IDs for developers</code> section of the <code>Embed visual</code> pane of the visual's on-visual menu of the Amazon QuickSight console. You can also get the <code>DashboardId</code> with a <code>ListDashboards</code> API operation.</p>",
         "DashboardVisualId$SheetId": "<p>The ID of the sheet that the has visual that you want to embed. The <code>SheetId</code> can be found in the <code>IDs for developers</code> section of the <code>Embed visual</code> pane of the visual's on-visual menu of the Amazon QuickSight console.</p>",
         "DashboardVisualId$VisualId": "<p>The ID of the visual that you want to embed. The <code>VisualID</code> can be found in the <code>IDs for developers</code> section of the <code>Embed visual</code> pane of the visual's on-visual menu of the Amazon QuickSight console.</p>",
+        "DashboardVisualResult$DashboardId": "<p>The ID of the dashboard.</p>",
+        "DashboardVisualResult$SheetId": "<p>The ID of the sheet.</p>",
+        "DashboardVisualResult$VisualId": "<p>The ID of the visual.</p>",
         "DeleteAnalysisRequest$AnalysisId": "<p>The ID of the analysis that you're deleting.</p>",
         "DeleteAnalysisResponse$AnalysisId": "<p>The ID of the deleted analysis.</p>",
         "DeleteBrandRequest$BrandId": "<p>The ID of the Amazon QuickSight brand.</p>",
@@ -12270,6 +12435,7 @@
         "DeleteDataSetRefreshPropertiesResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DeleteDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteFolderMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteFolderResponse$Status": "<p>The HTTP status of the request.</p>",
         "DeleteGroupMembershipResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12310,6 +12476,7 @@
         "DescribeDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDataSourcePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderResolvedPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeFolderResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12321,6 +12488,7 @@
         "DescribeKeyRegistrationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeNamespaceResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "DescribeQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "DescribeTemplateAliasResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12339,6 +12507,7 @@
         "FailedKeyRegistrationEntry$StatusCode": "<p>The HTTP status of a <code>FailedKeyRegistrationEntry</code> error.</p>",
         "GenerateEmbedUrlForAnonymousUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "GenerateEmbedUrlForRegisteredUserResponse$Status": "<p>The HTTP status of the request.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityResponse$Status": "<p>The HTTP status of the request.</p>",
         "GetDashboardEmbedUrlResponse$Status": "<p>The HTTP status of the request.</p>",
         "GetSessionEmbedUrlResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListAnalysesResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12374,6 +12543,7 @@
         "ListUserGroupsResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListUsersResponse$Status": "<p>The HTTP status of the request.</p>",
         "ListVPCConnectionsResponse$Status": "<p>The HTTP status of the request.</p>",
+        "PredictQAResultsResponse$Status": "<p>The HTTP status of the request.</p>",
         "PutDataSetRefreshPropertiesResponse$Status": "<p>The HTTP status of the request.</p>",
         "RegisterUserResponse$Status": "<p>The HTTP status of the request.</p>",
         "RestoreAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12395,6 +12565,7 @@
         "UpdateAccountSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateAnalysisPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateAnalysisResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateApplicationWithTokenExchangeGrantResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateCustomPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDashboardLinksResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDashboardPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12405,6 +12576,7 @@
         "UpdateDataSetResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDataSourcePermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateDataSourceResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateDefaultQBusinessApplicationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateFolderPermissionsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateFolderResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateGroupResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12413,6 +12585,7 @@
         "UpdateIpRestrictionResponse$Status": "<p>The HTTP status of the request. </p>",
         "UpdatePublicSharingSettingsResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateQPersonalizationConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
+        "UpdateQuickSightQSearchConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRefreshScheduleResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateRoleCustomPermissionResponse$Status": "<p>The HTTP status of the request.</p>",
         "UpdateSPICECapacityConfigurationResponse$Status": "<p>The HTTP status of the request.</p>",
@@ -12521,6 +12694,7 @@
         "DeleteDataSetRefreshPropertiesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DeleteDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteFolderResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DeleteGroupMembershipResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12564,6 +12738,8 @@
         "DescribeDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDataSourcePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeDefaultQBusinessApplicationResponse$ApplicationId": "<p>The ID of the Amazon Q Business application that is linked to the Amazon QuickSight account.</p>",
         "DescribeFolderPermissionsRequest$NextToken": "<p>A pagination token for the next set of results.</p>",
         "DescribeFolderPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeFolderPermissionsResponse$NextToken": "<p>The pagination token for the next set of results, or null if there are no more results.</p>",
@@ -12579,6 +12755,7 @@
         "DescribeIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeNamespaceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "DescribeQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRefreshScheduleRequest$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "DescribeRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "DescribeRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12609,6 +12786,7 @@
         "ForecastComputation$Name": "<p>The name of a computation.</p>",
         "GenerateEmbedUrlForAnonymousUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GenerateEmbedUrlForRegisteredUserResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "GeospatialCategoricalDataColor$DataValue": "<p>The data value for the category data color.</p>",
         "GeospatialLayerItem$LayerId": "<p>The ID of the layer.</p>",
         "GeospatialLayerItem$Label": "<p>The label that is displayed for the layer.</p>",
@@ -12749,6 +12927,7 @@
         "PluginVisualProperty$Value": "<p>The value of the plugin visual property.</p>",
         "PreconditionNotMetException$Message": null,
         "PreconditionNotMetException$RequestId": "<p>The Amazon Web Services request ID for this request.</p>",
+        "PredictQAResultsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "PrincipalList$member": null,
         "ProjectedColumnList$member": null,
         "PutDataSetRefreshPropertiesResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12832,6 +13011,7 @@
         "UpdateAccountSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateAnalysisResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateApplicationWithTokenExchangeGrantResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateBrandAssignmentResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateBrandPublishedVersionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateBrandResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12845,6 +13025,7 @@
         "UpdateDataSetResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDataSourcePermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateDataSourceResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateDefaultQBusinessApplicationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFolderPermissionsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateFolderResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateGroupResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12854,6 +13035,7 @@
         "UpdateIpRestrictionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdatePublicSharingSettingsResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateQPersonalizationConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
+        "UpdateQuickSightQSearchConfigurationResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRefreshScheduleResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
         "UpdateRefreshScheduleResponse$ScheduleId": "<p>The ID of the refresh schedule.</p>",
         "UpdateRoleCustomPermissionResponse$RequestId": "<p>The Amazon Web Services request ID for this operation.</p>",
@@ -12941,6 +13123,7 @@
         "ComparativeOrder$SpecifedOrder": "<p>The list of columns to be used in the ordering.</p>",
         "GenerateEmbedUrlForAnonymousUserRequest$AllowedDomains": "<p>The domains that you want to add to the allow list for access to the generated URL that is then embedded. This optional parameter overrides the static domains that are configured in the Manage QuickSight menu in the Amazon QuickSight console. Instead, it allows only the domains that you include in this parameter. You can list up to three domains or subdomains in each API call.</p> <p>To include all subdomains under a specific domain to the allow list, use <code>*</code>. For example, <code>https://*.sapp.amazon.com</code> includes all subdomains under <code>https://sapp.amazon.com</code>.</p>",
         "GenerateEmbedUrlForRegisteredUserRequest$AllowedDomains": "<p>The domains that you want to add to the allow list for access to the generated URL that is then embedded. This optional parameter overrides the static domains that are configured in the Manage QuickSight menu in the Amazon QuickSight console. Instead, it allows only the domains that you include in this parameter. You can list up to three domains or subdomains in each API call.</p> <p>To include all subdomains under a specific domain to the allow list, use <code>*</code>. For example, <code>https://*.sapp.amazon.com</code> includes all subdomains under <code>https://sapp.amazon.com</code>.</p>",
+        "GenerateEmbedUrlForRegisteredUserWithIdentityRequest$AllowedDomains": "<p>A list of domains to be allowed to generate the embed URL.</p>",
         "VPCConnection$DnsResolvers": "<p>A list of IP addresses of DNS resolver endpoints for the VPC connection.</p>",
         "VPCConnectionSummary$DnsResolvers": "<p>A list of IP addresses of DNS resolver endpoints for the VPC connection.</p>"
       }
@@ -14059,6 +14242,7 @@
         "DescribeTopicRefreshScheduleResponse$TopicId": "<p>The ID of the topic that contains the refresh schedule that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicRequest$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "DescribeTopicResponse$TopicId": "<p>The ID of the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
+        "GeneratedAnswerResult$TopicId": "<p>The ID of the topic.</p>",
         "ListTopicRefreshSchedulesRequest$TopicId": "<p>The ID for the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "ListTopicRefreshSchedulesResponse$TopicId": "<p>The ID for the topic that you want to describe. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
         "ListTopicReviewedAnswersRequest$TopicId": "<p>The ID for the topic that contains the reviewed answer that you want to list. This ID is unique per Amazon Web Services Region for each Amazon Web Services account.</p>",
@@ -14506,6 +14690,16 @@
       "refs": {
       }
     },
+    "UpdateApplicationWithTokenExchangeGrantRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateApplicationWithTokenExchangeGrantResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateBrandAssignmentRequest": {
       "base": null,
       "refs": {
@@ -14636,6 +14830,16 @@
       "refs": {
       }
     },
+    "UpdateDefaultQBusinessApplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateDefaultQBusinessApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateFolderPermissionsRequest": {
       "base": null,
       "refs": {
@@ -14729,6 +14933,16 @@
       }
     },
     "UpdateQPersonalizationConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -15322,6 +15536,12 @@
         "TopicVisual$Role": "<p>The role for the <code>TopicVisual</code>.</p>"
       }
     },
+    "VisualSubtitle": {
+      "base": null,
+      "refs": {
+        "DashboardVisualResult$VisualSubtitle": "<p>The subtitle of the visual.</p>"
+      }
+    },
     "VisualSubtitleLabelOptions": {
       "base": "<p>The subtitle label options for a visual.</p>",
       "refs": {
@@ -15349,6 +15569,12 @@
         "TreeMapVisual$Subtitle": "<p>The subtitle that is displayed on the visual.</p>",
         "WaterfallVisual$Subtitle": "<p>The subtitle that is displayed on the visual.</p>",
         "WordCloudVisual$Subtitle": "<p>The subtitle that is displayed on the visual.</p>"
+      }
+    },
+    "VisualTitle": {
+      "base": null,
+      "refs": {
+        "DashboardVisualResult$VisualTitle": "<p>The title of the visual.</p>"
       }
     },
     "VisualTitleLabelOptions": {

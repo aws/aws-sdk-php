@@ -881,6 +881,23 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "DeregisterNamespace":{
+      "name":"DeregisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterNamespaceInputMessage"},
+      "output":{
+        "shape":"DeregisterNamespaceOutputMessage",
+        "resultWrapper":"DeregisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
+      ]
+    },
     "DescribeAccountAttributes":{
       "name":"DescribeAccountAttributes",
       "http":{
@@ -2163,6 +2180,23 @@
         {"shape":"ClusterNotFoundFault"}
       ]
     },
+    "RegisterNamespace":{
+      "name":"RegisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterNamespaceInputMessage"},
+      "output":{
+        "shape":"RegisterNamespaceOutputMessage",
+        "resultWrapper":"RegisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
+      ]
+    },
     "RejectDataShare":{
       "name":"RejectDataShare",
       "http":{
@@ -3346,6 +3380,12 @@
       },
       "exception":true
     },
+    "ConsumerIdentifierList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":1,
+      "min":1
+    },
     "CopyClusterSnapshotMessage":{
       "type":"structure",
       "required":[
@@ -3795,7 +3835,8 @@
         "ProducerArn":{"shape":"String"},
         "AllowPubliclyAccessibleConsumers":{"shape":"Boolean"},
         "DataShareAssociations":{"shape":"DataShareAssociationList"},
-        "ManagedBy":{"shape":"String"}
+        "ManagedBy":{"shape":"String"},
+        "DataShareType":{"shape":"DataShareType"}
       }
     },
     "DataShareAssociation":{
@@ -3845,6 +3886,10 @@
         "DEAUTHORIZED",
         "REJECTED"
       ]
+    },
+    "DataShareType":{
+      "type":"string",
+      "enum":["INTERNAL"]
     },
     "DataTransferProgress":{
       "type":"structure",
@@ -4101,6 +4146,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DeregisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "DeregisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
+      }
     },
     "DescribeAccountAttributesMessage":{
       "type":"structure",
@@ -6155,6 +6217,21 @@
         "BreachAction":{"shape":"UsageLimitBreachAction"}
       }
     },
+    "NamespaceIdentifierUnion":{
+      "type":"structure",
+      "members":{
+        "ServerlessIdentifier":{"shape":"ServerlessIdentifier"},
+        "ProvisionedIdentifier":{"shape":"ProvisionedIdentifier"}
+      },
+      "union":true
+    },
+    "NamespaceRegistrationStatus":{
+      "type":"string",
+      "enum":[
+        "Registering",
+        "Deregistering"
+      ]
+    },
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -6434,6 +6511,13 @@
         "EncryptionType":{"shape":"String"}
       }
     },
+    "ProvisionedIdentifier":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "ClusterIdentifier":{"shape":"String"}
+      }
+    },
     "PurchaseReservedNodeOfferingMessage":{
       "type":"structure",
       "required":["ReservedNodeOfferingId"],
@@ -6618,6 +6702,23 @@
       "member":{
         "shape":"ReferenceLink",
         "locationName":"ReferenceLink"
+      }
+    },
+    "RegisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "RegisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
       }
     },
     "RejectDataShareMessage":{
@@ -7298,6 +7399,17 @@
     "SensitiveString":{
       "type":"string",
       "sensitive":true
+    },
+    "ServerlessIdentifier":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "WorkgroupIdentifier"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"String"},
+        "WorkgroupIdentifier":{"shape":"String"}
+      }
     },
     "ServiceAuthorization":{
       "type":"string",
