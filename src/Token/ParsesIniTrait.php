@@ -30,6 +30,14 @@ trait ParsesIniTrait
      */
     private static function getHomeDir()
     {
+        // Allow the ".aws" folder containing configuration and credentials to
+        // exist in another location. In some setups, this allows both the web
+        // server user (e.g. actions taken via a website UI) and the application
+        // user (e.g. actions taken via CLI) to properly work.
+        if ($homeDir = getenv('AWS_HOME')) {
+            return $homeDir;
+        }
+
         // On Linux/Unix-like systems, use the HOME environment variable
         if ($homeDir = getenv('HOME')) {
             return $homeDir;
