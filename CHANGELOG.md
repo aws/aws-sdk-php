@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - Add an API parameter that allows customers to set performance configuration for invoking a model.
+* `Aws\S3Control` - It allows customers to pass CRC64NVME as a header in S3 Batch Operations copy requests
+* `Aws\SocialMessaging` - Added support for passing role arn corresponding to the supported event destination
+
 ## 3.332.0 - 2024-12-02
 
 * `Aws\RDS` - Amazon RDS supports CloudWatch Database Insights. You can use the SDK to create, modify, and describe the DatabaseInsightsMode for your DB instances and clusters.

@@ -292,7 +292,8 @@
         "guardrailConfig":{"shape":"GuardrailConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
         "promptVariables":{"shape":"PromptVariableMap"},
-        "additionalModelResponseFieldPaths":{"shape":"ConverseRequestAdditionalModelResponseFieldPathsList"}
+        "additionalModelResponseFieldPaths":{"shape":"ConverseRequestAdditionalModelResponseFieldPathsList"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseRequestAdditionalModelResponseFieldPathsList":{
@@ -320,7 +321,8 @@
         "usage":{"shape":"TokenUsage"},
         "metrics":{"shape":"ConverseMetrics"},
         "additionalModelResponseFields":{"shape":"Document"},
-        "trace":{"shape":"ConverseTrace"}
+        "trace":{"shape":"ConverseTrace"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseStreamMetadataEvent":{
@@ -332,7 +334,8 @@
       "members":{
         "usage":{"shape":"TokenUsage"},
         "metrics":{"shape":"ConverseStreamMetrics"},
-        "trace":{"shape":"ConverseStreamTrace"}
+        "trace":{"shape":"ConverseStreamTrace"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       },
       "event":true
     },
@@ -376,7 +379,8 @@
         "guardrailConfig":{"shape":"GuardrailStreamConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
         "promptVariables":{"shape":"PromptVariableMap"},
-        "additionalModelResponseFieldPaths":{"shape":"ConverseStreamRequestAdditionalModelResponseFieldPathsList"}
+        "additionalModelResponseFieldPaths":{"shape":"ConverseStreamRequestAdditionalModelResponseFieldPathsList"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseStreamRequestAdditionalModelResponseFieldPathsList":{
@@ -1080,6 +1084,11 @@
           "shape":"GuardrailVersion",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-GuardrailVersion"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1096,6 +1105,11 @@
           "shape":"MimeType",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1134,6 +1148,11 @@
           "shape":"GuardrailVersion",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-GuardrailVersion"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1150,6 +1169,11 @@
           "shape":"MimeType",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-Content-Type"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1270,6 +1294,19 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "PerformanceConfigLatency":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "optimized"
+      ]
+    },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "latency":{"shape":"PerformanceConfigLatency"}
+      }
     },
     "PromptVariableMap":{
       "type":"map",
