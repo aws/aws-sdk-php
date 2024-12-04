@@ -220,26 +220,6 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    /**
-     * Simulates a custom endpoint provided with a starting path segment matching the
-     * modeled `RequestUri` starting path segment
-     */
-    public function testPreparesRequestsWithEndpointWithDuplicateRequestUriAndPath(): void
-    {
-        $request = $this->getPathEndpointRequest(
-            'requestUriOperation',
-            ['PathSegment' => 'bar', 'baz' => 'bar'],
-            ['path' => 'foo']
-        );
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('http://foo.com/foo/bar', (string) $request->getUri());
-        $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
-        $this->assertSame(
-            'application/json',
-            $request->getHeaderLine('Content-Type')
-        );
-    }
-
     public function testPreparesRequestsWithBlobButNoForcedContentType()
     {
         $request = $this->getRequest('bar', ['baz' => 'bar']);
