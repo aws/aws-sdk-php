@@ -372,10 +372,28 @@
         "ToolChoice$auto": "<p>Defines tools. The model automatically decides whether to call a tool or to generate text instead.</p>"
       }
     },
+    "AwsDataCatalogTableName": {
+      "base": null,
+      "refs": {
+        "AwsDataCatalogTableNames$member": null
+      }
+    },
+    "AwsDataCatalogTableNames": {
+      "base": null,
+      "refs": {
+        "RedshiftQueryEngineAwsDataCatalogStorageConfiguration$tableNames": "<p>A list of names of the tables to use.</p>"
+      }
+    },
     "BasePromptTemplate": {
       "base": null,
       "refs": {
         "PromptConfiguration$basePromptTemplate": "<p>Defines the prompt template with which to replace the default prompt template. You can use placeholder variables in the base prompt template to customize the prompt. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html\">Prompt template placeholder variables</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html\">Configure the prompt templates</a>.</p>"
+      }
+    },
+    "BedrockDataAutomationConfiguration": {
+      "base": "<p>Contains configurations for using Amazon Bedrock Data Automation as the parser for ingesting your data sources.</p>",
+      "refs": {
+        "ParsingConfiguration$bedrockDataAutomationConfiguration": "<p>If you specify <code>BEDROCK_DATA_AUTOMATION</code> as the parsing strategy for ingesting your data source, use this object to modify configurations for using the Amazon Bedrock Data Automation parser.</p>"
       }
     },
     "BedrockEmbeddingModelArn": {
@@ -393,13 +411,13 @@
     "BedrockFoundationModelConfiguration": {
       "base": "<p>Settings for a foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to parse documents for a data source.</p>",
       "refs": {
-        "ParsingConfiguration$bedrockFoundationModelConfiguration": "<p>Settings for a foundation model used to parse documents for a data source.</p>"
+        "ParsingConfiguration$bedrockFoundationModelConfiguration": "<p>If you specify <code>BEDROCK_FOUNDATION_MODEL</code> as the parsing strategy for ingesting your data source, use this object to modify configurations for using a foundation model to parse documents.</p>"
       }
     },
     "BedrockModelArn": {
       "base": null,
       "refs": {
-        "BedrockFoundationModelConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>.</p>"
+        "BedrockFoundationModelConfiguration$modelArn": "<p>The ARN of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use for parsing.</p>"
       }
     },
     "Boolean": {
@@ -689,6 +707,18 @@
       "refs": {
         "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>",
         "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>"
+      }
+    },
+    "CuratedQueries": {
+      "base": null,
+      "refs": {
+        "QueryGenerationContext$curatedQueries": "<p>An array of objects, each of which defines information about example queries to help the query engine generate appropriate SQL queries.</p>"
+      }
+    },
+    "CuratedQuery": {
+      "base": "<p>Contains configurations for a query, each of which defines information about example queries to help the query engine generate appropriate SQL queries.</p>",
+      "refs": {
+        "CuratedQueries$member": null
       }
     },
     "CustomContent": {
@@ -1023,6 +1053,13 @@
         "UpdateFlowAliasRequest$description": "<p>A description for the alias.</p>",
         "UpdateFlowAliasResponse$description": "<p>The description of the flow.</p>",
         "UpdateKnowledgeBaseRequest$description": "<p>Specifies a new description for the knowledge base.</p>"
+      }
+    },
+    "DescriptionString": {
+      "base": null,
+      "refs": {
+        "QueryGenerationColumn$description": "<p>A description of the column that helps the query engine understand the contents of the column.</p>",
+        "QueryGenerationTable$description": "<p>A description of the table that helps the query engine understand the contents of the table.</p>"
       }
     },
     "Dimensions": {
@@ -1970,6 +2007,13 @@
         "UpdateKnowledgeBaseRequest$knowledgeBaseId": "<p>The unique identifier of the knowledge base to update.</p>"
       }
     },
+    "IncludeExclude": {
+      "base": null,
+      "refs": {
+        "QueryGenerationColumn$inclusion": "<p>Specifies whether to include or exclude the column during query generation. If you specify <code>EXCLUDE</code>, the column will be ignored. If you specify <code>INCLUDE</code>, all other columns in the table will be ignored.</p>",
+        "QueryGenerationTable$inclusion": "<p>Specifies whether to include or exclude the table during query generation. If you specify <code>EXCLUDE</code>, the table will be ignored. If you specify <code>INCLUDE</code>, all other tables will be ignored.</p>"
+      }
+    },
     "IncompatibleConnectionDataTypeFlowValidationDetails": {
       "base": "<p>Details about incompatible data types in a connection between nodes.</p>",
       "refs": {
@@ -2116,6 +2160,18 @@
       "base": "<p>Contains configurations for an iterator node in a flow. Takes an input that is an array and iteratively sends each item of the array as an output to the following node. The size of the array is also returned in the output.</p> <p>The output flow node at the end of the flow iteration will return a response for each member of the array. To return only one response, you can include a collector node downstream from the iterator node.</p>",
       "refs": {
         "FlowNodeConfiguration$iterator": "<p>Contains configurations for an iterator node in your flow. Takes an input that is an array and iteratively sends each item of the array as an output to the following node. The size of the array is also returned in the output.</p> <p>The output flow node at the end of the flow iteration will return a response for each member of the array. To return only one response, you can include a collector node downstream from the iterator node.</p>"
+      }
+    },
+    "KendraIndexArn": {
+      "base": null,
+      "refs": {
+        "KendraKnowledgeBaseConfiguration$kendraIndexArn": "<p>The ARN of the Amazon Kendra index.</p>"
+      }
+    },
+    "KendraKnowledgeBaseConfiguration": {
+      "base": "<p>Settings for an Amazon Kendra knowledge base.</p>",
+      "refs": {
+        "KnowledgeBaseConfiguration$kendraKnowledgeBaseConfiguration": "<p>Settings for an Amazon Kendra knowledge base.</p>"
       }
     },
     "Key": {
@@ -2699,6 +2755,12 @@
         "UpdateKnowledgeBaseRequest$name": "<p>Specifies a new name for the knowledge base.</p>"
       }
     },
+    "NaturalLanguageString": {
+      "base": null,
+      "refs": {
+        "CuratedQuery$naturalLanguage": "<p>An example natural language query.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -2839,9 +2901,16 @@
       }
     },
     "ParsingConfiguration": {
-      "base": "<p>Settings for parsing document contents. By default, the service converts the contents of each document into text before splitting it into chunks. To improve processing of PDF files with tables and images, you can configure the data source to convert the pages of text into images and use a model to describe the contents of each page.</p> <p>To use a model to parse PDF documents, set the parsing strategy to <code>BEDROCK_FOUNDATION_MODEL</code> and specify the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use by ARN. You can also override the default parsing prompt with instructions for how to interpret images and tables in your documents. The following models are supported.</p> <ul> <li> <p>Anthropic Claude 3 Sonnet - <code>anthropic.claude-3-sonnet-20240229-v1:0</code> </p> </li> <li> <p>Anthropic Claude 3 Haiku - <code>anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> </ul> <p>You can get the ARN of a model with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListFoundationModels.html\">ListFoundationModels</a> action. Standard model usage charges apply for the foundation model parsing strategy.</p>",
+      "base": "<p>Settings for parsing document contents. If you exclude this field, the default parser converts the contents of each document into text before splitting it into chunks. Specify the parsing strategy to use in the <code>parsingStrategy</code> field and include the relevant configuration, or omit it to use the Amazon Bedrock default parser. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-advanced-parsing.html\">Parsing options for your data source</a>.</p> <note> <p>If you specify <code>BEDROCK_DATA_AUTOMATION</code> or <code>BEDROCK_FOUNDATION_MODEL</code> and it fails to parse a file, the Amazon Bedrock default parser will be used instead.</p> </note>",
       "refs": {
-        "VectorIngestionConfiguration$parsingConfiguration": "<p>A custom parser for data source documents.</p>"
+        "VectorIngestionConfiguration$parsingConfiguration": "<p>Configurations for a parser to use for parsing documents in your data source. If you exclude this field, the default parser will be used.</p>"
+      }
+    },
+    "ParsingModality": {
+      "base": null,
+      "refs": {
+        "BedrockDataAutomationConfiguration$parsingModality": "<p>Specifies whether to enable parsing of multimodal data, including both text and/or images.</p>",
+        "BedrockFoundationModelConfiguration$parsingModality": "<p>Specifies whether to enable parsing of multimodal data, including both text and/or images.</p>"
       }
     },
     "ParsingPrompt": {
@@ -3192,6 +3261,66 @@
         "AgentAliasRoutingConfigurationListItem$provisionedThroughput": "<p>Information on the Provisioned Throughput assigned to an agent alias.</p>"
       }
     },
+    "QueryEngineType": {
+      "base": null,
+      "refs": {
+        "SqlKnowledgeBaseConfiguration$type": "<p>The type of SQL database to connect to the knowledge base.</p>"
+      }
+    },
+    "QueryExecutionTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "QueryGenerationConfiguration$executionTimeoutSeconds": "<p>The time after which query generation will time out.</p>"
+      }
+    },
+    "QueryGenerationColumn": {
+      "base": "<p>Contains information about a column in the current table for the query engine to consider.</p>",
+      "refs": {
+        "QueryGenerationColumns$member": null
+      }
+    },
+    "QueryGenerationColumnName": {
+      "base": null,
+      "refs": {
+        "QueryGenerationColumn$name": "<p>The name of the column for which the other fields in this object apply.</p>"
+      }
+    },
+    "QueryGenerationColumns": {
+      "base": null,
+      "refs": {
+        "QueryGenerationTable$columns": "<p>An array of objects, each of which defines information about a column in the table.</p>"
+      }
+    },
+    "QueryGenerationConfiguration": {
+      "base": "<p>Contains configurations for query generation. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html\">Build a knowledge base by connecting to a structured data source</a> in the Amazon Bedrock User Guide..</p>",
+      "refs": {
+        "RedshiftConfiguration$queryGenerationConfiguration": "<p>Specifies configurations for generating queries.</p>"
+      }
+    },
+    "QueryGenerationContext": {
+      "base": "<p>&gt;Contains configurations for context to use during query generation.</p>",
+      "refs": {
+        "QueryGenerationConfiguration$generationContext": "<p>Specifies configurations for context to use during query generation.</p>"
+      }
+    },
+    "QueryGenerationTable": {
+      "base": "<p>Contains information about a table for the query engine to consider.</p>",
+      "refs": {
+        "QueryGenerationTables$member": null
+      }
+    },
+    "QueryGenerationTableName": {
+      "base": null,
+      "refs": {
+        "QueryGenerationTable$name": "<p>The name of the table for which the other fields in this object apply.</p>"
+      }
+    },
+    "QueryGenerationTables": {
+      "base": null,
+      "refs": {
+        "QueryGenerationContext$tables": "<p>An array of objects, each of which defines information about a table in the database.</p>"
+      }
+    },
     "RdsArn": {
       "base": null,
       "refs": {
@@ -3257,6 +3386,102 @@
       "base": null,
       "refs": {
         "RedisEnterpriseCloudConfiguration$vectorIndexName": "<p>The name of the vector index.</p>"
+      }
+    },
+    "RedshiftClusterIdentifier": {
+      "base": null,
+      "refs": {
+        "RedshiftProvisionedConfiguration$clusterIdentifier": "<p>The ID of the Amazon Redshift cluster.</p>"
+      }
+    },
+    "RedshiftConfiguration": {
+      "base": "<p>Contains configurations for an Amazon Redshift database. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html\">Build a knowledge base by connecting to a structured data source</a> in the Amazon Bedrock User Guide.</p>",
+      "refs": {
+        "SqlKnowledgeBaseConfiguration$redshiftConfiguration": "<p>Specifies configurations for a knowledge base connected to an Amazon Redshift database.</p>"
+      }
+    },
+    "RedshiftDatabase": {
+      "base": null,
+      "refs": {
+        "RedshiftQueryEngineRedshiftStorageConfiguration$databaseName": "<p>The name of the Amazon Redshift database.</p>"
+      }
+    },
+    "RedshiftProvisionedAuthConfiguration": {
+      "base": "<p>Contains configurations for authentication to an Amazon Redshift provisioned data warehouse. Specify the type of authentication to use in the <code>type</code> field and include the corresponding field. If you specify IAM authentication, you don't need to include another field.</p>",
+      "refs": {
+        "RedshiftProvisionedConfiguration$authConfiguration": "<p>Specifies configurations for authentication to Amazon Redshift.</p>"
+      }
+    },
+    "RedshiftProvisionedAuthType": {
+      "base": null,
+      "refs": {
+        "RedshiftProvisionedAuthConfiguration$type": "<p>The type of authentication to use.</p>"
+      }
+    },
+    "RedshiftProvisionedConfiguration": {
+      "base": "<p>Contains configurations for a provisioned Amazon Redshift query engine.</p>",
+      "refs": {
+        "RedshiftQueryEngineConfiguration$provisionedConfiguration": "<p>Specifies configurations for a provisioned Amazon Redshift query engine.</p>"
+      }
+    },
+    "RedshiftQueryEngineAwsDataCatalogStorageConfiguration": {
+      "base": "<p>Contains configurations for storage in Glue Data Catalog.</p>",
+      "refs": {
+        "RedshiftQueryEngineStorageConfiguration$awsDataCatalogConfiguration": "<p>Specifies configurations for storage in Glue Data Catalog.</p>"
+      }
+    },
+    "RedshiftQueryEngineConfiguration": {
+      "base": "<p>Contains configurations for an Amazon Redshift query engine. Specify the type of query engine in <code>type</code> and include the corresponding field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html\">Build a knowledge base by connecting to a structured data source</a> in the Amazon Bedrock User Guide.</p>",
+      "refs": {
+        "RedshiftConfiguration$queryEngineConfiguration": "<p>Specifies configurations for an Amazon Redshift query engine.</p>"
+      }
+    },
+    "RedshiftQueryEngineRedshiftStorageConfiguration": {
+      "base": "<p>Contains configurations for storage in Amazon Redshift.</p>",
+      "refs": {
+        "RedshiftQueryEngineStorageConfiguration$redshiftConfiguration": "<p>Specifies configurations for storage in Amazon Redshift.</p>"
+      }
+    },
+    "RedshiftQueryEngineStorageConfiguration": {
+      "base": "<p>Contains configurations for Amazon Redshift data storage. Specify the data storage service to use in the <code>type</code> field and include the corresponding field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html\">Build a knowledge base by connecting to a structured data source</a> in the Amazon Bedrock User Guide.</p>",
+      "refs": {
+        "RedshiftQueryEngineStorageConfigurations$member": null
+      }
+    },
+    "RedshiftQueryEngineStorageConfigurations": {
+      "base": null,
+      "refs": {
+        "RedshiftConfiguration$storageConfigurations": "<p>Specifies configurations for Amazon Redshift database storage.</p>"
+      }
+    },
+    "RedshiftQueryEngineStorageType": {
+      "base": null,
+      "refs": {
+        "RedshiftQueryEngineStorageConfiguration$type": "<p>The data storage service to use.</p>"
+      }
+    },
+    "RedshiftQueryEngineType": {
+      "base": null,
+      "refs": {
+        "RedshiftQueryEngineConfiguration$type": "<p>The type of query engine.</p>"
+      }
+    },
+    "RedshiftServerlessAuthConfiguration": {
+      "base": "<p>Specifies configurations for authentication to a Redshift Serverless. Specify the type of authentication to use in the <code>type</code> field and include the corresponding field. If you specify IAM authentication, you don't need to include another field.</p>",
+      "refs": {
+        "RedshiftServerlessConfiguration$authConfiguration": "<p>Specifies configurations for authentication to an Amazon Redshift provisioned data warehouse.</p>"
+      }
+    },
+    "RedshiftServerlessAuthType": {
+      "base": null,
+      "refs": {
+        "RedshiftServerlessAuthConfiguration$type": "<p>The type of authentication to use.</p>"
+      }
+    },
+    "RedshiftServerlessConfiguration": {
+      "base": "<p>Contains configurations for authentication to Amazon Redshift Serverless.</p>",
+      "refs": {
+        "RedshiftQueryEngineConfiguration$serverlessConfiguration": "<p>Specifies configurations for a serverless Amazon Redshift query engine.</p>"
       }
     },
     "RelayConversationHistory": {
@@ -3340,7 +3565,8 @@
       "refs": {
         "DocumentIdentifier$s3": "<p>Contains information that identifies the document in an S3 data source.</p>",
         "IntermediateStorage$s3Location": "<p>An S3 bucket path.</p>",
-        "S3Content$s3Location": "<p>The S3 location of the file containing the content to ingest.</p>"
+        "S3Content$s3Location": "<p>The S3 location of the file containing the content to ingest.</p>",
+        "SupplementalDataStorageLocation$s3Location": "<p>Contains information about the Amazon S3 location for the extracted images.</p>"
       }
     },
     "S3ObjectKey": {
@@ -3399,6 +3625,8 @@
         "PineconeConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Pinecone API key.</p>",
         "RdsConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Amazon RDS database.</p>",
         "RedisEnterpriseCloudConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name (ARN) of the secret that you created in Secrets Manager that is linked to your Redis Enterprise Cloud database.</p>",
+        "RedshiftProvisionedAuthConfiguration$usernamePasswordSecretArn": "<p>The ARN of an Secrets Manager secret for authentication.</p>",
+        "RedshiftServerlessAuthConfiguration$usernamePasswordSecretArn": "<p>The ARN of an Secrets Manager secret for authentication.</p>",
         "SalesforceSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your Salesforce instance URL. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/salesforce-data-source-connector.html#configuration-salesforce-connector\">Salesforce connection configuration</a>.</p>",
         "SharePointSourceConfiguration$credentialsSecretArn": "<p>The Amazon Resource Name of an Secrets Manager secret that stores your authentication credentials for your SharePoint site/sites. For more information on the key-value pairs that must be included in your secret, depending on your authentication type, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sharepoint-data-source-connector.html#configuration-sharepoint-connector\">SharePoint connection configuration</a>.</p>"
       }
@@ -3515,6 +3743,18 @@
         "ToolChoice$tool": "<p>Defines a specific tool that the model must request. No text is generated but the results of tool use are sent back to the model to help generate a response.</p>"
       }
     },
+    "SqlKnowledgeBaseConfiguration": {
+      "base": "<p>Contains configurations for a knowledge base connected to an SQL database. Specify the SQL database type in the <code>type</code> field and include the corresponding field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html\">Build a knowledge base by connecting to a structured data source</a> in the Amazon Bedrock User Guide.</p>",
+      "refs": {
+        "KnowledgeBaseConfiguration$sqlKnowledgeBaseConfiguration": "<p>Specifies configurations for a knowledge base connected to an SQL database.</p>"
+      }
+    },
+    "SqlString": {
+      "base": null,
+      "refs": {
+        "CuratedQuery$sql": "<p>The SQL equivalent of the natural language query.</p>"
+      }
+    },
     "StartIngestionJobRequest": {
       "base": null,
       "refs": {
@@ -3586,6 +3826,7 @@
         "ContentBlock$text": "<p>The text in the message.</p>",
         "KnowledgeBaseDocumentDetail$statusReason": "<p>The reason for the status. Appears alongside the status <code>IGNORED</code>.</p>",
         "ListKnowledgeBaseDocumentsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "RedshiftProvisionedAuthConfiguration$databaseUser": "<p>The database username for authentication to an Amazon Redshift provisioned data warehouse.</p>",
         "StopSequences$member": null
       }
     },
@@ -3594,6 +3835,30 @@
       "refs": {
         "MetadataAttributeValue$stringValue": "<p>The value of the string metadata attribute.</p>",
         "MetadataAttributeValueStringListValueList$member": null
+      }
+    },
+    "SupplementalDataStorageConfiguration": {
+      "base": "<p>Specifies configurations for the storage location of the images extracted from multimodal documents in your data source. These images can be retrieved and returned to the end user.</p>",
+      "refs": {
+        "VectorKnowledgeBaseConfiguration$supplementalDataStorageConfiguration": "<p>If you include multimodal data from your data source, use this object to specify configurations for the storage location of the images extracted from your documents. These images can be retrieved and returned to the end user. They can also be used in generation when using <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html\">RetrieveAndGenerate</a>.</p>"
+      }
+    },
+    "SupplementalDataStorageLocation": {
+      "base": "<p>Contains information about a storage location for images extracted from multimodal documents in your data source.</p>",
+      "refs": {
+        "SupplementalDataStorageLocations$member": null
+      }
+    },
+    "SupplementalDataStorageLocationType": {
+      "base": null,
+      "refs": {
+        "SupplementalDataStorageLocation$type": "<p>Specifies the storage service used for this location.</p>"
+      }
+    },
+    "SupplementalDataStorageLocations": {
+      "base": null,
+      "refs": {
+        "SupplementalDataStorageConfiguration$storageLocations": "<p>A list of objects specifying storage locations for images extracted from multimodal documents in your data source.</p>"
       }
     },
     "SystemContentBlock": {
@@ -4052,6 +4317,12 @@
       "base": "<p>The configuration of the URL/URLs for the web content that you want to crawl. You should be authorized to crawl the URLs.</p>",
       "refs": {
         "WebDataSourceConfiguration$sourceConfiguration": "<p>The source configuration details for the web data source.</p>"
+      }
+    },
+    "WorkgroupArn": {
+      "base": null,
+      "refs": {
+        "RedshiftServerlessConfiguration$workgroupArn": "<p>The ARN of the Amazon Redshift workgroup.</p>"
       }
     }
   }

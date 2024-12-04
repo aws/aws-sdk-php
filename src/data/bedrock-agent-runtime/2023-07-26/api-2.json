@@ -36,6 +36,27 @@
       ],
       "idempotent":true
     },
+    "GenerateQuery":{
+      "name":"GenerateQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/generateQuery",
+        "responseCode":200
+      },
+      "input":{"shape":"GenerateQueryRequest"},
+      "output":{"shape":"GenerateQueryResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "GetAgentMemory":{
       "name":"GetAgentMemory",
       "http":{
@@ -1177,6 +1198,40 @@
       "type":"list",
       "member":{"shape":"FunctionDefinition"}
     },
+    "GenerateQueryRequest":{
+      "type":"structure",
+      "required":[
+        "queryGenerationInput",
+        "transformationConfiguration"
+      ],
+      "members":{
+        "queryGenerationInput":{"shape":"QueryGenerationInput"},
+        "transformationConfiguration":{"shape":"TransformationConfiguration"}
+      }
+    },
+    "GenerateQueryResponse":{
+      "type":"structure",
+      "members":{
+        "queries":{"shape":"GeneratedQueries"}
+      }
+    },
+    "GeneratedQueries":{
+      "type":"list",
+      "member":{"shape":"GeneratedQuery"},
+      "min":0
+    },
+    "GeneratedQuery":{
+      "type":"structure",
+      "members":{
+        "sql":{"shape":"String"},
+        "type":{"shape":"GeneratedQueryType"}
+      },
+      "sensitive":true
+    },
+    "GeneratedQueryType":{
+      "type":"string",
+      "enum":["REDSHIFT_SQL"]
+    },
     "GeneratedResponsePart":{
       "type":"structure",
       "members":{
@@ -1648,6 +1703,10 @@
       },
       "union":true
     },
+    "InputQueryType":{
+      "type":"string",
+      "enum":["TEXT"]
+    },
     "InputText":{
       "type":"string",
       "max":25000000,
@@ -1875,6 +1934,12 @@
         "knowledgeBaseId":{"shape":"KnowledgeBaseId"},
         "retrievalConfiguration":{"shape":"KnowledgeBaseRetrievalConfiguration"}
       }
+    },
+    "KnowledgeBaseArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:knowledge-base/[0-9a-zA-Z]+$"
     },
     "KnowledgeBaseConfiguration":{
       "type":"structure",
@@ -2474,12 +2539,33 @@
         "properties":{"shape":"ParameterList"}
       }
     },
+    "QueryGenerationInput":{
+      "type":"structure",
+      "required":[
+        "text",
+        "type"
+      ],
+      "members":{
+        "text":{"shape":"QueryGenerationInputTextString"},
+        "type":{"shape":"InputQueryType"}
+      },
+      "sensitive":true
+    },
+    "QueryGenerationInputTextString":{
+      "type":"string",
+      "max":20000,
+      "min":1
+    },
     "QueryTransformationConfiguration":{
       "type":"structure",
       "required":["type"],
       "members":{
         "type":{"shape":"QueryTransformationType"}
       }
+    },
+    "QueryTransformationMode":{
+      "type":"string",
+      "enum":["TEXT_TO_SQL"]
     },
     "QueryTransformationType":{
       "type":"string",
@@ -2771,16 +2857,57 @@
     },
     "RetrievalResultContent":{
       "type":"structure",
-      "required":["text"],
       "members":{
-        "text":{"shape":"String"}
+        "byteContent":{"shape":"String"},
+        "row":{"shape":"RetrievalResultContentRow"},
+        "text":{"shape":"String"},
+        "type":{"shape":"RetrievalResultContentType"}
       },
       "sensitive":true
+    },
+    "RetrievalResultContentColumn":{
+      "type":"structure",
+      "members":{
+        "columnName":{"shape":"String"},
+        "columnValue":{"shape":"String"},
+        "type":{"shape":"RetrievalResultContentColumnType"}
+      },
+      "sensitive":true
+    },
+    "RetrievalResultContentColumnType":{
+      "type":"string",
+      "enum":[
+        "BLOB",
+        "BOOLEAN",
+        "DOUBLE",
+        "NULL",
+        "LONG",
+        "STRING"
+      ]
+    },
+    "RetrievalResultContentRow":{
+      "type":"list",
+      "member":{"shape":"RetrievalResultContentColumn"},
+      "sensitive":true
+    },
+    "RetrievalResultContentType":{
+      "type":"string",
+      "enum":[
+        "TEXT",
+        "IMAGE",
+        "ROW"
+      ]
     },
     "RetrievalResultCustomDocumentLocation":{
       "type":"structure",
       "members":{
         "id":{"shape":"String"}
+      }
+    },
+    "RetrievalResultKendraDocumentLocation":{
+      "type":"structure",
+      "members":{
+        "uri":{"shape":"String"}
       }
     },
     "RetrievalResultLocation":{
@@ -2789,9 +2916,11 @@
       "members":{
         "confluenceLocation":{"shape":"RetrievalResultConfluenceLocation"},
         "customDocumentLocation":{"shape":"RetrievalResultCustomDocumentLocation"},
+        "kendraDocumentLocation":{"shape":"RetrievalResultKendraDocumentLocation"},
         "s3Location":{"shape":"RetrievalResultS3Location"},
         "salesforceLocation":{"shape":"RetrievalResultSalesforceLocation"},
         "sharePointLocation":{"shape":"RetrievalResultSharePointLocation"},
+        "sqlLocation":{"shape":"RetrievalResultSqlLocation"},
         "type":{"shape":"RetrievalResultLocationType"},
         "webLocation":{"shape":"RetrievalResultWebLocation"}
       },
@@ -2805,7 +2934,9 @@
         "CONFLUENCE",
         "SALESFORCE",
         "SHAREPOINT",
-        "CUSTOM"
+        "CUSTOM",
+        "KENDRA",
+        "SQL"
       ]
     },
     "RetrievalResultMetadata":{
@@ -2842,6 +2973,12 @@
       "type":"structure",
       "members":{
         "url":{"shape":"String"}
+      }
+    },
+    "RetrievalResultSqlLocation":{
+      "type":"structure",
+      "members":{
+        "query":{"shape":"String"}
       }
     },
     "RetrievalResultWebLocation":{
@@ -3229,6 +3366,25 @@
       },
       "sensitive":true
     },
+    "TextToSqlConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "knowledgeBaseConfiguration":{"shape":"TextToSqlKnowledgeBaseConfiguration"},
+        "type":{"shape":"TextToSqlConfigurationType"}
+      }
+    },
+    "TextToSqlConfigurationType":{
+      "type":"string",
+      "enum":["KNOWLEDGE_BASE"]
+    },
+    "TextToSqlKnowledgeBaseConfiguration":{
+      "type":"structure",
+      "required":["knowledgeBaseArn"],
+      "members":{
+        "knowledgeBaseArn":{"shape":"KnowledgeBaseArn"}
+      }
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -3288,6 +3444,14 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "TransformationConfiguration":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"QueryTransformationMode"},
+        "textToSqlConfiguration":{"shape":"TextToSqlConfiguration"}
+      }
     },
     "Type":{
       "type":"string",

@@ -7,6 +7,7 @@
     "CreateGuardrail": "<p>Creates a guardrail to block topics and to implement safeguards for your generative AI applications.</p> <p>You can configure the following policies in a guardrail to avoid undesirable and harmful content, filter out denied topics and words, and remove sensitive information for privacy protection.</p> <ul> <li> <p> <b>Content filters</b> - Adjust filter strengths to block input prompts or model responses containing harmful content.</p> </li> <li> <p> <b>Denied topics</b> - Define a set of topics that are undesirable in the context of your application. These topics will be blocked if detected in user queries or model responses.</p> </li> <li> <p> <b>Word filters</b> - Configure filters to block undesirable words, phrases, and profanity. Such words can include offensive terms, competitor names etc.</p> </li> <li> <p> <b>Sensitive information filters</b> - Block or mask sensitive information such as personally identifiable information (PII) or custom regex in user inputs and model responses.</p> </li> </ul> <p>In addition to the above policies, you can also configure the messages to be returned to the user if a user input or model response is in violation of the policies defined in the guardrail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">Amazon Bedrock Guardrails</a> in the <i>Amazon Bedrock User Guide</i>.</p>",
     "CreateGuardrailVersion": "<p>Creates a version of the guardrail. Use this API to create a snapshot of the guardrail when you are satisfied with a configuration, or to compare the configuration with another version.</p>",
     "CreateInferenceProfile": "<p>Creates an application inference profile to track metrics and costs when invoking a model. To create an application inference profile for a foundation model in one region, specify the ARN of the model in that region. To create an application inference profile for a foundation model across multiple regions, specify the ARN of the system-defined inference profile that contains the regions that you want to route requests to. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
+    "CreateMarketplaceModelEndpoint": "<p>Creates an endpoint for a model from Amazon Bedrock Marketplace. The endpoint is hosted by Amazon SageMaker.</p>",
     "CreateModelCopyJob": "<p>Copies a model to another region so that it can be used there. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/copy-model.html\">Copy models to be used in other regions</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "CreateModelCustomizationJob": "<p>Creates a fine-tuning job to customize a base model.</p> <p>You specify the base foundation model and the location of the training data. After the model-customization job completes successfully, your custom model resource will be ready to use. Amazon Bedrock returns validation loss metrics and output generations after the job completes. </p> <p>For information on the format of training and validation data, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-prepare.html\">Prepare the datasets</a>.</p> <p> Model-customization jobs are asynchronous and the completion time depends on the base model and the training/validation data size. To monitor a job, use the <code>GetModelCustomizationJob</code> operation to retrieve the job status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "CreateModelImportJob": "<p>Creates a model import job to import model that you have customized in other environments, such as Amazon SageMaker. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> </p>",
@@ -16,19 +17,23 @@
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
     "DeleteImportedModel": "<p>Deletes a custom model that you imported earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>. </p>",
     "DeleteInferenceProfile": "<p>Deletes an application inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
+    "DeleteMarketplaceModelEndpoint": "<p>Deletes an endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "DeleteModelInvocationLoggingConfiguration": "<p>Delete the invocation logging. </p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created.For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetEvaluationJob": "<p>Gets information about an evaluation job, such as the status of the job.</p>",
     "GetFoundationModel": "<p>Get details about a Amazon Bedrock foundation model.</p>",
     "GetGuardrail": "<p>Gets details about a guardrail. If you don't specify a version, the response returns details for the <code>DRAFT</code> version.</p>",
     "GetImportedModel": "<p>Gets properties associated with a customized model you imported. </p>",
     "GetInferenceProfile": "<p>Gets information about an inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
+    "GetMarketplaceModelEndpoint": "<p>Retrieves details about a specific endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "GetModelCopyJob": "<p>Retrieves information about a model copy job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/copy-model.html\">Copy models to be used in other regions</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetModelCustomizationJob": "<p>Retrieves the properties associated with a model-customization job, including the status of the job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetModelImportJob": "<p>Retrieves the properties associated with import model job, including the status of the job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetModelInvocationJob": "<p>Gets details about a batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-monitor\">Monitor batch inference jobs</a> </p>",
     "GetModelInvocationLoggingConfiguration": "<p>Get the current configuration values for model invocation logging.</p>",
+    "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
@@ -36,22 +41,32 @@
     "ListGuardrails": "<p>Lists details about all the guardrails in an account. To list the <code>DRAFT</code> version of all your guardrails, don't specify the <code>guardrailIdentifier</code> field. To list all versions of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field.</p> <p>You can set the maximum number of results to return in a response in the <code>maxResults</code> field. If there are more results than the number you set, the response returns a <code>nextToken</code> that you can send in another <code>ListGuardrails</code> request to see the next batch of results.</p>",
     "ListImportedModels": "<p>Returns a list of models you've imported. You can filter the results to return based on one or more criteria. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListInferenceProfiles": "<p>Returns a list of inference profiles that you can use. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
+    "ListMarketplaceModelEndpoints": "<p>Lists the endpoints for models from Amazon Bedrock Marketplace in your Amazon Web Services account.</p>",
     "ListModelCopyJobs": "<p>Returns a list of model copy jobs that you have submitted. You can filter the jobs to return based on one or more criteria. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/copy-model.html\">Copy models to be used in other regions</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListModelCustomizationJobs": "<p>Returns a list of model customization jobs that you have submitted. You can filter the jobs to return based on one or more criteria.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListModelImportJobs": "<p>Returns a list of import jobs you've submitted. You can filter the results to return based on one or more criteria. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListModelInvocationJobs": "<p>Lists all batch inference jobs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-view.html\">View details about a batch inference job</a>.</p>",
+    "ListPromptRouters": "<p>Retrieves a list of prompt routers.</p>",
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
+    "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
     "StopEvaluationJob": "<p>Stops an evaluation job that is current being created or running.</p>",
     "StopModelCustomizationJob": "<p>Stops an active model customization job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "StopModelInvocationJob": "<p>Stops a batch inference job. You're only charged for tokens that were already processed. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-stop.html\">Stop a batch inference job</a>.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "UntagResource": "<p>Remove one or more tags from a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "UpdateGuardrail": "<p>Updates a guardrail with the values you specify.</p> <ul> <li> <p>Specify a <code>name</code> and optional <code>description</code>.</p> </li> <li> <p>Specify messages for when the guardrail successfully blocks a prompt or a model response in the <code>blockedInputMessaging</code> and <code>blockedOutputsMessaging</code> fields.</p> </li> <li> <p>Specify topics for the guardrail to deny in the <code>topicPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailTopicConfig.html\">GuardrailTopicConfig</a> object in the <code>topicsConfig</code> list pertains to one topic.</p> <ul> <li> <p>Give a <code>name</code> and <code>description</code> so that the guardrail can properly identify the topic.</p> </li> <li> <p>Specify <code>DENY</code> in the <code>type</code> field.</p> </li> <li> <p>(Optional) Provide up to five prompts that you would categorize as belonging to the topic in the <code>examples</code> list.</p> </li> </ul> </li> <li> <p>Specify filter strengths for the harmful categories defined in Amazon Bedrock in the <code>contentPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a> object in the <code>filtersConfig</code> list pertains to a harmful category. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-content-filters\">Content filters</a>. For more information about the fields in a content filter, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> <ul> <li> <p>Specify the category in the <code>type</code> field.</p> </li> <li> <p>Specify the strength of the filter for prompts in the <code>inputStrength</code> field and for model responses in the <code>strength</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> </li> </ul> </li> <li> <p>(Optional) For security, include the ARN of a KMS key in the <code>kmsKeyId</code> field.</p> </li> </ul>",
+    "UpdateMarketplaceModelEndpoint": "<p>Updates the configuration of an existing endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "UpdateProvisionedModelThroughput": "<p>Updates the name or associated model for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>"
   },
   "shapes": {
+    "AcceptEula": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceModelEndpointRequest$acceptEula": "<p>Indicates whether you accept the end-user license agreement (EULA) for the model. Set to <code>true</code> to accept the EULA.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>The request is denied because of missing access permissions.</p>",
       "refs": {
@@ -94,6 +109,18 @@
         "EvaluationSummary$applicationType": "<p>Specifies whether the evaluation job is for evaluating a model or evaluating a knowledge base (retrieval and response generation).</p>",
         "GetEvaluationJobResponse$applicationType": "<p>Specifies whether the evaluation job is for evaluating a model or evaluating a knowledge base (retrieval and response generation).</p>",
         "ListEvaluationJobsRequest$applicationTypeEquals": "<p>A filter to only list evaluation jobs that are either model evaluations or knowledge base evaluations.</p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "DeleteMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to delete.</p>",
+        "DeregisterMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to deregister.</p>",
+        "GetMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to get information about.</p>",
+        "MarketplaceModelEndpoint$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
+        "MarketplaceModelEndpointSummary$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
+        "RegisterMarketplaceModelEndpointRequest$endpointIdentifier": "<p>The ARN of the Amazon SageMaker endpoint you want to register with Amazon Bedrock Marketplace.</p>",
+        "UpdateMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to update.</p>"
       }
     },
     "AutomatedEvaluationConfig": {
@@ -272,6 +299,16 @@
       "refs": {
       }
     },
+    "CreateMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMarketplaceModelEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateModelCopyJobRequest": {
       "base": null,
       "refs": {
@@ -419,6 +456,16 @@
       "refs": {
       }
     },
+    "DeleteMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteMarketplaceModelEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteModelInvocationLoggingConfigurationRequest": {
       "base": null,
       "refs": {
@@ -439,10 +486,34 @@
       "refs": {
       }
     },
+    "DeregisterMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeregisterMarketplaceModelEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DistillationConfig": {
       "base": "<p>Settings for distilling a foundation model into a smaller and more efficient model.</p>",
       "refs": {
         "CustomizationConfig$distillationConfig": "<p>The distillation configuration for the custom model.</p>"
+      }
+    },
+    "EndpointConfig": {
+      "base": "<p>Specifies the configuration for the endpoint.</p>",
+      "refs": {
+        "CreateMarketplaceModelEndpointRequest$endpointConfig": "<p>The configuration for the endpoint, including the number and type of instances to use.</p>",
+        "MarketplaceModelEndpoint$endpointConfig": "<p>The configuration of the endpoint, including the number and type of instances used.</p>",
+        "UpdateMarketplaceModelEndpointRequest$endpointConfig": "<p>The new configuration for the endpoint, including the number and type of instances to use.</p>"
+      }
+    },
+    "EndpointName": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceModelEndpointRequest$endpointName": "<p>The name of the endpoint. This name must be unique within your Amazon Web Services account and region.</p>"
       }
     },
     "ErrorMessage": {
@@ -849,6 +920,16 @@
       "refs": {
       }
     },
+    "GetMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMarketplaceModelEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetModelCopyJobRequest": {
       "base": null,
       "refs": {
@@ -895,6 +976,16 @@
       }
     },
     "GetModelInvocationLoggingConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPromptRouterRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPromptRouterResponse": {
       "base": null,
       "refs": {
       }
@@ -1137,6 +1228,21 @@
         "GuardrailManagedWordsConfig$type": "<p>The managed word type to configure for the guardrail.</p>"
       }
     },
+    "GuardrailModalities": {
+      "base": null,
+      "refs": {
+        "GuardrailContentFilter$inputModalities": "<p>The input modalities selected for the guardrail content filter.</p>",
+        "GuardrailContentFilter$outputModalities": "<p>The output modalities selected for the guardrail content filter.</p>",
+        "GuardrailContentFilterConfig$inputModalities": "<p>The input modalities selected for the guardrail content filter configuration.</p>",
+        "GuardrailContentFilterConfig$outputModalities": "<p>The output modalities selected for the guardrail content filter configuration.</p>"
+      }
+    },
+    "GuardrailModality": {
+      "base": null,
+      "refs": {
+        "GuardrailModalities$member": null
+      }
+    },
     "GuardrailName": {
       "base": null,
       "refs": {
@@ -1180,8 +1286,8 @@
     "GuardrailPiiEntityType": {
       "base": null,
       "refs": {
-        "GuardrailPiiEntity$type": "<p>The type of PII entity. For exampvle, Social Security Number.</p>",
-        "GuardrailPiiEntityConfig$type": "<p>Configure guardrail type when the PII entity is detected.</p> <p>The following PIIs are used to block or mask sensitive information:</p> <ul> <li> <p> <b>General</b> </p> <ul> <li> <p> <b>ADDRESS</b> </p> <p>A physical address, such as \"100 Main Street, Anytown, USA\" or \"Suite #12, Building 123\". An address can include information such as the street, building, location, city, state, country, county, zip code, precinct, and neighborhood. </p> </li> <li> <p> <b>AGE</b> </p> <p>An individual's age, including the quantity and unit of time. For example, in the phrase \"I am 40 years old,\" Guarrails recognizes \"40 years\" as an age. </p> </li> <li> <p> <b>NAME</b> </p> <p>An individual's name. This entity type does not include titles, such as Dr., Mr., Mrs., or Miss. guardrails doesn't apply this entity type to names that are part of organizations or addresses. For example, guardrails recognizes the \"John Doe Organization\" as an organization, and it recognizes \"Jane Doe Street\" as an address. </p> </li> <li> <p> <b>EMAIL</b> </p> <p>An email address, such as <i>marymajor@email.com</i>.</p> </li> <li> <p> <b>PHONE</b> </p> <p>A phone number. This entity type also includes fax and pager numbers. </p> </li> <li> <p> <b>USERNAME</b> </p> <p>A user name that identifies an account, such as a login name, screen name, nick name, or handle. </p> </li> <li> <p> <b>PASSWORD</b> </p> <p>An alphanumeric string that is used as a password, such as \"*<i>very20special#pass*</i>\". </p> </li> <li> <p> <b>DRIVER_ID</b> </p> <p>The number assigned to a driver's license, which is an official document permitting an individual to operate one or more motorized vehicles on a public road. A driver's license number consists of alphanumeric characters. </p> </li> <li> <p> <b>LICENSE_PLATE</b> </p> <p>A license plate for a vehicle is issued by the state or country where the vehicle is registered. The format for passenger vehicles is typically five to eight digits, consisting of upper-case letters and numbers. The format varies depending on the location of the issuing state or country. </p> </li> <li> <p> <b>VEHICLE_IDENTIFICATION_NUMBER</b> </p> <p>A Vehicle Identification Number (VIN) uniquely identifies a vehicle. VIN content and format are defined in the <i>ISO 3779</i> specification. Each country has specific codes and formats for VINs. </p> </li> </ul> </li> <li> <p> <b>Finance</b> </p> <ul> <li> <p> <b>REDIT_DEBIT_CARD_CVV</b> </p> <p>A three-digit card verification code (CVV) that is present on VISA, MasterCard, and Discover credit and debit cards. For American Express credit or debit cards, the CVV is a four-digit numeric code. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_EXPIRY</b> </p> <p>The expiration date for a credit or debit card. This number is usually four digits long and is often formatted as <i>month/year</i> or <i>MM/YY</i>. Guardrails recognizes expiration dates such as <i>01/21</i>, <i>01/2021</i>, and <i>Jan 2021</i>. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_NUMBER</b> </p> <p>The number for a credit or debit card. These numbers can vary from 13 to 16 digits in length. However, Amazon Comprehend also recognizes credit or debit card numbers when only the last four digits are present. </p> </li> <li> <p> <b>PIN</b> </p> <p>A four-digit personal identification number (PIN) with which you can access your bank account. </p> </li> <li> <p> <b>INTERNATIONAL_BANK_ACCOUNT_NUMBER</b> </p> <p>An International Bank Account Number has specific formats in each country. For more information, see <a href=\"https://www.iban.com/structure\">www.iban.com/structure</a>.</p> </li> <li> <p> <b>SWIFT_CODE</b> </p> <p>A SWIFT code is a standard format of Bank Identifier Code (BIC) used to specify a particular bank or branch. Banks use these codes for money transfers such as international wire transfers.</p> <p>SWIFT codes consist of eight or 11 characters. The 11-digit codes refer to specific branches, while eight-digit codes (or 11-digit codes ending in 'XXX') refer to the head or primary office.</p> </li> </ul> </li> <li> <p> <b>IT</b> </p> <ul> <li> <p> <b>IP_ADDRESS</b> </p> <p>An IPv4 address, such as <i>198.51.100.0</i>. </p> </li> <li> <p> <b>MAC_ADDRESS</b> </p> <p>A <i>media access control</i> (MAC) address is a unique identifier assigned to a network interface controller (NIC). </p> </li> <li> <p> <b>URL</b> </p> <p>A web address, such as <i>www.example.com</i>. </p> </li> <li> <p> <b>AWS_ACCESS_KEY</b> </p> <p>A unique identifier that's associated with a secret access key; you use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> <li> <p> <b>AWS_SECRET_KEY</b> </p> <p>A unique identifier that's associated with an access key. You use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> </ul> </li> <li> <p> <b>USA specific</b> </p> <ul> <li> <p> <b>US_BANK_ACCOUNT_NUMBER</b> </p> <p>A US bank account number, which is typically 10 to 12 digits long. </p> </li> <li> <p> <b>US_BANK_ROUTING_NUMBER</b> </p> <p>A US bank account routing number. These are typically nine digits long, </p> </li> <li> <p> <b>US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER</b> </p> <p>A US Individual Taxpayer Identification Number (ITIN) is a nine-digit number that starts with a \"9\" and contain a \"7\" or \"8\" as the fourth digit. An ITIN can be formatted with a space or a dash after the third and forth digits. </p> </li> <li> <p> <b>US_PASSPORT_NUMBER</b> </p> <p>A US passport number. Passport numbers range from six to nine alphanumeric characters. </p> </li> <li> <p> <b>US_SOCIAL_SECURITY_NUMBER</b> </p> <p>A US Social Security Number (SSN) is a nine-digit number that is issued to US citizens, permanent residents, and temporary working residents. </p> </li> </ul> </li> <li> <p> <b>Canada specific</b> </p> <ul> <li> <p> <b>CA_HEALTH_NUMBER</b> </p> <p>A Canadian Health Service Number is a 10-digit unique identifier, required for individuals to access healthcare benefits. </p> </li> <li> <p> <b>CA_SOCIAL_INSURANCE_NUMBER</b> </p> <p>A Canadian Social Insurance Number (SIN) is a nine-digit unique identifier, required for individuals to access government programs and benefits.</p> <p>The SIN is formatted as three groups of three digits, such as <i>123-456-789</i>. A SIN can be validated through a simple check-digit process called the <a href=\"https://www.wikipedia.org/wiki/Luhn_algorithm\">Luhn algorithm</a>.</p> </li> </ul> </li> <li> <p> <b>UK Specific</b> </p> <ul> <li> <p> <b>UK_NATIONAL_HEALTH_SERVICE_NUMBER</b> </p> <p>A UK National Health Service Number is a 10-17 digit number, such as <i>485 777 3456</i>. The current system formats the 10-digit number with spaces after the third and sixth digits. The final digit is an error-detecting checksum.</p> </li> <li> <p> <b>UK_NATIONAL_INSURANCE_NUMBER</b> </p> <p>A UK National Insurance Number (NINO) provides individuals with access to National Insurance (social security) benefits. It is also used for some purposes in the UK tax system.</p> <p>The number is nine digits long and starts with two letters, followed by six numbers and one letter. A NINO can be formatted with a space or a dash after the two letters and after the second, forth, and sixth digits.</p> </li> <li> <p> <b>UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER</b> </p> <p>A UK Unique Taxpayer Reference (UTR) is a 10-digit number that identifies a taxpayer or a business. </p> </li> </ul> </li> <li> <p> <b>Custom</b> </p> <ul> <li> <p> <b>Regex filter</b> - You can use a regular expressions to define patterns for a guardrail to recognize and act upon such as serial number, booking ID etc..</p> </li> </ul> </li> </ul>"
+        "GuardrailPiiEntity$type": "<p>The type of PII entity. For example, Social Security Number.</p>",
+        "GuardrailPiiEntityConfig$type": "<p>Configure guardrail type when the PII entity is detected.</p> <p>The following PIIs are used to block or mask sensitive information:</p> <ul> <li> <p> <b>General</b> </p> <ul> <li> <p> <b>ADDRESS</b> </p> <p>A physical address, such as \"100 Main Street, Anytown, USA\" or \"Suite #12, Building 123\". An address can include information such as the street, building, location, city, state, country, county, zip code, precinct, and neighborhood. </p> </li> <li> <p> <b>AGE</b> </p> <p>An individual's age, including the quantity and unit of time. For example, in the phrase \"I am 40 years old,\" Guardrails recognizes \"40 years\" as an age. </p> </li> <li> <p> <b>NAME</b> </p> <p>An individual's name. This entity type does not include titles, such as Dr., Mr., Mrs., or Miss. guardrails doesn't apply this entity type to names that are part of organizations or addresses. For example, guardrails recognizes the \"John Doe Organization\" as an organization, and it recognizes \"Jane Doe Street\" as an address. </p> </li> <li> <p> <b>EMAIL</b> </p> <p>An email address, such as <i>marymajor@email.com</i>.</p> </li> <li> <p> <b>PHONE</b> </p> <p>A phone number. This entity type also includes fax and pager numbers. </p> </li> <li> <p> <b>USERNAME</b> </p> <p>A user name that identifies an account, such as a login name, screen name, nick name, or handle. </p> </li> <li> <p> <b>PASSWORD</b> </p> <p>An alphanumeric string that is used as a password, such as \"*<i>very20special#pass*</i>\". </p> </li> <li> <p> <b>DRIVER_ID</b> </p> <p>The number assigned to a driver's license, which is an official document permitting an individual to operate one or more motorized vehicles on a public road. A driver's license number consists of alphanumeric characters. </p> </li> <li> <p> <b>LICENSE_PLATE</b> </p> <p>A license plate for a vehicle is issued by the state or country where the vehicle is registered. The format for passenger vehicles is typically five to eight digits, consisting of upper-case letters and numbers. The format varies depending on the location of the issuing state or country. </p> </li> <li> <p> <b>VEHICLE_IDENTIFICATION_NUMBER</b> </p> <p>A Vehicle Identification Number (VIN) uniquely identifies a vehicle. VIN content and format are defined in the <i>ISO 3779</i> specification. Each country has specific codes and formats for VINs. </p> </li> </ul> </li> <li> <p> <b>Finance</b> </p> <ul> <li> <p> <b>CREDIT_DEBIT_CARD_CVV</b> </p> <p>A three-digit card verification code (CVV) that is present on VISA, MasterCard, and Discover credit and debit cards. For American Express credit or debit cards, the CVV is a four-digit numeric code. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_EXPIRY</b> </p> <p>The expiration date for a credit or debit card. This number is usually four digits long and is often formatted as <i>month/year</i> or <i>MM/YY</i>. Guardrails recognizes expiration dates such as <i>01/21</i>, <i>01/2021</i>, and <i>Jan 2021</i>. </p> </li> <li> <p> <b>CREDIT_DEBIT_CARD_NUMBER</b> </p> <p>The number for a credit or debit card. These numbers can vary from 13 to 16 digits in length. However, Amazon Comprehend also recognizes credit or debit card numbers when only the last four digits are present. </p> </li> <li> <p> <b>PIN</b> </p> <p>A four-digit personal identification number (PIN) with which you can access your bank account. </p> </li> <li> <p> <b>INTERNATIONAL_BANK_ACCOUNT_NUMBER</b> </p> <p>An International Bank Account Number has specific formats in each country. For more information, see <a href=\"https://www.iban.com/structure\">www.iban.com/structure</a>.</p> </li> <li> <p> <b>SWIFT_CODE</b> </p> <p>A SWIFT code is a standard format of Bank Identifier Code (BIC) used to specify a particular bank or branch. Banks use these codes for money transfers such as international wire transfers.</p> <p>SWIFT codes consist of eight or 11 characters. The 11-digit codes refer to specific branches, while eight-digit codes (or 11-digit codes ending in 'XXX') refer to the head or primary office.</p> </li> </ul> </li> <li> <p> <b>IT</b> </p> <ul> <li> <p> <b>IP_ADDRESS</b> </p> <p>An IPv4 address, such as <i>198.51.100.0</i>. </p> </li> <li> <p> <b>MAC_ADDRESS</b> </p> <p>A <i>media access control</i> (MAC) address is a unique identifier assigned to a network interface controller (NIC). </p> </li> <li> <p> <b>URL</b> </p> <p>A web address, such as <i>www.example.com</i>. </p> </li> <li> <p> <b>AWS_ACCESS_KEY</b> </p> <p>A unique identifier that's associated with a secret access key; you use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> <li> <p> <b>AWS_SECRET_KEY</b> </p> <p>A unique identifier that's associated with an access key. You use the access key ID and secret access key to sign programmatic Amazon Web Services requests cryptographically. </p> </li> </ul> </li> <li> <p> <b>USA specific</b> </p> <ul> <li> <p> <b>US_BANK_ACCOUNT_NUMBER</b> </p> <p>A US bank account number, which is typically 10 to 12 digits long. </p> </li> <li> <p> <b>US_BANK_ROUTING_NUMBER</b> </p> <p>A US bank account routing number. These are typically nine digits long, </p> </li> <li> <p> <b>US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER</b> </p> <p>A US Individual Taxpayer Identification Number (ITIN) is a nine-digit number that starts with a \"9\" and contain a \"7\" or \"8\" as the fourth digit. An ITIN can be formatted with a space or a dash after the third and forth digits. </p> </li> <li> <p> <b>US_PASSPORT_NUMBER</b> </p> <p>A US passport number. Passport numbers range from six to nine alphanumeric characters. </p> </li> <li> <p> <b>US_SOCIAL_SECURITY_NUMBER</b> </p> <p>A US Social Security Number (SSN) is a nine-digit number that is issued to US citizens, permanent residents, and temporary working residents. </p> </li> </ul> </li> <li> <p> <b>Canada specific</b> </p> <ul> <li> <p> <b>CA_HEALTH_NUMBER</b> </p> <p>A Canadian Health Service Number is a 10-digit unique identifier, required for individuals to access healthcare benefits. </p> </li> <li> <p> <b>CA_SOCIAL_INSURANCE_NUMBER</b> </p> <p>A Canadian Social Insurance Number (SIN) is a nine-digit unique identifier, required for individuals to access government programs and benefits.</p> <p>The SIN is formatted as three groups of three digits, such as <i>123-456-789</i>. A SIN can be validated through a simple check-digit process called the <a href=\"https://www.wikipedia.org/wiki/Luhn_algorithm\">Luhn algorithm</a>.</p> </li> </ul> </li> <li> <p> <b>UK Specific</b> </p> <ul> <li> <p> <b>UK_NATIONAL_HEALTH_SERVICE_NUMBER</b> </p> <p>A UK National Health Service Number is a 10-17 digit number, such as <i>485 777 3456</i>. The current system formats the 10-digit number with spaces after the third and sixth digits. The final digit is an error-detecting checksum.</p> </li> <li> <p> <b>UK_NATIONAL_INSURANCE_NUMBER</b> </p> <p>A UK National Insurance Number (NINO) provides individuals with access to National Insurance (social security) benefits. It is also used for some purposes in the UK tax system.</p> <p>The number is nine digits long and starts with two letters, followed by six numbers and one letter. A NINO can be formatted with a space or a dash after the two letters and after the second, forth, and sixth digits.</p> </li> <li> <p> <b>UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER</b> </p> <p>A UK Unique Taxpayer Reference (UTR) is a 10-digit number that identifies a taxpayer or a business. </p> </li> </ul> </li> <li> <p> <b>Custom</b> </p> <ul> <li> <p> <b>Regex filter</b> - You can use a regular expressions to define patterns for a guardrail to recognize and act upon such as serial number, booking ID etc..</p> </li> </ul> </li> </ul>"
       }
     },
     "GuardrailRegex": {
@@ -1462,11 +1568,13 @@
         "CreateGuardrailRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon S3 User Guide</i>.</p>",
         "CreateGuardrailVersionRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon S3 User Guide</i>.</p>",
         "CreateInferenceProfileRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateMarketplaceModelEndpointRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is listed as not required because Amazon Web Services SDKs automatically generate it for you and set this parameter. If you're not using the Amazon Web Services SDK or the CLI, you must provide this token or the action will fail.</p>",
         "CreateModelCopyJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateModelCustomizationJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateModelImportJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateProvisionedModelThroughputRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the Amazon S3 User Guide.</p>",
-        "GetModelCustomizationJobResponse$clientRequestToken": "<p>The token that you specified in the <code>CreateCustomizationJob</code> request.</p>"
+        "GetModelCustomizationJobResponse$clientRequestToken": "<p>The token that you specified in the <code>CreateCustomizationJob</code> request.</p>",
+        "UpdateMarketplaceModelEndpointRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is listed as not required because Amazon Web Services SDKs automatically generate it for you and set this parameter. If you're not using the Amazon Web Services SDK or the CLI, you must provide this token or the action will fail.</p>"
       }
     },
     "Identifier": {
@@ -1619,6 +1727,18 @@
         "FoundationModelSummary$inferenceTypesSupported": "<p>The inference types that the model supports.</p>"
       }
     },
+    "InstanceCount": {
+      "base": null,
+      "refs": {
+        "SageMakerEndpoint$initialInstanceCount": "<p>The number of Amazon EC2 compute instances to deploy for initial endpoint creation.</p>"
+      }
+    },
+    "InstanceType": {
+      "base": null,
+      "refs": {
+        "SageMakerEndpoint$instanceType": "<p>The Amazon EC2 compute instance type to deploy for hosting the model.</p>"
+      }
+    },
     "InstructSupported": {
       "base": null,
       "refs": {
@@ -1699,6 +1819,7 @@
         "CreateModelImportJobRequest$importedModelKmsKeyId": "<p>The imported model is encrypted at rest using this key.</p>",
         "GetEvaluationJobResponse$customerEncryptionKeyId": "<p>The Amazon Resource Name (ARN) of the customer managed encryption key specified when the evaluation job was created.</p>",
         "ModelInvocationJobS3OutputDataConfig$s3EncryptionKeyId": "<p>The unique identifier of the key that encrypts the S3 location of the output data.</p>",
+        "SageMakerEndpoint$kmsEncryptionKey": "<p>The Amazon Web Services KMS key that Amazon SageMaker uses to encrypt data on the storage volume attached to the Amazon EC2 compute instance that hosts the endpoint.</p>",
         "UpdateGuardrailRequest$kmsKeyId": "<p>The ARN of the KMS key with which to encrypt the guardrail.</p>"
       }
     },
@@ -1801,6 +1922,16 @@
       "refs": {
       }
     },
+    "ListMarketplaceModelEndpointsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMarketplaceModelEndpointsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListModelCopyJobsRequest": {
       "base": null,
       "refs": {
@@ -1841,6 +1972,16 @@
       "refs": {
       }
     },
+    "ListPromptRoutersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPromptRoutersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListProvisionedModelThroughputsRequest": {
       "base": null,
       "refs": {
@@ -1874,6 +2015,27 @@
         "PutModelInvocationLoggingConfigurationRequest$loggingConfig": "<p>The logging configuration values to set.</p>"
       }
     },
+    "MarketplaceModelEndpoint": {
+      "base": "<p>Contains details about an endpoint for a model from Amazon Bedrock Marketplace.</p>",
+      "refs": {
+        "CreateMarketplaceModelEndpointResponse$marketplaceModelEndpoint": "<p>Details about the created endpoint.</p>",
+        "GetMarketplaceModelEndpointResponse$marketplaceModelEndpoint": "<p>Details about the requested endpoint.</p>",
+        "RegisterMarketplaceModelEndpointResponse$marketplaceModelEndpoint": "<p>Details about the registered endpoint.</p>",
+        "UpdateMarketplaceModelEndpointResponse$marketplaceModelEndpoint": "<p>Details about the updated endpoint.</p>"
+      }
+    },
+    "MarketplaceModelEndpointSummaries": {
+      "base": null,
+      "refs": {
+        "ListMarketplaceModelEndpointsResponse$marketplaceModelEndpoints": "<p>An array of endpoint summaries.</p>"
+      }
+    },
+    "MarketplaceModelEndpointSummary": {
+      "base": "<p>Provides a summary of an endpoint for a model from Amazon Bedrock Marketplace.</p>",
+      "refs": {
+        "MarketplaceModelEndpointSummaries$member": null
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -1882,10 +2044,12 @@
         "ListGuardrailsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
         "ListImportedModelsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListInferenceProfilesRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListMarketplaceModelEndpointsRequest$maxResults": "<p>The maximum number of results to return in a single call. If more results are available, the operation returns a <code>NextToken</code> value.</p>",
         "ListModelCopyJobsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListModelCustomizationJobsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListModelImportJobsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListModelInvocationJobsRequest$maxResults": "<p>The maximum number of results to return. If there are more results than the number that you specify, a <code>nextToken</code> value is returned. Use the <code>nextToken</code> in a request to return the next batch of results.</p>",
+        "ListPromptRoutersRequest$maxResults": "<p>The maximum number of prompt routers to return in one page of results.</p>",
         "ListProvisionedModelThroughputsRequest$maxResults": "<p>THe maximum number of results to return in the response. If there are more results than the number you specified, the response returns a <code>nextToken</code> value. To see the next batch of results, send the <code>nextToken</code> value in another list request.</p>"
       }
     },
@@ -2191,6 +2355,16 @@
         "CustomModelSummary$baseModelName": "<p>The base model name.</p>"
       }
     },
+    "ModelSourceIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateMarketplaceModelEndpointRequest$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that you want to deploy to the endpoint.</p>",
+        "ListMarketplaceModelEndpointsRequest$modelSourceEquals": "<p>If specified, only endpoints for the given model source identifier are returned.</p>",
+        "MarketplaceModelEndpoint$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on this endpoint.</p>",
+        "MarketplaceModelEndpointSummary$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on this endpoint.</p>",
+        "RegisterMarketplaceModelEndpointRequest$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on the endpoint.</p>"
+      }
+    },
     "NonBlankString": {
       "base": null,
       "refs": {
@@ -2199,6 +2373,7 @@
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
+        "ServiceUnavailableException$message": null,
         "ThrottlingException$message": null,
         "TooManyTagsException$message": null,
         "ValidationException$message": null
@@ -2231,6 +2406,8 @@
         "ListImportedModelsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListInferenceProfilesRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListInferenceProfilesResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListMarketplaceModelEndpointsRequest$nextToken": "<p>The token for the next set of results. You receive this token from a previous <code>ListMarketplaceModelEndpoints</code> call.</p>",
+        "ListMarketplaceModelEndpointsResponse$nextToken": "<p>The token for the next set of results. Use this token to get the next set of results.</p>",
         "ListModelCopyJobsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListModelCopyJobsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListModelCustomizationJobsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
@@ -2239,6 +2416,8 @@
         "ListModelImportJobsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListModelInvocationJobsRequest$nextToken": "<p>If there were more results than the value you specified in the <code>maxResults</code> field in a previous <code>ListModelInvocationJobs</code> request, the response would have returned a <code>nextToken</code> value. To see the next batch of results, send the <code>nextToken</code> value in another request.</p>",
         "ListModelInvocationJobsResponse$nextToken": "<p>If there are more results than can fit in the response, a <code>nextToken</code> is returned. Use the <code>nextToken</code> in a request to return the next batch of results.</p>",
+        "ListPromptRoutersRequest$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
+        "ListPromptRoutersResponse$nextToken": "<p>Specify the pagination token from a previous request to retrieve the next page of results.</p>",
         "ListProvisionedModelThroughputsRequest$nextToken": "<p>If there are more results than the number you specified in the <code>maxResults</code> field, the response returns a <code>nextToken</code> value. To see the next batch of results, specify the <code>nextToken</code> value in this field.</p>",
         "ListProvisionedModelThroughputsResponse$nextToken": "<p>If there are more results than the number you specified in the <code>maxResults</code> field, this value is returned. To see the next batch of results, include this value in the <code>nextToken</code> field in another list request.</p>"
       }
@@ -2251,6 +2430,75 @@
         "GetProvisionedModelThroughputResponse$desiredModelUnits": "<p>The number of model units that was requested for this Provisioned Throughput.</p>",
         "ProvisionedModelSummary$modelUnits": "<p>The number of model units allocated to the Provisioned Throughput.</p>",
         "ProvisionedModelSummary$desiredModelUnits": "<p>The number of model units that was requested to be allocated to the Provisioned Throughput.</p>"
+      }
+    },
+    "PromptRouterArn": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterRequest$promptRouterArn": "<p>The prompt router's ARN</p>",
+        "GetPromptRouterResponse$promptRouterArn": "<p>The prompt router's ARN</p>",
+        "PromptRouterSummary$promptRouterArn": "<p>The router's ARN.</p>"
+      }
+    },
+    "PromptRouterDescription": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterResponse$description": "<p>The router's description.</p>",
+        "PromptRouterSummary$description": "<p>The router's description.</p>"
+      }
+    },
+    "PromptRouterName": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterResponse$promptRouterName": "<p>The router's name.</p>",
+        "PromptRouterSummary$promptRouterName": "<p>The router's name.</p>"
+      }
+    },
+    "PromptRouterStatus": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterResponse$status": "<p>The router's status.</p>",
+        "PromptRouterSummary$status": "<p>The router's status.</p>"
+      }
+    },
+    "PromptRouterSummaries": {
+      "base": null,
+      "refs": {
+        "ListPromptRoutersResponse$promptRouterSummaries": "<p>A list of prompt router summaries.</p>"
+      }
+    },
+    "PromptRouterSummary": {
+      "base": "<p>Details about a prompt router.</p>",
+      "refs": {
+        "PromptRouterSummaries$member": null
+      }
+    },
+    "PromptRouterTargetModel": {
+      "base": "<p>The target model for a prompt router.</p>",
+      "refs": {
+        "GetPromptRouterResponse$fallbackModel": "<p>The router's fallback model.</p>",
+        "PromptRouterSummary$fallbackModel": "<p>The router's fallback model.</p>",
+        "PromptRouterTargetModels$member": null
+      }
+    },
+    "PromptRouterTargetModelArn": {
+      "base": null,
+      "refs": {
+        "PromptRouterTargetModel$modelArn": "<p>The target model's ARN.</p>"
+      }
+    },
+    "PromptRouterTargetModels": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterResponse$models": "<p>The router's models.</p>",
+        "PromptRouterSummary$models": "<p>The router's models.</p>"
+      }
+    },
+    "PromptRouterType": {
+      "base": null,
+      "refs": {
+        "GetPromptRouterResponse$type": "<p>The router's type.</p>",
+        "PromptRouterSummary$type": "<p>The summary's type.</p>"
       }
     },
     "PromptTemplate": {
@@ -2364,6 +2612,16 @@
         "EvaluationInferenceConfig$ragConfigs": "<p>Contains the configuration details of the inference for a knowledge base evaluation job, including either the retrieval only configuration or the retrieval with response generation configuration.</p>"
       }
     },
+    "RegisterMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RegisterMarketplaceModelEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "RequestMetadataBaseFilters": {
       "base": "<p>A mapping of a metadata key to a value that it should or should not equal.</p>",
       "refs": {
@@ -2453,7 +2711,21 @@
         "GetModelCustomizationJobResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role.</p>",
         "GetModelImportJobResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with this job.</p>",
         "GetModelInvocationJobResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the service role with permissions to carry out and manage batch inference. You can use the console to create a default service role or follow the steps at <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-iam-sr.html\">Create a service role for batch inference</a>.</p>",
-        "ModelInvocationJobSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the service role with permissions to carry out and manage batch inference. You can use the console to create a default service role or follow the steps at <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-iam-sr.html\">Create a service role for batch inference</a>.</p>"
+        "ModelInvocationJobSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the service role with permissions to carry out and manage batch inference. You can use the console to create a default service role or follow the steps at <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-iam-sr.html\">Create a service role for batch inference</a>.</p>",
+        "SageMakerEndpoint$executionRole": "<p>The ARN of the IAM role that Amazon SageMaker can assume to access model artifacts and docker image for deployment on Amazon EC2 compute instances or for batch transform jobs.</p>"
+      }
+    },
+    "RoutingCriteria": {
+      "base": "<p>Routing criteria for a prompt router.</p>",
+      "refs": {
+        "GetPromptRouterResponse$routingCriteria": "<p>The router's routing criteria.</p>",
+        "PromptRouterSummary$routingCriteria": "<p>The router's routing criteria.</p>"
+      }
+    },
+    "RoutingCriteriaResponseQualityDifferenceDouble": {
+      "base": null,
+      "refs": {
+        "RoutingCriteria$responseQualityDifference": "<p>The criteria's response quality difference.</p>"
       }
     },
     "S3Config": {
@@ -2495,6 +2767,12 @@
         "Validator$s3Uri": "<p>The S3 URI where the validation data is stored.</p>"
       }
     },
+    "SageMakerEndpoint": {
+      "base": "<p>Specifies the configuration for a Amazon SageMaker endpoint.</p>",
+      "refs": {
+        "EndpointConfig$sageMaker": "<p>The configuration specific to Amazon SageMaker for the endpoint.</p>"
+      }
+    },
     "SageMakerFlowDefinitionArn": {
       "base": null,
       "refs": {
@@ -2521,6 +2799,11 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
+      "refs": {
+      }
+    },
+    "ServiceUnavailableException": {
+      "base": "<p>Returned if the service cannot complete the request.</p>",
       "refs": {
       }
     },
@@ -2560,6 +2843,13 @@
         "ListProvisionedModelThroughputsRequest$sortOrder": "<p>The sort order of the results.</p>"
       }
     },
+    "Status": {
+      "base": null,
+      "refs": {
+        "MarketplaceModelEndpoint$status": "<p>The overall status of the endpoint in Amazon Bedrock Marketplace (e.g., ACTIVE, INACTIVE).</p>",
+        "MarketplaceModelEndpointSummary$status": "<p>The overall status of the endpoint in Amazon Bedrock Marketplace.</p>"
+      }
+    },
     "StopEvaluationJobRequest": {
       "base": null,
       "refs": {
@@ -2596,6 +2886,10 @@
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
         "BatchDeleteEvaluationJobError$message": "<p>A status message about the evaluation job deletion.</p>",
         "GetImportedModelResponse$modelArchitecture": "<p>The architecture of the imported model.</p>",
+        "MarketplaceModelEndpoint$statusMessage": "<p>Additional information about the overall status, if available.</p>",
+        "MarketplaceModelEndpoint$endpointStatus": "<p>The current status of the endpoint (e.g., Creating, InService, Updating, Failed).</p>",
+        "MarketplaceModelEndpoint$endpointStatusMessage": "<p>Additional information about the endpoint status, if available.</p>",
+        "MarketplaceModelEndpointSummary$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "ModelCustomizationHyperParameters$key": null,
         "ModelCustomizationHyperParameters$value": null
       }
@@ -2637,6 +2931,7 @@
         "CreateEvaluationJobRequest$jobTags": "<p>Tags to attach to the model evaluation job.</p>",
         "CreateGuardrailRequest$tags": "<p>The tags that you want to attach to the guardrail. </p>",
         "CreateInferenceProfileRequest$tags": "<p>An array of objects, each of which contains a tag and its value. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+        "CreateMarketplaceModelEndpointRequest$tags": "<p>An array of key-value pairs to apply to the underlying Amazon SageMaker endpoint. You can use these tags to organize and identify your Amazon Web Services resources.</p>",
         "CreateModelCopyJobRequest$targetModelTags": "<p>Tags to associate with the target model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tag resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
         "CreateModelCustomizationJobRequest$jobTags": "<p>Tags to attach to the job.</p>",
         "CreateModelCustomizationJobRequest$customModelTags": "<p>Tags to attach to the resulting custom model.</p>",
@@ -2735,6 +3030,8 @@
         "GetModelInvocationJobResponse$lastModifiedTime": "<p>The time at which the batch inference job was last modified.</p>",
         "GetModelInvocationJobResponse$endTime": "<p>The time at which the batch inference job ended.</p>",
         "GetModelInvocationJobResponse$jobExpirationTime": "<p>The time at which the batch inference job times or timed out.</p>",
+        "GetPromptRouterResponse$createdAt": "<p>When the router was created.</p>",
+        "GetPromptRouterResponse$updatedAt": "<p>When the router was updated.</p>",
         "GetProvisionedModelThroughputResponse$creationTime": "<p>The timestamp of the creation time for this Provisioned Throughput. </p>",
         "GetProvisionedModelThroughputResponse$lastModifiedTime": "<p>The timestamp of the last time that this Provisioned Throughput was modified. </p>",
         "GetProvisionedModelThroughputResponse$commitmentExpirationTime": "<p>The timestamp for when the commitment term for the Provisioned Throughput expires.</p>",
@@ -2759,6 +3056,10 @@
         "ListModelInvocationJobsRequest$submitTimeBefore": "<p>Specify a time to filter for batch inference jobs that were submitted before the time you specify.</p>",
         "ListProvisionedModelThroughputsRequest$creationTimeAfter": "<p>A filter that returns Provisioned Throughputs created after the specified time. </p>",
         "ListProvisionedModelThroughputsRequest$creationTimeBefore": "<p>A filter that returns Provisioned Throughputs created before the specified time. </p>",
+        "MarketplaceModelEndpoint$createdAt": "<p>The timestamp when the endpoint was registered.</p>",
+        "MarketplaceModelEndpoint$updatedAt": "<p>The timestamp when the endpoint was last updated.</p>",
+        "MarketplaceModelEndpointSummary$createdAt": "<p>The timestamp when the endpoint was created.</p>",
+        "MarketplaceModelEndpointSummary$updatedAt": "<p>The timestamp when the endpoint was last updated.</p>",
         "ModelCopyJobSummary$creationTime": "<p>The time that the model copy job was created.</p>",
         "ModelCustomizationJobSummary$lastModifiedTime": "<p>Time that the customization job was last modified.</p>",
         "ModelCustomizationJobSummary$creationTime": "<p>Creation time of the custom model. </p>",
@@ -2770,6 +3071,8 @@
         "ModelInvocationJobSummary$lastModifiedTime": "<p>The time at which the batch inference job was last modified.</p>",
         "ModelInvocationJobSummary$endTime": "<p>The time at which the batch inference job ended.</p>",
         "ModelInvocationJobSummary$jobExpirationTime": "<p>The time at which the batch inference job times or timed out.</p>",
+        "PromptRouterSummary$createdAt": "<p>When the router was created.</p>",
+        "PromptRouterSummary$updatedAt": "<p>When the router was updated.</p>",
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
@@ -2818,6 +3121,16 @@
       }
     },
     "UpdateGuardrailResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateMarketplaceModelEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateMarketplaceModelEndpointResponse": {
       "base": null,
       "refs": {
       }
@@ -2885,7 +3198,8 @@
         "GetModelCustomizationJobResponse$vpcConfig": "<p>VPC configuration for the custom model job.</p>",
         "GetModelImportJobResponse$vpcConfig": "<p>The Virtual Private Cloud (VPC) configuration of the import model job.</p>",
         "GetModelInvocationJobResponse$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc\">Protect batch inference jobs using a VPC</a>.</p>",
-        "ModelInvocationJobSummary$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc\">Protect batch inference jobs using a VPC</a>.</p>"
+        "ModelInvocationJobSummary$vpcConfig": "<p>The configuration of the Virtual Private Cloud (VPC) for the data in the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc\">Protect batch inference jobs using a VPC</a>.</p>",
+        "SageMakerEndpoint$vpc": "<p>The VPC configuration for the endpoint.</p>"
       }
     },
     "kBS3Uri": {

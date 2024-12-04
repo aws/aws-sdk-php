@@ -111,6 +111,25 @@
       ],
       "idempotent":true
     },
+    "CreateMarketplaceModelEndpoint":{
+      "name":"CreateMarketplaceModelEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/marketplace-model/endpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMarketplaceModelEndpointRequest"},
+      "output":{"shape":"CreateMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateModelCopyJob":{
       "name":"CreateModelCopyJob",
       "http":{
@@ -286,6 +305,24 @@
       ],
       "idempotent":true
     },
+    "DeleteMarketplaceModelEndpoint":{
+      "name":"DeleteMarketplaceModelEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/marketplace-model/endpoints/{endpointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteMarketplaceModelEndpointRequest"},
+      "output":{"shape":"DeleteMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteModelInvocationLoggingConfiguration":{
       "name":"DeleteModelInvocationLoggingConfiguration",
       "http":{
@@ -320,6 +357,24 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "DeregisterMarketplaceModelEndpoint":{
+      "name":"DeregisterMarketplaceModelEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/marketplace-model/endpoints/{endpointArn}/registration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeregisterMarketplaceModelEndpointRequest"},
+      "output":{"shape":"DeregisterMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "GetCustomModel":{
       "name":"GetCustomModel",
@@ -423,6 +478,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetMarketplaceModelEndpoint":{
+      "name":"GetMarketplaceModelEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/marketplace-model/endpoints/{endpointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMarketplaceModelEndpointRequest"},
+      "output":{"shape":"GetMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetModelCopyJob":{
       "name":"GetModelCopyJob",
       "http":{
@@ -502,6 +574,23 @@
       "output":{"shape":"GetModelInvocationLoggingConfigurationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetPromptRouter":{
+      "name":"GetPromptRouter",
+      "http":{
+        "method":"GET",
+        "requestUri":"/prompt-routers/{promptRouterArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPromptRouterRequest"},
+      "output":{"shape":"GetPromptRouterResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ]
@@ -620,6 +709,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListMarketplaceModelEndpoints":{
+      "name":"ListMarketplaceModelEndpoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/marketplace-model/endpoints",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMarketplaceModelEndpointsRequest"},
+      "output":{"shape":"ListMarketplaceModelEndpointsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListModelCopyJobs":{
       "name":"ListModelCopyJobs",
       "http":{
@@ -685,6 +791,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListPromptRouters":{
+      "name":"ListPromptRouters",
+      "http":{
+        "method":"GET",
+        "requestUri":"/prompt-routers",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPromptRoutersRequest"},
+      "output":{"shape":"ListPromptRoutersResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListProvisionedModelThroughputs":{
       "name":"ListProvisionedModelThroughputs",
       "http":{
@@ -734,6 +856,24 @@
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
+    },
+    "RegisterMarketplaceModelEndpoint":{
+      "name":"RegisterMarketplaceModelEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/marketplace-model/endpoints/{endpointIdentifier}/registration",
+        "responseCode":200
+      },
+      "input":{"shape":"RegisterMarketplaceModelEndpointRequest"},
+      "output":{"shape":"RegisterMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
     },
     "StopEvaluationJob":{
       "name":"StopEvaluationJob",
@@ -845,6 +985,25 @@
       ],
       "idempotent":true
     },
+    "UpdateMarketplaceModelEndpoint":{
+      "name":"UpdateMarketplaceModelEndpoint",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/marketplace-model/endpoints/{endpointArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMarketplaceModelEndpointRequest"},
+      "output":{"shape":"UpdateMarketplaceModelEndpointResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateProvisionedModelThroughput":{
       "name":"UpdateProvisionedModelThroughput",
       "http":{
@@ -865,6 +1024,7 @@
     }
   },
   "shapes":{
+    "AcceptEula":{"type":"boolean"},
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -902,6 +1062,11 @@
         "ModelEvaluation",
         "RagEvaluation"
       ]
+    },
+    "Arn":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "AutomatedEvaluationConfig":{
       "type":"structure",
@@ -1185,6 +1350,32 @@
         "status":{"shape":"InferenceProfileStatus"}
       }
     },
+    "CreateMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "modelSourceIdentifier",
+        "endpointConfig",
+        "endpointName"
+      ],
+      "members":{
+        "modelSourceIdentifier":{"shape":"ModelSourceIdentifier"},
+        "endpointConfig":{"shape":"EndpointConfig"},
+        "acceptEula":{"shape":"AcceptEula"},
+        "endpointName":{"shape":"EndpointName"},
+        "clientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "required":["marketplaceModelEndpoint"],
+      "members":{
+        "marketplaceModelEndpoint":{"shape":"MarketplaceModelEndpoint"}
+      }
+    },
     "CreateModelCopyJobRequest":{
       "type":"structure",
       "required":[
@@ -1450,6 +1641,22 @@
       "members":{
       }
     },
+    "DeleteMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":["endpointArn"],
+      "members":{
+        "endpointArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"endpointArn"
+        }
+      }
+    },
+    "DeleteMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteModelInvocationLoggingConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -1476,12 +1683,40 @@
       "members":{
       }
     },
+    "DeregisterMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":["endpointArn"],
+      "members":{
+        "endpointArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"endpointArn"
+        }
+      }
+    },
+    "DeregisterMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DistillationConfig":{
       "type":"structure",
       "required":["teacherModelConfig"],
       "members":{
         "teacherModelConfig":{"shape":"TeacherModelConfig"}
       }
+    },
+    "EndpointConfig":{
+      "type":"structure",
+      "members":{
+        "sageMaker":{"shape":"SageMakerEndpoint"}
+      },
+      "union":true
+    },
+    "EndpointName":{
+      "type":"string",
+      "max":30,
+      "min":1
     },
     "ErrorMessage":{
       "type":"string",
@@ -1646,7 +1881,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:application-inference-profile/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z]{2}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:application-inference-profile/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z-]{2,8}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([0-9]{12}:default-prompt-router/[a-zA-Z0-9-:.]+)))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|arn:aws(-[^:]+)?:sagemaker:[a-z0-9-]{1,20}:[0-9]{12}:endpoint/[a-z0-9-]{1,63}"
     },
     "EvaluationModelIdentifiers":{
       "type":"list",
@@ -2090,6 +2325,23 @@
         "type":{"shape":"InferenceProfileType"}
       }
     },
+    "GetMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":["endpointArn"],
+      "members":{
+        "endpointArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"endpointArn"
+        }
+      }
+    },
+    "GetMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "marketplaceModelEndpoint":{"shape":"MarketplaceModelEndpoint"}
+      }
+    },
     "GetModelCopyJobRequest":{
       "type":"structure",
       "required":["jobArn"],
@@ -2253,6 +2505,41 @@
         "loggingConfig":{"shape":"LoggingConfig"}
       }
     },
+    "GetPromptRouterRequest":{
+      "type":"structure",
+      "required":["promptRouterArn"],
+      "members":{
+        "promptRouterArn":{
+          "shape":"PromptRouterArn",
+          "location":"uri",
+          "locationName":"promptRouterArn"
+        }
+      }
+    },
+    "GetPromptRouterResponse":{
+      "type":"structure",
+      "required":[
+        "promptRouterName",
+        "routingCriteria",
+        "promptRouterArn",
+        "models",
+        "fallbackModel",
+        "status",
+        "type"
+      ],
+      "members":{
+        "promptRouterName":{"shape":"PromptRouterName"},
+        "routingCriteria":{"shape":"RoutingCriteria"},
+        "description":{"shape":"PromptRouterDescription"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "promptRouterArn":{"shape":"PromptRouterArn"},
+        "models":{"shape":"PromptRouterTargetModels"},
+        "fallbackModel":{"shape":"PromptRouterTargetModel"},
+        "status":{"shape":"PromptRouterStatus"},
+        "type":{"shape":"PromptRouterType"}
+      }
+    },
     "GetProvisionedModelThroughputRequest":{
       "type":"structure",
       "required":["provisionedModelId"],
@@ -2339,7 +2626,9 @@
       "members":{
         "type":{"shape":"GuardrailContentFilterType"},
         "inputStrength":{"shape":"GuardrailFilterStrength"},
-        "outputStrength":{"shape":"GuardrailFilterStrength"}
+        "outputStrength":{"shape":"GuardrailFilterStrength"},
+        "inputModalities":{"shape":"GuardrailModalities"},
+        "outputModalities":{"shape":"GuardrailModalities"}
       }
     },
     "GuardrailContentFilterConfig":{
@@ -2352,7 +2641,9 @@
       "members":{
         "type":{"shape":"GuardrailContentFilterType"},
         "inputStrength":{"shape":"GuardrailFilterStrength"},
-        "outputStrength":{"shape":"GuardrailFilterStrength"}
+        "outputStrength":{"shape":"GuardrailFilterStrength"},
+        "inputModalities":{"shape":"GuardrailModalities"},
+        "outputModalities":{"shape":"GuardrailModalities"}
       }
     },
     "GuardrailContentFilterType":{
@@ -2524,6 +2815,20 @@
     "GuardrailManagedWordsType":{
       "type":"string",
       "enum":["PROFANITY"]
+    },
+    "GuardrailModalities":{
+      "type":"list",
+      "member":{"shape":"GuardrailModality"},
+      "max":2,
+      "min":1
+    },
+    "GuardrailModality":{
+      "type":"string",
+      "enum":[
+        "TEXT",
+        "IMAGE"
+      ],
+      "sensitive":true
     },
     "GuardrailName":{
       "type":"string",
@@ -3075,6 +3380,16 @@
       "type":"list",
       "member":{"shape":"InferenceType"}
     },
+    "InstanceCount":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "InstanceType":{
+      "type":"string",
+      "max":50,
+      "min":1
+    },
     "InstructSupported":{
       "type":"boolean",
       "box":true
@@ -3438,6 +3753,33 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListMarketplaceModelEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "modelSourceEquals":{
+          "shape":"ModelSourceIdentifier",
+          "location":"querystring",
+          "locationName":"modelSourceIdentifier"
+        }
+      }
+    },
+    "ListMarketplaceModelEndpointsResponse":{
+      "type":"structure",
+      "members":{
+        "marketplaceModelEndpoints":{"shape":"MarketplaceModelEndpointSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListModelCopyJobsRequest":{
       "type":"structure",
       "members":{
@@ -3656,6 +3998,28 @@
         "invocationJobSummaries":{"shape":"ModelInvocationJobSummaries"}
       }
     },
+    "ListPromptRoutersRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPromptRoutersResponse":{
+      "type":"structure",
+      "members":{
+        "promptRouterSummaries":{"shape":"PromptRouterSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListProvisionedModelThroughputsRequest":{
       "type":"structure",
       "members":{
@@ -3740,6 +4104,51 @@
         "imageDataDeliveryEnabled":{"shape":"Boolean"},
         "embeddingDataDeliveryEnabled":{"shape":"Boolean"},
         "videoDataDeliveryEnabled":{"shape":"Boolean"}
+      }
+    },
+    "MarketplaceModelEndpoint":{
+      "type":"structure",
+      "required":[
+        "endpointArn",
+        "modelSourceIdentifier",
+        "createdAt",
+        "updatedAt",
+        "endpointConfig",
+        "endpointStatus"
+      ],
+      "members":{
+        "endpointArn":{"shape":"Arn"},
+        "modelSourceIdentifier":{"shape":"ModelSourceIdentifier"},
+        "status":{"shape":"Status"},
+        "statusMessage":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "endpointConfig":{"shape":"EndpointConfig"},
+        "endpointStatus":{"shape":"String"},
+        "endpointStatusMessage":{"shape":"String"}
+      }
+    },
+    "MarketplaceModelEndpointSummaries":{
+      "type":"list",
+      "member":{"shape":"MarketplaceModelEndpointSummary"},
+      "max":1000,
+      "min":0
+    },
+    "MarketplaceModelEndpointSummary":{
+      "type":"structure",
+      "required":[
+        "endpointArn",
+        "modelSourceIdentifier",
+        "createdAt",
+        "updatedAt"
+      ],
+      "members":{
+        "endpointArn":{"shape":"Arn"},
+        "modelSourceIdentifier":{"shape":"ModelSourceIdentifier"},
+        "status":{"shape":"Status"},
+        "statusMessage":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"}
       }
     },
     "MaxResults":{
@@ -4068,6 +4477,12 @@
       "min":1,
       "pattern":"([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63})"
     },
+    "ModelSourceIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":".*arn:aws:sagemaker:.*:hub-content/SageMakerPublicHub/Model/.*"
+    },
     "NonBlankString":{
       "type":"string",
       "pattern":"[\\s\\S]*"
@@ -4096,6 +4511,80 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "PromptRouterArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:default-prompt-router/[a-zA-Z0-9-:.]+"
+    },
+    "PromptRouterDescription":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"([0-9a-zA-Z:.][ _-]?)+",
+      "sensitive":true
+    },
+    "PromptRouterName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"([0-9a-zA-Z][ _-]?)+"
+    },
+    "PromptRouterStatus":{
+      "type":"string",
+      "enum":["AVAILABLE"]
+    },
+    "PromptRouterSummaries":{
+      "type":"list",
+      "member":{"shape":"PromptRouterSummary"}
+    },
+    "PromptRouterSummary":{
+      "type":"structure",
+      "required":[
+        "promptRouterName",
+        "routingCriteria",
+        "promptRouterArn",
+        "models",
+        "fallbackModel",
+        "status",
+        "type"
+      ],
+      "members":{
+        "promptRouterName":{"shape":"PromptRouterName"},
+        "routingCriteria":{"shape":"RoutingCriteria"},
+        "description":{"shape":"PromptRouterDescription"},
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "promptRouterArn":{"shape":"PromptRouterArn"},
+        "models":{"shape":"PromptRouterTargetModels"},
+        "fallbackModel":{"shape":"PromptRouterTargetModel"},
+        "status":{"shape":"PromptRouterStatus"},
+        "type":{"shape":"PromptRouterType"}
+      }
+    },
+    "PromptRouterTargetModel":{
+      "type":"structure",
+      "members":{
+        "modelArn":{"shape":"PromptRouterTargetModelArn"}
+      }
+    },
+    "PromptRouterTargetModelArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":".*(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2})|(^arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{0,20}):(|[0-9]{12}):inference-profile/[a-zA-Z0-9-:.]+)"
+    },
+    "PromptRouterTargetModels":{
+      "type":"list",
+      "member":{"shape":"PromptRouterTargetModel"}
+    },
+    "PromptRouterType":{
+      "type":"string",
+      "enum":[
+        "custom",
+        "default"
+      ]
     },
     "PromptTemplate":{
       "type":"structure",
@@ -4216,6 +4705,28 @@
       "max":1,
       "min":1
     },
+    "RegisterMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "endpointIdentifier",
+        "modelSourceIdentifier"
+      ],
+      "members":{
+        "endpointIdentifier":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"endpointIdentifier"
+        },
+        "modelSourceIdentifier":{"shape":"ModelSourceIdentifier"}
+      }
+    },
+    "RegisterMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "required":["marketplaceModelEndpoint"],
+      "members":{
+        "marketplaceModelEndpoint":{"shape":"MarketplaceModelEndpoint"}
+      }
+    },
     "RequestMetadataBaseFilters":{
       "type":"structure",
       "members":{
@@ -4328,6 +4839,19 @@
       "min":0,
       "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
+    "RoutingCriteria":{
+      "type":"structure",
+      "required":["responseQualityDifference"],
+      "members":{
+        "responseQualityDifference":{"shape":"RoutingCriteriaResponseQualityDifferenceDouble"}
+      }
+    },
+    "RoutingCriteriaResponseQualityDifferenceDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
     "S3Config":{
       "type":"structure",
       "required":["bucketName"],
@@ -4359,6 +4883,21 @@
       "max":1024,
       "min":1,
       "pattern":"s3://[a-z0-9][-.a-z0-9]{1,61}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?"
+    },
+    "SageMakerEndpoint":{
+      "type":"structure",
+      "required":[
+        "initialInstanceCount",
+        "instanceType",
+        "executionRole"
+      ],
+      "members":{
+        "initialInstanceCount":{"shape":"InstanceCount"},
+        "instanceType":{"shape":"InstanceType"},
+        "executionRole":{"shape":"RoleArn"},
+        "kmsEncryptionKey":{"shape":"KmsKeyId"},
+        "vpc":{"shape":"VpcConfig"}
+      }
     },
     "SageMakerFlowDefinitionArn":{
       "type":"string",
@@ -4396,6 +4935,15 @@
       },
       "exception":true
     },
+    "ServiceUnavailableException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"NonBlankString"}
+      },
+      "error":{"httpStatusCode":503},
+      "exception":true,
+      "fault":true
+    },
     "SortByProvisionedModels":{
       "type":"string",
       "enum":["CreationTime"]
@@ -4413,6 +4961,13 @@
       "enum":[
         "Ascending",
         "Descending"
+      ]
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "REGISTERED",
+        "INCOMPATIBLE_ENDPOINT"
       ]
     },
     "StopEvaluationJobRequest":{
@@ -4667,6 +5222,32 @@
         "guardrailArn":{"shape":"GuardrailArn"},
         "version":{"shape":"GuardrailDraftVersion"},
         "updatedAt":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateMarketplaceModelEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "endpointArn",
+        "endpointConfig"
+      ],
+      "members":{
+        "endpointArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"endpointArn"
+        },
+        "endpointConfig":{"shape":"EndpointConfig"},
+        "clientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateMarketplaceModelEndpointResponse":{
+      "type":"structure",
+      "required":["marketplaceModelEndpoint"],
+      "members":{
+        "marketplaceModelEndpoint":{"shape":"MarketplaceModelEndpoint"}
       }
     },
     "UpdateProvisionedModelThroughputRequest":{

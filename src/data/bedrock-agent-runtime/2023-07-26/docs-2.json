@@ -3,6 +3,7 @@
   "service": "<p>Contains APIs related to model invocation and querying of knowledge bases.</p>",
   "operations": {
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
+    "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
     "InvokeAgent": "<note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeAgent</code>.</p> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response is returned in the <code>bytes</code> field of the <code>chunk</code> object.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
@@ -838,6 +839,34 @@
         "FunctionSchema$functions": "<p> A list of functions that each define an action in the action group. </p>"
       }
     },
+    "GenerateQueryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateQueryResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GeneratedQueries": {
+      "base": null,
+      "refs": {
+        "GenerateQueryResponse$queries": "<p>A list of objects, each of which defines a generated query that can correspond to the natural language queries.</p>"
+      }
+    },
+    "GeneratedQuery": {
+      "base": "<p>Contains information about a query generated for a natural language query.</p>",
+      "refs": {
+        "GeneratedQueries$member": null
+      }
+    },
+    "GeneratedQueryType": {
+      "base": null,
+      "refs": {
+        "GeneratedQuery$type": "<p>The type of transformed query.</p>"
+      }
+    },
     "GeneratedResponsePart": {
       "base": "<p>Contains metadata about a part of the generated response that is accompanied by a citation.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>generatedResponsePart</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>generatedResponsePart</code> field</p> </li> </ul>",
       "refs": {
@@ -1171,6 +1200,12 @@
         "OptimizePromptRequest$input": "<p>Contains the prompt to optimize.</p>"
       }
     },
+    "InputQueryType": {
+      "base": null,
+      "refs": {
+        "QueryGenerationInput$type": "<p>The type of the query.</p>"
+      }
+    },
     "InputText": {
       "base": null,
       "refs": {
@@ -1275,6 +1310,12 @@
       "base": "<p> Details of the knowledge base associated withe inline agent. </p>",
       "refs": {
         "KnowledgeBases$member": null
+      }
+    },
+    "KnowledgeBaseArn": {
+      "base": null,
+      "refs": {
+        "TextToSqlKnowledgeBaseConfiguration$knowledgeBaseArn": "<p>The ARN of the knowledge base</p>"
       }
     },
     "KnowledgeBaseConfiguration": {
@@ -1826,10 +1867,28 @@
         "ApiContentMap$value": null
       }
     },
+    "QueryGenerationInput": {
+      "base": "<p>Contains information about a natural language query to transform into SQL.</p>",
+      "refs": {
+        "GenerateQueryRequest$queryGenerationInput": "<p>Specifies information about a natural language query to transform into SQL.</p>"
+      }
+    },
+    "QueryGenerationInputTextString": {
+      "base": null,
+      "refs": {
+        "QueryGenerationInput$text": "<p>The text of the query.</p>"
+      }
+    },
     "QueryTransformationConfiguration": {
       "base": "<p>To split up the prompt and retrieve multiple sources, set the transformation type to <code>QUERY_DECOMPOSITION</code>.</p>",
       "refs": {
         "OrchestrationConfiguration$queryTransformationConfiguration": "<p>To split up the prompt and retrieve multiple sources, set the transformation type to <code>QUERY_DECOMPOSITION</code>.</p>"
+      }
+    },
+    "QueryTransformationMode": {
+      "base": null,
+      "refs": {
+        "TransformationConfiguration$mode": "<p>The mode of the transformation.</p>"
       }
     },
     "QueryTransformationType": {
@@ -2068,10 +2127,34 @@
       }
     },
     "RetrievalResultContent": {
-      "base": "<p>Contains the cited text from the data source.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>content</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>content</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>content</code> field</p> </li> </ul>",
+      "base": "<p>Contains information about a chunk of text from a data source in the knowledge base. If the result is from a structured data source, the cell in the database and the type of the value is also identified.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>content</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>content</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>content</code> field</p> </li> </ul>",
       "refs": {
-        "KnowledgeBaseRetrievalResult$content": "<p>Contains a chunk of text from a data source in the knowledge base.</p>",
+        "KnowledgeBaseRetrievalResult$content": "<p>Contains information about the content of the chunk.</p>",
         "RetrievedReference$content": "<p>Contains the cited text from the data source.</p>"
+      }
+    },
+    "RetrievalResultContentColumn": {
+      "base": "<p>Contains information about a column with a cell to return in retrieval.</p>",
+      "refs": {
+        "RetrievalResultContentRow$member": null
+      }
+    },
+    "RetrievalResultContentColumnType": {
+      "base": null,
+      "refs": {
+        "RetrievalResultContentColumn$type": "<p>The data type of the value.</p>"
+      }
+    },
+    "RetrievalResultContentRow": {
+      "base": null,
+      "refs": {
+        "RetrievalResultContent$row": "<p>Specifies information about the rows with the cells to return in retrieval.</p>"
+      }
+    },
+    "RetrievalResultContentType": {
+      "base": null,
+      "refs": {
+        "RetrievalResultContent$type": "<p>The type of content in the retrieval result.</p>"
       }
     },
     "RetrievalResultCustomDocumentLocation": {
@@ -2080,8 +2163,14 @@
         "RetrievalResultLocation$customDocumentLocation": "<p>Specifies the location of a document in a custom data source.</p>"
       }
     },
+    "RetrievalResultKendraDocumentLocation": {
+      "base": "<p>The location of a result in Amazon Kendra.</p>",
+      "refs": {
+        "RetrievalResultLocation$kendraDocumentLocation": "<p>The location of a document in Amazon Kendra.</p>"
+      }
+    },
     "RetrievalResultLocation": {
-      "base": "<p>Contains information about the data source location.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>location</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>location</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>locatino</code> field</p> </li> </ul>",
+      "base": "<p>Contains information about the data source location.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax\">Retrieve response</a> – in the <code>location</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>location</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>location</code> field</p> </li> </ul>",
       "refs": {
         "KnowledgeBaseRetrievalResult$location": "<p>Contains information about the location of the data source.</p>",
         "RetrievedReference$location": "<p>Contains information about the location of the data source.</p>"
@@ -2128,6 +2217,12 @@
       "base": "<p>The SharePoint data source location.</p>",
       "refs": {
         "RetrievalResultLocation$sharePointLocation": "<p>The SharePoint data source location.</p>"
+      }
+    },
+    "RetrievalResultSqlLocation": {
+      "base": "<p>Contains information about the SQL query used to retrieve the result.</p>",
+      "refs": {
+        "RetrievalResultLocation$sqlLocation": "<p>Specifies information about the SQL query used to retrieve the result.</p>"
       }
     },
     "RetrievalResultWebLocation": {
@@ -2427,6 +2522,7 @@
         "FunctionResult$actionGroup": "<p>The action group that the function belongs to.</p>",
         "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
+        "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
         "GuardrailPiiEntityFilter$match": "<p>The match to settings in the Guardrail filter to identify and remove PII.</p>",
@@ -2447,11 +2543,16 @@
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
+        "RetrievalResultContent$byteContent": "<p>A data URI with base64-encoded content from the data source. The URI is in the following format: returned in the following format: <code>data:image/jpeg;base64,${base64-encoded string}</code>.</p>",
         "RetrievalResultContent$text": "<p>The cited text from the data source.</p>",
+        "RetrievalResultContentColumn$columnName": "<p>The name of the column.</p>",
+        "RetrievalResultContentColumn$columnValue": "<p>The value in the column.</p>",
         "RetrievalResultCustomDocumentLocation$id": "<p>The ID of the document.</p>",
+        "RetrievalResultKendraDocumentLocation$uri": "<p>The document's uri.</p>",
         "RetrievalResultS3Location$uri": "<p>The S3 URI for the data source location.</p>",
         "RetrievalResultSalesforceLocation$url": "<p>The Salesforce host URL for the data source location.</p>",
         "RetrievalResultSharePointLocation$url": "<p>The SharePoint site URL for the data source location.</p>",
+        "RetrievalResultSqlLocation$query": "<p>The SQL query used to retrieve the result.</p>",
         "RetrievalResultWebLocation$url": "<p>The web URL/URLs for the data source location.</p>",
         "RetrieveAndGenerateOutput$text": "<p>The response generated from querying the knowledge base.</p>",
         "RetrieveAndGenerateOutputEvent$text": "<p>A text response.</p>",
@@ -2506,6 +2607,24 @@
       "base": "<p>Contains the part of the generated text that contains a citation, alongside where it begins and ends.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax\">RetrieveAndGenerate response</a> – in the <code>textResponsePart</code> field</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax\">InvokeAgent response</a> – in the <code>textResponsePart</code> field</p> </li> </ul>",
       "refs": {
         "GeneratedResponsePart$textResponsePart": "<p>Contains metadata about a textual part of the generated response that is accompanied by a citation.</p>"
+      }
+    },
+    "TextToSqlConfiguration": {
+      "base": "<p>Contains configurations for transforming text to SQL.</p>",
+      "refs": {
+        "TransformationConfiguration$textToSqlConfiguration": "<p>Specifies configurations for transforming text to SQL.</p>"
+      }
+    },
+    "TextToSqlConfigurationType": {
+      "base": null,
+      "refs": {
+        "TextToSqlConfiguration$type": "<p>The type of resource to use in transformation.</p>"
+      }
+    },
+    "TextToSqlKnowledgeBaseConfiguration": {
+      "base": "<p>Contains configurations for a knowledge base to use in transformation.</p>",
+      "refs": {
+        "TextToSqlConfiguration$knowledgeBaseConfiguration": "<p>Specifies configurations for a knowledge base to use in transformation.</p>"
       }
     },
     "ThrottlingException": {
@@ -2564,6 +2683,12 @@
       "base": "<p>Contains information about the agent and session, alongside the agent's reasoning process and results from calling API actions and querying knowledge bases and metadata about the trace. You can use the trace to understand how the agent arrived at the response it provided the customer. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement\">Trace enablement</a>.</p>",
       "refs": {
         "ResponseStream$trace": "<p>Contains information about the agent and session, alongside the agent's reasoning process and results from calling actions and querying knowledge bases and metadata about the trace. You can use the trace to understand how the agent arrived at the response it provided the customer. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Trace events</a>.</p>"
+      }
+    },
+    "TransformationConfiguration": {
+      "base": "<p>Contains configurations for transforming the natural language query into SQL.</p>",
+      "refs": {
+        "GenerateQueryRequest$transformationConfiguration": "<p>Specifies configurations for transforming the natural language query into SQL.</p>"
       }
     },
     "Type": {

@@ -499,6 +499,30 @@
         "GuardrailConverseTextBlock$qualifiers": "<p>The qualifier details for the guardrails contextual grounding filter.</p>"
       }
     },
+    "GuardrailConverseImageBlock": {
+      "base": "<p>An image block that contains images that you want to assess with a guardrail.</p>",
+      "refs": {
+        "GuardrailConverseContentBlock$image": "<p>Image within converse content block to be evaluated by the guardrail.</p>"
+      }
+    },
+    "GuardrailConverseImageFormat": {
+      "base": null,
+      "refs": {
+        "GuardrailConverseImageBlock$format": "<p>The format details for the image type of the guardrail converse image block.</p>"
+      }
+    },
+    "GuardrailConverseImageSource": {
+      "base": "<p>The image source (image bytes) of the guardrail converse image source.</p>",
+      "refs": {
+        "GuardrailConverseImageBlock$source": "<p>The image source (image bytes) of the guardrail converse image block.</p>"
+      }
+    },
+    "GuardrailConverseImageSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "GuardrailConverseImageSource$bytes": "<p>The raw image bytes for the image.</p>"
+      }
+    },
     "GuardrailConverseTextBlock": {
       "base": "<p>A text block that contains text that you want to assess with a guardrail. For more information, see <a>GuardrailConverseContentBlock</a>.</p>",
       "refs": {
@@ -532,6 +556,36 @@
         "GuardrailStreamConfiguration$guardrailIdentifier": "<p>The identifier for the guardrail.</p>",
         "InvokeModelRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail that you want to use. If you don't provide a value, no guardrail is applied to the invocation.</p> <p>An error will be thrown in the following situations.</p> <ul> <li> <p>You don't provide a guardrail identifier but you specify the <code>amazon-bedrock-guardrailConfig</code> field in the request body.</p> </li> <li> <p>You enable the guardrail but the <code>contentType</code> isn't <code>application/json</code>.</p> </li> <li> <p>You provide a guardrail identifier, but <code>guardrailVersion</code> isn't specified.</p> </li> </ul>",
         "InvokeModelWithResponseStreamRequest$guardrailIdentifier": "<p>The unique identifier of the guardrail that you want to use. If you don't provide a value, no guardrail is applied to the invocation.</p> <p>An error is thrown in the following situations.</p> <ul> <li> <p>You don't provide a guardrail identifier but you specify the <code>amazon-bedrock-guardrailConfig</code> field in the request body.</p> </li> <li> <p>You enable the guardrail but the <code>contentType</code> isn't <code>application/json</code>.</p> </li> <li> <p>You provide a guardrail identifier, but <code>guardrailVersion</code> isn't specified.</p> </li> </ul>"
+      }
+    },
+    "GuardrailImageBlock": {
+      "base": "<p>Contain an image which user wants guarded. This block is accepted by the guardrails independent API.</p>",
+      "refs": {
+        "GuardrailContentBlock$image": "<p>Image within guardrail content block to be evaluated by the guardrail.</p>"
+      }
+    },
+    "GuardrailImageCoverage": {
+      "base": "<p>The details of the guardrail image coverage.</p>",
+      "refs": {
+        "GuardrailCoverage$images": "<p>The guardrail coverage for images (the number of images that guardrails guarded).</p>"
+      }
+    },
+    "GuardrailImageFormat": {
+      "base": null,
+      "refs": {
+        "GuardrailImageBlock$format": "<p>The format details for the file type of the image blocked by the guardrail.</p>"
+      }
+    },
+    "GuardrailImageSource": {
+      "base": "<p>The image source (image bytes) of the guardrail image source. Object used in independent api.</p>",
+      "refs": {
+        "GuardrailImageBlock$source": "<p>The image source (image bytes) details of the image blocked by the guardrail.</p>"
+      }
+    },
+    "GuardrailImageSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "GuardrailImageSource$bytes": "<p>The bytes details of the guardrail image source. Object used in independent api.</p>"
       }
     },
     "GuardrailInvocationMetrics": {
@@ -773,6 +827,18 @@
         "ImageSource$bytes": "<p>The raw image bytes for the image. If you use an AWS SDK, you don't need to encode the image bytes in base64.</p>"
       }
     },
+    "ImagesGuarded": {
+      "base": null,
+      "refs": {
+        "GuardrailImageCoverage$guarded": "<p>The count (integer) of images guardrails guarded.</p>"
+      }
+    },
+    "ImagesTotal": {
+      "base": null,
+      "refs": {
+        "GuardrailImageCoverage$total": "<p>Represents the total number of images (integer) that were in the request (guarded and unguarded).</p>"
+      }
+    },
     "InferenceConfiguration": {
       "base": "<p>Base inference parameters to pass to a model in a call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>If you need to pass additional parameters that the model supports, use the <code>additionalModelRequestFields</code> request field in the call to <code>Converse</code> or <code>ConverseStream</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model parameters</a>.</p>",
       "refs": {
@@ -845,6 +911,12 @@
     "InvokeModelWithResponseStreamResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "InvokedModelId": {
+      "base": null,
+      "refs": {
+        "PromptRouterTrace$invokedModelId": "<p>The ID of the invoked model.</p>"
       }
     },
     "KmsKeyId": {
@@ -1019,6 +1091,13 @@
         "ConverseResponse$performanceConfig": "<p>Model performance settings for the request.</p>",
         "ConverseStreamMetadataEvent$performanceConfig": "<p>Model performance configuration metadata for the conversation stream event.</p>",
         "ConverseStreamRequest$performanceConfig": "<p>Model performance settings for the request.</p>"
+      }
+    },
+    "PromptRouterTrace": {
+      "base": "<p>A prompt router trace.</p>",
+      "refs": {
+        "ConverseStreamTrace$promptRouter": "<p>The request's prompt router.</p>",
+        "ConverseTrace$promptRouter": "<p>The request's prompt router.</p>"
       }
     },
     "PromptVariableMap": {

@@ -1870,11 +1870,29 @@
       "members":{
       }
     },
+    "AwsDataCatalogTableName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^.*\\.*$"
+    },
+    "AwsDataCatalogTableNames":{
+      "type":"list",
+      "member":{"shape":"AwsDataCatalogTableName"},
+      "max":1000,
+      "min":1
+    },
     "BasePromptTemplate":{
       "type":"string",
       "max":100000,
       "min":1,
       "sensitive":true
+    },
+    "BedrockDataAutomationConfiguration":{
+      "type":"structure",
+      "members":{
+        "parsingModality":{"shape":"ParsingModality"}
+      }
     },
     "BedrockEmbeddingModelArn":{
       "type":"string",
@@ -1894,6 +1912,7 @@
       "required":["modelArn"],
       "members":{
         "modelArn":{"shape":"BedrockModelArn"},
+        "parsingModality":{"shape":"ParsingModality"},
         "parsingPrompt":{"shape":"ParsingPrompt"}
       }
     },
@@ -2348,8 +2367,7 @@
       "required":[
         "knowledgeBaseConfiguration",
         "name",
-        "roleArn",
-        "storageConfiguration"
+        "roleArn"
       ],
       "members":{
         "clientToken":{
@@ -2456,6 +2474,23 @@
         "DEFAULT",
         "OVERRIDDEN"
       ]
+    },
+    "CuratedQueries":{
+      "type":"list",
+      "member":{"shape":"CuratedQuery"},
+      "max":10,
+      "min":0
+    },
+    "CuratedQuery":{
+      "type":"structure",
+      "required":[
+        "naturalLanguage",
+        "sql"
+      ],
+      "members":{
+        "naturalLanguage":{"shape":"NaturalLanguageString"},
+        "sql":{"shape":"SqlString"}
+      }
     },
     "CustomContent":{
       "type":"structure",
@@ -2614,7 +2649,8 @@
         "CONFLUENCE",
         "SALESFORCE",
         "SHAREPOINT",
-        "CUSTOM"
+        "CUSTOM",
+        "REDSHIFT_METADATA"
       ]
     },
     "DateTimestamp":{
@@ -2950,6 +2986,11 @@
       }
     },
     "Description":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "DescriptionString":{
       "type":"string",
       "max":200,
       "min":1
@@ -4144,6 +4185,13 @@
       "type":"string",
       "pattern":"^[0-9a-zA-Z]{10}$"
     },
+    "IncludeExclude":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
     "IncompatibleConnectionDataTypeFlowValidationDetails":{
       "type":"structure",
       "required":["connection"],
@@ -4367,6 +4415,17 @@
       "members":{
       }
     },
+    "KendraIndexArn":{
+      "type":"string",
+      "pattern":"^arn:aws(|-cn|-us-gov):kendra:[a-z0-9-]{1,20}:([0-9]{12}|):index/([a-zA-Z0-9][a-zA-Z0-9-]{35}|[a-zA-Z0-9][a-zA-Z0-9-]{35}-[a-zA-Z0-9][a-zA-Z0-9-]{35})$"
+    },
+    "KendraKnowledgeBaseConfiguration":{
+      "type":"structure",
+      "required":["kendraIndexArn"],
+      "members":{
+        "kendraIndexArn":{"shape":"KendraIndexArn"}
+      }
+    },
     "Key":{
       "type":"string",
       "max":200,
@@ -4389,7 +4448,6 @@
         "name",
         "roleArn",
         "status",
-        "storageConfiguration",
         "updatedAt"
       ],
       "members":{
@@ -4416,6 +4474,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "kendraKnowledgeBaseConfiguration":{"shape":"KendraKnowledgeBaseConfiguration"},
+        "sqlKnowledgeBaseConfiguration":{"shape":"SqlKnowledgeBaseConfiguration"},
         "type":{"shape":"KnowledgeBaseType"},
         "vectorKnowledgeBaseConfiguration":{"shape":"VectorKnowledgeBaseConfiguration"}
       }
@@ -4532,7 +4592,11 @@
     },
     "KnowledgeBaseType":{
       "type":"string",
-      "enum":["VECTOR"]
+      "enum":[
+        "VECTOR",
+        "KENDRA",
+        "SQL"
+      ]
     },
     "LambdaArn":{
       "type":"string",
@@ -5213,6 +5277,11 @@
       "type":"string",
       "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
     },
+    "NaturalLanguageString":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "NextToken":{
       "type":"string",
       "max":2048,
@@ -5316,9 +5385,14 @@
       "type":"structure",
       "required":["parsingStrategy"],
       "members":{
+        "bedrockDataAutomationConfiguration":{"shape":"BedrockDataAutomationConfiguration"},
         "bedrockFoundationModelConfiguration":{"shape":"BedrockFoundationModelConfiguration"},
         "parsingStrategy":{"shape":"ParsingStrategy"}
       }
+    },
+    "ParsingModality":{
+      "type":"string",
+      "enum":["MULTIMODAL"]
     },
     "ParsingPrompt":{
       "type":"structure",
@@ -5334,7 +5408,10 @@
     },
     "ParsingStrategy":{
       "type":"string",
-      "enum":["BEDROCK_FOUNDATION_MODEL"]
+      "enum":[
+        "BEDROCK_FOUNDATION_MODEL",
+        "BEDROCK_DATA_AUTOMATION"
+      ]
     },
     "PatternObjectFilter":{
       "type":"structure",
@@ -5716,6 +5793,68 @@
       "min":1,
       "pattern":"^((([0-9a-zA-Z][_-]?){1,63})|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:provisioned-model/[a-z0-9]{12}))$"
     },
+    "QueryEngineType":{
+      "type":"string",
+      "enum":["REDSHIFT"]
+    },
+    "QueryExecutionTimeoutSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":200,
+      "min":1
+    },
+    "QueryGenerationColumn":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"DescriptionString"},
+        "inclusion":{"shape":"IncludeExclude"},
+        "name":{"shape":"QueryGenerationColumnName"}
+      }
+    },
+    "QueryGenerationColumnName":{
+      "type":"string",
+      "max":127,
+      "min":1
+    },
+    "QueryGenerationColumns":{
+      "type":"list",
+      "member":{"shape":"QueryGenerationColumn"}
+    },
+    "QueryGenerationConfiguration":{
+      "type":"structure",
+      "members":{
+        "executionTimeoutSeconds":{"shape":"QueryExecutionTimeoutSeconds"},
+        "generationContext":{"shape":"QueryGenerationContext"}
+      }
+    },
+    "QueryGenerationContext":{
+      "type":"structure",
+      "members":{
+        "curatedQueries":{"shape":"CuratedQueries"},
+        "tables":{"shape":"QueryGenerationTables"}
+      },
+      "sensitive":true
+    },
+    "QueryGenerationTable":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "columns":{"shape":"QueryGenerationColumns"},
+        "description":{"shape":"DescriptionString"},
+        "inclusion":{"shape":"IncludeExclude"},
+        "name":{"shape":"QueryGenerationTableName"}
+      }
+    },
+    "QueryGenerationTableName":{
+      "type":"string",
+      "pattern":"^.*\\..*\\..*$"
+    },
+    "QueryGenerationTables":{
+      "type":"list",
+      "member":{"shape":"QueryGenerationTable"},
+      "max":50,
+      "min":0
+    },
     "RdsArn":{
       "type":"string",
       "pattern":"^arn:aws(|-cn|-us-gov):rds:[a-zA-Z0-9-]*:[0-9]{12}:cluster:[a-zA-Z0-9-]{1,63}$"
@@ -5814,6 +5953,134 @@
       "max":2048,
       "min":0,
       "pattern":"^.*$"
+    },
+    "RedshiftClusterIdentifier":{
+      "type":"string",
+      "max":63,
+      "min":1
+    },
+    "RedshiftConfiguration":{
+      "type":"structure",
+      "required":[
+        "queryEngineConfiguration",
+        "storageConfigurations"
+      ],
+      "members":{
+        "queryEngineConfiguration":{"shape":"RedshiftQueryEngineConfiguration"},
+        "queryGenerationConfiguration":{"shape":"QueryGenerationConfiguration"},
+        "storageConfigurations":{"shape":"RedshiftQueryEngineStorageConfigurations"}
+      }
+    },
+    "RedshiftDatabase":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "RedshiftProvisionedAuthConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "databaseUser":{"shape":"String"},
+        "type":{"shape":"RedshiftProvisionedAuthType"},
+        "usernamePasswordSecretArn":{"shape":"SecretArn"}
+      }
+    },
+    "RedshiftProvisionedAuthType":{
+      "type":"string",
+      "enum":[
+        "IAM",
+        "USERNAME_PASSWORD",
+        "USERNAME"
+      ]
+    },
+    "RedshiftProvisionedConfiguration":{
+      "type":"structure",
+      "required":[
+        "authConfiguration",
+        "clusterIdentifier"
+      ],
+      "members":{
+        "authConfiguration":{"shape":"RedshiftProvisionedAuthConfiguration"},
+        "clusterIdentifier":{"shape":"RedshiftClusterIdentifier"}
+      }
+    },
+    "RedshiftQueryEngineAwsDataCatalogStorageConfiguration":{
+      "type":"structure",
+      "required":["tableNames"],
+      "members":{
+        "tableNames":{"shape":"AwsDataCatalogTableNames"}
+      }
+    },
+    "RedshiftQueryEngineConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "provisionedConfiguration":{"shape":"RedshiftProvisionedConfiguration"},
+        "serverlessConfiguration":{"shape":"RedshiftServerlessConfiguration"},
+        "type":{"shape":"RedshiftQueryEngineType"}
+      }
+    },
+    "RedshiftQueryEngineRedshiftStorageConfiguration":{
+      "type":"structure",
+      "required":["databaseName"],
+      "members":{
+        "databaseName":{"shape":"RedshiftDatabase"}
+      }
+    },
+    "RedshiftQueryEngineStorageConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "awsDataCatalogConfiguration":{"shape":"RedshiftQueryEngineAwsDataCatalogStorageConfiguration"},
+        "redshiftConfiguration":{"shape":"RedshiftQueryEngineRedshiftStorageConfiguration"},
+        "type":{"shape":"RedshiftQueryEngineStorageType"}
+      }
+    },
+    "RedshiftQueryEngineStorageConfigurations":{
+      "type":"list",
+      "member":{"shape":"RedshiftQueryEngineStorageConfiguration"},
+      "max":1,
+      "min":1
+    },
+    "RedshiftQueryEngineStorageType":{
+      "type":"string",
+      "enum":[
+        "REDSHIFT",
+        "AWS_DATA_CATALOG"
+      ]
+    },
+    "RedshiftQueryEngineType":{
+      "type":"string",
+      "enum":[
+        "SERVERLESS",
+        "PROVISIONED"
+      ]
+    },
+    "RedshiftServerlessAuthConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"RedshiftServerlessAuthType"},
+        "usernamePasswordSecretArn":{"shape":"SecretArn"}
+      }
+    },
+    "RedshiftServerlessAuthType":{
+      "type":"string",
+      "enum":[
+        "IAM",
+        "USERNAME_PASSWORD"
+      ]
+    },
+    "RedshiftServerlessConfiguration":{
+      "type":"structure",
+      "required":[
+        "authConfiguration",
+        "workgroupArn"
+      ],
+      "members":{
+        "authConfiguration":{"shape":"RedshiftServerlessAuthConfiguration"},
+        "workgroupArn":{"shape":"WorkgroupArn"}
+      }
     },
     "RelayConversationHistory":{
       "type":"string",
@@ -6098,6 +6365,19 @@
         "name":{"shape":"ToolName"}
       }
     },
+    "SqlKnowledgeBaseConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "redshiftConfiguration":{"shape":"RedshiftConfiguration"},
+        "type":{"shape":"QueryEngineType"}
+      }
+    },
+    "SqlString":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "StartIngestionJobRequest":{
       "type":"structure",
       "required":[
@@ -6216,6 +6496,31 @@
       "max":2048,
       "min":1,
       "sensitive":true
+    },
+    "SupplementalDataStorageConfiguration":{
+      "type":"structure",
+      "required":["storageLocations"],
+      "members":{
+        "storageLocations":{"shape":"SupplementalDataStorageLocations"}
+      }
+    },
+    "SupplementalDataStorageLocation":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "s3Location":{"shape":"S3Location"},
+        "type":{"shape":"SupplementalDataStorageLocationType"}
+      }
+    },
+    "SupplementalDataStorageLocationType":{
+      "type":"string",
+      "enum":["S3"]
+    },
+    "SupplementalDataStorageLocations":{
+      "type":"list",
+      "member":{"shape":"SupplementalDataStorageLocation"},
+      "max":1,
+      "min":1
     },
     "SystemContentBlock":{
       "type":"structure",
@@ -6826,8 +7131,7 @@
         "knowledgeBaseConfiguration",
         "knowledgeBaseId",
         "name",
-        "roleArn",
-        "storageConfiguration"
+        "roleArn"
       ],
       "members":{
         "description":{"shape":"Description"},
@@ -6955,7 +7259,8 @@
       "required":["embeddingModelArn"],
       "members":{
         "embeddingModelArn":{"shape":"BedrockEmbeddingModelArn"},
-        "embeddingModelConfiguration":{"shape":"EmbeddingModelConfiguration"}
+        "embeddingModelConfiguration":{"shape":"EmbeddingModelConfiguration"},
+        "supplementalDataStorageConfiguration":{"shape":"SupplementalDataStorageConfiguration"}
       }
     },
     "Version":{
@@ -7006,6 +7311,10 @@
       "members":{
         "urlConfiguration":{"shape":"UrlConfiguration"}
       }
+    },
+    "WorkgroupArn":{
+      "type":"string",
+      "pattern":"^(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
     }
   }
 }
