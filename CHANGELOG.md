@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.0 - 2024-12-04
 
 * `Aws\BedrockRuntime` - Added support for Intelligent Prompt Router in Invoke, InvokeStream, Converse and ConverseStream. Add support for Bedrock Guardrails image content filter. New Bedrock Marketplace feature enabling a wider range of bedrock compatible models with self-hosted capability.
 * `Aws\BedrockDataAutomationRuntime` - Release Bedrock Data Automation Runtime SDK
