@@ -58,7 +58,7 @@
     "ListWebExperiences": "<p>Lists one or more Amazon Q Business Web Experiences.</p>",
     "PutFeedback": "<p>Enables your end user to provide feedback on their Amazon Q Business generated chat responses.</p>",
     "PutGroup": "<p>Create, or updates, a mapping of users—who have access to a document—to groups.</p> <p>You can also map sub groups to groups. For example, the group \"Company Intellectual Property Teams\" includes sub groups \"Research\" and \"Engineering\". These sub groups include their own list of users or people who work in these teams. Only users who work in research and engineering, and therefore belong in the intellectual property group, can see top-secret company documents in their Amazon Q Business chat results.</p>",
-    "SearchRelevantContent": "<p>Searches for relevant content in a Q Business application based on a query. This operation takes a search query text, the Q Business application identifier, and optional filters (such as user ID, user groups, content source, and maximum results) as input. It returns a list of relevant content items, where each item includes the content text, the unique document identifier, the document title, the document URI, any relevant document attributes, and score attributes indicating the confidence level of the relevance.</p>",
+    "SearchRelevantContent": "<p>Searches for relevant content in a Q Business application based on a query. This operation takes a search query text, the Q Business application identifier, and optional filters (such as content source and maximum results) as input. It returns a list of relevant content items, where each item includes the content text, the unique document identifier, the document title, the document URI, any relevant document attributes, and score attributes indicating the confidence level of the relevance.</p>",
     "StartDataSourceSyncJob": "<p>Starts a data source connector synchronization job. If a synchronization job is already in progress, Amazon Q Business returns a <code>ConflictException</code>.</p>",
     "StopDataSourceSyncJob": "<p>Stops an Amazon Q Business data source connector synchronization job already in progress.</p>",
     "TagResource": "<p>Adds the specified tag to the specified Amazon Q Business application or data source resource. If the tag already exists, the existing value is replaced with the new value.</p>",
@@ -3385,7 +3385,6 @@
       "refs": {
         "ChatInput$userGroups": "<p>The group names that a user associated with the chat input belongs to.</p>",
         "ChatSyncInput$userGroups": "<p>The group names that a user associated with the chat input belongs to.</p>",
-        "SearchRelevantContentRequest$userGroups": "<p>The groups the user belongs to. Used for access control.</p>",
         "UsersAndGroups$userGroups": "<p>The user group names associated with a topic control rule.</p>"
       }
     },
@@ -3399,8 +3398,7 @@
         "ListConversationsRequest$userId": "<p>The identifier of the user involved in the Amazon Q Business web experience conversation. </p>",
         "ListMessagesRequest$userId": "<p>The identifier of the user involved in the Amazon Q Business web experience conversation.</p>",
         "PrincipalUser$id": "<p> The identifier of the user. </p>",
-        "PutFeedbackRequest$userId": "<p>The identifier of the user giving the feedback.</p>",
-        "SearchRelevantContentRequest$userId": "<p>The ID of the user performing the search. Used for access control.</p>"
+        "PutFeedbackRequest$userId": "<p>The identifier of the user giving the feedback.</p>"
       }
     },
     "UserIds": {
