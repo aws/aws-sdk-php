@@ -151,6 +151,12 @@ final class Middleware
                 return $credentialPromise->then(
                     function (CredentialsInterface $creds)
                     use ($handler, $command, $signer, $request) {
+                        // Capture credentials metric
+                        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                            'credentials',
+                            $creds
+                        );
+
                         return $handler(
                             $command,
                             $signer->signRequest($request, $creds)
