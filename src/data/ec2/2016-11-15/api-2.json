@@ -4799,6 +4799,15 @@
       "input":{"shape":"ModifyInstanceMetadataOptionsRequest"},
       "output":{"shape":"ModifyInstanceMetadataOptionsResult"}
     },
+    "ModifyInstanceNetworkPerformanceOptions":{
+      "name":"ModifyInstanceNetworkPerformanceOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyInstanceNetworkPerformanceRequest"},
+      "output":{"shape":"ModifyInstanceNetworkPerformanceResult"}
+    },
     "ModifyInstancePlacement":{
       "name":"ModifyInstancePlacement",
       "http":{
@@ -8447,6 +8456,21 @@
       "type":"list",
       "member":{
         "shape":"InstanceCapacity",
+        "locationName":"item"
+      }
+    },
+    "BandwidthWeightingType":{
+      "type":"string",
+      "enum":[
+        "default",
+        "vpc-1",
+        "ebs-1"
+      ]
+    },
+    "BandwidthWeightingTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"BandwidthWeightingType",
         "locationName":"item"
       }
     },
@@ -28137,6 +28161,10 @@
           "shape":"InstanceBootModeValues",
           "locationName":"currentInstanceBootMode"
         },
+        "NetworkPerformanceOptions":{
+          "shape":"InstanceNetworkPerformanceOptions",
+          "locationName":"networkPerformanceOptions"
+        },
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
@@ -28344,6 +28372,14 @@
       "enum":[
         "disabled",
         "default"
+      ]
+    },
+    "InstanceBandwidthWeighting":{
+      "type":"string",
+      "enum":[
+        "default",
+        "vpc-1",
+        "ebs-1"
       ]
     },
     "InstanceBlockDeviceMapping":{
@@ -29246,6 +29282,21 @@
       "member":{
         "shape":"InstanceNetworkInterfaceSpecification",
         "locationName":"item"
+      }
+    },
+    "InstanceNetworkPerformanceOptions":{
+      "type":"structure",
+      "members":{
+        "BandwidthWeighting":{
+          "shape":"InstanceBandwidthWeighting",
+          "locationName":"bandwidthWeighting"
+        }
+      }
+    },
+    "InstanceNetworkPerformanceOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "BandwidthWeighting":{"shape":"InstanceBandwidthWeighting"}
       }
     },
     "InstancePrivateIpAddress":{
@@ -33368,6 +33419,21 @@
         "locationName":"item"
       }
     },
+    "LaunchTemplateNetworkPerformanceOptions":{
+      "type":"structure",
+      "members":{
+        "BandwidthWeighting":{
+          "shape":"InstanceBandwidthWeighting",
+          "locationName":"bandwidthWeighting"
+        }
+      }
+    },
+    "LaunchTemplateNetworkPerformanceOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "BandwidthWeighting":{"shape":"InstanceBandwidthWeighting"}
+      }
+    },
     "LaunchTemplateOverrides":{
       "type":"structure",
       "members":{
@@ -35188,6 +35254,31 @@
         "InstanceMetadataOptions":{
           "shape":"InstanceMetadataOptionsResponse",
           "locationName":"instanceMetadataOptions"
+        }
+      }
+    },
+    "ModifyInstanceNetworkPerformanceRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "BandwidthWeighting"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "BandwidthWeighting":{"shape":"InstanceBandwidthWeighting"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyInstanceNetworkPerformanceResult":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "BandwidthWeighting":{
+          "shape":"InstanceBandwidthWeighting",
+          "locationName":"bandwidthWeighting"
         }
       }
     },
@@ -37074,6 +37165,10 @@
         "EnaSrdSupported":{
           "shape":"EnaSrdSupported",
           "locationName":"enaSrdSupported"
+        },
+        "BandwidthWeightings":{
+          "shape":"BandwidthWeightingTypeList",
+          "locationName":"bandwidthWeightings"
         }
       }
     },
@@ -40684,7 +40779,8 @@
         "PrivateDnsNameOptions":{"shape":"LaunchTemplatePrivateDnsNameOptionsRequest"},
         "MaintenanceOptions":{"shape":"LaunchTemplateInstanceMaintenanceOptionsRequest"},
         "DisableApiStop":{"shape":"Boolean"},
-        "Operator":{"shape":"OperatorRequest"}
+        "Operator":{"shape":"OperatorRequest"},
+        "NetworkPerformanceOptions":{"shape":"LaunchTemplateNetworkPerformanceOptionsRequest"}
       }
     },
     "RequestSpotFleetRequest":{
@@ -41749,6 +41845,10 @@
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
+        },
+        "NetworkPerformanceOptions":{
+          "shape":"LaunchTemplateNetworkPerformanceOptions",
+          "locationName":"networkPerformanceOptions"
         }
       }
     },
@@ -42456,6 +42556,7 @@
         "MaintenanceOptions":{"shape":"InstanceMaintenanceOptionsRequest"},
         "DisableApiStop":{"shape":"Boolean"},
         "EnablePrimaryIpv6":{"shape":"Boolean"},
+        "NetworkPerformanceOptions":{"shape":"InstanceNetworkPerformanceOptionsRequest"},
         "Operator":{"shape":"OperatorRequest"},
         "DryRun":{
           "shape":"Boolean",

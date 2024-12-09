@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - H265 outputs now support disabling the deblocking filter.
+* `Aws\Keyspaces` - Amazon Keyspaces: adding the list of IAM actions required by the UpdateKeyspace API.
+* `Aws\EC2` - This release includes a new API for modifying instance network-performance-options after launch.
+* `Aws\AppSync` - Provides description of new Amazon Bedrock runtime datasource.
+* `Aws\WorkSpaces` - Added text to clarify case-sensitivity
+* `Aws\ECS` - This is a documentation only update to address various tickets for Amazon ECS.
+* `Aws\CognitoIdentityProvider` - Change `CustomDomainConfig` from a required to an optional parameter for the `UpdateUserPoolDomain` operation.
+
 ## 3.334.1 - 2024-12-05
 
 * `Aws\QBusiness` - This release removes the deprecated UserId and UserGroups fields from SearchRelevantContent api's request parameters.

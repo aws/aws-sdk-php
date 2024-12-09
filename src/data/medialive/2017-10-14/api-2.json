@@ -9263,6 +9263,10 @@
         "MinQp": {
           "shape": "__integerMin1Max51",
           "locationName": "minQp"
+        },
+        "Deblocking": {
+          "shape": "H265Deblocking",
+          "locationName": "deblocking"
         }
       },
       "required": [
@@ -15720,7 +15724,10 @@
         },
         "Tags": {
           "shape": "Tags",
-          "locationName": "tags"
+          "locationName": "tags",
+          "deprecated": true,
+          "deprecatedMessage": "This API is deprecated. You must use UpdateTagsForResource instead.",
+          "deprecatedSince": "2024-11-20"
         },
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRuleCidr",
@@ -23602,6 +23609,13 @@
           "locationName": "scte35PrerollPullupMilliseconds"
         }
       }
+    },
+    "H265Deblocking": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
     }
   }
 }

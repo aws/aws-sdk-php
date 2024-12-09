@@ -1164,6 +1164,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyInstanceMetadataDefaultsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceMetadataOptions(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceMetadataOptionsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyInstanceNetworkPerformanceOptions(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyInstanceNetworkPerformanceOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyIpam(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyIpamAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyIpamPool(array $args = []) (supported in versions 2016-11-15)
