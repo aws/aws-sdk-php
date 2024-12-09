@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.2 - 2024-12-09
 
 * `Aws\MediaLive` - H265 outputs now support disabling the deblocking filter.
 * `Aws\Keyspaces` - Amazon Keyspaces: adding the list of IAM actions required by the UpdateKeyspace API.
