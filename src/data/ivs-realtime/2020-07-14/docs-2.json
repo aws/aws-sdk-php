@@ -132,6 +132,18 @@
         "ListCompositionsResponse$compositions": "<p>List of the matching Compositions (summary information only).</p>"
       }
     },
+    "CompositionThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video for a <a>Composition</a>.</p>",
+      "refs": {
+        "CompositionThumbnailConfigurationList$member": null
+      }
+    },
+    "CompositionThumbnailConfigurationList": {
+      "base": null,
+      "refs": {
+        "S3DestinationConfiguration$thumbnailConfigurations": "<p>A complex type that allows you to enable/disable the recording of thumbnails for a <a>Composition</a> and modify the interval at which thumbnails are generated for the live session.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p/>",
       "refs": {
@@ -859,6 +871,12 @@
         "ParticipantList$member": null
       }
     },
+    "ParticipantThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video from an individual participant.</p>",
+      "refs": {
+        "AutoParticipantRecordingConfiguration$thumbnailConfiguration": "<p>A complex type that allows you to enable/disable the recording of thumbnails for individual participant recording and modify the interval at which thumbnails are generated for the live session.</p>"
+      }
+    },
     "ParticipantToken": {
       "base": "<p>Object specifying a participant token in a stage.</p> <p> <b>Important</b>: Treat tokens as opaque; i.e., do not build functionality based on token contents. The format of tokens could change in the future.</p>",
       "refs": {
@@ -1318,6 +1336,32 @@
         "StorageConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
         "StorageConfigurationSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
         "TagResourceRequest$tags": "<p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
+      }
+    },
+    "ThumbnailIntervalSeconds": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. Default: 60.</p>",
+        "ParticipantThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. This is configurable only if <code>recordingMode</code> is <code>INTERVAL</code>. Default: 60.</p>"
+      }
+    },
+    "ThumbnailRecordingMode": {
+      "base": null,
+      "refs": {
+        "ParticipantThumbnailConfiguration$recordingMode": "<p>Thumbnail recording mode. Default: <code>DISABLED</code>.</p>"
+      }
+    },
+    "ThumbnailStorageType": {
+      "base": null,
+      "refs": {
+        "ThumbnailStorageTypeList$member": null
+      }
+    },
+    "ThumbnailStorageTypeList": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/(width)x(height) directory, where (width) and (height) are the width and height of the thumbnail. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/(width)x(height)/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>",
+        "ParticipantThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/high directory. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/high/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>"
       }
     },
     "Time": {

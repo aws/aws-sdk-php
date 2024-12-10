@@ -630,6 +630,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreatePushNotificationRegistration":{
+      "name":"CreatePushNotificationRegistration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/push-notification/{InstanceId}/registrations"
+      },
+      "input":{"shape":"CreatePushNotificationRegistrationRequest"},
+      "output":{"shape":"CreatePushNotificationRegistrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateQueue":{
       "name":"CreateQueue",
       "http":{
@@ -1055,6 +1072,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "DeletePushNotificationRegistration":{
+      "name":"DeletePushNotificationRegistration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/push-notification/{InstanceId}/registrations/{RegistrationId}"
+      },
+      "input":{"shape":"DeletePushNotificationRegistrationRequest"},
+      "output":{"shape":"DeletePushNotificationRegistrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteQueue":{
@@ -5749,6 +5782,15 @@
         "Transcript":{"shape":"Transcript"}
       }
     },
+    "ContactConfiguration":{
+      "type":"structure",
+      "required":["ContactId"],
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "IncludeRawMessage":{"shape":"IncludeRawMessage"}
+      }
+    },
     "ContactDataRequest":{
       "type":"structure",
       "members":{
@@ -6543,6 +6585,38 @@
       "members":{
         "PromptARN":{"shape":"ARN"},
         "PromptId":{"shape":"PromptId"}
+      }
+    },
+    "CreatePushNotificationRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "PinpointAppArn",
+        "DeviceToken",
+        "DeviceType",
+        "ContactConfiguration"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "PinpointAppArn":{"shape":"ARN"},
+        "DeviceToken":{"shape":"DeviceToken"},
+        "DeviceType":{"shape":"DeviceType"},
+        "ContactConfiguration":{"shape":"ContactConfiguration"}
+      }
+    },
+    "CreatePushNotificationRegistrationResponse":{
+      "type":"structure",
+      "required":["RegistrationId"],
+      "members":{
+        "RegistrationId":{"shape":"RegistrationId"}
       }
     },
     "CreateQueueRequest":{
@@ -7367,6 +7441,36 @@
           "location":"uri",
           "locationName":"PromptId"
         }
+      }
+    },
+    "DeletePushNotificationRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "RegistrationId",
+        "ContactId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "RegistrationId":{
+          "shape":"RegistrationId",
+          "location":"uri",
+          "locationName":"RegistrationId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"querystring",
+          "locationName":"contactId"
+        }
+      }
+    },
+    "DeletePushNotificationRegistrationResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteQueueRequest":{
@@ -8331,6 +8435,19 @@
         "PlatformVersion":{"shape":"PlatformVersion"},
         "OperatingSystem":{"shape":"OperatingSystem"}
       }
+    },
+    "DeviceToken":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "DeviceType":{
+      "type":"string",
+      "enum":[
+        "GCM",
+        "APNS",
+        "APNS_SANDBOX"
+      ]
     },
     "Dimensions":{
       "type":"structure",
@@ -10415,6 +10532,7 @@
       "min":0,
       "sensitive":true
     },
+    "IncludeRawMessage":{"type":"boolean"},
     "Index":{"type":"integer"},
     "InitiateAs":{
       "type":"string",
@@ -14155,6 +14273,11 @@
     "RegionName":{
       "type":"string",
       "pattern":"[a-z]{2}(-[a-z]+){1,2}(-[0-9])?"
+    },
+    "RegistrationId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "RehydrationType":{
       "type":"string",

@@ -38,6 +38,7 @@
     "CreatePersistentContactAssociation": "<p>Enables rehydration of chats for the lifespan of a contact. For more information about chat rehydration, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
     "CreatePrompt": "<p>Creates a prompt. For more information about prompts, such as supported file types and maximum length, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/prompts.html\">Create prompts</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
+    "CreatePushNotificationRegistration": "<p>Creates registration for a device token and a chat contact to receive real-time push notifications. For more information about push notifications, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-up-push-notifications-for-mobile-chat.html\">Set up push notifications in Amazon Connect for mobile chat</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreateQueue": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Creates a new queue for the specified Amazon Connect instance.</p> <important> <ul> <li> <p>If the phone number is claimed to a traffic distribution group that was created in the same Region as the Amazon Connect instance where you are calling this API, then you can use a full phone number ARN or a UUID for <code>OutboundCallerIdNumberId</code>. However, if the phone number is claimed to a traffic distribution group that is in one Region, and you are calling this API from an instance in another Amazon Web Services Region that is associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </li> <li> <p>Only use the phone number ARN format that doesn't contain <code>instance</code> in the path, for example, <code>arn:aws:connect:us-east-1:1234567890:phone-number/uuid</code>. This is the same ARN format that is returned when you call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API.</p> </li> <li> <p>If you plan to use IAM policies to allow/deny access to this API for phone number resources claimed to a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_resource-level-policy-examples.html#allow-deny-queue-actions-replica-region\">Allow or Deny queue API actions for phone numbers in a replica Region</a>.</p> </li> </ul> </important>",
     "CreateQuickConnect": "<p>Creates a quick connect for the specified Amazon Connect instance.</p>",
     "CreateRoutingProfile": "<p>Creates a new routing profile.</p>",
@@ -63,6 +64,7 @@
     "DeleteIntegrationAssociation": "<p>Deletes an Amazon Web Services resource association from an Amazon Connect instance. The association must not have any use cases associated with it.</p>",
     "DeletePredefinedAttribute": "<p>Deletes a predefined attribute from the specified Amazon Connect instance.</p>",
     "DeletePrompt": "<p>Deletes a prompt.</p>",
+    "DeletePushNotificationRegistration": "<p>Deletes registration for a device token and a chat contact.</p>",
     "DeleteQueue": "<p>Deletes a queue. It isn't possible to delete a queue by using the Amazon Connect admin website.</p>",
     "DeleteQuickConnect": "<p>Deletes a quick connect. </p> <important> <p>After calling <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteUser.html\">DeleteUser</a>, it's important to call <code>DeleteQuickConnect</code> to delete any records related to the deleted users. This will help you:</p> <ul> <li> <p>Avoid dangling resources that impact your service quotas.</p> </li> <li> <p>Remove deleted users so they don't appear to agents as transfer options.</p> </li> <li> <p>Avoid the disruption of other Amazon Connect processes, such as instance replication and syncing if you're using <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-connect-global-resiliency.html\">Amazon Connect Global Resiliency</a>. </p> </li> </ul> </important>",
     "DeleteRoutingProfile": "<p>Deletes a routing profile.</p>",
@@ -317,6 +319,7 @@
         "CreateIntegrationAssociationRequest$IntegrationArn": "<p>The Amazon Resource Name (ARN) of the integration.</p> <note> <p>When integrating with Amazon Web Services End User Messaging, the Amazon Connect and Amazon Web Services End User Messaging instances must be in the same account.</p> </note>",
         "CreateIntegrationAssociationResponse$IntegrationAssociationArn": "<p>The Amazon Resource Name (ARN) for the association.</p>",
         "CreatePromptResponse$PromptARN": "<p>The Amazon Resource Name (ARN) of the prompt.</p>",
+        "CreatePushNotificationRegistrationRequest$PinpointAppArn": "<p>The Amazon Resource Name (ARN) of the Pinpoint application.</p>",
         "CreateQueueResponse$QueueArn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
         "CreateQuickConnectResponse$QuickConnectARN": "<p>The Amazon Resource Name (ARN) for the quick connect. </p>",
         "CreateRoutingProfileResponse$RoutingProfileArn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
@@ -1421,6 +1424,7 @@
         "CreateInstanceRequest$ClientToken": "<p>The idempotency token.</p>",
         "CreateParticipantRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreatePersistentContactAssociationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
+        "CreatePushNotificationRegistrationRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateRuleRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateTaskTemplateRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
         "CreateTrafficDistributionGroupRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\">Making retries safe with idempotent APIs</a>.</p>",
@@ -1541,6 +1545,12 @@
       "base": "<p>A structure that defines search criteria for contacts using analysis outputs from Amazon Connect Contact Lens.</p>",
       "refs": {
         "SearchCriteria$ContactAnalysis": "<p>Search criteria based on analysis outputs from Amazon Connect Contact Lens.</p>"
+      }
+    },
+    "ContactConfiguration": {
+      "base": "<p>The contact configuration for push notification registration.</p>",
+      "refs": {
+        "CreatePushNotificationRegistrationRequest$ContactConfiguration": "<p>The contact configuration for push notification registration.</p>"
       }
     },
     "ContactDataRequest": {
@@ -1832,6 +1842,7 @@
         "Contact$PreviousContactId": "<p>If this contact is not the first contact, this is the ID of the previous contact.</p>",
         "Contact$ContactAssociationId": "<p>This is the root contactId which is used as a unique identifier for all subsequent contacts in a contact tree.</p>",
         "Contact$RelatedContactId": "<p>The contactId that is <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html#relatedcontactid\">related</a> to this contact.</p>",
+        "ContactConfiguration$ContactId": "<p>The identifier of the contact within the Amazon Connect instance.</p>",
         "ContactSearchSummary$Id": "<p>The identifier of the contact summary.</p>",
         "ContactSearchSummary$InitialContactId": "<p>If this contact is related to other contacts, this is the ID of the initial contact.</p>",
         "ContactSearchSummary$PreviousContactId": "<p>If this contact is not the first contact, this is the ID of the previous contact.</p>",
@@ -1841,6 +1852,7 @@
         "CreatePersistentContactAssociationRequest$InitialContactId": "<p>This is the contactId of the current contact that the <code>CreatePersistentContactAssociation</code> API is being called from.</p>",
         "CreatePersistentContactAssociationRequest$SourceContactId": "<p>The contactId from which a persistent chat session must be started.</p>",
         "CreatePersistentContactAssociationResponse$ContinuedFromContactId": "<p>The contactId from which a persistent chat session is started. This field is populated only for persistent chat.</p>",
+        "DeletePushNotificationRegistrationRequest$ContactId": "<p>The identifier of the contact within the Amazon Connect instance.</p>",
         "DescribeContactRequest$ContactId": "<p>The identifier of the contact.</p>",
         "DismissUserContactRequest$ContactId": "<p>The identifier of the contact.</p>",
         "EvaluationMetadata$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
@@ -2184,6 +2196,16 @@
       }
     },
     "CreatePromptResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePushNotificationRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePushNotificationRegistrationResponse": {
       "base": null,
       "refs": {
       }
@@ -2550,6 +2572,16 @@
       }
     },
     "DeletePromptRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePushNotificationRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePushNotificationRegistrationResponse": {
       "base": null,
       "refs": {
       }
@@ -2943,6 +2975,18 @@
       "refs": {
         "AgentInfo$DeviceInfo": "<p>Information regarding Agent’s device.</p>",
         "Customer$DeviceInfo": "<p>Information regarding Customer’s device.</p>"
+      }
+    },
+    "DeviceToken": {
+      "base": null,
+      "refs": {
+        "CreatePushNotificationRegistrationRequest$DeviceToken": "<p>The push notification token issued by the Apple or Google gateways.</p>"
+      }
+    },
+    "DeviceType": {
+      "base": null,
+      "refs": {
+        "CreatePushNotificationRegistrationRequest$DeviceType": "<p>The device type to use when sending the message.</p>"
       }
     },
     "Dimensions": {
@@ -4506,6 +4550,12 @@
         "InboundRawMessage$Subject": "<p>The email subject.</p>"
       }
     },
+    "IncludeRawMessage": {
+      "base": null,
+      "refs": {
+        "ContactConfiguration$IncludeRawMessage": "<p>Whether to include raw connect message in the push notification payload. Default is <code>False</code>.</p>"
+      }
+    },
     "Index": {
       "base": null,
       "refs": {
@@ -4592,6 +4642,7 @@
         "CreatePersistentContactAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreatePredefinedAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreatePromptRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreatePushNotificationRegistrationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateQueueRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateQuickConnectRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateRoutingProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4615,6 +4666,7 @@
         "DeleteIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePredefinedAttributeRequest$InstanceId": "<p> The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeletePromptRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeletePushNotificationRegistrationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteQueueRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteQuickConnectRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteRoutingProfileRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -6284,6 +6336,7 @@
     "ParticipantRole": {
       "base": null,
       "refs": {
+        "ContactConfiguration$ParticipantRole": "<p>The role of the participant in the chat conversation.</p>",
         "ParticipantDetailsToAdd$ParticipantRole": "<p>The role of the participant being added.</p>",
         "RealTimeContactAnalysisSegmentAttachments$ParticipantRole": "<p>The role of the participant. For example, is it a customer, agent, or system.</p>",
         "RealTimeContactAnalysisSegmentEvent$ParticipantRole": "<p>The role of the participant. For example, is it a customer, agent, or system.</p>",
@@ -7454,6 +7507,13 @@
         "SecurityProfileSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "User$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "UserSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>"
+      }
+    },
+    "RegistrationId": {
+      "base": null,
+      "refs": {
+        "CreatePushNotificationRegistrationResponse$RegistrationId": "<p>The identifier for the registration.</p>",
+        "DeletePushNotificationRegistrationRequest$RegistrationId": "<p>The identifier for the registration.</p>"
       }
     },
     "RehydrationType": {

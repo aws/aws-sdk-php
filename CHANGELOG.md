@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BCMPricingCalculator` - Updated condition key inference from Workload Estimate, Bill Scenario, and Bill Estimate resources. Updated documentation links.
+* `Aws\finspace` - Update KxCommandLineArgument value parameter regex to allow for spaces and semicolons
+* `Aws\ApplicationAutoScaling` - Doc only update for AAS Predictive Scaling policy configuration API.
+* `Aws\Connect` - Add support for Push Notifications for Amazon Connect chat. With Push Notifications enabled an alert could be sent to customers about new messages even when they aren't actively using the mobile application.
+* `Aws\IVSRealTime` - IVS Real-Time now offers customers the ability to customize thumbnails recording mode and interval for both Individual Participant Recording (IPR) and Server-Side Compositions (SSC).
+* `Aws\SESv2` - Introduces support for creating DEED (Deterministic Easy-DKIM) identities.
+* `Aws\DSQL` - Doc only update to examples for DeleteMultiRegionClusters & CreateMultiRegionClusters
+
 ## 3.334.2 - 2024-12-09
 
 * `Aws\MediaLive` - H265 outputs now support disabling the deblocking filter.

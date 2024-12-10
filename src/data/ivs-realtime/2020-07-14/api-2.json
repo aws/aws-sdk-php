@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivsrealtime",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"ivsrealtime",
     "serviceFullName":"Amazon Interactive Video Service RealTime",
     "serviceId":"IVS RealTime",
@@ -627,7 +628,8 @@
       "required":["storageConfigurationArn"],
       "members":{
         "storageConfigurationArn":{"shape":"AutoParticipantRecordingStorageConfigurationArn"},
-        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"}
+        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
+        "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"}
       }
     },
     "AutoParticipantRecordingStorageConfigurationArn":{
@@ -720,6 +722,19 @@
     "CompositionSummaryList":{
       "type":"list",
       "member":{"shape":"CompositionSummary"}
+    },
+    "CompositionThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"}
+      }
+    },
+    "CompositionThumbnailConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CompositionThumbnailConfiguration"},
+      "max":1,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -1615,7 +1630,8 @@
       "type":"string",
       "enum":[
         "AUDIO_VIDEO",
-        "AUDIO_ONLY"
+        "AUDIO_ONLY",
+        "NONE"
       ]
     },
     "ParticipantRecordingMediaTypeList":{
@@ -1663,6 +1679,14 @@
         "firstJoinTime":{"shape":"Time"},
         "published":{"shape":"Published"},
         "recordingState":{"shape":"ParticipantRecordingState"}
+      }
+    },
+    "ParticipantThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"},
+        "recordingMode":{"shape":"ThumbnailRecordingMode"}
       }
     },
     "ParticipantToken":{
@@ -1872,7 +1896,8 @@
       "members":{
         "storageConfigurationArn":{"shape":"StorageConfigurationArn"},
         "encoderConfigurationArns":{"shape":"EncoderConfigurationArnList"},
-        "recordingConfiguration":{"shape":"RecordingConfiguration"}
+        "recordingConfiguration":{"shape":"RecordingConfiguration"},
+        "thumbnailConfigurations":{"shape":"CompositionThumbnailConfigurationList"}
       }
     },
     "S3Detail":{
@@ -2096,6 +2121,32 @@
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"},
       "max":50,
+      "min":0
+    },
+    "ThumbnailIntervalSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":1
+    },
+    "ThumbnailRecordingMode":{
+      "type":"string",
+      "enum":[
+        "INTERVAL",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailStorageType":{
+      "type":"string",
+      "enum":[
+        "SEQUENTIAL",
+        "LATEST"
+      ]
+    },
+    "ThumbnailStorageTypeList":{
+      "type":"list",
+      "member":{"shape":"ThumbnailStorageType"},
+      "max":2,
       "min":0
     },
     "Time":{
