@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.3 - 2024-12-10
 
 * `Aws\BCMPricingCalculator` - Updated condition key inference from Workload Estimate, Bill Scenario, and Bill Estimate resources. Updated documentation links.
 * `Aws\finspace` - Update KxCommandLineArgument value parameter regex to allow for spaces and semicolons
