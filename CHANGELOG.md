@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MigrationHub` - API and documentation updates for AWS MigrationHub related to adding support for listing migration task updates and associating, disassociating and listing source resources
+* `Aws\CloudTrail` - Doc-only updates for CloudTrail.
+* `Aws\CognitoIdentityProvider` - Updated descriptions for some API operations and parameters, corrected some errors in Cognito user pools
+* `Aws\ControlCatalog` - Minor documentation updates to the content of ImplementationDetails object part of the Control Catalog GetControl API
+* `Aws\EMRServerless` - This release adds support for accessing system profile logs in Lake Formation-enabled jobs.
+* `Aws\Artifact` - Add support for listing active customer agreements for the calling AWS Account.
+* `Aws\TimestreamInfluxDB` - Adds networkType parameter to CreateDbInstance API which allows IPv6 support to the InfluxDB endpoint
+* `Aws\SESv2` - Introduces support for multi-region endpoint.
+
 ## 3.334.3 - 2024-12-10
 
 * `Aws\BCMPricingCalculator` - Updated condition key inference from Workload Estimate, Bill Scenario, and Bill Estimate resources. Updated documentation links.

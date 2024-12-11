@@ -155,6 +155,7 @@
       },
       "input":{"shape":"TagResourceRequest"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
@@ -261,7 +262,8 @@
         "deploymentType":{"shape":"DeploymentType"},
         "logDeliveryConfiguration":{"shape":"LogDeliveryConfiguration"},
         "tags":{"shape":"RequestTagMap"},
-        "port":{"shape":"Port"}
+        "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"}
       }
     },
     "CreateDbInstanceOutput":{
@@ -279,6 +281,7 @@
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
         "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -355,6 +358,7 @@
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
         "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -444,6 +448,7 @@
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
         "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -512,6 +517,7 @@
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
         "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},
@@ -767,6 +773,13 @@
       "max":100,
       "min":1
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUAL"
+      ]
+    },
     "NextToken":{
       "type":"string",
       "min":1
@@ -946,6 +959,7 @@
         "status":{"shape":"Status"},
         "endpoint":{"shape":"String"},
         "port":{"shape":"Port"},
+        "networkType":{"shape":"NetworkType"},
         "dbInstanceType":{"shape":"DbInstanceType"},
         "dbStorageType":{"shape":"DbStorageType"},
         "allocatedStorage":{"shape":"AllocatedStorage"},

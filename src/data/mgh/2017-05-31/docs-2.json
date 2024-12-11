@@ -4,18 +4,22 @@
   "operations": {
     "AssociateCreatedArtifact": "<p>Associates a created artifact of an AWS cloud resource, the target receiving the migration, with the migration task performed by a migration tool. This API has the following traits:</p> <ul> <li> <p>Migration tools can call the <code>AssociateCreatedArtifact</code> operation to indicate which AWS artifact is associated with a migration task.</p> </li> <li> <p>The created artifact name must be provided in ARN (Amazon Resource Name) format which will contain information about type and region; for example: <code>arn:aws:ec2:us-east-1:488216288981:image/ami-6d0ba87b</code>.</p> </li> <li> <p>Examples of the AWS resource behind the created artifact are, AMI's, EC2 instance, or DMS endpoint, etc.</p> </li> </ul>",
     "AssociateDiscoveredResource": "<p>Associates a discovered resource ID from Application Discovery Service with a migration task.</p>",
+    "AssociateSourceResource": "<p>Associates a source resource with a migration task. For example, the source resource can be a source server, an application, or a migration wave.</p>",
     "CreateProgressUpdateStream": "<p>Creates a progress update stream which is an AWS resource used for access control as well as a namespace for migration task names that is implicitly linked to your AWS account. It must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.</p>",
     "DeleteProgressUpdateStream": "<p>Deletes a progress update stream, including all of its tasks, which was previously created as an AWS resource used for access control. This API has the following traits:</p> <ul> <li> <p>The only parameter needed for <code>DeleteProgressUpdateStream</code> is the stream name (same as a <code>CreateProgressUpdateStream</code> call).</p> </li> <li> <p>The call will return, and a background process will asynchronously delete the stream and all of its resources (tasks, associated resources, resource attributes, created artifacts).</p> </li> <li> <p>If the stream takes time to be deleted, it might still show up on a <code>ListProgressUpdateStreams</code> call.</p> </li> <li> <p> <code>CreateProgressUpdateStream</code>, <code>ImportMigrationTask</code>, <code>NotifyMigrationTaskState</code>, and all Associate[*] APIs related to the tasks belonging to the stream will throw \"InvalidInputException\" if the stream of the same name is in the process of being deleted.</p> </li> <li> <p>Once the stream and all of its resources are deleted, <code>CreateProgressUpdateStream</code> for a stream of the same name will succeed, and that stream will be an entirely new logical resource (without any resources associated with the old stream).</p> </li> </ul>",
     "DescribeApplicationState": "<p>Gets the migration status of an application.</p>",
     "DescribeMigrationTask": "<p>Retrieves a list of all attributes associated with a specific migration task.</p>",
     "DisassociateCreatedArtifact": "<p>Disassociates a created artifact of an AWS resource with a migration task performed by a migration tool that was previously associated. This API has the following traits:</p> <ul> <li> <p>A migration user can call the <code>DisassociateCreatedArtifacts</code> operation to disassociate a created AWS Artifact from a migration task.</p> </li> <li> <p>The created artifact name must be provided in ARN (Amazon Resource Name) format which will contain information about type and region; for example: <code>arn:aws:ec2:us-east-1:488216288981:image/ami-6d0ba87b</code>.</p> </li> <li> <p>Examples of the AWS resource behind the created artifact are, AMI's, EC2 instance, or RDS instance, etc.</p> </li> </ul>",
     "DisassociateDiscoveredResource": "<p>Disassociate an Application Discovery Service discovered resource from a migration task.</p>",
+    "DisassociateSourceResource": "<p>Removes the association between a source resource and a migration task.</p>",
     "ImportMigrationTask": "<p>Registers a new migration task which represents a server, database, etc., being migrated to AWS by a migration tool.</p> <p>This API is a prerequisite to calling the <code>NotifyMigrationTaskState</code> API as the migration tool must first register the migration task with Migration Hub.</p>",
     "ListApplicationStates": "<p>Lists all the migration statuses for your applications. If you use the optional <code>ApplicationIds</code> parameter, only the migration statuses for those applications will be returned.</p>",
     "ListCreatedArtifacts": "<p>Lists the created artifacts attached to a given migration task in an update stream. This API has the following traits:</p> <ul> <li> <p>Gets the list of the created artifacts while migration is taking place.</p> </li> <li> <p>Shows the artifacts created by the migration tool that was associated by the <code>AssociateCreatedArtifact</code> API. </p> </li> <li> <p>Lists created artifacts in a paginated interface. </p> </li> </ul>",
     "ListDiscoveredResources": "<p>Lists discovered resources associated with the given <code>MigrationTask</code>.</p>",
+    "ListMigrationTaskUpdates": "<p>This is a paginated API that returns all the migration-task states for the specified <code>MigrationTaskName</code> and <code>ProgressUpdateStream</code>.</p>",
     "ListMigrationTasks": "<p>Lists all, or filtered by resource name, migration tasks associated with the user account making this call. This API has the following traits:</p> <ul> <li> <p>Can show a summary list of the most recent migration tasks.</p> </li> <li> <p>Can show a summary list of migration tasks associated with a given discovered resource.</p> </li> <li> <p>Lists migration tasks in a paginated interface.</p> </li> </ul>",
     "ListProgressUpdateStreams": "<p>Lists progress update streams associated with the user account making this call.</p>",
+    "ListSourceResources": "<p>Lists all the source resource that are associated with the specified <code>MigrationTaskName</code> and <code>ProgressUpdateStream</code>.</p>",
     "NotifyApplicationState": "<p>Sets the migration state of an application. For a given application identified by the value passed to <code>ApplicationId</code>, its status is set or updated by passing one of three values to <code>Status</code>: <code>NOT_STARTED | IN_PROGRESS | COMPLETED</code>.</p>",
     "NotifyMigrationTaskState": "<p>Notifies Migration Hub of the current status, progress, or other detail regarding a migration task. This API has the following traits:</p> <ul> <li> <p>Migration tools will call the <code>NotifyMigrationTaskState</code> API to share the latest progress and status.</p> </li> <li> <p> <code>MigrationTaskName</code> is used for addressing updates to the correct target.</p> </li> <li> <p> <code>ProgressUpdateStream</code> is used for access control and to provide a namespace for each migration tool.</p> </li> </ul>",
     "PutResourceAttributes": "<p>Provides identifying details of the resource being migrated so that it can be associated in the Application Discovery Service repository. This association occurs asynchronously after <code>PutResourceAttributes</code> returns.</p> <important> <ul> <li> <p>Keep in mind that subsequent calls to PutResourceAttributes will override previously stored attributes. For example, if it is first called with a MAC address, but later, it is desired to <i>add</i> an IP address, it will then be required to call it with <i>both</i> the IP and MAC addresses to prevent overriding the MAC address.</p> </li> <li> <p>Note the instructions regarding the special use case of the <a href=\"https://docs.aws.amazon.com/migrationhub/latest/ug/API_PutResourceAttributes.html#migrationhub-PutResourceAttributes-request-ResourceAttributeList\"> <code>ResourceAttributeList</code> </a> parameter when specifying any \"VM\" related value.</p> </li> </ul> </important> <note> <p>Because this is an asynchronous call, it will always return 200, whether an association occurs or not. To confirm if an association was found based on the provided details, call <code>ListDiscoveredResources</code>.</p> </note>"
@@ -77,6 +81,16 @@
       }
     },
     "AssociateDiscoveredResourceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSourceResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSourceResourceResult": {
       "base": null,
       "refs": {
       }
@@ -174,6 +188,16 @@
       "refs": {
       }
     },
+    "DisassociateSourceResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateSourceResourceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DiscoveredResource": {
       "base": "<p>Object representing the on-premises resource being migrated.</p>",
       "refs": {
@@ -198,10 +222,12 @@
       "refs": {
         "AssociateCreatedArtifactRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "AssociateDiscoveredResourceRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
+        "AssociateSourceResourceRequest$DryRun": "<p>This is an optional parameter that you can use to test whether the call will succeed. Set this parameter to <code>true</code> to verify that you have the permissions that are required to make the call, and that you have specified the other parameters in the call correctly.</p>",
         "CreateProgressUpdateStreamRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "DeleteProgressUpdateStreamRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "DisassociateCreatedArtifactRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "DisassociateDiscoveredResourceRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
+        "DisassociateSourceResourceRequest$DryRun": "<p>This is an optional parameter that you can use to test whether the call will succeed. Set this parameter to <code>true</code> to verify that you have the permissions that are required to make the call, and that you have specified the other parameters in the call correctly.</p>",
         "ImportMigrationTaskRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "NotifyApplicationStateRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
         "NotifyMigrationTaskStateRequest$DryRun": "<p>Optional boolean flag to indicate whether any effect should take place. Used to test if the caller has permission to make the call.</p>",
@@ -289,6 +315,16 @@
       "refs": {
       }
     },
+    "ListMigrationTaskUpdatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMigrationTaskUpdatesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListMigrationTasksRequest": {
       "base": null,
       "refs": {
@@ -309,10 +345,21 @@
       "refs": {
       }
     },
+    "ListSourceResourcesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSourceResourcesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
         "ListApplicationStatesRequest$MaxResults": "<p>Maximum number of results to be returned per page.</p>",
+        "ListMigrationTaskUpdatesRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the value that you specify here for <code>MaxResults</code>, the response will include a token that you can use to retrieve the next set of results.</p>",
         "ListMigrationTasksRequest$MaxResults": "<p>Value to specify how many results are returned per page.</p>",
         "ListProgressUpdateStreamsRequest$MaxResults": "<p>Filter to limit the maximum number of results to list per page.</p>"
       }
@@ -329,6 +376,12 @@
         "ListDiscoveredResourcesRequest$MaxResults": "<p>The maximum number of results returned per page.</p>"
       }
     },
+    "MaxResultsSourceResources": {
+      "base": null,
+      "refs": {
+        "ListSourceResourcesRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the value that you specify here for <code>MaxResults</code>, the response will include a token that you can use to retrieve the next set of results.</p>"
+      }
+    },
     "MigrationTask": {
       "base": "<p>Represents a migration task in a migration tool.</p>",
       "refs": {
@@ -340,12 +393,16 @@
       "refs": {
         "AssociateCreatedArtifactRequest$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
         "AssociateDiscoveredResourceRequest$MigrationTaskName": "<p>The identifier given to the MigrationTask. <i>Do not store personal data in this field.</i> </p>",
+        "AssociateSourceResourceRequest$MigrationTaskName": "<p>A unique identifier that references the migration task. <i>Do not include sensitive data in this field.</i> </p>",
         "DescribeMigrationTaskRequest$MigrationTaskName": "<p>The identifier given to the MigrationTask. <i>Do not store personal data in this field.</i> </p>",
         "DisassociateCreatedArtifactRequest$MigrationTaskName": "<p>Unique identifier that references the migration task to be disassociated with the artifact. <i>Do not store personal data in this field.</i> </p>",
         "DisassociateDiscoveredResourceRequest$MigrationTaskName": "<p>The identifier given to the MigrationTask. <i>Do not store personal data in this field.</i> </p>",
+        "DisassociateSourceResourceRequest$MigrationTaskName": "<p>A unique identifier that references the migration task. <i>Do not include sensitive data in this field.</i> </p>",
         "ImportMigrationTaskRequest$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
         "ListCreatedArtifactsRequest$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
         "ListDiscoveredResourcesRequest$MigrationTaskName": "<p>The name of the MigrationTask. <i>Do not store personal data in this field.</i> </p>",
+        "ListMigrationTaskUpdatesRequest$MigrationTaskName": "<p>A unique identifier that references the migration task. <i>Do not include sensitive data in this field.</i> </p>",
+        "ListSourceResourcesRequest$MigrationTaskName": "<p>A unique identifier that references the migration task. <i>Do not store confidential data in this field.</i> </p>",
         "MigrationTask$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
         "MigrationTaskSummary$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
         "NotifyMigrationTaskStateRequest$MigrationTaskName": "<p>Unique identifier that references the migration task. <i>Do not store personal data in this field.</i> </p>",
@@ -362,6 +419,18 @@
       "base": null,
       "refs": {
         "ListMigrationTasksResult$MigrationTaskSummaryList": "<p>Lists the migration task's summary which includes: <code>MigrationTaskName</code>, <code>ProgressPercent</code>, <code>ProgressUpdateStream</code>, <code>Status</code>, and the <code>UpdateDateTime</code> for each task.</p>"
+      }
+    },
+    "MigrationTaskUpdate": {
+      "base": "<p>A migration-task progress update.</p>",
+      "refs": {
+        "MigrationTaskUpdateList$member": null
+      }
+    },
+    "MigrationTaskUpdateList": {
+      "base": null,
+      "refs": {
+        "ListMigrationTaskUpdatesResult$MigrationTaskUpdateList": "<p>The list of migration-task updates.</p>"
       }
     },
     "NextUpdateSeconds": {
@@ -407,14 +476,18 @@
       "refs": {
         "AssociateCreatedArtifactRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. </p>",
         "AssociateDiscoveredResourceRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream.</p>",
+        "AssociateSourceResourceRequest$ProgressUpdateStream": "<p>The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.</p>",
         "CreateProgressUpdateStreamRequest$ProgressUpdateStreamName": "<p>The name of the ProgressUpdateStream. <i>Do not store personal data in this field.</i> </p>",
         "DeleteProgressUpdateStreamRequest$ProgressUpdateStreamName": "<p>The name of the ProgressUpdateStream. <i>Do not store personal data in this field.</i> </p>",
         "DescribeMigrationTaskRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. </p>",
         "DisassociateCreatedArtifactRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. </p>",
         "DisassociateDiscoveredResourceRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream.</p>",
+        "DisassociateSourceResourceRequest$ProgressUpdateStream": "<p>The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.</p>",
         "ImportMigrationTaskRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. &gt;</p>",
         "ListCreatedArtifactsRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. </p>",
         "ListDiscoveredResourcesRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream.</p>",
+        "ListMigrationTaskUpdatesRequest$ProgressUpdateStream": "<p>The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.</p>",
+        "ListSourceResourcesRequest$ProgressUpdateStream": "<p>The name of the progress-update stream, which is used for access control as well as a namespace for migration-task names that is implicitly linked to your AWS account. The progress-update stream must uniquely identify the migration tool as it is used for all updates made by the tool; however, it does not need to be unique for each AWS account because it is scoped to the AWS account.</p>",
         "MigrationTask$ProgressUpdateStream": "<p>A name that identifies the vendor of the migration tool being used.</p>",
         "MigrationTaskSummary$ProgressUpdateStream": "<p>An AWS resource used for access control. It should uniquely identify the migration tool as it is used for all updates made by the tool.</p>",
         "NotifyMigrationTaskStateRequest$ProgressUpdateStream": "<p>The name of the ProgressUpdateStream. </p>",
@@ -491,6 +564,32 @@
       "refs": {
       }
     },
+    "SourceResource": {
+      "base": "<p>A source resource can be a source server, a migration wave, an application, or any other resource that you track.</p>",
+      "refs": {
+        "AssociateSourceResourceRequest$SourceResource": "<p>The source resource that you want to associate.</p>",
+        "SourceResourceList$member": null
+      }
+    },
+    "SourceResourceDescription": {
+      "base": null,
+      "refs": {
+        "SourceResource$Description": "<p>A description that can be free-form text to record additional detail about the resource for clarity or later reference.</p>"
+      }
+    },
+    "SourceResourceList": {
+      "base": null,
+      "refs": {
+        "ListSourceResourcesResult$SourceResourceList": "<p>The list of source resources.</p>"
+      }
+    },
+    "SourceResourceName": {
+      "base": null,
+      "refs": {
+        "DisassociateSourceResourceRequest$SourceResourceName": "<p>The name that was specified for the source resource.</p>",
+        "SourceResource$Name": "<p>This is the name that you want to use to identify the resource. If the resource is an AWS resource, we recommend that you set this parameter to the ARN of the resource.</p>"
+      }
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -502,6 +601,7 @@
       "base": null,
       "refs": {
         "MigrationTaskSummary$StatusDetail": "<p>Detail information of what is being done within the overall status state.</p>",
+        "SourceResource$StatusDetail": "<p>A free-form description of the status of the resource.</p>",
         "Task$StatusDetail": "<p>Details of task status as notified by a migration tool. A tool might use this field to provide clarifying information about the status that is unique to that tool or that explains an error state.</p>"
       }
     },
@@ -509,6 +609,7 @@
       "base": "<p>Task object encapsulating task information.</p>",
       "refs": {
         "MigrationTask$Task": "<p>Task object encapsulating task information.</p>",
+        "MigrationTaskUpdate$MigrationTaskState": null,
         "NotifyMigrationTaskStateRequest$Task": "<p>Information about the task's progress and status.</p>"
       }
     },
@@ -526,10 +627,14 @@
         "ListCreatedArtifactsResult$NextToken": "<p>If there are more created artifacts than the max result, return the next token to be passed to the next call as a bookmark of where to start from.</p>",
         "ListDiscoveredResourcesRequest$NextToken": "<p>If a <code>NextToken</code> was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in <code>NextToken</code>.</p>",
         "ListDiscoveredResourcesResult$NextToken": "<p>If there are more discovered resources than the max result, return the next token to be passed to the next call as a bookmark of where to start from.</p>",
+        "ListMigrationTaskUpdatesRequest$NextToken": "<p>If <code>NextToken</code> was returned by a previous call, there are more results available. The value of <code>NextToken</code> is a unique pagination token for each page. To retrieve the next page of results, specify the <code>NextToken</code> value that the previous call returned. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
+        "ListMigrationTaskUpdatesResult$NextToken": "<p>If the response includes a <code>NextToken</code> value, that means that there are more results available. The value of <code>NextToken</code> is a unique pagination token for each page. To retrieve the next page of results, call this API again and specify this <code>NextToken</code> value in the request. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
         "ListMigrationTasksRequest$NextToken": "<p>If a <code>NextToken</code> was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in <code>NextToken</code>.</p>",
         "ListMigrationTasksResult$NextToken": "<p>If there are more migration tasks than the max result, return the next token to be passed to the next call as a bookmark of where to start from.</p>",
         "ListProgressUpdateStreamsRequest$NextToken": "<p>If a <code>NextToken</code> was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in <code>NextToken</code>.</p>",
-        "ListProgressUpdateStreamsResult$NextToken": "<p>If there are more streams created than the max result, return the next token to be passed to the next call as a bookmark of where to start from.</p>"
+        "ListProgressUpdateStreamsResult$NextToken": "<p>If there are more streams created than the max result, return the next token to be passed to the next call as a bookmark of where to start from.</p>",
+        "ListSourceResourcesRequest$NextToken": "<p>If <code>NextToken</code> was returned by a previous call, there are more results available. The value of <code>NextToken</code> is a unique pagination token for each page. To retrieve the next page of results, specify the <code>NextToken</code> value that the previous call returned. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
+        "ListSourceResourcesResult$NextToken": "<p>If the response includes a <code>NextToken</code> value, that means that there are more results available. The value of <code>NextToken</code> is a unique pagination token for each page. To retrieve the next page of results, call this API again and specify this <code>NextToken</code> value in the request. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>"
       }
     },
     "UnauthorizedOperation": {
@@ -544,8 +649,15 @@
         "DescribeApplicationStateResult$LastUpdatedTime": "<p>The timestamp when the application status was last updated.</p>",
         "MigrationTask$UpdateDateTime": "<p>The timestamp when the task was gathered.</p>",
         "MigrationTaskSummary$UpdateDateTime": "<p>The timestamp when the task was gathered.</p>",
+        "MigrationTaskUpdate$UpdateDateTime": "<p>The timestamp for the update.</p>",
         "NotifyApplicationStateRequest$UpdateDateTime": "<p>The timestamp when the application state changed.</p>",
         "NotifyMigrationTaskStateRequest$UpdateDateTime": "<p>The timestamp when the task was gathered.</p>"
+      }
+    },
+    "UpdateType": {
+      "base": null,
+      "refs": {
+        "MigrationTaskUpdate$UpdateType": "<p>The type of the update.</p>"
       }
     }
   }
