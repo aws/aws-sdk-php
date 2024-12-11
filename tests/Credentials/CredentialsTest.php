@@ -2,7 +2,6 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\Credentials;
-use Aws\Credentials\CredentialSources;
 use Aws\Identity\AwsCredentialIdentity;
 use Aws\Identity\AwsCredentialIdentityInterface;
 use Aws\Identity\IdentityInterface;
@@ -28,8 +27,7 @@ class CredentialsTest extends TestCase
             'secret'  => 'baz',
             'token'   => 'tok',
             'expires' => $exp,
-            'accountId' => $accountId,
-            'source' => CredentialSources::STATIC
+            'accountId' => $accountId
         ], $creds->toArray());
     }
 
@@ -53,8 +51,7 @@ class CredentialsTest extends TestCase
             'secret'  => 'secret-value',
             'token'   => null,
             'expires' => null,
-            'accountId' => null,
-            'source' => CredentialSources::STATIC
+            'accountId' => null
         ], $actual);
         $accountId = 'foo';
         $credentials = new Credentials('key-value', 'secret-value', 'token-value', 10, $accountId);
@@ -65,8 +62,7 @@ class CredentialsTest extends TestCase
             'secret'  => 'secret-value',
             'token'   => 'token-value',
             'expires' => 10,
-            'accountId' => $accountId,
-            'source' => CredentialSources::STATIC
+            'accountId' => $accountId
         ], $actual);
     }
 

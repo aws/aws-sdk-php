@@ -302,8 +302,7 @@ class CredentialProvider
                         $secret,
                         $token,
                         null,
-                        $accountId,
-                        CredentialSources::ENVIRONMENT
+                        $accountId
                     )
                 );
             }
@@ -418,8 +417,7 @@ class CredentialProvider
                     'WebIdentityTokenFile' => $tokenFromEnv,
                     'SessionName' => $sessionName,
                     'client' => $stsClient,
-                    'region' => $region,
-                    'source' => CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN
+                    'region' => $region
                 ]);
 
                 return $provider();
@@ -448,8 +446,7 @@ class CredentialProvider
                         'WebIdentityTokenFile' => $profile['web_identity_token_file'],
                         'SessionName' => $sessionName,
                         'client' => $stsClient,
-                        'region' => $region,
-                        'source' => CredentialSources::PROFILE_STS_WEB_ID_TOKEN
+                        'region' => $region
                     ]);
 
                     return $provider();
@@ -556,8 +553,7 @@ class CredentialProvider
                     $data[$profile]['aws_secret_access_key'],
                     $data[$profile]['aws_session_token'],
                     null,
-                    $data[$profile]['aws_account_id'] ?? null,
-                    CredentialSources::PROFILE
+                    !empty($data[$profile]['aws_account_id']) ? $data[$profile]['aws_account_id'] : null
                 )
             );
         };
@@ -645,8 +641,7 @@ class CredentialProvider
                     $processData['SecretAccessKey'],
                     $processData['SessionToken'],
                     $expires,
-                    $accountId,
-                    CredentialSources::PROFILE_PROCESS
+                    $accountId
                 )
             );
         };
@@ -729,10 +724,7 @@ class CredentialProvider
             'RoleArn' => $roleArn,
             'RoleSessionName' => $roleSessionName
         ]);
-        $credentials = $stsClient->createCredentials(
-            $result,
-            CredentialSources::STS_ASSUME_ROLE
-        );
+        $credentials = $stsClient->createCredentials($result);
 
         return Promise\Create::promiseFor($credentials);
     }
@@ -926,8 +918,7 @@ class CredentialProvider
                 $ssoCredentials['secretAccessKey'],
                 $ssoCredentials['sessionToken'],
                 $expiration,
-                $ssoProfile['sso_account_id'],
-                CredentialSources::PROFILE_SSO
+                $ssoProfile['sso_account_id']
             )
         );
     }
@@ -987,8 +978,7 @@ class CredentialProvider
                 $ssoCredentials['secretAccessKey'],
                 $ssoCredentials['sessionToken'],
                 $expiration,
-                $ssoProfile['sso_account_id'],
-                CredentialSources::PROFILE_SSO_LEGACY
+                $ssoProfile['sso_account_id']
             )
         );
     }

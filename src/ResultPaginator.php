@@ -45,10 +45,6 @@ class ResultPaginator implements \Iterator
         $this->operation = $operation;
         $this->args = $args;
         $this->config = $config;
-        MetricsBuilder::appendMetricsCaptureMiddleware(
-            $this->client->getHandlerList(),
-            MetricsBuilder::PAGINATOR
-        );
     }
 
     /**

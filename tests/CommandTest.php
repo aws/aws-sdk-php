@@ -3,7 +3,6 @@ namespace Aws\Test;
 
 use Aws\Command;
 use Aws\HandlerList;
-use Aws\MetricsBuilder;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -46,28 +45,20 @@ class CommandTest extends TestCase
 
     public function testIsIterable()
     {
-        $command = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $data = iterator_to_array($command);
-        $this->assertEquals([
-                'bar' => 'baz',
-                'qux' => 'boo',
-                '@http' => [],
-                '@context' => []
-            ],
+        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+        $data = iterator_to_array($c);
+        $this->assertEquals(
+            ['bar' => 'baz', 'qux' => 'boo', '@http' => [], '@context' => []],
             $data
         );
     }
 
     public function testConvertToArray()
     {
-        $command = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $this->assertEquals([
-            'bar' => 'baz',
-            'qux' => 'boo',
-            '@http' => [],
-            '@context' => []
-        ],
-            $command->toArray()
+        $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
+        $this->assertEquals(
+            ['bar' => 'baz', 'qux' => 'boo', '@http' => [], '@context' => []],
+            $c->toArray()
         );
     }
 
@@ -117,12 +108,5 @@ class CommandTest extends TestCase
 
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
         $c->setAuthSchemes([]);
-    }
-
-    public function testInitializeMetricsBuilderObject()
-    {
-        $command = new Command('Foo', []);
-        $metricsBuilder = MetricsBuilder::fromCommand($command);
-        $this->assertInstanceOf(MetricsBuilder::class, $metricsBuilder);
     }
 }

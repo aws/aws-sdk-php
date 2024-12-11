@@ -2,7 +2,6 @@
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
-use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\S3Client;
@@ -418,15 +417,8 @@ class TransferTest extends TestCase
     /** @return S3Client|\PHPUnit_Framework_MockObject_MockObject */
     private function getMockS3Client()
     {
-        $mockClient =  $this->getMockBuilder(S3Client::class)
+        return $this->getMockBuilder(S3Client::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $mockHandler = $this->getMockBuilder(HandlerList::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $mockClient->method('getHandlerList')
-            ->willReturn($mockHandler);
-
-        return $mockClient;
     }
 }

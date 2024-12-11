@@ -7,13 +7,11 @@ use Aws\Crypto\KmsMaterialsProvider;
 use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\HashingStream;
-use Aws\MetricsBuilder;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\S3\Crypto\S3EncryptionClientV2;
 use Aws\Test\Crypto\UsesCryptoParamsTraitV2;
-use Aws\Test\MetricsBuilderTestTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Promise;
@@ -28,7 +26,6 @@ class S3EncryptionClientV2Test extends TestCase
     use UsesCryptoParamsTraitV2;
     use UsesMetadataEnvelopeTrait;
     use UsesServiceTrait;
-    use MetricsBuilderTestTrait;
 
     protected function getS3Client()
     {
@@ -1035,24 +1032,22 @@ EOXML;
         ]);
     }
 
-    public function testAppendsMetricsCaptureMiddleware()
+    public function testAddsCryptoUserAgent()
     {
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
+
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
-                $this->assertTrue(
-                    in_array(
-                        MetricsBuilder::S3_CRYPTO_V2,
-                        $this->getMetricsAsArray($req)
-                    )
+                $this->assertStringContainsString(
+                    'feat/s3-encrypt/' . S3EncryptionClientV2::CRYPTO_VERSION,
+                    $req->getHeaderLine('User-Agent')
                 );
-
                 return Promise\Create::promiseFor(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(

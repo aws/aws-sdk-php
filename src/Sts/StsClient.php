@@ -72,7 +72,7 @@ class StsClient extends AwsClient
      * @return Credentials
      * @throws \InvalidArgumentException if the result contains no credentials
      */
-    public function createCredentials(Result $result, $source=null)
+    public function createCredentials(Result $result)
     {
         if (!$result->hasKey('Credentials')) {
             throw new \InvalidArgumentException('Result contains no credentials');
@@ -97,8 +97,7 @@ class StsClient extends AwsClient
             $credentials['SecretAccessKey'],
             isset($credentials['SessionToken']) ? $credentials['SessionToken'] : null,
             $expiration,
-            $accountId,
-            $source
+            $accountId
         );
     }
 

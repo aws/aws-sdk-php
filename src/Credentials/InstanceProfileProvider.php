@@ -227,8 +227,7 @@ class InstanceProfileProvider
                     $result['SecretAccessKey'],
                     $result['Token'],
                     strtotime($result['Expiration']),
-                    $result['AccountId'] ?? null,
-                    CredentialSources::IMDS
+                    $result['AccountId'] ?? null
                 );
             }
 

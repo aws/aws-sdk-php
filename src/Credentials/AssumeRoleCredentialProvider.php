@@ -52,10 +52,7 @@ class AssumeRoleCredentialProvider
         $client = $this->client;
         return $client->assumeRoleAsync($this->assumeRoleParams)
             ->then(function (Result $result) {
-                return $this->client->createCredentials(
-                    $result,
-                    CredentialSources::STS_ASSUME_ROLE
-                );
+                return $this->client->createCredentials($result);
             })->otherwise(function (\RuntimeException $exception) {
                 throw new CredentialsException(
                     "Error in retrieving assume role credentials.",
