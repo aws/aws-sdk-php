@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.4 - 2024-12-11
 
 * `Aws\MigrationHub` - API and documentation updates for AWS MigrationHub related to adding support for listing migration task updates and associating, disassociating and listing source resources
 * `Aws\CloudTrail` - Doc-only updates for CloudTrail.
