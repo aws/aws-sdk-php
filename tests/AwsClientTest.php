@@ -10,7 +10,6 @@ use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
-use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
@@ -23,8 +22,8 @@ use Aws\Sts\StsClient;
 use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
+use Exception;
 use GuzzleHttp\Promise\RejectedPromise;
-use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -35,7 +34,6 @@ class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
     use TestServiceTrait;
-    use MetricsBuilderTestTrait;
 
     private function getApiProvider()
     {
@@ -992,25 +990,10 @@ EOT
         $client = $this->generateTestClient($service);
         $list = $client->getHandlerList();
         $list->setHandler(new MockHandler([new Result()]));
-        $list->appendSign(Middleware::tap(function ($cmd, $req) {
-            $this->assertTrue($req->hasHeader('x-amzn-query-mode'));
-            $this->assertEquals(true, $req->getHeaderLine('x-amzn-query-mode'));
+        $list->appendSign(Middleware::tap(function($cmd, $req) {
+           $this->assertTrue($req->hasHeader('x-amzn-query-mode'));
+           $this->assertEquals(true, $req->getHeaderLine('x-amzn-query-mode'));
         }));
         $client->TestOperation();
-    }
-
-    public function testAppendsUserAgentMiddleware()
-    {
-        $client = new S3Client([
-            'region' => 'us-east-2',
-            'http_handler' => function (RequestInterface $request) {
-                $userAgentValue = $request->getHeaderLine('User-Agent');
-
-                $this->assertNotEmpty($userAgentValue);
-
-                return new Response();
-            }
-        ]);
-        $client->listBuckets();
     }
 }

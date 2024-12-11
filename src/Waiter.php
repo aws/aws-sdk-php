@@ -85,10 +85,6 @@ class Waiter implements PromisorInterface
                 'The provided "before" callback is not callable.'
             );
         }
-        MetricsBuilder::appendMetricsCaptureMiddleware(
-            $this->client->getHandlerList(),
-            MetricsBuilder::WAITER
-        );
     }
 
     /**

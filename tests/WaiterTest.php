@@ -2,11 +2,9 @@
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
-use Aws\AwsClientInterface;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
-use Aws\MetricsBuilder;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Waiter;
@@ -27,7 +25,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
-    use MetricsBuilderTestTrait;
 
     public function testErrorOnBadConfig()
     {
@@ -428,18 +425,23 @@ EOXML;
             'Bucket' => 'fuzz',
             'Key' => 'bazz'
         ];
-        $acceptors = [
-            [
-                'expected' => false,
-                'matcher' => 'error',
-                'state' => 'success'
+        $waiterConfig = [
+            'delay' => 5,
+            'operation' => 'headObject',
+            'maxAttempts' => 20,
+            'acceptors' => [
+                [
+                    'expected' => false,
+                    'matcher' => 'error',
+                    'state' => 'success'
+                ]
             ]
         ];
-        $waiter = $this->getTestWaiter(
-            $acceptors,
-            'headObject',
+        $waiter = new Waiter(
+            $client,
+            'foo',
             $commandArgs,
-            $client
+            $waiterConfig
         );
         $waiter->promise()
             ->then(function (CommandInterface $_) {
@@ -476,87 +478,27 @@ EOXML;
             'Bucket' => 'fuzz',
             'Key' => 'bazz'
         ];
-        $acceptors = [
-            [
-                'expected' => true,
-                'matcher' => 'error',
-                'state' => 'success'
+        $waiterConfig = [
+            'delay' => 5,
+            'operation' => 'headObject',
+            'maxAttempts' => 20,
+            'acceptors' => [
+                [
+                    'expected' => true,
+                    'matcher' => 'error',
+                    'state' => 'success'
+                ]
             ]
         ];
-        $waiter = $this->getTestWaiter(
-            $acceptors,
-            'headObject',
+        $waiter = new Waiter(
+            $client,
+            'foo',
             $commandArgs,
-            $client
+            $waiterConfig
         );
         $waiter->promise()
             ->then(function (CommandInterface $_) {
                 $this->assertTrue(true); // Waiter succeeded
             })->wait();
-    }
-
-    public function testAppendsMetricsCaptureMiddleware()
-    {
-        $client = new S3Client([
-            'region' => 'us-east-2',
-            'http_handler' => function (RequestInterface $request) {
-                $this->assertTrue(
-                    in_array(
-                        MetricsBuilder::WAITER,
-                        $this->getMetricsAsArray($request)
-                    )
-                );
-
-                return new Response();
-            }
-        ]);
-        $commandArgs = [
-            'Bucket' => 'foo'
-        ];
-        $acceptors = [
-            [
-                'expected' => 200,
-                'matcher' => 'status',
-                'state' => 'success'
-            ]
-        ];
-        $waiter = $this->getTestWaiter(
-            $acceptors,
-            'headBucket',
-            $commandArgs,
-            $client
-        );
-        $waiter->promise()->wait();
-    }
-
-    /**
-     * Creates a test waiter.
-     *
-     * @param string $operation
-     * @param array $commandArgs
-     * @param AwsClientInterface $client
-     *
-     * @return Waiter
-     */
-    private function getTestWaiter(
-        array $acceptors,
-        string $operation,
-        array $commandArgs,
-        AwsClientInterface $client
-    ): Waiter
-    {
-        $waiterConfig = [
-            'delay' => 5,
-            'operation' => $operation,
-            'maxAttempts' => 20,
-            'acceptors' => $acceptors
-        ];
-
-        return new Waiter(
-            $client,
-            'waiter-' . $operation,
-            $commandArgs,
-            $waiterConfig
-        );
     }
 }
