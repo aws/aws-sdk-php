@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.5 - 2024-12-12
 
 * `Aws\Route53Domains` - This release includes the following API updates: added the enumeration type RESTORE_DOMAIN to the OperationType; constrained the Price attribute to non-negative values; updated the LangCode to allow 2 or 3 alphabetical characters.
 * `Aws\GuardDuty` - Improved descriptions for certain APIs.
