@@ -531,6 +531,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateHoursOfOperationOverride":{
+      "name":"CreateHoursOfOperationOverride",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+      },
+      "input":{"shape":"CreateHoursOfOperationOverrideRequest"},
+      "output":{"shape":"CreateHoursOfOperationOverrideResponse"},
+      "errors":[
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "CreateInstance":{
       "name":"CreateInstance",
       "http":{
@@ -1015,6 +1033,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeleteHoursOfOperationOverride":{
+      "name":"DeleteHoursOfOperationOverride",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"DeleteHoursOfOperationOverrideRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DeleteInstance":{
       "name":"DeleteInstance",
       "http":{
@@ -1436,6 +1469,22 @@
       },
       "input":{"shape":"DescribeHoursOfOperationRequest"},
       "output":{"shape":"DescribeHoursOfOperationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeHoursOfOperationOverride":{
+      "name":"DescribeHoursOfOperationOverride",
+      "http":{
+        "method":"GET",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"DescribeHoursOfOperationOverrideRequest"},
+      "output":{"shape":"DescribeHoursOfOperationOverrideResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -1993,6 +2042,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetEffectiveHoursOfOperations":{
+      "name":"GetEffectiveHoursOfOperations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/effective-hours-of-operations/{InstanceId}/{HoursOfOperationId}"
+      },
+      "input":{"shape":"GetEffectiveHoursOfOperationsRequest"},
+      "output":{"shape":"GetEffectiveHoursOfOperationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetFederationToken":{
       "name":"GetFederationToken",
       "http":{
@@ -2360,6 +2425,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListHoursOfOperationOverrides":{
+      "name":"ListHoursOfOperationOverrides",
+      "http":{
+        "method":"GET",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+      },
+      "input":{"shape":"ListHoursOfOperationOverridesRequest"},
+      "output":{"shape":"ListHoursOfOperationOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "ListHoursOfOperations":{
@@ -3086,6 +3167,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchHoursOfOperationOverrides":{
+      "name":"SearchHoursOfOperationOverrides",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-hours-of-operation-overrides"
+      },
+      "input":{"shape":"SearchHoursOfOperationOverridesRequest"},
+      "output":{"shape":"SearchHoursOfOperationOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
     },
@@ -3911,6 +4008,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateHoursOfOperationOverride":{
+      "name":"UpdateHoursOfOperationOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"UpdateHoursOfOperationOverrideRequest"},
+      "errors":[
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ConditionalOperationFailedException"}
       ]
     },
     "UpdateInstanceAttribute":{
@@ -5652,6 +5766,14 @@
       "type":"list",
       "member":{"shape":"CommonAttributeAndCondition"}
     },
+    "CommonHumanReadableDescription":{
+      "type":"string",
+      "pattern":"^[\\P{C}\\r\\n\\t]{1,250}$"
+    },
+    "CommonHumanReadableName":{
+      "type":"string",
+      "pattern":"^[\\P{C}\\r\\n\\t]{1,127}$"
+    },
     "CommonNameLength127":{
       "type":"string",
       "max":127,
@@ -5883,7 +6005,9 @@
       "members":{
         "OrConditions":{"shape":"ContactFlowModuleSearchConditionList"},
         "AndConditions":{"shape":"ContactFlowModuleSearchConditionList"},
-        "StringCondition":{"shape":"StringCondition"}
+        "StringCondition":{"shape":"StringCondition"},
+        "StateCondition":{"shape":"ContactFlowModuleState"},
+        "StatusCondition":{"shape":"ContactFlowModuleStatus"}
       }
     },
     "ContactFlowModuleSearchFilter":{
@@ -6408,6 +6532,40 @@
       "members":{
         "EvaluationFormId":{"shape":"ResourceId"},
         "EvaluationFormArn":{"shape":"ARN"}
+      }
+    },
+    "CreateHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "Name",
+        "Config",
+        "EffectiveFrom",
+        "EffectiveTill"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
+    },
+    "CreateHoursOfOperationOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrideId":{"shape":"HoursOfOperationOverrideId"}
       }
     },
     "CreateHoursOfOperationRequest":{
@@ -7145,12 +7303,34 @@
       "type":"list",
       "member":{"shape":"DataSetId"}
     },
+    "DateComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_THAN",
+        "LESS_THAN",
+        "GREATER_THAN_OR_EQUAL_TO",
+        "LESS_THAN_OR_EQUAL_TO",
+        "EQUAL_TO"
+      ]
+    },
+    "DateCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "Value":{"shape":"DateYearMonthDayFormat"},
+        "ComparisonType":{"shape":"DateComparisonType"}
+      }
+    },
     "DateReference":{
       "type":"structure",
       "members":{
         "Name":{"shape":"ReferenceKey"},
         "Value":{"shape":"ReferenceValue"}
       }
+    },
+    "DateYearMonthDayFormat":{
+      "type":"string",
+      "pattern":"^\\d{4}-\\d{2}-\\d{2}$"
     },
     "DeactivateEvaluationFormRequest":{
       "type":"structure",
@@ -7353,6 +7533,31 @@
           "box":true,
           "location":"querystring",
           "locationName":"version"
+        }
+      }
+    },
+    "DeleteHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
         }
       }
     },
@@ -7974,6 +8179,37 @@
       "required":["EvaluationForm"],
       "members":{
         "EvaluationForm":{"shape":"EvaluationForm"}
+      }
+    },
+    "DescribeHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
+        }
+      }
+    },
+    "DescribeHoursOfOperationOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverride":{"shape":"HoursOfOperationOverride"}
       }
     },
     "DescribeHoursOfOperationRequest":{
@@ -8841,6 +9077,17 @@
       "exception":true
     },
     "DurationInSeconds":{"type":"integer"},
+    "EffectiveHoursOfOperationList":{
+      "type":"list",
+      "member":{"shape":"EffectiveHoursOfOperations"}
+    },
+    "EffectiveHoursOfOperations":{
+      "type":"structure",
+      "members":{
+        "Date":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "OperationalHours":{"shape":"OperationalHours"}
+      }
+    },
     "Email":{
       "type":"string",
       "sensitive":true
@@ -9900,6 +10147,44 @@
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
+    "GetEffectiveHoursOfOperationsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "FromDate",
+        "ToDate"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "FromDate":{
+          "shape":"HoursOfOperationOverrideYearMonthDayDateFormat",
+          "location":"querystring",
+          "locationName":"fromDate"
+        },
+        "ToDate":{
+          "shape":"HoursOfOperationOverrideYearMonthDayDateFormat",
+          "location":"querystring",
+          "locationName":"toDate"
+        }
+      }
+    },
+    "GetEffectiveHoursOfOperationsResponse":{
+      "type":"structure",
+      "members":{
+        "EffectiveHoursOfOperationList":{"shape":"EffectiveHoursOfOperationList"},
+        "TimeZone":{"shape":"TimeZone"}
+      }
+    },
     "GetFederationTokenRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -10410,6 +10695,59 @@
       "member":{"shape":"HoursOfOperation"}
     },
     "HoursOfOperationName":{"type":"string"},
+    "HoursOfOperationOverride":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrideId":{"shape":"HoursOfOperationOverrideId"},
+        "HoursOfOperationId":{"shape":"HoursOfOperationId"},
+        "HoursOfOperationArn":{"shape":"ARN"},
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
+    },
+    "HoursOfOperationOverrideConfig":{
+      "type":"structure",
+      "members":{
+        "Day":{"shape":"OverrideDays"},
+        "StartTime":{"shape":"OverrideTimeSlice"},
+        "EndTime":{"shape":"OverrideTimeSlice"}
+      }
+    },
+    "HoursOfOperationOverrideConfigList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverrideConfig"},
+      "max":100,
+      "min":0
+    },
+    "HoursOfOperationOverrideId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "HoursOfOperationOverrideList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverride"}
+    },
+    "HoursOfOperationOverrideSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverrideSearchCriteria"}
+    },
+    "HoursOfOperationOverrideSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"HoursOfOperationOverrideSearchConditionList"},
+        "AndConditions":{"shape":"HoursOfOperationOverrideSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "DateCondition":{"shape":"DateCondition"}
+      }
+    },
+    "HoursOfOperationOverrideYearMonthDayDateFormat":{
+      "type":"string",
+      "pattern":"^\\d{4}-\\d{2}-\\d{2}$"
+    },
     "HoursOfOperationSearchConditionList":{
       "type":"list",
       "member":{"shape":"HoursOfOperationSearchCriteria"}
@@ -11415,6 +11753,45 @@
       "members":{
         "FlowAssociationSummaryList":{"shape":"FlowAssociationSummaryList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListHoursOfOperationOverridesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListHoursOfOperationOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "HoursOfOperationOverrideList":{"shape":"HoursOfOperationOverrideList"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "ListHoursOfOperationsRequest":{
@@ -12809,6 +13186,17 @@
       "max":128,
       "min":0
     },
+    "OperationalHour":{
+      "type":"structure",
+      "members":{
+        "Start":{"shape":"OverrideTimeSlice"},
+        "End":{"shape":"OverrideTimeSlice"}
+      }
+    },
+    "OperationalHours":{
+      "type":"list",
+      "member":{"shape":"OperationalHour"}
+    },
     "Origin":{
       "type":"string",
       "max":267
@@ -12898,6 +13286,35 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "OverrideDays":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
+    },
+    "OverrideTimeSlice":{
+      "type":"structure",
+      "required":[
+        "Hours",
+        "Minutes"
+      ],
+      "members":{
+        "Hours":{
+          "shape":"Hours24Format",
+          "box":true
+        },
+        "Minutes":{
+          "shape":"MinutesLimit60",
+          "box":true
+        }
+      }
     },
     "PEM":{
       "type":"string",
@@ -14972,6 +15389,28 @@
       "members":{
         "NextToken":{"shape":"NextToken"},
         "EmailAddresses":{"shape":"EmailAddressList"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchHoursOfOperationOverridesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"HoursOfOperationSearchFilter"},
+        "SearchCriteria":{"shape":"HoursOfOperationOverrideSearchCriteria"}
+      }
+    },
+    "SearchHoursOfOperationOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrides":{"shape":"HoursOfOperationOverrideList"},
+        "NextToken":{"shape":"NextToken2500"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
@@ -17165,6 +17604,36 @@
       "type":"string",
       "max":250,
       "min":0
+    },
+    "UpdateHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
+        },
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
     },
     "UpdateHoursOfOperationRequest":{
       "type":"structure",

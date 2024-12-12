@@ -32,6 +32,7 @@
     "CreateEmailAddress": "<p>Create new email address in the specified Amazon Connect instance. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Amazon Connect Administrator Guide.</p>",
     "CreateEvaluationForm": "<p>Creates an evaluation form in the specified Amazon Connect instance. The form can be used to define questions related to agent performance, and create sections to organize such questions. Question and section identifiers cannot be duplicated within the same evaluation form.</p>",
     "CreateHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Creates hours of operation. </p>",
+    "CreateHoursOfOperationOverride": "<p>Creates an hours of operation override in an Amazon Connect hours of operation resource</p>",
     "CreateInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Initiates an Amazon Connect instance with all the supported channels enabled. It does not attach any storage, such as Amazon Simple Storage Service (Amazon S3) or Amazon Kinesis. It also does not allow for any configurations on features, such as Contact Lens for Amazon Connect. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-instances.html\">Create an Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>Amazon Connect enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "CreateIntegrationAssociation": "<p>Creates an Amazon Web Services resource association with an Amazon Connect instance.</p>",
     "CreateParticipant": "<p>Adds a new participant into an on-going chat contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-customize-flow.html\">Customize chat flow experiences by integrating custom participants</a>.</p>",
@@ -39,7 +40,7 @@
     "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
     "CreatePrompt": "<p>Creates a prompt. For more information about prompts, such as supported file types and maximum length, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/prompts.html\">Create prompts</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreatePushNotificationRegistration": "<p>Creates registration for a device token and a chat contact to receive real-time push notifications. For more information about push notifications, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-up-push-notifications-for-mobile-chat.html\">Set up push notifications in Amazon Connect for mobile chat</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
-    "CreateQueue": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Creates a new queue for the specified Amazon Connect instance.</p> <important> <ul> <li> <p>If the phone number is claimed to a traffic distribution group that was created in the same Region as the Amazon Connect instance where you are calling this API, then you can use a full phone number ARN or a UUID for <code>OutboundCallerIdNumberId</code>. However, if the phone number is claimed to a traffic distribution group that is in one Region, and you are calling this API from an instance in another Amazon Web Services Region that is associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </li> <li> <p>Only use the phone number ARN format that doesn't contain <code>instance</code> in the path, for example, <code>arn:aws:connect:us-east-1:1234567890:phone-number/uuid</code>. This is the same ARN format that is returned when you call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API.</p> </li> <li> <p>If you plan to use IAM policies to allow/deny access to this API for phone number resources claimed to a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_resource-level-policy-examples.html#allow-deny-queue-actions-replica-region\">Allow or Deny queue API actions for phone numbers in a replica Region</a>.</p> </li> </ul> </important>",
+    "CreateQueue": "<p>Creates a new queue for the specified Amazon Connect instance.</p> <important> <ul> <li> <p>If the phone number is claimed to a traffic distribution group that was created in the same Region as the Amazon Connect instance where you are calling this API, then you can use a full phone number ARN or a UUID for <code>OutboundCallerIdNumberId</code>. However, if the phone number is claimed to a traffic distribution group that is in one Region, and you are calling this API from an instance in another Amazon Web Services Region that is associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </li> <li> <p>Only use the phone number ARN format that doesn't contain <code>instance</code> in the path, for example, <code>arn:aws:connect:us-east-1:1234567890:phone-number/uuid</code>. This is the same ARN format that is returned when you call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API.</p> </li> <li> <p>If you plan to use IAM policies to allow/deny access to this API for phone number resources claimed to a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_resource-level-policy-examples.html#allow-deny-queue-actions-replica-region\">Allow or Deny queue API actions for phone numbers in a replica Region</a>.</p> </li> </ul> </important>",
     "CreateQuickConnect": "<p>Creates a quick connect for the specified Amazon Connect instance.</p>",
     "CreateRoutingProfile": "<p>Creates a new routing profile.</p>",
     "CreateRule": "<p>Creates a rule for the specified Amazon Connect instance.</p> <p>Use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/connect-rules-language.html\">Rules Function language</a> to code conditions for the rule. </p>",
@@ -60,6 +61,7 @@
     "DeleteEmailAddress": "<p>Deletes email address from the specified Amazon Connect instance.</p>",
     "DeleteEvaluationForm": "<p>Deletes an evaluation form in the specified Amazon Connect instance. </p> <ul> <li> <p>If the version property is provided, only the specified version of the evaluation form is deleted.</p> </li> <li> <p>If no version is provided, then the full form (all versions) is deleted.</p> </li> </ul>",
     "DeleteHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Deletes an hours of operation.</p>",
+    "DeleteHoursOfOperationOverride": "<p>Deletes an hours of operation override in an Amazon Connect hours of operation resource</p>",
     "DeleteInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Deletes the Amazon Connect instance. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/delete-connect-instance.html\">Delete your Amazon Connect instance</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <p>Amazon Connect enforces a limit on the total number of instances that you can create or delete in 30 days. If you exceed this limit, you will get an error message indicating there has been an excessive number of attempts at creating or deleting instances. You must wait 30 days before you can restart creating and deleting instances in your account.</p>",
     "DeleteIntegrationAssociation": "<p>Deletes an Amazon Web Services resource association from an Amazon Connect instance. The association must not have any use cases associated with it.</p>",
     "DeletePredefinedAttribute": "<p>Deletes a predefined attribute from the specified Amazon Connect instance.</p>",
@@ -87,6 +89,7 @@
     "DescribeEmailAddress": "<p>Describe email address form the specified Amazon Connect instance.</p>",
     "DescribeEvaluationForm": "<p>Describes an evaluation form in the specified Amazon Connect instance. If the version property is not provided, the latest version of the evaluation form is described.</p>",
     "DescribeHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the hours of operation.</p>",
+    "DescribeHoursOfOperationOverride": "<p>Describes the hours of operation override.</p>",
     "DescribeInstance": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns the current state of the specified instance identifier. It tracks the instance while it is being created and returns an error status, if applicable. </p> <p>If an instance is not created successfully, the instance status reason field returns details relevant to the reason. The instance in a failed state is returned only for 24 hours after the CreateInstance API was invoked.</p>",
     "DescribeInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified instance attribute.</p>",
     "DescribeInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Retrieves the current storage configurations for the specified resource type, association ID, and instance ID.</p>",
@@ -122,6 +125,7 @@
     "GetContactAttributes": "<p>Retrieves the contact attributes for the specified contact.</p>",
     "GetCurrentMetricData": "<p>Gets the real-time metric data from the specified Amazon Connect instance.</p> <p>For a description of each metric, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/real-time-metrics-definitions.html\">Real-time Metrics Definitions</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "GetCurrentUserData": "<p>Gets the real-time active user data from the specified Amazon Connect instance. </p>",
+    "GetEffectiveHoursOfOperations": "<p>Get the hours of operations with the effective override applied.</p>",
     "GetFederationToken": "<p>Supports SAML sign-in for Amazon Connect. Retrieves a token for federation. The token is for the Amazon Connect user which corresponds to the IAM credentials that were used to invoke this action. </p> <p>For more information about how SAML sign-in works in Amazon Connect, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html \">Configure SAML with IAM for Amazon Connect in the <i>Amazon Connect Administrator Guide</i>.</a> </p> <note> <p>This API doesn't support root users. If you try to invoke GetFederationToken with root credentials, an error message similar to the following one appears: </p> <p> <code>Provided identity: Principal: .... User: .... cannot be used for federation with Amazon Connect</code> </p> </note>",
     "GetFlowAssociation": "<p>Retrieves the flow associated for a given resource.</p>",
     "GetMetricData": "<p>Gets historical metric data from the specified Amazon Connect instance.</p> <p>For a description of each historical metric, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html\">Historical Metrics Definitions</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <note> <p>We recommend using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricDataV2.html\">GetMetricDataV2</a> API. It provides more flexibility, features, and the ability to query longer time ranges than <code>GetMetricData</code>. Use it to retrieve historical agent and contact metrics for the last 3 months, at varying intervals. You can also use it to build custom dashboards to measure historical queue and agent performance. For example, you can track the number of incoming contacts for the last 7 days, with data split by day, to see how contact volume changed per day of the week.</p> </note>",
@@ -145,6 +149,7 @@
     "ListEvaluationFormVersions": "<p>Lists versions of an evaluation form in the specified Amazon Connect instance.</p>",
     "ListEvaluationForms": "<p>Lists evaluation forms in the specified Amazon Connect instance.</p>",
     "ListFlowAssociations": "<p>List the flow association based on the filters.</p>",
+    "ListHoursOfOperationOverrides": "<p>List the hours of operation overrides.</p>",
     "ListHoursOfOperations": "<p>Provides information about the hours of operation for the specified Amazon Connect instance.</p> <p>For more information about hours of operation, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-hours-operation.html\">Set the Hours of Operation for a Queue</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ListInstanceAttributes": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all attribute types for the given instance.</p>",
     "ListInstanceStorageConfigs": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of storage configs for the identified instance and resource type.</p>",
@@ -190,6 +195,7 @@
     "SearchContactFlows": "<p>Searches the flows in an Amazon Connect instance, with optional filtering.</p>",
     "SearchContacts": "<p>Searches contacts in an Amazon Connect instance.</p>",
     "SearchEmailAddresses": "<p>Searches email address in an instance, with optional filtering.</p>",
+    "SearchHoursOfOperationOverrides": "<p>Searches the hours of operation overrides.</p>",
     "SearchHoursOfOperations": "<p>Searches the hours of operation in an Amazon Connect instance, with optional filtering.</p>",
     "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
     "SearchPrompts": "<p>Searches prompts in an Amazon Connect instance, with optional filtering.</p>",
@@ -240,6 +246,7 @@
     "UpdateEmailAddressMetadata": "<p>Updates an email address metadata. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Amazon Connect Administrator Guide.</p>",
     "UpdateEvaluationForm": "<p>Updates details about a specific evaluation form version in the specified Amazon Connect instance. Question and section identifiers cannot be duplicated within the same evaluation form.</p> <p>This operation does not support partial updates. Instead it does a full update of evaluation form content.</p>",
     "UpdateHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the hours of operation.</p>",
+    "UpdateHoursOfOperationOverride": "<p>Update the hours of operation override.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
     "UpdateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates an existing configuration for a resource type. This API is idempotent.</p>",
     "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
@@ -365,6 +372,7 @@
         "HierarchyGroupSummaryReference$Arn": "<p>The Amazon Resource Name (ARN) for the hierarchy group. </p>",
         "HierarchyLevel$Arn": "<p>The Amazon Resource Name (ARN) of the hierarchy level.</p>",
         "HoursOfOperation$HoursOfOperationArn": "<p>The Amazon Resource Name (ARN) for the hours of operation.</p>",
+        "HoursOfOperationOverride$HoursOfOperationArn": "<p>The Amazon Resource Name (ARN) for the hours of operation.</p>",
         "HoursOfOperationSummary$Arn": "<p>The Amazon Resource Name (ARN) of the hours of operation.</p>",
         "ImportPhoneNumberRequest$SourcePhoneNumberArn": "<p>The claimed phone number ARN being imported from the external service, such as Amazon Web Services End User Messaging. If it is from Amazon Web Services End User Messaging, it looks like the ARN of the phone number to import from Amazon Web Services End User Messaging.</p>",
         "ImportPhoneNumberResponse$PhoneNumberArn": "<p>The Amazon Resource Name (ARN) of the phone number.</p>",
@@ -525,7 +533,7 @@
     "AgentFirstName": {
       "base": null,
       "refs": {
-        "UserIdentityInfo$FirstName": "<p>The first name. This is required if you are using Amazon Connect or SAML for identity management.</p>",
+        "UserIdentityInfo$FirstName": "<p>The first name. This is required if you are using Amazon Connect or SAML for identity management. Inputs must be in Unicode Normalization Form C (NFC). Text containing characters in a non-NFC form (for example, decomposed characters or combining marks) are not accepted.</p>",
         "UserIdentityInfoLite$FirstName": "<p>The user's first name.</p>"
       }
     },
@@ -566,7 +574,7 @@
     "AgentLastName": {
       "base": null,
       "refs": {
-        "UserIdentityInfo$LastName": "<p>The last name. This is required if you are using Amazon Connect or SAML for identity management.</p>",
+        "UserIdentityInfo$LastName": "<p>The last name. This is required if you are using Amazon Connect or SAML for identity management. Inputs must be in Unicode Normalization Form C (NFC). Text containing characters in a non-NFC form (for example, decomposed characters or combining marks) are not accepted.</p>",
         "UserIdentityInfoLite$LastName": "<p>The user's last name.</p>"
       }
     },
@@ -811,6 +819,7 @@
         "SearchContactFlowModulesResponse$ApproximateTotalCount": "<p>The total number of flows which matched your search query.</p>",
         "SearchContactFlowsResponse$ApproximateTotalCount": "<p>The total number of flows which matched your search query.</p>",
         "SearchEmailAddressesResponse$ApproximateTotalCount": "<p>The total number of email addresses which matched your search query.</p>",
+        "SearchHoursOfOperationOverridesResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchHoursOfOperationsResponse$ApproximateTotalCount": "<p>The total number of hours of operations which matched your search query.</p>",
         "SearchPredefinedAttributesResponse$ApproximateTotalCount": "<p>The approximate number of predefined attributes which matched your search query.</p>",
         "SearchPromptsResponse$ApproximateTotalCount": "<p>The total number of quick connects which matched your search query.</p>",
@@ -1465,6 +1474,22 @@
         "ControlPlaneAttributeFilter$OrConditions": "<p>A list of conditions which would be applied together with an <code>OR</code> condition.</p>"
       }
     },
+    "CommonHumanReadableDescription": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$Description": "<p>The description of the hours of operation override.</p>",
+        "HoursOfOperationOverride$Description": "<p>The description of the hours of operation override.</p>",
+        "UpdateHoursOfOperationOverrideRequest$Description": "<p>The description of the hours of operation override.</p>"
+      }
+    },
+    "CommonHumanReadableName": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$Name": "<p>The name of the hours of operation override.</p>",
+        "HoursOfOperationOverride$Name": "<p>The name of the hours of operation override.</p>",
+        "UpdateHoursOfOperationOverrideRequest$Name": "<p>The name of the hours of operation override.</p>"
+      }
+    },
     "CommonNameLength127": {
       "base": null,
       "refs": {
@@ -1514,7 +1539,7 @@
       }
     },
     "ConditionalOperationFailedException": {
-      "base": "<p>A conditional check failed.</p>",
+      "base": "<p>Request processing failed because dependent condition failed.</p>",
       "refs": {
       }
     },
@@ -1707,6 +1732,7 @@
       "base": null,
       "refs": {
         "ContactFlowModule$State": "<p>The type of flow module.</p>",
+        "ContactFlowModuleSearchCriteria$StateCondition": "<p>The state of the flow.</p>",
         "ContactFlowModuleSummary$State": "<p>The type of flow module.</p>",
         "ListContactFlowModulesRequest$ContactFlowModuleState": "<p>The state of the flow module.</p>",
         "UpdateContactFlowModuleMetadataRequest$State": "<p>The state of flow module.</p>"
@@ -1715,7 +1741,8 @@
     "ContactFlowModuleStatus": {
       "base": null,
       "refs": {
-        "ContactFlowModule$Status": "<p>The status of the flow module.</p>"
+        "ContactFlowModule$Status": "<p>The status of the flow module.</p>",
+        "ContactFlowModuleSearchCriteria$StatusCondition": "<p>The status of the flow.</p>"
       }
     },
     "ContactFlowModuleSummary": {
@@ -2135,6 +2162,16 @@
       "refs": {
       }
     },
+    "CreateHoursOfOperationOverrideRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateHoursOfOperationOverrideResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateHoursOfOperationRequest": {
       "base": null,
       "refs": {
@@ -2466,10 +2503,28 @@
         "BatchDisassociateAnalyticsDataSetResponse$Deleted": "<p>An array of successfully disassociated dataset identifiers.</p>"
       }
     },
+    "DateComparisonType": {
+      "base": null,
+      "refs": {
+        "DateCondition$ComparisonType": "<p>An object to specify the hours of operation override date condition <code>comparisonType</code>.</p>"
+      }
+    },
+    "DateCondition": {
+      "base": "<p>An object to specify the hours of operation override date condition.</p>",
+      "refs": {
+        "HoursOfOperationOverrideSearchCriteria$DateCondition": "<p>A leaf node condition which can be used to specify a date condition.</p>"
+      }
+    },
     "DateReference": {
       "base": "<p>Information about a reference when the <code>referenceType</code> is <code>DATE</code>. Otherwise, null.</p>",
       "refs": {
         "ReferenceSummary$Date": "<p>Information about a reference when the <code>referenceType</code> is <code>DATE</code>. Otherwise, null.</p>"
+      }
+    },
+    "DateYearMonthDayFormat": {
+      "base": null,
+      "refs": {
+        "DateCondition$Value": "<p>An object to specify the hours of operation override date value.</p>"
       }
     },
     "DeactivateEvaluationFormRequest": {
@@ -2547,6 +2602,11 @@
       }
     },
     "DeleteEvaluationFormRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteHoursOfOperationOverrideRequest": {
       "base": null,
       "refs": {
       }
@@ -2752,6 +2812,16 @@
       }
     },
     "DescribeEvaluationFormResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeHoursOfOperationOverrideRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeHoursOfOperationOverrideResponse": {
       "base": null,
       "refs": {
       }
@@ -3193,6 +3263,18 @@
       "refs": {
         "Expiry$DurationInSeconds": "<p>The number of seconds to wait before expiring the routing step.</p>",
         "RoutingCriteriaInputStepExpiry$DurationInSeconds": "<p>The number of seconds that the contact will be routed only to agents matching this routing&#x2028; step, if expiry was configured for this routing step.</p>"
+      }
+    },
+    "EffectiveHoursOfOperationList": {
+      "base": null,
+      "refs": {
+        "GetEffectiveHoursOfOperationsResponse$EffectiveHoursOfOperationList": "<p>Information about the effective hours of operations</p>"
+      }
+    },
+    "EffectiveHoursOfOperations": {
+      "base": "<p>Information about the hours of operations with the effective override applied.</p>",
+      "refs": {
+        "EffectiveHoursOfOperationList$member": null
       }
     },
     "Email": {
@@ -4062,6 +4144,16 @@
       "refs": {
       }
     },
+    "GetEffectiveHoursOfOperationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEffectiveHoursOfOperationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetFederationTokenRequest": {
       "base": null,
       "refs": {
@@ -4382,7 +4474,8 @@
     "Hours24Format": {
       "base": null,
       "refs": {
-        "HoursOfOperationTimeSlice$Hours": "<p>The hours.</p>"
+        "HoursOfOperationTimeSlice$Hours": "<p>The hours.</p>",
+        "OverrideTimeSlice$Hours": "<p>The hours.</p>"
       }
     },
     "HoursOfOperation": {
@@ -4422,13 +4515,20 @@
     "HoursOfOperationId": {
       "base": null,
       "refs": {
+        "CreateHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation</p>",
         "CreateHoursOfOperationResponse$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "CreateQueueRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "DeleteHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "DeleteHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "DescribeHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "DescribeHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "GetEffectiveHoursOfOperationsRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "HoursOfOperation$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "HoursOfOperationOverride$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "HoursOfOperationSummary$Id": "<p>The identifier of the hours of operation.</p>",
+        "ListHoursOfOperationOverridesRequest$HoursOfOperationId": "<p>The identifier for the hours of operation</p>",
         "Queue$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
+        "UpdateHoursOfOperationOverrideRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>",
         "UpdateHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier of the hours of operation.</p>",
         "UpdateQueueHoursOfOperationRequest$HoursOfOperationId": "<p>The identifier for the hours of operation.</p>"
       }
@@ -4443,6 +4543,72 @@
       "base": null,
       "refs": {
         "HoursOfOperationSummary$Name": "<p>The name of the hours of operation.</p>"
+      }
+    },
+    "HoursOfOperationOverride": {
+      "base": "<p>Information about the hours of operations override.</p>",
+      "refs": {
+        "DescribeHoursOfOperationOverrideResponse$HoursOfOperationOverride": "<p>Information about the hours of operations override. </p>",
+        "HoursOfOperationOverrideList$member": null
+      }
+    },
+    "HoursOfOperationOverrideConfig": {
+      "base": "<p>Information about the hours of operation override config: day, start time, and end time.</p>",
+      "refs": {
+        "HoursOfOperationOverrideConfigList$member": null
+      }
+    },
+    "HoursOfOperationOverrideConfigList": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$Config": "<p>Configuration information for the hours of operation override: day, start time, and end time.</p>",
+        "HoursOfOperationOverride$Config": "<p>Configuration information for the hours of operation override: day, start time, and end time.</p>",
+        "UpdateHoursOfOperationOverrideRequest$Config": "<p>Configuration information for the hours of operation override: day, start time, and end time.</p>"
+      }
+    },
+    "HoursOfOperationOverrideId": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideResponse$HoursOfOperationOverrideId": "<p>The identifier for the hours of operation override.</p>",
+        "DeleteHoursOfOperationOverrideRequest$HoursOfOperationOverrideId": "<p>The identifier for the hours of operation override.</p>",
+        "DescribeHoursOfOperationOverrideRequest$HoursOfOperationOverrideId": "<p>The identifier for the hours of operation override.</p>",
+        "HoursOfOperationOverride$HoursOfOperationOverrideId": "<p>The identifier for the hours of operation override.</p>",
+        "UpdateHoursOfOperationOverrideRequest$HoursOfOperationOverrideId": "<p>The identifier for the hours of operation override.</p>"
+      }
+    },
+    "HoursOfOperationOverrideList": {
+      "base": null,
+      "refs": {
+        "ListHoursOfOperationOverridesResponse$HoursOfOperationOverrideList": "<p>Information about the hours of operation override.</p>",
+        "SearchHoursOfOperationOverridesResponse$HoursOfOperationOverrides": "<p>Information about the hours of operations overrides.</p>"
+      }
+    },
+    "HoursOfOperationOverrideSearchConditionList": {
+      "base": null,
+      "refs": {
+        "HoursOfOperationOverrideSearchCriteria$OrConditions": "<p>A list of conditions which would be applied together with an OR condition.</p>",
+        "HoursOfOperationOverrideSearchCriteria$AndConditions": "<p>A list of conditions which would be applied together with an AND condition.</p>"
+      }
+    },
+    "HoursOfOperationOverrideSearchCriteria": {
+      "base": "<p>The search criteria to be used to return hours of operations overrides.</p>",
+      "refs": {
+        "HoursOfOperationOverrideSearchConditionList$member": null,
+        "SearchHoursOfOperationOverridesRequest$SearchCriteria": "<p>The search criteria to be used to return hours of operations overrides.</p>"
+      }
+    },
+    "HoursOfOperationOverrideYearMonthDayDateFormat": {
+      "base": null,
+      "refs": {
+        "CreateHoursOfOperationOverrideRequest$EffectiveFrom": "<p>The date from when the hours of operation override would be effective.</p>",
+        "CreateHoursOfOperationOverrideRequest$EffectiveTill": "<p>The date until when the hours of operation override would be effective.</p>",
+        "EffectiveHoursOfOperations$Date": "<p>The date that the hours of operation or overrides applies to.</p>",
+        "GetEffectiveHoursOfOperationsRequest$FromDate": "<p>The Date from when the hours of operation are listed.</p>",
+        "GetEffectiveHoursOfOperationsRequest$ToDate": "<p>The Date until when the hours of operation are listed.</p>",
+        "HoursOfOperationOverride$EffectiveFrom": "<p>The date from which the hours of operation override would be effective.</p>",
+        "HoursOfOperationOverride$EffectiveTill": "<p>The date till which the hours of operation override would be effective.</p>",
+        "UpdateHoursOfOperationOverrideRequest$EffectiveFrom": "<p>The date from when the hours of operation override would be effective.</p>",
+        "UpdateHoursOfOperationOverrideRequest$EffectiveTill": "<p>The date till when the hours of operation override would be effective.</p>"
       }
     },
     "HoursOfOperationSearchConditionList": {
@@ -4462,6 +4628,7 @@
     "HoursOfOperationSearchFilter": {
       "base": "<p>Filters to be applied to search results.</p>",
       "refs": {
+        "SearchHoursOfOperationOverridesRequest$SearchFilter": null,
         "SearchHoursOfOperationsRequest$SearchFilter": "<p>Filters to be applied to search results.</p>"
       }
     },
@@ -4635,6 +4802,7 @@
         "CreateContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateEmailAddressRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateEvaluationFormRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "CreateHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "CreateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "CreateInstanceResponse$Id": "<p>The identifier for the instance.</p>",
         "CreateIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4661,6 +4829,7 @@
         "DeleteContactFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteEmailAddressRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteEvaluationFormRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "DeleteHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteInstanceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteIntegrationAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4685,6 +4854,7 @@
         "DescribeContactRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeEmailAddressRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeEvaluationFormRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DescribeHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "DescribeHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DescribeInstanceRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4718,6 +4888,7 @@
         "GetContactAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "GetCurrentMetricDataRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetCurrentUserDataRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "GetEffectiveHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "GetFederationTokenRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetFlowAssociationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "GetMetricDataRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4743,6 +4914,7 @@
         "ListEvaluationFormVersionsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListEvaluationFormsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListFlowAssociationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "ListHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListInstanceAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListInstanceStorageConfigsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4783,6 +4955,7 @@
         "SearchContactFlowsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchContactsRequest$InstanceId": "<p>The identifier of Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchEmailAddressesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "SearchHoursOfOperationOverridesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "SearchHoursOfOperationsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPredefinedAttributesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
         "SearchPromptsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4830,6 +5003,7 @@
         "UpdateContactScheduleRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateEmailAddressMetadataRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateEvaluationFormRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -5320,6 +5494,16 @@
       "refs": {
       }
     },
+    "ListHoursOfOperationOverridesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListHoursOfOperationOverridesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListHoursOfOperationsRequest": {
       "base": null,
       "refs": {
@@ -5685,6 +5869,7 @@
         "ListDefaultVocabulariesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListEvaluationFormVersionsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListEvaluationFormsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100. Valid Range: Minimum value of 1. Maximum value of 1000.</p>",
         "ListIntegrationAssociationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page. </p>",
         "ListQueueQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
@@ -5698,6 +5883,7 @@
         "SearchContactFlowsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchContactsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchEmailAddressesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "SearchHoursOfOperationOverridesRequest$MaxResults": "<p>The maximum number of results to return per page. Valid Range: Minimum value of 1. Maximum value of 100.</p>",
         "SearchHoursOfOperationsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "SearchPromptsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -5948,7 +6134,8 @@
     "MinutesLimit60": {
       "base": null,
       "refs": {
-        "HoursOfOperationTimeSlice$Minutes": "<p>The minutes.</p>"
+        "HoursOfOperationTimeSlice$Minutes": "<p>The minutes.</p>",
+        "OverrideTimeSlice$Minutes": "<p>The minutes.</p>"
       }
     },
     "MonitorCapability": {
@@ -6041,6 +6228,8 @@
         "ListEvaluationFormsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListFlowAssociationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListFlowAssociationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListHoursOfOperationOverridesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListHoursOfOperationOverridesResponse$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListHoursOfOperationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListHoursOfOperationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListInstanceAttributesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -6110,6 +6299,8 @@
         "SearchContactFlowsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchContactFlowsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchEmailAddressesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "SearchHoursOfOperationOverridesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. Length Constraints: Minimum length of 1. Maximum length of 2500.</p>",
+        "SearchHoursOfOperationOverridesResponse$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results. Length Constraints: Minimum length of 1. Maximum length of 2500.</p>",
         "SearchHoursOfOperationsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "SearchHoursOfOperationsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchPredefinedAttributesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -6197,6 +6388,18 @@
       "base": null,
       "refs": {
         "DeviceInfo$OperatingSystem": "<p>Operating system that the participant used for the call.</p>"
+      }
+    },
+    "OperationalHour": {
+      "base": "<p>Information about the hours of operations with the effective override applied.</p>",
+      "refs": {
+        "OperationalHours$member": null
+      }
+    },
+    "OperationalHours": {
+      "base": null,
+      "refs": {
+        "EffectiveHoursOfOperations$OperationalHours": "<p>Information about the hours of operations with the effective override applied.</p>"
       }
     },
     "Origin": {
@@ -6291,6 +6494,21 @@
       "refs": {
       }
     },
+    "OverrideDays": {
+      "base": null,
+      "refs": {
+        "HoursOfOperationOverrideConfig$Day": "<p>The day that the hours of operation override applies to.</p>"
+      }
+    },
+    "OverrideTimeSlice": {
+      "base": "<p>The start time or end time for an hours of operation override.</p>",
+      "refs": {
+        "HoursOfOperationOverrideConfig$StartTime": "<p>The start time when your contact center opens if overrides are applied.</p>",
+        "HoursOfOperationOverrideConfig$EndTime": "<p>The end time that your contact center closes if overrides are applied.</p>",
+        "OperationalHour$Start": "<p>The start time that your contact center opens.</p>",
+        "OperationalHour$End": "<p>The end time that your contact center closes.</p>"
+      }
+    },
     "PEM": {
       "base": null,
       "refs": {
@@ -6336,7 +6554,7 @@
     "ParticipantRole": {
       "base": null,
       "refs": {
-        "ContactConfiguration$ParticipantRole": "<p>The role of the participant in the chat conversation.</p>",
+        "ContactConfiguration$ParticipantRole": "<p>The role of the participant in the chat conversation.</p> <note> <p>Only <code>CUSTOMER</code> is currently supported. Any other values other than <code>CUSTOMER</code> will result in an exception (4xx error).</p> </note>",
         "ParticipantDetailsToAdd$ParticipantRole": "<p>The role of the participant being added.</p>",
         "RealTimeContactAnalysisSegmentAttachments$ParticipantRole": "<p>The role of the participant. For example, is it a customer, agent, or system.</p>",
         "RealTimeContactAnalysisSegmentEvent$ParticipantRole": "<p>The role of the participant. For example, is it a customer, agent, or system.</p>",
@@ -7488,6 +7706,7 @@
         "HierarchyLevel$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "HoursOfOperation$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "HoursOfOperationSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ListHoursOfOperationOverridesResponse$LastModifiedRegion": "<p>The AWS Region where this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -8058,6 +8277,16 @@
       }
     },
     "SearchEmailAddressesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchHoursOfOperationOverridesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchHoursOfOperationOverridesResponse": {
       "base": null,
       "refs": {
       }
@@ -8753,6 +8982,7 @@
       "refs": {
         "AnalyticsDataAssociationResult$ResourceShareId": "<p>The Resource Access Manager share ID.</p>",
         "AssociateAnalyticsDataSetResponse$ResourceShareId": "<p>The Resource Access Manager share ID that is generated.</p>",
+        "DateCondition$FieldName": "<p>An object to specify the hours of operation override date field.</p>",
         "ErrorResult$ErrorCode": "<p>The error code.</p>",
         "ErrorResult$ErrorMessage": "<p>The corresponding error message for the error code.</p>",
         "FailedRequest$FailureReasonMessage": "<p>Why the request to create a contact failed.</p>",
@@ -8788,6 +9018,7 @@
         "ContactFlowModuleSearchCriteria$StringCondition": null,
         "ContactFlowSearchCriteria$StringCondition": null,
         "EmailAddressSearchCriteria$StringCondition": null,
+        "HoursOfOperationOverrideSearchCriteria$StringCondition": null,
         "HoursOfOperationSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, <code>timezone</code>, and <code>resourceID</code>.</p> </note>",
         "PredefinedAttributeSearchCriteria$StringCondition": null,
         "PromptSearchCriteria$StringCondition": "<p>A leaf node condition which can be used to specify a string condition.</p> <note> <p>The currently supported values for <code>FieldName</code> are <code>name</code>, <code>description</code>, and <code>resourceID</code>.</p> </note>",
@@ -9260,6 +9491,7 @@
       "base": null,
       "refs": {
         "CreateHoursOfOperationRequest$TimeZone": "<p>The time zone of the hours of operation.</p>",
+        "GetEffectiveHoursOfOperationsResponse$TimeZone": "<p>The time zone for the hours of operation.</p>",
         "HoursOfOperation$TimeZone": "<p>The time zone for the hours of operation.</p>",
         "UpdateHoursOfOperationRequest$TimeZone": "<p>The time zone of the hours of operation.</p>"
       }
@@ -9306,6 +9538,7 @@
         "HoursOfOperationSummary$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "Instance$CreatedTime": "<p>When the instance was created.</p>",
         "InstanceSummary$CreatedTime": "<p>When the instance was created.</p>",
+        "ListHoursOfOperationOverridesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
@@ -9651,6 +9884,11 @@
       "base": null,
       "refs": {
         "UpdateHoursOfOperationRequest$Description": "<p>The description of the hours of operation.</p>"
+      }
+    },
+    "UpdateHoursOfOperationOverrideRequest": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateHoursOfOperationRequest": {

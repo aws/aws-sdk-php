@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53Domains` - This release includes the following API updates: added the enumeration type RESTORE_DOMAIN to the OperationType; constrained the Price attribute to non-negative values; updated the LangCode to allow 2 or 3 alphabetical characters.
+* `Aws\GuardDuty` - Improved descriptions for certain APIs.
+* `Aws\DatabaseMigrationService` - Add parameters to support for kerberos authentication. Add parameter for disabling the Unicode source filter with PostgreSQL settings. Add parameter to use large integer value with Kinesis/Kafka settings.
+* `Aws\Glue` - To support customer-managed encryption in Data Quality to allow customers encrypt data with their own KMS key, we will add a DataQualityEncryption field to the SecurityConfiguration API where customers can provide their KMS keys.
+* `Aws\Connect` - Configure holidays and other overrides to hours of operation in advance. During contact handling, Amazon Connect automatically checks for overrides and provides customers with an appropriate flow path. After an override period passes call center automatically reverts to standard hours of operation.
+
 ## 3.334.4 - 2024-12-11
 
 * `Aws\MigrationHub` - API and documentation updates for AWS MigrationHub related to adding support for listing migration task updates and associating, disassociating and listing source resources
