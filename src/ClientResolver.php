@@ -991,68 +991,14 @@ class ClientResolver
         );
     }
 
-    public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
+    public static function _apply_user_agent(
+        $inputUserAgent,
+        array &$args,
+        HandlerList $list
+    ): void
     {
-        // Add SDK version
-        $userAgent = ['aws-sdk-php/' . Sdk::VERSION];
-
-        // User Agent Metadata
-        $userAgent[] = 'ua/2.0';
-
-        // If on HHVM add the HHVM version
-        if (defined('HHVM_VERSION')) {
-            $userAgent []= 'HHVM/' . HHVM_VERSION;
-        }
-
-        // Add OS version
-        $disabledFunctions = explode(',', ini_get('disable_functions'));
-        if (function_exists('php_uname')
-            && !in_array('php_uname', $disabledFunctions, true)
-        ) {
-            $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
-            if (!empty($osName)) {
-                $userAgent []= $osName;
-            }
-        }
-
-        // Add the language version
-        $userAgent []= 'lang/php#' . phpversion();
-
-        // Add exec environment if present
-        if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
-            $userAgent []= $executionEnvironment;
-        }
-
         // Add endpoint discovery if set
-        if (isset($args['endpoint_discovery'])) {
-            if (($args['endpoint_discovery'] instanceof \Aws\EndpointDiscovery\Configuration
-                && $args['endpoint_discovery']->isEnabled())
-            ) {
-                $userAgent []= 'cfg/endpoint-discovery';
-            } elseif (is_array($args['endpoint_discovery'])
-                && isset($args['endpoint_discovery']['enabled'])
-                && $args['endpoint_discovery']['enabled']
-            ) {
-                $userAgent []= 'cfg/endpoint-discovery';
-            }
-        }
-
-        // Add retry mode if set
-        if (isset($args['retries'])) {
-            if ($args['retries'] instanceof \Aws\Retry\Configuration) {
-                $userAgent []= 'cfg/retry-mode#' . $args["retries"]->getMode();
-            } elseif (is_array($args['retries'])
-                && isset($args["retries"]["mode"])
-            ) {
-                $userAgent []= 'cfg/retry-mode#' . $args["retries"]["mode"];
-            }
-        }
-
-        // AppID Metadata
-        if (!empty($args['app_id'])) {
-            $userAgent[] = 'app/' . $args['app_id'];
-        }
-
+        $userAgent = [];
         // Add the input to the end
         if ($inputUserAgent){
             if (!is_array($inputUserAgent)) {
@@ -1064,29 +1010,17 @@ class ClientResolver
 
         $args['ua_append'] = $userAgent;
 
-        $list->appendBuild(static function (callable $handler) use ($userAgent) {
-            return function (
-                CommandInterface $command,
-                RequestInterface $request
-            ) use ($handler, $userAgent) {
-                return $handler(
-                    $command,
-                    $request->withHeader(
-                        'X-Amz-User-Agent',
-                        implode(' ', array_merge(
-                            $userAgent,
-                            $request->getHeader('X-Amz-User-Agent')
-                        ))
-                    )->withHeader(
-                        'User-Agent',
-                        implode(' ', array_merge(
-                            $userAgent,
-                            $request->getHeader('User-Agent')
-                        ))
-                    )
+        $list->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $request) use ($userAgent) {
+                return $request->withHeader(
+                    'X-Amz-User-Agent',
+                    implode(' ', array_merge(
+                        $userAgent,
+                        $request->getHeader('X-Amz-User-Agent')
+                    ))
                 );
-            };
-        });
+            })
+        );
     }
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)

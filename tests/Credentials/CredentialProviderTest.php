@@ -2,17 +2,25 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Api\DateTimeResult;
+use Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialSources;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Result;
+use Aws\SSO\SSOClient;
+use Aws\Sts\StsClient;
 use Aws\Token\SsoTokenProvider;
 use GuzzleHttp\Promise;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+use function Aws\dir_iterator;
 
 
 /**
@@ -210,10 +218,31 @@ EOT;
 
     public function iniFileProvider()
     {
-        $credentials = new Credentials('foo', 'bar', 'baz');
+        $credentials = new Credentials(
+            'foo',
+            'bar',
+            'baz',
+            null,
+            null,
+            CredentialSources::PROFILE
+        );
         $testAccountId = 'foo';
-        $credentialsWithAccountId = new Credentials('foo', 'bar', 'baz', null, $testAccountId);
-        $credentialsWithEquals = new Credentials('foo', 'bar', 'baz=');
+        $credentialsWithAccountId = new Credentials(
+            'foo',
+            'bar',
+            'baz',
+            null,
+            $testAccountId,
+            CredentialSources::PROFILE
+        );
+        $credentialsWithEquals = new Credentials(
+            'foo',
+            'bar',
+            'baz=',
+            null,
+            null,
+            CredentialSources::PROFILE
+        );
         $standardIni = <<<EOT
 [default]
 aws_access_key_id = foo
@@ -272,7 +301,8 @@ EOT;
             "secret" => "bar",
             "token" => "baz",
             "expires" => null,
-            "accountId" => null
+            "accountId" => null,
+            'source' => CredentialSources::PROFILE
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
@@ -2042,5 +2072,647 @@ EOT;
             ['', '', '', 'bar', true],
             ['', '', '', '', false]
         ];
+    }
+
+    /**
+     * Test credentials defaults source to `static`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromStatic()
+    {
+        $credentials = new Credentials('foo', 'foo');
+
+        $this->assertEquals(
+            CredentialSources::STATIC,
+            $credentials->getSource()
+        );
+    }
+
+    /**
+     * Test credentials from environment, sets source to `env`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromEnv()
+    {
+        $currentEnv = [
+            'AWS_ACCESS_KEY_ID' => getenv('AWS_ACCESS_KEY_ID'),
+            'AWS_SECRET_ACCESS_KEY' => getenv('AWS_SECRET_ACCESS_KEY')
+        ];
+        putenv('AWS_ACCESS_KEY_ID=foo');
+        putenv('AWS_SECRET_ACCESS_KEY=bazz');
+        try {
+            $credentialsProvider = CredentialProvider::env();
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::ENVIRONMENT,
+                $credentials->getSource()
+            );
+        } finally {
+            foreach ($currentEnv as $key => $value) {
+                if ($value !== false) {
+                    putenv("$key=$value");
+                } else {
+                    putenv("$key");
+                }
+            }
+        }
+    }
+
+    /**
+     * Test credentials from sts web id token, sets source to `sts_web_id_token`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromStsWebIdToken()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $tokenPath = $awsDir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        $roleArn = 'arn:aws:iam::123456789012:role/role_name';
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'bar',
+                'SessionToken'    => 'baz',
+                'Expiration'      => time() + 1000
+            ],
+            'AssumedRoleUser' => [
+                'AssumedRoleId' => 'test_user_621903f1f21f5.01530789',
+                'Arn' => $roleArn
+            ]
+        ];
+        try {
+            $stsClient = new StsClient([
+                'region' => 'us-east-1',
+                'credentials' => false,
+                'handler' => function ($command, $request) use ($result) {
+                    return Create::promiseFor(new Result($result));
+                }
+            ]);
+            $credentialsProvider = new AssumeRoleWithWebIdentityCredentialProvider([
+                'RoleArn' => $roleArn,
+                'WebIdentityTokenFile' => $tokenPath,
+                'client' => $stsClient
+            ]);
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::STS_WEB_ID_TOKEN,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+        }
+    }
+
+    /**
+     * Test credentials from sts web id token defined by env, sets source to
+     * `env_sts_web_id_token`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromEnvStsWebIdToken()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $tokenPath = $awsDir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        $roleArn = 'arn:aws:iam::123456789012:role/role_name';
+        // Set temporary env values
+        $currentEnv = [
+            CredentialProvider::ENV_ARN => getenv(
+                CredentialProvider::ENV_ARN
+            ),
+            CredentialProvider::ENV_TOKEN_FILE => getenv(
+                CredentialProvider::ENV_TOKEN_FILE
+            ),
+            CredentialProvider::ENV_ROLE_SESSION_NAME => getenv(
+                CredentialProvider::ENV_ROLE_SESSION_NAME
+            )
+        ];
+        putenv(CredentialProvider::ENV_ARN . "={$roleArn}");
+        putenv(CredentialProvider::ENV_TOKEN_FILE . "={$tokenPath}");
+        putenv(
+            CredentialProvider::ENV_ROLE_SESSION_NAME . "=TestSession"
+        );
+        // End setting env values
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'bar',
+                'SessionToken'    => 'baz',
+                'Expiration'      => time() + 1000
+            ],
+            'AssumedRoleUser' => [
+                'AssumedRoleId' => 'test_user_621903f1f21f5.01530789',
+                'Arn' => $roleArn
+            ]
+        ];
+        try {
+            $stsClient = new StsClient([
+                'region' => 'us-east-1',
+                'credentials' => false,
+                'handler' => function ($command, $request) use ($result) {
+                    return Create::promiseFor(new Result($result));
+                }
+            ]);
+            $credentialsProvider =
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider([
+                'stsClient' => $stsClient
+            ]);
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+            foreach ($currentEnv as $key => $value) {
+                if ($value !== false) {
+                    putenv("$key=$value");
+                } else {
+                    putenv("$key");
+                }
+            }
+        }
+    }
+
+    /**
+     * Test credentials from sts web id token defined by profile, sets source to
+     * `profile_sts_web_id_token`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromProfileStsWebIdToken()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $tokenPath = $awsDir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        $roleArn = 'arn:aws:iam::123456789012:role/role_name';
+        $profile = "test-profile";
+        $configPath = $awsDir . '/my-config';
+        $configData = <<<EOF
+[$profile]
+web_identity_token_file={$tokenPath}
+role_arn=$roleArn
+role_session_name=TestSession
+EOF;
+        file_put_contents($configPath, $configData);
+        putenv(CredentialProvider::ENV_PROFILE . "=$profile");
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'bar',
+                'SessionToken'    => 'baz',
+                'Expiration'      => time() + 1000
+            ],
+            'AssumedRoleUser' => [
+                'AssumedRoleId' => 'test_user_621903f1f21f5.01530789',
+                'Arn' => $roleArn
+            ]
+        ];
+        try {
+            $stsClient = new StsClient([
+                'region' => 'us-east-1',
+                'credentials' => false,
+                'handler' => function ($command, $request) use ($result) {
+                    return Create::promiseFor(new Result($result));
+                }
+            ]);
+            $credentialsProvider =
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider([
+                    'stsClient' => $stsClient,
+                    'filename' => $configPath
+                ]);
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::PROFILE_STS_WEB_ID_TOKEN,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+            putenv(CredentialProvider::ENV_PROFILE);
+        }
+    }
+
+    /**
+     * Test credentials from sts assume role, sets source to
+     * `sts_assume_role`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromStsAssumeRole()
+    {
+        $stsClient = new StsClient([
+            'region' => 'us-east-2',
+            'handler' => function ($command, $request) {
+                return Create::promiseFor(
+                    new Result([
+                        'Credentials' => [
+                            'AccessKeyId' => 'foo',
+                            'SecretAccessKey' => 'foo'
+                        ]
+                    ])
+                );
+            }
+        ]);
+        $credentialsProvider = CredentialProvider::assumeRole([
+            'assume_role_params' => [
+                'RoleArn' => 'arn:aws:iam::account-id:role/role-name',
+                'RoleSessionName' => 'foo_session'
+            ],
+            'client' => $stsClient
+        ]);
+        $credentials = $credentialsProvider()->wait();
+
+        $this->assertEquals(
+            CredentialSources::STS_ASSUME_ROLE,
+            $credentials->getSource()
+        );
+    }
+
+    /**
+     * Test credentials sourced from a profile, sets source to
+     * `profile`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromProfile()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $profile = 'test-profile';
+        $configPath = $awsDir . '/credentials';
+        $configData = <<<EOF
+[$profile]
+aws_access_key_id=foo
+aws_secret_access_key=foo
+EOF;
+        file_put_contents($configPath, $configData);
+        $currentEnv = [
+            'AWS_ACCESS_KEY_ID' => getenv('AWS_ACCESS_KEY_ID'),
+            'AWS_SECRET_ACCESS_KEY' => getenv('AWS_SECRET_ACCESS_KEY')
+        ];
+        putenv("AWS_ACCESS_KEY_ID");
+        putenv("AWS_SECRET_ACCESS_KEY");
+        try {
+            $credentialsProvider = CredentialProvider::ini(
+                $profile,
+                $configPath
+            );
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::PROFILE,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+            foreach ($currentEnv as $key => $value) {
+                if ($value !== false) {
+                    putenv("$key=$value");
+                } else {
+                    putenv("$key");
+                }
+            }
+        }
+    }
+
+    /**
+     * Test credentials from IMDS, sets source to
+     * `instance_profile_provider`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromIMDS()
+    {
+        $imdsHandler = function ($request) {
+            $path = $request->getUri()->getPath();
+            if ($path === '/latest/api/token') {
+                return Create::promiseFor(
+                    new Response(200, [], Utils::streamFor(''))
+                );
+            } elseif ($path === '/latest/meta-data/iam/security-credentials/') {
+                return Create::promiseFor(
+                    new Response(200, [], Utils::streamFor('testProfile'))
+                );
+            } elseif ($path === '/latest/meta-data/iam/security-credentials/testProfile') {
+                $expiration = time() + 1000;
+                return Create::promiseFor(
+                    new Response(
+                        200,
+                        [],
+                        Utils::streamFor(
+                            <<<EOF
+{
+    "Code": "Success",
+    "AccessKeyId": "foo",
+    "SecretAccessKey": "foo",
+    "Token": "bazz",
+    "Expiration": "@$expiration",
+    "AccountId": "123456789012"
+}
+EOF
+                        )
+                    )
+                );
+            }
+
+            throw new \RuntimeException("Unknown request to $path");
+        };
+        $credentialsProvider = CredentialProvider::instanceProfile([
+            'client' => $imdsHandler,
+        ]);
+        $credentials = $credentialsProvider()->wait();
+
+        $this->assertEquals(
+            CredentialSources::IMDS,
+            $credentials->getSource()
+        );
+    }
+
+    /**
+     * Test credentials from ECS, sets source to
+     * `ecs`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromECS()
+    {
+        $ecsHandler = function ($request) {
+            $expiration = time() + 1000;
+            return Create::promiseFor(
+                new Response(
+                    200,
+                    [],
+                    <<<EOF
+{
+    "AccessKeyId": "foo",
+    "SecretAccessKey": "foo",
+    "Token": "bazz",
+    "Expiration": "@$expiration",
+    "AccountId": "123456789012"
+}
+EOF
+                )
+            );
+        };
+        $credentialsProvider = CredentialProvider::ecsCredentials([
+            'client' => $ecsHandler,
+        ]);
+        $credentials = $credentialsProvider()->wait();
+
+        $this->assertEquals(
+            CredentialSources::ECS,
+            $credentials->getSource()
+        );
+    }
+
+    /**
+     * Test credentials sourced from process, sets source to
+     * `profile_process`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromProcess()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $profile = 'test-profile';
+        $configData = <<<EOF
+[$profile]
+credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+EOF;
+        $configPath = $awsDir . '/config';
+        file_put_contents($configPath, $configData);
+        try {
+            $credentialsProvider = CredentialProvider::process(
+                $profile,
+                $configPath
+            );
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::PROFILE_PROCESS,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+        }
+    }
+
+    /**
+     * Test credentials sourced from sso, sets source to
+     * `profile_sso`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromSso()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $expiration = time() + 1000;
+        $ini = <<<EOF
+[default]
+sso_account_id = 123456789012
+sso_session = TestSession
+sso_role_name = TestRole
+
+[sso-session TestSession]
+sso_start_url = testssosession.url.com
+sso_region = us-east-1
+EOF;
+        $tokenFile = <<<EOF
+{
+    "startUrl": "https://d-123456789012.awsapps.com/start",
+    "region": "us-east-1",
+    "accessToken": "token",
+    "expiresAt": "2500-12-25T21:30:00Z"
+}
+EOF;
+        $configPath = $awsDir . '/config';
+        file_put_contents($configPath, $ini);
+
+        $tokenFileDir = $awsDir . "/sso/cache/";
+        if (!is_dir($tokenFileDir)) {
+            mkdir($tokenFileDir, 0777, true);
+        }
+
+        putenv('HOME=' . $tempHomeDir);
+
+        $tokenLocation = SsoTokenProvider::getTokenLocation('TestSession');
+        if (!is_dir(dirname($tokenLocation))) {
+            mkdir(dirname($tokenLocation), 0777, true);
+        }
+        file_put_contents(
+            $tokenLocation, $tokenFile
+        );
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'Foo',
+                'secretAccessKey' => 'Bazz',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+        $ssoClient = new SSOClient([
+            'region' => 'us-east-1',
+            'credentials' => false,
+            'handler' => function ($command, $request) use ($result) {
+
+                return Create::promiseFor(new Result($result));
+            }
+        ]);
+        try {
+            $credentialsProvider = CredentialProvider::sso(
+                'default',
+                $configPath,
+                [
+                    'ssoClient' => $ssoClient
+                ]
+            );
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::PROFILE_SSO,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+        }
+    }
+
+    /**
+     * Test credentials sourced from sso legacy, sets source to
+     * `profile_sso_legacy`.
+     *
+     * @return void
+     */
+    public function testCredentialsSourceFromSsoLegacy()
+    {
+        $tempHomeDir = sys_get_temp_dir() . "/test_credentials_source";
+        $awsDir = $tempHomeDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $expiration = time() + 1000;
+        $ini = <<<EOF
+[default]
+sso_start_url = testssosession.url.com
+sso_region = us-east-1
+sso_account_id = 123456789012
+sso_role_name = TestSession
+EOF;
+        $tokenFile = <<<EOF
+{
+    "startUrl": "https://d-123456789012.awsapps.com/start",
+    "region": "us-east-1",
+    "accessToken": "token",
+    "expiresAt": "2500-12-25T21:30:00Z"
+}
+EOF;
+        $configPath = $awsDir . '/config';
+        file_put_contents($configPath, $ini);
+
+        $tokenFileDir = $awsDir . "/sso/cache/";
+        if (!is_dir($tokenFileDir)) {
+            mkdir($tokenFileDir, 0777, true);
+        }
+
+        $tokenFileName = $tokenFileDir . sha1("testssosession.url.com") . '.json';
+        file_put_contents(
+            $tokenFileName, $tokenFile
+        );
+
+        putenv('HOME=' . $tempHomeDir);
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'Foo',
+                'secretAccessKey' => 'Bazz',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+        $ssoClient = new SSOClient([
+            'region' => 'us-east-1',
+            'credentials' => false,
+            'handler' => function ($command, $request) use ($result) {
+
+                return Create::promiseFor(new Result($result));
+            }
+        ]);
+        try {
+            $credentialsProvider = CredentialProvider::sso(
+                'default',
+                $configPath,
+                [
+                    'ssoClient' => $ssoClient
+                ]
+            );
+            $credentials = $credentialsProvider()->wait();
+
+            $this->assertEquals(
+                CredentialSources::PROFILE_SSO_LEGACY,
+                $credentials->getSource()
+            );
+        } finally {
+            $this->cleanUpDir($tempHomeDir);
+        }
+    }
+
+    /**
+     * Helper method to clean up temporary dirs.
+     *
+     * @param $dirPath
+     *
+     * @return void
+     */
+    private function cleanUpDir($dirPath): void
+    {
+        if (!is_dir($dirPath)) {
+            return;
+        }
+
+        $files = dir_iterator($dirPath);
+        foreach ($files as $file) {
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
+
+            $filePath  = $dirPath . '/' . $file;
+            if (is_file($filePath) || !is_dir($filePath)) {
+                unlink($filePath);
+            } elseif (is_dir($filePath)) {
+                $this->cleanUpDir($filePath);
+            }
+        }
+
+        rmdir($dirPath);
     }
 }
