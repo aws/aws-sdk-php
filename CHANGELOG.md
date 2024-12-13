@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.6 - 2024-12-13
 
 * `Aws\CloudHSMV2` - Add support for Dual-Stack hsm2m.medium clusters. The customers will now be able to create hsm2m.medium clusters having both IPv4 and IPv6 connection capabilities by specifying a new param called NetworkType=DUALSTACK during cluster creation.
 * `Aws\EC2` - This release adds GroupId to the response for DeleteSecurityGroup.
