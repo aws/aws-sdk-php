@@ -1669,7 +1669,8 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"DeleteSecurityGroupRequest"}
+      "input":{"shape":"DeleteSecurityGroupRequest"},
+      "output":{"shape":"DeleteSecurityGroupResult"}
     },
     "DeleteSnapshot":{
       "name":"DeleteSnapshot",
@@ -15057,6 +15058,19 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DeleteSecurityGroupResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        },
+        "GroupId":{
+          "shape":"SecurityGroupId",
+          "locationName":"groupId"
         }
       }
     },

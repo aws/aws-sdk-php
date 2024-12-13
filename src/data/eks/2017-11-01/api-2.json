@@ -1634,6 +1634,7 @@
         },
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "capacityType":{"shape":"CapacityTypes"},
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"}
@@ -3086,6 +3087,12 @@
         "productUrl":{"shape":"String"}
       }
     },
+    "NodeRepairConfig":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
+    },
     "Nodegroup":{
       "type":"structure",
       "members":{
@@ -3110,6 +3117,7 @@
         "diskSize":{"shape":"BoxedInteger"},
         "health":{"shape":"NodegroupHealth"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "tags":{"shape":"TagMap"}
       }
@@ -3765,6 +3773,7 @@
         "taints":{"shape":"UpdateTaintsPayload"},
         "scalingConfig":{"shape":"NodegroupScalingConfig"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -3843,6 +3852,7 @@
         "ResolveConflicts",
         "MaxUnavailable",
         "MaxUnavailablePercentage",
+        "NodeRepairEnabled",
         "ConfigurationValues",
         "SecurityGroups",
         "Subnets",
