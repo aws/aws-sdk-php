@@ -12112,6 +12112,14 @@
         "ChannelId": {
           "shape": "__stringMin1",
           "locationName": "channelId"
+        },
+        "ChannelGroup": {
+          "shape": "__stringMin1",
+          "locationName": "channelGroup"
+        },
+        "ChannelName": {
+          "shape": "__stringMin1",
+          "locationName": "channelName"
         }
       }
     },
@@ -17159,6 +17167,22 @@
         "SendDelayMs": {
           "shape": "__integerMin0Max2000",
           "locationName": "sendDelayMs"
+        },
+        "KlvBehavior": {
+          "shape": "CmafKLVBehavior",
+          "locationName": "klvBehavior"
+        },
+        "KlvNameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "klvNameModifier"
+        },
+        "NielsenId3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "nielsenId3NameModifier"
+        },
+        "Scte35NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "scte35NameModifier"
         }
       },
       "required": [
@@ -23616,6 +23640,17 @@
         "DISABLED",
         "ENABLED"
       ]
+    },
+    "CmafKLVBehavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
+    "__stringMax100": {
+      "type": "string",
+      "max": 100
     }
   }
 }

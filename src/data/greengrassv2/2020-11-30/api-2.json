@@ -9,7 +9,8 @@
     "serviceFullName":"AWS IoT Greengrass V2",
     "serviceId":"GreengrassV2",
     "signatureVersion":"v4",
-    "uid":"greengrassv2-2020-11-30"
+    "uid":"greengrassv2-2020-11-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateServiceRoleToAccount":{
@@ -813,7 +814,10 @@
       "members":{
         "coreDeviceThingName":{"shape":"CoreDeviceThingName"},
         "status":{"shape":"CoreDeviceStatus"},
-        "lastStatusUpdateTimestamp":{"shape":"Timestamp"}
+        "lastStatusUpdateTimestamp":{"shape":"Timestamp"},
+        "platform":{"shape":"CoreDevicePlatformString"},
+        "architecture":{"shape":"CoreDeviceArchitectureString"},
+        "runtime":{"shape":"CoreDeviceRuntimeString"}
       }
     },
     "CoreDeviceArchitectureString":{
@@ -822,6 +826,11 @@
       "min":1
     },
     "CoreDevicePlatformString":{
+      "type":"string",
+      "max":255,
+      "min":1
+    },
+    "CoreDeviceRuntimeString":{
       "type":"string",
       "max":255,
       "min":1
@@ -1276,6 +1285,7 @@
         "coreVersion":{"shape":"GGCVersion"},
         "platform":{"shape":"CoreDevicePlatformString"},
         "architecture":{"shape":"CoreDeviceArchitectureString"},
+        "runtime":{"shape":"CoreDeviceRuntimeString"},
         "status":{"shape":"CoreDeviceStatus"},
         "lastStatusUpdateTimestamp":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"}
@@ -1805,6 +1815,11 @@
           "box":true,
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "runtime":{
+          "shape":"CoreDeviceRuntimeString",
+          "location":"querystring",
+          "locationName":"runtime"
         }
       }
     },

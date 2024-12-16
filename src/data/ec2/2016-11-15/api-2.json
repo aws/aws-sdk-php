@@ -12723,6 +12723,7 @@
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
         },
+        "Location":{"shape":"SnapshotLocationEnum"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -12741,7 +12742,8 @@
           "locationName":"TagSpecification"
         },
         "DryRun":{"shape":"Boolean"},
-        "CopyTagsFromSource":{"shape":"CopyTagsFromSource"}
+        "CopyTagsFromSource":{"shape":"CopyTagsFromSource"},
+        "Location":{"shape":"SnapshotLocationEnum"}
       }
     },
     "CreateSnapshotsResult":{
@@ -43700,6 +43702,10 @@
           "shape":"SSEType",
           "locationName":"sseType"
         },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
         "TransferType":{
           "shape":"TransferType",
           "locationName":"transferType"
@@ -43902,6 +43908,10 @@
         "SseType":{
           "shape":"SSEType",
           "locationName":"sseType"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
         }
       }
     },
@@ -43911,6 +43921,13 @@
         "shape":"Snapshot",
         "locationName":"item"
       }
+    },
+    "SnapshotLocationEnum":{
+      "type":"string",
+      "enum":[
+        "regional",
+        "local"
+      ]
     },
     "SnapshotRecycleBinInfo":{
       "type":"structure",
