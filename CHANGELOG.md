@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.334.7 - 2024-12-16
 
 * `Aws\Cloud9` - Added information about Ubuntu 18.04 will be removed from the available imageIds for Cloud9 because Ubuntu 18.04 has ended standard support on May 31, 2023.
 * `Aws\GreengrassV2` - Add support for runtime in GetCoreDevice and ListCoreDevices APIs.
