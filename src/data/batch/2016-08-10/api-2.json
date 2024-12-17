@@ -1009,6 +1009,11 @@
         "volumes":{"shape":"Volumes"}
       }
     },
+    "EksAnnotationsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "EksAttemptContainerDetail":{
       "type":"structure",
       "members":{
@@ -1136,6 +1141,7 @@
       "members":{
         "name":{"shape":"String"},
         "mountPath":{"shape":"String"},
+        "subPath":{"shape":"String"},
         "readOnly":{"shape":"Boolean"}
       }
     },
@@ -1173,7 +1179,17 @@
     "EksMetadata":{
       "type":"structure",
       "members":{
-        "labels":{"shape":"EksLabelsMap"}
+        "labels":{"shape":"EksLabelsMap"},
+        "annotations":{"shape":"EksAnnotationsMap"},
+        "namespace":{"shape":"String"}
+      }
+    },
+    "EksPersistentVolumeClaim":{
+      "type":"structure",
+      "required":["claimName"],
+      "members":{
+        "claimName":{"shape":"String"},
+        "readOnly":{"shape":"Boolean"}
       }
     },
     "EksPodProperties":{
@@ -1252,7 +1268,8 @@
         "name":{"shape":"String"},
         "hostPath":{"shape":"EksHostPath"},
         "emptyDir":{"shape":"EksEmptyDir"},
-        "secret":{"shape":"EksSecret"}
+        "secret":{"shape":"EksSecret"},
+        "persistentVolumeClaim":{"shape":"EksPersistentVolumeClaim"}
       }
     },
     "EksVolumes":{

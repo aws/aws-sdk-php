@@ -426,7 +426,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,255}"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,255}"
     },
     "CanaryCodeInput":{
       "type":"structure",
@@ -779,7 +779,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "GetCanaryRequest":{
       "type":"structure",
@@ -850,7 +850,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:group:[0-9a-z]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:group:[0-9a-z]+"
     },
     "GroupIdentifier":{
       "type":"string",
@@ -894,7 +894,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:kms:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:key/[\\w\\-\\/]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:kms:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:key/[\\w\\-\\/]+"
     },
     "ListAssociatedGroupsRequest":{
       "type":"structure",
@@ -1036,7 +1036,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:(canary|group):[0-9a-z_\\-]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:(canary|group):[0-9a-z_\\-]+"
     },
     "ResourceList":{
       "type":"list",
@@ -1285,7 +1285,8 @@
       "type":"structure",
       "members":{
         "SubnetIds":{"shape":"SubnetIds"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcConfigOutput":{
@@ -1293,7 +1294,8 @@
       "members":{
         "VpcId":{"shape":"VpcId"},
         "SubnetIds":{"shape":"SubnetIds"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcId":{"type":"string"},

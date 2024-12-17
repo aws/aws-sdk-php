@@ -988,6 +988,7 @@
         "instanceType":{"shape":"String20"},
         "kmsKeyId":{"shape":"String"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"String50List"},
@@ -1321,6 +1322,7 @@
         "environmentId":{"shape":"Identifier"},
         "instanceType":{"shape":"String20"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "status":{"shape":"EnvironmentLifecycle"}
       }
     },
@@ -1668,6 +1670,7 @@
         "kmsKeyId":{"shape":"String"},
         "loadBalancerArn":{"shape":"String"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "pendingMaintenance":{"shape":"PendingMaintenance"},
         "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
@@ -2142,6 +2145,13 @@
       "box":true,
       "max":2000,
       "min":1
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dual"
+      ]
     },
     "NextToken":{
       "type":"string",

@@ -577,7 +577,9 @@
       "base": null,
       "refs": {
         "CanaryRunConfigInput$ActiveTracing": "<p>Specifies whether this canary is to use active X-Ray tracing when it runs. Active tracing enables this canary run to be displayed in the ServiceLens and X-Ray service maps even if the canary does not hit an endpoint that has X-Ray tracing enabled. Using X-Ray tracing incurs charges. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_tracing.html\"> Canaries and X-Ray tracing</a>.</p> <p>You can enable active tracing only for canaries that use version <code>syn-nodejs-2.0</code> or later for their canary runtime.</p>",
-        "CanaryRunConfigOutput$ActiveTracing": "<p>Displays whether this canary run used active X-Ray tracing. </p>"
+        "CanaryRunConfigOutput$ActiveTracing": "<p>Displays whether this canary run used active X-Ray tracing. </p>",
+        "VpcConfigInput$Ipv6AllowedForDualStack": "<p>Set this to <code>true</code> to allow outbound IPv6 traffic on VPC canaries that are connected to dual-stack subnets. The default is <code>false</code> </p>",
+        "VpcConfigOutput$Ipv6AllowedForDualStack": "<p>Indicates whether this canary allows outbound IPv6 traffic if it is connected to dual-stack subnets.</p>"
       }
     },
     "PaginationToken": {
@@ -718,7 +720,7 @@
         "StringList$member": null,
         "UpdateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and for more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "UpdateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the S3 bucket can't include a period (.).</p>",
-        "VisualReferenceInput$BaseCanaryRunId": "<p>Specifies which canary run to use the screenshots from as the baseline for future visual monitoring with this canary. Valid values are <code>nextrun</code> to use the screenshots from the next run after this update is made, <code>lastrun</code> to use the screenshots from the most recent run before this update was made, or the value of <code>Id</code> in the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_CanaryRun.html\"> CanaryRun</a> from any past run of this canary.</p>",
+        "VisualReferenceInput$BaseCanaryRunId": "<p>Specifies which canary run to use the screenshots from as the baseline for future visual monitoring with this canary. Valid values are <code>nextrun</code> to use the screenshots from the next run after this update is made, <code>lastrun</code> to use the screenshots from the most recent run before this update was made, or the value of <code>Id</code> in the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_CanaryRun.html\"> CanaryRun</a> from a run of this a canary in the past 31 days. If you specify the <code>Id</code> of a canary run older than 31 days, the operation returns a 400 validation exception error..</p>",
         "VisualReferenceOutput$BaseCanaryRunId": "<p>The ID of the canary run that produced the baseline screenshots that are used for visual monitoring comparisons by this canary.</p>"
       }
     },

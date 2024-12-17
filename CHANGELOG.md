@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Synthetics` - Add support to toggle outbound IPv6 traffic on canaries connected to dualstack subnets. This behavior can be controlled via the new Ipv6AllowedForDualStack parameter of the VpcConfig input object in CreateCanary and UpdateCanary APIs.
+* `Aws\MainframeModernization` - This release adds support for AWS Mainframe Modernization(M2) Service to allow specifying network type(ipv4, dual) for the environment instances. For dual network type, m2 environment applications will serve both IPv4 and IPv6 requests, whereas for ipv4 it will serve only IPv4 requests.
+* `Aws\BackupSearch` - Add support for searching backups
+* `Aws\ECS` - Added support for enableFaultInjection task definition parameter which can be used to enable Fault Injection feature on ECS tasks.
+* `Aws\Batch` - This feature allows AWS Batch on Amazon EKS to support configuration of Pod Annotations, overriding Namespace on which the Batch job's Pod runs on, and allows Subpath and Persistent Volume claim to be set for AWS Batch on Amazon EKS jobs.
+* `Aws\CodePipeline` - AWS CodePipeline V2 type pipelines now support Managed Compute Rule.
+* `Aws\CloudFront` - Adds support for OriginReadTimeout and OriginKeepaliveTimeout to create CloudFront Distributions with VPC Origins.
+* `Aws\Backup` - Add Support for Backup Indexing
+* `Aws\Account` - Update endpoint configuration.
+* `Aws\CleanRoomsML` - Add support for SQL compute configuration for StartAudienceGenerationJob API.
+
 ## 3.334.7 - 2024-12-16
 
 * `Aws\Cloud9` - Added information about Ubuntu 18.04 will be removed from the available imageIds for Cloud9 because Ubuntu 18.04 has ended standard support on May 31, 2023.
