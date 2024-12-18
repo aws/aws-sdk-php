@@ -12,6 +12,7 @@ use Aws\Credentials\Credentials;
 use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\MaterialsProviderV2;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\MetricsBuilder;
 use Aws\Result;
 use Aws\S3\Crypto\S3EncryptionClient;
@@ -658,7 +659,20 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function testUserAgentCaptureResolvedAccountIdMetric()
     {
+        try {
+            $ruleSet = $this->getDynamoDBTestRuleSet();
+        } catch (\Exception $e) {
+            $this->fail($e->getMessage());
+        }
+
         $dynamoDbClient = new DynamoDbClient([
+            'api_provider' => ApiProvider::filesystem(
+                __DIR__ . '/fixtures/aws_client_test'
+            ),
+            'endpoint_provider' => new \Aws\EndpointV2\EndpointProviderV2(
+                $ruleSet,
+                EndpointDefinitionProvider::getPartitions()
+            ),
             'region' => 'us-east-2',
             'credentials' => new Credentials(
                 'foo',
@@ -684,6 +698,22 @@ class UserAgentMiddlewareTest extends TestCase
             }
         ]);
         $dynamoDbClient->listTables();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getDynamoDBTestRuleSet(): array
+    {
+        $baseDir = __DIR__ . '/fixtures/aws_client_test/dynamodb';
+        $ruleSetFile = $baseDir . '/2012-08-10/endpoint-rule-set-1.json';
+        if (!file_exists($ruleSetFile)) {
+            throw new \Exception(
+                'DynamoDB rule set file does not exist at: ' . $ruleSetFile
+            );
+        }
+
+        return json_decode(file_get_contents($ruleSetFile), true);
     }
 
     /**
