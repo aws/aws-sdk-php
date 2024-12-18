@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.0 - 2024-12-18
 
 * `Aws\ResilienceHub` - AWS Resilience Hub now automatically detects already configured CloudWatch alarms and FIS experiments as part of the assessment process and returns the discovered resources in the corresponding list API responses. It also allows you to include or exclude test recommendations for an AppComponent.
 * `Aws\DataSync` - AWS DataSync introduces the ability to update attributes for in-cloud locations.
