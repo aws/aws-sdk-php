@@ -204,7 +204,8 @@ class UserAgentMiddlewareTest extends TestCase
             'metricsWithEndpoint' => function (): array {
                 $expectedEndpoint = "https://foo-endpoint.com";
                 $args = [
-                    'endpoint' => $expectedEndpoint
+                    'endpoint' => $expectedEndpoint,
+                    'endpoint_override' => true,
                 ];
 
                 return [$args, 'm/' . MetricsBuilder::ENDPOINT_OVERRIDE];
