@@ -2382,6 +2382,24 @@
         {"shape":"IndexNotReadyException"}
       ]
     },
+    "GetThingConnectivityData":{
+      "name":"GetThingConnectivityData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/things/{thingName}/connectivity-data"
+      },
+      "input":{"shape":"GetThingConnectivityDataRequest"},
+      "output":{"shape":"GetThingConnectivityDataResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"IndexNotReadyException"}
+      ]
+    },
     "GetTopicRule":{
       "name":"GetTopicRule",
       "http":{
@@ -6041,6 +6059,13 @@
       "max":128,
       "pattern":"[a-zA-Z0-9:.]+"
     },
+    "ConnectivityApiThingName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:_-]+",
+      "sensitive":true
+    },
     "ConnectivityTimestamp":{"type":"long"},
     "ConsecutiveDatapointsToAlarm":{
       "type":"integer",
@@ -8705,6 +8730,25 @@
       }
     },
     "DisconnectReason":{"type":"string"},
+    "DisconnectReasonValue":{
+      "type":"string",
+      "enum":[
+        "AUTH_ERROR",
+        "CLIENT_INITIATED_DISCONNECT",
+        "CLIENT_ERROR",
+        "CONNECTION_LOST",
+        "DUPLICATE_CLIENTID",
+        "FORBIDDEN_ACCESS",
+        "MQTT_KEEP_ALIVE_TIMEOUT",
+        "SERVER_ERROR",
+        "SERVER_INITIATED_DISCONNECT",
+        "THROTTLED",
+        "WEBSOCKET_TTL_EXPIRATION",
+        "CUSTOMAUTH_TTL_EXPIRATION",
+        "UNKNOWN",
+        "NONE"
+      ]
+    },
     "DisplayName":{
       "type":"string",
       "max":64,
@@ -9500,6 +9544,26 @@
       "type":"structure",
       "members":{
         "statistics":{"shape":"Statistics"}
+      }
+    },
+    "GetThingConnectivityDataRequest":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "thingName":{
+          "shape":"ConnectivityApiThingName",
+          "location":"uri",
+          "locationName":"thingName"
+        }
+      }
+    },
+    "GetThingConnectivityDataResponse":{
+      "type":"structure",
+      "members":{
+        "thingName":{"shape":"ConnectivityApiThingName"},
+        "connected":{"shape":"Boolean"},
+        "timestamp":{"shape":"Timestamp"},
+        "disconnectReason":{"shape":"DisconnectReasonValue"}
       }
     },
     "GetTopicRuleDestinationRequest":{

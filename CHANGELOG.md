@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ResilienceHub` - AWS Resilience Hub now automatically detects already configured CloudWatch alarms and FIS experiments as part of the assessment process and returns the discovered resources in the corresponding list API responses. It also allows you to include or exclude test recommendations for an AppComponent.
+* `Aws\DataSync` - AWS DataSync introduces the ability to update attributes for in-cloud locations.
+* `Aws\Budgets` - Releasing minor partition endpoint updates
+* `Aws\MWAA` - Added support for Apache Airflow version 2.10.3 to MWAA.
+* `Aws\ConnectParticipant` - This release adds support for the GetAuthenticationUrl and CancelParticipantAuthentication APIs used for customer authentication within Amazon Connect chats. There are also minor updates to the GetAttachment API.
+* `Aws\Transfer` - Added AS2 agreement configurations to control filename preservation and message signing enforcement. Added AS2 connector configuration to preserve content type from S3 objects.
+* `Aws\QuickSight` - Add support for PerformanceConfiguration attribute to Dataset entity. Allow PerformanceConfiguration specification in CreateDataset and UpdateDataset APIs.
+* `Aws\Connect` - This release adds support for the UpdateParticipantAuthentication API used for customer authentication within Amazon Connect chats.
+* `Aws\Amplify` - Added WAF Configuration to Amplify Apps
+* `Aws\IoT` - Release connectivity status query API which is a dedicated high throughput(TPS) API to query a specific device's most recent connectivity state and metadata.
+* `Aws\` - User agent 2.1 which allows metrics gathering around SDK usage.
+
 ## 3.335.0 - 2024-12-17
 
 * `Aws\Synthetics` - Add support to toggle outbound IPv6 traffic on canaries connected to dualstack subnets. This behavior can be controlled via the new Ipv6AllowedForDualStack parameter of the VpcConfig input object in CreateCanary and UpdateCanary APIs.

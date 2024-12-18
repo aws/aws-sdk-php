@@ -39,7 +39,7 @@
     "CreatePersistentContactAssociation": "<p>Enables rehydration of chats for the lifespan of a contact. For more information about chat rehydration, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
     "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
     "CreatePrompt": "<p>Creates a prompt. For more information about prompts, such as supported file types and maximum length, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/prompts.html\">Create prompts</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
-    "CreatePushNotificationRegistration": "<p>Creates registration for a device token and a chat contact to receive real-time push notifications. For more information about push notifications, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/set-up-push-notifications-for-mobile-chat.html\">Set up push notifications in Amazon Connect for mobile chat</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
+    "CreatePushNotificationRegistration": "<p>Creates registration for a device token and a chat contact to receive real-time push notifications. For more information about push notifications, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-push-notifications-for-mobile-chat.html\">Set up push notifications in Amazon Connect for mobile chat</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreateQueue": "<p>Creates a new queue for the specified Amazon Connect instance.</p> <important> <ul> <li> <p>If the phone number is claimed to a traffic distribution group that was created in the same Region as the Amazon Connect instance where you are calling this API, then you can use a full phone number ARN or a UUID for <code>OutboundCallerIdNumberId</code>. However, if the phone number is claimed to a traffic distribution group that is in one Region, and you are calling this API from an instance in another Amazon Web Services Region that is associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </li> <li> <p>Only use the phone number ARN format that doesn't contain <code>instance</code> in the path, for example, <code>arn:aws:connect:us-east-1:1234567890:phone-number/uuid</code>. This is the same ARN format that is returned when you call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API.</p> </li> <li> <p>If you plan to use IAM policies to allow/deny access to this API for phone number resources claimed to a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_resource-level-policy-examples.html#allow-deny-queue-actions-replica-region\">Allow or Deny queue API actions for phone numbers in a replica Region</a>.</p> </li> </ul> </important>",
     "CreateQuickConnect": "<p>Creates a quick connect for the specified Amazon Connect instance.</p>",
     "CreateRoutingProfile": "<p>Creates a new routing profile.</p>",
@@ -139,7 +139,7 @@
     "ListApprovedOrigins": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all approved origins associated with the instance.</p>",
     "ListAssociatedContacts": "<p>Provides information about contact tree, a list of associated contacts with a unique identifier.</p>",
     "ListAuthenticationProfiles": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Provides summary information about the authentication profiles in a specified Amazon Connect instance.</p>",
-    "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to returns both Amazon Lex V1 and V2 bots.</p>",
+    "ListBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>For the specified version of Amazon Lex, returns a paginated list of all the Amazon Lex bots currently associated with the instance. Use this API to return both Amazon Lex V1 and V2 bots.</p>",
     "ListContactEvaluations": "<p>Lists contact evaluations in the specified Amazon Connect instance.</p>",
     "ListContactFlowModules": "<p>Provides information about the flow modules for the specified Amazon Connect instance.</p>",
     "ListContactFlowVersions": "<p>Returns all the available versions for the specified Amazon Connect instance and flow identifier.</p>",
@@ -249,6 +249,7 @@
     "UpdateHoursOfOperationOverride": "<p>Update the hours of operation override.</p>",
     "UpdateInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates the value for the specified attribute type.</p>",
     "UpdateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Updates an existing configuration for a resource type. This API is idempotent.</p>",
+    "UpdateParticipantAuthentication": "<p>Instructs Amazon Connect to resume the authentication process. The subsequent actions depend on the request body contents:</p> <ul> <li> <p> <b>If a code is provided</b>: Connect retrieves the identity information from Amazon Cognito and imports it into Connect Customer Profiles.</p> </li> <li> <p> <b>If an error is provided</b>: The error branch of the Authenticate Customer block is executed.</p> </li> </ul> <note> <p>The API returns a success response to acknowledge the request. However, the interaction and exchange of identity information occur asynchronously after the response is returned.</p> </note>",
     "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
     "UpdatePhoneNumber": "<p>Updates your claimed phone number from its current Amazon Connect instance or traffic distribution group to another Amazon Connect instance or traffic distribution group in the same Amazon Web Services Region.</p> <important> <p>After using this API, you must verify that the phone number is attached to the correct flow in the target instance or traffic distribution group. You need to do this because the API switches only the phone number to a new instance or traffic distribution group. It doesn't migrate the flow configuration of the phone number, too.</p> <p>You can call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html\">UpdatePhoneNumber</a> operation.</p> </important>",
     "UpdatePhoneNumberMetadata": "<p>Updates a phone number’s metadata.</p> <important> <p>To verify the status of a previous UpdatePhoneNumberMetadata operation, call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API.</p> </important>",
@@ -1120,6 +1121,18 @@
         "AudioQualityMetricsInfo$QualityScore": "<p>Number measuring the estimated quality of the media connection.</p>"
       }
     },
+    "AuthenticationError": {
+      "base": null,
+      "refs": {
+        "UpdateParticipantAuthenticationRequest$Error": "<p>The <code>error</code> query parameter provided by Cognito in the <code>redirectUri</code>.</p>"
+      }
+    },
+    "AuthenticationErrorDescription": {
+      "base": null,
+      "refs": {
+        "UpdateParticipantAuthenticationRequest$ErrorDescription": "<p>The <code>error_description</code> parameter provided by Cognito in the <code>redirectUri</code>.</p>"
+      }
+    },
     "AuthenticationProfile": {
       "base": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Information about an authentication profile. An authentication profile is a resource that stores the authentication settings for users in your contact center. You use authentication profiles to set up IP address range restrictions and session timeouts. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html\">Set IP address restrictions or session timeouts</a>. </p>",
       "refs": {
@@ -1160,6 +1173,12 @@
       "base": null,
       "refs": {
         "ListAuthenticationProfilesResponse$AuthenticationProfileSummaryList": "<p>A summary of a given authentication profile.</p>"
+      }
+    },
+    "AuthorizationCode": {
+      "base": null,
+      "refs": {
+        "UpdateParticipantAuthenticationRequest$Code": "<p>The <code>code</code> query parameter provided by Cognito in the <code>redirectUri</code>.</p>"
       }
     },
     "AutoAccept": {
@@ -2464,6 +2483,18 @@
       "base": "<p>Information about the Customer on the contact.</p>",
       "refs": {
         "Contact$Customer": "<p>Information about the Customer on the contact.</p>"
+      }
+    },
+    "CustomerId": {
+      "base": null,
+      "refs": {
+        "Contact$CustomerId": "<p>The customer's identification number. For example, the <code>CustomerId</code> may be a customer number from your CRM. You can create a Lambda function to pull the unique customer ID of the caller from your CRM system. If you enable Amazon Connect Voice ID capability, this attribute is populated with the <code>CustomerSpeakerId</code> of the caller.</p>"
+      }
+    },
+    "CustomerIdNonEmpty": {
+      "base": null,
+      "refs": {
+        "StartChatContactRequest$CustomerId": "<p>The customer's identification number. For example, the <code>CustomerId</code> may be a customer number from your CRM.</p>"
       }
     },
     "CustomerProfileAttributesSerialized": {
@@ -5007,6 +5038,7 @@
         "UpdateHoursOfOperationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "UpdateParticipantAuthenticationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdateParticipantRoleConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "UpdatePhoneNumberRequest$InstanceId": "<p>The identifier of the Amazon Connect instance that phone numbers are claimed to. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. You must enter <code>InstanceId</code> or <code>TargetArn</code>. </p>",
         "UpdatePredefinedAttributeRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can find the instance ID in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -5224,7 +5256,7 @@
     "IvrRecordingTrack": {
       "base": null,
       "refs": {
-        "VoiceRecordingConfiguration$IvrRecordingTrack": "<p>Identifies which IVR track is being recorded.</p>"
+        "VoiceRecordingConfiguration$IvrRecordingTrack": "<p>Identifies which IVR track is being recorded.</p> <p>One and only one of the track configurations should be presented in the request.</p>"
       }
     },
     "JoinToken": {
@@ -6603,7 +6635,8 @@
       "refs": {
         "ParticipantTokenCredentials$ParticipantToken": "<p>The token used by the chat participant to call <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a>. The participant token is valid for the lifetime of a chat participant. </p>",
         "StartChatContactResponse$ParticipantToken": "<p>The token used by the chat participant to call <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a>. The participant token is valid for the lifetime of a chat participant.</p>",
-        "StartWebRTCContactResponse$ParticipantToken": "<p>The token used by the contact participant to call the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API. The participant token is valid for the lifetime of a contact participant.</p>"
+        "StartWebRTCContactResponse$ParticipantToken": "<p>The token used by the contact participant to call the <a href=\"https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html\">CreateParticipantConnection</a> API. The participant token is valid for the lifetime of a contact participant.</p>",
+        "UpdateParticipantAuthenticationRequest$State": "<p>The <code>state</code> query parameter that was provided by Cognito in the <code>redirectUri</code>. This will also match the <code>state</code> parameter provided in the <code>AuthenticationUrl</code> from the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_GetAuthenticationUrl.html\">GetAuthenticationUrl</a> response.</p>"
       }
     },
     "ParticipantTokenCredentials": {
@@ -9902,6 +9935,16 @@
       }
     },
     "UpdateInstanceStorageConfigRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateParticipantAuthenticationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateParticipantAuthenticationResponse": {
       "base": null,
       "refs": {
       }

@@ -124,6 +124,12 @@
         "AdditionalInfoMap$value": null
       }
     },
+    "Alarm": {
+      "base": "<p>Indicates the Amazon CloudWatch alarm detected while running an assessment.</p>",
+      "refs": {
+        "RecommendationItem$discoveredAlarm": "<p>Indicates the previously implemented Amazon CloudWatch alarm discovered by Resilience Hub.</p>"
+      }
+    },
     "AlarmRecommendation": {
       "base": "<p>Defines a recommendation for a CloudWatch alarm.</p>",
       "refs": {
@@ -218,7 +224,7 @@
       "base": null,
       "refs": {
         "AlarmRecommendation$appComponentNames": "<p>List of Application Component names for the CloudWatch alarm recommendation.</p>",
-        "AssessmentRiskRecommendation$appComponents": "<p>Indicates the Application Components (AppComponents) that were assessed as part of the assessnent and are associated with the identified risk and recommendation.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
+        "AssessmentRiskRecommendation$appComponents": "<p>Indicates the Application Components (AppComponents) that were assessed as part of the assessment and are associated with the identified risk and recommendation.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
         "CreateAppVersionResourceRequest$appComponents": "<p>List of Application Components that this resource belongs to. If an Application Component is not part of the Resilience Hub application, it will be added.</p>",
         "UpdateAppVersionResourceRequest$appComponents": "<p>List of Application Components that this resource belongs to. If an Application Component is not part of the Resilience Hub application, it will be added.</p>"
       }
@@ -288,6 +294,7 @@
         "AcceptResourceGroupingRecommendationsResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AddDraftAppVersionResourceMappingsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AddDraftAppVersionResourceMappingsResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "Alarm$alarmArn": "<p>Amazon Resource Name (ARN) of the Amazon CloudWatch alarm.</p>",
         "App$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "App$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "App$policyArn": "<p>Amazon Resource Name (ARN) of the resiliency policy. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:resiliency-policy/<code>policy-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -1061,8 +1068,11 @@
       "refs": {
         "AppComponent$id": "<p>Identifier of the Application Component.</p>",
         "AppComponent$name": "<p>Name of the Application Component.</p>",
+        "BatchUpdateRecommendationStatusSuccessfulEntry$appComponentId": "<p>Indicates the identifier of an AppComponent.</p>",
         "GroupingAppComponent$appComponentId": "<p>Indicates the identifier of an AppComponent.</p>",
-        "GroupingAppComponent$appComponentName": "<p>Indicates the name of an AppComponent.</p>"
+        "GroupingAppComponent$appComponentName": "<p>Indicates the name of an AppComponent.</p>",
+        "TestRecommendation$appComponentId": "<p>Indicates the identifier of the AppComponent.</p>",
+        "UpdateRecommendationStatusRequestEntry$appComponentId": "<p>Indicates the identifier of the AppComponent.</p>"
       }
     },
     "EntityNameList": {
@@ -1174,6 +1184,12 @@
         "UpdateRecommendationStatusRequestEntry$excludeReason": "<p>Indicates the reason for excluding an operational recommendation.</p>"
       }
     },
+    "Experiment": {
+      "base": "<p>Indicates the FIS experiment detected while running an assessment.</p>",
+      "refs": {
+        "RecommendationItem$latestDiscoveredExperiment": "<p>Indicates the experiment created in FIS that was discovered by Resilience Hub, which matches the recommendation.</p>"
+      }
+    },
     "FailedGroupingRecommendationEntries": {
       "base": null,
       "refs": {
@@ -1281,7 +1297,7 @@
     "IamRoleName": {
       "base": null,
       "refs": {
-        "PermissionModel$invokerRoleName": "<p>Existing Amazon Web Services IAM role name in the primary Amazon Web Services account that will be assumed by Resilience Hub Service Principle to obtain a read-only access to your application resources while running an assessment.</p> <note> <ul> <li> <p>You must have <code>iam:passRole</code> permission for this role while creating or updating the application.</p> </li> <li> <p>Currently, <code>invokerRoleName</code> accepts only <code>[A-Za-z0-9_+=,.@-]</code> characters.</p> </li> </ul> </note>"
+        "PermissionModel$invokerRoleName": "<p>Existing Amazon Web Services IAM role name in the primary Amazon Web Services account that will be assumed by Resilience Hub Service Principle to obtain a read-only access to your application resources while running an assessment. </p> <p>If your IAM role includes a path, you must include the path in the <code>invokerRoleName</code> parameter. For example, if your IAM role's ARN is <code>arn:aws:iam:123456789012:role/my-path/role-name</code>, you should pass <code>my-path/role-name</code>. </p> <note> <ul> <li> <p>You must have <code>iam:passRole</code> permission for this role while creating or updating the application.</p> </li> <li> <p>Currently, <code>invokerRoleName</code> accepts only <code>[A-Za-z0-9_+=,.@-]</code> characters.</p> </li> </ul> </note>"
       }
     },
     "ImportResourcesToDraftAppVersionRequest": {
@@ -2126,6 +2142,7 @@
       "base": null,
       "refs": {
         "AcceptGroupingRecommendationEntry$groupingRecommendationId": "<p>Indicates the identifier of the grouping recommendation.</p>",
+        "Alarm$source": "<p>Indicates the source of the Amazon CloudWatch alarm. That is, it indicates if the alarm was created using Resilience Hub recommendation (<code>AwsResilienceHub</code>), or if you had created the alarm in Amazon CloudWatch (<code>Customer</code>).</p>",
         "AppComponent$type": "<p>The type of Application Component.</p>",
         "AppComponentNameList$member": null,
         "AppInputSource$sourceName": "<p>The name of the input source.</p>",
@@ -2154,6 +2171,8 @@
         "DescribeResourceGroupingRecommendationTaskRequest$groupingId": "<p>Identifier of the grouping recommendation task.</p>",
         "DescribeResourceGroupingRecommendationTaskResponse$groupingId": "<p>Identifier of the grouping recommendation task.</p>",
         "EventSubscription$name": "<p>Unique name to identify an event subscription.</p>",
+        "Experiment$experimentArn": "<p>Amazon Resource Name (ARN) of the FIS experiment.</p>",
+        "Experiment$experimentTemplateId": "<p>Identifier of the FIS experiment template.</p>",
         "FailedGroupingRecommendationEntry$groupingRecommendationId": "<p>Indicates the identifier of the grouping recommendation.</p>",
         "Field$name": "<p>Name of the field.</p>",
         "GroupingAppComponent$appComponentType": "<p>Indicates the type of an AppComponent.</p>",

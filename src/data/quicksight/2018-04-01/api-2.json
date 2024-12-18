@@ -6922,7 +6922,8 @@
         "Tags":{"shape":"TagList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
         "DatasetParameters":{"shape":"DatasetParameterList"},
-        "FolderArns":{"shape":"FolderArnList"}
+        "FolderArns":{"shape":"FolderArnList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"}
       }
     },
     "CreateDataSetResponse":{
@@ -8257,7 +8258,8 @@
         "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
-        "DatasetParameters":{"shape":"DatasetParameterList"}
+        "DatasetParameters":{"shape":"DatasetParameterList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"}
       }
     },
     "DataSetArnsList":{
@@ -17513,6 +17515,12 @@
       "max":100,
       "min":0
     },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "UniqueKeys":{"shape":"UniqueKeyList"}
+      }
+    },
     "PeriodOverPeriodComputation":{
       "type":"structure",
       "required":["ComputationId"],
@@ -22498,6 +22506,25 @@
       "type":"string",
       "pattern":"^[^\\u0000-\\u00FF]$"
     },
+    "UniqueKey":{
+      "type":"structure",
+      "required":["ColumnNames"],
+      "members":{
+        "ColumnNames":{"shape":"UniqueKeyColumnNameList"}
+      }
+    },
+    "UniqueKeyColumnNameList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":1,
+      "min":1
+    },
+    "UniqueKeyList":{
+      "type":"list",
+      "member":{"shape":"UniqueKey"},
+      "max":1,
+      "min":1
+    },
     "UniqueValuesComputation":{
       "type":"structure",
       "required":["ComputationId"],
@@ -23070,7 +23097,8 @@
         "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
-        "DatasetParameters":{"shape":"DatasetParameterList"}
+        "DatasetParameters":{"shape":"DatasetParameterList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"}
       }
     },
     "UpdateDataSetResponse":{

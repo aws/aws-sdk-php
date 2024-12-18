@@ -2867,6 +2867,7 @@
         "RenameColumnOperation$ColumnName": "<p>The name of the column to be renamed.</p>",
         "RenameColumnOperation$NewColumnName": "<p>The new name for the column.</p>",
         "TagColumnOperation$ColumnName": "<p>The column that this operation acts on.</p>",
+        "UniqueKeyColumnNameList$member": null,
         "UntagColumnOperation$ColumnName": "<p>The column that this operation acts on.</p>"
       }
     },
@@ -9622,6 +9623,14 @@
         "PercentileAggregation$PercentileValue": "<p>The percentile value. This value can be any numeric constant 0–100. A percentile value of 50 computes the median value of the measure.</p>"
       }
     },
+    "PerformanceConfiguration": {
+      "base": "<p>The configuration for the performance optimization of the dataset that contains a <code>UniqueKey</code> configuration.</p>",
+      "refs": {
+        "CreateDataSetRequest$PerformanceConfiguration": "<p>The configuration for the performance optimization of the dataset that contains a <code>UniqueKey</code> configuration.</p>",
+        "DataSet$PerformanceConfiguration": "<p>The performance optimization configuration of a dataset.</p>",
+        "UpdateDataSetRequest$PerformanceConfiguration": "<p>The configuration for the performance optimization of the dataset that contains a <code>UniqueKey</code> configuration.</p>"
+      }
+    },
     "PeriodOverPeriodComputation": {
       "base": "<p>The period over period computation configuration.</p>",
       "refs": {
@@ -14610,6 +14619,24 @@
       "base": null,
       "refs": {
         "ConditionalFormattingCustomIconOptions$UnicodeIcon": "<p>Determines the Unicode icon type.</p>"
+      }
+    },
+    "UniqueKey": {
+      "base": "<p>A <code>UniqueKey</code> configuration that references a dataset column.</p>",
+      "refs": {
+        "UniqueKeyList$member": null
+      }
+    },
+    "UniqueKeyColumnNameList": {
+      "base": null,
+      "refs": {
+        "UniqueKey$ColumnNames": "<p>The name of the column that is referenced in the <code>UniqueKey</code> configuration.</p>"
+      }
+    },
+    "UniqueKeyList": {
+      "base": null,
+      "refs": {
+        "PerformanceConfiguration$UniqueKeys": "<p>A <code>UniqueKey</code> configuration.</p>"
       }
     },
     "UniqueValuesComputation": {

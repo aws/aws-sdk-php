@@ -4057,6 +4057,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateParticipantAuthentication":{
+      "name":"UpdateParticipantAuthentication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/update-participant-authentication"
+      },
+      "input":{"shape":"UpdateParticipantAuthenticationRequest"},
+      "output":{"shape":"UpdateParticipantAuthenticationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateParticipantRoleConfig":{
       "name":"UpdateParticipantRoleConfig",
       "http":{
@@ -5406,6 +5423,20 @@
       }
     },
     "AudioQualityScore":{"type":"float"},
+    "AuthenticationError":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[\\x20-\\x21\\x23-\\x5B\\x5D-\\x7E]*$",
+      "sensitive":true
+    },
+    "AuthenticationErrorDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[\\x20-\\x21\\x23-\\x5B\\x5D-\\x7E]*$",
+      "sensitive":true
+    },
     "AuthenticationProfile":{
       "type":"structure",
       "members":{
@@ -5452,6 +5483,12 @@
     "AuthenticationProfileSummaryList":{
       "type":"list",
       "member":{"shape":"AuthenticationProfileSummary"}
+    },
+    "AuthorizationCode":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
     },
     "AutoAccept":{"type":"boolean"},
     "AvailableNumberSummary":{
@@ -5881,6 +5918,7 @@
         "ScheduledTimestamp":{"shape":"timestamp"},
         "RelatedContactId":{"shape":"ContactId"},
         "WisdomInfo":{"shape":"WisdomInfo"},
+        "CustomerId":{"shape":"CustomerId"},
         "CustomerEndpoint":{"shape":"EndpointInfo"},
         "SystemEndpoint":{"shape":"EndpointInfo"},
         "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
@@ -7279,6 +7317,17 @@
         "DeviceInfo":{"shape":"DeviceInfo"},
         "Capabilities":{"shape":"ParticipantCapabilities"}
       }
+    },
+    "CustomerId":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "CustomerIdNonEmpty":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "sensitive":true
     },
     "CustomerProfileAttributesSerialized":{"type":"string"},
     "CustomerQualityMetrics":{
@@ -10914,7 +10963,8 @@
         "MULTI_PARTY_CONFERENCE",
         "HIGH_VOLUME_OUTBOUND",
         "ENHANCED_CONTACT_MONITORING",
-        "ENHANCED_CHAT_MONITORING"
+        "ENHANCED_CHAT_MONITORING",
+        "MULTI_PARTY_CHAT_CONFERENCE"
       ]
     },
     "InstanceAttributeValue":{
@@ -11053,7 +11103,8 @@
         "FILE_SCANNER",
         "SES_IDENTITY",
         "ANALYTICS_CONNECTOR",
-        "CALL_TRANSFER_CONNECTOR"
+        "CALL_TRANSFER_CONNECTOR",
+        "COGNITO_USER_POOL"
       ]
     },
     "InternalServiceException":{
@@ -16152,7 +16203,8 @@
         "SupportedMessagingContentTypes":{"shape":"SupportedMessagingContentTypes"},
         "PersistentChat":{"shape":"PersistentChat"},
         "RelatedContactId":{"shape":"ContactId"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "CustomerId":{"shape":"CustomerIdNonEmpty"}
       }
     },
     "StartChatContactResponse":{
@@ -17704,6 +17756,25 @@
           "locationName":"resourceType"
         },
         "StorageConfig":{"shape":"InstanceStorageConfig"}
+      }
+    },
+    "UpdateParticipantAuthenticationRequest":{
+      "type":"structure",
+      "required":[
+        "State",
+        "InstanceId"
+      ],
+      "members":{
+        "State":{"shape":"ParticipantToken"},
+        "InstanceId":{"shape":"InstanceId"},
+        "Code":{"shape":"AuthorizationCode"},
+        "Error":{"shape":"AuthenticationError"},
+        "ErrorDescription":{"shape":"AuthenticationErrorDescription"}
+      }
+    },
+    "UpdateParticipantAuthenticationResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateParticipantRoleConfigChannelInfo":{

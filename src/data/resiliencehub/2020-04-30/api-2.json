@@ -1201,6 +1201,13 @@
       "max":10,
       "min":1
     },
+    "Alarm":{
+      "type":"structure",
+      "members":{
+        "alarmArn":{"shape":"Arn"},
+        "source":{"shape":"String255"}
+      }
+    },
     "AlarmRecommendation":{
       "type":"structure",
       "required":[
@@ -1568,6 +1575,7 @@
         "referenceId"
       ],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "entryId":{"shape":"String255"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},
@@ -2469,6 +2477,13 @@
         "ComplexityOfImplementation"
       ]
     },
+    "Experiment":{
+      "type":"structure",
+      "members":{
+        "experimentArn":{"shape":"String255"},
+        "experimentTemplateId":{"shape":"String255"}
+      }
+    },
     "FailedGroupingRecommendationEntries":{
       "type":"list",
       "member":{"shape":"FailedGroupingRecommendationEntry"}
@@ -3361,8 +3376,10 @@
       "type":"structure",
       "members":{
         "alreadyImplemented":{"shape":"BooleanOptional"},
+        "discoveredAlarm":{"shape":"Alarm"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},
+        "latestDiscoveredExperiment":{"shape":"Experiment"},
         "resourceId":{"shape":"String500"},
         "targetAccountId":{"shape":"CustomerId"},
         "targetRegion":{"shape":"AwsRegion"}
@@ -3975,6 +3992,7 @@
       "type":"structure",
       "required":["referenceId"],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "appComponentName":{"shape":"EntityId"},
         "dependsOnAlarms":{"shape":"AlarmReferenceIdList"},
         "description":{"shape":"String500"},
@@ -4181,6 +4199,7 @@
         "referenceId"
       ],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "entryId":{"shape":"String255"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},

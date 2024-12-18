@@ -147,6 +147,7 @@
     "GetPolicyVersion": "<p>Gets information about the specified policy version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetPolicyVersion</a> action.</p>",
     "GetRegistrationCode": "<p>Gets a registration code used to register a CA certificate with IoT.</p> <p>IoT will create a registration code as part of this API call if the registration code doesn't exist or has been deleted. If you already have a registration code, this API call will return the same registration code.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetRegistrationCode</a> action.</p>",
     "GetStatistics": "<p>Returns the count, average, sum, minimum, maximum, sum of squares, variance, and standard deviation for the specified aggregated field. If the aggregation field is of type <code>String</code>, only the count statistic is returned.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetStatistics</a> action.</p>",
+    "GetThingConnectivityData": "<p>Retrieves the live connectivity status per device.</p>",
     "GetTopicRule": "<p>Gets information about the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetTopicRule</a> action.</p>",
     "GetTopicRuleDestination": "<p>Gets information about a topic rule destination.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetTopicRuleDestination</a> action.</p>",
     "GetV2LoggingOptions": "<p>Gets the fine grained logging options.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetV2LoggingOptions</a> action.</p>",
@@ -163,7 +164,7 @@
     "ListCertificateProviders": "<p>Lists all your certificate providers in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificateProviders</a> action. </p>",
     "ListCertificates": "<p>Lists the certificates registered in your Amazon Web Services account.</p> <p>The results are paginated with a default page size of 25. You can use the returned marker to retrieve additional results.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificates</a> action.</p>",
     "ListCertificatesByCA": "<p>List the device certificates signed by the specified CA certificate.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificatesByCA</a> action.</p>",
-    "ListCommandExecutions": "<p>List all command executions.</p> <important> <p>You must provide only the <code>startedTimeFilter</code> or the <code>completedTimeFilter</code> information. If you provide both time filters, the API will generate an error. You can use this information to find command executions that started within a specific timeframe.</p> </important>",
+    "ListCommandExecutions": "<p>List all command executions.</p> <important> <ul> <li> <p>You must provide only the <code>startedTimeFilter</code> or the <code>completedTimeFilter</code> information. If you provide both time filters, the API will generate an error. You can use this information to retrieve a list of command executions within a specific timeframe.</p> </li> <li> <p>You must provide only the <code>commandArn</code> or the <code>thingArn</code> information depending on whether you want to list executions for a specific command or an IoT thing. If you provide both fields, the API will generate an error.</p> </li> </ul> <p>For more information about considerations for using this API, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-remote-command-execution-start-monitor.html#iot-remote-command-execution-list-cli\">List command executions in your account (CLI)</a>.</p> </important>",
     "ListCommands": "<p>List all commands in your account.</p>",
     "ListCustomMetrics": "<p> Lists your Device Defender detect custom metrics. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCustomMetrics</a> action.</p>",
     "ListDetectMitigationActionsExecutions": "<p> Lists mitigation actions executions for a Device Defender ML Detect Security Profile. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListDetectMitigationActionsExecutions</a> action.</p>",
@@ -1382,6 +1383,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "GetThingConnectivityDataResponse$connected": "<p>A Boolean that indicates the connectivity status.</p>",
         "ThingConnectivity$connected": "<p>True if the thing is connected to the Amazon Web Services IoT Core service; false if it is not connected.</p>",
         "ThingTypeMetadata$deprecated": "<p>Whether the thing type is deprecated. If <b>true</b>, no new things could be associated with this type.</p>"
       }
@@ -2119,6 +2121,13 @@
         "PropagatingAttribute$connectionAttribute": "<p>The attribute associated with the connection between a device and Amazon Web Services IoT Core.</p>"
       }
     },
+    "ConnectivityApiThingName": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataRequest$thingName": "<p>The name of your IoT thing.</p>",
+        "GetThingConnectivityDataResponse$thingName": "<p>The name of your IoT thing.</p>"
+      }
+    },
     "ConnectivityTimestamp": {
       "base": null,
       "refs": {
@@ -2587,7 +2596,7 @@
         "GetCommandExecutionResponse$lastUpdatedAt": "<p>The timestamp, when the command execution was last updated.</p>",
         "GetCommandExecutionResponse$startedAt": "<p>The timestamp, when the command execution was started.</p>",
         "GetCommandExecutionResponse$completedAt": "<p>The timestamp, when the command execution was completed.</p>",
-        "GetCommandExecutionResponse$timeToLive": "<p>The time to live (TTL) parameter for the <code>GetCommandExecution</code> API.</p>",
+        "GetCommandExecutionResponse$timeToLive": "<p>The time to live (TTL) parameter that indicates the duration for which executions will be retained in your account. The default value is six months.</p>",
         "GetCommandResponse$createdAt": "<p>The timestamp, when the command was created.</p>",
         "GetCommandResponse$lastUpdatedAt": "<p>The timestamp, when the command was last updated.</p>",
         "GetPolicyResponse$creationDate": "<p>The date the policy was created.</p>",
@@ -3622,6 +3631,12 @@
         "ThingConnectivity$disconnectReason": "<p>The reason why the client is disconnected. If the thing has been disconnected for approximately an hour, the <code>disconnectReason</code> value might be missing.</p>"
       }
     },
+    "DisconnectReasonValue": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$disconnectReason": "<p>The reason why the client is disconnecting.</p>"
+      }
+    },
     "DisplayName": {
       "base": null,
       "refs": {
@@ -4358,6 +4373,16 @@
       }
     },
     "GetStatisticsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetThingConnectivityDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetThingConnectivityDataResponse": {
       "base": null,
       "refs": {
       }
@@ -7576,7 +7601,7 @@
       "refs": {
         "AlertTarget$roleArn": "<p>The ARN of the role that grants permission to send alerts to the notification target.</p>",
         "AuditNotificationTarget$roleArn": "<p>The ARN of the role that grants permission to send notifications to the target.</p>",
-        "CreateCommandRequest$roleArn": "<p>The IAM role that allows access to create the command.</p>",
+        "CreateCommandRequest$roleArn": "<p>The IAM role that you must provide when using the <code>AWS-IoT-FleetWise</code> namespace. The role grants IoT Device Management the permission to access IoT FleetWise resources for generating the payload for the command. This field is not required when you use the <code>AWS-IoT</code> namespace.</p>",
         "CreateMitigationActionRequest$roleArn": "<p>The ARN of the IAM role that is used to apply the mitigation action.</p>",
         "CreateOTAUpdateRequest$roleArn": "<p>The IAM role that grants Amazon Web Services IoT Core access to the Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to create an OTA update job.</p>",
         "CreateProvisioningTemplateRequest$provisioningRoleArn": "<p>The role ARN for the role associated with the provisioning template. This IoT role grants permission to provision a device.</p>",
@@ -7587,7 +7612,7 @@
         "DescribeProvisioningTemplateResponse$provisioningRoleArn": "<p>The ARN of the role associated with the provisioning template. This IoT role grants permission to provision a device.</p>",
         "DescribeThingRegistrationTaskResponse$roleArn": "<p>The role ARN that grants access to the input file bucket.</p>",
         "EnableIoTLoggingParams$roleArnForLogging": "<p>The Amazon Resource Name (ARN) of the IAM role used for logging.</p>",
-        "GetCommandResponse$roleArn": "<p>The IAM role that allows access to retrieve information about the command.</p>",
+        "GetCommandResponse$roleArn": "<p>The IAM role that you provided when creating the command with <code>AWS-IoT-FleetWise</code> as the namespace.</p>",
         "MetricsExportConfig$roleArn": "<p>This role ARN has permission to publish MQTT messages, after which Device Defender Detect can assume the role and publish messages on your behalf.</p>",
         "MitigationAction$roleArn": "<p>The IAM role ARN used to apply this mitigation action.</p>",
         "PresignedUrlConfig$roleArn": "<p>The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.</p> <important> <p>For information about addressing the confused deputy problem, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html\">cross-service confused deputy prevention</a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p> </important>",
@@ -9149,6 +9174,7 @@
         "DetectMitigationActionExecution$executionEndDate": "<p> The date a mitigation action ended. </p>",
         "DetectMitigationActionsTaskSummary$taskStartTime": "<p> The date the task started. </p>",
         "DetectMitigationActionsTaskSummary$taskEndTime": "<p> The date the task ended. </p>",
+        "GetThingConnectivityDataResponse$timestamp": "<p>The timestamp of when the event occurred.</p>",
         "ListAuditFindingsRequest$startTime": "<p>A filter to limit results to those found after the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditFindingsRequest$endTime": "<p>A filter to limit results to those found before the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditMitigationActionsTasksRequest$startTime": "<p>Specify this filter to limit results to tasks that began on or after a specific date and time.</p>",

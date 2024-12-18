@@ -296,6 +296,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getRegistrationCodeAsync(array $args = [])
  * @method \Aws\Result getStatistics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getStatisticsAsync(array $args = [])
+ * @method \Aws\Result getThingConnectivityData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getThingConnectivityDataAsync(array $args = [])
  * @method \Aws\Result getTopicRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTopicRuleAsync(array $args = [])
  * @method \Aws\Result getTopicRuleDestination(array $args = [])

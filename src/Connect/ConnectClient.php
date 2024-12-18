@@ -499,6 +499,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateInstanceAttributeAsync(array $args = [])
  * @method \Aws\Result updateInstanceStorageConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInstanceStorageConfigAsync(array $args = [])
+ * @method \Aws\Result updateParticipantAuthentication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateParticipantAuthenticationAsync(array $args = [])
  * @method \Aws\Result updateParticipantRoleConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateParticipantRoleConfigAsync(array $args = [])
  * @method \Aws\Result updatePhoneNumber(array $args = [])
