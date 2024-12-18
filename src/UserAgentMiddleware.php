@@ -276,7 +276,7 @@ class UserAgentMiddleware
      */
     private function appendEndpointMetric(): void
     {
-        if (!empty($this->args['endpoint'])) {
+        if (!empty($this->args['endpoint_override'])) {
             $this->metricsBuilder->append(MetricsBuilder::ENDPOINT_OVERRIDE);
         }
     }
