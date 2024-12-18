@@ -1030,6 +1030,7 @@ class ClientResolver
             return;
         }
 
+        $args['endpoint_override'] = true;
         $args['endpoint'] = $value;
     }
 
