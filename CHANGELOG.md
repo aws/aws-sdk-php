@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QConnect` - Amazon Q in Connect enables agents to ask Q for assistance in multiple languages and Q will provide answers and recommended step-by-step guides in those languages. Qs default language is English (United States) and you can switch this by setting the locale configuration on the AI Agent.
+* `Aws\WorkSpaces` - Added AWS Global Accelerator (AGA) support for WorkSpaces Personal.
+* `Aws\AppStream` - Added support for Rocky Linux 8 on Amazon AppStream 2.0
+* `Aws\MediaLive` - MediaLive is releasing ListVersions api
+* `Aws\MediaConvert` - This release adds support for inserting timecode tracks into MP4 container outputs.
+* `Aws\SsmSap` - AWS Systems Manager for SAP added support for registration and discovery of distributed ABAP applications
+
 ## 3.336.0 - 2024-12-18
 
 * `Aws\ResilienceHub` - AWS Resilience Hub now automatically detects already configured CloudWatch alarms and FIS experiments as part of the assessment process and returns the discovered resources in the corresponding list API responses. It also allows you to include or exclude test recommendations for an AppComponent.

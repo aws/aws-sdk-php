@@ -4160,6 +4160,46 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "ListVersions": {
+      "name": "ListVersions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/versions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListVersionsRequest"
+      },
+      "output": {
+        "shape": "ListVersionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -5740,6 +5780,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -5858,6 +5902,14 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
+        },
+        "UsedChannelEngineVersions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "usedChannelEngineVersions"
         }
       }
     },
@@ -6000,6 +6052,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -6067,6 +6127,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -6575,6 +6643,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -6961,6 +7033,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -13303,6 +13379,10 @@
         "PipelineId": {
           "shape": "__string",
           "locationName": "pipelineId"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -14471,6 +14551,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -14818,6 +14902,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -15378,6 +15466,14 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -15471,6 +15567,14 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       },
       "required": [
@@ -17094,6 +17198,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -23651,6 +23759,48 @@
     "__stringMax100": {
       "type": "string",
       "max": 100
+    },
+    "ChannelEngineVersionRequest": {
+      "type": "structure",
+      "members": {
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ChannelEngineVersionResponse": {
+      "type": "structure",
+      "members": {
+        "ExpirationDate": {
+          "shape": "__timestampIso8601",
+          "locationName": "expirationDate"
+        },
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ListVersionsRequest": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "ListVersionsResponse": {
+      "type": "structure",
+      "members": {
+        "Versions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "versions"
+        }
+      }
+    },
+    "__listOfChannelEngineVersionResponse": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelEngineVersionResponse"
+      }
     }
   }
 }

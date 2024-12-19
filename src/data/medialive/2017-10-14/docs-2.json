@@ -115,7 +115,8 @@
     "UpdateCluster": "Change the settings for a Cluster.",
     "UpdateNetwork": "Change the settings for a Network.",
     "UpdateNode": "Change the settings for a Node.",
-    "UpdateNodeState": "Update the state of a node."
+    "UpdateNodeState": "Update the state of a node.",
+    "ListVersions": "Retrieves an array of all the encoder engine versions that are available in this AWS account."
   },
   "shapes": {
     "AacCodingMode": {
@@ -3785,7 +3786,9 @@
         "StartMonitorDeploymentRequestContent$DryRun": null,
         "StartMonitorDeploymentResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
         "StartUpdateSignalMapRequestContent$ForceRediscovery": "If true, will force a rediscovery of a signal map if an unchanged discoveryEntryPointArn is provided.",
-        "StartUpdateSignalMapResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed."
+        "StartUpdateSignalMapResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
+        "CreateChannel$DryRun": null,
+        "UpdateChannel$DryRun": null
       }
     },
     "__double": {
@@ -5217,7 +5220,9 @@
         "UpdateNetworkResult$Arn": "The ARN of this Network. It is automatically assigned when the Network is created.",
         "UpdateNetworkResult$Id": "The ID of the Network. Unique in the AWS account. The ID is the resource-id portion of the ARN.",
         "UpdateNetworkResult$Name": "The name that you specified for the Network.",
-        "UpdateNodeRequest$Name": "Include this parameter only if you want to change the current name of the Node. Specify a name that is unique in the Cluster. You can't change the name. Names are case-sensitive."
+        "UpdateNodeRequest$Name": "Include this parameter only if you want to change the current name of the Node. Specify a name that is unique in the Cluster. You can't change the name. Names are case-sensitive.",
+        "ChannelEngineVersionRequest$Version": "The build identifier of the engine version to use for this channel. Specify 'DEFAULT' to reset to the default version.",
+        "ChannelEngineVersionResponse$Version": "The build identifier for this version of the channel version."
       }
     },
     "__stringMax1000": {
@@ -6873,6 +6878,34 @@
         "CmafIngestGroupSettings$KlvNameModifier": "Change the modifier that MediaLive automatically adds to the Streams() name that identifies a KLV track. The default is \"klv\", which means the default name will be Streams(klv.cmfm). Any string you enter here will replace the \"klv\" string.\\nThe modifier can only contain: numbers, letters, plus (+), minus (-), underscore (_) and period (.) and has a maximum length of 100 characters.",
         "CmafIngestGroupSettings$NielsenId3NameModifier": "Change the modifier that MediaLive automatically adds to the Streams() name that identifies a Nielsen ID3 track. The default is \"nid3\", which means the default name will be Streams(nid3.cmfm). Any string you enter here will replace the \"nid3\" string.\\nThe modifier can only contain: numbers, letters, plus (+), minus (-), underscore (_) and period (.) and has a maximum length of 100 characters.",
         "CmafIngestGroupSettings$Scte35NameModifier": "Change the modifier that MediaLive automatically adds to the Streams() name for a SCTE 35 track. The default is \"scte\", which means the default name will be Streams(scte.cmfm). Any string you enter here will replace the \"scte\" string.\\nThe modifier can only contain: numbers, letters, plus (+), minus (-), underscore (_) and period (.) and has a maximum length of 100 characters."
+      }
+    },
+    "ChannelEngineVersionRequest": {
+      "base": null,
+      "refs": {
+        "CreateChannel$ChannelEngineVersion": "The desired engine version for this channel.",
+        "UpdateChannel$ChannelEngineVersion": "Channel engine version for this channel"
+      }
+    },
+    "ChannelEngineVersionResponse": {
+      "base": null,
+      "refs": {
+        "Channel$ChannelEngineVersion": "Requested engine version for this channel.",
+        "ChannelSummary$ChannelEngineVersion": "The engine version that you requested for this channel.",
+        "PipelineDetail$ChannelEngineVersion": "Current engine version of the encoder for this pipeline.",
+        "__listOfChannelEngineVersionResponse$member": null
+      }
+    },
+    "ListVersionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "__listOfChannelEngineVersionResponse": {
+      "base": null,
+      "refs": {
+        "ChannelSummary$UsedChannelEngineVersions": "The engine version that the running pipelines are using.",
+        "ListVersionsResponse$Versions": "List of engine versions that are available for this AWS account."
       }
     }
   },

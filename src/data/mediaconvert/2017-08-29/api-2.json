@@ -1548,7 +1548,7 @@
           "locationName": "audioNormalizationSettings"
         },
         "AudioSourceName": {
-          "shape": "__string",
+          "shape": "__stringMax2048",
           "locationName": "audioSourceName"
         },
         "AudioType": {
@@ -2181,6 +2181,10 @@
         "OutlineSize": {
           "shape": "__integerMin0Max10",
           "locationName": "outlineSize"
+        },
+        "RemoveRubyReserveAttributes": {
+          "shape": "RemoveRubyReserveAttributes",
+          "locationName": "removeRubyReserveAttributes"
         },
         "ShadowColor": {
           "shape": "BurninSubtitleShadowColor",
@@ -6427,7 +6431,7 @@
           "locationName": "dolbyVisionMetadataXml"
         },
         "FileInput": {
-          "shape": "__stringPatternS3Https",
+          "shape": "__stringMax2048PatternS3Https",
           "locationName": "fileInput"
         },
         "FilterEnable": {
@@ -9070,7 +9074,7 @@
           "locationName": "containerSettings"
         },
         "Extension": {
-          "shape": "__string",
+          "shape": "__stringMax256",
           "locationName": "extension"
         },
         "NameModifier": {
@@ -9129,7 +9133,7 @@
           "locationName": "customName"
         },
         "Name": {
-          "shape": "__string",
+          "shape": "__stringMax2048",
           "locationName": "name"
         },
         "OutputGroupSettings": {
@@ -9628,6 +9632,13 @@
           "locationName": "channelsOut"
         }
       }
+    },
+    "RemoveRubyReserveAttributes": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
     },
     "RenewalType": {
       "type": "string",
@@ -10138,6 +10149,13 @@
         "EMBEDDED",
         "ZEROBASED",
         "SPECIFIEDSTART"
+      ]
+    },
+    "TimecodeTrack": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
       ]
     },
     "TimedMetadata": {
@@ -10693,6 +10711,10 @@
         "TimecodeInsertion": {
           "shape": "VideoTimecodeInsertion",
           "locationName": "timecodeInsertion"
+        },
+        "TimecodeTrack": {
+          "shape": "TimecodeTrack",
+          "locationName": "timecodeTrack"
         },
         "VideoPreprocessors": {
           "shape": "VideoPreprocessor",
@@ -12429,6 +12451,19 @@
     "__stringMax1000": {
       "type": "string",
       "max": 1000
+    },
+    "__stringMax2048": {
+      "type": "string",
+      "max": 2048
+    },
+    "__stringMax2048PatternS3Https": {
+      "type": "string",
+      "max": 2048,
+      "pattern": "^s3://([^\\/]+\\/+)+((([^\\/]*)))|^https?://[^\\/].*[^&]$"
+    },
+    "__stringMax256": {
+      "type": "string",
+      "max": 256
     },
     "__stringMin0": {
       "type": "string",

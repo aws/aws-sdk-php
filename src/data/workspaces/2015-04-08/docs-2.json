@@ -92,6 +92,30 @@
     "UpdateWorkspacesPool": "<p>Updates the specified pool.</p>"
   },
   "shapes": {
+    "AGAModeForDirectoryEnum": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForDirectory$Mode": "<p>Indicates if Global Accelerator for directory is enabled or disabled.</p>"
+      }
+    },
+    "AGAModeForWorkSpaceEnum": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForWorkSpace$Mode": "<p>Indicates if Global Accelerator for WorkSpaces is enabled, disabled, or the same mode as the associated directory.</p>"
+      }
+    },
+    "AGAPreferredProtocolForDirectory": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForDirectory$PreferredProtocol": "<p>Indicates the preferred protocol for Global Accelerator.</p>"
+      }
+    },
+    "AGAPreferredProtocolForWorkSpace": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForWorkSpace$PreferredProtocol": "<p>Indicates the preferred protocol for Global Accelerator.</p>"
+      }
+    },
     "ARN": {
       "base": null,
       "refs": {
@@ -1606,6 +1630,18 @@
     "GetAccountLinkResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "GlobalAcceleratorForDirectory": {
+      "base": "<p>Describes the Global Accelerator for directory</p>",
+      "refs": {
+        "StreamingProperties$GlobalAccelerator": "<p>Indicates the Global Accelerator properties.</p>"
+      }
+    },
+    "GlobalAcceleratorForWorkSpace": {
+      "base": "<p>Describes the Global Accelerator for WorkSpaces.</p>",
+      "refs": {
+        "WorkspaceProperties$GlobalAccelerator": "<p>Indicates the Global Accelerator properties.</p>"
       }
     },
     "IDCConfig": {

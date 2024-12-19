@@ -233,5 +233,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateNodeAsync(array $args = [])
  * @method \Aws\Result updateNodeState(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateNodeStateAsync(array $args = [])
+ * @method \Aws\Result listVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listVersionsAsync(array $args = [])
  */
 class MediaLiveClient extends AwsClient {}
