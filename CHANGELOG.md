@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.2 - 2024-12-20
 
 * `Aws\BedrockDataAutomationRuntime` - Documentation update for Amazon Bedrock Data Automation Runtime
 * `Aws\Outposts` - Add CS8365C as a supported power connector for Outpost sites.
