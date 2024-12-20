@@ -125,6 +125,18 @@
         "DescribeAddonResponse$addon": null
       }
     },
+    "AddonCompatibilityDetail": {
+      "base": "<p>The summary information about the Amazon EKS add-on compatibility for the next Kubernetes version for an insight check in the <code>UPGRADE_READINESS</code> category.</p>",
+      "refs": {
+        "AddonCompatibilityDetails$member": null
+      }
+    },
+    "AddonCompatibilityDetails": {
+      "base": null,
+      "refs": {
+        "InsightCategorySpecificSummary$addonCompatibilityDetails": "<p>A list of <code>AddonCompatibilityDetail</code> objects for Amazon EKS add-ons.</p>"
+      }
+    },
     "AddonHealth": {
       "base": "<p>The health of the add-on.</p>",
       "refs": {
@@ -1598,6 +1610,7 @@
         "Addon$publisher": "<p>The publisher of the add-on.</p>",
         "Addon$owner": "<p>The owner of the add-on.</p>",
         "Addon$configurationValues": "<p>The configuration values that you provided.</p>",
+        "AddonCompatibilityDetail$name": "<p>The name of the Amazon EKS add-on.</p>",
         "AddonInfo$addonName": "<p>The name of the add-on.</p>",
         "AddonInfo$type": "<p>The type of the add-on.</p>",
         "AddonInfo$publisher": "<p>The publisher of the add-on.</p>",
@@ -1919,6 +1932,7 @@
         "AccessEntry$kubernetesGroups": "<p>A <code>name</code> that you've specified in a Kubernetes <code>RoleBinding</code> or <code>ClusterRoleBinding</code> object so that Kubernetes authorizes the <code>principalARN</code> access to cluster objects.</p>",
         "AccessScope$namespaces": "<p>A Kubernetes <code>namespace</code> that an access policy is scoped to. A value is required if you specified <code>namespace</code> for <code>Type</code>.</p>",
         "Addon$podIdentityAssociations": "<p>An array of Pod Identity Assocations owned by the Addon. Each EKS Pod Identity association maps a role to a service account in a namespace in the cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html\">Attach an IAM Role to an Amazon EKS add-on using Pod Identity</a> in the EKS User Guide.</p>",
+        "AddonCompatibilityDetail$compatibleVersions": "<p>The list of compatible Amazon EKS add-on versions for the next Kubernetes version.</p>",
         "AddonIssue$resourceIds": "<p>The resource IDs of the issue.</p>",
         "AddonPodIdentityConfiguration$recommendedManagedPolicies": "<p>A suggested IAM Policy for the addon.</p>",
         "AddonVersionInfo$architecture": "<p>The architectures that the version supports.</p>",

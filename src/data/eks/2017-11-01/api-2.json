@@ -990,6 +990,17 @@
         "podIdentityAssociations":{"shape":"StringList"}
       }
     },
+    "AddonCompatibilityDetail":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "compatibleVersions":{"shape":"StringList"}
+      }
+    },
+    "AddonCompatibilityDetails":{
+      "type":"list",
+      "member":{"shape":"AddonCompatibilityDetail"}
+    },
     "AddonHealth":{
       "type":"structure",
       "members":{
@@ -2480,7 +2491,8 @@
     "InsightCategorySpecificSummary":{
       "type":"structure",
       "members":{
-        "deprecationDetails":{"shape":"DeprecationDetails"}
+        "deprecationDetails":{"shape":"DeprecationDetails"},
+        "addonCompatibilityDetails":{"shape":"AddonCompatibilityDetails"}
       }
     },
     "InsightResourceDetail":{

@@ -1058,7 +1058,8 @@
     "AttributeCondition": {
       "base": "<p>An object to specify the predefined attribute condition.</p>",
       "refs": {
-        "Expression$AttributeCondition": "<p>An object to specify the predefined attribute condition.</p>"
+        "Expression$AttributeCondition": "<p>An object to specify the predefined attribute condition.</p>",
+        "Expression$NotAttributeCondition": null
       }
     },
     "AttributeName": {
@@ -6376,7 +6377,9 @@
     "NullableProficiencyLevel": {
       "base": null,
       "refs": {
-        "AttributeCondition$ProficiencyLevel": "<p>The proficiency level of the condition.</p>"
+        "AttributeCondition$ProficiencyLevel": "<p>The proficiency level of the condition.</p>",
+        "Range$MinProficiencyLevel": "<p>The minimum proficiency level of the range.</p>",
+        "Range$MaxProficiencyLevel": "<p>The maximum proficiency level of the range.</p>"
       }
     },
     "NullableProficiencyLimitValue": {
@@ -7367,6 +7370,12 @@
         "AssociateQueueQuickConnectsRequest$QuickConnectIds": "<p>The quick connects to associate with this queue.</p>",
         "CreateQueueRequest$QuickConnectIds": "<p>The quick connects available to agents who are working the queue.</p>",
         "DisassociateQueueQuickConnectsRequest$QuickConnectIds": "<p>The quick connects to disassociate from the queue.</p>"
+      }
+    },
+    "Range": {
+      "base": "<p>An Object to define the minimum and maximum proficiency levels.</p>",
+      "refs": {
+        "AttributeCondition$Range": "<p>An Object to define the minimum and maximum proficiency levels.</p>"
       }
     },
     "ReadOnlyFieldInfo": {
@@ -10159,7 +10168,7 @@
     "UploadUrlMetadata": {
       "base": "<p>Fields required when uploading an attached file. </p>",
       "refs": {
-        "StartAttachedFileUploadResponse$UploadUrlMetadata": "<p>Information to be used while uploading the attached file. </p>"
+        "StartAttachedFileUploadResponse$UploadUrlMetadata": "<p>The headers to be provided while uploading the file to the URL.</p>"
       }
     },
     "Url": {

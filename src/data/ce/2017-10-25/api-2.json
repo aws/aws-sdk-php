@@ -187,7 +187,8 @@
         {"shape":"BillExpirationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"RequestChangedException"}
+        {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetCostAndUsageWithResources":{
@@ -203,7 +204,8 @@
         {"shape":"LimitExceededException"},
         {"shape":"BillExpirationException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"RequestChangedException"}
+        {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetCostCategories":{
@@ -219,7 +221,8 @@
         {"shape":"BillExpirationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"RequestChangedException"}
+        {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetCostForecast":{
@@ -232,7 +235,8 @@
       "output":{"shape":"GetCostForecastResponse"},
       "errors":[
         {"shape":"LimitExceededException"},
-        {"shape":"DataUnavailableException"}
+        {"shape":"DataUnavailableException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetDimensionValues":{
@@ -248,7 +252,8 @@
         {"shape":"BillExpirationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"RequestChangedException"}
+        {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetReservationCoverage":{
@@ -386,7 +391,8 @@
         {"shape":"BillExpirationException"},
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
-        {"shape":"RequestChangedException"}
+        {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetUsageForecast":{
@@ -400,7 +406,8 @@
       "errors":[
         {"shape":"LimitExceededException"},
         {"shape":"DataUnavailableException"},
-        {"shape":"UnresolvableUsageUnitException"}
+        {"shape":"UnresolvableUsageUnitException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListCommitmentPurchaseAnalyses":{
@@ -836,6 +843,12 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "BillingViewArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[-a-zA-Z0-9/:_+=.-@]{1,43}$"
     },
     "CommitmentPurchaseAnalysisConfiguration":{
       "type":"structure",
@@ -1682,6 +1695,7 @@
         "Filter":{"shape":"Expression"},
         "Metrics":{"shape":"MetricNames"},
         "GroupBy":{"shape":"GroupDefinitions"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
     },
@@ -1707,6 +1721,7 @@
         "Filter":{"shape":"Expression"},
         "Metrics":{"shape":"MetricNames"},
         "GroupBy":{"shape":"GroupDefinitions"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
     },
@@ -1728,6 +1743,7 @@
         "CostCategoryName":{"shape":"CostCategoryName"},
         "Filter":{"shape":"Expression"},
         "SortBy":{"shape":"SortDefinitions"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "MaxResults":{"shape":"MaxResults"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
@@ -1758,6 +1774,7 @@
         "Metric":{"shape":"Metric"},
         "Granularity":{"shape":"Granularity"},
         "Filter":{"shape":"Expression"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "PredictionIntervalLevel":{"shape":"PredictionIntervalLevel"}
       }
     },
@@ -1781,6 +1798,7 @@
         "Context":{"shape":"Context"},
         "Filter":{"shape":"Expression"},
         "SortBy":{"shape":"SortDefinitions"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "MaxResults":{"shape":"MaxResults"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
@@ -2016,6 +2034,7 @@
         "TagKey":{"shape":"TagKey"},
         "Filter":{"shape":"Expression"},
         "SortBy":{"shape":"SortDefinitions"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "MaxResults":{"shape":"MaxResults"},
         "NextPageToken":{"shape":"NextPageToken"}
       }
@@ -2046,6 +2065,7 @@
         "Metric":{"shape":"Metric"},
         "Granularity":{"shape":"Granularity"},
         "Filter":{"shape":"Expression"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "PredictionIntervalLevel":{"shape":"PredictionIntervalLevel"}
       }
     },

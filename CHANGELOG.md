@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockDataAutomationRuntime` - Documentation update for Amazon Bedrock Data Automation Runtime
+* `Aws\Outposts` - Add CS8365C as a supported power connector for Outpost sites.
+* `Aws\DocDB` - Support AWS Secret Manager managed password for AWS DocumentDB instance-based cluster.
+* `Aws\Macie2` - This release adds support for identifying S3 general purpose buckets that exceed the Amazon Macie quota for preventative control monitoring.
+* `Aws\EKS` - This release expands the catalog of upgrade insight checks
+* `Aws\Connect` - This release supports adding NotAttributeCondition and Range to the RoutingCriteria object.
+* `Aws\SageMaker` - This release adds support for c6i, m6i and r6i instance on SageMaker Hyperpod and trn1 instances in batch
+* `Aws\BedrockAgent` - Support for custom user agent and max web pages crawled for web connector. Support app only credentials for SharePoint connector. Increase agents memory duration limit to 365 days. Support to specify max number of session summaries to include in agent invocation context.
+* `Aws\BedrockDataAutomation` - Documentation update for Amazon Bedrock Data Automation
+* `Aws\Billing` - Added new API's for defining and fetching Billing Views.
+* `Aws\CostExplorer` - Support for retrieving cost, usage, and forecast for billing view.
+* `Aws\BedrockAgentRuntime` - bedrock agents now supports long term memory and performance configs. Invokeflow supports performance configs. RetrieveAndGenerate performance configs
+
 ## 3.336.1 - 2024-12-19
 
 * `Aws\QConnect` - Amazon Q in Connect enables agents to ask Q for assistance in multiple languages and Q will provide answers and recommended step-by-step guides in those languages. Qs default language is English (United States) and you can switch this by setting the locale configuration on the AI Agent.

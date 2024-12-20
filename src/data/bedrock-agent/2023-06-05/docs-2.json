@@ -2515,6 +2515,12 @@
         "FlowValidationDetails$malformedNodeInputExpression": "<p>Details about a malformed input expression in a node.</p>"
       }
     },
+    "MaxRecentSessions": {
+      "base": null,
+      "refs": {
+        "SessionSummaryConfiguration$maxRecentSessions": "<p>Maximum number of recent session summaries to include in the agent's prompt context.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -3680,6 +3686,12 @@
       "refs": {
       }
     },
+    "SessionSummaryConfiguration": {
+      "base": "<p>Configuration for SESSION_SUMMARY memory type enabled for the agent.</p>",
+      "refs": {
+        "MemoryConfiguration$sessionSummaryConfiguration": "<p>Contains the configuration for SESSION_SUMMARY memory type enabled for the agent. </p>"
+      }
+    },
     "SessionTTL": {
       "base": null,
       "refs": {
@@ -4216,6 +4228,12 @@
         "WebSourceConfiguration$urlConfiguration": "<p>The configuration of the URL/URLs.</p>"
       }
     },
+    "UserAgent": {
+      "base": null,
+      "refs": {
+        "WebCrawlerConfiguration$userAgent": "<p>A string used for identifying the crawler or a bot when it accesses a web server. By default, this is set to <code>bedrockbot_UUID</code> for your crawler. You can optionally append a custom string to <code>bedrockbot_UUID</code> to allowlist a specific user agent permitted to access your source URLs. </p>"
+      }
+    },
     "ValidateFlowDefinitionRequest": {
       "base": null,
       "refs": {
@@ -4293,6 +4311,12 @@
       "base": "<p>The rate limits for the URLs that you want to crawl. You should be authorized to crawl the URLs.</p>",
       "refs": {
         "WebCrawlerConfiguration$crawlerLimits": "<p>The configuration of crawl limits for the web URLs.</p>"
+      }
+    },
+    "WebCrawlerLimitsMaxPagesInteger": {
+      "base": null,
+      "refs": {
+        "WebCrawlerLimits$maxPages": "<p> The max number of web pages crawled from your source URLs, up to 25,000 pages. If the web pages exceed this limit, the data source sync will fail and no web pages will be ingested. </p>"
       }
     },
     "WebCrawlerLimitsRateLimitInteger": {

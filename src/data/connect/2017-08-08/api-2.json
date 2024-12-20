@@ -5382,6 +5382,7 @@
         "Name":{"shape":"PredefinedAttributeName"},
         "Value":{"shape":"ProficiencyValue"},
         "ProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "Range":{"shape":"Range"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ComparisonOperator":{"shape":"ComparisonOperator"}
       }
@@ -9889,7 +9890,8 @@
       "members":{
         "AttributeCondition":{"shape":"AttributeCondition"},
         "AndExpression":{"shape":"Expressions"},
-        "OrExpression":{"shape":"Expressions"}
+        "OrExpression":{"shape":"Expressions"},
+        "NotAttributeCondition":{"shape":"AttributeCondition"}
       }
     },
     "Expressions":{
@@ -14333,6 +14335,13 @@
       "member":{"shape":"QuickConnectId"},
       "max":50,
       "min":1
+    },
+    "Range":{
+      "type":"structure",
+      "members":{
+        "MinProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "MaxProficiencyLevel":{"shape":"NullableProficiencyLevel"}
+      }
     },
     "ReadOnlyFieldInfo":{
       "type":"structure",

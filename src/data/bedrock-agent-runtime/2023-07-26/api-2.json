@@ -88,6 +88,7 @@
       "input":{"shape":"InvokeAgentRequest"},
       "output":{"shape":"InvokeAgentResponse"},
       "errors":[
+        {"shape":"ModelNotReadyException"},
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -512,6 +513,12 @@
       "min":1,
       "pattern":"^(arn:aws(-[^:]+)?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
     },
+    "BedrockModelConfigurations":{
+      "type":"structure",
+      "members":{
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
+      }
+    },
     "BedrockRerankingConfiguration":{
       "type":"structure",
       "required":["modelConfiguration"],
@@ -728,6 +735,11 @@
           "shape":"MemoryId",
           "location":"querystring",
           "locationName":"memoryId"
+        },
+        "sessionId":{
+          "shape":"SessionId",
+          "location":"querystring",
+          "locationName":"sessionId"
         }
       }
     },
@@ -793,6 +805,7 @@
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "inferenceConfig":{"shape":"InferenceConfig"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"},
         "promptTemplate":{"shape":"PromptTemplate"}
       }
     },
@@ -1244,6 +1257,7 @@
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "inferenceConfig":{"shape":"InferenceConfig"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"},
         "promptTemplate":{"shape":"PromptTemplate"}
       }
     },
@@ -1669,6 +1683,12 @@
       "event":true,
       "sensitive":true
     },
+    "InlineBedrockModelConfigurations":{
+      "type":"structure",
+      "members":{
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
+      }
+    },
     "InlineSessionState":{
       "type":"structure",
       "members":{
@@ -1793,6 +1813,7 @@
           "location":"uri",
           "locationName":"agentId"
         },
+        "bedrockModelConfigurations":{"shape":"BedrockModelConfigurations"},
         "enableTrace":{"shape":"Boolean"},
         "endSession":{"shape":"Boolean"},
         "inputText":{"shape":"InputText"},
@@ -1857,7 +1878,8 @@
           "location":"uri",
           "locationName":"flowIdentifier"
         },
-        "inputs":{"shape":"FlowInputs"}
+        "inputs":{"shape":"FlowInputs"},
+        "modelPerformanceConfiguration":{"shape":"ModelPerformanceConfiguration"}
       }
     },
     "InvokeFlowResponse":{
@@ -1877,6 +1899,7 @@
       ],
       "members":{
         "actionGroups":{"shape":"AgentActionGroups"},
+        "bedrockModelConfigurations":{"shape":"InlineBedrockModelConfigurations"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "enableTrace":{"shape":"Boolean"},
         "endSession":{"shape":"Boolean"},
@@ -2191,6 +2214,23 @@
       },
       "sensitive":true
     },
+    "ModelNotReadyException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"NonBlankString"}
+      },
+      "error":{
+        "httpStatusCode":424,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ModelPerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
+      }
+    },
     "Name":{
       "type":"string",
       "pattern":"^([0-9a-zA-Z][_-]?){1,100}$",
@@ -2303,6 +2343,7 @@
       "members":{
         "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
         "inferenceConfig":{"shape":"InferenceConfig"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"},
         "promptTemplate":{"shape":"PromptTemplate"},
         "queryTransformationConfiguration":{"shape":"QueryTransformationConfiguration"}
       }
@@ -2421,6 +2462,19 @@
         "TEXT",
         "RETURN_CONTROL"
       ]
+    },
+    "PerformanceConfigLatency":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "optimized"
+      ]
+    },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "latency":{"shape":"PerformanceConfigLatency"}
+      }
     },
     "PostProcessingModelInvocationOutput":{
       "type":"structure",
@@ -2815,6 +2869,7 @@
         "dependencyFailedException":{"shape":"DependencyFailedException"},
         "files":{"shape":"FilePart"},
         "internalServerException":{"shape":"InternalServerException"},
+        "modelNotReadyException":{"shape":"ModelNotReadyException"},
         "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
         "returnControl":{"shape":"ReturnControlPayload"},
         "serviceQuotaExceededException":{"shape":"ServiceQuotaExceededException"},
