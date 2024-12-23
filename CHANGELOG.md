@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.3 - 2024-12-23
 
 * `Aws\Glue` - Add IncludeRoot parameters to GetCatalogs API to return root catalog.
 * `Aws\ECR` - Documentation update for ECR GetAccountSetting and PutAccountSetting APIs.
