@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Add IncludeRoot parameters to GetCatalogs API to return root catalog.
+* `Aws\ECR` - Documentation update for ECR GetAccountSetting and PutAccountSetting APIs.
+* `Aws\ECRPublic` - Add support for Dualstack endpoints
+* `Aws\EKS` - This release adds support for DescribeClusterVersions API that provides important information about Kubernetes versions along with end of support dates
+
 ## 3.336.2 - 2024-12-20
 
 * `Aws\BedrockDataAutomationRuntime` - Documentation update for Amazon Bedrock Data Automation Runtime
