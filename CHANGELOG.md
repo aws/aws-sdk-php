@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.4 - 2024-12-26
 
 * `Aws\NetworkFirewall` - Dual-stack endpoints are now supported.
 * `Aws\BCMPricingCalculator` - Added ConflictException to DeleteBillEstimate.
