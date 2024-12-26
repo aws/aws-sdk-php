@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkFirewall` - Dual-stack endpoints are now supported.
+* `Aws\BCMPricingCalculator` - Added ConflictException to DeleteBillEstimate.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\ECR` - Add support for Dualstack Endpoints
+
 ## 3.336.3 - 2024-12-23
 
 * `Aws\Glue` - Add IncludeRoot parameters to GetCatalogs API to return root catalog.
