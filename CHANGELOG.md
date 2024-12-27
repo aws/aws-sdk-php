@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.5 - 2024-12-27
 
 * `Aws\RDS` - Updates Amazon RDS documentation to correct various descriptions.
 
