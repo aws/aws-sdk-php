@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Updates Amazon RDS documentation to correct various descriptions.
+
 ## 3.336.4 - 2024-12-26
 
 * `Aws\NetworkFirewall` - Dual-stack endpoints are now supported.
