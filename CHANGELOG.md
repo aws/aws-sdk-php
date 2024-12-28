@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - Restoring custom endpoint functionality for ECR
+* `Aws\ECRPublic` - Restoring custom endpoint functionality for ECR Public
+
 ## 3.336.5 - 2024-12-27
 
 * `Aws\RDS` - Updates Amazon RDS documentation to correct various descriptions.
