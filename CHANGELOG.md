@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.6 - 2024-12-28
 
 * `Aws\ECR` - Restoring custom endpoint functionality for ECR
 * `Aws\ECRPublic` - Restoring custom endpoint functionality for ECR Public
