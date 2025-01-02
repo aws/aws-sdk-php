@@ -5315,6 +5315,10 @@
         "UnregisteredSeiTimecode": {
           "shape": "H264UnregisteredSeiTimecode",
           "locationName": "unregisteredSeiTimecode"
+        },
+        "WriteMp4PackagingType": {
+          "shape": "H264WriteMp4PackagingType",
+          "locationName": "writeMp4PackagingType"
         }
       }
     },
@@ -5359,6 +5363,13 @@
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "H264WriteMp4PackagingType": {
+      "type": "string",
+      "enum": [
+        "AVC1",
+        "AVC3"
       ]
     },
     "H265AdaptiveQuantization": {
@@ -7143,7 +7154,7 @@
           "locationName": "contentReference"
         },
         "CredentialsSecretName": {
-          "shape": "__stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09",
+          "shape": "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09",
           "locationName": "credentialsSecretName"
         },
         "FileOffset": {
@@ -12525,11 +12536,11 @@
       "min": 1,
       "max": 20
     },
-    "__stringMin1Max2048PatternArnAwsAwsUsGovAwsCnSecretsmanagerUsGovApCaCnEuSaCentralNorthSouthEastWestDD12SecretAZAZ09": {
+    "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09": {
       "type": "string",
       "min": 1,
       "max": 2048,
-      "pattern": "^(arn:(aws|aws-us-gov|aws-cn):secretsmanager:(us(-gov)?|ap|ca|cn|eu|sa)-(central|(north|south)?(east|west)?)-\\d:\\d{12}:secret:)?[a-zA-Z0-9_\\/_+=.@-]*$"
+      "pattern": "^(arn:[a-z-]+:secretsmanager:[\\w-]+:\\d{12}:secret:)?[a-zA-Z0-9_\\/_+=.@-]*$"
     },
     "__stringMin1Max256": {
       "type": "string",

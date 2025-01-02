@@ -175,9 +175,21 @@
         "UpdateEncryption$Algorithm": "The type of algorithm that is used for the encryption (such as aes128, aes192, or aes256)."
       }
     },
+    "AudioMonitoringSetting": {
+      "base" : "Specifies the configuration for audio stream metrics monitoring.",
+      "refs" : {
+        "__listOfAudioMonitoringSetting$member" : null
+      }
+    },
     "BadRequestException": {
       "base": "Exception raised by AWS Elemental MediaConnect. See the error message and documentation for the operation for more information on the cause of this exception.",
       "refs": {}
+    },
+    "BlackFrames": {
+      "base" : "Configures settings for the BlackFrames metric.",
+      "refs" : {
+        "VideoMonitoringSetting$BlackFrames" : "Detects video frames that are black."
+      }
     },
     "Bridge": {
       "base": "A Bridge is the connection between your data center's Instances and the AWS cloud. A bridge can be used to send video from the AWS cloud to your data center or from your data center to the AWS cloud.",
@@ -255,6 +267,12 @@
       "base": null,
       "refs": {
         "GatewayInstance$ConnectionStatus": "The connection state of the instance."
+      }
+    },
+    "ContentQualityAnalysisState" : {
+      "base" : null,
+      "refs" : {
+        "MonitoringConfig$ContentQualityAnalysisState" : "Indicates whether content quality analysis is enabled or disabled."
       }
     },
     "CreateBridge420Exception": {
@@ -467,6 +485,12 @@
       "base": "The frame resolution used by the video stream.",
       "refs": {
         "TransportStream$FrameResolution": null
+      }
+    },
+    "FrozenFrames": {
+      "base" : "Configures settings for the FrozenFrames metric.",
+      "refs" : {
+        "VideoMonitoringSetting$FrozenFrames" : "Detects video frames that have not changed."
       }
     },
     "Gateway": {
@@ -880,6 +904,12 @@
         "__listOfSetSourceRequest$member": null
       }
     },
+    "SilentAudio" : {
+      "base" : "Configures settings for the SilentAudio metric.",
+      "refs" : {
+        "AudioMonitoringSetting$SilentAudio" : "Detects periods of silence."
+      }
+    },
     "Source": {
       "base": "The settings for the source of the flow.",
       "refs": {
@@ -909,7 +939,10 @@
       "base": null,
       "refs": {
         "FailoverConfig$State": null,
-        "UpdateFailoverConfig$State": null
+        "UpdateFailoverConfig$State": null,
+        "BlackFrames$State" : "Indicates whether the BlackFrames metric is enabled or disabled.",
+        "FrozenFrames$State" : "Indicates whether the FrozenFrames metric is enabled or disabled.",
+        "SilentAudio$State" : "Indicates whether the SilentAudio metric is enabled or disabled."
       }
     },
     "Status": {
@@ -1115,6 +1148,12 @@
         "UpdateFlowRequest$Maintenance": null
       }
     },
+    "VideoMonitoringSetting" : {
+      "base" : "Specifies the configuration for video stream metrics monitoring.",
+      "refs" : {
+        "__listOfVideoMonitoringSetting$member" : null
+      }
+    },
     "VpcInterface": {
       "base": "The settings for a VPC Source.",
       "refs": {
@@ -1168,6 +1207,7 @@
         "AddOutputRequest$Port": "The port to use when content is distributed to this output.",
         "AddOutputRequest$SenderControlPort": "The port that the flow uses to send outbound requests to initiate connection with the sender.",
         "AddOutputRequest$SmoothingLatency": "The smoothing latency in milliseconds for RIST, RTP, and RTP-FEC streams.",
+        "BlackFrames$ThresholdSeconds" : "Specifies the number of consecutive seconds of black frames that triggers an event or alert.",
         "BridgeNetworkOutput$Port": "The network output port.",
         "BridgeNetworkOutput$Ttl": "The network output TTL.",
         "BridgeNetworkSource$Port": "The network source port.",
@@ -1178,6 +1218,7 @@
         "FailoverConfig$RecoveryWindow": "Search window time to look for dash-7 packets",
         "FrameResolution$FrameHeight": "The number of pixels in the height of the video frame.",
         "FrameResolution$FrameWidth": "The number of pixels in the width of the video frame.",
+        "FrozenFrames$ThresholdSeconds" : "Specifies the number of consecutive seconds of a static image that triggers an event or alert.",
         "GatewayInstance$RunningBridgeCount": "The running bridge count.",
         "GrantEntitlementRequest$DataTransferSubscriberFeePercent": "Percentage from 0-100 of the data transfer cost to be billed to the subscriber.",
         "IngressGatewayBridge$MaxBitrate" : "The maximum expected bitrate (in bps) of the ingress bridge.",
@@ -1200,6 +1241,7 @@
         "SetSourceRequest$MinLatency": "The minimum latency in milliseconds for SRT-based streams. In streams that use the SRT protocol, this value that you set on your MediaConnect source or output represents the minimal potential latency of that connection. The latency of the stream is set to the highest number between the sender\u2019s minimum latency and the receiver\u2019s minimum latency.",
         "SetSourceRequest$SenderControlPort": "The port that the flow uses to send outbound requests to initiate connection with the sender.",
         "SetSourceRequest$SourceListenerPort": "Source port for SRT-caller protocol.",
+        "SilentAudio$ThresholdSeconds" : "Specifies the number of consecutive seconds of silence that triggers an event or alert.",
         "Source$DataTransferSubscriberFeePercent": "Percentage from 0-100 of the data transfer cost to be billed to the subscriber.",
         "Source$IngestPort": "The port that the flow will be listening on for incoming content.",
         "Source$SenderControlPort": "The port that the flow uses to send outbound requests to initiate connection with the sender.",
@@ -1266,6 +1308,12 @@
       "refs": {
         "AddFlowOutputsRequest$Outputs": "A list of outputs that you want to add.",
         "CreateFlowRequest$Outputs": "The outputs that you want to add to this flow."
+      }
+    },
+    "__listOfAudioMonitoringSetting" : {
+      "base" : null,
+      "refs" : {
+        "MonitoringConfig$AudioMonitoringSettings" : "Contains the settings for audio stream metrics monitoring."
       }
     },
     "__listOfBridgeOutput": {
@@ -1443,6 +1491,12 @@
       "base": null,
       "refs": {
         "TransportMediaInfo$Programs": "The list of transport stream programs in the current flow's source."
+      }
+    },
+    "__listOfVideoMonitoringSetting" : {
+      "base" : null,
+      "refs" : {
+        "MonitoringConfig$VideoMonitoringSettings" : "Contains the settings for video stream metrics monitoring."
       }
     },
     "__listOfVpcInterface": {

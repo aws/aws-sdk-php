@@ -1602,6 +1602,23 @@
         {"shape":"UnsupportedRegionException"}
       ]
     },
+    "TerminateGameSession":{
+      "name":"TerminateGameSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TerminateGameSessionInput"},
+      "output":{"shape":"TerminateGameSessionOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidGameSessionStatusException"},
+        {"shape":"NotReadyException"}
+      ]
+    },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
@@ -4594,7 +4611,11 @@
     },
     "GameSessionStatusReason":{
       "type":"string",
-      "enum":["INTERRUPTED"]
+      "enum":[
+        "INTERRUPTED",
+        "TRIGGERED_ON_PROCESS_TERMINATE",
+        "FORCE_TERMINATED"
+      ]
     },
     "GetComputeAccessInput":{
       "type":"structure",
@@ -6244,6 +6265,30 @@
         "Message":{"shape":"NonEmptyString"}
       },
       "exception":true
+    },
+    "TerminateGameSessionInput":{
+      "type":"structure",
+      "required":[
+        "GameSessionId",
+        "TerminationMode"
+      ],
+      "members":{
+        "GameSessionId":{"shape":"ArnStringModel"},
+        "TerminationMode":{"shape":"TerminationMode"}
+      }
+    },
+    "TerminateGameSessionOutput":{
+      "type":"structure",
+      "members":{
+        "GameSession":{"shape":"GameSession"}
+      }
+    },
+    "TerminationMode":{
+      "type":"string",
+      "enum":[
+        "TRIGGER_ON_PROCESS_TERMINATE",
+        "FORCE_TERMINATE"
+      ]
     },
     "Timestamp":{"type":"timestamp"},
     "UnauthorizedException":{

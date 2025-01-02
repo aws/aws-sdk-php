@@ -2258,6 +2258,15 @@
         "aes256"
       ]
     },
+    "AudioMonitoringSetting": {
+      "type": "structure",
+      "members": {
+        "SilentAudio": {
+          "shape": "SilentAudio",
+          "locationName": "silentAudio"
+        }
+      }
+    },
     "BadRequestException": {
       "type": "structure",
       "members": {
@@ -2272,6 +2281,19 @@
       "exception": true,
       "error": {
         "httpStatusCode": 400
+      }
+    },
+    "BlackFrames": {
+      "type": "structure",
+      "members": {
+        "State": {
+          "shape": "State",
+          "locationName": "state"
+        },
+        "ThresholdSeconds": {
+          "shape": "__integer",
+          "locationName": "thresholdSeconds"
+        }
       }
     },
     "Bridge": {
@@ -2528,6 +2550,13 @@
       "enum": [
         "CONNECTED",
         "DISCONNECTED"
+      ]
+    },
+    "ContentQualityAnalysisState": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
       ]
     },
     "CreateBridge420Exception": {
@@ -3436,6 +3465,19 @@
         "FrameWidth",
         "FrameHeight"
       ]
+    },
+    "FrozenFrames": {
+      "type": "structure",
+      "members": {
+        "State": {
+          "shape": "State",
+          "locationName": "state"
+        },
+        "ThresholdSeconds": {
+          "shape": "__integer",
+          "locationName": "thresholdSeconds"
+        }
+      }
     },
     "Gateway": {
       "type": "structure",
@@ -4380,6 +4422,18 @@
         "ThumbnailState": {
           "shape": "ThumbnailState",
           "locationName": "thumbnailState"
+        },
+        "AudioMonitoringSettings": {
+          "shape": "__listOfAudioMonitoringSetting",
+          "locationName": "audioMonitoringSettings"
+        },
+        "ContentQualityAnalysisState": {
+          "shape": "ContentQualityAnalysisState",
+          "locationName": "contentQualityAnalysisState"
+        },
+        "VideoMonitoringSettings": {
+          "shape": "__listOfVideoMonitoringSetting",
+          "locationName": "videoMonitoringSettings"
         }
       }
     },
@@ -5077,6 +5131,19 @@
         "GatewayBridgeSource": {
           "shape": "SetGatewayBridgeSourceRequest",
           "locationName": "gatewayBridgeSource"
+        }
+      }
+    },
+    "SilentAudio": {
+      "type": "structure",
+      "members": {
+        "State": {
+          "shape": "State",
+          "locationName": "state"
+        },
+        "ThresholdSeconds": {
+          "shape": "__integer",
+          "locationName": "thresholdSeconds"
         }
       }
     },
@@ -6183,6 +6250,19 @@
         }
       }
     },
+    "VideoMonitoringSetting": {
+      "type": "structure",
+      "members": {
+        "BlackFrames": {
+          "shape": "BlackFrames",
+          "locationName": "blackFrames"
+        },
+        "FrozenFrames": {
+          "shape": "FrozenFrames",
+          "locationName": "frozenFrames"
+        }
+      }
+    },
     "VpcInterface": {
       "type": "structure",
       "members": {
@@ -6291,6 +6371,12 @@
       "type": "list",
       "member": {
         "shape": "AddOutputRequest"
+      }
+    },
+    "__listOfAudioMonitoringSetting": {
+      "type": "list",
+      "member": {
+        "shape": "AudioMonitoringSetting"
       }
     },
     "__listOfBridgeOutput": {
@@ -6453,6 +6539,12 @@
       "type": "list",
       "member": {
         "shape": "TransportStreamProgram"
+      }
+    },
+    "__listOfVideoMonitoringSetting": {
+      "type": "list",
+      "member": {
+        "shape": "VideoMonitoringSetting"
       }
     },
     "__listOfVpcInterface": {

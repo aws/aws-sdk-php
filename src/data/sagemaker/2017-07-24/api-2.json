@@ -4189,7 +4189,8 @@
       "members":{
         "S3DataType":{"shape":"AdditionalS3DataSourceDataType"},
         "S3Uri":{"shape":"S3Uri"},
-        "CompressionType":{"shape":"CompressionType"}
+        "CompressionType":{"shape":"CompressionType"},
+        "ETag":{"shape":"String"}
       }
     },
     "AdditionalS3DataSourceDataType":{
@@ -18332,7 +18333,8 @@
         "Framework":{"shape":"String"},
         "FrameworkVersion":{"shape":"ModelPackageFrameworkVersion"},
         "NearestModelName":{"shape":"String"},
-        "AdditionalS3DataSource":{"shape":"AdditionalS3DataSource"}
+        "AdditionalS3DataSource":{"shape":"AdditionalS3DataSource"},
+        "ModelDataETag":{"shape":"String"}
       }
     },
     "ModelPackageContainerDefinitionList":{
@@ -22172,7 +22174,9 @@
         "CompressionType":{"shape":"ModelCompressionType"},
         "ModelAccessConfig":{"shape":"ModelAccessConfig"},
         "HubAccessConfig":{"shape":"InferenceHubAccessConfig"},
-        "ManifestS3Uri":{"shape":"S3ModelUri"}
+        "ManifestS3Uri":{"shape":"S3ModelUri"},
+        "ETag":{"shape":"String"},
+        "ManifestEtag":{"shape":"String"}
       }
     },
     "S3ModelDataType":{
@@ -22800,6 +22804,7 @@
       "members":{
         "ModelDataUrl":{"shape":"Url"},
         "ModelDataSource":{"shape":"ModelDataSource"},
+        "ModelDataETag":{"shape":"String"},
         "AlgorithmName":{"shape":"ArnOrName"}
       }
     },

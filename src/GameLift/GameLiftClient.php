@@ -208,6 +208,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise suspendGameServerGroupAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result terminateGameSession(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise terminateGameSessionAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateAlias(array $args = [])
