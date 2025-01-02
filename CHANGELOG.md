@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.7 - 2025-01-02
 
 * `Aws\GameLift` - Amazon GameLift releases a new game session shutdown feature. Use the Amazon GameLift console or AWS CLI to terminate an in-progress game session that's entered a bad state or is no longer needed.
 * `Aws\SageMaker` - Adding ETag information with Model Artifacts for Model Registry
