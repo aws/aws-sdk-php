@@ -4,6 +4,7 @@ namespace Aws;
 
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\CredentialSources;
+use GuzzleHttp\Psr7\Uri;
 
 /**
  * A placeholder for gathering metrics in a request.
@@ -136,7 +137,9 @@ final class MetricsBuilder
             'signature' => 'appendSignatureMetric',
             'request_compression' => 'appendRequestCompressionMetric',
             'request_checksum' => 'appendRequestChecksumMetric',
-            'credentials' => 'appendCredentialsMetric'
+            'credentials' => 'appendCredentialsMetric',
+            'account_id_endpoint_mode' => 'appendAccountIdEndpointMode',
+            'account_id_endpoint' => 'appendAccountIdEndpoint',
         ];
 
         $fn = $appendMetricFns[$featureGroup];
@@ -241,6 +244,47 @@ final class MetricsBuilder
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);
+        }
+    }
+
+    /**
+     * Appends the account_id_endpoint_mode metrics based on
+     * the value resolved.
+     *
+     * @param string $accountIdEndpointMode
+     *
+     * @return void
+     */
+    private function appendAccountIdEndpointMode(
+        string $accountIdEndpointMode
+    ): void
+    {
+        if (empty($accountIdEndpointMode)) {
+            return;
+        }
+
+        if ($accountIdEndpointMode === 'preferred') {
+            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED);
+        } elseif ($accountIdEndpointMode === 'disabled') {
+            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_DISABLED);
+        } elseif ($accountIdEndpointMode === 'required') {
+            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED);
+        }
+    }
+
+    /**
+     * Appends the account_id_endpoint metric whenever a resolved endpoint
+     * matches an account_id endpoint pattern which also defined here.
+     *
+     * @param string $endpoint
+     *
+     * @return void
+     */
+    private function appendAccountIdEndpoint(string $endpoint): void
+    {
+        static $pattern = "/(https|http):\\/\\/\\d{12}\\.ddb/";
+        if (preg_match($pattern, $endpoint)) {
+            $this->append(MetricsBuilder::ACCOUNT_ID_ENDPOINT);
         }
     }
 

@@ -99,10 +99,27 @@ class EndpointV2Middleware
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $providerArgs = $this->resolveArgs($commandArgs, $operation);
+
+        // Resolved AccountId Metric
         if (!empty($providerArgs[self::ACCOUNT_ID_PARAM])) {
             $command->getMetricsBuilder()->append(MetricsBuilder::RESOLVED_ACCOUNT_ID);
         }
+        // AccountIdMode Metric
+        if(!empty($providerArgs[self::ACCOUNT_ID_ENDPOINT_MODE_PARAM])) {
+            $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                'account_id_endpoint_mode',
+                $providerArgs[self::ACCOUNT_ID_ENDPOINT_MODE_PARAM]
+            );
+        }
+
         $endpoint = $this->endpointProvider->resolveEndpoint($providerArgs);
+
+        // AccountId Endpoint Metric
+        $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+            'account_id_endpoint',
+            $endpoint->getUrl()
+        );
+
         if (!empty($authSchemes = $endpoint->getProperty('authSchemes'))) {
             $this->applyAuthScheme(
                 $authSchemes,
