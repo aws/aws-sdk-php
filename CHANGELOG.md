@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.8 - 2025-01-03
 
 * `Aws\ECS` - Adding SDK reference examples for Amazon ECS operations.
 * `Aws\S3` - This change is only for updating the model regexp of CopySource which is not for validation but only for documentation and user guide change.
