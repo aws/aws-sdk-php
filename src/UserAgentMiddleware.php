@@ -30,7 +30,6 @@ class UserAgentMiddleware
 
     static $metricsFnList = [
         'appendEndpointMetric',
-        'appendAccountIdModeMetric',
         'appendRetryConfigMetric',
     ];
 
@@ -278,26 +277,6 @@ class UserAgentMiddleware
     {
         if (!empty($this->args['endpoint_override'])) {
             $this->metricsBuilder->append(MetricsBuilder::ENDPOINT_OVERRIDE);
-        }
-    }
-
-    /**
-     * Appends the account id endpoint mode metric into the metrics builder,
-     * based on the account id endpoint mode provide as client argument.
-     */
-    private function appendAccountIdModeMetric(): void
-    {
-        $accountIdMode = $this->args['account_id_endpoint_mode'] ?? null;
-        if ($accountIdMode === null) {
-            return;
-        }
-
-        if ($accountIdMode === 'preferred') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED);
-        } elseif ($accountIdMode === 'disabled') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_DISABLED);
-        } elseif ($accountIdMode === 'required') {
-            $this->metricsBuilder->append(MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED);
         }
     }
 
