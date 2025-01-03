@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Adding SDK reference examples for Amazon ECS operations.
+* `Aws\S3` - This change is only for updating the model regexp of CopySource which is not for validation but only for documentation and user guide change.
+* `Aws\Route53Domains` - Doc only update for Route 53 Domains that fixes several customer-reported issues
+
 ## 3.336.7 - 2025-01-02
 
 * `Aws\GameLift` - Amazon GameLift releases a new game session shutdown feature. Use the Amazon GameLift console or AWS CLI to terminate an in-progress game session that's entered a bad state or is no longer needed.
