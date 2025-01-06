@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SupplyChain` - Allow vanity DNS domain when creating a new ASC instance
+* `Aws\IoTSecureTunneling` - Adds dualstack endpoint support for IoT Secure Tunneling
+
 ## 3.336.8 - 2025-01-03
 
 * `Aws\ECS` - Adding SDK reference examples for Amazon ECS operations.
