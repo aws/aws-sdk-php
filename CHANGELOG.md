@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.10 - 2025-01-07
 
 * `Aws\DynamoDB` - This release makes Amazon DynamoDB point-in-time-recovery (PITR) to be configurable. You can set PITR recovery period for each table individually to between 1 and 35 days.
 * `Aws\CloudHSMV2` - Adds support to ModifyCluster for modifying a Cluster's Hsm Type.
