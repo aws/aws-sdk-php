@@ -718,6 +718,20 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "ImportDiskImage":{
+      "name":"ImportDiskImage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/ImportDiskImage"
+      },
+      "input":{"shape":"ImportDiskImageRequest"},
+      "output":{"shape":"ImportDiskImageResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ImportVmImage":{
       "name":"ImportVmImage",
       "http":{
@@ -1434,7 +1448,8 @@
       "enum":[
         "USER_INITIATED",
         "SCHEDULED",
-        "IMPORT"
+        "IMPORT",
+        "IMPORT_ISO"
       ]
     },
     "CallRateLimitExceededException":{
@@ -3139,6 +3154,40 @@
         "requestId":{"shape":"NonEmptyString"},
         "clientToken":{"shape":"ClientToken"},
         "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
+      }
+    },
+    "ImportDiskImageRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "semanticVersion",
+        "platform",
+        "osVersion",
+        "infrastructureConfigurationArn",
+        "uri",
+        "clientToken"
+      ],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "semanticVersion":{"shape":"VersionNumber"},
+        "description":{"shape":"NonEmptyString"},
+        "platform":{"shape":"NonEmptyString"},
+        "osVersion":{"shape":"OsVersion"},
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
+        "uri":{"shape":"Uri"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ImportDiskImageResponse":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"}
       }
     },
     "ImportVmImageRequest":{

@@ -81,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getWorkflowStepExecutionAsync(array $args = [])
  * @method \Aws\Result importComponent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importComponentAsync(array $args = [])
+ * @method \Aws\Result importDiskImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise importDiskImageAsync(array $args = [])
  * @method \Aws\Result importVmImage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importVmImageAsync(array $args = [])
  * @method \Aws\Result listComponentBuildVersions(array $args = [])

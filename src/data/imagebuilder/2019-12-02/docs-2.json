@@ -40,6 +40,7 @@
     "GetWorkflowExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow.</p>",
     "GetWorkflowStepExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow step.</p>",
     "ImportComponent": "<p>Imports a component and transforms its data into a component document.</p>",
+    "ImportDiskImage": "<p>Import a Windows operating system image from a verified Microsoft ISO disk file. The following disk images are supported:</p> <ul> <li> <p>Windows 11 Enterprise</p> </li> </ul>",
     "ImportVmImage": "<p>When you export your virtual machine (VM) from its virtualization environment, that process creates a set of one or more disk container files that act as snapshots of your VM’s environment, settings, and data. The Amazon EC2 API <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ImportImage.html\">ImportImage</a> action uses those files to import your VM and create an AMI. To import using the CLI command, see <a href=\"https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html\">import-image</a> </p> <p>You can reference the task ID from the VM import to pull in the AMI that the import created as the base image for your Image Builder recipe.</p>",
     "ListComponentBuildVersions": "<p>Returns the list of component build versions for the specified component version Amazon Resource Name (ARN).</p>",
     "ListComponents": "<p>Returns the list of components that can be filtered by name, or by using the listed <code>filters</code> to streamline results. Newly created components can take up to two minutes to appear in the ListComponents API Results.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
@@ -165,9 +166,9 @@
     "BuildType": {
       "base": null,
       "refs": {
-        "Image$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>",
-        "ImageSummary$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>",
-        "ImageVersion$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>"
+        "Image$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>",
+        "ImageSummary$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>",
+        "ImageVersion$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>"
       }
     },
     "CallRateLimitExceededException": {
@@ -226,6 +227,8 @@
         "CreateWorkflowResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportComponentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportComponentResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
+        "ImportDiskImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
+        "ImportDiskImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportVmImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportVmImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "SendWorkflowStepActionRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
@@ -1160,6 +1163,7 @@
         "GetWorkflowStepExecutionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image resource build version that the specified runtime instance of the workflow step creates.</p>",
         "ImageAggregation$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) that identifies the image for this aggregation.</p>",
         "ImageScanFinding$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image build version that's associated with the finding.</p>",
+        "ImportDiskImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the output AMI that was created from the ISO disk file.</p>",
         "ListImagePackagesRequest$imageBuildVersionArn": "<p>Filter results for the ListImagePackages request by the Image Build Version ARN</p>",
         "ListWorkflowExecutionsRequest$imageBuildVersionArn": "<p>List all workflow runtime instances for the specified image build version resource ARN.</p>",
         "ListWorkflowExecutionsResponse$imageBuildVersionArn": "<p>The resource ARN of the image build version for which you requested a list of workflow runtime details.</p>",
@@ -1392,7 +1396,7 @@
     "ImageTestsTimeoutMinutes": {
       "base": null,
       "refs": {
-        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeout attribute is not currently active. This value is ignored.</p> </note>"
+        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeout property is not currently active. This value is ignored.</p> </note>"
       }
     },
     "ImageType": {
@@ -1438,6 +1442,16 @@
       "refs": {
       }
     },
+    "ImportDiskImageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ImportDiskImageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ImportVmImageRequest": {
       "base": null,
       "refs": {
@@ -1464,6 +1478,7 @@
         "DeleteInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration to delete.</p>",
         "DeleteInfrastructureConfigurationResponse$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that was deleted.</p>",
         "GetInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that you want to retrieve.</p>",
+        "ImportDiskImageRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration resource that's used for launching the EC2 instance on which the ISO image is built.</p>",
         "UpdateImagePipelineRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that Image Builder uses to build images that this image pipeline has updated.</p>",
         "UpdateInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that you want to update.</p>",
         "UpdateInfrastructureConfigurationResponse$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that was updated by this request.</p>"
@@ -2248,6 +2263,9 @@
         "ImportComponentRequest$data": "<p>The data of the component. Used to specify the data inline. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>",
         "ImportComponentRequest$kmsKeyId": "<p>The ID of the KMS key that should be used to encrypt this component.</p>",
         "ImportComponentResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
+        "ImportDiskImageRequest$name": "<p>The name of the image resource that's created from the import.</p>",
+        "ImportDiskImageRequest$description": "<p>The description for your disk image import.</p>",
+        "ImportDiskImageRequest$platform": "<p>The operating system platform for the imported image. Allowed values include the following: <code>Windows</code>.</p>",
         "ImportVmImageRequest$name": "<p>The name of the base image that is created by the import process.</p>",
         "ImportVmImageRequest$description": "<p>The description for the base image that is created by the import process.</p>",
         "ImportVmImageRequest$vmImportTaskId": "<p>The <code>importTaskId</code> (API) or <code>ImportTaskId</code> (CLI) from the Amazon EC2 VM import process. Image Builder retrieves information from the import process to pull in the AMI that is created from the VM source as the base image for your recipe.</p>",
@@ -2413,6 +2431,7 @@
         "Image$osVersion": "<p>The operating system version for instances that launch from this image. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
         "ImageSummary$osVersion": "<p>The operating system version of the instances that launch from this image. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
         "ImageVersion$osVersion": "<p>The operating system version of the Amazon EC2 build instance. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
+        "ImportDiskImageRequest$osVersion": "<p>The operating system version for the imported image. Allowed values include the following: <code>Microsoft Windows 11</code>.</p>",
         "ImportVmImageRequest$osVersion": "<p>The operating system version for the imported VM.</p>",
         "OsVersionList$member": null
       }
@@ -2517,7 +2536,7 @@
     "PipelineExecutionStartCondition": {
       "base": null,
       "refs": {
-        "Schedule$pipelineExecutionStartCondition": "<p>The condition configures when the pipeline should trigger a new image build. When the <code>pipelineExecutionStartCondition</code> is set to <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code>, and you use semantic version filters on the base image or components in your image recipe, EC2 Image Builder will build a new image only when there are new versions of the image or components in your recipe that match the semantic version filter. When it is set to <code>EXPRESSION_MATCH_ONLY</code>, it will build a new image every time the CRON expression matches the current time. For semantic version syntax, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_CreateComponent.html\">CreateComponent</a> in the <i> EC2 Image Builder API Reference</i>.</p>"
+        "Schedule$pipelineExecutionStartCondition": "<p>The start condition configures when the pipeline should trigger a new image build, as follows. If no value is set Image Builder defaults to <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code>.</p> <ul> <li> <p> <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code> (default) – When you use semantic version filters on the base image or components in your image recipe, EC2 Image Builder builds a new image only when there are new versions of the base image or components in your recipe that match the filter.</p> <note> <p>For semantic version syntax, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_CreateComponent.html\">CreateComponent</a>.</p> </note> </li> <li> <p> <code>EXPRESSION_MATCH_ONLY</code> – This condition builds a new image every time the CRON expression matches the current time.</p> </li> </ul>"
       }
     },
     "PipelineStatus": {
@@ -2775,6 +2794,7 @@
         "CreateLifecyclePolicyRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to run lifecycle actions.</p>",
         "Image$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "ImagePipeline$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
+        "ImportDiskImageRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions to import an image from a Microsoft ISO file.</p>",
         "LifecyclePolicy$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that Image Builder uses to run the lifecycle policy. This is a custom role that you create.</p>",
         "LifecyclePolicySummary$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that Image Builder uses to run the lifecycle policy.</p>",
         "StartResourceStateUpdateRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that’s used to update image state.</p>",
@@ -2942,6 +2962,7 @@
         "ImageRecipeSummary$tags": "<p>The tags of the image recipe.</p>",
         "ImageSummary$tags": "<p>The tags that apply to this image.</p>",
         "ImportComponentRequest$tags": "<p>The tags of the component.</p>",
+        "ImportDiskImageRequest$tags": "<p>Tags that are attached to image resources created from the import.</p>",
         "ImportVmImageRequest$tags": "<p>Tags that are attached to the import resources.</p>",
         "InfrastructureConfiguration$tags": "<p>The tags of the infrastructure configuration.</p>",
         "InfrastructureConfigurationSummary$tags": "<p>The tags of the infrastructure configuration.</p>",
@@ -3055,7 +3076,8 @@
         "CreateComponentRequest$uri": "<p>The <code>uri</code> of a YAML component document file. This must be an S3 URL (<code>s3://bucket/key</code>), and the requester must have permission to access the S3 bucket it points to. If you use Amazon S3, you can specify component content up to your service quota.</p> <p>Alternatively, you can specify the YAML document inline, using the component <code>data</code> property. You cannot specify both properties.</p>",
         "CreateContainerRecipeRequest$dockerfileTemplateUri": "<p>The Amazon S3 URI for the Dockerfile that will be used to build your container image.</p>",
         "CreateWorkflowRequest$uri": "<p>The <code>uri</code> of a YAML component document file. This must be an S3 URL (<code>s3://bucket/key</code>), and the requester must have permission to access the S3 bucket it points to. If you use Amazon S3, you can specify component content up to your service quota.</p> <p>Alternatively, you can specify the YAML document inline, using the component <code>data</code> property. You cannot specify both properties.</p>",
-        "ImportComponentRequest$uri": "<p>The uri of the component. Must be an Amazon S3 URL and the requester must have permission to access the Amazon S3 bucket. If you use Amazon S3, you can specify component content up to your service quota. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>"
+        "ImportComponentRequest$uri": "<p>The uri of the component. Must be an Amazon S3 URL and the requester must have permission to access the Amazon S3 bucket. If you use Amazon S3, you can specify component content up to your service quota. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>",
+        "ImportDiskImageRequest$uri": "<p>The <code>uri</code> of the ISO disk file that's stored in Amazon S3.</p>"
       }
     },
     "UserDataOverride": {
@@ -3080,6 +3102,7 @@
         "ImageSummary$version": "<p>The version of the image.</p>",
         "ImageVersion$version": "<p>Details for a specific version of an Image Builder image. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
         "ImportComponentRequest$semanticVersion": "<p>The semantic version of the component. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
+        "ImportDiskImageRequest$semanticVersion": "<p>The semantic version to attach to the image that's created during the import process. This version follows the semantic version syntax.</p>",
         "ImportVmImageRequest$semanticVersion": "<p>The semantic version to attach to the base image that was created during the import process. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "LifecyclePolicyResourceSelectionRecipe$semanticVersion": "<p>The version of the Image Builder recipe specified by the <code>name</code> field.</p>",
         "Workflow$version": "<p>The workflow resource version. Workflow resources are immutable. To make a change, you can clone a workflow or create a new version.</p>",

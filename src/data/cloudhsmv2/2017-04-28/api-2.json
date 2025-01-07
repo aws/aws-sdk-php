@@ -460,6 +460,7 @@
         "CreateTimestamp":{"shape":"Timestamp"},
         "Hsms":{"shape":"Hsms"},
         "HsmType":{"shape":"HsmType"},
+        "HsmTypeRollbackExpiration":{"shape":"Timestamp"},
         "PreCoPassword":{"shape":"PreCoPassword"},
         "SecurityGroup":{"shape":"SecurityGroup"},
         "SourceBackupId":{"shape":"BackupId"},
@@ -709,6 +710,7 @@
         "EniIp":{"shape":"IpAddress"},
         "EniIpV6":{"shape":"IpV6Address"},
         "HsmId":{"shape":"HsmId"},
+        "HsmType":{"shape":"HsmType"},
         "State":{"shape":"HsmState"},
         "StateMessage":{"shape":"String"}
       }
@@ -805,11 +807,9 @@
     },
     "ModifyClusterRequest":{
       "type":"structure",
-      "required":[
-        "BackupRetentionPolicy",
-        "ClusterId"
-      ],
+      "required":["ClusterId"],
       "members":{
+        "HsmType":{"shape":"HsmType"},
         "BackupRetentionPolicy":{"shape":"BackupRetentionPolicy"},
         "ClusterId":{"shape":"ClusterId"}
       }
