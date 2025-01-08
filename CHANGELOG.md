@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.11 - 2025-01-08
 
 * `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Thailand) Region (ap-southeast-7) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
 * `Aws\RDS` - Updates Amazon RDS documentation to clarify the RestoreDBClusterToPointInTime description.
