@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Thailand) Region (ap-southeast-7) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
+* `Aws\RDS` - Updates Amazon RDS documentation to clarify the RestoreDBClusterToPointInTime description.
+* `Aws\SageMaker` - Adds support for IPv6 for SageMaker HyperPod cluster nodes.
+
 ## 3.336.10 - 2025-01-07
 
 * `Aws\DynamoDB` - This release makes Amazon DynamoDB point-in-time-recovery (PITR) to be configurable. You can set PITR recovery period for each table individually to between 1 and 35 days.
