@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.12 - 2025-01-09
 
 * `Aws\ComputeOptimizer` - This release expands AWS Compute Optimizer rightsizing recommendation support for Amazon EC2 Auto Scaling groups to include those with scaling policies and multiple instance types.
 * `Aws\CodeBuild` - AWS CodeBuild Now Supports BuildBatch in Reserved Capacity and Lambda
