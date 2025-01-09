@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComputeOptimizer` - This release expands AWS Compute Optimizer rightsizing recommendation support for Amazon EC2 Auto Scaling groups to include those with scaling policies and multiple instance types.
+* `Aws\CodeBuild` - AWS CodeBuild Now Supports BuildBatch in Reserved Capacity and Lambda
+* `Aws\FMS` - AWS Firewall Manager now lets you combine multiple resource tags using the logical AND operator or the logical OR operator.
+
 ## 3.336.11 - 2025-01-08
 
 * `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Thailand) Region (ap-southeast-7) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region

@@ -569,6 +569,20 @@
       "member":{"shape":"AccountId"}
     },
     "AllocatedStorage":{"type":"integer"},
+    "AllocationStrategy":{
+      "type":"string",
+      "enum":[
+        "Prioritized",
+        "LowestPrice"
+      ]
+    },
+    "AsgType":{
+      "type":"string",
+      "enum":[
+        "SingleInstanceType",
+        "MixedInstanceTypes"
+      ]
+    },
     "AutoScalingConfiguration":{
       "type":"string",
       "enum":[
@@ -587,7 +601,11 @@
         "desiredCapacity":{"shape":"DesiredCapacity"},
         "minSize":{"shape":"MinSize"},
         "maxSize":{"shape":"MaxSize"},
-        "instanceType":{"shape":"InstanceType"}
+        "instanceType":{"shape":"NullableInstanceType"},
+        "allocationStrategy":{"shape":"AllocationStrategy"},
+        "estimatedInstanceHourReductionPercentage":{"shape":"NullableEstimatedInstanceHourReductionPercentage"},
+        "type":{"shape":"AsgType"},
+        "mixedInstanceTypes":{"shape":"MixedInstanceTypes"}
       }
     },
     "AutoScalingGroupEstimatedMonthlySavings":{
@@ -1300,6 +1318,9 @@
         "CurrentConfigurationDesiredCapacity",
         "CurrentConfigurationMinSize",
         "CurrentConfigurationMaxSize",
+        "CurrentConfigurationAllocationStrategy",
+        "CurrentConfigurationMixedInstanceTypes",
+        "CurrentConfigurationType",
         "CurrentOnDemandPrice",
         "CurrentStandardOneYearNoUpfrontReservedPrice",
         "CurrentStandardThreeYearNoUpfrontReservedPrice",
@@ -1311,6 +1332,10 @@
         "RecommendationOptionsConfigurationDesiredCapacity",
         "RecommendationOptionsConfigurationMinSize",
         "RecommendationOptionsConfigurationMaxSize",
+        "RecommendationOptionsConfigurationEstimatedInstanceHourReductionPercentage",
+        "RecommendationOptionsConfigurationAllocationStrategy",
+        "RecommendationOptionsConfigurationMixedInstanceTypes",
+        "RecommendationOptionsConfigurationType",
         "RecommendationOptionsProjectedUtilizationMetricsCpuMaximum",
         "RecommendationOptionsProjectedUtilizationMetricsMemoryMaximum",
         "RecommendationOptionsPerformanceRisk",
@@ -2831,9 +2856,16 @@
       "exception":true,
       "synthetic":true
     },
+    "MixedInstanceType":{"type":"string"},
+    "MixedInstanceTypes":{
+      "type":"list",
+      "member":{"shape":"MixedInstanceType"}
+    },
     "NextToken":{"type":"string"},
     "NullableCpu":{"type":"integer"},
+    "NullableEstimatedInstanceHourReductionPercentage":{"type":"double"},
     "NullableIOPS":{"type":"integer"},
+    "NullableInstanceType":{"type":"string"},
     "NullableMaxAllocatedStorage":{"type":"integer"},
     "NullableMemory":{"type":"integer"},
     "NullableMemoryReservation":{"type":"integer"},

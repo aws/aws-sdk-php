@@ -93,6 +93,18 @@
         "DBStorageConfiguration$allocatedStorage": "<p> The size of the RDS storage in gigabytes (GB). </p>"
       }
     },
+    "AllocationStrategy": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$allocationStrategy": "<p> Describes the allocation strategy that the EC2 Auto Scaling group uses. This field is only available for EC2 Auto Scaling groups with mixed instance types. </p>"
+      }
+    },
+    "AsgType": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$type": "<p> Describes whether the EC2 Auto Scaling group has a single instance type or a mixed instance type configuration. </p>"
+      }
+    },
     "AutoScalingConfiguration": {
       "base": null,
       "refs": {
@@ -113,7 +125,7 @@
       }
     },
     "AutoScalingGroupConfiguration": {
-      "base": "<p>Describes the configuration of an Auto Scaling group.</p>",
+      "base": "<p>Describes the configuration of an EC2 Auto Scaling group.</p>",
       "refs": {
         "AutoScalingGroupRecommendation$currentConfiguration": "<p>An array of objects that describe the current configuration of the Auto Scaling group.</p>",
         "AutoScalingGroupRecommendationOption$configuration": "<p>An array of objects that describe an Auto Scaling group configuration.</p>"
@@ -333,7 +345,7 @@
     "DesiredCapacity": {
       "base": null,
       "refs": {
-        "AutoScalingGroupConfiguration$desiredCapacity": "<p>The desired capacity, or number of instances, for the Auto Scaling group.</p>"
+        "AutoScalingGroupConfiguration$desiredCapacity": "<p>The desired capacity, or number of instances, for the EC2 Auto Scaling group.</p>"
       }
     },
     "DestinationBucket": {
@@ -1468,7 +1480,6 @@
     "InstanceType": {
       "base": null,
       "refs": {
-        "AutoScalingGroupConfiguration$instanceType": "<p>The instance type for the Auto Scaling group.</p>",
         "InstanceRecommendationOption$instanceType": "<p>The instance type of the instance recommendation.</p>",
         "LicenseConfiguration$instanceType": "<p> The instance type used in the license. </p>"
       }
@@ -1840,7 +1851,7 @@
     "MaxSize": {
       "base": null,
       "refs": {
-        "AutoScalingGroupConfiguration$maxSize": "<p>The maximum size, or maximum number of instances, for the Auto Scaling group.</p>"
+        "AutoScalingGroupConfiguration$maxSize": "<p>The maximum size, or maximum number of instances, for the EC2 Auto Scaling group.</p>"
       }
     },
     "Medium": {
@@ -1957,12 +1968,24 @@
     "MinSize": {
       "base": null,
       "refs": {
-        "AutoScalingGroupConfiguration$minSize": "<p>The minimum size, or minimum number of instances, for the Auto Scaling group.</p>"
+        "AutoScalingGroupConfiguration$minSize": "<p>The minimum size, or minimum number of instances, for the EC2 Auto Scaling group.</p>"
       }
     },
     "MissingAuthenticationToken": {
       "base": "<p>The request must contain either a valid (registered) Amazon Web Services access key ID or X.509 certificate.</p>",
       "refs": {
+      }
+    },
+    "MixedInstanceType": {
+      "base": null,
+      "refs": {
+        "MixedInstanceTypes$member": null
+      }
+    },
+    "MixedInstanceTypes": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$mixedInstanceTypes": "<p> List the instance types within an EC2 Auto Scaling group that has mixed instance types. </p>"
       }
     },
     "NextToken": {
@@ -2003,10 +2026,22 @@
         "ServiceConfiguration$cpu": "<p> The number of CPU units used by the tasks in the Amazon ECS service. </p>"
       }
     },
+    "NullableEstimatedInstanceHourReductionPercentage": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$estimatedInstanceHourReductionPercentage": "<p> Describes the projected percentage reduction in instance hours after adopting the recommended configuration. This field is only available for EC2 Auto Scaling groups with scaling policies. </p>"
+      }
+    },
     "NullableIOPS": {
       "base": null,
       "refs": {
         "DBStorageConfiguration$iops": "<p> The provisioned IOPs of the RDS storage. </p>"
+      }
+    },
+    "NullableInstanceType": {
+      "base": null,
+      "refs": {
+        "AutoScalingGroupConfiguration$instanceType": "<p>The instance type for the EC2 Auto Scaling group.</p>"
       }
     },
     "NullableMaxAllocatedStorage": {
