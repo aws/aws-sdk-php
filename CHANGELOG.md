@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes the Iot 1click services, which have been deprecated.
+* `Aws\Redshift` - Additions to the PubliclyAccessible and Encrypted parameters clarifying what the defaults are.
+* `Aws\STS` - Fixed typos in the descriptions.
+* `Aws\SecurityLake` - Doc only update for ServiceName that fixes several customer-reported issues
+
 ## 3.336.12 - 2025-01-09
 
 * `Aws\ComputeOptimizer` - This release expands AWS Compute Optimizer rightsizing recommendation support for Amazon EC2 Auto Scaling groups to include those with scaling policies and multiple instance types.
