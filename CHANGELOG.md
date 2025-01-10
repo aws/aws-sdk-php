@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.13 - 2025-01-10
 
 * `Aws\` - Removes the Iot 1click services, which have been deprecated.
 * `Aws\Redshift` - Additions to the PubliclyAccessible and Encrypted parameters clarifying what the defaults are.
