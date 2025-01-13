@@ -1734,7 +1734,8 @@
       "required":["modelIdentifier"],
       "members":{
         "modelIdentifier":{"shape":"EvaluationModelIdentifier"},
-        "inferenceParams":{"shape":"EvaluationModelInferenceParams"}
+        "inferenceParams":{"shape":"EvaluationModelInferenceParams"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "EvaluationConfig":{
@@ -4506,6 +4507,19 @@
       "max":2048,
       "min":1,
       "pattern":"\\S*"
+    },
+    "PerformanceConfigLatency":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "optimized"
+      ]
+    },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "latency":{"shape":"PerformanceConfigLatency"}
+      }
     },
     "PositiveInteger":{
       "type":"integer",

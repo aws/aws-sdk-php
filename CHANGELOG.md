@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Bedrock` - With this release, Bedrock Evaluation will now support latency-optimized inference for foundation models.
+* `Aws\TranscribeService` - This update provides tagging support for Transcribe's Call Analytics Jobs and Call Analytics Categories.
+* `Aws\EC2` - Add support for DisconnectOnSessionTimeout flag in CreateClientVpnEndpoint and ModifyClientVpnEndpoint requests and DescribeClientVpnEndpoints responses
+* `Aws\Artifact` - Support resolving regional API calls to partition's leader region endpoint.
+* `Aws\KafkaConnect` - Support updating connector configuration via UpdateConnector API. Release Operations API to monitor the status of the connector operation.
+
 ## 3.336.13 - 2025-01-10
 
 * `Aws\` - Removes the Iot 1click services, which have been deprecated.
