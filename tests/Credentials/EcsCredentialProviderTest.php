@@ -353,6 +353,40 @@ EOF;
 
     }
 
+    public function testResolveCredentialsWithAccountIdFromArn()
+    {
+        $testAccountId = 'foo';
+        $testArn = "arn:aws:iam::$testAccountId:role/role_name";
+        $expiration = time() + 1000;
+        $testHandler = function (RequestInterface $_) use ($expiration, $testArn) {
+            $jsonResponse = <<<EOF
+{
+    "AccessKeyId": "foo",
+    "SecretAccessKey": "foo",
+    "Token": "bazz",
+    "Expiration": "@$expiration",
+    "RoleArn": "$testArn"
+}
+EOF;
+            return Promise\Create::promiseFor(new Response(200, [], $jsonResponse));
+        };
+        $provider = new EcsCredentialProvider([
+            'client' => $testHandler
+        ]);
+        try {
+            /** @var Credentials $credentials */
+            $credentials = $provider()->wait();
+            $this->assertSame('foo', $credentials->getAccessKeyId());
+            $this->assertSame('foo', $credentials->getSecretKey());
+            $this->assertSame('bazz', $credentials->getSecurityToken());
+            $this->assertSame($expiration, $credentials->getExpiration());
+            $this->assertSame($testAccountId, $credentials->getAccountId());
+        } catch (GuzzleException $e) {
+            self::fail($e->getMessage());
+        }
+
+    }
+
     /**
      * @dataProvider successTestCases
      *
