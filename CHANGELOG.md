@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.336.14 - 2025-01-13
 
 * `Aws\Bedrock` - With this release, Bedrock Evaluation will now support latency-optimized inference for foundation models.
 * `Aws\TranscribeService` - This update provides tagging support for Transcribe's Call Analytics Jobs and Call Analytics Categories.
