@@ -1492,7 +1492,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "StartMatchBackfill":{
@@ -2222,7 +2223,7 @@
       "members":{
         "FleetId":{"shape":"FleetId"},
         "FleetArn":{"shape":"FleetArn"},
-        "FleetRoleArn":{"shape":"ArnStringModel"},
+        "FleetRoleArn":{"shape":"IamRoleArn"},
         "GameServerContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionName"},
         "GameServerContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionArn"},
         "PerInstanceContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionName"},
@@ -2521,7 +2522,7 @@
       "type":"structure",
       "required":["FleetRoleArn"],
       "members":{
-        "FleetRoleArn":{"shape":"ArnStringModel"},
+        "FleetRoleArn":{"shape":"IamRoleArn"},
         "Description":{"shape":"NonZeroAndMaxString"},
         "GameServerContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
         "PerInstanceContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
@@ -4536,7 +4537,8 @@
         "Port":{"shape":"PortNumber"},
         "PlacedPlayerSessions":{"shape":"PlacedPlayerSessionList"},
         "GameSessionData":{"shape":"LargeGameSessionData"},
-        "MatchmakerData":{"shape":"MatchmakerData"}
+        "MatchmakerData":{"shape":"MatchmakerData"},
+        "PriorityConfigurationOverride":{"shape":"PriorityConfigurationOverride"}
       }
     },
     "GameSessionPlacementState":{
@@ -5197,6 +5199,12 @@
       "type":"list",
       "member":{"shape":"LocationModel"}
     },
+    "LocationOrderOverrideList":{
+      "type":"list",
+      "member":{"shape":"LocationStringModel"},
+      "max":10,
+      "min":1
+    },
     "LocationState":{
       "type":"structure",
       "members":{
@@ -5509,6 +5517,13 @@
       "type":"list",
       "member":{"shape":"PlacedPlayerSession"}
     },
+    "PlacementFallbackStrategy":{
+      "type":"string",
+      "enum":[
+        "DEFAULT_AFTER_SINGLE_PASS",
+        "NONE"
+      ]
+    },
     "Player":{
       "type":"structure",
       "members":{
@@ -5659,6 +5674,14 @@
       "members":{
         "PriorityOrder":{"shape":"PriorityTypeList"},
         "LocationOrder":{"shape":"LocationList"}
+      }
+    },
+    "PriorityConfigurationOverride":{
+      "type":"structure",
+      "required":["LocationOrder"],
+      "members":{
+        "PlacementFallbackStrategy":{"shape":"PlacementFallbackStrategy"},
+        "LocationOrder":{"shape":"LocationOrderOverrideList"}
       }
     },
     "PriorityType":{
@@ -6030,7 +6053,8 @@
         "GameSessionName":{"shape":"NonZeroAndMaxString"},
         "PlayerLatencies":{"shape":"PlayerLatencyList"},
         "DesiredPlayerSessions":{"shape":"DesiredPlayerSessionList"},
-        "GameSessionData":{"shape":"LargeGameSessionData"}
+        "GameSessionData":{"shape":"LargeGameSessionData"},
+        "PriorityConfigurationOverride":{"shape":"PriorityConfigurationOverride"}
       }
     },
     "StartGameSessionPlacementOutput":{

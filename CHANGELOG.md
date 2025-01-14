@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53` - Amazon Route 53 now supports the Mexico (Central) Region (mx-central-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
+* `Aws\GameLift` - Amazon GameLift releases a new game session placement feature: PriorityConfigurationOverride. You can now override how a game session queue prioritizes placement locations for a single StartGameSessionPlacement request.
+
 ## 3.336.14 - 2025-01-13
 
 * `Aws\Bedrock` - With this release, Bedrock Evaluation will now support latency-optimized inference for foundation models.
