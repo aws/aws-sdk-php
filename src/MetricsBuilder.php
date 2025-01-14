@@ -4,7 +4,6 @@ namespace Aws;
 
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\CredentialSources;
-use GuzzleHttp\Psr7\Uri;
 
 /**
  * A placeholder for gathering metrics in a request.
@@ -156,9 +155,9 @@ final class MetricsBuilder
     private function appendSignatureMetric(string $signature): void
     {
         if ($signature === 'v4-s3express') {
-            $this->append(MetricsBuilder::S3_EXPRESS_BUCKET);
+            $this->append(self::S3_EXPRESS_BUCKET);
         } elseif ($signature === 'v4a') {
-            $this->append(MetricsBuilder::SIGV4A_SIGNING);
+            $this->append(self::SIGV4A_SIGNING);
         }
     }
 
@@ -172,7 +171,7 @@ final class MetricsBuilder
     private function appendRequestCompressionMetric(string $format): void
     {
         if ($format === 'gzip') {
-            $this->append(MetricsBuilder::GZIP_REQUEST_COMPRESSION);
+            $this->append(self::GZIP_REQUEST_COMPRESSION);
         }
     }
 
@@ -186,15 +185,15 @@ final class MetricsBuilder
     private function appendRequestChecksumMetric(string $algorithm): void
     {
         if ($algorithm === 'crc32') {
-            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32);
+            $this->append(self::FLEXIBLE_CHECKSUMS_REQ_CRC32);
         } elseif ($algorithm === 'crc32c') {
-            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC32C);
+            $this->append(self::FLEXIBLE_CHECKSUMS_REQ_CRC32C);
         } elseif ($algorithm === 'crc64') {
-            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_CRC64);
+            $this->append(self::FLEXIBLE_CHECKSUMS_REQ_CRC64);
         } elseif ($algorithm === 'sha1') {
-            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA1);
+            $this->append(self::FLEXIBLE_CHECKSUMS_REQ_SHA1);
         } elseif ($algorithm === 'sha256') {
-            $this->append(MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256);
+            $this->append(self::FLEXIBLE_CHECKSUMS_REQ_SHA256);
         }
     }
 
@@ -218,29 +217,29 @@ final class MetricsBuilder
 
         static $credentialsMetricMapping = [
             CredentialSources::STATIC =>
-                MetricsBuilder::CREDENTIALS_CODE,
+                self::CREDENTIALS_CODE,
             CredentialSources::ENVIRONMENT =>
-                MetricsBuilder::CREDENTIALS_ENV_VARS,
+                self::CREDENTIALS_ENV_VARS,
             CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN =>
-                MetricsBuilder::CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN,
+                self::CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN,
             CredentialSources::STS_ASSUME_ROLE =>
-                MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE,
+                self::CREDENTIALS_STS_ASSUME_ROLE,
             CredentialSources::STS_WEB_ID_TOKEN =>
-                MetricsBuilder::CREDENTIALS_STS_ASSUME_ROLE_WEB_ID,
+                self::CREDENTIALS_STS_ASSUME_ROLE_WEB_ID,
             CredentialSources::PROFILE =>
-                MetricsBuilder::CREDENTIALS_PROFILE,
+                self::CREDENTIALS_PROFILE,
             CredentialSources::IMDS =>
-                MetricsBuilder::CREDENTIALS_IMDS,
+                self::CREDENTIALS_IMDS,
             CredentialSources::ECS =>
-                MetricsBuilder::CREDENTIALS_HTTP,
+                self::CREDENTIALS_HTTP,
             CredentialSources::PROFILE_STS_WEB_ID_TOKEN =>
-                MetricsBuilder::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN,
+                self::CREDENTIALS_PROFILE_STS_WEB_ID_TOKEN,
             CredentialSources::PROFILE_PROCESS =>
-                MetricsBuilder::CREDENTIALS_PROFILE_PROCESS,
+                self::CREDENTIALS_PROFILE_PROCESS,
             CredentialSources::PROFILE_SSO =>
-                MetricsBuilder::CREDENTIALS_PROFILE_SSO,
+                self::CREDENTIALS_PROFILE_SSO,
             CredentialSources::PROFILE_SSO_LEGACY =>
-                MetricsBuilder::CREDENTIALS_PROFILE_SSO_LEGACY,
+                self::CREDENTIALS_PROFILE_SSO_LEGACY,
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);
@@ -264,11 +263,11 @@ final class MetricsBuilder
         }
 
         if ($accountIdEndpointMode === 'preferred') {
-            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_PREFERRED);
+            $this->append(self::ACCOUNT_ID_MODE_PREFERRED);
         } elseif ($accountIdEndpointMode === 'disabled') {
-            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_DISABLED);
+            $this->append(self::ACCOUNT_ID_MODE_DISABLED);
         } elseif ($accountIdEndpointMode === 'required') {
-            $this->append(MetricsBuilder::ACCOUNT_ID_MODE_REQUIRED);
+            $this->append(self::ACCOUNT_ID_MODE_REQUIRED);
         }
     }
 
@@ -284,7 +283,7 @@ final class MetricsBuilder
     {
         static $pattern = "/(https|http):\\/\\/\\d{12}\\.ddb/";
         if (preg_match($pattern, $endpoint)) {
-            $this->append(MetricsBuilder::ACCOUNT_ID_ENDPOINT);
+            $this->append(self::ACCOUNT_ID_ENDPOINT);
         }
     }
 
