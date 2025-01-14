@@ -384,7 +384,6 @@ EOF;
         } catch (GuzzleException $e) {
             self::fail($e->getMessage());
         }
-
     }
 
     /**
