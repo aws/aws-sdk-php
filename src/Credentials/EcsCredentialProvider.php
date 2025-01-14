@@ -93,10 +93,6 @@ class EcsCredentialProvider
                                 $result['AccountId'] = $parsedArn->getAccountId();
                             } catch (\Exception $e) {
                                 // AccountId will be null
-                                trigger_error(
-                                    "An error occured while parsing the ARN string: " . $e->getMessage(),
-                                    E_USER_WARNING
-                                );
                             }
                         }
 
