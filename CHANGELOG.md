@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.337.0 - 2025-01-15
 
 * `Aws\S3` - Adds a default checksum of CRC32 to operations that support checksums. Adds additional configuration for request checksum calculation and response checksum validation.
 * `Aws\CognitoIdentity` - corrects the dual-stack endpoint configuration
