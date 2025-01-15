@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Adds a default checksum of CRC32 to operations that support checksums. Adds additional configuration for request checksum calculation and response checksum validation.
+* `Aws\CognitoIdentity` - corrects the dual-stack endpoint configuration
+* `Aws\SESv2` - This release introduces a new recommendation in Virtual Deliverability Manager Advisor, which detects elevated complaint rates for customer sending identities.
+* `Aws\WorkSpaces` - Added GeneralPurpose.4xlarge & GeneralPurpose.8xlarge ComputeTypes.
+* `Aws\WorkSpacesThinClient` - Mark type in MaintenanceWindow as required.
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\PartnerCentralSelling` - Add Tagging support for ResourceSnapshotJob resources
+* `Aws\SecurityIR` - Increase minimum length of Threat Actor IP 'userAgent' to 1.
+* `Aws\S3` - This change enhances integrity protections for new SDK requests to S3. S3 SDKs now support the CRC64NVME checksum algorithm, full object checksums for multipart S3 objects, and new default integrity protections for S3 requests.
+* `Aws\BedrockAgentRuntime` - Now supports streaming for inline agents.
+
 ## 3.336.15 - 2025-01-14
 
 * `Aws\Route53` - Amazon Route 53 now supports the Mexico (Central) Region (mx-central-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region
