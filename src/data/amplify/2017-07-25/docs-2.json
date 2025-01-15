@@ -383,7 +383,7 @@
     "CommitTime": {
       "base": null,
       "refs": {
-        "JobSummary$commitTime": "<p> The commit date and time for the job. </p>",
+        "JobSummary$commitTime": "<p>The commit date and time for the job. </p>",
         "StartJobRequest$commitTime": "<p> The commit date and time for the job. </p>"
       }
     },
@@ -452,10 +452,10 @@
     "CreateTime": {
       "base": null,
       "refs": {
-        "App$createTime": "<p>Creates a date and time for the Amplify app. </p>",
+        "App$createTime": "<p>A timestamp of when Amplify created the application.</p>",
         "BackendEnvironment$createTime": "<p>The creation date and time for a backend environment that is part of an Amplify app. </p>",
-        "Branch$createTime": "<p> The creation date and time for a branch that is part of an Amplify app. </p>",
-        "Webhook$createTime": "<p>The create date and time for a webhook. </p>"
+        "Branch$createTime": "<p>A timestamp of when Amplify created the branch.</p>",
+        "Webhook$createTime": "<p>A timestamp of when Amplify created the webhook in your Git repository.</p>"
       }
     },
     "CreateWebhookRequest": {
@@ -1266,7 +1266,8 @@
       "base": null,
       "refs": {
         "DomainAssociation$statusReason": "<p> Additional information that describes why the domain association is in the current state.</p>",
-        "Step$statusReason": "<p> The reason for the current step status. </p>"
+        "Step$statusReason": "<p> The reason for the current step status. </p>",
+        "WafConfiguration$statusReason": "<p>The reason for the current status of the Firewall configuration.</p>"
       }
     },
     "Step": {
@@ -1463,10 +1464,10 @@
     "UpdateTime": {
       "base": null,
       "refs": {
-        "App$updateTime": "<p>Updates the date and time for the Amplify app. </p>",
+        "App$updateTime": "<p>A timestamp of when Amplify updated the application.</p>",
         "BackendEnvironment$updateTime": "<p>The last updated date and time for a backend environment that is part of an Amplify app. </p>",
-        "Branch$updateTime": "<p> The last updated date and time for a branch that is part of an Amplify app. </p>",
-        "Webhook$updateTime": "<p>Updates the date and time for a webhook. </p>"
+        "Branch$updateTime": "<p>A timestamp for the last updated time for a branch.</p>",
+        "Webhook$updateTime": "<p>A timestamp of when Amplify updated the webhook in your Git repository.</p>"
       }
     },
     "UpdateWebhookRequest": {
@@ -1490,6 +1491,24 @@
       "base": null,
       "refs": {
         "SubDomain$verified": "<p> The verified status of the subdomain </p>"
+      }
+    },
+    "WafConfiguration": {
+      "base": "<p>Describes the Firewall configuration for a hosted Amplify application. Firewall support enables you to protect your web applications with a direct integration with WAF. For more information about using WAF protections for an Amplify application, see <a href=\"https://docs.aws.amazon.com/amplify/latest/userguide/WAF-integration.html\">Firewall support for hosted sites</a> in the <i>Amplify User Guide</i>. </p>",
+      "refs": {
+        "App$wafConfiguration": "<p>Describes the Firewall configuration for the Amplify app. Firewall support enables you to protect your hosted applications with a direct integration with WAF.</p>"
+      }
+    },
+    "WafStatus": {
+      "base": null,
+      "refs": {
+        "WafConfiguration$wafStatus": "<p>The status of the process to associate or disassociate a web ACL to an Amplify app.</p>"
+      }
+    },
+    "WebAclArn": {
+      "base": null,
+      "refs": {
+        "WafConfiguration$webAclArn": "<p>The Amazon Resource Name (ARN) for the web ACL associated with an Amplify app.</p>"
       }
     },
     "Webhook": {
@@ -1527,6 +1546,12 @@
       "base": null,
       "refs": {
         "ListWebhooksResult$webhooks": "<p>A list of webhooks. </p>"
+      }
+    },
+    "webhookCreateTime": {
+      "base": null,
+      "refs": {
+        "App$webhookCreateTime": "<p>A timestamp of when Amplify created the webhook in your Git repository.</p>"
       }
     }
   }

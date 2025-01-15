@@ -578,8 +578,13 @@
         "channels":{"shape":"Integer"},
         "codec":{"shape":"String"},
         "sampleRate":{"shape":"Integer"},
-        "targetBitrate":{"shape":"Integer"}
+        "targetBitrate":{"shape":"Integer"},
+        "track":{"shape":"String"}
       }
+    },
+    "AudioConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AudioConfiguration"}
     },
     "BatchError":{
       "type":"structure",
@@ -675,9 +680,11 @@
       "members":{
         "arn":{"shape":"ChannelArn"},
         "authorized":{"shape":"IsAuthorized"},
+        "containerFormat":{"shape":"ContainerFormat"},
         "ingestEndpoint":{"shape":"IngestEndpoint"},
         "insecureIngest":{"shape":"InsecureIngest"},
         "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "playbackUrl":{"shape":"PlaybackURL"},
@@ -779,12 +786,21 @@
       },
       "exception":true
     },
+    "ContainerFormat":{
+      "type":"string",
+      "enum":[
+        "TS",
+        "FRAGMENTED_MP4"
+      ]
+    },
     "CreateChannelRequest":{
       "type":"structure",
       "members":{
         "authorized":{"shape":"Boolean"},
+        "containerFormat":{"shape":"ContainerFormat"},
         "insecureIngest":{"shape":"Boolean"},
         "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "preset":{"shape":"TranscodePreset"},
@@ -1008,6 +1024,17 @@
         "video":{"shape":"VideoConfiguration"}
       }
     },
+    "IngestConfigurations":{
+      "type":"structure",
+      "required":[
+        "audioConfigurations",
+        "videoConfigurations"
+      ],
+      "members":{
+        "audioConfigurations":{"shape":"AudioConfigurationList"},
+        "videoConfigurations":{"shape":"VideoConfigurationList"}
+      }
+    },
     "IngestEndpoint":{"type":"string"},
     "InsecureIngest":{"type":"boolean"},
     "Integer":{"type":"long"},
@@ -1021,6 +1048,7 @@
       "fault":true
     },
     "IsAuthorized":{"type":"boolean"},
+    "IsMultitrackInputEnabled":{"type":"boolean"},
     "ListChannelsRequest":{
       "type":"structure",
       "members":{
@@ -1187,6 +1215,29 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MultitrackInputConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"IsMultitrackInputEnabled"},
+        "maximumResolution":{"shape":"MultitrackMaximumResolution"},
+        "policy":{"shape":"MultitrackPolicy"}
+      }
+    },
+    "MultitrackMaximumResolution":{
+      "type":"string",
+      "enum":[
+        "SD",
+        "HD",
+        "FULL_HD"
+      ]
+    },
+    "MultitrackPolicy":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "REQUIRE"
+      ]
     },
     "PaginationToken":{
       "type":"string",
@@ -1604,6 +1655,7 @@
         "channel":{"shape":"Channel"},
         "endTime":{"shape":"Time"},
         "ingestConfiguration":{"shape":"IngestConfiguration"},
+        "ingestConfigurations":{"shape":"IngestConfigurations"},
         "recordingConfiguration":{"shape":"RecordingConfiguration"},
         "startTime":{"shape":"Time"},
         "streamId":{"shape":"StreamId"},
@@ -1786,8 +1838,10 @@
       "members":{
         "arn":{"shape":"ChannelArn"},
         "authorized":{"shape":"Boolean"},
+        "containerFormat":{"shape":"ContainerFormat"},
         "insecureIngest":{"shape":"Boolean"},
         "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
         "name":{"shape":"ChannelName"},
         "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "preset":{"shape":"TranscodePreset"},
@@ -1836,11 +1890,18 @@
         "avcProfile":{"shape":"String"},
         "codec":{"shape":"String"},
         "encoder":{"shape":"String"},
+        "level":{"shape":"String"},
+        "profile":{"shape":"String"},
         "targetBitrate":{"shape":"Integer"},
         "targetFramerate":{"shape":"Integer"},
+        "track":{"shape":"String"},
         "videoHeight":{"shape":"Integer"},
         "videoWidth":{"shape":"Integer"}
       }
+    },
+    "VideoConfigurationList":{
+      "type":"list",
+      "member":{"shape":"VideoConfiguration"}
     },
     "ViewerId":{
       "type":"string",

@@ -741,6 +741,21 @@
         "resultWrapper":"ListGeneratedTemplatesResult"
       }
     },
+    "ListHookResults":{
+      "name":"ListHookResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListHookResultsInput"},
+      "output":{
+        "shape":"ListHookResultsOutput",
+        "resultWrapper":"ListHookResultsResult"
+      },
+      "errors":[
+        {"shape":"HookResultNotFoundException"}
+      ]
+    },
     "ListImports":{
       "name":"ListImports",
       "http":{
@@ -2619,6 +2634,39 @@
       "type":"string",
       "enum":["PRE_PROVISION"]
     },
+    "HookResultId":{
+      "type":"string",
+      "max":1600,
+      "min":1,
+      "pattern":"[a-zA-Z][-a-zA-Z0-9]*|arn:[-a-zA-Z0-9:/]*|^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "HookResultNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"HookResultNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "HookResultSummaries":{
+      "type":"list",
+      "member":{"shape":"HookResultSummary"}
+    },
+    "HookResultSummary":{
+      "type":"structure",
+      "members":{
+        "InvocationPoint":{"shape":"HookInvocationPoint"},
+        "FailureMode":{"shape":"HookFailureMode"},
+        "TypeName":{"shape":"HookTypeName"},
+        "TypeVersionId":{"shape":"HookTypeVersionId"},
+        "TypeConfigurationVersionId":{"shape":"HookTypeConfigurationVersionId"},
+        "Status":{"shape":"HookStatus"},
+        "HookStatusReason":{"shape":"HookStatusReason"}
+      }
+    },
     "HookStatus":{
       "type":"string",
       "enum":[
@@ -2826,6 +2874,36 @@
         "Summaries":{"shape":"TemplateSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "ListHookResultsInput":{
+      "type":"structure",
+      "required":[
+        "TargetType",
+        "TargetId"
+      ],
+      "members":{
+        "TargetType":{"shape":"ListHookResultsTargetType"},
+        "TargetId":{"shape":"HookResultId"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListHookResultsOutput":{
+      "type":"structure",
+      "members":{
+        "TargetType":{"shape":"ListHookResultsTargetType"},
+        "TargetId":{"shape":"HookResultId"},
+        "HookResults":{"shape":"HookResultSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListHookResultsTargetType":{
+      "type":"string",
+      "enum":[
+        "CHANGE_SET",
+        "STACK",
+        "RESOURCE",
+        "CLOUD_CONTROL"
+      ]
     },
     "ListImportsInput":{
       "type":"structure",

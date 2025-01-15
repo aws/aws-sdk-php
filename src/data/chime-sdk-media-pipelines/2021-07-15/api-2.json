@@ -1021,6 +1021,8 @@
           "idempotencyToken":true
         },
         "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"},
+        "SseAwsKeyManagementParams":{"shape":"SseAwsKeyManagementParams"},
+        "SinkIamRoleArn":{"shape":"Arn"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1785,7 +1787,9 @@
         "SinkArn":{"shape":"Arn"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
         "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"}
+        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"},
+        "SseAwsKeyManagementParams":{"shape":"SseAwsKeyManagementParams"},
+        "SinkIamRoleArn":{"shape":"Arn"}
       }
     },
     "MediaCapturePipelineSourceConfiguration":{
@@ -2344,6 +2348,14 @@
       "type":"structure",
       "members":{
         "InsightsTarget":{"shape":"Arn"}
+      }
+    },
+    "SseAwsKeyManagementParams":{
+      "type":"structure",
+      "required":["AwsKmsKeyId"],
+      "members":{
+        "AwsKmsKeyId":{"shape":"String"},
+        "AwsKmsEncryptionContext":{"shape":"String"}
       }
     },
     "StartSpeakerSearchTaskRequest":{

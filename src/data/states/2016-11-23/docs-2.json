@@ -38,7 +38,7 @@
     "UpdateMapRun": "<p>Updates an in-progress Map Run's configuration to include changes to the settings that control maximum concurrency and Map Run failure.</p>",
     "UpdateStateMachine": "<p>Updates an existing state machine by modifying its <code>definition</code>, <code>roleArn</code>, <code>loggingConfiguration</code>, or <code>EncryptionConfiguration</code>. Running executions will continue to use the previous <code>definition</code> and <code>roleArn</code>. You must include at least one of <code>definition</code> or <code>roleArn</code> or you will receive a <code>MissingRequiredParameter</code> error.</p> <p>A qualified state machine ARN refers to a <i>Distributed Map state</i> defined within a state machine. For example, the qualified state machine ARN <code>arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel</code> refers to a <i>Distributed Map state</i> with a label <code>mapStateLabel</code> in the state machine named <code>stateMachineName</code>.</p> <p>A qualified state machine ARN can either refer to a <i>Distributed Map state</i> defined within a state machine, a version ARN, or an alias ARN.</p> <p>The following are some examples of qualified and unqualified state machine ARNs:</p> <ul> <li> <p>The following qualified state machine ARN refers to a <i>Distributed Map state</i> with a label <code>mapStateLabel</code> in a state machine named <code>myStateMachine</code>.</p> <p> <code>arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel</code> </p> <note> <p>If you provide a qualified state machine ARN that refers to a <i>Distributed Map state</i>, the request fails with <code>ValidationException</code>.</p> </note> </li> <li> <p>The following qualified state machine ARN refers to an alias named <code>PROD</code>.</p> <p> <code>arn:&lt;partition&gt;:states:&lt;region&gt;:&lt;account-id&gt;:stateMachine:&lt;myStateMachine:PROD&gt;</code> </p> <note> <p>If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.</p> </note> </li> <li> <p>The following unqualified state machine ARN refers to a state machine named <code>myStateMachine</code>.</p> <p> <code>arn:&lt;partition&gt;:states:&lt;region&gt;:&lt;account-id&gt;:stateMachine:&lt;myStateMachine&gt;</code> </p> </li> </ul> <p>After you update your state machine, you can set the <code>publish</code> parameter to <code>true</code> in the same action to publish a new <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html\">version</a>. This way, you can opt-in to strict versioning of your state machine.</p> <note> <p>Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.</p> </note> <note> <p>All <code>StartExecution</code> calls within a few seconds use the updated <code>definition</code> and <code>roleArn</code>. Executions started immediately after you call <code>UpdateStateMachine</code> may use the previous state machine <code>definition</code> and <code>roleArn</code>. </p> </note>",
     "UpdateStateMachineAlias": "<p>Updates the configuration of an existing state machine <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-alias.html\">alias</a> by modifying its <code>description</code> or <code>routingConfiguration</code>.</p> <p>You must specify at least one of the <code>description</code> or <code>routingConfiguration</code> parameters to update a state machine alias.</p> <note> <p> <code>UpdateStateMachineAlias</code> is an idempotent API. Step Functions bases the idempotency check on the <code>stateMachineAliasArn</code>, <code>description</code>, and <code>routingConfiguration</code> parameters. Requests with the same parameters return an idempotent response.</p> </note> <note> <p>This operation is eventually consistent. All <a>StartExecution</a> requests made within a few seconds use the latest alias configuration. Executions started immediately after calling <code>UpdateStateMachineAlias</code> may use the previous routing configuration.</p> </note> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>CreateStateMachineAlias</a> </p> </li> <li> <p> <a>DescribeStateMachineAlias</a> </p> </li> <li> <p> <a>ListStateMachineAliases</a> </p> </li> <li> <p> <a>DeleteStateMachineAlias</a> </p> </li> </ul>",
-    "ValidateStateMachineDefinition": "<p>Validates the syntax of a state machine definition.</p> <p>You can validate that a state machine definition is correct without creating a state machine resource. Step Functions will implicitly perform the same syntax check when you invoke <code>CreateStateMachine</code> and <code>UpdateStateMachine</code>. State machine definitions are specified using a JSON-based, structured language. For more information on Amazon States Language see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html\">Amazon States Language</a> (ASL). </p> <p>Suggested uses for <code>ValidateStateMachineDefinition</code>:</p> <ul> <li> <p>Integrate automated checks into your code review or Continuous Integration (CI) process to validate state machine definitions before starting deployments.</p> </li> <li> <p>Run the validation from a Git pre-commit hook to check your state machine definitions before committing them to your source repository.</p> </li> </ul> <note> <p>Errors found in the state machine definition will be returned in the response as a list of <b>diagnostic elements</b>, rather than raise an exception.</p> </note>"
+    "ValidateStateMachineDefinition": "<p>Validates the syntax of a state machine definition specified in <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html\">Amazon States Language</a> (ASL), a JSON-based, structured language.</p> <p>You can validate that a state machine definition is correct without creating a state machine resource.</p> <p>Suggested uses for <code>ValidateStateMachineDefinition</code>:</p> <ul> <li> <p>Integrate automated checks into your code review or Continuous Integration (CI) process to check state machine definitions before starting deployments.</p> </li> <li> <p>Run validation from a Git pre-commit hook to verify the definition before committing to your source repository.</p> </li> </ul> <p>Validation will look for problems in your state machine definition and return a <b>result</b> and a list of <b>diagnostic elements</b>.</p> <p>The <b>result</b> value will be <code>OK</code> when your workflow definition can be successfully created or updated. Note the result can be <code>OK</code> even when diagnostic warnings are present in the response. The <b>result</b> value will be <code>FAIL</code> when the workflow definition contains errors that would prevent you from creating or updating your state machine. </p> <p>The list of <a href=\"https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinitionDiagnostic.html\">ValidateStateMachineDefinitionDiagnostic</a> data elements can contain zero or more <b>WARNING</b> and/or <b>ERROR</b> elements.</p> <note> <p>The <b>ValidateStateMachineDefinition API</b> might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the <b>result</b> field value (OK, FAIL). Do <b>not</b> rely on the exact order, count, or wording of diagnostic messages.</p> </note>"
   },
   "shapes": {
     "ActivityAlreadyExists": {
@@ -184,6 +184,18 @@
         "UpdateStateMachineInput$stateMachineArn": "<p>The Amazon Resource Name (ARN) of the state machine.</p>",
         "UpdateStateMachineInput$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role of the state machine.</p>",
         "UpdateStateMachineOutput$stateMachineVersionArn": "<p>The Amazon Resource Name (ARN) of the published state machine version.</p> <p>If the <code>publish</code> parameter isn't set to <code>true</code>, this field returns null.</p>"
+      }
+    },
+    "AssignedVariables": {
+      "base": null,
+      "refs": {
+        "StateExitedEventDetails$assignedVariables": "<p>Map of variable name and value as a serialized JSON representation.</p>"
+      }
+    },
+    "AssignedVariablesDetails": {
+      "base": "<p>Provides details about assigned variables in an execution history event.</p>",
+      "refs": {
+        "StateExitedEventDetails$assignedVariablesDetails": "<p>Provides details about input or output in an execution history event.</p>"
       }
     },
     "BilledDuration": {
@@ -442,6 +454,18 @@
         "TaskTimedOut$message": null,
         "TooManyTags$message": null,
         "ValidationException$message": null
+      }
+    },
+    "EvaluationFailedEventDetails": {
+      "base": "<p>Contains details about an evaluation failure that occurred while processing a state, for example, when a JSONata expression throws an error. This event will only be present in state machines that have <b> QueryLanguage</b> set to JSONata, or individual states set to JSONata.</p>",
+      "refs": {
+        "HistoryEvent$evaluationFailedEventDetails": "<p>Contains details about an evaluation failure that occurred while processing a state.</p>"
+      }
+    },
+    "EvaluationFailureLocation": {
+      "base": null,
+      "refs": {
+        "EvaluationFailedEventDetails$location": "<p>The location of the field in the state in which the evaluation error occurred.</p>"
       }
     },
     "EventId": {
@@ -1192,6 +1216,7 @@
         "ActivityScheduleFailedEventDetails$cause": "<p>A more detailed explanation of the cause of the failure.</p>",
         "ActivityTimedOutEventDetails$cause": "<p>A more detailed explanation of the cause of the timeout.</p>",
         "DescribeExecutionOutput$cause": "<p>The cause string if the state machine execution failed.</p>",
+        "EvaluationFailedEventDetails$cause": "<p>A more detailed explanation of the cause of the failure.</p>",
         "ExecutionAbortedEventDetails$cause": "<p>A more detailed explanation of the cause of the failure.</p>",
         "ExecutionFailedEventDetails$cause": "<p>A more detailed explanation of the cause of the failure.</p>",
         "ExecutionTimedOutEventDetails$cause": "<p>A more detailed explanation of the cause of the timeout.</p>",
@@ -1221,11 +1246,13 @@
         "ExecutionStartedEventDetails$input": "<p>The JSON data input to the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "ExecutionSucceededEventDetails$output": "<p>The JSON data output by the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "InspectionData$input": "<p>The raw state input.</p>",
-        "InspectionData$afterInputPath": "<p>The input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath\">InputPath</a> filter.</p>",
-        "InspectionData$afterParameters": "<p>The effective input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters\">Parameters</a> filter.</p>",
+        "InspectionData$afterArguments": "<p>The input after Step Functions applies an Arguments filter. This event will only be present when QueryLanguage for the state machine or individual states is set to JSONata. For more info, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/data-transform.html\">Transforming data with Step Functions</a>.</p>",
+        "InspectionData$afterInputPath": "<p>The input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-inputpath\">InputPath</a> filter. Not populated when QueryLanguage is JSONata.</p>",
+        "InspectionData$afterParameters": "<p>The effective input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-parameters\">Parameters</a> filter. Not populated when QueryLanguage is JSONata.</p>",
         "InspectionData$result": "<p>The state's raw result.</p>",
-        "InspectionData$afterResultSelector": "<p>The effective result after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector\">ResultSelector</a> filter.</p>",
-        "InspectionData$afterResultPath": "<p>The effective result combined with the raw state input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html\">ResultPath</a> filter.</p>",
+        "InspectionData$afterResultSelector": "<p>The effective result after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-inputpath-params.html#input-output-resultselector\">ResultSelector</a> filter. Not populated when QueryLanguage is JSONata.</p>",
+        "InspectionData$afterResultPath": "<p>The effective result combined with the raw state input after Step Functions applies the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/input-output-resultpath.html\">ResultPath</a> filter. Not populated when QueryLanguage is JSONata.</p>",
+        "InspectionData$variables": "<p>JSON string that contains the set of workflow variables after execution of the state. The set will include variables assigned in the state and variables set up as test state input.</p>",
         "LambdaFunctionScheduledEventDetails$input": "<p>The JSON data input to the Lambda function. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "LambdaFunctionSucceededEventDetails$output": "<p>The JSON data output by the Lambda function. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "SendTaskSuccessInput$output": "<p>The JSON output of the task. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
@@ -1238,6 +1265,7 @@
         "TaskSubmittedEventDetails$output": "<p>The response from a resource when a task has started. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "TaskSucceededEventDetails$output": "<p>The full JSON response from a resource when a task has succeeded. This response becomes the output of the related task. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "TestStateInput$input": "<p>A string that contains the JSON input data for the state.</p>",
+        "TestStateInput$variables": "<p>JSON object literal that sets variables used in the state under test. Object keys are the variable names and values are the variable values.</p>",
         "TestStateOutput$output": "<p>The JSON output data of the state. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>"
       }
     },
@@ -1254,6 +1282,7 @@
         "ActivityScheduleFailedEventDetails$error": "<p>The error code of the failure.</p>",
         "ActivityTimedOutEventDetails$error": "<p>The error code of the failure.</p>",
         "DescribeExecutionOutput$error": "<p>The error string if the state machine execution failed.</p>",
+        "EvaluationFailedEventDetails$error": "<p>The error code of the failure.</p>",
         "ExecutionAbortedEventDetails$error": "<p>The error code of the failure.</p>",
         "ExecutionFailedEventDetails$error": "<p>The error code of the failure.</p>",
         "ExecutionTimedOutEventDetails$error": "<p>The error code of the failure.</p>",
@@ -1388,7 +1417,9 @@
     "StateName": {
       "base": null,
       "refs": {
-        "TestStateOutput$nextState": "<p>The name of the next state to transition to. If you haven't defined a next state in your definition or if the execution of the state fails, this ﬁeld doesn't contain a value.</p>"
+        "EvaluationFailedEventDetails$state": "<p>The name of the state in which the evaluation error occurred.</p>",
+        "TestStateOutput$nextState": "<p>The name of the next state to transition to. If you haven't defined a next state in your definition or if the execution of the state fails, this ﬁeld doesn't contain a value.</p>",
+        "VariableReferences$key": null
       }
     },
     "StopExecutionInput": {
@@ -1707,7 +1738,7 @@
       }
     },
     "ValidateStateMachineDefinitionDiagnostic": {
-      "base": "<p>Describes an error found during validation. Validation errors found in the definition return in the response as <b>diagnostic elements</b>, rather than raise an exception.</p>",
+      "base": "<p>Describes potential issues found during state machine validation. Rather than raise an exception, validation will return a list of <b>diagnostic elements</b> containing diagnostic information. </p> <note> <p>The <a href=\"https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinition.html\">ValidateStateMachineDefinitionlAPI</a> might add new diagnostics in the future, adjust diagnostic codes, or change the message wording. Your automated processes should only rely on the value of the <b>result</b> field value (OK, FAIL). Do <b>not</b> rely on the exact order, count, or wording of diagnostic messages.</p> </note> <p> <b>List of warning codes</b> </p> <dl> <dt>NO_DOLLAR</dt> <dd> <p>No <code>.$</code> on a field that appears to be a JSONPath or Intrinsic Function.</p> </dd> <dt>NO_PATH</dt> <dd> <p>Field value looks like a path, but field name does not end with 'Path'.</p> </dd> <dt>PASS_RESULT_IS_STATIC</dt> <dd> <p>Attempt to use a path in the result of a pass state.</p> </dd> </dl> <p> <b>List of error codes</b> </p> <dl> <dt>INVALID_JSON_DESCRIPTION</dt> <dd> <p>JSON syntax problem found.</p> </dd> <dt>MISSING_DESCRIPTION</dt> <dd> <p>Received a null or empty workflow input.</p> </dd> <dt>SCHEMA_VALIDATION_FAILED</dt> <dd> <p>Schema validation reported errors.</p> </dd> <dt>INVALID_RESOURCE</dt> <dd> <p>The value of a Task-state resource field is invalid.</p> </dd> <dt>MISSING_END_STATE</dt> <dd> <p>The workflow does not have a terminal state.</p> </dd> <dt>DUPLICATE_STATE_NAME</dt> <dd> <p>The same state name appears more than once.</p> </dd> <dt>INVALID_STATE_NAME</dt> <dd> <p>The state name does not follow the naming convention.</p> </dd> <dt>STATE_MACHINE_NAME_EMPTY</dt> <dd> <p>The state machine name has not been specified.</p> </dd> <dt>STATE_MACHINE_NAME_INVALID</dt> <dd> <p>The state machine name does not follow the naming convention.</p> </dd> <dt>STATE_MACHINE_NAME_TOO_LONG</dt> <dd> <p>The state name exceeds the allowed length.</p> </dd> <dt>STATE_MACHINE_NAME_ALREADY_EXISTS</dt> <dd> <p>The state name already exists.</p> </dd> <dt>DUPLICATE_LABEL_NAME</dt> <dd> <p>A label name appears more than once.</p> </dd> <dt>INVALID_LABEL_NAME</dt> <dd> <p>You have provided an invalid label name.</p> </dd> <dt>MISSING_TRANSITION_TARGET</dt> <dd> <p>The value of \"Next\" field doesn't match a known state name.</p> </dd> <dt>TOO_DEEPLY_NESTED</dt> <dd> <p>The states are too deeply nested.</p> </dd> </dl>",
       "refs": {
         "ValidateStateMachineDefinitionDiagnosticList$member": null
       }
@@ -1715,7 +1746,7 @@
     "ValidateStateMachineDefinitionDiagnosticList": {
       "base": null,
       "refs": {
-        "ValidateStateMachineDefinitionOutput$diagnostics": "<p>If the result is <code>OK</code>, this field will be empty. When there are errors, this field will contain an array of <b>Diagnostic</b> objects to help you troubleshoot.</p>"
+        "ValidateStateMachineDefinitionOutput$diagnostics": "<p>An array of diagnostic errors and warnings found during validation of the state machine definition. Since <b>warnings</b> do not prevent deploying your workflow definition, the <b>result</b> value could be <code>OK</code> even when warning diagnostics are present in the response.</p>"
       }
     },
     "ValidateStateMachineDefinitionInput": {
@@ -1755,7 +1786,7 @@
     "ValidateStateMachineDefinitionSeverity": {
       "base": null,
       "refs": {
-        "ValidateStateMachineDefinitionDiagnostic$severity": "<p>A value of <code>ERROR</code> means that you cannot create or update a state machine with this definition.</p>",
+        "ValidateStateMachineDefinitionDiagnostic$severity": "<p>A value of <code>ERROR</code> means that you cannot create or update a state machine with this definition.</p> <p> <code>WARNING</code> level diagnostics alert you to potential issues, but they will not prevent you from creating or updating your state machine.</p>",
         "ValidateStateMachineDefinitionInput$severity": "<p>Minimum level of diagnostics to return. <code>ERROR</code> returns only <code>ERROR</code> diagnostics, whereas <code>WARNING</code> returns both <code>WARNING</code> and <code>ERROR</code> diagnostics. The default is <code>ERROR</code>. </p>"
       }
     },
@@ -1774,6 +1805,32 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>The input does not satisfy the constraints specified by an Amazon Web Services service.</p>"
+      }
+    },
+    "VariableName": {
+      "base": null,
+      "refs": {
+        "AssignedVariables$key": null,
+        "VariableNameList$member": null
+      }
+    },
+    "VariableNameList": {
+      "base": null,
+      "refs": {
+        "VariableReferences$value": null
+      }
+    },
+    "VariableReferences": {
+      "base": null,
+      "refs": {
+        "DescribeStateMachineForExecutionOutput$variableReferences": "<p>A map of <b>state name</b> to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.</p>",
+        "DescribeStateMachineOutput$variableReferences": "<p>A map of <b>state name</b> to a list of variables referenced by that state. States that do not use variable references will not be shown in the response.</p>"
+      }
+    },
+    "VariableValue": {
+      "base": null,
+      "refs": {
+        "AssignedVariables$value": null
       }
     },
     "VersionDescription": {
@@ -1800,7 +1857,8 @@
     "truncated": {
       "base": null,
       "refs": {
-        "HistoryEventExecutionDataDetails$truncated": "<p>Indicates whether input or output was truncated in the response. Always <code>false</code> for API calls.</p>"
+        "AssignedVariablesDetails$truncated": "<p>Indicates whether assigned variables were truncated in the response. Always <code>false</code> for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.</p>",
+        "HistoryEventExecutionDataDetails$truncated": "<p>Indicates whether input or output was truncated in the response. Always <code>false</code> for API calls. In CloudWatch logs, the value will be true if the data is truncated due to size limits.</p>"
       }
     }
   }

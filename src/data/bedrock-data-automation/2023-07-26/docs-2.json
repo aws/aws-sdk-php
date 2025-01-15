@@ -1,0 +1,731 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon Bedrock Data Automation BuildTime</p>",
+  "operations": {
+    "CreateBlueprint": "<p>Creates an Amazon Bedrock Data Automation Blueprint</p>",
+    "CreateBlueprintVersion": "<p>Creates a new version of an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "CreateDataAutomationProject": "<p>Creates an Amazon Bedrock Data Automation Project</p>",
+    "DeleteBlueprint": "<p>Deletes an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "DeleteDataAutomationProject": "<p>Deletes an existing Amazon Bedrock Data Automation Project</p>",
+    "GetBlueprint": "<p>Gets an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "GetDataAutomationProject": "<p>Gets an existing Amazon Bedrock Data Automation Project</p>",
+    "ListBlueprints": "<p>Lists all existing Amazon Bedrock Data Automation Blueprints</p>",
+    "ListDataAutomationProjects": "<p>Lists all existing Amazon Bedrock Data Automation Projects</p>",
+    "UpdateBlueprint": "<p>Updates an existing Amazon Bedrock Data Automation Blueprint</p>",
+    "UpdateDataAutomationProject": "<p>Updates an existing Amazon Bedrock Data Automation Project</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
+      "refs": {
+      }
+    },
+    "AudioExtractionCategory": {
+      "base": "<p>Category of Audio Extraction</p>",
+      "refs": {
+        "AudioStandardExtraction$category": null
+      }
+    },
+    "AudioExtractionCategoryType": {
+      "base": null,
+      "refs": {
+        "AudioExtractionCategoryTypes$member": null
+      }
+    },
+    "AudioExtractionCategoryTypes": {
+      "base": "<p>List of Audio Extraction Category Type</p>",
+      "refs": {
+        "AudioExtractionCategory$types": null
+      }
+    },
+    "AudioStandardExtraction": {
+      "base": "<p>Standard Extraction Configuration of Audio</p>",
+      "refs": {
+        "AudioStandardOutputConfiguration$extraction": null
+      }
+    },
+    "AudioStandardGenerativeField": {
+      "base": "<p>Standard Generative Field Configuration of Audio</p>",
+      "refs": {
+        "AudioStandardOutputConfiguration$generativeField": null
+      }
+    },
+    "AudioStandardGenerativeFieldType": {
+      "base": null,
+      "refs": {
+        "AudioStandardGenerativeFieldTypes$member": null
+      }
+    },
+    "AudioStandardGenerativeFieldTypes": {
+      "base": "<p>List of Audio Standard Generative Field Type</p>",
+      "refs": {
+        "AudioStandardGenerativeField$types": null
+      }
+    },
+    "AudioStandardOutputConfiguration": {
+      "base": "<p>Standard Output Configuration of Audio</p>",
+      "refs": {
+        "StandardOutputConfiguration$audio": null
+      }
+    },
+    "Blueprint": {
+      "base": "<p>Contains the information of a Blueprint.</p>",
+      "refs": {
+        "CreateBlueprintResponse$blueprint": null,
+        "CreateBlueprintVersionResponse$blueprint": null,
+        "GetBlueprintResponse$blueprint": null,
+        "UpdateBlueprintResponse$blueprint": null
+      }
+    },
+    "BlueprintArn": {
+      "base": "<p>ARN of a Blueprint</p>",
+      "refs": {
+        "Blueprint$blueprintArn": null,
+        "BlueprintFilter$blueprintArn": null,
+        "BlueprintItem$blueprintArn": null,
+        "BlueprintSummary$blueprintArn": null,
+        "CreateBlueprintVersionRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
+        "DeleteBlueprintRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
+        "GetBlueprintRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>",
+        "ListBlueprintsRequest$blueprintArn": null,
+        "UpdateBlueprintRequest$blueprintArn": "<p>ARN generated at the server side when a Blueprint is created</p>"
+      }
+    },
+    "BlueprintFilter": {
+      "base": "<p>Blueprint Filter</p>",
+      "refs": {
+        "ListDataAutomationProjectsRequest$blueprintFilter": null
+      }
+    },
+    "BlueprintItem": {
+      "base": "<p>Blueprint Item</p>",
+      "refs": {
+        "BlueprintItems$member": null
+      }
+    },
+    "BlueprintItems": {
+      "base": "<p>List of Blueprint Item</p>",
+      "refs": {
+        "CustomOutputConfiguration$blueprints": null
+      }
+    },
+    "BlueprintName": {
+      "base": "<p>Name of the Blueprint</p>",
+      "refs": {
+        "Blueprint$blueprintName": null,
+        "BlueprintSummary$blueprintName": null,
+        "CreateBlueprintRequest$blueprintName": null
+      }
+    },
+    "BlueprintSchema": {
+      "base": "<p>Schema of the blueprint</p>",
+      "refs": {
+        "Blueprint$schema": null,
+        "CreateBlueprintRequest$schema": null,
+        "UpdateBlueprintRequest$schema": null
+      }
+    },
+    "BlueprintStage": {
+      "base": "<p>Stage of the Blueprint</p>",
+      "refs": {
+        "Blueprint$blueprintStage": null,
+        "BlueprintFilter$blueprintStage": null,
+        "BlueprintItem$blueprintStage": null,
+        "BlueprintSummary$blueprintStage": null,
+        "CreateBlueprintRequest$blueprintStage": null,
+        "GetBlueprintRequest$blueprintStage": "<p>Optional field to get a specific Blueprint stage</p>",
+        "UpdateBlueprintRequest$blueprintStage": null
+      }
+    },
+    "BlueprintStageFilter": {
+      "base": "<p>Blueprint Stage filter</p>",
+      "refs": {
+        "ListBlueprintsRequest$blueprintStageFilter": null
+      }
+    },
+    "BlueprintSummary": {
+      "base": "<p>Summary of a Blueprint</p>",
+      "refs": {
+        "Blueprints$member": null
+      }
+    },
+    "BlueprintVersion": {
+      "base": "<p>Blueprint Version</p>",
+      "refs": {
+        "Blueprint$blueprintVersion": null,
+        "BlueprintFilter$blueprintVersion": null,
+        "BlueprintItem$blueprintVersion": null,
+        "BlueprintSummary$blueprintVersion": null,
+        "DeleteBlueprintRequest$blueprintVersion": "<p>Optional field to delete a specific Blueprint version</p>",
+        "GetBlueprintRequest$blueprintVersion": "<p>Optional field to get a specific Blueprint version</p>"
+      }
+    },
+    "Blueprints": {
+      "base": "<p>List of Blueprints</p>",
+      "refs": {
+        "ListBlueprintsResponse$blueprints": null
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Client specified token used for idempotency checks</p>",
+      "refs": {
+        "CreateBlueprintRequest$clientToken": null,
+        "CreateBlueprintVersionRequest$clientToken": null,
+        "CreateDataAutomationProjectRequest$clientToken": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
+      "refs": {
+      }
+    },
+    "CreateBlueprintRequest": {
+      "base": "<p>Create Blueprint Request</p>",
+      "refs": {
+      }
+    },
+    "CreateBlueprintResponse": {
+      "base": "<p>Create Blueprint Response</p>",
+      "refs": {
+      }
+    },
+    "CreateBlueprintVersionRequest": {
+      "base": "<p>Create Blueprint Version Request</p>",
+      "refs": {
+      }
+    },
+    "CreateBlueprintVersionResponse": {
+      "base": "<p>Create Blueprint Version Response</p>",
+      "refs": {
+      }
+    },
+    "CreateDataAutomationProjectRequest": {
+      "base": "<p>Create DataAutomationProject Request</p>",
+      "refs": {
+      }
+    },
+    "CreateDataAutomationProjectResponse": {
+      "base": "<p>Create DataAutomationProject Response</p>",
+      "refs": {
+      }
+    },
+    "CustomOutputConfiguration": {
+      "base": "<p>Custom output configuration</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$customOutputConfiguration": null,
+        "DataAutomationProject$customOutputConfiguration": null,
+        "UpdateDataAutomationProjectRequest$customOutputConfiguration": null
+      }
+    },
+    "DataAutomationProject": {
+      "base": "<p>Contains the information of a DataAutomationProject.</p>",
+      "refs": {
+        "GetDataAutomationProjectResponse$project": null
+      }
+    },
+    "DataAutomationProjectArn": {
+      "base": "<p>ARN of a DataAutomationProject</p>",
+      "refs": {
+        "CreateDataAutomationProjectResponse$projectArn": null,
+        "DataAutomationProject$projectArn": null,
+        "DataAutomationProjectFilter$projectArn": null,
+        "DataAutomationProjectSummary$projectArn": null,
+        "DeleteDataAutomationProjectRequest$projectArn": "<p>ARN generated at the server side when a DataAutomationProject is created</p>",
+        "DeleteDataAutomationProjectResponse$projectArn": null,
+        "GetDataAutomationProjectRequest$projectArn": "<p>ARN generated at the server side when a DataAutomationProject is created</p>",
+        "UpdateDataAutomationProjectRequest$projectArn": "<p>ARN generated at the server side when a DataAutomationProject is created</p>",
+        "UpdateDataAutomationProjectResponse$projectArn": null
+      }
+    },
+    "DataAutomationProjectDescription": {
+      "base": "<p>Description of the DataAutomationProject</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$projectDescription": null,
+        "DataAutomationProject$projectDescription": null,
+        "UpdateDataAutomationProjectRequest$projectDescription": null
+      }
+    },
+    "DataAutomationProjectFilter": {
+      "base": "<p>Data Automation Project Filter</p>",
+      "refs": {
+        "ListBlueprintsRequest$projectFilter": null
+      }
+    },
+    "DataAutomationProjectName": {
+      "base": "<p>Name of the DataAutomationProject</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$projectName": null,
+        "DataAutomationProject$projectName": null,
+        "DataAutomationProjectSummary$projectName": null
+      }
+    },
+    "DataAutomationProjectStage": {
+      "base": "<p>Stage of the Project</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$projectStage": null,
+        "CreateDataAutomationProjectResponse$projectStage": null,
+        "DataAutomationProject$projectStage": null,
+        "DataAutomationProjectFilter$projectStage": null,
+        "DataAutomationProjectSummary$projectStage": null,
+        "GetDataAutomationProjectRequest$projectStage": "<p>Optional field to delete a specific DataAutomationProject stage</p>",
+        "UpdateDataAutomationProjectRequest$projectStage": null,
+        "UpdateDataAutomationProjectResponse$projectStage": null
+      }
+    },
+    "DataAutomationProjectStageFilter": {
+      "base": "<p>Project Stage filter</p>",
+      "refs": {
+        "ListDataAutomationProjectsRequest$projectStageFilter": null
+      }
+    },
+    "DataAutomationProjectStatus": {
+      "base": "<p>Status of Data Automation Project</p>",
+      "refs": {
+        "CreateDataAutomationProjectResponse$status": null,
+        "DataAutomationProject$status": null,
+        "DeleteDataAutomationProjectResponse$status": null,
+        "UpdateDataAutomationProjectResponse$status": null
+      }
+    },
+    "DataAutomationProjectSummaries": {
+      "base": "<p>List of DataAutomationProjectSummary</p>",
+      "refs": {
+        "ListDataAutomationProjectsResponse$projects": null
+      }
+    },
+    "DataAutomationProjectSummary": {
+      "base": "<p>Summary of a DataAutomationProject</p>",
+      "refs": {
+        "DataAutomationProjectSummaries$member": null
+      }
+    },
+    "DateTimestamp": {
+      "base": "<p>Time Stamp</p>",
+      "refs": {
+        "Blueprint$creationTime": null,
+        "Blueprint$lastModifiedTime": null,
+        "BlueprintSummary$creationTime": null,
+        "BlueprintSummary$lastModifiedTime": null,
+        "DataAutomationProject$creationTime": null,
+        "DataAutomationProject$lastModifiedTime": null,
+        "DataAutomationProjectSummary$creationTime": null
+      }
+    },
+    "DeleteBlueprintRequest": {
+      "base": "<p>Delete Blueprint Request</p>",
+      "refs": {
+      }
+    },
+    "DeleteBlueprintResponse": {
+      "base": "<p>Delete Blueprint Response</p>",
+      "refs": {
+      }
+    },
+    "DeleteDataAutomationProjectRequest": {
+      "base": "<p>Delete DataAutomationProject Request</p>",
+      "refs": {
+      }
+    },
+    "DeleteDataAutomationProjectResponse": {
+      "base": "<p>Delete DataAutomationProject Response</p>",
+      "refs": {
+      }
+    },
+    "DocumentBoundingBox": {
+      "base": "<p>Bounding Box Configuration of Document Extraction</p>",
+      "refs": {
+        "DocumentStandardExtraction$boundingBox": null
+      }
+    },
+    "DocumentExtractionGranularity": {
+      "base": "<p>Granularity of Document Extraction</p>",
+      "refs": {
+        "DocumentStandardExtraction$granularity": null
+      }
+    },
+    "DocumentExtractionGranularityType": {
+      "base": null,
+      "refs": {
+        "DocumentExtractionGranularityTypes$member": null
+      }
+    },
+    "DocumentExtractionGranularityTypes": {
+      "base": "<p>List of Document Extraction Granularity Type</p>",
+      "refs": {
+        "DocumentExtractionGranularity$types": null
+      }
+    },
+    "DocumentOutputAdditionalFileFormat": {
+      "base": "<p>Additional File Format of Document Output</p>",
+      "refs": {
+        "DocumentOutputFormat$additionalFileFormat": null
+      }
+    },
+    "DocumentOutputFormat": {
+      "base": "<p>Output Format of Document</p>",
+      "refs": {
+        "DocumentStandardOutputConfiguration$outputFormat": null
+      }
+    },
+    "DocumentOutputTextFormat": {
+      "base": "<p>Text Format of Document Output</p>",
+      "refs": {
+        "DocumentOutputFormat$textFormat": null
+      }
+    },
+    "DocumentOutputTextFormatType": {
+      "base": null,
+      "refs": {
+        "DocumentOutputTextFormatTypes$member": null
+      }
+    },
+    "DocumentOutputTextFormatTypes": {
+      "base": "<p>List of Document Output Text Format Type</p>",
+      "refs": {
+        "DocumentOutputTextFormat$types": null
+      }
+    },
+    "DocumentOverrideConfiguration": {
+      "base": "<p>Override Configuration of Document</p>",
+      "refs": {
+        "OverrideConfiguration$document": null
+      }
+    },
+    "DocumentStandardExtraction": {
+      "base": "<p>Standard Extraction Configuration of Document</p>",
+      "refs": {
+        "DocumentStandardOutputConfiguration$extraction": null
+      }
+    },
+    "DocumentStandardGenerativeField": {
+      "base": "<p>Standard Generative Field Configuration of Document</p>",
+      "refs": {
+        "DocumentStandardOutputConfiguration$generativeField": null
+      }
+    },
+    "DocumentStandardOutputConfiguration": {
+      "base": "<p>Standard Output Configuration of Document</p>",
+      "refs": {
+        "StandardOutputConfiguration$document": null
+      }
+    },
+    "EncryptionConfiguration": {
+      "base": "<p>KMS Encryption Configuration</p>",
+      "refs": {
+        "CreateBlueprintRequest$encryptionConfiguration": null,
+        "CreateDataAutomationProjectRequest$encryptionConfiguration": null
+      }
+    },
+    "GetBlueprintRequest": {
+      "base": "<p>Get Blueprint Request</p>",
+      "refs": {
+      }
+    },
+    "GetBlueprintResponse": {
+      "base": "<p>Get Blueprint Response</p>",
+      "refs": {
+      }
+    },
+    "GetDataAutomationProjectRequest": {
+      "base": "<p>Get DataAutomationProject Request</p>",
+      "refs": {
+      }
+    },
+    "GetDataAutomationProjectResponse": {
+      "base": "<p>Get DataAutomationProject Response</p>",
+      "refs": {
+      }
+    },
+    "ImageBoundingBox": {
+      "base": "<p>Bounding Box Configuration of Image Extraction</p>",
+      "refs": {
+        "ImageStandardExtraction$boundingBox": null
+      }
+    },
+    "ImageExtractionCategory": {
+      "base": "<p>Category of Image Extraction</p>",
+      "refs": {
+        "ImageStandardExtraction$category": null
+      }
+    },
+    "ImageExtractionCategoryType": {
+      "base": null,
+      "refs": {
+        "ImageExtractionCategoryTypes$member": null
+      }
+    },
+    "ImageExtractionCategoryTypes": {
+      "base": "<p>List of Image Extraction Category</p>",
+      "refs": {
+        "ImageExtractionCategory$types": null
+      }
+    },
+    "ImageStandardExtraction": {
+      "base": "<p>Standard Extraction Configuration of Image</p>",
+      "refs": {
+        "ImageStandardOutputConfiguration$extraction": null
+      }
+    },
+    "ImageStandardGenerativeField": {
+      "base": "<p>Standard Generative Field Configuration of Image</p>",
+      "refs": {
+        "ImageStandardOutputConfiguration$generativeField": null
+      }
+    },
+    "ImageStandardGenerativeFieldType": {
+      "base": null,
+      "refs": {
+        "ImageStandardGenerativeFieldTypes$member": null
+      }
+    },
+    "ImageStandardGenerativeFieldTypes": {
+      "base": "<p>List of Image Standard Generative Field Type</p>",
+      "refs": {
+        "ImageStandardGenerativeField$types": null
+      }
+    },
+    "ImageStandardOutputConfiguration": {
+      "base": "<p>Standard Output Configuration of Image</p>",
+      "refs": {
+        "StandardOutputConfiguration$image": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
+      "refs": {
+      }
+    },
+    "KmsEncryptionContext": {
+      "base": "<p>KMS Encryption Context</p>",
+      "refs": {
+        "Blueprint$kmsEncryptionContext": null,
+        "DataAutomationProject$kmsEncryptionContext": null,
+        "EncryptionConfiguration$kmsEncryptionContext": null
+      }
+    },
+    "KmsKeyId": {
+      "base": "<p>KMS Key Identifier</p>",
+      "refs": {
+        "Blueprint$kmsKeyId": null,
+        "DataAutomationProject$kmsKeyId": null,
+        "EncryptionConfiguration$kmsKeyId": null
+      }
+    },
+    "ListBlueprintsRequest": {
+      "base": "<p>List Blueprint Request</p>",
+      "refs": {
+      }
+    },
+    "ListBlueprintsResponse": {
+      "base": "<p>List Blueprint Response</p>",
+      "refs": {
+      }
+    },
+    "ListDataAutomationProjectsRequest": {
+      "base": "<p>List DataAutomationProject Request</p>",
+      "refs": {
+      }
+    },
+    "ListDataAutomationProjectsResponse": {
+      "base": "<p>List DataAutomationProject Response</p>",
+      "refs": {
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Max Results</p>",
+      "refs": {
+        "ListBlueprintsRequest$maxResults": null,
+        "ListDataAutomationProjectsRequest$maxResults": null
+      }
+    },
+    "NextToken": {
+      "base": "<p>Pagination token</p>",
+      "refs": {
+        "ListBlueprintsRequest$nextToken": null,
+        "ListBlueprintsResponse$nextToken": null,
+        "ListDataAutomationProjectsRequest$nextToken": null,
+        "ListDataAutomationProjectsResponse$nextToken": null
+      }
+    },
+    "NonBlankString": {
+      "base": "<p>Non Blank String</p>",
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": null,
+        "ValidationExceptionField$message": null
+      }
+    },
+    "OverrideConfiguration": {
+      "base": "<p>Override configuration</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$overrideConfiguration": null,
+        "DataAutomationProject$overrideConfiguration": null,
+        "UpdateDataAutomationProjectRequest$overrideConfiguration": null
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
+      "refs": {
+      }
+    },
+    "ResourceOwner": {
+      "base": "<p>Resource Owner</p>",
+      "refs": {
+        "ListBlueprintsRequest$resourceOwner": null,
+        "ListDataAutomationProjectsRequest$resourceOwner": null
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>This exception is thrown when a request is made beyond the service quota</p>",
+      "refs": {
+      }
+    },
+    "SplitterConfiguration": {
+      "base": "<p>Configuration of Splitter</p>",
+      "refs": {
+        "DocumentOverrideConfiguration$splitter": null
+      }
+    },
+    "StandardOutputConfiguration": {
+      "base": "<p>Standard output configuration</p>",
+      "refs": {
+        "CreateDataAutomationProjectRequest$standardOutputConfiguration": null,
+        "DataAutomationProject$standardOutputConfiguration": null,
+        "UpdateDataAutomationProjectRequest$standardOutputConfiguration": null
+      }
+    },
+    "State": {
+      "base": "<p>State</p>",
+      "refs": {
+        "AudioExtractionCategory$state": null,
+        "AudioStandardGenerativeField$state": null,
+        "DocumentBoundingBox$state": null,
+        "DocumentOutputAdditionalFileFormat$state": null,
+        "DocumentStandardGenerativeField$state": null,
+        "ImageBoundingBox$state": null,
+        "ImageExtractionCategory$state": null,
+        "ImageStandardGenerativeField$state": null,
+        "SplitterConfiguration$state": null,
+        "VideoBoundingBox$state": null,
+        "VideoExtractionCategory$state": null,
+        "VideoStandardGenerativeField$state": null
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "KmsEncryptionContext$key": null,
+        "KmsEncryptionContext$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>This exception is thrown when the number of requests exceeds the limit</p>",
+      "refs": {
+      }
+    },
+    "Type": {
+      "base": "<p>Type</p>",
+      "refs": {
+        "Blueprint$type": null,
+        "CreateBlueprintRequest$type": null
+      }
+    },
+    "UpdateBlueprintRequest": {
+      "base": "<p>Update Blueprint Request</p>",
+      "refs": {
+      }
+    },
+    "UpdateBlueprintResponse": {
+      "base": "<p>Update Blueprint Response</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataAutomationProjectRequest": {
+      "base": "<p>Update DataAutomationProject Request</p>",
+      "refs": {
+      }
+    },
+    "UpdateDataAutomationProjectResponse": {
+      "base": "<p>Update DataAutomationProject Response</p>",
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>This exception is thrown when the request's input validation fails</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Stores information about a field passed inside a request that resulted in an exception</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": "<p>list of ValidationExceptionField</p>",
+      "refs": {
+        "ValidationException$fieldList": null
+      }
+    },
+    "VideoBoundingBox": {
+      "base": "<p>Bounding Box Configuration of Video Extraction</p>",
+      "refs": {
+        "VideoStandardExtraction$boundingBox": null
+      }
+    },
+    "VideoExtractionCategory": {
+      "base": "<p>Category of Video Extraction</p>",
+      "refs": {
+        "VideoStandardExtraction$category": null
+      }
+    },
+    "VideoExtractionCategoryType": {
+      "base": null,
+      "refs": {
+        "VideoExtractionCategoryTypes$member": null
+      }
+    },
+    "VideoExtractionCategoryTypes": {
+      "base": "<p>List of Video Extraction Category Type</p>",
+      "refs": {
+        "VideoExtractionCategory$types": null
+      }
+    },
+    "VideoStandardExtraction": {
+      "base": "<p>Standard Extraction Configuration of Video</p>",
+      "refs": {
+        "VideoStandardOutputConfiguration$extraction": null
+      }
+    },
+    "VideoStandardGenerativeField": {
+      "base": "<p>Standard Generative Field Configuration of Video</p>",
+      "refs": {
+        "VideoStandardOutputConfiguration$generativeField": null
+      }
+    },
+    "VideoStandardGenerativeFieldType": {
+      "base": null,
+      "refs": {
+        "VideoStandardGenerativeFieldTypes$member": null
+      }
+    },
+    "VideoStandardGenerativeFieldTypes": {
+      "base": "<p>List of Video Standard Generative Field Type</p>",
+      "refs": {
+        "VideoStandardGenerativeField$types": null
+      }
+    },
+    "VideoStandardOutputConfiguration": {
+      "base": "<p>Standard Output Configuration of Video</p>",
+      "refs": {
+        "StandardOutputConfiguration$video": null
+      }
+    }
+  }
+}

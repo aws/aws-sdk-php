@@ -501,7 +501,8 @@
       "members":{
         "accountName":{"shape":"WhatsAppBusinessAccountName"},
         "registrationStatus":{"shape":"RegistrationStatus"},
-        "unregisteredWhatsAppPhoneNumbers":{"shape":"WhatsAppPhoneNumberDetailList"}
+        "unregisteredWhatsAppPhoneNumbers":{"shape":"WhatsAppPhoneNumberDetailList"},
+        "wabaId":{"shape":"LinkedWhatsAppBusinessAccountId"}
       }
     },
     "LinkedWhatsAppBusinessAccountSummary":{
@@ -643,6 +644,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "RoleArn":{
+      "type":"string",
+      "pattern":"arn:aws:iam::\\d{12}:role\\/[a-zA-Z0-9+=,.@\\-_]+"
     },
     "S3File":{
       "type":"structure",
@@ -823,7 +828,8 @@
       "type":"structure",
       "required":["eventDestinationArn"],
       "members":{
-        "eventDestinationArn":{"shape":"EventDestinationArn"}
+        "eventDestinationArn":{"shape":"EventDestinationArn"},
+        "roleArn":{"shape":"RoleArn"}
       }
     },
     "WhatsAppBusinessAccountEventDestinations":{

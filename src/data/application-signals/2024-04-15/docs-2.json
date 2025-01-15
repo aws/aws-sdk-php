@@ -105,6 +105,26 @@
         "ServiceLevelObjectiveBudgetReport$BudgetSecondsRemaining": "<p>The budget amount remaining before the SLO status becomes <code>BREACHING</code>, at the time specified in the <code>Timestemp</code> parameter of the request. If this value is negative, then the SLO is already in <code>BREACHING</code> status.</p> <p> This field is included only if the SLO is a period-based SLO.</p>"
       }
     },
+    "BurnRateConfiguration": {
+      "base": "<p>This object defines the length of the look-back window used to calculate one burn rate metric for this SLO. The burn rate measures how fast the service is consuming the error budget, relative to the attainment goal of the SLO. A burn rate of exactly 1 indicates that the SLO goal will be met exactly.</p> <p>For example, if you specify 60 as the number of minutes in the look-back window, the burn rate is calculated as the following:</p> <p> <i>burn rate = error rate over the look-back window / (1 - attainment goal percentage)</i> </p> <p>For more information about burn rates, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html#CloudWatch-ServiceLevelObjectives-burn\">Calculate burn rates</a>.</p>",
+      "refs": {
+        "BurnRateConfigurations$member": null
+      }
+    },
+    "BurnRateConfigurations": {
+      "base": null,
+      "refs": {
+        "CreateServiceLevelObjectiveInput$BurnRateConfigurations": "<p>Use this array to create <i>burn rates</i> for this SLO. Each burn rate is a metric that indicates how fast the service is consuming the error budget, relative to the attainment goal of the SLO.</p>",
+        "ServiceLevelObjective$BurnRateConfigurations": "<p>Each object in this array defines the length of the look-back window used to calculate one burn rate metric for this SLO. The burn rate measures how fast the service is consuming the error budget, relative to the attainment goal of the SLO.</p>",
+        "UpdateServiceLevelObjectiveInput$BurnRateConfigurations": "<p>Use this array to create <i>burn rates</i> for this SLO. Each burn rate is a metric that indicates how fast the service is consuming the error budget, relative to the attainment goal of the SLO.</p>"
+      }
+    },
+    "BurnRateLookBackWindowMinutes": {
+      "base": null,
+      "refs": {
+        "BurnRateConfiguration$LookBackWindowMinutes": "<p>The number of minutes to use as the look-back window.</p>"
+      }
+    },
     "CalendarInterval": {
       "base": "<p>If the interval for this service level objective is a calendar interval, this structure contains the interval specifications.</p>",
       "refs": {

@@ -1548,7 +1548,7 @@
           "locationName": "audioNormalizationSettings"
         },
         "AudioSourceName": {
-          "shape": "__string",
+          "shape": "__stringMax2048",
           "locationName": "audioSourceName"
         },
         "AudioType": {
@@ -2181,6 +2181,10 @@
         "OutlineSize": {
           "shape": "__integerMin0Max10",
           "locationName": "outlineSize"
+        },
+        "RemoveRubyReserveAttributes": {
+          "shape": "RemoveRubyReserveAttributes",
+          "locationName": "removeRubyReserveAttributes"
         },
         "ShadowColor": {
           "shape": "BurninSubtitleShadowColor",
@@ -3384,6 +3388,10 @@
     "CreateQueueRequest": {
       "type": "structure",
       "members": {
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "Description": {
           "shape": "__string",
           "locationName": "description"
@@ -5307,6 +5315,10 @@
         "UnregisteredSeiTimecode": {
           "shape": "H264UnregisteredSeiTimecode",
           "locationName": "unregisteredSeiTimecode"
+        },
+        "WriteMp4PackagingType": {
+          "shape": "H264WriteMp4PackagingType",
+          "locationName": "writeMp4PackagingType"
         }
       }
     },
@@ -5351,6 +5363,13 @@
       "enum": [
         "DISABLED",
         "ENABLED"
+      ]
+    },
+    "H264WriteMp4PackagingType": {
+      "type": "string",
+      "enum": [
+        "AVC1",
+        "AVC3"
       ]
     },
     "H265AdaptiveQuantization": {
@@ -6423,7 +6442,7 @@
           "locationName": "dolbyVisionMetadataXml"
         },
         "FileInput": {
-          "shape": "__stringPatternS3Https",
+          "shape": "__stringMax2048PatternS3Https",
           "locationName": "fileInput"
         },
         "FilterEnable": {
@@ -7135,7 +7154,7 @@
           "locationName": "contentReference"
         },
         "CredentialsSecretName": {
-          "shape": "__stringMin1Max512PatternAZAZ09",
+          "shape": "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09",
           "locationName": "credentialsSecretName"
         },
         "FileOffset": {
@@ -7541,6 +7560,14 @@
         "Queues": {
           "shape": "__listOfQueue",
           "locationName": "queues"
+        },
+        "TotalConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "totalConcurrentJobs"
+        },
+        "UnallocatedConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "unallocatedConcurrentJobs"
         }
       }
     },
@@ -9058,7 +9085,7 @@
           "locationName": "containerSettings"
         },
         "Extension": {
-          "shape": "__string",
+          "shape": "__stringMax256",
           "locationName": "extension"
         },
         "NameModifier": {
@@ -9117,7 +9144,7 @@
           "locationName": "customName"
         },
         "Name": {
-          "shape": "__string",
+          "shape": "__stringMax2048",
           "locationName": "name"
         },
         "OutputGroupSettings": {
@@ -9487,6 +9514,10 @@
           "shape": "__string",
           "locationName": "arn"
         },
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "CreatedAt": {
           "shape": "__timestampUnix",
           "locationName": "createdAt"
@@ -9514,6 +9545,10 @@
         "ReservationPlan": {
           "shape": "ReservationPlan",
           "locationName": "reservationPlan"
+        },
+        "ServiceOverrides": {
+          "shape": "__listOfServiceOverride",
+          "locationName": "serviceOverrides"
         },
         "Status": {
           "shape": "QueueStatus",
@@ -9608,6 +9643,13 @@
           "locationName": "channelsOut"
         }
       }
+    },
+    "RemoveRubyReserveAttributes": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
     },
     "RenewalType": {
       "type": "string",
@@ -9867,6 +9909,27 @@
         }
       }
     },
+    "ServiceOverride": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "OverrideValue": {
+          "shape": "__string",
+          "locationName": "overrideValue"
+        },
+        "Value": {
+          "shape": "__string",
+          "locationName": "value"
+        }
+      }
+    },
     "SimulateReservedQueue": {
       "type": "string",
       "enum": [
@@ -10097,6 +10160,13 @@
         "EMBEDDED",
         "ZEROBASED",
         "SPECIFIEDSTART"
+      ]
+    },
+    "TimecodeTrack": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
       ]
     },
     "TimedMetadata": {
@@ -10389,6 +10459,10 @@
     "UpdateQueueRequest": {
       "type": "structure",
       "members": {
+        "ConcurrentJobs": {
+          "shape": "__integer",
+          "locationName": "concurrentJobs"
+        },
         "Description": {
           "shape": "__string",
           "locationName": "description"
@@ -10648,6 +10722,10 @@
         "TimecodeInsertion": {
           "shape": "VideoTimecodeInsertion",
           "locationName": "timecodeInsertion"
+        },
+        "TimecodeTrack": {
+          "shape": "TimecodeTrack",
+          "locationName": "timecodeTrack"
         },
         "VideoPreprocessors": {
           "shape": "VideoPreprocessor",
@@ -12252,6 +12330,12 @@
         "shape": "QueueTransition"
       }
     },
+    "__listOfServiceOverride": {
+      "type": "list",
+      "member": {
+        "shape": "ServiceOverride"
+      }
+    },
     "__listOfTeletextPageType": {
       "type": "list",
       "member": {
@@ -12379,6 +12463,19 @@
       "type": "string",
       "max": 1000
     },
+    "__stringMax2048": {
+      "type": "string",
+      "max": 2048
+    },
+    "__stringMax2048PatternS3Https": {
+      "type": "string",
+      "max": 2048,
+      "pattern": "^s3://([^\\/]+\\/+)+((([^\\/]*)))|^https?://[^\\/].*[^&]$"
+    },
+    "__stringMax256": {
+      "type": "string",
+      "max": 256
+    },
     "__stringMin0": {
       "type": "string",
       "min": 0
@@ -12439,6 +12536,12 @@
       "min": 1,
       "max": 20
     },
+    "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09": {
+      "type": "string",
+      "min": 1,
+      "max": 2048,
+      "pattern": "^(arn:[a-z-]+:secretsmanager:[\\w-]+:\\d{12}:secret:)?[a-zA-Z0-9_\\/_+=.@-]*$"
+    },
     "__stringMin1Max256": {
       "type": "string",
       "min": 1,
@@ -12453,12 +12556,6 @@
       "type": "string",
       "min": 1,
       "max": 50,
-      "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
-    },
-    "__stringMin1Max512PatternAZAZ09": {
-      "type": "string",
-      "min": 1,
-      "max": 512,
       "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
     },
     "__stringMin24Max512PatternAZaZ0902": {

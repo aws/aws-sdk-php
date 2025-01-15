@@ -680,6 +680,22 @@
       ],
       "idempotent":true
     },
+    "GetRecoveryPointIndexDetails":{
+      "name":"GetRecoveryPointIndexDetails",
+      "http":{
+        "method":"GET",
+        "requestUri":"/backup-vaults/{backupVaultName}/recovery-points/{recoveryPointArn}/index"
+      },
+      "input":{"shape":"GetRecoveryPointIndexDetailsInput"},
+      "output":{"shape":"GetRecoveryPointIndexDetailsOutput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "GetRecoveryPointRestoreMetadata":{
       "name":"GetRecoveryPointRestoreMetadata",
       "http":{
@@ -910,6 +926,21 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceUnavailableException"}
       ]
+    },
+    "ListIndexedRecoveryPoints":{
+      "name":"ListIndexedRecoveryPoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/indexes/recovery-point/"
+      },
+      "input":{"shape":"ListIndexedRecoveryPointsInput"},
+      "output":{"shape":"ListIndexedRecoveryPointsOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
     },
     "ListLegalHolds":{
       "name":"ListLegalHolds",
@@ -1343,6 +1374,23 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "UpdateRecoveryPointIndexSettings":{
+      "name":"UpdateRecoveryPointIndexSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/backup-vaults/{backupVaultName}/recovery-points/{recoveryPointArn}/index"
+      },
+      "input":{"shape":"UpdateRecoveryPointIndexSettingsInput"},
+      "output":{"shape":"UpdateRecoveryPointIndexSettingsOutput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "UpdateRecoveryPointLifecycle":{
       "name":"UpdateRecoveryPointLifecycle",
       "http":{
@@ -1638,7 +1686,8 @@
         "RuleId":{"shape":"string"},
         "CopyActions":{"shape":"CopyActions"},
         "EnableContinuousBackup":{"shape":"Boolean"},
-        "ScheduleExpressionTimezone":{"shape":"Timezone"}
+        "ScheduleExpressionTimezone":{"shape":"Timezone"},
+        "IndexActions":{"shape":"IndexActions"}
       }
     },
     "BackupRuleInput":{
@@ -1657,7 +1706,8 @@
         "RecoveryPointTags":{"shape":"Tags"},
         "CopyActions":{"shape":"CopyActions"},
         "EnableContinuousBackup":{"shape":"Boolean"},
-        "ScheduleExpressionTimezone":{"shape":"Timezone"}
+        "ScheduleExpressionTimezone":{"shape":"Timezone"},
+        "IndexActions":{"shape":"IndexActions"}
       }
     },
     "BackupRuleName":{
@@ -2564,7 +2614,9 @@
         "CompositeMemberIdentifier":{"shape":"string"},
         "IsParent":{"shape":"boolean"},
         "ResourceName":{"shape":"string"},
-        "VaultType":{"shape":"VaultType"}
+        "VaultType":{"shape":"VaultType"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "IndexStatusMessage":{"shape":"string"}
       }
     },
     "DescribeRegionSettingsInput":{
@@ -2901,6 +2953,39 @@
         "RecoveryPointSelection":{"shape":"RecoveryPointSelection"}
       }
     },
+    "GetRecoveryPointIndexDetailsInput":{
+      "type":"structure",
+      "required":[
+        "BackupVaultName",
+        "RecoveryPointArn"
+      ],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        },
+        "RecoveryPointArn":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"recoveryPointArn"
+        }
+      }
+    },
+    "GetRecoveryPointIndexDetailsOutput":{
+      "type":"structure",
+      "members":{
+        "RecoveryPointArn":{"shape":"ARN"},
+        "BackupVaultArn":{"shape":"ARN"},
+        "SourceResourceArn":{"shape":"ARN"},
+        "IndexCreationDate":{"shape":"timestamp"},
+        "IndexDeletionDate":{"shape":"timestamp"},
+        "IndexCompletionDate":{"shape":"timestamp"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "IndexStatusMessage":{"shape":"string"},
+        "TotalItemsIndexed":{"shape":"Long"}
+      }
+    },
     "GetRecoveryPointRestoreMetadataInput":{
       "type":"structure",
       "required":[
@@ -3042,6 +3127,50 @@
     "GlobalSettingsValue":{"type":"string"},
     "IAMPolicy":{"type":"string"},
     "IAMRoleArn":{"type":"string"},
+    "Index":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "IndexAction":{
+      "type":"structure",
+      "members":{
+        "ResourceTypes":{"shape":"ResourceTypes"}
+      }
+    },
+    "IndexActions":{
+      "type":"list",
+      "member":{"shape":"IndexAction"}
+    },
+    "IndexStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACTIVE",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "IndexedRecoveryPoint":{
+      "type":"structure",
+      "members":{
+        "RecoveryPointArn":{"shape":"ARN"},
+        "SourceResourceArn":{"shape":"ARN"},
+        "IamRoleArn":{"shape":"ARN"},
+        "BackupCreationDate":{"shape":"timestamp"},
+        "ResourceType":{"shape":"ResourceType"},
+        "IndexCreationDate":{"shape":"timestamp"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "IndexStatusMessage":{"shape":"string"},
+        "BackupVaultArn":{"shape":"ARN"}
+      }
+    },
+    "IndexedRecoveryPointList":{
+      "type":"list",
+      "member":{"shape":"IndexedRecoveryPoint"}
+    },
     "InvalidParameterValueException":{
       "type":"structure",
       "members":{
@@ -3537,6 +3666,53 @@
       "type":"structure",
       "members":{
         "Frameworks":{"shape":"FrameworkList"},
+        "NextToken":{"shape":"string"}
+      }
+    },
+    "ListIndexedRecoveryPointsInput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "SourceResourceArn":{
+          "shape":"ARN",
+          "location":"querystring",
+          "locationName":"sourceResourceArn"
+        },
+        "CreatedBefore":{
+          "shape":"timestamp",
+          "location":"querystring",
+          "locationName":"createdBefore"
+        },
+        "CreatedAfter":{
+          "shape":"timestamp",
+          "location":"querystring",
+          "locationName":"createdAfter"
+        },
+        "ResourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
+        },
+        "IndexStatus":{
+          "shape":"IndexStatus",
+          "location":"querystring",
+          "locationName":"indexStatus"
+        }
+      }
+    },
+    "ListIndexedRecoveryPointsOutput":{
+      "type":"structure",
+      "members":{
+        "IndexedRecoveryPoints":{"shape":"IndexedRecoveryPointList"},
         "NextToken":{"shape":"string"}
       }
     },
@@ -4187,7 +4363,9 @@
         "CompositeMemberIdentifier":{"shape":"string"},
         "IsParent":{"shape":"boolean"},
         "ResourceName":{"shape":"string"},
-        "VaultType":{"shape":"VaultType"}
+        "VaultType":{"shape":"VaultType"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "IndexStatusMessage":{"shape":"string"}
       }
     },
     "RecoveryPointByBackupVaultList":{
@@ -4207,7 +4385,9 @@
         "IsParent":{"shape":"boolean"},
         "ParentRecoveryPointArn":{"shape":"ARN"},
         "ResourceName":{"shape":"string"},
-        "VaultType":{"shape":"VaultType"}
+        "VaultType":{"shape":"VaultType"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "IndexStatusMessage":{"shape":"string"}
       }
     },
     "RecoveryPointByResourceList":{
@@ -4662,7 +4842,8 @@
         "CompleteWindowMinutes":{"shape":"WindowMinutes"},
         "Lifecycle":{"shape":"Lifecycle"},
         "RecoveryPointTags":{"shape":"Tags"},
-        "BackupOptions":{"shape":"BackupOptions"}
+        "BackupOptions":{"shape":"BackupOptions"},
+        "Index":{"shape":"Index"}
       }
     },
     "StartBackupJobOutput":{
@@ -4860,6 +5041,37 @@
       "type":"structure",
       "members":{
         "GlobalSettings":{"shape":"GlobalSettings"}
+      }
+    },
+    "UpdateRecoveryPointIndexSettingsInput":{
+      "type":"structure",
+      "required":[
+        "BackupVaultName",
+        "RecoveryPointArn",
+        "Index"
+      ],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        },
+        "RecoveryPointArn":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"recoveryPointArn"
+        },
+        "IamRoleArn":{"shape":"IAMRoleArn"},
+        "Index":{"shape":"Index"}
+      }
+    },
+    "UpdateRecoveryPointIndexSettingsOutput":{
+      "type":"structure",
+      "members":{
+        "BackupVaultName":{"shape":"BackupVaultName"},
+        "RecoveryPointArn":{"shape":"ARN"},
+        "IndexStatus":{"shape":"IndexStatus"},
+        "Index":{"shape":"Index"}
       }
     },
     "UpdateRecoveryPointLifecycleInput":{

@@ -1212,9 +1212,9 @@
       }
     },
     "DropFrameTimecode": {
-      "base": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion is enabled.",
+      "base": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled.",
       "refs": {
-        "VideoDescription$DropFrameTimecode": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion is enabled."
+        "VideoDescription$DropFrameTimecode": "Applies only to 29.97 fps outputs. When this feature is enabled, the service will use drop-frame timecode on outputs. If it is not possible to use drop-frame timecode, the system will fall back to non-drop-frame. This setting is enabled by default when Timecode insertion or Timecode track is enabled."
       }
     },
     "DvbNitSettings": {
@@ -1825,6 +1825,12 @@
       "base": "Inserts timecode for each frame as 4 bytes of an unregistered SEI message.",
       "refs": {
         "H264Settings$UnregisteredSeiTimecode": "Inserts timecode for each frame as 4 bytes of an unregistered SEI message."
+      }
+    },
+    "H264WriteMp4PackagingType": {
+      "base": "Specify how SPS and PPS NAL units are written in your output MP4 container, according to ISO/IEC 14496-15. If the location of these parameters doesn't matter in your workflow: Keep the default value, AVC1. MediaConvert writes SPS and PPS NAL units in the sample description ('stsd') box (but not into samples directly). To write SPS and PPS NAL units directly into samples (but not in the 'stsd' box): Choose AVC3. When you do, note that your output might not play properly with some downstream systems or players.",
+      "refs": {
+        "H264Settings$WriteMp4PackagingType": "Specify how SPS and PPS NAL units are written in your output MP4 container, according to ISO/IEC 14496-15. If the location of these parameters doesn't matter in your workflow: Keep the default value, AVC1. MediaConvert writes SPS and PPS NAL units in the sample description ('stsd') box (but not into samples directly). To write SPS and PPS NAL units directly into samples (but not in the 'stsd' box): Choose AVC3. When you do, note that your output might not play properly with some downstream systems or players."
       }
     },
     "H265AdaptiveQuantization": {
@@ -3035,10 +3041,10 @@
       }
     },
     "NielsenNonLinearWatermarkSettings": {
-      "base": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 5.2.1 Nielsen NLM Watermark Engine Version 1.2.7 Nielsen Watermark Authenticator [SID_TIC] Version [5.0.0]",
+      "base": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 6.0.13 Nielsen NLM Watermark Engine Version 1.3.3 Nielsen Watermark Authenticator [SID_TIC] Version [7.0.0]",
       "refs": {
-        "JobSettings$NielsenNonLinearWatermark": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 5.2.1 Nielsen NLM Watermark Engine Version 1.2.7 Nielsen Watermark Authenticator [SID_TIC] Version [5.0.0]",
-        "JobTemplateSettings$NielsenNonLinearWatermark": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 5.2.1 Nielsen NLM Watermark Engine Version 1.2.7 Nielsen Watermark Authenticator [SID_TIC] Version [5.0.0]"
+        "JobSettings$NielsenNonLinearWatermark": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 6.0.13 Nielsen NLM Watermark Engine Version 1.3.3 Nielsen Watermark Authenticator [SID_TIC] Version [7.0.0]",
+        "JobTemplateSettings$NielsenNonLinearWatermark": "Ignore these settings unless you are using Nielsen non-linear watermarking. Specify the values that MediaConvert uses to generate and place Nielsen watermarks in your output audio. In addition to specifying these values, you also need to set up your cloud TIC server. These settings apply to every output in your job. The MediaConvert implementation is currently with the following Nielsen versions: Nielsen Watermark SDK Version 6.0.13 Nielsen NLM Watermark Engine Version 1.3.3 Nielsen Watermark Authenticator [SID_TIC] Version [7.0.0]"
       }
     },
     "NielsenSourceWatermarkStatusType": {
@@ -3349,6 +3355,12 @@
         "AudioSelector$RemixSettings": "Use these settings to reorder the audio channels of one input to match those of another input. This allows you to combine the two files into a single output, one after the other."
       }
     },
+    "RemoveRubyReserveAttributes": {
+      "base": "Optionally remove any tts:rubyReserve attributes present in your input, that do   not have a tts:ruby attribute in the same element, from your output. Use if your vertical Japanese output captions have alignment issues. To remove ruby reserve attributes when present: Choose Enabled. To not remove any ruby reserve attributes: Keep the default value, Disabled.",
+      "refs": {
+        "BurninDestinationSettings$RemoveRubyReserveAttributes": "Optionally remove any tts:rubyReserve attributes present in your input, that do   not have a tts:ruby attribute in the same element, from your output. Use if your vertical Japanese output captions have alignment issues. To remove ruby reserve attributes when present: Choose Enabled. To not remove any ruby reserve attributes: Keep the default value, Disabled."
+      }
+    },
     "RenewalType": {
       "base": "Specifies whether the term of your reserved queue pricing plan is automatically extended (AUTO_RENEW) or expires (EXPIRE) at the end of the term.",
       "refs": {
@@ -3469,6 +3481,12 @@
       "refs": {
       }
     },
+    "ServiceOverride": {
+      "base": "A service override applied by MediaConvert to the settings that you have configured. If you see any overrides, we recommend that you contact AWS Support.",
+      "refs": {
+        "__listOfServiceOverride$member": null
+      }
+    },
     "SimulateReservedQueue": {
       "base": "Enable this setting when you run a test job to estimate how many reserved transcoding slots (RTS) you need. When this is enabled, MediaConvert runs your job from an on-demand queue with similar performance to what you will see with one RTS in a reserved queue. This setting is disabled by default.",
       "refs": {
@@ -3570,6 +3588,12 @@
       "base": "Use Source to set how timecodes are handled within this job. To make sure that your video, audio, captions, and markers are synchronized and that time-based features, such as image inserter, work correctly, choose the Timecode source option that matches your assets. All timecodes are in a 24-hour format with frame number (HH:MM:SS:FF). * Embedded - Use the timecode that is in the input video. If no embedded timecode is in the source, the service will use Start at 0 instead. * Start at 0 - Set the timecode of the initial frame to 00:00:00:00. * Specified Start - Set the timecode of the initial frame to a value other than zero. You use Start timecode to provide this value.",
       "refs": {
         "TimecodeConfig$Source": "Use Source to set how timecodes are handled within this job. To make sure that your video, audio, captions, and markers are synchronized and that time-based features, such as image inserter, work correctly, choose the Timecode source option that matches your assets. All timecodes are in a 24-hour format with frame number (HH:MM:SS:FF). * Embedded - Use the timecode that is in the input video. If no embedded timecode is in the source, the service will use Start at 0 instead. * Start at 0 - Set the timecode of the initial frame to 00:00:00:00. * Specified Start - Set the timecode of the initial frame to a value other than zero. You use Start timecode to provide this value."
+      }
+    },
+    "TimecodeTrack": {
+      "base": "To include a timecode track in your MP4 output: Choose Enabled. MediaConvert writes the timecode track in the Null Media Header box (NMHD), without any timecode text formatting information. You can also specify dropframe or non-dropframe timecode under the Drop Frame Timecode setting. To not include a timecode track: Keep the default value, Disabled.",
+      "refs": {
+        "VideoDescription$TimecodeTrack": "To include a timecode track in your MP4 output: Choose Enabled. MediaConvert writes the timecode track in the Null Media Header box (NMHD), without any timecode text formatting information. You can also specify dropframe or non-dropframe timecode under the Drop Frame Timecode setting. To not include a timecode track: Keep the default value, Disabled."
       }
     },
     "TimedMetadata": {
@@ -4233,7 +4257,12 @@
         "WarningGroup$Code": "Warning code that identifies a specific warning in the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/warning_codes.html",
         "WarningGroup$Count": "The number of times this warning occurred in the job.",
         "Queue$ProgressingJobsCount": "The estimated number of jobs with a PROGRESSING status.",
-        "Queue$SubmittedJobsCount": "The estimated number of jobs with a SUBMITTED status."
+        "Queue$SubmittedJobsCount": "The estimated number of jobs with a SUBMITTED status.",
+        "Queue$ConcurrentJobs": "The maximum number of jobs your queue can process concurrently.",
+        "CreateQueueRequest$ConcurrentJobs": "Specify the maximum number of jobs your queue can process concurrently. For on-demand queues, the value you enter is constrained by your service quotas for Maximum concurrent jobs, per on-demand queue and Maximum concurrent jobs, per account. For reserved queues, specify the number of jobs you can process concurrently in your reservation plan instead.",
+        "UpdateQueueRequest$ConcurrentJobs": "Specify the maximum number of jobs your queue can process concurrently. For on-demand queues, the value you enter is constrained by your service quotas for Maximum concurrent jobs, per on-demand queue and Maximum concurrent jobs, per account. For reserved queues, update your reservation plan instead in order to increase your yearly commitment.",
+        "ListQueuesResponse$TotalConcurrentJobs": "The maximum number of jobs that MediaConvert can process at one time, across all of your on-demand queues in the current AWS Region.",
+        "ListQueuesResponse$UnallocatedConcurrentJobs": "The remaining number of concurrent jobs that are not associated with a queue and are available to allocate to a queue. You can allocate these jobs when you create or update a queue."
       }
     },
     "__integerMin0Max0": {
@@ -5277,6 +5306,12 @@
         "Job$QueueTransitions": "The job's queue hopping history."
       }
     },
+    "__listOfServiceOverride": {
+      "base": null,
+      "refs": {
+        "Queue$ServiceOverrides": "A list of any service overrides applied by MediaConvert to the settings that you have configured. If you see any overrides, we recommend that you contact AWS Support."
+      }
+    },
     "__listOfTeletextPageType": {
       "base": null,
       "refs": {
@@ -5410,7 +5445,6 @@
       "base": null,
       "refs": {
         "AssociateCertificateRequest$Arn": "The ARN of the ACM certificate that you want to associate with your MediaConvert resource.",
-        "AudioDescription$AudioSourceName": "Specifies which audio data to use from each input. In the simplest case, specify an \"Audio Selector\":#inputs-audio_selector by name based on its order within each input. For example if you specify \"Audio Selector 3\", then the third audio selector will be used from each input. If an input does not have an \"Audio Selector 3\", then the audio selector marked as \"default\" in that input will be used. If there is no audio selector marked as \"default\", silence will be inserted for the duration of that input. Alternatively, an \"Audio Selector Group\":#inputs-audio_selector_group name may be specified, with similar default/silence behavior. If no audio_source_name is specified, then \"Audio Selector 1\" will be chosen automatically.",
         "BurninDestinationSettings$FontFileBoldItalic": "Specify a bold italic TrueType font file to use when rendering your output captions.\nEnter an S3, HTTP, or HTTPS URL.\nWhen you do, you must also separately specify a regular, a bold, and an italic font file.",
         "CancelJobRequest$Id": "The Job ID of the job to be cancelled.",
         "CaptionDescription$LanguageDescription": "Specify a label for this set of output captions. For example, \"English\", \"Director commentary\", or \"track_2\". For streaming outputs, MediaConvert passes this information into destination manifests for display on the end-viewer's player device. For outputs in other output groups, the service ignores this setting.",
@@ -5484,9 +5518,7 @@
         "ListVersionsResponse$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of Job engine versions.",
         "Mp4Settings$Mp4MajorBrand": "Overrides the \"Major Brand\" field in the output file. Usually not necessary to specify.",
         "NielsenConfiguration$DistributorId": "Use Distributor ID to specify the distributor ID that is assigned to your organization by Nielsen.",
-        "Output$Extension": "Use Extension to specify the file extension for outputs in File output groups. If you do not specify a value, the service will use default extensions by container type as follows * MPEG-2 transport stream, m2ts * Quicktime, mov * MXF container, mxf * MPEG-4 container, mp4 * WebM container, webm * No Container, the service will use codec extensions (e.g. AAC, H265, H265, AC3)",
         "OutputGroup$CustomName": "Use Custom Group Name to specify a name for the output group. This value is displayed on the console and can make your job settings JSON more human-readable. It does not affect your outputs. Use up to twelve characters that are either letters, numbers, spaces, or underscores.",
-        "OutputGroup$Name": "Name of the output group",
         "Preset$Arn": "An identifier for this resource that is unique within all of AWS.",
         "Preset$Category": "An optional category you create to organize your presets.",
         "Preset$Description": "An optional description you create for each preset.",
@@ -5501,6 +5533,10 @@
         "SearchJobsRequest$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of jobs.",
         "SearchJobsRequest$Queue": "Optional. Provide a queue name, or a queue ARN, to return only jobs from that queue.",
         "SearchJobsResponse$NextToken": "Use this string to request the next batch of jobs.",
+        "ServiceOverride$Message": "Details about the service override that MediaConvert has applied.",
+        "ServiceOverride$Name": "The name of the setting that MediaConvert has applied an override to.",
+        "ServiceOverride$OverrideValue": "The current value of the service override that MediaConvert has applied.",
+        "ServiceOverride$Value": "The value of the setting that you configured, prior to any overrides that MediaConvert has applied.",
         "SpekeKeyProvider$ResourceId": "Specify the resource ID that your SPEKE-compliant key provider uses to identify this content.",
         "StaticKeyProvider$Url": "Relates to DRM implementation. The location of the license server used for protecting content.",
         "TagResourceRequest$Arn": "The Amazon Resource Name (ARN) of the resource that you want to tag. To get the ARN, send a GET request with the resource name.",
@@ -5527,6 +5563,25 @@
         "CmfcSettings$TimedMetadataValue": "Specify the event message box (eMSG) value for ID3 timed metadata in your output. For more information, see ISO/IEC 23009-1:2022 section 5.10.3.3.4 Semantics. When you specify a value for ID3 Metadata Value, you must also set ID3 metadata to Passthrough.",
         "MpdSettings$TimedMetadataSchemeIdUri": "Specify the event message box (eMSG) scheme ID URI for ID3 timed metadata in your output. For more information, see ISO/IEC 23009-1:2022 section 5.10.3.3.4 Semantics. Leave blank to use the default value: https://aomedia.org/emsg/ID3 When you specify a value for ID3 metadata scheme ID URI, you must also set ID3 metadata to Passthrough.",
         "MpdSettings$TimedMetadataValue": "Specify the event message box (eMSG) value for ID3 timed metadata in your output. For more information, see ISO/IEC 23009-1:2022 section 5.10.3.3.4 Semantics. When you specify a value for ID3 Metadata Value, you must also set ID3 metadata to Passthrough."
+      }
+    },
+    "__stringMax2048": {
+      "base": null,
+      "refs": {
+        "AudioDescription$AudioSourceName": "Specifies which audio data to use from each input. In the simplest case, specify an \"Audio Selector\":#inputs-audio_selector by name based on its order within each input. For example if you specify \"Audio Selector 3\", then the third audio selector will be used from each input. If an input does not have an \"Audio Selector 3\", then the audio selector marked as \"default\" in that input will be used. If there is no audio selector marked as \"default\", silence will be inserted for the duration of that input. Alternatively, an \"Audio Selector Group\":#inputs-audio_selector_group name may be specified, with similar default/silence behavior. If no audio_source_name is specified, then \"Audio Selector 1\" will be chosen automatically.",
+        "OutputGroup$Name": "Name of the output group"
+      }
+    },
+    "__stringMax2048PatternS3Https": {
+      "base": null,
+      "refs": {
+        "Input$FileInput": "Specify the source file for your transcoding job. You can use multiple inputs in a single job. The service concatenates these inputs, in the order that you specify them in the job, to create the outputs. If your input format is IMF, specify your input by providing the path to your CPL. For example, \"s3://bucket/vf/cpl.xml\". If the CPL is in an incomplete IMP, make sure to use *Supplemental IMPs* to specify any supplemental IMPs that contain assets referenced by the CPL."
+      }
+    },
+    "__stringMax256": {
+      "base": null,
+      "refs": {
+        "Output$Extension": "Use Extension to specify the file extension for outputs in File output groups. If you do not specify a value, the service will use default extensions by container type as follows * MPEG-2 transport stream, m2ts * Quicktime, mov * MXF container, mxf * MPEG-4 container, mp4 * WebM container, webm * No Container, the service will use codec extensions (e.g. AAC, H265, H265, AC3)"
       }
     },
     "__stringMin0": {
@@ -5612,6 +5667,12 @@
         "NielsenNonLinearWatermarkSettings$EpisodeId": "Optional. If this asset uses an episode ID with Nielsen, provide it here."
       }
     },
+    "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09": {
+      "base": null,
+      "refs": {
+        "KantarWatermarkSettings$CredentialsSecretName": "Provide the name of the AWS Secrets Manager secret where your Kantar credentials are stored. Note that your MediaConvert service role must provide access to this secret. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/granting-permissions-for-mediaconvert-to-access-secrets-manager-secret.html. For instructions on creating a secret, see https://docs.aws.amazon.com/secretsmanager/latest/userguide/tutorials_basic.html, in the AWS Secrets Manager User Guide."
+      }
+    },
     "__stringMin1Max256": {
       "base": null,
       "refs": {
@@ -5640,12 +5701,6 @@
       "base": null,
       "refs": {
         "KantarWatermarkSettings$ContentReference": "Specify a unique identifier for Kantar to use for this piece of content."
-      }
-    },
-    "__stringMin1Max512PatternAZAZ09": {
-      "base": null,
-      "refs": {
-        "KantarWatermarkSettings$CredentialsSecretName": "Provide the name of the AWS Secrets Manager secret where your Kantar credentials are stored. Note that your MediaConvert service role must provide access to this secret. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/granting-permissions-for-mediaconvert-to-access-secrets-manager-secret.html. For instructions on creating a secret, see https://docs.aws.amazon.com/secretsmanager/latest/userguide/tutorials_basic.html, in the AWS Secrets Manager User Guide."
       }
     },
     "__stringMin24Max512PatternAZaZ0902": {
@@ -5839,7 +5894,6 @@
       "base": null,
       "refs": {
         "AudioSelector$ExternalAudioFileInput": "Specifies audio data from an external file source.",
-        "Input$FileInput": "Specify the source file for your transcoding job. You can use multiple inputs in a single job. The service concatenates these inputs, in the order that you specify them in the job, to create the outputs. If your input format is IMF, specify your input by providing the path to your CPL. For example, \"s3://bucket/vf/cpl.xml\". If the CPL is in an incomplete IMP, make sure to use *Supplemental IMPs* to specify any supplemental IMPs that contain assets referenced by the CPL.",
         "VideoOverlayInput$FileInput": "Specify the input file S3, HTTP, or HTTPS URL for your video overlay.\nTo specify one or more Transitions for your base input video instead: Leave blank."
       }
     },

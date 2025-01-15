@@ -2344,7 +2344,9 @@
     "ManagedScalingPolicy":{
       "type":"structure",
       "members":{
-        "ComputeLimits":{"shape":"ComputeLimits"}
+        "ComputeLimits":{"shape":"ComputeLimits"},
+        "UtilizationPerformanceIndex":{"shape":"UtilizationPerformanceIndexInteger"},
+        "ScalingStrategy":{"shape":"ScalingStrategy"}
       }
     },
     "Marker":{"type":"string"},
@@ -2830,6 +2832,13 @@
     "ScalingRuleList":{
       "type":"list",
       "member":{"shape":"ScalingRule"}
+    },
+    "ScalingStrategy":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "ADVANCED"
+      ]
     },
     "ScalingTrigger":{
       "type":"structure",
@@ -3359,6 +3368,11 @@
         "Password":{"shape":"XmlStringMaxLen256"}
       },
       "sensitive":true
+    },
+    "UtilizationPerformanceIndexInteger":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "VolumeSpecification":{
       "type":"structure",

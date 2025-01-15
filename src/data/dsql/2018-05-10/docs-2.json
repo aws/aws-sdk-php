@@ -1,0 +1,349 @@
+{
+  "version": "2.0",
+  "service": "<p>This is an interface reference for Amazon Aurora DSQL. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Aurora DSQL.</p> <p>Amazon Aurora DSQL is a serverless, distributed SQL database suitable for workloads of any size. Aurora DSQL is available in both single-Region and multi-Region configurations, so your clusters and databases are always available even if an Availability Zone or an Amazon Web Services Region are unavailable. Aurora DSQL lets you focus on using your data to acquire new insights for your business and customers.</p>",
+  "operations": {
+    "CreateCluster": "<p>Creates a cluster in Amazon Aurora DSQL.</p>",
+    "CreateMultiRegionClusters": "<p>Creates multi-Region clusters in Amazon Aurora DSQL. Multi-Region clusters require a linked Region list, which is an array of the Regions in which you want to create linked clusters. Multi-Region clusters require a witness Region, which participates in quorum in failure scenarios.</p>",
+    "DeleteCluster": "<p>Deletes a cluster in Amazon Aurora DSQL.</p>",
+    "DeleteMultiRegionClusters": "<p>Deletes a multi-Region cluster in Amazon Aurora DSQL.</p>",
+    "GetCluster": "<p>Retrieves information about a cluster.</p>",
+    "ListClusters": "<p>Retrieves information about a list of clusters.</p>",
+    "ListTagsForResource": "<p>Lists all of the tags for a resource.</p>",
+    "TagResource": "<p>Tags a resource with a map of key and value pairs.</p>",
+    "UntagResource": "<p>Removes a tag from a resource.</p>",
+    "UpdateCluster": "<p>Updates a cluster.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "Arn": {
+      "base": "<p>Amazon Resource Name</p>",
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>The ARN of the resource for which you want to list the tags.</p>",
+        "TagResourceInput$resourceArn": "<p>The ARN of the resource that you want to tag.</p>",
+        "UntagResourceInput$resourceArn": "<p>The ARN of the resource from which to remove tags.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Idempotency Token</p>",
+      "refs": {
+        "CreateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "CreateMultiRegionClustersInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "DeleteClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "DeleteMultiRegionClustersInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "UpdateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>"
+      }
+    },
+    "ClusterArn": {
+      "base": "<p>Cluster ARN</p>",
+      "refs": {
+        "ClusterArnList$member": null,
+        "ClusterSummary$arn": "<p>The ARN of the cluster.</p>",
+        "CreateClusterOutput$arn": "<p>The ARN of the created cluster.</p>",
+        "DeleteClusterOutput$arn": "<p>The ARN of the deleted cluster.</p>",
+        "GetClusterOutput$arn": "<p>The ARN of the retrieved cluster.</p>",
+        "UpdateClusterOutput$arn": "<p>The ARN of the updated cluster.</p>"
+      }
+    },
+    "ClusterArnList": {
+      "base": "<p>List of cluster arns</p>",
+      "refs": {
+        "CreateMultiRegionClustersOutput$linkedClusterArns": "<p>An array that contains the ARNs of all linked clusters.</p>",
+        "DeleteMultiRegionClustersInput$linkedClusterArns": "<p>The ARNs of the clusters linked to the cluster you want to delete. also deletes these clusters as part of the operation.</p>",
+        "GetClusterOutput$linkedClusterArns": "<p>The ARNs of the clusters linked to the retrieved cluster.</p>",
+        "UpdateClusterOutput$linkedClusterArns": "<p>The ARNs of the clusters linked to the updated cluster. Applicable only for multi-Region clusters.</p>"
+      }
+    },
+    "ClusterCreationTime": {
+      "base": "<p>Timestamp when the Cluster was created</p>",
+      "refs": {
+        "CreateClusterOutput$creationTime": "<p>The time of when created the cluster.</p>",
+        "DeleteClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>",
+        "GetClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>",
+        "UpdateClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>"
+      }
+    },
+    "ClusterId": {
+      "base": "<p>The ID of the cluster</p>",
+      "refs": {
+        "ClusterSummary$identifier": "<p>The ID of the cluster.</p>",
+        "CreateClusterOutput$identifier": "<p>The ID of the created cluster.</p>",
+        "DeleteClusterInput$identifier": "<p>The ID of the cluster to delete.</p>",
+        "DeleteClusterOutput$identifier": "<p>The ID of the deleted cluster.</p>",
+        "GetClusterInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
+        "GetClusterOutput$identifier": "<p>The ID of the retrieved cluster.</p>",
+        "UpdateClusterInput$identifier": "<p>The ID of the cluster you want to update.</p>",
+        "UpdateClusterOutput$identifier": "<p>The ID of the cluster to update.</p>"
+      }
+    },
+    "ClusterList": {
+      "base": "<p>List of clusters</p>",
+      "refs": {
+        "ListClustersOutput$clusters": "<p>An array of the returned clusters.</p>"
+      }
+    },
+    "ClusterPropertyMap": {
+      "base": "<p>Properties for each linked cluster</p>",
+      "refs": {
+        "CreateMultiRegionClustersInput$clusterProperties": "<p>A mapping of properties to use when creating linked clusters.</p>"
+      }
+    },
+    "ClusterStatus": {
+      "base": "<p>Cluster Status</p>",
+      "refs": {
+        "CreateClusterOutput$status": "<p>The status of the created cluster.</p>",
+        "DeleteClusterOutput$status": "<p>The status of the cluster.</p>",
+        "GetClusterOutput$status": "<p>The status of the retrieved cluster.</p>",
+        "UpdateClusterOutput$status": "<p>The status of the updated cluster.</p>"
+      }
+    },
+    "ClusterSummary": {
+      "base": "<p>A summary of the properties of a cluster.</p>",
+      "refs": {
+        "ClusterList$member": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The submitted action has conflicts.</p>",
+      "refs": {
+      }
+    },
+    "CreateClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateClusterOutput": {
+      "base": "<p>Output Mixin</p>",
+      "refs": {
+      }
+    },
+    "CreateMultiRegionClustersInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMultiRegionClustersOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClusterOutput": {
+      "base": "<p>Output Mixin</p>",
+      "refs": {
+      }
+    },
+    "DeleteMultiRegionClustersInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletionProtectionEnabled": {
+      "base": "<p>Deletion Protection</p>",
+      "refs": {
+        "CreateClusterInput$deletionProtectionEnabled": "<p>If enabled, you can't delete your cluster. You must first disable this property before you can delete your cluster.</p>",
+        "CreateClusterOutput$deletionProtectionEnabled": "<p>Whether deletion protection is enabled on this cluster.</p>",
+        "DeleteClusterOutput$deletionProtectionEnabled": "<p>Specifies whether deletion protection was enabled on the cluster.</p>",
+        "GetClusterOutput$deletionProtectionEnabled": "<p>Whether deletion protection is enabled in this cluster.</p>",
+        "LinkedClusterProperties$deletionProtectionEnabled": "<p>Whether deletion protection is enabled.</p>",
+        "UpdateClusterInput$deletionProtectionEnabled": "<p>Specifies whether to enable deletion protection in your cluster.</p>",
+        "UpdateClusterOutput$deletionProtectionEnabled": "<p>Whether deletion protection is enabled for the updated cluster.</p>"
+      }
+    },
+    "GetClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClusterOutput": {
+      "base": "<p>Output Mixin</p>",
+      "refs": {
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "InternalServerException$retryAfterSeconds": "<p>Retry after seconds.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>Advice to clients on when the call can be safely retried</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
+      "refs": {
+      }
+    },
+    "LinkedClusterProperties": {
+      "base": "<p>Properties of linked clusters.</p>",
+      "refs": {
+        "ClusterPropertyMap$value": null
+      }
+    },
+    "ListClustersInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListClustersOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Max results that will be returned per page</p>",
+      "refs": {
+        "ListClustersInput$maxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use nextToken to display the next page of results.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>Opaque token used to retrieve next page</p>",
+      "refs": {
+        "ListClustersInput$nextToken": "<p>If your initial ListClusters operation returns a nextToken, you can include the returned nextToken in following ListClusters operations, which returns results in the next page.</p>",
+        "ListClustersOutput$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>"
+      }
+    },
+    "Region": {
+      "base": "<p>AWS Region name (e.g.: 'us-east-1')</p>",
+      "refs": {
+        "ClusterPropertyMap$key": null,
+        "CreateMultiRegionClustersInput$witnessRegion": "<p>The witness Region of multi-Region clusters.</p>",
+        "GetClusterOutput$witnessRegion": "<p>The witness Region of the cluster. Applicable only for multi-Region clusters.</p>",
+        "RegionList$member": null,
+        "UpdateClusterOutput$witnessRegion": "<p>The Region that receives all data you write to linked clusters.</p>"
+      }
+    },
+    "RegionList": {
+      "base": "<p>List of regions</p>",
+      "refs": {
+        "CreateMultiRegionClustersInput$linkedRegionList": "<p>An array of the Regions in which you want to create additional clusters.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The resource could not be found.</p>",
+      "refs": {
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The service limit was exceeded.</p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>Resource Id</p>",
+        "ConflictException$resourceType": "<p>Resource Type</p>",
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>Hypothetical identifier of the resource which does not exist</p>",
+        "ResourceNotFoundException$resourceType": "<p>Hypothetical type of the resource which does not exist</p>",
+        "ServiceQuotaExceededException$message": "<p>Description of the error</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>Identifier of the resource affected</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>Type of the resource affected</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>Service Quotas requirement to identify originating service</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota</p>",
+        "ThrottlingException$message": "<p>Description of the error</p>",
+        "ThrottlingException$serviceCode": "<p>Service Quotas requirement to identify originating service</p>",
+        "ThrottlingException$quotaCode": "<p>Service Quotas requirement to identify originating quota</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field.</p>",
+        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Unique tag key, maximum 128 Unicode characters in UTF-8</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>The array of keys of the tags that you want to remove.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>Map of tags</p>",
+      "refs": {
+        "CreateClusterInput$tags": "<p>A map of key and value pairs to use to tag your cluster.</p>",
+        "LinkedClusterProperties$tags": "<p>A map of key and value pairs the linked cluster is tagged with.</p>",
+        "ListTagsForResourceOutput$tags": "<p>A map of key and value pairs that you used to tag your resource.</p>",
+        "TagResourceInput$tags": "<p>A map of key and value pairs to use to tag your resource.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Tag value, maximum 256 Unicode characters in UTF-8</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateClusterOutput": {
+      "base": "<p>Output Mixin</p>",
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input failed to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Stores information about a field passed inside a request that resulted in an validation error.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": "<p>List of fields that caused the error</p>",
+      "refs": {
+        "ValidationException$fieldList": null
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": "<p>Reason the request failed validation</p>",
+      "refs": {
+        "ValidationException$reason": null
+      }
+    }
+  }
+}

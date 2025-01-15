@@ -5,6 +5,7 @@ use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Credentials\CredentialSources;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\CredentialsException;
 use Aws\LruArrayCache;
@@ -199,7 +200,8 @@ class StsClientTest extends TestCase
                     "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
-                    "sessionToken" => "baz"
+                    "sessionToken" => "baz",
+                    "source" => CredentialSources::STS_ASSUME_ROLE
                 ]
             ]
         ];
@@ -308,7 +310,8 @@ class StsClientTest extends TestCase
                     "accountId" => "foobar",
                     "accessKeyId" => "foo",
                     "secretAccessKey" => "bar",
-                    "sessionToken" => "baz"
+                    "sessionToken" => "baz",
+                    "source" => CredentialSources::ENVIRONMENT_STS_WEB_ID_TOKEN
                 ]
             ]
         ];
@@ -413,7 +416,8 @@ class StsClientTest extends TestCase
                 $expectedResponse['secretAccessKey'] ?? null,
                 $expectedResponse['sessionToken'] ?? null,
                 $expectedResponse['expires'] ?? null,
-                $expectedResponse['accountId'] ?? null
+                $expectedResponse['accountId'] ?? null,
+            $expectedResponse['source'] ?? null
         );
     }
 
@@ -456,5 +460,27 @@ class StsClientTest extends TestCase
         $this->deferredFns[] = $deferFn;
 
         return $tokenPath;
+    }
+
+    public function testCreateCredentialsAddSource()
+    {
+        $result = new Result([
+            'Credentials' => [
+                'AccessKeyId' => 'foo',
+                'SecretAccessKey' => 'foo'
+            ]
+        ]);
+        $stsClient = new StsClient([
+            'region' => 'us-east-1'
+        ]);
+        $credentials = $stsClient->createCredentials(
+            $result,
+            CredentialSources::PROFILE
+        );
+        $this->assertNotEmpty($credentials->getSource());
+        $this->assertEquals(
+            CredentialSources::PROFILE,
+            $credentials->getSource()
+        );
     }
 }

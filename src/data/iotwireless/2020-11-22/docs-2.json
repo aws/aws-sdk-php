@@ -55,7 +55,7 @@
     "GetPositionConfiguration": "<p>Get position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
     "GetPositionEstimate": "<p>Get estimated position information as a payload in GeoJSON format. The payload measurement data is resolved using solvers that are provided by third-party vendors.</p>",
     "GetResourceEventConfiguration": "<p>Get the event configuration for a particular resource identifier.</p>",
-    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It can be used for a wireless device or a wireless gateway.</p>",
+    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It can be used for a wireless device, wireless gateway or fuota task.</p>",
     "GetResourcePosition": "<p>Get the position information for a given wireless device or a wireless gateway resource. The position information uses the <a href=\"https://gisgeography.com/wgs84-world-geodetic-system/\"> World Geodetic System (WGS84)</a>.</p>",
     "GetServiceEndpoint": "<p>Gets the account-specific endpoint for Configuration and Update Server (CUPS) protocol or LoRaWAN Network Server (LNS) connections.</p>",
     "GetServiceProfile": "<p>Gets information about a service profile.</p>",
@@ -87,8 +87,8 @@
     "ListWirelessGateways": "<p>Lists the wireless gateways registered to your AWS account.</p>",
     "PutPositionConfiguration": "<p>Put position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to update the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
     "PutResourceLogLevel": "<p>Sets the log-level override for a resource-ID and resource-type. This option can be specified for a wireless gateway or a wireless device. A limit of 200 log level override can be set per account.</p>",
-    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; both wireless devices and wireless gateways.</p>",
-    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource-ID and resource-type. It can be used for a wireless device or a wireless gateway.</p>",
+    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; wireless devices, wireless gateways, and fuota tasks.</p>",
+    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource-ID and resource-type. It can be used for a wireless device, a wireless gateway, or a fuota task.</p>",
     "SendDataToMulticastGroup": "<p>Sends the specified data to a multicast group.</p>",
     "SendDataToWirelessDevice": "<p>Sends a decrypted application data frame to a device.</p>",
     "StartBulkAssociateWirelessDeviceWithMulticastGroup": "<p>Starts a bulk association of all qualifying wireless devices with a multicast group.</p>",
@@ -1351,6 +1351,14 @@
         "DakCertificateMetadata$FactorySupport": "<p>Whether factory support has been enabled.</p>"
       }
     },
+    "FileDescriptor": {
+      "base": "<p>The Descriptor specifies some metadata about the File being transferred using FUOTA e.g. the software version. It is sent transparently to the device. It is a binary field encoded in base64</p>",
+      "refs": {
+        "CreateFuotaTaskRequest$Descriptor": null,
+        "GetFuotaTaskResponse$Descriptor": null,
+        "UpdateFuotaTaskRequest$Descriptor": null
+      }
+    },
     "Fingerprint": {
       "base": null,
       "refs": {
@@ -1409,6 +1417,24 @@
         "GetFuotaTaskResponse$Arn": null
       }
     },
+    "FuotaTaskEvent": {
+      "base": "<p>The event for a log message, if the log message is tied to a fuota task.</p>",
+      "refs": {
+        "FuotaTaskEventLogOption$Event": null
+      }
+    },
+    "FuotaTaskEventLogOption": {
+      "base": "<p>The log options for a FUOTA task event and can be used to set log levels for a specific fuota task event.</p> <p>For a LoRaWAN FuotaTask type, possible event for a log message is <code>Fuota</code>.</p>",
+      "refs": {
+        "FuotaTaskEventLogOptionList$member": null
+      }
+    },
+    "FuotaTaskEventLogOptionList": {
+      "base": "<p>The list of FUOTA task event log options.</p>",
+      "refs": {
+        "FuotaTaskLogOption$Events": null
+      }
+    },
     "FuotaTaskId": {
       "base": "<p>The ID of a FUOTA task.</p>",
       "refs": {
@@ -1433,6 +1459,19 @@
         "ListFuotaTasksResponse$FuotaTaskList": null
       }
     },
+    "FuotaTaskLogOption": {
+      "base": "<p>The log options for fuota tasks and can be used to set log levels for a specific type of fuota task.</p>",
+      "refs": {
+        "FuotaTaskLogOptionList$member": null
+      }
+    },
+    "FuotaTaskLogOptionList": {
+      "base": "<p>The list of fuota task log options.</p>",
+      "refs": {
+        "GetLogLevelsByResourceTypesResponse$FuotaTaskLogOptions": null,
+        "UpdateLogLevelsByResourceTypesRequest$FuotaTaskLogOptions": null
+      }
+    },
     "FuotaTaskName": {
       "base": "<p>The name of a FUOTA task.</p>",
       "refs": {
@@ -1446,6 +1485,12 @@
       "base": "<p>The status of a FUOTA task.</p>",
       "refs": {
         "GetFuotaTaskResponse$Status": null
+      }
+    },
+    "FuotaTaskType": {
+      "base": "<p>The fuota task type.</p>",
+      "refs": {
+        "FuotaTaskLogOption$Type": "<p>The fuota task type.</p>"
       }
     },
     "GPST": {
@@ -1471,6 +1516,12 @@
       "base": "<p>Gateway list item object that specifies the frequency and list of gateways for which the downlink message should be sent.</p>",
       "refs": {
         "GatewayList$member": null
+      }
+    },
+    "GatewayListMulticast": {
+      "base": null,
+      "refs": {
+        "ParticipatingGatewaysMulticast$GatewayList": "<p>The list of gateways that you want to use for sending the multicast downlink. Each downlink will be sent to all the gateways in the list with transmission interval between them. If list is empty the gateway list will be dynamically selected similar to the case of no ParticipatingGateways </p>"
       }
     },
     "GatewayMaxEirp": {
@@ -2385,6 +2436,8 @@
     "LogLevel": {
       "base": "<p>The log level for a log message. The log levels can be disabled, or set to <code>ERROR</code> to display less verbose logs containing only error information, or to <code>INFO</code> for more detailed logs.</p>",
       "refs": {
+        "FuotaTaskEventLogOption$LogLevel": null,
+        "FuotaTaskLogOption$LogLevel": null,
         "GetLogLevelsByResourceTypesResponse$DefaultLogLevel": null,
         "GetResourceLogLevelResponse$LogLevel": null,
         "PutResourceLogLevelRequest$LogLevel": null,
@@ -2933,6 +2986,13 @@
         "LoRaWANSendDataToDevice$ParticipatingGateways": "<p>Choose the gateways that you want to use for the downlink data traffic when the wireless device is running in class B or class C mode.</p>"
       }
     },
+    "ParticipatingGatewaysMulticast": {
+      "base": "<p>Specify the list of gateways to which you want to send the multicast downlink messages. The multicast message will be sent to each gateway in the sequence provided in the list.</p>",
+      "refs": {
+        "LoRaWANMulticast$ParticipatingGateways": null,
+        "LoRaWANMulticastGet$ParticipatingGateways": null
+      }
+    },
     "PartnerAccountArn": {
       "base": null,
       "refs": {
@@ -3302,9 +3362,9 @@
       "base": null,
       "refs": {
         "ConflictException$ResourceType": "<p>Type of the resource in the conflicting operation.</p>",
-        "GetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
-        "PutResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
-        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
+        "GetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code> or <code>FuotaTask</code>.</p>",
+        "PutResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
         "ResourceNotFoundException$ResourceType": "<p>Type of the font found resource.</p>"
       }
     },
@@ -3943,6 +4003,12 @@
         "ParticipatingGateways$TransmissionInterval": "<p>The duration of time for which AWS IoT Core for LoRaWAN will wait before transmitting the payload to the next gateway.</p>"
       }
     },
+    "TransmissionIntervalMulticast": {
+      "base": null,
+      "refs": {
+        "ParticipatingGatewaysMulticast$TransmissionInterval": "<p>The duration of time for which AWS IoT Core for LoRaWAN will wait before transmitting the multicast payload to the next gateway in the list.</p>"
+      }
+    },
     "TransmitMode": {
       "base": null,
       "refs": {
@@ -4418,6 +4484,7 @@
         "DisassociateWirelessGatewayFromCertificateRequest$Id": "<p>The ID of the resource to update.</p>",
         "DisassociateWirelessGatewayFromThingRequest$Id": "<p>The ID of the resource to update.</p>",
         "GatewayListItem$GatewayId": "<p>The ID of the wireless gateways that you want to add to the list of gateways when sending downlink messages.</p>",
+        "GatewayListMulticast$member": null,
         "GetWirelessGatewayCertificateRequest$Id": "<p>The ID of the resource to get.</p>",
         "GetWirelessGatewayFirmwareInformationRequest$Id": "<p>The ID of the resource to get.</p>",
         "GetWirelessGatewayResponse$Id": "<p>The ID of the wireless gateway.</p>",

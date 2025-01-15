@@ -41,6 +41,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise copyObjectAsync(array $args = [])
  * @method \Aws\Result createBucket(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBucketAsync(array $args = [])
+ * @method \Aws\Result createBucketMetadataTableConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result createMultipartUpload(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createMultipartUploadAsync(array $args = [])
  * @method \Aws\Result createSession(array $args = [])
@@ -59,6 +61,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteBucketInventoryConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketLifecycle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketLifecycleAsync(array $args = [])
+ * @method \Aws\Result deleteBucketMetadataTableConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketMetricsConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketMetricsConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteBucketOwnershipControls(array $args = [])
@@ -101,6 +105,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getBucketLocationAsync(array $args = [])
  * @method \Aws\Result getBucketLogging(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketLoggingAsync(array $args = [])
+ * @method \Aws\Result getBucketMetadataTableConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBucketMetadataTableConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketMetricsConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketMetricsConfigurationAsync(array $args = [])
  * @method \Aws\Result getBucketNotification(array $args = [])
@@ -619,6 +625,20 @@ class S3Client extends AwsClient implements S3ClientInterface
         }
 
         $request = \Aws\serialize($command);
+
+        //Applies ContentSHA256 parameter, if provided and not applied
+        // by middleware
+        $commandName = $command->getName();
+        if (!empty($command['ContentSHA256']
+            && isset(ApplyChecksumMiddleware::$sha256[$commandName])
+            && !$request->hasHeader('X-Amz-Content-Sha256')
+        )) {
+            $request = $request->withHeader(
+                'X-Amz-Content-Sha256',
+                $command['ContentSHA256']
+            );
+        }
+
         $signing_name = $command['@context']['signing_service']
             ?? $this->getSigningName($request->getUri()->getHost());
         $signature_version = $this->getSignatureVersionFromCommand($command);

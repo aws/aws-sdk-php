@@ -5,11 +5,13 @@
     "endpointPrefix":"vpc-lattice",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon VPC Lattice",
     "serviceId":"VPC Lattice",
     "signatureVersion":"v4",
     "signingName":"vpc-lattice",
-    "uid":"vpc-lattice-2022-11-30"
+    "uid":"vpc-lattice-2022-11-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchUpdateRule":{
@@ -70,6 +72,46 @@
       ],
       "idempotent":true
     },
+    "CreateResourceConfiguration":{
+      "name":"CreateResourceConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/resourceconfigurations",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateResourceConfigurationRequest"},
+      "output":{"shape":"CreateResourceConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateResourceGateway":{
+      "name":"CreateResourceGateway",
+      "http":{
+        "method":"POST",
+        "requestUri":"/resourcegateways",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateResourceGatewayRequest"},
+      "output":{"shape":"CreateResourceGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateRule":{
       "name":"CreateRule",
       "http":{
@@ -119,6 +161,26 @@
       },
       "input":{"shape":"CreateServiceNetworkRequest"},
       "output":{"shape":"CreateServiceNetworkResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateServiceNetworkResourceAssociation":{
+      "name":"CreateServiceNetworkResourceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/servicenetworkresourceassociations",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateServiceNetworkResourceAssociationRequest"},
+      "output":{"shape":"CreateServiceNetworkResourceAssociationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -245,6 +307,62 @@
       ],
       "idempotent":true
     },
+    "DeleteResourceConfiguration":{
+      "name":"DeleteResourceConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/resourceconfigurations/{resourceConfigurationIdentifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteResourceConfigurationRequest"},
+      "output":{"shape":"DeleteResourceConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteResourceEndpointAssociation":{
+      "name":"DeleteResourceEndpointAssociation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/resourceendpointassociations/{resourceEndpointAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourceEndpointAssociationRequest"},
+      "output":{"shape":"DeleteResourceEndpointAssociationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteResourceGateway":{
+      "name":"DeleteResourceGateway",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/resourcegateways/{resourceGatewayIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteResourceGatewayRequest"},
+      "output":{"shape":"DeleteResourceGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteResourcePolicy":{
       "name":"DeleteResourcePolicy",
       "http":{
@@ -310,6 +428,25 @@
       },
       "input":{"shape":"DeleteServiceNetworkRequest"},
       "output":{"shape":"DeleteServiceNetworkResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteServiceNetworkResourceAssociation":{
+      "name":"DeleteServiceNetworkResourceAssociation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/servicenetworkresourceassociations/{serviceNetworkResourceAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteServiceNetworkResourceAssociationRequest"},
+      "output":{"shape":"DeleteServiceNetworkResourceAssociationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -446,6 +583,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetResourceConfiguration":{
+      "name":"GetResourceConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourceconfigurations/{resourceConfigurationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourceConfigurationRequest"},
+      "output":{"shape":"GetResourceConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetResourceGateway":{
+      "name":"GetResourceGateway",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourcegateways/{resourceGatewayIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetResourceGatewayRequest"},
+      "output":{"shape":"GetResourceGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
       "http":{
@@ -506,6 +677,23 @@
       },
       "input":{"shape":"GetServiceNetworkRequest"},
       "output":{"shape":"GetServiceNetworkResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetServiceNetworkResourceAssociation":{
+      "name":"GetServiceNetworkResourceAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/servicenetworkresourceassociations/{serviceNetworkResourceAssociationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetServiceNetworkResourceAssociationRequest"},
+      "output":{"shape":"GetServiceNetworkResourceAssociationResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -598,6 +786,54 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListResourceConfigurations":{
+      "name":"ListResourceConfigurations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourceconfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourceConfigurationsRequest"},
+      "output":{"shape":"ListResourceConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListResourceEndpointAssociations":{
+      "name":"ListResourceEndpointAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourceendpointassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourceEndpointAssociationsRequest"},
+      "output":{"shape":"ListResourceEndpointAssociationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListResourceGateways":{
+      "name":"ListResourceGateways",
+      "http":{
+        "method":"GET",
+        "requestUri":"/resourcegateways",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourceGatewaysRequest"},
+      "output":{"shape":"ListResourceGatewaysResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListRules":{
       "name":"ListRules",
       "http":{
@@ -612,6 +848,22 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListServiceNetworkResourceAssociations":{
+      "name":"ListServiceNetworkResourceAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/servicenetworkresourceassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceNetworkResourceAssociationsRequest"},
+      "output":{"shape":"ListServiceNetworkResourceAssociationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -640,6 +892,22 @@
       },
       "input":{"shape":"ListServiceNetworkVpcAssociationsRequest"},
       "output":{"shape":"ListServiceNetworkVpcAssociationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListServiceNetworkVpcEndpointAssociations":{
+      "name":"ListServiceNetworkVpcEndpointAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/servicenetworkvpcendpointassociations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceNetworkVpcEndpointAssociationsRequest"},
+      "output":{"shape":"ListServiceNetworkVpcEndpointAssociationsResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -850,9 +1118,45 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "UpdateResourceConfiguration":{
+      "name":"UpdateResourceConfiguration",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/resourceconfigurations/{resourceConfigurationIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateResourceConfigurationRequest"},
+      "output":{"shape":"UpdateResourceConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateResourceGateway":{
+      "name":"UpdateResourceGateway",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/resourcegateways/{resourceGatewayIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateResourceGatewayRequest"},
+      "output":{"shape":"UpdateResourceGatewayResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "UpdateRule":{
       "name":"UpdateRule",
@@ -869,6 +1173,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -888,6 +1193,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -944,6 +1250,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1008,7 +1315,8 @@
         "id":{"shape":"AccessLogSubscriptionId"},
         "lastUpdatedAt":{"shape":"Timestamp"},
         "resourceArn":{"shape":"ResourceArn"},
-        "resourceId":{"shape":"ResourceId"}
+        "resourceId":{"shape":"ResourceId"},
+        "serviceNetworkLogType":{"shape":"ServiceNetworkLogType"}
       }
     },
     "AccountId":{
@@ -1022,6 +1330,12 @@
       "max":1224,
       "min":0,
       "pattern":"^arn:[a-z0-9][-.a-z0-9]{0,62}:vpc-lattice:([a-z0-9][-.a-z0-9]{0,62})?:\\d{12}?:[^/].{0,1023}$"
+    },
+    "ArnResource":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"WildcardArn"}
+      }
     },
     "AuthPolicyState":{
       "type":"string",
@@ -1117,6 +1431,7 @@
         },
         "destinationArn":{"shape":"AccessLogDestinationArn"},
         "resourceIdentifier":{"shape":"ResourceIdentifier"},
+        "serviceNetworkLogType":{"shape":"ServiceNetworkLogType"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1134,7 +1449,8 @@
         "destinationArn":{"shape":"AccessLogDestinationArn"},
         "id":{"shape":"AccessLogSubscriptionId"},
         "resourceArn":{"shape":"ResourceArn"},
-        "resourceId":{"shape":"ResourceId"}
+        "resourceId":{"shape":"ResourceId"},
+        "serviceNetworkLogType":{"shape":"ServiceNetworkLogType"}
       }
     },
     "CreateListenerRequest":{
@@ -1173,6 +1489,85 @@
         "protocol":{"shape":"ListenerProtocol"},
         "serviceArn":{"shape":"ServiceArn"},
         "serviceId":{"shape":"ServiceId"}
+      }
+    },
+    "CreateResourceConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"ResourceConfigurationName"},
+        "portRanges":{"shape":"PortRangeList"},
+        "protocol":{"shape":"ProtocolType"},
+        "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
+        "resourceConfigurationGroupIdentifier":{"shape":"ResourceConfigurationIdentifier"},
+        "resourceGatewayIdentifier":{"shape":"ResourceGatewayIdentifier"},
+        "tags":{"shape":"TagMap"},
+        "type":{"shape":"ResourceConfigurationType"}
+      }
+    },
+    "CreateResourceConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "arn":{"shape":"ResourceConfigurationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "failureReason":{"shape":"String"},
+        "id":{"shape":"ResourceConfigurationId"},
+        "name":{"shape":"ResourceConfigurationName"},
+        "portRanges":{"shape":"PortRangeList"},
+        "protocol":{"shape":"ProtocolType"},
+        "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
+        "resourceConfigurationGroupId":{"shape":"ResourceConfigurationId"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "status":{"shape":"ResourceConfigurationStatus"},
+        "type":{"shape":"ResourceConfigurationType"}
+      }
+    },
+    "CreateResourceGatewayRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "subnetIds",
+        "vpcIdentifier"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
+        "name":{"shape":"ResourceGatewayName"},
+        "securityGroupIds":{"shape":"CreateResourceGatewayRequestSecurityGroupIdsList"},
+        "subnetIds":{"shape":"SubnetList"},
+        "tags":{"shape":"TagMap"},
+        "vpcIdentifier":{"shape":"VpcId"}
+      }
+    },
+    "CreateResourceGatewayRequestSecurityGroupIdsList":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":0
+    },
+    "CreateResourceGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceGatewayArn"},
+        "id":{"shape":"ResourceGatewayId"},
+        "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
+        "name":{"shape":"ResourceGatewayName"},
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "status":{"shape":"ResourceGatewayStatus"},
+        "subnetIds":{"shape":"SubnetList"},
+        "vpcIdentifier":{"shape":"VpcId"}
       }
     },
     "CreateRuleRequest":{
@@ -1228,7 +1623,33 @@
           "idempotencyToken":true
         },
         "name":{"shape":"ServiceNetworkName"},
+        "sharingConfig":{"shape":"SharingConfig"},
         "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateServiceNetworkResourceAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "resourceConfigurationIdentifier",
+        "serviceNetworkIdentifier"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "resourceConfigurationIdentifier":{"shape":"ResourceConfigurationIdentifier"},
+        "serviceNetworkIdentifier":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateServiceNetworkResourceAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ServiceNetworkResourceAssociationArn"},
+        "createdBy":{"shape":"AccountId"},
+        "id":{"shape":"ServiceNetworkResourceAssociationId"},
+        "status":{"shape":"ServiceNetworkResourceAssociationStatus"}
       }
     },
     "CreateServiceNetworkResponse":{
@@ -1237,7 +1658,8 @@
         "arn":{"shape":"ServiceNetworkArn"},
         "authType":{"shape":"AuthType"},
         "id":{"shape":"ServiceNetworkId"},
-        "name":{"shape":"ServiceNetworkName"}
+        "name":{"shape":"ServiceNetworkName"},
+        "sharingConfig":{"shape":"SharingConfig"}
       }
     },
     "CreateServiceNetworkServiceAssociationRequest":{
@@ -1412,6 +1834,63 @@
       "members":{
       }
     },
+    "DeleteResourceConfigurationRequest":{
+      "type":"structure",
+      "required":["resourceConfigurationIdentifier"],
+      "members":{
+        "resourceConfigurationIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"uri",
+          "locationName":"resourceConfigurationIdentifier"
+        }
+      }
+    },
+    "DeleteResourceConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteResourceEndpointAssociationRequest":{
+      "type":"structure",
+      "required":["resourceEndpointAssociationIdentifier"],
+      "members":{
+        "resourceEndpointAssociationIdentifier":{
+          "shape":"ResourceEndpointAssociationIdentifier",
+          "location":"uri",
+          "locationName":"resourceEndpointAssociationIdentifier"
+        }
+      }
+    },
+    "DeleteResourceEndpointAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceEndpointAssociationArn"},
+        "id":{"shape":"ResourceEndpointAssociationId"},
+        "resourceConfigurationArn":{"shape":"ResourceConfigurationArn"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
+    "DeleteResourceGatewayRequest":{
+      "type":"structure",
+      "required":["resourceGatewayIdentifier"],
+      "members":{
+        "resourceGatewayIdentifier":{
+          "shape":"ResourceGatewayIdentifier",
+          "location":"uri",
+          "locationName":"resourceGatewayIdentifier"
+        }
+      }
+    },
+    "DeleteResourceGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceGatewayArn"},
+        "id":{"shape":"ResourceGatewayId"},
+        "name":{"shape":"ResourceGatewayName"},
+        "status":{"shape":"ResourceGatewayStatus"}
+      }
+    },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1467,6 +1946,25 @@
           "location":"uri",
           "locationName":"serviceNetworkIdentifier"
         }
+      }
+    },
+    "DeleteServiceNetworkResourceAssociationRequest":{
+      "type":"structure",
+      "required":["serviceNetworkResourceAssociationIdentifier"],
+      "members":{
+        "serviceNetworkResourceAssociationIdentifier":{
+          "shape":"ServiceNetworkResourceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"serviceNetworkResourceAssociationIdentifier"
+        }
+      }
+    },
+    "DeleteServiceNetworkResourceAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ServiceNetworkResourceAssociationArn"},
+        "id":{"shape":"ServiceNetworkResourceAssociationId"},
+        "status":{"shape":"ServiceNetworkResourceAssociationStatus"}
       }
     },
     "DeleteServiceNetworkResponse":{
@@ -1586,6 +2084,18 @@
         "hostedZoneId":{"shape":"String"}
       }
     },
+    "DnsResource":{
+      "type":"structure",
+      "members":{
+        "domainName":{"shape":"DomainName"},
+        "ipAddressType":{"shape":"ResourceConfigurationIpAddressType"}
+      }
+    },
+    "DomainName":{
+      "type":"string",
+      "max":255,
+      "min":3
+    },
     "FailureCode":{"type":"string"},
     "FailureMessage":{"type":"string"},
     "FixedResponseAction":{
@@ -1631,7 +2141,8 @@
         "id":{"shape":"AccessLogSubscriptionId"},
         "lastUpdatedAt":{"shape":"Timestamp"},
         "resourceArn":{"shape":"ResourceArn"},
-        "resourceId":{"shape":"ResourceId"}
+        "resourceId":{"shape":"ResourceId"},
+        "serviceNetworkLogType":{"shape":"ServiceNetworkLogType"}
       }
     },
     "GetAuthPolicyRequest":{
@@ -1686,6 +2197,64 @@
         "protocol":{"shape":"ListenerProtocol"},
         "serviceArn":{"shape":"ServiceArn"},
         "serviceId":{"shape":"ServiceId"}
+      }
+    },
+    "GetResourceConfigurationRequest":{
+      "type":"structure",
+      "required":["resourceConfigurationIdentifier"],
+      "members":{
+        "resourceConfigurationIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"uri",
+          "locationName":"resourceConfigurationIdentifier"
+        }
+      }
+    },
+    "GetResourceConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "amazonManaged":{"shape":"Boolean"},
+        "arn":{"shape":"ResourceConfigurationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "customDomainName":{"shape":"DomainName"},
+        "failureReason":{"shape":"String"},
+        "id":{"shape":"ResourceConfigurationId"},
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "name":{"shape":"ResourceConfigurationName"},
+        "portRanges":{"shape":"PortRangeList"},
+        "protocol":{"shape":"ProtocolType"},
+        "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
+        "resourceConfigurationGroupId":{"shape":"ResourceConfigurationId"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "status":{"shape":"ResourceConfigurationStatus"},
+        "type":{"shape":"ResourceConfigurationType"}
+      }
+    },
+    "GetResourceGatewayRequest":{
+      "type":"structure",
+      "required":["resourceGatewayIdentifier"],
+      "members":{
+        "resourceGatewayIdentifier":{
+          "shape":"ResourceGatewayIdentifier",
+          "location":"uri",
+          "locationName":"resourceGatewayIdentifier"
+        }
+      }
+    },
+    "GetResourceGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceGatewayArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "id":{"shape":"ResourceGatewayId"},
+        "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "name":{"shape":"ResourceGatewayName"},
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "status":{"shape":"ResourceGatewayStatus"},
+        "subnetIds":{"shape":"SubnetList"},
+        "vpcId":{"shape":"VpcId"}
       }
     },
     "GetResourcePolicyRequest":{
@@ -1755,6 +2324,39 @@
         }
       }
     },
+    "GetServiceNetworkResourceAssociationRequest":{
+      "type":"structure",
+      "required":["serviceNetworkResourceAssociationIdentifier"],
+      "members":{
+        "serviceNetworkResourceAssociationIdentifier":{
+          "shape":"ServiceNetworkResourceAssociationIdentifier",
+          "location":"uri",
+          "locationName":"serviceNetworkResourceAssociationIdentifier"
+        }
+      }
+    },
+    "GetServiceNetworkResourceAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ServiceNetworkResourceAssociationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"AccountId"},
+        "dnsEntry":{"shape":"DnsEntry"},
+        "failureCode":{"shape":"String"},
+        "failureReason":{"shape":"String"},
+        "id":{"shape":"ServiceNetworkResourceAssociationId"},
+        "isManagedAssociation":{"shape":"Boolean"},
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "privateDnsEntry":{"shape":"DnsEntry"},
+        "resourceConfigurationArn":{"shape":"ResourceConfigurationArn"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "resourceConfigurationName":{"shape":"ResourceConfigurationName"},
+        "serviceNetworkArn":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
+        "serviceNetworkId":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
+        "serviceNetworkName":{"shape":"ServiceNetworkNameWithoutRegex"},
+        "status":{"shape":"ServiceNetworkResourceAssociationStatus"}
+      }
+    },
     "GetServiceNetworkResponse":{
       "type":"structure",
       "members":{
@@ -1765,7 +2367,8 @@
         "lastUpdatedAt":{"shape":"Timestamp"},
         "name":{"shape":"ServiceNetworkName"},
         "numberOfAssociatedServices":{"shape":"Long"},
-        "numberOfAssociatedVPCs":{"shape":"Long"}
+        "numberOfAssociatedVPCs":{"shape":"Long"},
+        "sharingConfig":{"shape":"SharingConfig"}
       }
     },
     "GetServiceNetworkServiceAssociationRequest":{
@@ -2027,12 +2630,23 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "IpAddress":{
+      "type":"string",
+      "max":39,
+      "min":4
+    },
     "IpAddressType":{
       "type":"string",
       "enum":[
         "IPV4",
         "IPV6"
       ]
+    },
+    "IpResource":{
+      "type":"structure",
+      "members":{
+        "ipAddress":{"shape":"IpAddress"}
+      }
     },
     "LambdaEventStructureVersion":{
       "type":"string",
@@ -2099,6 +2713,104 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListResourceConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "resourceConfigurationGroupIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"querystring",
+          "locationName":"resourceConfigurationGroupIdentifier"
+        },
+        "resourceGatewayIdentifier":{
+          "shape":"ResourceGatewayIdentifier",
+          "location":"querystring",
+          "locationName":"resourceGatewayIdentifier"
+        }
+      }
+    },
+    "ListResourceConfigurationsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ResourceConfigurationSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceEndpointAssociationsRequest":{
+      "type":"structure",
+      "required":["resourceConfigurationIdentifier"],
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "resourceConfigurationIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"querystring",
+          "locationName":"resourceConfigurationIdentifier"
+        },
+        "resourceEndpointAssociationIdentifier":{
+          "shape":"ResourceEndpointAssociationIdentifier",
+          "location":"querystring",
+          "locationName":"resourceEndpointAssociationIdentifier"
+        },
+        "vpcEndpointId":{
+          "shape":"VpcEndpointId",
+          "location":"querystring",
+          "locationName":"vpcEndpointId"
+        },
+        "vpcEndpointOwner":{
+          "shape":"VpcEndpointOwner",
+          "location":"querystring",
+          "locationName":"vpcEndpointOwner"
+        }
+      }
+    },
+    "ListResourceEndpointAssociationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"ResourceEndpointAssociationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceGatewaysRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListResourceGatewaysResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"ResourceGatewayList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListRulesRequest":{
       "type":"structure",
       "required":[
@@ -2133,6 +2845,39 @@
       "required":["items"],
       "members":{
         "items":{"shape":"RuleSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListServiceNetworkResourceAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "resourceConfigurationIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"querystring",
+          "locationName":"resourceConfigurationIdentifier"
+        },
+        "serviceNetworkIdentifier":{
+          "shape":"ServiceNetworkIdentifier",
+          "location":"querystring",
+          "locationName":"serviceNetworkIdentifier"
+        }
+      }
+    },
+    "ListServiceNetworkResourceAssociationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"ServiceNetworkResourceAssociationList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2199,6 +2944,35 @@
       "required":["items"],
       "members":{
         "items":{"shape":"ServiceNetworkVpcAssociationList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListServiceNetworkVpcEndpointAssociationsRequest":{
+      "type":"structure",
+      "required":["serviceNetworkIdentifier"],
+      "members":{
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "serviceNetworkIdentifier":{
+          "shape":"ServiceNetworkIdentifier",
+          "location":"querystring",
+          "locationName":"serviceNetworkIdentifier"
+        }
+      }
+    },
+    "ListServiceNetworkVpcEndpointAssociationsResponse":{
+      "type":"structure",
+      "required":["items"],
+      "members":{
+        "items":{"shape":"ServiceNetworkVpcEndpointAssociationList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2442,6 +3216,20 @@
       "max":65535,
       "min":1
     },
+    "PortRange":{
+      "type":"string",
+      "max":11,
+      "min":1,
+      "pattern":"^((\\d{1,5}\\-\\d{1,5})|(\\d+))$"
+    },
+    "PortRangeList":{
+      "type":"list",
+      "member":{"shape":"PortRange"}
+    },
+    "ProtocolType":{
+      "type":"string",
+      "enum":["TCP"]
+    },
     "PutAuthPolicyRequest":{
       "type":"structure",
       "required":[
@@ -2516,7 +3304,187 @@
       "type":"string",
       "max":200,
       "min":20,
-      "pattern":"^arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(service/svc))-[0-9a-z]{17}$"
+      "pattern":"^arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(service/svc)|(resourceconfiguration/rcfg))-[0-9a-z]{17}$"
+    },
+    "ResourceConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z0-9f\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}$"
+    },
+    "ResourceConfigurationDefinition":{
+      "type":"structure",
+      "members":{
+        "arnResource":{"shape":"ArnResource"},
+        "dnsResource":{"shape":"DnsResource"},
+        "ipResource":{"shape":"IpResource"}
+      },
+      "union":true
+    },
+    "ResourceConfigurationId":{
+      "type":"string",
+      "max":22,
+      "min":22,
+      "pattern":"^rcfg-[0-9a-z]{17}$"
+    },
+    "ResourceConfigurationIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^((rcfg-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}))$"
+    },
+    "ResourceConfigurationIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6",
+        "DUALSTACK"
+      ]
+    },
+    "ResourceConfigurationName":{
+      "type":"string",
+      "max":40,
+      "min":3,
+      "pattern":"^(?!rcfg-)(?![-])(?!.*[-]$)(?!.*[-]{2})[a-z0-9-]+$"
+    },
+    "ResourceConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATE_IN_PROGRESS",
+        "UPDATE_IN_PROGRESS",
+        "DELETE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "UPDATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "ResourceConfigurationSummary":{
+      "type":"structure",
+      "members":{
+        "amazonManaged":{"shape":"Boolean"},
+        "arn":{"shape":"ResourceConfigurationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "id":{"shape":"ResourceConfigurationId"},
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "name":{"shape":"ResourceConfigurationName"},
+        "resourceConfigurationGroupId":{"shape":"ResourceConfigurationId"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "status":{"shape":"ResourceConfigurationStatus"},
+        "type":{"shape":"ResourceConfigurationType"}
+      }
+    },
+    "ResourceConfigurationSummaryList":{
+      "type":"list",
+      "member":{"shape":"ResourceConfigurationSummary"}
+    },
+    "ResourceConfigurationType":{
+      "type":"string",
+      "enum":[
+        "GROUP",
+        "CHILD",
+        "SINGLE",
+        "ARN"
+      ]
+    },
+    "ResourceEndpointAssociationArn":{
+      "type":"string",
+      "max":2048,
+      "min":21,
+      "pattern":"^arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceendpointassociation/rea-[0-9a-f]{17}$"
+    },
+    "ResourceEndpointAssociationId":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"^rea-[0-9a-f]{17}$"
+    },
+    "ResourceEndpointAssociationIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":21,
+      "pattern":"^((rea-[0-9a-f]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceendpointassociation/rea-[0-9a-f]{17}))$"
+    },
+    "ResourceEndpointAssociationList":{
+      "type":"list",
+      "member":{"shape":"ResourceEndpointAssociationSummary"}
+    },
+    "ResourceEndpointAssociationSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceEndpointAssociationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"AccountId"},
+        "id":{"shape":"ResourceEndpointAssociationId"},
+        "resourceConfigurationArn":{"shape":"ResourceConfigurationArn"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "resourceConfigurationName":{"shape":"ResourceConfigurationName"},
+        "vpcEndpointId":{"shape":"VpcEndpointId"},
+        "vpcEndpointOwner":{"shape":"VpcEndpointOwner"}
+      }
+    },
+    "ResourceGatewayArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourcegateway/rgw-[0-9a-z]{17}$"
+    },
+    "ResourceGatewayId":{
+      "type":"string",
+      "max":21,
+      "min":21,
+      "pattern":"^rgw-[0-9a-z]{17}$"
+    },
+    "ResourceGatewayIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":17,
+      "pattern":"^((rgw-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourcegateway/rgw-[0-9a-z]{17}))$"
+    },
+    "ResourceGatewayIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6",
+        "DUALSTACK"
+      ]
+    },
+    "ResourceGatewayList":{
+      "type":"list",
+      "member":{"shape":"ResourceGatewaySummary"}
+    },
+    "ResourceGatewayName":{
+      "type":"string",
+      "max":40,
+      "min":3,
+      "pattern":"^(?!rgw-)(?![-])(?!.*[-]$)(?!.*[-]{2})[a-z0-9-]+$"
+    },
+    "ResourceGatewayStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATE_IN_PROGRESS",
+        "UPDATE_IN_PROGRESS",
+        "DELETE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "UPDATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "ResourceGatewaySummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceGatewayArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "id":{"shape":"ResourceGatewayId"},
+        "ipAddressType":{"shape":"ResourceGatewayIpAddressType"},
+        "lastUpdatedAt":{"shape":"Timestamp"},
+        "name":{"shape":"ResourceGatewayName"},
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "status":{"shape":"ResourceGatewayStatus"},
+        "subnetIds":{"shape":"SubnetList"},
+        "vpcIdentifier":{"shape":"VpcId"}
+      }
     },
     "ResourceId":{
       "type":"string",
@@ -2528,7 +3496,7 @@
       "type":"string",
       "max":200,
       "min":17,
-      "pattern":"^((((sn)|(svc))-[0-9a-z]{17})|(arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(service/svc))-[0-9a-z]{17}))$"
+      "pattern":"^((((sn)|(svc)|(rcfg))-[0-9a-z]{17})|(arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:((servicenetwork/sn)|(resourceconfiguration/rcfg)|(service/svc))-[0-9a-z]{17}))$"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2706,10 +3674,27 @@
       "min":32,
       "pattern":"^arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetwork/sn-[0-9a-z]{17}$"
     },
+    "ServiceNetworkArnWithoutRegex":{
+      "type":"string",
+      "max":2048,
+      "min":10
+    },
+    "ServiceNetworkEndpointAssociation":{
+      "type":"structure",
+      "members":{
+        "createdAt":{"shape":"Timestamp"},
+        "id":{"shape":"String"},
+        "serviceNetworkArn":{"shape":"ServiceNetworkArn"},
+        "state":{"shape":"String"},
+        "vpcEndpointId":{"shape":"String"},
+        "vpcEndpointOwnerId":{"shape":"String"},
+        "vpcId":{"shape":"String"}
+      }
+    },
     "ServiceNetworkId":{
       "type":"string",
-      "max":32,
-      "min":32,
+      "max":20,
+      "min":20,
       "pattern":"^sn-[0-9a-z]{17}$"
     },
     "ServiceNetworkIdentifier":{
@@ -2718,15 +3703,85 @@
       "min":3,
       "pattern":"^((sn-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetwork/sn-[0-9a-z]{17}))$"
     },
+    "ServiceNetworkIdentifierWithoutRegex":{
+      "type":"string",
+      "max":2048,
+      "min":3
+    },
     "ServiceNetworkList":{
       "type":"list",
       "member":{"shape":"ServiceNetworkSummary"}
+    },
+    "ServiceNetworkLogType":{
+      "type":"string",
+      "enum":[
+        "SERVICE",
+        "RESOURCE"
+      ]
     },
     "ServiceNetworkName":{
       "type":"string",
       "max":63,
       "min":3,
       "pattern":"^(?![-])(?!.*[-]$)(?!.*[-]{2})[a-z0-9-]+$"
+    },
+    "ServiceNetworkNameWithoutRegex":{
+      "type":"string",
+      "max":100,
+      "min":3
+    },
+    "ServiceNetworkResourceAssociationArn":{
+      "type":"string",
+      "max":2048,
+      "min":22,
+      "pattern":"^arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetworkresourceassociation/snra-[0-9a-f]{17}$"
+    },
+    "ServiceNetworkResourceAssociationId":{
+      "type":"string",
+      "max":22,
+      "min":22,
+      "pattern":"^snra-[0-9a-f]{17}$"
+    },
+    "ServiceNetworkResourceAssociationIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":22,
+      "pattern":"^((snra-[0-9a-z]{17})|(arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:servicenetworkresourceassociation/snra-[0-9a-f]{17}))$"
+    },
+    "ServiceNetworkResourceAssociationList":{
+      "type":"list",
+      "member":{"shape":"ServiceNetworkResourceAssociationSummary"}
+    },
+    "ServiceNetworkResourceAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "ACTIVE",
+        "PARTIAL",
+        "DELETE_IN_PROGRESS",
+        "CREATE_FAILED",
+        "DELETE_FAILED"
+      ]
+    },
+    "ServiceNetworkResourceAssociationSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ServiceNetworkResourceAssociationArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "createdBy":{"shape":"AccountId"},
+        "dnsEntry":{"shape":"DnsEntry"},
+        "failureCode":{"shape":"String"},
+        "id":{"shape":"ServiceNetworkResourceAssociationId"},
+        "isManagedAssociation":{"shape":"Boolean"},
+        "privateDnsEntry":{"shape":"DnsEntry"},
+        "resourceConfigurationArn":{"shape":"ResourceConfigurationArn"},
+        "resourceConfigurationId":{"shape":"ResourceConfigurationId"},
+        "resourceConfigurationName":{"shape":"ResourceConfigurationName"},
+        "serviceNetworkArn":{"shape":"ServiceNetworkArnWithoutRegex"},
+        "serviceNetworkId":{"shape":"ServiceNetworkIdentifierWithoutRegex"},
+        "serviceNetworkName":{"shape":"ServiceNetworkNameWithoutRegex"},
+        "status":{"shape":"ServiceNetworkResourceAssociationStatus"}
+      }
     },
     "ServiceNetworkServiceAssociationArn":{
       "type":"string",
@@ -2780,6 +3835,7 @@
         "id":{"shape":"ServiceNetworkId"},
         "lastUpdatedAt":{"shape":"Timestamp"},
         "name":{"shape":"ServiceNetworkName"},
+        "numberOfAssociatedResourceConfigurations":{"shape":"Long"},
         "numberOfAssociatedServices":{"shape":"Long"},
         "numberOfAssociatedVPCs":{"shape":"Long"}
       }
@@ -2833,6 +3889,10 @@
         "vpcId":{"shape":"VpcId"}
       }
     },
+    "ServiceNetworkVpcEndpointAssociationList":{
+      "type":"list",
+      "member":{"shape":"ServiceNetworkEndpointAssociation"}
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -2877,7 +3937,22 @@
         "status":{"shape":"ServiceStatus"}
       }
     },
+    "SharingConfig":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"}
+      }
+    },
     "String":{"type":"string"},
+    "SubnetId":{
+      "type":"string",
+      "max":200,
+      "min":5
+    },
+    "SubnetList":{
+      "type":"list",
+      "member":{"shape":"SubnetId"}
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -3194,6 +4269,67 @@
         "serviceId":{"shape":"ServiceId"}
       }
     },
+    "UpdateResourceConfigurationRequest":{
+      "type":"structure",
+      "required":["resourceConfigurationIdentifier"],
+      "members":{
+        "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "portRanges":{"shape":"PortRangeList"},
+        "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
+        "resourceConfigurationIdentifier":{
+          "shape":"ResourceConfigurationIdentifier",
+          "location":"uri",
+          "locationName":"resourceConfigurationIdentifier"
+        }
+      }
+    },
+    "UpdateResourceConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "allowAssociationToShareableServiceNetwork":{"shape":"Boolean"},
+        "arn":{"shape":"ResourceConfigurationArn"},
+        "id":{"shape":"ResourceConfigurationId"},
+        "name":{"shape":"ResourceConfigurationName"},
+        "portRanges":{"shape":"PortRangeList"},
+        "protocol":{"shape":"ProtocolType"},
+        "resourceConfigurationDefinition":{"shape":"ResourceConfigurationDefinition"},
+        "resourceConfigurationGroupId":{"shape":"ResourceConfigurationId"},
+        "resourceGatewayId":{"shape":"ResourceGatewayId"},
+        "status":{"shape":"ResourceConfigurationStatus"},
+        "type":{"shape":"ResourceConfigurationType"}
+      }
+    },
+    "UpdateResourceGatewayRequest":{
+      "type":"structure",
+      "required":["resourceGatewayIdentifier"],
+      "members":{
+        "resourceGatewayIdentifier":{
+          "shape":"ResourceGatewayIdentifier",
+          "location":"uri",
+          "locationName":"resourceGatewayIdentifier"
+        },
+        "securityGroupIds":{"shape":"UpdateResourceGatewayRequestSecurityGroupIdsList"}
+      }
+    },
+    "UpdateResourceGatewayRequestSecurityGroupIdsList":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":5,
+      "min":0
+    },
+    "UpdateResourceGatewayResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ResourceGatewayArn"},
+        "id":{"shape":"ResourceGatewayId"},
+        "ipAddressType":{"shape":"IpAddressType"},
+        "name":{"shape":"ResourceGatewayName"},
+        "securityGroupIds":{"shape":"SecurityGroupList"},
+        "status":{"shape":"ResourceGatewayStatus"},
+        "subnetIds":{"shape":"SubnetList"},
+        "vpcId":{"shape":"VpcId"}
+      }
+    },
     "UpdateRuleRequest":{
       "type":"structure",
       "required":[
@@ -3380,6 +4516,18 @@
         "other"
       ]
     },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":22,
+      "min":22,
+      "pattern":"^vpce-[0-9a-f]{17}$"
+    },
+    "VpcEndpointOwner":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^\\d{12}$"
+    },
     "VpcId":{
       "type":"string",
       "max":50,
@@ -3399,6 +4547,12 @@
       "member":{"shape":"WeightedTargetGroup"},
       "max":10,
       "min":1
+    },
+    "WildcardArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z0-9][-.a-z0-9]{0,62}:[a-z0-9][-.a-z0-9]{0,62}:([a-z0-9][-.a-z0-9]{0,62})?:\\d{12}?:[^/].{0,1023}$"
     }
   }
 }

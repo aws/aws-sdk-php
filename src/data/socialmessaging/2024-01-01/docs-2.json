@@ -190,6 +190,7 @@
         "GetLinkedWhatsAppBusinessAccountInput$id": "<p>The unique identifier, from Amazon Web Services, of the linked WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$linkedWhatsAppBusinessAccountId": "<p>The WABA identifier linked to the phone number, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "LinkedWhatsAppBusinessAccount$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "LinkedWhatsAppBusinessAccountIdMetaData$wabaId": "<p>The Amazon Resource Name (ARN) of the WhatsApp Business Account ID.</p>",
         "LinkedWhatsAppBusinessAccountSummary$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
         "PutWhatsAppBusinessAccountEventDestinationsInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
         "WhatsAppSetupFinalization$phoneNumberParent": "<p>Used to add a new phone number to an existing WhatsApp Business Account. This field can't be used when the <code>waba</code> field is present.</p>"
@@ -297,6 +298,12 @@
     "ResourceNotFoundException": {
       "base": "<p>The resource was not found.</p>",
       "refs": {
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "WhatsAppBusinessAccountEventDestination$roleArn": "<p>The Amazon Resource Name (ARN) of an Identity and Access Management role that is able to import phone numbers and write events.</p>"
       }
     },
     "S3File": {

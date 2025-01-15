@@ -323,6 +323,21 @@
         "resultWrapper":"DescribeAccountLimitsResult"
       }
     },
+    "DescribeCapacityReservation":{
+      "name":"DescribeCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityReservationInput"},
+      "output":{
+        "shape":"DescribeCapacityReservationOutput",
+        "resultWrapper":"DescribeCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"LoadBalancerNotFoundException"}
+      ]
+    },
     "DescribeListenerAttributes":{
       "name":"DescribeListenerAttributes",
       "http":{
@@ -589,6 +604,28 @@
       "errors":[
         {"shape":"TrustStoreNotFoundException"},
         {"shape":"RevocationIdNotFoundException"}
+      ]
+    },
+    "ModifyCapacityReservation":{
+      "name":"ModifyCapacityReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyCapacityReservationInput"},
+      "output":{
+        "shape":"ModifyCapacityReservationOutput",
+        "resultWrapper":"ModifyCapacityReservationResult"
+      },
+      "errors":[
+        {"shape":"LoadBalancerNotFoundException"},
+        {"shape":"InvalidConfigurationRequestException"},
+        {"shape":"CapacityUnitsLimitExceededException"},
+        {"shape":"CapacityReservationPendingException"},
+        {"shape":"InsufficientCapacityException"},
+        {"shape":"CapacityDecreaseRequestsLimitExceededException"},
+        {"shape":"PriorRequestNotCompleteException"},
+        {"shape":"OperationNotPermittedException"}
       ]
     },
     "ModifyListener":{
@@ -868,7 +905,8 @@
         {"shape":"SubnetNotFoundException"},
         {"shape":"InvalidSubnetException"},
         {"shape":"AllocationIdNotFoundException"},
-        {"shape":"AvailabilityZoneNotSupportedException"}
+        {"shape":"AvailabilityZoneNotSupportedException"},
+        {"shape":"CapacityReservationPendingException"}
       ]
     }
   },
@@ -971,6 +1009,13 @@
         "Reason":{"shape":"TargetAdministrativeOverrideReasonEnum"},
         "Description":{"shape":"Description"}
       }
+    },
+    "AdvertiseTrustStoreCaNamesEnum":{
+      "type":"string",
+      "enum":[
+        "on",
+        "off"
+      ]
     },
     "AllocationId":{"type":"string"},
     "AllocationIdNotFoundException":{
@@ -1097,7 +1142,8 @@
         "ZoneName":{"shape":"ZoneName"},
         "SubnetId":{"shape":"SubnetId"},
         "OutpostId":{"shape":"OutpostId"},
-        "LoadBalancerAddresses":{"shape":"LoadBalancerAddresses"}
+        "LoadBalancerAddresses":{"shape":"LoadBalancerAddresses"},
+        "SourceNatIpv6Prefixes":{"shape":"SourceNatIpv6Prefixes"}
       }
     },
     "AvailabilityZoneNotSupportedException":{
@@ -1127,6 +1173,57 @@
       "exception":true
     },
     "CanonicalHostedZoneId":{"type":"string"},
+    "CapacityDecreaseRequestsLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityDecreaseRequestLimitExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CapacityReservationPendingException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityReservationPending",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "CapacityReservationStateEnum":{
+      "type":"string",
+      "enum":[
+        "provisioned",
+        "pending",
+        "rebalancing",
+        "failed"
+      ]
+    },
+    "CapacityReservationStatus":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"CapacityReservationStateEnum"},
+        "Reason":{"shape":"StateReason"}
+      }
+    },
+    "CapacityUnits":{"type":"integer"},
+    "CapacityUnitsDouble":{"type":"double"},
+    "CapacityUnitsLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"CapacityUnitsLimitExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "Certificate":{
       "type":"structure",
       "members":{
@@ -1203,7 +1300,8 @@
         "Tags":{"shape":"TagList"},
         "Type":{"shape":"LoadBalancerTypeEnum"},
         "IpAddressType":{"shape":"IpAddressType"},
-        "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"}
+        "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "CreateLoadBalancerOutput":{
@@ -1291,6 +1389,7 @@
       "pattern":"^(ipv4pool-coip-)[a-zA-Z0-9]+$"
     },
     "DNSName":{"type":"string"},
+    "DecreaseRequestsRemaining":{"type":"integer"},
     "Default":{"type":"boolean"},
     "DeleteAssociationSameAccountException":{
       "type":"structure",
@@ -1407,6 +1506,22 @@
       "members":{
         "Limits":{"shape":"Limits"},
         "NextMarker":{"shape":"Marker"}
+      }
+    },
+    "DescribeCapacityReservationInput":{
+      "type":"structure",
+      "required":["LoadBalancerArn"],
+      "members":{
+        "LoadBalancerArn":{"shape":"LoadBalancerArn"}
+      }
+    },
+    "DescribeCapacityReservationOutput":{
+      "type":"structure",
+      "members":{
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "DecreaseRequestsRemaining":{"shape":"DecreaseRequestsRemaining"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "CapacityReservationState":{"shape":"ZonalCapacityReservationStates"}
       }
     },
     "DescribeListenerAttributesInput":{
@@ -1698,6 +1813,13 @@
       },
       "exception":true
     },
+    "EnablePrefixForIpv6SourceNatEnum":{
+      "type":"string",
+      "enum":[
+        "on",
+        "off"
+      ]
+    },
     "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"type":"string"},
     "EnforceSecurityGroupInboundRulesOnPrivateLinkTrafficEnum":{
       "type":"string",
@@ -1841,6 +1963,16 @@
       },
       "exception":true
     },
+    "InsufficientCapacityException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InsufficientCapacity",
+        "httpStatusCode":500
+      },
+      "exception":true
+    },
     "InvalidCaCertificatesBundleException":{
       "type":"structure",
       "members":{
@@ -1939,6 +2071,7 @@
       ]
     },
     "IsDefault":{"type":"boolean"},
+    "LastModifiedTime":{"type":"timestamp"},
     "Limit":{
       "type":"structure",
       "members":{
@@ -2025,7 +2158,8 @@
         "SecurityGroups":{"shape":"SecurityGroups"},
         "IpAddressType":{"shape":"IpAddressType"},
         "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
-        "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"shape":"EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"}
+        "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"shape":"EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "LoadBalancerAddress":{
@@ -2128,6 +2262,12 @@
       }
     },
     "Max":{"type":"string"},
+    "MinimumLoadBalancerCapacity":{
+      "type":"structure",
+      "members":{
+        "CapacityUnits":{"shape":"CapacityUnits"}
+      }
+    },
     "MitigationInEffectEnum":{
       "type":"string",
       "enum":[
@@ -2136,6 +2276,24 @@
       ]
     },
     "Mode":{"type":"string"},
+    "ModifyCapacityReservationInput":{
+      "type":"structure",
+      "required":["LoadBalancerArn"],
+      "members":{
+        "LoadBalancerArn":{"shape":"LoadBalancerArn"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "ResetCapacityReservation":{"shape":"ResetCapacityReservation"}
+      }
+    },
+    "ModifyCapacityReservationOutput":{
+      "type":"structure",
+      "members":{
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "DecreaseRequestsRemaining":{"shape":"DecreaseRequestsRemaining"},
+        "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
+        "CapacityReservationState":{"shape":"ZonalCapacityReservationStates"}
+      }
+    },
     "ModifyListenerAttributesInput":{
       "type":"structure",
       "required":[
@@ -2270,7 +2428,8 @@
         "Mode":{"shape":"Mode"},
         "TrustStoreArn":{"shape":"TrustStoreArn"},
         "IgnoreClientCertificateExpiry":{"shape":"IgnoreClientCertificateExpiry"},
-        "TrustStoreAssociationStatus":{"shape":"TrustStoreAssociationStatusEnum"}
+        "TrustStoreAssociationStatus":{"shape":"TrustStoreAssociationStatusEnum"},
+        "AdvertiseTrustStoreCaNames":{"shape":"AdvertiseTrustStoreCaNamesEnum"}
       }
     },
     "Name":{"type":"string"},
@@ -2312,6 +2471,17 @@
       "type":"integer",
       "max":65535,
       "min":1
+    },
+    "PriorRequestNotCompleteException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"PriorRequestNotComplete",
+        "httpStatusCode":429,
+        "senderFault":true
+      },
+      "exception":true
     },
     "PriorityInUseException":{
       "type":"structure",
@@ -2458,6 +2628,7 @@
       "members":{
       }
     },
+    "ResetCapacityReservation":{"type":"boolean"},
     "ResourceArn":{"type":"string"},
     "ResourceArns":{
       "type":"list",
@@ -2667,14 +2838,16 @@
         "LoadBalancerArn":{"shape":"LoadBalancerArn"},
         "Subnets":{"shape":"Subnets"},
         "SubnetMappings":{"shape":"SubnetMappings"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "SetSubnetsOutput":{
       "type":"structure",
       "members":{
         "AvailabilityZones":{"shape":"AvailabilityZones"},
-        "IpAddressType":{"shape":"IpAddressType"}
+        "IpAddressType":{"shape":"IpAddressType"},
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
       }
     },
     "SourceIpConditionConfig":{
@@ -2682,6 +2855,11 @@
       "members":{
         "Values":{"shape":"ListOfString"}
       }
+    },
+    "SourceNatIpv6Prefix":{"type":"string"},
+    "SourceNatIpv6Prefixes":{
+      "type":"list",
+      "member":{"shape":"SourceNatIpv6Prefix"}
     },
     "SslPolicies":{
       "type":"list",
@@ -2716,7 +2894,8 @@
         "SubnetId":{"shape":"SubnetId"},
         "AllocationId":{"shape":"AllocationId"},
         "PrivateIPv4Address":{"shape":"PrivateIPv4Address"},
-        "IPv6Address":{"shape":"IPv6Address"}
+        "IPv6Address":{"shape":"IPv6Address"},
+        "SourceNatIpv6Prefix":{"shape":"SourceNatIpv6Prefix"}
       }
     },
     "SubnetMappings":{
@@ -3230,6 +3409,18 @@
       "exception":true
     },
     "VpcId":{"type":"string"},
+    "ZonalCapacityReservationState":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"CapacityReservationStatus"},
+        "AvailabilityZone":{"shape":"ZoneName"},
+        "EffectiveCapacityUnits":{"shape":"CapacityUnitsDouble"}
+      }
+    },
+    "ZonalCapacityReservationStates":{
+      "type":"list",
+      "member":{"shape":"ZonalCapacityReservationState"}
+    },
     "ZoneName":{"type":"string"}
   }
 }

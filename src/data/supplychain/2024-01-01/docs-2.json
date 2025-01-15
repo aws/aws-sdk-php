@@ -3,26 +3,26 @@
   "service": "<p> AWS Supply Chain is a cloud-based application that works with your enterprise resource planning (ERP) and supply chain management systems. Using AWS Supply Chain, you can connect and extract your inventory, supply, and demand related data from existing ERP or supply chain systems into a single data model. </p> <p>The AWS Supply Chain API supports configuration data import for Supply Planning.</p> <p> All AWS Supply chain API operations are Amazon-authenticated and certificate-signed. They not only require the use of the AWS SDK, but also allow for the exclusive use of AWS Identity and Access Management users and roles to help facilitate access, trust, and permission policies. </p>",
   "operations": {
     "CreateBillOfMaterialsImportJob": "<p>CreateBillOfMaterialsImportJob creates an import job for the Product Bill Of Materials (BOM) entity. For information on the product_bom entity, see the AWS Supply Chain User Guide.</p> <p>The CSV file must be located in an Amazon S3 location accessible to AWS Supply Chain. It is recommended to use the same Amazon S3 bucket created during your AWS Supply Chain instance creation.</p>",
-    "CreateDataIntegrationFlow": "<p>Create DataIntegrationFlow to map one or more different sources to one target using the SQL transformation query.</p>",
-    "CreateDataLakeDataset": "<p>Create a data lake dataset.</p>",
-    "CreateInstance": "<p>Create a new instance for AWS Supply Chain. This is an asynchronous operation. Upon receiving a CreateInstance request, AWS Supply Chain immediately returns the instance resource, with instance ID, and the initializing state while simultaneously creating all required Amazon Web Services resources for an instance creation. You can use GetInstance to check the status of the instance.</p>",
-    "DeleteDataIntegrationFlow": "<p>Delete the DataIntegrationFlow.</p>",
-    "DeleteDataLakeDataset": "<p>Delete a data lake dataset.</p>",
-    "DeleteInstance": "<p>Delete the instance. This is an asynchronous operation. Upon receiving a DeleteInstance request, AWS Supply Chain immediately returns a response with the instance resource, delete state while cleaning up all Amazon Web Services resources created during the instance creation process. You can use the GetInstance action to check the instance status.</p>",
+    "CreateDataIntegrationFlow": "<p>Enables you to programmatically create a data pipeline to ingest data from source systems such as Amazon S3 buckets, to a predefined Amazon Web Services Supply Chain dataset (product, inbound_order) or a temporary dataset along with the data transformation query provided with the API.</p>",
+    "CreateDataLakeDataset": "<p>Enables you to programmatically create an Amazon Web Services Supply Chain data lake dataset. Developers can create the datasets using their pre-defined or custom schema for a given instance ID, namespace, and dataset name.</p>",
+    "CreateInstance": "<p>Enables you to programmatically create an Amazon Web Services Supply Chain instance by applying KMS keys and relevant information associated with the API without using the Amazon Web Services console.</p> <p>This is an asynchronous operation. Upon receiving a CreateInstance request, Amazon Web Services Supply Chain immediately returns the instance resource, instance ID, and the initializing state while simultaneously creating all required Amazon Web Services resources for an instance creation. You can use GetInstance to check the status of the instance. If the instance results in an unhealthy state, you need to check the error message, delete the current instance, and recreate a new one based on the mitigation from the error message.</p>",
+    "DeleteDataIntegrationFlow": "<p>Enable you to programmatically delete an existing data pipeline for the provided Amazon Web Services Supply Chain instance and DataIntegrationFlow name.</p>",
+    "DeleteDataLakeDataset": "<p>Enables you to programmatically delete an Amazon Web Services Supply Chain data lake dataset. Developers can delete the existing datasets for a given instance ID, namespace, and instance name.</p>",
+    "DeleteInstance": "<p>Enables you to programmatically delete an Amazon Web Services Supply Chain instance by deleting the KMS keys and relevant information associated with the API without using the Amazon Web Services console.</p> <p>This is an asynchronous operation. Upon receiving a DeleteInstance request, Amazon Web Services Supply Chain immediately returns a response with the instance resource, delete state while cleaning up all Amazon Web Services resources created during the instance creation process. You can use the GetInstance action to check the instance status.</p>",
     "GetBillOfMaterialsImportJob": "<p>Get status and details of a BillOfMaterialsImportJob.</p>",
-    "GetDataIntegrationFlow": "<p>View the DataIntegrationFlow details.</p>",
-    "GetDataLakeDataset": "<p>Get a data lake dataset.</p>",
-    "GetInstance": "<p>Get the AWS Supply Chain instance details.</p>",
-    "ListDataIntegrationFlows": "<p>Lists all the DataIntegrationFlows in a paginated way.</p>",
-    "ListDataLakeDatasets": "<p>List the data lake datasets for a specific instance and name space.</p>",
-    "ListInstances": "<p>List all the AWS Supply Chain instances in a paginated way.</p>",
-    "ListTagsForResource": "<p>List all the tags for an Amazon Web ServicesSupply Chain resource.</p>",
+    "GetDataIntegrationFlow": "<p>Enables you to programmatically view a specific data pipeline for the provided Amazon Web Services Supply Chain instance and DataIntegrationFlow name.</p>",
+    "GetDataLakeDataset": "<p>Enables you to programmatically view an Amazon Web Services Supply Chain data lake dataset. Developers can view the data lake dataset information such as namespace, schema, and so on for a given instance ID, namespace, and dataset name.</p>",
+    "GetInstance": "<p>Enables you to programmatically retrieve the information related to an Amazon Web Services Supply Chain instance ID.</p>",
+    "ListDataIntegrationFlows": "<p>Enables you to programmatically list all data pipelines for the provided Amazon Web Services Supply Chain instance.</p>",
+    "ListDataLakeDatasets": "<p>Enables you to programmatically view the list of Amazon Web Services Supply Chain data lake datasets. Developers can view the datasets and the corresponding information such as namespace, schema, and so on for a given instance ID and namespace.</p>",
+    "ListInstances": "<p>List all Amazon Web Services Supply Chain instances for a specific account. Enables you to programmatically list all Amazon Web Services Supply Chain instances based on their account ID, instance name, and state of the instance (active or delete).</p>",
+    "ListTagsForResource": "<p>List all the tags for an Amazon Web ServicesSupply Chain resource. You can list all the tags added to a resource. By listing the tags, developers can view the tag level information on a resource and perform actions such as, deleting a resource associated with a particular tag.</p>",
     "SendDataIntegrationEvent": "<p>Send the transactional data payload for the event with real-time data for analysis or monitoring. The real-time data events are stored in an Amazon Web Services service before being processed and stored in data lake. New data events are synced with data lake at 5 PM GMT everyday. The updated transactional data is available in data lake after ingestion.</p>",
-    "TagResource": "<p>Create tags for an Amazon Web Services Supply chain resource.</p>",
-    "UntagResource": "<p>Delete tags for an Amazon Web Services Supply chain resource.</p>",
-    "UpdateDataIntegrationFlow": "<p>Update the DataIntegrationFlow.</p>",
-    "UpdateDataLakeDataset": "<p>Update a data lake dataset.</p>",
-    "UpdateInstance": "<p>Update the instance.</p>"
+    "TagResource": "<p>You can create tags during or after creating a resource such as instance, data flow, or dataset in AWS Supply chain. During the data ingestion process, you can add tags such as dev, test, or prod to data flows created during the data ingestion process in the AWS Supply Chain datasets. You can use these tags to identify a group of resources or a single resource used by the developer.</p>",
+    "UntagResource": "<p>You can delete tags for an Amazon Web Services Supply chain resource such as instance, data flow, or dataset in AWS Supply Chain. During the data ingestion process, you can delete tags such as dev, test, or prod to data flows created during the data ingestion process in the AWS Supply Chain datasets. </p>",
+    "UpdateDataIntegrationFlow": "<p>Enables you to programmatically update an existing data pipeline to ingest data from the source systems such as, Amazon S3 buckets, to a predefined Amazon Web Services Supply Chain dataset (product, inbound_order) or a temporary dataset along with the data transformation query provided with the API.</p>",
+    "UpdateDataLakeDataset": "<p>Enables you to programmatically update an Amazon Web Services Supply Chain data lake dataset. Developers can update the description of a data lake dataset for a given instance ID, namespace, and dataset name.</p>",
+    "UpdateInstance": "<p>Enables you to programmatically update an Amazon Web Services Supply Chain instance description by providing all the relevant information such as account ID, instance ID and so on without using the AWS console.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -127,7 +127,7 @@
     "DataIntegrationEventData": {
       "base": null,
       "refs": {
-        "SendDataIntegrationEventRequest$data": "<p>The data payload of the event. For more information on the data schema to use, see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">Data entities supported in AWS Supply Chain </a>.</p>"
+        "SendDataIntegrationEventRequest$data": "<p>The data payload of the event. For more information on the data schema to use, see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">Data entities supported in AWS Supply Chain</a>.</p>"
       }
     },
     "DataIntegrationEventGroupId": {
@@ -338,7 +338,7 @@
       "refs": {
         "CreateDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
         "DataLakeDataset$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
-        "DeleteDataLakeDatasetRequest$name": "<p>The name of the dataset. If the namespace is <i>asc</i>, the name must be one of the supported <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">data entities </a>.</p>",
+        "DeleteDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
         "DeleteDataLakeDatasetResponse$name": "<p>The name of deleted dataset.</p>",
         "GetDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>",
         "UpdateDataLakeDatasetRequest$name": "<p>The name of the dataset. For <b>asc</b> name space, the name must be one of the supported data entities under <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p>"
@@ -349,10 +349,10 @@
       "refs": {
         "CreateDataLakeDatasetRequest$namespace": "<p>The name space of the dataset.</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
         "DataLakeDataset$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
-        "DeleteDataLakeDatasetRequest$namespace": "<p>The namespace of the dataset. The available values are:</p> <ul> <li> <p>asc: for <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\"> AWS Supply Chain supported datasets </a>.</p> </li> <li> <p>default: for datasets with custom user-defined schemas.</p> </li> </ul>",
-        "DeleteDataLakeDatasetResponse$namespace": "<p>The namespace of deleted dataset.</p>",
+        "DeleteDataLakeDatasetRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
+        "DeleteDataLakeDatasetResponse$namespace": "<p>The name space of deleted dataset.</p>",
         "GetDataLakeDatasetRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
-        "ListDataLakeDatasetsRequest$namespace": "<p>The namespace of the dataset. The available values are:</p> <ul> <li> <p>asc: for <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\"> AWS Supply Chain supported datasets </a>.</p> </li> <li> <p>default: for datasets with custom user-defined schemas.</p> </li> </ul>",
+        "ListDataLakeDatasetsRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>",
         "UpdateDataLakeDatasetRequest$namespace": "<p>The name space of the dataset. The available values are:</p> <ul> <li> <p> <b>asc</b> - For information on the Amazon Web Services Supply Chain supported datasets see <a href=\"https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html\">https://docs.aws.amazon.com/aws-supply-chain/latest/userguide/data-model-asc.html</a>.</p> </li> <li> <p> <b>default</b> - For datasets with custom user-defined schemas.</p> </li> </ul>"
       }
     },
@@ -366,7 +366,7 @@
     "DataLakeDatasetSchema": {
       "base": "<p>The schema details of the dataset.</p>",
       "refs": {
-        "CreateDataLakeDatasetRequest$schema": "<p>The custom schema of the data lake dataset and is only required when the name space is <i>default</i>.</p>",
+        "CreateDataLakeDatasetRequest$schema": "<p>The custom schema of the data lake dataset and is only required when the name space is <b>default</b>.</p>",
         "DataLakeDataset$schema": "<p>The schema of the dataset.</p>"
       }
     },
@@ -551,6 +551,7 @@
     "InstanceWebAppDnsDomain": {
       "base": null,
       "refs": {
+        "CreateInstanceRequest$webAppDnsDomain": "<p>The DNS subdomain of the web app. This would be \"example\" in the URL \"example.scn.global.on.aws\". You can set this to a custom value, as long as the domain isn't already being used by someone else. The name may only include alphanumeric characters and hyphens.</p>",
         "Instance$webAppDnsDomain": "<p>The WebApp DNS domain name of the instance.</p>"
       }
     },
@@ -639,6 +640,7 @@
         "AccessDeniedException$message": null,
         "BillOfMaterialsImportJob$message": "<p>When the BillOfMaterialsImportJob has reached a terminal state, there will be a message.</p>",
         "ConflictException$message": null,
+        "Instance$errorMessage": "<p>The Amazon Web Services Supply Chain instance error message. If the instance results in an unhealthy state, customers need to check the error message, delete the current instance, and recreate a new one based on the mitigation from the error message.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,

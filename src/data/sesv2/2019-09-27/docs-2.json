@@ -16,6 +16,7 @@
     "CreateEmailTemplate": "<p>Creates an email template. Email templates enable you to send personalized email to one or more destinations in a single API operation. For more information, see the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-personalized-email-api.html\">Amazon SES Developer Guide</a>.</p> <p>You can execute this operation no more than once per second.</p>",
     "CreateExportJob": "<p>Creates an export job for a data source and destination.</p> <p>You can execute this operation no more than once per second.</p>",
     "CreateImportJob": "<p>Creates an import job for a data destination.</p>",
+    "CreateMultiRegionEndpoint": "<p>Creates a multi-region endpoint (global-endpoint).</p> <p>The primary region is going to be the AWS-Region where the operation is executed. The secondary region has to be provided in request's parameters. From the data flow standpoint there is no difference between primary and secondary regions - sending traffic will be split equally between the two. The primary region is the region where the resource has been created and where it can be managed. </p>",
     "DeleteConfigurationSet": "<p>Delete an existing configuration set.</p> <p> <i>Configuration sets</i> are groups of rules that you can apply to the emails you send. You apply a configuration set to an email by including a reference to the configuration set in the headers of the email. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email.</p>",
     "DeleteConfigurationSetEventDestination": "<p>Delete an event destination.</p> <p> <i>Events</i> include message sends, deliveries, opens, clicks, bounces, and complaints. <i>Event destinations</i> are places that you can send information about these events to. For example, you can send event data to Amazon EventBridge and associate a rule to send the event to the specified target.</p>",
     "DeleteContact": "<p>Removes a contact from a contact list.</p>",
@@ -25,6 +26,7 @@
     "DeleteEmailIdentity": "<p>Deletes an email identity. An identity can be either an email address or a domain name.</p>",
     "DeleteEmailIdentityPolicy": "<p>Deletes the specified sending authorization policy for the given identity (an email address or a domain). This API returns successfully even if a policy with the specified name does not exist.</p> <note> <p>This API is for the identity owner only. If you have not verified the identity, this API will return an error.</p> </note> <p>Sending authorization is a feature that enables an identity owner to authorize other senders to use its identities. For information about using sending authorization, see the <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/sending-authorization.html\">Amazon SES Developer Guide</a>.</p> <p>You can execute this operation no more than once per second.</p>",
     "DeleteEmailTemplate": "<p>Deletes an email template.</p> <p>You can execute this operation no more than once per second.</p>",
+    "DeleteMultiRegionEndpoint": "<p>Deletes a multi-region endpoint (global-endpoint).</p> <p>Only multi-region endpoints (global-endpoints) whose primary region is the AWS-Region where operation is executed can be deleted.</p>",
     "DeleteSuppressedDestination": "<p>Removes an email address from the suppression list for your account.</p>",
     "GetAccount": "<p>Obtain information about the email-sending status and capabilities of your Amazon SES account in the current Amazon Web Services Region.</p>",
     "GetBlacklistReports": "<p>Retrieve a list of the blacklists that your dedicated IP addresses appear on.</p>",
@@ -46,6 +48,7 @@
     "GetExportJob": "<p>Provides information about an export job.</p>",
     "GetImportJob": "<p>Provides information about an import job.</p>",
     "GetMessageInsights": "<p>Provides information about a specific message, including the from address, the subject, the recipient address, email tags, as well as events associated with the message.</p> <p>You can execute this operation no more than once per second.</p>",
+    "GetMultiRegionEndpoint": "<p>Displays the multi-region endpoint (global-endpoint) configuration.</p> <p>Only multi-region endpoints (global-endpoints) whose primary region is the AWS-Region where operation is executed can be displayed.</p>",
     "GetSuppressedDestination": "<p>Retrieves information about a specific email address that's on the suppression list for your account.</p>",
     "ListConfigurationSets": "<p>List all of the configuration sets associated with your account in the current region.</p> <p> <i>Configuration sets</i> are groups of rules that you can apply to the emails you send. You apply a configuration set to an email by including a reference to the configuration set in the headers of the email. When you apply a configuration set to an email, all of the rules in that configuration set are applied to the email.</p>",
     "ListContactLists": "<p>Lists all of the contact lists available.</p>",
@@ -58,6 +61,7 @@
     "ListEmailTemplates": "<p>Lists the email templates present in your Amazon SES account in the current Amazon Web Services Region.</p> <p>You can execute this operation no more than once per second.</p>",
     "ListExportJobs": "<p>Lists all of the export jobs.</p>",
     "ListImportJobs": "<p>Lists all of the import jobs.</p>",
+    "ListMultiRegionEndpoints": "<p>List the multi-region endpoints (global-endpoints).</p> <p>Only multi-region endpoints (global-endpoints) whose primary region is the AWS-Region where operation is executed will be listed.</p>",
     "ListRecommendations": "<p>Lists the recommendations present in your Amazon SES account in the current Amazon Web Services Region.</p> <p>You can execute this operation no more than once per second.</p>",
     "ListSuppressedDestinations": "<p>Retrieves a list of email addresses that are on the suppression list for your account.</p>",
     "ListTagsForResource": "<p>Retrieve a list of the tags (keys and values) that are associated with a specified resource. A <i>tag</i> is a label that you optionally define and associate with a resource. Each tag consists of a required <i>tag key</i> and an optional associated <i>tag value</i>. A tag key is a general label that acts as a category for more specific tag values. A tag value acts as a descriptor within a tag key.</p>",
@@ -581,6 +585,16 @@
       "refs": {
       }
     },
+    "CreateMultiRegionEndpointRequest": {
+      "base": "<p>Represents a request to create a multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+      }
+    },
+    "CreateMultiRegionEndpointResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {
+      }
+    },
     "CustomRedirectDomain": {
       "base": "<p>The domain to use for tracking open and click events.</p>",
       "refs": {
@@ -746,6 +760,16 @@
       "refs": {
       }
     },
+    "DeleteMultiRegionEndpointRequest": {
+      "base": "<p>Represents a request to delete a multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+      }
+    },
+    "DeleteMultiRegionEndpointResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {
+      }
+    },
     "DeleteSuppressedDestinationRequest": {
       "base": "<p>A request to remove an email address from the suppression list for your account.</p>",
       "refs": {
@@ -817,6 +841,12 @@
         "SendEmailRequest$Destination": "<p>An object that contains the recipients of the email message.</p>"
       }
     },
+    "Details": {
+      "base": "<p>An object that contains configuration details of multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+        "CreateMultiRegionEndpointRequest$Details": "<p>Contains details of a multi-region endpoint (global-endpoint) being created.</p>"
+      }
+    },
     "DiagnosticCode": {
       "base": null,
       "refs": {
@@ -864,7 +894,8 @@
     "DkimSigningAttributesOrigin": {
       "base": null,
       "refs": {
-        "DkimAttributes$SigningAttributesOrigin": "<p>A string that indicates how DKIM was configured for the identity. These are the possible values:</p> <ul> <li> <p> <code>AWS_SES</code> – Indicates that DKIM was configured for the identity by using <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html\">Easy DKIM</a>.</p> </li> <li> <p> <code>EXTERNAL</code> – Indicates that DKIM was configured for the identity by using Bring Your Own DKIM (BYODKIM).</p> </li> </ul>",
+        "DkimAttributes$SigningAttributesOrigin": "<p>A string that indicates how DKIM was configured for the identity. These are the possible values:</p> <ul> <li> <p> <code>AWS_SES</code> – Indicates that DKIM was configured for the identity by using <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html\">Easy DKIM</a>.</p> </li> <li> <p> <code>EXTERNAL</code> – Indicates that DKIM was configured for the identity by using Bring Your Own DKIM (BYODKIM).</p> </li> <li> <p> <code>AWS_SES_AF_SOUTH_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Africa (Cape Town) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_NORTH_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Stockholm) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTH_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Mumbai) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_3</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Paris) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_2</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (London) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_SOUTH_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Milan) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Ireland) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_3</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Osaka) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_2</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Seoul) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_ME_SOUTH_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Middle East (Bahrain) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Tokyo) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_IL_CENTRAL_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Israel (Tel Aviv) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_SA_EAST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in South America (São Paulo) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_CA_CENTRAL_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Canada (Central) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Singapore) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_2</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Sydney) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_3</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Asia Pacific (Jakarta) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_CENTRAL_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in Europe (Frankfurt) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_EAST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US East (N. Virginia) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_EAST_2</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US East (Ohio) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_WEST_1</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US West (N. California) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_WEST_2</code> – Indicates that DKIM was configured for the identity by replicating signing attributes from a parent identity in US West (Oregon) region using Deterministic Easy-DKIM (DEED). </p> </li> </ul>",
+        "DkimSigningAttributes$DomainSigningAttributesOrigin": "<p>The attribute to use for configuring DKIM for the identity depends on the operation: </p> <ol> <li> <p>For <code>PutEmailIdentityDkimSigningAttributes</code>: </p> <ul> <li> <p>None of the values are allowed - use the <a href=\"https://docs.aws.amazon.com/ses/latest/APIReference-V2/API_PutEmailIdentityDkimSigningAttributes.html#SES-PutEmailIdentityDkimSigningAttributes-request-SigningAttributesOrigin\"> <code>SigningAttributesOrigin</code> </a> parameter instead </p> </li> </ul> </li> <li> <p>For <code>CreateEmailIdentity</code> when replicating a parent identity's DKIM configuration: </p> <ul> <li> <p>Allowed values: All values except <code>AWS_SES</code> and <code>EXTERNAL</code> </p> </li> </ul> </li> </ol> <ul> <li> <p> <code>AWS_SES</code> – Configure DKIM for the identity by using Easy DKIM. </p> </li> <li> <p> <code>EXTERNAL</code> – Configure DKIM for the identity by using Bring Your Own DKIM (BYODKIM). </p> </li> <li> <p> <code>AWS_SES_AF_SOUTH_1</code> – Configure DKIM for the identity by replicating from a parent identity in Africa (Cape Town) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_NORTH_1</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (Stockholm) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTH_1</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Mumbai) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_3</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (Paris) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_2</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (London) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_SOUTH_1</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (Milan) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_WEST_1</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (Ireland) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_3</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Osaka) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_2</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Seoul) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_ME_SOUTH_1</code> – Configure DKIM for the identity by replicating from a parent identity in Middle East (Bahrain) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_NORTHEAST_1</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Tokyo) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_IL_CENTRAL_1</code> – Configure DKIM for the identity by replicating from a parent identity in Israel (Tel Aviv) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_SA_EAST_1</code> – Configure DKIM for the identity by replicating from a parent identity in South America (São Paulo) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_CA_CENTRAL_1</code> – Configure DKIM for the identity by replicating from a parent identity in Canada (Central) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_1</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Singapore) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_2</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Sydney) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_AP_SOUTHEAST_3</code> – Configure DKIM for the identity by replicating from a parent identity in Asia Pacific (Jakarta) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_EU_CENTRAL_1</code> – Configure DKIM for the identity by replicating from a parent identity in Europe (Frankfurt) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_EAST_1</code> – Configure DKIM for the identity by replicating from a parent identity in US East (N. Virginia) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_EAST_2</code> – Configure DKIM for the identity by replicating from a parent identity in US East (Ohio) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_WEST_1</code> – Configure DKIM for the identity by replicating from a parent identity in US West (N. California) region using Deterministic Easy-DKIM (DEED). </p> </li> <li> <p> <code>AWS_SES_US_WEST_2</code> – Configure DKIM for the identity by replicating from a parent identity in US West (Oregon) region using Deterministic Easy-DKIM (DEED). </p> </li> </ul>",
         "PutEmailIdentityDkimSigningAttributesRequest$SigningAttributesOrigin": "<p>The method to use to configure DKIM for the identity. There are the following possible values:</p> <ul> <li> <p> <code>AWS_SES</code> – Configure DKIM for the identity by using <a href=\"https://docs.aws.amazon.com/ses/latest/DeveloperGuide/easy-dkim.html\">Easy DKIM</a>.</p> </li> <li> <p> <code>EXTERNAL</code> – Configure DKIM for the identity by using Bring Your Own DKIM (BYODKIM).</p> </li> </ul>"
       }
     },
@@ -1025,6 +1056,7 @@
       "refs": {
         "CreateEmailTemplateRequest$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>",
         "GetEmailTemplateResponse$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>",
+        "Template$TemplateContent": "<p>The content of the template.</p> <note> <p>Amazon SES supports only simple substitions when you send email using the <code>SendEmail</code> or <code>SendBulkEmail</code> operations and you provide the full template content in the request.</p> </note>",
         "UpdateEmailTemplateRequest$TemplateContent": "<p>The content of the email template, composed of a subject line, an HTML part, and a text-only part.</p>"
       }
     },
@@ -1120,6 +1152,26 @@
       "base": null,
       "refs": {
         "PutAccountDetailsRequest$ProductionAccessEnabled": "<p>Indicates whether or not your account should have production access in the current Amazon Web Services Region.</p> <p>If the value is <code>false</code>, then your account is in the <i>sandbox</i>. When your account is in the sandbox, you can only send email to verified identities. </p> <p>If the value is <code>true</code>, then your account has production access. When your account has production access, you can send email to any address. The sending quota and maximum sending rate for your account vary based on your specific use case.</p>"
+      }
+    },
+    "EndpointId": {
+      "base": "<p>The ID of the multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+        "CreateMultiRegionEndpointResponse$EndpointId": "<p>The ID of the multi-region endpoint (global-endpoint).</p>",
+        "GetMultiRegionEndpointResponse$EndpointId": "<p>The ID of the multi-region endpoint (global-endpoint).</p>",
+        "MultiRegionEndpoint$EndpointId": "<p>The ID of the multi-region endpoint (global-endpoint).</p>",
+        "SendBulkEmailRequest$EndpointId": "<p>The ID of the multi-region endpoint (global-endpoint).</p>",
+        "SendEmailRequest$EndpointId": "<p>The ID of the multi-region endpoint (global-endpoint).</p>"
+      }
+    },
+    "EndpointName": {
+      "base": "<p>The name of the multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+        "CreateMultiRegionEndpointRequest$EndpointName": "<p>The name of the multi-region endpoint (global-endpoint).</p>",
+        "DeleteMultiRegionEndpointRequest$EndpointName": "<p>The name of the multi-region endpoint (global-endpoint) to be deleted.</p>",
+        "GetMultiRegionEndpointRequest$EndpointName": "<p>The name of the multi-region endpoint (global-endpoint).</p>",
+        "GetMultiRegionEndpointResponse$EndpointName": "<p>The name of the multi-region endpoint (global-endpoint).</p>",
+        "MultiRegionEndpoint$EndpointName": "<p>The name of the multi-region endpoint (global-endpoint).</p>"
       }
     },
     "EngagementEventType": {
@@ -1523,6 +1575,16 @@
       "refs": {
       }
     },
+    "GetMultiRegionEndpointRequest": {
+      "base": "<p>Represents a request to display the multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+      }
+    },
+    "GetMultiRegionEndpointResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {
+      }
+    },
     "GetSuppressedDestinationRequest": {
       "base": "<p>A request to retrieve information about an email address that's on the suppression list for your account.</p>",
       "refs": {
@@ -1898,6 +1960,16 @@
         "SendEmailRequest$ListManagementOptions": "<p>An object used to specify a list or topic to which an email belongs, which will be used when a contact chooses to unsubscribe.</p>"
       }
     },
+    "ListMultiRegionEndpointsRequest": {
+      "base": "<p>Represents a request to list all the multi-region endpoints (global-endpoints) whose primary region is the AWS-Region where operation is executed. </p>",
+      "refs": {
+      }
+    },
+    "ListMultiRegionEndpointsResponse": {
+      "base": "<p>The following elements are returned by the service.</p>",
+      "refs": {
+      }
+    },
     "ListOfContactLists": {
       "base": null,
       "refs": {
@@ -2198,6 +2270,18 @@
         "ExportDataSource$MetricsDataSource": null
       }
     },
+    "MultiRegionEndpoint": {
+      "base": "<p>An object that contains multi-region endpoint (global-endpoint) properties.</p>",
+      "refs": {
+        "MultiRegionEndpoints$member": null
+      }
+    },
+    "MultiRegionEndpoints": {
+      "base": null,
+      "refs": {
+        "ListMultiRegionEndpointsResponse$MultiRegionEndpoints": "<p>An array that contains key multi-region endpoint (global-endpoint) properties.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -2231,6 +2315,13 @@
         "ListSuppressedDestinationsResponse$NextToken": "<p>A token that indicates that there are additional email addresses on the suppression list for your account. To view additional suppressed addresses, issue another request to <code>ListSuppressedDestinations</code>, and pass this token in the <code>NextToken</code> parameter.</p>"
       }
     },
+    "NextTokenV2": {
+      "base": null,
+      "refs": {
+        "ListMultiRegionEndpointsRequest$NextToken": "<p>A token returned from a previous call to <code>ListMultiRegionEndpoints</code> to indicate the position in the list of multi-region endpoints (global-endpoints).</p>",
+        "ListMultiRegionEndpointsResponse$NextToken": "<p>A token indicating that there are additional multi-region endpoints (global-endpoints) available to be listed. Pass this token to a subsequent <code>ListMultiRegionEndpoints</code> call to retrieve the next page.</p>"
+      }
+    },
     "NotFoundException": {
       "base": "<p>The resource you attempted to access doesn't exist.</p>",
       "refs": {
@@ -2251,6 +2342,12 @@
       "base": "<p>An object that contains information about email that was sent from the selected domain.</p>",
       "refs": {
         "GetDomainStatisticsReportResponse$OverallVolume": "<p>An object that contains deliverability metrics for the domain that you specified. The data in this object is a summary of all of the data that was collected from the <code>StartDate</code> to the <code>EndDate</code>.</p>"
+      }
+    },
+    "PageSizeV2": {
+      "base": null,
+      "refs": {
+        "ListMultiRegionEndpointsRequest$PageSize": "<p>The number of results to show in a single call to <code>ListMultiRegionEndpoints</code>. If the number of results is larger than the number you specified in this parameter, the response includes a <code>NextToken</code> element that you can use to retrieve the next page of results. </p>"
       }
     },
     "Percentage": {
@@ -2633,6 +2730,20 @@
         "ListRecommendationsResponse$Recommendations": "<p>The recommendations applicable to your account.</p>"
       }
     },
+    "Region": {
+      "base": "<p>The name of an AWS-Region.</p>",
+      "refs": {
+        "Regions$member": null,
+        "Route$Region": "<p>The name of an AWS-Region.</p>",
+        "RouteDetails$Region": "<p>The name of an AWS-Region to be a secondary region for the multi-region endpoint (global-endpoint).</p>"
+      }
+    },
+    "Regions": {
+      "base": null,
+      "refs": {
+        "MultiRegionEndpoint$Regions": "<p>Primary and secondary regions between which multi-region endpoint splits sending traffic.</p>"
+      }
+    },
     "RenderedEmailTemplate": {
       "base": "<p>The complete MIME message rendered by applying the data in the TemplateData parameter to the template specified in the TemplateName parameter.</p>",
       "refs": {
@@ -2683,6 +2794,30 @@
       "base": null,
       "refs": {
         "ReviewDetails$Status": "<p>The status of the latest review of your account. The status can be one of the following:</p> <ul> <li> <p> <code>PENDING</code> – We have received your appeal and are in the process of reviewing it.</p> </li> <li> <p> <code>GRANTED</code> – Your appeal has been reviewed and your production access has been granted.</p> </li> <li> <p> <code>DENIED</code> – Your appeal has been reviewed and your production access has been denied.</p> </li> <li> <p> <code>FAILED</code> – An internal error occurred and we didn't receive your appeal. You can submit your appeal again.</p> </li> </ul>"
+      }
+    },
+    "Route": {
+      "base": "<p>An object which contains an AWS-Region and routing status.</p>",
+      "refs": {
+        "Routes$member": null
+      }
+    },
+    "RouteDetails": {
+      "base": "<p>An object that contains route configuration. Includes secondary region name.</p>",
+      "refs": {
+        "RoutesDetails$member": null
+      }
+    },
+    "Routes": {
+      "base": "<p>A list of routes between which the traffic will be split when sending through the multi-region endpoint (global-endpoint).</p>",
+      "refs": {
+        "GetMultiRegionEndpointResponse$Routes": "<p>Contains routes information for the multi-region endpoint (global-endpoint).</p>"
+      }
+    },
+    "RoutesDetails": {
+      "base": "<p>A list of route configuration details. Must contain exactly one route configuration.</p>",
+      "refs": {
+        "Details$RoutesDetails": "<p>A list of route configuration details. Must contain exactly one route configuration.</p>"
       }
     },
     "S3Url": {
@@ -2783,6 +2918,15 @@
       "refs": {
         "EventDestination$SnsDestination": "<p>An object that defines an Amazon SNS destination for email events. You can use Amazon SNS to send notifications when certain email events occur.</p>",
         "EventDestinationDefinition$SnsDestination": "<p>An object that defines an Amazon SNS destination for email events. You can use Amazon SNS to send notifications when certain email events occur.</p>"
+      }
+    },
+    "Status": {
+      "base": "<p>The status of the multi-region endpoint (global-endpoint).</p> <ul> <li> <p> <code>CREATING</code> – The resource is being provisioned.</p> </li> <li> <p> <code>READY</code> – The resource is ready to use.</p> </li> <li> <p> <code>FAILED</code> – The resource failed to be provisioned.</p> </li> <li> <p> <code>DELETING</code> – The resource is being deleted as requested.</p> </li> </ul>",
+      "refs": {
+        "CreateMultiRegionEndpointResponse$Status": "<p>A status of the multi-region endpoint (global-endpoint) right after the create request.</p> <ul> <li> <p> <code>CREATING</code> – The resource is being provisioned.</p> </li> <li> <p> <code>READY</code> – The resource is ready to use.</p> </li> <li> <p> <code>FAILED</code> – The resource failed to be provisioned.</p> </li> <li> <p> <code>DELETING</code> – The resource is being deleted as requested.</p> </li> </ul>",
+        "DeleteMultiRegionEndpointResponse$Status": "<p>A status of the multi-region endpoint (global-endpoint) right after the delete request.</p> <ul> <li> <p> <code>CREATING</code> – The resource is being provisioned.</p> </li> <li> <p> <code>READY</code> – The resource is ready to use.</p> </li> <li> <p> <code>FAILED</code> – The resource failed to be provisioned.</p> </li> <li> <p> <code>DELETING</code> – The resource is being deleted as requested.</p> </li> </ul>",
+        "GetMultiRegionEndpointResponse$Status": "<p>The status of the multi-region endpoint (global-endpoint).</p> <ul> <li> <p> <code>CREATING</code> – The resource is being provisioned.</p> </li> <li> <p> <code>READY</code> – The resource is ready to use.</p> </li> <li> <p> <code>FAILED</code> – The resource failed to be provisioned.</p> </li> <li> <p> <code>DELETING</code> – The resource is being deleted as requested.</p> </li> </ul>",
+        "MultiRegionEndpoint$Status": "<p>The status of the multi-region endpoint (global-endpoint).</p> <ul> <li> <p> <code>CREATING</code> – The resource is being provisioned.</p> </li> <li> <p> <code>READY</code> – The resource is ready to use.</p> </li> <li> <p> <code>FAILED</code> – The resource failed to be provisioned.</p> </li> <li> <p> <code>DELETING</code> – The resource is being deleted as requested.</p> </li> </ul>"
       }
     },
     "Subject": {
@@ -2903,6 +3047,7 @@
         "CreateDedicatedIpPoolRequest$Tags": "<p>An object that defines the tags (keys and values) that you want to associate with the pool.</p>",
         "CreateDeliverabilityTestReportRequest$Tags": "<p>An array of objects that define the tags (keys and values) that you want to associate with the predictive inbox placement test.</p>",
         "CreateEmailIdentityRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the email identity.</p>",
+        "CreateMultiRegionEndpointRequest$Tags": "<p>An array of objects that define the tags (keys and values) to associate with the multi-region endpoint (global-endpoint).</p>",
         "GetConfigurationSetResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the configuration set.</p>",
         "GetContactListResponse$Tags": "<p>The tags associated with a contact list.</p>",
         "GetDeliverabilityTestReportResponse$Tags": "<p>An array of objects that define the tags (keys and values) that are associated with the predictive inbox placement test.</p>",
@@ -2928,7 +3073,7 @@
       }
     },
     "Template": {
-      "base": "<p>An object that defines the email template to use for an email message, and the values to use for any message variables in that template. An <i>email template</i> is a type of message template that contains content that you want to define, save, and reuse in email messages that you send.</p>",
+      "base": "<p>An object that defines the email template to use for an email message, and the values to use for any message variables in that template. An <i>email template</i> is a type of message template that contains content that you want to reuse in email messages that you send. You can specifiy the email template by providing the name or ARN of an <i>email template</i> previously saved in your Amazon SES account or by providing the full template content.</p>",
       "refs": {
         "BulkEmailContent$Template": "<p>The template to use for the bulk email message.</p>",
         "EmailContent$Template": "<p>The template to use for the email message.</p>"
@@ -2980,6 +3125,8 @@
         "GetExportJobResponse$CompletedTimestamp": "<p>The timestamp of when the export job was completed.</p>",
         "GetImportJobResponse$CreatedTimestamp": "<p>The time stamp of when the import job was created.</p>",
         "GetImportJobResponse$CompletedTimestamp": "<p>The time stamp of when the import job was completed.</p>",
+        "GetMultiRegionEndpointResponse$CreatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was created.</p>",
+        "GetMultiRegionEndpointResponse$LastUpdatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was last updated.</p>",
         "ImportJobSummary$CreatedTimestamp": "<p>The date and time when the import job was created.</p>",
         "InsightsEvent$Timestamp": "<p>The timestamp of the event.</p>",
         "ListDomainDeliverabilityCampaignsRequest$StartDate": "<p>The first day that you want to obtain deliverability data for.</p>",
@@ -2990,6 +3137,8 @@
         "MessageInsightsDataSource$EndDate": "<p>Represents the end date for the export interval as a timestamp. The end date is inclusive.</p>",
         "MetricsDataSource$StartDate": "<p>Represents the start date for the export interval as a timestamp.</p>",
         "MetricsDataSource$EndDate": "<p>Represents the end date for the export interval as a timestamp.</p>",
+        "MultiRegionEndpoint$CreatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was created.</p>",
+        "MultiRegionEndpoint$LastUpdatedTimestamp": "<p>The time stamp of when the multi-region endpoint (global-endpoint) was last updated.</p>",
         "Recommendation$CreatedTimestamp": "<p>The first time this issue was encountered and the recommendation was generated.</p>",
         "Recommendation$LastUpdatedTimestamp": "<p>The last time the recommendation was updated.</p>",
         "SuppressedDestination$LastUpdateTime": "<p>The date and time when the suppressed destination was last updated, shown in Unix time format.</p>",
@@ -3180,7 +3329,7 @@
     "VerificationError": {
       "base": null,
       "refs": {
-        "VerificationInfo$ErrorType": "<p>Provides the reason for the failure describing why Amazon SES was not able to successfully verify the identity. Below are the possible values: </p> <ul> <li> <p> <code>INVALID_VALUE</code> – Amazon SES was able to find the record, but the value contained within the record was invalid. Ensure you have published the correct values for the record.</p> </li> <li> <p> <code>TYPE_NOT_FOUND</code> – The queried hostname exists but does not have the requested type of DNS record. Ensure that you have published the correct type of DNS record.</p> </li> <li> <p> <code>HOST_NOT_FOUND</code> – The queried hostname does not exist or was not reachable at the time of the request. Ensure that you have published the required DNS record(s). </p> </li> <li> <p> <code>SERVICE_ERROR</code> – A temporary issue is preventing Amazon SES from determining the verification status of the domain.</p> </li> <li> <p> <code>DNS_SERVER_ERROR</code> – The DNS server encountered an issue and was unable to complete the request.</p> </li> </ul>"
+        "VerificationInfo$ErrorType": "<p>Provides the reason for the failure describing why Amazon SES was not able to successfully verify the identity. Below are the possible values: </p> <ul> <li> <p> <code>INVALID_VALUE</code> – Amazon SES was able to find the record, but the value contained within the record was invalid. Ensure you have published the correct values for the record.</p> </li> <li> <p> <code>TYPE_NOT_FOUND</code> – The queried hostname exists but does not have the requested type of DNS record. Ensure that you have published the correct type of DNS record.</p> </li> <li> <p> <code>HOST_NOT_FOUND</code> – The queried hostname does not exist or was not reachable at the time of the request. Ensure that you have published the required DNS record(s). </p> </li> <li> <p> <code>SERVICE_ERROR</code> – A temporary issue is preventing Amazon SES from determining the verification status of the domain.</p> </li> <li> <p> <code>DNS_SERVER_ERROR</code> – The DNS server encountered an issue and was unable to complete the request.</p> </li> <li> <p> <code>REPLICATION_ACCESS_DENIED</code> – The verification failed because the user does not have the required permissions to replicate the DKIM key from the primary region. Ensure you have the necessary permissions in both primary and replica regions. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_NOT_FOUND</code> – The verification failed because no corresponding identity was found in the specified primary region. Ensure the identity exists in the primary region before attempting replication. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_BYO_DKIM_NOT_SUPPORTED</code> – The verification failed because the identity in the primary region is configured with Bring Your Own DKIM (BYODKIM). DKIM key replication is only supported for identities using Easy DKIM. </p> </li> <li> <p> <code>REPLICATION_REPLICA_AS_PRIMARY_NOT_SUPPORTED</code> – The verification failed because the specified primary identity is a replica of another identity, and multi-level replication is not supported; the primary identity must be a non-replica identity. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_INVALID_REGION</code> – The verification failed due to an invalid primary region specified. Ensure you provide a valid AWS region where Amazon SES is available and different from the replica region. </p> </li> </ul>"
       }
     },
     "VerificationInfo": {

@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2019-11-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"access-analyzer",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -564,6 +565,25 @@
       ],
       "idempotent":true
     },
+    "UpdateAnalyzer":{
+      "name":"UpdateAnalyzer",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/analyzer/{analyzerName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAnalyzerRequest"},
+      "output":{"shape":"UpdateAnalyzerResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateArchiveRule":{
       "name":"UpdateArchiveRule",
       "http":{
@@ -723,7 +743,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "AccessPreviewFindingId":{"type":"string"},
@@ -783,6 +804,10 @@
       "max":100,
       "min":0
     },
+    "AccountIdsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "AclCanonicalId":{"type":"string"},
     "AclGrantee":{
       "type":"structure",
@@ -807,6 +832,23 @@
     "ActionList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "AnalysisRule":{
+      "type":"structure",
+      "members":{
+        "exclusions":{"shape":"AnalysisRuleCriteriaList"}
+      }
+    },
+    "AnalysisRuleCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"AccountIdsList"},
+        "resourceTags":{"shape":"TagsList"}
+      }
+    },
+    "AnalysisRuleCriteriaList":{
+      "type":"list",
+      "member":{"shape":"AnalysisRuleCriteria"}
     },
     "AnalyzedResource":{
       "type":"structure",
@@ -1291,7 +1333,8 @@
         "condition":{"shape":"ConditionKeyMap"},
         "isPublic":{"shape":"Boolean"},
         "principal":{"shape":"PrincipalMap"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FilterCriteriaMap":{
@@ -1325,7 +1368,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FindingChangeType":{
@@ -1425,7 +1469,8 @@
         "status":{"shape":"FindingStatus"},
         "resourceOwnerAccount":{"shape":"String"},
         "error":{"shape":"String"},
-        "sources":{"shape":"FindingSourceList"}
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
     "FindingSummaryV2":{
@@ -2283,7 +2328,8 @@
       "enum":[
         "IDENTITY_POLICY",
         "RESOURCE_POLICY",
-        "SERVICE_CONTROL_POLICY"
+        "SERVICE_CONTROL_POLICY",
+        "RESOURCE_CONTROL_POLICY"
       ]
     },
     "Position":{
@@ -2427,6 +2473,14 @@
       "type":"string",
       "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
+    "ResourceControlPolicyRestriction":{
+      "type":"string",
+      "enum":[
+        "APPLICABLE",
+        "FAILED_TO_EVALUATE_RCP",
+        "NOT_APPLICABLE"
+      ]
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "required":[
@@ -2463,7 +2517,8 @@
         "AWS::SNS::Topic",
         "AWS::S3Express::DirectoryBucket",
         "AWS::DynamoDB::Table",
-        "AWS::DynamoDB::Stream"
+        "AWS::DynamoDB::Stream",
+        "AWS::IAM::User"
       ]
     },
     "RetiringPrincipal":{"type":"string"},
@@ -2676,6 +2731,10 @@
       "members":{
       }
     },
+    "TagsList":{
+      "type":"list",
+      "member":{"shape":"TagsMap"}
+    },
     "TagsMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -2779,7 +2838,8 @@
     "UnusedAccessConfiguration":{
       "type":"structure",
       "members":{
-        "unusedAccessAge":{"shape":"Integer"}
+        "unusedAccessAge":{"shape":"Integer"},
+        "analysisRule":{"shape":"AnalysisRule"}
       }
     },
     "UnusedAction":{
@@ -2831,6 +2891,24 @@
         "recommendedAction":{"shape":"RecommendedRemediationAction"},
         "recommendedPolicy":{"shape":"String"},
         "existingPolicyId":{"shape":"String"}
+      }
+    },
+    "UpdateAnalyzerRequest":{
+      "type":"structure",
+      "required":["analyzerName"],
+      "members":{
+        "analyzerName":{
+          "shape":"Name",
+          "location":"uri",
+          "locationName":"analyzerName"
+        },
+        "configuration":{"shape":"AnalyzerConfiguration"}
+      }
+    },
+    "UpdateAnalyzerResponse":{
+      "type":"structure",
+      "members":{
+        "configuration":{"shape":"AnalyzerConfiguration"}
       }
     },
     "UpdateArchiveRuleRequest":{

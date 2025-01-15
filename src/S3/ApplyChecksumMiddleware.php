@@ -4,6 +4,8 @@ namespace Aws\S3;
 use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\CommandInterface;
+use Aws\MetricsBuilder;
+use GuzzleHttp\Psr7;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -28,7 +30,7 @@ class ApplyChecksumMiddleware
      * S3 Operations for which pre-calculated SHA256
      * Checksums can be added to the command
      */
-    private static $sha256 = [
+    public static $sha256 = [
         'PutObject' => true,
         'UploadPart' => true,
     ];
@@ -103,6 +105,11 @@ class ApplyChecksumMiddleware
                     $checksumMemberName
                 );
                 $request = $this->addAlgorithmHeader($algorithm, $request, $body);
+
+                $command->getMetricsBuilder()->identifyMetricByValueAndAppend(
+                    'request_checksum',
+                    $algorithm
+                );
             }
         }
 
@@ -111,6 +118,9 @@ class ApplyChecksumMiddleware
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
                 $command['ContentSHA256']
+            );
+            $command->getMetricsBuilder()->append(
+                MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_SHA256
             );
         }
 

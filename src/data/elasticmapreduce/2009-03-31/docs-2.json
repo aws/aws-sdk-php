@@ -1801,6 +1801,12 @@
         "AutoScalingPolicyDescription$Rules": "<p>The scale-in and scale-out rules that comprise the automatic scaling policy.</p>"
       }
     },
+    "ScalingStrategy": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$ScalingStrategy": "<p>Determines whether a custom scaling utilization performance index can be set. Possible values include <i>ADVANCED</i> or <i>DEFAULT</i>.</p>"
+      }
+    },
     "ScalingTrigger": {
       "base": "<p>The conditions that trigger an automatic scaling activity.</p>",
       "refs": {
@@ -2273,6 +2279,12 @@
       "base": "<p>The username and password that you use to connect to cluster endpoints.</p>",
       "refs": {
         "Credentials$UsernamePassword": "<p>The username and password that you use to connect to cluster endpoints.</p>"
+      }
+    },
+    "UtilizationPerformanceIndexInteger": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$UtilizationPerformanceIndex": "<p>An integer value that represents an advanced scaling strategy. Setting a higher value optimizes for performance. Setting a lower value optimizes for resource conservation. Setting the value to 50 balances performance and resource conservation. Possible values are 1, 25, 50, 75, and 100.</p>"
       }
     },
     "VolumeSpecification": {

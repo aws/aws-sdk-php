@@ -45,14 +45,8 @@
           },
           "Location": "https://cloudfront.amazonaws.com/2020-05-31/function/arn:aws:cloudfront::123456789012:function/my-function-name"
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
         "description": "Use the following command to create a function.",
-        "id": "to-create-a-function-1699737558249",
+        "id": "example-1",
         "title": "To create a function"
       }
     ],
@@ -61,7 +55,7 @@
         "input": {
           "Comment": "my-key-valuestore-comment",
           "ImportSource": {
-            "SourceARN": "arn:aws:s3:::my-bucket/validJSON.json",
+            "SourceARN": "arn:aws:s3:::amzn-s3-demo-bucket/validJSON.json",
             "SourceType": "S3"
           },
           "Name": "my-keyvaluestore-name"
@@ -78,15 +72,57 @@
           },
           "Location": "https://cloudfront.amazonaws.com/2020-05-31/key-value-store/arn:aws:cloudfront::123456789012:key-value-store/54947df8-0e9e-4471-a2f9-9af509fb5889"
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
+        "description": "Use the following command to create a KeyValueStore.",
+        "id": "example-1",
+        "title": "To create a KeyValueStore"
+      }
+    ],
+    "CreateVpcOrigin": [
+      {
+        "input": {
+          "VpcOriginEndpointConfig": {
+            "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "Name": "my-vpcorigin-name",
+            "OriginProtocolPolicy": "match-viewer",
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.1",
+                "TLSv1.2"
+              ],
+              "Quantity": 2
+            }
           }
         },
-        "description": "Use the following command to create a KeyValueStore.",
-        "id": "to-create-a-key-value-store-1699751722467",
-        "title": "To create a KeyValueStore"
+        "output": {
+          "ETag": "E23ZP02F085DFQ",
+          "Location": "https://cloudfront.amazonaws.com/2020-05-31/vpc-origin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:19:42.318Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command creates a VPC origin:",
+        "id": "example-1",
+        "title": "To create a VPC origin"
       }
     ],
     "DeleteKeyValueStore": [
@@ -95,15 +131,44 @@
           "IfMatch": "ETVPDKIKX0DER",
           "Name": "my-keyvaluestore-name"
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
+        "description": "Use the following command to delete a KeyValueStore.",
+        "id": "example-1",
+        "title": "To delete a KeyValueStore"
+      }
+    ],
+    "DeleteVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "IfMatch": "E1F83G8C2ARO7P"
+        },
+        "output": {
+          "ETag": "E1PA6795UKMFR9",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:57:08.965Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
           }
         },
-        "description": "Use the following command to delete a KeyValueStore.",
-        "id": "to-delete-a-key-value-store-1699751759648",
-        "title": "To delete a KeyValueStore"
+        "description": "The following command deletes a VPC origin:",
+        "id": "example-1",
+        "title": "To delete a VPC origin"
       }
     ],
     "DescribeKeyValueStore": [
@@ -122,22 +187,69 @@
             "Status": "READY"
           }
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
+        "description": "Use the following command to describe a KeyValueStore.",
+        "id": "example-1",
+        "title": "To describe a KeyValueStore"
+      }
+    ],
+    "GetVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM"
+        },
+        "output": {
+          "ETag": "ETVPDKIKX0DER",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:24:35.188Z",
+            "Status": "Deployed",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
           }
         },
-        "description": "Use the following command to describe a KeyValueStore.",
-        "id": "to-describe-a-key-value-store-1699751788152",
-        "title": "To describe a KeyValueStore"
+        "description": "The following command gets a VPC origin:",
+        "id": "example-1",
+        "title": "To get a VPC origin"
+      }
+    ],
+    "ListDistributionsByVpcOriginId": [
+      {
+        "input": {
+          "VpcOriginId": "vo_BQwjxxQxjCaBcQLzJUFkDM"
+        },
+        "output": {
+          "DistributionIdList": {
+            "IsTruncated": false,
+            "Items": [
+
+            ],
+            "Marker": "a",
+            "MaxItems": 100,
+            "Quantity": 0
+          }
+        },
+        "description": "The following command lists distributions by VPC origin ID:",
+        "id": "example-1",
+        "title": "To list distributions by VPC origin ID"
       }
     ],
     "ListKeyValueStores": [
       {
         "input": {
-          "Marker": "",
-          "MaxItems": "100",
           "Status": "READY"
         },
         "output": {
@@ -157,15 +269,37 @@
             "Quantity": 1
           }
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
+        "description": "The following command retrieves a list of KeyValueStores with READY status.",
+        "id": "example-1",
+        "title": "To get a list of KeyValueStores"
+      }
+    ],
+    "ListVpcOrigins": [
+      {
+        "input": {
+        },
+        "output": {
+          "VpcOriginList": {
+            "IsTruncated": true,
+            "Items": [
+              {
+                "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+                "CreatedTime": "2024-10-15T17:19:42.318Z",
+                "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+                "LastModifiedTime": "2024-10-15T17:24:35.188Z",
+                "Name": "my-vpcorigin-name",
+                "OriginEndpointArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+                "Status": "Deployed"
+              }
+            ],
+            "Marker": "a",
+            "MaxItems": 100,
+            "Quantity": 1
           }
         },
-        "description": "The following command retrieves a list of KeyValueStores with READY status.",
-        "id": "to-get-a-list-of-key-value-store-1699751799198",
-        "title": "To get a list of KeyValueStores"
+        "description": "The following command lists VPC origins:",
+        "id": "example-1",
+        "title": "To list VPC origins"
       }
     ],
     "UpdateFunction": [
@@ -212,14 +346,8 @@
             "Status": "UNPUBLISHED"
           }
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
         "description": "Use the following command to update a function.",
-        "id": "to-update-a-function-1699751865053",
+        "id": "example-1",
         "title": "To update a function"
       }
     ],
@@ -241,15 +369,58 @@
             "Status": "READY"
           }
         },
-        "comments": {
-          "input": {
-          },
-          "output": {
+        "description": "Use the following command to update a KeyValueStore.",
+        "id": "example-1",
+        "title": "To update a KeyValueStore"
+      }
+    ],
+    "UpdateVpcOrigin": [
+      {
+        "input": {
+          "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+          "IfMatch": "ETVPDKIKX0DER",
+          "VpcOriginEndpointConfig": {
+            "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+            "HTTPPort": 80,
+            "HTTPSPort": 443,
+            "Name": "my-vpcorigin-name",
+            "OriginProtocolPolicy": "match-viewer",
+            "OriginSslProtocols": {
+              "Items": [
+                "TLSv1.1",
+                "TLSv1.2"
+              ],
+              "Quantity": 2
+            }
           }
         },
-        "description": "Use the following command to update a KeyValueStore.",
-        "id": "to-update-a-key-value-store-1699751822090",
-        "title": "To update a KeyValueStore"
+        "output": {
+          "ETag": "E3UN6WX5RRO2AG",
+          "VpcOrigin": {
+            "Arn": "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "CreatedTime": "2024-10-15T17:19:42.318Z",
+            "Id": "vo_BQwjxxQxjCaBcQLzJUFkDM",
+            "LastModifiedTime": "2024-10-15T17:47:08.133Z",
+            "Status": "Deploying",
+            "VpcOriginEndpointConfig": {
+              "Arn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d",
+              "HTTPPort": 80,
+              "HTTPSPort": 443,
+              "Name": "my-vpcorigin-name",
+              "OriginProtocolPolicy": "match-viewer",
+              "OriginSslProtocols": {
+                "Items": [
+                  "TLSv1.1",
+                  "TLSv1.2"
+                ],
+                "Quantity": 2
+              }
+            }
+          }
+        },
+        "description": "The following command updates a VPC origin:",
+        "id": "example-1",
+        "title": "To update a VPC origin"
       }
     ]
   }

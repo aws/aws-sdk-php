@@ -262,6 +262,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListAssetInstances":{
+      "name":"ListAssetInstances",
+      "http":{
+        "method":"GET",
+        "requestUri":"/outposts/{OutpostId}/assetInstances"
+      },
+      "input":{"shape":"ListAssetInstancesInput"},
+      "output":{"shape":"ListAssetInstancesOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListAssets":{
       "name":"ListAssets",
       "http":{
@@ -270,6 +285,21 @@
       },
       "input":{"shape":"ListAssetsInput"},
       "output":{"shape":"ListAssetsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListBlockingInstancesForCapacityTask":{
+      "name":"ListBlockingInstancesForCapacityTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/outposts/{OutpostId}/capacity/{CapacityTaskId}/blockingInstances"
+      },
+      "input":{"shape":"ListBlockingInstancesForCapacityTaskInput"},
+      "output":{"shape":"ListBlockingInstancesForCapacityTaskOutput"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -488,6 +518,21 @@
     }
   },
   "shapes":{
+    "AWSServiceName":{
+      "type":"string",
+      "enum":[
+        "AWS",
+        "EC2",
+        "ELASTICACHE",
+        "ELB",
+        "RDS",
+        "ROUTE53"
+      ]
+    },
+    "AWSServiceNameList":{
+      "type":"list",
+      "member":{"shape":"AWSServiceName"}
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -501,6 +546,10 @@
       "max":12,
       "min":12,
       "pattern":"\\d{12}"
+    },
+    "AccountIdList":{
+      "type":"list",
+      "member":{"shape":"AccountId"}
     },
     "Address":{
       "type":"structure",
@@ -561,6 +610,10 @@
       "min":1,
       "pattern":"^(\\w+)$"
     },
+    "AssetIdList":{
+      "type":"list",
+      "member":{"shape":"AssetId"}
+    },
     "AssetInfo":{
       "type":"structure",
       "members":{
@@ -569,6 +622,35 @@
         "AssetType":{"shape":"AssetType"},
         "ComputeAttributes":{"shape":"ComputeAttributes"},
         "AssetLocation":{"shape":"AssetLocation"}
+      }
+    },
+    "AssetInstance":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "InstanceType":{"shape":"OutpostInstanceType"},
+        "AssetId":{"shape":"AssetId"},
+        "AccountId":{"shape":"AccountId"},
+        "AwsServiceName":{"shape":"AWSServiceName"}
+      }
+    },
+    "AssetInstanceCapacityList":{
+      "type":"list",
+      "member":{"shape":"AssetInstanceTypeCapacity"}
+    },
+    "AssetInstanceList":{
+      "type":"list",
+      "member":{"shape":"AssetInstance"}
+    },
+    "AssetInstanceTypeCapacity":{
+      "type":"structure",
+      "required":[
+        "InstanceType",
+        "Count"
+      ],
+      "members":{
+        "InstanceType":{"shape":"InstanceTypeName"},
+        "Count":{"shape":"InstanceTypeCount"}
       }
     },
     "AssetListDefinition":{
@@ -616,6 +698,18 @@
       "member":{"shape":"AvailabilityZone"},
       "max":5,
       "min":1
+    },
+    "BlockingInstance":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "AccountId":{"shape":"AccountId"},
+        "AwsServiceName":{"shape":"AWSServiceName"}
+      }
+    },
+    "BlockingInstancesList":{
+      "type":"list",
+      "member":{"shape":"BlockingInstance"}
     },
     "CIDR":{
       "type":"string",
@@ -677,7 +771,13 @@
     },
     "CapacityTaskFailureType":{
       "type":"string",
-      "enum":["UNSUPPORTED_CAPACITY_CONFIGURATION"]
+      "enum":[
+        "UNSUPPORTED_CAPACITY_CONFIGURATION",
+        "UNEXPECTED_ASSET_STATE",
+        "BLOCKING_INSTANCES_NOT_EVACUATED",
+        "INTERNAL_SERVER_ERROR",
+        "RESOURCE_NOT_FOUND"
+      ]
     },
     "CapacityTaskId":{
       "type":"string",
@@ -696,6 +796,8 @@
         "IN_PROGRESS",
         "FAILED",
         "COMPLETED",
+        "WAITING_FOR_EVACUATION",
+        "CANCELLATION_IN_PROGRESS",
         "CANCELLED"
       ]
     },
@@ -784,7 +886,9 @@
       "members":{
         "HostId":{"shape":"HostId"},
         "State":{"shape":"ComputeAssetState"},
-        "InstanceFamilies":{"shape":"InstanceFamilies"}
+        "InstanceFamilies":{"shape":"InstanceFamilies"},
+        "InstanceTypeCapacities":{"shape":"AssetInstanceCapacityList"},
+        "MaxVcpus":{"shape":"VCPUCount"}
       }
     },
     "ConflictException":{
@@ -1003,12 +1107,14 @@
         "OutpostId":{"shape":"OutpostId"},
         "OrderId":{"shape":"OrderId"},
         "RequestedInstancePools":{"shape":"RequestedInstancePools"},
+        "InstancesToExclude":{"shape":"InstancesToExclude"},
         "DryRun":{"shape":"DryRun"},
         "CapacityTaskStatus":{"shape":"CapacityTaskStatus"},
         "Failed":{"shape":"CapacityTaskFailure"},
         "CreationDate":{"shape":"ISO8601Timestamp"},
         "CompletionDate":{"shape":"ISO8601Timestamp"},
-        "LastModifiedDate":{"shape":"ISO8601Timestamp"}
+        "LastModifiedDate":{"shape":"ISO8601Timestamp"},
+        "TaskActionOnBlockingInstances":{"shape":"TaskActionOnBlockingInstances"}
       }
     },
     "GetCatalogItemInput":{
@@ -1112,10 +1218,7 @@
     },
     "GetOutpostSupportedInstanceTypesInput":{
       "type":"structure",
-      "required":[
-        "OutpostIdentifier",
-        "OrderId"
-      ],
+      "required":["OutpostIdentifier"],
       "members":{
         "OutpostIdentifier":{
           "shape":"OutpostIdentifier",
@@ -1211,6 +1314,16 @@
       "min":1,
       "pattern":"^(?:.{1,200}/)?(?:[a-z0-9-_A-Z])+$"
     },
+    "InstanceId":{
+      "type":"string",
+      "max":32,
+      "min":11,
+      "pattern":"^i-[0-9a-z]+$"
+    },
+    "InstanceIdList":{
+      "type":"list",
+      "member":{"shape":"InstanceId"}
+    },
     "InstanceType":{"type":"string"},
     "InstanceTypeCapacity":{
       "type":"structure",
@@ -1244,6 +1357,14 @@
       "max":64,
       "min":1,
       "pattern":"^[a-z0-9\\-]+\\.[a-z0-9\\-]+$"
+    },
+    "InstancesToExclude":{
+      "type":"structure",
+      "members":{
+        "Instances":{"shape":"InstanceIdList"},
+        "AccountIds":{"shape":"AccountIdList"},
+        "Services":{"shape":"AWSServiceNameList"}
+      }
     },
     "InternalServerException":{
       "type":"structure",
@@ -1333,6 +1454,54 @@
       "key":{"shape":"LineItemStatus"},
       "value":{"shape":"LineItemQuantity"}
     },
+    "ListAssetInstancesInput":{
+      "type":"structure",
+      "required":["OutpostIdentifier"],
+      "members":{
+        "OutpostIdentifier":{
+          "shape":"OutpostIdentifier",
+          "location":"uri",
+          "locationName":"OutpostId"
+        },
+        "AssetIdFilter":{
+          "shape":"AssetIdList",
+          "location":"querystring",
+          "locationName":"AssetIdFilter"
+        },
+        "InstanceTypeFilter":{
+          "shape":"OutpostInstanceTypeList",
+          "location":"querystring",
+          "locationName":"InstanceTypeFilter"
+        },
+        "AccountIdFilter":{
+          "shape":"AccountIdList",
+          "location":"querystring",
+          "locationName":"AccountIdFilter"
+        },
+        "AwsServiceFilter":{
+          "shape":"AWSServiceNameList",
+          "location":"querystring",
+          "locationName":"AwsServiceFilter"
+        },
+        "MaxResults":{
+          "shape":"MaxResults1000",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListAssetInstancesOutput":{
+      "type":"structure",
+      "members":{
+        "AssetInstances":{"shape":"AssetInstanceList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
     "ListAssetsInput":{
       "type":"structure",
       "required":["OutpostIdentifier"],
@@ -1368,6 +1537,42 @@
       "type":"structure",
       "members":{
         "Assets":{"shape":"AssetListDefinition"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "ListBlockingInstancesForCapacityTaskInput":{
+      "type":"structure",
+      "required":[
+        "OutpostIdentifier",
+        "CapacityTaskId"
+      ],
+      "members":{
+        "OutpostIdentifier":{
+          "shape":"OutpostIdentifier",
+          "location":"uri",
+          "locationName":"OutpostId"
+        },
+        "CapacityTaskId":{
+          "shape":"CapacityTaskId",
+          "location":"uri",
+          "locationName":"CapacityTaskId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults1000",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListBlockingInstancesForCapacityTaskOutput":{
+      "type":"structure",
+      "members":{
+        "BlockingInstances":{"shape":"BlockingInstancesList"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -1728,6 +1933,16 @@
       "min":1,
       "pattern":"^(arn:aws([a-z-]+)?:outposts:[a-z\\d-]+:\\d{12}:outpost/)?op-[a-f0-9]{17}$"
     },
+    "OutpostInstanceType":{
+      "type":"string",
+      "max":30,
+      "min":3,
+      "pattern":"[a-z0-9\\-\\.]+"
+    },
+    "OutpostInstanceTypeList":{
+      "type":"list",
+      "member":{"shape":"OutpostInstanceType"}
+    },
     "OutpostName":{
       "type":"string",
       "max":255,
@@ -1752,7 +1967,8 @@
       "type":"string",
       "enum":[
         "THREE_YEARS",
-        "ONE_YEAR"
+        "ONE_YEAR",
+        "FIVE_YEARS"
       ]
     },
     "PostalCode":{
@@ -1767,7 +1983,8 @@
         "L6_30P",
         "IEC309",
         "AH530P7W",
-        "AH532P6W"
+        "AH532P6W",
+        "CS8365C"
       ]
     },
     "PowerDrawKva":{
@@ -1918,7 +2135,6 @@
       "type":"structure",
       "required":[
         "OutpostIdentifier",
-        "OrderId",
         "InstancePools"
       ],
       "members":{
@@ -1929,7 +2145,9 @@
         },
         "OrderId":{"shape":"OrderId"},
         "InstancePools":{"shape":"RequestedInstancePools"},
-        "DryRun":{"shape":"DryRun"}
+        "InstancesToExclude":{"shape":"InstancesToExclude"},
+        "DryRun":{"shape":"DryRun"},
+        "TaskActionOnBlockingInstances":{"shape":"TaskActionOnBlockingInstances"}
       }
     },
     "StartCapacityTaskOutput":{
@@ -1939,12 +2157,14 @@
         "OutpostId":{"shape":"OutpostId"},
         "OrderId":{"shape":"OrderId"},
         "RequestedInstancePools":{"shape":"RequestedInstancePools"},
+        "InstancesToExclude":{"shape":"InstancesToExclude"},
         "DryRun":{"shape":"DryRun"},
         "CapacityTaskStatus":{"shape":"CapacityTaskStatus"},
         "Failed":{"shape":"CapacityTaskFailure"},
         "CreationDate":{"shape":"ISO8601Timestamp"},
         "CompletionDate":{"shape":"ISO8601Timestamp"},
-        "LastModifiedDate":{"shape":"ISO8601Timestamp"}
+        "LastModifiedDate":{"shape":"ISO8601Timestamp"},
+        "TaskActionOnBlockingInstances":{"shape":"TaskActionOnBlockingInstances"}
       }
     },
     "StartConnectionRequest":{
@@ -2056,6 +2276,13 @@
       "type":"string",
       "max":256,
       "pattern":"^[\\S \\n]+$"
+    },
+    "TaskActionOnBlockingInstances":{
+      "type":"string",
+      "enum":[
+        "WAIT_FOR_EVACUATION",
+        "FAIL_TASK"
+      ]
     },
     "Token":{
       "type":"string",

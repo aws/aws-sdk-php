@@ -1156,6 +1156,23 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AccessKey":{
+      "type":"structure",
+      "members":{
+        "PrincipalId":{
+          "shape":"String",
+          "locationName":"principalId"
+        },
+        "UserName":{
+          "shape":"String",
+          "locationName":"userName"
+        },
+        "UserType":{
+          "shape":"String",
+          "locationName":"userType"
+        }
+      }
+    },
     "AccessKeyDetails":{
       "type":"structure",
       "members":{
@@ -1174,6 +1191,20 @@
         "UserType":{
           "shape":"String",
           "locationName":"userType"
+        }
+      }
+    },
+    "Account":{
+      "type":"structure",
+      "required":["Uid"],
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"account"
         }
       }
     },
@@ -1304,6 +1335,34 @@
           "locationName":"kubernetesRoleDetails"
         }
       }
+    },
+    "Actor":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "User":{
+          "shape":"User",
+          "locationName":"user"
+        },
+        "Session":{
+          "shape":"Session",
+          "locationName":"session"
+        }
+      }
+    },
+    "ActorIds":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":400
+    },
+    "Actors":{
+      "type":"list",
+      "member":{"shape":"Actor"},
+      "max":400
     },
     "AddonDetails":{
       "type":"structure",
@@ -1469,6 +1528,23 @@
         "ALL",
         "NONE"
       ]
+    },
+    "AutonomousSystem":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Number"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Number":{
+          "shape":"Integer",
+          "locationName":"number"
+        }
+      }
     },
     "AwsApiCallAction":{
       "type":"structure",
@@ -2914,6 +2990,10 @@
         "Anomaly":{
           "shape":"Anomaly",
           "locationName":"anomaly"
+        },
+        "Sequence":{
+          "shape":"Sequence",
+          "locationName":"sequence"
         }
       }
     },
@@ -3224,6 +3304,77 @@
         }
       }
     },
+    "Ec2Instance":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "ImageDescription":{
+          "shape":"String",
+          "locationName":"imageDescription"
+        },
+        "InstanceState":{
+          "shape":"String",
+          "locationName":"instanceState"
+        },
+        "IamInstanceProfile":{"shape":"IamInstanceProfile"},
+        "InstanceType":{
+          "shape":"String",
+          "locationName":"instanceType"
+        },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
+        },
+        "Platform":{
+          "shape":"String",
+          "locationName":"platform"
+        },
+        "ProductCodes":{
+          "shape":"ProductCodes",
+          "locationName":"productCodes"
+        },
+        "Ec2NetworkInterfaceUids":{
+          "shape":"Ec2NetworkInterfaceUids",
+          "locationName":"ec2NetworkInterfaceUids"
+        }
+      }
+    },
+    "Ec2NetworkInterface":{
+      "type":"structure",
+      "members":{
+        "Ipv6Addresses":{
+          "shape":"Ipv6Addresses",
+          "locationName":"ipv6Addresses"
+        },
+        "PrivateIpAddresses":{
+          "shape":"PrivateIpAddresses",
+          "locationName":"privateIpAddresses"
+        },
+        "PublicIp":{
+          "shape":"String",
+          "locationName":"publicIp"
+        },
+        "SecurityGroups":{
+          "shape":"SecurityGroups",
+          "locationName":"securityGroups"
+        },
+        "SubNetId":{
+          "shape":"String",
+          "locationName":"subNetId"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        }
+      }
+    },
+    "Ec2NetworkInterfaceUids":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "EcsClusterDetails":{
       "type":"structure",
       "members":{
@@ -3359,6 +3510,11 @@
       "type":"structure",
       "members":{
       }
+    },
+    "EndpointIds":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":400
     },
     "Eq":{
       "type":"list",
@@ -3565,6 +3721,10 @@
         "UpdatedAt":{
           "shape":"String",
           "locationName":"updatedAt"
+        },
+        "AssociatedAttackSequenceArn":{
+          "shape":"String",
+          "locationName":"associatedAttackSequenceArn"
         }
       }
     },
@@ -3594,6 +3754,16 @@
         "FIFTEEN_MINUTES",
         "ONE_HOUR",
         "SIX_HOURS"
+      ]
+    },
+    "FindingResourceType":{
+      "type":"string",
+      "enum":[
+        "EC2_INSTANCE",
+        "EC2_NETWORK_INTERFACE",
+        "S3_BUCKET",
+        "S3_OBJECT",
+        "ACCESS_KEY"
       ]
     },
     "FindingStatisticType":{
@@ -4424,6 +4594,60 @@
           "locationName":"groups"
         }
       }
+    },
+    "Indicator":{
+      "type":"structure",
+      "required":["Key"],
+      "members":{
+        "Key":{
+          "shape":"IndicatorType",
+          "locationName":"key"
+        },
+        "Values":{
+          "shape":"IndicatorValues",
+          "locationName":"values"
+        },
+        "Title":{
+          "shape":"IndicatorTitle",
+          "locationName":"title"
+        }
+      }
+    },
+    "IndicatorTitle":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "IndicatorType":{
+      "type":"string",
+      "enum":[
+        "SUSPICIOUS_USER_AGENT",
+        "SUSPICIOUS_NETWORK",
+        "MALICIOUS_IP",
+        "TOR_IP",
+        "ATTACK_TACTIC",
+        "HIGH_RISK_API",
+        "ATTACK_TECHNIQUE",
+        "UNUSUAL_API_FOR_ACCOUNT",
+        "UNUSUAL_ASN_FOR_ACCOUNT",
+        "UNUSUAL_ASN_FOR_USER"
+      ]
+    },
+    "IndicatorValueString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "IndicatorValues":{
+      "type":"list",
+      "member":{"shape":"IndicatorValueString"},
+      "max":400,
+      "min":1
+    },
+    "Indicators":{
+      "type":"list",
+      "member":{"shape":"Indicator"},
+      "max":400
     },
     "InstanceArn":{
       "type":"string",
@@ -5725,6 +5949,13 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "MfaStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Name":{
       "type":"string",
       "max":300,
@@ -5733,6 +5964,16 @@
     "Neq":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "NetworkConnection":{
+      "type":"structure",
+      "required":["Direction"],
+      "members":{
+        "Direction":{
+          "shape":"NetworkDirection",
+          "locationName":"direction"
+        }
+      }
     },
     "NetworkConnectionAction":{
       "type":"structure",
@@ -5768,6 +6009,79 @@
         "RemotePortDetails":{
           "shape":"RemotePortDetails",
           "locationName":"remotePortDetails"
+        }
+      }
+    },
+    "NetworkDirection":{
+      "type":"string",
+      "enum":[
+        "INBOUND",
+        "OUTBOUND"
+      ]
+    },
+    "NetworkEndpoint":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        },
+        "Ip":{
+          "shape":"String",
+          "locationName":"ip"
+        },
+        "Domain":{
+          "shape":"String",
+          "locationName":"domain"
+        },
+        "Port":{
+          "shape":"Integer",
+          "locationName":"port"
+        },
+        "Location":{
+          "shape":"NetworkGeoLocation",
+          "locationName":"location"
+        },
+        "AutonomousSystem":{
+          "shape":"AutonomousSystem",
+          "locationName":"autonomousSystem"
+        },
+        "Connection":{
+          "shape":"NetworkConnection",
+          "locationName":"connection"
+        }
+      }
+    },
+    "NetworkEndpoints":{
+      "type":"list",
+      "member":{"shape":"NetworkEndpoint"},
+      "max":400
+    },
+    "NetworkGeoLocation":{
+      "type":"structure",
+      "required":[
+        "City",
+        "Country",
+        "Latitude",
+        "Longitude"
+      ],
+      "members":{
+        "City":{
+          "shape":"String",
+          "locationName":"city"
+        },
+        "Country":{
+          "shape":"String",
+          "locationName":"country"
+        },
+        "Latitude":{
+          "shape":"Double",
+          "locationName":"lat"
+        },
+        "Longitude":{
+          "shape":"Double",
+          "locationName":"lon"
         }
       }
     },
@@ -6376,6 +6690,48 @@
         }
       }
     },
+    "PublicAccessConfiguration":{
+      "type":"structure",
+      "members":{
+        "PublicAclAccess":{
+          "shape":"PublicAccessStatus",
+          "locationName":"publicAclAccess"
+        },
+        "PublicPolicyAccess":{
+          "shape":"PublicAccessStatus",
+          "locationName":"publicPolicyAccess"
+        },
+        "PublicAclIgnoreBehavior":{
+          "shape":"PublicAclIgnoreBehavior",
+          "locationName":"publicAclIgnoreBehavior"
+        },
+        "PublicBucketRestrictBehavior":{
+          "shape":"PublicBucketRestrictBehavior",
+          "locationName":"publicBucketRestrictBehavior"
+        }
+      }
+    },
+    "PublicAccessStatus":{
+      "type":"string",
+      "enum":[
+        "BLOCKED",
+        "ALLOWED"
+      ]
+    },
+    "PublicAclIgnoreBehavior":{
+      "type":"string",
+      "enum":[
+        "IGNORED",
+        "NOT_IGNORED"
+      ]
+    },
+    "PublicBucketRestrictBehavior":{
+      "type":"string",
+      "enum":[
+        "RESTRICTED",
+        "NOT_RESTRICTED"
+      ]
+    },
     "PublishingStatus":{
       "type":"string",
       "enum":[
@@ -6438,6 +6794,39 @@
         "AuthMethod":{
           "shape":"String",
           "locationName":"authMethod"
+        }
+      }
+    },
+    "RdsLimitlessDbDetails":{
+      "type":"structure",
+      "members":{
+        "DbShardGroupIdentifier":{
+          "shape":"String",
+          "locationName":"dbShardGroupIdentifier"
+        },
+        "DbShardGroupResourceId":{
+          "shape":"String",
+          "locationName":"dbShardGroupResourceId"
+        },
+        "DbShardGroupArn":{
+          "shape":"String",
+          "locationName":"dbShardGroupArn"
+        },
+        "Engine":{
+          "shape":"String",
+          "locationName":"engine"
+        },
+        "EngineVersion":{
+          "shape":"String",
+          "locationName":"engineVersion"
+        },
+        "DbClusterIdentifier":{
+          "shape":"String",
+          "locationName":"dbClusterIdentifier"
+        },
+        "Tags":{
+          "shape":"Tags",
+          "locationName":"tags"
         }
       }
     },
@@ -6549,6 +6938,10 @@
           "shape":"RdsDbInstanceDetails",
           "locationName":"rdsDbInstanceDetails"
         },
+        "RdsLimitlessDbDetails":{
+          "shape":"RdsLimitlessDbDetails",
+          "locationName":"rdsLimitlessDbDetails"
+        },
         "RdsDbUserDetails":{
           "shape":"RdsDbUserDetails",
           "locationName":"rdsDbUserDetails"
@@ -6562,6 +6955,31 @@
     "ResourceArn":{
       "type":"string",
       "pattern":"^arn:[A-Za-z-]+:[A-Za-z0-9]+:[A-Za-z0-9-]+:\\d+:(([A-Za-z0-9-]+)[:\\/])?[A-Za-z0-9-]*$"
+    },
+    "ResourceData":{
+      "type":"structure",
+      "members":{
+        "S3Bucket":{
+          "shape":"S3Bucket",
+          "locationName":"s3Bucket"
+        },
+        "Ec2Instance":{
+          "shape":"Ec2Instance",
+          "locationName":"ec2Instance"
+        },
+        "AccessKey":{
+          "shape":"AccessKey",
+          "locationName":"accessKey"
+        },
+        "Ec2NetworkInterface":{
+          "shape":"Ec2NetworkInterface",
+          "locationName":"ec2NetworkInterface"
+        },
+        "S3Object":{
+          "shape":"S3Object",
+          "locationName":"s3Object"
+        }
+      }
     },
     "ResourceDetails":{
       "type":"structure",
@@ -6623,6 +7041,61 @@
         "ECS",
         "EC2"
       ]
+    },
+    "ResourceUids":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":400
+    },
+    "ResourceV2":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "ResourceType"
+      ],
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "ResourceType":{
+          "shape":"FindingResourceType",
+          "locationName":"resourceType"
+        },
+        "Region":{
+          "shape":"String",
+          "locationName":"region"
+        },
+        "Service":{
+          "shape":"String",
+          "locationName":"service"
+        },
+        "CloudPartition":{
+          "shape":"String",
+          "locationName":"cloudPartition"
+        },
+        "Tags":{
+          "shape":"Tags",
+          "locationName":"tags"
+        },
+        "Data":{
+          "shape":"ResourceData",
+          "locationName":"data"
+        }
+      }
+    },
+    "Resources":{
+      "type":"list",
+      "member":{"shape":"ResourceV2"},
+      "max":400
     },
     "RuntimeContext":{
       "type":"structure",
@@ -6742,6 +7215,51 @@
         }
       }
     },
+    "S3Bucket":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "EncryptionType":{
+          "shape":"String",
+          "locationName":"encryptionType"
+        },
+        "EncryptionKeyArn":{
+          "shape":"String",
+          "locationName":"encryptionKeyArn"
+        },
+        "EffectivePermission":{
+          "shape":"String",
+          "locationName":"effectivePermission"
+        },
+        "PublicReadAccess":{
+          "shape":"PublicAccessStatus",
+          "locationName":"publicReadAccess"
+        },
+        "PublicWriteAccess":{
+          "shape":"PublicAccessStatus",
+          "locationName":"publicWriteAccess"
+        },
+        "AccountPublicAccess":{
+          "shape":"PublicAccessConfiguration",
+          "locationName":"accountPublicAccess"
+        },
+        "BucketPublicAccess":{
+          "shape":"PublicAccessConfiguration",
+          "locationName":"bucketPublicAccess"
+        },
+        "S3ObjectUids":{
+          "shape":"S3ObjectUids",
+          "locationName":"s3ObjectUids"
+        }
+      }
+    },
     "S3BucketDetail":{
       "type":"structure",
       "members":{
@@ -6807,6 +7325,23 @@
         }
       }
     },
+    "S3Object":{
+      "type":"structure",
+      "members":{
+        "ETag":{
+          "shape":"String",
+          "locationName":"eTag"
+        },
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "VersionId":{
+          "shape":"String",
+          "locationName":"versionId"
+        }
+      }
+    },
     "S3ObjectDetail":{
       "type":"structure",
       "members":{
@@ -6835,6 +7370,10 @@
     "S3ObjectDetails":{
       "type":"list",
       "member":{"shape":"S3ObjectDetail"}
+    },
+    "S3ObjectUids":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "Scan":{
       "type":"structure",
@@ -7119,6 +7658,48 @@
       "type":"string",
       "sensitive":true
     },
+    "Sequence":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "Description",
+        "Signals"
+      ],
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Description":{
+          "shape":"SequenceDescription",
+          "locationName":"description"
+        },
+        "Actors":{
+          "shape":"Actors",
+          "locationName":"actors"
+        },
+        "Resources":{
+          "shape":"Resources",
+          "locationName":"resources"
+        },
+        "Endpoints":{
+          "shape":"NetworkEndpoints",
+          "locationName":"endpoints"
+        },
+        "Signals":{
+          "shape":"Signals",
+          "locationName":"signals"
+        },
+        "SequenceIndicators":{
+          "shape":"Indicators",
+          "locationName":"sequenceIndicators"
+        }
+      }
+    },
+    "SequenceDescription":{
+      "type":"string",
+      "max":4096
+    },
     "Service":{
       "type":"structure",
       "members":{
@@ -7201,6 +7782,27 @@
         }
       }
     },
+    "Session":{
+      "type":"structure",
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "MfaStatus":{
+          "shape":"MfaStatus",
+          "locationName":"mfaStatus"
+        },
+        "CreatedTime":{
+          "shape":"Timestamp",
+          "locationName":"createdTime"
+        },
+        "Issuer":{
+          "shape":"String",
+          "locationName":"issuer"
+        }
+      }
+    },
     "SessionNameList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -7221,6 +7823,95 @@
           "locationName":"totalFindings"
         }
       }
+    },
+    "Signal":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "Type",
+        "Name",
+        "CreatedAt",
+        "UpdatedAt",
+        "FirstSeenAt",
+        "LastSeenAt",
+        "Count"
+      ],
+      "members":{
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Type":{
+          "shape":"SignalType",
+          "locationName":"type"
+        },
+        "Description":{
+          "shape":"SignalDescription",
+          "locationName":"description"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "UpdatedAt":{
+          "shape":"Timestamp",
+          "locationName":"updatedAt"
+        },
+        "FirstSeenAt":{
+          "shape":"Timestamp",
+          "locationName":"firstSeenAt"
+        },
+        "LastSeenAt":{
+          "shape":"Timestamp",
+          "locationName":"lastSeenAt"
+        },
+        "Severity":{
+          "shape":"Double",
+          "locationName":"severity"
+        },
+        "Count":{
+          "shape":"Integer",
+          "locationName":"count"
+        },
+        "ResourceUids":{
+          "shape":"ResourceUids",
+          "locationName":"resourceUids"
+        },
+        "ActorIds":{
+          "shape":"ActorIds",
+          "locationName":"actorIds"
+        },
+        "EndpointIds":{
+          "shape":"EndpointIds",
+          "locationName":"endpointIds"
+        },
+        "SignalIndicators":{
+          "shape":"Indicators",
+          "locationName":"signalIndicators"
+        }
+      }
+    },
+    "SignalDescription":{
+      "type":"string",
+      "max":2000
+    },
+    "SignalType":{
+      "type":"string",
+      "enum":[
+        "FINDING",
+        "CLOUD_TRAIL",
+        "S3_DATA_EVENTS"
+      ]
+    },
+    "Signals":{
+      "type":"list",
+      "member":{"shape":"Signal"},
+      "max":100,
+      "min":2
     },
     "SortCriteria":{
       "type":"structure",
@@ -8137,6 +8828,36 @@
     "UsageTopAccountsResultList":{
       "type":"list",
       "member":{"shape":"UsageTopAccountsResult"}
+    },
+    "User":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Uid",
+        "Type"
+      ],
+      "members":{
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Uid":{
+          "shape":"String",
+          "locationName":"uid"
+        },
+        "Type":{
+          "shape":"String",
+          "locationName":"type"
+        },
+        "CredentialUid":{
+          "shape":"String",
+          "locationName":"credentialUid"
+        },
+        "Account":{
+          "shape":"Account",
+          "locationName":"account"
+        }
+      }
     },
     "Volume":{
       "type":"structure",

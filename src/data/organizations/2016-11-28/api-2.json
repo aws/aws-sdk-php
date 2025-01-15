@@ -541,6 +541,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"AWSOrganizationsNotInUseException"},
         {"shape":"ConcurrentModificationException"},
+        {"shape":"ConstraintViolationException"},
         {"shape":"HandshakeConstraintViolationException"},
         {"shape":"InvalidInputException"},
         {"shape":"ServiceException"},
@@ -1302,7 +1303,8 @@
         "SERVICE_ACCESS_NOT_ENABLED",
         "INVALID_PAYMENT_INSTRUMENT",
         "ACCOUNT_CREATION_NOT_COMPLETE",
-        "CANNOT_REGISTER_SUSPENDED_ACCOUNT_AS_DELEGATED_ADMINISTRATOR"
+        "CANNOT_REGISTER_SUSPENDED_ACCOUNT_AS_DELEGATED_ADMINISTRATOR",
+        "ALL_FEATURES_MIGRATION_ORGANIZATION_SIZE_LIMIT_EXCEEDED"
       ]
     },
     "CreateAccountFailureReason":{
@@ -1721,7 +1723,8 @@
         "TAG_POLICY",
         "BACKUP_POLICY",
         "AISERVICES_OPT_OUT_POLICY",
-        "CHATBOT_POLICY"
+        "CHATBOT_POLICY",
+        "DECLARATIVE_POLICY_EC2"
       ]
     },
     "Email":{
@@ -1986,9 +1989,11 @@
         "TARGET_NOT_SUPPORTED",
         "INVALID_EMAIL_ADDRESS_TARGET",
         "INVALID_RESOURCE_POLICY_JSON",
+        "INVALID_PRINCIPAL",
         "UNSUPPORTED_ACTION_IN_RESOURCE_POLICY",
         "UNSUPPORTED_POLICY_TYPE_IN_RESOURCE_POLICY",
-        "UNSUPPORTED_RESOURCE_IN_RESOURCE_POLICY"
+        "UNSUPPORTED_RESOURCE_IN_RESOURCE_POLICY",
+        "NON_DETACHABLE_POLICY"
       ]
     },
     "InviteAccountToOrganizationRequest":{
@@ -2499,10 +2504,12 @@
       "type":"string",
       "enum":[
         "SERVICE_CONTROL_POLICY",
+        "RESOURCE_CONTROL_POLICY",
         "TAG_POLICY",
         "BACKUP_POLICY",
         "AISERVICES_OPT_OUT_POLICY",
-        "CHATBOT_POLICY"
+        "CHATBOT_POLICY",
+        "DECLARATIVE_POLICY_EC2"
       ]
     },
     "PolicyTypeAlreadyEnabledException":{

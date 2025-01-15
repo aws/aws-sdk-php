@@ -1191,6 +1191,20 @@
         "RoleArn":{"shape":"IamRoleArn"}
       }
     },
+    "DeliverToQBusinessAction":{
+      "type":"structure",
+      "required":[
+        "ApplicationId",
+        "IndexId",
+        "RoleArn"
+      ],
+      "members":{
+        "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
+        "ApplicationId":{"shape":"QBusinessApplicationId"},
+        "IndexId":{"shape":"QBusinessIndexId"},
+        "RoleArn":{"shape":"IamRoleArn"}
+      }
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -2007,6 +2021,18 @@
       "type":"list",
       "member":{"shape":"PolicyStatement"}
     },
+    "QBusinessApplicationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-z0-9-]+$"
+    },
+    "QBusinessIndexId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-z0-9-]+$"
+    },
     "Recipients":{
       "type":"list",
       "member":{"shape":"EmailAddress"},
@@ -2150,6 +2176,7 @@
         "AddHeader":{"shape":"AddHeaderAction"},
         "Archive":{"shape":"ArchiveAction"},
         "DeliverToMailbox":{"shape":"DeliverToMailboxAction"},
+        "DeliverToQBusiness":{"shape":"DeliverToQBusinessAction"},
         "Drop":{"shape":"DropAction"},
         "Relay":{"shape":"RelayAction"},
         "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},

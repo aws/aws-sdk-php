@@ -64,6 +64,22 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "CreateApi":{
+      "name":"CreateApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/apis"
+      },
+      "input":{"shape":"CreateApiRequest"},
+      "output":{"shape":"CreateApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateApiCache":{
       "name":"CreateApiCache",
       "http":{
@@ -97,6 +113,24 @@
         {"shape":"InternalFailureException"},
         {"shape":"ApiKeyLimitExceededException"},
         {"shape":"ApiKeyValidityOutOfBoundsException"}
+      ]
+    },
+    "CreateChannelNamespace":{
+      "name":"CreateChannelNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/apis/{apiId}/channelNamespaces"
+      },
+      "input":{"shape":"CreateChannelNamespaceRequest"},
+      "output":{"shape":"CreateChannelNamespaceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateDataSource":{
@@ -194,6 +228,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteApi":{
+      "name":"DeleteApi",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/apis/{apiId}"
+      },
+      "input":{"shape":"DeleteApiRequest"},
+      "output":{"shape":"DeleteApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteApiCache":{
       "name":"DeleteApiCache",
       "http":{
@@ -224,6 +276,24 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InternalFailureException"}
       ]
+    },
+    "DeleteChannelNamespace":{
+      "name":"DeleteChannelNamespace",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/apis/{apiId}/channelNamespaces/{name}"
+      },
+      "input":{"shape":"DeleteChannelNamespaceRequest"},
+      "output":{"shape":"DeleteChannelNamespaceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "DeleteDataSource":{
       "name":"DeleteDataSource",
@@ -414,6 +484,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GetApi":{
+      "name":"GetApi",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/apis/{apiId}"
+      },
+      "input":{"shape":"GetApiRequest"},
+      "output":{"shape":"GetApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetApiAssociation":{
       "name":"GetApiAssociation",
       "http":{
@@ -443,6 +529,22 @@
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "GetChannelNamespace":{
+      "name":"GetChannelNamespace",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/apis/{apiId}/channelNamespaces/{name}"
+      },
+      "input":{"shape":"GetChannelNamespaceRequest"},
+      "output":{"shape":"GetChannelNamespaceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetDataSource":{
@@ -619,6 +721,35 @@
       },
       "input":{"shape":"ListApiKeysRequest"},
       "output":{"shape":"ListApiKeysResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListApis":{
+      "name":"ListApis",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/apis"
+      },
+      "input":{"shape":"ListApisRequest"},
+      "output":{"shape":"ListApisResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListChannelNamespaces":{
+      "name":"ListChannelNamespaces",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/apis/{apiId}/channelNamespaces"
+      },
+      "input":{"shape":"ListChannelNamespacesRequest"},
+      "output":{"shape":"ListChannelNamespacesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
@@ -876,6 +1007,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "UpdateApi":{
+      "name":"UpdateApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/apis/{apiId}"
+      },
+      "input":{"shape":"UpdateApiRequest"},
+      "output":{"shape":"UpdateApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateApiCache":{
       "name":"UpdateApiCache",
       "http":{
@@ -907,6 +1055,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
         {"shape":"ApiKeyValidityOutOfBoundsException"}
+      ]
+    },
+    "UpdateChannelNamespace":{
+      "name":"UpdateChannelNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/apis/{apiId}/channelNamespaces/{name}"
+      },
+      "input":{"shape":"UpdateChannelNamespaceRequest"},
+      "output":{"shape":"UpdateChannelNamespaceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateDataSource":{
@@ -1045,6 +1210,21 @@
       "type":"list",
       "member":{"shape":"AdditionalAuthenticationProvider"}
     },
+    "Api":{
+      "type":"structure",
+      "members":{
+        "apiId":{"shape":"String"},
+        "name":{"shape":"ApiName"},
+        "ownerContact":{"shape":"OwnerContact"},
+        "tags":{"shape":"TagMap"},
+        "dns":{"shape":"MapOfStringToString"},
+        "apiArn":{"shape":"String"},
+        "created":{"shape":"Timestamp"},
+        "xrayEnabled":{"shape":"Boolean"},
+        "wafWebAclArn":{"shape":"String"},
+        "eventConfig":{"shape":"EventConfig"}
+      }
+    },
     "ApiAssociation":{
       "type":"structure",
       "members":{
@@ -1140,6 +1320,16 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ApiName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"[A-Za-z0-9_\\-\\ ]+"
+    },
+    "Apis":{
+      "type":"list",
+      "member":{"shape":"Api"}
+    },
     "AppSyncRuntime":{
       "type":"structure",
       "required":[
@@ -1226,6 +1416,31 @@
         "SUCCESS"
       ]
     },
+    "AuthMode":{
+      "type":"structure",
+      "required":["authType"],
+      "members":{
+        "authType":{"shape":"AuthenticationType"}
+      }
+    },
+    "AuthModes":{
+      "type":"list",
+      "member":{"shape":"AuthMode"}
+    },
+    "AuthProvider":{
+      "type":"structure",
+      "required":["authType"],
+      "members":{
+        "authType":{"shape":"AuthenticationType"},
+        "cognitoConfig":{"shape":"CognitoConfig"},
+        "openIDConnectConfig":{"shape":"OpenIDConnectConfig"},
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
+      }
+    },
+    "AuthProviders":{
+      "type":"list",
+      "member":{"shape":"AuthProvider"}
+    },
     "AuthenticationType":{
       "type":"string",
       "enum":[
@@ -1303,6 +1518,24 @@
       "min":20,
       "pattern":"^arn:[a-z-]*:(acm|iam):[a-z0-9-]*:\\d{12}:(certificate|server-certificate)/[0-9A-Za-z_/-]*$"
     },
+    "ChannelNamespace":{
+      "type":"structure",
+      "members":{
+        "apiId":{"shape":"String"},
+        "name":{"shape":"Namespace"},
+        "subscribeAuthModes":{"shape":"AuthModes"},
+        "publishAuthModes":{"shape":"AuthModes"},
+        "codeHandlers":{"shape":"Code"},
+        "tags":{"shape":"TagMap"},
+        "channelNamespaceArn":{"shape":"String"},
+        "created":{"shape":"Timestamp"},
+        "lastModified":{"shape":"Timestamp"}
+      }
+    },
+    "ChannelNamespaces":{
+      "type":"list",
+      "member":{"shape":"ChannelNamespace"}
+    },
     "Code":{
       "type":"string",
       "max":32768,
@@ -1331,6 +1564,18 @@
       "type":"list",
       "member":{"shape":"CodeError"}
     },
+    "CognitoConfig":{
+      "type":"structure",
+      "required":[
+        "userPoolId",
+        "awsRegion"
+      ],
+      "members":{
+        "userPoolId":{"shape":"String"},
+        "awsRegion":{"shape":"String"},
+        "appIdClientRegex":{"shape":"String"}
+      }
+    },
     "CognitoUserPoolConfig":{
       "type":"structure",
       "required":[
@@ -1357,6 +1602,14 @@
         "VERSION",
         "NONE"
       ]
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
     },
     "ConflictHandlerType":{
       "type":"string",
@@ -1418,6 +1671,47 @@
       "type":"structure",
       "members":{
         "apiKey":{"shape":"ApiKey"}
+      }
+    },
+    "CreateApiRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"ApiName"},
+        "ownerContact":{"shape":"String"},
+        "tags":{"shape":"TagMap"},
+        "eventConfig":{"shape":"EventConfig"}
+      }
+    },
+    "CreateApiResponse":{
+      "type":"structure",
+      "members":{
+        "api":{"shape":"Api"}
+      }
+    },
+    "CreateChannelNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "name"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "name":{"shape":"Namespace"},
+        "subscribeAuthModes":{"shape":"AuthModes"},
+        "publishAuthModes":{"shape":"AuthModes"},
+        "codeHandlers":{"shape":"Code"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateChannelNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "channelNamespace":{"shape":"ChannelNamespace"}
       }
     },
     "CreateDataSourceRequest":{
@@ -1518,9 +1812,9 @@
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
         "xrayEnabled":{"shape":"Boolean"},
         "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"},
-        "visibility":{"shape":"GraphQLApiVisibility"},
         "apiType":{"shape":"GraphQLApiType"},
         "mergedApiExecutionRoleArn":{"shape":"String"},
+        "visibility":{"shape":"GraphQLApiVisibility"},
         "ownerContact":{"shape":"String"},
         "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
         "queryDepthLimit":{"shape":"QueryDepthLimit"},
@@ -1706,7 +2000,8 @@
         "HTTP",
         "RELATIONAL_DATABASE",
         "AMAZON_OPENSEARCH_SERVICE",
-        "AMAZON_EVENTBRIDGE"
+        "AMAZON_EVENTBRIDGE",
+        "AMAZON_BEDROCK_RUNTIME"
       ]
     },
     "DataSources":{
@@ -1757,6 +2052,46 @@
       }
     },
     "DeleteApiKeyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteApiRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        }
+      }
+    },
+    "DeleteApiResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteChannelNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "name"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "name":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteChannelNamespaceResponse":{
       "type":"structure",
       "members":{
       }
@@ -2119,6 +2454,43 @@
         "eventBusArn":{"shape":"String"}
       }
     },
+    "EventConfig":{
+      "type":"structure",
+      "required":[
+        "authProviders",
+        "connectionAuthModes",
+        "defaultPublishAuthModes",
+        "defaultSubscribeAuthModes"
+      ],
+      "members":{
+        "authProviders":{"shape":"AuthProviders"},
+        "connectionAuthModes":{"shape":"AuthModes"},
+        "defaultPublishAuthModes":{"shape":"AuthModes"},
+        "defaultSubscribeAuthModes":{"shape":"AuthModes"},
+        "logConfig":{"shape":"EventLogConfig"}
+      }
+    },
+    "EventLogConfig":{
+      "type":"structure",
+      "required":[
+        "logLevel",
+        "cloudWatchLogsRoleArn"
+      ],
+      "members":{
+        "logLevel":{"shape":"EventLogLevel"},
+        "cloudWatchLogsRoleArn":{"shape":"String"}
+      }
+    },
+    "EventLogLevel":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "ERROR",
+        "ALL",
+        "INFO",
+        "DEBUG"
+      ]
+    },
     "FieldLogLevel":{
       "type":"string",
       "enum":[
@@ -2202,6 +2574,48 @@
       "type":"structure",
       "members":{
         "apiCache":{"shape":"ApiCache"}
+      }
+    },
+    "GetApiRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        }
+      }
+    },
+    "GetApiResponse":{
+      "type":"structure",
+      "members":{
+        "api":{"shape":"Api"}
+      }
+    },
+    "GetChannelNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "name"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "name":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetChannelNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "channelNamespace":{"shape":"ChannelNamespace"}
       }
     },
     "GetDataSourceIntrospectionRequest":{
@@ -2611,6 +3025,56 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListApisRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListApisResponse":{
+      "type":"structure",
+      "members":{
+        "apis":{"shape":"Apis"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListChannelNamespacesRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListChannelNamespacesResponse":{
+      "type":"structure",
+      "members":{
+        "channelNamespaces":{"shape":"ChannelNamespaces"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListDataSourcesRequest":{
       "type":"structure",
       "required":["apiId"],
@@ -2961,6 +3425,12 @@
         "AUTO_MERGE"
       ]
     },
+    "Namespace":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"([A-Za-z0-9](?:[A-Za-z0-9\\-]{0,48}[A-Za-z0-9])?)"
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -3004,6 +3474,12 @@
         "JSON"
       ]
     },
+    "OwnerContact":{
+      "type":"string",
+      "max":250,
+      "min":0,
+      "pattern":"[A-Za-z0-9_\\-\\ \\.]+"
+    },
     "Ownership":{
       "type":"string",
       "enum":[
@@ -3015,7 +3491,7 @@
       "type":"string",
       "max":65536,
       "min":1,
-      "pattern":"[\\\\S]+"
+      "pattern":"[\\S]+"
     },
     "PipelineConfig":{
       "type":"structure",
@@ -3175,6 +3651,14 @@
         "SUCCESS",
         "NOT_APPLICABLE"
       ]
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":402},
+      "exception":true
     },
     "SourceApiAssociation":{
       "type":"structure",
@@ -3351,6 +3835,7 @@
       "min":2,
       "pattern":"^[\\s\\S]*$"
     },
+    "Timestamp":{"type":"timestamp"},
     "Type":{
       "type":"structure",
       "members":{
@@ -3455,6 +3940,57 @@
       "type":"structure",
       "members":{
         "apiKey":{"shape":"ApiKey"}
+      }
+    },
+    "UpdateApiRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "name"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "name":{"shape":"ApiName"},
+        "ownerContact":{"shape":"String"},
+        "eventConfig":{"shape":"EventConfig"}
+      }
+    },
+    "UpdateApiResponse":{
+      "type":"structure",
+      "members":{
+        "api":{"shape":"Api"}
+      }
+    },
+    "UpdateChannelNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "name"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "name":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "subscribeAuthModes":{"shape":"AuthModes"},
+        "publishAuthModes":{"shape":"AuthModes"},
+        "codeHandlers":{"shape":"Code"}
+      }
+    },
+    "UpdateChannelNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "channelNamespace":{"shape":"ChannelNamespace"}
       }
     },
     "UpdateDataSourceRequest":{

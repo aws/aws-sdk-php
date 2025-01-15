@@ -1551,7 +1551,9 @@
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
-        "KMSKeyArn":{"shape":"KMSKeyArn"}
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "CreateFunctionRequest":{
@@ -2002,7 +2004,25 @@
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
         "FilterCriteriaError":{"shape":"FilterCriteriaError"},
-        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"}
+        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
+      }
+    },
+    "EventSourceMappingMetric":{
+      "type":"string",
+      "enum":["EventCount"]
+    },
+    "EventSourceMappingMetricList":{
+      "type":"list",
+      "member":{"shape":"EventSourceMappingMetric"},
+      "max":1,
+      "min":0
+    },
+    "EventSourceMappingMetricsConfig":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"EventSourceMappingMetricList"}
       }
     },
     "EventSourceMappingsList":{
@@ -2101,7 +2121,8 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
-        "ImageUri":{"shape":"String"}
+        "ImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "FunctionCodeLocation":{
@@ -2110,7 +2131,8 @@
         "RepositoryType":{"shape":"String"},
         "Location":{"shape":"String"},
         "ImageUri":{"shape":"String"},
-        "ResolvedImageUri":{"shape":"String"}
+        "ResolvedImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"String"}
       }
     },
     "FunctionConfiguration":{
@@ -2403,6 +2425,7 @@
         "Configuration":{"shape":"FunctionConfiguration"},
         "Code":{"shape":"FunctionCodeLocation"},
         "Tags":{"shape":"Tags"},
+        "TagsError":{"shape":"TagsError"},
         "Concurrency":{"shape":"Concurrency"}
       }
     },
@@ -3474,6 +3497,11 @@
       "max":21600,
       "min":60
     },
+    "MaximumNumberOfPollers":{
+      "type":"integer",
+      "max":2000,
+      "min":1
+    },
     "MaximumRecordAgeInSeconds":{
       "type":"integer",
       "max":604800,
@@ -3498,6 +3526,11 @@
       "type":"string",
       "max":6,
       "pattern":".*"
+    },
+    "MinimumNumberOfPollers":{
+      "type":"integer",
+      "max":200,
+      "min":1
     },
     "NameSpacedFunctionArn":{
       "type":"string",
@@ -3625,6 +3658,13 @@
         "READY",
         "FAILED"
       ]
+    },
+    "ProvisionedPollerConfig":{
+      "type":"structure",
+      "members":{
+        "MinimumPollers":{"shape":"MinimumNumberOfPollers"},
+        "MaximumPollers":{"shape":"MaximumNumberOfPollers"}
+      }
     },
     "PublishLayerVersionRequest":{
       "type":"structure",
@@ -4016,7 +4056,9 @@
         "nodejs20.x",
         "provided.al2023",
         "python3.12",
-        "java21"
+        "java21",
+        "python3.13",
+        "nodejs22.x"
       ]
     },
     "RuntimeVersionArn":{
@@ -4289,6 +4331,29 @@
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
     },
+    "TagsError":{
+      "type":"structure",
+      "required":[
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "ErrorCode":{"shape":"TagsErrorCode"},
+        "Message":{"shape":"TagsErrorMessage"}
+      }
+    },
+    "TagsErrorCode":{
+      "type":"string",
+      "max":21,
+      "min":10,
+      "pattern":"[A-Za-z]+Exception"
+    },
+    "TagsErrorMessage":{
+      "type":"string",
+      "max":1000,
+      "min":84,
+      "pattern":"^.*$"
+    },
     "ThrottleReason":{
       "type":"string",
       "enum":[
@@ -4468,7 +4533,9 @@
         "FunctionResponseTypes":{"shape":"FunctionResponseTypeList"},
         "ScalingConfig":{"shape":"ScalingConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
-        "KMSKeyArn":{"shape":"KMSKeyArn"}
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "UpdateFunctionCodeRequest":{
@@ -4488,7 +4555,8 @@
         "Publish":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
         "RevisionId":{"shape":"String"},
-        "Architectures":{"shape":"ArchitecturesList"}
+        "Architectures":{"shape":"ArchitecturesList"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "UpdateFunctionConfigurationRequest":{

@@ -15,6 +15,21 @@
     "uid":"verifiedpermissions-2021-12-01"
   },
   "operations":{
+    "BatchGetPolicy":{
+      "name":"BatchGetPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetPolicyInput"},
+      "output":{"shape":"BatchGetPolicyOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "BatchIsAuthorized":{
       "name":"BatchIsAuthorized",
       "http":{
@@ -506,7 +521,9 @@
         "long":{"shape":"LongAttribute"},
         "string":{"shape":"StringAttribute"},
         "set":{"shape":"SetAttribute"},
-        "record":{"shape":"RecordAttribute"}
+        "record":{"shape":"RecordAttribute"},
+        "ipaddr":{"shape":"IpAddr"},
+        "decimal":{"shape":"Decimal"}
       },
       "union":true
     },
@@ -520,6 +537,90 @@
       "member":{"shape":"Audience"},
       "max":255,
       "min":1
+    },
+    "BatchGetPolicyErrorCode":{
+      "type":"string",
+      "enum":[
+        "POLICY_STORE_NOT_FOUND",
+        "POLICY_NOT_FOUND"
+      ]
+    },
+    "BatchGetPolicyErrorItem":{
+      "type":"structure",
+      "required":[
+        "code",
+        "policyStoreId",
+        "policyId",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"BatchGetPolicyErrorCode"},
+        "policyStoreId":{"shape":"String"},
+        "policyId":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "BatchGetPolicyErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchGetPolicyErrorItem"}
+    },
+    "BatchGetPolicyInput":{
+      "type":"structure",
+      "required":["requests"],
+      "members":{
+        "requests":{"shape":"BatchGetPolicyInputList"}
+      }
+    },
+    "BatchGetPolicyInputItem":{
+      "type":"structure",
+      "required":[
+        "policyStoreId",
+        "policyId"
+      ],
+      "members":{
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "policyId":{"shape":"PolicyId"}
+      }
+    },
+    "BatchGetPolicyInputList":{
+      "type":"list",
+      "member":{"shape":"BatchGetPolicyInputItem"},
+      "max":100,
+      "min":1
+    },
+    "BatchGetPolicyOutput":{
+      "type":"structure",
+      "required":[
+        "results",
+        "errors"
+      ],
+      "members":{
+        "results":{"shape":"BatchGetPolicyOutputList"},
+        "errors":{"shape":"BatchGetPolicyErrorList"}
+      }
+    },
+    "BatchGetPolicyOutputItem":{
+      "type":"structure",
+      "required":[
+        "policyStoreId",
+        "policyId",
+        "policyType",
+        "definition",
+        "createdDate",
+        "lastUpdatedDate"
+      ],
+      "members":{
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "policyId":{"shape":"PolicyId"},
+        "policyType":{"shape":"PolicyType"},
+        "definition":{"shape":"PolicyDefinitionDetail"},
+        "createdDate":{"shape":"TimestampFormat"},
+        "lastUpdatedDate":{"shape":"TimestampFormat"}
+      }
+    },
+    "BatchGetPolicyOutputList":{
+      "type":"list",
+      "member":{"shape":"BatchGetPolicyOutputItem"}
     },
     "BatchIsAuthorizedInput":{
       "type":"structure",
@@ -883,6 +984,13 @@
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"}
       }
+    },
+    "Decimal":{
+      "type":"string",
+      "max":23,
+      "min":3,
+      "pattern":"-?\\d{1,15}\\.\\d{1,4}",
+      "sensitive":true
     },
     "Decision":{
       "type":"string",
@@ -1311,6 +1419,13 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "IpAddr":{
+      "type":"string",
+      "max":44,
+      "min":1,
+      "pattern":"[0-9a-fA-F\\.:\\/]*",
+      "sensitive":true
+    },
     "IsAuthorizedInput":{
       "type":"structure",
       "required":["policyStoreId"],
@@ -1455,7 +1570,7 @@
     "Namespace":{
       "type":"string",
       "max":100,
-      "min":1,
+      "min":0,
       "pattern":".*",
       "sensitive":true
     },
@@ -1856,7 +1971,6 @@
     },
     "SchemaJson":{
       "type":"string",
-      "max":100000,
       "min":1,
       "sensitive":true
     },

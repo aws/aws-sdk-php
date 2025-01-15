@@ -881,6 +881,23 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "DeregisterNamespace":{
+      "name":"DeregisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterNamespaceInputMessage"},
+      "output":{
+        "shape":"DeregisterNamespaceOutputMessage",
+        "resultWrapper":"DeregisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
+      ]
+    },
     "DescribeAccountAttributes":{
       "name":"DescribeAccountAttributes",
       "http":{
@@ -2163,6 +2180,23 @@
         {"shape":"ClusterNotFoundFault"}
       ]
     },
+    "RegisterNamespace":{
+      "name":"RegisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterNamespaceInputMessage"},
+      "output":{
+        "shape":"RegisterNamespaceOutputMessage",
+        "resultWrapper":"RegisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
+      ]
+    },
     "RejectDataShare":{
       "name":"RejectDataShare",
       "http":{
@@ -3346,6 +3380,12 @@
       },
       "exception":true
     },
+    "ConsumerIdentifierList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":1,
+      "min":1
+    },
     "CopyClusterSnapshotMessage":{
       "type":"structure",
       "required":[
@@ -3633,8 +3673,8 @@
         "IntegrationName"
       ],
       "members":{
-        "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "IntegrationName":{"shape":"IntegrationName"},
         "KMSKeyId":{"shape":"String"},
         "TagList":{"shape":"TagList"},
@@ -3795,7 +3835,8 @@
         "ProducerArn":{"shape":"String"},
         "AllowPubliclyAccessibleConsumers":{"shape":"Boolean"},
         "DataShareAssociations":{"shape":"DataShareAssociationList"},
-        "ManagedBy":{"shape":"String"}
+        "ManagedBy":{"shape":"String"},
+        "DataShareType":{"shape":"DataShareType"}
       }
     },
     "DataShareAssociation":{
@@ -3845,6 +3886,10 @@
         "DEAUTHORIZED",
         "REJECTED"
       ]
+    },
+    "DataShareType":{
+      "type":"string",
+      "enum":["INTERNAL"]
     },
     "DataTransferProgress":{
       "type":"structure",
@@ -4102,6 +4147,23 @@
       },
       "exception":true
     },
+    "DeregisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "DeregisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
+      }
+    },
     "DescribeAccountAttributesMessage":{
       "type":"structure",
       "members":{
@@ -4356,8 +4418,8 @@
     "DescribeInboundIntegrationsMessage":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "MaxRecords":{"shape":"IntegerOptional"},
         "Marker":{"shape":"String"}
       }
@@ -5209,13 +5271,19 @@
     "InboundIntegration":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
         "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "TargetArn":{"shape":"TargetArn"},
         "Status":{"shape":"ZeroETLIntegrationStatus"},
         "Errors":{"shape":"IntegrationErrorList"},
         "CreateTime":{"shape":"TStamp"}
       }
+    },
+    "InboundIntegrationArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:.+:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "InboundIntegrationList":{
       "type":"list",
@@ -5269,10 +5337,10 @@
     "Integration":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"IntegrationArn"},
         "IntegrationName":{"shape":"IntegrationName"},
-        "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "Status":{"shape":"ZeroETLIntegrationStatus"},
         "Errors":{"shape":"IntegrationErrorList"},
         "CreateTime":{"shape":"TStamp"},
@@ -5297,7 +5365,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"arn:aws[a-z\\-]*:redshift:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+      "pattern":"^arn:aws[a-z\\-]*:redshift:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "IntegrationConflictOperationFault":{
       "type":"structure",
@@ -6149,6 +6217,21 @@
         "BreachAction":{"shape":"UsageLimitBreachAction"}
       }
     },
+    "NamespaceIdentifierUnion":{
+      "type":"structure",
+      "members":{
+        "ServerlessIdentifier":{"shape":"ServerlessIdentifier"},
+        "ProvisionedIdentifier":{"shape":"ProvisionedIdentifier"}
+      },
+      "union":true
+    },
+    "NamespaceRegistrationStatus":{
+      "type":"string",
+      "enum":[
+        "Registering",
+        "Deregistering"
+      ]
+    },
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -6428,6 +6511,13 @@
         "EncryptionType":{"shape":"String"}
       }
     },
+    "ProvisionedIdentifier":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "ClusterIdentifier":{"shape":"String"}
+      }
+    },
     "PurchaseReservedNodeOfferingMessage":{
       "type":"structure",
       "required":["ReservedNodeOfferingId"],
@@ -6457,6 +6547,13 @@
       "type":"structure",
       "members":{
         "ResourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "ReadWriteAccess":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
       }
     },
     "RebootClusterMessage":{
@@ -6605,6 +6702,23 @@
       "member":{
         "shape":"ReferenceLink",
         "locationName":"ReferenceLink"
+      }
+    },
+    "RegisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "RegisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
       }
     },
     "RejectDataShareMessage":{
@@ -7066,6 +7180,17 @@
         "Cluster":{"shape":"Cluster"}
       }
     },
+    "S3AccessGrantsScopeUnion":{
+      "type":"structure",
+      "members":{
+        "ReadWriteAccess":{"shape":"ReadWriteAccess"}
+      },
+      "union":true
+    },
+    "S3AccessGrantsServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"S3AccessGrantsScopeUnion"}
+    },
     "S3KeyPrefixValue":{
       "type":"string",
       "max":256,
@@ -7275,6 +7400,17 @@
       "type":"string",
       "sensitive":true
     },
+    "ServerlessIdentifier":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "WorkgroupIdentifier"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"String"},
+        "WorkgroupIdentifier":{"shape":"String"}
+      }
+    },
     "ServiceAuthorization":{
       "type":"string",
       "enum":[
@@ -7289,7 +7425,8 @@
     "ServiceIntegrationsUnion":{
       "type":"structure",
       "members":{
-        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"}
+        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"},
+        "S3AccessGrants":{"shape":"S3AccessGrantsServiceIntegrations"}
       },
       "union":true
     },
@@ -7547,6 +7684,12 @@
         "ASC",
         "DESC"
       ]
+    },
+    "SourceArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:(s3|dynamodb):.*:.*:[a-zA-Z0-9._\\-\\/]+$"
     },
     "SourceIdsList":{
       "type":"list",
@@ -7822,6 +7965,12 @@
         "TaggedResources":{"shape":"TaggedResourceList"},
         "Marker":{"shape":"String"}
       }
+    },
+    "TargetArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:redshift(-serverless)?:[a-z0-9\\-]+:[0-9]{12}:(namespace\\/|namespace:)[a-z0-9\\-]+$"
     },
     "TrackList":{
       "type":"list",

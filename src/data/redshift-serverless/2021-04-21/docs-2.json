@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>This is an interface reference for Amazon Redshift Serverless. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Redshift Serverless. </p> <p>Amazon Redshift Serverless automatically provisions data warehouse capacity and intelligently scales the underlying resources based on workload demands. Amazon Redshift Serverless adjusts capacity in seconds to deliver consistently high performance and simplified operations for even the most demanding and volatile workloads. Amazon Redshift Serverless lets you focus on using your data to acquire new insights for your business and customers. </p> <p> To learn more about Amazon Redshift Serverless, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html\">What is Amazon Redshift Serverless</a>. </p>",
+  "service": "<p>This is an interface reference for Amazon Redshift Serverless. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Redshift Serverless. </p> <p>Amazon Redshift Serverless automatically provisions data warehouse capacity and intelligently scales the underlying resources based on workload demands. Amazon Redshift Serverless adjusts capacity in seconds to deliver consistently high performance and simplified operations for even the most demanding and volatile workloads. Amazon Redshift Serverless lets you focus on using your data to acquire new insights for your business and customers. </p> <p> To learn more about Amazon Redshift Serverless, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html\">What is Amazon Redshift Serverless?</a>.</p>",
   "operations": {
     "ConvertRecoveryPointToSnapshot": "<p>Converts a recovery point to a snapshot. For more information about recovery points and snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html\">Working with snapshots and recovery points</a>.</p>",
     "CreateCustomDomainAssociation": "<p>Creates a custom domain association for Amazon Redshift Serverless.</p>",
@@ -10,7 +10,7 @@
     "CreateSnapshot": "<p>Creates a snapshot of all databases in a namespace. For more information about snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html\"> Working with snapshots and recovery points</a>.</p>",
     "CreateSnapshotCopyConfiguration": "<p>Creates a snapshot copy configuration that lets you copy snapshots to another Amazon Web Services Region.</p>",
     "CreateUsageLimit": "<p>Creates a usage limit for a specified Amazon Redshift Serverless usage type. The usage limit is identified by the returned usage limit identifier. </p>",
-    "CreateWorkgroup": "<p>Creates an workgroup in Amazon Redshift Serverless.</p>",
+    "CreateWorkgroup": "<p>Creates an workgroup in Amazon Redshift Serverless.</p> <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways. If a workgroup is in an account with VPC BPA turned on, the following capabilities are blocked: </p> <ul> <li> <p>Creating a public access workgroup</p> </li> <li> <p>Modifying a private workgroup to public</p> </li> <li> <p>Adding a subnet with VPC BPA turned on to the workgroup when the workgroup is public</p> </li> </ul> <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and subnets</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DeleteCustomDomainAssociation": "<p>Deletes a custom domain association for Amazon Redshift Serverless.</p>",
     "DeleteEndpointAccess": "<p>Deletes an Amazon Redshift Serverless managed VPC endpoint.</p>",
     "DeleteNamespace": "<p>Deletes a namespace from Amazon Redshift Serverless. Before you delete the namespace, you can create a final snapshot that has all of the data within the namespace.</p>",
@@ -20,7 +20,7 @@
     "DeleteSnapshotCopyConfiguration": "<p>Deletes a snapshot copy configuration</p>",
     "DeleteUsageLimit": "<p>Deletes a usage limit from Amazon Redshift Serverless.</p>",
     "DeleteWorkgroup": "<p>Deletes a workgroup.</p>",
-    "GetCredentials": "<p>Returns a database user name and temporary password with temporary authorization to log in to Amazon Redshift Serverless.</p> <p>By default, the temporary credentials expire in 900 seconds. You can optionally specify a duration between 900 seconds (15 minutes) and 3600 seconds (60 minutes).</p> <pre><code> &lt;p&gt;The Identity and Access Management (IAM) user or role that runs GetCredentials must have an IAM policy attached that allows access to all necessary actions and resources.&lt;/p&gt; &lt;p&gt;If the &lt;code&gt;DbName&lt;/code&gt; parameter is specified, the IAM policy must allow access to the resource dbname for the specified database name.&lt;/p&gt; </code></pre>",
+    "GetCredentials": "<p>Returns a database user name and temporary password with temporary authorization to log in to Amazon Redshift Serverless.</p> <p>By default, the temporary credentials expire in 900 seconds. You can optionally specify a duration between 900 seconds (15 minutes) and 3600 seconds (60 minutes).</p> <p>The Identity and Access Management (IAM) user or role that runs GetCredentials must have an IAM policy attached that allows access to all necessary actions and resources.</p> <p>If the <code>DbName</code> parameter is specified, the IAM policy must allow access to the resource dbname for the specified database name.</p>",
     "GetCustomDomainAssociation": "<p>Gets information about a specific custom domain association.</p>",
     "GetEndpointAccess": "<p>Returns information, such as the name, about a VPC endpoint.</p>",
     "GetNamespace": "<p>Returns information about a namespace in Amazon Redshift Serverless.</p>",
@@ -33,6 +33,7 @@
     "GetWorkgroup": "<p>Returns information about a specific workgroup.</p>",
     "ListCustomDomainAssociations": "<p> Lists custom domain associations for Amazon Redshift Serverless.</p>",
     "ListEndpointAccess": "<p>Returns an array of <code>EndpointAccess</code> objects and relevant information.</p>",
+    "ListManagedWorkgroups": "<p>Returns information about a list of specified managed workgroups in your account.</p>",
     "ListNamespaces": "<p>Returns information about a list of specified namespaces.</p>",
     "ListRecoveryPoints": "<p>Returns an array of recovery points.</p>",
     "ListScheduledActions": "<p>Returns a list of scheduled actions. You can use the flags to filter the list of returned scheduled actions.</p>",
@@ -56,7 +57,7 @@
     "UpdateSnapshot": "<p>Updates a snapshot.</p>",
     "UpdateSnapshotCopyConfiguration": "<p>Updates a snapshot copy configuration.</p>",
     "UpdateUsageLimit": "<p>Update a usage limit in Amazon Redshift Serverless. You can't update the usage type or period of a usage limit.</p>",
-    "UpdateWorkgroup": "<p>Updates a workgroup with the specified configuration settings. You can't update multiple parameters in one request. For example, you can update <code>baseCapacity</code> or <code>port</code> in a single request, but you can't update both in the same request.</p>"
+    "UpdateWorkgroup": "<p>Updates a workgroup with the specified configuration settings. You can't update multiple parameters in one request. For example, you can update <code>baseCapacity</code> or <code>port</code> in a single request, but you can't update both in the same request.</p> <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways. If a workgroup is in an account with VPC BPA turned on, the following capabilities are blocked: </p> <ul> <li> <p>Creating a public access workgroup</p> </li> <li> <p>Modifying a private workgroup to public</p> </li> <li> <p>Adding a subnet with VPC BPA turned on to the workgroup when the workgroup is public</p> </li> </ul> <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and subnets</a> in the <i>Amazon VPC User Guide</i>.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -627,6 +628,22 @@
       "refs": {
       }
     },
+    "ListManagedWorkgroupsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListManagedWorkgroupsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListManagedWorkgroupsRequest$maxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use nextToken to display the next page of results.</p>"
+      }
+    },
+    "ListManagedWorkgroupsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListNamespacesRequest": {
       "base": null,
       "refs": {
@@ -791,6 +808,30 @@
         "UsageLimit$amount": "<p>The limit amount. If time-based, this amount is in RPUs consumed per hour. If data-based, this amount is in terabytes (TB). The value must be a positive number.</p>"
       }
     },
+    "ManagedWorkgroupListItem": {
+      "base": "<p>A collection of Amazon Redshift compute resources managed by AWS Glue.</p>",
+      "refs": {
+        "ManagedWorkgroups$member": null
+      }
+    },
+    "ManagedWorkgroupName": {
+      "base": null,
+      "refs": {
+        "ManagedWorkgroupListItem$managedWorkgroupName": "<p>The name of the managed workgroup.</p>"
+      }
+    },
+    "ManagedWorkgroupStatus": {
+      "base": null,
+      "refs": {
+        "ManagedWorkgroupListItem$status": "<p>The status of the managed workgroup.</p>"
+      }
+    },
+    "ManagedWorkgroups": {
+      "base": null,
+      "refs": {
+        "ListManagedWorkgroupsResponse$managedWorkgroups": "<p>The returned array of managed workgroups.</p>"
+      }
+    },
     "Namespace": {
       "base": "<p>A collection of database objects and users.</p>",
       "refs": {
@@ -869,6 +910,8 @@
       "refs": {
         "ListCustomDomainAssociationsRequest$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCustomDomainAssociationsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListManagedWorkgroupsRequest$nextToken": "<p>If your initial ListManagedWorkgroups operation returns a nextToken, you can include the returned nextToken in following ListManagedWorkgroups operations, which returns results in the next page.</p>",
+        "ListManagedWorkgroupsResponse$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>",
         "ListScheduledActionsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListScheduledActionsResponse$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListSnapshotCopyConfigurationsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
@@ -889,6 +932,26 @@
       "base": null,
       "refs": {
         "ConfigParameter$parameterValue": "<p>The value of the parameter to set.</p>"
+      }
+    },
+    "PerformanceTarget": {
+      "base": "<p>An object that represents the price performance target settings for the workgroup.</p>",
+      "refs": {
+        "CreateWorkgroupRequest$pricePerformanceTarget": "<p>An object that represents the price performance target settings for the workgroup.</p>",
+        "UpdateWorkgroupRequest$pricePerformanceTarget": "<p>An object that represents the price performance target settings for the workgroup.</p>",
+        "Workgroup$pricePerformanceTarget": "<p>An object that represents the price performance target settings for the workgroup.</p>"
+      }
+    },
+    "PerformanceTargetLevelInteger": {
+      "base": null,
+      "refs": {
+        "PerformanceTarget$level": "<p>The target price performance level for the workgroup. Valid values include 1, 25, 50, 75, and 100. These correspond to the price performance levels LOW_COST, ECONOMICAL, BALANCED, RESOURCEFUL, and HIGH_PERFORMANCE.</p>"
+      }
+    },
+    "PerformanceTargetStatus": {
+      "base": null,
+      "refs": {
+        "PerformanceTarget$status": "<p>Whether the price performance target is enabled for the workgroup.</p>"
       }
     },
     "PutResourcePolicyRequest": {
@@ -1075,6 +1138,13 @@
         "Snapshot$status": "<p>The status of the snapshot.</p>"
       }
     },
+    "SourceArn": {
+      "base": null,
+      "refs": {
+        "ListManagedWorkgroupsRequest$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the AWS Glue Data Catalog.</p>",
+        "ManagedWorkgroupListItem$sourceArn": "<p>The Amazon Resource Name (ARN) for the managed workgroup in the AWS Glue Data Catalog.</p>"
+      }
+    },
     "State": {
       "base": null,
       "refs": {
@@ -1143,6 +1213,7 @@
         "ListUsageLimitsRequest$resourceArn": "<p>The Amazon Resource Name (ARN) associated with the resource whose usage limits you want to list.</p>",
         "ListWorkgroupsRequest$nextToken": "<p>If your initial ListWorkgroups operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in following ListNamespaces operations, which returns results in the next page.</p>",
         "ListWorkgroupsResponse$nextToken": "<p> If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>",
+        "ManagedWorkgroupListItem$managedWorkgroupId": "<p>The unique identifier of the managed workgroup.</p>",
         "Namespace$adminPasswordSecretArn": "<p>The Amazon Resource Name (ARN) for the namespace's admin user credentials secret.</p>",
         "Namespace$dbName": "<p>The name of the first database created in the namespace.</p>",
         "Namespace$defaultIamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to set as a default in the namespace.</p>",
@@ -1261,6 +1332,7 @@
         "CreateCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",
         "EndpointAccess$endpointCreateTime": "<p>The time that the endpoint was created.</p>",
         "GetCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",
+        "ManagedWorkgroupListItem$creationDate": "<p>The creation date of the managed workgroup.</p>",
         "Namespace$creationDate": "<p>The date of when the namespace was created.</p>",
         "RecoveryPoint$recoveryPointCreateTime": "<p>The time the recovery point is created.</p>",
         "Snapshot$snapshotCreateTime": "<p>The timestamp of when the snapshot was created.</p>",

@@ -21,6 +21,7 @@
     "DeleteSipRule": "<p>Deletes a SIP rule.</p>",
     "DeleteVoiceConnector": "<p>Deletes an Amazon Chime SDK Voice Connector. Any phone numbers associated with the Amazon Chime SDK Voice Connector must be disassociated from it before it can be deleted.</p>",
     "DeleteVoiceConnectorEmergencyCallingConfiguration": "<p>Deletes the emergency calling details from the specified Amazon Chime SDK Voice Connector.</p>",
+    "DeleteVoiceConnectorExternalSystemsConfiguration": "<p>Deletes the external systems configuration for a Voice Connector.</p>",
     "DeleteVoiceConnectorGroup": "<p>Deletes an Amazon Chime SDK Voice Connector group. Any <code>VoiceConnectorItems</code> and phone numbers associated with the group must be removed before it can be deleted.</p>",
     "DeleteVoiceConnectorOrigination": "<p>Deletes the origination settings for the specified Amazon Chime SDK Voice Connector. </p> <note> <p>If emergency calling is configured for the Voice Connector, it must be deleted prior to deleting the origination settings.</p> </note>",
     "DeleteVoiceConnectorProxy": "<p>Deletes the proxy configuration from the specified Amazon Chime SDK Voice Connector.</p>",
@@ -43,6 +44,7 @@
     "GetSpeakerSearchTask": "<p>Retrieves the details of the specified speaker search task.</p>",
     "GetVoiceConnector": "<p>Retrieves details for the specified Amazon Chime SDK Voice Connector, such as timestamps,name, outbound host, and encryption requirements.</p>",
     "GetVoiceConnectorEmergencyCallingConfiguration": "<p>Retrieves the emergency calling configuration details for the specified Voice Connector.</p>",
+    "GetVoiceConnectorExternalSystemsConfiguration": "<p>Gets information about an external systems configuration for a Voice Connector.</p>",
     "GetVoiceConnectorGroup": "<p>Retrieves details for the specified Amazon Chime SDK Voice Connector group, such as timestamps,name, and associated <code>VoiceConnectorItems</code>.</p>",
     "GetVoiceConnectorLoggingConfiguration": "<p>Retrieves the logging configuration settings for the specified Voice Connector. Shows whether SIP message logs are enabled for sending to Amazon CloudWatch Logs.</p>",
     "GetVoiceConnectorOrigination": "<p>Retrieves the origination settings for the specified Voice Connector.</p>",
@@ -69,6 +71,7 @@
     "PutSipMediaApplicationAlexaSkillConfiguration": "<p>Updates the Alexa Skill configuration for the SIP media application.</p> <important> <p>Due to changes made by the Amazon Alexa service, this API is no longer available for use. For more information, refer to the <a href=\"https://developer.amazon.com/en-US/alexa/alexasmartproperties\">Alexa Smart Properties</a> page.</p> </important>",
     "PutSipMediaApplicationLoggingConfiguration": "<p>Updates the logging configuration for the specified SIP media application.</p>",
     "PutVoiceConnectorEmergencyCallingConfiguration": "<p>Updates a Voice Connector's emergency calling configuration.</p>",
+    "PutVoiceConnectorExternalSystemsConfiguration": "<p>Adds an external systems configuration to a Voice Connector.</p>",
     "PutVoiceConnectorLoggingConfiguration": "<p>Updates a Voice Connector's logging configuration.</p>",
     "PutVoiceConnectorOrigination": "<p>Updates a Voice Connector's origination settings.</p>",
     "PutVoiceConnectorProxy": "<p>Puts the specified proxy configuration to the specified Amazon Chime SDK Voice Connector.</p>",
@@ -306,6 +309,19 @@
       "refs": {
       }
     },
+    "ContactCenterSystemType": {
+      "base": null,
+      "refs": {
+        "ContactCenterSystemTypeList$member": null
+      }
+    },
+    "ContactCenterSystemTypeList": {
+      "base": null,
+      "refs": {
+        "ExternalSystemsConfiguration$ContactCenterSystemTypes": "<p>The contact center system.</p>",
+        "PutVoiceConnectorExternalSystemsConfigurationRequest$ContactCenterSystemTypes": "<p>The contact center system to use.</p>"
+      }
+    },
     "Country": {
       "base": null,
       "refs": {
@@ -470,6 +486,11 @@
       "refs": {
       }
     },
+    "DeleteVoiceConnectorExternalSystemsConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteVoiceConnectorGroupRequest": {
       "base": null,
       "refs": {
@@ -576,6 +597,13 @@
       "base": null,
       "refs": {
         "PhoneNumberError$ErrorCode": "<p>The error code.</p>"
+      }
+    },
+    "ExternalSystemsConfiguration": {
+      "base": "<p>Contains information about an external systems configuration for a Voice Connector.</p>",
+      "refs": {
+        "GetVoiceConnectorExternalSystemsConfigurationResponse$ExternalSystemsConfiguration": "<p>An object that contains information about an external systems configuration for a Voice Connector.</p>",
+        "PutVoiceConnectorExternalSystemsConfigurationResponse$ExternalSystemsConfiguration": "<p>An object that contains information about an external systems configuration for a Voice Connector.</p>"
       }
     },
     "ForbiddenException": {
@@ -699,6 +727,16 @@
       }
     },
     "GetVoiceConnectorEmergencyCallingConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetVoiceConnectorExternalSystemsConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetVoiceConnectorExternalSystemsConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -1040,6 +1078,7 @@
         "DeleteSipMediaApplicationRequest$SipMediaApplicationId": "<p>The SIP media application ID.</p>",
         "DeleteSipRuleRequest$SipRuleId": "<p>The SIP rule ID.</p>",
         "DeleteVoiceConnectorEmergencyCallingConfigurationRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
+        "DeleteVoiceConnectorExternalSystemsConfigurationRequest$VoiceConnectorId": "<p>The ID of the Voice Connector for which to delete the external system configuration.</p>",
         "DeleteVoiceConnectorGroupRequest$VoiceConnectorGroupId": "<p>The Voice Connector Group ID.</p>",
         "DeleteVoiceConnectorOriginationRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "DeleteVoiceConnectorRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
@@ -1053,6 +1092,7 @@
         "GetSipMediaApplicationRequest$SipMediaApplicationId": "<p>The SIP media application ID .</p>",
         "GetSipRuleRequest$SipRuleId": "<p>The SIP rule ID.</p>",
         "GetVoiceConnectorEmergencyCallingConfigurationRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
+        "GetVoiceConnectorExternalSystemsConfigurationRequest$VoiceConnectorId": "<p>The ID of the Voice Connector for which to return information about the external system configuration.</p>",
         "GetVoiceConnectorGroupRequest$VoiceConnectorGroupId": "<p>The Voice Connector group ID.</p>",
         "GetVoiceConnectorLoggingConfigurationRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "GetVoiceConnectorOriginationRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
@@ -1107,6 +1147,7 @@
         "ListProxySessionsRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "ProxySession$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "ProxySession$ProxySessionId": "<p>The proxy session ID.</p>",
+        "PutVoiceConnectorExternalSystemsConfigurationRequest$VoiceConnectorId": "<p>The ID of the Voice Connector for which to add the external system configuration.</p>",
         "PutVoiceConnectorProxyRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "StartSpeakerSearchTaskRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
         "StartVoiceToneAnalysisTaskRequest$VoiceConnectorId": "<p>The Voice Connector ID.</p>",
@@ -1482,6 +1523,16 @@
       "refs": {
       }
     },
+    "PutVoiceConnectorExternalSystemsConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutVoiceConnectorExternalSystemsConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "PutVoiceConnectorLoggingConfigurationRequest": {
       "base": null,
       "refs": {
@@ -1659,6 +1710,19 @@
     "ServiceUnavailableException": {
       "base": "<p>The service is currently unavailable.</p>",
       "refs": {
+      }
+    },
+    "SessionBorderControllerType": {
+      "base": null,
+      "refs": {
+        "SessionBorderControllerTypeList$member": null
+      }
+    },
+    "SessionBorderControllerTypeList": {
+      "base": null,
+      "refs": {
+        "ExternalSystemsConfiguration$SessionBorderControllerTypes": "<p>The session border controllers.</p>",
+        "PutVoiceConnectorExternalSystemsConfigurationRequest$SessionBorderControllerTypes": "<p>The session border controllers to use.</p>"
       }
     },
     "SipApplicationPriority": {
@@ -2155,6 +2219,13 @@
         "CreateVoiceConnectorGroupRequest$Name": "<p>The name of the Voice Connector group.</p>",
         "UpdateVoiceConnectorGroupRequest$Name": "<p>The name of the Voice Connector group.</p>",
         "VoiceConnectorGroup$Name": "<p>The name of a Voice Connector group.</p>"
+      }
+    },
+    "VoiceConnectorIntegrationType": {
+      "base": null,
+      "refs": {
+        "CreateVoiceConnectorRequest$IntegrationType": "<p>The connectors for use with Amazon Connect.</p> <p>The following options are available:</p> <ul> <li> <p> <code>CONNECT_CALL_TRANSFER_CONNECTOR</code> - Enables enterprises to integrate Amazon Connect with other voice systems to directly transfer voice calls and metadata without using the public telephone network. They can use Amazon Connect telephony and Interactive Voice Response (IVR) with their existing voice systems to modernize the IVR experience of their existing contact center and their enterprise and branch voice systems. Additionally, enterprises migrating their contact center to Amazon Connect can start with Connect telephony and IVR for immediate modernization ahead of agent migration.</p> </li> <li> <p> <code>CONNECT_ANALYTICS_CONNECTOR</code> - Enables enterprises to integrate Amazon Connect with other voice systems for real-time and post-call analytics. They can use Amazon Connect Contact Lens with their existing voice systems to provides call recordings, conversational analytics (including contact transcript, sensitive data redaction, content categorization, theme detection, sentiment analysis, real-time alerts, and post-contact summary), and agent performance evaluations (including evaluation forms, automated evaluation, supervisor review) with a rich user experience to display, search and filter customer interactions, and programmatic access to data streams and the data lake. Additionally, enterprises migrating their contact center to Amazon Connect can start with Contact Lens analytics and performance insights ahead of agent migration.</p> </li> </ul>",
+        "VoiceConnector$IntegrationType": "<p>The connectors for use with Amazon Connect.</p>"
       }
     },
     "VoiceConnectorItem": {

@@ -71,6 +71,7 @@
       "refs": {
         "ArchiveAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified archive has been deleted.</p>",
         "DeliverToMailboxAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the mailbox ARN is no longer valid.</p>",
+        "DeliverToQBusinessAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified application has been deleted or the role lacks necessary permissions to call the qbusiness:BatchPutDocument API.</p>",
         "RelayAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified relay has been deleted.</p>",
         "S3Action$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified the bucket has been deleted.</p>",
         "SendAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the caller does not have the permissions to call the sendRawEmail API.</p>"
@@ -471,6 +472,12 @@
         "RuleAction$DeliverToMailbox": "<p>This action delivers an email to a WorkMail mailbox.</p>"
       }
     },
+    "DeliverToQBusinessAction": {
+      "base": "<p>The action to deliver incoming emails to an Amazon Q Business application for indexing.</p>",
+      "refs": {
+        "RuleAction$DeliverToQBusiness": "<p>This action delivers an email to an Amazon Q Business application for ingestion into its knowledge base.</p>"
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -699,6 +706,7 @@
       "base": null,
       "refs": {
         "DeliverToMailboxAction$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role to use to execute this action. The role must have access to the workmail:DeliverToMailbox API.</p>",
+        "DeliverToQBusinessAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while delivering to Amazon Q Business. This role must have access to the qbusiness:BatchPutDocument API for the given application and index.</p>",
         "S3Action$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while writing to S3. This role must have access to the s3:PutObject, kms:Encrypt, and kms:GenerateDataKey APIs for the given bucket.</p>",
         "SendAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the role to use for this action. This role must have access to the ses:SendRawEmail API.</p>"
       }
@@ -1146,6 +1154,18 @@
         "CreateTrafficPolicyRequest$PolicyStatements": "<p>Conditional statements for filtering email traffic.</p>",
         "GetTrafficPolicyResponse$PolicyStatements": "<p>The list of conditions which are in the traffic policy resource.</p>",
         "UpdateTrafficPolicyRequest$PolicyStatements": "<p>The list of conditions to be updated for filtering email traffic.</p>"
+      }
+    },
+    "QBusinessApplicationId": {
+      "base": null,
+      "refs": {
+        "DeliverToQBusinessAction$ApplicationId": "<p>The unique identifier of the Amazon Q Business application instance where the email content will be delivered.</p>"
+      }
+    },
+    "QBusinessIndexId": {
+      "base": null,
+      "refs": {
+        "DeliverToQBusinessAction$IndexId": "<p>The identifier of the knowledge base index within the Amazon Q Business application where the email content will be stored and indexed.</p>"
       }
     },
     "Recipients": {

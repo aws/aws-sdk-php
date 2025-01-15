@@ -107,10 +107,41 @@
     "UpdateWorkerSchedule": "<p>Updates the schedule for a worker.</p>"
   },
   "shapes": {
+    "AcceleratorCapabilities": {
+      "base": "<p>Provides information about the GPU accelerators and drivers for the instance types in a fleet. If you include the <code>acceleratorCapabilities</code> property in the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_ServiceManagedEc2InstanceCapabilities\">ServiceManagedEc2InstanceCapabilities</a> object, all of the Amazon EC2 instances will have at least one accelerator. </p>",
+      "refs": {
+        "ServiceManagedEc2InstanceCapabilities$acceleratorCapabilities": "<p>The GPU accelerator capabilities required for the Amazon EC2 instances. If you include the <code>acceleratorCapabilities</code> property in the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_ServiceManagedEc2InstanceCapabilities\">ServiceManagedEc2InstanceCapabilities</a> object, all of the Amazon EC2 instances will have at least one accelerator. </p>"
+      }
+    },
     "AcceleratorCountRange": {
       "base": "<p>The range for the GPU fleet acceleration.</p>",
       "refs": {
+        "AcceleratorCapabilities$count": "<p>The number of GPUs on each worker. The default is 1.</p>",
         "CustomerManagedWorkerCapabilities$acceleratorCount": "<p>The range of the accelerator.</p>"
+      }
+    },
+    "AcceleratorName": {
+      "base": null,
+      "refs": {
+        "AcceleratorSelection$name": "<p>The name of the GPU accelerator.</p>"
+      }
+    },
+    "AcceleratorRuntime": {
+      "base": null,
+      "refs": {
+        "AcceleratorSelection$runtime": "<p>The driver version that the GPU accelerator uses. </p>"
+      }
+    },
+    "AcceleratorSelection": {
+      "base": "<p>Values that you can use to select a particular Amazon EC2 instance type. </p>",
+      "refs": {
+        "AcceleratorSelections$member": null
+      }
+    },
+    "AcceleratorSelections": {
+      "base": null,
+      "refs": {
+        "AcceleratorCapabilities$selections": "<p>A list of objects that contain the GPU name of the accelerator and driver for the instance types that support the accelerator.</p>"
       }
     },
     "AcceleratorTotalMemoryMiBRange": {
@@ -2584,8 +2615,8 @@
     "MinZeroMaxInteger": {
       "base": null,
       "refs": {
-        "AcceleratorCountRange$min": "<p>The minimum GPU for the accelerator.</p>",
-        "AcceleratorCountRange$max": "<p>The maximum GPU for the accelerator.</p>",
+        "AcceleratorCountRange$min": "<p>The minimum number of GPUs for the accelerator. If you set the value to 0, a worker will still have 1 GPU.</p>",
+        "AcceleratorCountRange$max": "<p>The maximum number of GPUs for the accelerator.</p>",
         "AcceleratorTotalMemoryMiBRange$min": "<p>The minimum amount of memory to use for the accelerator, measured in MiB.</p>",
         "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
         "CreateFleetRequest$minWorkerCount": "<p>The minimum number of workers for the fleet.</p>",

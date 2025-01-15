@@ -12,7 +12,8 @@
     "signatureVersion":"v4",
     "signingName":"datasync",
     "targetPrefix":"FmrsService",
-    "uid":"datasync-2018-11-09"
+    "uid":"datasync-2018-11-09",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddStorageSystem":{
@@ -716,6 +717,71 @@
         {"shape":"InternalException"}
       ]
     },
+    "UpdateLocationEfs":{
+      "name":"UpdateLocationEfs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationEfsRequest"},
+      "output":{"shape":"UpdateLocationEfsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "UpdateLocationFsxLustre":{
+      "name":"UpdateLocationFsxLustre",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationFsxLustreRequest"},
+      "output":{"shape":"UpdateLocationFsxLustreResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "UpdateLocationFsxOntap":{
+      "name":"UpdateLocationFsxOntap",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationFsxOntapRequest"},
+      "output":{"shape":"UpdateLocationFsxOntapResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "UpdateLocationFsxOpenZfs":{
+      "name":"UpdateLocationFsxOpenZfs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationFsxOpenZfsRequest"},
+      "output":{"shape":"UpdateLocationFsxOpenZfsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "UpdateLocationFsxWindows":{
+      "name":"UpdateLocationFsxWindows",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationFsxWindowsRequest"},
+      "output":{"shape":"UpdateLocationFsxWindowsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
     "UpdateLocationHdfs":{
       "name":"UpdateLocationHdfs",
       "http":{
@@ -750,6 +816,19 @@
       },
       "input":{"shape":"UpdateLocationObjectStorageRequest"},
       "output":{"shape":"UpdateLocationObjectStorageResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalException"}
+      ]
+    },
+    "UpdateLocationS3":{
+      "name":"UpdateLocationS3",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateLocationS3Request"},
+      "output":{"shape":"UpdateLocationS3Response"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalException"}
@@ -1248,7 +1327,8 @@
         "Tags":{"shape":"InputTagList"},
         "Includes":{"shape":"FilterList"},
         "ManifestConfig":{"shape":"ManifestConfig"},
-        "TaskReportConfig":{"shape":"TaskReportConfig"}
+        "TaskReportConfig":{"shape":"TaskReportConfig"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "CreateTaskResponse":{
@@ -1645,7 +1725,11 @@
         "FilesSkipped":{"shape":"long"},
         "FilesVerified":{"shape":"long"},
         "ReportResult":{"shape":"ReportResult"},
-        "EstimatedFilesToDelete":{"shape":"long"}
+        "EstimatedFilesToDelete":{"shape":"long"},
+        "TaskMode":{"shape":"TaskMode"},
+        "FilesPrepared":{"shape":"long"},
+        "FilesListed":{"shape":"TaskExecutionFilesListedDetail"},
+        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"}
       }
     },
     "DescribeTaskRequest":{
@@ -1676,7 +1760,8 @@
         "Includes":{"shape":"FilterList"},
         "ManifestConfig":{"shape":"ManifestConfig"},
         "TaskReportConfig":{"shape":"TaskReportConfig"},
-        "ScheduleDetails":{"shape":"TaskScheduleDetails"}
+        "ScheduleDetails":{"shape":"TaskScheduleDetails"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "DestinationNetworkInterfaceArns":{
@@ -1922,6 +2007,27 @@
         "Password":{"shape":"SmbPassword"},
         "User":{"shape":"SmbUser"}
       }
+    },
+    "FsxUpdateProtocol":{
+      "type":"structure",
+      "members":{
+        "NFS":{"shape":"FsxProtocolNfs"},
+        "SMB":{"shape":"FsxUpdateProtocolSmb"}
+      }
+    },
+    "FsxUpdateProtocolSmb":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "MountOptions":{"shape":"SmbMountOptions"},
+        "Password":{"shape":"SmbPassword"},
+        "User":{"shape":"SmbUser"}
+      }
+    },
+    "FsxUpdateSmbDomain":{
+      "type":"string",
+      "max":253,
+      "pattern":"^([A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252})?$"
     },
     "FsxWindowsSubdirectory":{
       "type":"string",
@@ -2748,8 +2854,8 @@
     },
     "S3BucketArn":{
       "type":"string",
-      "max":156,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):(s3|s3-outposts):[a-z\\-0-9]*:[0-9]*:.*$"
+      "max":268,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3:[a-z\\-0-9]*:[0-9]{12}:accesspoint[/:][a-zA-Z0-9\\-.]{1,63}$|^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3-outposts:[a-z\\-0-9]+:[0-9]{12}:outpost[/:][a-zA-Z0-9\\-]{1,63}[/:]accesspoint[/:][a-zA-Z0-9\\-]{1,63}$|^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):s3:::[a-zA-Z0-9.\\-_]{1,255}$"
     },
     "S3Config":{
       "type":"structure",
@@ -3026,6 +3132,22 @@
       "max":128,
       "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):datasync:[a-z\\-0-9]*:[0-9]{12}:task/task-[0-9a-f]{17}/execution/exec-[0-9a-f]{17}$"
     },
+    "TaskExecutionFilesFailedDetail":{
+      "type":"structure",
+      "members":{
+        "Prepare":{"shape":"long"},
+        "Transfer":{"shape":"long"},
+        "Verify":{"shape":"long"},
+        "Delete":{"shape":"long"}
+      }
+    },
+    "TaskExecutionFilesListedDetail":{
+      "type":"structure",
+      "members":{
+        "AtSource":{"shape":"long"},
+        "AtDestinationForDelete":{"shape":"long"}
+      }
+    },
     "TaskExecutionList":{
       "type":"list",
       "member":{"shape":"TaskExecutionListEntry"}
@@ -3034,7 +3156,8 @@
       "type":"structure",
       "members":{
         "TaskExecutionArn":{"shape":"TaskExecutionArn"},
-        "Status":{"shape":"TaskExecutionStatus"}
+        "Status":{"shape":"TaskExecutionStatus"},
+        "TaskMode":{"shape":"TaskMode"}
       }
     },
     "TaskExecutionResultDetail":{
@@ -3097,8 +3220,16 @@
       "members":{
         "TaskArn":{"shape":"TaskArn"},
         "Status":{"shape":"TaskStatus"},
-        "Name":{"shape":"TagValue"}
+        "Name":{"shape":"TagValue"},
+        "TaskMode":{"shape":"TaskMode"}
       }
+    },
+    "TaskMode":{
+      "type":"string",
+      "enum":[
+        "BASIC",
+        "ENHANCED"
+      ]
     },
     "TaskQueueing":{
       "type":"string",
@@ -3233,6 +3364,79 @@
       "members":{
       }
     },
+    "UpdateLocationEfsRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Subdirectory":{"shape":"EfsSubdirectory"},
+        "AccessPointArn":{"shape":"UpdatedEfsAccessPointArn"},
+        "FileSystemAccessRoleArn":{"shape":"UpdatedEfsIamRoleArn"},
+        "InTransitEncryption":{"shape":"EfsInTransitEncryption"}
+      }
+    },
+    "UpdateLocationEfsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationFsxLustreRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Subdirectory":{"shape":"SmbSubdirectory"}
+      }
+    },
+    "UpdateLocationFsxLustreResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationFsxOntapRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Protocol":{"shape":"FsxUpdateProtocol"},
+        "Subdirectory":{"shape":"FsxOntapSubdirectory"}
+      }
+    },
+    "UpdateLocationFsxOntapResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationFsxOpenZfsRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Protocol":{"shape":"FsxProtocol"},
+        "Subdirectory":{"shape":"SmbSubdirectory"}
+      }
+    },
+    "UpdateLocationFsxOpenZfsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationFsxWindowsRequest":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Subdirectory":{"shape":"FsxWindowsSubdirectory"},
+        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "User":{"shape":"SmbUser"},
+        "Password":{"shape":"SmbPassword"}
+      }
+    },
+    "UpdateLocationFsxWindowsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateLocationHdfsRequest":{
       "type":"structure",
       "required":["LocationArn"],
@@ -3287,6 +3491,21 @@
       }
     },
     "UpdateLocationObjectStorageResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateLocationS3Request":{
+      "type":"structure",
+      "required":["LocationArn"],
+      "members":{
+        "LocationArn":{"shape":"LocationArn"},
+        "Subdirectory":{"shape":"S3Subdirectory"},
+        "S3StorageClass":{"shape":"S3StorageClass"},
+        "S3Config":{"shape":"S3Config"}
+      }
+    },
+    "UpdateLocationS3Response":{
       "type":"structure",
       "members":{
       }
@@ -3361,6 +3580,16 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UpdatedEfsAccessPointArn":{
+      "type":"string",
+      "max":128,
+      "pattern":"(^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):elasticfilesystem:[a-z\\-0-9]+:[0-9]{12}:access-point/fsap-[0-9a-f]{8,40}$)|(^$)"
+    },
+    "UpdatedEfsIamRoleArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"(^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):iam::[0-9]{12}:role/.*$)|(^$)"
     },
     "VerifyMode":{
       "type":"string",

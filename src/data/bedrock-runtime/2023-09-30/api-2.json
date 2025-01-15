@@ -73,6 +73,22 @@
         {"shape":"ModelErrorException"}
       ]
     },
+    "GetAsyncInvoke":{
+      "name":"GetAsyncInvoke",
+      "http":{
+        "method":"GET",
+        "requestUri":"/async-invoke/{invocationArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAsyncInvokeRequest"},
+      "output":{"shape":"GetAsyncInvokeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "InvokeModel":{
       "name":"InvokeModel",
       "http":{
@@ -117,6 +133,43 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ModelErrorException"}
       ]
+    },
+    "ListAsyncInvokes":{
+      "name":"ListAsyncInvokes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/async-invoke",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAsyncInvokesRequest"},
+      "output":{"shape":"ListAsyncInvokesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "StartAsyncInvoke":{
+      "name":"StartAsyncInvoke",
+      "http":{
+        "method":"POST",
+        "requestUri":"/async-invoke",
+        "responseCode":200
+      },
+      "input":{"shape":"StartAsyncInvokeRequest"},
+      "output":{"shape":"StartAsyncInvokeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -130,6 +183,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "AnyToolChoice":{
       "type":"structure",
@@ -175,6 +232,78 @@
         "guardrailCoverage":{"shape":"GuardrailCoverage"}
       }
     },
+    "AsyncInvokeArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:[a-z0-9\\-]+:bedrock:[a-z0-9\\-]*:[0-9]*:(provisioned-model|foundation-model)/.+"
+    },
+    "AsyncInvokeIdempotencyToken":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[!-~]*"
+    },
+    "AsyncInvokeIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z_\\.\\-/0-9:]+"
+    },
+    "AsyncInvokeMessage":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "sensitive":true
+    },
+    "AsyncInvokeOutputDataConfig":{
+      "type":"structure",
+      "members":{
+        "s3OutputDataConfig":{"shape":"AsyncInvokeS3OutputDataConfig"}
+      },
+      "union":true
+    },
+    "AsyncInvokeS3OutputDataConfig":{
+      "type":"structure",
+      "required":["s3Uri"],
+      "members":{
+        "s3Uri":{"shape":"S3Uri"},
+        "kmsKeyId":{"shape":"KmsKeyId"},
+        "bucketOwner":{"shape":"AccountId"}
+      }
+    },
+    "AsyncInvokeStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed"
+      ]
+    },
+    "AsyncInvokeSummaries":{
+      "type":"list",
+      "member":{"shape":"AsyncInvokeSummary"}
+    },
+    "AsyncInvokeSummary":{
+      "type":"structure",
+      "required":[
+        "invocationArn",
+        "modelArn",
+        "submitTime",
+        "outputDataConfig"
+      ],
+      "members":{
+        "invocationArn":{"shape":"InvocationArn"},
+        "modelArn":{"shape":"AsyncInvokeArn"},
+        "clientRequestToken":{"shape":"AsyncInvokeIdempotencyToken"},
+        "status":{"shape":"AsyncInvokeStatus"},
+        "failureMessage":{"shape":"AsyncInvokeMessage"},
+        "submitTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "outputDataConfig":{"shape":"AsyncInvokeOutputDataConfig"}
+      }
+    },
     "AutoToolChoice":{
       "type":"structure",
       "members":{
@@ -186,12 +315,24 @@
       "min":0,
       "sensitive":true
     },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"NonBlankString"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "ContentBlock":{
       "type":"structure",
       "members":{
         "text":{"shape":"String"},
         "image":{"shape":"ImageBlock"},
         "document":{"shape":"DocumentBlock"},
+        "video":{"shape":"VideoBlock"},
         "toolUse":{"shape":"ToolUseBlock"},
         "toolResult":{"shape":"ToolResultBlock"},
         "guardContent":{"shape":"GuardrailConverseContentBlock"}
@@ -260,7 +401,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:inference-profile/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)|(^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?))$|(^arn:aws:sagemaker:[a-z0-9-]+:[0-9]{12}:endpoint/[a-zA-Z0-9-]+$)|(^arn:aws(-[^:]+)?:bedrock:([0-9a-z-]{1,20}):([0-9]{12}):default-prompt-router/[a-zA-Z0-9-:.]+$)"
     },
     "ConverseMetrics":{
       "type":"structure",
@@ -278,10 +419,7 @@
     },
     "ConverseRequest":{
       "type":"structure",
-      "required":[
-        "modelId",
-        "messages"
-      ],
+      "required":["modelId"],
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
@@ -294,7 +432,10 @@
         "toolConfig":{"shape":"ToolConfiguration"},
         "guardrailConfig":{"shape":"GuardrailConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
-        "additionalModelResponseFieldPaths":{"shape":"ConverseRequestAdditionalModelResponseFieldPathsList"}
+        "promptVariables":{"shape":"PromptVariableMap"},
+        "additionalModelResponseFieldPaths":{"shape":"ConverseRequestAdditionalModelResponseFieldPathsList"},
+        "requestMetadata":{"shape":"RequestMetadata"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseRequestAdditionalModelResponseFieldPathsList":{
@@ -322,7 +463,8 @@
         "usage":{"shape":"TokenUsage"},
         "metrics":{"shape":"ConverseMetrics"},
         "additionalModelResponseFields":{"shape":"Document"},
-        "trace":{"shape":"ConverseTrace"}
+        "trace":{"shape":"ConverseTrace"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseStreamMetadataEvent":{
@@ -334,7 +476,8 @@
       "members":{
         "usage":{"shape":"TokenUsage"},
         "metrics":{"shape":"ConverseStreamMetrics"},
-        "trace":{"shape":"ConverseStreamTrace"}
+        "trace":{"shape":"ConverseStreamTrace"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       },
       "event":true
     },
@@ -364,10 +507,7 @@
     },
     "ConverseStreamRequest":{
       "type":"structure",
-      "required":[
-        "modelId",
-        "messages"
-      ],
+      "required":["modelId"],
       "members":{
         "modelId":{
           "shape":"ConversationalModelId",
@@ -380,7 +520,10 @@
         "toolConfig":{"shape":"ToolConfiguration"},
         "guardrailConfig":{"shape":"GuardrailStreamConfiguration"},
         "additionalModelRequestFields":{"shape":"Document"},
-        "additionalModelResponseFieldPaths":{"shape":"ConverseStreamRequestAdditionalModelResponseFieldPathsList"}
+        "promptVariables":{"shape":"PromptVariableMap"},
+        "additionalModelResponseFieldPaths":{"shape":"ConverseStreamRequestAdditionalModelResponseFieldPathsList"},
+        "requestMetadata":{"shape":"RequestMetadata"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "ConverseStreamRequestAdditionalModelResponseFieldPathsList":{
@@ -404,13 +547,15 @@
     "ConverseStreamTrace":{
       "type":"structure",
       "members":{
-        "guardrail":{"shape":"GuardrailTraceAssessment"}
+        "guardrail":{"shape":"GuardrailTraceAssessment"},
+        "promptRouter":{"shape":"PromptRouterTrace"}
       }
     },
     "ConverseTrace":{
       "type":"structure",
       "members":{
-        "guardrail":{"shape":"GuardrailTraceAssessment"}
+        "guardrail":{"shape":"GuardrailTraceAssessment"},
+        "promptRouter":{"shape":"PromptRouterTrace"}
       }
     },
     "Document":{
@@ -462,6 +607,38 @@
       "type":"blob",
       "min":1
     },
+    "GetAsyncInvokeRequest":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{
+          "shape":"InvocationArn",
+          "location":"uri",
+          "locationName":"invocationArn"
+        }
+      }
+    },
+    "GetAsyncInvokeResponse":{
+      "type":"structure",
+      "required":[
+        "invocationArn",
+        "modelArn",
+        "status",
+        "submitTime",
+        "outputDataConfig"
+      ],
+      "members":{
+        "invocationArn":{"shape":"InvocationArn"},
+        "modelArn":{"shape":"AsyncInvokeArn"},
+        "clientRequestToken":{"shape":"AsyncInvokeIdempotencyToken"},
+        "status":{"shape":"AsyncInvokeStatus"},
+        "failureMessage":{"shape":"AsyncInvokeMessage"},
+        "submitTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "outputDataConfig":{"shape":"AsyncInvokeOutputDataConfig"}
+      }
+    },
     "GuardrailAction":{
       "type":"string",
       "enum":[
@@ -509,7 +686,8 @@
     "GuardrailContentBlock":{
       "type":"structure",
       "members":{
-        "text":{"shape":"GuardrailTextBlock"}
+        "text":{"shape":"GuardrailTextBlock"},
+        "image":{"shape":"GuardrailImageBlock"}
       },
       "union":true
     },
@@ -656,7 +834,8 @@
     "GuardrailConverseContentBlock":{
       "type":"structure",
       "members":{
-        "text":{"shape":"GuardrailConverseTextBlock"}
+        "text":{"shape":"GuardrailConverseTextBlock"},
+        "image":{"shape":"GuardrailConverseImageBlock"}
       },
       "union":true
     },
@@ -672,6 +851,37 @@
       "type":"list",
       "member":{"shape":"GuardrailConverseContentQualifier"}
     },
+    "GuardrailConverseImageBlock":{
+      "type":"structure",
+      "required":[
+        "format",
+        "source"
+      ],
+      "members":{
+        "format":{"shape":"GuardrailConverseImageFormat"},
+        "source":{"shape":"GuardrailConverseImageSource"}
+      },
+      "sensitive":true
+    },
+    "GuardrailConverseImageFormat":{
+      "type":"string",
+      "enum":[
+        "png",
+        "jpeg"
+      ]
+    },
+    "GuardrailConverseImageSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"GuardrailConverseImageSourceBytesBlob"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "GuardrailConverseImageSourceBytesBlob":{
+      "type":"blob",
+      "min":1
+    },
     "GuardrailConverseTextBlock":{
       "type":"structure",
       "required":["text"],
@@ -683,7 +893,8 @@
     "GuardrailCoverage":{
       "type":"structure",
       "members":{
-        "textCharacters":{"shape":"GuardrailTextCharactersCoverage"}
+        "textCharacters":{"shape":"GuardrailTextCharactersCoverage"},
+        "images":{"shape":"GuardrailImageCoverage"}
       }
     },
     "GuardrailCustomWord":{
@@ -706,6 +917,44 @@
       "max":2048,
       "min":0,
       "pattern":"(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail/[a-z0-9]+))"
+    },
+    "GuardrailImageBlock":{
+      "type":"structure",
+      "required":[
+        "format",
+        "source"
+      ],
+      "members":{
+        "format":{"shape":"GuardrailImageFormat"},
+        "source":{"shape":"GuardrailImageSource"}
+      },
+      "sensitive":true
+    },
+    "GuardrailImageCoverage":{
+      "type":"structure",
+      "members":{
+        "guarded":{"shape":"ImagesGuarded"},
+        "total":{"shape":"ImagesTotal"}
+      }
+    },
+    "GuardrailImageFormat":{
+      "type":"string",
+      "enum":[
+        "png",
+        "jpeg"
+      ]
+    },
+    "GuardrailImageSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"GuardrailImageSourceBytesBlob"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "GuardrailImageSourceBytesBlob":{
+      "type":"blob",
+      "min":1
     },
     "GuardrailInvocationMetrics":{
       "type":"structure",
@@ -1003,6 +1252,14 @@
       "type":"blob",
       "min":1
     },
+    "ImagesGuarded":{
+      "type":"integer",
+      "box":true
+    },
+    "ImagesTotal":{
+      "type":"integer",
+      "box":true
+    },
     "InferenceConfiguration":{
       "type":"structure",
       "members":{
@@ -1044,18 +1301,21 @@
       "exception":true,
       "fault":true
     },
+    "InvocationArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:async-invoke/[a-z0-9]{12}"
+    },
     "InvokeModelIdentifier":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:inference-profile/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|(([0-9a-zA-Z][_-]?)+)|([a-zA-Z0-9-:.]+)$|(^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?))$|(^arn:aws:sagemaker:[a-z0-9-]+:[0-9]{12}:endpoint/[a-zA-Z0-9-]+$)|(^arn:aws(-[^:]+)?:bedrock:([0-9a-z-]{1,20}):([0-9]{12}):default-prompt-router/[a-zA-Z0-9-:.]+$)"
     },
     "InvokeModelRequest":{
       "type":"structure",
-      "required":[
-        "body",
-        "modelId"
-      ],
+      "required":["modelId"],
       "members":{
         "body":{"shape":"Body"},
         "contentType":{
@@ -1087,6 +1347,11 @@
           "shape":"GuardrailVersion",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-GuardrailVersion"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1103,16 +1368,18 @@
           "shape":"MimeType",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
     },
     "InvokeModelWithResponseStreamRequest":{
       "type":"structure",
-      "required":[
-        "body",
-        "modelId"
-      ],
+      "required":["modelId"],
       "members":{
         "body":{"shape":"Body"},
         "contentType":{
@@ -1144,6 +1411,11 @@
           "shape":"GuardrailVersion",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-GuardrailVersion"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
@@ -1160,13 +1432,81 @@
           "shape":"MimeType",
           "location":"header",
           "locationName":"X-Amzn-Bedrock-Content-Type"
+        },
+        "performanceConfigLatency":{
+          "shape":"PerformanceConfigLatency",
+          "location":"header",
+          "locationName":"X-Amzn-Bedrock-PerformanceConfig-Latency"
         }
       },
       "payload":"body"
     },
+    "InvokedModelId":{
+      "type":"string",
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2})|(arn:aws(|-us-gov|-cn|-iso|-iso-b):bedrock:(|[0-9a-z-]{1,20}):(|[0-9]{12}):inference-profile/[a-zA-Z0-9-:.]+)"
+    },
+    "KmsKeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws(-[^:]+)?:kms:[a-zA-Z0-9-]*:[0-9]{12}:((key/[a-zA-Z0-9-]{36})|(alias/[a-zA-Z0-9-_/]+))"
+    },
+    "ListAsyncInvokesRequest":{
+      "type":"structure",
+      "members":{
+        "submitTimeAfter":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"submitTimeAfter"
+        },
+        "submitTimeBefore":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"submitTimeBefore"
+        },
+        "statusEquals":{
+          "shape":"AsyncInvokeStatus",
+          "location":"querystring",
+          "locationName":"statusEquals"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortAsyncInvocationBy",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListAsyncInvokesResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "asyncInvokeSummaries":{"shape":"AsyncInvokeSummaries"}
+      }
+    },
     "Long":{
       "type":"long",
       "box":true
+    },
+    "MaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
     },
     "Message":{
       "type":"structure",
@@ -1213,6 +1553,13 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ModelInputPayload":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true,
+      "sensitive":true
     },
     "ModelNotReadyException":{
       "type":"structure",
@@ -1267,6 +1614,12 @@
       "box":true,
       "min":0
     },
+    "PaginationToken":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"\\S*"
+    },
     "PartBody":{
       "type":"blob",
       "max":1000000,
@@ -1280,6 +1633,58 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "PerformanceConfigLatency":{
+      "type":"string",
+      "enum":[
+        "standard",
+        "optimized"
+      ]
+    },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "latency":{"shape":"PerformanceConfigLatency"}
+      }
+    },
+    "PromptRouterTrace":{
+      "type":"structure",
+      "members":{
+        "invokedModelId":{"shape":"InvokedModelId"}
+      }
+    },
+    "PromptVariableMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"PromptVariableValues"},
+      "sensitive":true
+    },
+    "PromptVariableValues":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "union":true
+    },
+    "RequestMetadata":{
+      "type":"map",
+      "key":{"shape":"RequestMetadataKeyString"},
+      "value":{"shape":"RequestMetadataValueString"},
+      "max":16,
+      "min":1,
+      "sensitive":true
+    },
+    "RequestMetadataKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s:_@$#=/+,-.]{1,256}"
+    },
+    "RequestMetadataValueString":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s:_@$#=/+,-.]{0,256}"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1305,6 +1710,20 @@
       },
       "eventstream":true
     },
+    "S3Location":{
+      "type":"structure",
+      "required":["uri"],
+      "members":{
+        "uri":{"shape":"S3Uri"},
+        "bucketOwner":{"shape":"AccountId"}
+      }
+    },
+    "S3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"s3://[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9](/.*)?"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1325,11 +1744,47 @@
       "exception":true,
       "fault":true
     },
+    "SortAsyncInvocationBy":{
+      "type":"string",
+      "enum":["SubmissionTime"]
+    },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "Ascending",
+        "Descending"
+      ]
+    },
     "SpecificToolChoice":{
       "type":"structure",
       "required":["name"],
       "members":{
         "name":{"shape":"ToolName"}
+      }
+    },
+    "StartAsyncInvokeRequest":{
+      "type":"structure",
+      "required":[
+        "modelId",
+        "modelInput",
+        "outputDataConfig"
+      ],
+      "members":{
+        "clientRequestToken":{
+          "shape":"AsyncInvokeIdempotencyToken",
+          "idempotencyToken":true
+        },
+        "modelId":{"shape":"AsyncInvokeIdentifier"},
+        "modelInput":{"shape":"ModelInputPayload"},
+        "outputDataConfig":{"shape":"AsyncInvokeOutputDataConfig"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "StartAsyncInvokeResponse":{
+      "type":"structure",
+      "required":["invocationArn"],
+      "members":{
+        "invocationArn":{"shape":"InvocationArn"}
       }
     },
     "StatusCode":{
@@ -1362,6 +1817,35 @@
       "type":"list",
       "member":{"shape":"SystemContentBlock"}
     },
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "key",
+        "value"
+      ],
+      "members":{
+        "key":{"shape":"TagKey"},
+        "value":{"shape":"TagValue"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":200,
+      "min":0
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
     "TextCharactersGuarded":{
       "type":"integer",
       "box":true
@@ -1380,6 +1864,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Timestamp":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
     },
     "TokenUsage":{
       "type":"structure",
@@ -1469,7 +1957,8 @@
         "json":{"shape":"Document"},
         "text":{"shape":"String"},
         "image":{"shape":"ImageBlock"},
-        "document":{"shape":"DocumentBlock"}
+        "document":{"shape":"DocumentBlock"},
+        "video":{"shape":"VideoBlock"}
       },
       "union":true
     },
@@ -1550,6 +2039,43 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "VideoBlock":{
+      "type":"structure",
+      "required":[
+        "format",
+        "source"
+      ],
+      "members":{
+        "format":{"shape":"VideoFormat"},
+        "source":{"shape":"VideoSource"}
+      }
+    },
+    "VideoFormat":{
+      "type":"string",
+      "enum":[
+        "mkv",
+        "mov",
+        "mp4",
+        "webm",
+        "flv",
+        "mpeg",
+        "mpg",
+        "wmv",
+        "three_gp"
+      ]
+    },
+    "VideoSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"VideoSourceBytesBlob"},
+        "s3Location":{"shape":"S3Location"}
+      },
+      "union":true
+    },
+    "VideoSourceBytesBlob":{
+      "type":"blob",
+      "min":1
     }
   }
 }

@@ -92,6 +92,30 @@
     "UpdateWorkspacesPool": "<p>Updates the specified pool.</p>"
   },
   "shapes": {
+    "AGAModeForDirectoryEnum": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForDirectory$Mode": "<p>Indicates if Global Accelerator for directory is enabled or disabled.</p>"
+      }
+    },
+    "AGAModeForWorkSpaceEnum": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForWorkSpace$Mode": "<p>Indicates if Global Accelerator for WorkSpaces is enabled, disabled, or the same mode as the associated directory.</p>"
+      }
+    },
+    "AGAPreferredProtocolForDirectory": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForDirectory$PreferredProtocol": "<p>Indicates the preferred protocol for Global Accelerator.</p>"
+      }
+    },
+    "AGAPreferredProtocolForWorkSpace": {
+      "base": null,
+      "refs": {
+        "GlobalAcceleratorForWorkSpace$PreferredProtocol": "<p>Indicates the preferred protocol for Global Accelerator.</p>"
+      }
+    },
     "ARN": {
       "base": null,
       "refs": {
@@ -558,9 +582,9 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "AcceptAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon EFS uses to ensure idempotent creation.</p>",
-        "CreateAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon EFS uses to ensure idempotent creation.</p>",
-        "DeleteAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon EFS uses to ensure idempotent creation.</p>",
+        "AcceptAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon WorkSpaces uses to ensure idempotent creation.</p>",
+        "CreateAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon WorkSpaces uses to ensure idempotent creation.</p>",
+        "DeleteAccountLinkInvitationRequest$ClientToken": "<p>A string of up to 64 ASCII characters that Amazon WorkSpaces uses to ensure idempotent creation.</p>",
         "RejectAccountLinkInvitationRequest$ClientToken": "<p>The client token of the account link invitation to reject.</p>"
       }
     },
@@ -1606,6 +1630,18 @@
     "GetAccountLinkResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "GlobalAcceleratorForDirectory": {
+      "base": "<p>Describes the Global Accelerator for directory</p>",
+      "refs": {
+        "StreamingProperties$GlobalAccelerator": "<p>Indicates the Global Accelerator properties.</p>"
+      }
+    },
+    "GlobalAcceleratorForWorkSpace": {
+      "base": "<p>Describes the Global Accelerator for WorkSpaces.</p>",
+      "refs": {
+        "WorkspaceProperties$GlobalAccelerator": "<p>Indicates the Global Accelerator properties.</p>"
       }
     },
     "IDCConfig": {
@@ -2845,7 +2881,7 @@
         "PendingCreateStandbyWorkspacesRequest$UserName": "<p>Describes the standby WorkSpace that was created.</p> <p>Because this operation is asynchronous, the identifier returned is not immediately available for use with other operations. For example, if you call <a href=\"https://docs.aws.amazon.com/workspaces/latest/api/API_DescribeWorkspaces.html\"> DescribeWorkspaces</a> before the WorkSpace is created, the information returned can be incomplete. </p>",
         "Workspace$UserName": "<p>The user for the WorkSpace.</p>",
         "WorkspaceDirectory$CustomerUserName": "<p>The user name for the service account.</p>",
-        "WorkspaceRequest$UserName": "<p>The user name of the user for the WorkSpace. This user name must exist in the Directory Service directory for the WorkSpace.</p> <p>The reserved keyword, <code>[UNDEFINED]</code>, is used when creating user-decoupled WorkSpaces.</p>"
+        "WorkspaceRequest$UserName": "<p>The user name of the user for the WorkSpace. This user name must exist in the Directory Service directory for the WorkSpace.</p> <p>The username is not case-sensitive, but we recommend matching the case in the Directory Service directory to avoid potential incompatibilities.</p> <p>The reserved keyword, <code>[UNDEFINED]</code>, is used when creating user-decoupled WorkSpaces.</p>"
       }
     },
     "UserSetting": {
@@ -3168,7 +3204,7 @@
     "WorkspaceImageIngestionProcess": {
       "base": null,
       "refs": {
-        "ImportWorkspaceImageRequest$IngestionProcess": "<p>The ingestion process to be used when importing the image, depending on which protocol you want to use for your BYOL Workspace image, either PCoIP, DCV, or bring your own protocol (BYOP). To use WSP, specify a value that ends in <code>_DCV</code>. To use PCoIP, specify a value that does not end in <code>_DCV</code>. To use BYOP, specify a value that ends in <code>_BYOP</code>.</p> <p>For non-GPU-enabled bundles (bundles other than Graphics or GraphicsPro), specify <code>BYOL_REGULAR</code>, <code>BYOL_REGULAR_DCV</code>, or <code>BYOL_REGULAR_BYOP</code>, depending on the protocol.</p> <note> <p>The <code>BYOL_REGULAR_BYOP</code> and <code>BYOL_GRAPHICS_G4DN_BYOP</code> values are only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use these values. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </note>"
+        "ImportWorkspaceImageRequest$IngestionProcess": "<p>The ingestion process to be used when importing the image, depending on which protocol you want to use for your BYOL Workspace image, either PCoIP, WSP, or bring your own protocol (BYOP). To use DCV, specify a value that ends in <code>_WSP</code>. To use PCoIP, specify a value that does not end in <code>_WSP</code>. To use BYOP, specify a value that ends in <code>_BYOP</code>.</p> <p>For non-GPU-enabled bundles (bundles other than Graphics or GraphicsPro), specify <code>BYOL_REGULAR</code>, <code>BYOL_REGULAR_WSP</code>, or <code>BYOL_REGULAR_BYOP</code>, depending on the protocol.</p> <note> <p>The <code>BYOL_REGULAR_BYOP</code> and <code>BYOL_GRAPHICS_G4DN_BYOP</code> values are only supported by Amazon WorkSpaces Core. Contact your account team to be allow-listed to use these values. For more information, see <a href=\"http://aws.amazon.com/workspaces/core/\">Amazon WorkSpaces Core</a>.</p> </note>"
       }
     },
     "WorkspaceImageList": {

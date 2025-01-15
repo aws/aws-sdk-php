@@ -2864,6 +2864,23 @@ EOXML;
         $this->assertStringContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
     }
 
+    public function testCreatesPresignedRequestsWithContentSha256Value()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar', 'ContentSHA256' => 'foo']
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('X-Amz-Content-Sha256=foo', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-algorithm', $url);
+        $this->assertStringNotContainsString('x-amz-checksum', $url);
+    }
+
     public function testCreatesPresignedPutRequestsWithChecksumValue()
     {
         /** @var S3Client $client */

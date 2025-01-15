@@ -14,6 +14,23 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "ActivateMessageTemplate":{
+      "name":"ActivateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/activate",
+        "responseCode":200
+      },
+      "input":{"shape":"ActivateMessageTemplateRequest"},
+      "output":{"shape":"ActivateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateAIAgent":{
       "name":"CreateAIAgent",
       "http":{
@@ -42,6 +59,44 @@
       },
       "input":{"shape":"CreateAIAgentVersionRequest"},
       "output":{"shape":"CreateAIAgentVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAIGuardrail":{
+      "name":"CreateAIGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAIGuardrailRequest"},
+      "output":{"shape":"CreateAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAIGuardrailVersion":{
+      "name":"CreateAIGuardrailVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateAIGuardrailVersionRequest"},
+      "output":{"shape":"CreateAIGuardrailVersionResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -178,6 +233,62 @@
       ],
       "idempotent":true
     },
+    "CreateMessageTemplate":{
+      "name":"CreateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateRequest"},
+      "output":{"shape":"CreateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateMessageTemplateAttachment":{
+      "name":"CreateMessageTemplateAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/attachments",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateAttachmentRequest"},
+      "output":{"shape":"CreateMessageTemplateAttachmentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateMessageTemplateVersion":{
+      "name":"CreateMessageTemplateVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateMessageTemplateVersionRequest"},
+      "output":{"shape":"CreateMessageTemplateVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateQuickResponse":{
       "name":"CreateQuickResponse",
       "http":{
@@ -213,6 +324,23 @@
       ],
       "idempotent":true
     },
+    "DeactivateMessageTemplate":{
+      "name":"DeactivateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/deactivate",
+        "responseCode":200
+      },
+      "input":{"shape":"DeactivateMessageTemplateRequest"},
+      "output":{"shape":"DeactivateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteAIAgent":{
       "name":"DeleteAIAgent",
       "http":{
@@ -239,6 +367,42 @@
       },
       "input":{"shape":"DeleteAIAgentVersionRequest"},
       "output":{"shape":"DeleteAIAgentVersionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAIGuardrail":{
+      "name":"DeleteAIGuardrail",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAIGuardrailRequest"},
+      "output":{"shape":"DeleteAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteAIGuardrailVersion":{
+      "name":"DeleteAIGuardrailVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions/{versionNumber}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAIGuardrailVersionRequest"},
+      "output":{"shape":"DeleteAIGuardrailVersionResponse"},
       "errors":[
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -381,6 +545,42 @@
       ],
       "idempotent":true
     },
+    "DeleteMessageTemplate":{
+      "name":"DeleteMessageTemplate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMessageTemplateRequest"},
+      "output":{"shape":"DeleteMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteMessageTemplateAttachment":{
+      "name":"DeleteMessageTemplateAttachment",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/attachments/{attachmentId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMessageTemplateAttachmentRequest"},
+      "output":{"shape":"DeleteMessageTemplateAttachmentResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteQuickResponse":{
       "name":"DeleteQuickResponse",
       "http":{
@@ -406,6 +606,22 @@
       },
       "input":{"shape":"GetAIAgentRequest"},
       "output":{"shape":"GetAIAgentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetAIGuardrail":{
+      "name":"GetAIGuardrail",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAIGuardrailRequest"},
+      "output":{"shape":"GetAIGuardrailResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -534,6 +750,37 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetMessageTemplate":{
+      "name":"GetMessageTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMessageTemplateRequest"},
+      "output":{"shape":"GetMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetNextMessage":{
+      "name":"GetNextMessage",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/messages/next",
+        "responseCode":200
+      },
+      "input":{"shape":"GetNextMessageRequest"},
+      "output":{"shape":"GetNextMessageResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetQuickResponse":{
       "name":"GetQuickResponse",
       "http":{
@@ -606,6 +853,38 @@
       },
       "input":{"shape":"ListAIAgentsRequest"},
       "output":{"shape":"ListAIAgentsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAIGuardrailVersions":{
+      "name":"ListAIGuardrailVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAIGuardrailVersionsRequest"},
+      "output":{"shape":"ListAIGuardrailVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAIGuardrails":{
+      "name":"ListAIGuardrails",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/aiguardrails",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAIGuardrailsRequest"},
+      "output":{"shape":"ListAIGuardrailsResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
@@ -732,6 +1011,53 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListMessageTemplateVersions":{
+      "name":"ListMessageTemplateVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/versions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessageTemplateVersionsRequest"},
+      "output":{"shape":"ListMessageTemplateVersionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListMessageTemplates":{
+      "name":"ListMessageTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessageTemplatesRequest"},
+      "output":{"shape":"ListMessageTemplatesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListMessages":{
+      "name":"ListMessages",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/messages",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMessagesRequest"},
+      "output":{"shape":"ListMessagesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListQuickResponses":{
       "name":"ListQuickResponses",
       "http":{
@@ -842,6 +1168,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RenderMessageTemplate":{
+      "name":"RenderMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/render",
+        "responseCode":200
+      },
+      "input":{"shape":"RenderMessageTemplateRequest"},
+      "output":{"shape":"RenderMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "SearchContent":{
       "name":"SearchContent",
       "http":{
@@ -855,6 +1197,22 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "SearchMessageTemplates":{
+      "name":"SearchMessageTemplates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/search/messageTemplates",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchMessageTemplatesRequest"},
+      "output":{"shape":"SearchMessageTemplatesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "SearchQuickResponses":{
@@ -887,6 +1245,25 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "SendMessage":{
+      "name":"SendMessage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/sessions/{sessionId}/message",
+        "responseCode":200
+      },
+      "input":{"shape":"SendMessageRequest"},
+      "output":{"shape":"SendMessageResponse"},
+      "errors":[
+        {"shape":"RequestTimeoutException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "StartContentUpload":{
       "name":"StartContentUpload",
@@ -968,6 +1345,24 @@
       ],
       "idempotent":true
     },
+    "UpdateAIGuardrail":{
+      "name":"UpdateAIGuardrail",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistants/{assistantId}/aiguardrails/{aiGuardrailId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAIGuardrailRequest"},
+      "output":{"shape":"UpdateAIGuardrailResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "UpdateAIPrompt":{
       "name":"UpdateAIPrompt",
       "http":{
@@ -1033,6 +1428,40 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateMessageTemplate":{
+      "name":"UpdateMessageTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMessageTemplateRequest"},
+      "output":{"shape":"UpdateMessageTemplateResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateMessageTemplateMetadata":{
+      "name":"UpdateMessageTemplateMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/knowledgeBases/{knowledgeBaseId}/messageTemplates/{messageTemplateId}/metadata",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateMessageTemplateMetadataRequest"},
+      "output":{"shape":"UpdateMessageTemplateMetadataResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "UpdateQuickResponse":{
       "name":"UpdateQuickResponse",
       "http":{
@@ -1090,7 +1519,8 @@
       "type":"structure",
       "members":{
         "answerRecommendationAIAgentConfiguration":{"shape":"AnswerRecommendationAIAgentConfiguration"},
-        "manualSearchAIAgentConfiguration":{"shape":"ManualSearchAIAgentConfiguration"}
+        "manualSearchAIAgentConfiguration":{"shape":"ManualSearchAIAgentConfiguration"},
+        "selfServiceAIAgentConfiguration":{"shape":"SelfServiceAIAgentConfiguration"}
       },
       "union":true
     },
@@ -1169,7 +1599,8 @@
       "type":"string",
       "enum":[
         "MANUAL_SEARCH",
-        "ANSWER_RECOMMENDATION"
+        "ANSWER_RECOMMENDATION",
+        "SELF_SERVICE"
       ]
     },
     "AIAgentVersionSummariesList":{
@@ -1181,6 +1612,123 @@
       "members":{
         "aiAgentSummary":{"shape":"AIAgentSummary"},
         "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AIGuardrailBlockedMessaging":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "sensitive":true
+    },
+    "AIGuardrailContentPolicyConfig":{
+      "type":"structure",
+      "required":["filtersConfig"],
+      "members":{
+        "filtersConfig":{"shape":"GuardrailContentFiltersConfig"}
+      }
+    },
+    "AIGuardrailContextualGroundingPolicyConfig":{
+      "type":"structure",
+      "required":["filtersConfig"],
+      "members":{
+        "filtersConfig":{"shape":"GuardrailContextualGroundingFiltersConfig"}
+      }
+    },
+    "AIGuardrailData":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailArn",
+        "aiGuardrailId",
+        "assistantArn",
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailArn":{"shape":"Arn"},
+        "aiGuardrailId":{"shape":"Uuid"},
+        "assistantArn":{"shape":"Arn"},
+        "assistantId":{"shape":"Uuid"},
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "modifiedTime":{"shape":"Timestamp"},
+        "name":{"shape":"Name"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "status":{"shape":"Status"},
+        "tags":{"shape":"Tags"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "AIGuardrailDescription":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "AIGuardrailSensitiveInformationPolicyConfig":{
+      "type":"structure",
+      "members":{
+        "piiEntitiesConfig":{"shape":"GuardrailPiiEntitiesConfig"},
+        "regexesConfig":{"shape":"GuardrailRegexesConfig"}
+      }
+    },
+    "AIGuardrailSummariesList":{
+      "type":"list",
+      "member":{"shape":"AIGuardrailSummary"}
+    },
+    "AIGuardrailSummary":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailArn",
+        "aiGuardrailId",
+        "assistantArn",
+        "assistantId",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailArn":{"shape":"Arn"},
+        "aiGuardrailId":{"shape":"Uuid"},
+        "assistantArn":{"shape":"Arn"},
+        "assistantId":{"shape":"Uuid"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "modifiedTime":{"shape":"Timestamp"},
+        "name":{"shape":"Name"},
+        "status":{"shape":"Status"},
+        "tags":{"shape":"Tags"},
+        "visibilityStatus":{"shape":"VisibilityStatus"}
+      }
+    },
+    "AIGuardrailTopicPolicyConfig":{
+      "type":"structure",
+      "required":["topicsConfig"],
+      "members":{
+        "topicsConfig":{"shape":"GuardrailTopicsConfig"}
+      }
+    },
+    "AIGuardrailVersionSummariesList":{
+      "type":"list",
+      "member":{"shape":"AIGuardrailVersionSummary"}
+    },
+    "AIGuardrailVersionSummary":{
+      "type":"structure",
+      "members":{
+        "aiGuardrailSummary":{"shape":"AIGuardrailSummary"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AIGuardrailWordPolicyConfig":{
+      "type":"structure",
+      "members":{
+        "managedWordListsConfig":{"shape":"GuardrailManagedWordListsConfig"},
+        "wordsConfig":{"shape":"GuardrailWordsConfig"}
       }
     },
     "AIPromptAPIFormat":{
@@ -1281,7 +1829,9 @@
       "enum":[
         "ANSWER_GENERATION",
         "INTENT_LABELING_GENERATION",
-        "QUERY_REFORMULATION"
+        "QUERY_REFORMULATION",
+        "SELF_SERVICE_PRE_PROCESSING",
+        "SELF_SERVICE_ANSWER_GENERATION"
       ]
     },
     "AIPromptVersionSummariesList":{
@@ -1306,6 +1856,47 @@
       },
       "exception":true
     },
+    "ActivateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "ActivateMessageTemplateResponse":{
+      "type":"structure",
+      "required":[
+        "messageTemplateArn",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "AgentAttributes":{
+      "type":"structure",
+      "members":{
+        "firstName":{"shape":"MessageTemplateAttributeValue"},
+        "lastName":{"shape":"MessageTemplateAttributeValue"}
+      }
+    },
     "AmazonConnectGuideAssociationData":{
       "type":"structure",
       "members":{
@@ -1319,9 +1910,11 @@
     "AnswerRecommendationAIAgentConfiguration":{
       "type":"structure",
       "members":{
+        "answerGenerationAIGuardrailId":{"shape":"UuidWithQualifier"},
         "answerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
         "associationConfigurations":{"shape":"AssociationConfigurationList"},
         "intentLabelingGenerationAIPromptId":{"shape":"UuidWithQualifier"},
+        "locale":{"shape":"NonEmptyString"},
         "queryReformulationAIPromptId":{"shape":"UuidWithQualifier"}
       }
     },
@@ -1336,6 +1929,10 @@
     "Arn":{
       "type":"string",
       "pattern":"^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}$"
+    },
+    "ArnWithQualifier":{
+      "type":"string",
+      "pattern":"^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}(:[A-Z0-9_$]+){0,1}$"
     },
     "AssistantAssociationData":{
       "type":"structure",
@@ -1502,6 +2099,13 @@
       "type":"string",
       "enum":["KNOWLEDGE_BASE"]
     },
+    "AttachmentFileName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{M}\\p{N}_\\s&@()+,;=\\-]+\\.[A-Za-z0-9]+$",
+      "sensitive":true
+    },
     "BedrockFoundationModelConfigurationForParsing":{
       "type":"structure",
       "required":["modelArn"],
@@ -1525,6 +2129,13 @@
       "max":10,
       "min":1,
       "sensitive":true
+    },
+    "ChannelSubtype":{
+      "type":"string",
+      "enum":[
+        "EMAIL",
+        "SMS"
+      ]
     },
     "Channels":{
       "type":"list",
@@ -1706,6 +2317,10 @@
         "textData":{"shape":"TextData"}
       }
     },
+    "ContentDisposition":{
+      "type":"string",
+      "enum":["ATTACHMENT"]
+    },
     "ContentFeedbackData":{
       "type":"structure",
       "members":{
@@ -1784,6 +2399,37 @@
       "type":"string",
       "pattern":"^(text/(plain|html|csv))|(application/(pdf|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document))|(application/x\\.wisdom-json;source=(salesforce|servicenow|zendesk))$"
     },
+    "ConversationContext":{
+      "type":"structure",
+      "required":["selfServiceConversationHistory"],
+      "members":{
+        "selfServiceConversationHistory":{"shape":"SelfServiceConversationHistoryList"}
+      }
+    },
+    "ConversationState":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "reason":{"shape":"ConversationStatusReason"},
+        "status":{"shape":"ConversationStatus"}
+      }
+    },
+    "ConversationStatus":{
+      "type":"string",
+      "enum":[
+        "CLOSED",
+        "READY",
+        "PROCESSING"
+      ]
+    },
+    "ConversationStatusReason":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "FAILED",
+        "REJECTED"
+      ]
+    },
     "CreateAIAgentRequest":{
       "type":"structure",
       "required":[
@@ -1845,6 +2491,75 @@
       "type":"structure",
       "members":{
         "aiAgent":{"shape":"AIAgentData"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "CreateAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "name",
+        "visibilityStatus"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "name":{"shape":"Name"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "tags":{"shape":"Tags"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "CreateAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"}
+      }
+    },
+    "CreateAIGuardrailVersionRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "modifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "CreateAIGuardrailVersionResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"},
         "versionNumber":{"shape":"Version"}
       }
     },
@@ -2062,6 +2777,98 @@
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
       }
     },
+    "CreateMessageTemplateAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "body",
+        "contentDisposition",
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "body":{"shape":"NonEmptyUnlimitedString"},
+        "clientToken":{"shape":"ClientToken"},
+        "contentDisposition":{"shape":"ContentDisposition"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "name":{"shape":"AttachmentFileName"}
+      }
+    },
+    "CreateMessageTemplateAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "attachment":{"shape":"MessageTemplateAttachment"}
+      }
+    },
+    "CreateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "knowledgeBaseId",
+        "name"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "language":{"shape":"LanguageCode"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
+      }
+    },
+    "CreateMessageTemplateVersionRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "CreateMessageTemplateVersionResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"ExtendedMessageTemplateData"}
+      }
+    },
     "CreateQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -2126,6 +2933,75 @@
         "session":{"shape":"SessionData"}
       }
     },
+    "CustomAttributes":{
+      "type":"map",
+      "key":{"shape":"MessageTemplateAttributeKey"},
+      "value":{"shape":"MessageTemplateAttributeValue"},
+      "sensitive":true
+    },
+    "CustomerProfileAttributes":{
+      "type":"structure",
+      "members":{
+        "accountNumber":{"shape":"MessageTemplateAttributeValue"},
+        "additionalInformation":{"shape":"MessageTemplateAttributeValue"},
+        "address1":{"shape":"MessageTemplateAttributeValue"},
+        "address2":{"shape":"MessageTemplateAttributeValue"},
+        "address3":{"shape":"MessageTemplateAttributeValue"},
+        "address4":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "billingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "billingCity":{"shape":"MessageTemplateAttributeValue"},
+        "billingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "billingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "billingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "billingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "billingState":{"shape":"MessageTemplateAttributeValue"},
+        "birthDate":{"shape":"MessageTemplateAttributeValue"},
+        "businessEmailAddress":{"shape":"MessageTemplateAttributeValue"},
+        "businessName":{"shape":"MessageTemplateAttributeValue"},
+        "businessPhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "city":{"shape":"MessageTemplateAttributeValue"},
+        "country":{"shape":"MessageTemplateAttributeValue"},
+        "county":{"shape":"MessageTemplateAttributeValue"},
+        "custom":{"shape":"CustomAttributes"},
+        "emailAddress":{"shape":"MessageTemplateAttributeValue"},
+        "firstName":{"shape":"MessageTemplateAttributeValue"},
+        "gender":{"shape":"MessageTemplateAttributeValue"},
+        "homePhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "lastName":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "mailingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCity":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "mailingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "mailingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "mailingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "mailingState":{"shape":"MessageTemplateAttributeValue"},
+        "middleName":{"shape":"MessageTemplateAttributeValue"},
+        "mobilePhoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "partyType":{"shape":"MessageTemplateAttributeValue"},
+        "phoneNumber":{"shape":"MessageTemplateAttributeValue"},
+        "postalCode":{"shape":"MessageTemplateAttributeValue"},
+        "profileARN":{"shape":"MessageTemplateAttributeValue"},
+        "profileId":{"shape":"MessageTemplateAttributeValue"},
+        "province":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress1":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress2":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress3":{"shape":"MessageTemplateAttributeValue"},
+        "shippingAddress4":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCity":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCountry":{"shape":"MessageTemplateAttributeValue"},
+        "shippingCounty":{"shape":"MessageTemplateAttributeValue"},
+        "shippingPostalCode":{"shape":"MessageTemplateAttributeValue"},
+        "shippingProvince":{"shape":"MessageTemplateAttributeValue"},
+        "shippingState":{"shape":"MessageTemplateAttributeValue"},
+        "state":{"shape":"MessageTemplateAttributeValue"}
+      }
+    },
     "DataDetails":{
       "type":"structure",
       "members":{
@@ -2158,6 +3034,40 @@
     "DataSummaryList":{
       "type":"list",
       "member":{"shape":"DataSummary"}
+    },
+    "DeactivateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "DeactivateMessageTemplateResponse":{
+      "type":"structure",
+      "required":[
+        "messageTemplateArn",
+        "messageTemplateId",
+        "versionNumber"
+      ],
+      "members":{
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "versionNumber":{"shape":"Version"}
+      }
     },
     "DeleteAIAgentRequest":{
       "type":"structure",
@@ -2209,6 +3119,60 @@
       }
     },
     "DeleteAIAgentVersionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        }
+      }
+    },
+    "DeleteAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteAIGuardrailVersionRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId",
+        "versionNumber"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "versionNumber":{
+          "shape":"Version",
+          "location":"uri",
+          "locationName":"versionNumber"
+        }
+      }
+    },
+    "DeleteAIGuardrailVersionResponse":{
       "type":"structure",
       "members":{
       }
@@ -2401,6 +3365,60 @@
       "members":{
       }
     },
+    "DeleteMessageTemplateAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "attachmentId",
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "attachmentId":{
+          "shape":"Uuid",
+          "location":"uri",
+          "locationName":"attachmentId"
+        },
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "DeleteMessageTemplateAttachmentResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "DeleteMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -2445,6 +3463,85 @@
       "members":{
         "highlights":{"shape":"Highlights"},
         "text":{"shape":"SensitiveString"}
+      }
+    },
+    "EmailHeader":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"EmailHeaderKey"},
+        "value":{"shape":"EmailHeaderValue"}
+      }
+    },
+    "EmailHeaderKey":{
+      "type":"string",
+      "max":126,
+      "min":1,
+      "pattern":"^[!-9;-@A-~]+$"
+    },
+    "EmailHeaderValue":{
+      "type":"string",
+      "max":870,
+      "min":1,
+      "pattern":"[ -~]*",
+      "sensitive":true
+    },
+    "EmailHeaders":{
+      "type":"list",
+      "member":{"shape":"EmailHeader"},
+      "max":15,
+      "min":0
+    },
+    "EmailMessageTemplateContent":{
+      "type":"structure",
+      "members":{
+        "body":{"shape":"EmailMessageTemplateContentBody"},
+        "headers":{"shape":"EmailHeaders"},
+        "subject":{"shape":"NonEmptyUnlimitedString"}
+      }
+    },
+    "EmailMessageTemplateContentBody":{
+      "type":"structure",
+      "members":{
+        "html":{"shape":"MessageTemplateBodyContentProvider"},
+        "plainText":{"shape":"MessageTemplateBodyContentProvider"}
+      }
+    },
+    "ExtendedMessageTemplateData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateContentSha256",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "attachments":{"shape":"MessageTemplateAttachmentList"},
+        "attributeTypes":{"shape":"MessageTemplateAttributeTypeList"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"},
+        "versionNumber":{"shape":"Version"}
       }
     },
     "ExternalSource":{
@@ -2569,6 +3666,32 @@
       "type":"structure",
       "members":{
         "aiAgent":{"shape":"AIAgentData"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "GetAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        }
+      }
+    },
+    "GetAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"},
         "versionNumber":{"shape":"Version"}
       }
     },
@@ -2763,6 +3886,73 @@
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
       }
     },
+    "GetMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "GetMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"ExtendedMessageTemplateData"}
+      }
+    },
+    "GetNextMessageRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "nextMessageToken",
+        "sessionId"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "nextMessageToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextMessageToken"
+        },
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "GetNextMessageResponse":{
+      "type":"structure",
+      "required":[
+        "conversationState",
+        "requestMessageId",
+        "response",
+        "type"
+      ],
+      "members":{
+        "conversationSessionData":{"shape":"RuntimeSessionDataList"},
+        "conversationState":{"shape":"ConversationState"},
+        "nextMessageToken":{"shape":"NextToken"},
+        "requestMessageId":{"shape":"Uuid"},
+        "response":{"shape":"MessageOutput"},
+        "type":{"shape":"MessageType"}
+      }
+    },
     "GetQuickResponseRequest":{
       "type":"structure",
       "required":[
@@ -2872,6 +4062,254 @@
     "GroupingValues":{
       "type":"list",
       "member":{"shape":"GroupingValue"}
+    },
+    "GuardrailContentFilterConfig":{
+      "type":"structure",
+      "required":[
+        "inputStrength",
+        "outputStrength",
+        "type"
+      ],
+      "members":{
+        "inputStrength":{"shape":"GuardrailFilterStrength"},
+        "outputStrength":{"shape":"GuardrailFilterStrength"},
+        "type":{"shape":"GuardrailContentFilterType"}
+      }
+    },
+    "GuardrailContentFilterType":{
+      "type":"string",
+      "enum":[
+        "SEXUAL",
+        "VIOLENCE",
+        "HATE",
+        "INSULTS",
+        "MISCONDUCT",
+        "PROMPT_ATTACK"
+      ],
+      "sensitive":true
+    },
+    "GuardrailContentFiltersConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailContentFilterConfig"},
+      "max":6,
+      "min":1
+    },
+    "GuardrailContextualGroundingFilterConfig":{
+      "type":"structure",
+      "required":[
+        "threshold",
+        "type"
+      ],
+      "members":{
+        "threshold":{"shape":"GuardrailContextualGroundingFilterThreshold"},
+        "type":{"shape":"GuardrailContextualGroundingFilterType"}
+      }
+    },
+    "GuardrailContextualGroundingFilterThreshold":{
+      "type":"double",
+      "min":0,
+      "sensitive":true
+    },
+    "GuardrailContextualGroundingFilterType":{
+      "type":"string",
+      "enum":[
+        "GROUNDING",
+        "RELEVANCE"
+      ],
+      "sensitive":true
+    },
+    "GuardrailContextualGroundingFiltersConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailContextualGroundingFilterConfig"},
+      "min":1
+    },
+    "GuardrailFilterStrength":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ],
+      "sensitive":true
+    },
+    "GuardrailManagedWordListsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailManagedWordsConfig"}
+    },
+    "GuardrailManagedWordsConfig":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"GuardrailManagedWordsType"}
+      }
+    },
+    "GuardrailManagedWordsType":{
+      "type":"string",
+      "enum":["PROFANITY"],
+      "sensitive":true
+    },
+    "GuardrailPiiEntitiesConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailPiiEntityConfig"},
+      "min":1
+    },
+    "GuardrailPiiEntityConfig":{
+      "type":"structure",
+      "required":[
+        "action",
+        "type"
+      ],
+      "members":{
+        "action":{"shape":"GuardrailSensitiveInformationAction"},
+        "type":{"shape":"GuardrailPiiEntityType"}
+      }
+    },
+    "GuardrailPiiEntityType":{
+      "type":"string",
+      "enum":[
+        "ADDRESS",
+        "AGE",
+        "AWS_ACCESS_KEY",
+        "AWS_SECRET_KEY",
+        "CA_HEALTH_NUMBER",
+        "CA_SOCIAL_INSURANCE_NUMBER",
+        "CREDIT_DEBIT_CARD_CVV",
+        "CREDIT_DEBIT_CARD_EXPIRY",
+        "CREDIT_DEBIT_CARD_NUMBER",
+        "DRIVER_ID",
+        "EMAIL",
+        "INTERNATIONAL_BANK_ACCOUNT_NUMBER",
+        "IP_ADDRESS",
+        "LICENSE_PLATE",
+        "MAC_ADDRESS",
+        "NAME",
+        "PASSWORD",
+        "PHONE",
+        "PIN",
+        "SWIFT_CODE",
+        "UK_NATIONAL_HEALTH_SERVICE_NUMBER",
+        "UK_NATIONAL_INSURANCE_NUMBER",
+        "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER",
+        "URL",
+        "USERNAME",
+        "US_BANK_ACCOUNT_NUMBER",
+        "US_BANK_ROUTING_NUMBER",
+        "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER",
+        "US_PASSPORT_NUMBER",
+        "US_SOCIAL_SECURITY_NUMBER",
+        "VEHICLE_IDENTIFICATION_NUMBER"
+      ],
+      "sensitive":true
+    },
+    "GuardrailRegexConfig":{
+      "type":"structure",
+      "required":[
+        "action",
+        "name",
+        "pattern"
+      ],
+      "members":{
+        "action":{"shape":"GuardrailSensitiveInformationAction"},
+        "description":{"shape":"GuardrailRegexDescription"},
+        "name":{"shape":"GuardrailRegexName"},
+        "pattern":{"shape":"GuardrailRegexPattern"}
+      }
+    },
+    "GuardrailRegexDescription":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexPattern":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailRegexesConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailRegexConfig"},
+      "min":1
+    },
+    "GuardrailSensitiveInformationAction":{
+      "type":"string",
+      "enum":[
+        "BLOCK",
+        "ANONYMIZE"
+      ],
+      "sensitive":true
+    },
+    "GuardrailTopicConfig":{
+      "type":"structure",
+      "required":[
+        "definition",
+        "name",
+        "type"
+      ],
+      "members":{
+        "definition":{"shape":"GuardrailTopicDefinition"},
+        "examples":{"shape":"GuardrailTopicExamples"},
+        "name":{"shape":"GuardrailTopicName"},
+        "type":{"shape":"GuardrailTopicType"}
+      }
+    },
+    "GuardrailTopicDefinition":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailTopicExample":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailTopicExamples":{
+      "type":"list",
+      "member":{"shape":"GuardrailTopicExample"},
+      "min":0
+    },
+    "GuardrailTopicName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z-_ !?.]+$",
+      "sensitive":true
+    },
+    "GuardrailTopicType":{
+      "type":"string",
+      "enum":["DENY"],
+      "sensitive":true
+    },
+    "GuardrailTopicsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailTopicConfig"},
+      "min":1
+    },
+    "GuardrailWordConfig":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"GuardrailWordText"}
+      }
+    },
+    "GuardrailWordText":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
+    },
+    "GuardrailWordsConfig":{
+      "type":"list",
+      "member":{"shape":"GuardrailWordConfig"},
+      "min":1
     },
     "Headers":{
       "type":"map",
@@ -2998,6 +4436,10 @@
     "ImportJobType":{
       "type":"string",
       "enum":["QUICK_RESPONSES"]
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "IntentDetectedDataDetails":{
       "type":"structure",
@@ -3191,6 +4633,72 @@
       "required":["aiAgentSummaries"],
       "members":{
         "aiAgentSummaries":{"shape":"AIAgentSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAIGuardrailVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAIGuardrailVersionsResponse":{
+      "type":"structure",
+      "required":["aiGuardrailVersionSummaries"],
+      "members":{
+        "aiGuardrailVersionSummaries":{"shape":"AIGuardrailVersionSummariesList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAIGuardrailsRequest":{
+      "type":"structure",
+      "required":["assistantId"],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAIGuardrailsResponse":{
+      "type":"structure",
+      "required":["aiGuardrailSummaries"],
+      "members":{
+        "aiGuardrailSummaries":{"shape":"AIGuardrailSummariesList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3440,6 +4948,109 @@
         "nextToken":{"shape":"NonEmptyString"}
       }
     },
+    "ListMessageTemplateVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMessageTemplateVersionsResponse":{
+      "type":"structure",
+      "required":["messageTemplateVersionSummaries"],
+      "members":{
+        "messageTemplateVersionSummaries":{"shape":"MessageTemplateVersionSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMessageTemplatesRequest":{
+      "type":"structure",
+      "required":["knowledgeBaseId"],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMessageTemplatesResponse":{
+      "type":"structure",
+      "required":["messageTemplateSummaries"],
+      "members":{
+        "messageTemplateSummaries":{"shape":"MessageTemplateSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMessagesRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "sessionId"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        }
+      }
+    },
+    "ListMessagesResponse":{
+      "type":"structure",
+      "required":["messages"],
+      "members":{
+        "messages":{"shape":"MessageList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListQuickResponsesRequest":{
       "type":"structure",
       "required":["knowledgeBaseId"],
@@ -3501,8 +5112,10 @@
     "ManualSearchAIAgentConfiguration":{
       "type":"structure",
       "members":{
+        "answerGenerationAIGuardrailId":{"shape":"UuidWithQualifier"},
         "answerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
-        "associationConfigurations":{"shape":"AssociationConfigurationList"}
+        "associationConfigurations":{"shape":"AssociationConfigurationList"},
+        "locale":{"shape":"NonEmptyString"}
       }
     },
     "MaxResults":{
@@ -3510,6 +5123,346 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "MessageData":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"TextMessage"}
+      },
+      "union":true
+    },
+    "MessageInput":{
+      "type":"structure",
+      "required":["value"],
+      "members":{
+        "value":{"shape":"MessageData"}
+      }
+    },
+    "MessageList":{
+      "type":"list",
+      "member":{"shape":"MessageOutput"}
+    },
+    "MessageOutput":{
+      "type":"structure",
+      "required":[
+        "messageId",
+        "participant",
+        "timestamp",
+        "value"
+      ],
+      "members":{
+        "messageId":{"shape":"Uuid"},
+        "participant":{"shape":"Participant"},
+        "timestamp":{"shape":"Timestamp"},
+        "value":{"shape":"MessageData"}
+      }
+    },
+    "MessageTemplateAttachment":{
+      "type":"structure",
+      "required":[
+        "attachmentId",
+        "contentDisposition",
+        "name",
+        "uploadedTime",
+        "url",
+        "urlExpiry"
+      ],
+      "members":{
+        "attachmentId":{"shape":"Uuid"},
+        "contentDisposition":{"shape":"ContentDisposition"},
+        "name":{"shape":"AttachmentFileName"},
+        "uploadedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "url":{"shape":"Url"},
+        "urlExpiry":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "MessageTemplateAttachmentList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttachment"}
+    },
+    "MessageTemplateAttributeKey":{
+      "type":"string",
+      "max":32767,
+      "min":1
+    },
+    "MessageTemplateAttributeKeyList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttributeKey"},
+      "sensitive":true
+    },
+    "MessageTemplateAttributeType":{
+      "type":"string",
+      "enum":[
+        "SYSTEM",
+        "AGENT",
+        "CUSTOMER_PROFILE",
+        "CUSTOM"
+      ]
+    },
+    "MessageTemplateAttributeTypeList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateAttributeType"}
+    },
+    "MessageTemplateAttributeValue":{
+      "type":"string",
+      "max":32767,
+      "min":1,
+      "sensitive":true
+    },
+    "MessageTemplateAttributes":{
+      "type":"structure",
+      "members":{
+        "agentAttributes":{"shape":"AgentAttributes"},
+        "customAttributes":{"shape":"CustomAttributes"},
+        "customerProfileAttributes":{"shape":"CustomerProfileAttributes"},
+        "systemAttributes":{"shape":"SystemAttributes"}
+      }
+    },
+    "MessageTemplateBodyContentProvider":{
+      "type":"structure",
+      "members":{
+        "content":{"shape":"NonEmptyUnlimitedString"}
+      },
+      "union":true
+    },
+    "MessageTemplateContentProvider":{
+      "type":"structure",
+      "members":{
+        "email":{"shape":"EmailMessageTemplateContent"},
+        "sms":{"shape":"SMSMessageTemplateContent"}
+      },
+      "union":true
+    },
+    "MessageTemplateContentSha256":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]+$"
+    },
+    "MessageTemplateData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "content",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateContentSha256",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "attributeTypes":{"shape":"MessageTemplateAttributeTypeList"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateContentSha256":{"shape":"MessageTemplateContentSha256"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "MessageTemplateFilterField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "operator"
+      ],
+      "members":{
+        "includeNoExistence":{"shape":"Boolean"},
+        "name":{"shape":"NonEmptyString"},
+        "operator":{"shape":"MessageTemplateFilterOperator"},
+        "values":{"shape":"MessageTemplateFilterValueList"}
+      }
+    },
+    "MessageTemplateFilterFieldList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateFilterField"},
+      "max":10,
+      "min":0
+    },
+    "MessageTemplateFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "PREFIX"
+      ]
+    },
+    "MessageTemplateFilterValue":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "MessageTemplateFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateFilterValue"},
+      "max":5,
+      "min":1
+    },
+    "MessageTemplateOrderField":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "order":{"shape":"Order"}
+      }
+    },
+    "MessageTemplateQueryField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "operator",
+        "values"
+      ],
+      "members":{
+        "allowFuzziness":{"shape":"Boolean"},
+        "name":{"shape":"NonEmptyString"},
+        "operator":{"shape":"MessageTemplateQueryOperator"},
+        "priority":{"shape":"Priority"},
+        "values":{"shape":"MessageTemplateQueryValueList"}
+      }
+    },
+    "MessageTemplateQueryFieldList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateQueryField"},
+      "max":4,
+      "min":0
+    },
+    "MessageTemplateQueryOperator":{
+      "type":"string",
+      "enum":[
+        "CONTAINS",
+        "CONTAINS_AND_PREFIX"
+      ]
+    },
+    "MessageTemplateQueryValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "MessageTemplateQueryValueList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateQueryValue"},
+      "max":5,
+      "min":1
+    },
+    "MessageTemplateSearchExpression":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"MessageTemplateFilterFieldList"},
+        "orderOnField":{"shape":"MessageTemplateOrderField"},
+        "queries":{"shape":"MessageTemplateQueryFieldList"}
+      }
+    },
+    "MessageTemplateSearchResultData":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "language":{"shape":"LanguageCode"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "MessageTemplateSearchResultsList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateSearchResultData"}
+    },
+    "MessageTemplateSummary":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "createdTime",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "lastModifiedBy",
+        "lastModifiedTime",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name"
+      ],
+      "members":{
+        "activeVersionNumber":{"shape":"Version"},
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "createdTime":{"shape":"SyntheticTimestamp_date_time"},
+        "description":{"shape":"Description"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "lastModifiedBy":{"shape":"GenericArn"},
+        "lastModifiedTime":{"shape":"SyntheticTimestamp_date_time"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "MessageTemplateSummaryList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateSummary"}
+    },
+    "MessageTemplateVersionSummary":{
+      "type":"structure",
+      "required":[
+        "channelSubtype",
+        "isActive",
+        "knowledgeBaseArn",
+        "knowledgeBaseId",
+        "messageTemplateArn",
+        "messageTemplateId",
+        "name",
+        "versionNumber"
+      ],
+      "members":{
+        "channelSubtype":{"shape":"ChannelSubtype"},
+        "isActive":{"shape":"Boolean"},
+        "knowledgeBaseArn":{"shape":"Arn"},
+        "knowledgeBaseId":{"shape":"Uuid"},
+        "messageTemplateArn":{"shape":"ArnWithQualifier"},
+        "messageTemplateId":{"shape":"Uuid"},
+        "name":{"shape":"Name"},
+        "versionNumber":{"shape":"Version"}
+      }
+    },
+    "MessageTemplateVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"MessageTemplateVersionSummary"}
+    },
+    "MessageType":{
+      "type":"string",
+      "enum":["TEXT"]
     },
     "Name":{
       "type":"string",
@@ -3532,6 +5485,11 @@
       "type":"string",
       "max":4096,
       "min":1
+    },
+    "NonEmptyUnlimitedString":{
+      "type":"string",
+      "min":1,
+      "sensitive":true
     },
     "NotifyRecommendationsReceivedError":{
       "type":"structure",
@@ -3628,6 +5586,14 @@
     "ParsingStrategy":{
       "type":"string",
       "enum":["BEDROCK_FOUNDATION_MODEL"]
+    },
+    "Participant":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "AGENT",
+        "BOT"
+      ]
     },
     "PreconditionFailedException":{
       "type":"structure",
@@ -4191,6 +6157,36 @@
       "members":{
       }
     },
+    "RenderMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "attributes",
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "attributes":{"shape":"MessageTemplateAttributes"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "RenderMessageTemplateResponse":{
+      "type":"structure",
+      "required":["content"],
+      "members":{
+        "attachments":{"shape":"MessageTemplateAttachmentList"},
+        "attributesNotInterpolated":{"shape":"MessageTemplateAttributeKeyList"},
+        "content":{"shape":"MessageTemplateContentProvider"}
+      }
+    },
     "RenderingConfiguration":{
       "type":"structure",
       "members":{
@@ -4256,6 +6252,18 @@
       },
       "union":true
     },
+    "SMSMessageTemplateContent":{
+      "type":"structure",
+      "members":{
+        "body":{"shape":"SMSMessageTemplateContentBody"}
+      }
+    },
+    "SMSMessageTemplateContentBody":{
+      "type":"structure",
+      "members":{
+        "plainText":{"shape":"MessageTemplateBodyContentProvider"}
+      }
+    },
     "SearchContentRequest":{
       "type":"structure",
       "required":[
@@ -4294,6 +6302,39 @@
       "required":["filters"],
       "members":{
         "filters":{"shape":"FilterList"}
+      }
+    },
+    "SearchMessageTemplatesRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "searchExpression"
+      ],
+      "members":{
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "searchExpression":{"shape":"MessageTemplateSearchExpression"}
+      }
+    },
+    "SearchMessageTemplatesResponse":{
+      "type":"structure",
+      "required":["results"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "results":{"shape":"MessageTemplateSearchResultsList"}
       }
     },
     "SearchQuickResponsesRequest":{
@@ -4375,6 +6416,30 @@
       "max":100,
       "min":1
     },
+    "SelfServiceAIAgentConfiguration":{
+      "type":"structure",
+      "members":{
+        "associationConfigurations":{"shape":"AssociationConfigurationList"},
+        "selfServiceAIGuardrailId":{"shape":"UuidWithQualifier"},
+        "selfServiceAnswerGenerationAIPromptId":{"shape":"UuidWithQualifier"},
+        "selfServicePreProcessingAIPromptId":{"shape":"UuidWithQualifier"}
+      }
+    },
+    "SelfServiceConversationHistory":{
+      "type":"structure",
+      "required":["turnNumber"],
+      "members":{
+        "botResponse":{"shape":"SensitiveString"},
+        "inputTranscript":{"shape":"SensitiveString"},
+        "turnNumber":{"shape":"Integer"}
+      }
+    },
+    "SelfServiceConversationHistoryList":{
+      "type":"list",
+      "member":{"shape":"SelfServiceConversationHistory"},
+      "max":10,
+      "min":0
+    },
     "SemanticChunkingConfiguration":{
       "type":"structure",
       "required":[
@@ -4404,6 +6469,45 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "SendMessageRequest":{
+      "type":"structure",
+      "required":[
+        "assistantId",
+        "message",
+        "sessionId",
+        "type"
+      ],
+      "members":{
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "conversationContext":{"shape":"ConversationContext"},
+        "message":{"shape":"MessageInput"},
+        "sessionId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"sessionId"
+        },
+        "type":{"shape":"MessageType"}
+      }
+    },
+    "SendMessageResponse":{
+      "type":"structure",
+      "required":[
+        "nextMessageToken",
+        "requestMessageId"
+      ],
+      "members":{
+        "nextMessageToken":{"shape":"NextToken"},
+        "requestMessageId":{"shape":"Uuid"}
+      }
     },
     "SensitiveString":{
       "type":"string",
@@ -4587,9 +6691,27 @@
         "CREATE_IN_PROGRESS"
       ]
     },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "SyntheticTimestamp_epoch_seconds":{
       "type":"timestamp",
       "timestampFormat":"unixTimestamp"
+    },
+    "SystemAttributes":{
+      "type":"structure",
+      "members":{
+        "customerEndpoint":{"shape":"SystemEndpointAttributes"},
+        "name":{"shape":"MessageTemplateAttributeValue"},
+        "systemEndpoint":{"shape":"SystemEndpointAttributes"}
+      }
+    },
+    "SystemEndpointAttributes":{
+      "type":"structure",
+      "members":{
+        "address":{"shape":"MessageTemplateAttributeValue"}
+      }
     },
     "TagCondition":{
       "type":"structure",
@@ -4677,6 +6799,18 @@
         "text":{"shape":"TextAIPrompt"}
       }
     },
+    "TextMessage":{
+      "type":"structure",
+      "members":{
+        "value":{"shape":"TextMessageValueString"}
+      }
+    },
+    "TextMessageValueString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -4763,6 +6897,47 @@
       "type":"structure",
       "members":{
         "aiAgent":{"shape":"AIAgentData"}
+      }
+    },
+    "UpdateAIGuardrailRequest":{
+      "type":"structure",
+      "required":[
+        "aiGuardrailId",
+        "assistantId",
+        "blockedInputMessaging",
+        "blockedOutputsMessaging",
+        "visibilityStatus"
+      ],
+      "members":{
+        "aiGuardrailId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"aiGuardrailId"
+        },
+        "assistantId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"assistantId"
+        },
+        "blockedInputMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "blockedOutputsMessaging":{"shape":"AIGuardrailBlockedMessaging"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "contentPolicyConfig":{"shape":"AIGuardrailContentPolicyConfig"},
+        "contextualGroundingPolicyConfig":{"shape":"AIGuardrailContextualGroundingPolicyConfig"},
+        "description":{"shape":"AIGuardrailDescription"},
+        "sensitiveInformationPolicyConfig":{"shape":"AIGuardrailSensitiveInformationPolicyConfig"},
+        "topicPolicyConfig":{"shape":"AIGuardrailTopicPolicyConfig"},
+        "visibilityStatus":{"shape":"VisibilityStatus"},
+        "wordPolicyConfig":{"shape":"AIGuardrailWordPolicyConfig"}
+      }
+    },
+    "UpdateAIGuardrailResponse":{
+      "type":"structure",
+      "members":{
+        "aiGuardrail":{"shape":"AIGuardrailData"}
       }
     },
     "UpdateAIPromptRequest":{
@@ -4871,6 +7046,62 @@
       "type":"structure",
       "members":{
         "knowledgeBase":{"shape":"KnowledgeBaseData"}
+      }
+    },
+    "UpdateMessageTemplateMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "description":{"shape":"Description"},
+        "groupingConfiguration":{"shape":"GroupingConfiguration"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        },
+        "name":{"shape":"Name"}
+      }
+    },
+    "UpdateMessageTemplateMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
+      }
+    },
+    "UpdateMessageTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseId",
+        "messageTemplateId"
+      ],
+      "members":{
+        "content":{"shape":"MessageTemplateContentProvider"},
+        "defaultAttributes":{"shape":"MessageTemplateAttributes"},
+        "knowledgeBaseId":{
+          "shape":"UuidOrArn",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
+        "language":{"shape":"LanguageCode"},
+        "messageTemplateId":{
+          "shape":"UuidOrArnOrEitherWithQualifier",
+          "location":"uri",
+          "locationName":"messageTemplateId"
+        }
+      }
+    },
+    "UpdateMessageTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "messageTemplate":{"shape":"MessageTemplateData"}
       }
     },
     "UpdateQuickResponseRequest":{

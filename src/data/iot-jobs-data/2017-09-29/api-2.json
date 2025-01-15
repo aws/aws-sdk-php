@@ -4,11 +4,13 @@
     "apiVersion":"2017-09-29",
     "endpointPrefix":"data.jobs.iot",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT Jobs Data Plane",
     "serviceId":"IoT Jobs Data Plane",
     "signatureVersion":"v4",
     "signingName":"iot-jobs-data",
-    "uid":"iot-jobs-data-2017-09-29"
+    "uid":"iot-jobs-data-2017-09-29",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DescribeJobExecution":{
@@ -42,6 +44,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"CertificateValidationException"}
+      ]
+    },
+    "StartCommandExecution":{
+      "name":"StartCommandExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/command-executions"
+      },
+      "input":{"shape":"StartCommandExecutionRequest"},
+      "output":{"shape":"StartCommandExecutionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "StartNextPendingJobExecution":{
@@ -81,12 +100,67 @@
   "shapes":{
     "ApproximateSecondsBeforeTimedOut":{"type":"long"},
     "BinaryBlob":{"type":"blob"},
+    "BinaryParameterValue":{
+      "type":"blob",
+      "min":1
+    },
+    "BooleanParameterValue":{"type":"boolean"},
     "CertificateValidationException":{
       "type":"structure",
       "members":{
         "message":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "ClientRequestTokenV2":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\x21-\\x7E]+$"
+    },
+    "CommandArn":{"type":"string"},
+    "CommandExecutionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandExecutionParameterMap":{
+      "type":"map",
+      "key":{"shape":"CommandParameterName"},
+      "value":{"shape":"CommandParameterValue"},
+      "min":1
+    },
+    "CommandExecutionTimeoutInSeconds":{
+      "type":"long",
+      "min":1
+    },
+    "CommandParameterName":{
+      "type":"string",
+      "max":192,
+      "min":1,
+      "pattern":"^[.$a-zA-Z0-9_-]+$"
+    },
+    "CommandParameterValue":{
+      "type":"structure",
+      "members":{
+        "S":{"shape":"StringParameterValue"},
+        "B":{"shape":"BooleanParameterValue"},
+        "I":{"shape":"IntegerParameterValue"},
+        "L":{"shape":"LongParameterValue"},
+        "D":{"shape":"DoubleParameterValue"},
+        "BIN":{"shape":"BinaryParameterValue"},
+        "UL":{"shape":"UnsignedLongParameterValue"}
+      }
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"},
+        "resourceId":{"shape":"resourceId"}
+      },
+      "error":{"httpStatusCode":409},
       "exception":true
     },
     "DescribeJobExecutionJobId":{
@@ -141,10 +215,10 @@
     },
     "DetailsValue":{
       "type":"string",
-      "max":1024,
       "min":1,
-      "pattern":"[^\\p{C}]*+"
+      "pattern":"[^\\p{C}]+"
     },
+    "DoubleParameterValue":{"type":"double"},
     "ExecutionNumber":{"type":"long"},
     "ExpectedVersion":{"type":"long"},
     "GetPendingJobExecutionsRequest":{
@@ -167,6 +241,16 @@
     },
     "IncludeExecutionState":{"type":"boolean"},
     "IncludeJobDocument":{"type":"boolean"},
+    "IntegerParameterValue":{"type":"integer"},
+    "InternalServerException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
+    },
     "InvalidRequestException":{
       "type":"structure",
       "members":{
@@ -246,6 +330,7 @@
       "pattern":"[a-zA-Z0-9_-]+"
     },
     "LastUpdatedAt":{"type":"long"},
+    "LongParameterValue":{"type":"long"},
     "QueuedAt":{"type":"long"},
     "ResourceNotFoundException":{
       "type":"structure",
@@ -253,6 +338,14 @@
         "message":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":404},
+      "exception":true
+    },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":402},
       "exception":true
     },
     "ServiceUnavailableException":{
@@ -263,6 +356,29 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "StartCommandExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "targetArn",
+        "commandArn"
+      ],
+      "members":{
+        "targetArn":{"shape":"TargetArn"},
+        "commandArn":{"shape":"CommandArn"},
+        "parameters":{"shape":"CommandExecutionParameterMap"},
+        "executionTimeoutSeconds":{"shape":"CommandExecutionTimeoutInSeconds"},
+        "clientToken":{
+          "shape":"ClientRequestTokenV2",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartCommandExecutionResponse":{
+      "type":"structure",
+      "members":{
+        "executionId":{"shape":"CommandExecutionId"}
+      }
     },
     "StartNextPendingJobExecutionRequest":{
       "type":"structure",
@@ -285,6 +401,14 @@
     },
     "StartedAt":{"type":"long"},
     "StepTimeoutInMinutes":{"type":"long"},
+    "StringParameterValue":{
+      "type":"string",
+      "min":1
+    },
+    "TargetArn":{
+      "type":"string",
+      "max":2048
+    },
     "TerminalStateException":{
       "type":"structure",
       "members":{
@@ -307,6 +431,12 @@
       },
       "error":{"httpStatusCode":429},
       "exception":true
+    },
+    "UnsignedLongParameterValue":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[0-9]*$"
     },
     "UpdateJobExecutionRequest":{
       "type":"structure",
@@ -342,7 +472,16 @@
         "jobDocument":{"shape":"JobDocument"}
       }
     },
+    "ValidationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "VersionNumber":{"type":"long"},
-    "errorMessage":{"type":"string"}
+    "errorMessage":{"type":"string"},
+    "resourceId":{"type":"string"}
   }
 }
