@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - The release addresses Amazon ECS documentation tickets.
+* `Aws\SageMaker` - Added support for ml.trn1.32xlarge instance type in Reserved Capacity Offering
+
 ## 3.337.0 - 2025-01-15
 
 * `Aws\S3` - Adds a default checksum of CRC32 to operations that support checksums. Adds additional configuration for request checksum calculation and response checksum validation.
