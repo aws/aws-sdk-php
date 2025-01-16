@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.337.1 - 2025-01-16
 
 * `Aws\ECS` - The release addresses Amazon ECS documentation tickets.
 * `Aws\SageMaker` - Added support for ml.trn1.32xlarge instance type in Reserved Capacity Offering
