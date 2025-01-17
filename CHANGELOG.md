@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Release u7i-6tb.112xlarge, u7i-8tb.112xlarge, u7inh-32tb.480xlarge, p5e.48xlarge, p5en.48xlarge, f2.12xlarge, f2.48xlarge, trn2.48xlarge instance types.
+* `Aws\BedrockRuntime` - Allow hyphens in tool name for Converse and ConverseStream APIs
+* `Aws\Detective` - Doc only update for Detective documentation.
+* `Aws\Notifications` - Added support for Managed Notifications, integration with AWS Organization and added aggregation summaries for Aggregate Notifications
+* `Aws\SageMaker` - Correction of docs for "Added support for ml.trn1.32xlarge instance type in Reserved Capacity Offering"
+
 ## 3.337.1 - 2025-01-16
 
 * `Aws\ECS` - The release addresses Amazon ECS documentation tickets.
