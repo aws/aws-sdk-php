@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.337.3 - 2025-01-21
 
 * `Aws\CognitoIdentityProvider` - corrects the dual-stack endpoint configuration for cognitoidp
 * `Aws\Connect` - Added DeleteContactFlowVersion API and the CAMPAIGN flow type
