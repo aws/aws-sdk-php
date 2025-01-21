@@ -117,6 +117,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteContactFlowAsync(array $args = [])
  * @method \Aws\Result deleteContactFlowModule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteContactFlowModuleAsync(array $args = [])
+ * @method \Aws\Result deleteContactFlowVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteContactFlowVersionAsync(array $args = [])
  * @method \Aws\Result deleteEmailAddress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEmailAddressAsync(array $args = [])
  * @method \Aws\Result deleteEvaluationForm(array $args = [])

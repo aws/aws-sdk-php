@@ -2717,6 +2717,7 @@
       "type":"structure",
       "required":["entries"],
       "members":{
+        "enablePartialEntryProcessing":{"shape":"BooleanValue"},
         "entries":{"shape":"PutAssetPropertyValueEntries"}
       }
     },
@@ -2727,6 +2728,7 @@
         "errorEntries":{"shape":"BatchPutAssetPropertyErrorEntries"}
       }
     },
+    "BooleanValue":{"type":"boolean"},
     "Bucket":{
       "type":"string",
       "max":63,
@@ -4232,7 +4234,8 @@
         "configurationStatus":{"shape":"ConfigurationStatus"},
         "lastUpdateDate":{"shape":"Timestamp"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "DescribeTimeSeriesRequest":{
@@ -4305,6 +4308,7 @@
       "type":"list",
       "member":{"shape":"DetailedError"}
     },
+    "DisallowIngestNullNaN":{"type":"boolean"},
     "DisassociateAssetsRequest":{
       "type":"structure",
       "required":[
@@ -5876,10 +5880,7 @@
       "type":"boolean",
       "box":true
     },
-    "NumberOfDays":{
-      "type":"integer",
-      "min":30
-    },
+    "NumberOfDays":{"type":"integer"},
     "Offset":{
       "type":"string",
       "max":25,
@@ -6097,6 +6098,13 @@
     "PropertyValueBooleanValue":{"type":"boolean"},
     "PropertyValueDoubleValue":{"type":"double"},
     "PropertyValueIntegerValue":{"type":"integer"},
+    "PropertyValueNullValue":{
+      "type":"structure",
+      "required":["valueType"],
+      "members":{
+        "valueType":{"shape":"RawValueType"}
+      }
+    },
     "PropertyValueStringValue":{"type":"string"},
     "PutAssetPropertyValueEntries":{
       "type":"list",
@@ -6157,7 +6165,8 @@
         "disassociatedDataStorage":{"shape":"DisassociatedDataStorageState"},
         "retentionPeriod":{"shape":"RetentionPeriod"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "PutStorageConfigurationResponse":{
@@ -6173,7 +6182,8 @@
         "retentionPeriod":{"shape":"RetentionPeriod"},
         "configurationStatus":{"shape":"ConfigurationStatus"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "Qualities":{
@@ -6202,6 +6212,16 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "RawValueType":{
+      "type":"string",
+      "enum":[
+        "D",
+        "B",
+        "S",
+        "I",
+        "U"
+      ]
     },
     "Reference":{
       "type":"structure",
@@ -6950,7 +6970,8 @@
         "stringValue":{"shape":"PropertyValueStringValue"},
         "integerValue":{"shape":"PropertyValueIntegerValue"},
         "doubleValue":{"shape":"PropertyValueDoubleValue"},
-        "booleanValue":{"shape":"PropertyValueBooleanValue"}
+        "booleanValue":{"shape":"PropertyValueBooleanValue"},
+        "nullValue":{"shape":"PropertyValueNullValue"}
       }
     },
     "Version":{

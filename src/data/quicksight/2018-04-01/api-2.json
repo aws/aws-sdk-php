@@ -11831,6 +11831,13 @@
         "SourceColumn":{"shape":"ColumnIdentifier"}
       }
     },
+    "DigitGroupingStyle":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "LAKHS"
+      ]
+    },
     "DimensionField":{
       "type":"structure",
       "members":{
@@ -16994,7 +17001,9 @@
         "THOUSANDS",
         "MILLIONS",
         "BILLIONS",
-        "TRILLIONS"
+        "TRILLIONS",
+        "LAKHS",
+        "CRORES"
       ]
     },
     "NumericAxisOptions":{
@@ -20986,7 +20995,7 @@
     "TableFieldOptionList":{
       "type":"list",
       "member":{"shape":"TableFieldOption"},
-      "max":100
+      "max":201
     },
     "TableFieldOptions":{
       "type":"structure",
@@ -21107,10 +21116,15 @@
         "SCROLLED"
       ]
     },
+    "TableUnaggregatedFieldList":{
+      "type":"list",
+      "member":{"shape":"UnaggregatedField"},
+      "max":201
+    },
     "TableUnaggregatedFieldWells":{
       "type":"structure",
       "members":{
-        "Values":{"shape":"UnaggregatedFieldList"}
+        "Values":{"shape":"TableUnaggregatedFieldList"}
       }
     },
     "TableVisual":{
@@ -21515,7 +21529,8 @@
       "type":"structure",
       "members":{
         "Symbol":{"shape":"NumericSeparatorSymbol"},
-        "Visibility":{"shape":"Visibility"}
+        "Visibility":{"shape":"Visibility"},
+        "GroupingStyle":{"shape":"DigitGroupingStyle"}
       }
     },
     "ThrottlingException":{

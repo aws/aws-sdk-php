@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - corrects the dual-stack endpoint configuration for cognitoidp
+* `Aws\Connect` - Added DeleteContactFlowVersion API and the CAMPAIGN flow type
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now supports ingestion and querying of Null (all data types) and NaN (double type) values of bad or uncertain data quality. New partial error handling prevents data loss during ingestion. Enabled by default for new customers; existing customers can opt-in.
+* `Aws\CloudWatchLogs` - Documentation-only update to address doc errors
+* `Aws\Batch` - Documentation-only update: clarified the description of the shareDecaySeconds parameter of the FairsharePolicy data type, clarified the description of the priority parameter of the JobQueueDetail data type.
+* `Aws\QuickSight` - Added `DigitGroupingStyle` in ThousandsSeparator to allow grouping by `LAKH`( Indian Grouping system ) currency. Support LAKH and `CRORE` currency types in Column Formatting.
+* `Aws\SNS` - This release adds support for the topic attribute FifoThroughputScope for SNS FIFO topics. For details, see the documentation history in the Amazon Simple Notification Service Developer Guide.
+* `Aws\EMRServerless` - Increasing entryPoint in SparkSubmit to accept longer script paths. New limit is 4kb.
+
 ## 3.337.2 - 2025-01-17
 
 * `Aws\EC2` - Release u7i-6tb.112xlarge, u7i-8tb.112xlarge, u7inh-32tb.480xlarge, p5e.48xlarge, p5en.48xlarge, f2.12xlarge, f2.48xlarge, trn2.48xlarge instance types.

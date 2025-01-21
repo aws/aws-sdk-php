@@ -984,6 +984,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeleteContactFlowVersion":{
+      "name":"DeleteContactFlowVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/version/{ContactFlowVersion}"
+      },
+      "input":{"shape":"DeleteContactFlowVersionRequest"},
+      "output":{"shape":"DeleteContactFlowVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteEmailAddress":{
       "name":"DeleteEmailAddress",
       "http":{
@@ -6163,7 +6180,8 @@
         "AGENT_WHISPER",
         "OUTBOUND_WHISPER",
         "AGENT_TRANSFER",
-        "QUEUE_TRANSFER"
+        "QUEUE_TRANSFER",
+        "CAMPAIGN"
       ]
     },
     "ContactFlowTypes":{
@@ -6469,6 +6487,7 @@
           "locationName":"ContactFlowId"
         },
         "FlowContentSha256":{"shape":"FlowContentSha256"},
+        "ContactFlowVersion":{"shape":"ResourceVersion"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"}
       }
@@ -7533,6 +7552,36 @@
       }
     },
     "DeleteContactFlowResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteContactFlowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "ContactFlowVersion"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "ContactFlowVersion":{
+          "shape":"ResourceVersion",
+          "location":"uri",
+          "locationName":"ContactFlowVersion"
+        }
+      }
+    },
+    "DeleteContactFlowVersionResponse":{
       "type":"structure",
       "members":{
       }

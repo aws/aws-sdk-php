@@ -995,6 +995,12 @@
       "refs": {
       }
     },
+    "BooleanValue": {
+      "base": null,
+      "refs": {
+        "BatchPutAssetPropertyValueRequest$enablePartialEntryProcessing": "<p>This setting enables partial ingestion at entry-level. If set to <code>true</code>, we ingest all TQVs not resulting in an error. If set to <code>false</code>, an invalid TQV fails ingestion of the entire entry that contains it.</p>"
+      }
+    },
     "Bucket": {
       "base": null,
       "refs": {
@@ -1797,6 +1803,14 @@
       "base": null,
       "refs": {
         "ErrorDetails$details": "<p> A list of detailed errors. </p>"
+      }
+    },
+    "DisallowIngestNullNaN": {
+      "base": null,
+      "refs": {
+        "DescribeStorageConfigurationResponse$disallowIngestNullNaN": "<p>Describes the configuration for ingesting NULL and NaN data. By default the feature is allowed. The feature is disallowed if the value is <code>true</code>.</p>",
+        "PutStorageConfigurationRequest$disallowIngestNullNaN": "<p>Describes the configuration for ingesting NULL and NaN data. By default the feature is allowed. The feature is disallowed if the value is <code>true</code>.</p>",
+        "PutStorageConfigurationResponse$disallowIngestNullNaN": "<p>Describes the configuration for ingesting NULL and NaN data. By default the feature is allowed. The feature is disallowed if the value is <code>true</code>.</p>"
       }
     },
     "DisassociateAssetsRequest": {
@@ -3192,7 +3206,7 @@
     "PropertyValueDoubleValue": {
       "base": null,
       "refs": {
-        "Variant$doubleValue": "<p>Asset property data of type double (floating point number).</p>"
+        "Variant$doubleValue": "<p> Asset property data of type double (floating point number). The min value is -10^10. The max value is 10^10. Double.NaN is allowed. </p>"
       }
     },
     "PropertyValueIntegerValue": {
@@ -3201,10 +3215,16 @@
         "Variant$integerValue": "<p>Asset property data of type integer (whole number).</p>"
       }
     },
+    "PropertyValueNullValue": {
+      "base": "<p>The value type of null asset property data with BAD and UNCERTAIN qualities.</p>",
+      "refs": {
+        "Variant$nullValue": "<p>The type of null asset property data with BAD and UNCERTAIN qualities.</p>"
+      }
+    },
     "PropertyValueStringValue": {
       "base": null,
       "refs": {
-        "Variant$stringValue": "<p>Asset property data of type string (sequence of characters).</p>"
+        "Variant$stringValue": "<p> Asset property data of type string (sequence of characters). The allowed pattern: \"^$|[^\\u0000-\\u001F\\u007F]+\". The max length is 1024. </p>"
       }
     },
     "PutAssetPropertyValueEntries": {
@@ -3276,6 +3296,12 @@
     "QueryTimeoutException": {
       "base": "<p>The query timed out.</p>",
       "refs": {
+      }
+    },
+    "RawValueType": {
+      "base": null,
+      "refs": {
+        "PropertyValueNullValue$valueType": "<p>The type of null asset property data.</p>"
       }
     },
     "Reference": {

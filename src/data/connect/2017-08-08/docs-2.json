@@ -16,7 +16,7 @@
     "AssociateRoutingProfileQueues": "<p>Associates a set of queues with a routing profile.</p>",
     "AssociateSecurityKey": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates a security key to the instance.</p>",
     "AssociateTrafficDistributionGroupUser": "<p>Associates an agent with a traffic distribution group. This API can be called only in the Region where the traffic distribution group is created.</p>",
-    "AssociateUserProficiencies": "<p>&gt;Associates a set of proficiencies with a user.</p>",
+    "AssociateUserProficiencies": "<p>Associates a set of proficiencies with a user.</p>",
     "BatchAssociateAnalyticsDataSet": "<p>Associates a list of analytics datasets for a given Amazon Connect instance to a target account. You can associate multiple datasets in a single call.</p>",
     "BatchDisassociateAnalyticsDataSet": "<p>Removes a list of analytics datasets associated with a given Amazon Connect instance. You can disassociate multiple datasets in a single call.</p>",
     "BatchGetAttachedFileMetadata": "<p>Allows you to retrieve metadata about multiple attached files on an associated resource. Each attached file provided in the input list must be associated with the input AssociatedResourceArn.</p>",
@@ -28,7 +28,7 @@
     "CreateContact": "<p>Creates a new contact.</p>",
     "CreateContactFlow": "<p>Creates a flow for the specified Amazon Connect instance.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p>",
     "CreateContactFlowModule": "<p>Creates a flow module for the specified Amazon Connect instance. </p>",
-    "CreateContactFlowVersion": "<p>Publishes a new version of the flow provided. Versions are immutable and monotonically increasing. If a version of the same flow content already exists, no new version is created and instead the existing version number is returned. If the <code>FlowContentSha256</code> provided is different from the <code>FlowContentSha256</code> of the <code>$LATEST</code> published flow content, then an error is returned. This API only supports creating versions for flows of type <code>Campaign</code>.</p>",
+    "CreateContactFlowVersion": "<p>Publishes a new version of the flow provided. Versions are immutable and monotonically increasing. If the <code>FlowContentSha256</code> provided is different from the <code>FlowContentSha256</code> of the <code>$LATEST</code> published flow content, then an error is returned. This API only supports creating versions for flows of type <code>Campaign</code>.</p>",
     "CreateEmailAddress": "<p>Create new email address in the specified Amazon Connect instance. For more information about email addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html\">Create email addresses</a> in the Amazon Connect Administrator Guide.</p>",
     "CreateEvaluationForm": "<p>Creates an evaluation form in the specified Amazon Connect instance. The form can be used to define questions related to agent performance, and create sections to organize such questions. Question and section identifiers cannot be duplicated within the same evaluation form.</p>",
     "CreateHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Creates hours of operation. </p>",
@@ -58,6 +58,7 @@
     "DeleteContactEvaluation": "<p>Deletes a contact evaluation in the specified Amazon Connect instance.</p>",
     "DeleteContactFlow": "<p>Deletes a flow for the specified Amazon Connect instance.</p>",
     "DeleteContactFlowModule": "<p>Deletes the specified flow module.</p>",
+    "DeleteContactFlowVersion": "<p>Deletes the particular version specified in flow version identifier.</p>",
     "DeleteEmailAddress": "<p>Deletes email address from the specified Amazon Connect instance.</p>",
     "DeleteEvaluationForm": "<p>Deletes an evaluation form in the specified Amazon Connect instance. </p> <ul> <li> <p>If the version property is provided, only the specified version of the evaluation form is deleted.</p> </li> <li> <p>If no version is provided, then the full form (all versions) is deleted.</p> </li> </ul>",
     "DeleteHoursOfOperation": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Deletes an hours of operation.</p>",
@@ -67,7 +68,7 @@
     "DeletePredefinedAttribute": "<p>Deletes a predefined attribute from the specified Amazon Connect instance.</p>",
     "DeletePrompt": "<p>Deletes a prompt.</p>",
     "DeletePushNotificationRegistration": "<p>Deletes registration for a device token and a chat contact.</p>",
-    "DeleteQueue": "<p>Deletes a queue. It isn't possible to delete a queue by using the Amazon Connect admin website.</p>",
+    "DeleteQueue": "<p>Deletes a queue.</p>",
     "DeleteQuickConnect": "<p>Deletes a quick connect. </p> <important> <p>After calling <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteUser.html\">DeleteUser</a>, it's important to call <code>DeleteQuickConnect</code> to delete any records related to the deleted users. This will help you:</p> <ul> <li> <p>Avoid dangling resources that impact your service quotas.</p> </li> <li> <p>Remove deleted users so they don't appear to agents as transfer options.</p> </li> <li> <p>Avoid the disruption of other Amazon Connect processes, such as instance replication and syncing if you're using <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-connect-global-resiliency.html\">Amazon Connect Global Resiliency</a>. </p> </li> </ul> </important>",
     "DeleteRoutingProfile": "<p>Deletes a routing profile.</p>",
     "DeleteRule": "<p>Deletes a rule for the specified Amazon Connect instance.</p>",
@@ -84,7 +85,7 @@
     "DescribeAuthenticationProfile": "<p>This API is in preview release for Amazon Connect and is subject to change. To request access to this API, contact Amazon Web Services Support.</p> <p>Describes the target authentication profile.</p>",
     "DescribeContact": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified contact. </p> <important> <p>Contact information remains available in Amazon Connect for 24 months from the InitiationTimestamp, and then it is deleted. Only contact information that is available in Amazon Connect is returned by this API</p> </important>",
     "DescribeContactEvaluation": "<p>Describes a contact evaluation in the specified Amazon Connect instance.</p>",
-    "DescribeContactFlow": "<p>Describes the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p> <p>In the response, <b>Status</b> indicates the flow status as either <code>SAVED</code> or <code>PUBLISHED</code>. The <code>PUBLISHED</code> status will initiate validation on the content. <code>SAVED</code> does not initiate validation of the content. <code>SAVED</code> | <code>PUBLISHED</code> </p>",
+    "DescribeContactFlow": "<p>Describes the specified flow.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p> <p>Use <code>arn:aws:.../contact-flow/{id}:{version}</code> to retrieve the content of a specific flow version.</p> <p>In the response, <b>Status</b> indicates the flow status as either <code>SAVED</code> or <code>PUBLISHED</code>. The <code>PUBLISHED</code> status will initiate validation on the content. <code>SAVED</code> does not initiate validation of the content. <code>SAVED</code> | <code>PUBLISHED</code> </p>",
     "DescribeContactFlowModule": "<p>Describes the specified flow module.</p> <p>Use the <code>$SAVED</code> alias in the request to describe the <code>SAVED</code> content of a Flow. For example, <code>arn:aws:.../contact-flow/{id}:$SAVED</code>. After a flow is published, <code>$SAVED</code> needs to be supplied to view saved content that has not been published.</p>",
     "DescribeEmailAddress": "<p>Describe email address form the specified Amazon Connect instance.</p>",
     "DescribeEvaluationForm": "<p>Describes an evaluation form in the specified Amazon Connect instance. If the version property is not provided, the latest version of the evaluation form is described.</p>",
@@ -341,6 +342,7 @@
         "CreatedByInfo$AWSIdentityArn": "<p>STS or IAM ARN representing the identity of API Caller. SDK users cannot populate this and this value is calculated automatically if <code>ConnectUserArn</code> is not provided.</p>",
         "DeactivateEvaluationFormResponse$EvaluationFormArn": "<p>The Amazon Resource Name (ARN) for the evaluation form resource.</p>",
         "DeleteAttachedFileRequest$AssociatedResourceArn": "<p>The resource to which the attached file is (being) uploaded to. <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html\">Cases</a> are the only current supported resource.</p> <note> <p>This value must be a valid ARN.</p> </note>",
+        "DeleteContactFlowVersionRequest$ContactFlowId": "<p>The identifier of the flow.</p>",
         "DeleteVocabularyResponse$VocabularyArn": "<p>The Amazon Resource Name (ARN) of the custom vocabulary.</p>",
         "DisassociateFlowRequest$ResourceId": "<p>The identifier of the resource.</p> <ul> <li> <p>Amazon Web Services End User Messaging SMS phone number ARN when using <code>SMS_PHONE_NUMBER</code> </p> </li> <li> <p>Amazon Web Services End User Messaging Social phone number ARN when using <code>WHATSAPP_MESSAGING_PHONE_NUMBER</code> </p> </li> </ul>",
         "Evaluation$EvaluationArn": "<p>The Amazon Resource Name (ARN) for the contact evaluation resource.</p>",
@@ -2623,6 +2625,16 @@
       "refs": {
       }
     },
+    "DeleteContactFlowVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteContactFlowVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteEmailAddressRequest": {
       "base": null,
       "refs": {
@@ -4118,7 +4130,7 @@
       "base": null,
       "refs": {
         "ContactFlow$FlowContentSha256": "<p>Indicates the checksum value of the flow content.</p>",
-        "CreateContactFlowResponse$FlowContentSha256": "<p>Indicates the checksum value of the flow content.</p>",
+        "CreateContactFlowResponse$FlowContentSha256": "<p>Indicates the checksum value of the latest published flow content.</p>",
         "CreateContactFlowVersionRequest$FlowContentSha256": "<p>Indicates the checksum value of the flow content.</p>"
       }
     },
@@ -4859,6 +4871,7 @@
         "DeleteContactEvaluationRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactFlowModuleRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteContactFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "DeleteContactFlowVersionRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteEmailAddressRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteEvaluationFormRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "DeleteHoursOfOperationOverrideRequest$InstanceId": "<p>The identifier of the Amazon Connect instance.</p>",
@@ -7929,7 +7942,9 @@
       "refs": {
         "ContactFlow$Version": "<p>The identifier of the flow version.</p>",
         "ContactFlowVersionSummary$Version": "<p>The identifier of the flow version.</p>",
-        "CreateContactFlowVersionResponse$Version": "<p>The identifier of the flow version.</p>"
+        "CreateContactFlowVersionRequest$ContactFlowVersion": "<p>The identifier of the flow version.</p>",
+        "CreateContactFlowVersionResponse$Version": "<p>The identifier of the flow version.</p>",
+        "DeleteContactFlowVersionRequest$ContactFlowVersion": "<p>The identifier of the flow version.</p>"
       }
     },
     "ResumeContactRecordingRequest": {
