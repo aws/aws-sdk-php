@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.338.0 - 2025-01-22
 
 * `Aws\` - Drops support for PHP runtimes 8.0.x and below.  Adds support for PHP 8.4.
 * `Aws\BedrockAgentRuntime` - Adds multi-turn input support for an Agent node in an Amazon Bedrock Flow
