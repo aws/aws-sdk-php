@@ -491,6 +491,7 @@
       "base": null,
       "refs": {
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
+        "FlowMultiTurnInputContent$document": "<p>The requested additional input to send back to the multi-turn flow node.</p>",
         "FlowOutputContent$document": "<p>The content in the output.</p>",
         "FlowTraceNodeInputContent$document": "<p>The content of the node input.</p>",
         "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>",
@@ -671,6 +672,13 @@
         "FlowCompletionEvent$completionReason": "<p>The reason that the flow completed.</p>"
       }
     },
+    "FlowExecutionId": {
+      "base": null,
+      "refs": {
+        "InvokeFlowRequest$executionId": "<p>The unique identifier for the current flow execution. If you don't provide a value, Amazon Bedrock creates the identifier for you. </p>",
+        "InvokeFlowResponse$executionId": "<p>The unique identifier for the current flow execution.</p>"
+      }
+    },
     "FlowIdentifier": {
       "base": null,
       "refs": {
@@ -693,6 +701,18 @@
       "base": null,
       "refs": {
         "InvokeFlowRequest$inputs": "<p>A list of objects, each containing information about an input into the flow.</p>"
+      }
+    },
+    "FlowMultiTurnInputContent": {
+      "base": "<p>The content structure containing input information for multi-turn flow interactions.</p>",
+      "refs": {
+        "FlowMultiTurnInputRequestEvent$content": "<p>The content payload containing the input request details for the multi-turn interaction.</p>"
+      }
+    },
+    "FlowMultiTurnInputRequestEvent": {
+      "base": "<p>Response object from the flow multi-turn node requesting additional information.</p>",
+      "refs": {
+        "FlowResponseStream$flowMultiTurnInputRequestEvent": "<p>The event stream containing the multi-turn input request information from the flow.</p>"
       }
     },
     "FlowOutputContent": {
@@ -1601,6 +1621,7 @@
     "NodeInputName": {
       "base": null,
       "refs": {
+        "FlowInput$nodeInputName": "<p>The name of the input from the flow input node.</p>",
         "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>"
       }
     },
@@ -1608,6 +1629,7 @@
       "base": null,
       "refs": {
         "FlowInput$nodeName": "<p>The name of the flow input node that begins the prompt flow.</p>",
+        "FlowMultiTurnInputRequestEvent$nodeName": "<p>The name of the node in the flow that is requesting the input.</p>",
         "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>",
         "FlowTraceConditionNodeResultEvent$nodeName": "<p>The name of the condition node.</p>",
         "FlowTraceNodeInputEvent$nodeName": "<p>The name of the node that received the input.</p>",
@@ -1624,6 +1646,7 @@
     "NodeType": {
       "base": null,
       "refs": {
+        "FlowMultiTurnInputRequestEvent$nodeType": "<p>The type of the node in the flow that is requesting the input.</p>",
         "FlowOutputEvent$nodeType": "<p>The type of the node that the output is from.</p>"
       }
     },

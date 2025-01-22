@@ -5222,7 +5222,10 @@
         "UpdateNetworkResult$Name": "The name that you specified for the Network.",
         "UpdateNodeRequest$Name": "Include this parameter only if you want to change the current name of the Node. Specify a name that is unique in the Cluster. You can't change the name. Names are case-sensitive.",
         "ChannelEngineVersionRequest$Version": "The build identifier of the engine version to use for this channel. Specify 'DEFAULT' to reset to the default version.",
-        "ChannelEngineVersionResponse$Version": "The build identifier for this version of the channel version."
+        "ChannelEngineVersionResponse$Version": "The build identifier for this version of the channel version.",
+        "Id3SegmentTaggingScheduleActionSettings$Id3": "Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure",
+        "Id3SegmentTaggingScheduleActionSettings$Tag": "Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number.",
+        "TimedMetadataScheduleActionSettings$Id3": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure"
       }
     },
     "__stringMax1000": {
@@ -6906,6 +6909,24 @@
       "refs": {
         "ChannelSummary$UsedChannelEngineVersions": "The engine version that the running pipelines are using.",
         "ListVersionsResponse$Versions": "List of engine versions that are available for this AWS account."
+      }
+    },
+    "CmafId3Behavior": {
+      "base": "Cmaf Id3 Behavior",
+      "refs": {
+        "CmafIngestGroupSettings$Id3Behavior": "Set to ENABLED to enable ID3 metadata insertion. To include metadata, you configure other parameters in the output group, or you add an ID3 action to the channel schedule."
+      }
+    },
+    "Id3SegmentTaggingScheduleActionSettings": {
+      "base": "Settings for the action to insert ID3 metadata in every segment, in applicable output groups.",
+      "refs": {
+        "ScheduleActionSettings$Id3SegmentTaggingSettings": "Action to insert ID3 metadata in every segment, in applicable output groups"
+      }
+    },
+    "TimedMetadataScheduleActionSettings": {
+      "base": "Settings for the action to insert ID3 metadata (as a one-time action) in applicable output groups.",
+      "refs": {
+        "ScheduleActionSettings$TimedMetadataSettings": "Action to insert ID3 metadata once, in applicable output groups"
       }
     }
   },

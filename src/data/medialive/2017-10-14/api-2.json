@@ -14013,6 +14013,14 @@
         "StaticImageOutputDeactivateSettings": {
           "shape": "StaticImageOutputDeactivateScheduleActionSettings",
           "locationName": "staticImageOutputDeactivateSettings"
+        },
+        "Id3SegmentTaggingSettings": {
+          "shape": "Id3SegmentTaggingScheduleActionSettings",
+          "locationName": "id3SegmentTaggingSettings"
+        },
+        "TimedMetadataSettings": {
+          "shape": "TimedMetadataScheduleActionSettings",
+          "locationName": "timedMetadataSettings"
         }
       }
     },
@@ -17291,6 +17299,14 @@
         "Scte35NameModifier": {
           "shape": "__stringMax100",
           "locationName": "scte35NameModifier"
+        },
+        "Id3Behavior": {
+          "shape": "CmafId3Behavior",
+          "locationName": "id3Behavior"
+        },
+        "Id3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "id3NameModifier"
         }
       },
       "required": [
@@ -23801,6 +23817,38 @@
       "member": {
         "shape": "ChannelEngineVersionResponse"
       }
+    },
+    "CmafId3Behavior": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Id3SegmentTaggingScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        },
+        "Tag": {
+          "shape": "__string",
+          "locationName": "tag"
+        }
+      }
+    },
+    "TimedMetadataScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        }
+      },
+      "required": [
+        "Id3"
+      ]
     }
   }
 }

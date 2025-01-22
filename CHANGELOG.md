@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Drops support for PHP runtimes 8.0.x and below.  Adds support for PHP 8.4.
+* `Aws\BedrockAgentRuntime` - Adds multi-turn input support for an Agent node in an Amazon Bedrock Flow
+* `Aws\Glue` - Docs Update for timeout changes
+* `Aws\WorkSpacesThinClient` - Rename WorkSpaces Web to WorkSpaces Secure Browser
+* `Aws\MediaLive` - AWS Elemental MediaLive adds a new feature, ID3 segment tagging, in CMAF Ingest output groups. It allows customers to insert ID3 tags into every output segment, controlled by a newly added channel schedule action Id3SegmentTagging.
+
 ## 3.337.3 - 2025-01-21
 
 * `Aws\CognitoIdentityProvider` - corrects the dual-stack endpoint configuration for cognitoidp
