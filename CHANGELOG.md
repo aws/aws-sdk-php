@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.338.1 - 2025-01-23
 
 * `Aws\EC2` - Added "future" allocation type for future dated capacity reservation
 
