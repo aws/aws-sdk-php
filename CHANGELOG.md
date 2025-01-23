@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Added "future" allocation type for future dated capacity reservation
+
 ## 3.338.0 - 2025-01-22
 
 * `Aws\` - Drops support for PHP runtimes 8.0.x and below.  Adds support for PHP 8.4.
