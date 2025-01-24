@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.338.2 - 2025-01-24
 
 * `Aws\CloudTrail` - This release introduces the SearchSampleQueries API that allows users to search for CloudTrail Lake sample queries.
 * `Aws\SSOOIDC` - Fixed typos in the descriptions.
