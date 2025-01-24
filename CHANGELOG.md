@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - This release introduces the SearchSampleQueries API that allows users to search for CloudTrail Lake sample queries.
+* `Aws\SSOOIDC` - Fixed typos in the descriptions.
+* `Aws\Transfer` - Added CustomDirectories as a new directory option for storing inbound AS2 messages, MDN files and Status files.
+* `Aws\SSM` - Systems Manager doc-only update for January, 2025.
+* `Aws\EKS` - Adds support for UpdateStrategies in EKS Managed Node Groups.
+* `Aws\HealthLake` - Added new authorization strategy value 'SMART_ON_FHIR' for CreateFHIRDatastore API to support Smart App 2.0
+
 ## 3.338.1 - 2025-01-23
 
 * `Aws\EC2` - Added "future" allocation type for future dated capacity reservation

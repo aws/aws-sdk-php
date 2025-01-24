@@ -1327,7 +1327,6 @@
         "ServerId",
         "LocalProfileId",
         "PartnerProfileId",
-        "BaseDirectory",
         "AccessRole"
       ],
       "members":{
@@ -1340,7 +1339,8 @@
         "Status":{"shape":"AgreementStatusType"},
         "Tags":{"shape":"Tags"},
         "PreserveFilename":{"shape":"PreserveFilenameType"},
-        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"}
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "CreateAgreementResponse":{
@@ -1485,6 +1485,23 @@
       "required":["WorkflowId"],
       "members":{
         "WorkflowId":{"shape":"WorkflowId"}
+      }
+    },
+    "CustomDirectoriesType":{
+      "type":"structure",
+      "required":[
+        "FailedFilesDirectory",
+        "MdnFilesDirectory",
+        "PayloadFilesDirectory",
+        "StatusFilesDirectory",
+        "TemporaryFilesDirectory"
+      ],
+      "members":{
+        "FailedFilesDirectory":{"shape":"HomeDirectory"},
+        "MdnFilesDirectory":{"shape":"HomeDirectory"},
+        "PayloadFilesDirectory":{"shape":"HomeDirectory"},
+        "StatusFilesDirectory":{"shape":"HomeDirectory"},
+        "TemporaryFilesDirectory":{"shape":"HomeDirectory"}
       }
     },
     "CustomStepDetails":{
@@ -1884,7 +1901,8 @@
         "AccessRole":{"shape":"Role"},
         "Tags":{"shape":"Tags"},
         "PreserveFilename":{"shape":"PreserveFilenameType"},
-        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"}
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "DescribedCertificate":{
@@ -3655,7 +3673,8 @@
         "BaseDirectory":{"shape":"HomeDirectory"},
         "AccessRole":{"shape":"Role"},
         "PreserveFilename":{"shape":"PreserveFilenameType"},
-        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"}
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "UpdateAgreementResponse":{

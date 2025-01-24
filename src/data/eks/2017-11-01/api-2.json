@@ -3305,8 +3305,16 @@
       "type":"structure",
       "members":{
         "maxUnavailable":{"shape":"NonZeroInteger"},
-        "maxUnavailablePercentage":{"shape":"PercentCapacity"}
+        "maxUnavailablePercentage":{"shape":"PercentCapacity"},
+        "updateStrategy":{"shape":"NodegroupUpdateStrategies"}
       }
+    },
+    "NodegroupUpdateStrategies":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "MINIMAL"
+      ]
     },
     "NonZeroInteger":{
       "type":"integer",
@@ -3958,6 +3966,7 @@
         "MaxUnavailable",
         "MaxUnavailablePercentage",
         "NodeRepairEnabled",
+        "UpdateStrategy",
         "ConfigurationValues",
         "SecurityGroups",
         "Subnets",

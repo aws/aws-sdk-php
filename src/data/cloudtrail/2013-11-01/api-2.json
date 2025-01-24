@@ -923,6 +923,21 @@
         {"shape":"OrganizationNotInAllFeaturesModeException"}
       ]
     },
+    "SearchSampleQueries":{
+      "name":"SearchSampleQueries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SearchSampleQueriesRequest"},
+      "output":{"shape":"SearchSampleQueriesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"OperationNotPermittedException"}
+      ],
+      "idempotent":true
+    },
     "StartDashboardRefresh":{
       "name":"StartDashboardRefresh",
       "http":{
@@ -3315,6 +3330,50 @@
         "S3BucketRegion":{"shape":"String"},
         "S3BucketAccessRoleArn":{"shape":"String"}
       }
+    },
+    "SampleQueryDescription":{"type":"string"},
+    "SampleQueryName":{"type":"string"},
+    "SampleQueryRelevance":{"type":"float"},
+    "SampleQuerySQL":{"type":"string"},
+    "SearchSampleQueriesMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "SearchSampleQueriesRequest":{
+      "type":"structure",
+      "required":["SearchPhrase"],
+      "members":{
+        "SearchPhrase":{"shape":"SearchSampleQueriesSearchPhrase"},
+        "MaxResults":{"shape":"SearchSampleQueriesMaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "SearchSampleQueriesResponse":{
+      "type":"structure",
+      "members":{
+        "SearchResults":{"shape":"SearchSampleQueriesSearchResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "SearchSampleQueriesSearchPhrase":{
+      "type":"string",
+      "max":1000,
+      "min":2,
+      "pattern":"^[ -~\\n]*$"
+    },
+    "SearchSampleQueriesSearchResult":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"SampleQueryName"},
+        "Description":{"shape":"SampleQueryDescription"},
+        "SQL":{"shape":"SampleQuerySQL"},
+        "Relevance":{"shape":"SampleQueryRelevance"}
+      }
+    },
+    "SearchSampleQueriesSearchResults":{
+      "type":"list",
+      "member":{"shape":"SearchSampleQueriesSearchResult"}
     },
     "SelectorField":{
       "type":"string",
