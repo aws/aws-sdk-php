@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.0 - 2025-01-27
 
 * `Aws\DSQL` - Adds new `AuthTokenGenerator` class which generates tokens for connecting to DSQL database clusters
 * `Aws\BedrockAgent` - Add support for the prompt caching feature for Bedrock Prompt Management
