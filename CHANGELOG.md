@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DSQL` - Adds new `AuthTokenGenerator` class which generates tokens for connecting to DSQL database clusters
+* `Aws\BedrockAgent` - Add support for the prompt caching feature for Bedrock Prompt Management
+* `Aws\MediaConvert` - This release adds support for dynamic audio configuration and the ability to disable the deblocking filter for h265 encodes.
+* `Aws\S3Control` - Minor fix to ARN validation for Lambda functions passed to S3 Batch Operations
+* `Aws\IoT` - Raised the documentParameters size limit to 30 KB for AWS IoT Device Management - Jobs.
+
 ## 3.338.2 - 2025-01-24
 
 * `Aws\CloudTrail` - This release introduces the SearchSampleQueries API that allows users to search for CloudTrail Lake sample queries.

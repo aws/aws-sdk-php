@@ -4202,6 +4202,38 @@
         "NO_DISPLAY_WINDOW"
       ]
     },
+    "DynamicAudioSelector": {
+      "type": "structure",
+      "members": {
+        "AudioDurationCorrection": {
+          "shape": "AudioDurationCorrection",
+          "locationName": "audioDurationCorrection"
+        },
+        "ExternalAudioFileInput": {
+          "shape": "__stringPatternS3Https",
+          "locationName": "externalAudioFileInput"
+        },
+        "LanguageCode": {
+          "shape": "LanguageCode",
+          "locationName": "languageCode"
+        },
+        "Offset": {
+          "shape": "__integerMinNegative2147483648Max2147483647",
+          "locationName": "offset"
+        },
+        "SelectorType": {
+          "shape": "DynamicAudioSelectorType",
+          "locationName": "selectorType"
+        }
+      }
+    },
+    "DynamicAudioSelectorType": {
+      "type": "string",
+      "enum": [
+        "ALL_TRACKS",
+        "LANGUAGE_CODE"
+      ]
+    },
     "Eac3AtmosBitstreamMode": {
       "type": "string",
       "enum": [
@@ -5423,6 +5455,13 @@
         "MAIN_422_10BIT_HIGH"
       ]
     },
+    "H265Deblocking": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "H265DynamicSubGop": {
       "type": "string",
       "enum": [
@@ -5573,6 +5612,10 @@
         "CodecProfile": {
           "shape": "H265CodecProfile",
           "locationName": "codecProfile"
+        },
+        "Deblocking": {
+          "shape": "H265Deblocking",
+          "locationName": "deblocking"
         },
         "DynamicSubGop": {
           "shape": "H265DynamicSubGop",
@@ -6441,6 +6484,10 @@
           "shape": "__stringMin14PatternS3XmlXMLHttpsXmlXML",
           "locationName": "dolbyVisionMetadataXml"
         },
+        "DynamicAudioSelectors": {
+          "shape": "__mapOfDynamicAudioSelector",
+          "locationName": "dynamicAudioSelectors"
+        },
         "FileInput": {
           "shape": "__stringMax2048PatternS3Https",
           "locationName": "fileInput"
@@ -6636,6 +6683,10 @@
         "DolbyVisionMetadataXml": {
           "shape": "__stringMin14PatternS3XmlXMLHttpsXmlXML",
           "locationName": "dolbyVisionMetadataXml"
+        },
+        "DynamicAudioSelectors": {
+          "shape": "__mapOfDynamicAudioSelector",
+          "locationName": "dynamicAudioSelectors"
         },
         "FilterEnable": {
           "shape": "InputFilterEnable",
@@ -12445,6 +12496,15 @@
       },
       "value": {
         "shape": "CaptionSelector"
+      }
+    },
+    "__mapOfDynamicAudioSelector": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "DynamicAudioSelector"
       }
     },
     "__mapOf__string": {

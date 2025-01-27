@@ -201,7 +201,7 @@
     "AgentAliasStatus": {
       "base": null,
       "refs": {
-        "AgentAlias$agentAliasStatus": "<p>The status of the alias of the agent and whether it is ready for use. The following statuses are possible:</p> <ul> <li> <p>CREATING – The agent alias is being created.</p> </li> <li> <p>PREPARED – The agent alias is finished being created or updated and is ready to be invoked.</p> </li> <li> <p>FAILED – The agent alias API operation failed.</p> </li> <li> <p>UPDATING – The agent alias is being updated.</p> </li> <li> <p>DELETING – The agent alias is being deleted.</p> </li> </ul>",
+        "AgentAlias$agentAliasStatus": "<p>The status of the alias of the agent and whether it is ready for use. The following statuses are possible:</p> <ul> <li> <p>CREATING – The agent alias is being created.</p> </li> <li> <p>PREPARED – The agent alias is finished being created or updated and is ready to be invoked.</p> </li> <li> <p>FAILED – The agent alias API operation failed.</p> </li> <li> <p>UPDATING – The agent alias is being updated.</p> </li> <li> <p>DELETING – The agent alias is being deleted.</p> </li> <li> <p>DISSOCIATED - The agent alias has no version associated with it.</p> </li> </ul>",
         "AgentAliasSummary$agentAliasStatus": "<p>The status of the alias.</p>",
         "DeleteAgentAliasResponse$agentAliasStatus": "<p>The status of the alias.</p>"
       }
@@ -455,6 +455,21 @@
       "base": null,
       "refs": {
         "ByteContentDoc$mimeType": "<p>The MIME type of the content. For a list of MIME types, see <a href=\"https://www.iana.org/assignments/media-types/media-types.xhtml\">Media Types</a>. The following MIME types are supported:</p> <ul> <li> <p>text/plain</p> </li> <li> <p>text/html</p> </li> <li> <p>text/csv</p> </li> <li> <p>text/vtt</p> </li> <li> <p>message/rfc822</p> </li> <li> <p>application/xhtml+xml</p> </li> <li> <p>application/pdf</p> </li> <li> <p>application/msword</p> </li> <li> <p>application/vnd.ms-word.document.macroenabled.12</p> </li> <li> <p>application/vnd.ms-word.template.macroenabled.12</p> </li> <li> <p>application/vnd.ms-excel</p> </li> <li> <p>application/vnd.ms-excel.addin.macroenabled.12</p> </li> <li> <p>application/vnd.ms-excel.sheet.macroenabled.12</p> </li> <li> <p>application/vnd.ms-excel.template.macroenabled.12</p> </li> <li> <p>application/vnd.ms-excel.sheet.binary.macroenabled.12</p> </li> <li> <p>application/vnd.ms-spreadsheetml</p> </li> <li> <p>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</p> </li> <li> <p>application/vnd.openxmlformats-officedocument.spreadsheetml.template</p> </li> <li> <p>application/vnd.openxmlformats-officedocument.wordprocessingml.document</p> </li> <li> <p>application/vnd.openxmlformats-officedocument.wordprocessingml.template</p> </li> </ul>"
+      }
+    },
+    "CachePointBlock": {
+      "base": "<p>Indicates where a cache checkpoint is located. All information before this checkpoint is cached to be accessed on subsequent requests.</p>",
+      "refs": {
+        "ContentBlock$cachePoint": "<p>Creates a cache checkpoint within a message.</p>",
+        "SystemContentBlock$cachePoint": "<p>Creates a cache checkpoint within a tool designation</p>",
+        "TextPromptTemplateConfiguration$cachePoint": "<p>A cache checkpoint within a template configuration.</p>",
+        "Tool$cachePoint": "<p>Creates a cache checkpoint within a tool designation</p>"
+      }
+    },
+    "CachePointType": {
+      "base": null,
+      "refs": {
+        "CachePointBlock$type": "<p>Indicates that the CachePointBlock is of the default type</p>"
       }
     },
     "ChatPromptTemplateConfiguration": {
@@ -1539,7 +1554,8 @@
         "MismatchedNodeInputTypeFlowValidationDetails$input": "<p>The name of the input with the mismatched data type.</p>",
         "MissingNodeInputFlowValidationDetails$input": "<p>The name of the missing input.</p>",
         "MultipleNodeInputConnectionsFlowValidationDetails$input": "<p>The name of the input with multiple connections to it.</p>",
-        "UnfulfilledNodeInputFlowValidationDetails$input": "<p>The name of the unfulfilled input. An input is unfulfilled if there are no data connections to it.</p>"
+        "UnfulfilledNodeInputFlowValidationDetails$input": "<p>The name of the unfulfilled input. An input is unfulfilled if there are no data connections to it.</p>",
+        "UnknownNodeInputFlowValidationDetails$input": "<p>The name of the node with the unknown input.</p>"
       }
     },
     "FlowNodeInputs": {
@@ -1567,6 +1583,8 @@
         "MissingNodeOutputFlowValidationDetails$node": "<p>The name of the node missing the required output.</p>",
         "MultipleNodeInputConnectionsFlowValidationDetails$node": "<p>The name of the node containing the input with multiple connections.</p>",
         "UnfulfilledNodeInputFlowValidationDetails$node": "<p>The name of the node containing the unfulfilled input.</p>",
+        "UnknownNodeInputFlowValidationDetails$node": "<p>The name of the unknown input.</p>",
+        "UnknownNodeOutputFlowValidationDetails$node": "<p>The name of the node with the unknown output.</p>",
         "UnreachableNodeFlowValidationDetails$node": "<p>The name of the unreachable node.</p>"
       }
     },
@@ -1582,7 +1600,8 @@
         "FlowDataConnectionConfiguration$sourceOutput": "<p>The name of the output in the source node that the connection begins from.</p>",
         "FlowNodeOutput$name": "<p>A name for the output that you can reference.</p>",
         "MismatchedNodeOutputTypeFlowValidationDetails$output": "<p>The name of the output with the mismatched data type.</p>",
-        "MissingNodeOutputFlowValidationDetails$output": "<p>The name of the missing output.</p>"
+        "MissingNodeOutputFlowValidationDetails$output": "<p>The name of the missing output.</p>",
+        "UnknownNodeOutputFlowValidationDetails$output": "<p>The name of the unknown output.</p>"
       }
     },
     "FlowNodeOutputs": {
@@ -4086,6 +4105,18 @@
       "base": "<p>Details about an unknown target input for a connection.</p>",
       "refs": {
         "FlowValidationDetails$unknownConnectionTargetInput": "<p>Details about an unknown target input for a connection.</p>"
+      }
+    },
+    "UnknownNodeInputFlowValidationDetails": {
+      "base": "<p>Details about an unknown input for a node.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownNodeInput": "<p>Details about an unknown input for a node.</p>"
+      }
+    },
+    "UnknownNodeOutputFlowValidationDetails": {
+      "base": "<p>Details about an unknown output for a node.</p>",
+      "refs": {
+        "FlowValidationDetails$unknownNodeOutput": "<p>Details about an unknown output for a node.</p>"
       }
     },
     "UnreachableNodeFlowValidationDetails": {

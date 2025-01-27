@@ -1537,7 +1537,8 @@
         "PREPARED",
         "FAILED",
         "UPDATING",
-        "DELETING"
+        "DELETING",
+        "DISSOCIATED"
       ]
     },
     "AgentAliasSummaries":{
@@ -1953,6 +1954,17 @@
       "type":"string",
       "pattern":"[a-z]{1,20}/.{1,20}"
     },
+    "CachePointBlock":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"CachePointType"}
+      }
+    },
+    "CachePointType":{
+      "type":"string",
+      "enum":["default"]
+    },
     "ChatPromptTemplateConfiguration":{
       "type":"structure",
       "required":["messages"],
@@ -2067,6 +2079,7 @@
     "ContentBlock":{
       "type":"structure",
       "members":{
+        "cachePoint":{"shape":"CachePointBlock"},
         "text":{"shape":"String"}
       },
       "sensitive":true,
@@ -3519,7 +3532,7 @@
     "FlowNodes":{
       "type":"list",
       "member":{"shape":"FlowNode"},
-      "max":20,
+      "max":40,
       "min":0
     },
     "FlowStatus":{
@@ -3597,6 +3610,8 @@
         "unknownConnectionSourceOutput":{"shape":"UnknownConnectionSourceOutputFlowValidationDetails"},
         "unknownConnectionTarget":{"shape":"UnknownConnectionTargetFlowValidationDetails"},
         "unknownConnectionTargetInput":{"shape":"UnknownConnectionTargetInputFlowValidationDetails"},
+        "unknownNodeInput":{"shape":"UnknownNodeInputFlowValidationDetails"},
+        "unknownNodeOutput":{"shape":"UnknownNodeOutputFlowValidationDetails"},
         "unreachableNode":{"shape":"UnreachableNodeFlowValidationDetails"},
         "unsatisfiedConnectionConditions":{"shape":"UnsatisfiedConnectionConditionsFlowValidationDetails"},
         "unspecified":{"shape":"UnspecifiedFlowValidationDetails"}
@@ -3637,7 +3652,9 @@
         "MultipleNodeInputConnections",
         "UnfulfilledNodeInput",
         "UnsatisfiedConnectionConditions",
-        "Unspecified"
+        "Unspecified",
+        "UnknownNodeInput",
+        "UnknownNodeOutput"
       ]
     },
     "FlowValidations":{
@@ -5039,7 +5056,7 @@
     "MaximumLength":{
       "type":"integer",
       "box":true,
-      "max":4096,
+      "max":8192,
       "min":0
     },
     "MemoryConfiguration":{
@@ -5641,7 +5658,7 @@
     "PromptInputVariablesList":{
       "type":"list",
       "member":{"shape":"PromptInputVariable"},
-      "max":5,
+      "max":10,
       "min":0,
       "sensitive":true
     },
@@ -6541,6 +6558,7 @@
     "SystemContentBlock":{
       "type":"structure",
       "members":{
+        "cachePoint":{"shape":"CachePointBlock"},
         "text":{"shape":"NonEmptyString"}
       },
       "sensitive":true,
@@ -6622,6 +6640,7 @@
       "type":"structure",
       "required":["text"],
       "members":{
+        "cachePoint":{"shape":"CachePointBlock"},
         "inputVariables":{"shape":"PromptInputVariablesList"},
         "text":{"shape":"TextPrompt"}
       },
@@ -6641,6 +6660,7 @@
     "Tool":{
       "type":"structure",
       "members":{
+        "cachePoint":{"shape":"CachePointBlock"},
         "toolSpec":{"shape":"ToolSpecification"}
       },
       "union":true
@@ -6791,6 +6811,28 @@
       "required":["connection"],
       "members":{
         "connection":{"shape":"FlowConnectionName"}
+      }
+    },
+    "UnknownNodeInputFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "input",
+        "node"
+      ],
+      "members":{
+        "input":{"shape":"FlowNodeInputName"},
+        "node":{"shape":"FlowNodeName"}
+      }
+    },
+    "UnknownNodeOutputFlowValidationDetails":{
+      "type":"structure",
+      "required":[
+        "node",
+        "output"
+      ],
+      "members":{
+        "node":{"shape":"FlowNodeName"},
+        "output":{"shape":"FlowNodeOutputName"}
       }
     },
     "UnreachableNodeFlowValidationDetails":{
