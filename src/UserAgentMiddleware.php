@@ -3,6 +3,7 @@
 namespace Aws;
 
 use Aws\EndpointDiscovery\Configuration;
+use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Closure;
 use Psr\Http\Message\RequestInterface;
 
@@ -31,6 +32,7 @@ class UserAgentMiddleware
     static $metricsFnList = [
         'appendEndpointMetric',
         'appendRetryConfigMetric',
+        'appendResponseChecksumValidationMetric',
     ];
 
     /** @var callable  */
@@ -312,6 +314,19 @@ class UserAgentMiddleware
             $this->metricsBuilder->append(
                 MetricsBuilder::RETRY_MODE_ADAPTIVE
             );
+        }
+    }
+
+    private function appendResponseChecksumValidationMetric(): void {
+        $checksumValidation = $this->args['response_checksum_validation']
+            ?? ValidateResponseChecksumResultMutator::DEFAULT_VALIDATION_MODE;
+        static $checksumValidationMetricMapping = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED,
+        ];
+
+        if (isset($checksumValidationMetricMapping[$checksumValidation])) {
+            $this->metricsBuilder->append($checksumValidationMetricMapping[$checksumValidation]);
         }
     }
 }

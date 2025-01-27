@@ -34,6 +34,10 @@ final class MetricsBuilder
     const FLEXIBLE_CHECKSUMS_REQ_CRC64 = "W";
     const FLEXIBLE_CHECKSUMS_REQ_SHA1 = "X";
     const FLEXIBLE_CHECKSUMS_REQ_SHA256 = "Y";
+    const FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED = "Z";
+    const FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED = "a";
+    const FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED = "b";
+    const FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED = "c";
     const CREDENTIALS_CODE = "e";
     const CREDENTIALS_ENV_VARS = "g";
     const CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN = "h";
@@ -139,6 +143,7 @@ final class MetricsBuilder
             'credentials' => 'appendCredentialsMetric',
             'account_id_endpoint_mode' => 'appendAccountIdEndpointMode',
             'account_id_endpoint' => 'appendAccountIdEndpoint',
+            'request_checksum_calculation' => 'appendRequestChecksumCalculationMetric',
         ];
 
         $fn = $appendMetricFns[$featureGroup];
@@ -243,6 +248,20 @@ final class MetricsBuilder
         ];
         if (isset($credentialsMetricMapping[$source])) {
             $this->append($credentialsMetricMapping[$source]);
+        }
+    }
+
+    private function appendRequestChecksumCalculationMetric(
+        string $checkSumCalculation
+    ): void
+    {
+        static $checksumCalculationMetricMapping = [
+            'when_supported' => self::FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED,
+            'when_required' => self::FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED,
+        ];
+
+        if (isset($checksumCalculationMetricMapping[$checkSumCalculation])) {
+            $this->append($checksumCalculationMetricMapping[$checkSumCalculation]);
         }
     }
 
