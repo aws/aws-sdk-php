@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.1 - 2025-01-28
 
 * `Aws\DSQL` - Updates default `AuthTokenGenerator` token expiration time from 700 to 900 seconds.
 * `Aws\Firehose` - For AppendOnly streams, Firehose will automatically scale to match your throughput.
