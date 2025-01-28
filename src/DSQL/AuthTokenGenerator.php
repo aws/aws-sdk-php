@@ -18,7 +18,7 @@ class AuthTokenGenerator
     private const DB_CONNECT = 'DbConnect';
     private const DB_CONNECT_ADMIN = 'DbConnectAdmin';
     private const SIGNING_NAME = 'dsql';
-    private const DEFAULT_EXPIRATION_TIME_SECONDS = 700;
+    private const DEFAULT_EXPIRATION_TIME_SECONDS = 900;
 
     /**
      * @var Credentials|callable

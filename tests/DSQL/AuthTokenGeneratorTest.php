@@ -143,4 +143,20 @@ class AuthTokenGeneratorTest extends TestCase
             $expiration
         );
     }
+
+    public function testTokenGenerationDefaultExpiration()
+    {
+        $accessKeyId = 'AKID';
+        $secretKeyId = 'SECRET';
+        $credentials = new Credentials($accessKeyId, $secretKeyId);
+        $tokenGenerator = new AuthTokenGenerator($credentials);
+        $token = $tokenGenerator->generateDbConnectAuthToken(
+            'peccy.dsql.us-east-1.on.aws',
+            'us-east-1'
+        );
+
+        $this->assertStringContainsString('X-Amz-Credential=AKID', $token);
+        $this->assertStringContainsString('X-Amz-Expires=900', $token);
+        $this->assertStringContainsString('us-east-1%2Fdsql', $token);
+    }
 }
