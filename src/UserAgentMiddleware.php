@@ -318,8 +318,11 @@ class UserAgentMiddleware
     }
 
     private function appendResponseChecksumValidationMetric(): void {
-        $checksumValidation = $this->args['response_checksum_validation']
-            ?? ValidateResponseChecksumResultMutator::DEFAULT_VALIDATION_MODE;
+        if (empty($this->args['response_checksum_validation'])) {
+            return;
+        }
+
+        $checksumValidation = $this->args['response_checksum_validation'];
         static $checksumValidationMetricMapping = [
             'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
             'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED,
