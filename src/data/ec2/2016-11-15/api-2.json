@@ -11509,7 +11509,10 @@
       ],
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
         "SpotOptions":{"shape":"SpotOptionsRequest"},
         "OnDemandOptions":{"shape":"OnDemandOptionsRequest"},
         "ExcessCapacityTerminationPolicy":{"shape":"FleetExcessCapacityTerminationPolicy"},

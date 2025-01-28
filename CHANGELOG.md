@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DSQL` - Updates default `AuthTokenGenerator` token expiration time from 700 to 900 seconds.
+* `Aws\Firehose` - For AppendOnly streams, Firehose will automatically scale to match your throughput.
+* `Aws\AppSync` - Add stash and outErrors to EvaluateCode/EvaluateMappingTemplate response
+* `Aws\Deadline` - feature: Deadline: Add support for limiting the concurrent usage of external resources, like floating licenses, using limits and the ability to constrain the maximum number of workers that work on a job
+* `Aws\DataSync` - AWS DataSync now supports the Kerberos authentication protocol for SMB locations.
+* `Aws\TimestreamInfluxDB` - Adds 'allocatedStorage' parameter to UpdateDbInstance API that allows increasing the database instance storage size and 'dbStorageType' parameter to UpdateDbInstance API that allows changing the storage type of the database instance
+* `Aws\EC2` - This release changes the CreateFleet CLI and SDK's such that if you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.
+
 ## 3.339.0 - 2025-01-27
 
 * `Aws\DSQL` - Adds new `AuthTokenGenerator` class which generates tokens for connecting to DSQL database clusters

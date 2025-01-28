@@ -16,23 +16,27 @@
     "CreateBudget": "<p>Creates a budget to set spending thresholds for your rendering activity.</p>",
     "CreateFarm": "<p>Creates a farm to allow space for queues and fleets. Farms are the space where the components of your renders gather and are pieced together in the cloud. Farms contain budgets and allow you to enforce permissions. Deadline Cloud farms are a useful container for large projects.</p>",
     "CreateFleet": "<p>Creates a fleet. Fleets gather information relating to compute, or capacity, for renders within your farms. You can choose to manage your own capacity or opt to have fleets fully managed by Deadline Cloud.</p>",
-    "CreateJob": "<p>Creates a job. A job is a set of instructions that AWS Deadline Cloud uses to schedule and run work on available workers. For more information, see <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/userguide/deadline-cloud-jobs.html\">Deadline Cloud jobs</a>.</p>",
+    "CreateJob": "<p>Creates a job. A job is a set of instructions that Deadline Cloud uses to schedule and run work on available workers. For more information, see <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/userguide/deadline-cloud-jobs.html\">Deadline Cloud jobs</a>.</p>",
     "CreateLicenseEndpoint": "<p>Creates a license endpoint to integrate your various licensed software used for rendering on Deadline Cloud.</p>",
+    "CreateLimit": "<p>Creates a limit that manages the distribution of shared resources, such as floating licenses. A limit can throttle work assignments, help manage workloads, and track current usage. Before you use a limit, you must associate the limit with one or more queues. </p> <p>You must add the <code>amountRequirementName</code> to a step in a job template to declare the limit requirement.</p>",
     "CreateMonitor": "<p>Creates an Amazon Web Services Deadline Cloud monitor that you can use to view your farms, queues, and fleets. After you submit a job, you can track the progress of the tasks and steps that make up the job, and then download the job's results. </p>",
     "CreateQueue": "<p>Creates a queue to coordinate the order in which jobs run on a farm. A queue can also specify where to pull resources and indicate where to output completed jobs.</p>",
     "CreateQueueEnvironment": "<p>Creates an environment for a queue that defines how jobs in the queue run.</p>",
     "CreateQueueFleetAssociation": "<p>Creates an association between a queue and a fleet.</p>",
+    "CreateQueueLimitAssociation": "<p>Associates a limit with a particular queue. After the limit is associated, all workers for jobs that specify the limit associated with the queue are subject to the limit. You can't associate two limits with the same <code>amountRequirementName</code> to the same queue.</p>",
     "CreateStorageProfile": "<p>Creates a storage profile that specifies the operating system, file type, and file location of resources used on a farm.</p>",
     "CreateWorker": "<p>Creates a worker. A worker tells your instance how much processing power (vCPU), and memory (GiB) you’ll need to assemble the digital assets held within a particular instance. You can specify certain instance types to use, or let the worker know which instances types to exclude.</p>",
     "DeleteBudget": "<p>Deletes a budget.</p>",
     "DeleteFarm": "<p>Deletes a farm.</p>",
     "DeleteFleet": "<p>Deletes a fleet.</p>",
     "DeleteLicenseEndpoint": "<p>Deletes a license endpoint.</p>",
+    "DeleteLimit": "<p>Removes a limit from the specified farm. Before you delete a limit you must use the <code>DeleteQueueLimitAssociation</code> operation to remove the association with any queues. </p>",
     "DeleteMeteredProduct": "<p>Deletes a metered product.</p>",
     "DeleteMonitor": "<p>Removes a Deadline Cloud monitor. After you delete a monitor, you can create a new one and attach farms to the monitor.</p>",
     "DeleteQueue": "<p>Deletes a queue.</p> <important> <p>You can't recover the jobs in a queue if you delete the queue. Deleting the queue also deletes the jobs in that queue.</p> </important>",
     "DeleteQueueEnvironment": "<p>Deletes a queue environment.</p>",
     "DeleteQueueFleetAssociation": "<p>Deletes a queue-fleet association.</p>",
+    "DeleteQueueLimitAssociation": "<p>Removes the association between a queue and a limit. You must use the <code>UpdateQueueLimitAssociation</code> operation to set the status to <code>STOP_LIMIT_USAGE_AND_COMPLETE_TASKS</code> or <code>STOP_LIMIT_USAGE_AND_CANCEL_TASKS</code>. The status does not change immediately. Use the <code>GetQueueLimitAssociation</code> operation to see if the status changed to <code>STOPPED</code> before deleting the association.</p>",
     "DeleteStorageProfile": "<p>Deletes a storage profile.</p>",
     "DeleteWorker": "<p>Deletes a worker.</p>",
     "DisassociateMemberFromFarm": "<p>Disassociates a member from a farm.</p>",
@@ -44,10 +48,12 @@
     "GetFleet": "<p>Get a fleet.</p>",
     "GetJob": "<p>Gets a Deadline Cloud job.</p>",
     "GetLicenseEndpoint": "<p>Gets a licence endpoint.</p>",
+    "GetLimit": "<p>Gets information about a specific limit.</p>",
     "GetMonitor": "<p>Gets information about the specified monitor.</p>",
     "GetQueue": "<p>Gets a queue.</p>",
     "GetQueueEnvironment": "<p>Gets a queue environment.</p>",
     "GetQueueFleetAssociation": "<p>Gets a queue-fleet association.</p>",
+    "GetQueueLimitAssociation": "<p>Gets information about a specific association between a queue and a limit.</p>",
     "GetSession": "<p>Gets a session.</p>",
     "GetSessionAction": "<p>Gets a session action for the job.</p>",
     "GetSessionsStatisticsAggregation": "<p>Gets a set of statistics for queues or farms. Before you can call the <code>GetSessionStatisticsAggregation</code> operation, you must first call the <code>StartSessionsStatisticsAggregation</code> operation. Statistics are available for 1 hour after you call the <code>StartSessionsStatisticsAggregation</code> operation.</p>",
@@ -66,10 +72,12 @@
     "ListJobParameterDefinitions": "<p>Lists parameter definitions of a job.</p>",
     "ListJobs": "<p>Lists jobs.</p>",
     "ListLicenseEndpoints": "<p>Lists license endpoints.</p>",
+    "ListLimits": "<p>Gets a list of limits defined in the specified farm.</p>",
     "ListMeteredProducts": "<p>Lists metered products.</p>",
     "ListMonitors": "<p>Gets a list of your monitors in Deadline Cloud.</p>",
     "ListQueueEnvironments": "<p>Lists queue environments.</p>",
     "ListQueueFleetAssociations": "<p>Lists queue-fleet associations.</p>",
+    "ListQueueLimitAssociations": "<p>Gets a list of the associations between queues and limits defined in a farm.</p>",
     "ListQueueMembers": "<p>Lists the members in a queue.</p>",
     "ListQueues": "<p>Lists queues.</p>",
     "ListSessionActions": "<p>Lists session actions.</p>",
@@ -95,10 +103,12 @@
     "UpdateFarm": "<p>Updates a farm.</p>",
     "UpdateFleet": "<p>Updates a fleet.</p>",
     "UpdateJob": "<p>Updates a job. </p> <p>When you change the status of the job to <code>ARCHIVED</code>, the job can't be scheduled or archived.</p> <important> <p>An archived jobs and its steps and tasks are deleted after 120 days. The job can't be recovered.</p> </important>",
+    "UpdateLimit": "<p>Updates the properties of the specified limit. </p>",
     "UpdateMonitor": "<p>Modifies the settings for a Deadline Cloud monitor. You can modify one or all of the settings when you call <code>UpdateMonitor</code>.</p>",
     "UpdateQueue": "<p>Updates a queue.</p>",
     "UpdateQueueEnvironment": "<p>Updates the queue environment.</p>",
     "UpdateQueueFleetAssociation": "<p>Updates a queue-fleet association.</p>",
+    "UpdateQueueLimitAssociation": "<p>Updates the status of the queue. If you set the status to one of the <code>STOP_LIMIT_USAGE*</code> values, there will be a delay before the status transitions to the <code>STOPPED</code> state. </p>",
     "UpdateSession": "<p>Updates a session.</p>",
     "UpdateStep": "<p>Updates a step.</p>",
     "UpdateStorageProfile": "<p>Updates a storage profile.</p>",
@@ -108,32 +118,32 @@
   },
   "shapes": {
     "AcceleratorCapabilities": {
-      "base": "<p>Provides information about the GPU accelerators and drivers for the instance types in a fleet. If you include the <code>acceleratorCapabilities</code> property in the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_ServiceManagedEc2InstanceCapabilities\">ServiceManagedEc2InstanceCapabilities</a> object, all of the Amazon EC2 instances will have at least one accelerator. </p>",
+      "base": "<p>Provides information about the GPU accelerators used for jobs processed by a fleet.</p>",
       "refs": {
-        "ServiceManagedEc2InstanceCapabilities$acceleratorCapabilities": "<p>The GPU accelerator capabilities required for the Amazon EC2 instances. If you include the <code>acceleratorCapabilities</code> property in the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_ServiceManagedEc2InstanceCapabilities\">ServiceManagedEc2InstanceCapabilities</a> object, all of the Amazon EC2 instances will have at least one accelerator. </p>"
+        "ServiceManagedEc2InstanceCapabilities$acceleratorCapabilities": "<p>Describes the GPU accelerator capabilities required for worker host instances in this fleet.</p>"
       }
     },
     "AcceleratorCountRange": {
-      "base": "<p>The range for the GPU fleet acceleration.</p>",
+      "base": "<p>Defines the maximum and minimum number of GPU accelerators required for a worker instance..</p>",
       "refs": {
-        "AcceleratorCapabilities$count": "<p>The number of GPUs on each worker. The default is 1.</p>",
+        "AcceleratorCapabilities$count": "<p>The number of GPU accelerators specified for worker hosts in this fleet. </p>",
         "CustomerManagedWorkerCapabilities$acceleratorCount": "<p>The range of the accelerator.</p>"
       }
     },
     "AcceleratorName": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$name": "<p>The name of the GPU accelerator.</p>"
+        "AcceleratorSelection$name": "<p>The name of the chip used by the GPU accelerator.</p> <p>If you specify <code>l4</code> as the name of the accelerator, you must specify <code>latest</code> or <code>grid:r550</code> as the runtime.</p> <p>The available GPU accelerators are:</p> <ul> <li> <p> <code>t4</code> - NVIDIA T4 Tensor Core GPU</p> </li> <li> <p> <code>a10g</code> - NVIDIA A10G Tensor Core GPU</p> </li> <li> <p> <code>l4</code> - NVIDIA L4 Tensor Core GPU</p> </li> <li> <p> <code>l40s</code> - NVIDIA L40S Tensor Core GPU</p> </li> </ul>"
       }
     },
     "AcceleratorRuntime": {
       "base": null,
       "refs": {
-        "AcceleratorSelection$runtime": "<p>The driver version that the GPU accelerator uses. </p>"
+        "AcceleratorSelection$runtime": "<p>Specifies the runtime driver to use for the GPU accelerator. You must use the same runtime for all GPUs. </p> <p>You can choose from the following runtimes:</p> <ul> <li> <p> <code>latest</code> - Use the latest runtime available for the chip. If you specify <code>latest</code> and a new version of the runtime is released, the new version of the runtime is used.</p> </li> <li> <p> <code>grid:r550</code> - <a href=\"https://docs.nvidia.com/vgpu/17.0/index.html\">NVIDIA vGPU software 17</a> </p> </li> <li> <p> <code>grid:r535</code> - <a href=\"https://docs.nvidia.com/vgpu/16.0/index.html\">NVIDIA vGPU software 16</a> </p> </li> </ul> <p>If you don't specify a runtime, Deadline Cloud uses <code>latest</code> as the default. However, if you have multiple accelerators and specify <code>latest</code> for some and leave others blank, Deadline Cloud raises an exception.</p>"
       }
     },
     "AcceleratorSelection": {
-      "base": "<p>Values that you can use to select a particular Amazon EC2 instance type. </p>",
+      "base": "<p>Describes a specific GPU accelerator required for an Amazon Elastic Compute Cloud worker host.</p>",
       "refs": {
         "AcceleratorSelections$member": null
       }
@@ -141,11 +151,11 @@
     "AcceleratorSelections": {
       "base": null,
       "refs": {
-        "AcceleratorCapabilities$selections": "<p>A list of objects that contain the GPU name of the accelerator and driver for the instance types that support the accelerator.</p>"
+        "AcceleratorCapabilities$selections": "<p>A list of accelerator capabilities requested for this fleet. Only Amazon Elastic Compute Cloud instances that provide these capabilities will be used. For example, if you specify both L4 and T4 chips, Deadline Cloud will use Amazon EC2 instances that have either the L4 or the T4 chip installed.</p>"
       }
     },
     "AcceleratorTotalMemoryMiBRange": {
-      "base": "<p>The range for memory, in MiB, to use for the accelerator.</p>",
+      "base": "<p>Defines the maximum and minimum amount of memory, in MiB, to use for the accelerator.</p>",
       "refs": {
         "CustomerManagedWorkerCapabilities$acceleratorTotalMemoryMiB": "<p>The total memory (MiB) for the customer managed worker capabilities.</p>"
       }
@@ -173,6 +183,18 @@
         "AwsCredentials$accessKeyId": "<p>The IAM access key ID.</p>"
       }
     },
+    "AcquiredLimit": {
+      "base": "<p>Provides information about the number of resources used.</p>",
+      "refs": {
+        "AcquiredLimits$member": null
+      }
+    },
+    "AcquiredLimits": {
+      "base": null,
+      "refs": {
+        "GetSessionActionResponse$acquiredLimits": "<p>The limits and their amounts acquired during a session action. If no limits were acquired during the session, this field isn't returned.</p>"
+      }
+    },
     "AggregationId": {
       "base": null,
       "refs": {
@@ -195,6 +217,14 @@
         "FleetAmountCapability$name": "<p>The name of the fleet capability.</p>",
         "StepAmountCapability$name": "<p>The name of the step.</p>",
         "WorkerAmountCapability$name": "<p>The name of the worker amount capability.</p>"
+      }
+    },
+    "AmountRequirementName": {
+      "base": null,
+      "refs": {
+        "CreateLimitRequest$amountRequirementName": "<p>The value that you specify as the <code>name</code> in the <code>amounts</code> field of the <code>hostRequirements</code> in a step of a job template to declare the limit requirement.</p>",
+        "GetLimitResponse$amountRequirementName": "<p>The value that you specify as the <code>name</code> in the <code>amounts</code> field of the <code>hostRequirements</code> in a step of a job template to declare the limit requirement.</p>",
+        "LimitSummary$amountRequirementName": "<p>The value that you specify as the <code>name</code> in the <code>amounts</code> field of the <code>hostRequirements</code> in a step of a job template to declare the limit requirement.</p>"
       }
     },
     "AssignedEnvironmentEnterSessionActionDefinition": {
@@ -510,6 +540,7 @@
         "CreateFleetRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateJobRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateLicenseEndpointRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
+        "CreateLimitRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateMonitorRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateQueueEnvironmentRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
         "CreateQueueRequest$clientToken": "<p>The unique token which the server uses to recognize retries of the same request.</p>",
@@ -659,6 +690,16 @@
       "refs": {
       }
     },
+    "CreateLimitRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLimitResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateMonitorRequest": {
       "base": null,
       "refs": {
@@ -685,6 +726,16 @@
       }
     },
     "CreateQueueFleetAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateQueueLimitAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateQueueLimitAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -729,9 +780,11 @@
         "GetFarmResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetFleetResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetJobResponse$createdAt": "<p>The date and time the resource was created.</p>",
+        "GetLimitResponse$createdAt": "<p>The Unix timestamp of the date and time that the limit was created.</p>",
         "GetMonitorResponse$createdAt": "<p>The UNIX timestamp of the date and time that the monitor was created.</p>",
         "GetQueueEnvironmentResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetQueueFleetAssociationResponse$createdAt": "<p>The date and time the resource was created.</p>",
+        "GetQueueLimitAssociationResponse$createdAt": "<p>The Unix timestamp of the date and time that the association was created.</p>",
         "GetQueueResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetStepResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "GetStorageProfileResponse$createdAt": "<p>The date and time the resource was created.</p>",
@@ -739,8 +792,10 @@
         "GetWorkerResponse$createdAt": "<p>The date and time the resource was created.</p>",
         "JobSearchSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "JobSummary$createdAt": "<p>The date and time the resource was created.</p>",
+        "LimitSummary$createdAt": "<p>The Unix timestamp of the date and time that the limit was created.</p>",
         "MonitorSummary$createdAt": "<p>The UNIX timestamp of the date and time that the monitor was created.</p>",
         "QueueFleetAssociationSummary$createdAt": "<p>The date and time the resource was created.</p>",
+        "QueueLimitAssociationSummary$createdAt": "<p>The Unix timestamp of the date and time that the association was created.</p>",
         "QueueSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "StepSearchSummary$createdAt": "<p>The date and time the resource was created.</p>",
         "StepSummary$createdAt": "<p>The date and time the resource was created.</p>",
@@ -759,9 +814,11 @@
         "GetFarmResponse$createdBy": "<p>The user or system that created this resource.</p>",
         "GetFleetResponse$createdBy": "<p>The user or system that created this resource.</p>",
         "GetJobResponse$createdBy": "<p>The user or system that created this resource.</p>",
+        "GetLimitResponse$createdBy": "<p>The user identifier of the person that created the limit.</p>",
         "GetMonitorResponse$createdBy": "<p>The user name of the person that created the monitor.</p>",
         "GetQueueEnvironmentResponse$createdBy": "<p>The user or system that created this resource.&gt;</p>",
         "GetQueueFleetAssociationResponse$createdBy": "<p>The user or system that created this resource.</p>",
+        "GetQueueLimitAssociationResponse$createdBy": "<p>The user identifier of the person that created the association.</p>",
         "GetQueueResponse$createdBy": "<p>The user or system that created this resource.</p>",
         "GetStepResponse$createdBy": "<p>The user or system that created this resource.</p>",
         "GetStorageProfileResponse$createdBy": "<p>The user or system that created this resource.</p>",
@@ -769,8 +826,10 @@
         "GetWorkerResponse$createdBy": "<p>The user or system that created this resource.</p>",
         "JobSearchSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "JobSummary$createdBy": "<p>The user or system that created this resource.</p>",
+        "LimitSummary$createdBy": "<p>The user identifier of the person that created the limit.</p>",
         "MonitorSummary$createdBy": "<p>The user name of the person that created the monitor.</p>",
         "QueueFleetAssociationSummary$createdBy": "<p>The user or system that created this resource.</p>",
+        "QueueLimitAssociationSummary$createdBy": "<p>The user identifier of the person that created the association.</p>",
         "QueueSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "StepSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "TaskSummary$createdBy": "<p>The user or system that created this resource.</p>",
@@ -865,6 +924,16 @@
       "refs": {
       }
     },
+    "DeleteLimitRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLimitResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteMeteredProductRequest": {
       "base": null,
       "refs": {
@@ -901,6 +970,16 @@
       }
     },
     "DeleteQueueFleetAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteQueueLimitAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteQueueLimitAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -963,15 +1042,18 @@
         "CreateBudgetRequest$description": "<p>The description of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateFarmRequest$description": "<p>The description of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateFleetRequest$description": "<p>The description of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateLimitRequest$description": "<p>A description of the limit. A description helps you identify the purpose of the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateQueueRequest$description": "<p>The description of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetBudgetResponse$description": "<p>The description of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetFarmResponse$description": "<p>The description of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetFleetResponse$description": "<p>The description of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetLimitResponse$description": "<p>The description of the limit that helps identify what the limit is used for.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetQueueResponse$description": "<p>The description of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "ResponseBudgetAction$description": "<p>The budget action description.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateBudgetRequest$description": "<p>The description of the budget to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateFarmRequest$description": "<p>The description of the farm to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateFleetRequest$description": "<p>The description of the fleet to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateLimitRequest$description": "<p>The new description of the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateQueueRequest$description": "<p>The description of the queue to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
       }
     },
@@ -1203,16 +1285,20 @@
         "CreateFarmResponse$farmId": "<p>The farm ID.</p>",
         "CreateFleetRequest$farmId": "<p>The farm ID of the farm to connect to the fleet.</p>",
         "CreateJobRequest$farmId": "<p>The farm ID of the farm to connect to the job.</p>",
+        "CreateLimitRequest$farmId": "<p>The farm ID of the farm that contains the limit.</p>",
         "CreateQueueEnvironmentRequest$farmId": "<p>The farm ID of the farm to connect to the environment.</p>",
         "CreateQueueFleetAssociationRequest$farmId": "<p>The ID of the farm that the queue and fleet belong to.</p>",
+        "CreateQueueLimitAssociationRequest$farmId": "<p>The unique identifier of the farm that contains the queue and limit to associate.</p>",
         "CreateQueueRequest$farmId": "<p>The farm ID of the farm to connect to the queue.</p>",
         "CreateStorageProfileRequest$farmId": "<p>The farm ID of the farm to connect to the storage profile.</p>",
         "CreateWorkerRequest$farmId": "<p>The farm ID of the farm to connect to the worker.</p>",
         "DeleteBudgetRequest$farmId": "<p>The farm ID of the farm to remove from the budget.</p>",
         "DeleteFarmRequest$farmId": "<p>The farm ID of the farm to delete.</p>",
         "DeleteFleetRequest$farmId": "<p>The farm ID of the farm to remove from the fleet.</p>",
+        "DeleteLimitRequest$farmId": "<p>The unique identifier of the farm that contains the limit to delete.</p>",
         "DeleteQueueEnvironmentRequest$farmId": "<p>The farm ID of the farm from which to remove the queue environment.</p>",
         "DeleteQueueFleetAssociationRequest$farmId": "<p>The farm ID of the farm that holds the queue-fleet association.</p>",
+        "DeleteQueueLimitAssociationRequest$farmId": "<p>The unique identifier of the farm that contains the queue and limit to disassociate.</p>",
         "DeleteQueueRequest$farmId": "<p>The ID of the farm from which to remove the queue.</p>",
         "DeleteStorageProfileRequest$farmId": "<p>The farm ID of the farm from which to remove the storage profile.</p>",
         "DeleteWorkerRequest$farmId": "<p>The farm ID of the worker to delete.</p>",
@@ -1230,8 +1316,11 @@
         "GetFleetRequest$farmId": "<p>The farm ID of the farm in the fleet.</p>",
         "GetFleetResponse$farmId": "<p>The farm ID of the farm in the fleet.</p>",
         "GetJobRequest$farmId": "<p>The farm ID of the farm in the job.</p>",
+        "GetLimitRequest$farmId": "<p>The unique identifier of the farm that contains the limit.</p>",
+        "GetLimitResponse$farmId": "<p>The unique identifier of the farm that contains the limit.</p>",
         "GetQueueEnvironmentRequest$farmId": "<p>The farm ID for the queue environment.</p>",
         "GetQueueFleetAssociationRequest$farmId": "<p>The farm ID of the farm that contains the queue-fleet association.</p>",
+        "GetQueueLimitAssociationRequest$farmId": "<p>The unique identifier of the farm that contains the associated queue and limit.</p>",
         "GetQueueRequest$farmId": "<p>The farm ID of the farm in the queue.</p>",
         "GetQueueResponse$farmId": "<p>The farm ID for the queue.</p>",
         "GetSessionActionRequest$farmId": "<p>The farm ID for the session action.</p>",
@@ -1244,6 +1333,7 @@
         "GetWorkerRequest$farmId": "<p>The farm ID for the worker.</p>",
         "GetWorkerResponse$farmId": "<p>The farm ID.</p>",
         "JobMember$farmId": "<p>The farm ID.</p>",
+        "LimitSummary$farmId": "<p>The unique identifier of the farm that contains the limit.</p>",
         "ListBudgetsRequest$farmId": "<p>The farm ID associated with the budgets.</p>",
         "ListFarmMembersRequest$farmId": "<p>The farm ID.</p>",
         "ListFleetMembersRequest$farmId": "<p>The farm ID of the fleet.</p>",
@@ -1251,8 +1341,10 @@
         "ListJobMembersRequest$farmId": "<p>The farm ID of the job to list.</p>",
         "ListJobParameterDefinitionsRequest$farmId": "<p>The farm ID of the job to list.</p>",
         "ListJobsRequest$farmId": "<p>The farm ID for the jobs.</p>",
+        "ListLimitsRequest$farmId": "<p>The unique identifier of the farm that contains the limits.</p>",
         "ListQueueEnvironmentsRequest$farmId": "<p>The farm ID for the queue environment list.</p>",
         "ListQueueFleetAssociationsRequest$farmId": "<p>The farm ID for the queue-fleet association list.</p>",
+        "ListQueueLimitAssociationsRequest$farmId": "<p>The unique identifier of the farm that contains the limits and associations.</p>",
         "ListQueueMembersRequest$farmId": "<p>The farm ID for the queue.</p>",
         "ListQueuesRequest$farmId": "<p>The farm ID of the queue.</p>",
         "ListSessionActionsRequest$farmId": "<p>The farm ID for the session actions list.</p>",
@@ -1276,8 +1368,10 @@
         "UpdateFarmRequest$farmId": "<p>The farm ID to update.</p>",
         "UpdateFleetRequest$farmId": "<p>The farm ID to update.</p>",
         "UpdateJobRequest$farmId": "<p>The farm ID of the job to update.</p>",
+        "UpdateLimitRequest$farmId": "<p>The unique identifier of the farm that contains the limit.</p>",
         "UpdateQueueEnvironmentRequest$farmId": "<p>The farm ID of the queue environment to update.</p>",
         "UpdateQueueFleetAssociationRequest$farmId": "<p>The farm ID to update.</p>",
+        "UpdateQueueLimitAssociationRequest$farmId": "<p>The unique identifier of the farm that contains the associated queues and limits.</p>",
         "UpdateQueueRequest$farmId": "<p>The farm ID to update in the queue.</p>",
         "UpdateSessionRequest$farmId": "<p>The farm ID to update in the session.</p>",
         "UpdateStepRequest$farmId": "<p>The farm ID to update.</p>",
@@ -1552,6 +1646,16 @@
         "GetLicenseEndpointResponse$subnetIds": "<p>The subnet IDs.</p>"
       }
     },
+    "GetLimitRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLimitResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetMonitorRequest": {
       "base": null,
       "refs": {
@@ -1578,6 +1682,16 @@
       }
     },
     "GetQueueFleetAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetQueueLimitAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetQueueLimitAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -2141,6 +2255,37 @@
         "Statistics$licenseProduct": "<p>The licensed product.</p>"
       }
     },
+    "LimitId": {
+      "base": null,
+      "refs": {
+        "AcquiredLimit$limitId": "<p>The unique identifier of the limit.</p>",
+        "CreateLimitResponse$limitId": "<p>A unique identifier for the limit. Use this identifier in other operations, such as <code>CreateQueueLimitAssociation</code> and <code>DeleteLimit</code>.</p>",
+        "CreateQueueLimitAssociationRequest$limitId": "<p>The unique identifier of the limit to associate with the queue.</p>",
+        "DeleteLimitRequest$limitId": "<p>The unique identifier of the limit to delete.</p>",
+        "DeleteQueueLimitAssociationRequest$limitId": "<p>The unique identifier of the limit to disassociate.</p>",
+        "GetLimitRequest$limitId": "<p>The unique identifier of the limit to return.</p>",
+        "GetLimitResponse$limitId": "<p>The unique identifier of the limit.</p>",
+        "GetQueueLimitAssociationRequest$limitId": "<p>The unique identifier of the limit associated with the queue.</p>",
+        "GetQueueLimitAssociationResponse$limitId": "<p>The unique identifier of the limit associated with the queue.</p>",
+        "LimitSummary$limitId": "<p>The unique identifier of the limit.</p>",
+        "ListQueueLimitAssociationsRequest$limitId": "<p>Specifies that the operation should return only the queue limit associations for the specified limit. If you specify both the <code>queueId</code> and the <code>limitId</code>, only the specified limit is returned if it exists.</p>",
+        "QueueLimitAssociationSummary$limitId": "<p>The unique identifier of the limit in the association.</p>",
+        "UpdateLimitRequest$limitId": "<p>The unique identifier of the limit to update.</p>",
+        "UpdateQueueLimitAssociationRequest$limitId": "<p>The unique identifier of the limit associated to the queue.</p>"
+      }
+    },
+    "LimitSummaries": {
+      "base": null,
+      "refs": {
+        "ListLimitsResponse$limits": "<p>A list of limits that the farm contains.</p>"
+      }
+    },
+    "LimitSummary": {
+      "base": "<p>Provides information about a specific limit.</p>",
+      "refs": {
+        "LimitSummaries$member": null
+      }
+    },
     "ListAttributeCapabilityValue": {
       "base": null,
       "refs": {
@@ -2248,6 +2393,16 @@
       "refs": {
       }
     },
+    "ListLimitsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLimitsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListMeteredProductsRequest": {
       "base": null,
       "refs": {
@@ -2284,6 +2439,16 @@
       }
     },
     "ListQueueFleetAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListQueueLimitAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListQueueLimitAssociationsResponse": {
       "base": null,
       "refs": {
       }
@@ -2486,7 +2651,7 @@
     "ManifestPropertiesInputManifestHashString": {
       "base": null,
       "refs": {
-        "ManifestProperties$inputManifestHash": "<p>The has value of the file.</p>"
+        "ManifestProperties$inputManifestHash": "<p>The hash value of the file.</p>"
       }
     },
     "ManifestPropertiesInputManifestPathString": {
@@ -2505,6 +2670,15 @@
       "base": null,
       "refs": {
         "ManifestProperties$rootPath": "<p>The file's root path.</p>"
+      }
+    },
+    "MaxCount": {
+      "base": null,
+      "refs": {
+        "CreateLimitRequest$maxCount": "<p>The maximum number of resources constrained by this limit. When all of the resources are in use, steps that require the limit won't be scheduled until the resource is available.</p> <p>The <code>maxCount</code> must not be 0. If the value is -1, there is no restriction on the number of resources that can be acquired for this limit.</p>",
+        "GetLimitResponse$maxCount": "<p>The maximum number of resources constrained by this limit. When all of the resources are in use, steps that require the limit won't be scheduled until the resource is available.</p> <p>The <code>maxValue</code> must not be 0. If the value is -1, there is no restriction on the number of resources that can be acquired for this limit.</p>",
+        "LimitSummary$maxCount": "<p>The maximum number of resources constrained by this limit. When all of the resources are in use, steps that require the limit won't be scheduled until the resource is available.</p> <p>The <code>maxValue</code> must not be 0. If the value is -1, there is no restriction on the number of resources that can be acquired for this limit.</p>",
+        "UpdateLimitRequest$maxCount": "<p>The maximum number of resources constrained by this limit. When all of the resources are in use, steps that require the limit won't be scheduled until the resource is available.</p> <p>If more than the new maximum number is currently in use, running jobs finish but no new jobs are started until the number of resources in use is below the new maximum number.</p> <p>The <code>maxCount</code> must not be 0. If the value is -1, there is no restriction on the number of resources that can be acquired for this limit.</p>"
       }
     },
     "MaxFailedTasksCount": {
@@ -2531,10 +2705,12 @@
         "ListJobParameterDefinitionsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListJobsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListLicenseEndpointsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
+        "ListLimitsRequest$maxResults": "<p>The maximum number of limits to return in each page of results.</p>",
         "ListMeteredProductsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListMonitorsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListQueueEnvironmentsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListQueueFleetAssociationsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
+        "ListQueueLimitAssociationsRequest$maxResults": "<p>The maximum number of associations to return in each page of results.</p>",
         "ListQueueMembersRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListQueuesRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
         "ListSessionActionsRequest$maxResults": "<p>The maximum number of results to return. Use this parameter with <code>NextToken</code> to get results as a set of sequential pages.</p>",
@@ -2555,6 +2731,16 @@
         "JobSearchSummary$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
         "JobSummary$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>",
         "UpdateJobRequest$maxRetriesPerTask": "<p>The maximum number of retries for a job.</p>"
+      }
+    },
+    "MaxWorkerCount": {
+      "base": null,
+      "refs": {
+        "CreateJobRequest$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, Deadline Cloud won't throttle the number of workers used to process the job.</p>",
+        "GetJobResponse$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>If you don't set the <code>maxWorkerCount</code> when you create a job, this value is not returned in the response.</p>",
+        "JobSearchSummary$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, the default is -1.</p>",
+        "JobSummary$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, the default is -1.</p>",
+        "UpdateJobRequest$maxWorkerCount": "<p>The maximum number of worker hosts that can concurrently process a job. When the <code>maxWorkerCount</code> is reached, no more workers will be assigned to process the job, even if the fleets assigned to the job's queue has available workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set it to -1, there is no maximum number of workers.</p> <p>If you don't specify the <code>maxWorkerCount</code>, the default is -1.</p> <p>The maximum number of workers that can process tasks in the job.</p>"
       }
     },
     "MembershipLevel": {
@@ -2605,6 +2791,12 @@
         "ListMeteredProductsResponse$meteredProducts": "<p>The metered products to list.</p>"
       }
     },
+    "MinOneMaxInteger": {
+      "base": null,
+      "refs": {
+        "AcquiredLimit$count": "<p>The number of limit resources used.</p>"
+      }
+    },
     "MinOneMaxTenThousand": {
       "base": null,
       "refs": {
@@ -2615,8 +2807,8 @@
     "MinZeroMaxInteger": {
       "base": null,
       "refs": {
-        "AcceleratorCountRange$min": "<p>The minimum number of GPUs for the accelerator. If you set the value to 0, a worker will still have 1 GPU.</p>",
-        "AcceleratorCountRange$max": "<p>The maximum number of GPUs for the accelerator.</p>",
+        "AcceleratorCountRange$min": "<p>The minimum number of GPU accelerators in the worker host.</p>",
+        "AcceleratorCountRange$max": "<p>The maximum number of GPU accelerators in the worker host.</p>",
         "AcceleratorTotalMemoryMiBRange$min": "<p>The minimum amount of memory to use for the accelerator, measured in MiB.</p>",
         "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
         "CreateFleetRequest$minWorkerCount": "<p>The minimum number of workers for the fleet.</p>",
@@ -2625,6 +2817,8 @@
         "FleetSummary$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
         "GetFleetResponse$minWorkerCount": "<p>The minimum number of workers specified in the fleet.</p>",
         "GetFleetResponse$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
+        "GetLimitResponse$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
+        "LimitSummary$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
         "UpdateFleetRequest$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
         "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p>"
       }
@@ -2863,9 +3057,11 @@
         "CreateJobRequest$queueId": "<p>The ID of the queue that the job is submitted to.</p>",
         "CreateQueueEnvironmentRequest$queueId": "<p>The queue ID to connect the queue and environment.</p>",
         "CreateQueueFleetAssociationRequest$queueId": "<p>The queue ID.</p>",
+        "CreateQueueLimitAssociationRequest$queueId": "<p>The unique identifier of the queue to associate with the limit.</p>",
         "CreateQueueResponse$queueId": "<p>The queue ID.</p>",
         "DeleteQueueEnvironmentRequest$queueId": "<p>The queue ID of the queue environment to delete.</p>",
         "DeleteQueueFleetAssociationRequest$queueId": "<p>The queue ID of the queue-fleet association.</p>",
+        "DeleteQueueLimitAssociationRequest$queueId": "<p>The unique identifier of the queue to disassociate.</p>",
         "DeleteQueueRequest$queueId": "<p>The queue ID of the queue to delete.</p>",
         "DisassociateMemberFromJobRequest$queueId": "<p>The queue ID connected to a job for which you're disassociating a member.</p>",
         "DisassociateMemberFromQueueRequest$queueId": "<p>The queue ID of the queue in which you're disassociating from a member.</p>",
@@ -2873,6 +3069,8 @@
         "GetQueueEnvironmentRequest$queueId": "<p>The queue ID for the queue environment.</p>",
         "GetQueueFleetAssociationRequest$queueId": "<p>The queue ID for the queue-fleet association.</p>",
         "GetQueueFleetAssociationResponse$queueId": "<p>The queue ID for the queue-fleet association.</p>",
+        "GetQueueLimitAssociationRequest$queueId": "<p>The unique identifier of the queue associated with the limit.</p>",
+        "GetQueueLimitAssociationResponse$queueId": "<p>The unique identifier of the queue associated with the limit.</p>",
         "GetQueueRequest$queueId": "<p>The queue ID for the queue to retrieve.</p>",
         "GetQueueResponse$queueId": "<p>The queue ID.</p>",
         "GetSessionActionRequest$queueId": "<p>The queue ID for the session action.</p>",
@@ -2887,6 +3085,7 @@
         "ListJobsRequest$queueId": "<p>The queue ID for the job.</p>",
         "ListQueueEnvironmentsRequest$queueId": "<p>The queue ID for the queue environment list.</p>",
         "ListQueueFleetAssociationsRequest$queueId": "<p>The queue ID for the queue-fleet association list.</p>",
+        "ListQueueLimitAssociationsRequest$queueId": "<p>Specifies that the operation should return only the queue limit associations for the specified queue. If you specify both the <code>queueId</code> and the <code>limitId</code>, only the specified limit is returned if it exists.</p>",
         "ListQueueMembersRequest$queueId": "<p>The queue ID to include on the list.</p>",
         "ListSessionActionsRequest$queueId": "<p>The queue ID for the session actions list.</p>",
         "ListSessionsRequest$queueId": "<p>The queue ID for the list of sessions</p>",
@@ -2896,6 +3095,7 @@
         "ListStorageProfilesForQueueRequest$queueId": "<p>The queue ID for the storage profile.</p>",
         "ListTasksRequest$queueId": "<p>The queue ID connected to the tasks.</p>",
         "QueueFleetAssociationSummary$queueId": "<p>The queue ID.</p>",
+        "QueueLimitAssociationSummary$queueId": "<p>The unique identifier of the queue in the association.</p>",
         "QueueMember$queueId": "<p>The queue ID.</p>",
         "QueueSummary$queueId": "<p>The queue ID.</p>",
         "SearchJobsRequestQueueIdsList$member": null,
@@ -2908,12 +3108,32 @@
         "UpdateJobRequest$queueId": "<p>The queue ID of the job to update.</p>",
         "UpdateQueueEnvironmentRequest$queueId": "<p>The queue ID of the queue environment to update.</p>",
         "UpdateQueueFleetAssociationRequest$queueId": "<p>The queue ID to update.</p>",
+        "UpdateQueueLimitAssociationRequest$queueId": "<p>The unique identifier of the queue associated to the limit.</p>",
         "UpdateQueueRequest$queueId": "<p>The queue ID to update.</p>",
         "UpdateSessionRequest$queueId": "<p>The queue ID to update in the session.</p>",
         "UpdateStepRequest$queueId": "<p>The queue ID to update.</p>",
         "UpdateTaskRequest$queueId": "<p>The queue ID to update.</p>",
         "UsageTrackingResource$queueId": "<p>The queue ID.</p>",
         "WorkerSessionSummary$queueId": "<p>The queue ID for the queue associated to the worker.</p>"
+      }
+    },
+    "QueueLimitAssociationStatus": {
+      "base": null,
+      "refs": {
+        "GetQueueLimitAssociationResponse$status": "<p>The current status of the limit.</p>",
+        "QueueLimitAssociationSummary$status": "<p>The status of task scheduling in the queue-limit association.</p> <ul> <li> <p> <code>ACTIVE</code> - Association is active.</p> </li> <li> <p> <code>STOP_LIMIT_USAGE_AND_COMPLETE_TASKS</code> - Association has stopped scheduling new tasks and is completing current tasks.</p> </li> <li> <p> <code>STOP_LIMIT_USAGE_AND_CANCEL_TASKS</code> - Association has stopped scheduling new tasks and is canceling current tasks.</p> </li> <li> <p> <code>STOPPED</code> - Association has been stopped.</p> </li> </ul>"
+      }
+    },
+    "QueueLimitAssociationSummaries": {
+      "base": null,
+      "refs": {
+        "ListQueueLimitAssociationsResponse$queueLimitAssociations": "<p>A list of associations between limits and queues in the farm specified in the request.</p>"
+      }
+    },
+    "QueueLimitAssociationSummary": {
+      "base": "<p>Provides information about the association between a queue and a limit.</p>",
+      "refs": {
+        "QueueLimitAssociationSummaries$member": null
       }
     },
     "QueueMember": {
@@ -2964,6 +3184,7 @@
         "CreateBudgetRequest$displayName": "<p>The display name of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateFarmRequest$displayName": "<p>The display name of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateFleetRequest$displayName": "<p>The display name of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "CreateLimitRequest$displayName": "<p>The display name of the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateMonitorRequest$displayName": "<p>The name that you give the monitor that is displayed in the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateQueueRequest$displayName": "<p>The display name of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "CreateStorageProfileRequest$displayName": "<p>The display name of the storage profile.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
@@ -2972,10 +3193,12 @@
         "GetBudgetResponse$displayName": "<p>The display name of the budget.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetFarmResponse$displayName": "<p>The display name of the farm.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetFleetResponse$displayName": "<p>The display name of the fleet.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "GetLimitResponse$displayName": "<p>The display name of the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetMonitorResponse$displayName": "<p>The name used to identify the monitor on the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetQueueResponse$displayName": "<p>The display name of the queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetStorageProfileForQueueResponse$displayName": "<p>The display name of the storage profile connected to a queue.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "GetStorageProfileResponse$displayName": "<p>The display name of the storage profile.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "LimitSummary$displayName": "<p>The name of the limit used in lists to identify the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "ListFleetsRequest$displayName": "<p>The display names of a list of fleets.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "MonitorSummary$displayName": "<p>The name of the monitor that displays on the Deadline Cloud console.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "QueueSummary$displayName": "<p>The display name of the queue summary to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
@@ -2983,6 +3206,7 @@
         "UpdateBudgetRequest$displayName": "<p>The display name of the budget to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateFarmRequest$displayName": "<p>The display name of the farm to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateFleetRequest$displayName": "<p>The display name of the fleet to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
+        "UpdateLimitRequest$displayName": "<p>The new display name of the limit.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateMonitorRequest$displayName": "<p>The new value to use for the monitor's display name.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateQueueRequest$displayName": "<p>The display name of the queue to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>",
         "UpdateStorageProfileRequest$displayName": "<p>The display name of the storage profile to update.</p> <important> <p>This field can store any content. Escape or encode this content before displaying it on a webpage or any other system that might interpret the content of this field.</p> </important>"
@@ -3717,6 +3941,8 @@
         "ListJobsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListLicenseEndpointsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListLicenseEndpointsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
+        "ListLimitsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
+        "ListLimitsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListMeteredProductsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListMeteredProductsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListMonitorsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
@@ -3725,6 +3951,8 @@
         "ListQueueEnvironmentsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListQueueFleetAssociationsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListQueueFleetAssociationsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
+        "ListQueueLimitAssociationsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
+        "ListQueueLimitAssociationsResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListQueueMembersRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
         "ListQueueMembersResponse$nextToken": "<p>If Deadline Cloud returns <code>nextToken</code>, then there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page, call the operation again using the returned token. Keep all other arguments unchanged. If no results remain, then <code>nextToken</code> is set to <code>null</code>. Each pagination token expires after 24 hours. If you provide a token that isn't valid, then you receive an HTTP 400 <code>ValidationException</code> error.</p>",
         "ListQueuesRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",
@@ -4067,6 +4295,16 @@
       "refs": {
       }
     },
+    "UpdateLimitRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateLimitResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateMonitorRequest": {
       "base": null,
       "refs": {
@@ -4101,6 +4339,22 @@
       "base": null,
       "refs": {
         "UpdateQueueFleetAssociationRequest$status": "<p>The status to update.</p>"
+      }
+    },
+    "UpdateQueueLimitAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateQueueLimitAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateQueueLimitAssociationStatus": {
+      "base": null,
+      "refs": {
+        "UpdateQueueLimitAssociationRequest$status": "<p>Sets the status of the limit. You can mark the limit active, or you can stop usage of the limit and either complete existing tasks or cancel any existing tasks immediately. </p>"
       }
     },
     "UpdateQueueRequest": {
@@ -4190,9 +4444,11 @@
         "GetFarmResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetFleetResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetJobResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "GetLimitResponse$updatedAt": "<p>The Unix timestamp of the date and time that the limit was last updated.</p>",
         "GetMonitorResponse$updatedAt": "<p>The UNIX timestamp of the last date and time that the monitor was updated.</p>",
         "GetQueueEnvironmentResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetQueueFleetAssociationResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "GetQueueLimitAssociationResponse$updatedAt": "<p>The Unix timestamp of the date and time that the association was last updated.</p>",
         "GetQueueResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetSessionResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetStepResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
@@ -4200,8 +4456,10 @@
         "GetTaskResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetWorkerResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "JobSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "LimitSummary$updatedAt": "<p>The Unix timestamp of the date and time that the limit was last updated.</p>",
         "MonitorSummary$updatedAt": "<p>The UNIX timestamp of the date and time that the monitor was last updated.</p>",
         "QueueFleetAssociationSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "QueueLimitAssociationSummary$updatedAt": "<p>The Unix timestamp of the date and time that the association was last updated.</p>",
         "QueueSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "SessionSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "StepSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
@@ -4220,9 +4478,11 @@
         "GetFarmResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetFleetResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetJobResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "GetLimitResponse$updatedBy": "<p>The user identifier of the person that last updated the limit.</p>",
         "GetMonitorResponse$updatedBy": "<p>The user name of the person that last updated the monitor.</p>",
         "GetQueueEnvironmentResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetQueueFleetAssociationResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "GetQueueLimitAssociationResponse$updatedBy": "<p>The user identifier of the person that last updated the association.</p>",
         "GetQueueResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetSessionResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetStepResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
@@ -4230,8 +4490,10 @@
         "GetTaskResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetWorkerResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "JobSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "LimitSummary$updatedBy": "<p>The user identifier of the person that last updated the limit.</p>",
         "MonitorSummary$updatedBy": "<p>The user name of the person that last updated the monitor.</p>",
         "QueueFleetAssociationSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "QueueLimitAssociationSummary$updatedBy": "<p>The user identifier of the person that updated the association.</p>",
         "QueueSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "SessionSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "StepSummary$updatedBy": "<p>The user or system that updated this resource.</p>",

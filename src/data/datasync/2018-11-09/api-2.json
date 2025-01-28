@@ -1289,8 +1289,6 @@
       "required":[
         "Subdirectory",
         "ServerHostname",
-        "User",
-        "Password",
         "AgentArns"
       ],
       "members":{
@@ -1301,7 +1299,12 @@
         "Password":{"shape":"SmbPassword"},
         "AgentArns":{"shape":"AgentArnList"},
         "MountOptions":{"shape":"SmbMountOptions"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "KerberosKeytab":{"shape":"KerberosKeytabFile"},
+        "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"}
       }
     },
     "CreateLocationSmbResponse":{
@@ -1625,7 +1628,10 @@
         "User":{"shape":"SmbUser"},
         "Domain":{"shape":"SmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
-        "CreationTime":{"shape":"Time"}
+        "CreationTime":{"shape":"Time"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"}
       }
     },
     "DescribeStorageSystemRequest":{
@@ -1848,6 +1854,11 @@
       "enum":["NetAppONTAP"]
     },
     "DiscoveryTime":{"type":"timestamp"},
+    "DnsIpList":{
+      "type":"list",
+      "member":{"shape":"ServerIpAddress"},
+      "max":2
+    },
     "Duration":{
       "type":"long",
       "min":0
@@ -2018,16 +2029,11 @@
     "FsxUpdateProtocolSmb":{
       "type":"structure",
       "members":{
-        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "Domain":{"shape":"UpdateSmbDomain"},
         "MountOptions":{"shape":"SmbMountOptions"},
         "Password":{"shape":"SmbPassword"},
         "User":{"shape":"SmbUser"}
       }
-    },
-    "FsxUpdateSmbDomain":{
-      "type":"string",
-      "max":253,
-      "pattern":"^([A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252})?$"
     },
     "FsxWindowsSubdirectory":{
       "type":"string",
@@ -2538,7 +2544,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-zA-Z0-9_\\-\\+\\./\\(\\)\\$\\p{Zs}]+$"
+      "pattern":"^[a-zA-Z0-9_\\-\\+\\.\\(\\)\\$\\p{Zs}]+$"
     },
     "ObjectStorageCertificate":{
       "type":"blob",
@@ -2936,6 +2942,19 @@
       "max":255,
       "pattern":"^(([a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9\\-]*[A-Za-z0-9])$"
     },
+    "ServerIpAddress":{
+      "type":"string",
+      "max":15,
+      "min":7,
+      "pattern":"\\A(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}\\z"
+    },
+    "SmbAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "NTLM",
+        "KERBEROS"
+      ]
+    },
     "SmbDomain":{
       "type":"string",
       "max":253,
@@ -2969,7 +2988,7 @@
     "SmbUser":{
       "type":"string",
       "max":104,
-      "pattern":"^[^\\x5B\\x5D\\\\/:;|=,+*?]{1,104}$"
+      "pattern":"^[^\\x22\\x5B\\x5D/\\\\:;|=,+*?\\x3C\\x3E]{1,104}$"
     },
     "SmbVersion":{
       "type":"string",
@@ -3427,7 +3446,7 @@
       "members":{
         "LocationArn":{"shape":"LocationArn"},
         "Subdirectory":{"shape":"FsxWindowsSubdirectory"},
-        "Domain":{"shape":"FsxUpdateSmbDomain"},
+        "Domain":{"shape":"UpdateSmbDomain"},
         "User":{"shape":"SmbUser"},
         "Password":{"shape":"SmbPassword"}
       }
@@ -3520,13 +3539,23 @@
         "Domain":{"shape":"SmbDomain"},
         "Password":{"shape":"SmbPassword"},
         "AgentArns":{"shape":"AgentArnList"},
-        "MountOptions":{"shape":"SmbMountOptions"}
+        "MountOptions":{"shape":"SmbMountOptions"},
+        "AuthenticationType":{"shape":"SmbAuthenticationType"},
+        "DnsIpAddresses":{"shape":"DnsIpList"},
+        "KerberosPrincipal":{"shape":"KerberosPrincipal"},
+        "KerberosKeytab":{"shape":"KerberosKeytabFile"},
+        "KerberosKrb5Conf":{"shape":"KerberosKrb5ConfFile"}
       }
     },
     "UpdateLocationSmbResponse":{
       "type":"structure",
       "members":{
       }
+    },
+    "UpdateSmbDomain":{
+      "type":"string",
+      "max":253,
+      "pattern":"^([A-Za-z0-9]((\\.|-+)?[A-Za-z0-9]){0,252})?$"
     },
     "UpdateStorageSystemRequest":{
       "type":"structure",

@@ -1525,6 +1525,13 @@
         "EnhancedMetricsConfig$operationLevelMetricsConfig": "<p> Controls how operation metrics will be emitted to CloudWatch. Operation metrics include:</p> <ul> <li> <p>Requests: The number of times a specified GraphQL operation was called.</p> </li> <li> <p>GraphQL errors: The number of GraphQL errors that occurred during a specified GraphQL operation.</p> </li> </ul> <p>Metrics will be recorded by API ID and operation name. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>"
       }
     },
+    "OutErrors": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$outErrors": "<p>The list of runtime errors that are added to the GraphQL operation response.</p>",
+        "EvaluateMappingTemplateResponse$outErrors": "<p>The list of runtime errors that are added to the GraphQL operation response.</p>"
+      }
+    },
     "OutputType": {
       "base": null,
       "refs": {
@@ -1820,6 +1827,13 @@
     "StartSchemaMergeResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "Stash": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$stash": "<p>An object available inside each resolver and function handler. A single <code>stash</code> object lives through a single resolver run. Therefore, you can use the stash to pass arbitrary data across request and response handlers and across functions in a pipeline resolver.</p>",
+        "EvaluateMappingTemplateResponse$stash": "<p>An object available inside each resolver and function handler. A single <code>stash</code> object lives through a single resolver run. Therefore, you can use the stash to pass arbitrary data across request and response handlers and across functions in a pipeline resolver.</p>"
       }
     },
     "String": {

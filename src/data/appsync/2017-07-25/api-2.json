@@ -2419,7 +2419,9 @@
       "members":{
         "evaluationResult":{"shape":"EvaluationResult"},
         "error":{"shape":"EvaluateCodeErrorDetail"},
-        "logs":{"shape":"Logs"}
+        "logs":{"shape":"Logs"},
+        "stash":{"shape":"Stash"},
+        "outErrors":{"shape":"OutErrors"}
       }
     },
     "EvaluateMappingTemplateRequest":{
@@ -2438,7 +2440,9 @@
       "members":{
         "evaluationResult":{"shape":"EvaluationResult"},
         "error":{"shape":"ErrorDetail"},
-        "logs":{"shape":"Logs"}
+        "logs":{"shape":"Logs"},
+        "stash":{"shape":"Stash"},
+        "outErrors":{"shape":"OutErrors"}
       }
     },
     "EvaluationResult":{
@@ -3467,6 +3471,10 @@
         "DISABLED"
       ]
     },
+    "OutErrors":{
+      "type":"string",
+      "pattern":"^[\\s\\S]*$"
+    },
     "OutputType":{
       "type":"string",
       "enum":[
@@ -3770,6 +3778,10 @@
       "members":{
         "sourceApiAssociationStatus":{"shape":"SourceApiAssociationStatus"}
       }
+    },
+    "Stash":{
+      "type":"string",
+      "pattern":"^[\\s\\S]*$"
     },
     "String":{"type":"string"},
     "SyncConfig":{
