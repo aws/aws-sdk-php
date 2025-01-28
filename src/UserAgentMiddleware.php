@@ -3,7 +3,6 @@
 namespace Aws;
 
 use Aws\EndpointDiscovery\Configuration;
-use Aws\S3\Parser\ValidateResponseChecksumResultMutator;
 use Closure;
 use Psr\Http\Message\RequestInterface;
 
