@@ -583,11 +583,11 @@ class S3Client extends AwsClient implements S3ClientInterface
     {
         $value = strtolower($value);
         if (array_key_exists($value, self::$checksumOptionEnum)) {
-            $args['request_checksum_calculation'] = $value;
+            $args['response_checksum_validation'] = $value;
         } else {
             $validValues = implode(' | ', array_keys(self::$checksumOptionEnum));
             throw new \InvalidArgumentException(
-                'invalid value provided for `request_checksum_calculation`.'
+                'invalid value provided for `response_checksum_validation`.'
                 . ' valid values are: ' . $validValues . '.'
             );
         }
