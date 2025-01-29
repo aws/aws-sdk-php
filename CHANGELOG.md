@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.2 - 2025-01-29
 
 * `Aws\ECR` - Add support for Dualstack and Dualstack-with-FIPS Endpoints
 * `Aws\S3` - Change the type of MpuObjectSize in CompleteMultipartUploadRequest from int to long.
