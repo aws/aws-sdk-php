@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - Add support for Dualstack and Dualstack-with-FIPS Endpoints
+* `Aws\S3` - Change the type of MpuObjectSize in CompleteMultipartUploadRequest from int to long.
+* `Aws\ECRPublic` - Add support for Dualstack Endpoints
+* `Aws\BCMPricingCalculator` - Added ConflictException error type in DeleteBillScenario, BatchDeleteBillScenarioCommitmentModification, BatchDeleteBillScenarioUsageModification, BatchUpdateBillScenarioUsageModification, and BatchUpdateBillScenarioCommitmentModification API operations.
+* `Aws\MailManager` - This release includes a new feature for Amazon SES Mail Manager which allows customers to specify known addresses and domains and make use of those in traffic policies and rules actions to distinguish between known and unknown entries.
+
 ## 3.339.1 - 2025-01-28
 
 * `Aws\DSQL` - Updates default `AuthTokenGenerator` token expiration time from 700 to 900 seconds.

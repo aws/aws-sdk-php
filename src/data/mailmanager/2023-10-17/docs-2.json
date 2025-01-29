@@ -4,6 +4,8 @@
   "operations": {
     "CreateAddonInstance": "<p>Creates an Add On instance for the subscription indicated in the request. The resulting Amazon Resource Name (ARN) can be used in a conditional statement for a rule set or traffic policy. </p>",
     "CreateAddonSubscription": "<p>Creates a subscription for an Add On representing the acceptance of its terms of use and additional pricing. The subscription can then be used to create an instance for use in rule sets or traffic policies.</p>",
+    "CreateAddressList": "<p>Creates a new address list.</p>",
+    "CreateAddressListImportJob": "<p>Creates an import job for an address list.</p>",
     "CreateArchive": "<p>Creates a new email archive resource for storing and retaining emails.</p>",
     "CreateIngressPoint": "<p>Provision a new ingress endpoint resource.</p>",
     "CreateRelay": "<p>Creates a relay resource which can be used in rules to relay incoming emails to defined relay destinations. </p>",
@@ -11,13 +13,17 @@
     "CreateTrafficPolicy": "<p>Provision a new traffic policy resource.</p>",
     "DeleteAddonInstance": "<p>Deletes an Add On instance.</p>",
     "DeleteAddonSubscription": "<p>Deletes an Add On subscription.</p>",
+    "DeleteAddressList": "<p>Deletes an address list.</p>",
     "DeleteArchive": "<p>Initiates deletion of an email archive. This changes the archive state to pending deletion. In this state, no new emails can be added, and existing archived emails become inaccessible (search, export, download). The archive and all of its contents will be permanently deleted 30 days after entering the pending deletion state, regardless of the configured retention period. </p>",
     "DeleteIngressPoint": "<p>Delete an ingress endpoint resource.</p>",
     "DeleteRelay": "<p>Deletes an existing relay resource.</p>",
     "DeleteRuleSet": "<p>Delete a rule set.</p>",
     "DeleteTrafficPolicy": "<p>Delete a traffic policy resource.</p>",
+    "DeregisterMemberFromAddressList": "<p>Removes a member from an address list.</p>",
     "GetAddonInstance": "<p>Gets detailed information about an Add On instance.</p>",
     "GetAddonSubscription": "<p>Gets detailed information about an Add On subscription.</p>",
+    "GetAddressList": "<p>Fetch attributes of an address list.</p>",
+    "GetAddressListImportJob": "<p>Fetch attributes of an import job.</p>",
     "GetArchive": "<p>Retrieves the full details and current state of a specified email archive.</p>",
     "GetArchiveExport": "<p>Retrieves the details and current status of a specific email archive export job.</p>",
     "GetArchiveMessage": "<p>Returns a pre-signed URL that provides temporary download access to the specific email message stored in the archive. </p>",
@@ -25,21 +31,28 @@
     "GetArchiveSearch": "<p>Retrieves the details and current status of a specific email archive search job.</p>",
     "GetArchiveSearchResults": "<p>Returns the results of a completed email archive search job.</p>",
     "GetIngressPoint": "<p>Fetch ingress endpoint resource attributes.</p>",
+    "GetMemberOfAddressList": "<p>Fetch attributes of a member in an address list.</p>",
     "GetRelay": "<p>Fetch the relay resource and it's attributes.</p>",
     "GetRuleSet": "<p>Fetch attributes of a rule set.</p>",
     "GetTrafficPolicy": "<p>Fetch attributes of a traffic policy resource.</p>",
     "ListAddonInstances": "<p>Lists all Add On instances in your account.</p>",
     "ListAddonSubscriptions": "<p>Lists all Add On subscriptions in your account.</p>",
+    "ListAddressListImportJobs": "<p>Lists jobs for an address list.</p>",
+    "ListAddressLists": "<p>Lists address lists for this account.</p>",
     "ListArchiveExports": "<p>Returns a list of email archive export jobs.</p>",
     "ListArchiveSearches": "<p>Returns a list of email archive search jobs.</p>",
     "ListArchives": "<p>Returns a list of all email archives in your account.</p>",
     "ListIngressPoints": "<p>List all ingress endpoint resources.</p>",
+    "ListMembersOfAddressList": "<p>Lists members of an address list.</p>",
     "ListRelays": "<p>Lists all the existing relay resources.</p>",
     "ListRuleSets": "<p>List rule sets for this account.</p>",
     "ListTagsForResource": "<p> Retrieves the list of tags (keys and values) assigned to the resource. </p>",
     "ListTrafficPolicies": "<p>List traffic policy resources.</p>",
+    "RegisterMemberToAddressList": "<p>Adds a member to an address list.</p>",
+    "StartAddressListImportJob": "<p>Starts an import job for an address list.</p>",
     "StartArchiveExport": "<p>Initiates an export of emails from the specified archive.</p>",
     "StartArchiveSearch": "<p>Initiates a search across emails in the specified archive.</p>",
+    "StopAddressListImportJob": "<p>Stops an ongoing import job for an address list.</p>",
     "StopArchiveExport": "<p>Stops an in-progress export of emails from an archive.</p>",
     "StopArchiveSearch": "<p>Stops an in-progress archive search job.</p>",
     "TagResource": "<p> Adds one or more tags (keys and values) to a specified resource. </p>",
@@ -150,6 +163,81 @@
       "base": null,
       "refs": {
         "ListAddonSubscriptionsResponse$AddonSubscriptions": "<p>The list of ingress endpoints.</p>"
+      }
+    },
+    "Address": {
+      "base": null,
+      "refs": {
+        "DeregisterMemberFromAddressListRequest$Address": "<p>The address to be removed from the address list.</p>",
+        "GetMemberOfAddressListRequest$Address": "<p>The address to be retrieved from the address list.</p>",
+        "GetMemberOfAddressListResponse$Address": "<p>The address retrieved from the address list.</p>",
+        "RegisterMemberToAddressListRequest$Address": "<p>The address to be added to the address list.</p>",
+        "SavedAddress$Address": "<p>The email or domain that constitutes the address.</p>"
+      }
+    },
+    "AddressFilter": {
+      "base": "<p>Filtering options for ListMembersOfAddressList operation.</p>",
+      "refs": {
+        "ListMembersOfAddressListRequest$Filter": "<p>Filter to be used to limit the results.</p>"
+      }
+    },
+    "AddressList": {
+      "base": "<p>An address list contains a list of emails and domains that are used in MailManager Ingress endpoints and Rules for email management.</p>",
+      "refs": {
+        "AddressLists$member": null
+      }
+    },
+    "AddressListArn": {
+      "base": null,
+      "refs": {
+        "AddressList$AddressListArn": "<p>The Amazon Resource Name (ARN) of the address list.</p>",
+        "GetAddressListResponse$AddressListArn": "<p>The Amazon Resource Name (ARN) of the address list resource.</p>",
+        "IngressAddressListArnList$member": null,
+        "RuleAddressListArnList$member": null
+      }
+    },
+    "AddressListId": {
+      "base": null,
+      "refs": {
+        "AddressList$AddressListId": "<p>The identifier of the address list.</p>",
+        "CreateAddressListImportJobRequest$AddressListId": "<p>The unique identifier of the address list for importing addresses to.</p>",
+        "CreateAddressListResponse$AddressListId": "<p>The identifier of the created address list.</p>",
+        "DeleteAddressListRequest$AddressListId": "<p>The identifier of an existing address list resource to delete.</p>",
+        "DeregisterMemberFromAddressListRequest$AddressListId": "<p>The unique identifier of the address list to remove the address from.</p>",
+        "GetAddressListImportJobResponse$AddressListId": "<p>The unique identifier of the address list the import job was created for.</p>",
+        "GetAddressListRequest$AddressListId": "<p>The identifier of an existing address list resource to be retrieved.</p>",
+        "GetAddressListResponse$AddressListId": "<p>The identifier of the address list resource.</p>",
+        "GetMemberOfAddressListRequest$AddressListId": "<p>The unique identifier of the address list to retrieve the address from.</p>",
+        "ImportJob$AddressListId": "<p>The unique identifier of the address list the import job was created for.</p>",
+        "ListAddressListImportJobsRequest$AddressListId": "<p>The unique identifier of the address list for listing import jobs.</p>",
+        "ListMembersOfAddressListRequest$AddressListId": "<p>The unique identifier of the address list to list the addresses from.</p>",
+        "RegisterMemberToAddressListRequest$AddressListId": "<p>The unique identifier of the address list where the address should be added.</p>"
+      }
+    },
+    "AddressListName": {
+      "base": null,
+      "refs": {
+        "AddressList$AddressListName": "<p>The user-friendly name of the address list.</p>",
+        "CreateAddressListRequest$AddressListName": "<p>A user-friendly name for the address list.</p>",
+        "GetAddressListResponse$AddressListName": "<p>A user-friendly name for the address list resource.</p>"
+      }
+    },
+    "AddressLists": {
+      "base": null,
+      "refs": {
+        "ListAddressListsResponse$AddressLists": "<p>The list of address lists.</p>"
+      }
+    },
+    "AddressPageSize": {
+      "base": null,
+      "refs": {
+        "ListMembersOfAddressListRequest$PageSize": "<p>The maximum number of address list members that are returned per call. You can use NextToken to retrieve the next page of members.</p>"
+      }
+    },
+    "AddressPrefix": {
+      "base": null,
+      "refs": {
+        "AddressFilter$AddressPrefix": "<p>Filter to limit the results to addresses having the provided prefix.</p>"
       }
     },
     "Analysis": {
@@ -346,6 +434,26 @@
       "refs": {
       }
     },
+    "CreateAddressListImportJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAddressListImportJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAddressListResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateArchiveRequest": {
       "base": "<p>The request to create a new email archive.</p>",
       "refs": {
@@ -416,6 +524,16 @@
       "refs": {
       }
     },
+    "DeleteAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAddressListResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteArchiveRequest": {
       "base": "<p>The request to initiate deletion of an email archive.</p>",
       "refs": {
@@ -478,6 +596,16 @@
         "RuleAction$DeliverToQBusiness": "<p>This action delivers an email to an Amazon Q Business application for ingestion into its knowledge base.</p>"
       }
     },
+    "DeregisterMemberFromAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeregisterMemberFromAddressListResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Double": {
       "base": null,
       "refs": {
@@ -515,6 +643,8 @@
         "AccessDeniedException$Message": null,
         "ConflictException$Message": null,
         "ExportStatus$ErrorMessage": "<p>An error message if the export job failed.</p>",
+        "GetAddressListImportJobResponse$Error": "<p>The reason for failure of an import job.</p>",
+        "ImportJob$Error": "<p>The reason for failure of an import job.</p>",
         "ResourceNotFoundException$Message": null,
         "SearchStatus$ErrorMessage": "<p>An error message if the search failed.</p>",
         "ServiceQuotaExceededException$Message": null,
@@ -590,6 +720,26 @@
       "refs": {
       }
     },
+    "GetAddressListImportJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAddressListImportJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAddressListResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetArchiveExportRequest": {
       "base": "<p>The request to retrieve details of a specific archive export job.</p>",
       "refs": {
@@ -660,6 +810,16 @@
       "refs": {
       }
     },
+    "GetMemberOfAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMemberOfAddressListResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetRelayRequest": {
       "base": null,
       "refs": {
@@ -722,11 +882,58 @@
       "refs": {
         "CreateAddonInstanceRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
         "CreateAddonSubscriptionRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
+        "CreateAddressListImportJobRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
+        "CreateAddressListRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
         "CreateArchiveRequest$ClientToken": "<p>A unique token Amazon SES uses to recognize retries of this request.</p>",
         "CreateIngressPointRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
         "CreateRelayRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
         "CreateRuleSetRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>",
         "CreateTrafficPolicyRequest$ClientToken": "<p>A unique token that Amazon SES uses to recognize subsequent retries of the same request.</p>"
+      }
+    },
+    "ImportDataFormat": {
+      "base": "<p>The import data format contains the specifications of the input file that would be passed to the address list import job.</p>",
+      "refs": {
+        "CreateAddressListImportJobRequest$ImportDataFormat": "<p>The format of the input for an import job.</p>",
+        "GetAddressListImportJobResponse$ImportDataFormat": "<p>The format of the input for an import job.</p>",
+        "ImportJob$ImportDataFormat": "<p>The format of the input for the import job.</p>"
+      }
+    },
+    "ImportDataType": {
+      "base": null,
+      "refs": {
+        "ImportDataFormat$ImportDataType": "<p>The type of file that would be passed as an input for the address list import job.</p>"
+      }
+    },
+    "ImportJob": {
+      "base": "<p>Details about an import job.</p>",
+      "refs": {
+        "ImportJobs$member": null
+      }
+    },
+    "ImportJobStatus": {
+      "base": null,
+      "refs": {
+        "GetAddressListImportJobResponse$Status": "<p>The status of the import job.</p>",
+        "ImportJob$Status": "<p>The status of the import job.</p>"
+      }
+    },
+    "ImportJobs": {
+      "base": null,
+      "refs": {
+        "ListAddressListImportJobsResponse$ImportJobs": "<p>The list of import jobs.</p>"
+      }
+    },
+    "IngressAddressListArnList": {
+      "base": null,
+      "refs": {
+        "IngressIsInAddressList$AddressLists": "<p>The address lists that will be used for evaluation.</p>"
+      }
+    },
+    "IngressAddressListEmailAttribute": {
+      "base": null,
+      "refs": {
+        "IngressIsInAddressList$Attribute": "<p>The email attribute that needs to be evaluated against the address list.</p>"
       }
     },
     "IngressAnalysis": {
@@ -775,6 +982,12 @@
       "base": "<p>The union type representing the allowed types for the left hand side of an IP condition.</p>",
       "refs": {
         "PolicyCondition$IpExpression": "<p>This represents an IP based condition matching on the incoming mail. It performs the operation configured in 'Operator' and evaluates the 'Protocol' object against the 'Value'.</p>"
+      }
+    },
+    "IngressIsInAddressList": {
+      "base": "<p>The address lists and the address list attribute value that is evaluated in a policy statement's conditional expression to either deny or block the incoming email.</p>",
+      "refs": {
+        "IngressBooleanToEvaluate$IsInAddressList": "<p>The structure type for a boolean condition that provides the address lists to evaluate incoming traffic on.</p>"
       }
     },
     "IngressPoint": {
@@ -936,6 +1149,34 @@
         "IngressIpv4Expression$Values": "<p>The right hand side argument of an IP condition expression.</p>"
       }
     },
+    "JobId": {
+      "base": null,
+      "refs": {
+        "CreateAddressListImportJobResponse$JobId": "<p>The identifier of the created import job.</p>",
+        "GetAddressListImportJobRequest$JobId": "<p>The identifier of the import job that needs to be retrieved.</p>",
+        "GetAddressListImportJobResponse$JobId": "<p>The identifier of the import job.</p>",
+        "ImportJob$JobId": "<p>The identifier of the import job.</p>",
+        "StartAddressListImportJobRequest$JobId": "<p>The identifier of the import job that needs to be started.</p>",
+        "StopAddressListImportJobRequest$JobId": "<p>The identifier of the import job that needs to be stopped.</p>"
+      }
+    },
+    "JobItemsCount": {
+      "base": null,
+      "refs": {
+        "GetAddressListImportJobResponse$FailedItemsCount": "<p>The number of input addresses that failed to be imported into the address list.</p>",
+        "GetAddressListImportJobResponse$ImportedItemsCount": "<p>The number of input addresses successfully imported into the address list.</p>",
+        "ImportJob$FailedItemsCount": "<p>The number of addresses in the input that failed to get imported into address list.</p>",
+        "ImportJob$ImportedItemsCount": "<p>The number of addresses in the input that were successfully imported into the address list.</p>"
+      }
+    },
+    "JobName": {
+      "base": null,
+      "refs": {
+        "CreateAddressListImportJobRequest$Name": "<p>A user-friendly name for the import job.</p>",
+        "GetAddressListImportJobResponse$Name": "<p>A user-friendly name for the import job.</p>",
+        "ImportJob$Name": "<p>A user-friendly name for the import job.</p>"
+      }
+    },
     "KmsKeyArn": {
       "base": null,
       "refs": {
@@ -965,6 +1206,26 @@
       }
     },
     "ListAddonSubscriptionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAddressListImportJobsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAddressListImportJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAddressListsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAddressListsResponse": {
       "base": null,
       "refs": {
       }
@@ -1005,6 +1266,16 @@
       }
     },
     "ListIngressPointsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMembersOfAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMembersOfAddressListResponse": {
       "base": null,
       "refs": {
       }
@@ -1099,6 +1370,8 @@
       "refs": {
         "ListAddonInstancesRequest$PageSize": "<p>The maximum number of ingress endpoint resources that are returned per call. You can use NextToken to obtain further ingress endpoints. </p>",
         "ListAddonSubscriptionsRequest$PageSize": "<p>The maximum number of ingress endpoint resources that are returned per call. You can use NextToken to obtain further ingress endpoints. </p>",
+        "ListAddressListImportJobsRequest$PageSize": "<p>The maximum number of import jobs that are returned per call. You can use NextToken to retrieve the next page of jobs.</p>",
+        "ListAddressListsRequest$PageSize": "<p>The maximum number of address list resources that are returned per call. You can use NextToken to retrieve the next page of address lists.</p>",
         "ListArchiveExportsRequest$PageSize": "<p>The maximum number of archive export jobs that are returned per call. You can use NextToken to obtain further pages of archives. </p>",
         "ListArchiveSearchesRequest$PageSize": "<p>The maximum number of archive search jobs that are returned per call. You can use NextToken to obtain further pages of archives. </p>",
         "ListArchivesRequest$PageSize": "<p>The maximum number of archives that are returned per call. You can use NextToken to obtain further pages of archives. </p>",
@@ -1114,6 +1387,10 @@
         "ListAddonInstancesResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListAddonSubscriptionsRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
         "ListAddonSubscriptionsResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListAddressListImportJobsRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
+        "ListAddressListImportJobsResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListAddressListsRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
+        "ListAddressListsResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListArchiveExportsRequest$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. </p>",
         "ListArchiveExportsResponse$NextToken": "<p>If present, use to retrieve the next page of results.</p>",
         "ListArchiveSearchesRequest$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. </p>",
@@ -1122,6 +1399,8 @@
         "ListArchivesResponse$NextToken": "<p>If present, use to retrieve the next page of results.</p>",
         "ListIngressPointsRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
         "ListIngressPointsResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
+        "ListMembersOfAddressListRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
+        "ListMembersOfAddressListResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListRelaysRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
         "ListRelaysResponse$NextToken": "<p>If NextToken is returned, there are more results available. The value of NextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListRuleSetsRequest$NextToken": "<p>If you received a pagination token from a previous call to this API, you can provide it here to continue paginating through the next page of results.</p>",
@@ -1156,6 +1435,14 @@
         "UpdateTrafficPolicyRequest$PolicyStatements": "<p>The list of conditions to be updated for filtering email traffic.</p>"
       }
     },
+    "PreSignedUrl": {
+      "base": null,
+      "refs": {
+        "CreateAddressListImportJobResponse$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>",
+        "GetAddressListImportJobResponse$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>",
+        "ImportJob$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>"
+      }
+    },
     "QBusinessApplicationId": {
       "base": null,
       "refs": {
@@ -1172,6 +1459,16 @@
       "base": null,
       "refs": {
         "ReplaceRecipientAction$ReplaceWith": "<p>This action specifies the replacement recipient email addresses to insert.</p>"
+      }
+    },
+    "RegisterMemberToAddressListRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RegisterMemberToAddressListResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "Relay": {
@@ -1296,6 +1593,18 @@
         "Rule$Actions": "<p>The list of actions to execute when the conditions match the incoming email, and none of the \"unless conditions\" match.</p>"
       }
     },
+    "RuleAddressListArnList": {
+      "base": null,
+      "refs": {
+        "RuleIsInAddressList$AddressLists": "<p>The address lists that will be used for evaluation.</p>"
+      }
+    },
+    "RuleAddressListEmailAttribute": {
+      "base": null,
+      "refs": {
+        "RuleIsInAddressList$Attribute": "<p>The email attribute that needs to be evaluated against the address list.</p>"
+      }
+    },
     "RuleBooleanEmailAttribute": {
       "base": null,
       "refs": {
@@ -1391,6 +1700,12 @@
       "base": null,
       "refs": {
         "RuleIpExpression$Values": "<p>The IP CIDR blocks in format \"x.y.z.w/n\" (eg 10.0.0.0/8) to match with the email's IP address. For the operator CIDR_MATCHES, if multiple values are given, they are evaluated as an OR. That is, if the IP address is contained within any of the given CIDR ranges, the condition is deemed to match. For NOT_CIDR_MATCHES, if multiple CIDR ranges are given, the condition is deemed to match if the IP address is not contained in any of the given CIDR ranges.</p>"
+      }
+    },
+    "RuleIsInAddressList": {
+      "base": "<p>The structure type for a boolean condition that provides the address lists and address list attribute to evaluate.</p>",
+      "refs": {
+        "RuleBooleanToEvaluate$IsInAddressList": "<p>The structure representing the address lists and address list attribute that will be used in evaluation of boolean expression.</p>"
       }
     },
     "RuleName": {
@@ -1581,6 +1896,18 @@
         "GetArchiveMessageResponse$MessageDownloadLink": "<p>A pre-signed URL to temporarily download the full message content.</p>"
       }
     },
+    "SavedAddress": {
+      "base": "<p>An address that is a member of an address list.</p>",
+      "refs": {
+        "SavedAddresses$member": null
+      }
+    },
+    "SavedAddresses": {
+      "base": null,
+      "refs": {
+        "ListMembersOfAddressListResponse$Addresses": "<p>The list of addresses.</p>"
+      }
+    },
     "SearchId": {
       "base": null,
       "refs": {
@@ -1655,6 +1982,16 @@
         "IngressPointConfiguration$SmtpPassword": "<p>The password of the ingress endpoint resource.</p>"
       }
     },
+    "StartAddressListImportJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAddressListImportJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartArchiveExportRequest": {
       "base": "<p>The request to initiate an export of emails from an archive.</p>",
       "refs": {
@@ -1672,6 +2009,16 @@
     },
     "StartArchiveSearchResponse": {
       "base": "<p>The response from initiating an archive search.</p>",
+      "refs": {
+      }
+    },
+    "StopAddressListImportJobRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopAddressListImportJobResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -1765,6 +2112,7 @@
       "refs": {
         "CreateAddonInstanceRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateAddonSubscriptionRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
+        "CreateAddressListRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateArchiveRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateIngressPointRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
         "CreateRelayRequest$Tags": "<p>The tags used to organize, track, or control access for the resource. For example, { \"tags\": {\"key1\":\"value1\", \"key2\":\"value2\"} }.</p>",
@@ -1808,11 +2156,18 @@
       "refs": {
         "AddonInstance$CreatedTimestamp": "<p>The timestamp of when the Add On instance was created.</p>",
         "AddonSubscription$CreatedTimestamp": "<p>The timestamp of when the Add On subscription was created.</p>",
+        "AddressList$CreatedTimestamp": "<p>The timestamp of when the address list was created.</p>",
+        "AddressList$LastUpdatedTimestamp": "<p>The timestamp of when the address list was last updated.</p>",
         "Archive$LastUpdatedTimestamp": "<p>The timestamp of when the archive was last updated.</p>",
         "ExportStatus$CompletionTimestamp": "<p>The timestamp of when the export job completed (if finished).</p>",
         "ExportStatus$SubmissionTimestamp": "<p>The timestamp of when the export job was submitted.</p>",
         "GetAddonInstanceResponse$CreatedTimestamp": "<p>The timestamp of when the Add On instance was created.</p>",
         "GetAddonSubscriptionResponse$CreatedTimestamp": "<p>The timestamp of when the Add On subscription was created.</p>",
+        "GetAddressListImportJobResponse$CompletedTimestamp": "<p>The timestamp of when the import job was completed.</p>",
+        "GetAddressListImportJobResponse$CreatedTimestamp": "<p>The timestamp of when the import job was created.</p>",
+        "GetAddressListImportJobResponse$StartTimestamp": "<p>The timestamp of when the import job was started.</p>",
+        "GetAddressListResponse$CreatedTimestamp": "<p>The date of when then address list was created.</p>",
+        "GetAddressListResponse$LastUpdatedTimestamp": "<p>The date of when the address list was last updated.</p>",
         "GetArchiveExportResponse$FromTimestamp": "<p>The start of the timestamp range the exported emails cover.</p>",
         "GetArchiveExportResponse$ToTimestamp": "<p>The end of the date range the exported emails cover.</p>",
         "GetArchiveResponse$CreatedTimestamp": "<p>The timestamp of when the archive was created.</p>",
@@ -1821,17 +2176,22 @@
         "GetArchiveSearchResponse$ToTimestamp": "<p>The end timestamp of the range the searched emails cover.</p>",
         "GetIngressPointResponse$CreatedTimestamp": "<p>The timestamp of when the ingress endpoint was created.</p>",
         "GetIngressPointResponse$LastUpdatedTimestamp": "<p>The timestamp of when the ingress endpoint was last updated.</p>",
+        "GetMemberOfAddressListResponse$CreatedTimestamp": "<p>The timestamp of when the address was created.</p>",
         "GetRelayResponse$CreatedTimestamp": "<p>The timestamp of when the relay was created.</p>",
         "GetRelayResponse$LastModifiedTimestamp": "<p>The timestamp of when relay was last updated.</p>",
         "GetRuleSetResponse$CreatedDate": "<p>The date of when then rule set was created.</p>",
         "GetRuleSetResponse$LastModificationDate": "<p>The date of when the rule set was last modified.</p>",
         "GetTrafficPolicyResponse$CreatedTimestamp": "<p>The timestamp of when the traffic policy was created.</p>",
         "GetTrafficPolicyResponse$LastUpdatedTimestamp": "<p>The timestamp of when the traffic policy was last updated.</p>",
+        "ImportJob$CompletedTimestamp": "<p>The timestamp of when the import job was completed.</p>",
+        "ImportJob$CreatedTimestamp": "<p>The timestamp of when the import job was created.</p>",
+        "ImportJob$StartTimestamp": "<p>The timestamp of when the import job was started.</p>",
         "IngressPointPasswordConfiguration$PreviousSmtpPasswordExpiryTimestamp": "<p>The previous password expiry timestamp of the ingress endpoint resource.</p>",
         "Metadata$Timestamp": "<p>The timestamp of when the email was received.</p>",
         "Relay$LastModifiedTimestamp": "<p>The timestamp of when the relay was last modified.</p>",
         "Row$ReceivedTimestamp": "<p>The timestamp of when the email was received.</p>",
         "RuleSet$LastModificationDate": "<p>The last modification date of the rule set.</p>",
+        "SavedAddress$CreatedTimestamp": "<p>The timestamp of when the address was added to the address list.</p>",
         "SearchStatus$CompletionTimestamp": "<p>The timestamp of when the search completed (if finished).</p>",
         "SearchStatus$SubmissionTimestamp": "<p>The timestamp of when the search was submitted.</p>",
         "StartArchiveExportRequest$FromTimestamp": "<p>The start of the timestamp range to include emails from.</p>",
