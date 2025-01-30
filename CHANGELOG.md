@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.3 - 2025-01-30
 
 * `Aws\QBusiness` - Added APIs to manage QBusiness user subscriptions
 * `Aws\AppStream` - Add support for managing admin consent requirement on selected domains for OneDrive Storage Connectors in AppStream2.0.
