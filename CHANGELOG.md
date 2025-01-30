@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QBusiness` - Added APIs to manage QBusiness user subscriptions
+* `Aws\AppStream` - Add support for managing admin consent requirement on selected domains for OneDrive Storage Connectors in AppStream2.0.
+* `Aws\ECR` - Temporarily updating dualstack endpoint support
+* `Aws\VerifiedPermissions` - Adds Cedar JSON format support for entities and context data in authorization requests
+* `Aws\MediaTailor` - Adds options for configuring how MediaTailor conditions ads before inserting them into the content stream. Based on the new settings, MediaTailor will either transcode ads to match the content stream as it has in the past, or it will insert ads without first transcoding them.
+* `Aws\S3Tables` - You can now use the CreateTable API operation to create tables with schemas by adding an optional metadata argument.
+* `Aws\BedrockAgentRuntime` - Add a 'reason' field to InternalServerException
+* `Aws\ECRPublic` - Temporarily updating dualstack endpoint support
+
 ## 3.339.2 - 2025-01-29
 
 * `Aws\ECR` - Add support for Dualstack and Dualstack-with-FIPS Endpoints

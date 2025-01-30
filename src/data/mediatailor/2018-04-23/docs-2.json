@@ -3,7 +3,7 @@
   "service": "<p>Use the AWS Elemental MediaTailor SDKs and CLI to configure scalable ad insertion and linear channels. With MediaTailor, you can assemble existing content into a linear stream and serve targeted ads to viewers while maintaining broadcast quality in over-the-top (OTT) video applications. For information about using the service, including detailed information about the settings covered in this guide, see the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/\">AWS Elemental MediaTailor User Guide</a>.</p> <p>Through the SDKs and the CLI you manage AWS Elemental MediaTailor configurations and channels the same as you do through the console. For example, you specify ad insertion behavior and mapping information for the origin server and the ad decision server (ADS).</p>",
   "operations": {
     "ConfigureLogsForChannel": "<p>Configures Amazon CloudWatch log settings for a channel.</p>",
-    "ConfigureLogsForPlaybackConfiguration": "<p>Amazon CloudWatch log settings for a playback configuration.</p>",
+    "ConfigureLogsForPlaybackConfiguration": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
     "CreateChannel": "<p>Creates a channel. For information about MediaTailor channels, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/channel-assembly-channels.html\">Working with channels</a> in the <i>MediaTailor User Guide</i>.</p>",
     "CreateLiveSource": "<p>The live source configuration.</p>",
     "CreatePrefetchSchedule": "<p>Creates a prefetch schedule for a playback configuration. A prefetch schedule allows you to tell MediaTailor to fetch and prepare certain ads before an ad break happens. For more information about ad prefetching, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Using ad prefetching</a> in the <i>MediaTailor User Guide</i>.</p>",
@@ -87,6 +87,15 @@
       "base": "<p>A location at which a zero-duration ad marker was detected in a VOD source manifest.</p>",
       "refs": {
         "AdBreakOpportunities$member": null
+      }
+    },
+    "AdConditioningConfiguration": {
+      "base": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
+      "refs": {
+        "GetPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns. </p>",
+        "PlaybackConfiguration$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
+        "PutPlaybackConfigurationRequest$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
+        "PutPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>"
       }
     },
     "AdMarkerPassthrough": {
@@ -203,15 +212,15 @@
     "ConfigurationAliasesRequest": {
       "base": "<p>The predefined aliases for dynamic variables.</p>",
       "refs": {
-        "PutPlaybackConfigurationRequest$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>"
+        "PutPlaybackConfigurationRequest$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>"
       }
     },
     "ConfigurationAliasesResponse": {
       "base": "<p>The predefined aliases for dynamic variables.</p>",
       "refs": {
-        "GetPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>",
-        "PlaybackConfiguration$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>",
-        "PutPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>"
+        "GetPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>",
+        "PlaybackConfiguration$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>",
+        "PutPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>"
       }
     },
     "ConfigureLogsForChannelRequest": {
@@ -563,10 +572,10 @@
     "Integer": {
       "base": null,
       "refs": {
-        "SegmentationDescriptor$SegmentNum": "<p>The segment number to assign to the <code>segmentation_descriptor.segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SegmentationEventId": "<p>The Event Identifier to assign to the <code>segmentation_descriptor.segmentation_event_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. The default value is 1.</p>",
-        "SegmentationDescriptor$SegmentationTypeId": "<p>The Type Identifier to assign to the <code>segmentation_descriptor.segmentation_type_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 48.</p>",
         "SegmentationDescriptor$SegmentationUpidType": "<p>The Upid Type to assign to the <code>segmentation_descriptor.segmentation_upid_type</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 14.</p>",
+        "SegmentationDescriptor$SegmentationTypeId": "<p>The Type Identifier to assign to the <code>segmentation_descriptor.segmentation_type_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 48.</p>",
+        "SegmentationDescriptor$SegmentNum": "<p>The segment number to assign to the <code>segmentation_descriptor.segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SegmentsExpected": "<p>The number of segments expected, which is assigned to the <code>segmentation_descriptor.segments_expectedS</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SubSegmentNum": "<p>The sub-segment number to assign to the <code>segmentation_descriptor.sub_segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The defualt value is null.</p>",
         "SegmentationDescriptor$SubSegmentsExpected": "<p>The number of sub-segments expected, which is assigned to the <code>segmentation_descriptor.sub_segments_expected</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is null.</p>"
@@ -674,11 +683,11 @@
       }
     },
     "LogConfiguration": {
-      "base": "<p>Returns Amazon CloudWatch log settings for a playback configuration.</p>",
+      "base": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
       "refs": {
-        "GetPlaybackConfigurationResponse$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>",
-        "PlaybackConfiguration$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>",
-        "PutPlaybackConfigurationResponse$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>"
+        "GetPlaybackConfigurationResponse$LogConfiguration": "<p>The configuration that defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
+        "PlaybackConfiguration$LogConfiguration": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
+        "PutPlaybackConfigurationResponse$LogConfiguration": "<p>The configuration that defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>"
       }
     },
     "LogConfigurationForChannel": {
@@ -936,6 +945,12 @@
       "refs": {
       }
     },
+    "StreamingMediaFileConditioning": {
+      "base": null,
+      "refs": {
+        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery, indicates what transcoding action MediaTailor it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/precondition-ads.html\">https://docs.aws.amazon.com/precondition-ads.html</a>.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1066,7 +1081,7 @@
     "__integer": {
       "base": null,
       "refs": {
-        "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
+        "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your CloudWatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "ConfigureLogsForPlaybackConfigurationResponse$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account.</p>",
         "DashPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
         "DashPlaylistSettings$MinBufferTimeSeconds": "<p>Minimum amount of content (measured in seconds) that a player must keep available in the buffer. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
@@ -1074,7 +1089,7 @@
         "DashPlaylistSettings$SuggestedPresentationDelaySeconds": "<p>Amount of time (in seconds) that the player should be from the live point at the end of the manifest. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
         "HlsPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
         "LivePreRollConfiguration$MaxDurationSeconds": "<p>The maximum allowed duration for the pre-roll ad avail. AWS Elemental MediaTailor won't play pre-roll ads to exceed this duration, regardless of the total duration of ads that the ADS returns.</p>",
-        "LogConfiguration$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account. For example, if your playback configuration has 1000 sessions and <code>percentEnabled</code> is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
+        "LogConfiguration$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your configured log destination. For example, if your playback configuration has 1000 sessions and <code>percentEnabled</code> is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "SpliceInsertMessage$AvailNum": "<p>This is written to <code>splice_insert.avail_num</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$AvailsExpected": "<p>This is written to <code>splice_insert.avails_expected</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$SpliceEventId": "<p>This is written to <code>splice_insert.splice_event_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>1</code>.</p>",
@@ -1207,8 +1222,8 @@
       "refs": {
         "AdBreak$OffsetMillis": "<p>How long (in milliseconds) after the beginning of the program that an ad starts. This value must fall within 100ms of a segment boundary, otherwise the ad break will be skipped.</p>",
         "AdBreakOpportunity$OffsetMillis": "<p>The offset in milliseconds from the start of the VOD source at which an ad marker was detected.</p>",
-        "AlternateMedia$DurationMillis": "<p>The duration of the alternateMedia in milliseconds.</p>",
         "AlternateMedia$ScheduledStartTimeMillis": "<p>The date and time that the alternateMedia is scheduled to start, in epoch milliseconds.</p>",
+        "AlternateMedia$DurationMillis": "<p>The duration of the alternateMedia in milliseconds.</p>",
         "ClipRange$EndOffsetMillis": "<p>The end offset of the clip range, in milliseconds, starting from the beginning of the VOD source associated with the program.</p>",
         "ClipRange$StartOffsetMillis": "<p>The start offset of the clip range, in milliseconds. This offset truncates the start at the number of milliseconds into the duration of the VOD source.</p>",
         "CreateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
@@ -1217,8 +1232,8 @@
         "Transition$DurationMillis": "<p>The duration of the live program in seconds.</p>",
         "Transition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>",
         "UpdateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
-        "UpdateProgramTransition$DurationMillis": "<p>The duration of the live program in seconds.</p>",
-        "UpdateProgramTransition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>"
+        "UpdateProgramTransition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>",
+        "UpdateProgramTransition$DurationMillis": "<p>The duration of the live program in seconds.</p>"
       }
     },
     "__mapOf__string": {
@@ -1261,8 +1276,8 @@
         "Alert$AlertCode": "<p>The code for the alert. For example, <code>NOT_PROCESSED</code>.</p>",
         "Alert$AlertMessage": "<p>If an alert is generated for a resource, an explanation of the reason for the alert.</p>",
         "Alert$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
-        "AlternateMedia$LiveSourceName": "<p>The name of the live source for alternateMedia.</p>",
         "AlternateMedia$SourceLocationName": "<p>The name of the source location for alternateMedia.</p>",
+        "AlternateMedia$LiveSourceName": "<p>The name of the live source for alternateMedia.</p>",
         "AlternateMedia$VodSourceName": "<p>The name of the VOD source for alternateMedia.</p>",
         "AudienceMedia$Audience": "<p>The Audience defined in AudienceMedia.</p>",
         "AvailMatchingCriteria$DynamicVariable": "<p>The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables.html\">Using dynamic ad variables</a> in the <i>MediaTailor User Guide</i>.</p> <p>You can include up to 100 dynamic variables.</p>",
@@ -1363,10 +1378,10 @@
         "DescribeVodSourceResponse$VodSourceName": "<p>The name of the VOD source.</p>",
         "GetChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this Channel Policy.</p>",
         "GetChannelPolicyResponse$Policy": "<p>The IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
-        "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleRequest$ChannelName": "<p>The name of the channel associated with this Channel Schedule.</p>",
         "GetChannelScheduleRequest$DurationMinutes": "<p>The duration in minutes of the channel schedule.</p>",
         "GetChannelScheduleRequest$NextToken": "<p>(Optional) If the playback configuration has more than <code>MaxResults</code> channel schedules, use <code>NextToken</code> to get the second and subsequent pages of results.</p> <p>For the first <code>GetChannelScheduleRequest</code> request, omit this value.</p> <p>For the second and subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request.</p> <p>If the previous response didn't include a <code>NextToken</code> element, there are no more channel schedules to get.</p>",
+        "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
         "GetPlaybackConfigurationRequest$Name": "<p>The identifier for the playback configuration.</p>",
         "GetPlaybackConfigurationResponse$AdDecisionServerUrl": "<p>The URL for the ad decision server (ADS). This includes the specification of static parameters and placeholders for dynamic parameters. AWS Elemental MediaTailor substitutes player-specific and session-specific parameters as needed when calling the ADS. Alternately, for testing, you can provide a static VAST URL. The maximum length is 25,000 characters.</p>",
@@ -1480,10 +1495,10 @@
         "UpdateProgramRequest$ProgramName": "<p>The name of the Program.</p>",
         "UpdateProgramResponse$Arn": "<p>The ARN to assign to the program.</p>",
         "UpdateProgramResponse$ChannelName": "<p>The name to assign to the channel for this program.</p>",
-        "UpdateProgramResponse$LiveSourceName": "<p>The name of the LiveSource for this Program.</p>",
         "UpdateProgramResponse$ProgramName": "<p>The name to assign to this program.</p>",
         "UpdateProgramResponse$SourceLocationName": "<p>The name to assign to the source location for this program.</p>",
         "UpdateProgramResponse$VodSourceName": "<p>The name that's used to refer to a VOD source.</p>",
+        "UpdateProgramResponse$LiveSourceName": "<p>The name of the LiveSource for this Program.</p>",
         "UpdateSourceLocationRequest$SourceLocationName": "<p>The name of the source location.</p>",
         "UpdateSourceLocationResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the source location.</p>",
         "UpdateSourceLocationResponse$SourceLocationName": "<p>The name of the source location.</p>",
@@ -1529,7 +1544,7 @@
         "LiveSource$CreationTime": "<p>The timestamp that indicates when the live source was created.</p>",
         "LiveSource$LastModifiedTime": "<p>The timestamp that indicates when the live source was last modified.</p>",
         "PrefetchConsumption$EndTime": "<p>The time when MediaTailor no longer considers the prefetched ads for use in an ad break. MediaTailor automatically deletes prefetch schedules no less than seven days after the end time. If you'd like to manually delete the prefetch schedule, you can call <code>DeletePrefetchSchedule</code>.</p>",
-        "PrefetchConsumption$StartTime": "<p>The time when prefetched ads are considered for use in an ad break. If you don't specify <code>StartTime</code>, the prefetched ads are available after MediaTailor retrives them from the ad decision server.</p>",
+        "PrefetchConsumption$StartTime": "<p>The time when prefetched ads are considered for use in an ad break. If you don't specify <code>StartTime</code>, the prefetched ads are available after MediaTailor retrieves them from the ad decision server.</p>",
         "PrefetchRetrieval$EndTime": "<p>The time when prefetch retrieval ends for the ad break. Prefetching will be attempted for manifest requests that occur at or before this time.</p>",
         "PrefetchRetrieval$StartTime": "<p>The time when prefetch retrievals can start for this break. Ad prefetching will be attempted for manifest requests that occur at or after this time. Defaults to the current time. If not specified, the prefetch retrieval starts as soon as possible.</p>",
         "ScheduleAdBreak$ApproximateStartTime": "<p>The approximate time that the ad will start playing.</p>",

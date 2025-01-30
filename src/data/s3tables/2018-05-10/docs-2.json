@@ -2,32 +2,32 @@
   "version": "2.0",
   "service": "<p>An Amazon S3 table represents a structured dataset consisting of tabular data in <a href=\"https://parquet.apache.org/docs/\">Apache Parquet</a> format and related metadata. This data is stored inside an S3 table as a subresource. All tables in a table bucket are stored in the <a href=\"https://iceberg.apache.org/docs/latest/\">Apache Iceberg</a> table format. Through integration with the <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/glue/latest/dg/catalog-and-crawler.html\">AWS Glue Data Catalog</a> you can interact with your tables using AWS analytics services, such as <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/athena/\">Amazon Athena</a> and <a href=\"https://docs.aws.amazon.com/https:/docs.aws.amazon.com/redshift/\">Amazon Redshift</a>. Amazon S3 manages maintenance of your tables through automatic file compaction and snapshot management. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html\">Amazon S3 table buckets</a>.</p>",
   "operations": {
-    "CreateNamespace": "<p>Creates a namespace. A namespace is a logical grouping of tables within your table bucket, which you can use to organize tables. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace.html\">Table namespaces</a>. </p>",
-    "CreateTable": "<p>Creates a new table associated with the given namespace in a table bucket.</p>",
-    "CreateTableBucket": "<p>Creates a table bucket.</p>",
-    "DeleteNamespace": "<p>Deletes a namespace.</p>",
-    "DeleteTable": "<p>Deletes a table.</p>",
-    "DeleteTableBucket": "<p>Deletes a table bucket.</p>",
-    "DeleteTableBucketPolicy": "<p>Deletes a table bucket policy.</p>",
-    "DeleteTablePolicy": "<p>Deletes a table policy.</p>",
-    "GetNamespace": "<p>Gets details about a namespace.</p>",
-    "GetTable": "<p>Gets details about a table.</p>",
-    "GetTableBucket": "<p>Gets details on a table bucket.</p>",
-    "GetTableBucketMaintenanceConfiguration": "<p>Gets details about a maintenance configuration for a given table bucket.</p>",
-    "GetTableBucketPolicy": "<p>Gets details about a table bucket policy.</p>",
-    "GetTableMaintenanceConfiguration": "<p>Gets details about the maintenance configuration of a table.</p>",
-    "GetTableMaintenanceJobStatus": "<p>Gets the status of a maintenance job for a table.</p>",
-    "GetTableMetadataLocation": "<p>Gets the location of the table metadata.</p>",
-    "GetTablePolicy": "<p>Gets details about a table policy.</p>",
-    "ListNamespaces": "<p>Lists the namespaces within a table bucket.</p>",
-    "ListTableBuckets": "<p>Lists table buckets for your account.</p>",
-    "ListTables": "<p>List tables in the given table bucket.</p>",
-    "PutTableBucketMaintenanceConfiguration": "<p>Creates a new maintenance configuration or replaces an existing maintenance configuration for a table bucket.</p>",
-    "PutTableBucketPolicy": "<p>Creates a new maintenance configuration or replaces an existing table bucket policy for a table bucket. </p>",
-    "PutTableMaintenanceConfiguration": "<p>Creates a new maintenance configuration or replaces an existing maintenance configuration for a table.</p>",
-    "PutTablePolicy": "<p>Creates a new maintenance configuration or replaces an existing table policy for a table. </p>",
-    "RenameTable": "<p>Renames a table or a namespace.</p>",
-    "UpdateTableMetadataLocation": "<p>Updates the metadata location for a table.</p>"
+    "CreateNamespace": "<p>Creates a namespace. A namespace is a logical grouping of tables within your table bucket, which you can use to organize tables. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace-create.html\">Create a namespace</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:CreateNamespace</code> permission to use this operation. </p> </dd> </dl>",
+    "CreateTable": "<p>Creates a new table associated with the given namespace in a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-create.html\">Creating an Amazon S3 table</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:CreateTable</code> permission to use this operation. </p> <note> <p>Additionally, you must have the <code>s3tables:PutTableData</code> permission to use this operation with the optional <code>metadata</code> request parameter. </p> </note> </dd> </dl>",
+    "CreateTableBucket": "<p>Creates a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-create.html\">Creating a table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:CreateTableBucket</code> permission to use this operation. </p> </dd> </dl>",
+    "DeleteNamespace": "<p>Deletes a namespace. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace-delete.html\">Delete a namespace</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteNamespace</code> permission to use this operation. </p> </dd> </dl>",
+    "DeleteTable": "<p>Deletes a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-delete.html\">Deleting an Amazon S3 table</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTable</code> permission to use this operation. </p> </dd> </dl>",
+    "DeleteTableBucket": "<p>Deletes a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-delete.html\">Deleting a table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTableBucket</code> permission to use this operation. </p> </dd> </dl>",
+    "DeleteTableBucketPolicy": "<p>Deletes a table bucket policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-bucket-policy.html#table-bucket-policy-delete\">Deleting a table bucket policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTableBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "DeleteTablePolicy": "<p>Deletes a table policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-table-policy.html#table-policy-delete\">Deleting a table policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:DeleteTablePolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "GetNamespace": "<p>Gets details about a namespace. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace.html\">Table namespaces</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetNamespace</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTable": "<p>Gets details about a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTable</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableBucket": "<p>Gets details on a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets-details.html\">Viewing details about an Amazon S3 table bucket</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucket</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableBucketMaintenanceConfiguration": "<p>Gets details about a maintenance configuration for a given table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html\">Amazon S3 table bucket maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableBucketPolicy": "<p>Gets details about a table bucket policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-bucket-policy.html#table-bucket-policy-get\">Viewing a table bucket policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableMaintenanceConfiguration": "<p>Gets details about the maintenance configuration of a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance.html\">S3 Tables maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableMaintenanceJobStatus": "<p>Gets the status of a maintenance job for a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance.html\">S3 Tables maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableMaintenanceJobStatus</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTableMetadataLocation": "<p>Gets the location of the table metadata.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTableMetadataLocation</code> permission to use this operation. </p> </dd> </dl>",
+    "GetTablePolicy": "<p>Gets details about a table policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-table-policy.html#table-policy-get\">Viewing a table policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:GetTablePolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "ListNamespaces": "<p>Lists the namespaces within a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-namespace.html\">Table namespaces</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListNamespaces</code> permission to use this operation. </p> </dd> </dl>",
+    "ListTableBuckets": "<p>Lists table buckets for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-buckets.html\">S3 Table buckets</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListTableBuckets</code> permission to use this operation. </p> </dd> </dl>",
+    "ListTables": "<p>List tables in the given table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:ListTables</code> permission to use this operation. </p> </dd> </dl>",
+    "PutTableBucketMaintenanceConfiguration": "<p>Creates a new maintenance configuration or replaces an existing maintenance configuration for a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-table-buckets-maintenance.html\">Amazon S3 table bucket maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
+    "PutTableBucketPolicy": "<p>Creates a new maintenance configuration or replaces an existing table bucket policy for a table bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-bucket-policy.html#table-bucket-policy-add\">Adding a table bucket policy</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableBucketPolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "PutTableMaintenanceConfiguration": "<p>Creates a new maintenance configuration or replaces an existing maintenance configuration for a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-maintenance.html\">S3 Tables maintenance</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTableMaintenanceConfiguration</code> permission to use this operation. </p> </dd> </dl>",
+    "PutTablePolicy": "<p>Creates a new maintenance configuration or replaces an existing table policy for a table. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-table-policy.html#table-policy-add\">Adding a table policy</a> in the <i>Amazon Simple Storage Service User Guide</i>. </p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:PutTablePolicy</code> permission to use this operation. </p> </dd> </dl>",
+    "RenameTable": "<p>Renames a table or a namespace. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-tables.html\">S3 Tables</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:RenameTable</code> permission to use this operation. </p> </dd> </dl>",
+    "UpdateTableMetadataLocation": "<p>Updates the metadata location for a table. The metadata location of a table must be an S3 URI that begins with the table's warehouse location. The metadata location for an Apache Iceberg table must end with <code>.metadata.json</code>, or if the metadata file is Gzip-compressed, <code>.metadata.json.gz</code>.</p> <dl> <dt>Permissions</dt> <dd> <p>You must have the <code>s3tables:UpdateTableMetadataLocation</code> permission to use this operation. </p> </dd> </dl>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -52,6 +52,12 @@
     "BadRequestException": {
       "base": "<p>The request is invalid or malformed.</p>",
       "refs": {
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "SchemaField$required": "<p>A Boolean value that specifies whether values are required for each row in this field. By default, this is <code>false</code> and null values are allowed in the field. If this is <code>true</code> the field does not allow null values.</p>"
       }
     },
     "ConflictException": {
@@ -231,6 +237,18 @@
       "base": "<p>Contains details about the compaction settings for an Iceberg table. </p>",
       "refs": {
         "TableMaintenanceSettings$icebergCompaction": "<p>Contains details about the Iceberg compaction settings for the table.</p>"
+      }
+    },
+    "IcebergMetadata": {
+      "base": "<p>Contains details about the metadata for an Iceberg table.</p>",
+      "refs": {
+        "TableMetadata$iceberg": "<p>Contains details about the metadata of an Iceberg table.</p>"
+      }
+    },
+    "IcebergSchema": {
+      "base": "<p>Contains details about the schema for an Iceberg table.</p>",
+      "refs": {
+        "IcebergMetadata$schema": "<p>The schema for an Iceberg table.</p>"
       }
     },
     "IcebergSnapshotManagementSettings": {
@@ -445,16 +463,30 @@
     "ResourcePolicy": {
       "base": null,
       "refs": {
-        "GetTableBucketPolicyResponse$resourcePolicy": "<p>The name of the resource policy.</p>",
-        "GetTablePolicyResponse$resourcePolicy": "<p>The name of the resource policy.</p>",
-        "PutTableBucketPolicyRequest$resourcePolicy": "<p>The name of the resource policy.</p>",
-        "PutTablePolicyRequest$resourcePolicy": "<p>The name of the resource policy.</p>"
+        "GetTableBucketPolicyResponse$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>",
+        "GetTablePolicyResponse$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>",
+        "PutTableBucketPolicyRequest$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>",
+        "PutTablePolicyRequest$resourcePolicy": "<p>The <code>JSON</code> that defines the policy.</p>"
+      }
+    },
+    "SchemaField": {
+      "base": "<p>Contains details about a schema field.</p>",
+      "refs": {
+        "SchemaFieldList$member": null
+      }
+    },
+    "SchemaFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergSchema$fields": "<p>The schema fields for the table</p>"
       }
     },
     "String": {
       "base": null,
       "refs": {
         "GetTableResponse$managedByService": "<p>The service that manages the table.</p>",
+        "SchemaField$name": "<p>The name of the field.</p>",
+        "SchemaField$type": "<p>The field type. S3 Tables supports all Apache Iceberg primitive types. For more information, see the <a href=\"https://iceberg.apache.org/spec/#primitive-types\">Apache Iceberg documentation</a>.</p>",
         "TableMaintenanceJobStatusValue$failureMessage": "<p>The failure message of a failed job.</p>"
       }
     },
@@ -479,8 +511,8 @@
         "GetTableMaintenanceConfigurationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableMaintenanceJobStatusResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
         "GetTableResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
-        "TableSummary$tableARN": "<p>The Amazon Resource Number (ARN) of the table.</p>",
-        "UpdateTableMetadataLocationResponse$tableARN": "<p>The Amazon Resource Number (ARN) of the table.</p>"
+        "TableSummary$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>",
+        "UpdateTableMetadataLocationResponse$tableARN": "<p>The Amazon Resource Name (ARN) of the table.</p>"
       }
     },
     "TableBucketARN": {
@@ -491,29 +523,29 @@
         "CreateTableBucketResponse$arn": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "CreateTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket to create the table in.</p>",
         "DeleteNamespaceRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the namespace.</p>",
-        "DeleteTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket.</p>",
+        "DeleteTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "DeleteTableBucketRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
-        "DeleteTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket that contains the table.</p>",
+        "DeleteTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "DeleteTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "GetNamespaceRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
         "GetTableBucketMaintenanceConfigurationResponse$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
-        "GetTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket.</p>",
+        "GetTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableBucketResponse$arn": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableMaintenanceJobStatusRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "GetTableMetadataLocationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
-        "GetTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket that contains the table.</p>",
+        "GetTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "GetTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the table.</p>",
         "ListNamespacesRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
-        "ListTablesRequest$tableBucketARN": "<p>The Amazon resource Number (ARN) of the table bucket.</p>",
+        "ListTablesRequest$tableBucketARN": "<p>The Amazon resource Name (ARN) of the table bucket.</p>",
         "PutTableBucketMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket associated with the maintenance configuration.</p>",
-        "PutTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket.</p>",
+        "PutTableBucketPolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "PutTableMaintenanceConfigurationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table associated with the maintenance configuration.</p>",
-        "PutTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Number (ARN) of the table bucket that contains the table.</p>",
+        "PutTablePolicyRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket that contains the table.</p>",
         "RenameTableRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket. </p>",
-        "TableBucketSummary$arn": "<p>The Amazon Resource Number (ARN) of the table bucket.</p>",
+        "TableBucketSummary$arn": "<p>The Amazon Resource Name (ARN) of the table bucket.</p>",
         "UpdateTableMetadataLocationRequest$tableBucketARN": "<p>The Amazon Resource Name (ARN) of the table bucket. </p>"
       }
     },
@@ -605,6 +637,12 @@
       "refs": {
         "PutTableMaintenanceConfigurationRequest$type": "<p>The type of the maintenance configuration.</p>",
         "TableMaintenanceConfiguration$key": null
+      }
+    },
+    "TableMetadata": {
+      "base": "<p>Contains details about the table metadata.</p>",
+      "refs": {
+        "CreateTableRequest$metadata": "<p>The metadata for the table.</p>"
       }
     },
     "TableName": {

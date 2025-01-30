@@ -513,6 +513,10 @@
       },
       "exception":true
     },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -590,7 +594,8 @@
           "locationName":"namespace"
         },
         "name":{"shape":"TableName"},
-        "format":{"shape":"OpenTableFormat"}
+        "format":{"shape":"OpenTableFormat"},
+        "metadata":{"shape":"TableMetadata"}
       }
     },
     "CreateTableResponse":{
@@ -1017,6 +1022,20 @@
         "targetFileSizeMB":{"shape":"PositiveInteger"}
       }
     },
+    "IcebergMetadata":{
+      "type":"structure",
+      "required":["schema"],
+      "members":{
+        "schema":{"shape":"IcebergSchema"}
+      }
+    },
+    "IcebergSchema":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"SchemaFieldList"}
+      }
+    },
     "IcebergSnapshotManagementSettings":{
       "type":"structure",
       "members":{
@@ -1379,6 +1398,22 @@
       "max":20480,
       "min":1
     },
+    "SchemaField":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"String"},
+        "required":{"shape":"Boolean"}
+      }
+    },
+    "SchemaFieldList":{
+      "type":"list",
+      "member":{"shape":"SchemaField"}
+    },
     "String":{"type":"string"},
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
@@ -1490,6 +1525,13 @@
         "icebergCompaction",
         "icebergSnapshotManagement"
       ]
+    },
+    "TableMetadata":{
+      "type":"structure",
+      "members":{
+        "iceberg":{"shape":"IcebergMetadata"}
+      },
+      "union":true
     },
     "TableName":{
       "type":"string",

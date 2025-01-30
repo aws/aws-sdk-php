@@ -225,6 +225,13 @@
         "AttributeValue$boolean": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#boolean\">Boolean</a> type.</p> <p>Example: <code>{\"boolean\": true}</code> </p>"
       }
     },
+    "CedarJson": {
+      "base": null,
+      "refs": {
+        "ContextDefinition$cedarJson": "<p>A Cedar JSON string representation of the context needed to successfully evaluate an authorization request.</p> <p>Example: <code>{\"cedarJson\":\"{\\\"&lt;KeyName1&gt;\\\": true, \\\"&lt;KeyName2&gt;\\\": 1234}\" }</code> </p>",
+        "EntitiesDefinition$cedarJson": "<p>A Cedar JSON string representation of the entities needed to successfully evaluate an authorization request.</p> <p>Example: <code>{\"cedarJson\": \"[{\\\"uid\\\":{\\\"type\\\":\\\"Photo\\\",\\\"id\\\":\\\"VacationPhoto94.jpg\\\"},\\\"attrs\\\":{\\\"accessLevel\\\":\\\"public\\\"},\\\"parents\\\":[]}]\"}</code> </p>"
+      }
+    },
     "Claim": {
       "base": null,
       "refs": {
@@ -323,7 +330,7 @@
       }
     },
     "ContextDefinition": {
-      "base": "<p>Contains additional details about the context of the request. Verified Permissions evaluates this information in an authorization request as part of the <code>when</code> and <code>unless</code> clauses in a policy.</p> <p>This data type is used as a request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p> <p>Example: <code>\"context\":{\"contextMap\":{\"&lt;KeyName1&gt;\":{\"boolean\":true},\"&lt;KeyName2&gt;\":{\"long\":1234}}}</code> </p>",
+      "base": "<p>Contains additional details about the context of the request. Verified Permissions evaluates this information in an authorization request as part of the <code>when</code> and <code>unless</code> clauses in a policy.</p> <p>This data type is used as a request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p> <p>If you're passing context as part of the request, exactly one instance of <code>context</code> must be passed. If you don't want to pass context, omit the <code>context</code> parameter from your request rather than sending <code>context {}</code>.</p> <p>Example: <code>\"context\":{\"contextMap\":{\"&lt;KeyName1&gt;\":{\"boolean\":true},\"&lt;KeyName2&gt;\":{\"long\":1234}}}</code> </p>",
       "refs": {
         "BatchIsAuthorizedInputItem$context": "<p>Specifies additional context that can be used to make more granular authorization decisions.</p>",
         "BatchIsAuthorizedWithTokenInputItem$context": "<p>Specifies additional context that can be used to make more granular authorization decisions.</p>",
@@ -524,7 +531,7 @@
     "EntityList": {
       "base": null,
       "refs": {
-        "EntitiesDefinition$entityList": "<p>An array of entities that are needed to successfully evaluate an authorization request. Each entity in this array must include an identifier for the entity, the attributes of the entity, and a list of any parent entities.</p>"
+        "EntitiesDefinition$entityList": "<p>An array of entities that are needed to successfully evaluate an authorization request. Each entity in this array must include an identifier for the entity, the attributes of the entity, and a list of any parent entities.</p> <note> <p>If you include multiple entities with the same <code>identifier</code>, only the last one is processed in the request.</p> </note>"
       }
     },
     "EntityReference": {

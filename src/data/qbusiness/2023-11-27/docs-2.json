@@ -2,23 +2,25 @@
   "version": "2.0",
   "service": "<p>This is the <i>Amazon Q Business</i> API Reference. Amazon Q Business is a fully managed, generative-AI powered enterprise chat assistant that you can deploy within your organization. Amazon Q Business enhances employee productivity by supporting key tasks such as question-answering, knowledge discovery, writing email messages, summarizing text, drafting document outlines, and brainstorming ideas. Users ask questions of Amazon Q Business and get answers that are presented in a conversational manner. For an introduction to the service, see the <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/what-is.html\"> <i>Amazon Q Business User Guide</i> </a>.</p> <p>For an overview of the Amazon Q Business APIs, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/api-ref.html#api-overview\">Overview of Amazon Q Business API operations</a>.</p> <p>For information about the IAM access control permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/iam-roles.html\">IAM roles for Amazon Q Business</a> in the <i>Amazon Q Business User Guide</i>.</p> <p>The following resources provide additional information about using the Amazon Q Business API:</p> <ul> <li> <p> <i> <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/setting-up.html\">Setting up for Amazon Q Business</a> </i> </p> </li> <li> <p> <i> <a href=\"https://awscli.amazonaws.com/v2/documentation/api/latest/reference/qbusiness/index.html\">Amazon Q Business CLI Reference</a> </i> </p> </li> <li> <p> <i> <a href=\"https://docs.aws.amazon.com/general/latest/gr/amazonq.html\">Amazon Web Services General Reference</a> </i> </p> </li> </ul>",
   "operations": {
-    "AssociatePermission": "<p>Adds or updates a permission policy for a Q Business application, allowing cross-account access for an ISV. This operation creates a new policy statement for the specified Q Business application. The policy statement defines the IAM actions that the ISV is allowed to perform on the Q Business application's resources.</p>",
+    "AssociatePermission": "<p>Adds or updates a permission policy for a Amazon Q Business application, allowing cross-account access for an ISV. This operation creates a new policy statement for the specified Amazon Q Business application. The policy statement defines the IAM actions that the ISV is allowed to perform on the Amazon Q Business application's resources.</p>",
     "BatchDeleteDocument": "<p>Asynchronously deletes one or more documents added using the <code>BatchPutDocument</code> API from an Amazon Q Business index.</p> <p>You can see the progress of the deletion, and any error messages related to the process, by using CloudWatch.</p>",
     "BatchPutDocument": "<p>Adds one or more documents to an Amazon Q Business index.</p> <p>You use this API to:</p> <ul> <li> <p>ingest your structured and unstructured documents and documents stored in an Amazon S3 bucket into an Amazon Q Business index.</p> </li> <li> <p>add custom attributes to documents in an Amazon Q Business index.</p> </li> <li> <p>attach an access control list to the documents added to an Amazon Q Business index.</p> </li> </ul> <p>You can see the progress of the deletion, and any error messages related to the process, by using CloudWatch.</p>",
+    "CancelSubscription": "<p>Unsubscribes a user or a group from their pricing tier in an Amazon Q Business application. An unsubscribed user or group loses all Amazon Q Business feature access at the start of next month. </p>",
     "Chat": "<p>Starts or continues a streaming Amazon Q Business conversation.</p>",
     "ChatSync": "<p>Starts or continues a non-streaming Amazon Q Business conversation.</p>",
     "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users. </p> <p>An Amazon Q Apps service linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps</a>.</p> <p>When you create an application, Amazon Q Business may securely transmit data for processing from your selected Amazon Web Services region, but within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
-    "CreateDataAccessor": "<p>Creates a new data accessor for an ISV to access data from a Q Business application. The data accessor is an entity that represents the ISV's access to the Q Business application's data. It includes the IAM role ARN for the ISV, a friendly name, and a set of action configurations that define the specific actions the ISV is allowed to perform and any associated data filters. When the data accessor is created, an AWS IAM Identity Center application is also created to manage the ISV's identity and authentication for accessing the Q Business application.</p>",
+    "CreateDataAccessor": "<p>Creates a new data accessor for an ISV to access data from a Amazon Q Business application. The data accessor is an entity that represents the ISV's access to the Amazon Q Business application's data. It includes the IAM role ARN for the ISV, a friendly name, and a set of action configurations that define the specific actions the ISV is allowed to perform and any associated data filters. When the data accessor is created, an IAM Identity Center application is also created to manage the ISV's identity and authentication for accessing the Amazon Q Business application.</p>",
     "CreateDataSource": "<p>Creates a data source connector for an Amazon Q Business application.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p>",
     "CreateIndex": "<p>Creates an Amazon Q Business index.</p> <p>To determine if index creation has completed, check the <code>Status</code> field returned from a call to <code>DescribeIndex</code>. The <code>Status</code> field is set to <code>ACTIVE</code> when the index is ready to use.</p> <p>Once the index is active, you can index your documents using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_BatchPutDocument.html\"> <code>BatchPutDocument</code> </a> API or the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_CreateDataSource.html\"> <code>CreateDataSource</code> </a> API.</p>",
     "CreatePlugin": "<p>Creates an Amazon Q Business plugin.</p>",
     "CreateRetriever": "<p>Adds a retriever to your Amazon Q Business application.</p>",
+    "CreateSubscription": "<p>Subscribes an IAM Identity Center user or a group to a pricing tier for an Amazon Q Business application.</p> <p>Amazon Q Business offers two subscription tiers: <code>Q_LITE</code> and <code>Q_BUSINESS</code>. Subscription tier determines feature access for the user. For more information on subscriptions and pricing tiers, see <a href=\"https://aws.amazon.com/q/business/pricing/\">Amazon Q Business pricing</a>.</p>",
     "CreateUser": "<p>Creates a universally unique identifier (UUID) mapped to a list of local user ids within an application.</p>",
     "CreateWebExperience": "<p>Creates an Amazon Q Business web experience.</p>",
     "DeleteApplication": "<p>Deletes an Amazon Q Business application.</p>",
     "DeleteChatControlsConfiguration": "<p>Deletes chat controls configured for an existing Amazon Q Business application.</p>",
     "DeleteConversation": "<p>Deletes an Amazon Q Business web experience conversation.</p>",
-    "DeleteDataAccessor": "<p>Deletes a specified data accessor. This operation permanently removes the data accessor and its associated AWS IAM Identity Center application. Any access granted to the ISV through this data accessor will be revoked</p>",
+    "DeleteDataAccessor": "<p>Deletes a specified data accessor. This operation permanently removes the data accessor and its associated IAM Identity Center application. Any access granted to the ISV through this data accessor will be revoked.</p>",
     "DeleteDataSource": "<p>Deletes an Amazon Q Business data source connector. While the data source is being deleted, the <code>Status</code> field returned by a call to the <code>DescribeDataSource</code> API is set to <code>DELETING</code>. </p>",
     "DeleteGroup": "<p>Deletes a group so that all users and sub groups that belong to the group can no longer access documents only available to that group. For example, after deleting the group \"Summer Interns\", all interns who belonged to that group no longer see intern-only documents in their chat results. </p> <p>If you want to delete, update, or replace users or sub groups of a group, you need to use the <code>PutGroup</code> operation. For example, if a user in the group \"Engineering\" leaves the engineering team and another user takes their place, you provide an updated list of users or sub groups that belong to the \"Engineering\" group when calling <code>PutGroup</code>.</p>",
     "DeleteIndex": "<p>Deletes an Amazon Q Business index.</p>",
@@ -26,23 +28,23 @@
     "DeleteRetriever": "<p>Deletes the retriever used by an Amazon Q Business application.</p>",
     "DeleteUser": "<p>Deletes a user by email id.</p>",
     "DeleteWebExperience": "<p>Deletes an Amazon Q Business web experience.</p>",
-    "DisassociatePermission": "<p>Removes a permission policy from a Q Business application, revoking the cross-account access that was previously granted to an ISV. This operation deletes the specified policy statement from the application's permission policy.</p>",
+    "DisassociatePermission": "<p>Removes a permission policy from a Amazon Q Business application, revoking the cross-account access that was previously granted to an ISV. This operation deletes the specified policy statement from the application's permission policy.</p>",
     "GetApplication": "<p>Gets information about an existing Amazon Q Business application.</p>",
     "GetChatControlsConfiguration": "<p>Gets information about an chat controls configured for an existing Amazon Q Business application.</p>",
-    "GetDataAccessor": "<p>Retrieves information about a specified data accessor. This operation returns details about the data accessor, including its display name, unique identifier, Amazon Resource Name (ARN), the associated Q Business application and AWS IAM Identity Center application, the IAM role for the ISV, the action configurations, and the timestamps for when the data accessor was created and last updated.</p>",
+    "GetDataAccessor": "<p>Retrieves information about a specified data accessor. This operation returns details about the data accessor, including its display name, unique identifier, Amazon Resource Name (ARN), the associated Amazon Q Business application and IAM Identity Center application, the IAM role for the ISV, the action configurations, and the timestamps for when the data accessor was created and last updated.</p>",
     "GetDataSource": "<p>Gets information about an existing Amazon Q Business data source connector.</p>",
     "GetGroup": "<p>Describes a group by group name.</p>",
     "GetIndex": "<p>Gets information about an existing Amazon Q Business index.</p>",
     "GetMedia": "<p>Returns the image bytes corresponding to a media object. If you have implemented your own application with the Chat and ChatSync APIs, and have enabled content extraction from visual data in Amazon Q Business, you use the GetMedia API operation to download the images so you can show them in your UI with responses.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/extracting-meaning-from-images.html\">Extracting semantic meaning from images and visuals</a>.</p>",
     "GetPlugin": "<p>Gets information about an existing Amazon Q Business plugin.</p>",
-    "GetPolicy": "<p>Retrieves the current permission policy for a Q Business application. The policy is returned as a JSON-formatted string and defines the IAM actions that are allowed or denied for the application's resources.</p>",
+    "GetPolicy": "<p>Retrieves the current permission policy for a Amazon Q Business application. The policy is returned as a JSON-formatted string and defines the IAM actions that are allowed or denied for the application's resources.</p>",
     "GetRetriever": "<p>Gets information about an existing retriever used by an Amazon Q Business application.</p>",
     "GetUser": "<p>Describes the universally unique identifier (UUID) associated with a local user in a data source.</p>",
     "GetWebExperience": "<p>Gets information about an existing Amazon Q Business web experience.</p>",
     "ListApplications": "<p>Lists Amazon Q Business applications.</p> <note> <p>Amazon Q Business applications may securely transmit data for processing across Amazon Web Services Regions within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
     "ListAttachments": "<p>Gets a list of attachments associated with an Amazon Q Business web experience or a list of attachements associated with a specific Amazon Q Business conversation.</p>",
     "ListConversations": "<p>Lists one or more Amazon Q Business conversations.</p>",
-    "ListDataAccessors": "<p>Lists the data accessors for a Q Business application. This operation returns a paginated list of data accessor summaries, including the friendly name, unique identifier, ARN, associated IAM role, and creation/update timestamps for each data accessor.</p>",
+    "ListDataAccessors": "<p>Lists the data accessors for a Amazon Q Business application. This operation returns a paginated list of data accessor summaries, including the friendly name, unique identifier, ARN, associated IAM role, and creation/update timestamps for each data accessor.</p>",
     "ListDataSourceSyncJobs": "<p>Get information about an Amazon Q Business data source connector synchronization.</p>",
     "ListDataSources": "<p>Lists the Amazon Q Business data source connectors that you have created.</p>",
     "ListDocuments": "<p>A list of documents attached to an index.</p>",
@@ -54,11 +56,12 @@
     "ListPluginTypeMetadata": "<p>Lists metadata for all Amazon Q Business plugin types.</p>",
     "ListPlugins": "<p>Lists configured Amazon Q Business plugins.</p>",
     "ListRetrievers": "<p>Lists the retriever used by an Amazon Q Business application.</p>",
+    "ListSubscriptions": "<p> Lists all subscriptions created in an Amazon Q Business application. </p>",
     "ListTagsForResource": "<p>Gets a list of tags associated with a specified resource. Amazon Q Business applications and data sources can have tags associated with them.</p>",
     "ListWebExperiences": "<p>Lists one or more Amazon Q Business Web Experiences.</p>",
     "PutFeedback": "<p>Enables your end user to provide feedback on their Amazon Q Business generated chat responses.</p>",
-    "PutGroup": "<p>Create, or updates, a mapping of users—who have access to a document—to groups.</p> <p>You can also map sub groups to groups. For example, the group \"Company Intellectual Property Teams\" includes sub groups \"Research\" and \"Engineering\". These sub groups include their own list of users or people who work in these teams. Only users who work in research and engineering, and therefore belong in the intellectual property group, can see top-secret company documents in their Amazon Q Business chat results.</p>",
-    "SearchRelevantContent": "<p>Searches for relevant content in a Q Business application based on a query. This operation takes a search query text, the Q Business application identifier, and optional filters (such as content source and maximum results) as input. It returns a list of relevant content items, where each item includes the content text, the unique document identifier, the document title, the document URI, any relevant document attributes, and score attributes indicating the confidence level of the relevance.</p>",
+    "PutGroup": "<p>Create, or updates, a mapping of users—who have access to a document—to groups.</p> <p>You can also map sub groups to groups. For example, the group \"Company Intellectual Property Teams\" includes sub groups \"Research\" and \"Engineering\". These sub groups include their own list of users or people who work in these teams. Only users who work in research and engineering, and therefore belong in the intellectual property group, can see top-secret company documents in their Amazon Q Business chat results.</p> <p>There are two options for creating groups, either passing group members inline or using an S3 file via the S3PathForGroupMembers field. For inline groups, there is a limit of 1000 members per group and for provided S3 files there is a limit of 100 thousand members. When creating a group using an S3 file, you provide both an S3 file and a <code>RoleArn</code> for Amazon Q Buisness to access the file.</p>",
+    "SearchRelevantContent": "<p>Searches for relevant content in a Amazon Q Business application based on a query. This operation takes a search query text, the Amazon Q Business application identifier, and optional filters (such as content source and maximum results) as input. It returns a list of relevant content items, where each item includes the content text, the unique document identifier, the document title, the document URI, any relevant document attributes, and score attributes indicating the confidence level of the relevance.</p>",
     "StartDataSourceSyncJob": "<p>Starts a data source connector synchronization job. If a synchronization job is already in progress, Amazon Q Business returns a <code>ConflictException</code>.</p>",
     "StopDataSourceSyncJob": "<p>Stops an Amazon Q Business data source connector synchronization job already in progress.</p>",
     "TagResource": "<p>Adds the specified tag to the specified Amazon Q Business application or data source resource. If the tag already exists, the existing value is replaced with the new value.</p>",
@@ -70,6 +73,7 @@
     "UpdateIndex": "<p>Updates an Amazon Q Business index.</p>",
     "UpdatePlugin": "<p>Updates an Amazon Q Business plugin.</p>",
     "UpdateRetriever": "<p>Updates the retriever used for your Amazon Q Business application.</p>",
+    "UpdateSubscription": "<p>Updates the pricing tier for an Amazon Q Business subscription. Upgrades are instant. Downgrades apply at the start of the next month. Subscription tier determines feature access for the user. For more information on subscriptions and pricing tiers, see <a href=\"https://aws.amazon.com/q/business/pricing/\">Amazon Q Business pricing</a>.</p>",
     "UpdateUser": "<p>Updates a information associated with a user id.</p>",
     "UpdateWebExperience": "<p>Updates an Amazon Q Business web experience. </p>"
   },
@@ -268,23 +272,25 @@
       "base": null,
       "refs": {
         "Application$applicationId": "<p>The identifier for the Amazon Q Business application.</p>",
-        "AssociatePermissionRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "AssociatePermissionRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "BatchDeleteDocumentRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "BatchPutDocumentRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
+        "CancelSubscriptionRequest$applicationId": "<p>The identifier of the Amazon Q Business application for which the subscription is being cancelled.</p>",
         "ChatInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to a streaming Amazon Q Business conversation.</p>",
         "ChatSyncInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to the Amazon Q Business conversation.</p>",
         "CreateApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
-        "CreateDataAccessorRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "CreateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "CreateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source will be attached to.</p>",
         "CreateIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application using the index.</p>",
         "CreatePluginRequest$applicationId": "<p>The identifier of the application that will contain the plugin.</p>",
         "CreateRetrieverRequest$applicationId": "<p>The identifier of your Amazon Q Business application.</p>",
+        "CreateSubscriptionRequest$applicationId": "<p>The identifier of the Amazon Q Business application the subscription should be added to.</p>",
         "CreateUserRequest$applicationId": "<p>The identifier of the application for which the user mapping will be created.</p>",
         "CreateWebExperienceRequest$applicationId": "<p>The identifier of the Amazon Q Business web experience.</p>",
         "DeleteApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "DeleteChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application the chat controls have been configured for.</p>",
         "DeleteConversationRequest$applicationId": "<p>The identifier of the Amazon Q Business application associated with the conversation.</p>",
-        "DeleteDataAccessorRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "DeleteDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "DeleteDataSourceRequest$applicationId": "<p>The identifier of the Amazon Q Business application used with the data source connector.</p>",
         "DeleteGroupRequest$applicationId": "<p>The identifier of the application in which the group mapping belongs.</p>",
         "DeleteIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application the Amazon Q Business index is linked to.</p>",
@@ -292,12 +298,12 @@
         "DeleteRetrieverRequest$applicationId": "<p>The identifier of the Amazon Q Business application using the retriever.</p>",
         "DeleteUserRequest$applicationId": "<p>The identifier of the application from which the user is being deleted.</p>",
         "DeleteWebExperienceRequest$applicationId": "<p>The identifier of the Amazon Q Business application linked to the Amazon Q Business web experience.</p>",
-        "DisassociatePermissionRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "DisassociatePermissionRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "GetApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application for which the chat controls are configured.</p>",
-        "GetDataAccessorRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
-        "GetDataAccessorResponse$applicationId": "<p>The unique identifier of the Q Business application associated with this data accessor.</p>",
+        "GetDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
+        "GetDataAccessorResponse$applicationId": "<p>The unique identifier of the Amazon Q Business application associated with this data accessor.</p>",
         "GetDataSourceRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetDataSourceResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetGroupRequest$applicationId": "<p>The identifier of the application id the group is attached to.</p>",
@@ -306,7 +312,7 @@
         "GetMediaRequest$applicationId": "<p>The identifier of the Amazon Q Business which contains the media object.</p>",
         "GetPluginRequest$applicationId": "<p>The identifier of the application which contains the plugin.</p>",
         "GetPluginResponse$applicationId": "<p>The identifier of the application which contains the plugin.</p>",
-        "GetPolicyRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "GetPolicyRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "GetRetrieverRequest$applicationId": "<p>The identifier of the Amazon Q Business application using the retriever.</p>",
         "GetRetrieverResponse$applicationId": "<p>The identifier of the Amazon Q Business application using the retriever. </p>",
         "GetUserRequest$applicationId": "<p>The identifier of the application connected to the user.</p>",
@@ -314,7 +320,7 @@
         "GetWebExperienceResponse$applicationId": "<p>The identifier of the Amazon Q Business application linked to the web experience.</p>",
         "ListAttachmentsRequest$applicationId": "<p>The unique identifier for the Amazon Q Business application.</p>",
         "ListConversationsRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
-        "ListDataAccessorsRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "ListDataAccessorsRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "ListDataSourceSyncJobsRequest$applicationId": "<p>The identifier of the Amazon Q Business application connected to the data source.</p>",
         "ListDataSourcesRequest$applicationId": "<p>The identifier of the Amazon Q Business application linked to the data source connectors.</p>",
         "ListDocumentsRequest$applicationId": "<p>The identifier of the application id the documents are attached to.</p>",
@@ -324,20 +330,22 @@
         "ListPluginActionsRequest$applicationId": "<p>The identifier of the Amazon Q Business application the plugin is attached to.</p>",
         "ListPluginsRequest$applicationId": "<p>The identifier of the application the plugin is attached to.</p>",
         "ListRetrieversRequest$applicationId": "<p>The identifier of the Amazon Q Business application using the retriever.</p>",
+        "ListSubscriptionsRequest$applicationId": "<p>The identifier of the Amazon Q Business application linked to the subscription.</p>",
         "ListWebExperiencesRequest$applicationId": "<p>The identifier of the Amazon Q Business application linked to the listed web experiences.</p>",
         "PutFeedbackRequest$applicationId": "<p>The identifier of the application associated with the feedback.</p>",
         "PutGroupRequest$applicationId": "<p>The identifier of the application in which the user and group mapping belongs.</p>",
         "Retriever$applicationId": "<p>The identifier of the Amazon Q Business application using the retriever.</p>",
-        "SearchRelevantContentRequest$applicationId": "<p>The unique identifier of the Q Business application to search.</p>",
+        "SearchRelevantContentRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application to search.</p>",
         "StartDataSourceSyncJobRequest$applicationId": "<p>The identifier of Amazon Q Business application the data source is connected to.</p>",
         "StopDataSourceSyncJobRequest$applicationId": "<p>The identifier of the Amazon Q Business application that the data source is connected to.</p>",
         "UpdateApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "UpdateChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application for which the chat controls are configured.</p>",
-        "UpdateDataAccessorRequest$applicationId": "<p>The unique identifier of the Q Business application.</p>",
+        "UpdateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "UpdateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source is attached to.</p>",
         "UpdateIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application connected to the index.</p>",
         "UpdatePluginRequest$applicationId": "<p>The identifier of the application the plugin is attached to.</p>",
         "UpdateRetrieverRequest$applicationId": "<p>The identifier of your Amazon Q Business application.</p>",
+        "UpdateSubscriptionRequest$applicationId": "<p>The identifier of the Amazon Q Business application where the subscription update should take effect.</p>",
         "UpdateUserRequest$applicationId": "<p>The identifier of the application the user is attached to.</p>",
         "UpdateWebExperienceRequest$applicationId": "<p>The identifier of the Amazon Q Business application attached to the web experience.</p>"
       }
@@ -647,6 +655,16 @@
         "BrowserExtensionConfiguration$enabledBrowserExtensions": "<p>Specify the browser extensions allowed for your Amazon Q web experience.</p> <ul> <li> <p> <code>CHROME</code> — Enables the extension for Chromium-based browsers (Google Chrome, Microsoft Edge, Opera, etc.).</p> </li> <li> <p> <code>FIREFOX</code> — Enables the extension for Mozilla Firefox.</p> </li> <li> <p> <code>CHROME</code> and <code>FIREFOX</code> — Enable the extension for Chromium-based browsers and Mozilla Firefox.</p> </li> </ul>"
       }
     },
+    "CancelSubscriptionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelSubscriptionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ChatInput": {
       "base": null,
       "refs": {
@@ -723,6 +741,7 @@
         "CreateIndexRequest$clientToken": "<p>A token that you provide to identify the request to create an index. Multiple calls to the <code>CreateIndex</code> API with the same client token will create only one index.</p>",
         "CreatePluginRequest$clientToken": "<p>A token that you provide to identify the request to create your Amazon Q Business plugin.</p>",
         "CreateRetrieverRequest$clientToken": "<p>A token that you provide to identify the request to create your Amazon Q Business application retriever.</p>",
+        "CreateSubscriptionRequest$clientToken": "<p>A token that you provide to identify the request to create a subscription for your Amazon Q Business application.</p>",
         "CreateUserRequest$clientToken": "<p>A token that you provide to identify the request to create your Amazon Q Business user mapping.</p>",
         "CreateWebExperienceRequest$clientToken": "<p>A token you provide to identify a request to create an Amazon Q Business web experience. </p>",
         "UpdateChatControlsConfigurationRequest$clientToken": "<p>A token that you provide to identify the request to update a Amazon Q Business application chat configuration.</p>"
@@ -871,6 +890,16 @@
       }
     },
     "CreateRetrieverResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSubscriptionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSubscriptionResponse": {
       "base": null,
       "refs": {
       }
@@ -1646,6 +1675,12 @@
       "refs": {
       }
     },
+    "GroupIdentifier": {
+      "base": null,
+      "refs": {
+        "SubscriptionPrincipal$group": "<p>The identifier of a group in the IAM Identity Center instance connected to the Amazon Q Business application.</p>"
+      }
+    },
     "GroupMembers": {
       "base": "<p>A list of users or sub groups that belong to a group. This is for generating Amazon Q Business chat results only from document a user has access to.</p>",
       "refs": {
@@ -1711,10 +1746,10 @@
     "IdcApplicationArn": {
       "base": null,
       "refs": {
-        "CreateDataAccessorResponse$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the AWS IAM Identity Center application created for this data accessor.</p>",
-        "DataAccessor$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the associated AWS IAM Identity Center application.</p>",
+        "CreateDataAccessorResponse$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application created for this data accessor.</p>",
+        "DataAccessor$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the associated IAM Identity Center application.</p>",
         "GetApplicationResponse$identityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) of the AWS IAM Identity Center instance attached to your Amazon Q Business application.</p>",
-        "GetDataAccessorResponse$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the AWS IAM Identity Center application associated with this data accessor.</p>",
+        "GetDataAccessorResponse$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application associated with this data accessor.</p>",
         "IdcAuthConfiguration$idcApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center Application used to configure authentication.</p>"
       }
     },
@@ -2074,6 +2109,16 @@
       "refs": {
       }
     },
+    "ListSubscriptionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSubscriptionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {
@@ -2206,6 +2251,12 @@
       "base": null,
       "refs": {
         "ListRetrieversRequest$maxResults": "<p>The maximum number of retrievers returned.</p>"
+      }
+    },
+    "MaxResultsIntegerForListSubscriptions": {
+      "base": null,
+      "refs": {
+        "ListSubscriptionsRequest$maxResults": "<p>The maximum number of Amazon Q Business subscriptions to return.</p>"
       }
     },
     "MaxResultsIntegerForListWebExperiencesRequest": {
@@ -2396,6 +2447,8 @@
         "ListPluginsResponse$nextToken": "<p>If the <code>maxResults</code> response was incomplete because there is more data to retrieve, Amazon Q Business returns a pagination token in the response. You can use this pagination token to retrieve the next set of plugins.</p>",
         "ListRetrieversRequest$nextToken": "<p>If the number of retrievers returned exceeds <code>maxResults</code>, Amazon Q Business returns a next token as a pagination token to retrieve the next set of retrievers.</p>",
         "ListRetrieversResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token, which you can use in a later request to list the next set of retrievers.</p>",
+        "ListSubscriptionsRequest$nextToken": "<p>If the <code>maxResults</code> response was incomplete because there is more data to retrieve, Amazon Q Business returns a pagination token in the response. You can use this pagination token to retrieve the next set of Amazon Q Business subscriptions.</p>",
+        "ListSubscriptionsResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token. You can use this token in a subsequent request to retrieve the next set of subscriptions.</p>",
         "ListWebExperiencesRequest$nextToken": "<p>If the <code>maxResults</code> response was incomplete because there is more data to retrieve, Amazon Q Business returns a pagination token in the response. You can use this pagination token to retrieve the next set of Amazon Q Business conversations.</p>",
         "ListWebExperiencesResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token, which you can use in a later request to list the next set of messages.</p>",
         "SearchRelevantContentRequest$nextToken": "<p>The token for the next set of results. (You received this token from a previous call.)</p>",
@@ -2585,7 +2638,7 @@
     "PrincipalRoleArn": {
       "base": null,
       "refs": {
-        "AssociatePermissionRequest$principal": "<p>The Amazon Resource Name (ARN) of the IAM role for the ISV that is being granted permission.</p>",
+        "AssociatePermissionRequest$principal": "<p>The Amazon Resource Name of the IAM role for the ISV that is being granted permission.</p>",
         "CreateDataAccessorRequest$principal": "<p>The Amazon Resource Name (ARN) of the IAM role for the ISV that will be accessing the data.</p>",
         "DataAccessor$principal": "<p>The Amazon Resource Name (ARN) of the IAM role for the ISV associated with this data accessor.</p>",
         "GetDataAccessorResponse$principal": "<p>The Amazon Resource Name (ARN) of the IAM role for the ISV associated with this data accessor.</p>"
@@ -2635,14 +2688,14 @@
     "QIamAction": {
       "base": null,
       "refs": {
-        "ActionConfiguration$action": "<p>The Q Business action that is allowed.</p>",
+        "ActionConfiguration$action": "<p>The Amazon Q Business action that is allowed.</p>",
         "QIamActions$member": null
       }
     },
     "QIamActions": {
       "base": null,
       "refs": {
-        "AssociatePermissionRequest$actions": "<p>The list of Q Business actions that the ISV is allowed to perform.</p>"
+        "AssociatePermissionRequest$actions": "<p>The list of Amazon Q Business actions that the ISV is allowed to perform.</p>"
       }
     },
     "QueryText": {
@@ -2776,7 +2829,7 @@
         "IdcAuthConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role with permissions to perform actions on Amazon Web Services services on your behalf.</p>",
         "OAuth2ClientCredentialConfiguration$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the OAuth 2.0 authentication credentials stored in a Secrets Manager secret.</p>",
         "OpenIDConnectProviderConfiguration$secretsRole": "<p>An IAM role with permissions to access KMS to decrypt the Secrets Manager secret containing your OIDC client secret.</p>",
-        "PutGroupRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.</p>",
+        "PutGroupRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.</p>",
         "SamlConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role assumed by users when they authenticate into their Amazon Q Business web experience, containing the relevant Amazon Q Business permissions for conversing with Amazon Q Business.</p>",
         "UpdateApplicationRequest$roleArn": "<p>An Amazon Web Services Identity and Access Management (IAM) role that gives Amazon Q Business permission to access Amazon CloudWatch logs and metrics.</p>",
         "UpdateDataSourceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources.</p>",
@@ -3055,10 +3108,63 @@
         "DataSourceVpcConfiguration$subnetIds": "<p>A list of identifiers for subnets within your Amazon VPC. The subnets should be able to connect to each other in the VPC, and they should have outgoing access to the Internet through a NAT device.</p>"
       }
     },
+    "Subscription": {
+      "base": "<p>Information about an Amazon Q Business subscription.</p> <p>Subscriptions are used to provide access for an IAM Identity Center user or a group to an Amazon Q Business application.</p> <p>Amazon Q Business offers two subscription tiers: <code>Q_LITE</code> and <code>Q_BUSINESS</code>. Subscription tier determines feature access for the user. For more information on subscriptions and pricing tiers, see <a href=\"https://aws.amazon.com/q/business/pricing/\">Amazon Q Business pricing</a>.</p>",
+      "refs": {
+        "Subscriptions$member": null
+      }
+    },
+    "SubscriptionArn": {
+      "base": null,
+      "refs": {
+        "CancelSubscriptionResponse$subscriptionArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q Business subscription being cancelled.</p>",
+        "CreateSubscriptionResponse$subscriptionArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q Business subscription created.</p>",
+        "Subscription$subscriptionArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q Business subscription that was updated.</p>",
+        "UpdateSubscriptionResponse$subscriptionArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q Business subscription that was updated.</p>"
+      }
+    },
+    "SubscriptionDetails": {
+      "base": "<p> The details of an Amazon Q Business subscription. </p>",
+      "refs": {
+        "CancelSubscriptionResponse$currentSubscription": "<p>The type of your current Amazon Q Business subscription.</p>",
+        "CancelSubscriptionResponse$nextSubscription": "<p>The type of the Amazon Q Business subscription for the next month.</p>",
+        "CreateSubscriptionResponse$currentSubscription": "<p>The type of your current Amazon Q Business subscription.</p>",
+        "CreateSubscriptionResponse$nextSubscription": "<p>The type of the Amazon Q Business subscription for the next month.</p>",
+        "Subscription$currentSubscription": "<p>The type of your current Amazon Q Business subscription.</p>",
+        "Subscription$nextSubscription": "<p>The type of the Amazon Q Business subscription for the next month.</p>",
+        "UpdateSubscriptionResponse$currentSubscription": "<p>The type of your current Amazon Q Business subscription.</p>",
+        "UpdateSubscriptionResponse$nextSubscription": "<p>The type of the Amazon Q Business subscription for the next month.</p>"
+      }
+    },
+    "SubscriptionId": {
+      "base": null,
+      "refs": {
+        "CancelSubscriptionRequest$subscriptionId": "<p>The identifier of the Amazon Q Business subscription being cancelled.</p>",
+        "CreateSubscriptionResponse$subscriptionId": "<p>The identifier of the Amazon Q Business subscription created.</p>",
+        "Subscription$subscriptionId": "<p>The identifier of the Amazon Q Business subscription to be updated.</p>",
+        "UpdateSubscriptionRequest$subscriptionId": "<p>The identifier of the Amazon Q Business subscription to be updated.</p>"
+      }
+    },
+    "SubscriptionPrincipal": {
+      "base": "<p>A user or group in the IAM Identity Center instance connected to the Amazon Q Business application.</p>",
+      "refs": {
+        "CreateSubscriptionRequest$principal": "<p>The IAM Identity Center <code>UserId</code> or <code>GroupId</code> of a user or group in the IAM Identity Center instance connected to the Amazon Q Business application.</p>",
+        "Subscription$principal": "<p>The IAM Identity Center <code>UserId</code> or <code>GroupId</code> of a user or group in the IAM Identity Center instance connected to the Amazon Q Business application.</p>"
+      }
+    },
     "SubscriptionType": {
       "base": null,
       "refs": {
-        "AutoSubscriptionConfiguration$defaultSubscriptionType": "<p>Describes the default subscription type assigned to an Amazon Q Business application using IAM identity federation for user management. If the value for <code>autoSubscribe</code> is set to <code>ENABLED</code> you must select a value for this field.</p>"
+        "AutoSubscriptionConfiguration$defaultSubscriptionType": "<p>Describes the default subscription type assigned to an Amazon Q Business application using IAM identity federation for user management. If the value for <code>autoSubscribe</code> is set to <code>ENABLED</code> you must select a value for this field.</p>",
+        "CreateSubscriptionRequest$type": "<p>The type of Amazon Q Business subscription you want to create.</p>",
+        "SubscriptionDetails$type": "<p> The type of an Amazon Q Business subscription. </p>",
+        "UpdateSubscriptionRequest$type": "<p>The type of the Amazon Q Business subscription to be updated.</p>"
+      }
+    },
+    "Subscriptions": {
+      "base": null,
+      "refs": {
+        "ListSubscriptionsResponse$subscriptions": "<p>An array of summary information on the subscriptions configured for an Amazon Q Business application.</p>"
       }
     },
     "SyncSchedule": {
@@ -3326,6 +3432,16 @@
       "refs": {
       }
     },
+    "UpdateSubscriptionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSubscriptionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateUserRequest": {
       "base": null,
       "refs": {
@@ -3399,6 +3515,12 @@
         "ListMessagesRequest$userId": "<p>The identifier of the user involved in the Amazon Q Business web experience conversation.</p>",
         "PrincipalUser$id": "<p> The identifier of the user. </p>",
         "PutFeedbackRequest$userId": "<p>The identifier of the user giving the feedback.</p>"
+      }
+    },
+    "UserIdentifier": {
+      "base": null,
+      "refs": {
+        "SubscriptionPrincipal$user": "<p>The identifier of a user in the IAM Identity Center instance connected to the Amazon Q Business application.</p>"
       }
     },
     "UserIds": {
