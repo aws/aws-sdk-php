@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.4 - 2025-01-31
 
 * `Aws\PrometheusService` - Add support for sending metrics to cross account and CMCK AMP workspaces through RoleConfiguration on Create/Update Scraper.
 * `Aws\CodeBuild` - Added support for CodeBuild self-hosted Buildkite runner builds
