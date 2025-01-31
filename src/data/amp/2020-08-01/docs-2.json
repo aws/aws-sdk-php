@@ -264,6 +264,8 @@
     "IamRoleArn": {
       "base": "<p>An ARN identifying an IAM role used by the scraper.</p>",
       "refs": {
+        "RoleConfiguration$sourceRoleArn": "<p>A ARN identifying the source role configuration.</p>",
+        "RoleConfiguration$targetRoleArn": "<p>A ARN identifying the target role configuration.</p>",
         "ScraperDescription$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the scraper to discover and collect metrics on your behalf.</p> <p>For example, <code>arn:aws:iam::123456789012:role/service-role/AmazonGrafanaServiceRole-12example</code>.</p>",
         "ScraperSummary$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the scraper to discover and collect metrics on your behalf.</p>"
       }
@@ -429,6 +431,15 @@
     "ResourceNotFoundException": {
       "base": "<p>The request references a resources that doesn't exist.</p>",
       "refs": {
+      }
+    },
+    "RoleConfiguration": {
+      "base": "<p>To configure roles that allows users to write to an Amazon Managed Service for Prometheus workspace in a different account.</p>",
+      "refs": {
+        "CreateScraperRequest$roleConfiguration": "<p>The scraper role configuration for the workspace.</p>",
+        "ScraperDescription$roleConfiguration": null,
+        "ScraperSummary$roleConfiguration": null,
+        "UpdateScraperRequest$roleConfiguration": "<p>The scraper role configuration for the workspace.</p>"
       }
     },
     "RuleGroupsNamespaceArn": {

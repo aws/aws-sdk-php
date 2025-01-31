@@ -678,6 +678,7 @@
           "idempotencyToken":true
         },
         "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
         "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "source":{"shape":"Source"},
         "tags":{"shape":"TagMap"}
@@ -973,7 +974,10 @@
         "configuration":{"shape":"Blob"}
       }
     },
-    "IamRoleArn":{"type":"string"},
+    "IamRoleArn":{
+      "type":"string",
+      "pattern":"^arn:aws[-a-z]*:iam::[0-9]{12}:role/.+$"
+    },
     "IdempotencyToken":{
       "type":"string",
       "max":64,
@@ -1004,7 +1008,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws:kms:[a-z0-9\\-]+:\\d+:key/[a-f0-9\\-]+$"
+      "pattern":"^arn:aws[-a-z]*:kms:[-a-z0-9]+:[0-9]{12}:key/[-a-f0-9]+$"
     },
     "ListRuleGroupsNamespacesRequest":{
       "type":"structure",
@@ -1132,7 +1136,7 @@
     },
     "LogGroupArn":{
       "type":"string",
-      "pattern":"^arn:aws[a-z0-9-]*:logs:[a-z0-9-]+:\\d{12}:log-group:[A-Za-z0-9\\.\\-\\_\\#/]{1,512}\\:\\*$"
+      "pattern":"^arn:aws[-a-z]*:logs:[-a-z0-9]+:[0-9]{12}:log-group:[A-Za-z0-9\\.\\-\\_\\#/]{1,512}\\:\\*$"
     },
     "LoggingConfigurationMetadata":{
       "type":"structure",
@@ -1258,6 +1262,13 @@
       },
       "exception":true
     },
+    "RoleConfiguration":{
+      "type":"structure",
+      "members":{
+        "sourceRoleArn":{"shape":"IamRoleArn"},
+        "targetRoleArn":{"shape":"IamRoleArn"}
+      }
+    },
     "RuleGroupsNamespaceArn":{"type":"string"},
     "RuleGroupsNamespaceData":{"type":"blob"},
     "RuleGroupsNamespaceDescription":{
@@ -1361,6 +1372,7 @@
         "destination":{"shape":"Destination"},
         "lastModifiedAt":{"shape":"Timestamp"},
         "roleArn":{"shape":"IamRoleArn"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
         "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "scraperId":{"shape":"ScraperId"},
         "source":{"shape":"Source"},
@@ -1420,6 +1432,7 @@
         "destination":{"shape":"Destination"},
         "lastModifiedAt":{"shape":"Timestamp"},
         "roleArn":{"shape":"IamRoleArn"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
         "scraperId":{"shape":"ScraperId"},
         "source":{"shape":"Source"},
         "status":{"shape":"ScraperStatus"},
@@ -1614,6 +1627,7 @@
           "idempotencyToken":true
         },
         "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
         "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "scraperId":{
           "shape":"ScraperId",

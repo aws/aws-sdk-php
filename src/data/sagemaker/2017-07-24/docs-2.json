@@ -7931,7 +7931,7 @@
         "CreateImageVersionResponse$ImageVersionArn": "<p>The ARN of the image version.</p>",
         "DescribeImageVersionResponse$ImageVersionArn": "<p>The ARN of the version.</p>",
         "ImageVersion$ImageVersionArn": "<p>The ARN of the version.</p>",
-        "ResourceSpec$SageMakerImageVersionArn": "<p>The ARN of the image version created on the instance.</p>",
+        "ResourceSpec$SageMakerImageVersionArn": "<p>The ARN of the image version created on the instance. To clear the value set for <code>SageMakerImageVersionArn</code>, pass <code>None</code> as the value.</p>",
         "UpdateImageVersionResponse$ImageVersionArn": "<p>The ARN of the image version.</p>"
       }
     },
@@ -14208,7 +14208,7 @@
       }
     },
     "ResourceSpec": {
-      "base": "<p>Specifies the ARN's of a SageMaker AI image and SageMaker AI image version, and the instance type that the version runs on.</p>",
+      "base": "<p>Specifies the ARN's of a SageMaker AI image and SageMaker AI image version, and the instance type that the version runs on.</p> <note> <p>When both <code>SageMakerImageVersionArn</code> and <code>SageMakerImageArn</code> are passed, <code>SageMakerImageVersionArn</code> is used. Any updates to <code>SageMakerImageArn</code> will not take effect if <code>SageMakerImageVersionArn</code> already exists in the <code>ResourceSpec</code> because <code>SageMakerImageVersionArn</code> always takes precedence. To clear the value set for <code>SageMakerImageVersionArn</code>, pass <code>None</code> as the value.</p> </note>",
       "refs": {
         "AppDetails$ResourceSpec": null,
         "CodeEditorAppSettings$DefaultResourceSpec": null,

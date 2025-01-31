@@ -602,7 +602,13 @@
     "CitationEvent":{
       "type":"structure",
       "members":{
-        "citation":{"shape":"Citation"}
+        "citation":{
+          "shape":"Citation",
+          "deprecated":true,
+          "deprecatedMessage":"Citation is deprecated. Please use GeneratedResponsePart and RetrievedReferences for citation event."
+        },
+        "generatedResponsePart":{"shape":"GeneratedResponsePart"},
+        "retrievedReferences":{"shape":"RetrievedReferences"}
       },
       "event":true
     },

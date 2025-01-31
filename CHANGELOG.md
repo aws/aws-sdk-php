@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PrometheusService` - Add support for sending metrics to cross account and CMCK AMP workspaces through RoleConfiguration on Create/Update Scraper.
+* `Aws\CodeBuild` - Added support for CodeBuild self-hosted Buildkite runner builds
+* `Aws\SageMaker` - This release introduces a new valid value in InstanceType parameter: p5en.48xlarge, in ProductionVariant.
+* `Aws\RDS` - Updates to Aurora MySQL and Aurora PostgreSQL API pages with instance log type in the create and modify DB Cluster.
+* `Aws\GeoRoutes` - The OptimizeWaypoints API now supports 50 waypoints per request (20 with constraints like AccessHours or AppointmentTime). It adds waypoint clustering via Clustering and ClusteringIndex for better optimization. Also, total distance validation is removed for greater flexibility.
+* `Aws\BedrockAgentRuntime` - This change is to deprecate the existing citation field under RetrieveAndGenerateStream API response in lieu of GeneratedResponsePart and RetrievedReferences
+
 ## 3.339.3 - 2025-01-30
 
 * `Aws\QBusiness` - Added APIs to manage QBusiness user subscriptions
