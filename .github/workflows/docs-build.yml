@@ -25,7 +25,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
+        run: composer update --no-interaction --prefer-source
 
       - name: Prepare OS environment
         run: |
