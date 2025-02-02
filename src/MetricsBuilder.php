@@ -307,6 +307,101 @@ final class MetricsBuilder
     }
 
     /**
+     * Resolves metrics from client arguments.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    public function resolveAndAppendFromArgs(array $args = []): void {
+        static $metricsFnList = [
+            'appendEndpointMetric',
+            'appendRetryConfigMetric',
+            'appendResponseChecksumValidationMetric',
+        ];
+        foreach ($metricsFnList as $metricFn) {
+            $this->{$metricFn}($args);
+        }
+    }
+
+    /**
+     * Appends the endpoint metric into the metrics builder,
+     * just if a custom endpoint was provided at client construction.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendEndpointMetric(array $args): void
+    {
+        if (!empty($args['endpoint_override'])) {
+            $this->append(MetricsBuilder::ENDPOINT_OVERRIDE);
+        }
+    }
+
+    /**
+     * Appends the retry mode metric into the metrics builder,
+     * based on the resolved retry config mode.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendRetryConfigMetric(array $args): void
+    {
+        $retries = $args['retries'] ?? null;
+        if ($retries === null) {
+            return;
+        }
+
+        $retryMode = '';
+        if ($retries instanceof \Aws\Retry\Configuration) {
+            $retryMode = $retries->getMode();
+        } elseif (is_array($retries)
+            && isset($retries["mode"])
+        ) {
+            $retryMode = $retries["mode"];
+        }
+
+        if ($retryMode === 'legacy') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_LEGACY
+            );
+        } elseif ($retryMode === 'standard') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_STANDARD
+            );
+        } elseif ($retryMode === 'adaptive') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_ADAPTIVE
+            );
+        }
+    }
+
+    /**
+     * Appends the provided/resolved response checksum validation mode.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendResponseChecksumValidationMetric(array $args): void {
+        if (empty($args['response_checksum_validation'])) {
+            return;
+        }
+
+        $checksumValidation = $args['response_checksum_validation'];
+        static $checksumValidationMetricMapping = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED,
+        ];
+
+        if (isset($checksumValidationMetricMapping[$checksumValidation])) {
+            $this->append($checksumValidationMetricMapping[$checksumValidation]);
+        }
+    }
+
+    /**
      * Validates if a metric can be appended by ensuring the total size,
      * including the new metric and separator, does not exceed the limit.
      * Also checks that the metric does not already exist.
