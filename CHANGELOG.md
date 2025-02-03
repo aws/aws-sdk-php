@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaTailor` - Add support for CloudWatch Vended Logs which allows for delivery of customer logs to CloudWatch Logs, S3, or Firehose.
+
 ## 3.339.4 - 2025-01-31
 
 * `Aws\PrometheusService` - Add support for sending metrics to cross account and CMCK AMP workspaces through RoleConfiguration on Create/Update Scraper.

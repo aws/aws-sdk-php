@@ -92,10 +92,10 @@
     "AdConditioningConfiguration": {
       "base": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
       "refs": {
-        "GetPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns. </p>",
-        "PlaybackConfiguration$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
-        "PutPlaybackConfigurationRequest$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
-        "PutPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>"
+        "GetPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>",
+        "PlaybackConfiguration$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads.</p>",
+        "PutPlaybackConfigurationRequest$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>",
+        "PutPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>"
       }
     },
     "AdMarkerPassthrough": {
@@ -711,6 +711,12 @@
         "LogConfigurationForChannel$LogTypes": "<p>The log types.</p>"
       }
     },
+    "LoggingStrategy": {
+      "base": null,
+      "refs": {
+        "__listOfLoggingStrategies$member": null
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -948,7 +954,7 @@
     "StreamingMediaFileConditioning": {
       "base": null,
       "refs": {
-        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery, indicates what transcoding action MediaTailor it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/precondition-ads.html\">https://docs.aws.amazon.com/precondition-ads.html</a>.</p>"
+        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery and supported file extensions, indicates what transcoding action MediaTailor takes when it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/precondition-ads.html\">https://docs.aws.amazon.com/precondition-ads.html</a>.</p>"
       }
     },
     "String": {
@@ -1161,6 +1167,14 @@
       "base": null,
       "refs": {
         "ListLiveSourcesResponse$Items": "<p>Lists the live sources.</p>"
+      }
+    },
+    "__listOfLoggingStrategies": {
+      "base": null,
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. To configure MediaTailor to send logs directly to Amazon CloudWatch Logs, choose <code>LEGACY_CLOUDWATCH</code>. To configure MediaTailor to send logs to CloudWatch, which then vends the logs to your destination of choice, choose <code>VENDED_LOGS</code>. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream.</p> <p>To use vended logs, you must configure the delivery destination in Amazon CloudWatch, as described in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-vended-logs-permissions-V2\">Enable logging from AWS services, Logging that requires additional permissions [V2]</a>.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. <code>LEGACY_CLOUDWATCH</code> indicates that MediaTailor is sending logs directly to Amazon CloudWatch Logs. <code>VENDED_LOGS</code> indicates that MediaTailor is sending logs to CloudWatch, which then vends the logs to your destination of choice. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream. </p>",
+        "LogConfiguration$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. <code>LEGACY_CLOUDWATCH</code> indicates that MediaTailor is sending logs directly to Amazon CloudWatch Logs. <code>VENDED_LOGS</code> indicates that MediaTailor is sending logs to CloudWatch, which then vends the logs to your destination of choice. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream. </p>"
       }
     },
     "__listOfPlaybackConfiguration": {

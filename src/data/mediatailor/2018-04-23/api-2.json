@@ -725,7 +725,8 @@
       ],
       "members":{
         "PercentEnabled":{"shape":"__integer"},
-        "PlaybackConfigurationName":{"shape":"__string"}
+        "PlaybackConfigurationName":{"shape":"__string"},
+        "EnabledLoggingStrategies":{"shape":"__listOfLoggingStrategies"}
       }
     },
     "ConfigureLogsForPlaybackConfigurationResponse":{
@@ -733,7 +734,8 @@
       "required":["PercentEnabled"],
       "members":{
         "PercentEnabled":{"shape":"__integer"},
-        "PlaybackConfigurationName":{"shape":"__string"}
+        "PlaybackConfigurationName":{"shape":"__string"},
+        "EnabledLoggingStrategies":{"shape":"__listOfLoggingStrategies"}
       }
     },
     "CreateChannelRequest":{
@@ -1749,7 +1751,8 @@
       "type":"structure",
       "required":["PercentEnabled"],
       "members":{
-        "PercentEnabled":{"shape":"__integer"}
+        "PercentEnabled":{"shape":"__integer"},
+        "EnabledLoggingStrategies":{"shape":"__listOfLoggingStrategies"}
       }
     },
     "LogConfigurationForChannel":{
@@ -1765,6 +1768,13 @@
     "LogTypes":{
       "type":"list",
       "member":{"shape":"LogType"}
+    },
+    "LoggingStrategy":{
+      "type":"string",
+      "enum":[
+        "VENDED_LOGS",
+        "LEGACY_CLOUDWATCH"
+      ]
     },
     "Long":{
       "type":"long",
@@ -2498,6 +2508,10 @@
     "__listOfLiveSource":{
       "type":"list",
       "member":{"shape":"LiveSource"}
+    },
+    "__listOfLoggingStrategies":{
+      "type":"list",
+      "member":{"shape":"LoggingStrategy"}
     },
     "__listOfPlaybackConfiguration":{
       "type":"list",
