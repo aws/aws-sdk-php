@@ -1151,6 +1151,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         $expiration = time() + 1000;
+        $expirationMilliseconds = $expiration * 1000;
         $ini = <<<EOT
 [default]
 sso_account_id = 12345
@@ -1196,7 +1197,7 @@ EOT;
                 'accessKeyId'     => 'foo',
                 'secretAccessKey' => 'assumedSecret',
                 'sessionToken'    => null,
-                'expiration'      => $expiration
+                'expiration'      => $expirationMilliseconds
             ],
         ];
 
@@ -1220,6 +1221,7 @@ EOT;
                 DateTimeResult::fromEpoch(time())->getTimestamp(),
                 $creds->getExpiration()
             );
+            $this->assertEquals($creds->getExpiration(), $expiration);
         } finally {
             unlink($dir . '/config');
             unlink($tokenLocation);
@@ -2537,6 +2539,7 @@ EOF;
             mkdir($awsDir, 0777, true);
         }
         $expiration = time() + 1000;
+        $expirationMilliseconds = $expiration * 1000;
         $ini = <<<EOF
 [default]
 sso_account_id = 123456789012
@@ -2577,7 +2580,7 @@ EOF;
                 'accessKeyId'     => 'Foo',
                 'secretAccessKey' => 'Bazz',
                 'sessionToken'    => null,
-                'expiration'      => $expiration
+                'expiration'      => $expirationMilliseconds
             ],
         ];
         $ssoClient = new SSOClient([
@@ -2597,6 +2600,7 @@ EOF;
                 ]
             );
             $credentials = $credentialsProvider()->wait();
+            $this->assertEquals($credentials->getExpiration(), $expiration);
 
             $this->assertEquals(
                 CredentialSources::PROFILE_SSO,
