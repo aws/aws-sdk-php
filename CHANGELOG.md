@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.5 - 2025-02-03
 
 * `Aws\MediaTailor` - Add support for CloudWatch Vended Logs which allows for delivery of customer logs to CloudWatch Logs, S3, or Firehose.
 
