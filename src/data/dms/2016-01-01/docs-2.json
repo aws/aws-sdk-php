@@ -1962,7 +1962,7 @@
       }
     },
     "KerberosAuthenticationSettings": {
-      "base": "<p>Specifies using Kerberos authentication settings for use with DMS.</p>",
+      "base": "<p>Specifies the settings required for kerberos authentication when creating the replication instance.</p>",
       "refs": {
         "CreateReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication, when creating a replication instance.</p>",
         "ModifyReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication, when modifying a replication instance.</p>",
@@ -2278,7 +2278,7 @@
     "OracleAuthenticationMethod": {
       "base": null,
       "refs": {
-        "OracleSettings$AuthenticationMethod": "<p>Specifies using Kerberos authentication with Oracle.</p>"
+        "OracleSettings$AuthenticationMethod": "<p>Specifies the authentication method to be used with Oracle.</p>"
       }
     },
     "OracleDataProviderSettings": {
@@ -2902,7 +2902,7 @@
     "SqlServerAuthenticationMethod": {
       "base": null,
       "refs": {
-        "MicrosoftSQLServerSettings$AuthenticationMethod": "<p>Specifies using Kerberos authentication with Microsoft SQL Server.</p>"
+        "MicrosoftSQLServerSettings$AuthenticationMethod": "<p>Specifies the authentication method to be used with Microsoft SQL Server.</p>"
       }
     },
     "SslSecurityProtocolValue": {
@@ -3439,9 +3439,9 @@
         "KafkaSettings$SslClientKeyArn": "<p>The Amazon Resource Name (ARN) for the client private key used to securely connect to a Kafka target endpoint.</p>",
         "KafkaSettings$SslCaCertificateArn": "<p> The Amazon Resource Name (ARN) for the private certificate authority (CA) cert that DMS uses to securely connect to your Kafka target endpoint.</p>",
         "KafkaSettings$SaslUsername": "<p> The secure user name you created when you first set up your MSK cluster to validate a client identity and make an encrypted connection between server and client using SASL-SSL authentication.</p>",
-        "KerberosAuthenticationSettings$KeyCacheSecretId": "<p>Specifies the secret ID of the key cache for the replication instance.</p>",
-        "KerberosAuthenticationSettings$KeyCacheSecretIamArn": "<p>Specifies the Amazon Resource Name (ARN) of the IAM role that grants Amazon Web Services DMS access to the secret containing key cache file for the replication instance.</p>",
-        "KerberosAuthenticationSettings$Krb5FileContents": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication of the replication instance.</p>",
+        "KerberosAuthenticationSettings$KeyCacheSecretId": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication.</p>",
+        "KerberosAuthenticationSettings$KeyCacheSecretIamArn": "<p>Specifies the Amazon Resource Name (ARN) of the IAM role that grants Amazon Web Services DMS access to the secret containing key cache file for the kerberos authentication.</p>",
+        "KerberosAuthenticationSettings$Krb5FileContents": "<p>Specifies the contents of krb5 configuration file required for kerberos authentication.</p>",
         "KeyList$member": null,
         "KinesisSettings$StreamArn": "<p>The Amazon Resource Name (ARN) for the Amazon Kinesis Data Streams endpoint.</p>",
         "KinesisSettings$ServiceAccessRoleArn": "<p>The Amazon Resource Name (ARN) for the IAM role that DMS uses to write to the Kinesis data stream. The role must allow the <code>iam:PassRole</code> action.</p>",
@@ -3934,6 +3934,12 @@
         "ReloadTablesMessage$TablesToReload": "<p>The name and schema of the table to be reloaded. </p>"
       }
     },
+    "TablePreparationMode": {
+      "base": null,
+      "refs": {
+        "TargetDataSetting$TablePreparationMode": "<p>This setting determines how DMS handles the target tables before starting a data migration, either by leaving them untouched, dropping and recreating them, or truncating the existing data in the target tables.</p>"
+      }
+    },
     "TableStatistics": {
       "base": "<p>Provides a collection of table statistics in response to a request by the <code>DescribeTableStatistics</code> operation.</p>",
       "refs": {
@@ -3976,6 +3982,20 @@
         "ImportCertificateMessage$Tags": "<p>The tags associated with the certificate.</p>",
         "ListTagsForResourceResponse$TagList": "<p>A list of tags for the resource.</p>",
         "StartReplicationTaskAssessmentRunMessage$Tags": "<p>One or more tags to be assigned to the premigration assessment run that you want to start.</p>"
+      }
+    },
+    "TargetDataSetting": {
+      "base": "<p>Defines settings for a target data provider for a data migration.</p>",
+      "refs": {
+        "TargetDataSettings$member": null
+      }
+    },
+    "TargetDataSettings": {
+      "base": null,
+      "refs": {
+        "CreateDataMigrationMessage$TargetDataSettings": "<p>Specifies information about the target data provider.</p>",
+        "DataMigration$TargetDataSettings": "<p>Specifies information about the data migration's target data provider.</p>",
+        "ModifyDataMigrationMessage$TargetDataSettings": "<p>The new information about the target data provider for the data migration.</p>"
       }
     },
     "TargetDbType": {

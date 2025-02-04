@@ -30,7 +30,7 @@
     "DeleteWebExperience": "<p>Deletes an Amazon Q Business web experience.</p>",
     "DisassociatePermission": "<p>Removes a permission policy from a Amazon Q Business application, revoking the cross-account access that was previously granted to an ISV. This operation deletes the specified policy statement from the application's permission policy.</p>",
     "GetApplication": "<p>Gets information about an existing Amazon Q Business application.</p>",
-    "GetChatControlsConfiguration": "<p>Gets information about an chat controls configured for an existing Amazon Q Business application.</p>",
+    "GetChatControlsConfiguration": "<p>Gets information about chat controls configured for an existing Amazon Q Business application.</p>",
     "GetDataAccessor": "<p>Retrieves information about a specified data accessor. This operation returns details about the data accessor, including its display name, unique identifier, Amazon Resource Name (ARN), the associated Amazon Q Business application and IAM Identity Center application, the IAM role for the ISV, the action configurations, and the timestamps for when the data accessor was created and last updated.</p>",
     "GetDataSource": "<p>Gets information about an existing Amazon Q Business data source connector.</p>",
     "GetGroup": "<p>Describes a group by group name.</p>",
@@ -67,7 +67,7 @@
     "TagResource": "<p>Adds the specified tag to the specified Amazon Q Business application or data source resource. If the tag already exists, the existing value is replaced with the new value.</p>",
     "UntagResource": "<p>Removes a tag from an Amazon Q Business application or a data source.</p>",
     "UpdateApplication": "<p>Updates an existing Amazon Q Business application.</p> <note> <p>Amazon Q Business applications may securely transmit data for processing across Amazon Web Services Regions within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note> <note> <p>An Amazon Q Apps service-linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\">Using service-linked roles for Q Apps</a>. </p> </note>",
-    "UpdateChatControlsConfiguration": "<p>Updates an set of chat controls configured for an existing Amazon Q Business application.</p>",
+    "UpdateChatControlsConfiguration": "<p>Updates a set of chat controls configured for an existing Amazon Q Business application.</p>",
     "UpdateDataAccessor": "<p>Updates an existing data accessor. This operation allows modifying the action configurations (the allowed actions and associated filters) and the display name of the data accessor. It does not allow changing the IAM role associated with the data accessor or other core properties of the data accessor.</p>",
     "UpdateDataSource": "<p>Updates an existing Amazon Q Business data source connector.</p>",
     "UpdateIndex": "<p>Updates an Amazon Q Business index.</p>",
@@ -383,6 +383,12 @@
       "base": "<p>The creator mode specific admin controls configured for an Amazon Q Business application. Determines whether an end user can generate LLM-only responses when they use the web experience.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html\">Admin controls and guardrails</a> and <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope\">Conversation settings</a>.</p>",
       "refs": {
         "GetChatControlsConfigurationResponse$creatorModeConfiguration": "<p>The configuration details for <code>CREATOR_MODE</code>.</p>"
+      }
+    },
+    "AppliedOrchestrationConfiguration": {
+      "base": "<p>The chat orchestration specific admin controls configured for an Amazon Q Business application. Determines whether Amazon Q Business automatically routes chat requests across configured plugins and data sources in your Amazon Q Business application.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails-global-controls.html#guardrails-global-orchestration\">Chat orchestration settings</a>.</p>",
+      "refs": {
+        "GetChatControlsConfigurationResponse$orchestrationConfiguration": "<p> The chat response orchestration settings for your application.</p> <note> <p>Chat orchestration is optimized to work for English language content. For more details on language support in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-languages.html\">Supported languages</a>.</p> </note>"
       }
     },
     "AssociatePermissionRequest": {
@@ -2490,6 +2496,19 @@
       "base": "<p>Information about the OIDC-compliant identity provider (IdP) used to authenticate end users of an Amazon Q Business web experience.</p>",
       "refs": {
         "IdentityProviderConfiguration$openIDConnectConfiguration": null
+      }
+    },
+    "OrchestrationConfiguration": {
+      "base": "<p>Configuration information required to enable chat orchestration for your Amazon Q Business application.</p> <note> <p>Chat orchestration is optimized to work for English language content. For more details on language support in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/supported-languages.html\">Supported languages</a>.</p> </note>",
+      "refs": {
+        "UpdateChatControlsConfigurationRequest$orchestrationConfiguration": "<p> The chat response orchestration settings for your application.</p>"
+      }
+    },
+    "OrchestrationControl": {
+      "base": null,
+      "refs": {
+        "AppliedOrchestrationConfiguration$control": "<p> Information about whether chat orchestration is enabled or disabled for an Amazon Q Business application. </p>",
+        "OrchestrationConfiguration$control": "<p> Status information about whether chat orchestration is activated or deactivated for your Amazon Q Business application.</p>"
       }
     },
     "Origin": {

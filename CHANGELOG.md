@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Updates to sso provider expiration time handling
+* `Aws\DataSync` - Doc-only update to provide more information on using Kerberos authentication with SMB locations.
+* `Aws\QBusiness` - Adds functionality to enable/disable a new Q Business Chat orchestration feature. If enabled, Q Business can orchestrate over datasources and plugins without the need for customers to select specific chat modes.
+* `Aws\SageMaker` - IPv6 support for Hyperpod clusters
+* `Aws\IAM` - This release adds support for accepting encrypted SAML assertions. Customers can now configure their identity provider to encrypt the SAML assertions it sends to IAM.
+* `Aws\DatabaseMigrationService` - Introduces TargetDataSettings with the TablePreparationMode option available for data migrations.
+* `Aws\NeptuneGraph` - Added argument to `list-export` to filter by graph ID
+
 ## 3.339.5 - 2025-02-03
 
 * `Aws\MediaTailor` - Add support for CloudWatch Vended Logs which allows for delivery of customer logs to CloudWatch Logs, S3, or Firehose.

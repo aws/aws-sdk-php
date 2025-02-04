@@ -2903,6 +2903,17 @@
                 }
             }
         },
+        "AppliedOrchestrationConfiguration": {
+            "type": "structure",
+            "required": [
+                "control"
+            ],
+            "members": {
+                "control": {
+                    "shape": "OrchestrationControl"
+                }
+            }
+        },
         "AssociatePermissionRequest": {
             "type": "structure",
             "required": [
@@ -5343,6 +5354,9 @@
                 "responseScope": {
                     "shape": "ResponseScope"
                 },
+                "orchestrationConfiguration": {
+                    "shape": "AppliedOrchestrationConfiguration"
+                },
                 "blockedPhrases": {
                     "shape": "BlockedPhrasesConfiguration"
                 },
@@ -7318,6 +7332,24 @@
                 }
             }
         },
+        "OrchestrationConfiguration": {
+            "type": "structure",
+            "required": [
+                "control"
+            ],
+            "members": {
+                "control": {
+                    "shape": "OrchestrationControl"
+                }
+            }
+        },
+        "OrchestrationControl": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
         "Origin": {
             "type": "string",
             "max": 256,
@@ -8598,6 +8630,9 @@
                 },
                 "responseScope": {
                     "shape": "ResponseScope"
+                },
+                "orchestrationConfiguration": {
+                    "shape": "OrchestrationConfiguration"
                 },
                 "blockedPhrasesConfigurationUpdate": {
                     "shape": "BlockedPhrasesConfigurationUpdate"

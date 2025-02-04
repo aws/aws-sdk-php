@@ -6,7 +6,6 @@
     "endpointPrefix":"neptune-graph",
     "protocol":"rest-json",
     "protocols":["rest-json"],
-    "ripServiceName":"neptune-graph",
     "serviceAbbreviation":"Neptune Graph",
     "serviceFullName":"Amazon Neptune Graph",
     "serviceId":"Neptune Graph",
@@ -1661,6 +1660,11 @@
     "ListExportTasksInput":{
       "type":"structure",
       "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"querystring",
+          "locationName":"graphIdentifier"
+        },
         "nextToken":{
           "shape":"PaginationToken",
           "location":"querystring",

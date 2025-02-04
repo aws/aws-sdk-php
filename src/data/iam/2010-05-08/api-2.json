@@ -2963,7 +2963,9 @@
       "members":{
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
         "Name":{"shape":"SAMLProviderNameType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "AddPrivateKey":{"shape":"privateKeyType"}
       }
     },
     "CreateSAMLProviderResponse":{
@@ -3853,10 +3855,13 @@
     "GetSAMLProviderResponse":{
       "type":"structure",
       "members":{
+        "SAMLProviderUUID":{"shape":"privateKeyIdType"},
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
         "CreateDate":{"shape":"dateType"},
         "ValidUntil":{"shape":"dateType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "PrivateKeyList":{"shape":"privateKeyList"}
       }
     },
     "GetSSHPublicKeyRequest":{
@@ -5304,6 +5309,13 @@
       "max":10000000,
       "min":1000
     },
+    "SAMLPrivateKey":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"privateKeyIdType"},
+        "Timestamp":{"shape":"dateType"}
+      }
+    },
     "SAMLProviderListEntry":{
       "type":"structure",
       "members":{
@@ -5905,13 +5917,13 @@
     },
     "UpdateSAMLProviderRequest":{
       "type":"structure",
-      "required":[
-        "SAMLMetadataDocument",
-        "SAMLProviderArn"
-      ],
+      "required":["SAMLProviderArn"],
       "members":{
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
-        "SAMLProviderArn":{"shape":"arnType"}
+        "SAMLProviderArn":{"shape":"arnType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "AddPrivateKey":{"shape":"privateKeyType"},
+        "RemovePrivateKey":{"shape":"privateKeyIdType"}
       }
     },
     "UpdateSAMLProviderResponse":{
@@ -6105,6 +6117,13 @@
       "type":"string",
       "max":2048,
       "min":20
+    },
+    "assertionEncryptionModeType":{
+      "type":"string",
+      "enum":[
+        "Required",
+        "Allowed"
+      ]
     },
     "assignmentStatusType":{
       "type":"string",
@@ -6405,6 +6424,17 @@
     "policyVersionIdType":{
       "type":"string",
       "pattern":"v[1-9][0-9]*(\\.[A-Za-z0-9-]*)?"
+    },
+    "privateKeyIdType":{
+      "type":"string",
+      "max":64,
+      "min":22,
+      "pattern":"[A-Z0-9]+"
+    },
+    "privateKeyList":{
+      "type":"list",
+      "member":{"shape":"SAMLPrivateKey"},
+      "max":2
     },
     "privateKeyType":{
       "type":"string",

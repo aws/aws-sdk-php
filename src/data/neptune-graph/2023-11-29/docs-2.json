@@ -496,6 +496,7 @@
         "GetGraphSummaryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "GetPrivateGraphEndpointInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "GetQueryInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "ListExportTasksInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListGraphSnapshotsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListPrivateGraphEndpointsInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ListQueriesInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
@@ -875,7 +876,7 @@
       "refs": {
         "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
         "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
-        "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the max of the <code>min-provisioned-memory</code> and <code>max-provisioned memory</code> is used to create the graph. If neither value is specified 128 m-NCUs are used.</p>",
+        "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the final <code>provisioned-memory</code> will be chosen per the actual size of your imported data. If neither value is specified, 128 m-NCUs are used.</p>",
         "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 128</p>",
         "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",

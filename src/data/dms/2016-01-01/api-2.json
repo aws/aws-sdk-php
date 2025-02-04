@@ -1875,6 +1875,7 @@
         "ServiceAccessRoleArn":{"shape":"String"},
         "EnableCloudwatchLogs":{"shape":"BooleanOptional"},
         "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "TargetDataSettings":{"shape":"TargetDataSettings"},
         "NumberOfJobs":{"shape":"IntegerOptional"},
         "Tags":{"shape":"TagList"},
         "SelectionRules":{"shape":"SecretString"}
@@ -2180,6 +2181,7 @@
         "DataMigrationType":{"shape":"MigrationTypeValue"},
         "DataMigrationSettings":{"shape":"DataMigrationSettings"},
         "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "TargetDataSettings":{"shape":"TargetDataSettings"},
         "DataMigrationStatistics":{"shape":"DataMigrationStatistics"},
         "DataMigrationStatus":{"shape":"String"},
         "PublicIpAddresses":{"shape":"PublicIpAddressList"},
@@ -3947,6 +3949,7 @@
         "ServiceAccessRoleArn":{"shape":"String"},
         "DataMigrationType":{"shape":"MigrationTypeValue"},
         "SourceDataSettings":{"shape":"SourceDataSettings"},
+        "TargetDataSettings":{"shape":"TargetDataSettings"},
         "NumberOfJobs":{"shape":"IntegerOptional"},
         "SelectionRules":{"shape":"SecretString"}
       }
@@ -5557,6 +5560,14 @@
       "type":"list",
       "member":{"shape":"TableToReload"}
     },
+    "TablePreparationMode":{
+      "type":"string",
+      "enum":[
+        "do-nothing",
+        "truncate",
+        "drop-tables-on-target"
+      ]
+    },
     "TableStatistics":{
       "type":"structure",
       "members":{
@@ -5611,6 +5622,16 @@
     "TagList":{
       "type":"list",
       "member":{"shape":"Tag"}
+    },
+    "TargetDataSetting":{
+      "type":"structure",
+      "members":{
+        "TablePreparationMode":{"shape":"TablePreparationMode"}
+      }
+    },
+    "TargetDataSettings":{
+      "type":"list",
+      "member":{"shape":"TargetDataSetting"}
     },
     "TargetDbType":{
       "type":"string",
