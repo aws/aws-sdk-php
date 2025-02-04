@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.6 - 2025-02-04
 
 * `Aws\Credentials` - Updates to sso provider expiration time handling
 * `Aws\DataSync` - Doc-only update to provide more information on using Kerberos authentication with SMB locations.
