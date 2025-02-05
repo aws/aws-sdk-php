@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.7 - 2025-02-05
 
 * `Aws\RDS` - Documentation updates to clarify the description for the parameter AllocatedStorage for the DB cluster data type, the description for the parameter DeleteAutomatedBackups for the DeleteDBCluster API operation, and removing an outdated note for the CreateDBParameterGroup API operation.
 
