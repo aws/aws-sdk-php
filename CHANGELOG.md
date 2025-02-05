@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Documentation updates to clarify the description for the parameter AllocatedStorage for the DB cluster data type, the description for the parameter DeleteAutomatedBackups for the DeleteDBCluster API operation, and removing an outdated note for the CreateDBParameterGroup API operation.
+
 ## 3.339.6 - 2025-02-04
 
 * `Aws\Credentials` - Updates to sso provider expiration time handling
