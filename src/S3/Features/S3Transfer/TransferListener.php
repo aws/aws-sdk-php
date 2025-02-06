@@ -71,6 +71,37 @@ class TransferListener extends ListenerNotifier
         private int $objectsToBeTransferred = 0
     ) {}
 
+    /**
+     * @return int
+     */
+    public function getObjectsTransferCompleted(): int
+    {
+        return $this->objectsTransferCompleted;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsBytesTransferred(): int
+    {
+        return $this->objectsBytesTransferred;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsTransferFailed(): int
+    {
+        return $this->objectsTransferFailed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsToBeTransferred(): int
+    {
+        return $this->objectsToBeTransferred;
+    }
 
     /**
      * Transfer initiated event.

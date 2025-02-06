@@ -7,45 +7,25 @@ namespace Aws\S3\Features\S3Transfer;
  */
 class ObjectProgressTracker
 {
-    /** @var string  */
-    private string $objectKey;
-
-    /** @var int */
-    private int $objectBytesTransferred;
-
-    /** @var int */
-    private int $objectSizeInBytes;
-
-    /** @var ?ProgressBar */
-    private ?ProgressBar $progressBar;
-
-    /**
-     * @var string
-     * - initiated
-     * - progress
-     * - failed
-     * - completed
-     */
-    private string $status;
-
     /**
      * @param string $objectKey
      * @param int $objectBytesTransferred
      * @param int $objectSizeInBytes
      * @param string $status
+     * Possible values are:
+     *  - initiated
+     *  - progress
+     *  - failed
+     *  - completed
      * @param ?ProgressBar $progressBar
      */
     public function __construct(
-        string $objectKey,
-        int $objectBytesTransferred,
-        int $objectSizeInBytes,
-        string $status,
-        ?ProgressBar $progressBar = null
+        private string $objectKey,
+        private int $objectBytesTransferred,
+        private int $objectSizeInBytes,
+        private string $status,
+        private ?ProgressBar $progressBar = null
     ) {
-        $this->objectKey = $objectKey;
-        $this->objectBytesTransferred = $objectBytesTransferred;
-        $this->objectSizeInBytes = $objectSizeInBytes;
-        $this->status = $status;
         $this->progressBar = $progressBar ?? $this->defaultProgressBar();
     }
 

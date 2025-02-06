@@ -92,11 +92,17 @@ class ConsoleProgressBar implements ProgressBar
         $this->args = $args;
     }
 
+    /**
+     * Sets an argument.
+     *
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return void
+     */
     public function setArg(string $key, mixed $value): void
     {
-        if (array_key_exists($key, $this->args)) {
-            $this->args[$key] = $value;
-        }
+        $this->args[$key] = $value;
     }
 
     private function renderProgressBar(): string {
@@ -112,7 +118,7 @@ class ConsoleProgressBar implements ProgressBar
     public function getPaintedProgress(): string {
         foreach ($this->format['parameters'] as $param) {
             if (!array_key_exists($param, $this->args)) {
-                throw new \InvalidArgumentException("Missing '{$param}' parameter for progress bar.");
+                throw new \InvalidArgumentException("Missing `$param` parameter for progress bar.");
             }
         }
 

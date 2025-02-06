@@ -27,16 +27,27 @@ class DefaultProgressTracker
     /** @var TransferListener */
     private TransferListener $transferListener;
 
-    private Closure| ProgressBarFactory | null $progressBarFactory;
+    /** @var Closure|ProgressBarFactory|null */
+    private Closure|ProgressBarFactory|null $progressBarFactory;
+
+    /** @var resource */
+    private $output;
 
     /**
      * @param Closure|ProgressBarFactory|null $progressBarFactory
      */
-    public function __construct(Closure | ProgressBarFactory | null $progressBarFactory = null)
-    {
+    public function __construct(
+        Closure | ProgressBarFactory | null $progressBarFactory = null,
+        $output = STDOUT
+    ) {
         $this->clear();
         $this->initializeListener();
         $this->progressBarFactory = $progressBarFactory ?? $this->defaultProgressBarFactory();
+        if (get_resource_type($output) !== 'stream') {
+            throw new \InvalidArgumentException("The type for $output must be a stream");
+        }
+
+        $this->output = $output;
     }
 
     private function initializeListener(): void {
@@ -54,6 +65,46 @@ class DefaultProgressTracker
      */
     public function getTransferListener(): TransferListener {
         return $this->transferListener;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalBytesTransferred(): int
+    {
+        return $this->totalBytesTransferred;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsTotalSizeInBytes(): int
+    {
+        return $this->objectsTotalSizeInBytes;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsInProgress(): int
+    {
+        return $this->objectsInProgress;
+    }
+
+    /**
+     * @return int
+     */
+    public function getObjectsCount(): int
+    {
+        return $this->objectsCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTransferPercentCompleted(): int
+    {
+        return $this->transferPercentCompleted;
     }
 
     /**
@@ -107,6 +158,9 @@ class DefaultProgressTracker
         };
     }
 
+    /**
+     * @return Closure
+     */
     public function objectTransferFailed(): Closure
     {
         return function (
@@ -123,6 +177,9 @@ class DefaultProgressTracker
         };
     }
 
+    /**
+     * @return Closure
+     */
     public function objectTransferCompleted(): Closure
     {
         return function (
@@ -150,6 +207,11 @@ class DefaultProgressTracker
         $this->transferPercentCompleted = 0;
     }
 
+    /**
+     * @param int $bytesTransferred
+     *
+     * @return void
+     */
     private function increaseBytesTransferred(int $bytesTransferred): void {
         $this->totalBytesTransferred += $bytesTransferred;
         if ($this->objectsTotalSizeInBytes !== 0) {
@@ -157,23 +219,33 @@ class DefaultProgressTracker
         }
     }
 
+    /**
+     * @return void
+     */
     private function showProgress(): void {
         // Clear screen
-        fwrite(STDOUT, "\033[2J\033[H");
+        fwrite($this->output, "\033[2J\033[H");
 
         // Display progress header
-        echo sprintf(
+        fwrite($this->output, sprintf(
             "\r%d%% [%s/%s]\n",
             $this->transferPercentCompleted,
             $this->objectsInProgress,
             $this->objectsCount
-        );
+        ));
 
         foreach ($this->objects as $name => $object) {
-            echo sprintf("\r%s:\n%s\n", $name, $object->getProgressBar()->getPaintedProgress());
+            fwrite($this->output, sprintf(
+                "\r%s:\n%s\n",
+                $name,
+                $object->getProgressBar()->getPaintedProgress()
+            ));
         }
     }
 
+    /**
+     * @return Closure|ProgressBarFactory
+     */
     private function defaultProgressBarFactory(): Closure| ProgressBarFactory {
         return function () {
             return new ConsoleProgressBar(
@@ -183,7 +255,7 @@ class DefaultProgressTracker
                 args: [
                     'transferred' => 0,
                     'tobe_transferred' => 0,
-                    'unit' => 'MB',
+                    'unit' => 'B',
                     'color_code' => ConsoleProgressBar::BLACK_COLOR_CODE,
                 ]
             );
