@@ -21,8 +21,6 @@ class S3TransferManager
      *   The minimum part size to be used in a multipart upload/download.
      * - multipartUploadThresholdBytes: (int, default=(16777216 `16 MB`)) \
      *   The threshold to decided whether a multipart upload is needed.
-     * - multipartDownloadThresholdBytes: (int, default=(16777216 `16 MB`)) \
-     *   The threshold to decided whether a multipart download is needed.
      * - checksumValidationEnabled: (bool, default=true) \
      *   To decide whether a checksum validation will be applied to the response.
      * - checksumAlgorithm: (string, default='crc32') \
@@ -62,6 +60,8 @@ class S3TransferManager
      *   to decide whether transfer progress should be tracked. If not
      *   transfer tracker factory is provided and trackProgress is true then,
      *   the default progress listener implementation will be used.
+     * - minimumPartSize: (int) \
+     *   The minimum part size in bytes to be used in a range multipart download.
      *
      * @return PromiseInterface
      */
@@ -83,7 +83,10 @@ class S3TransferManager
 
         $requestArgs = $sourceArgs + $downloadArgs;
         if (empty($downloadArgs['PartNumber']) && empty($downloadArgs['Range'])) {
-            return $this->tryMultipartDownload($requestArgs, $config);
+            return $this->tryMultipartDownload(
+                $requestArgs,
+                $config
+            );
         }
 
         return $this->trySingleDownload($requestArgs);
@@ -97,6 +100,10 @@ class S3TransferManager
      * - listener: (?MultipartDownloadListener) \
      *   A multipart download listener for watching every multipart download
      *   stage.
+     * - minimumPartSize: (int) \
+     *   The minimum part size in bytes for a range multipart download. If
+     *   this parameter is not provided then it fallbacks to the transfer
+     *   manager `targetPartSizeBytes` config value.
      *
      * @return PromiseInterface
      */
@@ -117,12 +124,17 @@ class S3TransferManager
             }
         }
         $multipartDownloader = MultipartDownloader::chooseDownloader(
-            $this->s3Client,
-            $this->config['multipartDownloadType'],
-            $requestArgs,
-            $this->config,
-            $config['listener'] ?? null,
-            $progressListener?->getTransferListener()
+            s3Client: $this->s3Client,
+            multipartDownloadType: $this->config['multipartDownloadType'],
+            requestArgs: $requestArgs,
+            config: [
+                'minimumPartSize' => max(
+                    $config['minimumPartSize'] ?? 0,
+                    $this->config['targetPartSizeBytes']
+                )
+            ],
+            listener:  $config['listener'] ?? null,
+            progressTracker:  $progressListener?->getTransferListener()
         );
 
         return $multipartDownloader->promise();

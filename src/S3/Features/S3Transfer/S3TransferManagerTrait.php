@@ -11,7 +11,6 @@ trait S3TransferManagerTrait
     private static array $defaultConfig = [
         'targetPartSizeBytes' => 8 * 1024 * 1024,
         'multipartUploadThresholdBytes' => 16 * 1024 * 1024,
-        'multipartDownloadThresholdBytes' => 16 * 1024 * 1024,
         'checksumValidationEnabled' => true,
         'checksumAlgorithm' => 'crc32',
         'multipartDownloadType' => 'partGet',
