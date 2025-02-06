@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Signature` - Adds `transfer-encoding` to list of headers to be removed prior to sigv4a signing
+* `Aws\ConnectCases` - This release adds the ability to conditionally require fields on a template. Check public documentation for more information.
+* `Aws\CostOptimizationHub` - This release enables AWS Cost Optimization Hub to show cost optimization recommendations for Amazon Auto Scaling Groups, including those with single and mixed instance types.
+* `Aws\S3` - Updated list of the valid AWS Region values for the LocationConstraint parameter for general purpose buckets.
+* `Aws\CloudFormation` - We added 5 new stack refactoring APIs: CreateStackRefactor, ExecuteStackRefactor, ListStackRefactors, DescribeStackRefactor, ListStackRefactorActions.
+
 ## 3.339.7 - 2025-02-05
 
 * `Aws\RDS` - Documentation updates to clarify the description for the parameter AllocatedStorage for the DB cluster data type, the description for the parameter DeleteAutomatedBackups for the DeleteDBCluster API operation, and removing an outdated note for the CreateDBParameterGroup API operation.

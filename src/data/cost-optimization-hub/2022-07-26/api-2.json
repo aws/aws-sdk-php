@@ -163,7 +163,8 @@
         "PurchaseSavingsPlans",
         "PurchaseReservedInstances",
         "MigrateToGraviton",
-        "Delete"
+        "Delete",
+        "ScaleIn"
       ]
     },
     "ActionTypeList":{
@@ -171,6 +172,13 @@
       "member":{"shape":"ActionType"},
       "max":100,
       "min":1
+    },
+    "AllocationStrategy":{
+      "type":"string",
+      "enum":[
+        "Prioritized",
+        "LowestPrice"
+      ]
     },
     "BlockStoragePerformanceConfiguration":{
       "type":"structure",
@@ -244,8 +252,18 @@
     "Ec2AutoScalingGroupConfiguration":{
       "type":"structure",
       "members":{
-        "instance":{"shape":"InstanceConfiguration"}
+        "instance":{"shape":"InstanceConfiguration"},
+        "mixedInstances":{"shape":"MixedInstanceConfigurationList"},
+        "type":{"shape":"Ec2AutoScalingGroupType"},
+        "allocationStrategy":{"shape":"AllocationStrategy"}
       }
+    },
+    "Ec2AutoScalingGroupType":{
+      "type":"string",
+      "enum":[
+        "SingleInstanceType",
+        "MixedInstanceTypes"
+      ]
     },
     "Ec2Instance":{
       "type":"structure",
@@ -550,6 +568,16 @@
         "All",
         "None"
       ]
+    },
+    "MixedInstanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"String"}
+      }
+    },
+    "MixedInstanceConfigurationList":{
+      "type":"list",
+      "member":{"shape":"MixedInstanceConfiguration"}
     },
     "OpenSearchReservedInstances":{
       "type":"structure",

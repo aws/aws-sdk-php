@@ -160,6 +160,18 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "CreateStackRefactor":{
+      "name":"CreateStackRefactor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateStackRefactorInput"},
+      "output":{
+        "shape":"CreateStackRefactorOutput",
+        "resultWrapper":"CreateStackRefactorResult"
+      }
+    },
     "CreateStackSet":{
       "name":"CreateStackSet",
       "http":{
@@ -444,6 +456,21 @@
         {"shape":"StackInstanceNotFoundException"}
       ]
     },
+    "DescribeStackRefactor":{
+      "name":"DescribeStackRefactor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeStackRefactorInput"},
+      "output":{
+        "shape":"DescribeStackRefactorOutput",
+        "resultWrapper":"DescribeStackRefactorResult"
+      },
+      "errors":[
+        {"shape":"StackRefactorNotFoundException"}
+      ]
+    },
     "DescribeStackResource":{
       "name":"DescribeStackResource",
       "http":{
@@ -626,6 +653,14 @@
         {"shape":"InsufficientCapabilitiesException"},
         {"shape":"TokenAlreadyExistsException"}
       ]
+    },
+    "ExecuteStackRefactor":{
+      "name":"ExecuteStackRefactor",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExecuteStackRefactorInput"}
     },
     "GetGeneratedTemplate":{
       "name":"GetGeneratedTemplate",
@@ -843,6 +878,30 @@
       "errors":[
         {"shape":"StackSetNotFoundException"}
       ]
+    },
+    "ListStackRefactorActions":{
+      "name":"ListStackRefactorActions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStackRefactorActionsInput"},
+      "output":{
+        "shape":"ListStackRefactorActionsOutput",
+        "resultWrapper":"ListStackRefactorActionsResult"
+      }
+    },
+    "ListStackRefactors":{
+      "name":"ListStackRefactors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStackRefactorsInput"},
+      "output":{
+        "shape":"ListStackRefactorsOutput",
+        "resultWrapper":"ListStackRefactorsResult"
+      }
     },
     "ListStackResources":{
       "name":"ListStackResources",
@@ -1769,6 +1828,23 @@
         "StackId":{"shape":"StackId"}
       }
     },
+    "CreateStackRefactorInput":{
+      "type":"structure",
+      "required":["StackDefinitions"],
+      "members":{
+        "Description":{"shape":"Description"},
+        "EnableStackCreation":{"shape":"EnableStackCreation"},
+        "ResourceMappings":{"shape":"ResourceMappings"},
+        "StackDefinitions":{"shape":"StackDefinitions"}
+      }
+    },
+    "CreateStackRefactorOutput":{
+      "type":"structure",
+      "required":["StackRefactorId"],
+      "members":{
+        "StackRefactorId":{"shape":"StackRefactorId"}
+      }
+    },
     "CreateStackSetInput":{
       "type":"structure",
       "required":["StackSetName"],
@@ -2144,6 +2220,25 @@
         "StackInstance":{"shape":"StackInstance"}
       }
     },
+    "DescribeStackRefactorInput":{
+      "type":"structure",
+      "required":["StackRefactorId"],
+      "members":{
+        "StackRefactorId":{"shape":"StackRefactorId"}
+      }
+    },
+    "DescribeStackRefactorOutput":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"Description"},
+        "StackRefactorId":{"shape":"StackRefactorId"},
+        "StackIds":{"shape":"StackIds"},
+        "ExecutionStatus":{"shape":"StackRefactorExecutionStatus"},
+        "ExecutionStatusReason":{"shape":"ExecutionStatusReason"},
+        "Status":{"shape":"StackRefactorStatus"},
+        "StatusReason":{"shape":"StackRefactorStatusReason"}
+      }
+    },
     "DescribeStackResourceDriftsInput":{
       "type":"structure",
       "required":["StackName"],
@@ -2362,6 +2457,7 @@
         "OperationId":{"shape":"ClientRequestToken"}
       }
     },
+    "DetectionReason":{"type":"string"},
     "DifferenceType":{
       "type":"string",
       "enum":[
@@ -2375,6 +2471,7 @@
       "type":"integer",
       "min":0
     },
+    "EnableStackCreation":{"type":"boolean"},
     "EnableTerminationProtection":{"type":"boolean"},
     "ErrorCode":{
       "type":"string",
@@ -2424,6 +2521,13 @@
       "members":{
       }
     },
+    "ExecuteStackRefactorInput":{
+      "type":"structure",
+      "required":["StackRefactorId"],
+      "members":{
+        "StackRefactorId":{"shape":"StackRefactorId"}
+      }
+    },
     "ExecutionRoleName":{
       "type":"string",
       "max":64,
@@ -2441,6 +2545,7 @@
         "OBSOLETE"
       ]
     },
+    "ExecutionStatusReason":{"type":"string"},
     "Export":{
       "type":"structure",
       "members":{
@@ -3017,6 +3122,39 @@
       "type":"structure",
       "members":{
         "Summaries":{"shape":"StackInstanceSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStackRefactorActionsInput":{
+      "type":"structure",
+      "required":["StackRefactorId"],
+      "members":{
+        "StackRefactorId":{"shape":"StackRefactorId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListStackRefactorActionsOutput":{
+      "type":"structure",
+      "required":["StackRefactorActions"],
+      "members":{
+        "StackRefactorActions":{"shape":"StackRefactorActions"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListStackRefactorsInput":{
+      "type":"structure",
+      "members":{
+        "ExecutionStatusFilter":{"shape":"StackRefactorExecutionStatusFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListStackRefactorsOutput":{
+      "type":"structure",
+      "required":["StackRefactorSummaries"],
+      "members":{
+        "StackRefactorSummaries":{"shape":"StackRefactorSummaries"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -3798,6 +3936,32 @@
       "type":"list",
       "member":{"shape":"ResourceIdentifierPropertyKey"}
     },
+    "ResourceLocation":{
+      "type":"structure",
+      "required":[
+        "StackName",
+        "LogicalResourceId"
+      ],
+      "members":{
+        "StackName":{"shape":"StackName"},
+        "LogicalResourceId":{"shape":"LogicalResourceId"}
+      }
+    },
+    "ResourceMapping":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Destination"
+      ],
+      "members":{
+        "Source":{"shape":"ResourceLocation"},
+        "Destination":{"shape":"ResourceLocation"}
+      }
+    },
+    "ResourceMappings":{
+      "type":"list",
+      "member":{"shape":"ResourceMapping"}
+    },
     "ResourceModel":{
       "type":"string",
       "max":16384,
@@ -3899,6 +4063,12 @@
         "IMPORT_ROLLBACK_IN_PROGRESS",
         "IMPORT_ROLLBACK_FAILED",
         "IMPORT_ROLLBACK_COMPLETE",
+        "EXPORT_FAILED",
+        "EXPORT_COMPLETE",
+        "EXPORT_IN_PROGRESS",
+        "EXPORT_ROLLBACK_IN_PROGRESS",
+        "EXPORT_ROLLBACK_FAILED",
+        "EXPORT_ROLLBACK_COMPLETE",
         "UPDATE_ROLLBACK_IN_PROGRESS",
         "UPDATE_ROLLBACK_COMPLETE",
         "UPDATE_ROLLBACK_FAILED",
@@ -4164,6 +4334,18 @@
         "DetailedStatus":{"shape":"DetailedStatus"}
       }
     },
+    "StackDefinition":{
+      "type":"structure",
+      "members":{
+        "StackName":{"shape":"StackName"},
+        "TemplateBody":{"shape":"TemplateBody"},
+        "TemplateURL":{"shape":"TemplateURL"}
+      }
+    },
+    "StackDefinitions":{
+      "type":"list",
+      "member":{"shape":"StackDefinition"}
+    },
     "StackDriftDetectionId":{
       "type":"string",
       "max":36,
@@ -4237,6 +4419,10 @@
     },
     "StackId":{"type":"string"},
     "StackIdList":{
+      "type":"list",
+      "member":{"shape":"StackId"}
+    },
+    "StackIds":{
       "type":"list",
       "member":{"shape":"StackId"}
     },
@@ -4407,6 +4593,112 @@
       "type":"string",
       "max":1350,
       "min":1
+    },
+    "StackRefactorAction":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"StackRefactorActionType"},
+        "Entity":{"shape":"StackRefactorActionEntity"},
+        "PhysicalResourceId":{"shape":"PhysicalResourceId"},
+        "ResourceIdentifier":{"shape":"StackRefactorResourceIdentifier"},
+        "Description":{"shape":"Description"},
+        "Detection":{"shape":"StackRefactorDetection"},
+        "DetectionReason":{"shape":"DetectionReason"},
+        "TagResources":{"shape":"StackRefactorTagResources"},
+        "UntagResources":{"shape":"StackRefactorUntagResources"},
+        "ResourceMapping":{"shape":"ResourceMapping"}
+      }
+    },
+    "StackRefactorActionEntity":{
+      "type":"string",
+      "enum":[
+        "RESOURCE",
+        "STACK"
+      ]
+    },
+    "StackRefactorActionType":{
+      "type":"string",
+      "enum":[
+        "MOVE",
+        "CREATE"
+      ]
+    },
+    "StackRefactorActions":{
+      "type":"list",
+      "member":{"shape":"StackRefactorAction"}
+    },
+    "StackRefactorDetection":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "StackRefactorExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "UNAVAILABLE",
+        "AVAILABLE",
+        "OBSOLETE",
+        "EXECUTE_IN_PROGRESS",
+        "EXECUTE_COMPLETE",
+        "EXECUTE_FAILED",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_COMPLETE",
+        "ROLLBACK_FAILED"
+      ]
+    },
+    "StackRefactorExecutionStatusFilter":{
+      "type":"list",
+      "member":{"shape":"StackRefactorExecutionStatus"}
+    },
+    "StackRefactorId":{"type":"string"},
+    "StackRefactorNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"StackRefactorNotFoundException",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "StackRefactorResourceIdentifier":{"type":"string"},
+    "StackRefactorStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETE",
+        "CREATE_FAILED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_COMPLETE",
+        "DELETE_FAILED"
+      ]
+    },
+    "StackRefactorStatusReason":{"type":"string"},
+    "StackRefactorSummaries":{
+      "type":"list",
+      "member":{"shape":"StackRefactorSummary"}
+    },
+    "StackRefactorSummary":{
+      "type":"structure",
+      "members":{
+        "StackRefactorId":{"shape":"StackRefactorId"},
+        "Description":{"shape":"Description"},
+        "ExecutionStatus":{"shape":"StackRefactorExecutionStatus"},
+        "ExecutionStatusReason":{"shape":"ExecutionStatusReason"},
+        "Status":{"shape":"StackRefactorStatus"},
+        "StatusReason":{"shape":"StackRefactorStatusReason"}
+      }
+    },
+    "StackRefactorTagResources":{
+      "type":"list",
+      "member":{"shape":"Tag"}
+    },
+    "StackRefactorUntagResources":{
+      "type":"list",
+      "member":{"shape":"TagKey"}
     },
     "StackResource":{
       "type":"structure",
