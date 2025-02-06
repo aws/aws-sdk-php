@@ -214,13 +214,13 @@ class FunctionsTest extends TestCase
     /**
      * @covers Aws\default_http_handler()
      */
-    public function testGuzzleV6HttpHandler()
+    public function testGuzzleHttpHandler()
     {
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
             $this->markTestSkipped();
         }
         $this->assertInstanceOf(
-            Aws\Handler\GuzzleV6\GuzzleHandler::class,
+            Aws\Handler\Guzzle\GuzzleHandler::class,
             Aws\default_http_handler()
         );
     }
