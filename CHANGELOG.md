@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.8 - 2025-02-06
 
 * `Aws\Signature` - Adds `transfer-encoding` to list of headers to be removed prior to sigv4a signing
 * `Aws\ConnectCases` - This release adds the ability to conditionally require fields on a template. Check public documentation for more information.
