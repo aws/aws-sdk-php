@@ -4,16 +4,9 @@ namespace Aws\Test\Integ;
 use GuzzleHttp\Handler\StreamHandler;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class GuzzleV6StreamHandlerTest extends TestCase
+class GuzzleStreamHandlerTest extends TestCase
 {
     use IntegUtils;
-
-    public function set_up()
-    {
-        if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
-            $this->markTestSkipped();
-        }
-    }
 
     public function testCanUseStreamForBasicRequests()
     {
