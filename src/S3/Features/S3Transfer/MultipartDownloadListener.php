@@ -16,17 +16,17 @@ class MultipartDownloadListener extends ListenerNotifier
      *
      * @param Closure|null $onDownloadFailed
      *  Parameters that will be passed when invoked:
-     *  - $reason: The throwable with the reason why the transfer failed.
-     *  - $totalPartsTransferred: The total of parts transferred before failure.
-     *  - $totalBytesTransferred: The total of bytes transferred before failure.
-     *  - $lastPartTransferred: The number of the last part that was transferred
+     *  - $reason: The throwable with the reason why the download failed.
+     *  - $totalPartsDownloaded: The total of parts downloaded before failure.
+     *  - $totalBytesDownloaded: The total of bytes downloaded before failure.
+     *  - $lastPartDownloaded: The number of the last part that was downloaded
      *    before failure.
      *
      * @param Closure|null $onDownloadCompleted
      *  Parameters that will be passed when invoked:
      *  - $stream: The stream which holds the bytes for the file downloaded.
-     *  - $totalPartsDownloaded: The number of objects that were transferred.
-     *  - $totalBytesDownloaded: The total of bytes that were transferred.
+     *  - $totalPartsDownloaded: The number of parts that were downloaded.
+     *  - $totalBytesDownloaded: The total of bytes that were downloaded.
      *
      * @param Closure|null $onPartDownloadInitiated
      *  Parameters that will be passed when invoked:
@@ -39,7 +39,7 @@ class MultipartDownloadListener extends ListenerNotifier
      *  - $partNo: The part number just downloaded.
      *  - $partTotalBytes: The size of the part just downloaded.
      *  - $totalParts: The total parts for the full object to be downloaded.
-     *  - $objectBytesTransferred: The total in bytes already downloaded.
+     *  - $objectBytesDownloaded: The total in bytes already downloaded.
      *  - $objectSizeInBytes: The total in bytes for the full object to be downloaded.
      *
      * @param Closure|null $onPartDownloadFailed
@@ -66,11 +66,11 @@ class MultipartDownloadListener extends ListenerNotifier
      *  keep the states maintained in this implementation.
      *
      * @param array &$commandArgs
-     * @param ?int $initialPart
+     * @param int $initialPart
      *
      * @return void
      */
-    public function downloadInitiated(array &$commandArgs, ?int $initialPart): void {
+    public function downloadInitiated(array &$commandArgs, int $initialPart): void {
         $this->notify('onDownloadInitiated', [&$commandArgs, $initialPart]);
     }
 
@@ -81,14 +81,14 @@ class MultipartDownloadListener extends ListenerNotifier
      * keep the states maintained in this implementation.
      *
      * @param \Throwable $reason
-     * @param int $totalPartsTransferred
-     * @param int $totalBytesTransferred
-     * @param int $lastPartTransferred
+     * @param int $totalPartsDownloaded
+     * @param int $totalBytesDownloaded
+     * @param int $lastPartDownloaded
      *
      * @return void
      */
-    public function downloadFailed(\Throwable $reason, int $totalPartsTransferred, int $totalBytesTransferred, int $lastPartTransferred): void {
-        $this->notify('onDownloadFailed', [$reason, $totalPartsTransferred, $totalBytesTransferred, $lastPartTransferred]);
+    public function downloadFailed(\Throwable $reason, int $totalPartsDownloaded, int $totalBytesDownloaded, int $lastPartDownloaded): void {
+        $this->notify('onDownloadFailed', [$reason, $totalPartsDownloaded, $totalBytesDownloaded, $lastPartDownloaded]);
     }
 
     /**
@@ -132,7 +132,7 @@ class MultipartDownloadListener extends ListenerNotifier
      * @param int $partNo
      * @param int $partTotalBytes
      * @param int $totalParts
-     * @param int $objectBytesTransferred
+     * @param int $objectBytesDownloaded
      * @param int $objectSizeInBytes
      * @return void
      */
@@ -141,7 +141,7 @@ class MultipartDownloadListener extends ListenerNotifier
         int $partNo,
         int $partTotalBytes,
         int $totalParts,
-        int $objectBytesTransferred,
+        int $objectBytesDownloaded,
         int $objectSizeInBytes
     ): void
     {
@@ -150,7 +150,7 @@ class MultipartDownloadListener extends ListenerNotifier
             $partNo,
             $partTotalBytes,
             $totalParts,
-            $objectBytesTransferred,
+            $objectBytesDownloaded,
             $objectSizeInBytes
         ]);
     }
