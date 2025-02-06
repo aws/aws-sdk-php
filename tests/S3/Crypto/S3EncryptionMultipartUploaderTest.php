@@ -251,14 +251,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
-        ?callable $skipCheck = null
     ) {
-        if ($skipCheck && $skipCheck()) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
