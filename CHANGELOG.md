@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.9 - 2025-02-07
 
 * `Aws\` - Remove paragonie/random_compat dev dependency.
 * `Aws\MediaConvert` - This release adds support for Animated GIF output, forced chroma sample positioning metadata, and Extensible Wave Container format
