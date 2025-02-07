@@ -313,7 +313,8 @@ final class MetricsBuilder
      *
      * @return void
      */
-    public function resolveAndAppendFromArgs(array $args = []): void {
+    public function resolveAndAppendFromArgs(array $args = []): void
+    {
         static $metricsFnList = [
             'appendEndpointMetric',
             'appendRetryConfigMetric',
@@ -385,7 +386,8 @@ final class MetricsBuilder
      *
      * @return void
      */
-    private function appendResponseChecksumValidationMetric(array $args): void {
+    private function appendResponseChecksumValidationMetric(array $args): void
+    {
         if (empty($args['response_checksum_validation'])) {
             return;
         }
