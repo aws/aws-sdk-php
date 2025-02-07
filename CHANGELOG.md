@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Remove paragonie/random_compat dev dependency.
+* `Aws\MediaConvert` - This release adds support for Animated GIF output, forced chroma sample positioning metadata, and Extensible Wave Container format
+* `Aws\EKS` - Introduce versionStatus field to take place of status field in EKS DescribeClusterVersions API
+* `Aws\PI` - Adds documentation for dimension groups and dimensions to analyze locks for Database Insights.
+* `Aws\TranscribeService` - This release adds support for the Clinical Note Template Customization feature for the AWS HealthScribe APIs within Amazon Transcribe.
+* `Aws\ECR` - Adds support to handle the new basic scanning daily quota.
+
 ## 3.339.8 - 2025-02-06
 
 * `Aws\Signature` - Adds `transfer-encoding` to list of headers to be removed prior to sigv4a signing

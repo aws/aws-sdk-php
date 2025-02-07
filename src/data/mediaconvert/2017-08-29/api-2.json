@@ -1835,7 +1835,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "Av1QvbrSettings": {
@@ -1955,7 +1956,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "AvcIntraInterlaceMode": {
@@ -2530,6 +2532,14 @@
           "locationName": "outputChannels"
         }
       }
+    },
+    "ChromaPositionMode": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "FORCE_CENTER",
+        "FORCE_TOP_LEFT"
+      ]
     },
     "ClipLimits": {
       "type": "structure",
@@ -3193,6 +3203,7 @@
       "type": "string",
       "enum": [
         "F4V",
+        "GIF",
         "ISMV",
         "M2TS",
         "M3U8",
@@ -4979,6 +4990,41 @@
         }
       }
     },
+    "GifFramerateControl": {
+      "type": "string",
+      "enum": [
+        "INITIALIZE_FROM_SOURCE",
+        "SPECIFIED"
+      ]
+    },
+    "GifFramerateConversionAlgorithm": {
+      "type": "string",
+      "enum": [
+        "DUPLICATE_DROP",
+        "INTERPOLATE"
+      ]
+    },
+    "GifSettings": {
+      "type": "structure",
+      "members": {
+        "FramerateControl": {
+          "shape": "GifFramerateControl",
+          "locationName": "framerateControl"
+        },
+        "FramerateConversionAlgorithm": {
+          "shape": "GifFramerateConversionAlgorithm",
+          "locationName": "framerateConversionAlgorithm"
+        },
+        "FramerateDenominator": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "framerateDenominator"
+        },
+        "FramerateNumerator": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "framerateNumerator"
+        }
+      }
+    },
     "H264AdaptiveQuantization": {
       "type": "string",
       "enum": [
@@ -5072,7 +5118,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "H264GopBReference": {
@@ -5495,7 +5542,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "H265GopBReference": {
@@ -8505,7 +8553,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "Mpeg2GopSizeUnits": {
@@ -9439,7 +9488,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "ProresInterlaceMode": {
@@ -10325,7 +10375,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "UncompressedInterlaceMode": {
@@ -10565,7 +10616,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "Vc3InterlaceMode": {
@@ -10650,6 +10702,7 @@
         "AV1",
         "AVC_INTRA",
         "FRAME_CAPTURE",
+        "GIF",
         "H_264",
         "H_265",
         "MPEG2",
@@ -10680,6 +10733,10 @@
         "FrameCaptureSettings": {
           "shape": "FrameCaptureSettings",
           "locationName": "frameCaptureSettings"
+        },
+        "GifSettings": {
+          "shape": "GifSettings",
+          "locationName": "gifSettings"
         },
         "H264Settings": {
           "shape": "H264Settings",
@@ -10729,6 +10786,10 @@
         "AntiAlias": {
           "shape": "AntiAlias",
           "locationName": "antiAlias"
+        },
+        "ChromaPositionMode": {
+          "shape": "ChromaPositionMode",
+          "locationName": "chromaPositionMode"
         },
         "CodecSettings": {
           "shape": "VideoCodecSettings",
@@ -11042,7 +11103,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "Vp8ParControl": {
@@ -11134,7 +11196,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "Vp9ParControl": {
@@ -11245,7 +11308,8 @@
       "type": "string",
       "enum": [
         "RIFF",
-        "RF64"
+        "RF64",
+        "EXTENSIBLE"
       ]
     },
     "WavSettings": {
@@ -11311,7 +11375,8 @@
       "enum": [
         "ENABLED",
         "DISABLED",
-        "STRICT"
+        "STRICT",
+        "MERGE"
       ]
     },
     "Xavc4kIntraCbgProfileClass": {
@@ -11447,7 +11512,8 @@
       "enum": [
         "DUPLICATE_DROP",
         "INTERPOLATE",
-        "FRAMEFORMER"
+        "FRAMEFORMER",
+        "MAINTAIN_FRAME_COUNT"
       ]
     },
     "XavcGopBReference": {

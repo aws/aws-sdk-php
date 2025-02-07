@@ -817,6 +817,12 @@
       "max":1,
       "min":0
     },
+    "ClinicalNoteGenerationSettings":{
+      "type":"structure",
+      "members":{
+        "NoteTemplate":{"shape":"MedicalScribeNoteTemplate"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1662,6 +1668,13 @@
       "type":"string",
       "enum":["en-US"]
     },
+    "MedicalScribeNoteTemplate":{
+      "type":"string",
+      "enum":[
+        "HISTORY_AND_PHYSICAL",
+        "GIRPP"
+      ]
+    },
     "MedicalScribeOutput":{
       "type":"structure",
       "required":[
@@ -1688,7 +1701,8 @@
         "ChannelIdentification":{"shape":"Boolean"},
         "VocabularyName":{"shape":"VocabularyName"},
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
-        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"}
+        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
+        "ClinicalNoteGenerationSettings":{"shape":"ClinicalNoteGenerationSettings"}
       }
     },
     "MedicalTranscript":{
