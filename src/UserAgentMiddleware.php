@@ -28,11 +28,6 @@ class UserAgentMiddleware
         'getMetrics'
     ];
 
-    static $metricsFnList = [
-        'appendEndpointMetric',
-        'appendRetryConfigMetric',
-    ];
-
     /** @var callable  */
     private $nextHandler;
 
@@ -257,61 +252,14 @@ class UserAgentMiddleware
      */
     private function getMetrics(): string
     {
-        foreach (self::$metricsFnList as $fn) {
-            $this->{$fn}();
-        }
-
+        // Resolve first metrics related to client arguments.
+        $this->metricsBuilder->resolveAndAppendFromArgs($this->args);
+        // Build the metrics.
         $metricsEncoded = $this->metricsBuilder->build();
         if (empty($metricsEncoded)) {
             return "";
         }
 
         return "m/" . $metricsEncoded;
-    }
-
-    /**
-     * Appends the endpoint metric into the metrics builder,
-     * just if a custom endpoint was provided at client construction.
-     */
-    private function appendEndpointMetric(): void
-    {
-        if (!empty($this->args['endpoint_override'])) {
-            $this->metricsBuilder->append(MetricsBuilder::ENDPOINT_OVERRIDE);
-        }
-    }
-
-    /**
-     * Appends the retry mode metric into the metrics builder,
-     * based on the resolved retry config mode.
-     */
-    private function appendRetryConfigMetric(): void
-    {
-        $retries = $this->args['retries'] ?? null;
-        if ($retries === null) {
-            return;
-        }
-
-        $retryMode = '';
-        if ($retries instanceof \Aws\Retry\Configuration) {
-            $retryMode = $retries->getMode();
-        } elseif (is_array($retries)
-            && isset($retries["mode"])
-        ) {
-            $retryMode = $retries["mode"];
-        }
-
-        if ($retryMode === 'legacy') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_LEGACY
-            );
-        } elseif ($retryMode === 'standard') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_STANDARD
-            );
-        } elseif ($retryMode === 'adaptive') {
-            $this->metricsBuilder->append(
-                MetricsBuilder::RETRY_MODE_ADAPTIVE
-            );
-        }
     }
 }

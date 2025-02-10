@@ -1557,4 +1557,84 @@ EOF;
         ]);
         $s3Client->listBuckets();
     }
+
+    /**
+     * Tests user agent captures the flexible checksum calculation metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureFlexibleChecksumCalculationMetric()
+    {
+        $checksumCalculationMetrics = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED
+        ];
+        foreach ($checksumCalculationMetrics as $config => $checksumCalculationMetric) {
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'api_provider' => ApiProvider::filesystem(__DIR__ . '/S3/fixtures'),
+                'request_checksum_calculation' => $config,
+                'http_handler' => function (RequestInterface $request)
+                use ($checksumCalculationMetric) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array($checksumCalculationMetric, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '<?xml version="1.0" encoding="UTF-8"?><Node></Node>'
+                    );
+                }
+            ]);
+            $s3Client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                'Body' => 'Test body',
+                'ChecksumAlgorithm' => 'crc32'
+            ]);
+        }
+    }
+
+    /**
+     * Tests user agent captures the flexible checksum validation metric.
+     *
+     * @return void
+     */
+    public function testUserAgentCaptureFlexibleChecksumValidationMetric()
+    {
+        $checksumCalculationMetrics = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED
+        ];
+        foreach ($checksumCalculationMetrics as $config => $checksumCalculationMetric) {
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+                'api_provider' => ApiProvider::filesystem(__DIR__ . '/S3/fixtures'),
+                'response_checksum_validation' => $config,
+                'http_handler' => function (RequestInterface $request)
+                use ($checksumCalculationMetric) {
+                    $metrics = $this->getMetricsAsArray($request);
+
+                    $this->assertTrue(
+                        in_array($checksumCalculationMetric, $metrics)
+                    );
+
+                    return new Response(
+                        200,
+                        [],
+                        '<?xml version="1.0" encoding="UTF-8"?><Node></Node>'
+                    );
+                }
+            ]);
+            $s3Client->putObject([
+                'Bucket' => 'foo',
+                'Key' => 'foo',
+                'Body' => 'Test body',
+                'ChecksumAlgorithm' => 'crc32'
+            ]);
+        }
+    }
 }

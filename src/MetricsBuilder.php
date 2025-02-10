@@ -34,6 +34,10 @@ final class MetricsBuilder
     const FLEXIBLE_CHECKSUMS_REQ_CRC64 = "W";
     const FLEXIBLE_CHECKSUMS_REQ_SHA1 = "X";
     const FLEXIBLE_CHECKSUMS_REQ_SHA256 = "Y";
+    const FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED = "Z";
+    const FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED = "a";
+    const FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED = "b";
+    const FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED = "c";
     const CREDENTIALS_CODE = "e";
     const CREDENTIALS_ENV_VARS = "g";
     const CREDENTIALS_ENV_VARS_STS_WEB_ID_TOKEN = "h";
@@ -139,6 +143,7 @@ final class MetricsBuilder
             'credentials' => 'appendCredentialsMetric',
             'account_id_endpoint_mode' => 'appendAccountIdEndpointMode',
             'account_id_endpoint' => 'appendAccountIdEndpoint',
+            'request_checksum_calculation' => 'appendRequestChecksumCalculationMetric',
         ];
 
         $fn = $appendMetricFns[$featureGroup];
@@ -246,6 +251,20 @@ final class MetricsBuilder
         }
     }
 
+    private function appendRequestChecksumCalculationMetric(
+        string $checkSumCalculation
+    ): void
+    {
+        static $checksumCalculationMetricMapping = [
+            'when_supported' => self::FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED,
+            'when_required' => self::FLEXIBLE_CHECKSUMS_REQ_WHEN_REQUIRED,
+        ];
+
+        if (isset($checksumCalculationMetricMapping[$checkSumCalculation])) {
+            $this->append($checksumCalculationMetricMapping[$checkSumCalculation]);
+        }
+    }
+
     /**
      * Appends the account_id_endpoint_mode metrics based on
      * the value resolved.
@@ -284,6 +303,103 @@ final class MetricsBuilder
         static $pattern = "/(https|http):\\/\\/\\d{12}\\.ddb/";
         if (preg_match($pattern, $endpoint)) {
             $this->append(self::ACCOUNT_ID_ENDPOINT);
+        }
+    }
+
+    /**
+     * Resolves metrics from client arguments.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    public function resolveAndAppendFromArgs(array $args = []): void
+    {
+        static $metricsFnList = [
+            'appendEndpointMetric',
+            'appendRetryConfigMetric',
+            'appendResponseChecksumValidationMetric',
+        ];
+        foreach ($metricsFnList as $metricFn) {
+            $this->{$metricFn}($args);
+        }
+    }
+
+    /**
+     * Appends the endpoint metric into the metrics builder,
+     * just if a custom endpoint was provided at client construction.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendEndpointMetric(array $args): void
+    {
+        if (!empty($args['endpoint_override'])) {
+            $this->append(MetricsBuilder::ENDPOINT_OVERRIDE);
+        }
+    }
+
+    /**
+     * Appends the retry mode metric into the metrics builder,
+     * based on the resolved retry config mode.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendRetryConfigMetric(array $args): void
+    {
+        $retries = $args['retries'] ?? null;
+        if ($retries === null) {
+            return;
+        }
+
+        $retryMode = '';
+        if ($retries instanceof \Aws\Retry\Configuration) {
+            $retryMode = $retries->getMode();
+        } elseif (is_array($retries)
+            && isset($retries["mode"])
+        ) {
+            $retryMode = $retries["mode"];
+        }
+
+        if ($retryMode === 'legacy') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_LEGACY
+            );
+        } elseif ($retryMode === 'standard') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_STANDARD
+            );
+        } elseif ($retryMode === 'adaptive') {
+            $this->append(
+                MetricsBuilder::RETRY_MODE_ADAPTIVE
+            );
+        }
+    }
+
+    /**
+     * Appends the provided/resolved response checksum validation mode.
+     *
+     * @param array $args
+     *
+     * @return void
+     */
+    private function appendResponseChecksumValidationMetric(array $args): void
+    {
+        if (empty($args['response_checksum_validation'])) {
+            return;
+        }
+
+        $checksumValidation = $args['response_checksum_validation'];
+        static $checksumValidationMetricMapping = [
+            'when_supported' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED,
+            'when_required' => MetricsBuilder::FLEXIBLE_CHECKSUMS_RES_WHEN_REQUIRED,
+        ];
+
+        if (isset($checksumValidationMetricMapping[$checksumValidation])) {
+            $this->append($checksumValidationMetricMapping[$checksumValidation]);
         }
     }
 
