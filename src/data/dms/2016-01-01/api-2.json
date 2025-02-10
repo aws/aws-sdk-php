@@ -2271,6 +2271,8 @@
         "MicrosoftSqlServerSettings":{"shape":"MicrosoftSqlServerDataProviderSettings"},
         "DocDbSettings":{"shape":"DocDbDataProviderSettings"},
         "MariaDbSettings":{"shape":"MariaDbDataProviderSettings"},
+        "IbmDb2LuwSettings":{"shape":"IbmDb2LuwDataProviderSettings"},
+        "IbmDb2zOsSettings":{"shape":"IbmDb2zOsDataProviderSettings"},
         "MongoDbSettings":{"shape":"MongoDbDataProviderSettings"}
       },
       "union":true
@@ -3581,6 +3583,26 @@
         "WriteBufferSize":{"shape":"IntegerOptional"},
         "MaxFileSize":{"shape":"IntegerOptional"},
         "KeepCsvFiles":{"shape":"BooleanOptional"}
+      }
+    },
+    "IbmDb2LuwDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "CertificateArn":{"shape":"String"}
+      }
+    },
+    "IbmDb2zOsDataProviderSettings":{
+      "type":"structure",
+      "members":{
+        "ServerName":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"},
+        "DatabaseName":{"shape":"String"},
+        "SslMode":{"shape":"DmsSslModeValue"},
+        "CertificateArn":{"shape":"String"}
       }
     },
     "ImportCertificateMessage":{

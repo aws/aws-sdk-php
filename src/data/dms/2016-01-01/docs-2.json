@@ -60,7 +60,7 @@
     "DescribeMetadataModelImports": "<p>Returns a paginated list of metadata model imports.</p>",
     "DescribeMigrationProjects": "<p>Returns a paginated list of migration projects for your account in the current region.</p>",
     "DescribeOrderableReplicationInstances": "<p>Returns information about the replication instance types that can be created in the specified region.</p>",
-    "DescribePendingMaintenanceActions": "<p>For internal use only</p>",
+    "DescribePendingMaintenanceActions": "<p>Returns a list of upcoming maintenance events for replication instances in your account in the current Region.</p>",
     "DescribeRecommendationLimitations": "<p>Returns a paginated list of limitations for recommendations of target Amazon Web Services engines.</p>",
     "DescribeRecommendations": "<p>Returns a paginated list of target engine recommendations for your source databases.</p>",
     "DescribeRefreshSchemasStatus": "<p>Returns the status of the RefreshSchemas operation.</p>",
@@ -1308,6 +1308,8 @@
         "CreateEndpointMessage$SslMode": "<p>The Secure Sockets Layer (SSL) mode to use for the SSL connection. The default is <code>none</code> </p>",
         "DocDbDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the DocumentDB data provider. The default value is <code>none</code>.</p>",
         "Endpoint$SslMode": "<p>The SSL mode used to connect to the endpoint. The default value is <code>none</code>.</p>",
+        "IbmDb2LuwDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the DB2 LUW data provider. The default value is <code>none</code>. Valid Values: <code>none</code> and <code>verify-ca</code>.</p>",
+        "IbmDb2zOsDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the DB2 for z/OS data provider. The default value is <code>none</code>. Valid Values: <code>none</code> and <code>verify-ca</code>.</p>",
         "MariaDbDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the MariaDB data provider. The default value is <code>none</code>.</p>",
         "MicrosoftSqlServerDataProviderSettings$SslMode": "<p>The SSL mode used to connect to the Microsoft SQL Server data provider. The default value is <code>none</code>.</p>",
         "ModifyEndpointMessage$SslMode": "<p>The SSL mode used to connect to the endpoint. The default value is <code>none</code>.</p>",
@@ -1646,6 +1648,18 @@
         "ModifyEndpointMessage$IBMDb2Settings": "<p>Settings in JSON format for the source IBM Db2 LUW endpoint. For information about other available settings, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.DB2.html#CHAP_Source.DB2.ConnectionAttrib\">Extra connection attributes when using Db2 LUW as a source for DMS</a> in the <i>Database Migration Service User Guide.</i> </p>"
       }
     },
+    "IbmDb2LuwDataProviderSettings": {
+      "base": "<p>Provides information about an IBM DB2 LUW data provider.</p>",
+      "refs": {
+        "DataProviderSettings$IbmDb2LuwSettings": "<p>Provides information that defines an IBM DB2 LUW data provider.</p>"
+      }
+    },
+    "IbmDb2zOsDataProviderSettings": {
+      "base": "<p>Provides information about an IBM DB2 for z/OS data provider.</p>",
+      "refs": {
+        "DataProviderSettings$IbmDb2zOsSettings": "<p>Provides information that defines an IBM DB2 for z/OS data provider.</p>"
+      }
+    },
     "ImportCertificateMessage": {
       "base": null,
       "refs": {
@@ -1799,6 +1813,8 @@
         "IBMDb2Settings$LoadTimeout": "<p>The amount of time (in milliseconds) before DMS times out operations performed by DMS on the Db2 target. The default value is 1200 (20 minutes).</p>",
         "IBMDb2Settings$WriteBufferSize": "<p>The size (in KB) of the in-memory file write buffer used when generating .csv files on the local disk on the DMS replication instance. The default value is 1024 (1 MB).</p>",
         "IBMDb2Settings$MaxFileSize": "<p>Specifies the maximum size (in KB) of .csv files used to transfer data to Db2 LUW.</p>",
+        "IbmDb2LuwDataProviderSettings$Port": "<p>The port value for the DB2 LUW data provider.</p>",
+        "IbmDb2zOsDataProviderSettings$Port": "<p>The port value for the DB2 for z/OS data provider.</p>",
         "InventoryData$NumberOfDatabases": "<p>The number of databases in the Fleet Advisor collector inventory.</p>",
         "InventoryData$NumberOfSchemas": "<p>The number of schemas in the Fleet Advisor collector inventory.</p>",
         "KafkaSettings$MessageMaxBytes": "<p>The maximum size in bytes for records created on the endpoint The default is 1,000,000.</p>",
@@ -1964,9 +1980,9 @@
     "KerberosAuthenticationSettings": {
       "base": "<p>Specifies the settings required for kerberos authentication when creating the replication instance.</p>",
       "refs": {
-        "CreateReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication, when creating a replication instance.</p>",
-        "ModifyReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication, when modifying a replication instance.</p>",
-        "ReplicationInstance$KerberosAuthenticationSettings": "<p>Specifies the ID of the secret that stores the key cache file required for kerberos authentication, when replicating an instance.</p>"
+        "CreateReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the settings required for kerberos authentication when creating the replication instance.</p>",
+        "ModifyReplicationInstanceMessage$KerberosAuthenticationSettings": "<p>Specifies the settings required for kerberos authentication when modifying a replication instance.</p>",
+        "ReplicationInstance$KerberosAuthenticationSettings": "<p>Specifies the settings required for kerberos authentication when replicating an instance.</p>"
       }
     },
     "KeyList": {
@@ -3091,7 +3107,7 @@
         "AccountQuota$AccountQuotaName": "<p>The name of the DMS quota for this Amazon Web Services account.</p>",
         "AddTagsToResourceMessage$ResourceArn": "<p>Identifies the DMS resource to which tags should be added. The value for this parameter is an Amazon Resource Name (ARN).</p> <p>For DMS, you can tag a replication instance, an endpoint, or a replication task.</p>",
         "ApplyPendingMaintenanceActionMessage$ReplicationInstanceArn": "<p>The Amazon Resource Name (ARN) of the DMS resource that the pending maintenance action applies to.</p>",
-        "ApplyPendingMaintenanceActionMessage$ApplyAction": "<p>The pending maintenance action to apply to this resource.</p> <p>Valid values: <code>os-upgrade</code>, <code>system-update</code>, <code>db-upgrade</code> </p>",
+        "ApplyPendingMaintenanceActionMessage$ApplyAction": "<p>The pending maintenance action to apply to this resource.</p> <p>Valid values: <code>os-upgrade</code>, <code>system-update</code>, <code>db-upgrade</code>, <code>os-patch</code> </p>",
         "ApplyPendingMaintenanceActionMessage$OptInType": "<p>A value that specifies the type of opt-in request, or undoes an opt-in request. You can't undo an opt-in request of type <code>immediate</code>.</p> <p>Valid values:</p> <ul> <li> <p> <code>immediate</code> - Apply the maintenance action immediately.</p> </li> <li> <p> <code>next-maintenance</code> - Apply the maintenance action during the next maintenance window for the resource.</p> </li> <li> <p> <code>undo-opt-in</code> - Cancel any existing <code>next-maintenance</code> opt-in requests.</p> </li> </ul>",
         "ArnList$member": null,
         "AvailabilityZone$Name": "<p>The name of the Availability Zone.</p>",
@@ -3134,7 +3150,7 @@
         "CreateDataMigrationMessage$ServiceAccessRoleArn": "<p>The Amazon Resource Name (ARN) for the service access role that you want to use to create the data migration.</p>",
         "CreateDataProviderMessage$DataProviderName": "<p>A user-friendly name for the data provider.</p>",
         "CreateDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "CreateDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "CreateEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "CreateEndpointMessage$EngineName": "<p>The type of engine for the endpoint. Valid values, depending on the <code>EndpointType</code> value, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"opensearch\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"docdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, <code>\"babelfish\"</code>, <code>redshift-serverless</code>, <code>aurora-serverless</code>, <code>aurora-postgresql-serverless</code>, <code>gcp-mysql</code>, <code>azure-sql-managed-instance</code>, <code>redis</code>, <code>dms-transfer</code>.</p>",
         "CreateEndpointMessage$Username": "<p>The user name to be used to log in to the endpoint database.</p>",
@@ -3207,7 +3223,7 @@
         "DataProvider$DataProviderName": "<p>The name of the data provider.</p>",
         "DataProvider$DataProviderArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the data provider.</p>",
         "DataProvider$Description": "<p>A description of the data provider. Descriptions can have up to 31 characters. A description can contain only ASCII letters, digits, and hyphens ('-'). Also, it can't end with a hyphen or contain two consecutive hyphens, and can only begin with a letter.</p>",
-        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "DataProvider$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "DataProviderDescriptor$SecretsManagerSecretId": "<p>The identifier of the Amazon Web Services Secrets Manager Secret used to store access credentials for the data provider.</p>",
         "DataProviderDescriptor$SecretsManagerAccessRoleArn": "<p>The ARN of the role used to access Amazon Web Services Secrets Manager.</p>",
         "DataProviderDescriptor$DataProviderName": "<p>The user-friendly name of the data provider.</p>",
@@ -3423,6 +3439,12 @@
         "IBMDb2Settings$Username": "<p>Endpoint connection user name.</p>",
         "IBMDb2Settings$SecretsManagerAccessRoleArn": "<p>The full Amazon Resource Name (ARN) of the IAM role that specifies DMS as the trusted entity and grants the required permissions to access the value in <code>SecretsManagerSecret</code>. The role must allow the <code>iam:PassRole</code> action. <code>SecretsManagerSecret</code> has the value of the Amazon Web Services Secrets Manager secret that allows access to the Db2 LUW endpoint. </p> <note> <p>You can specify one of two sets of values for these permissions. You can specify the values for this setting and <code>SecretsManagerSecretId</code>. Or you can specify clear-text values for <code>UserName</code>, <code>Password</code>, <code>ServerName</code>, and <code>Port</code>. You can't specify both. For more information on creating this <code>SecretsManagerSecret</code> and the <code>SecretsManagerAccessRoleArn</code> and <code>SecretsManagerSecretId</code> required to access it, see <a href=\"https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#security-iam-secretsmanager\">Using secrets to access Database Migration Service resources</a> in the <i>Database Migration Service User Guide</i>.</p> </note>",
         "IBMDb2Settings$SecretsManagerSecretId": "<p>The full ARN, partial ARN, or friendly name of the <code>SecretsManagerSecret</code> that contains the Db2 LUW endpoint connection details.</p>",
+        "IbmDb2LuwDataProviderSettings$ServerName": "<p>The name of the DB2 LUW server.</p>",
+        "IbmDb2LuwDataProviderSettings$DatabaseName": "<p>The database name on the DB2 LUW data provider.</p>",
+        "IbmDb2LuwDataProviderSettings$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate used for SSL connection.</p>",
+        "IbmDb2zOsDataProviderSettings$ServerName": "<p>The name of the DB2 for z/OS server.</p>",
+        "IbmDb2zOsDataProviderSettings$DatabaseName": "<p>The database name on the DB2 for z/OS data provider.</p>",
+        "IbmDb2zOsDataProviderSettings$CertificateArn": "<p>The Amazon Resource Name (ARN) of the certificate used for SSL connection.</p>",
         "ImportCertificateMessage$CertificateIdentifier": "<p>A customer-assigned name for the certificate. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen or contain two consecutive hyphens.</p>",
         "IncludeTestList$member": null,
         "IndividualAssessmentNameList$member": null,
@@ -3478,7 +3500,7 @@
         "ModifyDataProviderMessage$DataProviderIdentifier": "<p>The identifier of the data provider. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen, or contain two consecutive hyphens.</p>",
         "ModifyDataProviderMessage$DataProviderName": "<p>The name of the data provider.</p>",
         "ModifyDataProviderMessage$Description": "<p>A user-friendly description of the data provider.</p>",
-        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
+        "ModifyDataProviderMessage$Engine": "<p>The type of database engine for the data provider. Valid values include <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"sqlserver\"</code>, <code>redshift</code>, <code>mariadb</code>, <code>mongodb</code>, <code>db2</code>, <code>db2-zos</code> and <code>docdb</code>. A value of <code>\"aurora\"</code> represents Amazon Aurora MySQL-Compatible Edition.</p>",
         "ModifyEndpointMessage$EndpointArn": "<p>The Amazon Resource Name (ARN) string that uniquely identifies the endpoint.</p>",
         "ModifyEndpointMessage$EndpointIdentifier": "<p>The database endpoint identifier. Identifiers must begin with a letter and must contain only ASCII letters, digits, and hyphens. They can't end with a hyphen or contain two consecutive hyphens.</p>",
         "ModifyEndpointMessage$EngineName": "<p>The database engine name. Valid values, depending on the EndpointType, include <code>\"mysql\"</code>, <code>\"oracle\"</code>, <code>\"postgres\"</code>, <code>\"mariadb\"</code>, <code>\"aurora\"</code>, <code>\"aurora-postgresql\"</code>, <code>\"redshift\"</code>, <code>\"s3\"</code>, <code>\"db2\"</code>, <code>\"db2-zos\"</code>, <code>\"azuredb\"</code>, <code>\"sybase\"</code>, <code>\"dynamodb\"</code>, <code>\"mongodb\"</code>, <code>\"kinesis\"</code>, <code>\"kafka\"</code>, <code>\"elasticsearch\"</code>, <code>\"documentdb\"</code>, <code>\"sqlserver\"</code>, <code>\"neptune\"</code>, and <code>\"babelfish\"</code>.</p>",

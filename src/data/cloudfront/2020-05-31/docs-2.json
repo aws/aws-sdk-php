@@ -204,7 +204,7 @@
       }
     },
     "AnycastIpList": {
-      "base": "<p>An Anycast static IP list.</p>",
+      "base": "<p>An Anycast static IP list. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/request-static-ips.html\">Request Anycast static IPs to use for allowlisting</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
       "refs": {
         "CreateAnycastIpListResult$AnycastIpList": "<p>A response structure that includes the version identifier (ETag) and the created <a>AnycastIpList</a> structure.</p>",
         "GetAnycastIpListResult$AnycastIpList": "<p>The Anycast static IP list details.</p>"
@@ -4043,8 +4043,8 @@
         "TrustedSigners$Quantity": "<p>The number of Amazon Web Services accounts in the list.</p>",
         "VpcOriginConfig$OriginReadTimeout": "<p>Specifies how long, in seconds, CloudFront waits for a response from the origin. This is also known as the <i>origin response timeout</i>. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 30 seconds.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesOriginResponseTimeout\">Response timeout (custom origins only)</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
         "VpcOriginConfig$OriginKeepaliveTimeout": "<p>Specifies how long, in seconds, CloudFront persists its connection to the origin. The minimum timeout is 1 second, the maximum is 60 seconds, and the default (if you don't specify otherwise) is 5 seconds.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web-values-specify.html#DownloadDistValuesOriginKeepaliveTimeout\">Keep-alive timeout (custom origins only)</a> in the <i>Amazon CloudFront Developer Guide</i>.</p>",
-        "VpcOriginEndpointConfig$HTTPPort": "<p>The HTTP port for the CloudFront VPC origin endpoint configuration.</p>",
-        "VpcOriginEndpointConfig$HTTPSPort": "<p>The HTTPS port of the CloudFront VPC origin endpoint configuration.</p>",
+        "VpcOriginEndpointConfig$HTTPPort": "<p>The HTTP port for the CloudFront VPC origin endpoint configuration. The default value is <code>80</code>.</p>",
+        "VpcOriginEndpointConfig$HTTPSPort": "<p>The HTTPS port of the CloudFront VPC origin endpoint configuration. The default value is <code>443</code>.</p>",
         "VpcOriginList$MaxItems": "<p>The maximum number of items included in the list.</p>",
         "VpcOriginList$Quantity": "<p>The number of VPC origins in the list.</p>"
       }
@@ -4229,7 +4229,7 @@
         "DeleteStreamingDistributionRequest$Id": "<p>The distribution ID.</p>",
         "DeleteStreamingDistributionRequest$IfMatch": "<p>The value of the <code>ETag</code> header that you received when you disabled the streaming distribution. For example: <code>E2QWRUHAPOMQZL</code>.</p>",
         "DeleteVpcOriginRequest$Id": "<p>The VPC origin ID.</p>",
-        "DeleteVpcOriginRequest$IfMatch": "<p>The VPC origin to delete, if a match occurs.</p>",
+        "DeleteVpcOriginRequest$IfMatch": "<p>The version identifier of the VPC origin to delete. This is the <code>ETag</code> value returned in the response to <a>GetVpcOrigin</a>.</p>",
         "DeleteVpcOriginResult$ETag": "<p>The VPC origin ETag.</p>",
         "DescribeFunctionRequest$Name": "<p>The name of the function that you are getting information about.</p>",
         "DescribeFunctionResult$ETag": "<p>The version identifier for the current version of the CloudFront function.</p>",

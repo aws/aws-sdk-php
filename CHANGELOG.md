@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Updated the CreateContact API documentation to indicate that it only applies to EMAIL contacts.
+* `Aws\DatabaseMigrationService` - New vendors for DMS Data Providers: DB2 LUW and DB2 for z/OS
+* `Aws\CloudFront` - Doc-only update that adds defaults for CloudFront VpcOriginEndpointConfig values.
+* `Aws\ApiGatewayV2` - Documentation updates for Amazon API Gateway
+
 ## 3.339.9 - 2025-02-07
 
 * `Aws\` - Remove paragonie/random_compat dev dependency.
