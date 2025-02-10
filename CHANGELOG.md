@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.10 - 2025-02-10
 
 * `Aws\Connect` - Updated the CreateContact API documentation to indicate that it only applies to EMAIL contacts.
 * `Aws\DatabaseMigrationService` - New vendors for DMS Data Providers: DB2 LUW and DB2 for z/OS
