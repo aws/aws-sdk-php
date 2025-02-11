@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.11 - 2025-02-11
 
 * `Aws\ACMPCA` - Private Certificate Authority service now supports Partitioned CRL as a revocation configuration option.
 * `Aws\PI` - Documentation only update for RDS Performance Insights dimensions for execution plans and locking analysis.
