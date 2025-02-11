@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - Private Certificate Authority service now supports Partitioned CRL as a revocation configuration option.
+* `Aws\PI` - Documentation only update for RDS Performance Insights dimensions for execution plans and locking analysis.
+* `Aws\AppSync` - Add support for operation level caching
+* `Aws\EC2` - Adding support for the new fullSnapshotSizeInBytes field in the response of the EC2 EBS DescribeSnapshots API. This field represents the size of all the blocks that were written to the source volume at the time the snapshot was created.
+
 ## 3.339.10 - 2025-02-10
 
 * `Aws\Connect` - Updated the CreateContact API documentation to indicate that it only applies to EMAIL contacts.
