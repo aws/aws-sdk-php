@@ -1,10 +1,7 @@
 <?php
 namespace Aws\Test\S3Control;
 
-use Aws\Arn\ArnParser;
-use Aws\Exception\UnresolvedEndpointException;
-use Aws\S3Control\S3ControlClient;
-use Aws\Signature\SignatureV4;
+use Aws\Endpoint\PartitionEndpointProvider;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -36,4 +33,23 @@ class S3ControlClientTest extends TestCase
         ]);
     }
 
+    public function testDoesNotUseEndpointArnMiddlewareByDefault()
+    {
+        $client = $this->getTestClient([]);
+        $list = $client->getHandlerList();
+        $this->assertStringNotContainsString(
+            's3control.endpoint_arn_middleware', $list->__toString()
+        );
+    }
+
+    public function testLegacyEndpointProviderUsesEndpointArnMiddleware()
+    {
+        $client = $this->getTestClient(
+            ['endpoint_provider' => PartitionEndpointProvider::defaultProvider()]
+        );
+        $list = $client->getHandlerList();
+        $this->assertStringContainsString(
+            's3control.endpoint_arn_middleware', $list->__toString()
+        );
+    }
 }
