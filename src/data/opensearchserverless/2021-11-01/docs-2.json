@@ -1061,28 +1061,28 @@
     "String": {
       "base": null,
       "refs": {
+        "CollectionDetail$description": "<p>A description of the collection.</p>",
         "CollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "CollectionDetail$kmsKeyArn": "<p>The ARN of the Amazon Web Services KMS key used to encrypt the collection.</p>",
         "CollectionDetail$collectionEndpoint": "<p>Collection-specific endpoint used to submit index, search, and data upload requests to an OpenSearch Serverless collection.</p>",
         "CollectionDetail$dashboardEndpoint": "<p>Collection-specific endpoint used to access OpenSearch Dashboards.</p>",
-        "CollectionDetail$description": "<p>A description of the collection.</p>",
         "CollectionDetail$failureCode": "<p>A failure code associated with the request.</p>",
         "CollectionDetail$failureMessage": "<p>A message associated with the failure code.</p>",
-        "CollectionDetail$kmsKeyArn": "<p>The ARN of the Amazon Web Services KMS key used to encrypt the collection.</p>",
-        "CollectionErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "CollectionErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Collection is not found.</code> </p>",
+        "CollectionErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "CollectionSummary$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "ConflictException$message": null,
-        "CreateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "CreateCollectionDetail$description": "<p>A description of the collection.</p>",
+        "CreateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "CreateCollectionDetail$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key with which to encrypt the collection.</p>",
         "EffectiveLifecyclePolicyDetail$retentionPeriod": "<p>The minimum number of index retention in days or hours. This is an optional parameter that will return only if it’s set.</p>",
-        "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Index resource is not found</code>.</p>",
-        "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
+        "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
         "IamIdentityCenterConfigOptions$applicationName": "<p>The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
+        "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "InternalServerException$message": null,
-        "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "LifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Lifecycle Policy is not found</code>.</p>",
+        "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page. </p>",
         "ListAccessPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCollectionsRequest$nextToken": "<p>If your initial <code>ListCollections</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollections</code> operations, which returns results in the next page.</p>",
@@ -1098,17 +1098,17 @@
         "OcuLimitExceededException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": "<p>Description of the error.</p>",
-        "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>Type of the resource affected.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Service Quotas requirement to identify originating service.</p>",
-        "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "UpdateCollectionDetail$description": "<p>The description of the collection.</p>",
+        "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "ValidationException$message": null,
         "VpcEndpointDetail$failureCode": "<p>A failure code associated with the request.</p>",
         "VpcEndpointDetail$failureMessage": "<p>A message associated with the failure code.</p>",
-        "VpcEndpointErrorDetail$errorCode": "<p>The error code for the failed request.</p>",
-        "VpcEndpointErrorDetail$errorMessage": "<p>An error message describing the reason for the failure.</p>"
+        "VpcEndpointErrorDetail$errorMessage": "<p>An error message describing the reason for the failure.</p>",
+        "VpcEndpointErrorDetail$errorCode": "<p>The error code for the failed request.</p>"
       }
     },
     "SubnetId": {
@@ -1368,6 +1368,12 @@
       "refs": {
         "CreateVpcEndpointRequest$vpcId": "<p>The ID of the VPC from which you'll access OpenSearch Serverless.</p>",
         "VpcEndpointDetail$vpcId": "<p>The ID of the VPC from which you access OpenSearch Serverless.</p>"
+      }
+    },
+    "openSearchServerlessEntityId": {
+      "base": null,
+      "refs": {
+        "SamlConfigOptions$openSearchServerlessEntityId": "<p>Custom entity id attribute to override default entity id for this saml integration.</p>"
       }
     },
     "samlGroupAttribute": {

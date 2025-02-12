@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-11-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"aoss",
     "jsonVersion":"1.0",
     "protocol":"json",
@@ -11,8 +12,7 @@
     "signatureVersion":"v4",
     "signingName":"aoss",
     "targetPrefix":"OpenSearchServerless",
-    "uid":"opensearchserverless-2021-11-01",
-    "auth":["aws.auth#sigv4"]
+    "uid":"opensearchserverless-2021-11-01"
   },
   "operations":{
     "BatchGetCollection":{
@@ -564,13 +564,13 @@
     "AccessPolicyDetail":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"AccessPolicyType"},
         "name":{"shape":"PolicyName"},
-        "policy":{"shape":"Document"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"AccessPolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"Document"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "AccessPolicyStats":{
@@ -586,12 +586,12 @@
     "AccessPolicySummary":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"AccessPolicyType"},
         "name":{"shape":"PolicyName"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"AccessPolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "AccessPolicyType":{
@@ -684,20 +684,20 @@
     "CollectionDetail":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"String"},
-        "collectionEndpoint":{"shape":"String"},
-        "createdDate":{"shape":"Long"},
-        "dashboardEndpoint":{"shape":"String"},
-        "description":{"shape":"String"},
-        "failureCode":{"shape":"String"},
-        "failureMessage":{"shape":"String"},
         "id":{"shape":"CollectionId"},
-        "kmsKeyArn":{"shape":"String"},
-        "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"CollectionName"},
-        "standbyReplicas":{"shape":"StandbyReplicas"},
         "status":{"shape":"CollectionStatus"},
-        "type":{"shape":"CollectionType"}
+        "type":{"shape":"CollectionType"},
+        "description":{"shape":"String"},
+        "arn":{"shape":"String"},
+        "kmsKeyArn":{"shape":"String"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"},
+        "collectionEndpoint":{"shape":"String"},
+        "dashboardEndpoint":{"shape":"String"},
+        "failureCode":{"shape":"String"},
+        "failureMessage":{"shape":"String"}
       }
     },
     "CollectionDetails":{
@@ -707,10 +707,10 @@
     "CollectionErrorDetail":{
       "type":"structure",
       "members":{
-        "errorCode":{"shape":"String"},
-        "errorMessage":{"shape":"String"},
         "id":{"shape":"CollectionId"},
-        "name":{"shape":"CollectionName"}
+        "name":{"shape":"CollectionName"},
+        "errorMessage":{"shape":"String"},
+        "errorCode":{"shape":"String"}
       }
     },
     "CollectionErrorDetails":{
@@ -728,7 +728,7 @@
       "type":"string",
       "max":40,
       "min":3,
-      "pattern":"^[a-z0-9]{3,40}$"
+      "pattern":"[a-z0-9]{3,40}"
     },
     "CollectionIds":{
       "type":"list",
@@ -740,7 +740,7 @@
       "type":"string",
       "max":32,
       "min":3,
-      "pattern":"^[a-z][a-z0-9-]+$"
+      "pattern":"[a-z][a-z0-9-]+"
     },
     "CollectionNames":{
       "type":"list",
@@ -764,10 +764,10 @@
     "CollectionSummary":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"String"},
         "id":{"shape":"CollectionId"},
         "name":{"shape":"CollectionName"},
-        "status":{"shape":"CollectionStatus"}
+        "status":{"shape":"CollectionStatus"},
+        "arn":{"shape":"String"}
       }
     },
     "CollectionType":{
@@ -787,7 +787,7 @@
       "type":"string",
       "max":32,
       "min":3,
-      "pattern":"^[a-z][a-z0-9-]+$"
+      "pattern":"[a-z][a-z0-9-]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -799,19 +799,19 @@
     "CreateAccessPolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policy",
-        "type"
+        "policy"
       ],
       "members":{
+        "type":{"shape":"AccessPolicyType"},
+        "name":{"shape":"PolicyName"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "type":{"shape":"AccessPolicyType"}
+        }
       }
     },
     "CreateAccessPolicyResponse":{
@@ -823,31 +823,31 @@
     "CreateCollectionDetail":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"String"},
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"String"},
         "id":{"shape":"CollectionId"},
-        "kmsKeyArn":{"shape":"String"},
-        "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"CollectionName"},
-        "standbyReplicas":{"shape":"StandbyReplicas"},
         "status":{"shape":"CollectionStatus"},
-        "type":{"shape":"CollectionType"}
+        "type":{"shape":"CollectionType"},
+        "description":{"shape":"String"},
+        "arn":{"shape":"String"},
+        "kmsKeyArn":{"shape":"String"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "CreateCollectionRequest":{
       "type":"structure",
       "required":["name"],
       "members":{
+        "name":{"shape":"CollectionName"},
+        "type":{"shape":"CollectionType"},
+        "description":{"shape":"CreateCollectionRequestDescriptionString"},
+        "tags":{"shape":"Tags"},
+        "standbyReplicas":{"shape":"StandbyReplicas"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"CreateCollectionRequestDescriptionString"},
-        "name":{"shape":"CollectionName"},
-        "standbyReplicas":{"shape":"StandbyReplicas"},
-        "tags":{"shape":"Tags"},
-        "type":{"shape":"CollectionType"}
+        }
       }
     },
     "CreateCollectionRequestDescriptionString":{
@@ -865,27 +865,27 @@
       "type":"structure",
       "required":["instanceArn"],
       "members":{
-        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
         "instanceArn":{"shape":"IamIdentityCenterInstanceArn"},
-        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"},
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"}
       }
     },
     "CreateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policy",
-        "type"
+        "policy"
       ],
       "members":{
+        "type":{"shape":"LifecyclePolicyType"},
+        "name":{"shape":"PolicyName"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "type":{"shape":"LifecyclePolicyType"}
+        }
       }
     },
     "CreateLifecyclePolicyResponse":{
@@ -897,19 +897,19 @@
     "CreateSecurityConfigRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
+        "type":{"shape":"SecurityConfigType"},
+        "name":{"shape":"ConfigName"},
+        "description":{"shape":"ConfigDescription"},
+        "samlOptions":{"shape":"SamlConfigOptions"},
+        "iamIdentityCenterOptions":{"shape":"CreateIamIdentityCenterConfigOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"ConfigDescription"},
-        "iamIdentityCenterOptions":{"shape":"CreateIamIdentityCenterConfigOptions"},
-        "name":{"shape":"ConfigName"},
-        "samlOptions":{"shape":"SamlConfigOptions"},
-        "type":{"shape":"SecurityConfigType"}
+        }
       }
     },
     "CreateSecurityConfigResponse":{
@@ -921,19 +921,19 @@
     "CreateSecurityPolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policy",
-        "type"
+        "policy"
       ],
       "members":{
+        "type":{"shape":"SecurityPolicyType"},
+        "name":{"shape":"PolicyName"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "type":{"shape":"SecurityPolicyType"}
+        }
       }
     },
     "CreateSecurityPolicyResponse":{
@@ -954,18 +954,18 @@
       "type":"structure",
       "required":[
         "name",
-        "subnetIds",
-        "vpcId"
+        "vpcId",
+        "subnetIds"
       ],
       "members":{
+        "name":{"shape":"VpcEndpointName"},
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"SubnetIds"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "name":{"shape":"VpcEndpointName"},
-        "securityGroupIds":{"shape":"SecurityGroupIds"},
-        "subnetIds":{"shape":"SubnetIds"},
-        "vpcId":{"shape":"VpcId"}
+        }
       }
     },
     "CreateVpcEndpointResponse":{
@@ -977,16 +977,16 @@
     "DeleteAccessPolicyRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
+        "type":{"shape":"AccessPolicyType"},
+        "name":{"shape":"PolicyName"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"AccessPolicyType"}
+        }
       }
     },
     "DeleteAccessPolicyResponse":{
@@ -1006,11 +1006,11 @@
       "type":"structure",
       "required":["id"],
       "members":{
+        "id":{"shape":"CollectionId"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "id":{"shape":"CollectionId"}
+        }
       }
     },
     "DeleteCollectionResponse":{
@@ -1022,16 +1022,16 @@
     "DeleteLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
+        "type":{"shape":"LifecyclePolicyType"},
+        "name":{"shape":"PolicyName"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"LifecyclePolicyType"}
+        }
       }
     },
     "DeleteLifecyclePolicyResponse":{
@@ -1043,11 +1043,11 @@
       "type":"structure",
       "required":["id"],
       "members":{
+        "id":{"shape":"SecurityConfigId"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "id":{"shape":"SecurityConfigId"}
+        }
       }
     },
     "DeleteSecurityConfigResponse":{
@@ -1058,16 +1058,16 @@
     "DeleteSecurityPolicyRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
+        "type":{"shape":"SecurityPolicyType"},
+        "name":{"shape":"PolicyName"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"SecurityPolicyType"}
+        }
       }
     },
     "DeleteSecurityPolicyResponse":{
@@ -1087,11 +1087,11 @@
       "type":"structure",
       "required":["id"],
       "members":{
+        "id":{"shape":"VpcEndpointId"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "id":{"shape":"VpcEndpointId"}
+        }
       }
     },
     "DeleteVpcEndpointResponse":{
@@ -1109,12 +1109,12 @@
     "EffectiveLifecyclePolicyDetail":{
       "type":"structure",
       "members":{
-        "noMinRetentionPeriod":{"shape":"Boolean"},
-        "policyName":{"shape":"PolicyName"},
+        "type":{"shape":"LifecyclePolicyType"},
         "resource":{"shape":"Resource"},
+        "policyName":{"shape":"PolicyName"},
         "resourceType":{"shape":"ResourceType"},
         "retentionPeriod":{"shape":"String"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "noMinRetentionPeriod":{"shape":"Boolean"}
       }
     },
     "EffectiveLifecyclePolicyDetails":{
@@ -1124,10 +1124,10 @@
     "EffectiveLifecyclePolicyErrorDetail":{
       "type":"structure",
       "members":{
-        "errorCode":{"shape":"String"},
-        "errorMessage":{"shape":"String"},
+        "type":{"shape":"LifecyclePolicyType"},
         "resource":{"shape":"Resource"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "errorMessage":{"shape":"String"},
+        "errorCode":{"shape":"String"}
       }
     },
     "EffectiveLifecyclePolicyErrorDetails":{
@@ -1137,12 +1137,12 @@
     "GetAccessPolicyRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"AccessPolicyType"}
+        "type":{"shape":"AccessPolicyType"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "GetAccessPolicyResponse":{
@@ -1171,9 +1171,9 @@
       "type":"structure",
       "members":{
         "AccessPolicyStats":{"shape":"AccessPolicyStats"},
-        "LifecyclePolicyStats":{"shape":"LifecyclePolicyStats"},
-        "SecurityConfigStats":{"shape":"SecurityConfigStats"},
         "SecurityPolicyStats":{"shape":"SecurityPolicyStats"},
+        "SecurityConfigStats":{"shape":"SecurityConfigStats"},
+        "LifecyclePolicyStats":{"shape":"LifecyclePolicyStats"},
         "TotalPolicyCount":{"shape":"Long"}
       }
     },
@@ -1193,12 +1193,12 @@
     "GetSecurityPolicyRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"SecurityPolicyType"}
+        "type":{"shape":"SecurityPolicyType"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "GetSecurityPolicyResponse":{
@@ -1211,17 +1211,17 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
     },
     "IamIdentityCenterConfigOptions":{
       "type":"structure",
       "members":{
-        "applicationArn":{"shape":"IamIdentityCenterApplicationArn"},
-        "applicationDescription":{"shape":"String"},
-        "applicationName":{"shape":"String"},
-        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
         "instanceArn":{"shape":"IamIdentityCenterInstanceArn"},
-        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+        "applicationArn":{"shape":"IamIdentityCenterApplicationArn"},
+        "applicationName":{"shape":"String"},
+        "applicationDescription":{"shape":"String"},
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"},
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"}
       }
     },
     "IamIdentityCenterGroupAttribute":{
@@ -1235,7 +1235,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
     },
     "IamIdentityCenterUserAttribute":{
       "type":"string",
@@ -1261,13 +1261,13 @@
     "LifecyclePolicyDetail":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"LifecyclePolicyType"},
         "name":{"shape":"PolicyName"},
-        "policy":{"shape":"Document"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"Document"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "LifecyclePolicyDetails":{
@@ -1277,10 +1277,10 @@
     "LifecyclePolicyErrorDetail":{
       "type":"structure",
       "members":{
-        "errorCode":{"shape":"String"},
-        "errorMessage":{"shape":"String"},
+        "type":{"shape":"LifecyclePolicyType"},
         "name":{"shape":"PolicyName"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "errorMessage":{"shape":"String"},
+        "errorCode":{"shape":"String"}
       }
     },
     "LifecyclePolicyErrorDetails":{
@@ -1290,12 +1290,12 @@
     "LifecyclePolicyIdentifier":{
       "type":"structure",
       "required":[
-        "name",
-        "type"
+        "type",
+        "name"
       ],
       "members":{
-        "name":{"shape":"PolicyName"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "type":{"shape":"LifecyclePolicyType"},
+        "name":{"shape":"PolicyName"}
       }
     },
     "LifecyclePolicyIdentifiers":{
@@ -1307,12 +1307,12 @@
     "LifecyclePolicyResourceIdentifier":{
       "type":"structure",
       "required":[
-        "resource",
-        "type"
+        "type",
+        "resource"
       ],
       "members":{
-        "resource":{"shape":"ResourceName"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "type":{"shape":"LifecyclePolicyType"},
+        "resource":{"shape":"ResourceName"}
       }
     },
     "LifecyclePolicyResourceIdentifiers":{
@@ -1334,12 +1334,12 @@
     "LifecyclePolicySummary":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"LifecyclePolicyType"},
         "name":{"shape":"PolicyName"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "LifecyclePolicyType":{
@@ -1351,10 +1351,10 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "maxResults":{"shape":"ListAccessPoliciesRequestMaxResultsInteger"},
-        "nextToken":{"shape":"String"},
+        "type":{"shape":"AccessPolicyType"},
         "resource":{"shape":"ListAccessPoliciesRequestResourceList"},
-        "type":{"shape":"AccessPolicyType"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListAccessPoliciesRequestMaxResultsInteger"}
       }
     },
     "ListAccessPoliciesRequestMaxResultsInteger":{
@@ -1380,8 +1380,8 @@
       "type":"structure",
       "members":{
         "collectionFilters":{"shape":"CollectionFilters"},
-        "maxResults":{"shape":"ListCollectionsRequestMaxResultsInteger"},
-        "nextToken":{"shape":"String"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListCollectionsRequestMaxResultsInteger"}
       }
     },
     "ListCollectionsRequestMaxResultsInteger":{
@@ -1401,10 +1401,10 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "maxResults":{"shape":"ListLifecyclePoliciesRequestMaxResultsInteger"},
-        "nextToken":{"shape":"String"},
+        "type":{"shape":"LifecyclePolicyType"},
         "resources":{"shape":"ListLifecyclePoliciesRequestResourcesList"},
-        "type":{"shape":"LifecyclePolicyType"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListLifecyclePoliciesRequestMaxResultsInteger"}
       }
     },
     "ListLifecyclePoliciesRequestMaxResultsInteger":{
@@ -1430,9 +1430,9 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "maxResults":{"shape":"ListSecurityConfigsRequestMaxResultsInteger"},
+        "type":{"shape":"SecurityConfigType"},
         "nextToken":{"shape":"String"},
-        "type":{"shape":"SecurityConfigType"}
+        "maxResults":{"shape":"ListSecurityConfigsRequestMaxResultsInteger"}
       }
     },
     "ListSecurityConfigsRequestMaxResultsInteger":{
@@ -1444,18 +1444,18 @@
     "ListSecurityConfigsResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"String"},
-        "securityConfigSummaries":{"shape":"SecurityConfigSummaries"}
+        "securityConfigSummaries":{"shape":"SecurityConfigSummaries"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListSecurityPoliciesRequest":{
       "type":"structure",
       "required":["type"],
       "members":{
-        "maxResults":{"shape":"ListSecurityPoliciesRequestMaxResultsInteger"},
-        "nextToken":{"shape":"String"},
+        "type":{"shape":"SecurityPolicyType"},
         "resource":{"shape":"ListSecurityPoliciesRequestResourceList"},
-        "type":{"shape":"SecurityPolicyType"}
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"ListSecurityPoliciesRequestMaxResultsInteger"}
       }
     },
     "ListSecurityPoliciesRequestMaxResultsInteger":{
@@ -1473,8 +1473,8 @@
     "ListSecurityPoliciesResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"String"},
-        "securityPolicySummaries":{"shape":"SecurityPolicySummaries"}
+        "securityPolicySummaries":{"shape":"SecurityPolicySummaries"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1493,9 +1493,9 @@
     "ListVpcEndpointsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"ListVpcEndpointsRequestMaxResultsInteger"},
+        "vpcEndpointFilters":{"shape":"VpcEndpointFilters"},
         "nextToken":{"shape":"String"},
-        "vpcEndpointFilters":{"shape":"VpcEndpointFilters"}
+        "maxResults":{"shape":"ListVpcEndpointsRequestMaxResultsInteger"}
       }
     },
     "ListVpcEndpointsRequestMaxResultsInteger":{
@@ -1507,8 +1507,8 @@
     "ListVpcEndpointsResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"String"},
-        "vpcEndpointSummaries":{"shape":"VpcEndpointSummaries"}
+        "vpcEndpointSummaries":{"shape":"VpcEndpointSummaries"},
+        "nextToken":{"shape":"String"}
       }
     },
     "Long":{
@@ -1532,24 +1532,24 @@
       "type":"string",
       "max":20480,
       "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+"
+      "pattern":".*[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+.*"
     },
     "PolicyName":{
       "type":"string",
       "max":32,
       "min":3,
-      "pattern":"^[a-z][a-z0-9-]+$"
+      "pattern":"[a-z][a-z0-9-]+"
     },
     "PolicyVersion":{
       "type":"string",
       "max":36,
       "min":20,
-      "pattern":"^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$"
+      "pattern":"([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?"
     },
     "Resource":{"type":"string"},
     "ResourceName":{
       "type":"string",
-      "pattern":"^index/[a-z][a-z0-9-]{3,32}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*)$"
+      "pattern":"index/[a-z][a-z0-9-]{3,32}/([a-z;0-9&$%][+.~=\\-_a-z;0-9&$%]*)"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1566,10 +1566,11 @@
       "type":"structure",
       "required":["metadata"],
       "members":{
-        "groupAttribute":{"shape":"samlGroupAttribute"},
         "metadata":{"shape":"samlMetadata"},
-        "sessionTimeout":{"shape":"SamlConfigOptionsSessionTimeoutInteger"},
-        "userAttribute":{"shape":"samlUserAttribute"}
+        "userAttribute":{"shape":"samlUserAttribute"},
+        "groupAttribute":{"shape":"samlGroupAttribute"},
+        "openSearchServerlessEntityId":{"shape":"openSearchServerlessEntityId"},
+        "sessionTimeout":{"shape":"SamlConfigOptionsSessionTimeoutInteger"}
       }
     },
     "SamlConfigOptionsSessionTimeoutInteger":{
@@ -1586,14 +1587,14 @@
     "SecurityConfigDetail":{
       "type":"structure",
       "members":{
-        "configVersion":{"shape":"PolicyVersion"},
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"ConfigDescription"},
-        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterConfigOptions"},
         "id":{"shape":"SecurityConfigId"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"SecurityConfigType"},
+        "configVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"ConfigDescription"},
         "samlOptions":{"shape":"SamlConfigOptions"},
-        "type":{"shape":"SecurityConfigType"}
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterConfigOptions"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "SecurityConfigId":{
@@ -1614,12 +1615,12 @@
     "SecurityConfigSummary":{
       "type":"structure",
       "members":{
-        "configVersion":{"shape":"PolicyVersion"},
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"ConfigDescription"},
         "id":{"shape":"SecurityConfigId"},
-        "lastModifiedDate":{"shape":"Long"},
-        "type":{"shape":"SecurityConfigType"}
+        "type":{"shape":"SecurityConfigType"},
+        "configVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"ConfigDescription"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "SecurityConfigType":{
@@ -1633,7 +1634,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\w+\\-]+$"
+      "pattern":"[\\w+\\-]+"
     },
     "SecurityGroupIds":{
       "type":"list",
@@ -1644,13 +1645,13 @@
     "SecurityPolicyDetail":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"SecurityPolicyType"},
         "name":{"shape":"PolicyName"},
-        "policy":{"shape":"Document"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"SecurityPolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"Document"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "SecurityPolicyStats":{
@@ -1667,12 +1668,12 @@
     "SecurityPolicySummary":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"PolicyDescription"},
-        "lastModifiedDate":{"shape":"Long"},
+        "type":{"shape":"SecurityPolicyType"},
         "name":{"shape":"PolicyName"},
         "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"SecurityPolicyType"}
+        "description":{"shape":"PolicyDescription"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "SecurityPolicyType":{
@@ -1690,10 +1691,10 @@
       ],
       "members":{
         "message":{"shape":"String"},
-        "quotaCode":{"shape":"String"},
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"},
-        "serviceCode":{"shape":"String"}
+        "serviceCode":{"shape":"String"},
+        "quotaCode":{"shape":"String"}
       },
       "exception":true
     },
@@ -1709,7 +1710,7 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^subnet-([0-9a-f]{8}|[0-9a-f]{17})$"
+      "pattern":"subnet-([0-9a-f]{8}|[0-9a-f]{17})"
     },
     "SubnetIds":{
       "type":"list",
@@ -1785,20 +1786,20 @@
     "UpdateAccessPolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policyVersion",
-        "type"
+        "policyVersion"
       ],
       "members":{
+        "type":{"shape":"AccessPolicyType"},
+        "name":{"shape":"PolicyName"},
+        "policyVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"AccessPolicyType"}
+        }
       }
     },
     "UpdateAccessPolicyResponse":{
@@ -1822,26 +1823,26 @@
     "UpdateCollectionDetail":{
       "type":"structure",
       "members":{
-        "arn":{"shape":"String"},
-        "createdDate":{"shape":"Long"},
-        "description":{"shape":"String"},
         "id":{"shape":"CollectionId"},
-        "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"CollectionName"},
         "status":{"shape":"CollectionStatus"},
-        "type":{"shape":"CollectionType"}
+        "type":{"shape":"CollectionType"},
+        "description":{"shape":"String"},
+        "arn":{"shape":"String"},
+        "createdDate":{"shape":"Long"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "UpdateCollectionRequest":{
       "type":"structure",
       "required":["id"],
       "members":{
+        "id":{"shape":"CollectionId"},
+        "description":{"shape":"UpdateCollectionRequestDescriptionString"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"UpdateCollectionRequestDescriptionString"},
-        "id":{"shape":"CollectionId"}
+        }
       }
     },
     "UpdateCollectionRequestDescriptionString":{
@@ -1858,27 +1859,27 @@
     "UpdateIamIdentityCenterConfigOptions":{
       "type":"structure",
       "members":{
-        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"},
-        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"}
+        "userAttribute":{"shape":"IamIdentityCenterUserAttribute"},
+        "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"}
       }
     },
     "UpdateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policyVersion",
-        "type"
+        "policyVersion"
       ],
       "members":{
+        "type":{"shape":"LifecyclePolicyType"},
+        "name":{"shape":"PolicyName"},
+        "policyVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"LifecyclePolicyType"}
+        }
       }
     },
     "UpdateLifecyclePolicyResponse":{
@@ -1890,19 +1891,19 @@
     "UpdateSecurityConfigRequest":{
       "type":"structure",
       "required":[
-        "configVersion",
-        "id"
+        "id",
+        "configVersion"
       ],
       "members":{
+        "id":{"shape":"SecurityConfigId"},
+        "configVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"ConfigDescription"},
+        "samlOptions":{"shape":"SamlConfigOptions"},
+        "iamIdentityCenterOptionsUpdates":{"shape":"UpdateIamIdentityCenterConfigOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "configVersion":{"shape":"PolicyVersion"},
-        "description":{"shape":"ConfigDescription"},
-        "iamIdentityCenterOptionsUpdates":{"shape":"UpdateIamIdentityCenterConfigOptions"},
-        "id":{"shape":"SecurityConfigId"},
-        "samlOptions":{"shape":"SamlConfigOptions"}
+        }
       }
     },
     "UpdateSecurityConfigResponse":{
@@ -1914,20 +1915,20 @@
     "UpdateSecurityPolicyRequest":{
       "type":"structure",
       "required":[
+        "type",
         "name",
-        "policyVersion",
-        "type"
+        "policyVersion"
       ],
       "members":{
+        "type":{"shape":"SecurityPolicyType"},
+        "name":{"shape":"PolicyName"},
+        "policyVersion":{"shape":"PolicyVersion"},
+        "description":{"shape":"PolicyDescription"},
+        "policy":{"shape":"PolicyDocument"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "description":{"shape":"PolicyDescription"},
-        "name":{"shape":"PolicyName"},
-        "policy":{"shape":"PolicyDocument"},
-        "policyVersion":{"shape":"PolicyVersion"},
-        "type":{"shape":"SecurityPolicyType"}
+        }
       }
     },
     "UpdateSecurityPolicyResponse":{
@@ -1940,26 +1941,26 @@
       "type":"structure",
       "members":{
         "id":{"shape":"VpcEndpointId"},
-        "lastModifiedDate":{"shape":"Long"},
         "name":{"shape":"VpcEndpointName"},
-        "securityGroupIds":{"shape":"SecurityGroupIds"},
         "status":{"shape":"VpcEndpointStatus"},
-        "subnetIds":{"shape":"SubnetIds"}
+        "subnetIds":{"shape":"SubnetIds"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "lastModifiedDate":{"shape":"Long"}
       }
     },
     "UpdateVpcEndpointRequest":{
       "type":"structure",
       "required":["id"],
       "members":{
-        "addSecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "id":{"shape":"VpcEndpointId"},
         "addSubnetIds":{"shape":"SubnetIds"},
+        "removeSubnetIds":{"shape":"SubnetIds"},
+        "addSecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "removeSecurityGroupIds":{"shape":"SecurityGroupIds"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "id":{"shape":"VpcEndpointId"},
-        "removeSecurityGroupIds":{"shape":"SecurityGroupIds"},
-        "removeSubnetIds":{"shape":"SubnetIds"}
+        }
       }
     },
     "UpdateVpcEndpointResponse":{
@@ -1978,15 +1979,15 @@
     "VpcEndpointDetail":{
       "type":"structure",
       "members":{
-        "createdDate":{"shape":"Long"},
-        "failureCode":{"shape":"String"},
-        "failureMessage":{"shape":"String"},
         "id":{"shape":"VpcEndpointId"},
         "name":{"shape":"VpcEndpointName"},
+        "vpcId":{"shape":"VpcId"},
+        "subnetIds":{"shape":"SubnetIds"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "status":{"shape":"VpcEndpointStatus"},
-        "subnetIds":{"shape":"SubnetIds"},
-        "vpcId":{"shape":"VpcId"}
+        "createdDate":{"shape":"Long"},
+        "failureCode":{"shape":"String"},
+        "failureMessage":{"shape":"String"}
       }
     },
     "VpcEndpointDetails":{
@@ -1996,9 +1997,9 @@
     "VpcEndpointErrorDetail":{
       "type":"structure",
       "members":{
-        "errorCode":{"shape":"String"},
+        "id":{"shape":"VpcEndpointId"},
         "errorMessage":{"shape":"String"},
-        "id":{"shape":"VpcEndpointId"}
+        "errorCode":{"shape":"String"}
       }
     },
     "VpcEndpointErrorDetails":{
@@ -2015,18 +2016,19 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^vpce-[0-9a-z]*$"
+      "pattern":"vpce-[0-9a-z]*"
     },
     "VpcEndpointIds":{
       "type":"list",
       "member":{"shape":"VpcEndpointId"},
+      "max":100,
       "min":1
     },
     "VpcEndpointName":{
       "type":"string",
       "max":32,
       "min":3,
-      "pattern":"^[a-z][a-z0-9-]+$"
+      "pattern":"[a-z][a-z0-9-]+"
     },
     "VpcEndpointStatus":{
       "type":"string",
@@ -2053,25 +2055,31 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^vpc-[0-9a-z]*$"
+      "pattern":"vpc-[0-9a-z]*"
+    },
+    "openSearchServerlessEntityId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"aws:opensearch:[0-9]{12}:*.*"
     },
     "samlGroupAttribute":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"[\\w+=,.@-]+"
+      "pattern":".*[\\w+=,.@-]+.*"
     },
     "samlMetadata":{
       "type":"string",
       "max":51200,
       "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+"
+      "pattern":".*[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+.*"
     },
     "samlUserAttribute":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"[\\w+=,.@-]+"
+      "pattern":".*[\\w+=,.@-]+.*"
     }
   }
 }

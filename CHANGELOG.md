@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Auth` - Adds exception handling for invalid identities, allowing fallback behavior
+* `Aws\BedrockAgent` - This releases adds the additionalModelRequestFields field to the CreateAgent and UpdateAgent operations. Use additionalModelRequestFields to specify additional inference parameters for a model beyond the base inference parameters.
+* `Aws\MediaLive` - Adds a RequestId parameter to all MediaLive Workflow Monitor create operations. The RequestId parameter allows idempotent operations.
+* `Aws\FSx` - Support for in-place Lustre version upgrades
+* `Aws\Polly` - Added support for the new voice - Jasmine (en-SG). Jasmine is available as a Neural voice only.
+* `Aws\BedrockAgentRuntime` - This releases adds the additionalModelRequestFields field to the InvokeInlineAgent operation. Use additionalModelRequestFields to specify additional inference parameters for a model beyond the base inference parameters.
+* `Aws\OpenSearchServerless` - Custom OpenSearchServerless Entity ID for SAML Config.
+* `Aws\CodeBuild` - Add note for the RUNNER_BUILDKITE_BUILD buildType.
+* `Aws\B2bi` - Allow spaces in the following fields in the Partnership resource: ISA 06 - Sender ID, ISA 08 - Receiver ID, GS 02 - Application Sender Code, GS 03 - Application Receiver Code
+
 ## 3.339.11 - 2025-02-11
 
 * `Aws\ACMPCA` - Private Certificate Authority service now supports Partitioned CRL as a revocation configuration option.
