@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.12 - 2025-02-12
 
 * `Aws\Auth` - Adds exception handling for invalid identities, allowing fallback behavior
 * `Aws\BedrockAgent` - This releases adds the additionalModelRequestFields field to the CreateAgent and UpdateAgent operations. Use additionalModelRequestFields to specify additional inference parameters for a model beyond the base inference parameters.
