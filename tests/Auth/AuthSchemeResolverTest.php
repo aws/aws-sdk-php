@@ -190,4 +190,53 @@ class AuthSchemeResolverTest extends TestCase
         $resolver = new AuthSchemeResolver($credentialProvider);
         $resolver->selectAuthScheme(['aws.auth#sigv4a']);
     }
+
+    /**
+     * @dataProvider fallsBackWhenIdentityNotAvailableProvider
+     */
+    public function testFallsBackWhenIdentityNotAvailable(
+        $credentialProvider,
+        $tokenProvider,
+        $authSchemes,
+        $expected
+    )
+    {
+        if ($expected === 'error') {
+            $this->expectException(UnresolvedAuthSchemeException::class);
+        }
+        $resolver = new AuthSchemeResolver($credentialProvider, $tokenProvider);
+        $this->assertEquals($expected, $resolver->selectAuthScheme($authSchemes));
+    }
+
+    public function fallsBackWhenIdentityNotAvailableProvider()
+    {
+        $credentialProvider = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(AwsCredentialIdentity::class)
+            );
+        };
+        $tokenProvider = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(BearerTokenIdentity::class)
+            );
+        };
+        $badCredentialProvider = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(BearerTokenIdentity::class)
+            );
+        };
+        $badTokenProvider = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(AwsCredentialIdentity::class)
+            );
+        };
+
+        return [
+            [$credentialProvider, $tokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'v4'],
+            [$badCredentialProvider, $tokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'bearer'],
+            [$credentialProvider, $badTokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'v4'],
+            [$badCredentialProvider, $badTokenProvider, ['aws.auth#sigv4', 'smithy.api#httpBearerAuth'], 'error'],
+            [$badCredentialProvider, $tokenProvider, ['aws.auth#sigv4'], 'error']
+        ];
+    }
 }
