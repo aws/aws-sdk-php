@@ -11,6 +11,7 @@
     "AssociateFileSystem": "<p>Associate an Amazon FSx file system with the FSx File Gateway. After the association process is complete, the file shares on the Amazon FSx file system are available for access through the gateway. This operation only supports the FSx File Gateway type.</p>",
     "AttachVolume": "<p>Connects a volume to an iSCSI connection and then attaches the volume to the specified gateway. Detaching and attaching a volume enables you to recover your data from one gateway to a different gateway without creating a snapshot. It also makes it easier to move your volumes from an on-premises gateway to a gateway hosted on an Amazon EC2 instance.</p>",
     "CancelArchival": "<p>Cancels archiving of a virtual tape to the virtual tape shelf (VTS) after the archiving process is initiated. This operation is only supported in the tape gateway type.</p>",
+    "CancelCacheReport": "<p>Cancels generation of a specified cache report. You can use this operation to manually cancel an IN-PROGRESS report for any reason. This action changes the report status from IN-PROGRESS to CANCELLED. You can only cancel in-progress reports. If the the report you attempt to cancel is in FAILED, ERROR, or COMPLETED state, the cancel operation returns an error.</p>",
     "CancelRetrieval": "<p>Cancels retrieval of a virtual tape from the virtual tape shelf (VTS) to a gateway after the retrieval process is initiated. The virtual tape is returned to the VTS. This operation is only supported in the tape gateway type.</p>",
     "CreateCachediSCSIVolume": "<p>Creates a cached volume on a specified cached volume gateway. This operation is only supported in the cached volume gateway type.</p> <note> <p>Cache storage must be allocated to the gateway before you can create a cached volume. Use the <a>AddCache</a> operation to add cache storage to a gateway.</p> </note> <p>In the request, you must specify the gateway, size of the volume in bytes, the iSCSI target name, an IP address on which to expose the target, and a unique client token. In response, the gateway creates the volume and returns information about it. This information includes the volume Amazon Resource Name (ARN), its size, and the iSCSI target ARN that initiators can use to connect to the volume target.</p> <p>Optionally, you can provide the ARN for an existing volume as the <code>SourceVolumeARN</code> for this cached volume, which creates an exact copy of the existing volume’s latest recovery point. The <code>VolumeSizeInBytes</code> value must be equal to or larger than the size of the copied volume, in bytes.</p>",
     "CreateNFSFileShare": "<p>Creates a Network File System (NFS) file share on an existing S3 File Gateway. In Storage Gateway, a file share is a file system mount point backed by Amazon S3 cloud storage. Storage Gateway exposes file shares using an NFS interface. This operation is only supported for S3 File Gateways.</p> <important> <p>S3 File gateway requires Security Token Service (Amazon Web Services STS) to be activated to enable you to create a file share. Make sure Amazon Web Services STS is activated in the Amazon Web Services Region you are creating your S3 File Gateway in. If Amazon Web Services STS is not activated in the Amazon Web Services Region, activate it. For information about how to activate Amazon Web Services STS, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Identity and Access Management User Guide</i>.</p> <p>S3 File Gateways do not support creating hard or symbolic links on a file share.</p> </important>",
@@ -23,6 +24,7 @@
     "CreateTapes": "<p>Creates one or more virtual tapes. You write data to the virtual tapes and then archive the tapes. This operation is only supported in the tape gateway type.</p> <note> <p>Cache storage must be allocated to the gateway before you can create virtual tapes. Use the <a>AddCache</a> operation to add cache storage to a gateway.</p> </note>",
     "DeleteAutomaticTapeCreationPolicy": "<p>Deletes the automatic tape creation policy of a gateway. If you delete this policy, new virtual tapes must be created manually. Use the Amazon Resource Name (ARN) of the gateway in your request to remove the policy.</p>",
     "DeleteBandwidthRateLimit": "<p>Deletes the bandwidth rate limits of a gateway. You can delete either the upload and download bandwidth rate limit, or you can delete both. If you delete only one of the limits, the other limit remains unchanged. To specify which gateway to work with, use the Amazon Resource Name (ARN) of the gateway in your request. This operation is supported only for the stored volume, cached volume, and tape gateway types.</p>",
+    "DeleteCacheReport": "<p>Deletes the specified cache report and any associated tags from the Storage Gateway database. You can only delete completed reports. If the status of the report you attempt to delete still IN-PROGRESS, the delete operation returns an error. You can use <code>CancelCacheReport</code> to cancel an IN-PROGRESS report.</p> <note> <p> <code>DeleteCacheReport</code> does not delete the report object from your Amazon S3 bucket.</p> </note>",
     "DeleteChapCredentials": "<p>Deletes Challenge-Handshake Authentication Protocol (CHAP) credentials for a specified iSCSI target and initiator pair. This operation is supported in volume and tape gateway types.</p>",
     "DeleteFileShare": "<p>Deletes a file share from an S3 File Gateway. This operation is only supported for S3 File Gateways.</p>",
     "DeleteGateway": "<p>Deletes a gateway. To specify which gateway to delete, use the Amazon Resource Name (ARN) of the gateway in your request. The operation deletes the gateway; however, it does not delete the gateway virtual machine (VM) from your host computer.</p> <p>After you delete a gateway, you cannot reactivate it. Completed snapshots of the gateway volumes are not deleted upon deleting the gateway, however, pending snapshots will not complete. After you delete a gateway, your next step is to remove it from your environment.</p> <important> <p>You no longer pay software charges after the gateway is deleted; however, your existing Amazon EBS snapshots persist and you will continue to be billed for these snapshots. You can choose to remove all remaining Amazon EBS snapshots by canceling your Amazon EC2 subscription.  If you prefer not to cancel your Amazon EC2 subscription, you can delete your snapshots using the Amazon EC2 console. For more information, see the <a href=\"http://aws.amazon.com/storagegateway\">Storage Gateway detail page</a>.</p> </important>",
@@ -35,6 +37,7 @@
     "DescribeBandwidthRateLimit": "<p>Returns the bandwidth rate limits of a gateway. By default, these limits are not set, which means no bandwidth rate limiting is in effect. This operation is supported only for the stored volume, cached volume, and tape gateway types. To describe bandwidth rate limits for S3 file gateways, use <a>DescribeBandwidthRateLimitSchedule</a>.</p> <p>This operation returns a value for a bandwidth rate limit only if the limit is set. If no limits are set for the gateway, then this operation returns only the gateway ARN in the response body. To specify which gateway to describe, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
     "DescribeBandwidthRateLimitSchedule": "<p> Returns information about the bandwidth rate limit schedule of a gateway. By default, gateways do not have bandwidth rate limit schedules, which means no bandwidth rate limiting is in effect. This operation is supported only for volume, tape and S3 file gateways. FSx file gateways do not support bandwidth rate limits.</p> <p>This operation returns information about a gateway's bandwidth rate limit schedule. A bandwidth rate limit schedule consists of one or more bandwidth rate limit intervals. A bandwidth rate limit interval defines a period of time on one or more days of the week, during which bandwidth rate limits are specified for uploading, downloading, or both. </p> <p> A bandwidth rate limit interval consists of one or more days of the week, a start hour and minute, an ending hour and minute, and bandwidth rate limits for uploading and downloading </p> <p> If no bandwidth rate limit schedule intervals are set for the gateway, this operation returns an empty response. To specify which gateway to describe, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
     "DescribeCache": "<p>Returns information about the cache of a gateway. This operation is only supported in the cached volume, tape, and file gateway types.</p> <p>The response includes disk IDs that are configured as cache, and it includes the amount of cache allocated and used.</p>",
+    "DescribeCacheReport": "<p>Returns information about the specified cache report, including completion status and generation progress.</p>",
     "DescribeCachediSCSIVolumes": "<p>Returns a description of the gateway volumes specified in the request. This operation is only supported in the cached volume gateway types.</p> <p>The list of gateway volumes in the request must be from one gateway. In the response, Storage Gateway returns volume information sorted by volume Amazon Resource Name (ARN).</p>",
     "DescribeChapCredentials": "<p>Returns an array of Challenge-Handshake Authentication Protocol (CHAP) credentials information for a specified iSCSI target, one for each target-initiator pair. This operation is supported in the volume and tape gateway types.</p>",
     "DescribeFileSystemAssociations": "<p>Gets the file system association information. This operation is only supported for FSx File Gateways.</p>",
@@ -56,6 +59,7 @@
     "DisassociateFileSystem": "<p>Disassociates an Amazon FSx file system from the specified gateway. After the disassociation process finishes, the gateway can no longer access the Amazon FSx file system. This operation is only supported in the FSx File Gateway type.</p>",
     "JoinDomain": "<p>Adds a file gateway to an Active Directory domain. This operation is only supported for file gateways that support the SMB file protocol.</p> <note> <p>Joining a domain creates an Active Directory computer account in the default organizational unit, using the gateway's <b>Gateway ID</b> as the account name (for example, SGW-1234ADE). If your Active Directory environment requires that you pre-stage accounts to facilitate the join domain process, you will need to create this account ahead of time.</p> <p>To create the gateway's computer account in an organizational unit other than the default, you must specify the organizational unit when joining the domain.</p> </note>",
     "ListAutomaticTapeCreationPolicies": "<p>Lists the automatic tape creation policies for a gateway. If there are no automatic tape creation policies for the gateway, it returns an empty list.</p> <p>This operation is only supported for tape gateways.</p>",
+    "ListCacheReports": "<p>Returns a list of existing cache reports for all file shares associated with your Amazon Web Services account. This list includes all information provided by the <code>DescribeCacheReport</code> action, such as report name, status, completion progress, start time, end time, filters, and tags.</p>",
     "ListFileShares": "<p>Gets a list of the file shares for a specific S3 File Gateway, or the list of file shares that belong to the calling Amazon Web Services account. This operation is only supported for S3 File Gateways.</p>",
     "ListFileSystemAssociations": "<p>Gets a list of <code>FileSystemAssociationSummary</code> objects. Each object contains a summary of a file system association. This operation is only supported for FSx File Gateways.</p>",
     "ListGateways": "<p>Lists gateways owned by an Amazon Web Services account in an Amazon Web Services Region specified in the request. The returned list is ordered by gateway Amazon Resource Name (ARN).</p> <p>By default, the operation returns a maximum of 100 gateways. This operation supports pagination that allows you to optionally reduce the number of gateways returned in a response.</p> <p>If you have more gateways than are returned in a response (that is, the response returns only a truncated list of your gateways), the response contains a marker that you can specify in your next request to fetch the next page of gateways.</p>",
@@ -66,7 +70,7 @@
     "ListVolumeInitiators": "<p>Lists iSCSI initiators that are connected to a volume. You can use this operation to determine whether a volume is being used or not. This operation is only supported in the cached volume and stored volume gateway types.</p>",
     "ListVolumeRecoveryPoints": "<p>Lists the recovery points for a specified gateway. This operation is only supported in the cached volume gateway type.</p> <p>Each cache volume has one recovery point. A volume recovery point is a point in time at which all data of the volume is consistent and from which you can create a snapshot or clone a new cached volume from a source volume. To create a snapshot from a volume recovery point use the <a>CreateSnapshotFromVolumeRecoveryPoint</a> operation.</p>",
     "ListVolumes": "<p>Lists the iSCSI stored volumes of a gateway. Results are sorted by volume ARN. The response includes only the volume ARNs. If you want additional volume information, use the <a>DescribeStorediSCSIVolumes</a> or the <a>DescribeCachediSCSIVolumes</a> API.</p> <p>The operation supports pagination. By default, the operation returns a maximum of up to 100 volumes. You can optionally specify the <code>Limit</code> field in the body to limit the number of volumes in the response. If the number of volumes returned in the response is truncated, the response includes a Marker field. You can use this Marker value in your subsequent request to retrieve the next set of volumes. This operation is only supported in the cached volume and stored volume gateway types.</p>",
-    "NotifyWhenUploaded": "<p>Sends you notification through CloudWatch Events when all files written to your file share have been uploaded to Amazon S3.</p> <p>Storage Gateway can send a notification through Amazon CloudWatch Events when all files written to your file share up to that point in time have been uploaded to Amazon S3. These files include files written to the file share up to the time that you make a request for notification. When the upload is done, Storage Gateway sends you notification through an Amazon CloudWatch Event. You can configure CloudWatch Events to send the notification through event targets such as Amazon SNS or Lambda function. This operation is only supported for S3 File Gateways.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification\">Getting file upload notification</a> in the <i>Amazon S3 File Gateway User Guide</i>.</p>",
+    "NotifyWhenUploaded": "<p>Sends you notification through Amazon EventBridge when all files written to your file share have been uploaded to Amazon S3.</p> <p>Storage Gateway can send a notification through Amazon EventBridge when all files written to your file share up to that point in time have been uploaded to Amazon S3. These files include files written to the file share up to the time that you make a request for notification. When the upload is done, Storage Gateway sends you notification through EventBridge. You can configure EventBridge to send the notification through event targets such as Amazon SNS or Lambda function. This operation is only supported for S3 File Gateways.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification\">Getting file upload notification</a> in the <i>Amazon S3 File Gateway User Guide</i>.</p>",
     "RefreshCache": "<p>Refreshes the cached inventory of objects for the specified file share. This operation finds objects in the Amazon S3 bucket that were added, removed, or replaced since the gateway last listed the bucket's contents and cached the results. This operation does not import files into the S3 File Gateway cache storage. It only updates the cached inventory to reflect changes in the inventory of the objects in the S3 bucket. This operation is only supported in the S3 File Gateway types.</p> <p>You can subscribe to be notified through an Amazon CloudWatch event when your <code>RefreshCache</code> operation completes. For more information, see <a href=\"https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification\">Getting notified about file operations</a> in the <i>Amazon S3 File Gateway User Guide</i>. This operation is Only supported for S3 File Gateways.</p> <p>When this API is called, it only initiates the refresh operation. When the API call completes and returns a success code, it doesn't necessarily mean that the file refresh has completed. You should use the refresh-complete notification to determine that the operation has completed before you check for new files on the gateway file share. You can subscribe to be notified through a CloudWatch event when your <code>RefreshCache</code> operation completes.</p> <p>Throttle limit: This API is asynchronous, so the gateway will accept no more than two refreshes at any time. We recommend using the refresh-complete CloudWatch event notification before issuing additional requests. For more information, see <a href=\"https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification\">Getting notified about file operations</a> in the <i>Amazon S3 File Gateway User Guide</i>.</p> <important> <ul> <li> <p>Wait at least 60 seconds between consecutive RefreshCache API requests.</p> </li> <li> <p>If you invoke the RefreshCache API when two requests are already being processed, any new request will cause an <code>InvalidGatewayRequestException</code> error because too many requests were sent to the server.</p> </li> </ul> </important> <note> <p>The S3 bucket name does not need to be included when entering the list of folders in the FolderList parameter.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification\">Getting notified about file operations</a> in the <i>Amazon S3 File Gateway User Guide</i>.</p>",
     "RemoveTagsFromResource": "<p>Removes one or more tags from the specified resource. This operation is supported in storage gateways of all types.</p>",
     "ResetCache": "<p>Resets all cache disks that have encountered an error and makes the disks available for reconfiguration as cache storage. If your cache disk encounters an error, the gateway prevents read and write operations on virtual tapes in the gateway. For example, an error can occur when a disk is corrupted or removed from the gateway. When a cache is reset, the gateway loses its cache storage. At this point, you can reconfigure the disks as cache disks. This operation is only supported in the cached volume and tape types.</p> <important> <p>If the cache disk you are resetting contains data that has not been uploaded to Amazon S3 yet, that data can be lost. After you reset cache disks, there will be no configured cache disks left in the gateway, so you must configure at least one new cache disk for your gateway to function properly.</p> </important>",
@@ -76,6 +80,7 @@
     "SetSMBGuestPassword": "<p>Sets the password for the guest user <code>smbguest</code>. The <code>smbguest</code> user is the user when the authentication method for the file share is set to <code>GuestAccess</code>. This operation only supported for S3 File Gateways</p>",
     "ShutdownGateway": "<p>Shuts down a Tape Gateway or Volume Gateway. To specify which gateway to shut down, use the Amazon Resource Name (ARN) of the gateway in the body of your request.</p> <note> <p>This API action cannot be used to shut down S3 File Gateway or FSx File Gateway.</p> </note> <p>The operation shuts down the gateway service component running in the gateway's virtual machine (VM) and not the host VM.</p> <note> <p>If you want to shut down the VM, it is recommended that you first shut down the gateway component in the VM to avoid unpredictable conditions.</p> </note> <p>After the gateway is shutdown, you cannot call any other API except <a>StartGateway</a>, <a>DescribeGatewayInformation</a>, and <a>ListGateways</a>. For more information, see <a>ActivateGateway</a>. Your applications cannot read from or write to the gateway's storage volumes, and there are no snapshots taken.</p> <note> <p>When you make a shutdown request, you will get a <code>200 OK</code> success response immediately. However, it might take some time for the gateway to shut down. You can call the <a>DescribeGatewayInformation</a> API to check the status. For more information, see <a>ActivateGateway</a>.</p> </note> <p>If do not intend to use the gateway again, you must delete the gateway (using <a>DeleteGateway</a>) to no longer pay software charges associated with the gateway.</p>",
     "StartAvailabilityMonitorTest": "<p>Start a test that verifies that the specified gateway is configured for High Availability monitoring in your host environment. This request only initiates the test and that a successful response only indicates that the test was started. It doesn't indicate that the test passed. For the status of the test, invoke the <code>DescribeAvailabilityMonitorTest</code> API.</p> <note> <p>Starting this test will cause your gateway to go offline for a brief period.</p> </note>",
+    "StartCacheReport": "<p>Starts generating a report of the file metadata currently cached by an S3 File Gateway for a specific file share. You can use this report to identify and resolve issues if you have files failing upload from your gateway to Amazon S3. The report is a CSV file containing a list of files which match the set of filter parameters you specify in the request.</p> <note> <p>The <b>Files Failing Upload</b> flag is reset every 24 hours and during gateway reboot. If this report captures the files after the reset, but before they become flagged again, they will not be reported as <b>Files Failing Upload</b>.</p> </note> <p>The following requirements must be met to successfully generate a cache report:</p> <ul> <li> <p>You must have permissions to list the entire Amazon S3 bucket associated with the specified file share.</p> </li> <li> <p>No other cache reports can currently be in-progress for the specified file share.</p> </li> <li> <p>There must be fewer than 10 existing cache reports for the specified file share.</p> </li> <li> <p>The gateway must be online and connected to Amazon Web Services.</p> </li> <li> <p>The root disk must have at least 20GB of free space when report generation starts.</p> </li> <li> <p>You must specify at least one value for <code>InclusionFilters</code> or <code>ExclusionFilters</code> in the request.</p> </li> </ul>",
     "StartGateway": "<p>Starts a gateway that you previously shut down (see <a>ShutdownGateway</a>). After the gateway starts, you can then make other API calls, your applications can read from or write to the gateway's storage volumes and you will be able to take snapshot backups.</p> <note> <p>When you make a request, you will get a 200 OK success response immediately. However, it might take some time for the gateway to be ready. You should call <a>DescribeGatewayInformation</a> and check the status before making any additional API calls. For more information, see <a>ActivateGateway</a>.</p> </note> <p>To specify which gateway to start, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
     "UpdateAutomaticTapeCreationPolicy": "<p>Updates the automatic tape creation policy of a gateway. Use this to update the policy with a new set of automatic tape creation rules. This is only supported for tape gateways.</p> <p>By default, there is no automatic tape creation policy.</p> <note> <p>A gateway can have only one automatic tape creation policy.</p> </note>",
     "UpdateBandwidthRateLimit": "<p>Updates the bandwidth rate limits of a gateway. You can update both the upload and download bandwidth rate limit or specify only one of the two. If you don't set a bandwidth rate limit, the existing rate limit remains. This operation is supported only for the stored volume, cached volume, and tape gateway types. To update bandwidth rate limits for S3 file gateways, use <a>UpdateBandwidthRateLimitSchedule</a>.</p> <p>By default, a gateway's bandwidth rate limits are not set. If you don't set any limit, the gateway does not have any limitations on its bandwidth usage and could potentially use the maximum available bandwidth.</p> <p>To specify which gateway to update, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
@@ -113,8 +118,8 @@
     "ActiveDirectoryStatus": {
       "base": null,
       "refs": {
-        "DescribeSMBSettingsOutput$ActiveDirectoryStatus": "<p>Indicates the status of a gateway that is a member of the Active Directory domain.</p> <ul> <li> <p> <code>ACCESS_DENIED</code>: Indicates that the <code>JoinDomain</code> operation failed due to an authentication error.</p> </li> <li> <p> <code>DETACHED</code>: Indicates that gateway is not joined to a domain.</p> </li> <li> <p> <code>JOINED</code>: Indicates that the gateway has successfully joined a domain.</p> </li> <li> <p> <code>JOINING</code>: Indicates that a <code>JoinDomain</code> operation is in progress.</p> </li> <li> <p> <code>NETWORK_ERROR</code>: Indicates that <code>JoinDomain</code> operation failed due to a network or connectivity error.</p> </li> <li> <p> <code>TIMEOUT</code>: Indicates that the <code>JoinDomain</code> operation failed because the operation didn't complete within the allotted time.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code>: Indicates that the <code>JoinDomain</code> operation failed due to another type of error.</p> </li> </ul>",
-        "JoinDomainOutput$ActiveDirectoryStatus": "<p>Indicates the status of the gateway as a member of the Active Directory domain.</p> <ul> <li> <p> <code>ACCESS_DENIED</code>: Indicates that the <code>JoinDomain</code> operation failed due to an authentication error.</p> </li> <li> <p> <code>DETACHED</code>: Indicates that gateway is not joined to a domain.</p> </li> <li> <p> <code>JOINED</code>: Indicates that the gateway has successfully joined a domain.</p> </li> <li> <p> <code>JOINING</code>: Indicates that a <code>JoinDomain</code> operation is in progress.</p> </li> <li> <p> <code>NETWORK_ERROR</code>: Indicates that <code>JoinDomain</code> operation failed due to a network or connectivity error.</p> </li> <li> <p> <code>TIMEOUT</code>: Indicates that the <code>JoinDomain</code> operation failed because the operation didn't complete within the allotted time.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code>: Indicates that the <code>JoinDomain</code> operation failed due to another type of error.</p> </li> </ul>"
+        "DescribeSMBSettingsOutput$ActiveDirectoryStatus": "<p>Indicates the status of a gateway that is a member of the Active Directory domain.</p> <note> <p>This field is only used as part of a <code>JoinDomain</code> request. It is not affected by Active Directory connectivity changes that occur after the <code>JoinDomain</code> request succeeds.</p> </note> <ul> <li> <p> <code>ACCESS_DENIED</code>: Indicates that the <code>JoinDomain</code> operation failed due to an authentication error.</p> </li> <li> <p> <code>DETACHED</code>: Indicates that gateway is not joined to a domain.</p> </li> <li> <p> <code>JOINED</code>: Indicates that the gateway has successfully joined a domain.</p> </li> <li> <p> <code>JOINING</code>: Indicates that a <code>JoinDomain</code> operation is in progress.</p> </li> <li> <p> <code>NETWORK_ERROR</code>: Indicates that <code>JoinDomain</code> operation failed due to a network or connectivity error.</p> </li> <li> <p> <code>TIMEOUT</code>: Indicates that the <code>JoinDomain</code> operation failed because the operation didn't complete within the allotted time.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code>: Indicates that the <code>JoinDomain</code> operation failed due to another type of error.</p> </li> </ul>",
+        "JoinDomainOutput$ActiveDirectoryStatus": "<p>Indicates the status of the gateway as a member of the Active Directory domain.</p> <note> <p>This field is only used as part of a <code>JoinDomain</code> request. It is not affected by Active Directory connectivity changes that occur after the <code>JoinDomain</code> request succeeds.</p> </note> <ul> <li> <p> <code>ACCESS_DENIED</code>: Indicates that the <code>JoinDomain</code> operation failed due to an authentication error.</p> </li> <li> <p> <code>DETACHED</code>: Indicates that gateway is not joined to a domain.</p> </li> <li> <p> <code>JOINED</code>: Indicates that the gateway has successfully joined a domain.</p> </li> <li> <p> <code>JOINING</code>: Indicates that a <code>JoinDomain</code> operation is in progress.</p> </li> <li> <p> <code>NETWORK_ERROR</code>: Indicates that <code>JoinDomain</code> operation failed due to a network or connectivity error.</p> </li> <li> <p> <code>TIMEOUT</code>: Indicates that the <code>JoinDomain</code> operation failed because the operation didn't complete within the allotted time.</p> </li> <li> <p> <code>UNKNOWN_ERROR</code>: Indicates that the <code>JoinDomain</code> operation failed due to another type of error.</p> </li> </ul>"
       }
     },
     "AddCacheInput": {
@@ -339,6 +344,76 @@
         "UpdateSMBFileShareInput$CacheAttributes": "<p>Specifies refresh cache information for the file share.</p>"
       }
     },
+    "CacheReportARN": {
+      "base": null,
+      "refs": {
+        "CacheReportInfo$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to describe.</p>",
+        "CancelCacheReportInput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to cancel.</p>",
+        "CancelCacheReportOutput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to cancel.</p>",
+        "DeleteCacheReportInput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to delete.</p>",
+        "DeleteCacheReportOutput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to delete.</p>",
+        "DescribeCacheReportInput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report you want to describe.</p>",
+        "StartCacheReportOutput$CacheReportARN": "<p>The Amazon Resource Name (ARN) of the cache report generated by the <code>StartCacheReport</code> request.</p>"
+      }
+    },
+    "CacheReportFilter": {
+      "base": "<p>A list of filter parameters and associated values that determine which files are included or excluded from a cache report created by a <code>StartCacheReport</code> request. Multiple instances of the same filter parameter are combined with an OR operation, while different parameters are combined with an AND operation.</p>",
+      "refs": {
+        "CacheReportFilterList$member": null
+      }
+    },
+    "CacheReportFilterList": {
+      "base": null,
+      "refs": {
+        "CacheReportInfo$InclusionFilters": "<p>The list of filters and parameters that determine which files are included in the report.</p>",
+        "CacheReportInfo$ExclusionFilters": "<p>The list of filters and parameters that determine which files are excluded from the report.</p>",
+        "StartCacheReportInput$InclusionFilters": "<p>The list of filters and parameters that determine which files are included in the report. You must specify at least one value for <code>InclusionFilters</code> or <code>ExclusionFilters</code> in a <code>StartCacheReport</code> request.</p>",
+        "StartCacheReportInput$ExclusionFilters": "<p>The list of filters and parameters that determine which files are excluded from the report. You must specify at least one value for <code>InclusionFilters</code> or <code>ExclusionFilters</code> in a <code>StartCacheReport</code> request.</p>"
+      }
+    },
+    "CacheReportFilterName": {
+      "base": null,
+      "refs": {
+        "CacheReportFilter$Name": "<p>The parameter name for a filter that determines which files are included or excluded from a cache report.</p> <p> <b>Valid Names:</b> </p> <p>UploadFailureReason | UploadState</p>"
+      }
+    },
+    "CacheReportFilterValue": {
+      "base": null,
+      "refs": {
+        "CacheReportFilterValues$member": null
+      }
+    },
+    "CacheReportFilterValues": {
+      "base": null,
+      "refs": {
+        "CacheReportFilter$Values": "<p>The parameter value for a filter that determines which files are included or excluded from a cache report.</p> <p> <b>Valid <code>UploadFailureReason</code> Values:</b> </p> <p> <code>InaccessibleStorageClass</code> | <code>InvalidObjectState</code> | <code>ObjectMissing</code> | <code>S3AccessDenied</code> </p> <p> <b>Valid <code>UploadState</code> Values:</b> </p> <p> <code>FailingUpload</code> </p>"
+      }
+    },
+    "CacheReportInfo": {
+      "base": "<p>Contains all informational fields associated with a cache report. Includes name, ARN, tags, status, progress, filters, start time, and end time.</p>",
+      "refs": {
+        "CacheReportList$member": null,
+        "DescribeCacheReportOutput$CacheReportInfo": "<p>Contains all informational fields associated with a cache report. Includes name, ARN, tags, status, progress, filters, start time, and end time.</p>"
+      }
+    },
+    "CacheReportList": {
+      "base": null,
+      "refs": {
+        "ListCacheReportsOutput$CacheReportList": "<p>A list of existing cache reports for all file shares associated with your Amazon Web Services account. This list includes all information provided by the <code>DescribeCacheReport</code> action, such as report status, completion progress, start time, end time, filters, and tags.</p>"
+      }
+    },
+    "CacheReportName": {
+      "base": null,
+      "refs": {
+        "CacheReportInfo$ReportName": "<p>The file name of the completed cache report object stored in Amazon S3.</p>"
+      }
+    },
+    "CacheReportStatus": {
+      "base": null,
+      "refs": {
+        "CacheReportInfo$CacheReportStatus": "<p>The status of the specified cache report.</p>"
+      }
+    },
     "CacheStaleTimeoutInSeconds": {
       "base": null,
       "refs": {
@@ -364,6 +439,16 @@
     },
     "CancelArchivalOutput": {
       "base": "<p>CancelArchivalOutput</p>",
+      "refs": {
+      }
+    },
+    "CancelCacheReportInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelCacheReportOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -413,7 +498,8 @@
         "CreateCachediSCSIVolumeInput$ClientToken": "<p>A unique identifier that you use to retry a request. If you retry a request, use the same <code>ClientToken</code> you specified in the initial request.</p>",
         "CreateNFSFileShareInput$ClientToken": "<p>A unique string value that you supply that is used by S3 File Gateway to ensure idempotent file share creation.</p>",
         "CreateSMBFileShareInput$ClientToken": "<p>A unique string value that you supply that is used by S3 File Gateway to ensure idempotent file share creation.</p>",
-        "CreateTapesInput$ClientToken": "<p>A unique identifier that you use to retry a request. If you retry a request, use the same <code>ClientToken</code> you specified in the initial request.</p> <note> <p>Using the same <code>ClientToken</code> prevents creating the tape multiple times.</p> </note>"
+        "CreateTapesInput$ClientToken": "<p>A unique identifier that you use to retry a request. If you retry a request, use the same <code>ClientToken</code> you specified in the initial request.</p> <note> <p>Using the same <code>ClientToken</code> prevents creating the tape multiple times.</p> </note>",
+        "StartCacheReportInput$ClientToken": "<p>A unique identifier that you use to ensure idempotent report generation if you need to retry an unsuccessful <code>StartCacheReport</code> request. If you retry a request, use the same <code>ClientToken</code> you specified in the initial request.</p>"
       }
     },
     "CloudWatchLogGroupARN": {
@@ -526,7 +612,8 @@
         "CreateNFSFileShareInput$VPCEndpointDNSName": "<p>Specifies the DNS name for the VPC endpoint that the NFS file share uses to connect to Amazon S3.</p> <note> <p>This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
         "CreateSMBFileShareInput$VPCEndpointDNSName": "<p>Specifies the DNS name for the VPC endpoint that the SMB file share uses to connect to Amazon S3.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
         "NFSFileShareInfo$VPCEndpointDNSName": "<p>Specifies the DNS name for the VPC endpoint that the NFS file share uses to connect to Amazon S3.</p> <note> <p>This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
-        "SMBFileShareInfo$VPCEndpointDNSName": "<p>Specifies the DNS name for the VPC endpoint that the SMB file share uses to connect to Amazon S3.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>"
+        "SMBFileShareInfo$VPCEndpointDNSName": "<p>Specifies the DNS name for the VPC endpoint that the SMB file share uses to connect to Amazon S3.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
+        "StartCacheReportInput$VPCEndpointDNSName": "<p>The DNS name of the VPC endpoint associated with the Amazon S3 where you want to save the cache report. Optional.</p>"
       }
     },
     "DayOfMonth": {
@@ -567,6 +654,16 @@
     },
     "DeleteBandwidthRateLimitOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose bandwidth rate information was deleted.</p>",
+      "refs": {
+      }
+    },
+    "DeleteCacheReportInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCacheReportOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -693,6 +790,16 @@
       }
     },
     "DescribeCacheOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCacheReportInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCacheReportOutput": {
       "base": null,
       "refs": {
       }
@@ -1035,6 +1142,7 @@
     "FileShareARN": {
       "base": "<p>The Amazon Resource Name (ARN) of the file share.</p>",
       "refs": {
+        "CacheReportInfo$FileShareARN": null,
         "CreateNFSFileShareOutput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the newly created file share.</p>",
         "CreateSMBFileShareOutput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the newly created file share.</p>",
         "DeleteFileShareInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the file share to be deleted.</p>",
@@ -1047,6 +1155,7 @@
         "RefreshCacheInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the file share you want to refresh.</p>",
         "RefreshCacheOutput$FileShareARN": null,
         "SMBFileShareInfo$FileShareARN": null,
+        "StartCacheReportInput$FileShareARN": null,
         "UpdateNFSFileShareInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the file share to be updated.</p>",
         "UpdateNFSFileShareOutput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the updated file share.</p>",
         "UpdateSMBFileShareInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the SMB file share that you want to update.</p>",
@@ -1516,6 +1625,16 @@
       "refs": {
       }
     },
+    "ListCacheReportsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCacheReportsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListFileSharesInput": {
       "base": "<p>ListFileShareInput</p>",
       "refs": {
@@ -1625,10 +1744,12 @@
     "LocationARN": {
       "base": "<p>A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).</p> <note> <p>You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.</p> <p>Bucket ARN:</p> <p> <code>arn:aws:s3:::amzn-s3-demo-bucket/prefix/</code> </p> <p>Access point ARN:</p> <p> <code>arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/</code> </p> <p>If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control\">Delegating access control to access points</a> in the <i>Amazon S3 User Guide</i>.</p> <p>Access point alias:</p> <p> <code>test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias</code> </p> </note>",
       "refs": {
+        "CacheReportInfo$LocationARN": "<p>The ARN of the Amazon S3 bucket location where the cache report is saved.</p>",
         "CreateNFSFileShareInput$LocationARN": "<p>A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).</p> <note> <p>You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.</p> <p>Bucket ARN:</p> <p> <code>arn:aws:s3:::amzn-s3-demo-bucket/prefix/</code> </p> <p>Access point ARN:</p> <p> <code>arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/</code> </p> <p>If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control\">Delegating access control to access points</a> in the <i>Amazon S3 User Guide</i>.</p> <p>Access point alias:</p> <p> <code>test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias</code> </p> </note>",
         "CreateSMBFileShareInput$LocationARN": "<p>A custom ARN for the backend storage used for storing data for file shares. It includes a resource ARN with an optional prefix concatenation. The prefix must end with a forward slash (/).</p> <note> <p>You can specify LocationARN as a bucket ARN, access point ARN or access point alias, as shown in the following examples.</p> <p>Bucket ARN:</p> <p> <code>arn:aws:s3:::amzn-s3-demo-bucket/prefix/</code> </p> <p>Access point ARN:</p> <p> <code>arn:aws:s3:region:account-id:accesspoint/access-point-name/prefix/</code> </p> <p>If you specify an access point, the bucket policy must be configured to delegate access control to the access point. For information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html#access-points-delegating-control\">Delegating access control to access points</a> in the <i>Amazon S3 User Guide</i>.</p> <p>Access point alias:</p> <p> <code>test-ap-ab123cdef4gehijklmn5opqrstuvuse1a-s3alias</code> </p> </note>",
         "NFSFileShareInfo$LocationARN": null,
-        "SMBFileShareInfo$LocationARN": null
+        "SMBFileShareInfo$LocationARN": null,
+        "StartCacheReportInput$LocationARN": "<p>The ARN of the Amazon S3 bucket where the cache report will be saved.</p> <note> <p>We do not recommend saving the cache report to the same Amazon S3 bucket for which you are generating the report.</p> <p>This field does not accept access point ARNs.</p> </note>"
       }
     },
     "Marker": {
@@ -1642,6 +1763,8 @@
         "DescribeTapesOutput$Marker": "<p>An opaque string that can be used as part of a subsequent <code>DescribeTapes</code> call to retrieve the next page of results.</p> <p>If a response does not contain a marker, then there are no more results to be retrieved.</p>",
         "DescribeVTLDevicesInput$Marker": "<p>An opaque string that indicates the position at which to begin describing the VTL devices.</p>",
         "DescribeVTLDevicesOutput$Marker": "<p>An opaque string that indicates the position at which the VTL devices that were fetched for description ended. Use the marker in your next request to fetch the next set of VTL devices in the list. If there are no more VTL devices to describe, this field does not appear in the response.</p>",
+        "ListCacheReportsInput$Marker": "<p>Opaque pagination token returned from a previous <code>ListCacheReports</code> operation. If present, <code>Marker</code> specifies where to continue the list from after a previous call to <code>ListCacheReports</code>. Optional.</p>",
+        "ListCacheReportsOutput$Marker": "<p>If the request includes <code>Marker</code>, the response returns that value in this field.</p>",
         "ListFileSharesInput$Marker": "<p>Opaque pagination token returned from a previous ListFileShares operation. If present, <code>Marker</code> specifies where to continue the list from after a previous call to ListFileShares. Optional.</p>",
         "ListFileSharesOutput$Marker": "<p>If the request includes <code>Marker</code>, the response returns that value in this field.</p>",
         "ListFileSharesOutput$NextMarker": "<p>If a value is present, there are more file shares to return. In a subsequent request, use <code>NextMarker</code> as the value for <code>Marker</code> to retrieve the next set of file shares.</p>",
@@ -1889,7 +2012,8 @@
         "CreateNFSFileShareInput$BucketRegion": "<p>Specifies the Region of the S3 bucket where the NFS file share stores files.</p> <note> <p>This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
         "CreateSMBFileShareInput$BucketRegion": "<p>Specifies the Region of the S3 bucket where the SMB file share stores files.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
         "NFSFileShareInfo$BucketRegion": "<p>Specifies the Region of the S3 bucket where the NFS file share stores files.</p> <note> <p>This parameter is required for NFS file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
-        "SMBFileShareInfo$BucketRegion": "<p>Specifies the Region of the S3 bucket where the SMB file share stores files.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>"
+        "SMBFileShareInfo$BucketRegion": "<p>Specifies the Region of the S3 bucket where the SMB file share stores files.</p> <note> <p>This parameter is required for SMB file shares that connect to Amazon S3 through a VPC endpoint, a VPC access point, or an access point alias that points to a VPC access point.</p> </note>",
+        "StartCacheReportInput$BucketRegion": "<p>The Amazon Web Services Region of the Amazon S3 bucket associated with the file share for which you want to generate the cache report.</p>"
       }
     },
     "RemoveTagsFromResourceInput": {
@@ -1900,6 +2024,12 @@
     "RemoveTagsFromResourceOutput": {
       "base": "<p>RemoveTagsFromResourceOutput</p>",
       "refs": {
+      }
+    },
+    "ReportCompletionPercent": {
+      "base": null,
+      "refs": {
+        "CacheReportInfo$ReportCompletionPercent": "<p>The percentage of the report generation process that has been completed at time of inquiry.</p>"
       }
     },
     "ResetCacheInput": {
@@ -1960,10 +2090,12 @@
     "Role": {
       "base": "<p>The ARN of the IAM role that an S3 File Gateway assumes when it accesses the underlying storage.</p>",
       "refs": {
+        "CacheReportInfo$Role": null,
         "CreateNFSFileShareInput$Role": "<p>The ARN of the Identity and Access Management (IAM) role that an S3 File Gateway assumes when it accesses the underlying storage.</p>",
         "CreateSMBFileShareInput$Role": "<p>The ARN of the Identity and Access Management (IAM) role that an S3 File Gateway assumes when it accesses the underlying storage.</p>",
         "NFSFileShareInfo$Role": null,
-        "SMBFileShareInfo$Role": null
+        "SMBFileShareInfo$Role": null,
+        "StartCacheReportInput$Role": "<p>The ARN of the IAM role used when saving the cache report to Amazon S3.</p>"
       }
     },
     "SMBFileShareInfo": {
@@ -2089,6 +2221,16 @@
       "refs": {
       }
     },
+    "StartCacheReportInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartCacheReportOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartGatewayInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway to start.</p>",
       "refs": {
@@ -2167,6 +2309,7 @@
         "ActivateGatewayInput$Tags": "<p>A list of up to 50 tags that you can assign to the gateway. Each tag is a key-value pair.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers that can be represented in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256 characters.</p> </note>",
         "AddTagsToResourceInput$Tags": "<p>The key-value pair that represents the tag you want to add to the resource. The value can be an empty string.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.</p> </note>",
         "AssociateFileSystemInput$Tags": "<p>A list of up to 50 tags that can be assigned to the file system association. Each tag is a key-value pair.</p>",
+        "CacheReportInfo$Tags": "<p>The list of key/value tags associated with the report.</p>",
         "CreateCachediSCSIVolumeInput$Tags": "<p>A list of up to 50 tags that you can assign to a cached volume. Each tag is a key-value pair.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers that you can represent in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256 characters.</p> </note>",
         "CreateNFSFileShareInput$Tags": "<p>A list of up to 50 tags that can be assigned to the NFS file share. Each tag is a key-value pair.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.</p> </note>",
         "CreateSMBFileShareInput$Tags": "<p>A list of up to 50 tags that can be assigned to the NFS file share. Each tag is a key-value pair.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.</p> </note>",
@@ -2182,6 +2325,7 @@
         "ListTagsForResourceOutput$Tags": "<p>An array that contains the tags for the specified resource.</p>",
         "NFSFileShareInfo$Tags": "<p>A list of up to 50 tags assigned to the NFS file share, sorted alphabetically by key name. Each tag is a key-value pair. For a gateway with more than 10 tags assigned, you can view all tags using the <code>ListTagsForResource</code> API operation.</p>",
         "SMBFileShareInfo$Tags": "<p>A list of up to 50 tags assigned to the SMB file share, sorted alphabetically by key name. Each tag is a key-value pair. For a gateway with more than 10 tags assigned, you can view all tags using the <code>ListTagsForResource</code> API operation.</p>",
+        "StartCacheReportInput$Tags": "<p>A list of up to 50 key/value tags that you can assign to the cache report. Using tags can help you categorize your reports and more easily locate them in search results.</p>",
         "UpdateSnapshotScheduleInput$Tags": "<p>A list of up to 50 tags that can be assigned to a snapshot. Each tag is a key-value pair.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. The maximum length of a tag's key is 128 characters, and the maximum length for a tag's value is 256.</p> </note>"
       }
     },
@@ -2363,6 +2507,8 @@
     "Time": {
       "base": null,
       "refs": {
+        "CacheReportInfo$EndTime": "<p>The time at which the gateway stopped generating the cache report.</p>",
+        "CacheReportInfo$StartTime": "<p>The time at which the gateway started generating the cache report.</p>",
         "DescribeAvailabilityMonitorTestOutput$StartTime": "<p>The time the high availability monitoring test was started. If a test hasn't been performed, the value of this field is null.</p>",
         "Tape$TapeCreatedDate": "<p>The date the virtual tape was created.</p>",
         "Tape$RetentionStartDate": "<p>The date that the tape is first archived with tape retention lock enabled.</p>",

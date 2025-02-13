@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Control` - Disables legacy `EndpointArnMiddleware` when the dynamic endpoint provider is in use
+* `Aws\AccessAnalyzer` - This release introduces the getFindingsStatistics API, enabling users to retrieve aggregated finding statistics for IAM Access Analyzer's external access and unused access analysis features. Updated service API and documentation.
+* `Aws\ECS` - This is a documentation only release to support migrating Amazon ECS service ARNs to the long ARN format.
+* `Aws\ACMPCA` - Private Certificate Authority (PCA) documentation updates
+* `Aws\StorageGateway` - This release adds support for generating cache reports on S3 File Gateways for files that fail to upload.
+* `Aws\SageMaker` - Adds additional values to the InferenceAmiVersion parameter in the ProductionVariant data type.
+* `Aws\FIS` - Adds auto-pagination for the following operations: ListActions, ListExperimentTemplates, ListTargetAccountConfigurations, ListExperiments, ListExperimentResolvedTargets, ListTargetResourceTypes. Reduces length constraints of prefixes for logConfiguration and experimentReportConfiguration.
+
 ## 3.339.12 - 2025-02-12
 
 * `Aws\Auth` - Adds exception handling for invalid identities, allowing fallback behavior

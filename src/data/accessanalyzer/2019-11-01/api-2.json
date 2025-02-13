@@ -327,6 +327,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetFindingsStatistics":{
+      "name":"GetFindingsStatistics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/analyzer/findings/statistics",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFindingsStatisticsRequest"},
+      "output":{"shape":"GetFindingsStatisticsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetGeneratedPolicy":{
       "name":"GetGeneratedPolicy",
       "http":{
@@ -803,6 +820,12 @@
       "member":{"shape":"Resource"},
       "max":100,
       "min":0
+    },
+    "AccountAggregations":{
+      "type":"list",
+      "member":{"shape":"FindingAggregationAccountDetails"},
+      "max":10,
+      "min":1
     },
     "AccountIdsList":{
       "type":"list",
@@ -1337,6 +1360,15 @@
         "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
     },
+    "ExternalAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "resourceTypeStatistics":{"shape":"ResourceTypeStatisticsMap"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
     "FilterCriteriaMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -1371,6 +1403,19 @@
         "sources":{"shape":"FindingSourceList"},
         "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"}
       }
+    },
+    "FindingAggregationAccountDetails":{
+      "type":"structure",
+      "members":{
+        "account":{"shape":"String"},
+        "numberOfActiveFindings":{"shape":"Integer"},
+        "details":{"shape":"FindingAggregationAccountDetailsMap"}
+      }
+    },
+    "FindingAggregationAccountDetailsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"Integer"}
     },
     "FindingChangeType":{
       "type":"string",
@@ -1514,6 +1559,18 @@
     "FindingsListV2":{
       "type":"list",
       "member":{"shape":"FindingSummaryV2"}
+    },
+    "FindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "externalAccessFindingsStatistics":{"shape":"ExternalAccessFindingsStatistics"},
+        "unusedAccessFindingsStatistics":{"shape":"UnusedAccessFindingsStatistics"}
+      },
+      "union":true
+    },
+    "FindingsStatisticsList":{
+      "type":"list",
+      "member":{"shape":"FindingsStatistics"}
     },
     "GenerateFindingRecommendationRequest":{
       "type":"structure",
@@ -1800,6 +1857,20 @@
         "updatedAt":{"shape":"Timestamp"},
         "findingDetails":{"shape":"FindingDetailsList"},
         "findingType":{"shape":"FindingType"}
+      }
+    },
+    "GetFindingsStatisticsRequest":{
+      "type":"structure",
+      "required":["analyzerArn"],
+      "members":{
+        "analyzerArn":{"shape":"AnalyzerArn"}
+      }
+    },
+    "GetFindingsStatisticsResponse":{
+      "type":"structure",
+      "members":{
+        "findingsStatistics":{"shape":"FindingsStatisticsList"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
       }
     },
     "GetGeneratedPolicyRequest":{
@@ -2521,6 +2592,18 @@
         "AWS::IAM::User"
       ]
     },
+    "ResourceTypeDetails":{
+      "type":"structure",
+      "members":{
+        "totalActivePublic":{"shape":"Integer"},
+        "totalActiveCrossAccount":{"shape":"Integer"}
+      }
+    },
+    "ResourceTypeStatisticsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"ResourceTypeDetails"}
+    },
     "RetiringPrincipal":{"type":"string"},
     "RoleArn":{
       "type":"string",
@@ -2841,6 +2924,27 @@
         "unusedAccessAge":{"shape":"Integer"},
         "analysisRule":{"shape":"AnalysisRule"}
       }
+    },
+    "UnusedAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "unusedAccessTypeStatistics":{"shape":"UnusedAccessTypeStatisticsList"},
+        "topAccounts":{"shape":"AccountAggregations"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
+    "UnusedAccessTypeStatistics":{
+      "type":"structure",
+      "members":{
+        "unusedAccessType":{"shape":"String"},
+        "total":{"shape":"Integer"}
+      }
+    },
+    "UnusedAccessTypeStatisticsList":{
+      "type":"list",
+      "member":{"shape":"UnusedAccessTypeStatistics"}
     },
     "UnusedAction":{
       "type":"structure",

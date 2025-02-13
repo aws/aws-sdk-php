@@ -871,7 +871,7 @@
       "type":"structure",
       "members":{
         "bucketName":{"shape":"S3BucketName"},
-        "prefix":{"shape":"S3ObjectKey"}
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
       }
     },
     "ExperimentReportError":{
@@ -1753,15 +1753,20 @@
       "type":"structure",
       "members":{
         "bucketName":{"shape":"S3BucketName"},
-        "prefix":{"shape":"S3ObjectKey"}
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
       }
     },
     "ReportConfigurationS3OutputInput":{
       "type":"structure",
       "members":{
         "bucketName":{"shape":"S3BucketName"},
-        "prefix":{"shape":"S3ObjectKey"}
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
       }
+    },
+    "ReportConfigurationS3OutputPrefix":{
+      "type":"string",
+      "max":256,
+      "pattern":"[\\S]+"
     },
     "ResolvedTarget":{
       "type":"structure",
@@ -1808,7 +1813,7 @@
     },
     "S3ObjectKey":{
       "type":"string",
-      "max":1024,
+      "max":700,
       "min":1,
       "pattern":"[\\s\\S]+"
     },
