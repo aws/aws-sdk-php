@@ -14,10 +14,36 @@ use Psr\Http\Message\StreamInterface;
 
 abstract class MultipartDownloader implements PromisorInterface
 {
-    use MultipartDownloaderTrait;
     public const GET_OBJECT_COMMAND = "GetObject";
     public const PART_GET_MULTIPART_DOWNLOADER = "partGet";
     public const RANGE_GET_MULTIPART_DOWNLOADER = "rangeGet";
+
+    /** @var array */
+    protected array $requestArgs;
+
+    /** @var int */
+    protected int $currentPartNo;
+
+    /** @var int */
+    protected int $objectPartsCount;
+
+    /** @var int */
+    protected int $objectCompletedPartsCount;
+
+    /** @var int */
+    protected int $objectSizeInBytes;
+
+    /** @var int */
+    protected int $objectBytesTransferred;
+
+    /** @var string */
+    protected string $eTag;
+
+    /** @var  string */
+    protected string $objectKey;
+
+    /** @var StreamInterface */
+    private StreamInterface $stream;
 
     /**
      * @param S3ClientInterface $s3Client
@@ -38,23 +64,33 @@ abstract class MultipartDownloader implements PromisorInterface
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
-        protected array $requestArgs,
+        array $requestArgs,
         protected readonly array $config = [],
-        protected int $currentPartNo = 0,
-        protected int $objectPartsCount = 0,
-        protected int $objectCompletedPartsCount = 0,
-        protected int $objectSizeInBytes = 0,
-        protected int $objectBytesTransferred = 0,
-        protected string $eTag = "",
-        protected string $objectKey = "",
+        int $currentPartNo = 0,
+        int $objectPartsCount = 0,
+        int $objectCompletedPartsCount = 0,
+        int $objectSizeInBytes = 0,
+        int $objectBytesTransferred = 0,
+        string $eTag = "",
+        string $objectKey = "",
         private readonly ?MultipartDownloadListener $listener = null,
         private readonly ?TransferListener $progressListener = null,
-        private ?StreamInterface $stream = null
+        ?StreamInterface $stream = null
     ) {
+        $this->requestArgs = $requestArgs;
+        $this->currentPartNo = $currentPartNo;
+        $this->objectPartsCount = $objectPartsCount;
+        $this->objectCompletedPartsCount = $objectCompletedPartsCount;
+        $this->objectSizeInBytes = $objectSizeInBytes;
+        $this->objectBytesTransferred = $objectBytesTransferred;
+        $this->eTag = $eTag;
+        $this->objectKey = $objectKey;
         if ($stream === null) {
             $this->stream = Utils::streamFor(
                 fopen('php://temp', 'w+')
             );
+        } else {
+            $this->stream = $stream;
         }
     }
 
@@ -156,14 +192,16 @@ abstract class MultipartDownloader implements PromisorInterface
                     yield Create::rejectionFor($e);
                 }
 
-                $lastPartIncrement = $this->currentPartNo;
             }
 
             // Transfer completed
             $this->objectDownloadCompleted();
 
             // TODO: yield the stream wrapped in a modeled transfer success response.
-            yield Create::promiseFor($this->stream);
+            yield Create::promiseFor(new DownloadResult(
+                $this->stream,
+                []
+            ));
         });
     }
 
@@ -190,7 +228,8 @@ abstract class MultipartDownloader implements PromisorInterface
      *
      * @return int
      */
-    protected function computeObjectSize($sizeSource): int {
+    protected function computeObjectSize($sizeSource): int
+    {
         if (is_int($sizeSource)) {
             return (int) $sizeSource;
         }
@@ -244,7 +283,7 @@ abstract class MultipartDownloader implements PromisorInterface
     ) : MultipartDownloader
     {
         return match ($multipartDownloadType) {
-            self::PART_GET_MULTIPART_DOWNLOADER => new GetMultipartDownloader(
+            self::PART_GET_MULTIPART_DOWNLOADER => new PartGetMultipartDownloader(
                 s3Client: $s3Client,
                 requestArgs: $requestArgs,
                 config: $config,
@@ -258,7 +297,7 @@ abstract class MultipartDownloader implements PromisorInterface
                 listener: $listener,
                 progressListener: $progressTracker
             ),
-            self::RANGE_GET_MULTIPART_DOWNLOADER => new RangeMultipartDownloader(
+            self::RANGE_GET_MULTIPART_DOWNLOADER => new RangeGetMultipartDownloader(
                 s3Client: $s3Client,
                 requestArgs: $requestArgs,
                 config: $config,
@@ -277,5 +316,182 @@ abstract class MultipartDownloader implements PromisorInterface
                 ."It should be either " . self::PART_GET_MULTIPART_DOWNLOADER .
                 " or " . self::RANGE_GET_MULTIPART_DOWNLOADER . ".")
         };
+    }
+
+    /**
+     * Main purpose of this method is to propagate
+     * the download-initiated event to listeners, but
+     * also it does some computation regarding internal states
+     * that need to be maintained.
+     *
+     * @param array $commandArgs
+     * @param int|null $currentPartNo
+     *
+     * @return void
+     */
+    private function downloadInitiated(array &$commandArgs, ?int $currentPartNo): void
+    {
+        $this->objectKey = $commandArgs['Key'];
+        $this->progressListener?->objectTransferInitiated(
+            $this->objectKey,
+            $commandArgs
+        );
+        $this->_notifyMultipartDownloadListeners('downloadInitiated', [
+            &$commandArgs,
+            $currentPartNo
+        ]);
+    }
+
+    /**
+     * Propagates download-failed event to listeners.
+     * It may also do some computation in order to maintain internal states.
+     *
+     * @param \Throwable $reason
+     * @param int $totalPartsTransferred
+     * @param int $totalBytesTransferred
+     * @param int $lastPartTransferred
+     *
+     * @return void
+     */
+    private function downloadFailed(
+        \Throwable $reason,
+        int $totalPartsTransferred,
+        int $totalBytesTransferred,
+        int $lastPartTransferred
+    ): void
+    {
+        $this->progressListener?->objectTransferFailed(
+            $this->objectKey,
+            $totalBytesTransferred,
+            $reason
+        );
+        $this->_notifyMultipartDownloadListeners('downloadFailed', [
+            $reason,
+            $totalPartsTransferred,
+            $totalBytesTransferred,
+            $lastPartTransferred
+        ]);
+    }
+
+    /**
+     * Propagates part-download-initiated event to listeners.
+     *
+     * @param CommandInterface $partDownloadCommand
+     * @param int $partNo
+     *
+     * @return void
+     */
+    private function partDownloadInitiated(
+        CommandInterface $partDownloadCommand,
+        int $partNo
+    ): void
+    {
+        $this->_notifyMultipartDownloadListeners('partDownloadInitiated', [
+            $partDownloadCommand,
+            $partNo
+        ]);
+    }
+
+    /**
+     * Propagates part-download-completed to listeners.
+     * It also does some computation in order to maintain internal states.
+     * In this specific method we move each part content into an accumulative
+     * stream, which is meant to hold the full object content once the download
+     * is completed.
+     *
+     * @param ResultInterface $result
+     * @param int $partNo
+     *
+     * @return void
+     */
+    private function partDownloadCompleted(
+        ResultInterface $result,
+        int $partNo
+    ): void
+    {
+        $this->objectCompletedPartsCount++;
+        $partDownloadBytes = $result['ContentLength'];
+        $this->objectBytesTransferred = $this->objectBytesTransferred + $partDownloadBytes;
+        if (isset($result['ETag'])) {
+            $this->eTag = $result['ETag'];
+        }
+        Utils::copyToStream($result['Body'], $this->stream);
+
+        $this->progressListener?->objectTransferProgress(
+            $this->objectKey,
+            $partDownloadBytes,
+            $this->objectSizeInBytes
+        );
+
+        $this->_notifyMultipartDownloadListeners('partDownloadCompleted', [
+            $result,
+            $partNo,
+            $partDownloadBytes,
+            $this->objectCompletedPartsCount,
+            $this->objectBytesTransferred,
+            $this->objectSizeInBytes
+        ]);
+    }
+
+    /**
+     * Propagates part-download-failed event to listeners.
+     *
+     * @param CommandInterface $partDownloadCommand
+     * @param \Throwable $reason
+     * @param int $partNo
+     *
+     * @return void
+     */
+    private function partDownloadFailed(
+        CommandInterface $partDownloadCommand,
+        \Throwable $reason,
+        int $partNo
+    ): void
+    {
+        $this->progressListener?->objectTransferFailed(
+            $this->objectKey,
+            $this->objectBytesTransferred,
+            $reason
+        );
+        $this->_notifyMultipartDownloadListeners(
+            'partDownloadFailed',
+            [$partDownloadCommand, $reason, $partNo]);
+    }
+
+    /**
+     * Propagates object-download-completed event to listeners.
+     * It also resets the pointer of the stream to the first position,
+     * so that the stream is ready to be consumed once returned.
+     *
+     * @return void
+     */
+    private function objectDownloadCompleted(): void
+    {
+        $this->stream->rewind();
+        $this->progressListener?->objectTransferCompleted(
+            $this->objectKey,
+            $this->objectBytesTransferred
+        );
+        $this->_notifyMultipartDownloadListeners('downloadCompleted', [
+            $this->stream,
+            $this->objectCompletedPartsCount,
+            $this->objectBytesTransferred
+        ]);
+    }
+
+    /**
+     * Internal helper method for notifying listeners of specific events.
+     *
+     * @param string $listenerMethod
+     * @param array $args
+     *
+     * @return void
+     */
+    private function _notifyMultipartDownloadListeners(
+        string $listenerMethod,
+        array $args
+    ): void
+    {
+        $this->listener?->{$listenerMethod}(...$args);
     }
 }

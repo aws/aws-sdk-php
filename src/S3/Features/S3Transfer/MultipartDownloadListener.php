@@ -5,6 +5,8 @@ namespace Aws\S3\Features\S3Transfer;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Closure;
+use Psr\Http\Message\StreamInterface;
+use Throwable;
 
 class MultipartDownloadListener extends ListenerNotifier
 {
@@ -70,7 +72,8 @@ class MultipartDownloadListener extends ListenerNotifier
      *
      * @return void
      */
-    public function downloadInitiated(array &$commandArgs, int $initialPart): void {
+    public function downloadInitiated(array &$commandArgs, int $initialPart): void
+    {
         $this->notify('onDownloadInitiated', [&$commandArgs, $initialPart]);
     }
 
@@ -80,15 +83,25 @@ class MultipartDownloadListener extends ListenerNotifier
      * to call parent::downloadFailed() in order to
      * keep the states maintained in this implementation.
      *
-     * @param \Throwable $reason
+     * @param Throwable $reason
      * @param int $totalPartsDownloaded
      * @param int $totalBytesDownloaded
      * @param int $lastPartDownloaded
      *
      * @return void
      */
-    public function downloadFailed(\Throwable $reason, int $totalPartsDownloaded, int $totalBytesDownloaded, int $lastPartDownloaded): void {
-        $this->notify('onDownloadFailed', [$reason, $totalPartsDownloaded, $totalBytesDownloaded, $lastPartDownloaded]);
+    public function downloadFailed(
+        Throwable $reason,
+        int $totalPartsDownloaded,
+        int $totalBytesDownloaded,
+        int $lastPartDownloaded): void
+    {
+        $this->notify('onDownloadFailed', [
+            $reason,
+            $totalPartsDownloaded,
+            $totalBytesDownloaded,
+            $lastPartDownloaded
+        ]);
     }
 
     /**
@@ -97,14 +110,23 @@ class MultipartDownloadListener extends ListenerNotifier
      * to call parent::onDownloadCompleted() in order to
      * keep the states maintained in this implementation.
      *
-     * @param resource $stream
+     * @param StreamInterface $stream
      * @param int $totalPartsDownloaded
      * @param int $totalBytesDownloaded
      *
      * @return void
      */
-    public function downloadCompleted($stream, int $totalPartsDownloaded, int $totalBytesDownloaded): void {
-        $this->notify('onDownloadCompleted', [$stream, $totalPartsDownloaded, $totalBytesDownloaded]);
+    public function downloadCompleted(
+        StreamInterface $stream,
+        int $totalPartsDownloaded,
+        int $totalBytesDownloaded
+    ): void
+    {
+        $this->notify('onDownloadCompleted', [
+            $stream,
+            $totalPartsDownloaded,
+            $totalBytesDownloaded
+        ]);
     }
 
     /**
@@ -118,8 +140,15 @@ class MultipartDownloadListener extends ListenerNotifier
      *
      * @return void
      */
-    public function partDownloadInitiated(CommandInterface $partDownloadCommand, int $partNo): void {
-        $this->notify('onPartDownloadInitiated', [$partDownloadCommand, $partNo]);
+    public function partDownloadInitiated(
+        CommandInterface $partDownloadCommand,
+        int $partNo
+    ): void
+    {
+        $this->notify('onPartDownloadInitiated', [
+            $partDownloadCommand,
+            $partNo
+        ]);
     }
 
     /**
@@ -162,13 +191,22 @@ class MultipartDownloadListener extends ListenerNotifier
      * keep the states maintained in this implementation.
      *
      * @param CommandInterface $partDownloadCommand
-     * @param \Throwable $reason
+     * @param Throwable $reason
      * @param int $partNo
      *
      * @return void
      */
-    public function partDownloadFailed(CommandInterface $partDownloadCommand, \Throwable $reason, int $partNo): void {
-        $this->notify('onPartDownloadFailed', [$partDownloadCommand, $reason, $partNo]);
+    public function partDownloadFailed(
+        CommandInterface $partDownloadCommand,
+        Throwable $reason,
+        int $partNo
+    ): void
+    {
+        $this->notify('onPartDownloadFailed', [
+            $partDownloadCommand,
+            $reason,
+            $partNo
+        ]);
     }
 
     protected function notify(string $event, array $params = []): void

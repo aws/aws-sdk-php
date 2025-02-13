@@ -104,7 +104,8 @@ class ObjectProgressTracker
         $this->setProgressColor();
     }
 
-    private function setProgressColor(): void {
+    private function setProgressColor(): void
+    {
         if ($this->status === 'progress') {
             $this->progressBar->setArg('color_code', ConsoleProgressBar::BLUE_COLOR_CODE);
         } elseif ($this->status === 'completed') {
@@ -143,7 +144,8 @@ class ObjectProgressTracker
     /**
      * @return ProgressBar
      */
-    private function defaultProgressBar(): ProgressBar {
+    private function defaultProgressBar(): ProgressBar
+    {
         return new ConsoleProgressBar(
             format: ConsoleProgressBar::$formats[
                 ConsoleProgressBar::COLORED_TRANSFER_FORMAT

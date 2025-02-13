@@ -6,6 +6,9 @@ use Closure;
 
 class DefaultProgressTracker
 {
+    public const TRACKING_OPERATION_DOWNLOADING = 'Downloading';
+    public const TRACKING_OPERATION_UPLOADING = 'Uploading';
+
     /** @var ObjectProgressTracker[] */
     private array $objects;
 
@@ -33,12 +36,21 @@ class DefaultProgressTracker
     /** @var resource */
     private $output;
 
+    /** @var string */
+    private string $trackingOperation;
+
     /**
      * @param Closure|ProgressBarFactory|null $progressBarFactory
+     * @param false|resource $output
+     * @param string $trackingOperation
+     * Valid values should be:
+     * - Downloading
+     * - Uploading
      */
     public function __construct(
         Closure | ProgressBarFactory | null $progressBarFactory = null,
-        $output = STDOUT
+        mixed $output = STDOUT,
+        string $trackingOperation = '',
     ) {
         $this->clear();
         $this->initializeListener();
@@ -48,9 +60,15 @@ class DefaultProgressTracker
         }
 
         $this->output = $output;
+        if (!in_array(strtolower($trackingOperation), ['downloading', 'Uploading'], true)) {
+            throw new \InvalidArgumentException("Tracking operation '$trackingOperation' should be one of 'Downloading', 'Uploading'");
+        }
+
+        $this->trackingOperation = $trackingOperation;
     }
 
-    private function initializeListener(): void {
+    private function initializeListener(): void
+    {
         $this->transferListener = new TransferListener();
         // Object transfer initialized
         $this->transferListener->onObjectTransferInitiated = $this->objectTransferInitiated();
@@ -63,7 +81,8 @@ class DefaultProgressTracker
     /**
      * @return TransferListener
      */
-    public function getTransferListener(): TransferListener {
+    public function getTransferListener(): TransferListener
+    {
         return $this->transferListener;
     }
 
@@ -212,7 +231,8 @@ class DefaultProgressTracker
      *
      * @return void
      */
-    private function increaseBytesTransferred(int $bytesTransferred): void {
+    private function increaseBytesTransferred(int $bytesTransferred): void
+    {
         $this->totalBytesTransferred += $bytesTransferred;
         if ($this->objectsTotalSizeInBytes !== 0) {
             $this->transferPercentCompleted = floor(($this->totalBytesTransferred / $this->objectsTotalSizeInBytes) * 100);
@@ -222,16 +242,18 @@ class DefaultProgressTracker
     /**
      * @return void
      */
-    private function showProgress(): void {
+    private function showProgress(): void
+    {
         // Clear screen
         fwrite($this->output, "\033[2J\033[H");
 
         // Display progress header
         fwrite($this->output, sprintf(
-            "\r%d%% [%s/%s]\n",
-            $this->transferPercentCompleted,
+            "\r%s [%d/%d] %d%%\n",
+            $this->trackingOperation,
             $this->objectsInProgress,
-            $this->objectsCount
+            $this->objectsCount,
+            $this->transferPercentCompleted
         ));
 
         foreach ($this->objects as $name => $object) {
@@ -246,7 +268,8 @@ class DefaultProgressTracker
     /**
      * @return Closure|ProgressBarFactory
      */
-    private function defaultProgressBarFactory(): Closure| ProgressBarFactory {
+    private function defaultProgressBarFactory(): Closure| ProgressBarFactory
+    {
         return function () {
             return new ConsoleProgressBar(
                 format: ConsoleProgressBar::$formats[
@@ -261,5 +284,4 @@ class DefaultProgressTracker
             );
         };
     }
-
 }

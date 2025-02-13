@@ -106,7 +106,8 @@ class TransferListener extends ListenerNotifier
     /**
      * Transfer initiated event.
      */
-    public function transferInitiated(): void {
+    public function transferInitiated(): void
+    {
         $this->notify('onTransferInitiated', []);
     }
 
@@ -118,7 +119,8 @@ class TransferListener extends ListenerNotifier
      *
      * @return void
      */
-    public function objectTransferInitiated(string $objectKey, array &$requestArgs): void {
+    public function objectTransferInitiated(string $objectKey, array &$requestArgs): void
+    {
         $this->objectsToBeTransferred++;
         if ($this->objectsToBeTransferred === 1) {
             $this->transferInitiated();
@@ -140,7 +142,8 @@ class TransferListener extends ListenerNotifier
         string $objectKey,
         int $objectBytesTransferred,
         int $objectSizeInBytes
-    ): void {
+    ): void
+    {
         $this->objectsBytesTransferred += $objectBytesTransferred;
         $this->notify('onObjectTransferProgress', [
             $objectKey,
@@ -168,7 +171,8 @@ class TransferListener extends ListenerNotifier
         string $objectKey,
         int $objectBytesTransferred,
         \Throwable | string $reason
-    ): void {
+    ): void
+    {
         $this->objectsTransferFailed++;
         $this->notify('onObjectTransferFailed', [
             $objectKey,
@@ -188,7 +192,8 @@ class TransferListener extends ListenerNotifier
     public function objectTransferCompleted (
         string $objectKey,
         int $objectBytesCompleted
-    ): void {
+    ): void
+    {
         $this->objectsTransferCompleted++;
         $this->validateTransferComplete();
         $this->notify('onObjectTransferCompleted', [
@@ -208,7 +213,8 @@ class TransferListener extends ListenerNotifier
     public function transferCompleted (
         int $objectsTransferCompleted,
         int $objectsBytesTransferred,
-    ): void {
+    ): void
+    {
         $this->notify('onTransferCompleted', [
             $objectsTransferCompleted,
             $objectsBytesTransferred
@@ -229,7 +235,8 @@ class TransferListener extends ListenerNotifier
         int $objectsBytesTransferred,
         int $objectsTransferFailed,
         Throwable | string $reason
-    ): void {
+    ): void
+    {
         $this->notify('onTransferFailed', [
             $objectsTransferCompleted,
             $objectsBytesTransferred,
@@ -244,7 +251,8 @@ class TransferListener extends ListenerNotifier
      *
      * @return void
      */
-    private function validateTransferComplete(): void {
+    private function validateTransferComplete(): void
+    {
         if ($this->objectsToBeTransferred === ($this->objectsTransferCompleted + $this->objectsTransferFailed)) {
             if ($this->objectsTransferFailed > 0) {
                 $this->transferFailed(

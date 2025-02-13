@@ -9,14 +9,15 @@ use Aws\ResultInterface;
 /**
  * Multipart downloader using the part get approach.
  */
-class GetMultipartDownloader extends MultipartDownloader
+class PartGetMultipartDownloader extends MultipartDownloader
 {
     /**
      * @inheritDoc
      *
      * @return CommandInterface
      */
-    protected function nextCommand() : CommandInterface {
+    protected function nextCommand() : CommandInterface
+    {
         if ($this->currentPartNo === 0) {
             $this->currentPartNo = 1;
         } else {
@@ -45,6 +46,8 @@ class GetMultipartDownloader extends MultipartDownloader
             $this->objectPartsCount = $result['PartsCount'];
         }
 
-        $this->objectSizeInBytes = $this->computeObjectSize($result['ContentRange'] ?? "");
+        $this->objectSizeInBytes = $this->computeObjectSize(
+            $result['ContentRange'] ?? ""
+        );
     }
 }

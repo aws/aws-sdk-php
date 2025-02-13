@@ -5,10 +5,11 @@ namespace Aws\S3\Features\S3Transfer;
 use Aws\CommandInterface;
 use Aws\Result;
 use Aws\ResultInterface;
+use Aws\S3\Features\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3ClientInterface;
 use Psr\Http\Message\StreamInterface;
 
-class RangeMultipartDownloader extends MultipartDownloader
+class RangeGetMultipartDownloader extends MultipartDownloader
 {
 
     /** @var int */
@@ -60,13 +61,17 @@ class RangeMultipartDownloader extends MultipartDownloader
             $stream
         );
         if (empty($config['minimumPartSize'])) {
-            throw new \RuntimeException('You must provide a valid minimum part size in bytes');
+            throw new S3TransferException(
+                'You must provide a valid minimum part size in bytes'
+            );
         }
         $this->partSize = $config['minimumPartSize'];
         // If object size is known at instantiation time then, we can compute
         // the object dimensions.
         if ($this->objectSizeInBytes !== 0) {
-            $this->computeObjectDimensions(new Result(['ContentRange' => $this->objectSizeInBytes]));
+            $this->computeObjectDimensions(
+                new Result(['ContentRange' => $this->objectSizeInBytes])
+            );
         }
     }
 
@@ -115,11 +120,15 @@ class RangeMultipartDownloader extends MultipartDownloader
     {
         // Assign object size just if needed.
         if ($this->objectSizeInBytes === 0) {
-            $this->objectSizeInBytes = $this->computeObjectSize($result['ContentRange'] ?? "");
+            $this->objectSizeInBytes = $this->computeObjectSize(
+                $result['ContentRange'] ?? ""
+            );
         }
 
         if ($this->objectSizeInBytes > $this->partSize) {
-            $this->objectPartsCount = intval(ceil($this->objectSizeInBytes / $this->partSize));
+            $this->objectPartsCount = intval(
+                ceil($this->objectSizeInBytes / $this->partSize)
+            );
         } else {
             // Single download since partSize will be set to full object size.
             $this->partSize = $this->objectSizeInBytes;

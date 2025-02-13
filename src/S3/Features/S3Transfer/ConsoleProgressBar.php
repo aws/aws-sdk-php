@@ -49,7 +49,8 @@ class ConsoleProgressBar implements ProgressBar
     /** @var ?array */
     private ?array $format;
 
-    private ?array $args;
+    /** @var array */
+    private array $args;
 
     /**
      * @param ?string $progressBarChar
@@ -62,7 +63,7 @@ class ConsoleProgressBar implements ProgressBar
         ?int $progressBarWidth = null,
         ?int $percentCompleted = null,
         ?array $format = null,
-        ?array $args = null
+        array $args = [],
     ) {
         $this->progressBarChar = $progressBarChar ?? '#';
         $this->progressBarWidth = $progressBarWidth ?? 25;
@@ -78,7 +79,8 @@ class ConsoleProgressBar implements ProgressBar
      *
      * @return void
      */
-    public function setPercentCompleted(int $percent): void {
+    public function setPercentCompleted(int $percent): void
+    {
         $this->percentCompleted = max(0, min(100, $percent));
     }
 
@@ -105,7 +107,8 @@ class ConsoleProgressBar implements ProgressBar
         $this->args[$key] = $value;
     }
 
-    private function renderProgressBar(): string {
+    private function renderProgressBar(): string
+    {
         $filledWidth = (int) round(($this->progressBarWidth * $this->percentCompleted) / 100);
         return str_repeat($this->progressBarChar, $filledWidth)
             . str_repeat(' ', $this->progressBarWidth - $filledWidth);
@@ -115,7 +118,8 @@ class ConsoleProgressBar implements ProgressBar
      *
      * @return string
      */
-    public function getPaintedProgress(): string {
+    public function getPaintedProgress(): string
+    {
         foreach ($this->format['parameters'] as $param) {
             if (!array_key_exists($param, $this->args)) {
                 throw new \InvalidArgumentException("Missing `$param` parameter for progress bar.");
