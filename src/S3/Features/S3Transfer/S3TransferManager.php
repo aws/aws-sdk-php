@@ -8,10 +8,10 @@ use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use function Aws\filter;
 use function Aws\map;
+use function Aws\recursive_dir_iterator;
 
 class S3TransferManager
 {
@@ -303,20 +303,85 @@ class S3TransferManager
             return $this->trySingleUpload(
                 $requestArgs,
                 $progressTracker
-            )->then(function ($result) {
-                $streams = get_resources("stream");
-
-                echo "Open file handles:\n";
-                foreach ($streams as $stream) {
-                    $metadata = stream_get_meta_data($stream);
-                    echo "\nFile: " . ($metadata['uri'] ?? "") . "\n";
-                }
-
-                return $result;
-            });
+            );
         }
 
-        throw new S3TransferException("Not implemented yet.");
+        return $this->tryMultipartUpload(
+            $source,
+            $requestArgs,
+            $uploadListener,
+            $progressTracker,
+        );
+    }
+
+    /**
+     * @param string $directory
+     * @param string $bucketTo
+     * @param array $requestArgs
+     * @param array $config
+     * @param MultipartUploadListener|null $uploadListener
+     * @param TransferListener|null $progressTracker
+     *
+     * @return PromiseInterface
+     */
+    public function uploadDirectory(
+        string $directory,
+        string $bucketTo,
+        array $requestArgs = [],
+        array $config = [],
+        ?MultipartUploadListener $uploadListener = null,
+        ?TransferListener $progressTracker = null,
+    ): PromiseInterface
+    {
+        if (!file_exists($directory)) {
+            throw new \InvalidArgumentException(
+                "Source directory '$directory' MUST exists."
+            );
+        }
+
+        if ($progressTracker === null
+            && ($config['trackProgress'] ?? $this->config['trackProgress'])) {
+            $progressTracker = $this->resolveDefaultProgressTracker(
+                DefaultProgressTracker::TRACKING_OPERATION_UPLOADING
+            );
+        }
+
+        $filter = null;
+        if (isset($config['filter'])) {
+            if (!is_callable($config['filter'])) {
+                throw new \InvalidArgumentException("The parameter \$config['filter'] must be callable.");
+            }
+
+            $filter = $config['filter'];
+        }
+
+        $files = filter(
+            recursive_dir_iterator($directory),
+            function ($file) use ($filter) {
+                if ($filter !== null) {
+                    return !is_dir($file) && $filter($file);
+                }
+
+                return !is_dir($file);
+            }
+        );
+
+        $promises = [];
+        foreach ($files as $file) {
+            $fileParts = explode("/", $file);
+            $key = end($fileParts);
+            $promises[] = $this->upload(
+                $file,
+                $bucketTo,
+                $key,
+                $requestArgs,
+                $config,
+                $uploadListener,
+                $progressTracker,
+            );
+        }
+
+        return Each::ofLimitAll($promises, $this->config['concurrency']);
     }
 
     /**
@@ -467,6 +532,30 @@ class S3TransferManager
         $command = $this->s3Client->getCommand('PutObject', $requestArgs);
 
         return $this->s3Client->executeAsync($command);
+    }
+
+    /**
+     * @param array $requestArgs
+     *
+     * @return PromiseInterface
+     */
+    private function tryMultipartUpload(
+        string | StreamInterface $source,
+        array $requestArgs,
+        ?MultipartUploadListener $uploadListener = null,
+        ?TransferListener $progressTracker = null,
+    ): PromiseInterface {
+        return (new MultipartUploaderV2(
+            $this->s3Client,
+            $source,
+            $requestArgs,
+            [
+                'target_part_size_bytes' => $this->config['targetPartSizeBytes'],
+                'concurrency' => $this->config['concurrency'],
+            ],
+            $uploadListener,
+            $progressTracker,
+        ))->promise();
     }
 
     /**
