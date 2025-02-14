@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.14 - 2025-02-14
 
 * `Aws\WorkSpacesThinClient` - Update Environment and Device name field definitions
 * `Aws\RDSDataService` - Add support for Stop DB feature.
