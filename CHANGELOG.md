@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpacesThinClient` - Update Environment and Device name field definitions
+* `Aws\RDSDataService` - Add support for Stop DB feature.
+* `Aws\Connect` - Release Notes: 1) Analytics API enhancements: Added new ListAnalyticsDataLakeDataSets API. 2) Onboarding API Idempotency: Adds ClientToken to instance creation and management APIs to support idempotency.
+* `Aws\S3` - Added support for Content-Range header in HeadObject response.
+* `Aws\WAFV2` - The WAFv2 API now supports configuring data protection in webACLs.
+* `Aws\CodeBuild` - Added test suite names to test case metadata
+* `Aws\DatabaseMigrationService` - Introduces premigration assessment feature to DMS Serverless API for start-replication and describe-replications
+
 ## 3.339.13 - 2025-02-13
 
 * `Aws\S3Control` - Disables legacy `EndpointArnMiddleware` when the dynamic endpoint provider is in use

@@ -1567,6 +1567,7 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "Tags":{"shape":"TagList"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
         "CaptchaConfig":{"shape":"CaptchaConfig"},
@@ -1647,6 +1648,39 @@
         "ContentType":{"shape":"ResponseContentType"},
         "Content":{"shape":"ResponseContent"}
       }
+    },
+    "DataProtection":{
+      "type":"structure",
+      "required":[
+        "Field",
+        "Action"
+      ],
+      "members":{
+        "Field":{"shape":"FieldToProtect"},
+        "Action":{"shape":"DataProtectionAction"},
+        "ExcludeRuleMatchDetails":{"shape":"Boolean"},
+        "ExcludeRateBasedDetails":{"shape":"Boolean"}
+      }
+    },
+    "DataProtectionAction":{
+      "type":"string",
+      "enum":[
+        "SUBSTITUTION",
+        "HASH"
+      ]
+    },
+    "DataProtectionConfig":{
+      "type":"structure",
+      "required":["DataProtections"],
+      "members":{
+        "DataProtections":{"shape":"DataProtections"}
+      }
+    },
+    "DataProtections":{
+      "type":"list",
+      "member":{"shape":"DataProtection"},
+      "max":26,
+      "min":1
     },
     "DefaultAction":{
       "type":"structure",
@@ -1959,6 +1993,35 @@
       "max":64,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "FieldToProtect":{
+      "type":"structure",
+      "required":["FieldType"],
+      "members":{
+        "FieldType":{"shape":"FieldToProtectType"},
+        "FieldKeys":{"shape":"FieldToProtectKeys"}
+      }
+    },
+    "FieldToProtectKeyName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "FieldToProtectKeys":{
+      "type":"list",
+      "member":{"shape":"FieldToProtectKeyName"},
+      "max":100
+    },
+    "FieldToProtectType":{
+      "type":"string",
+      "enum":[
+        "SINGLE_HEADER",
+        "SINGLE_COOKIE",
+        "SINGLE_QUERY_ARGUMENT",
+        "QUERY_STRING",
+        "BODY"
+      ]
     },
     "Filter":{
       "type":"structure",
@@ -3088,7 +3151,8 @@
         "ASSOCIATED_RESOURCE_TYPE",
         "SCOPE_DOWN",
         "CUSTOM_KEYS",
-        "ACP_RULE_SET_RESPONSE_INSPECTION"
+        "ACP_RULE_SET_RESPONSE_INSPECTION",
+        "DATA_PROTECTION_CONFIG"
       ]
     },
     "ParameterExceptionParameter":{
@@ -4152,6 +4216,7 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "LockToken":{"shape":"LockToken"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
         "CaptchaConfig":{"shape":"CaptchaConfig"},
@@ -4371,6 +4436,7 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "Capacity":{"shape":"ConsumedCapacity"},
         "PreProcessFirewallManagerRuleGroups":{"shape":"FirewallManagerRuleGroups"},
         "PostProcessFirewallManagerRuleGroups":{"shape":"FirewallManagerRuleGroups"},

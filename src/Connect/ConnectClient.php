@@ -275,6 +275,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAgentStatusesAsync(array $args = [])
  * @method \Aws\Result listAnalyticsDataAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAnalyticsDataAssociationsAsync(array $args = [])
+ * @method \Aws\Result listAnalyticsDataLakeDataSets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAnalyticsDataLakeDataSetsAsync(array $args = [])
  * @method \Aws\Result listApprovedOrigins(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApprovedOriginsAsync(array $args = [])
  * @method \Aws\Result listAssociatedContacts(array $args = [])

@@ -2238,6 +2238,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListAnalyticsDataLakeDataSets":{
+      "name":"ListAnalyticsDataLakeDataSets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/analytics-data/instance/{InstanceId}/datasets"
+      },
+      "input":{"shape":"ListAnalyticsDataLakeDataSetsRequest"},
+      "output":{"shape":"ListAnalyticsDataLakeDataSetsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListApprovedOrigins":{
       "name":"ListApprovedOrigins",
       "http":{
@@ -4925,12 +4941,24 @@
         "DataSetId":{"shape":"DataSetId"},
         "TargetAccountId":{"shape":"AWSAccountId"},
         "ResourceShareId":{"shape":"String"},
-        "ResourceShareArn":{"shape":"ARN"}
+        "ResourceShareArn":{"shape":"ARN"},
+        "ResourceShareStatus":{"shape":"String"}
       }
     },
     "AnalyticsDataAssociationResults":{
       "type":"list",
       "member":{"shape":"AnalyticsDataAssociationResult"}
+    },
+    "AnalyticsDataSetsResult":{
+      "type":"structure",
+      "members":{
+        "DataSetId":{"shape":"DataSetId"},
+        "DataSetName":{"shape":"String"}
+      }
+    },
+    "AnalyticsDataSetsResults":{
+      "type":"list",
+      "member":{"shape":"AnalyticsDataSetsResult"}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -5032,7 +5060,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "Origin":{"shape":"Origin"}
+        "Origin":{"shape":"Origin"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateBotRequest":{
@@ -5045,7 +5077,11 @@
           "locationName":"InstanceId"
         },
         "LexBot":{"shape":"LexBot"},
-        "LexV2Bot":{"shape":"LexV2Bot"}
+        "LexV2Bot":{"shape":"LexV2Bot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateDefaultVocabularyRequest":{
@@ -5111,7 +5147,11 @@
           "locationName":"InstanceId"
         },
         "ResourceType":{"shape":"InstanceStorageResourceType"},
-        "StorageConfig":{"shape":"InstanceStorageConfig"}
+        "StorageConfig":{"shape":"InstanceStorageConfig"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateInstanceStorageConfigResponse":{
@@ -5132,7 +5172,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "FunctionArn":{"shape":"FunctionArn"}
+        "FunctionArn":{"shape":"FunctionArn"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateLexBotRequest":{
@@ -5147,7 +5191,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "LexBot":{"shape":"LexBot"}
+        "LexBot":{"shape":"LexBot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociatePhoneNumberContactFlowRequest":{
@@ -5221,7 +5269,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "Key":{"shape":"PEM"}
+        "Key":{"shape":"PEM"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateSecurityKeyResponse":{
@@ -6662,7 +6714,10 @@
         "OutboundCallsEnabled"
       ],
       "members":{
-        "ClientToken":{"shape":"ClientToken"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "IdentityManagementType":{"shape":"DirectoryType"},
         "InstanceAlias":{"shape":"DirectoryAlias"},
         "DirectoryId":{"shape":"DirectoryId"},
@@ -7687,6 +7742,12 @@
           "shape":"InstanceId",
           "location":"uri",
           "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -8854,6 +8915,12 @@
           "shape":"Origin",
           "location":"querystring",
           "locationName":"origin"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -8867,7 +8934,11 @@
           "locationName":"InstanceId"
         },
         "LexBot":{"shape":"LexBot"},
-        "LexV2Bot":{"shape":"LexV2Bot"}
+        "LexV2Bot":{"shape":"LexV2Bot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "DisassociateFlowRequest":{
@@ -8922,6 +8993,12 @@
           "shape":"InstanceStorageResourceType",
           "location":"querystring",
           "locationName":"resourceType"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -8941,6 +9018,12 @@
           "shape":"FunctionArn",
           "location":"querystring",
           "locationName":"functionArn"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -8966,6 +9049,12 @@
           "shape":"LexRegion",
           "location":"querystring",
           "locationName":"lexRegion"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -9046,6 +9135,12 @@
           "shape":"AssociationId",
           "location":"uri",
           "locationName":"AssociationId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -11404,6 +11499,34 @@
       "type":"structure",
       "members":{
         "Results":{"shape":"AnalyticsDataAssociationResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAnalyticsDataLakeDataSetsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAnalyticsDataLakeDataSetsResponse":{
+      "type":"structure",
+      "members":{
+        "Results":{"shape":"AnalyticsDataSetsResults"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -17786,7 +17909,11 @@
           "location":"uri",
           "locationName":"AttributeType"
         },
-        "Value":{"shape":"InstanceAttributeValue"}
+        "Value":{"shape":"InstanceAttributeValue"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateInstanceStorageConfigRequest":{
@@ -17813,7 +17940,11 @@
           "location":"querystring",
           "locationName":"resourceType"
         },
-        "StorageConfig":{"shape":"InstanceStorageConfig"}
+        "StorageConfig":{"shape":"InstanceStorageConfig"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateParticipantAuthenticationRequest":{

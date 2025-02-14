@@ -4462,6 +4462,26 @@
         "CertificateArn":{"shape":"String"}
       }
     },
+    "PremigrationAssessmentStatus":{
+      "type":"structure",
+      "members":{
+        "PremigrationAssessmentRunArn":{"shape":"String"},
+        "FailOnAssessmentFailure":{"shape":"Boolean"},
+        "Status":{"shape":"String"},
+        "PremigrationAssessmentRunCreationDate":{"shape":"TStamp"},
+        "AssessmentProgress":{"shape":"ReplicationTaskAssessmentRunProgress"},
+        "LastFailureMessage":{"shape":"String"},
+        "ResultLocationBucket":{"shape":"String"},
+        "ResultLocationFolder":{"shape":"String"},
+        "ResultEncryptionMode":{"shape":"String"},
+        "ResultKmsKeyArn":{"shape":"String"},
+        "ResultStatistic":{"shape":"ReplicationTaskAssessmentRunResultStatistic"}
+      }
+    },
+    "PremigrationAssessmentStatusList":{
+      "type":"list",
+      "member":{"shape":"PremigrationAssessmentStatus"}
+    },
     "ProvisionData":{
       "type":"structure",
       "members":{
@@ -4738,6 +4758,7 @@
         "ReplicationType":{"shape":"MigrationTypeValue"},
         "Status":{"shape":"String"},
         "ProvisionData":{"shape":"ProvisionData"},
+        "PremigrationAssessmentStatuses":{"shape":"PremigrationAssessmentStatusList"},
         "StopReason":{"shape":"String"},
         "FailureMessages":{"shape":"StringList"},
         "ReplicationStats":{"shape":"ReplicationStats"},
@@ -5390,6 +5411,7 @@
       "members":{
         "ReplicationConfigArn":{"shape":"String"},
         "StartReplicationType":{"shape":"String"},
+        "PremigrationAssessmentSettings":{"shape":"String"},
         "CdcStartTime":{"shape":"TStamp"},
         "CdcStartPosition":{"shape":"String"},
         "CdcStopPosition":{"shape":"String"}
