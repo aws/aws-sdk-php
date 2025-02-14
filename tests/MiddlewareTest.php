@@ -15,6 +15,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -448,5 +449,45 @@ class MiddlewareTest extends TestCase
             [$dontAddHeaderMock,  null, null],
             [$headerAlreadyExistsMock, 'foo', 'bar']
         ];
+    }
+
+    /**
+     * Tests the lazy open stream created when the body of a put object
+     * operation is populated from a `SourceFile parameter`.
+     *
+     * @return void
+     */
+    public function testStreamIsClosedAtSourceFileMiddleware() {
+        $tempDir = sys_get_temp_dir() . "/test-source-file-middleware";
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0777, true);
+        }
+
+        $sourceFile = $tempDir . '/test-file.txt';
+        file_put_contents($sourceFile, 'fooData');
+        try {
+            $client = new Aws\S3\S3Client([
+                'region' => 'us-west-2',
+                'http_handler' => function ($command, $request) {
+
+                    return new Psr7\Response(200);
+                }
+            ]);
+            $client->putObject([
+                'Bucket' => 'test-bucket',
+                'Key' => 'test-file.txt',
+                'SourceFile' => $sourceFile,
+            ]);
+            $streams = get_resources('stream');
+            foreach ($streams as $stream) {
+                $metadata = stream_get_meta_data($stream);
+                if (isset($metadata['uri'])) {
+                    $this->assertNotEquals($sourceFile, $metadata['uri']);
+                }
+            }
+        } finally {
+            unlink($sourceFile);
+            rmdir($tempDir);
+        }
     }
 }

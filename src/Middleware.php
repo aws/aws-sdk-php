@@ -51,8 +51,18 @@ final class Middleware
                 if ($source !== null
                     && $operation->getInput()->hasMember($bodyParameter)
                 ) {
-                    $command[$bodyParameter] = new LazyOpenStream($source, 'r');
+                    $lazyOpenStream = new LazyOpenStream($source, 'r');
+                    $command[$bodyParameter] = $lazyOpenStream;
                     unset($command[$sourceParameter]);
+
+                    return $handler($command, $request)->then(
+                        function ($result) use ($lazyOpenStream) {
+                            // To make sure the resource is closed.
+                            $lazyOpenStream->close();
+
+                            return $result;
+                        }
+                    );
                 }
 
                 return $handler($command, $request);
