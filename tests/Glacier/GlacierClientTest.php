@@ -1,8 +1,10 @@
 <?php
 namespace Aws\Test\Glacier;
 
+use Aws\CommandInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
 use Aws\Glacier\GlacierClient;
+use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7;
@@ -26,6 +28,13 @@ class GlacierClientTest extends TestCase
             'vaultName'  => 'foo',
             'sourceFile' => __DIR__ . '/test-content.txt',
         ]);
+        $called = false;
+        $command->getHandlerList()->appendSign(
+            Middleware::tap(function($cmd, $req) use (&$called) {
+                $called = true;
+                $this->assertSame('foo', (string)$cmd['body']);
+            }
+        ));
         $request = \Aws\serialize($command);
 
         // Added default accountId and the API version header.
@@ -36,7 +45,7 @@ class GlacierClientTest extends TestCase
         );
 
         // Added Content-Type and Body
-        $this->assertSame('foo', (string)$command['body']);
+        $this->assertTrue($called);
         $this->assertSame('text/plain', $request->getHeaderLine('Content-Type'));
 
         // Added the tree and content hashes.
