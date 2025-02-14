@@ -60,7 +60,10 @@ class DefaultProgressTracker
         }
 
         $this->output = $output;
-        if (!in_array(strtolower($trackingOperation), ['downloading', 'Uploading'], true)) {
+        if (!in_array(strtolower($trackingOperation), [
+            strtolower(self::TRACKING_OPERATION_DOWNLOADING),
+            strtolower(self::TRACKING_OPERATION_UPLOADING),
+        ], true)) {
             throw new \InvalidArgumentException("Tracking operation '$trackingOperation' should be one of 'Downloading', 'Uploading'");
         }
 
@@ -188,7 +191,7 @@ class DefaultProgressTracker
             \Throwable | string $reason
         ): void {
             $objectProgressTracker = $this->objects[$objectKey];
-            $objectProgressTracker->setStatus('failed');
+            $objectProgressTracker->setStatus('failed', $reason);
 
             $this->objectsInProgress--;
 
@@ -235,7 +238,9 @@ class DefaultProgressTracker
     {
         $this->totalBytesTransferred += $bytesTransferred;
         if ($this->objectsTotalSizeInBytes !== 0) {
-            $this->transferPercentCompleted = floor(($this->totalBytesTransferred / $this->objectsTotalSizeInBytes) * 100);
+            $this->transferPercentCompleted = floor(
+                ($this->totalBytesTransferred / $this->objectsTotalSizeInBytes) * 100
+            );
         }
     }
 

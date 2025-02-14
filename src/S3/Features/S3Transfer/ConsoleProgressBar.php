@@ -27,12 +27,13 @@ class ConsoleProgressBar implements ProgressBar
             ]
         ],
         'colored_transfer_format' => [
-            'format' => "\033|color_code|[|progress_bar|] |percent|% |transferred|/|tobe_transferred| |unit|\033[0m",
+            'format' => "\033|color_code|[|progress_bar|] |percent|% |transferred|/|tobe_transferred| |unit| |message|\033[0m",
             'parameters' => [
                 'transferred',
                 'tobe_transferred',
                 'unit',
-                'color_code'
+                'color_code',
+                'message'
             ]
         ],
     ];
@@ -57,6 +58,7 @@ class ConsoleProgressBar implements ProgressBar
      * @param ?int $progressBarWidth
      * @param ?int $percentCompleted
      * @param array|null $format
+     * @param array $args
      */
     public function __construct(
         ?string $progressBarChar = null,
@@ -68,8 +70,8 @@ class ConsoleProgressBar implements ProgressBar
         $this->progressBarChar = $progressBarChar ?? '#';
         $this->progressBarWidth = $progressBarWidth ?? 25;
         $this->percentCompleted = $percentCompleted ?? 0;
-        $this->format = $format ?: self::$formats['transfer_format'];
-        $this->args = $args ?: [];
+        $this->format = $format ?? self::$formats['transfer_format'];
+        $this->args = $args ?? [];
     }
 
     /**
@@ -122,13 +124,13 @@ class ConsoleProgressBar implements ProgressBar
     {
         foreach ($this->format['parameters'] as $param) {
             if (!array_key_exists($param, $this->args)) {
-                throw new \InvalidArgumentException("Missing `$param` parameter for progress bar.");
+                $this->args[$param] = '';
             }
         }
 
         $replacements = [
             '|progress_bar|' => $this->renderProgressBar(),
-            '|percent|' => $this->percentCompleted
+            '|percent|' => $this->percentCompleted,
         ];
 
         foreach ($this->format['parameters'] as $param) {

@@ -7,6 +7,24 @@ namespace Aws\S3\Features\S3Transfer;
  */
 class ObjectProgressTracker
 {
+    /** @var string */
+    private string $objectKey;
+
+    /** @var int */
+    private int $objectBytesTransferred;
+
+    /** @var int */
+    private int $objectSizeInBytes;
+
+    /** @var string */
+    private string $status;
+
+    /** @var ProgressBar */
+    private ProgressBar $progressBar;
+
+    /** @var string */
+    private string $message;
+
     /**
      * @param string $objectKey
      * @param int $objectBytesTransferred
@@ -20,12 +38,16 @@ class ObjectProgressTracker
      * @param ?ProgressBar $progressBar
      */
     public function __construct(
-        private string $objectKey,
-        private int $objectBytesTransferred,
-        private int $objectSizeInBytes,
-        private string $status,
-        private ?ProgressBar $progressBar = null
+        string $objectKey,
+        int $objectBytesTransferred,
+        int $objectSizeInBytes,
+        string $status,
+        ?ProgressBar $progressBar = null
     ) {
+        $this->objectKey = $objectKey;
+        $this->objectBytesTransferred = $objectBytesTransferred;
+        $this->objectSizeInBytes = $objectSizeInBytes;
+        $this->status = $status;
         $this->progressBar = $progressBar ?? $this->defaultProgressBar();
     }
 
@@ -95,13 +117,18 @@ class ObjectProgressTracker
 
     /**
      * @param string $status
+     * @param string|null $message
      *
      * @return void
      */
-    public function setStatus(string $status): void
+    public function setStatus(string $status, ?string $message = null): void
     {
         $this->status = $status;
         $this->setProgressColor();
+        // To show specific messages for specific status.
+        if (!empty($message)) {
+            $this->progressBar->setArg('message', "$status: $message");
+        }
     }
 
     private function setProgressColor(): void
@@ -155,6 +182,7 @@ class ObjectProgressTracker
                 'tobe_transferred' => 0,
                 'unit' => 'B',
                 'color_code' => ConsoleProgressBar::BLACK_COLOR_CODE,
+                'message' => ''
             ]
         );
     }
