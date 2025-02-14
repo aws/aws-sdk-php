@@ -15,7 +15,6 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
-use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
