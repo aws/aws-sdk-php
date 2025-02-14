@@ -55,14 +55,20 @@ final class Middleware
                     $command[$bodyParameter] = $lazyOpenStream;
                     unset($command[$sourceParameter]);
 
-                    return $handler($command, $request)->then(
-                        function ($result) use ($lazyOpenStream) {
-                            // To make sure the resource is closed.
-                            $lazyOpenStream->close();
+                    $next = $handler($command, $request);
+                    // To avoid failures in some tests cases
+                    if ($next !== null && method_exists($next, 'then')) {
+                        return $next->then(
+                            function ($result) use ($lazyOpenStream) {
+                                // To make sure the resource is closed.
+                                $lazyOpenStream->close();
 
-                            return $result;
-                        }
-                    );
+                                return $result;
+                            }
+                        );
+                    }
+
+                    return $next;
                 }
 
                 return $handler($command, $request);
