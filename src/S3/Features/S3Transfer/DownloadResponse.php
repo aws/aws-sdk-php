@@ -4,7 +4,7 @@ namespace Aws\S3\Features\S3Transfer;
 
 use Psr\Http\Message\StreamInterface;
 
-class DownloadResult
+class DownloadResponse
 {
     public function __construct(
         private readonly StreamInterface $content,

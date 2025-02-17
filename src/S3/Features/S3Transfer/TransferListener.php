@@ -174,6 +174,7 @@ class TransferListener extends ListenerNotifier
     ): void
     {
         $this->objectsTransferFailed++;
+        $this->validateTransferComplete();
         $this->notify('onObjectTransferFailed', [
             $objectKey,
             $objectBytesTransferred,

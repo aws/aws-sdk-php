@@ -198,7 +198,7 @@ abstract class MultipartDownloader implements PromisorInterface
             $this->objectDownloadCompleted();
 
             // TODO: yield the stream wrapped in a modeled transfer success response.
-            yield Create::promiseFor(new DownloadResult(
+            yield Create::promiseFor(new DownloadResponse(
                 $this->stream,
                 []
             ));
