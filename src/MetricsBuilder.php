@@ -463,15 +463,18 @@ final class MetricsBuilder
         $metric
     ): void
     {
-        $handlerList->appendBuild(
-            Middleware::tap(
-                function (CommandInterface $command) use ($metric) {
-                    self::fromCommand($command)->append(
-                        $metric
-                    );
-                }
-            ),
-            'metrics-capture-'.$metric
-        );
+        $middlewareName = 'metrics-capture-'.$metric;
+        if (!$handlerList->hasMiddleware($middlewareName)) {
+            $handlerList->appendBuild(
+                Middleware::tap(
+                    function (CommandInterface $command) use ($metric) {
+                        self::fromCommand($command)->append(
+                            $metric
+                        );
+                    }
+                ),
+                $middlewareName
+            );
+        }
     }
 }
