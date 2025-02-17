@@ -625,6 +625,7 @@
         "platform":{"shape":"Platform"},
         "createTime":{"shape":"CreateTime"},
         "updateTime":{"shape":"UpdateTime"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "defaultDomain":{"shape":"DefaultDomain"},
@@ -836,7 +837,8 @@
         "destinationBranch":{"shape":"BranchName"},
         "sourceBranch":{"shape":"BranchName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "BranchArn":{
@@ -922,6 +924,12 @@
       "pattern":"(?s).*"
     },
     "CommitTime":{"type":"timestamp"},
+    "ComputeRoleArn":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "pattern":"(?s).*"
+    },
     "Condition":{
       "type":"string",
       "max":2048,
@@ -937,6 +945,7 @@
         "description":{"shape":"Description"},
         "repository":{"shape":"Repository"},
         "platform":{"shape":"Platform"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "oauthToken":{"shape":"OauthToken"},
         "accessToken":{"shape":"AccessToken"},
@@ -1015,7 +1024,8 @@
         "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
         "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "CreateBranchResult":{
@@ -2400,6 +2410,7 @@
         "name":{"shape":"Name"},
         "description":{"shape":"Description"},
         "platform":{"shape":"Platform"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"},
         "iamServiceRoleArn":{"shape":"ServiceRoleArn"},
         "environmentVariables":{"shape":"EnvironmentVariables"},
         "enableBranchAutoBuild":{"shape":"EnableAutoBuild"},
@@ -2457,7 +2468,8 @@
         "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
         "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
         "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
-        "backend":{"shape":"Backend"}
+        "backend":{"shape":"Backend"},
+        "computeRoleArn":{"shape":"ComputeRoleArn"}
       }
     },
     "UpdateBranchResult":{

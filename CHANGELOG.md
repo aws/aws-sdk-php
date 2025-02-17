@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TimestreamInfluxDB` - This release introduces APIs to manage DbClusters and adds support for read replicas
+* `Aws\DatabaseMigrationService` - Support replicationConfigArn in DMS DescribeApplicableIndividualAssessments API.
+* `Aws\Amplify` - Add ComputeRoleArn to CreateApp, UpdateApp, CreateBranch, and UpdateBranch, allowing caller to specify a role to be assumed by Amplify Hosting for server-side rendered applications.
+
 ## 3.339.14 - 2025-02-14
 
 * `Aws\WorkSpacesThinClient` - Update Environment and Device name field definitions
