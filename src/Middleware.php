@@ -58,18 +58,19 @@ final class Middleware
                     $next = $handler($command, $request);
                     // To avoid failures in some tests cases
                     if ($next !== null && method_exists($next, 'then')) {
-                        return $next->then(
-                            function ($result) use ($lazyOpenStream) {
-                                // To make sure the resource is closed.
-                                $lazyOpenStream->close();
+                        try {
+                            return $next->then(
+                                function ($result) use ($lazyOpenStream) {
+                                    // To make sure the resource is closed.
+                                    $lazyOpenStream->close();
 
-                                return $result;
-                            }
-                        )->otherwise(function ($reason) use ($lazyOpenStream) {
+                                    return $result;
+                                }
+                            );
+                        } catch (\Throwable $e) {
                             $lazyOpenStream->close();
-
-                            return $reason;
-                        });
+                            throw $e;
+                        }
                     }
 
                     return $next;
