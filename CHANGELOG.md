@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.15 - 2025-02-17
 
 * `Aws\TimestreamInfluxDB` - This release introduces APIs to manage DbClusters and adds support for read replicas
 * `Aws\DatabaseMigrationService` - Support replicationConfigArn in DMS DescribeApplicableIndividualAssessments API.
