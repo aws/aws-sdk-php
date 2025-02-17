@@ -1,0 +1,23 @@
+<?php
+
+namespace Aws\S3\S3Transfer;
+
+use Psr\Http\Message\StreamInterface;
+
+class DownloadResponse
+{
+    public function __construct(
+        private readonly StreamInterface $content,
+        private readonly array $metadata = []
+    ) {}
+
+    public function getContent(): StreamInterface
+    {
+        return $this->content;
+    }
+
+    public function getMetadata(): array
+    {
+        return $this->metadata;
+    }
+}
