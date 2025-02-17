@@ -169,4 +169,31 @@ class MetricsBuilderTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * Tests that metric middlewares are appended just once.
+     *
+     * @return void
+     */
+    public function testAppendMetricsCaptureMiddlewareJustOnce(): void {
+        $handlerList = new HandlerList(function (){});
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $handlerList,
+            'test'
+        );
+        MetricsBuilder::appendMetricsCaptureMiddleware(
+            $handlerList,
+            'test'
+        );
+        $this->assertTrue(
+            $handlerList->hasMiddleware('metrics-capture-test')
+        );
+        $this->assertEquals(
+            1,
+            substr_count(
+                $handlerList->__toString(),
+                'metrics-capture-test'
+            )
+        );
+    }
 }
