@@ -468,7 +468,6 @@ class MiddlewareTest extends TestCase
             $client = new Aws\S3\S3Client([
                 'region' => 'us-west-2',
                 'http_handler' => function ($command, $request) {
-
                     return new Psr7\Response(200);
                 }
             ]);

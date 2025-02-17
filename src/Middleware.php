@@ -65,7 +65,11 @@ final class Middleware
 
                                 return $result;
                             }
-                        );
+                        )->otherwise(function ($reason) use ($lazyOpenStream) {
+                            $lazyOpenStream->close();
+
+                            return $reason;
+                        });
                     }
 
                     return $next;
