@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Fault Injection Service is a managed service that enables you to perform fault injection experiments on your Amazon Web Services workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">Fault Injection Service User Guide</a>.</p>",
+  "service": "<p>Amazon Web Services Fault Injection Service is a managed service that enables you to perform fault injection experiments on your Amazon Web Services workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">Fault Injection Service User Guide</a>.</p>",
   "operations": {
     "CreateExperimentTemplate": "<p>Creates an experiment template. </p> <p>An experiment template includes the following components:</p> <ul> <li> <p> <b>Targets</b>: A target can be a specific resource in your Amazon Web Services environment, or one or more resources that match criteria that you specify, for example, resources that have specific tags.</p> </li> <li> <p> <b>Actions</b>: The actions to carry out on the target. You can specify multiple actions, the duration of each action, and when to start each action during an experiment.</p> </li> <li> <p> <b>Stop conditions</b>: If a stop condition is triggered while an experiment is running, the experiment is automatically stopped. You can define a stop condition as a CloudWatch alarm.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-templates.html\">experiment templates</a> in the <i>Fault Injection Service User Guide</i>.</p>",
     "CreateTargetAccountConfiguration": "<p>Creates a target account configuration for the experiment template. A target account configuration is required when <code>accountTargeting</code> of <code>experimentOptions</code> is set to <code>multi-account</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-options.html\">experiment options</a> in the <i>Fault Injection Service User Guide</i>. </p>",
@@ -10,6 +10,7 @@
     "GetExperiment": "<p>Gets information about the specified experiment.</p>",
     "GetExperimentTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment.</p>",
     "GetExperimentTemplate": "<p>Gets information about the specified experiment template.</p>",
+    "GetSafetyLever": "<p> Gets information about the specified safety lever. </p>",
     "GetTargetAccountConfiguration": "<p>Gets information about the specified target account configuration of the experiment template.</p>",
     "GetTargetResourceType": "<p>Gets information about the specified resource type.</p>",
     "ListActions": "<p>Lists the available FIS actions.</p>",
@@ -25,6 +26,7 @@
     "TagResource": "<p>Applies the specified tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateExperimentTemplate": "<p>Updates the specified experiment template.</p>",
+    "UpdateSafetyLeverState": "<p> Updates the specified safety lever state. </p>",
     "UpdateTargetAccountConfiguration": "<p>Updates the target account configuration for the specified experiment template.</p>"
   },
   "shapes": {
@@ -172,6 +174,12 @@
       "base": "<p>Specifies the configuration for experiment logging.</p>",
       "refs": {
         "CreateExperimentTemplateRequest$logConfiguration": "<p>The configuration for experiment logging.</p>"
+      }
+    },
+    "CreateExperimentTemplateReportConfigurationInput": {
+      "base": "<p>Specifies the configuration for experiment reports.</p>",
+      "refs": {
+        "CreateExperimentTemplateRequest$experimentReportConfiguration": "<p>The experiment report configuration for the experiment template.</p>"
       }
     },
     "CreateExperimentTemplateRequest": {
@@ -381,6 +389,30 @@
         "Experiment$endTime": "<p>The time that the experiment ended.</p>"
       }
     },
+    "ExperimentError": {
+      "base": "<p>Describes the error when an experiment has <code>failed</code>.</p>",
+      "refs": {
+        "ExperimentState$error": "<p>The error information of the experiment when the action has <code>failed</code>.</p>"
+      }
+    },
+    "ExperimentErrorAccountId": {
+      "base": null,
+      "refs": {
+        "ExperimentError$accountId": "<p>The Amazon Web Services Account ID where the experiment failure occurred.</p>"
+      }
+    },
+    "ExperimentErrorCode": {
+      "base": null,
+      "refs": {
+        "ExperimentError$code": "<p>The error code for the failed experiment.</p>"
+      }
+    },
+    "ExperimentErrorLocation": {
+      "base": null,
+      "refs": {
+        "ExperimentError$location": "<p>Context for the section of the experiment template that failed.</p>"
+      }
+    },
     "ExperimentId": {
       "base": null,
       "refs": {
@@ -404,6 +436,102 @@
       "refs": {
         "Experiment$experimentOptions": "<p>The experiment options for the experiment.</p>",
         "ExperimentSummary$experimentOptions": "<p>The experiment options for the experiment.</p>"
+      }
+    },
+    "ExperimentReport": {
+      "base": "<p>Describes the experiment report.</p>",
+      "refs": {
+        "Experiment$experimentReport": "<p>The experiment report for the experiment.</p>"
+      }
+    },
+    "ExperimentReportConfiguration": {
+      "base": "<p>Describes the report configuration for the experiment. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-report-configuration\">Experiment report configurations for AWS FIS</a>.</p>",
+      "refs": {
+        "Experiment$experimentReportConfiguration": "<p>The experiment report configuration for the experiment.</p>"
+      }
+    },
+    "ExperimentReportConfigurationCloudWatchDashboard": {
+      "base": "<p>Specifies the CloudWatch dashboard to include in the experiment report. The dashboard widgets will be captured as snapshot graphs within the report.</p>",
+      "refs": {
+        "ExperimentReportConfigurationCloudWatchDashboardList$member": null
+      }
+    },
+    "ExperimentReportConfigurationCloudWatchDashboardList": {
+      "base": null,
+      "refs": {
+        "ExperimentReportConfigurationDataSources$cloudWatchDashboards": "<p>The CloudWatch dashboards to include as data sources in the experiment report.</p>"
+      }
+    },
+    "ExperimentReportConfigurationDataSources": {
+      "base": "<p>Describes the data sources for the experiment report.</p>",
+      "refs": {
+        "ExperimentReportConfiguration$dataSources": "<p>The data sources for the experiment report.</p>"
+      }
+    },
+    "ExperimentReportConfigurationOutputs": {
+      "base": "<p>Describes the output destinations of the experiment report.</p>",
+      "refs": {
+        "ExperimentReportConfiguration$outputs": "<p>The output destinations of the experiment report.</p>"
+      }
+    },
+    "ExperimentReportConfigurationOutputsS3Configuration": {
+      "base": "<p>Specifies the S3 destination for the experiment report.</p>",
+      "refs": {
+        "ExperimentReportConfigurationOutputs$s3Configuration": "<p>The S3 destination for the experiment report.</p>"
+      }
+    },
+    "ExperimentReportError": {
+      "base": "<p>Describes the error when experiment report generation has failed.</p>",
+      "refs": {
+        "ExperimentReportState$error": "<p>The error information of the experiment when the experiment report generation has failed.</p>"
+      }
+    },
+    "ExperimentReportErrorCode": {
+      "base": null,
+      "refs": {
+        "ExperimentReportError$code": "<p>The error code for the failed experiment report generation.</p>"
+      }
+    },
+    "ExperimentReportReason": {
+      "base": null,
+      "refs": {
+        "ExperimentReportState$reason": "<p>The reason for the state of the experiment report generation.</p>"
+      }
+    },
+    "ExperimentReportS3Report": {
+      "base": "<p>Describes the S3 destination for the report.</p>",
+      "refs": {
+        "ExperimentReportS3ReportList$member": null
+      }
+    },
+    "ExperimentReportS3ReportArn": {
+      "base": null,
+      "refs": {
+        "ExperimentReportS3Report$arn": "<p>The Amazon Resource Name (ARN) of the generated report.</p>"
+      }
+    },
+    "ExperimentReportS3ReportList": {
+      "base": null,
+      "refs": {
+        "ExperimentReport$s3Reports": "<p>The S3 destination of the experiment report.</p>"
+      }
+    },
+    "ExperimentReportS3ReportType": {
+      "base": null,
+      "refs": {
+        "ExperimentReportS3Report$reportType": "<p>The report type for the experiment report.</p>"
+      }
+    },
+    "ExperimentReportState": {
+      "base": "<p>Describes the state of the experiment report generation.</p>",
+      "refs": {
+        "ExperimentReport$state": "<p>The state of the experiment report.</p>"
+      }
+    },
+    "ExperimentReportStatus": {
+      "base": null,
+      "refs": {
+        "ExperimentReportState$status": "<p>The state of the experiment report generation.</p>"
       }
     },
     "ExperimentS3LogConfiguration": {
@@ -690,6 +818,50 @@
         "ExperimentTemplate$logConfiguration": "<p>The configuration for experiment logging.</p>"
       }
     },
+    "ExperimentTemplateReportConfiguration": {
+      "base": "<p>Describes the experiment report configuration. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-report-configuration\">Experiment report configurations for AWS FIS</a>.</p>",
+      "refs": {
+        "ExperimentTemplate$experimentReportConfiguration": "<p>Describes the report configuration for the experiment template.</p>"
+      }
+    },
+    "ExperimentTemplateReportConfigurationCloudWatchDashboard": {
+      "base": "<p>The CloudWatch dashboards to include as data sources in the experiment report.</p>",
+      "refs": {
+        "ExperimentTemplateReportConfigurationCloudWatchDashboardList$member": null
+      }
+    },
+    "ExperimentTemplateReportConfigurationCloudWatchDashboardList": {
+      "base": null,
+      "refs": {
+        "ExperimentTemplateReportConfigurationDataSources$cloudWatchDashboards": "<p>The CloudWatch dashboards to include as data sources in the experiment report.</p>"
+      }
+    },
+    "ExperimentTemplateReportConfigurationDataSources": {
+      "base": "<p>Describes the data sources for the experiment report.</p>",
+      "refs": {
+        "ExperimentTemplateReportConfiguration$dataSources": "<p>The data sources for the experiment report.</p>"
+      }
+    },
+    "ExperimentTemplateReportConfigurationDataSourcesInput": {
+      "base": "<p>Specifies the data sources for the experiment report.</p>",
+      "refs": {
+        "CreateExperimentTemplateReportConfigurationInput$dataSources": "<p>The data sources for the experiment report.</p>",
+        "UpdateExperimentTemplateReportConfigurationInput$dataSources": "<p>The data sources for the experiment report.</p>"
+      }
+    },
+    "ExperimentTemplateReportConfigurationOutputs": {
+      "base": "<p>The output destinations of the experiment report.</p>",
+      "refs": {
+        "ExperimentTemplateReportConfiguration$outputs": "<p>Describes the output destinations of the experiment report.</p>"
+      }
+    },
+    "ExperimentTemplateReportConfigurationOutputsInput": {
+      "base": "<p>Specifies the outputs for the experiment templates.</p>",
+      "refs": {
+        "CreateExperimentTemplateReportConfigurationInput$outputs": "<p>The output destinations of the experiment report. </p>",
+        "UpdateExperimentTemplateReportConfigurationInput$outputs": "<p>Describes the output destinations of the experiment report. </p>"
+      }
+    },
     "ExperimentTemplateS3LogConfiguration": {
       "base": "<p>Describes the configuration for experiment logging to Amazon S3.</p>",
       "refs": {
@@ -857,6 +1029,16 @@
       }
     },
     "GetExperimentTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSafetyLeverRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSafetyLeverResponse": {
       "base": null,
       "refs": {
       }
@@ -1032,6 +1214,59 @@
         "ListTargetResourceTypesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
       }
     },
+    "ReportConfigurationCloudWatchDashboardIdentifier": {
+      "base": null,
+      "refs": {
+        "ExperimentReportConfigurationCloudWatchDashboard$dashboardIdentifier": "<p>The Amazon Resource Name (ARN) of the CloudWatch dashboard to include in the experiment report.</p>",
+        "ExperimentTemplateReportConfigurationCloudWatchDashboard$dashboardIdentifier": "<p>The Amazon Resource Name (ARN) of the CloudWatch dashboard to include in the experiment report.</p>",
+        "ReportConfigurationCloudWatchDashboardInput$dashboardIdentifier": "<p>The Amazon Resource Name (ARN) of the CloudWatch dashboard to include in the experiment report.</p>"
+      }
+    },
+    "ReportConfigurationCloudWatchDashboardInput": {
+      "base": "<p>Specifies the CloudWatch dashboard for the experiment report.</p>",
+      "refs": {
+        "ReportConfigurationCloudWatchDashboardInputList$member": null
+      }
+    },
+    "ReportConfigurationCloudWatchDashboardInputList": {
+      "base": null,
+      "refs": {
+        "ExperimentTemplateReportConfigurationDataSourcesInput$cloudWatchDashboards": "<p>The CloudWatch dashboards to include as data sources in the experiment report.</p>"
+      }
+    },
+    "ReportConfigurationDuration": {
+      "base": null,
+      "refs": {
+        "CreateExperimentTemplateReportConfigurationInput$preExperimentDuration": "<p>The duration before the experiment start time for the data sources to include in the report. </p>",
+        "CreateExperimentTemplateReportConfigurationInput$postExperimentDuration": "<p>The duration after the experiment end time for the data sources to include in the report. </p>",
+        "ExperimentReportConfiguration$preExperimentDuration": "<p>The duration before the experiment start time for the data sources to include in the report.</p>",
+        "ExperimentReportConfiguration$postExperimentDuration": "<p>The duration after the experiment end time for the data sources to include in the report.</p>",
+        "ExperimentTemplateReportConfiguration$preExperimentDuration": "<p>The duration before the experiment start time for the data sources to include in the report.</p>",
+        "ExperimentTemplateReportConfiguration$postExperimentDuration": "<p>The duration after the experiment end time for the data sources to include in the report.</p>",
+        "UpdateExperimentTemplateReportConfigurationInput$preExperimentDuration": "<p>The duration before the experiment start time for the data sources to include in the report. </p>",
+        "UpdateExperimentTemplateReportConfigurationInput$postExperimentDuration": "<p>The duration after the experiment end time for the data sources to include in the report. </p>"
+      }
+    },
+    "ReportConfigurationS3Output": {
+      "base": "<p>Describes the S3 destination for the experiment report.</p>",
+      "refs": {
+        "ExperimentTemplateReportConfigurationOutputs$s3Configuration": "<p>The S3 destination for the experiment report.</p>"
+      }
+    },
+    "ReportConfigurationS3OutputInput": {
+      "base": "<p>Specifies the S3 destination for the experiment report.</p>",
+      "refs": {
+        "ExperimentTemplateReportConfigurationOutputsInput$s3Configuration": "<p>The S3 destination for the experiment report.</p>"
+      }
+    },
+    "ReportConfigurationS3OutputPrefix": {
+      "base": null,
+      "refs": {
+        "ExperimentReportConfigurationOutputsS3Configuration$prefix": "<p>The prefix of the S3 bucket where the experiment report will be stored.</p>",
+        "ReportConfigurationS3Output$prefix": "<p>The prefix of the S3 bucket where the experiment report will be stored.</p>",
+        "ReportConfigurationS3OutputInput$prefix": "<p>The prefix of the S3 bucket where the experiment report will be stored.</p>"
+      }
+    },
     "ResolvedTarget": {
       "base": "<p>Describes a resolved target.</p>",
       "refs": {
@@ -1055,6 +1290,7 @@
         "ExperimentTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the experiment template.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ResourceArnList$member": null,
+        "SafetyLever$arn": "<p> The Amazon Resource Name (ARN) of the safety lever. </p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
@@ -1091,9 +1327,12 @@
     "S3BucketName": {
       "base": null,
       "refs": {
+        "ExperimentReportConfigurationOutputsS3Configuration$bucketName": "<p>The name of the S3 bucket where the experiment report will be stored.</p>",
         "ExperimentS3LogConfiguration$bucketName": "<p>The name of the destination bucket.</p>",
         "ExperimentTemplateS3LogConfiguration$bucketName": "<p>The name of the destination bucket.</p>",
-        "ExperimentTemplateS3LogConfigurationInput$bucketName": "<p>The name of the destination bucket.</p>"
+        "ExperimentTemplateS3LogConfigurationInput$bucketName": "<p>The name of the destination bucket.</p>",
+        "ReportConfigurationS3Output$bucketName": "<p>The name of the S3 bucket where the experiment report will be stored.</p>",
+        "ReportConfigurationS3OutputInput$bucketName": "<p>The name of the S3 bucket where the experiment report will be stored.</p>"
       }
     },
     "S3ObjectKey": {
@@ -1102,6 +1341,46 @@
         "ExperimentS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
         "ExperimentTemplateS3LogConfigurationInput$prefix": "<p>The bucket prefix.</p>"
+      }
+    },
+    "SafetyLever": {
+      "base": "<p> Describes a safety lever. </p>",
+      "refs": {
+        "GetSafetyLeverResponse$safetyLever": "<p> Information about the safety lever. </p>",
+        "UpdateSafetyLeverStateResponse$safetyLever": "<p> Information about the safety lever. </p>"
+      }
+    },
+    "SafetyLeverId": {
+      "base": null,
+      "refs": {
+        "GetSafetyLeverRequest$id": "<p> The ID of the safety lever. </p>",
+        "SafetyLever$id": "<p> The ID of the safety lever. </p>",
+        "UpdateSafetyLeverStateRequest$id": "<p> The ID of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverState": {
+      "base": "<p> Describes the state of the safety lever. </p>",
+      "refs": {
+        "SafetyLever$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatus": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$status": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusInput": {
+      "base": null,
+      "refs": {
+        "UpdateSafetyLeverStateInput$status": "<p> The updated state of the safety lever. </p>"
+      }
+    },
+    "SafetyLeverStatusReason": {
+      "base": null,
+      "refs": {
+        "SafetyLeverState$reason": "<p> The reason for the state of the safety lever. </p>",
+        "UpdateSafetyLeverStateInput$reason": "<p> The reason for updating the state of the safety lever. </p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -1382,6 +1661,12 @@
         "UpdateExperimentTemplateRequest$logConfiguration": "<p>The configuration for experiment logging.</p>"
       }
     },
+    "UpdateExperimentTemplateReportConfigurationInput": {
+      "base": "<p> Specifies the input for the experiment report configuration.</p>",
+      "refs": {
+        "UpdateExperimentTemplateRequest$experimentReportConfiguration": "<p>The experiment report configuration for the experiment template.</p>"
+      }
+    },
     "UpdateExperimentTemplateRequest": {
       "base": null,
       "refs": {
@@ -1414,6 +1699,22 @@
       "base": null,
       "refs": {
         "UpdateExperimentTemplateRequest$targets": "<p>The targets for the experiment.</p>"
+      }
+    },
+    "UpdateSafetyLeverStateInput": {
+      "base": "<p> Specifies a state for a safety lever. </p>",
+      "refs": {
+        "UpdateSafetyLeverStateRequest$state": "<p> The state of the safety lever. </p>"
+      }
+    },
+    "UpdateSafetyLeverStateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSafetyLeverStateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateTargetAccountConfigurationRequest": {

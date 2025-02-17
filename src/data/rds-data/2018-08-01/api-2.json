@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-08-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"rds-data",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS RDS DataService",
     "serviceId":"RDS Data",
     "signatureVersion":"v4",
@@ -25,9 +26,11 @@
         {"shape":"SecretsErrorException"},
         {"shape":"HttpEndpointNotEnabledException"},
         {"shape":"DatabaseErrorException"},
+        {"shape":"DatabaseResumingException"},
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -50,9 +53,11 @@
         {"shape":"SecretsErrorException"},
         {"shape":"HttpEndpointNotEnabledException"},
         {"shape":"DatabaseErrorException"},
+        {"shape":"DatabaseResumingException"},
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -78,6 +83,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -105,7 +111,8 @@
         {"shape":"ServiceUnavailableError"}
       ],
       "deprecated":true,
-      "deprecatedMessage":"The ExecuteSql API is deprecated, please use the ExecuteStatement API."
+      "deprecatedMessage":"The ExecuteSql API is deprecated, please use the ExecuteStatement API.",
+      "deprecatedSince":"2019-03-21"
     },
     "ExecuteStatement":{
       "name":"ExecuteStatement",
@@ -120,9 +127,11 @@
         {"shape":"SecretsErrorException"},
         {"shape":"HttpEndpointNotEnabledException"},
         {"shape":"DatabaseErrorException"},
+        {"shape":"DatabaseResumingException"},
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -149,6 +158,7 @@
         {"shape":"DatabaseUnavailableException"},
         {"shape":"TransactionNotFoundException"},
         {"shape":"InvalidSecretException"},
+        {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableError"},
         {"shape":"ForbiddenException"},
         {"shape":"DatabaseNotFoundException"},
@@ -335,6 +345,17 @@
       },
       "exception":true
     },
+    "DatabaseResumingException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "DatabaseUnavailableException":{
       "type":"structure",
       "members":{
@@ -465,6 +486,17 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "InvalidResourceStateException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "InvalidSecretException":{
       "type":"structure",

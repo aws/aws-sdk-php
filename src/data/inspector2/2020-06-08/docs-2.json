@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<p>Amazon Inspector is a vulnerability discovery service that automates continuous scanning for security vulnerabilities within your Amazon EC2, Amazon ECR, and Amazon Web Services Lambda environments.</p>",
   "operations": {
-    "AssociateMember": "<p>Associates an Amazon Web Services account with an Amazon Inspector delegated administrator. An HTTP 200 response indicates the association was successfully started, but doesn’t indicate whether it was completed. You can check if the association completed by using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html\">ListMembers</a> for multiple accounts or <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html\">GetMembers</a> for a single account.</p>",
+    "AssociateMember": "<p> Associates an Amazon Web Services account with an Amazon Inspector delegated administrator. An HTTP 200 response indicates the association was started but doesn’t indicate whether it completed. You can check if the association completed using <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html\">ListMembers</a> for multiple accounts or <a href=\"https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html\">GetMembers</a> for a single account. An HTTP 402 response indicates the association failed because the organization size exceeded its limit. For information on limits, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/quotas.html\">Amazon Inspector quotas</a>. </p>",
     "BatchGetAccountStatus": "<p>Retrieves the Amazon Inspector status of multiple Amazon Web Services accounts within your environment.</p>",
     "BatchGetCodeSnippet": "<p>Retrieves code snippets from findings that Amazon Inspector detected code vulnerabilities in.</p>",
     "BatchGetFindingDetails": "<p>Gets vulnerability details for findings.</p>",
@@ -37,7 +37,7 @@
     "ListCisScanResultsAggregatedByChecks": "<p>Lists scan results aggregated by checks.</p>",
     "ListCisScanResultsAggregatedByTargetResource": "<p>Lists scan results aggregated by a target resource.</p>",
     "ListCisScans": "<p>Returns a CIS scan list.</p>",
-    "ListCoverage": "<p>Lists coverage details for you environment.</p>",
+    "ListCoverage": "<p>Lists coverage details for your environment.</p>",
     "ListCoverageStatistics": "<p>Lists Amazon Inspector coverage statistics for your environment.</p>",
     "ListDelegatedAdminAccounts": "<p>Lists information about the Amazon Inspector delegated administrator of your organization.</p>",
     "ListFilters": "<p>Lists the filters associated with your account.</p>",
@@ -51,7 +51,7 @@
     "SendCisSessionHealth": "<p> Sends a CIS session health. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "SendCisSessionTelemetry": "<p> Sends a CIS session telemetry. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
     "StartCisSession": "<p> Starts a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
-    "StopCisSession": "<p> Stops a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to start a CIS scan session for the scan ID supplied by the service. </p>",
+    "StopCisSession": "<p> Stops a CIS session. This API is used by the Amazon Inspector SSM plugin to communicate with the Amazon Inspector service. The Amazon Inspector SSM plugin calls this API to stop a CIS scan session for the scan ID supplied by the service. </p>",
     "TagResource": "<p>Adds tags to a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateCisScanConfiguration": "<p>Updates a CIS scan configuration.</p>",
@@ -914,7 +914,7 @@
     "CisaData": {
       "base": "<p>The Cybersecurity and Infrastructure Security Agency (CISA) details for a specific vulnerability.</p>",
       "refs": {
-        "FindingDetail$cisaData": null,
+        "FindingDetail$cisaData": "<p>The Cybersecurity and Infrastructure Security Agency (CISA) details for a specific vulnerability.</p>",
         "Vulnerability$cisaData": "<p>An object that contains the Cybersecurity and Infrastructure Security Agency (CISA) details for the vulnerability.</p>"
       }
     },
@@ -1099,7 +1099,7 @@
         "CoverageFilterCriteria$lambdaFunctionRuntime": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by runtime.</p>",
         "CoverageFilterCriteria$resourceId": "<p>An array of Amazon Web Services resource IDs to return coverage statistics for.</p>",
         "CoverageFilterCriteria$resourceType": "<p>An array of Amazon Web Services resource types to return coverage statistics for. The values can be <code>AWS_EC2_INSTANCE</code>, <code>AWS_LAMBDA_FUNCTION</code>, <code>AWS_ECR_CONTAINER_IMAGE</code>, <code>AWS_ECR_REPOSITORY</code> or <code>AWS_ACCOUNT</code>.</p>",
-        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code> and <code>EC2_HYBRID</code>.</p>",
+        "CoverageFilterCriteria$scanMode": "<p>The filter to search for Amazon EC2 instance coverage by scan mode. Valid values are <code>EC2_SSM_AGENT_BASED</code> and <code>EC2_AGENTLESS</code>.</p>",
         "CoverageFilterCriteria$scanStatusCode": "<p>The scan status code to filter on. Valid values are: <code>ValidationException</code>, <code>InternalServerException</code>, <code>ResourceNotFoundException</code>, <code>BadRequestException</code>, and <code>ThrottlingException</code>.</p>",
         "CoverageFilterCriteria$scanStatusReason": "<p>The scan status reason to filter on.</p>",
         "CoverageFilterCriteria$scanType": "<p>An array of Amazon Inspector scan types to return coverage statistics for.</p>"
@@ -1375,9 +1375,9 @@
       "base": "<p>Contains details of the Amazon S3 bucket and KMS key used to export findings.</p>",
       "refs": {
         "CreateFindingsReportRequest$s3Destination": "<p>The Amazon S3 export destination for the report.</p>",
-        "CreateSbomExportRequest$s3Destination": null,
+        "CreateSbomExportRequest$s3Destination": "<p>Contains details of the Amazon S3 bucket and KMS key used to export findings.</p>",
         "GetFindingsReportStatusResponse$destination": "<p>The destination of the report.</p>",
-        "GetSbomExportResponse$s3Destination": null
+        "GetSbomExportResponse$s3Destination": "<p>Contains details of the Amazon S3 bucket and KMS key used to export findings</p>"
       }
     },
     "DetectionPlatforms": {
@@ -1672,7 +1672,7 @@
     "ExploitObserved": {
       "base": "<p>Contains information on when this exploit was observed.</p>",
       "refs": {
-        "FindingDetail$exploitObserved": null,
+        "FindingDetail$exploitObserved": "<p>Contains information on when this exploit was observed.</p>",
         "Vulnerability$exploitObserved": "<p>An object that contains details on when the exploit was observed.</p>"
       }
     },
@@ -2474,8 +2474,12 @@
     "Long": {
       "base": null,
       "refs": {
+        "AccountAggregationResponse$exploitAvailableCount": "<p> The number of findings that have an exploit available. </p>",
+        "AccountAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "AmiAggregationResponse$affectedInstances": "<p>The IDs of Amazon EC2 instances using this AMI.</p>",
         "Ec2InstanceAggregationResponse$networkFindings": "<p>The number of network findings for the Amazon EC2 instance.</p>",
+        "FindingTypeAggregationResponse$exploitAvailableCount": "<p>The number of findings that have an exploit available.</p>",
+        "FindingTypeAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "ListCoverageStatisticsResponse$totalCounts": "<p>The total number for all groups.</p>",
         "RepositoryAggregationResponse$affectedImages": "<p>The number of container images impacted by the findings.</p>",
         "SeverityCounts$all": "<p>The total count of findings from all severities.</p>",
@@ -2697,7 +2701,6 @@
         "StringList$member": null,
         "TagFilter$key": "<p>The tag filter key.</p>",
         "TagFilter$value": "<p>The tag filter value.</p>",
-        "TargetResourceTags$key": null,
         "TitleAggregationResponse$title": "<p>The title that the findings were aggregated on.</p>",
         "UpdateEc2DeepInspectionConfigurationResponse$errorMessage": "<p>An error message explaining why new Amazon Inspector deep inspection custom paths could not be added.</p>",
         "Vulnerability$id": "<p>The ID for the specific vulnerability.</p>"
@@ -3292,8 +3295,8 @@
         "Ec2InstanceAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "FindingTypeAggregationResponse$severityCounts": "<p>The value to sort results by.</p>",
         "ImageLayerAggregationResponse$severityCounts": "<p>An object that represents the count of matched findings per severity.</p>",
-        "LambdaFunctionAggregationResponse$severityCounts": null,
-        "LambdaLayerAggregationResponse$severityCounts": null,
+        "LambdaFunctionAggregationResponse$severityCounts": "<p>An object that contains the counts of aggregated finding per severity.</p>",
+        "LambdaLayerAggregationResponse$severityCounts": "<p>An object that contains the counts of aggregated finding per severity.</p>",
         "PackageAggregationResponse$severityCounts": "<p>An object that contains the count of matched findings per severity.</p>",
         "RepositoryAggregationResponse$severityCounts": "<p>An object that represent the count of matched findings per severity.</p>",
         "TitleAggregationResponse$severityCounts": "<p>An object that represent the count of matched findings per severity.</p>"
@@ -3356,8 +3359,8 @@
         "AccountState$state": "<p>An object detailing the status of Amazon Inspector for the account.</p>",
         "ResourceState$ec2": "<p>An object detailing the state of Amazon Inspector scanning for Amazon EC2 resources.</p>",
         "ResourceState$ecr": "<p>An object detailing the state of Amazon Inspector scanning for Amazon ECR resources.</p>",
-        "ResourceState$lambda": null,
-        "ResourceState$lambdaCode": null
+        "ResourceState$lambda": "<p>An object that described the state of Amazon Inspector scans for an account.</p>",
+        "ResourceState$lambdaCode": "<p>An object that described the state of Amazon Inspector scans for an account.</p>"
       }
     },
     "Status": {
@@ -3462,7 +3465,6 @@
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds a service quota.</p>",
         "TagList$member": null,
-        "TagValueList$member": null,
         "ThrottlingException$message": null,
         "TitleAggregationResponse$vulnerabilityId": "<p>The vulnerability ID of the finding.</p>",
         "ValidationException$message": null,
@@ -3480,9 +3482,10 @@
       "base": "<p>An object that describes the details of a string filter.</p>",
       "refs": {
         "PackageFilter$architecture": "<p>An object that contains details on the package architecture type to filter on.</p>",
+        "PackageFilter$filePath": "<p>An object that contains details on the package file path to filter on.</p>",
         "PackageFilter$name": "<p>An object that contains details on the name of the package to filter on.</p>",
         "PackageFilter$release": "<p>An object that contains details on the package release to filter on.</p>",
-        "PackageFilter$sourceLambdaLayerArn": null,
+        "PackageFilter$sourceLambdaLayerArn": "<p>An object that describes the details of a string filter.</p>",
         "PackageFilter$sourceLayerHash": "<p>An object that contains details on the source layer hash to filter on.</p>",
         "PackageFilter$version": "<p>The package version to filter on.</p>",
         "StringFilterList$member": null
@@ -3682,6 +3685,18 @@
         "CisTargets$targetResourceTags": "<p>The CIS target resource tags.</p>",
         "CreateCisTargets$targetResourceTags": "<p>The CIS target resource tags.</p>",
         "UpdateCisTargets$targetResourceTags": "<p>The target resource tags.</p>"
+      }
+    },
+    "TargetResourceTagsKey": {
+      "base": null,
+      "refs": {
+        "TargetResourceTags$key": null
+      }
+    },
+    "TargetResourceTagsValue": {
+      "base": null,
+      "refs": {
+        "TagValueList$member": null
       }
     },
     "TargetStatusFilterList": {

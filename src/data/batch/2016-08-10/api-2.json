@@ -521,7 +521,8 @@
         "updatePolicy":{"shape":"UpdatePolicy"},
         "eksConfiguration":{"shape":"EksConfiguration"},
         "containerOrchestrationType":{"shape":"OrchestrationType"},
-        "uuid":{"shape":"String"}
+        "uuid":{"shape":"String"},
+        "context":{"shape":"String"}
       }
     },
     "ComputeEnvironmentDetailList":{
@@ -706,7 +707,8 @@
         "computeResources":{"shape":"ComputeResource"},
         "serviceRole":{"shape":"String"},
         "tags":{"shape":"TagrisTagsMap"},
-        "eksConfiguration":{"shape":"EksConfiguration"}
+        "eksConfiguration":{"shape":"EksConfiguration"},
+        "context":{"shape":"String"}
       }
     },
     "CreateComputeEnvironmentResponse":{
@@ -1007,10 +1009,16 @@
         "volumes":{"shape":"Volumes"}
       }
     },
+    "EksAnnotationsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "EksAttemptContainerDetail":{
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
+        "containerID":{"shape":"String"},
         "exitCode":{"shape":"Integer"},
         "reason":{"shape":"String"}
       }
@@ -1024,7 +1032,9 @@
       "members":{
         "containers":{"shape":"EksAttemptContainerDetails"},
         "initContainers":{"shape":"EksAttemptContainerDetails"},
+        "eksClusterArn":{"shape":"String"},
         "podName":{"shape":"String"},
+        "podNamespace":{"shape":"String"},
         "nodeName":{"shape":"String"},
         "startedAt":{"shape":"Long"},
         "stoppedAt":{"shape":"Long"},
@@ -1131,6 +1141,7 @@
       "members":{
         "name":{"shape":"String"},
         "mountPath":{"shape":"String"},
+        "subPath":{"shape":"String"},
         "readOnly":{"shape":"Boolean"}
       }
     },
@@ -1168,7 +1179,17 @@
     "EksMetadata":{
       "type":"structure",
       "members":{
-        "labels":{"shape":"EksLabelsMap"}
+        "labels":{"shape":"EksLabelsMap"},
+        "annotations":{"shape":"EksAnnotationsMap"},
+        "namespace":{"shape":"String"}
+      }
+    },
+    "EksPersistentVolumeClaim":{
+      "type":"structure",
+      "required":["claimName"],
+      "members":{
+        "claimName":{"shape":"String"},
+        "readOnly":{"shape":"Boolean"}
       }
     },
     "EksPodProperties":{
@@ -1247,7 +1268,8 @@
         "name":{"shape":"String"},
         "hostPath":{"shape":"EksHostPath"},
         "emptyDir":{"shape":"EksEmptyDir"},
-        "secret":{"shape":"EksSecret"}
+        "secret":{"shape":"EksSecret"},
+        "persistentVolumeClaim":{"shape":"EksPersistentVolumeClaim"}
       }
     },
     "EksVolumes":{
@@ -1592,8 +1614,22 @@
       "members":{
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
-        "version":{"shape":"String"}
+        "version":{"shape":"String"},
+        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"}
       }
+    },
+    "LaunchTemplateSpecificationOverride":{
+      "type":"structure",
+      "members":{
+        "launchTemplateId":{"shape":"String"},
+        "launchTemplateName":{"shape":"String"},
+        "version":{"shape":"String"},
+        "targetInstanceTypes":{"shape":"StringList"}
+      }
+    },
+    "LaunchTemplateSpecificationOverrideList":{
+      "type":"list",
+      "member":{"shape":"LaunchTemplateSpecificationOverride"}
     },
     "LinuxParameters":{
       "type":"structure",
@@ -1792,7 +1828,8 @@
         "targetNodes":{"shape":"String"},
         "containerOverrides":{"shape":"ContainerOverrides"},
         "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
-        "instanceTypes":{"shape":"StringList"}
+        "instanceTypes":{"shape":"StringList"},
+        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"}
       }
     },
     "NodePropertyOverrides":{
@@ -1810,7 +1847,8 @@
         "targetNodes":{"shape":"String"},
         "container":{"shape":"ContainerProperties"},
         "instanceTypes":{"shape":"StringList"},
-        "ecsProperties":{"shape":"EcsProperties"}
+        "ecsProperties":{"shape":"EcsProperties"},
+        "eksProperties":{"shape":"EksProperties"}
       }
     },
     "OrchestrationType":{
@@ -2236,7 +2274,8 @@
         "unmanagedvCpus":{"shape":"Integer"},
         "computeResources":{"shape":"ComputeResourceUpdate"},
         "serviceRole":{"shape":"String"},
-        "updatePolicy":{"shape":"UpdatePolicy"}
+        "updatePolicy":{"shape":"UpdatePolicy"},
+        "context":{"shape":"String"}
       }
     },
     "UpdateComputeEnvironmentResponse":{

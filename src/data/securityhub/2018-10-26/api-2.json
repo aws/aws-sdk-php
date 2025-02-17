@@ -1404,6 +1404,46 @@
       "type":"list",
       "member":{"shape":"ActionTarget"}
     },
+    "Actor":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"NonEmptyString"},
+        "User":{"shape":"ActorUser"},
+        "Session":{"shape":"ActorSession"}
+      }
+    },
+    "ActorSession":{
+      "type":"structure",
+      "members":{
+        "Uid":{"shape":"NonEmptyString"},
+        "MfaStatus":{"shape":"ActorSessionMfaStatus"},
+        "CreatedTime":{"shape":"Long"},
+        "Issuer":{"shape":"NonEmptyString"}
+      }
+    },
+    "ActorSessionMfaStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "ActorUser":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Uid":{"shape":"NonEmptyString"},
+        "Type":{"shape":"NonEmptyString"},
+        "CredentialUid":{"shape":"NonEmptyString"},
+        "Account":{"shape":"UserAccount"}
+      }
+    },
+    "ActorsList":{
+      "type":"list",
+      "member":{"shape":"Actor"},
+      "max":10,
+      "min":0
+    },
     "Adjustment":{
       "type":"structure",
       "members":{
@@ -6585,7 +6625,8 @@
         "Sample":{"shape":"Boolean"},
         "GeneratorDetails":{"shape":"GeneratorDetails"},
         "ProcessedAt":{"shape":"NonEmptyString"},
-        "AwsAccountName":{"shape":"NonEmptyString"}
+        "AwsAccountName":{"shape":"NonEmptyString"},
+        "Detection":{"shape":"Detection"}
       }
     },
     "AwsSecurityFindingFilters":{
@@ -7553,6 +7594,13 @@
       "type":"list",
       "member":{"shape":"ConfigurationPolicySummary"}
     },
+    "ConnectionDirection":{
+      "type":"string",
+      "enum":[
+        "INBOUND",
+        "OUTBOUND"
+      ]
+    },
     "ContainerDetails":{
       "type":"structure",
       "members":{
@@ -8012,6 +8060,12 @@
       "members":{
         "Standards":{"shape":"Standards"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "Detection":{
+      "type":"structure",
+      "members":{
+        "Sequence":{"shape":"Sequence"}
       }
     },
     "DisableImportFindingsForProductRequest":{
@@ -8543,6 +8597,21 @@
     "ImportFindingsErrorList":{
       "type":"list",
       "member":{"shape":"ImportFindingsError"}
+    },
+    "Indicator":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"NonEmptyString"},
+        "Values":{"shape":"NonEmptyStringList"},
+        "Title":{"shape":"NonEmptyString"},
+        "Type":{"shape":"NonEmptyString"}
+      }
+    },
+    "IndicatorsList":{
+      "type":"list",
+      "member":{"shape":"Indicator"},
+      "max":100,
+      "min":0
     },
     "Insight":{
       "type":"structure",
@@ -9089,6 +9158,19 @@
         "DestinationDomain":{"shape":"NonEmptyString"}
       }
     },
+    "NetworkAutonomousSystem":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NonEmptyString"},
+        "Number":{"shape":"Integer"}
+      }
+    },
+    "NetworkConnection":{
+      "type":"structure",
+      "members":{
+        "Direction":{"shape":"ConnectionDirection"}
+      }
+    },
     "NetworkConnectionAction":{
       "type":"structure",
       "members":{
@@ -9106,6 +9188,33 @@
         "IN",
         "OUT"
       ]
+    },
+    "NetworkEndpoint":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"NonEmptyString"},
+        "Ip":{"shape":"NonEmptyString"},
+        "Domain":{"shape":"NonEmptyString"},
+        "Port":{"shape":"Integer"},
+        "Location":{"shape":"NetworkGeoLocation"},
+        "AutonomousSystem":{"shape":"NetworkAutonomousSystem"},
+        "Connection":{"shape":"NetworkConnection"}
+      }
+    },
+    "NetworkEndpointsList":{
+      "type":"list",
+      "member":{"shape":"NetworkEndpoint"},
+      "max":10,
+      "min":0
+    },
+    "NetworkGeoLocation":{
+      "type":"structure",
+      "members":{
+        "City":{"shape":"NonEmptyString"},
+        "Country":{"shape":"NonEmptyString"},
+        "Lat":{"shape":"Double"},
+        "Lon":{"shape":"Double"}
+      }
     },
     "NetworkHeader":{
       "type":"structure",
@@ -9173,9 +9282,9 @@
       "members":{
         "Gte":{"shape":"Double"},
         "Lte":{"shape":"Double"},
+        "Eq":{"shape":"Double"},
         "Gt":{"shape":"Double"},
-        "Lt":{"shape":"Double"},
-        "Eq":{"shape":"Double"}
+        "Lt":{"shape":"Double"}
       }
     },
     "NumberFilterList":{
@@ -9978,6 +10087,16 @@
       "type":"list",
       "member":{"shape":"SensitiveDataResult"}
     },
+    "Sequence":{
+      "type":"structure",
+      "members":{
+        "Uid":{"shape":"NonEmptyString"},
+        "Actors":{"shape":"ActorsList"},
+        "Endpoints":{"shape":"NetworkEndpointsList"},
+        "Signals":{"shape":"SignalsList"},
+        "SequenceIndicators":{"shape":"IndicatorsList"}
+      }
+    },
     "Severity":{
       "type":"structure",
       "members":{
@@ -10013,6 +10132,32 @@
         "Product":{"shape":"Double"},
         "Label":{"shape":"SeverityLabel"}
       }
+    },
+    "Signal":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"NonEmptyString"},
+        "Id":{"shape":"NonEmptyString"},
+        "Title":{"shape":"NonEmptyString"},
+        "ProductArn":{"shape":"NonEmptyString"},
+        "ResourceIds":{"shape":"NonEmptyStringList"},
+        "SignalIndicators":{"shape":"IndicatorsList"},
+        "Name":{"shape":"NonEmptyString"},
+        "CreatedAt":{"shape":"Long"},
+        "UpdatedAt":{"shape":"Long"},
+        "FirstSeenAt":{"shape":"Long"},
+        "LastSeenAt":{"shape":"Long"},
+        "Severity":{"shape":"Double"},
+        "Count":{"shape":"Integer"},
+        "ActorIds":{"shape":"NonEmptyStringList"},
+        "EndpointIds":{"shape":"NonEmptyStringList"}
+      }
+    },
+    "SignalsList":{
+      "type":"list",
+      "member":{"shape":"Signal"},
+      "max":100,
+      "min":1
     },
     "SizeBytes":{"type":"long"},
     "SoftwarePackage":{
@@ -10775,6 +10920,13 @@
         "READY",
         "UPDATING"
       ]
+    },
+    "UserAccount":{
+      "type":"structure",
+      "members":{
+        "Uid":{"shape":"NonEmptyString"},
+        "Name":{"shape":"NonEmptyString"}
+      }
     },
     "VerificationState":{
       "type":"string",

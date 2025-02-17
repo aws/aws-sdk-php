@@ -269,14 +269,40 @@ class ServiceTest extends TestCase
                     'signingName'     => 'qux',
                     'protocol'        => 'yak',
                     'uid'             => 'foo-2016-12-09'
+                ],
+                'operations' => [
+                    'FooOperation' => [
+                        'name' => 'FooOperation',
+                        'output' => [
+                            'shape' => 'FooOperationOutput'
+                        ]
+                    ]
+                ],
+                'shapes' => [
+                    'FooOperationOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'Expires' => [
+                                'shape' => 'Expires',
+                            ]
+                        ]
+                    ],
+                    'Expires' => [
+                        'type' => 'string'
+                    ]
                 ]
             ],
             function () { return []; }
         );
         $definition = $s->getDefinition();
         $definition['metadata']['serviceId'] = 'bar';
+        $definition['shapes']['Expires']['type'] = 'timestamp';
         $s->setDefinition($definition);
         $this->assertTrue($s->isModifiedModel());
         $this->assertEquals( 'bar', $s->getMetadata('serviceId'));
+        $this->assertEquals(
+            'timestamp',
+            $s->getOperation('FooOperation')->getOutput()->getMember('Expires')->getType()
+        );
     }
 }

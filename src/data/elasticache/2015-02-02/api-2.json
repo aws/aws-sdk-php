@@ -9,7 +9,8 @@
     "serviceId":"ElastiCache",
     "signatureVersion":"v4",
     "uid":"elasticache-2015-02-02",
-    "xmlNamespace":"http://elasticache.amazonaws.com/doc/2015-02-02/"
+    "xmlNamespace":"http://elasticache.amazonaws.com/doc/2015-02-02/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddTagsToResource":{
@@ -3534,6 +3535,7 @@
         "CacheParameterGroupName":{"shape":"String"},
         "NotificationTopicStatus":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
@@ -3587,6 +3589,7 @@
         "GlobalReplicationGroupId":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
         "CacheNodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "CacheParameterGroupName":{"shape":"String"},
         "GlobalReplicationGroupDescription":{"shape":"String"},
@@ -3620,6 +3623,7 @@
         "CacheParameterGroupName":{"shape":"String"},
         "NotificationTopicStatus":{"shape":"String"},
         "ApplyImmediately":{"shape":"Boolean"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
@@ -3676,7 +3680,9 @@
         "UserGroupId":{"shape":"String"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdsList"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
-        "DailySnapshotTime":{"shape":"String"}
+        "DailySnapshotTime":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "MajorEngineVersion":{"shape":"String"}
       }
     },
     "ModifyServerlessCacheResponse":{
@@ -3691,7 +3697,8 @@
       "members":{
         "UserGroupId":{"shape":"String"},
         "UserIdsToAdd":{"shape":"UserIdListInput"},
-        "UserIdsToRemove":{"shape":"UserIdListInput"}
+        "UserIdsToRemove":{"shape":"UserIdListInput"},
+        "Engine":{"shape":"EngineType"}
       }
     },
     "ModifyUserMessage":{
@@ -3703,7 +3710,8 @@
         "AppendAccessString":{"shape":"AccessString"},
         "Passwords":{"shape":"PasswordListInput"},
         "NoPasswordRequired":{"shape":"BooleanOptional"},
-        "AuthenticationMode":{"shape":"AuthenticationMode"}
+        "AuthenticationMode":{"shape":"AuthenticationMode"},
+        "Engine":{"shape":"EngineType"}
       }
     },
     "MultiAZStatus":{
@@ -4191,7 +4199,8 @@
         "NetworkType":{"shape":"NetworkType"},
         "IpDiscovery":{"shape":"IpDiscovery"},
         "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
-        "ClusterMode":{"shape":"ClusterMode"}
+        "ClusterMode":{"shape":"ClusterMode"},
+        "Engine":{"shape":"String"}
       },
       "wrapper":true
     },

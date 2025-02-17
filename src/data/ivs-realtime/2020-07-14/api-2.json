@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivsrealtime",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -29,6 +30,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
+    "CreateIngestConfiguration":{
+      "name":"CreateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateIngestConfigurationRequest"},
+      "output":{"shape":"CreateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"PendingVerification"}
       ]
     },
@@ -100,6 +117,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteIngestConfiguration":{
+      "name":"DeleteIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteIngestConfigurationRequest"},
+      "output":{"shape":"DeleteIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
       ]
     },
     "DeletePublicKey":{
@@ -204,6 +238,21 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "GetIngestConfiguration":{
+      "name":"GetIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIngestConfigurationRequest"},
+      "output":{"shape":"GetIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetParticipant":{
@@ -333,6 +382,20 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "ListIngestConfigurations":{
+      "name":"ListIngestConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListIngestConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListIngestConfigurationsRequest"},
+      "output":{"shape":"ListIngestConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListParticipantEvents":{
@@ -506,6 +569,23 @@
       ],
       "idempotent":true
     },
+    "UpdateIngestConfiguration":{
+      "name":"UpdateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIngestConfigurationRequest"},
+      "output":{"shape":"UpdateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "UpdateStage":{
       "name":"UpdateStage",
       "http":{
@@ -548,7 +628,8 @@
       "required":["storageConfigurationArn"],
       "members":{
         "storageConfigurationArn":{"shape":"AutoParticipantRecordingStorageConfigurationArn"},
-        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"}
+        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
+        "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"}
       }
     },
     "AutoParticipantRecordingStorageConfigurationArn":{
@@ -563,6 +644,7 @@
       "max":8500000,
       "min":1
     },
+    "Boolean":{"type":"boolean"},
     "ChannelArn":{
       "type":"string",
       "max":128,
@@ -641,6 +723,19 @@
       "type":"list",
       "member":{"shape":"CompositionSummary"}
     },
+    "CompositionThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"}
+      }
+    },
+    "CompositionThumbnailConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CompositionThumbnailConfiguration"},
+      "max":1,
+      "min":0
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -664,6 +759,25 @@
       "type":"structure",
       "members":{
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
+      }
+    },
+    "CreateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["ingestProtocol"],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
     "CreateParticipantTokenRequest":{
@@ -722,6 +836,19 @@
       }
     },
     "DeleteEncoderConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "force":{"shape":"Boolean"}
+      }
+    },
+    "DeleteIngestConfigurationResponse":{
       "type":"structure",
       "members":{
       }
@@ -918,7 +1045,18 @@
       "enum":[
         "INSUFFICIENT_CAPABILITIES",
         "QUOTA_EXCEEDED",
-        "PUBLISHER_NOT_FOUND"
+        "PUBLISHER_NOT_FOUND",
+        "BITRATE_EXCEEDED",
+        "RESOLUTION_EXCEEDED",
+        "STREAM_DURATION_EXCEEDED",
+        "INVALID_AUDIO_CODEC",
+        "INVALID_VIDEO_CODEC",
+        "INVALID_PROTOCOL",
+        "INVALID_STREAM_KEY",
+        "REUSE_OF_STREAM_KEY",
+        "B_FRAME_PRESENT",
+        "INVALID_INPUT",
+        "INTERNAL_SERVER_EXCEPTION"
       ]
     },
     "EventList":{
@@ -969,6 +1107,19 @@
       "type":"structure",
       "members":{
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
+      }
+    },
+    "GetIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"}
+      }
+    },
+    "GetIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
     "GetParticipantRequest":{
@@ -1064,7 +1215,7 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
     "ImportPublicKeyRequest":{
       "type":"structure",
@@ -1081,6 +1232,85 @@
         "publicKey":{"shape":"PublicKey"}
       }
     },
+    "IngestConfiguration":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "streamKey",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "streamKey":{"shape":"StreamKey"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "IngestConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:ingest-configuration/[a-zA-Z0-9-]+"
+    },
+    "IngestConfigurationList":{
+      "type":"list",
+      "member":{"shape":"IngestConfigurationSummary"}
+    },
+    "IngestConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "IngestConfigurationStageArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stage/[a-zA-Z0-9-]+$"
+    },
+    "IngestConfigurationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "IngestConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"}
+      }
+    },
+    "IngestProtocol":{
+      "type":"string",
+      "enum":[
+        "RTMP",
+        "RTMPS"
+      ]
+    },
+    "InsecureIngest":{"type":"boolean"},
     "InternalServerException":{
       "type":"structure",
       "members":{
@@ -1126,6 +1356,23 @@
       "required":["encoderConfigurations"],
       "members":{
         "encoderConfigurations":{"shape":"EncoderConfigurationSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListIngestConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "filterByStageArn":{"shape":"StageArn"},
+        "filterByState":{"shape":"IngestConfigurationState"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxIngestConfigurationResults"}
+      }
+    },
+    "ListIngestConfigurationsResponse":{
+      "type":"structure",
+      "required":["ingestConfigurations"],
+      "members":{
+        "ingestConfigurations":{"shape":"IngestConfigurationList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1269,6 +1516,12 @@
       "max":100,
       "min":1
     },
+    "MaxIngestConfigurationResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "MaxParticipantEventResults":{
       "type":"integer",
       "box":true,
@@ -1329,7 +1582,8 @@
         "sdkVersion":{"shape":"ParticipantClientAttribute"},
         "recordingS3BucketName":{"shape":"ParticipantRecordingS3BucketName"},
         "recordingS3Prefix":{"shape":"ParticipantRecordingS3Prefix"},
-        "recordingState":{"shape":"ParticipantRecordingState"}
+        "recordingState":{"shape":"ParticipantRecordingState"},
+        "protocol":{"shape":"ParticipantProtocol"}
       }
     },
     "ParticipantAttributes":{
@@ -1353,6 +1607,15 @@
       "type":"list",
       "member":{"shape":"ParticipantSummary"}
     },
+    "ParticipantProtocol":{
+      "type":"string",
+      "enum":[
+        "UNKNOWN",
+        "WHIP",
+        "RTMP",
+        "RTMPS"
+      ]
+    },
     "ParticipantRecordingFilterByRecordingState":{
       "type":"string",
       "enum":[
@@ -1367,7 +1630,8 @@
       "type":"string",
       "enum":[
         "AUDIO_VIDEO",
-        "AUDIO_ONLY"
+        "AUDIO_ONLY",
+        "NONE"
       ]
     },
     "ParticipantRecordingMediaTypeList":{
@@ -1415,6 +1679,14 @@
         "firstJoinTime":{"shape":"Time"},
         "published":{"shape":"Published"},
         "recordingState":{"shape":"ParticipantRecordingState"}
+      }
+    },
+    "ParticipantThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"},
+        "recordingMode":{"shape":"ThumbnailRecordingMode"}
       }
     },
     "ParticipantToken":{
@@ -1624,7 +1896,8 @@
       "members":{
         "storageConfigurationArn":{"shape":"StorageConfigurationArn"},
         "encoderConfigurationArns":{"shape":"EncoderConfigurationArnList"},
-        "recordingConfiguration":{"shape":"RecordingConfiguration"}
+        "recordingConfiguration":{"shape":"RecordingConfiguration"},
+        "thumbnailConfigurations":{"shape":"CompositionThumbnailConfigurationList"}
       }
     },
     "S3Detail":{
@@ -1679,7 +1952,9 @@
       "type":"structure",
       "members":{
         "events":{"shape":"StageEndpoint"},
-        "whip":{"shape":"StageEndpoint"}
+        "whip":{"shape":"StageEndpoint"},
+        "rtmp":{"shape":"StageEndpoint"},
+        "rtmps":{"shape":"StageEndpoint"}
       }
     },
     "StageName":{
@@ -1799,6 +2074,11 @@
       "type":"list",
       "member":{"shape":"StorageConfigurationSummary"}
     },
+    "StreamKey":{
+      "type":"string",
+      "pattern":"rt_[0-9]+_[a-z0-9-]+_[a-zA-Z0-9-]+_.+",
+      "sensitive":true
+    },
     "String":{"type":"string"},
     "TagKey":{
       "type":"string",
@@ -1843,6 +2123,32 @@
       "max":50,
       "min":0
     },
+    "ThumbnailIntervalSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":1
+    },
+    "ThumbnailRecordingMode":{
+      "type":"string",
+      "enum":[
+        "INTERVAL",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailStorageType":{
+      "type":"string",
+      "enum":[
+        "SEQUENTIAL",
+        "LATEST"
+      ]
+    },
+    "ThumbnailStorageTypeList":{
+      "type":"list",
+      "member":{"shape":"ThumbnailStorageType"},
+      "max":2,
+      "min":0
+    },
     "Time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -1869,6 +2175,20 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"}
+      }
+    },
+    "UpdateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
     "UpdateStageRequest":{
@@ -1932,7 +2252,7 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
     "errorMessage":{"type":"string"}
   }

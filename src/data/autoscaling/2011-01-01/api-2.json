@@ -1196,7 +1196,8 @@
       ],
       "members":{
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
-        "TrafficSources":{"shape":"TrafficSources"}
+        "TrafficSources":{"shape":"TrafficSources"},
+        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"}
       }
     },
     "AutoRollback":{"type":"boolean"},
@@ -1232,7 +1233,7 @@
         "CreatedTime":{"shape":"TimestampType"},
         "SuspendedProcesses":{"shape":"SuspendedProcesses"},
         "PlacementGroup":{"shape":"XmlStringMaxLen255"},
-        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen2047"},
+        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen5000"},
         "EnabledMetrics":{"shape":"EnabledMetrics"},
         "Status":{"shape":"XmlStringMaxLen255"},
         "Tags":{"shape":"TagDescriptionList"},
@@ -1247,7 +1248,10 @@
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
         "TrafficSources":{"shape":"TrafficSources"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
+        "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1322,9 +1326,27 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
     },
+    "AvailabilityZoneDistribution":{
+      "type":"structure",
+      "members":{
+        "CapacityDistributionStrategy":{"shape":"CapacityDistributionStrategy"}
+      }
+    },
+    "AvailabilityZoneImpairmentPolicy":{
+      "type":"structure",
+      "members":{
+        "ZonalShiftEnabled":{"shape":"ZonalShiftEnabled"},
+        "ImpairedZoneHealthCheckBehavior":{"shape":"ImpairedZoneHealthCheckBehavior"}
+      }
+    },
     "AvailabilityZones":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
+    },
+    "BakeTime":{
+      "type":"integer",
+      "max":172800,
+      "min":0
     },
     "BareMetal":{
       "type":"string",
@@ -1339,6 +1361,12 @@
       "members":{
         "Min":{"shape":"NullablePositiveInteger"},
         "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
+    "BaselinePerformanceFactorsRequest":{
+      "type":"structure",
+      "members":{
+        "Cpu":{"shape":"CpuPerformanceFactorRequest"}
       }
     },
     "BatchDeleteScheduledActionAnswer":{
@@ -1432,6 +1460,13 @@
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
       }
     },
+    "CapacityDistributionStrategy":{
+      "type":"string",
+      "enum":[
+        "balanced-only",
+        "balanced-best-effort"
+      ]
+    },
     "CapacityForecast":{
       "type":"structure",
       "required":[
@@ -1444,6 +1479,37 @@
       }
     },
     "CapacityRebalanceEnabled":{"type":"boolean"},
+    "CapacityReservationIds":{
+      "type":"list",
+      "member":{"shape":"AsciiStringMaxLen255"}
+    },
+    "CapacityReservationPreference":{
+      "type":"string",
+      "enum":[
+        "capacity-reservations-only",
+        "capacity-reservations-first",
+        "none",
+        "default"
+      ]
+    },
+    "CapacityReservationResourceGroupArns":{
+      "type":"list",
+      "member":{"shape":"ResourceName"}
+    },
+    "CapacityReservationSpecification":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationPreference":{"shape":"CapacityReservationPreference"},
+        "CapacityReservationTarget":{"shape":"CapacityReservationTarget"}
+      }
+    },
+    "CapacityReservationTarget":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationIds":{"shape":"CapacityReservationIds"},
+        "CapacityReservationResourceGroupArns":{"shape":"CapacityReservationResourceGroupArns"}
+      }
+    },
     "CheckpointDelay":{
       "type":"integer",
       "max":172800,
@@ -1491,6 +1557,15 @@
       "type":"list",
       "member":{"shape":"CpuManufacturer"}
     },
+    "CpuPerformanceFactorRequest":{
+      "type":"structure",
+      "members":{
+        "References":{
+          "shape":"PerformanceFactorReferenceSetRequest",
+          "locationName":"Reference"
+        }
+      }
+    },
     "CreateAutoScalingGroupType":{
       "type":"structure",
       "required":[
@@ -1514,7 +1589,7 @@
         "HealthCheckType":{"shape":"XmlStringMaxLen32"},
         "HealthCheckGracePeriod":{"shape":"HealthCheckGracePeriod"},
         "PlacementGroup":{"shape":"XmlStringMaxLen255"},
-        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen2047"},
+        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen5000"},
         "TerminationPolicies":{"shape":"TerminationPolicies"},
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
@@ -1526,7 +1601,11 @@
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
         "TrafficSources":{"shape":"TrafficSources"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
+        "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
+        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -1569,6 +1648,7 @@
         "Dimensions":{"shape":"MetricDimensions"},
         "Statistic":{"shape":"MetricStatistic"},
         "Unit":{"shape":"MetricUnit"},
+        "Period":{"shape":"MetricGranularityInSeconds"},
         "Metrics":{"shape":"TargetTrackingMetricDataQueries"}
       }
     },
@@ -2077,6 +2157,13 @@
     "HealthCheckGracePeriod":{"type":"integer"},
     "HeartbeatTimeout":{"type":"integer"},
     "HonorCooldown":{"type":"boolean"},
+    "ImpairedZoneHealthCheckBehavior":{
+      "type":"string",
+      "enum":[
+        "ReplaceUnhealthy",
+        "IgnoreUnhealthy"
+      ]
+    },
     "IncludeDeletedGroups":{"type":"boolean"},
     "Instance":{
       "type":"structure",
@@ -2213,7 +2300,8 @@
         "Cancelled",
         "RollbackInProgress",
         "RollbackFailed",
-        "RollbackSuccessful"
+        "RollbackSuccessful",
+        "Baking"
       ]
     },
     "InstanceRefreshWarmPoolProgress":{
@@ -2257,7 +2345,8 @@
         "AcceleratorNames":{"shape":"AcceleratorNames"},
         "AcceleratorTotalMemoryMiB":{"shape":"AcceleratorTotalMemoryMiBRequest"},
         "NetworkBandwidthGbps":{"shape":"NetworkBandwidthGbpsRequest"},
-        "AllowedInstanceTypes":{"shape":"AllowedInstanceTypes"}
+        "AllowedInstanceTypes":{"shape":"AllowedInstanceTypes"},
+        "BaselinePerformanceFactors":{"shape":"BaselinePerformanceFactorsRequest"}
       }
     },
     "InstanceReusePolicy":{
@@ -2650,6 +2739,10 @@
       "type":"list",
       "member":{"shape":"MetricDimension"}
     },
+    "MetricGranularityInSeconds":{
+      "type":"integer",
+      "min":1
+    },
     "MetricGranularityType":{
       "type":"structure",
       "members":{
@@ -2771,6 +2864,19 @@
     "Overrides":{
       "type":"list",
       "member":{"shape":"LaunchTemplateOverrides"}
+    },
+    "PerformanceFactorReferenceRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceFamily":{"shape":"String"}
+      }
+    },
+    "PerformanceFactorReferenceSetRequest":{
+      "type":"list",
+      "member":{
+        "shape":"PerformanceFactorReferenceRequest",
+        "locationName":"item"
+      }
     },
     "PoliciesType":{
       "type":"structure",
@@ -3085,7 +3191,8 @@
         "ScaleInProtectedInstances":{"shape":"ScaleInProtectedInstances"},
         "StandbyInstances":{"shape":"StandbyInstances"},
         "AlarmSpecification":{"shape":"AlarmSpecification"},
-        "MaxHealthyPercentage":{"shape":"IntPercent100To200"}
+        "MaxHealthyPercentage":{"shape":"IntPercent100To200"},
+        "BakeTime":{"shape":"BakeTime"}
       }
     },
     "RefreshStrategy":{
@@ -3329,6 +3436,7 @@
     "ShouldDecrementDesiredCapacity":{"type":"boolean"},
     "ShouldRespectGracePeriod":{"type":"boolean"},
     "SkipMatching":{"type":"boolean"},
+    "SkipZonalShiftValidation":{"type":"boolean"},
     "SpotInstancePools":{"type":"integer"},
     "SpotPrice":{
       "type":"string",
@@ -3372,6 +3480,7 @@
       "type":"list",
       "member":{"shape":"StepAdjustment"}
     },
+    "String":{"type":"string"},
     "SuspendedProcess":{
       "type":"structure",
       "members":{
@@ -3457,6 +3566,7 @@
         "Expression":{"shape":"XmlStringMaxLen2047"},
         "MetricStat":{"shape":"TargetTrackingMetricStat"},
         "Label":{"shape":"XmlStringMetricLabel"},
+        "Period":{"shape":"MetricGranularityInSeconds"},
         "ReturnData":{"shape":"ReturnData"}
       }
     },
@@ -3469,7 +3579,8 @@
       "members":{
         "Metric":{"shape":"Metric"},
         "Stat":{"shape":"XmlStringMetricStat"},
-        "Unit":{"shape":"MetricUnit"}
+        "Unit":{"shape":"MetricUnit"},
+        "Period":{"shape":"MetricGranularityInSeconds"}
       }
     },
     "TerminateInstanceInAutoScalingGroupType":{
@@ -3539,8 +3650,8 @@
         "AvailabilityZones":{"shape":"AvailabilityZones"},
         "HealthCheckType":{"shape":"XmlStringMaxLen32"},
         "HealthCheckGracePeriod":{"shape":"HealthCheckGracePeriod"},
-        "PlacementGroup":{"shape":"XmlStringMaxLen255"},
-        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen2047"},
+        "PlacementGroup":{"shape":"UpdatePlacementGroupParam"},
+        "VPCZoneIdentifier":{"shape":"XmlStringMaxLen5000"},
         "TerminationPolicies":{"shape":"TerminationPolicies"},
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
@@ -3549,8 +3660,18 @@
         "Context":{"shape":"Context"},
         "DesiredCapacityType":{"shape":"XmlStringMaxLen255"},
         "DefaultInstanceWarmup":{"shape":"DefaultInstanceWarmup"},
-        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"}
+        "InstanceMaintenancePolicy":{"shape":"InstanceMaintenancePolicy"},
+        "AvailabilityZoneDistribution":{"shape":"AvailabilityZoneDistribution"},
+        "AvailabilityZoneImpairmentPolicy":{"shape":"AvailabilityZoneImpairmentPolicy"},
+        "SkipZonalShiftValidation":{"shape":"SkipZonalShiftValidation"},
+        "CapacityReservationSpecification":{"shape":"CapacityReservationSpecification"}
       }
+    },
+    "UpdatePlacementGroupParam":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "VCpuCountRequest":{
       "type":"structure",
@@ -3631,6 +3752,12 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "XmlStringMaxLen5000":{
+      "type":"string",
+      "max":5000,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
     "XmlStringMaxLen511":{
       "type":"string",
       "max":511,
@@ -3658,6 +3785,7 @@
       "type":"string",
       "max":21847,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
-    }
+    },
+    "ZonalShiftEnabled":{"type":"boolean"}
   }
 }

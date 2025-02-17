@@ -3,10 +3,9 @@ namespace Aws\Test\S3Control;
 
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\CommandInterface;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
-use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
-use Aws\Test\S3Control\S3ControlTestingTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -45,7 +44,9 @@ class EndpointArnMiddlewareTest extends TestCase
         $options['http_handler'] = function($req) {
             return Promise\Create::promiseFor(new Response());
         };
-        $s3control = $this->getTestClient($options);
+        $s3control = $this->getTestClient(
+            $options + ['endpoint_provider' => PartitionEndpointProvider::defaultProvider()]
+        );
         $command = $s3control->getCommand($cmdName, $cmdParams);
 
         $command->getHandlerList()->appendSign(
@@ -439,7 +440,9 @@ class EndpointArnMiddlewareTest extends TestCase
         $options['http_handler'] = function($req) {
             return Promise\Create::promiseFor(new Response());
         };
-        $s3control = $this->getTestClient($options);
+        $s3control = $this->getTestClient(
+            $options + ['endpoint_provider' => PartitionEndpointProvider::defaultProvider()]
+        );
         $command = $s3control->getCommand($cmdName, $cmdParams);
 
         try {
@@ -466,8 +469,8 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_arn_region' => false,
                 ],
-                new UnresolvedEndpointException(
-                    'Invalid configuration: region from ARN `us-east-1` does not match client region `us-west-2` and UseArnRegion is `false`'
+                new InvalidRegionException(
+                    'The region specified in the ARN (us-east-1) does not match the client region (us-west-2).'
                 ),
             ],
             // Outposts accesspoint ARN, different partition
@@ -481,8 +484,8 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_arn_region' => true,
                 ],
-                new UnresolvedEndpointException(
-                    'Client was configured for partition `aws` but ARN has `aws-cn`'
+                new InvalidRegionException(
+                    "The supplied ARN partition does not match the client's partition."
                 ),
             ],
             // Outposts accesspoint ARN, fips, use_arn_region true
@@ -495,8 +498,8 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-gov-east-1',
                 ],
-                new UnresolvedEndpointException(
-                    'Client was configured for partition `aws-us-gov` but ARN has `aws`'
+                new InvalidArnException(
+                    'Provided ARN was not a valid S3 access point ARN.'
                 )
             ],
             // Outposts bucket ARN, fips, use_arn_region true
@@ -509,7 +512,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-gov-east-1',
                 ],
-                new UnresolvedEndpointException("Client was configured for partition `aws-us-gov` but ARN has `aws`")
+                new InvalidRegionException("Fips is currently not supported with S3 Outposts access points. Please provide a non-fips region or do not supply an access point ARN.")
             ],
             // Outposts accesspoint ARN, invalid ARN
             [
@@ -521,7 +524,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new UnresolvedEndpointException('Invalid ARN: The Outpost Id was not set'),
+                new InvalidArnException('Provided ARN was not a valid S3 access point ARN.'),
             ],
             // Outposts bucket ARN, different partition
             [
@@ -533,8 +536,8 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new UnresolvedEndpointException(
-                    'Client was configured for partition `aws` but ARN has `aws-cn`'
+                new InvalidRegionException(
+                    "The supplied ARN partition does not match the client's partition."
                 ),
             ],
             // Outposts bucket ARN, fips, use_arn_region false
@@ -548,8 +551,8 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'fips-us-gov-east-1',
                     'use_arn_region' => false
                 ],
-                new UnresolvedEndpointException(
-                    'Invalid configuration: region from ARN `fips-us-gov-west-1` does not match client region `us-gov-east-1` and UseArnRegion is `false`'
+                new InvalidRegionException(
+                    "The region specified in the ARN (fips-us-gov-west-1) does not match the client region (us-gov-east-1)."
                 )
             ],
             // Outposts bucket ARN, invalid ARN
@@ -562,7 +565,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                new UnresolvedEndpointException("Invalid ARN: The Outpost Id was not set"),
+                new InvalidArnException("Provided ARN was not a valid S3 bucket ARN."),
             ],
         ];
     }

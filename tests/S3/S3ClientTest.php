@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DateTimeResult;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -34,6 +36,7 @@ use Aws\Exception\UnresolvedEndpointException;
 class S3ClientTest extends TestCase
 {
     use UsesServiceTrait;
+    const OPERATIONS_WITH_PARAMS_LOCATION = __DIR__ . '/fixtures/operations-with-params.json';
 
     public function testCanUseBucketEndpoint()
     {
@@ -509,9 +512,16 @@ class S3ClientTest extends TestCase
     public function testAddsLocationConstraintAutomatically($region, $target, $command, $contains)
     {
         $client = $this->getTestClient('S3', ['region' => $region]);
-        $params = ['Bucket' => 'foo'];
+        $params = [
+            'Bucket' => 'foo',
+            'CreateBucketConfiguration' => [
+                'Bucket' => [
+                    'Type' => 'foo'
+                ]
+            ]
+        ];
         if ($region !== $target) {
-            $params['CreateBucketConfiguration'] = ['LocationConstraint' => $target];
+            $params['CreateBucketConfiguration']['LocationConstraint'] = $target;
         }
         $command = $client->getCommand($command, $params);
 
@@ -521,6 +531,12 @@ class S3ClientTest extends TestCase
             $this->assertStringContainsString($text, $body);
         } else {
             $this->assertStringNotContainsString($text, $body);
+        }
+        //ensures original configuration is not overwritten
+        if ($target !== 'us-east-1'
+            && $command->getName() === 'CreateBucket'
+        ) {
+            $this->assertStringContainsString('<Bucket><Type>foo</Type></Bucket>', $body);
         }
     }
 
@@ -532,6 +548,33 @@ class S3ClientTest extends TestCase
             ['us-west-2', 'us-west-2', 'HeadBucket',   false],
             ['us-west-2', 'eu-west-1', 'CreateBucket', true],
             ['us-west-2', 'us-east-1', 'CreateBucket', false],
+        ];
+    }
+
+    /**
+     * @param string $bucket
+     *
+     * @dataProvider directoryBucketLocationConstraintProvider
+     */
+    public function testDoesNotAddLocationConstraintForDirectoryBuckets(
+        string $bucket
+    ): void
+    {
+        $client = $this->getTestClient('s3');
+        $params = ['Bucket' => $bucket];
+        $command = $client->getCommand('CreateBucket', $params);
+        $body = (string) \Aws\serialize($command)->getBody();
+        $this->assertStringNotContainsString('LocationConstraint', $body);
+    }
+
+    public function directoryBucketLocationConstraintProvider(): array
+    {
+        return [
+            ['bucket-base-name--usw2-az1--x-s3'],
+            ['mybucket123--euw1-az2--x-s3'],
+            ['test_bucket_name--apne1-az3--x-s3'],
+            ['valid-name--aps1-az4--x-s3'],
+            ['s3_express_demo_directory_bucket--usw2-az1--x-s3']
         ];
     }
 
@@ -634,25 +677,23 @@ class S3ClientTest extends TestCase
     }
 
     /**
-     * @dataProvider successErrorResponseProvider
+     * @dataProvider s3OperationsProvider
      *
-     * @param Response $failingSuccess
      * @param string   $operation
      * @param array    $payload
      * @param array    $retryOptions
      */
     public function testRetries200Errors(
-        Response $failingSuccess,
-        $operation,
+        string $operation,
         array $payload,
-        $retryOptions
+        array $retryOptions
     ) {
         $retries = $retryOptions['max_attempts'];
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
             'retries' => $retryOptions,
-            'http_handler' => function () use (&$retries, $failingSuccess) {
+            'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(
                         200,
@@ -661,7 +702,7 @@ class S3ClientTest extends TestCase
                     ));
                 }
 
-                return new FulfilledPromise($failingSuccess);
+                return new FulfilledPromise(new Response(200, [], $this->getErrorXml()));
             },
         ]);
 
@@ -670,166 +711,45 @@ class S3ClientTest extends TestCase
         $this->assertSame(0, $retries);
     }
 
-    public function successErrorResponseProvider()
+    /**
+     * This provider returns a set of s3 operations along with
+     * the required params, and a retry configuration.
+     *
+     * @return \Generator
+     */
+    public function s3OperationsProvider(): \Generator
     {
-        return [
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'copyObject',
-                [
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'uploadPartCopy',
-                [
-                    'PartNumber' => 1,
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                    'CopySource' => 'baz',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getErrorXml()),
-                'completeMultipartUpload',
-                [
-                    'UploadId' => PHP_INT_SIZE,
-                    'Bucket' => 'foo',
-                    'Key' => 'bar',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'legacy',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'standard',
-                    'max_attempts' => 11
-                ],
-            ],
-            [
-                new Response(200, [], $this->getMalformedXml()),
-                'listObjects',
-                [
-                    'Bucket' => 'foo',
-                ],
-                [
-                    'mode' => 'adaptive',
-                    'max_attempts' => 11
-                ],
-            ],
+        $operations = $this->loadOperations();
+        $retryModes = [
+            'legacy',
+            'standard',
+            'adaptive'
         ];
+
+        foreach ($operations as $operation) {
+            foreach ($retryModes as $retryMode) {
+                yield ($operation['operation'] . '/' . $retryMode) => [
+                    $operation['operation'],
+                    $operation['params'],
+                    [
+                        'mode' => $retryMode,
+                        'max_attempts' => 5
+                    ],
+                ];
+            }
+        }
+    }
+
+    /**
+     * Load a list of s3 operations along with the required params populated.
+     *
+     * @return array
+     */
+    private function loadOperations(): array
+    {
+        $jsonContent = file_get_contents(self::OPERATIONS_WITH_PARAMS_LOCATION);
+
+        return json_decode($jsonContent, true);
     }
 
     private function getErrorXml()
@@ -1715,7 +1635,7 @@ EOXML;
 
     public function testAppliesAmbiguousSuccessParsing()
     {
-        $this->expectExceptionMessage("An error connecting to the service occurred while performing the CopyObject operation");
+        $this->expectExceptionMessage("Error parsing response for CopyObject: AWS parsing error: Error parsing XML: String could not be parsed as XML");
         $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $httpHandler = function ($request, array $options) {
             return Promise\Create::promiseFor(
@@ -2383,39 +2303,14 @@ EOXML;
     /**
      * @dataProvider addMD5Provider
      */
-    public function testAutomaticallyComputesMD5($options, $operation)
+    public function testAddContentMd5EmitsDeprecationNotice($options, $operation)
     {
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('S3 no longer supports MD5 checksums.');
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);
         $options['AddContentMD5'] = true;
         $command = $s3->getCommand($operation, $options);
-        $command->getHandlerList()->appendSign(
-            Middleware::tap(function ($cmd, $req) {
-                $this->assertSame(
-                    'CY9rzUYh03PK3k6DJie09g==',
-                    $req->getHeader('Content-MD5')[0]
-                );
-            })
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @dataProvider addMD5Provider
-     */
-    public function testDoesNotComputeMD5($options, $operation)
-    {
-        $s3 = $this->getTestClient('s3');
-        $this->addMockResults($s3, [[]]);
-        $options['AddContentMD5'] = false;
-        $command = $s3->getCommand($operation, $options);
-        $command->getHandlerList()->appendSign(
-            Middleware::tap(function ($cmd, $req) {
-                $this->assertFalse(
-                    $req->hasHeader('Content-MD5')
-                );
-            })
-        );
         $s3->execute($command);
     }
 
@@ -2497,11 +2392,508 @@ EOXML;
         putenv('AWS_REGION=');
     }
 
+    public function testExpiresStringInResult()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    ['expires' => '1989-08-05']
+                ));
+            },
+        ]);
+        $result = $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertInstanceOf(DateTimeResult::class, $result['Expires']);
+        $this->assertEquals('1989-08-05', $result['ExpiresString']);
+    }
+
+    public function testEmitsWarningWhenExpiresUnparseable()
+    {
+        $this->expectWarning();
+        $this->expectWarningMessage(
+            "Failed to parse the `expires` header as a timestamp due to "
+            . " an invalid timestamp format.\nPlease refer to `ExpiresString` "
+            . "for the unparsed string format of this header.\n"
+        );
+
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'http_handler' => function (RequestInterface $request) {
+                return Promise\Create::promiseFor(new Response(
+                    200,
+                    ['expires' => 'this-is-not-a-timestamp']
+                ));
+            },
+        ]);
+
+        $client->headObject(['Bucket' => 'foo', 'Key' => 'bar']);
+    }
+
+    public function testExpiresRemainsTimestamp() {
+        //S3 will be changing `Expires` type from `timestamp` to `string`
+        // soon.  This test ensures backward compatibility
+        $apiProvider = static function () {
+            return [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                    'protocol' => 'rest-xml'
+                ],
+                'shapes' => [
+                    'Expires' => [
+                        'type' => 'string'
+                    ],
+                ],
+            ];
+        };
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'api_provider' => $apiProvider
+        ]);
+
+        $api = $s3Client->getApi();
+        $expiresType = $api->getDefinition()['shapes']['Expires']['type'];
+        $this->assertEquals('timestamp', $expiresType);
+    }
+
+    public function testBucketNotModifiedWithLegacyEndpointProvider()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'endpoint_provider' => PartitionEndpointProvider::defaultProvider()
+        ]);
+
+        $operations = $client->getApi()->getDefinition()['operations'];
+        $this->assertEquals('/{Bucket}', $operations['ListObjects']['http']['requestUri']);
+        $this->assertEquals(
+            '/{Bucket}?versions',
+            $operations['ListObjectVersions']['http']['requestUri']
+        );
+    }
+
     public function builtinRegionProvider()
     {
         return [
             ['us-east-1' , true],
             ['us-west-2', false]
         ];
+    }
+
+    /**
+     * This test makes sure that not parsable xml errors are retried.
+     * This handling is specified in the s3 parser implementation.
+     *
+     * @dataProvider clientRetrySettingsProvider
+     * @param array $retrySettings
+     *
+     * @return void
+     */
+    public function testS3RetriesOnNotParsableBody(array $retrySettings)
+    {
+        $retries = $retrySettings['max_attempts'];
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'version' => 'latest',
+            'retries' => $retrySettings,
+            'http_handler' => function (RequestInterface $req) use (&$retries) {
+                if (0 === --$retries) {
+                    return new Response(200, [], $this->getWellFormedXml());
+                }
+
+                return new Response(200, [], $this->getMalformedXml());
+            }
+        ]);
+        $client->listBuckets();
+        $this->assertEquals(0, $retries);
+    }
+  
+  /**
+     * @param string $bucketName
+     * @param bool $expected
+     *
+     * @return void
+     *
+     * @dataProvider directoryBucketProvider
+     */
+    public function testIsDirectoryBucket(string $bucketName, bool $expected): void
+    {
+        $client = $this->getTestClient('s3');
+        $this->assertEquals($expected, $client::isDirectoryBucket($bucketName));
+    }
+
+    public function directoryBucketProvider(): array
+    {
+        return [
+            ['bucket-base-name--usw2-az1--x-s3', true],
+            ['mybucket123--euw1-az2--x-s3', true],
+            ['test_bucket_name--apne1-az3--x-s3', true],
+            ['valid-name--aps1-az4--x-s3', true],
+            ['s3_express_demo_directory_bucket--usw2-az1--x-s3', true],
+            ['bucket-name--usw2-az1--s3alias', false], // ends with -s3alias
+            ['bucketname--usw2-az1--ol-s3', false],    // ends with --ol-s3
+            ['bucketname--usw2-az1.mrap', false],      // ends with .mrap
+            ['invalid_bucket_name--az1--x-s3', false], // missing region in azid
+            ['name--usw2-az1', false],                 // missing --x-s3 at the end
+            ['wrong-format--usw2az1--x-s3', false],    // missing hyphen in azid part
+            ['too-short--x-s3', false],                // invalid azid format, missing prefix
+        ];
+    }
+
+    public function testAddCrc32ForDirectoryBucketsAsAppropriate()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand('putBucketPolicy', [
+            'Bucket' => 'mybucket--use1-az1--x-s3',
+            'Policy' => 'policy'
+        ]);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) {
+                $this->assertFalse($request->hasHeader('Content-MD5'));
+                $this->assertSame('8H0FFg==', $request->getHeaderLine('x-amz-checksum-crc32'));
+            })
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @dataProvider getContentSha256UseCases
+     */
+    public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand($operation, $args);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) use ($hashAdded, $hashValue) {
+                $this->assertSame($hashAdded, $request->hasHeader('x-amz-content-sha256'));
+                $this->assertEquals($hashValue, $request->getHeaderLine('x-amz-content-sha256'));
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function getContentSha256UseCases()
+    {
+        $hash = 'SHA256HASH';
+
+        return [
+            // Do nothing if ContentSHA256 was not provided.
+            [
+                'PutObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'Body' => 'baz'],
+                false,
+                ''
+            ],
+            // Gets added for operations that allow it.
+            [
+                'PutObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'Body' => 'baz', 'ContentSHA256' => $hash],
+                true,
+                $hash
+            ],
+            // Not added for operations that do not allow it.
+            [
+                'GetObject',
+                ['Bucket' => 'foo', 'Key' => 'bar', 'ContentSHA256' => $hash],
+                false,
+                '',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getFlexibleChecksumUseCases
+     */
+    public function testAddsFlexibleChecksumAsAppropriate($operation, $clientArgs, $operationArgs, $headerAdded, $headerValue)
+    {
+        if (isset($operationArgs['ChecksumAlgorithm'])
+            && $operationArgs['ChecksumAlgorithm'] === 'crc32c'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped("Cannot test crc32c without the CRT");
+        }
+        $s3 = $this->getTestClient('s3', $clientArgs);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand($operation, $operationArgs);
+        $command->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, RequestInterface $request) use ($headerAdded, $headerValue, $operationArgs) {
+                $checksumName = $operationArgs['ChecksumAlgorithm'] ?? "crc32";
+                if ($headerAdded) {
+                    $this->assertTrue($request->hasHeader("x-amz-checksum-{$checksumName}"));
+                }
+                $this->assertEquals($headerValue, $request->getHeaderLine("x-amz-checksum-{$checksumName}"));
+            })
+        );
+        $s3->execute($command);
+    }
+
+    public function getFlexibleChecksumUseCases()
+    {
+        return [
+            // httpChecksum not modeled
+            [
+                'GetObject',
+                [],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumMode' => 'ENABLED'
+                ],
+                false,
+                ''
+            ],
+            // default: when_supported. defaults to crc32
+            [
+                'PutObject',
+                [],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'abc'
+                ],
+                true,
+                'NSRBwg=='
+            ],
+            // when_required when not required and no requested algorithm
+            [
+                'PutObject',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'abc'
+                ],
+                false,
+                ''
+            ],
+            // when_required when required and no requested algorithm
+            [
+                'PutObjectLockConfiguration',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ObjectLockConfiguration' => []
+                ],
+                true,
+                'UHB63w=='
+            ],
+            // when_required when not required and requested algorithm
+            [
+                'PutObject',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'blah',
+                    'ChecksumAlgorithm' => 'crc32',
+                ],
+                true,
+                'zilhXA=='
+            ],
+            // when_supported and requested algorithm
+            [
+                'PutObject',
+                [],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'crc32c',
+                    'Body' => 'abc'
+                ],
+                true,
+                'Nks/tw=='
+            ],
+            // when_supported and requested algorithm
+            [
+                'PutObject',
+                [],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'sha256'
+                ],
+                true,
+                '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+            ],
+            // when_supported and requested algorithm
+            [
+                'PutObject',
+                [],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ChecksumAlgorithm' => 'SHA1'
+                ],
+                true,
+                '2jmj7l5rSw0yVb/vlWAYkK/YBwk='
+            ]
+        ];
+    }
+
+    /**
+     * @param array $clientConfig
+     * @return void
+     *
+     * @dataProvider responseChecksumValidationProvider
+     */
+    public function testResponseChecksumValidation(
+        array $clientConfig,
+        ?string $checksumAlgorithm,
+        ?string $mode
+    ): void
+    {
+        if ($checksumAlgorithm === 'CRC32C'
+            && !extension_loaded('awscrt')
+        ) {
+            $this->markTestSkipped("Cannot test crc32c without the awscrt");
+        }
+
+        $handler = static function (RequestInterface $request) use ($checksumAlgorithm) {
+            return Promise\Create::promiseFor(new Response(
+                200,
+                ['x-amz-checksum-' . $checksumAlgorithm => 'AAAAAA==']
+            ));
+        };
+        $client = $this->getTestClient('s3', $clientConfig + ['http_handler' => $handler]);
+
+
+        $result = $client->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            'ChecksumMode' => $mode
+        ]);
+
+        $this->assertEquals($checksumAlgorithm, $result['ChecksumValidated']);
+    }
+
+    public function responseChecksumValidationProvider(): array
+    {
+        return [
+            [
+                //default, when_supported, validates checksum for operation with modeled response checksums
+                [],
+                'CRC32',
+                null
+            ],
+            [
+                //default, when_supported, validates checksum for operation with modeled response checksums when
+                // CRT installed
+                [],
+                'CRC32C',
+                null
+            ],
+            [
+                // when_required, validates checksum for operation with modeled response checksums
+                // and mode is "enabled"
+                ['response_checksum_validation' => 'when_required'],
+                'CRC32',
+                'enabled'
+            ],
+            [
+                // when_required, validates checksum validation for operation with modeled response checksums
+                // and mode is "enabled" when CRT installed
+                ['response_checksum_validation' => 'when_required'],
+                'CRC32C',
+                'enabled'
+            ],
+            [
+                // when_required, skips checksum validation for operation with modeled response checksums
+                ['response_checksum_validation' => 'when_required'],
+                null,
+                null
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider checksumConfigProvider
+     * @return void
+     */
+    public function testChecksumConfigThrowsForInvalidInput(
+        string $option,
+        string $invalidOption
+    ): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'valid values are: when_supported | when_required.'
+        );
+        $this->getTestClient(
+            's3',
+            [$option => 'foo']
+        );
+    }
+
+    public function checksumConfigProvider()
+    {
+        return [
+            ['request_checksum_calculation', 'foo'],
+            ['response_checksum_validation', 'foo']
+        ];
+    }
+
+    public function testCreatesPresignedRequestsWithoutChecksumByDefault()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand('PutObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringNotContainsString('x-amz-checksum-', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-', $url);
+    }
+
+    public function testCreatesPresignedRequestsWithRequestedChecksumAlgorithm()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar', 'ChecksumAlgorithm' => 'crc32']
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('x-amz-checksum-crc32=AAAAAA%3D%3D', $url);
+        $this->assertStringContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
+    }
+
+    public function testCreatesPresignedRequestsWithContentSha256Value()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar', 'ContentSHA256' => 'foo']
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('X-Amz-Content-Sha256=foo', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-algorithm', $url);
+        $this->assertStringNotContainsString('x-amz-checksum', $url);
+    }
+
+    public function testCreatesPresignedPutRequestsWithChecksumValue()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'PutObject',
+            ['Bucket' => 'foo', 'Key' => 'bar','ChecksumCRC32' => 'AAAAAA==']
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringContainsString('x-amz-checksum-crc32=AAAAAA%3D%3D', $url);
+        $this->assertStringNotContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
     }
 }

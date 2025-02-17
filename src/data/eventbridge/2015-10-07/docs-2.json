@@ -6,7 +6,7 @@
     "CancelReplay": "<p>Cancels the specified replay.</p>",
     "CreateApiDestination": "<p>Creates an API destination, which is an HTTP invocation endpoint configured as a target for events.</p> <p>API destinations do not support private destinations, such as interface VPC endpoints.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-api-destinations.html\">API destinations</a> in the <i>EventBridge User Guide</i>.</p>",
     "CreateArchive": "<p>Creates an archive of events with the specified settings. When you create an archive, incoming events might not immediately start being sent to the archive. Allow a short period of time for changes to take effect. If you do not specify a pattern to filter events sent to the archive, all events are sent to the archive except replayed events. Replayed events are not sent to an archive.</p> <note> <p>Archives and schema discovery are not supported for event buses encrypted using a customer managed key. EventBridge returns an error if:</p> <ul> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateArchive.html\">CreateArchive</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/schema-reference/v1-discoverers.html#CreateDiscoverer\">CreateDiscoverer</a> </code> on an event bus set to use a customer managed key for encryption.</p> </li> <li> <p>You call <code> <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UpdatedEventBus.html\">UpdatedEventBus</a> </code> to set a customer managed key on an event bus with an archives or schema discovery enabled.</p> </li> </ul> <p>To enable archives or schema discovery on an event bus, choose to use an Amazon Web Services owned key. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-encryption.html\">Data encryption in EventBridge</a> in the <i>Amazon EventBridge User Guide</i>.</p> </note>",
-    "CreateConnection": "<p>Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.</p>",
+    "CreateConnection": "<p>Creates a connection. A connection defines the authorization type and credentials to use for authorization with an API destination HTTP endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection.html\">Connections for endpoint targets</a> in the <i>Amazon EventBridge User Guide</i>.</p>",
     "CreateEndpoint": "<p>Creates a global endpoint. Global endpoints improve your application's availability by making it regional-fault tolerant. To do this, you define a primary and secondary Region with event buses in each Region. You also create a Amazon Route 53 health check that will tell EventBridge to route events to the secondary Region when an \"unhealthy\" state is encountered and events will be routed back to the primary Region when the health check reports a \"healthy\" state.</p>",
     "CreateEventBus": "<p>Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services, or it can be a partner event bus which can be matched to a partner event source.</p>",
     "CreatePartnerEventSource": "<p>Called by an SaaS partner to create a partner event source. This operation is not used by Amazon Web Services customers.</p> <p>Each partner event source can be used by one Amazon Web Services account to create a matching partner event bus in that Amazon Web Services account. A SaaS partner must create one partner event source for each Amazon Web Services account that wants to receive those event types. </p> <p>A partner event source creates events based on resources within the SaaS partner's service or application.</p> <p>An Amazon Web Services account that creates a partner event bus that matches the partner event source can use that event bus to receive events from the partner, and then process them using Amazon Web Services Events rules and targets.</p> <p>Partner event source names follow this format:</p> <p> <code> <i>partner_name</i>/<i>event_namespace</i>/<i>event_name</i> </code> </p> <ul> <li> <p> <i>partner_name</i> is determined during partner registration, and identifies the partner to Amazon Web Services customers. </p> </li> <li> <p> <i>event_namespace</i> is determined by the partner, and is a way for the partner to categorize their events.</p> </li> <li> <p> <i>event_name</i> is determined by the partner, and should uniquely identify an event-generating resource within the partner system. </p> <p>The <i>event_name</i> must be unique across all Amazon Web Services customers. This is because the event source is a shared resource between the partner and customer accounts, and each partner event source unique in the partner account.</p> </li> </ul> <p>The combination of <i>event_namespace</i> and <i>event_name</i> should help Amazon Web Services customers decide whether to create an event bus to receive these events.</p>",
@@ -43,17 +43,17 @@
     "ListRules": "<p>Lists your Amazon EventBridge rules. You can either list all the rules or you can provide a prefix to match to the rule names.</p> <p>The maximum number of results per page for requests is 100.</p> <p>ListRules does not list the targets of a rule. To see the targets associated with a rule, use <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_ListTargetsByRule.html\">ListTargetsByRule</a>.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with an EventBridge resource. In EventBridge, rules and event buses can be tagged.</p>",
     "ListTargetsByRule": "<p>Lists the targets assigned to the specified rule.</p> <p>The maximum number of results per page for requests is 100.</p>",
-    "PutEvents": "<p>Sends custom events to Amazon EventBridge so that they can be matched to rules.</p> <p>The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html\">Calculating PutEvents event entry size</a> in the <i> <i>Amazon EventBridge User Guide</i> </i> </p> <p>PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.</p> <note> <p>PutEvents will only process nested JSON up to 1100 levels deep.</p> </note>",
+    "PutEvents": "<p>Sends custom events to Amazon EventBridge so that they can be matched to rules.</p> <p>The maximum size for a PutEvents event entry is 256 KB. Entry size is calculated including the event and any necessary characters and keys of the JSON representation of the event. To learn more, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html\">Calculating PutEvents event entry size</a> in the <i> <i>Amazon EventBridge User Guide</i> </i> </p> <p>PutEvents accepts the data in JSON format. For the JSON number (integer) data type, the constraints are: a minimum value of -9,223,372,036,854,775,808 and a maximum value of 9,223,372,036,854,775,807.</p> <note> <p>PutEvents will only process nested JSON up to 1000 levels deep.</p> </note>",
     "PutPartnerEvents": "<p>This is used by SaaS partners to write events to a customer's partner event bus. Amazon Web Services customers do not use this operation.</p> <p>For information on calculating event batch size, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-putevent-size.html\">Calculating EventBridge PutEvents event entry size</a> in the <i>EventBridge User Guide</i>.</p>",
-    "PutPermission": "<p>Running <code>PutPermission</code> permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified <i>event bus</i>. Amazon EventBridge (CloudWatch Events) rules in your account are triggered by these events arriving to an event bus in your account. </p> <p>For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.</p> <p>To enable multiple Amazon Web Services accounts to put events to your event bus, run <code>PutPermission</code> once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run <code>PutPermission</code> once specifying <code>Principal</code> as \"*\" and specifying the Amazon Web Services organization ID in <code>Condition</code>, to grant permissions to all accounts in that organization.</p> <p>If you grant permissions using an organization, then accounts in that organization must specify a <code>RoleArn</code> with proper permissions when they use <code>PutTarget</code> to add your account's event bus as a target. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html\">Sending and Receiving Events Between Amazon Web Services Accounts</a> in the <i>Amazon EventBridge User Guide</i>.</p> <p>The permission policy on the event bus cannot exceed 10 KB in size.</p>",
-    "PutRule": "<p>Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html\">DisableRule</a>.</p> <p>A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html\">CreateEventBus</a>.</p> <p>If you are updating an existing rule, the rule is replaced with what you specify in this <code>PutRule</code> command. If you omit arguments in <code>PutRule</code>, the old values for those arguments are not kept. Instead, they are replaced with null values.</p> <p>When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.</p> <p>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.</p> <p>When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the <code>PutRule</code> operation and assign tags, you must have both the <code>events:PutRule</code> and <code>events:TagResource</code> permissions.</p> <p>If you are updating an existing rule, any tags you specify in the <code>PutRule</code> operation are ignored. To update the tags of an existing rule, use <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html\">TagResource</a> and <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p> <p>Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p> <p>In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.</p> <p>To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. </p> <p>An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html\">Managing Your Costs with Budgets</a>.</p>",
+    "PutPermission": "<p>Running <code>PutPermission</code> permits the specified Amazon Web Services account or Amazon Web Services organization to put events to the specified <i>event bus</i>. Amazon EventBridge rules in your account are triggered by these events arriving to an event bus in your account. </p> <p>For another account to send events to your account, that external account must have an EventBridge rule with your account's event bus as a target.</p> <p>To enable multiple Amazon Web Services accounts to put events to your event bus, run <code>PutPermission</code> once for each of these accounts. Or, if all the accounts are members of the same Amazon Web Services organization, you can run <code>PutPermission</code> once specifying <code>Principal</code> as \"*\" and specifying the Amazon Web Services organization ID in <code>Condition</code>, to grant permissions to all accounts in that organization.</p> <p>If you grant permissions using an organization, then accounts in that organization must specify a <code>RoleArn</code> with proper permissions when they use <code>PutTarget</code> to add your account's event bus as a target. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html\">Sending and Receiving Events Between Amazon Web Services Accounts</a> in the <i>Amazon EventBridge User Guide</i>.</p> <p>The permission policy on the event bus cannot exceed 10 KB in size.</p>",
+    "PutRule": "<p>Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html\">DisableRule</a>.</p> <p>A single rule watches for events from a single event bus. Events generated by Amazon Web Services services go to your account's default event bus. Events generated by SaaS partner services or applications go to the matching partner event bus. If you have custom applications or services, you can specify whether their events go to your default event bus or a custom event bus that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_CreateEventBus.html\">CreateEventBus</a>.</p> <p>If you are updating an existing rule, the rule is replaced with what you specify in this <code>PutRule</code> command. If you omit arguments in <code>PutRule</code>, the old values for those arguments are not kept. Instead, they are replaced with null values.</p> <p>When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Allow a short period of time for changes to take effect.</p> <p>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.</p> <p>When you initially create a rule, you can optionally assign one or more tags to the rule. Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only rules with certain tag values. To use the <code>PutRule</code> operation and assign tags, you must have both the <code>events:PutRule</code> and <code>events:TagResource</code> permissions.</p> <p>If you are updating an existing rule, any tags you specify in the <code>PutRule</code> operation are ignored. To update the tags of an existing rule, use <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html\">TagResource</a> and <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p> <p>Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p> <p>In EventBridge, it is possible to create rules that lead to infinite loops, where a rule is fired repeatedly. For example, a rule might detect that ACLs have changed on an S3 bucket, and trigger software to change them to the desired state. If the rule is not written carefully, the subsequent change to the ACLs fires the rule again, creating an infinite loop.</p> <p>To prevent this, write the rules so that the triggered actions do not re-fire the same rule. For example, your rule could fire only if ACLs are found to be in a bad state, instead of after any change. </p> <p>An infinite loop can quickly cause higher than expected charges. We recommend that you use budgeting, which alerts you when charges exceed your specified limit. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html\">Managing Your Costs with Budgets</a>.</p> <p>To create a rule that filters for management events from Amazon Web Services services, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html#eb-service-event-cloudtrail-management\">Receiving read-only management events from Amazon Web Services services</a> in the <i>EventBridge User Guide</i>.</p>",
     "PutTargets": "<p>Adds the specified targets to the specified rule, or updates the targets if they are already associated with the rule.</p> <p>Targets are the resources that are invoked when a rule is triggered.</p> <p>The maximum number of entries per request is 10.</p> <note> <p>Each rule can have up to five (5) targets associated with it at one time.</p> </note> <p>For a list of services you can configure as targets for events, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-targets.html\">EventBridge targets</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p> <p>Creating rules with built-in targets is supported only in the Amazon Web Services Management Console. The built-in targets are:</p> <ul> <li> <p> <code>Amazon EBS CreateSnapshot API call</code> </p> </li> <li> <p> <code>Amazon EC2 RebootInstances API call</code> </p> </li> <li> <p> <code>Amazon EC2 StopInstances API call</code> </p> </li> <li> <p> <code>Amazon EC2 TerminateInstances API call</code> </p> </li> </ul> <p>For some target types, <code>PutTargets</code> provides target-specific parameters. If the target is a Kinesis data stream, you can optionally specify which shard the event goes to by using the <code>KinesisParameters</code> argument. To invoke a command on multiple EC2 instances with one rule, you can use the <code>RunCommandParameters</code> field.</p> <p>To be able to make API calls against the resources that you own, Amazon EventBridge needs the appropriate permissions: </p> <ul> <li> <p>For Lambda and Amazon SNS resources, EventBridge relies on resource-based policies.</p> </li> <li> <p>For EC2 instances, Kinesis Data Streams, Step Functions state machines and API Gateway APIs, EventBridge relies on IAM roles that you specify in the <code>RoleARN</code> argument in <code>PutTargets</code>.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/auth-and-access-control-eventbridge.html\">Authentication and Access Control</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p> <p>If another Amazon Web Services account is in the same region and has granted you permission (using <code>PutPermission</code>), you can send events to that account. Set that account's event bus as a target of the rules in your account. To send the matched events to the other account, specify that account's event bus as the <code>Arn</code> value when you run <code>PutTargets</code>. If your account sends events to another account, your account is charged for each sent event. Each event sent to another account is charged as a custom event. The account receiving the event is not charged. For more information, see <a href=\"http://aws.amazon.com/eventbridge/pricing/\">Amazon EventBridge Pricing</a>.</p> <note> <p> <code>Input</code>, <code>InputPath</code>, and <code>InputTransformer</code> are not available with <code>PutTarget</code> if the target is an event bus of a different Amazon Web Services account.</p> </note> <p>If you are setting the event bus of another account as the target, and that account granted permission to your account through an organization instead of directly by the account ID, then you must specify a <code>RoleArn</code> with proper permissions in the <code>Target</code> structure. For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-cross-account-event-delivery.html\">Sending and Receiving Events Between Amazon Web Services Accounts</a> in the <i>Amazon EventBridge User Guide</i>.</p> <note> <p>If you have an IAM role on a cross-account event bus target, a <code>PutTargets</code> call without a role on the same target (same <code>Id</code> and <code>Arn</code>) will not remove the role.</p> </note> <p>For more information about enabling cross-account events, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_PutPermission.html\">PutPermission</a>.</p> <p> <b>Input</b>, <b>InputPath</b>, and <b>InputTransformer</b> are mutually exclusive and optional parameters of a target. When a rule is triggered due to a matched event:</p> <ul> <li> <p>If none of the following arguments are specified for a target, then the entire event is passed to the target in JSON format (unless the target is Amazon EC2 Run Command or Amazon ECS task, in which case nothing from the event is passed to the target).</p> </li> <li> <p>If <b>Input</b> is specified in the form of valid JSON, then the matched event is overridden with this constant.</p> </li> <li> <p>If <b>InputPath</b> is specified in the form of JSONPath (for example, <code>$.detail</code>), then only the part of the event specified in the path is passed to the target (for example, only the detail part of the event is passed).</p> </li> <li> <p>If <b>InputTransformer</b> is specified, then one or more specified JSONPaths are extracted from the event and used as values in a template that you specify as the input to the target.</p> </li> </ul> <p>When you specify <code>InputPath</code> or <code>InputTransformer</code>, you must use JSON dot notation, not bracket notation.</p> <p>When you add targets to a rule and the associated rule triggers soon after, new or updated targets might not be immediately invoked. Allow a short period of time for changes to take effect.</p> <p>This action can partially fail if too many requests are made at the same time. If that happens, <code>FailedEntryCount</code> is non-zero in the response and each entry in <code>FailedEntries</code> provides the ID of the failed target and the error code.</p>",
     "RemovePermission": "<p>Revokes the permission of another Amazon Web Services account to be able to put events to the specified event bus. Specify the account to revoke by the <code>StatementId</code> value that you associated with the account when you granted it permission with <code>PutPermission</code>. You can find the <code>StatementId</code> by using <a href=\"https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DescribeEventBus.html\">DescribeEventBus</a>.</p>",
     "RemoveTargets": "<p>Removes the specified targets from the specified rule. When the rule is triggered, those targets are no longer be invoked.</p> <note> <p>A successful execution of <code>RemoveTargets</code> doesn't guarantee all targets are removed from the rule, it means that the target(s) listed in the request are removed.</p> </note> <p>When you remove a target, when the associated rule triggers, removed targets might continue to be invoked. Allow a short period of time for changes to take effect.</p> <p>This action can partially fail if too many requests are made at the same time. If that happens, <code>FailedEntryCount</code> is non-zero in the response and each entry in <code>FailedEntries</code> provides the ID of the failed target and the error code.</p> <p>The maximum number of entries per request is 10.</p>",
     "StartReplay": "<p>Starts the specified replay. Events are not necessarily replayed in the exact same order that they were added to the archive. A replay processes events to replay based on the time in the event, and replays them using 1 minute intervals. If you specify an <code>EventStartTime</code> and an <code>EventEndTime</code> that covers a 20 minute time range, the events are replayed from the first minute of that 20 minute range first. Then the events from the second minute are replayed. You can use <code>DescribeReplay</code> to determine the progress of a replay. The value returned for <code>EventLastReplayedTime</code> indicates the time within the specified time range associated with the last event replayed.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified EventBridge resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In EventBridge, rules and event buses can be tagged.</p> <p>Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.</p> <p>You can use the <code>TagResource</code> action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource.</p>",
     "TestEventPattern": "<p>Tests whether the specified event pattern matches the provided event.</p> <p>Most services in Amazon Web Services treat : or / as the same character in Amazon Resource Names (ARNs). However, EventBridge uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p>",
-    "UntagResource": "<p>Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge (CloudWatch Events), rules and event buses can be tagged.</p>",
+    "UntagResource": "<p>Removes one or more tags from the specified EventBridge resource. In Amazon EventBridge, rules and event buses can be tagged.</p>",
     "UpdateApiDestination": "<p>Updates an API destination.</p>",
     "UpdateArchive": "<p>Updates the specified archive.</p>",
     "UpdateConnection": "<p>Updates settings for a connection.</p>",
@@ -61,6 +61,11 @@
     "UpdateEventBus": "<p>Updates the specified event bus.</p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have the necessary permissons for this action.</p>",
+      "refs": {
+      }
+    },
     "AccountId": {
       "base": null,
       "refs": {
@@ -136,7 +141,7 @@
     "ApiDestinationResponseList": {
       "base": null,
       "refs": {
-        "ListApiDestinationsResponse$ApiDestinations": "<p>An array of <code>ApiDestination</code> objects that include information about an API destination.</p>"
+        "ListApiDestinationsResponse$ApiDestinations": "<p>An array that includes information about each API destination.</p>"
       }
     },
     "ApiDestinationState": {
@@ -258,7 +263,7 @@
         "CreateConnectionApiKeyAuthRequestParameters$ApiKeyValue": "<p>The value for the API key to use for authorization.</p>",
         "CreateConnectionBasicAuthRequestParameters$Password": "<p>The password associated with the user name to use for Basic authorization.</p>",
         "CreateConnectionOAuthClientRequestParameters$ClientSecret": "<p>The client secret associated with the client ID to use for OAuth authorization for the connection.</p>",
-        "UpdateConnectionApiKeyAuthRequestParameters$ApiKeyValue": "<p>The value associated with teh API key to use for authorization.</p>",
+        "UpdateConnectionApiKeyAuthRequestParameters$ApiKeyValue": "<p>The value associated with the API key to use for authorization.</p>",
         "UpdateConnectionBasicAuthRequestParameters$Password": "<p>The password associated with the user name to use for Basic authorization.</p>",
         "UpdateConnectionOAuthClientRequestParameters$ClientSecret": "<p>The client secret assciated with the client ID to use for OAuth authorization.</p>"
       }
@@ -290,8 +295,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "ConnectionBodyParameter$IsValueSecret": "<p>Specified whether the value is secret.</p>",
-        "ConnectionHeaderParameter$IsValueSecret": "<p>Specified whether the value is a secret.</p>",
+        "ConnectionBodyParameter$IsValueSecret": "<p>Specifies whether the value is secret.</p>",
+        "ConnectionHeaderParameter$IsValueSecret": "<p>Specifies whether the value is a secret.</p>",
         "ConnectionQueryStringParameter$IsValueSecret": "<p>Specifies whether the value is secret.</p>",
         "DeleteRuleRequest$Force": "<p>If this is a managed rule, created by an Amazon Web Services service on your behalf, you must specify <code>Force</code> as <code>True</code> to delete the rule. This parameter is ignored for rules that are not managed rules. You can check whether a rule is a managed rule by using <code>DescribeRule</code> or <code>ListRules</code> and checking the <code>ManagedBy</code> field of the response.</p>",
         "EcsParameters$EnableECSManagedTags": "<p>Specifies whether to enable Amazon ECS managed tags for the task. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-using-tags.html\">Tagging Your Amazon ECS Resources</a> in the Amazon Elastic Container Service Developer Guide. </p>",
@@ -382,7 +387,7 @@
       }
     },
     "ConnectionAuthResponseParameters": {
-      "base": "<p>Contains the authorization parameters to use for the connection.</p>",
+      "base": "<p>Tthe authorization parameters to use for the connection.</p>",
       "refs": {
         "DescribeConnectionResponse$AuthParameters": "<p>The parameters to use for authorization for the connection.</p>"
       }
@@ -397,7 +402,7 @@
       }
     },
     "ConnectionBasicAuthResponseParameters": {
-      "base": "<p>Contains the authorization parameters for the connection if Basic is specified as the authorization type.</p>",
+      "base": "<p>The authorization parameters for the connection if Basic is specified as the authorization type.</p>",
       "refs": {
         "ConnectionAuthResponseParameters$BasicAuthParameters": "<p>The authorization parameters for Basic authorization.</p>"
       }
@@ -411,7 +416,7 @@
     "ConnectionBodyParametersList": {
       "base": null,
       "refs": {
-        "ConnectionHttpParameters$BodyParameters": "<p>Contains additional body string parameters for the connection.</p>"
+        "ConnectionHttpParameters$BodyParameters": "<p>Any additional body string parameters for the connection.</p>"
       }
     },
     "ConnectionDescription": {
@@ -431,17 +436,17 @@
     "ConnectionHeaderParametersList": {
       "base": null,
       "refs": {
-        "ConnectionHttpParameters$HeaderParameters": "<p>Contains additional header parameters for the connection.</p>"
+        "ConnectionHttpParameters$HeaderParameters": "<p>Any additional header parameters for the connection.</p>"
       }
     },
     "ConnectionHttpParameters": {
-      "base": "<p>Contains additional parameters for the connection.</p>",
+      "base": "<p>Any additional parameters for the connection.</p>",
       "refs": {
         "ConnectionAuthResponseParameters$InvocationHttpParameters": "<p>Additional parameters for the connection that are passed through with every invocation to the HTTP endpoint.</p>",
         "ConnectionOAuthResponseParameters$OAuthHttpParameters": "<p>The additional HTTP parameters used for the OAuth authorization request.</p>",
-        "CreateConnectionAuthRequestParameters$InvocationHttpParameters": "<p>A <code>ConnectionHttpParameters</code> object that contains the API key authorization parameters to use for the connection. Note that if you include additional parameters for the target of a rule via <code>HttpParameters</code>, including query strings, the parameters added for the connection take precedence.</p>",
-        "CreateConnectionOAuthRequestParameters$OAuthHttpParameters": "<p>A <code>ConnectionHttpParameters</code> object that contains details about the additional parameters to use for the connection.</p>",
-        "UpdateConnectionAuthRequestParameters$InvocationHttpParameters": "<p>A <code>ConnectionHttpParameters</code> object that contains the additional parameters to use for the connection.</p>",
+        "CreateConnectionAuthRequestParameters$InvocationHttpParameters": "<p>The API key authorization parameters to use for the connection. Note that if you include additional parameters for the target of a rule via <code>HttpParameters</code>, including query strings, the parameters added for the connection take precedence.</p>",
+        "CreateConnectionOAuthRequestParameters$OAuthHttpParameters": "<p>Details about the additional parameters to use for the connection.</p>",
+        "UpdateConnectionAuthRequestParameters$InvocationHttpParameters": "<p>The additional parameters to use for the connection.</p>",
         "UpdateConnectionOAuthRequestParameters$OAuthHttpParameters": "<p>The additional HTTP parameters used for the OAuth authorization request.</p>"
       }
     },
@@ -459,9 +464,9 @@
       }
     },
     "ConnectionOAuthClientResponseParameters": {
-      "base": "<p>Contains the client response parameters for the connection when OAuth is specified as the authorization type.</p>",
+      "base": "<p>The client response parameters for the connection when OAuth is specified as the authorization type.</p>",
       "refs": {
-        "ConnectionOAuthResponseParameters$ClientParameters": "<p>A <code>ConnectionOAuthClientResponseParameters</code> object that contains details about the client parameters returned when OAuth is specified as the authorization type.</p>"
+        "ConnectionOAuthResponseParameters$ClientParameters": "<p>Details about the client parameters returned when OAuth is specified as the authorization type.</p>"
       }
     },
     "ConnectionOAuthHttpMethod": {
@@ -473,13 +478,13 @@
       }
     },
     "ConnectionOAuthResponseParameters": {
-      "base": "<p>Contains the response parameters when OAuth is specified as the authorization type.</p>",
+      "base": "<p>The response parameters when OAuth is specified as the authorization type.</p>",
       "refs": {
         "ConnectionAuthResponseParameters$OAuthParameters": "<p>The OAuth parameters to use for authorization.</p>"
       }
     },
     "ConnectionQueryStringParameter": {
-      "base": "<p>Additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.</p>",
+      "base": "<p>Any additional query string parameter for the connection. You can include up to 100 additional query string parameters per request. Each additional parameter counts towards the event payload size, which cannot exceed 64 KB.</p>",
       "refs": {
         "ConnectionQueryStringParametersList$member": null
       }
@@ -487,7 +492,7 @@
     "ConnectionQueryStringParametersList": {
       "base": null,
       "refs": {
-        "ConnectionHttpParameters$QueryStringParameters": "<p>Contains additional query string parameters for the connection.</p>"
+        "ConnectionHttpParameters$QueryStringParameters": "<p>Any additional query string parameters for the connection.</p>"
       }
     },
     "ConnectionResponseList": {
@@ -515,6 +520,21 @@
         "DescribeConnectionResponse$StateReason": "<p>The reason that the connection is in the current connection state.</p>"
       }
     },
+    "ConnectivityResourceConfigurationArn": {
+      "base": "<p>The Amazon Resource Name (ARN) of the resource configuration for the resource endpoint.</p>",
+      "refs": {
+        "ConnectivityResourceParameters$ResourceParameters": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>"
+      }
+    },
+    "ConnectivityResourceParameters": {
+      "base": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>",
+      "refs": {
+        "CreateConnectionAuthRequestParameters$ConnectivityParameters": "<p>If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+        "CreateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private resource endpoints, the parameters to use for invoking the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+        "UpdateConnectionAuthRequestParameters$ConnectivityParameters": "<p>If you specify a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+        "UpdateConnectionRequest$InvocationConnectivityParameters": "<p>For connections to private resource endpoints, the parameters to use for invoking the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
+      }
+    },
     "CreateApiDestinationRequest": {
       "base": null,
       "refs": {
@@ -536,33 +556,33 @@
       }
     },
     "CreateConnectionApiKeyAuthRequestParameters": {
-      "base": "<p>Contains the API key authorization parameters for the connection.</p>",
+      "base": "<p>The API key authorization parameters for the connection.</p>",
       "refs": {
-        "CreateConnectionAuthRequestParameters$ApiKeyAuthParameters": "<p>A <code>CreateConnectionApiKeyAuthRequestParameters</code> object that contains the API key authorization parameters to use for the connection.</p>"
+        "CreateConnectionAuthRequestParameters$ApiKeyAuthParameters": "<p>The API key authorization parameters to use for the connection.</p>"
       }
     },
     "CreateConnectionAuthRequestParameters": {
-      "base": "<p>Contains the authorization parameters for the connection.</p>",
+      "base": "<p>The authorization parameters for the connection.</p> <p>You must include only authorization parameters for the <code>AuthorizationType</code> you specify.</p>",
       "refs": {
-        "CreateConnectionRequest$AuthParameters": "<p>A <code>CreateConnectionAuthRequestParameters</code> object that contains the authorization parameters to use to authorize with the endpoint. </p>"
+        "CreateConnectionRequest$AuthParameters": "<p>The authorization parameters to use to authorize with the endpoint. </p> <p>You must include only authorization parameters for the <code>AuthorizationType</code> you specify.</p>"
       }
     },
     "CreateConnectionBasicAuthRequestParameters": {
       "base": "<p>Contains the Basic authorization parameters to use for the connection.</p>",
       "refs": {
-        "CreateConnectionAuthRequestParameters$BasicAuthParameters": "<p>A <code>CreateConnectionBasicAuthRequestParameters</code> object that contains the Basic authorization parameters to use for the connection.</p>"
+        "CreateConnectionAuthRequestParameters$BasicAuthParameters": "<p>The Basic authorization parameters to use for the connection.</p>"
       }
     },
     "CreateConnectionOAuthClientRequestParameters": {
-      "base": "<p>Contains the Basic authorization parameters to use for the connection.</p>",
+      "base": "<p>The Basic authorization parameters to use for the connection.</p>",
       "refs": {
-        "CreateConnectionOAuthRequestParameters$ClientParameters": "<p>A <code>CreateConnectionOAuthClientRequestParameters</code> object that contains the client parameters for OAuth authorization.</p>"
+        "CreateConnectionOAuthRequestParameters$ClientParameters": "<p>The client parameters for OAuth authorization.</p>"
       }
     },
     "CreateConnectionOAuthRequestParameters": {
       "base": "<p>Contains the OAuth authorization parameters to use for the connection.</p>",
       "refs": {
-        "CreateConnectionAuthRequestParameters$OAuthParameters": "<p>A <code>CreateConnectionOAuthRequestParameters</code> object that contains the OAuth authorization parameters to use for the connection.</p>"
+        "CreateConnectionAuthRequestParameters$OAuthParameters": "<p>The OAuth authorization parameters to use for the connection.</p>"
       }
     },
     "CreateConnectionRequest": {
@@ -629,7 +649,7 @@
       }
     },
     "DeadLetterConfig": {
-      "base": "<p>Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).</p> <p>For more information, see <a href=\"eventbridge/latest/userguide/eb-rule-dlq.html\">Event retry policy and using dead-letter queues</a> in the <i>EventBridge User Guide</i>.</p>",
+      "base": "<p>Configuration details of the Amazon SQS queue for EventBridge to use as a dead-letter queue (DLQ).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq\">Using dead-letter queues to process undelivered events</a> in the <i>EventBridge User Guide</i>.</p>",
       "refs": {
         "CreateEventBusRequest$DeadLetterConfig": null,
         "CreateEventBusResponse$DeadLetterConfig": null,
@@ -724,9 +744,22 @@
       "refs": {
       }
     },
+    "DescribeConnectionConnectivityParameters": {
+      "base": "<p>If the connection uses a private OAuth endpoint, the parameters for EventBridge to use when authenticating against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+      "refs": {
+        "ConnectionAuthResponseParameters$ConnectivityParameters": "<p>For private OAuth authentication endpoints. The parameters EventBridge uses to authenticate against the endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html\">Authorization methods for connections</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>",
+        "DescribeConnectionResponse$InvocationConnectivityParameters": "<p>For connections to private resource endpoints. The parameters EventBridge uses to invoke the resource endpoint.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html\">Connecting to private resources</a> in the <i> <i>Amazon EventBridge User Guide</i> </i>.</p>"
+      }
+    },
     "DescribeConnectionRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeConnectionResourceParameters": {
+      "base": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>",
+      "refs": {
+        "DescribeConnectionConnectivityParameters$ResourceParameters": "<p>The parameters for EventBridge to use when invoking the resource endpoint.</p>"
       }
     },
     "DescribeConnectionResponse": {
@@ -1402,30 +1435,30 @@
     "NextToken": {
       "base": null,
       "refs": {
-        "ListApiDestinationsRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListApiDestinationsResponse$NextToken": "<p>A token you can use in a subsequent request to retrieve the next set of results.</p>",
-        "ListArchivesRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListArchivesResponse$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListConnectionsRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListConnectionsResponse$NextToken": "<p>A token you can use in a subsequent request to retrieve the next set of results.</p>",
-        "ListEndpointsRequest$NextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
-        "ListEndpointsResponse$NextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page. Keep all other arguments unchanged. Each pagination token expires after 24 hours. Using an expired pagination token will return an HTTP 400 InvalidToken error.</p>",
-        "ListEventBusesRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListEventBusesResponse$NextToken": "<p>A token you can use in a subsequent operation to retrieve the next set of results.</p>",
-        "ListEventSourcesRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListEventSourcesResponse$NextToken": "<p>A token you can use in a subsequent operation to retrieve the next set of results.</p>",
-        "ListPartnerEventSourceAccountsRequest$NextToken": "<p>The token returned by a previous call to this operation. Specifying this retrieves the next set of results.</p>",
-        "ListPartnerEventSourceAccountsResponse$NextToken": "<p>A token you can use in a subsequent operation to retrieve the next set of results.</p>",
-        "ListPartnerEventSourcesRequest$NextToken": "<p>The token returned by a previous call to this operation. Specifying this retrieves the next set of results.</p>",
-        "ListPartnerEventSourcesResponse$NextToken": "<p>A token you can use in a subsequent operation to retrieve the next set of results.</p>",
-        "ListReplaysRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListReplaysResponse$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListRuleNamesByTargetRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListRuleNamesByTargetResponse$NextToken": "<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>",
-        "ListRulesRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListRulesResponse$NextToken": "<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>",
-        "ListTargetsByRuleRequest$NextToken": "<p>The token returned by a previous call to retrieve the next set of results.</p>",
-        "ListTargetsByRuleResponse$NextToken": "<p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p>"
+        "ListApiDestinationsRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListApiDestinationsResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListArchivesRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListArchivesResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListConnectionsRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListConnectionsResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEndpointsRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEndpointsResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEventBusesRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEventBusesResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEventSourcesRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListEventSourcesResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListPartnerEventSourceAccountsRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListPartnerEventSourceAccountsResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListPartnerEventSourcesRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListPartnerEventSourcesResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListReplaysRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListReplaysResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListRuleNamesByTargetRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListRuleNamesByTargetResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListRulesRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListRulesResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListTargetsByRuleRequest$NextToken": "<p>The token returned by a previous call, which you can use to retrieve the next set of results.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>",
+        "ListTargetsByRuleResponse$NextToken": "<p>A token indicating there are more results available. If there are no more results, no token is included in the response.</p> <p>The value of <code>nextToken</code> is a unique pagination token for each page. To retrieve the next page of results, make the call again using the returned token. Keep all other arguments unchanged.</p> <p> Using an expired pagination token results in an <code>HTTP 400 InvalidToken</code> error.</p>"
       }
     },
     "NonPartnerEventBusArn": {
@@ -1838,6 +1871,19 @@
         "DeadLetterConfig$Arn": "<p>The ARN of the SQS queue specified as the target for the dead-letter queue.</p>"
       }
     },
+    "ResourceAssociationArn": {
+      "base": null,
+      "refs": {
+        "DescribeConnectionResourceParameters$ResourceAssociationArn": "<p>For connections to private APIs, the Amazon Resource Name (ARN) of the resource association EventBridge created between the connection and the private API's resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationArn": {
+      "base": null,
+      "refs": {
+        "ConnectivityResourceConfigurationArn$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration for the resource endpoint.</p>",
+        "DescribeConnectionResourceParameters$ResourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration for the private API.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>An entity that you specified does not exist.</p>",
       "refs": {
@@ -1855,7 +1901,7 @@
     "RetryPolicy": {
       "base": "<p>A <code>RetryPolicy</code> object that includes information about the retry policy settings.</p>",
       "refs": {
-        "Target$RetryPolicy": "<p>The <code>RetryPolicy</code> object that contains the retry policy configuration to use for the dead-letter queue.</p>"
+        "Target$RetryPolicy": "<p>The retry policy configuration to use for the dead-letter queue.</p>"
       }
     },
     "RoleArn": {
@@ -2233,6 +2279,11 @@
       "refs": {
       }
     },
+    "ThrottlingException": {
+      "base": "<p>This request cannot be completed due to throttling issues.</p>",
+      "refs": {
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -2345,7 +2396,7 @@
     "UpdateConnectionApiKeyAuthRequestParameters": {
       "base": "<p>Contains the API key authorization parameters to use to update the connection.</p>",
       "refs": {
-        "UpdateConnectionAuthRequestParameters$ApiKeyAuthParameters": "<p>A <code>UpdateConnectionApiKeyAuthRequestParameters</code> object that contains the authorization parameters for API key authorization.</p>"
+        "UpdateConnectionAuthRequestParameters$ApiKeyAuthParameters": "<p>The authorization parameters for API key authorization.</p>"
       }
     },
     "UpdateConnectionAuthRequestParameters": {
@@ -2355,21 +2406,21 @@
       }
     },
     "UpdateConnectionBasicAuthRequestParameters": {
-      "base": "<p>Contains the Basic authorization parameters for the connection.</p>",
+      "base": "<p>The Basic authorization parameters for the connection.</p>",
       "refs": {
-        "UpdateConnectionAuthRequestParameters$BasicAuthParameters": "<p>A <code>UpdateConnectionBasicAuthRequestParameters</code> object that contains the authorization parameters for Basic authorization.</p>"
+        "UpdateConnectionAuthRequestParameters$BasicAuthParameters": "<p>The authorization parameters for Basic authorization.</p>"
       }
     },
     "UpdateConnectionOAuthClientRequestParameters": {
-      "base": "<p>Contains the OAuth authorization parameters to use for the connection.</p>",
+      "base": "<p>The OAuth authorization parameters to use for the connection.</p>",
       "refs": {
-        "UpdateConnectionOAuthRequestParameters$ClientParameters": "<p>A <code>UpdateConnectionOAuthClientRequestParameters</code> object that contains the client parameters to use for the connection when OAuth is specified as the authorization type.</p>"
+        "UpdateConnectionOAuthRequestParameters$ClientParameters": "<p>The client parameters to use for the connection when OAuth is specified as the authorization type.</p>"
       }
     },
     "UpdateConnectionOAuthRequestParameters": {
-      "base": "<p>Contains the OAuth request parameters to use for the connection.</p>",
+      "base": "<p>The OAuth request parameters to use for the connection.</p>",
       "refs": {
-        "UpdateConnectionAuthRequestParameters$OAuthParameters": "<p>A <code>UpdateConnectionOAuthRequestParameters</code> object that contains the authorization parameters for OAuth authorization.</p>"
+        "UpdateConnectionAuthRequestParameters$OAuthParameters": "<p>The authorization parameters for OAuth authorization.</p>"
       }
     },
     "UpdateConnectionRequest": {

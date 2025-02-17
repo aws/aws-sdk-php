@@ -11,7 +11,8 @@
     "serviceId":"Firehose",
     "signatureVersion":"v4",
     "targetPrefix":"Firehose_20150804",
-    "uid":"firehose-2015-08-04"
+    "uid":"firehose-2015-08-04",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateDeliveryStream":{
@@ -191,7 +192,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:kms:[a-zA-Z0-9\\-]+:\\d{12}:(key|alias)/[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "AmazonOpenSearchServerlessBufferingHints":{
       "type":"structure",
@@ -375,7 +376,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:es:[a-zA-Z0-9\\-]+:\\d{12}:domain/[a-z][-0-9a-z]{2,27}"
     },
     "AmazonopensearchserviceIndexName":{
       "type":"string",
@@ -437,13 +438,20 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:s3:::[\\w\\.\\-]{1,255}"
     },
     "BufferingHints":{
       "type":"structure",
       "members":{
         "SizeInMBs":{"shape":"SizeInMBs"},
         "IntervalInSeconds":{"shape":"IntervalInSeconds"}
+      }
+    },
+    "CatalogConfiguration":{
+      "type":"structure",
+      "members":{
+        "CatalogARN":{"shape":"GlueDataCatalogARN"},
+        "WarehouseLocation":{"shape":"WarehouseLocation"}
       }
     },
     "CloudWatchLoggingOptions":{
@@ -458,7 +466,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+(redshift(-serverless)?)\\.([a-zA-Z0-9\\.]+):\\d{1,5}/[a-zA-Z0-9_$-]+"
+      "pattern":"jdbc:(redshift|postgresql)://((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+(redshift(-serverless)?)\\.([a-zA-Z0-9\\.\\-]+):\\d{1,5}/[a-zA-Z0-9_$-]+"
     },
     "ColumnToJsonKeyMappings":{
       "type":"map",
@@ -507,7 +515,7 @@
     },
     "CopyOptions":{
       "type":"string",
-      "max":204800,
+      "max":10240,
       "min":0,
       "pattern":".*"
     },
@@ -517,6 +525,7 @@
       "members":{
         "DeliveryStreamName":{"shape":"DeliveryStreamName"},
         "DeliveryStreamType":{"shape":"DeliveryStreamType"},
+        "DirectPutSourceConfiguration":{"shape":"DirectPutSourceConfiguration"},
         "KinesisStreamSourceConfiguration":{"shape":"KinesisStreamSourceConfiguration"},
         "DeliveryStreamEncryptionConfigurationInput":{"shape":"DeliveryStreamEncryptionConfigurationInput"},
         "S3DestinationConfiguration":{
@@ -532,7 +541,9 @@
         "Tags":{"shape":"TagDeliveryStreamInputTagList"},
         "AmazonOpenSearchServerlessDestinationConfiguration":{"shape":"AmazonOpenSearchServerlessDestinationConfiguration"},
         "MSKSourceConfiguration":{"shape":"MSKSourceConfiguration"},
-        "SnowflakeDestinationConfiguration":{"shape":"SnowflakeDestinationConfiguration"}
+        "SnowflakeDestinationConfiguration":{"shape":"SnowflakeDestinationConfiguration"},
+        "IcebergDestinationConfiguration":{"shape":"IcebergDestinationConfiguration"},
+        "DatabaseSourceConfiguration":{"shape":"DatabaseSourceConfiguration"}
       }
     },
     "CreateDeliveryStreamOutput":{
@@ -544,7 +555,8 @@
     "CustomTimeZone":{
       "type":"string",
       "max":50,
-      "min":0
+      "min":0,
+      "pattern":"^$|[a-zA-Z/_]+"
     },
     "Data":{
       "type":"blob",
@@ -562,7 +574,7 @@
     },
     "DataTableColumns":{
       "type":"string",
-      "max":204800,
+      "max":10240,
       "min":0,
       "pattern":".*"
     },
@@ -571,6 +583,158 @@
       "max":512,
       "min":1,
       "pattern":".*"
+    },
+    "DatabaseColumnIncludeOrExcludeList":{
+      "type":"list",
+      "member":{"shape":"DatabaseColumnName"}
+    },
+    "DatabaseColumnList":{
+      "type":"structure",
+      "members":{
+        "Include":{"shape":"DatabaseColumnIncludeOrExcludeList"},
+        "Exclude":{"shape":"DatabaseColumnIncludeOrExcludeList"}
+      }
+    },
+    "DatabaseColumnName":{
+      "type":"string",
+      "max":194,
+      "min":1,
+      "pattern":"[\\u0001-\\uFFFF]*"
+    },
+    "DatabaseEndpoint":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "DatabaseIncludeOrExcludeList":{
+      "type":"list",
+      "member":{"shape":"DatabaseName"}
+    },
+    "DatabaseList":{
+      "type":"structure",
+      "members":{
+        "Include":{"shape":"DatabaseIncludeOrExcludeList"},
+        "Exclude":{"shape":"DatabaseIncludeOrExcludeList"}
+      }
+    },
+    "DatabaseName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[\\u0001-\\uFFFF]*"
+    },
+    "DatabasePort":{
+      "type":"integer",
+      "max":65535,
+      "min":0
+    },
+    "DatabaseSnapshotInfo":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Table",
+        "RequestTimestamp",
+        "RequestedBy",
+        "Status"
+      ],
+      "members":{
+        "Id":{"shape":"NonEmptyStringWithoutWhitespace"},
+        "Table":{"shape":"DatabaseTableName"},
+        "RequestTimestamp":{"shape":"Timestamp"},
+        "RequestedBy":{"shape":"SnapshotRequestedBy"},
+        "Status":{"shape":"SnapshotStatus"},
+        "FailureDescription":{"shape":"FailureDescription"}
+      }
+    },
+    "DatabaseSnapshotInfoList":{
+      "type":"list",
+      "member":{"shape":"DatabaseSnapshotInfo"}
+    },
+    "DatabaseSourceAuthenticationConfiguration":{
+      "type":"structure",
+      "required":["SecretsManagerConfiguration"],
+      "members":{
+        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"}
+      }
+    },
+    "DatabaseSourceConfiguration":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Endpoint",
+        "Port",
+        "Databases",
+        "Tables",
+        "SnapshotWatermarkTable",
+        "DatabaseSourceAuthenticationConfiguration",
+        "DatabaseSourceVPCConfiguration"
+      ],
+      "members":{
+        "Type":{"shape":"DatabaseType"},
+        "Endpoint":{"shape":"DatabaseEndpoint"},
+        "Port":{"shape":"DatabasePort"},
+        "SSLMode":{"shape":"SSLMode"},
+        "Databases":{"shape":"DatabaseList"},
+        "Tables":{"shape":"DatabaseTableList"},
+        "Columns":{"shape":"DatabaseColumnList"},
+        "SurrogateKeys":{"shape":"DatabaseSurrogateKeyList"},
+        "SnapshotWatermarkTable":{"shape":"DatabaseTableName"},
+        "DatabaseSourceAuthenticationConfiguration":{"shape":"DatabaseSourceAuthenticationConfiguration"},
+        "DatabaseSourceVPCConfiguration":{"shape":"DatabaseSourceVPCConfiguration"}
+      }
+    },
+    "DatabaseSourceDescription":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"DatabaseType"},
+        "Endpoint":{"shape":"DatabaseEndpoint"},
+        "Port":{"shape":"DatabasePort"},
+        "SSLMode":{"shape":"SSLMode"},
+        "Databases":{"shape":"DatabaseList"},
+        "Tables":{"shape":"DatabaseTableList"},
+        "Columns":{"shape":"DatabaseColumnList"},
+        "SurrogateKeys":{"shape":"DatabaseColumnIncludeOrExcludeList"},
+        "SnapshotWatermarkTable":{"shape":"DatabaseTableName"},
+        "SnapshotInfo":{"shape":"DatabaseSnapshotInfoList"},
+        "DatabaseSourceAuthenticationConfiguration":{"shape":"DatabaseSourceAuthenticationConfiguration"},
+        "DatabaseSourceVPCConfiguration":{"shape":"DatabaseSourceVPCConfiguration"}
+      }
+    },
+    "DatabaseSourceVPCConfiguration":{
+      "type":"structure",
+      "required":["VpcEndpointServiceName"],
+      "members":{
+        "VpcEndpointServiceName":{"shape":"VpcEndpointServiceName"}
+      }
+    },
+    "DatabaseSurrogateKeyList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyStringWithoutWhitespace"}
+    },
+    "DatabaseTableIncludeOrExcludeList":{
+      "type":"list",
+      "member":{"shape":"DatabaseTableName"}
+    },
+    "DatabaseTableList":{
+      "type":"structure",
+      "members":{
+        "Include":{"shape":"DatabaseTableIncludeOrExcludeList"},
+        "Exclude":{"shape":"DatabaseTableIncludeOrExcludeList"}
+      }
+    },
+    "DatabaseTableName":{
+      "type":"string",
+      "max":129,
+      "min":1,
+      "pattern":"[\\u0001-\\uFFFF]*"
+    },
+    "DatabaseType":{
+      "type":"string",
+      "enum":[
+        "MySQL",
+        "PostgreSQL"
+      ]
     },
     "DefaultDocumentIdFormat":{
       "type":"string",
@@ -597,7 +761,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:firehose:[a-zA-Z0-9\\-]+:\\d{12}:deliverystream/[a-zA-Z0-9._-]+"
     },
     "DeliveryStreamDescription":{
       "type":"structure",
@@ -656,6 +820,8 @@
     "DeliveryStreamFailureType":{
       "type":"string",
       "enum":[
+        "VPC_ENDPOINT_SERVICE_NAME_NOT_FOUND",
+        "VPC_INTERFACE_ENDPOINT_SERVICE_ACCESS_DENIED",
         "RETIRE_KMS_GRANT_FAILED",
         "CREATE_KMS_GRANT_FAILED",
         "KMS_ACCESS_DENIED",
@@ -698,7 +864,8 @@
       "enum":[
         "DirectPut",
         "KinesisStreamAsSource",
-        "MSKAsSource"
+        "MSKAsSource",
+        "DatabaseAsSource"
       ]
     },
     "DeliveryStreamVersionId":{
@@ -748,7 +915,8 @@
         "SplunkDestinationDescription":{"shape":"SplunkDestinationDescription"},
         "HttpEndpointDestinationDescription":{"shape":"HttpEndpointDestinationDescription"},
         "SnowflakeDestinationDescription":{"shape":"SnowflakeDestinationDescription"},
-        "AmazonOpenSearchServerlessDestinationDescription":{"shape":"AmazonOpenSearchServerlessDestinationDescription"}
+        "AmazonOpenSearchServerlessDestinationDescription":{"shape":"AmazonOpenSearchServerlessDestinationDescription"},
+        "IcebergDestinationDescription":{"shape":"IcebergDestinationDescription"}
       }
     },
     "DestinationDescriptionList":{
@@ -760,6 +928,37 @@
       "max":100,
       "min":1,
       "pattern":"[a-zA-Z0-9-]+"
+    },
+    "DestinationTableConfiguration":{
+      "type":"structure",
+      "required":[
+        "DestinationTableName",
+        "DestinationDatabaseName"
+      ],
+      "members":{
+        "DestinationTableName":{"shape":"StringWithLettersDigitsUnderscoresDots"},
+        "DestinationDatabaseName":{"shape":"StringWithLettersDigitsUnderscoresDots"},
+        "UniqueKeys":{"shape":"ListOfNonEmptyStringsWithoutWhitespace"},
+        "PartitionSpec":{"shape":"PartitionSpec"},
+        "S3ErrorOutputPrefix":{"shape":"ErrorOutputPrefix"}
+      }
+    },
+    "DestinationTableConfigurationList":{
+      "type":"list",
+      "member":{"shape":"DestinationTableConfiguration"}
+    },
+    "DirectPutSourceConfiguration":{
+      "type":"structure",
+      "required":["ThroughputHintInMBs"],
+      "members":{
+        "ThroughputHintInMBs":{"shape":"ThroughputHintInMBs"}
+      }
+    },
+    "DirectPutSourceDescription":{
+      "type":"structure",
+      "members":{
+        "ThroughputHintInMBs":{"shape":"ThroughputHintInMBs"}
+      }
     },
     "DocumentIdOptions":{
       "type":"structure",
@@ -862,7 +1061,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:es:[a-zA-Z0-9\\-]+:\\d{12}:domain/[a-z][-0-9a-z]{2,27}"
     },
     "ElasticsearchIndexName":{
       "type":"string",
@@ -1006,6 +1205,12 @@
       "max":128,
       "min":0,
       "pattern":"^$|\\.[0-9a-z!\\-_.*'()]+"
+    },
+    "GlueDataCatalogARN":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"arn:.*:glue:.*:\\d{12}:catalog"
     },
     "HECAcknowledgmentTimeoutInSeconds":{
       "type":"integer",
@@ -1195,6 +1400,69 @@
       "pattern":"https://.*",
       "sensitive":true
     },
+    "IcebergDestinationConfiguration":{
+      "type":"structure",
+      "required":[
+        "RoleARN",
+        "CatalogConfiguration",
+        "S3Configuration"
+      ],
+      "members":{
+        "DestinationTableConfigurationList":{"shape":"DestinationTableConfigurationList"},
+        "SchemaEvolutionConfiguration":{"shape":"SchemaEvolutionConfiguration"},
+        "TableCreationConfiguration":{"shape":"TableCreationConfiguration"},
+        "BufferingHints":{"shape":"BufferingHints"},
+        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
+        "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
+        "S3BackupMode":{"shape":"IcebergS3BackupMode"},
+        "RetryOptions":{"shape":"RetryOptions"},
+        "RoleARN":{"shape":"RoleARN"},
+        "AppendOnly":{"shape":"BooleanObject"},
+        "CatalogConfiguration":{"shape":"CatalogConfiguration"},
+        "S3Configuration":{"shape":"S3DestinationConfiguration"}
+      }
+    },
+    "IcebergDestinationDescription":{
+      "type":"structure",
+      "members":{
+        "DestinationTableConfigurationList":{"shape":"DestinationTableConfigurationList"},
+        "SchemaEvolutionConfiguration":{"shape":"SchemaEvolutionConfiguration"},
+        "TableCreationConfiguration":{"shape":"TableCreationConfiguration"},
+        "BufferingHints":{"shape":"BufferingHints"},
+        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
+        "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
+        "S3BackupMode":{"shape":"IcebergS3BackupMode"},
+        "RetryOptions":{"shape":"RetryOptions"},
+        "RoleARN":{"shape":"RoleARN"},
+        "AppendOnly":{"shape":"BooleanObject"},
+        "CatalogConfiguration":{"shape":"CatalogConfiguration"},
+        "S3DestinationDescription":{"shape":"S3DestinationDescription"}
+      }
+    },
+    "IcebergDestinationUpdate":{
+      "type":"structure",
+      "members":{
+        "DestinationTableConfigurationList":{"shape":"DestinationTableConfigurationList"},
+        "SchemaEvolutionConfiguration":{"shape":"SchemaEvolutionConfiguration"},
+        "TableCreationConfiguration":{"shape":"TableCreationConfiguration"},
+        "BufferingHints":{"shape":"BufferingHints"},
+        "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"},
+        "ProcessingConfiguration":{"shape":"ProcessingConfiguration"},
+        "S3BackupMode":{"shape":"IcebergS3BackupMode"},
+        "RetryOptions":{"shape":"RetryOptions"},
+        "RoleARN":{"shape":"RoleARN"},
+        "AppendOnly":{"shape":"BooleanObject"},
+        "CatalogConfiguration":{"shape":"CatalogConfiguration"},
+        "S3Configuration":{"shape":"S3DestinationConfiguration"}
+      }
+    },
+    "IcebergS3BackupMode":{
+      "type":"string",
+      "enum":[
+        "FailedDataOnly",
+        "AllData"
+      ]
+    },
     "InputFormatConfiguration":{
       "type":"structure",
       "members":{
@@ -1247,7 +1515,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:kinesis:[a-zA-Z0-9\\-]+:\\d{12}:stream/[a-zA-Z0-9_.-]+"
     },
     "KinesisStreamSourceConfiguration":{
       "type":"structure",
@@ -1366,7 +1634,8 @@
       "members":{
         "MSKClusterARN":{"shape":"MSKClusterARN"},
         "TopicName":{"shape":"TopicName"},
-        "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"}
+        "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"},
+        "ReadFromTimestamp":{"shape":"ReadFromTimestamp"}
       }
     },
     "MSKSourceDescription":{
@@ -1375,7 +1644,8 @@
         "MSKClusterARN":{"shape":"MSKClusterARN"},
         "TopicName":{"shape":"TopicName"},
         "AuthenticationConfiguration":{"shape":"AuthenticationConfiguration"},
-        "DeliveryStartTimestamp":{"shape":"DeliveryStartTimestamp"}
+        "DeliveryStartTimestamp":{"shape":"DeliveryStartTimestamp"},
+        "ReadFromTimestamp":{"shape":"ReadFromTimestamp"}
       }
     },
     "NoEncryptionConfig":{
@@ -1479,6 +1749,23 @@
         "V1",
         "V2"
       ]
+    },
+    "PartitionField":{
+      "type":"structure",
+      "required":["SourceName"],
+      "members":{
+        "SourceName":{"shape":"NonEmptyStringWithoutWhitespace"}
+      }
+    },
+    "PartitionFields":{
+      "type":"list",
+      "member":{"shape":"PartitionField"}
+    },
+    "PartitionSpec":{
+      "type":"structure",
+      "members":{
+        "Identity":{"shape":"PartitionFields"}
+      }
     },
     "Password":{
       "type":"string",
@@ -1631,6 +1918,7 @@
       "type":"string",
       "min":1
     },
+    "ReadFromTimestamp":{"type":"timestamp"},
     "Record":{
       "type":"structure",
       "required":["Data"],
@@ -1747,7 +2035,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:iam::\\d{12}:role/[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "S3BackupMode":{
       "type":"string",
@@ -1806,6 +2094,13 @@
         "CloudWatchLoggingOptions":{"shape":"CloudWatchLoggingOptions"}
       }
     },
+    "SSLMode":{
+      "type":"string",
+      "enum":[
+        "Disabled",
+        "Enabled"
+      ]
+    },
     "SchemaConfiguration":{
       "type":"structure",
       "members":{
@@ -1817,11 +2112,18 @@
         "VersionId":{"shape":"NonEmptyStringWithoutWhitespace"}
       }
     },
+    "SchemaEvolutionConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BooleanObject"}
+      }
+    },
     "SecretARN":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:.*"
+      "pattern":"arn:.*:secretsmanager:[a-zA-Z0-9\\-]+:\\d{12}:secret:[a-zA-Z0-9\\-/_+=.@]+"
     },
     "SecretsManagerConfiguration":{
       "type":"structure",
@@ -1858,12 +2160,44 @@
       "max":128,
       "min":1
     },
+    "SnapshotRequestedBy":{
+      "type":"string",
+      "enum":[
+        "USER",
+        "FIREHOSE"
+      ]
+    },
+    "SnapshotStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETE",
+        "SUSPENDED"
+      ]
+    },
     "SnowflakeAccountUrl":{
       "type":"string",
       "max":2048,
       "min":24,
       "pattern":".+?\\.snowflakecomputing\\.com",
       "sensitive":true
+    },
+    "SnowflakeBufferingHints":{
+      "type":"structure",
+      "members":{
+        "SizeInMBs":{"shape":"SnowflakeBufferingSizeInMBs"},
+        "IntervalInSeconds":{"shape":"SnowflakeBufferingIntervalInSeconds"}
+      }
+    },
+    "SnowflakeBufferingIntervalInSeconds":{
+      "type":"integer",
+      "max":900,
+      "min":0
+    },
+    "SnowflakeBufferingSizeInMBs":{
+      "type":"integer",
+      "max":128,
+      "min":1
     },
     "SnowflakeContentColumnName":{
       "type":"string",
@@ -1914,7 +2248,8 @@
         "RetryOptions":{"shape":"SnowflakeRetryOptions"},
         "S3BackupMode":{"shape":"SnowflakeS3BackupMode"},
         "S3Configuration":{"shape":"S3DestinationConfiguration"},
-        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"}
+        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"},
+        "BufferingHints":{"shape":"SnowflakeBufferingHints"}
       }
     },
     "SnowflakeDestinationDescription":{
@@ -1936,7 +2271,8 @@
         "RetryOptions":{"shape":"SnowflakeRetryOptions"},
         "S3BackupMode":{"shape":"SnowflakeS3BackupMode"},
         "S3DestinationDescription":{"shape":"S3DestinationDescription"},
-        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"}
+        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"},
+        "BufferingHints":{"shape":"SnowflakeBufferingHints"}
       }
     },
     "SnowflakeDestinationUpdate":{
@@ -1959,7 +2295,8 @@
         "RetryOptions":{"shape":"SnowflakeRetryOptions"},
         "S3BackupMode":{"shape":"SnowflakeS3BackupMode"},
         "S3Update":{"shape":"S3DestinationUpdate"},
-        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"}
+        "SecretsManagerConfiguration":{"shape":"SecretsManagerConfiguration"},
+        "BufferingHints":{"shape":"SnowflakeBufferingHints"}
       }
     },
     "SnowflakeKeyPassphrase":{
@@ -2047,8 +2384,10 @@
     "SourceDescription":{
       "type":"structure",
       "members":{
+        "DirectPutSourceDescription":{"shape":"DirectPutSourceDescription"},
         "KinesisStreamSourceDescription":{"shape":"KinesisStreamSourceDescription"},
-        "MSKSourceDescription":{"shape":"MSKSourceDescription"}
+        "MSKSourceDescription":{"shape":"MSKSourceDescription"},
+        "DatabaseSourceDescription":{"shape":"DatabaseSourceDescription"}
       }
     },
     "SplunkBufferingHints":{
@@ -2164,11 +2503,24 @@
       "members":{
       }
     },
+    "StringWithLettersDigitsUnderscoresDots":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\.\\_]+"
+    },
     "SubnetIdList":{
       "type":"list",
       "member":{"shape":"NonEmptyStringWithoutWhitespace"},
       "max":16,
       "min":1
+    },
+    "TableCreationConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"BooleanObject"}
+      }
     },
     "Tag":{
       "type":"structure",
@@ -2218,6 +2570,11 @@
       "min":0,
       "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@%]*$"
     },
+    "ThroughputHintInMBs":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
     "Timestamp":{"type":"timestamp"},
     "TopicName":{
       "type":"string",
@@ -2263,7 +2620,8 @@
         "SplunkDestinationUpdate":{"shape":"SplunkDestinationUpdate"},
         "HttpEndpointDestinationUpdate":{"shape":"HttpEndpointDestinationUpdate"},
         "AmazonOpenSearchServerlessDestinationUpdate":{"shape":"AmazonOpenSearchServerlessDestinationUpdate"},
-        "SnowflakeDestinationUpdate":{"shape":"SnowflakeDestinationUpdate"}
+        "SnowflakeDestinationUpdate":{"shape":"SnowflakeDestinationUpdate"},
+        "IcebergDestinationUpdate":{"shape":"IcebergDestinationUpdate"}
       }
     },
     "UpdateDestinationOutput":{
@@ -2305,6 +2663,18 @@
         "SecurityGroupIds":{"shape":"SecurityGroupIdList"},
         "VpcId":{"shape":"NonEmptyStringWithoutWhitespace"}
       }
+    },
+    "VpcEndpointServiceName":{
+      "type":"string",
+      "max":255,
+      "min":47,
+      "pattern":"([a-zA-Z0-9\\-\\_]+\\.){2,3}vpce\\.[a-zA-Z0-9\\-]*\\.vpce-svc\\-[a-zA-Z0-9\\-]{17}$"
+    },
+    "WarehouseLocation":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"s3:\\/\\/.*"
     }
   }
 }

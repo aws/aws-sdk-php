@@ -5,11 +5,13 @@
     "endpointPrefix":"workspaces",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon WorkSpaces",
     "serviceId":"WorkSpaces",
     "signatureVersion":"v4",
     "targetPrefix":"WorkspacesService",
-    "uid":"workspaces-2015-04-08"
+    "uid":"workspaces-2015-04-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptAccountLinkInvitation":{
@@ -275,6 +277,23 @@
       "errors":[
         {"shape":"ResourceLimitExceededException"},
         {"shape":"InvalidParameterValuesException"}
+      ]
+    },
+    "CreateWorkspacesPool":{
+      "name":"CreateWorkspacesPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateWorkspacesPoolRequest"},
+      "output":{"shape":"CreateWorkspacesPoolResult"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteAccountLinkInvitation":{
@@ -712,6 +731,34 @@
         {"shape":"InvalidParameterValuesException"}
       ]
     },
+    "DescribeWorkspacesPoolSessions":{
+      "name":"DescribeWorkspacesPoolSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeWorkspacesPoolSessionsRequest"},
+      "output":{"shape":"DescribeWorkspacesPoolSessionsResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DescribeWorkspacesPools":{
+      "name":"DescribeWorkspacesPools",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeWorkspacesPoolsRequest"},
+      "output":{"shape":"DescribeWorkspacesPoolsResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DisassociateConnectionAlias":{
       "name":"DisassociateConnectionAlias",
       "http":{
@@ -740,7 +787,8 @@
         {"shape":"InvalidParameterValuesException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidResourceStateException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "DisassociateWorkspaceApplication":{
@@ -892,7 +940,8 @@
       "errors":[
         {"shape":"InvalidParameterValuesException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "ModifySamlProperties":{
@@ -921,7 +970,23 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterValuesException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"}
+      ]
+    },
+    "ModifyStreamingProperties":{
+      "name":"ModifyStreamingProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyStreamingPropertiesRequest"},
+      "output":{"shape":"ModifyStreamingPropertiesResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "ModifyWorkspaceAccessProperties":{
@@ -1025,7 +1090,8 @@
         {"shape":"WorkspacesDefaultRoleNotFoundException"},
         {"shape":"InvalidResourceStateException"},
         {"shape":"UnsupportedNetworkConfigurationException"},
-        {"shape":"OperationNotSupportedException"}
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"ResourceAlreadyExistsException"}
       ]
     },
     "RejectAccountLinkInvitation":{
@@ -1083,6 +1149,24 @@
       "input":{"shape":"StartWorkspacesRequest"},
       "output":{"shape":"StartWorkspacesResult"}
     },
+    "StartWorkspacesPool":{
+      "name":"StartWorkspacesPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartWorkspacesPoolRequest"},
+      "output":{"shape":"StartWorkspacesPoolResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StopWorkspaces":{
       "name":"StopWorkspaces",
       "http":{
@@ -1092,6 +1176,22 @@
       "input":{"shape":"StopWorkspacesRequest"},
       "output":{"shape":"StopWorkspacesResult"}
     },
+    "StopWorkspacesPool":{
+      "name":"StopWorkspacesPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopWorkspacesPoolRequest"},
+      "output":{"shape":"StopWorkspacesPoolResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "TerminateWorkspaces":{
       "name":"TerminateWorkspaces",
       "http":{
@@ -1100,6 +1200,38 @@
       },
       "input":{"shape":"TerminateWorkspacesRequest"},
       "output":{"shape":"TerminateWorkspacesResult"}
+    },
+    "TerminateWorkspacesPool":{
+      "name":"TerminateWorkspacesPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TerminateWorkspacesPoolRequest"},
+      "output":{"shape":"TerminateWorkspacesPoolResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "TerminateWorkspacesPoolSession":{
+      "name":"TerminateWorkspacesPoolSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TerminateWorkspacesPoolSessionRequest"},
+      "output":{"shape":"TerminateWorkspacesPoolSessionResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"AccessDeniedException"}
+      ]
     },
     "UpdateConnectClientAddIn":{
       "name":"UpdateConnectClientAddIn",
@@ -1180,12 +1312,60 @@
         {"shape":"InvalidParameterValuesException"},
         {"shape":"OperationNotSupportedException"}
       ]
+    },
+    "UpdateWorkspacesPool":{
+      "name":"UpdateWorkspacesPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateWorkspacesPoolRequest"},
+      "output":{"shape":"UpdateWorkspacesPoolResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"AccessDeniedException"}
+      ]
     }
   },
   "shapes":{
+    "AGAModeForDirectoryEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED_AUTO",
+        "DISABLED"
+      ]
+    },
+    "AGAModeForWorkSpaceEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED_AUTO",
+        "DISABLED",
+        "INHERITED"
+      ]
+    },
+    "AGAPreferredProtocolForDirectory":{
+      "type":"string",
+      "enum":[
+        "TCP",
+        "NONE"
+      ]
+    },
+    "AGAPreferredProtocolForWorkSpace":{
+      "type":"string",
+      "enum":[
+        "TCP",
+        "NONE",
+        "INHERITED"
+      ]
+    },
     "ARN":{
       "type":"string",
-      "pattern":"^arn:aws:[A-Za-z0-9][A-za-z0-9_/.-]{0,62}:[A-za-z0-9_/.-]{0,63}:[A-za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-za-z0-9_/.-]{0,127}$"
+      "pattern":"^arn:aws[a-z-]{0,7}:[A-Za-z0-9][A-za-z0-9_/.-]{0,62}:[A-za-z0-9_/.-]{0,63}:[A-za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.\\\\-]{0,1023}$"
     },
     "AcceptAccountLinkInvitationRequest":{
       "type":"structure",
@@ -1253,6 +1433,25 @@
       "type":"list",
       "member":{"shape":"AccountModification"}
     },
+    "ActiveDirectoryConfig":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ServiceAccountSecretArn"
+      ],
+      "members":{
+        "DomainName":{"shape":"DomainName"},
+        "ServiceAccountSecretArn":{"shape":"SecretsManagerArn"}
+      }
+    },
+    "ActiveUserSessions":{
+      "type":"integer",
+      "min":0
+    },
+    "ActualUserSessions":{
+      "type":"integer",
+      "min":0
+    },
     "AddInName":{
       "type":"string",
       "max":64,
@@ -1318,6 +1517,30 @@
     "ApplicationResourceAssociationList":{
       "type":"list",
       "member":{"shape":"ApplicationResourceAssociation"}
+    },
+    "ApplicationSettingsRequest":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"ApplicationSettingsStatusEnum"},
+        "SettingsGroup":{"shape":"SettingsGroup"}
+      }
+    },
+    "ApplicationSettingsResponse":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"ApplicationSettingsStatusEnum"},
+        "SettingsGroup":{"shape":"SettingsGroup"},
+        "S3BucketName":{"shape":"S3BucketName"}
+      }
+    },
+    "ApplicationSettingsStatusEnum":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ENABLED"
+      ]
     },
     "AssociateConnectionAliasRequest":{
       "type":"structure",
@@ -1410,6 +1633,10 @@
         "PENDING_DISASSOCIATION"
       ]
     },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":["SAML"]
+    },
     "AuthorizeIpRulesRequest":{
       "type":"structure",
       "required":[
@@ -1425,6 +1652,10 @@
       "type":"structure",
       "members":{
       }
+    },
+    "AvailableUserSessions":{
+      "type":"integer",
+      "min":0
     },
     "AwsAccount":{
       "type":"string",
@@ -1476,6 +1707,28 @@
         "REGULAR",
         "STANDBY"
       ]
+    },
+    "Capacity":{
+      "type":"structure",
+      "required":["DesiredUserSessions"],
+      "members":{
+        "DesiredUserSessions":{"shape":"DesiredUserSessions"}
+      }
+    },
+    "CapacityStatus":{
+      "type":"structure",
+      "required":[
+        "AvailableUserSessions",
+        "DesiredUserSessions",
+        "ActualUserSessions",
+        "ActiveUserSessions"
+      ],
+      "members":{
+        "AvailableUserSessions":{"shape":"AvailableUserSessions"},
+        "DesiredUserSessions":{"shape":"DesiredUserSessions"},
+        "ActualUserSessions":{"shape":"ActualUserSessions"},
+        "ActiveUserSessions":{"shape":"ActiveUserSessions"}
+      }
     },
     "CertificateAuthorityArn":{
       "type":"string",
@@ -1569,6 +1822,8 @@
         "POWER",
         "GRAPHICS",
         "POWERPRO",
+        "GENERALPURPOSE_4XLARGE",
+        "GENERALPURPOSE_8XLARGE",
         "GRAPHICSPRO",
         "GRAPHICS_G4DN",
         "GRAPHICSPRO_G4DN"
@@ -1889,6 +2144,32 @@
         "OwnerAccountId":{"shape":"AwsAccount"}
       }
     },
+    "CreateWorkspacesPoolRequest":{
+      "type":"structure",
+      "required":[
+        "PoolName",
+        "Description",
+        "BundleId",
+        "DirectoryId",
+        "Capacity"
+      ],
+      "members":{
+        "PoolName":{"shape":"WorkspacesPoolName"},
+        "Description":{"shape":"UpdateDescription"},
+        "BundleId":{"shape":"BundleId"},
+        "DirectoryId":{"shape":"DirectoryId"},
+        "Capacity":{"shape":"Capacity"},
+        "Tags":{"shape":"TagList"},
+        "ApplicationSettings":{"shape":"ApplicationSettingsRequest"},
+        "TimeoutSettings":{"shape":"TimeoutSettings"}
+      }
+    },
+    "CreateWorkspacesPoolResult":{
+      "type":"structure",
+      "members":{
+        "WorkspacesPool":{"shape":"WorkspacesPool"}
+      }
+    },
     "CreateWorkspacesRequest":{
       "type":"structure",
       "required":["Workspaces"],
@@ -1985,7 +2266,8 @@
         "DefaultOu":{"shape":"DefaultOu"},
         "CustomSecurityGroupId":{"shape":"SecurityGroupId"},
         "UserEnabledAsLocalAdministrator":{"shape":"BooleanObject"},
-        "EnableMaintenanceMode":{"shape":"BooleanObject"}
+        "EnableMaintenanceMode":{"shape":"BooleanObject"},
+        "InstanceIamRoleArn":{"shape":"ARN"}
       }
     },
     "DeletableCertificateBasedAuthPropertiesList":{
@@ -2381,12 +2663,48 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "DescribeWorkspaceDirectoriesFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"DescribeWorkspaceDirectoriesFilterName"},
+        "Values":{"shape":"DescribeWorkspaceDirectoriesFilterValues"}
+      }
+    },
+    "DescribeWorkspaceDirectoriesFilterList":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspaceDirectoriesFilter"},
+      "max":25,
+      "min":1
+    },
+    "DescribeWorkspaceDirectoriesFilterName":{
+      "type":"string",
+      "enum":[
+        "USER_IDENTITY_TYPE",
+        "WORKSPACE_TYPE"
+      ]
+    },
+    "DescribeWorkspaceDirectoriesFilterValue":{
+      "type":"string",
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?-_]{0,64}$"
+    },
+    "DescribeWorkspaceDirectoriesFilterValues":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspaceDirectoriesFilterValue"},
+      "max":25,
+      "min":1
+    },
     "DescribeWorkspaceDirectoriesRequest":{
       "type":"structure",
       "members":{
         "DirectoryIds":{"shape":"DirectoryIdList"},
+        "WorkspaceDirectoryNames":{"shape":"WorkspaceDirectoryNameList"},
         "Limit":{"shape":"Limit"},
-        "NextToken":{"shape":"PaginationToken"}
+        "NextToken":{"shape":"PaginationToken"},
+        "Filters":{"shape":"DescribeWorkspaceDirectoriesFilterList"}
       }
     },
     "DescribeWorkspaceDirectoriesResult":{
@@ -2457,6 +2775,83 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "DescribeWorkspacesPoolSessionsRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"},
+        "UserId":{"shape":"WorkspacesPoolUserId"},
+        "Limit":{"shape":"Limit50"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeWorkspacesPoolSessionsResult":{
+      "type":"structure",
+      "members":{
+        "Sessions":{"shape":"WorkspacesPoolSessions"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeWorkspacesPoolsFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values",
+        "Operator"
+      ],
+      "members":{
+        "Name":{"shape":"DescribeWorkspacesPoolsFilterName"},
+        "Values":{"shape":"DescribeWorkspacesPoolsFilterValues"},
+        "Operator":{"shape":"DescribeWorkspacesPoolsFilterOperator"}
+      }
+    },
+    "DescribeWorkspacesPoolsFilterName":{
+      "type":"string",
+      "enum":["PoolName"]
+    },
+    "DescribeWorkspacesPoolsFilterOperator":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "NOTEQUALS",
+        "CONTAINS",
+        "NOTCONTAINS"
+      ]
+    },
+    "DescribeWorkspacesPoolsFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]+$"
+    },
+    "DescribeWorkspacesPoolsFilterValues":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspacesPoolsFilterValue"},
+      "max":25,
+      "min":1
+    },
+    "DescribeWorkspacesPoolsFilters":{
+      "type":"list",
+      "member":{"shape":"DescribeWorkspacesPoolsFilter"},
+      "max":25,
+      "min":1
+    },
+    "DescribeWorkspacesPoolsRequest":{
+      "type":"structure",
+      "members":{
+        "PoolIds":{"shape":"WorkspacesPoolIds"},
+        "Filters":{"shape":"DescribeWorkspacesPoolsFilters"},
+        "Limit":{"shape":"Limit"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeWorkspacesPoolsResult":{
+      "type":"structure",
+      "members":{
+        "WorkspacesPools":{"shape":"WorkspacesPools"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "DescribeWorkspacesRequest":{
       "type":"structure",
       "members":{
@@ -2477,11 +2872,15 @@
       }
     },
     "Description":{"type":"string"},
+    "DesiredUserSessions":{
+      "type":"integer",
+      "min":0
+    },
     "DirectoryId":{
       "type":"string",
       "max":65,
       "min":10,
-      "pattern":"^d-[0-9a-f]{8,63}$"
+      "pattern":"^(d-[0-9a-f]{8,63}$)|(wsd-[0-9a-z]{8,63}$)"
     },
     "DirectoryIdList":{
       "type":"list",
@@ -2539,9 +2938,18 @@
         "Association":{"shape":"WorkspaceResourceAssociation"}
       }
     },
+    "DisconnectTimeoutInSeconds":{
+      "type":"integer",
+      "max":36000,
+      "min":60
+    },
     "DnsIpAddresses":{
       "type":"list",
       "member":{"shape":"IpAddress"}
+    },
+    "DomainName":{
+      "type":"string",
+      "pattern":"^([a-zA-Z0-9]+[.-])+([a-zA-Z0-9])+$"
     },
     "Ec2ImageId":{
       "type":"string",
@@ -2558,6 +2966,7 @@
       "type":"list",
       "member":{"shape":"ErrorDetails"}
     },
+    "ErrorMessage":{"type":"string"},
     "ErrorType":{"type":"string"},
     "ExceptionErrorCode":{"type":"string"},
     "ExceptionMessage":{"type":"string"},
@@ -2625,6 +3034,34 @@
       "members":{
         "AccountLink":{"shape":"AccountLink"}
       }
+    },
+    "GlobalAcceleratorForDirectory":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AGAModeForDirectoryEnum"},
+        "PreferredProtocol":{"shape":"AGAPreferredProtocolForDirectory"}
+      }
+    },
+    "GlobalAcceleratorForWorkSpace":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AGAModeForWorkSpaceEnum"},
+        "PreferredProtocol":{"shape":"AGAPreferredProtocolForWorkSpace"}
+      }
+    },
+    "IDCConfig":{
+      "type":"structure",
+      "members":{
+        "InstanceArn":{"shape":"ARN"},
+        "ApplicationArn":{"shape":"ARN"}
+      }
+    },
+    "IdleDisconnectTimeoutInSeconds":{
+      "type":"integer",
+      "max":36000,
+      "min":0
     },
     "ImageAssociatedResourceType":{
       "type":"string",
@@ -2813,6 +3250,11 @@
       "max":25,
       "min":1
     },
+    "Limit50":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
     "LinkId":{
       "type":"string",
       "pattern":"^link-.{8,24}$"
@@ -2872,6 +3314,26 @@
       "type":"integer",
       "max":5,
       "min":1
+    },
+    "MaxUserDurationInSeconds":{
+      "type":"integer",
+      "max":432000,
+      "min":600
+    },
+    "MaximumLength":{
+      "type":"integer",
+      "min":0
+    },
+    "MicrosoftEntraConfig":{
+      "type":"structure",
+      "members":{
+        "TenantId":{"shape":"MicrosoftEntraConfigTenantId"},
+        "ApplicationConfigSecretArn":{"shape":"SecretsManagerArn"}
+      }
+    },
+    "MicrosoftEntraConfigTenantId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9-]{1,100}$"
     },
     "MigrateWorkspaceRequest":{
       "type":"structure",
@@ -2989,6 +3451,19 @@
       "members":{
       }
     },
+    "ModifyStreamingPropertiesRequest":{
+      "type":"structure",
+      "required":["ResourceId"],
+      "members":{
+        "ResourceId":{"shape":"DirectoryId"},
+        "StreamingProperties":{"shape":"StreamingProperties"}
+      }
+    },
+    "ModifyStreamingPropertiesResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "ModifyWorkspaceAccessPropertiesRequest":{
       "type":"structure",
       "required":[
@@ -3051,6 +3526,13 @@
       "members":{
       }
     },
+    "NetworkAccessConfiguration":{
+      "type":"structure",
+      "members":{
+        "EniPrivateIpAddress":{"shape":"NonEmptyString"},
+        "EniId":{"shape":"NonEmptyString"}
+      }
+    },
     "NonEmptyString":{
       "type":"string",
       "min":1
@@ -3074,7 +3556,9 @@
         "WINDOWS_7",
         "WINDOWS_SERVER_2016",
         "WINDOWS_SERVER_2019",
-        "WINDOWS_SERVER_2022"
+        "WINDOWS_SERVER_2022",
+        "RHEL_8",
+        "ROCKY_8"
       ]
     },
     "OperatingSystemNameList":{
@@ -3205,22 +3689,27 @@
     },
     "RegisterWorkspaceDirectoryRequest":{
       "type":"structure",
-      "required":[
-        "DirectoryId",
-        "EnableWorkDocs"
-      ],
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
         "SubnetIds":{"shape":"SubnetIds"},
         "EnableWorkDocs":{"shape":"BooleanObject"},
         "EnableSelfService":{"shape":"BooleanObject"},
         "Tenancy":{"shape":"Tenancy"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
+        "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
+        "UserIdentityType":{"shape":"UserIdentityType"},
+        "IdcInstanceArn":{"shape":"ARN"},
+        "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
+        "WorkspaceType":{"shape":"WorkspaceType"},
+        "ActiveDirectoryConfig":{"shape":"ActiveDirectoryConfig"}
       }
     },
     "RegisterWorkspaceDirectoryResult":{
       "type":"structure",
       "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "State":{"shape":"WorkspaceDirectoryState"}
       }
     },
     "RegistrationCode":{
@@ -3343,6 +3832,7 @@
     },
     "RootStorage":{
       "type":"structure",
+      "required":["Capacity"],
       "members":{
         "Capacity":{"shape":"NonEmptyString"}
       }
@@ -3357,6 +3847,12 @@
       ]
     },
     "RunningModeAutoStopTimeoutInMinutes":{"type":"integer"},
+    "S3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]$"
+    },
     "SamlProperties":{
       "type":"structure",
       "members":{
@@ -3379,6 +3875,10 @@
       "min":8,
       "pattern":"^(http|https)\\://\\S+$"
     },
+    "SecretsManagerArn":{
+      "type":"string",
+      "pattern":"^arn:aws[a-z-]{0,7}:secretsmanager:[A-za-z0-9_/.-]{0,63}:[A-za-z0-9_/.-]{0,63}:secret:[A-Za-z0-9][A-za-z0-9_/.-]{8,519}$"
+    },
     "SecurityGroupId":{
       "type":"string",
       "max":20,
@@ -3394,6 +3894,22 @@
         "SwitchRunningMode":{"shape":"ReconnectEnum"},
         "RebuildWorkspace":{"shape":"ReconnectEnum"}
       }
+    },
+    "SessionConnectionState":{
+      "type":"string",
+      "enum":[
+        "CONNECTED",
+        "NOT_CONNECTED"
+      ]
+    },
+    "SessionInstanceId":{
+      "type":"string",
+      "pattern":"^i-[a-f0-9]{8}(?:[a-f0-9]{9})?$"
+    },
+    "SettingsGroup":{
+      "type":"string",
+      "max":100,
+      "pattern":"^[A-Za-z0-9_./()!*'-]+$"
     },
     "Snapshot":{
       "type":"structure",
@@ -3454,6 +3970,18 @@
       "max":25,
       "min":1
     },
+    "StartWorkspacesPoolRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"}
+      }
+    },
+    "StartWorkspacesPoolResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StartWorkspacesRequest":{
       "type":"structure",
       "required":["StartWorkspaceRequests"],
@@ -3479,6 +4007,18 @@
       "max":25,
       "min":1
     },
+    "StopWorkspacesPoolRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"}
+      }
+    },
+    "StopWorkspacesPoolResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StopWorkspacesRequest":{
       "type":"structure",
       "required":["StopWorkspaceRequests"],
@@ -3490,6 +4030,49 @@
       "type":"structure",
       "members":{
         "FailedRequests":{"shape":"FailedStopWorkspaceRequests"}
+      }
+    },
+    "StorageConnector":{
+      "type":"structure",
+      "required":[
+        "ConnectorType",
+        "Status"
+      ],
+      "members":{
+        "ConnectorType":{"shape":"StorageConnectorTypeEnum"},
+        "Status":{"shape":"StorageConnectorStatusEnum"}
+      }
+    },
+    "StorageConnectorStatusEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "StorageConnectorTypeEnum":{
+      "type":"string",
+      "enum":["HOME_FOLDER"]
+    },
+    "StorageConnectors":{
+      "type":"list",
+      "member":{"shape":"StorageConnector"},
+      "min":1
+    },
+    "StreamingExperiencePreferredProtocolEnum":{
+      "type":"string",
+      "enum":[
+        "TCP",
+        "UDP"
+      ]
+    },
+    "StreamingProperties":{
+      "type":"structure",
+      "members":{
+        "StreamingExperiencePreferredProtocol":{"shape":"StreamingExperiencePreferredProtocolEnum"},
+        "UserSettings":{"shape":"UserSettings"},
+        "StorageConnectors":{"shape":"StorageConnectors"},
+        "GlobalAccelerator":{"shape":"GlobalAcceleratorForDirectory"}
       }
     },
     "String2048":{
@@ -3560,6 +4143,30 @@
       "max":25,
       "min":1
     },
+    "TerminateWorkspacesPoolRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"}
+      }
+    },
+    "TerminateWorkspacesPoolResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TerminateWorkspacesPoolSessionRequest":{
+      "type":"structure",
+      "required":["SessionId"],
+      "members":{
+        "SessionId":{"shape":"AmazonUuid"}
+      }
+    },
+    "TerminateWorkspacesPoolSessionResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "TerminateWorkspacesRequest":{
       "type":"structure",
       "required":["TerminateWorkspaceRequests"],
@@ -3571,6 +4178,14 @@
       "type":"structure",
       "members":{
         "FailedRequests":{"shape":"FailedTerminateWorkspaceRequests"}
+      }
+    },
+    "TimeoutSettings":{
+      "type":"structure",
+      "members":{
+        "DisconnectTimeoutInSeconds":{"shape":"DisconnectTimeoutInSeconds"},
+        "IdleDisconnectTimeoutInSeconds":{"shape":"IdleDisconnectTimeoutInSeconds"},
+        "MaxUserDurationInSeconds":{"shape":"MaxUserDurationInSeconds"}
       }
     },
     "Timestamp":{"type":"timestamp"},
@@ -3681,13 +4296,74 @@
       "members":{
       }
     },
+    "UpdateWorkspacesPoolRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"},
+        "Description":{"shape":"UpdateDescription"},
+        "BundleId":{"shape":"BundleId"},
+        "DirectoryId":{"shape":"DirectoryId"},
+        "Capacity":{"shape":"Capacity"},
+        "ApplicationSettings":{"shape":"ApplicationSettingsRequest"},
+        "TimeoutSettings":{"shape":"TimeoutSettings"}
+      }
+    },
+    "UpdateWorkspacesPoolResult":{
+      "type":"structure",
+      "members":{
+        "WorkspacesPool":{"shape":"WorkspacesPool"}
+      }
+    },
+    "UserIdentityType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED",
+        "AWS_DIRECTORY_SERVICE",
+        "AWS_IAM_IDENTITY_CENTER"
+      ]
+    },
     "UserName":{
       "type":"string",
       "max":63,
       "min":1
     },
+    "UserSetting":{
+      "type":"structure",
+      "required":[
+        "Action",
+        "Permission"
+      ],
+      "members":{
+        "Action":{"shape":"UserSettingActionEnum"},
+        "Permission":{"shape":"UserSettingPermissionEnum"},
+        "MaximumLength":{"shape":"MaximumLength"}
+      }
+    },
+    "UserSettingActionEnum":{
+      "type":"string",
+      "enum":[
+        "CLIPBOARD_COPY_FROM_LOCAL_DEVICE",
+        "CLIPBOARD_COPY_TO_LOCAL_DEVICE",
+        "PRINTING_TO_LOCAL_DEVICE",
+        "SMART_CARD"
+      ]
+    },
+    "UserSettingPermissionEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "UserSettings":{
+      "type":"list",
+      "member":{"shape":"UserSetting"},
+      "min":1
+    },
     "UserStorage":{
       "type":"structure",
+      "required":["Capacity"],
       "members":{
         "Capacity":{"shape":"NonEmptyString"}
       }
@@ -3858,7 +4534,8 @@
         "DefaultOu":{"shape":"DefaultOu"},
         "CustomSecurityGroupId":{"shape":"SecurityGroupId"},
         "UserEnabledAsLocalAdministrator":{"shape":"BooleanObject"},
-        "EnableMaintenanceMode":{"shape":"BooleanObject"}
+        "EnableMaintenanceMode":{"shape":"BooleanObject"},
+        "InstanceIamRoleArn":{"shape":"ARN"}
       }
     },
     "WorkspaceDirectory":{
@@ -3881,8 +4558,31 @@
         "Tenancy":{"shape":"Tenancy"},
         "SelfservicePermissions":{"shape":"SelfservicePermissions"},
         "SamlProperties":{"shape":"SamlProperties"},
-        "CertificateBasedAuthProperties":{"shape":"CertificateBasedAuthProperties"}
+        "CertificateBasedAuthProperties":{"shape":"CertificateBasedAuthProperties"},
+        "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
+        "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
+        "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
+        "UserIdentityType":{"shape":"UserIdentityType"},
+        "WorkspaceType":{"shape":"WorkspaceType"},
+        "IDCConfig":{"shape":"IDCConfig"},
+        "ActiveDirectoryConfig":{"shape":"ActiveDirectoryConfig"},
+        "StreamingProperties":{"shape":"StreamingProperties"},
+        "ErrorMessage":{"shape":"Description"}
       }
+    },
+    "WorkspaceDirectoryDescription":{
+      "type":"string",
+      "pattern":"^([a-zA-Z0-9_])[\\\\a-zA-Z0-9_@#%*+=:?./!\\s-]{1,255}$"
+    },
+    "WorkspaceDirectoryName":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_.\\s-]{1,64}$"
+    },
+    "WorkspaceDirectoryNameList":{
+      "type":"list",
+      "member":{"shape":"WorkspaceDirectoryName"},
+      "max":25,
+      "min":1
     },
     "WorkspaceDirectoryState":{
       "type":"string",
@@ -3898,7 +4598,9 @@
       "type":"string",
       "enum":[
         "SIMPLE_AD",
-        "AD_CONNECTOR"
+        "AD_CONNECTOR",
+        "CUSTOMER_MANAGED",
+        "AWS_IAM_IDENTITY_CENTER"
       ]
     },
     "WorkspaceErrorCode":{"type":"string"},
@@ -3964,7 +4666,26 @@
         "ZeroRearmCount",
         "InPlaceUpgrade",
         "AntiVirusInstalled",
-        "UEFINotSupported"
+        "UEFINotSupported",
+        "UnknownError",
+        "AppXPackagesInstalled",
+        "ReservedStorageInUse",
+        "AdditionalDrivesPresent",
+        "WindowsUpdatesRequired",
+        "SysPrepFileMissing",
+        "UserProfileMissing",
+        "InsufficientDiskSpace",
+        "EnvironmentVariablesPathMissingEntries",
+        "DomainAccountServicesFound",
+        "InvalidIp",
+        "RemoteDesktopServicesDisabled",
+        "WindowsModulesInstallerDisabled",
+        "AmazonSsmAgentEnabled",
+        "UnsupportedSecurityProtocol",
+        "MultipleUserProfiles",
+        "StagedAppxPackage",
+        "UnsupportedOsUpgrade",
+        "InsufficientRearmCount"
       ]
     },
     "WorkspaceImageId":{
@@ -3985,6 +4706,7 @@
         "BYOL_GRAPHICSPRO",
         "BYOL_GRAPHICS_G4DN",
         "BYOL_REGULAR_WSP",
+        "BYOL_GRAPHICS_G4DN_WSP",
         "BYOL_REGULAR_BYOP",
         "BYOL_GRAPHICS_G4DN_BYOP"
       ]
@@ -4031,7 +4753,8 @@
         "UserVolumeSizeGib":{"shape":"UserVolumeSizeGib"},
         "ComputeTypeName":{"shape":"Compute"},
         "Protocols":{"shape":"ProtocolList"},
-        "OperatingSystemName":{"shape":"OperatingSystemName"}
+        "OperatingSystemName":{"shape":"OperatingSystemName"},
+        "GlobalAccelerator":{"shape":"GlobalAcceleratorForWorkSpace"}
       }
     },
     "WorkspaceRequest":{
@@ -4097,6 +4820,13 @@
         "ERROR"
       ]
     },
+    "WorkspaceType":{
+      "type":"string",
+      "enum":[
+        "PERSONAL",
+        "POOLS"
+      ]
+    },
     "WorkspacesDefaultRoleNotFoundException":{
       "type":"structure",
       "members":{
@@ -4116,6 +4846,147 @@
     "WorkspacesIpGroupsList":{
       "type":"list",
       "member":{"shape":"WorkspacesIpGroup"}
+    },
+    "WorkspacesPool":{
+      "type":"structure",
+      "required":[
+        "PoolId",
+        "PoolArn",
+        "CapacityStatus",
+        "PoolName",
+        "State",
+        "CreatedAt",
+        "BundleId",
+        "DirectoryId"
+      ],
+      "members":{
+        "PoolId":{"shape":"WorkspacesPoolId"},
+        "PoolArn":{"shape":"ARN"},
+        "CapacityStatus":{"shape":"CapacityStatus"},
+        "PoolName":{"shape":"WorkspacesPoolName"},
+        "Description":{"shape":"UpdateDescription"},
+        "State":{"shape":"WorkspacesPoolState"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "BundleId":{"shape":"BundleId"},
+        "DirectoryId":{"shape":"DirectoryId"},
+        "Errors":{"shape":"WorkspacesPoolErrors"},
+        "ApplicationSettings":{"shape":"ApplicationSettingsResponse"},
+        "TimeoutSettings":{"shape":"TimeoutSettings"}
+      }
+    },
+    "WorkspacesPoolError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"WorkspacesPoolErrorCode"},
+        "ErrorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "WorkspacesPoolErrorCode":{
+      "type":"string",
+      "enum":[
+        "IAM_SERVICE_ROLE_IS_MISSING",
+        "IAM_SERVICE_ROLE_MISSING_ENI_DESCRIBE_ACTION",
+        "IAM_SERVICE_ROLE_MISSING_ENI_CREATE_ACTION",
+        "IAM_SERVICE_ROLE_MISSING_ENI_DELETE_ACTION",
+        "NETWORK_INTERFACE_LIMIT_EXCEEDED",
+        "INTERNAL_SERVICE_ERROR",
+        "MACHINE_ROLE_IS_MISSING",
+        "STS_DISABLED_IN_REGION",
+        "SUBNET_HAS_INSUFFICIENT_IP_ADDRESSES",
+        "IAM_SERVICE_ROLE_MISSING_DESCRIBE_SUBNET_ACTION",
+        "SUBNET_NOT_FOUND",
+        "IMAGE_NOT_FOUND",
+        "INVALID_SUBNET_CONFIGURATION",
+        "SECURITY_GROUPS_NOT_FOUND",
+        "IGW_NOT_ATTACHED",
+        "IAM_SERVICE_ROLE_MISSING_DESCRIBE_SECURITY_GROUPS_ACTION",
+        "WORKSPACES_POOL_STOPPED",
+        "WORKSPACES_POOL_INSTANCE_PROVISIONING_FAILURE",
+        "DOMAIN_JOIN_ERROR_FILE_NOT_FOUND",
+        "DOMAIN_JOIN_ERROR_ACCESS_DENIED",
+        "DOMAIN_JOIN_ERROR_LOGON_FAILURE",
+        "DOMAIN_JOIN_ERROR_INVALID_PARAMETER",
+        "DOMAIN_JOIN_ERROR_MORE_DATA",
+        "DOMAIN_JOIN_ERROR_NO_SUCH_DOMAIN",
+        "DOMAIN_JOIN_ERROR_NOT_SUPPORTED",
+        "DOMAIN_JOIN_NERR_INVALID_WORKGROUP_NAME",
+        "DOMAIN_JOIN_NERR_WORKSTATION_NOT_STARTED",
+        "DOMAIN_JOIN_ERROR_DS_MACHINE_ACCOUNT_QUOTA_EXCEEDED",
+        "DOMAIN_JOIN_NERR_PASSWORD_EXPIRED",
+        "DOMAIN_JOIN_INTERNAL_SERVICE_ERROR",
+        "DOMAIN_JOIN_ERROR_SECRET_ACTION_PERMISSION_IS_MISSING",
+        "DOMAIN_JOIN_ERROR_SECRET_DECRYPTION_FAILURE",
+        "DOMAIN_JOIN_ERROR_SECRET_STATE_INVALID",
+        "DOMAIN_JOIN_ERROR_SECRET_NOT_FOUND",
+        "DOMAIN_JOIN_ERROR_SECRET_VALUE_KEY_NOT_FOUND",
+        "DOMAIN_JOIN_ERROR_SECRET_INVALID",
+        "BUNDLE_NOT_FOUND",
+        "DIRECTORY_NOT_FOUND",
+        "INSUFFICIENT_PERMISSIONS_ERROR",
+        "DEFAULT_OU_IS_MISSING"
+      ]
+    },
+    "WorkspacesPoolErrors":{
+      "type":"list",
+      "member":{"shape":"WorkspacesPoolError"}
+    },
+    "WorkspacesPoolId":{
+      "type":"string",
+      "pattern":"^wspool-[0-9a-z]{9}$"
+    },
+    "WorkspacesPoolIds":{
+      "type":"list",
+      "member":{"shape":"WorkspacesPoolId"},
+      "max":25,
+      "min":1
+    },
+    "WorkspacesPoolName":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"
+    },
+    "WorkspacesPoolSession":{
+      "type":"structure",
+      "required":[
+        "SessionId",
+        "PoolId",
+        "UserId"
+      ],
+      "members":{
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "ConnectionState":{"shape":"SessionConnectionState"},
+        "SessionId":{"shape":"AmazonUuid"},
+        "InstanceId":{"shape":"SessionInstanceId"},
+        "PoolId":{"shape":"WorkspacesPoolId"},
+        "ExpirationTime":{"shape":"Timestamp"},
+        "NetworkAccessConfiguration":{"shape":"NetworkAccessConfiguration"},
+        "StartTime":{"shape":"Timestamp"},
+        "UserId":{"shape":"WorkspacesPoolUserId"}
+      }
+    },
+    "WorkspacesPoolSessions":{
+      "type":"list",
+      "member":{"shape":"WorkspacesPoolSession"}
+    },
+    "WorkspacesPoolState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "DELETING",
+        "RUNNING",
+        "STARTING",
+        "STOPPED",
+        "STOPPING",
+        "UPDATING"
+      ]
+    },
+    "WorkspacesPoolUserId":{
+      "type":"string",
+      "max":128,
+      "min":2
+    },
+    "WorkspacesPools":{
+      "type":"list",
+      "member":{"shape":"WorkspacesPool"}
     }
   }
 }

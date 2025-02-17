@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   verify-no-models-changes:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: Check for model changes
     if: github.event_name == 'pull_request'
     steps:
@@ -30,12 +30,25 @@ jobs:
             exit 1
           fi
   run:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
-        php-versions: ['7.2.5', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
-        composer-options: ['', '--prefer-lowest']
+        include:
+          - php-versions: '8.1'
+            composer-options: ''
+          - php-versions: '8.1'
+            composer-options: '--prefer-lowest'
+          - php-versions: '8.2'
+            composer-options: ''
+          - php-versions: '8.2'
+            composer-options: '--prefer-lowest'
+          - php-versions: '8.3'
+            composer-options: ''
+          - php-versions: '8.3'
+            composer-options: '--prefer-lowest'
+          - php-versions: '8.4'
+            composer-options: ''
     #set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
     #set up environment variables used by unit tests
@@ -57,7 +70,7 @@ jobs:
     - name: Checkout codebase
       uses: actions/checkout@v4
 
-    #validate composer files
+      #validate composer files
     - name: Validate composer.json and composer.lock
       run: composer validate
 
@@ -65,37 +78,33 @@ jobs:
     - name: Install dependencies
       run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
 
-    #php 8.x requirements
-    - if: ${{ matrix.php-versions >= '8.0' && matrix.composer-options != '' }}
-      name: PHP 8.x
-      run: composer require --dev phpunit/phpunit "^9.5" --no-interaction --prefer-source --with-all-dependencies
-
     #php 8.1+ requirements
-    - if: ${{ matrix.php-versions >= '8.1' && matrix.composer-options != '' }}
-      name: PHP 8.1+
-      run: composer require --dev guzzlehttp/guzzle "^7.4.5" --no-interaction --prefer-source --with-all-dependencies
+    - name: PHP 8.1+ requirements
+      run: composer require --dev phpunit/phpunit "^9.5" guzzlehttp/guzzle "^7.4.5" --no-interaction --prefer-source --with-all-dependencies
 
     #run tests
     - name: Run test suite
       run: make test
 
     #static analysis
-    - if: ${{ matrix.php-versions < '8.0' && matrix.composer-options == '' }}
-      name: Static analysis
+    - name: Static analysis
       run: |
-        composer require --dev nette/neon "^3.0"
-        composer require --dev phpstan/phpstan "0.12.45"
+        composer require --dev nette/neon "^3.4.4"
+        composer require --dev phpstan/phpstan "2.1.1"
         vendor/bin/phpstan analyse src
 
     #generate package
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
-        composer require guzzlehttp/psr7 "^1.9.1" -W
+        composer config platform.php 8.1
         composer update
         make package
 
     #generate code coverage
-    - if: ${{ (matrix.php-versions == '7.2.5' || matrix.php-versions == '8.0') && matrix.composer-options == '' }}
-      name: Code coverage
-      run: bash <(curl -s https://codecov.io/bash)
+    - if: ${{ matrix.composer-options == '' }}
+      name: Code Coverage
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - run: bash <(curl -s https://codecov.io/bash)

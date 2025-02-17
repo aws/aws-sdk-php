@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-09-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"controlplane.payment-cryptography",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Payment Cryptography Control Plane",
     "serviceId":"Payment Cryptography",
     "signatureVersion":"v4",
@@ -493,6 +495,12 @@
         "Key":{"shape":"Key"}
       }
     },
+    "EvenHexLengthBetween16And32":{
+      "type":"string",
+      "max":32,
+      "min":16,
+      "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
+    },
     "ExportAttributes":{
       "type":"structure",
       "members":{
@@ -571,7 +579,7 @@
         "WrappingKeyCertificate":{"shape":"CertificateType"},
         "ExportToken":{"shape":"ExportTokenId"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
-        "RandomNonce":{"shape":"HexLength16"},
+        "RandomNonce":{"shape":"EvenHexLengthBetween16And32"},
         "KeyBlockHeaders":{"shape":"KeyBlockHeaders"}
       }
     },
@@ -677,12 +685,6 @@
         "KeyCertificateChain":{"shape":"CertificateType"}
       }
     },
-    "HexLength16":{
-      "type":"string",
-      "max":16,
-      "min":16,
-      "pattern":"[0-9A-F]+"
-    },
     "HexLength20Or24":{
       "type":"string",
       "max":24,
@@ -763,7 +765,7 @@
         "ImportToken":{"shape":"ImportTokenId"},
         "WrappedKeyBlock":{"shape":"Tr34WrappedKeyBlock"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
-        "RandomNonce":{"shape":"HexLength16"}
+        "RandomNonce":{"shape":"EvenHexLengthBetween16And32"}
       }
     },
     "InternalServerException":{
@@ -813,7 +815,9 @@
         "AES_256",
         "RSA_2048",
         "RSA_3072",
-        "RSA_4096"
+        "RSA_4096",
+        "ECC_NIST_P256",
+        "ECC_NIST_P384"
       ]
     },
     "KeyArn":{
@@ -988,6 +992,7 @@
     "ListAliasesInput":{
       "type":"structure",
       "members":{
+        "KeyArn":{"shape":"KeyArn"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
       }
@@ -1148,7 +1153,10 @@
     "String":{"type":"string"},
     "Tag":{
       "type":"structure",
-      "required":["Key"],
+      "required":[
+        "Key",
+        "Value"
+      ],
       "members":{
         "Key":{"shape":"TagKey"},
         "Value":{"shape":"TagValue"}
@@ -1184,7 +1192,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":1
     },
     "Tags":{
       "type":"list",
@@ -1204,7 +1212,8 @@
       "type":"string",
       "max":9984,
       "min":56,
-      "pattern":"[0-9A-Z]+"
+      "pattern":"[0-9A-Z]+",
+      "sensitive":true
     },
     "Tr34KeyBlockFormat":{
       "type":"string",
@@ -1214,7 +1223,8 @@
       "type":"string",
       "max":4096,
       "min":2,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "TrustedCertificatePublicKey":{
       "type":"structure",
@@ -1286,7 +1296,8 @@
       "type":"string",
       "max":4096,
       "min":16,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "WrappedKeyMaterialFormat":{
       "type":"string",

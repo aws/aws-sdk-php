@@ -5,13 +5,15 @@
     "endpointPrefix":"kendra",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"kendra",
     "serviceFullName":"AWSKendraFrontendService",
     "serviceId":"kendra",
     "signatureVersion":"v4",
     "signingName":"kendra",
     "targetPrefix":"AWSKendraFrontendService",
-    "uid":"kendra-2019-02-03"
+    "uid":"kendra-2019-02-03",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateEntitiesToExperience":{
@@ -1362,6 +1364,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -1427,6 +1430,7 @@
       "type":"structure",
       "members":{
         "DocumentId":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -1458,6 +1462,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -3657,7 +3662,8 @@
       "type":"string",
       "enum":[
         "DEVELOPER_EDITION",
-        "ENTERPRISE_EDITION"
+        "ENTERPRISE_EDITION",
+        "GEN_AI_ENTERPRISE_EDITION"
       ]
     },
     "IndexFieldName":{

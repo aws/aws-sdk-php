@@ -162,7 +162,9 @@
         "Upgrade",
         "PurchaseSavingsPlans",
         "PurchaseReservedInstances",
-        "MigrateToGraviton"
+        "MigrateToGraviton",
+        "Delete",
+        "ScaleIn"
       ]
     },
     "ActionTypeList":{
@@ -170,6 +172,13 @@
       "member":{"shape":"ActionType"},
       "max":100,
       "min":1
+    },
+    "AllocationStrategy":{
+      "type":"string",
+      "enum":[
+        "Prioritized",
+        "LowestPrice"
+      ]
     },
     "BlockStoragePerformanceConfiguration":{
       "type":"structure",
@@ -243,8 +252,18 @@
     "Ec2AutoScalingGroupConfiguration":{
       "type":"structure",
       "members":{
-        "instance":{"shape":"InstanceConfiguration"}
+        "instance":{"shape":"InstanceConfiguration"},
+        "mixedInstances":{"shape":"MixedInstanceConfigurationList"},
+        "type":{"shape":"Ec2AutoScalingGroupType"},
+        "allocationStrategy":{"shape":"AllocationStrategy"}
       }
+    },
+    "Ec2AutoScalingGroupType":{
+      "type":"string",
+      "enum":[
+        "SingleInstanceType",
+        "MixedInstanceTypes"
+      ]
     },
     "Ec2Instance":{
       "type":"structure",
@@ -493,6 +512,7 @@
         "filter":{"shape":"Filter"},
         "groupBy":{"shape":"String"},
         "maxResults":{"shape":"ListRecommendationSummariesRequestMaxResultsInteger"},
+        "metrics":{"shape":"SummaryMetricsList"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -509,6 +529,7 @@
         "items":{"shape":"RecommendationSummariesList"},
         "groupBy":{"shape":"String"},
         "currencyCode":{"shape":"String"},
+        "metrics":{"shape":"SummaryMetricsResult"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -547,6 +568,16 @@
         "All",
         "None"
       ]
+    },
+    "MixedInstanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"String"}
+      }
+    },
+    "MixedInstanceConfigurationList":{
+      "type":"list",
+      "member":{"shape":"MixedInstanceConfiguration"}
     },
     "OpenSearchReservedInstances":{
       "type":"structure",
@@ -879,6 +910,22 @@
       }
     },
     "String":{"type":"string"},
+    "SummaryMetrics":{
+      "type":"string",
+      "enum":["SavingsPercentage"]
+    },
+    "SummaryMetricsList":{
+      "type":"list",
+      "member":{"shape":"SummaryMetrics"},
+      "max":100,
+      "min":1
+    },
+    "SummaryMetricsResult":{
+      "type":"structure",
+      "members":{
+        "savingsPercentage":{"shape":"String"}
+      }
+    },
     "Tag":{
       "type":"structure",
       "members":{

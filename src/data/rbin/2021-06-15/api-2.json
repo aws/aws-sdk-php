@@ -5,11 +5,13 @@
     "endpointPrefix":"rbin",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Recycle Bin",
     "serviceId":"rbin",
     "signatureVersion":"v4",
     "signingName":"rbin",
-    "uid":"rbin-2021-06-15"
+    "uid":"rbin-2021-06-15",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateRule":{
@@ -194,7 +196,8 @@
         "Tags":{"shape":"TagList"},
         "ResourceType":{"shape":"ResourceType"},
         "ResourceTags":{"shape":"ResourceTags"},
-        "LockConfiguration":{"shape":"LockConfiguration"}
+        "LockConfiguration":{"shape":"LockConfiguration"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "CreateRuleResponse":{
@@ -209,7 +212,8 @@
         "Status":{"shape":"RuleStatus"},
         "LockConfiguration":{"shape":"LockConfiguration"},
         "LockState":{"shape":"LockState"},
-        "RuleArn":{"shape":"RuleArn"}
+        "RuleArn":{"shape":"RuleArn"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "DeleteRuleRequest":{
@@ -233,6 +237,12 @@
       "pattern":"^[\\S ]{0,255}$"
     },
     "ErrorMessage":{"type":"string"},
+    "ExcludeResourceTags":{
+      "type":"list",
+      "member":{"shape":"ResourceTag"},
+      "max":5,
+      "min":0
+    },
     "GetRuleRequest":{
       "type":"structure",
       "required":["Identifier"],
@@ -256,7 +266,8 @@
         "LockConfiguration":{"shape":"LockConfiguration"},
         "LockState":{"shape":"LockState"},
         "LockEndTime":{"shape":"TimeStamp"},
-        "RuleArn":{"shape":"RuleArn"}
+        "RuleArn":{"shape":"RuleArn"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "InternalServerException":{
@@ -276,7 +287,8 @@
         "NextToken":{"shape":"NextToken"},
         "ResourceType":{"shape":"ResourceType"},
         "ResourceTags":{"shape":"ResourceTags"},
-        "LockState":{"shape":"LockState"}
+        "LockState":{"shape":"LockState"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "ListRulesResponse":{
@@ -336,7 +348,8 @@
         "Status":{"shape":"RuleStatus"},
         "LockConfiguration":{"shape":"LockConfiguration"},
         "LockState":{"shape":"LockState"},
-        "RuleArn":{"shape":"RuleArn"}
+        "RuleArn":{"shape":"RuleArn"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "LockState":{
@@ -561,7 +574,8 @@
         "LockConfiguration":{"shape":"LockConfiguration"},
         "LockState":{"shape":"LockState"},
         "LockEndTime":{"shape":"TimeStamp"},
-        "RuleArn":{"shape":"RuleArn"}
+        "RuleArn":{"shape":"RuleArn"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "UntagResourceRequest":{
@@ -600,7 +614,8 @@
         "RetentionPeriod":{"shape":"RetentionPeriod"},
         "Description":{"shape":"Description"},
         "ResourceType":{"shape":"ResourceType"},
-        "ResourceTags":{"shape":"ResourceTags"}
+        "ResourceTags":{"shape":"ResourceTags"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "UpdateRuleResponse":{
@@ -614,7 +629,8 @@
         "Status":{"shape":"RuleStatus"},
         "LockState":{"shape":"LockState"},
         "LockEndTime":{"shape":"TimeStamp"},
-        "RuleArn":{"shape":"RuleArn"}
+        "RuleArn":{"shape":"RuleArn"},
+        "ExcludeResourceTags":{"shape":"ExcludeResourceTags"}
       }
     },
     "ValidationException":{

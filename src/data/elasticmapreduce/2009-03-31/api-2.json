@@ -5,12 +5,14 @@
     "endpointPrefix":"elasticmapreduce",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon EMR",
     "serviceFullName":"Amazon EMR",
     "serviceId":"EMR",
     "signatureVersion":"v4",
     "targetPrefix":"ElasticMapReduce",
-    "uid":"elasticmapreduce-2009-03-31"
+    "uid":"elasticmapreduce-2009-03-31",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddInstanceFleet":{
@@ -1614,7 +1616,8 @@
         "ProvisionedSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeSpecifications":{"shape":"InstanceTypeSpecificationList"},
         "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
-        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"},
+        "Context":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceFleetConfig":{
@@ -1627,7 +1630,8 @@
         "TargetSpotCapacity":{"shape":"WholeNumber"},
         "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"},
         "LaunchSpecifications":{"shape":"InstanceFleetProvisioningSpecifications"},
-        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"},
+        "Context":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceFleetConfigList":{
@@ -1646,7 +1650,9 @@
         "InstanceFleetId":{"shape":"InstanceFleetId"},
         "TargetOnDemandCapacity":{"shape":"WholeNumber"},
         "TargetSpotCapacity":{"shape":"WholeNumber"},
-        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"}
+        "ResizeSpecifications":{"shape":"InstanceFleetResizingSpecifications"},
+        "InstanceTypeConfigs":{"shape":"InstanceTypeConfigList"},
+        "Context":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceFleetProvisioningSpecifications":{
@@ -1964,7 +1970,8 @@
         "BidPriceAsPercentageOfOnDemandPrice":{"shape":"NonNegativeDouble"},
         "EbsConfiguration":{"shape":"EbsConfiguration"},
         "Configurations":{"shape":"ConfigurationList"},
-        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"},
+        "Priority":{"shape":"NonNegativeDouble"}
       }
     },
     "InstanceTypeConfigList":{
@@ -1981,7 +1988,8 @@
         "Configurations":{"shape":"ConfigurationList"},
         "EbsBlockDevices":{"shape":"EbsBlockDeviceList"},
         "EbsOptimized":{"shape":"BooleanObject"},
-        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"},
+        "Priority":{"shape":"NonNegativeDouble"}
       }
     },
     "InstanceTypeSpecificationList":{
@@ -2336,7 +2344,9 @@
     "ManagedScalingPolicy":{
       "type":"structure",
       "members":{
-        "ComputeLimits":{"shape":"ComputeLimits"}
+        "ComputeLimits":{"shape":"ComputeLimits"},
+        "UtilizationPerformanceIndex":{"shape":"UtilizationPerformanceIndexInteger"},
+        "ScalingStrategy":{"shape":"ScalingStrategy"}
       }
     },
     "Marker":{"type":"string"},
@@ -2502,7 +2512,10 @@
     },
     "OnDemandProvisioningAllocationStrategy":{
       "type":"string",
-      "enum":["lowest-price"]
+      "enum":[
+        "lowest-price",
+        "prioritized"
+      ]
     },
     "OnDemandProvisioningSpecification":{
       "type":"structure",
@@ -2514,9 +2527,10 @@
     },
     "OnDemandResizingSpecification":{
       "type":"structure",
-      "required":["TimeoutDurationMinutes"],
       "members":{
-        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"},
+        "AllocationStrategy":{"shape":"OnDemandProvisioningAllocationStrategy"},
+        "CapacityReservationOptions":{"shape":"OnDemandCapacityReservationOptions"}
       }
     },
     "OptionalArnType":{
@@ -2819,6 +2833,13 @@
       "type":"list",
       "member":{"shape":"ScalingRule"}
     },
+    "ScalingStrategy":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "ADVANCED"
+      ]
+    },
     "ScalingTrigger":{
       "type":"structure",
       "required":["CloudWatchAlarmDefinition"],
@@ -2953,7 +2974,8 @@
         "capacity-optimized",
         "price-capacity-optimized",
         "lowest-price",
-        "diversified"
+        "diversified",
+        "capacity-optimized-prioritized"
       ]
     },
     "SpotProvisioningSpecification":{
@@ -2978,9 +3000,9 @@
     },
     "SpotResizingSpecification":{
       "type":"structure",
-      "required":["TimeoutDurationMinutes"],
       "members":{
-        "TimeoutDurationMinutes":{"shape":"WholeNumber"}
+        "TimeoutDurationMinutes":{"shape":"WholeNumber"},
+        "AllocationStrategy":{"shape":"SpotProvisioningAllocationStrategy"}
       }
     },
     "StartNotebookExecutionInput":{
@@ -3346,6 +3368,11 @@
         "Password":{"shape":"XmlStringMaxLen256"}
       },
       "sensitive":true
+    },
+    "UtilizationPerformanceIndexInteger":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "VolumeSpecification":{
       "type":"structure",

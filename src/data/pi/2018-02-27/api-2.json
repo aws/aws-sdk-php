@@ -12,7 +12,8 @@
     "signatureVersion":"v4",
     "signingName":"pi",
     "targetPrefix":"PerformanceInsightsv20180227",
-    "uid":"pi-2018-02-27"
+    "uid":"pi-2018-02-27",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreatePerformanceAnalysisReport":{
@@ -804,6 +805,7 @@
         "Metric":{"shape":"DescriptiveString"},
         "DisplayName":{"shape":"DescriptiveString"},
         "Dimensions":{"shape":"DescriptiveMap"},
+        "Filter":{"shape":"DescriptiveMap"},
         "Value":{"shape":"Double"}
       }
     },

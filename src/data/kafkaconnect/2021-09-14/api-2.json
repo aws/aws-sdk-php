@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-09-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"kafkaconnect",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Kafka Connect",
     "serviceFullName":"Managed Streaming for Kafka Connect",
     "serviceId":"KafkaConnect",
@@ -152,6 +153,25 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "DescribeConnectorOperation":{
+      "name":"DescribeConnectorOperation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/connectorOperations/{connectorOperationArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeConnectorOperationRequest"},
+      "output":{"shape":"DescribeConnectorOperationResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "DescribeCustomPlugin":{
       "name":"DescribeCustomPlugin",
       "http":{
@@ -180,6 +200,25 @@
       },
       "input":{"shape":"DescribeWorkerConfigurationRequest"},
       "output":{"shape":"DescribeWorkerConfigurationResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "ListConnectorOperations":{
+      "name":"ListConnectorOperations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/connectors/{connectorArn}/operations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConnectorOperationsRequest"},
+      "output":{"shape":"ListConnectorOperationsResponse"},
       "errors":[
         {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
@@ -355,9 +394,9 @@
         "minWorkerCount"
       ],
       "members":{
-        "maxWorkerCount":{"shape":"__integerMin1Max10"},
+        "maxWorkerCount":{"shape":"__integer"},
         "mcuCount":{"shape":"__integerMin1Max8"},
-        "minWorkerCount":{"shape":"__integerMin1Max10"},
+        "minWorkerCount":{"shape":"__integer"},
         "scaleInPolicy":{"shape":"ScaleInPolicy"},
         "scaleOutPolicy":{"shape":"ScaleOutPolicy"}
       }
@@ -382,9 +421,9 @@
         "scaleOutPolicy"
       ],
       "members":{
-        "maxWorkerCount":{"shape":"__integerMin1Max10"},
+        "maxWorkerCount":{"shape":"__integer"},
         "mcuCount":{"shape":"__integerMin1Max8"},
-        "minWorkerCount":{"shape":"__integerMin1Max10"},
+        "minWorkerCount":{"shape":"__integer"},
         "scaleInPolicy":{"shape":"ScaleInPolicyUpdate"},
         "scaleOutPolicy":{"shape":"ScaleOutPolicyUpdate"}
       }
@@ -447,6 +486,76 @@
       },
       "exception":true
     },
+    "ConnectorConfiguration":{
+      "type":"map",
+      "key":{"shape":"__string"},
+      "value":{"shape":"__string"},
+      "sensitive":true
+    },
+    "ConnectorConfigurationUpdate":{
+      "type":"map",
+      "key":{"shape":"__string"},
+      "value":{"shape":"__string"},
+      "sensitive":true
+    },
+    "ConnectorOperationState":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETE",
+        "UPDATE_FAILED",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_FAILED",
+        "ROLLBACK_COMPLETE"
+      ]
+    },
+    "ConnectorOperationStep":{
+      "type":"structure",
+      "members":{
+        "stepType":{"shape":"ConnectorOperationStepType"},
+        "stepState":{"shape":"ConnectorOperationStepState"}
+      }
+    },
+    "ConnectorOperationStepState":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "ConnectorOperationStepType":{
+      "type":"string",
+      "enum":[
+        "INITIALIZE_UPDATE",
+        "FINALIZE_UPDATE",
+        "UPDATE_WORKER_SETTING",
+        "UPDATE_CONNECTOR_CONFIGURATION",
+        "VALIDATE_UPDATE"
+      ]
+    },
+    "ConnectorOperationSummary":{
+      "type":"structure",
+      "members":{
+        "connectorOperationArn":{"shape":"__string"},
+        "connectorOperationType":{"shape":"ConnectorOperationType"},
+        "connectorOperationState":{"shape":"ConnectorOperationState"},
+        "creationTime":{"shape":"__timestampIso8601"},
+        "endTime":{"shape":"__timestampIso8601"}
+      }
+    },
+    "ConnectorOperationType":{
+      "type":"string",
+      "enum":[
+        "UPDATE_WORKER_SETTING",
+        "UPDATE_CONNECTOR_CONFIGURATION",
+        "ISOLATE_CONNECTOR",
+        "RESTORE_CONNECTOR"
+      ]
+    },
     "ConnectorState":{
       "type":"string",
       "enum":[
@@ -492,7 +601,7 @@
       ],
       "members":{
         "capacity":{"shape":"Capacity"},
-        "connectorConfiguration":{"shape":"__sensitive__mapOf__string"},
+        "connectorConfiguration":{"shape":"ConnectorConfiguration"},
         "connectorDescription":{"shape":"__stringMax1024"},
         "connectorName":{"shape":"__stringMin1Max128"},
         "kafkaCluster":{"shape":"KafkaCluster"},
@@ -502,8 +611,8 @@
         "logDelivery":{"shape":"LogDelivery"},
         "plugins":{"shape":"__listOfPlugin"},
         "serviceExecutionRoleArn":{"shape":"__string"},
-        "tags":{"shape":"Tags"},
-        "workerConfiguration":{"shape":"WorkerConfiguration"}
+        "workerConfiguration":{"shape":"WorkerConfiguration"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateConnectorResponse":{
@@ -698,6 +807,34 @@
         "workerConfigurationState":{"shape":"WorkerConfigurationState"}
       }
     },
+    "DescribeConnectorOperationRequest":{
+      "type":"structure",
+      "required":["connectorOperationArn"],
+      "members":{
+        "connectorOperationArn":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"connectorOperationArn"
+        }
+      }
+    },
+    "DescribeConnectorOperationResponse":{
+      "type":"structure",
+      "members":{
+        "connectorArn":{"shape":"__string"},
+        "connectorOperationArn":{"shape":"__string"},
+        "connectorOperationState":{"shape":"ConnectorOperationState"},
+        "connectorOperationType":{"shape":"ConnectorOperationType"},
+        "operationSteps":{"shape":"__listOfConnectorOperationStep"},
+        "originWorkerSetting":{"shape":"WorkerSetting"},
+        "originConnectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "targetWorkerSetting":{"shape":"WorkerSetting"},
+        "targetConnectorConfiguration":{"shape":"ConnectorConfiguration"},
+        "errorInfo":{"shape":"StateDescription"},
+        "creationTime":{"shape":"__timestampIso8601"},
+        "endTime":{"shape":"__timestampIso8601"}
+      }
+    },
     "DescribeConnectorRequest":{
       "type":"structure",
       "required":["connectorArn"],
@@ -714,7 +851,7 @@
       "members":{
         "capacity":{"shape":"CapacityDescription"},
         "connectorArn":{"shape":"__string"},
-        "connectorConfiguration":{"shape":"__sensitive__mapOf__string"},
+        "connectorConfiguration":{"shape":"ConnectorConfiguration"},
         "connectorDescription":{"shape":"__string"},
         "connectorName":{"shape":"__string"},
         "connectorState":{"shape":"ConnectorState"},
@@ -727,8 +864,8 @@
         "logDelivery":{"shape":"LogDeliveryDescription"},
         "plugins":{"shape":"__listOfPluginDescription"},
         "serviceExecutionRoleArn":{"shape":"__string"},
-        "stateDescription":{"shape":"StateDescription"},
-        "workerConfiguration":{"shape":"WorkerConfigurationDescription"}
+        "workerConfiguration":{"shape":"WorkerConfigurationDescription"},
+        "stateDescription":{"shape":"StateDescription"}
       }
     },
     "DescribeCustomPluginRequest":{
@@ -864,6 +1001,34 @@
         "TLS"
       ]
     },
+    "ListConnectorOperationsRequest":{
+      "type":"structure",
+      "required":["connectorArn"],
+      "members":{
+        "connectorArn":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"connectorArn"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"__string",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListConnectorOperationsResponse":{
+      "type":"structure",
+      "members":{
+        "connectorOperations":{"shape":"__listOfConnectorOperationSummary"},
+        "nextToken":{"shape":"__string"}
+      }
+    },
     "ListConnectorsRequest":{
       "type":"structure",
       "members":{
@@ -899,15 +1064,15 @@
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "namePrefix":{
-          "shape":"__string",
-          "location":"querystring",
-          "locationName":"namePrefix"
-        },
         "nextToken":{
           "shape":"__string",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "namePrefix":{
+          "shape":"__string",
+          "location":"querystring",
+          "locationName":"namePrefix"
         }
       }
     },
@@ -943,15 +1108,15 @@
           "location":"querystring",
           "locationName":"maxResults"
         },
-        "namePrefix":{
-          "shape":"__string",
-          "location":"querystring",
-          "locationName":"namePrefix"
-        },
         "nextToken":{
           "shape":"__string",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "namePrefix":{
+          "shape":"__string",
+          "location":"querystring",
+          "locationName":"namePrefix"
         }
       }
     },
@@ -977,6 +1142,7 @@
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -1012,7 +1178,7 @@
       ],
       "members":{
         "mcuCount":{"shape":"__integerMin1Max8"},
-        "workerCount":{"shape":"__integerMin1Max10"}
+        "workerCount":{"shape":"__integer"}
       }
     },
     "ProvisionedCapacityDescription":{
@@ -1030,7 +1196,7 @@
       ],
       "members":{
         "mcuCount":{"shape":"__integerMin1Max8"},
-        "workerCount":{"shape":"__integerMin1Max10"}
+        "workerCount":{"shape":"__integer"}
       }
     },
     "S3Location":{
@@ -1218,12 +1384,12 @@
     "UpdateConnectorRequest":{
       "type":"structure",
       "required":[
-        "capacity",
         "connectorArn",
         "currentVersion"
       ],
       "members":{
         "capacity":{"shape":"CapacityUpdate"},
+        "connectorConfiguration":{"shape":"ConnectorConfigurationUpdate"},
         "connectorArn":{
           "shape":"__string",
           "location":"uri",
@@ -1240,7 +1406,8 @@
       "type":"structure",
       "members":{
         "connectorArn":{"shape":"__string"},
-        "connectorState":{"shape":"ConnectorState"}
+        "connectorState":{"shape":"ConnectorState"},
+        "connectorOperationArn":{"shape":"__string"}
       }
     },
     "Vpc":{
@@ -1327,13 +1494,14 @@
         "s3":{"shape":"S3LogDeliveryDescription"}
       }
     },
+    "WorkerSetting":{
+      "type":"structure",
+      "members":{
+        "capacity":{"shape":"CapacityDescription"}
+      }
+    },
     "__boolean":{"type":"boolean"},
     "__integer":{"type":"integer"},
-    "__integerMin1Max10":{
-      "type":"integer",
-      "max":10,
-      "min":1
-    },
     "__integerMin1Max100":{
       "type":"integer",
       "max":100,
@@ -1343,6 +1511,14 @@
       "type":"integer",
       "max":8,
       "min":1
+    },
+    "__listOfConnectorOperationStep":{
+      "type":"list",
+      "member":{"shape":"ConnectorOperationStep"}
+    },
+    "__listOfConnectorOperationSummary":{
+      "type":"list",
+      "member":{"shape":"ConnectorOperationSummary"}
     },
     "__listOfConnectorSummary":{
       "type":"list",
@@ -1376,12 +1552,6 @@
     },
     "__sensitiveString":{
       "type":"string",
-      "sensitive":true
-    },
-    "__sensitive__mapOf__string":{
-      "type":"map",
-      "key":{"shape":"__string"},
-      "value":{"shape":"__string"},
       "sensitive":true
     },
     "__string":{"type":"string"},

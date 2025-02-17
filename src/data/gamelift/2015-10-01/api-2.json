@@ -5,11 +5,13 @@
     "endpointPrefix":"gamelift",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon GameLift",
     "serviceId":"GameLift",
     "signatureVersion":"v4",
     "targetPrefix":"GameLift",
-    "uid":"gamelift-2015-10-01"
+    "uid":"gamelift-2015-10-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptMatch":{
@@ -77,6 +79,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContainerFleet":{
+      "name":"CreateContainerFleet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateContainerFleetInput"},
+      "output":{"shape":"CreateContainerFleetOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"TaggingFailedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
     "CreateContainerGroupDefinition":{
       "name":"CreateContainerGroupDefinition",
       "http":{
@@ -86,12 +106,12 @@
       "input":{"shape":"CreateContainerGroupDefinitionInput"},
       "output":{"shape":"CreateContainerGroupDefinitionOutput"},
       "errors":[
-        {"shape":"UnauthorizedException"},
-        {"shape":"InvalidRequestException"},
         {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"LimitExceededException"},
         {"shape":"TaggingFailedException"},
-        {"shape":"InternalServiceException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"UnsupportedRegionException"}
       ]
     },
@@ -352,6 +372,23 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DeleteContainerFleet":{
+      "name":"DeleteContainerFleet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteContainerFleetInput"},
+      "output":{"shape":"DeleteContainerFleetOutput"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"TaggingFailedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
     "DeleteContainerGroupDefinition":{
       "name":"DeleteContainerGroupDefinition",
       "http":{
@@ -359,12 +396,13 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteContainerGroupDefinitionInput"},
+      "output":{"shape":"DeleteContainerGroupDefinitionOutput"},
       "errors":[
-        {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"TaggingFailedException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TaggingFailedException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"UnsupportedRegionException"}
       ]
     },
@@ -489,7 +527,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DeleteScript":{
@@ -608,7 +647,24 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "DescribeContainerFleet":{
+      "name":"DescribeContainerFleet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeContainerFleetInput"},
+      "output":{"shape":"DescribeContainerFleetOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeContainerGroupDefinition":{
@@ -620,10 +676,10 @@
       "input":{"shape":"DescribeContainerGroupDefinitionInput"},
       "output":{"shape":"DescribeContainerGroupDefinitionOutput"},
       "errors":[
-        {"shape":"UnauthorizedException"},
+        {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"InternalServiceException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"UnsupportedRegionException"}
       ]
     },
@@ -669,7 +725,24 @@
         {"shape":"InternalServiceException"},
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "DescribeFleetDeployment":{
+      "name":"DescribeFleetDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFleetDeploymentInput"},
+      "output":{"shape":"DescribeFleetDeploymentOutput"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeFleetEvents":{
@@ -684,7 +757,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "DescribeFleetLocationAttributes":{
@@ -1036,7 +1110,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "GetComputeAuthToken":{
@@ -1051,7 +1126,8 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "GetGameSessionLogUrl":{
@@ -1123,7 +1199,39 @@
       "errors":[
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "ListContainerFleets":{
+      "name":"ListContainerFleets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContainerFleetsInput"},
+      "output":{"shape":"ListContainerFleetsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "ListContainerGroupDefinitionVersions":{
+      "name":"ListContainerGroupDefinitionVersions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListContainerGroupDefinitionVersionsInput"},
+      "output":{"shape":"ListContainerGroupDefinitionVersionsOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "ListContainerGroupDefinitions":{
@@ -1135,9 +1243,25 @@
       "input":{"shape":"ListContainerGroupDefinitionsInput"},
       "output":{"shape":"ListContainerGroupDefinitionsOutput"},
       "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "ListFleetDeployments":{
+      "name":"ListFleetDeployments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFleetDeploymentsInput"},
+      "output":{"shape":"ListFleetDeploymentsOutput"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServiceException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"InternalServiceException"},
         {"shape":"UnsupportedRegionException"}
       ]
     },
@@ -1224,7 +1348,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"TaggingFailedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "PutScalingPolicy":{
@@ -1239,7 +1364,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"NotFoundException"}
+        {"shape":"NotFoundException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "RegisterCompute":{
@@ -1366,7 +1492,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
-        {"shape":"UnauthorizedException"}
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "StartMatchBackfill":{
@@ -1472,7 +1599,25 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"TaggingFailedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "TerminateGameSession":{
+      "name":"TerminateGameSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TerminateGameSessionInput"},
+      "output":{"shape":"TerminateGameSessionOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InvalidGameSessionStatusException"},
+        {"shape":"NotReadyException"}
       ]
     },
     "UntagResource":{
@@ -1487,7 +1632,8 @@
         {"shape":"NotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"TaggingFailedException"},
-        {"shape":"InternalServiceException"}
+        {"shape":"InternalServiceException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "UpdateAlias":{
@@ -1518,6 +1664,41 @@
         {"shape":"InvalidRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateContainerFleet":{
+      "name":"UpdateContainerFleet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateContainerFleetInput"},
+      "output":{"shape":"UpdateContainerFleetOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"NotFoundException"},
+        {"shape":"NotReadyException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
+      ]
+    },
+    "UpdateContainerGroupDefinition":{
+      "name":"UpdateContainerGroupDefinition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateContainerGroupDefinitionInput"},
+      "output":{"shape":"UpdateContainerGroupDefinitionOutput"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"UnsupportedRegionException"}
       ]
     },
     "UpdateFleetAttributes":{
@@ -1767,7 +1948,7 @@
     },
     "ArnStringModel":{
       "type":"string",
-      "max":256,
+      "max":512,
       "min":1,
       "pattern":"[a-zA-Z0-9:/-]+"
     },
@@ -1911,7 +2092,8 @@
         "GameLiftServiceSdkEndpoint":{"shape":"GameLiftServiceSdkEndpointOutput"},
         "GameLiftAgentEndpoint":{"shape":"GameLiftAgentEndpointOutput"},
         "InstanceId":{"shape":"InstanceId"},
-        "ContainerAttributes":{"shape":"ContainerAttributes"}
+        "ContainerAttributes":{"shape":"ContainerAttributes"},
+        "GameServerContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionNameOrArn"}
       }
     },
     "ComputeArn":{
@@ -1945,15 +2127,15 @@
       "enum":[
         "PENDING",
         "ACTIVE",
-        "TERMINATING"
+        "TERMINATING",
+        "IMPAIRED"
       ]
     },
     "ComputeType":{
       "type":"string",
       "enum":[
         "EC2",
-        "ANYWHERE",
-        "CONTAINER"
+        "ANYWHERE"
       ]
     },
     "ConflictException":{
@@ -1974,76 +2156,23 @@
         "ToPort":{"shape":"PortNumber"}
       }
     },
-    "ContainerAttributes":{
+    "ContainerAttribute":{
       "type":"structure",
       "members":{
-        "ContainerPortMappings":{"shape":"ContainerPortMappingList"}
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "ContainerRuntimeId":{"shape":"NonEmptyString"}
       }
+    },
+    "ContainerAttributes":{
+      "type":"list",
+      "member":{"shape":"ContainerAttribute"},
+      "max":10,
+      "min":1
     },
     "ContainerCommandStringList":{
       "type":"list",
       "member":{"shape":"NonZeroAnd255MaxString"},
       "max":20,
-      "min":1
-    },
-    "ContainerCpu":{
-      "type":"integer",
-      "max":10240,
-      "min":1
-    },
-    "ContainerDefinition":{
-      "type":"structure",
-      "required":[
-        "ContainerName",
-        "ImageUri"
-      ],
-      "members":{
-        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
-        "ImageUri":{"shape":"ImageUriString"},
-        "ResolvedImageDigest":{"shape":"Sha256"},
-        "MemoryLimits":{"shape":"ContainerMemoryLimits"},
-        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
-        "Cpu":{"shape":"ContainerCpu"},
-        "HealthCheck":{"shape":"ContainerHealthCheck"},
-        "Command":{"shape":"ContainerCommandStringList"},
-        "Essential":{"shape":"BooleanModel"},
-        "EntryPoint":{"shape":"ContainerEntryPointList"},
-        "WorkingDirectory":{"shape":"NonZeroAnd255MaxString"},
-        "Environment":{"shape":"ContainerEnvironmentList"},
-        "DependsOn":{"shape":"ContainerDependencyList"}
-      }
-    },
-    "ContainerDefinitionInput":{
-      "type":"structure",
-      "required":[
-        "ContainerName",
-        "ImageUri"
-      ],
-      "members":{
-        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
-        "ImageUri":{"shape":"ImageUriString"},
-        "MemoryLimits":{"shape":"ContainerMemoryLimits"},
-        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
-        "Cpu":{"shape":"ContainerCpu"},
-        "HealthCheck":{"shape":"ContainerHealthCheck"},
-        "Command":{"shape":"ContainerCommandStringList"},
-        "Essential":{"shape":"BooleanModel"},
-        "EntryPoint":{"shape":"ContainerEntryPointList"},
-        "WorkingDirectory":{"shape":"NonZeroAnd255MaxString"},
-        "Environment":{"shape":"ContainerEnvironmentList"},
-        "DependsOn":{"shape":"ContainerDependencyList"}
-      }
-    },
-    "ContainerDefinitionInputList":{
-      "type":"list",
-      "member":{"shape":"ContainerDefinitionInput"},
-      "max":10,
-      "min":1
-    },
-    "ContainerDefinitionList":{
-      "type":"list",
-      "member":{"shape":"ContainerDefinition"},
-      "max":10,
       "min":1
     },
     "ContainerDependency":{
@@ -2072,12 +2201,6 @@
       "max":10,
       "min":1
     },
-    "ContainerEntryPointList":{
-      "type":"list",
-      "member":{"shape":"NonZeroAndMaxString"},
-      "max":20,
-      "min":1
-    },
     "ContainerEnvironment":{
       "type":"structure",
       "required":[
@@ -2095,17 +2218,105 @@
       "max":20,
       "min":1
     },
+    "ContainerFleet":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetId"},
+        "FleetArn":{"shape":"FleetArn"},
+        "FleetRoleArn":{"shape":"IamRoleArn"},
+        "GameServerContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionName"},
+        "GameServerContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionArn"},
+        "PerInstanceContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionName"},
+        "PerInstanceContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionArn"},
+        "InstanceConnectionPortRange":{"shape":"ConnectionPortRange"},
+        "InstanceInboundPermissions":{"shape":"IpPermissionsList"},
+        "GameServerContainerGroupsPerInstance":{"shape":"GameServerContainerGroupsPerInstance"},
+        "MaximumGameServerContainerGroupsPerInstance":{"shape":"MaximumGameServerContainerGroupsPerInstance"},
+        "InstanceType":{"shape":"NonZeroAndMaxString"},
+        "BillingType":{"shape":"ContainerFleetBillingType"},
+        "Description":{"shape":"NonZeroAndMaxString"},
+        "CreationTime":{"shape":"Timestamp"},
+        "MetricGroups":{"shape":"MetricGroupList"},
+        "NewGameSessionProtectionPolicy":{"shape":"ProtectionPolicy"},
+        "GameSessionCreationLimitPolicy":{"shape":"GameSessionCreationLimitPolicy"},
+        "Status":{"shape":"ContainerFleetStatus"},
+        "DeploymentDetails":{"shape":"DeploymentDetails"},
+        "LogConfiguration":{"shape":"LogConfiguration"},
+        "LocationAttributes":{"shape":"ContainerFleetLocationAttributesList"}
+      }
+    },
+    "ContainerFleetBillingType":{
+      "type":"string",
+      "enum":[
+        "ON_DEMAND",
+        "SPOT"
+      ]
+    },
+    "ContainerFleetList":{
+      "type":"list",
+      "member":{"shape":"ContainerFleet"},
+      "min":1
+    },
+    "ContainerFleetLocationAttributes":{
+      "type":"structure",
+      "members":{
+        "Location":{"shape":"LocationStringModel"},
+        "Status":{"shape":"ContainerFleetLocationStatus"}
+      }
+    },
+    "ContainerFleetLocationAttributesList":{
+      "type":"list",
+      "member":{"shape":"ContainerFleetLocationAttributes"}
+    },
+    "ContainerFleetLocationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "CREATING",
+        "CREATED",
+        "ACTIVATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING"
+      ]
+    },
+    "ContainerFleetRemoveAttribute":{
+      "type":"string",
+      "enum":["PER_INSTANCE_CONTAINER_GROUP_DEFINITION"]
+    },
+    "ContainerFleetRemoveAttributeList":{
+      "type":"list",
+      "member":{"shape":"ContainerFleetRemoveAttribute"},
+      "max":1,
+      "min":1
+    },
+    "ContainerFleetStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "CREATING",
+        "CREATED",
+        "ACTIVATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING"
+      ]
+    },
     "ContainerGroupDefinition":{
       "type":"structure",
+      "required":["Name"],
       "members":{
         "ContainerGroupDefinitionArn":{"shape":"ContainerGroupDefinitionArn"},
         "CreationTime":{"shape":"Timestamp"},
         "OperatingSystem":{"shape":"ContainerOperatingSystem"},
         "Name":{"shape":"ContainerGroupDefinitionName"},
-        "SchedulingStrategy":{"shape":"ContainerSchedulingStrategy"},
-        "TotalMemoryLimit":{"shape":"ContainerTotalMemoryLimit"},
-        "TotalCpuLimit":{"shape":"ContainerTotalCpuLimit"},
-        "ContainerDefinitions":{"shape":"ContainerDefinitionList"},
+        "ContainerGroupType":{"shape":"ContainerGroupType"},
+        "TotalMemoryLimitMebibytes":{"shape":"ContainerTotalMemoryLimit"},
+        "TotalVcpuLimit":{"shape":"ContainerTotalVcpuLimit"},
+        "GameServerContainerDefinition":{"shape":"GameServerContainerDefinition"},
+        "SupportContainerDefinitions":{"shape":"SupportContainerDefinitionList"},
+        "VersionNumber":{"shape":"PositiveInteger"},
+        "VersionDescription":{"shape":"NonZeroAndMaxString"},
         "Status":{"shape":"ContainerGroupDefinitionStatus"},
         "StatusReason":{"shape":"NonZeroAndMaxString"}
       }
@@ -2114,7 +2325,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^arn:.*:containergroupdefinition\\/containergroupdefinition-[a-zA-Z0-9-]+$"
+      "pattern":"^arn:.*:containergroupdefinition\\/[a-zA-Z0-9\\-]+(:[0-9]+)?$"
     },
     "ContainerGroupDefinitionList":{
       "type":"list",
@@ -2130,24 +2341,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\-]+$|^arn:.*:containergroupdefinition\\/[a-zA-Z0-9\\-]+$"
-    },
-    "ContainerGroupDefinitionNameOrArnLimitedList":{
-      "type":"list",
-      "member":{"shape":"ContainerGroupDefinitionNameOrArn"},
-      "max":2,
-      "min":1
-    },
-    "ContainerGroupDefinitionPropertiesList":{
-      "type":"list",
-      "member":{"shape":"ContainerGroupDefinitionProperty"}
-    },
-    "ContainerGroupDefinitionProperty":{
-      "type":"structure",
-      "members":{
-        "SchedulingStrategy":{"shape":"ContainerSchedulingStrategy"},
-        "ContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionName"}
-      }
+      "pattern":"^[a-zA-Z0-9\\-]+$|^arn:.*:containergroupdefinition\\/[a-zA-Z0-9\\-]+(:[0-9]+)?$"
     },
     "ContainerGroupDefinitionStatus":{
       "type":"string",
@@ -2157,32 +2351,12 @@
         "FAILED"
       ]
     },
-    "ContainerGroupsAttributes":{
-      "type":"structure",
-      "members":{
-        "ContainerGroupDefinitionProperties":{"shape":"ContainerGroupDefinitionPropertiesList"},
-        "ConnectionPortRange":{"shape":"ConnectionPortRange"},
-        "ContainerGroupsPerInstance":{"shape":"ContainerGroupsPerInstance"}
-      }
-    },
-    "ContainerGroupsConfiguration":{
-      "type":"structure",
-      "required":[
-        "ContainerGroupDefinitionNames",
-        "ConnectionPortRange"
-      ],
-      "members":{
-        "ContainerGroupDefinitionNames":{"shape":"ContainerGroupDefinitionNameOrArnLimitedList"},
-        "ConnectionPortRange":{"shape":"ConnectionPortRange"},
-        "DesiredReplicaContainerGroupsPerInstance":{"shape":"ReplicaContainerGroupsPerInstance"}
-      }
-    },
-    "ContainerGroupsPerInstance":{
-      "type":"structure",
-      "members":{
-        "DesiredReplicaContainerGroupsPerInstance":{"shape":"ReplicaContainerGroupsPerInstance"},
-        "MaxReplicaContainerGroupsPerInstance":{"shape":"ReplicaContainerGroupsPerInstance"}
-      }
+    "ContainerGroupType":{
+      "type":"string",
+      "enum":[
+        "GAME_SERVER",
+        "PER_INSTANCE"
+      ]
     },
     "ContainerHealthCheck":{
       "type":"structure",
@@ -2190,9 +2364,9 @@
       "members":{
         "Command":{"shape":"ContainerCommandStringList"},
         "Interval":{"shape":"ContainerHealthCheckInterval"},
-        "Timeout":{"shape":"ContainerHealthCheckTimeout"},
         "Retries":{"shape":"ContainerHealthCheckRetries"},
-        "StartPeriod":{"shape":"ContainerHealthCheckStartPeriod"}
+        "StartPeriod":{"shape":"ContainerHealthCheckStartPeriod"},
+        "Timeout":{"shape":"ContainerHealthCheckTimeout"}
       }
     },
     "ContainerHealthCheckInterval":{
@@ -2215,21 +2389,55 @@
       "max":60,
       "min":30
     },
+    "ContainerIdentifier":{
+      "type":"structure",
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "ContainerRuntimeId":{"shape":"NonEmptyString"}
+      }
+    },
+    "ContainerIdentifierList":{
+      "type":"list",
+      "member":{"shape":"ContainerIdentifier"},
+      "max":10,
+      "min":1
+    },
     "ContainerMemoryLimit":{
       "type":"integer",
       "max":1024000,
       "min":4
     },
-    "ContainerMemoryLimits":{
+    "ContainerMountPoint":{
       "type":"structure",
+      "required":["InstancePath"],
       "members":{
-        "SoftLimit":{"shape":"ContainerMemoryLimit"},
-        "HardLimit":{"shape":"ContainerMemoryLimit"}
+        "InstancePath":{"shape":"InstancePathString"},
+        "ContainerPath":{"shape":"ContainerPathString"},
+        "AccessLevel":{"shape":"ContainerMountPointAccessLevel"}
       }
+    },
+    "ContainerMountPointAccessLevel":{
+      "type":"string",
+      "enum":[
+        "READ_ONLY",
+        "READ_AND_WRITE"
+      ]
+    },
+    "ContainerMountPointList":{
+      "type":"list",
+      "member":{"shape":"ContainerMountPoint"},
+      "max":10,
+      "min":1
     },
     "ContainerOperatingSystem":{
       "type":"string",
       "enum":["AMAZON_LINUX_2023"]
+    },
+    "ContainerPathString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^(\\/+[^\\/]+\\/*)+$"
     },
     "ContainerPortConfiguration":{
       "type":"structure",
@@ -2237,18 +2445,6 @@
       "members":{
         "ContainerPortRanges":{"shape":"ContainerPortRangeList"}
       }
-    },
-    "ContainerPortMapping":{
-      "type":"structure",
-      "members":{
-        "ContainerPort":{"shape":"PortNumber"},
-        "ConnectionPort":{"shape":"PortNumber"},
-        "Protocol":{"shape":"IpProtocol"}
-      }
-    },
-    "ContainerPortMappingList":{
-      "type":"list",
-      "member":{"shape":"ContainerPortMapping"}
     },
     "ContainerPortRange":{
       "type":"structure",
@@ -2269,22 +2465,20 @@
       "max":100,
       "min":1
     },
-    "ContainerSchedulingStrategy":{
-      "type":"string",
-      "enum":[
-        "REPLICA",
-        "DAEMON"
-      ]
-    },
-    "ContainerTotalCpuLimit":{
-      "type":"integer",
-      "max":10240,
-      "min":128
-    },
     "ContainerTotalMemoryLimit":{
       "type":"integer",
       "max":1024000,
       "min":4
+    },
+    "ContainerTotalVcpuLimit":{
+      "type":"double",
+      "max":10,
+      "min":0.125
+    },
+    "ContainerVcpu":{
+      "type":"double",
+      "max":10,
+      "min":0.125
     },
     "CreateAliasInput":{
       "type":"structure",
@@ -2324,22 +2518,50 @@
         "StorageLocation":{"shape":"S3Location"}
       }
     },
+    "CreateContainerFleetInput":{
+      "type":"structure",
+      "required":["FleetRoleArn"],
+      "members":{
+        "FleetRoleArn":{"shape":"IamRoleArn"},
+        "Description":{"shape":"NonZeroAndMaxString"},
+        "GameServerContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "PerInstanceContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "InstanceConnectionPortRange":{"shape":"ConnectionPortRange"},
+        "InstanceInboundPermissions":{"shape":"IpPermissionsList"},
+        "GameServerContainerGroupsPerInstance":{"shape":"GameServerContainerGroupsPerInstance"},
+        "InstanceType":{"shape":"NonZeroAndMaxString"},
+        "BillingType":{"shape":"ContainerFleetBillingType"},
+        "Locations":{"shape":"LocationConfigurationList"},
+        "MetricGroups":{"shape":"MetricGroupList"},
+        "NewGameSessionProtectionPolicy":{"shape":"ProtectionPolicy"},
+        "GameSessionCreationLimitPolicy":{"shape":"GameSessionCreationLimitPolicy"},
+        "LogConfiguration":{"shape":"LogConfiguration"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateContainerFleetOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerFleet":{"shape":"ContainerFleet"}
+      }
+    },
     "CreateContainerGroupDefinitionInput":{
       "type":"structure",
       "required":[
         "Name",
-        "TotalMemoryLimit",
-        "TotalCpuLimit",
-        "ContainerDefinitions",
+        "TotalMemoryLimitMebibytes",
+        "TotalVcpuLimit",
         "OperatingSystem"
       ],
       "members":{
         "Name":{"shape":"ContainerGroupDefinitionName"},
-        "SchedulingStrategy":{"shape":"ContainerSchedulingStrategy"},
-        "TotalMemoryLimit":{"shape":"ContainerTotalMemoryLimit"},
-        "TotalCpuLimit":{"shape":"ContainerTotalCpuLimit"},
-        "ContainerDefinitions":{"shape":"ContainerDefinitionInputList"},
+        "ContainerGroupType":{"shape":"ContainerGroupType"},
+        "TotalMemoryLimitMebibytes":{"shape":"ContainerTotalMemoryLimit"},
+        "TotalVcpuLimit":{"shape":"ContainerTotalVcpuLimit"},
+        "GameServerContainerDefinition":{"shape":"GameServerContainerDefinitionInput"},
+        "SupportContainerDefinitions":{"shape":"SupportContainerDefinitionInputList"},
         "OperatingSystem":{"shape":"ContainerOperatingSystem"},
+        "VersionDescription":{"shape":"NonZeroAndMaxString"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -2375,8 +2597,7 @@
         "Tags":{"shape":"TagList"},
         "ComputeType":{"shape":"ComputeType"},
         "AnywhereConfiguration":{"shape":"AnywhereConfiguration"},
-        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"},
-        "ContainerGroupsConfiguration":{"shape":"ContainerGroupsConfiguration"}
+        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"}
       }
     },
     "CreateFleetLocationsInput":{
@@ -2661,11 +2882,30 @@
         "BuildId":{"shape":"BuildIdOrArn"}
       }
     },
+    "DeleteContainerFleetInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"}
+      }
+    },
+    "DeleteContainerFleetOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteContainerGroupDefinitionInput":{
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"}
+        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "VersionNumber":{"shape":"PositiveInteger"},
+        "VersionCountToRetain":{"shape":"WholeNumber"}
+      }
+    },
+    "DeleteContainerGroupDefinitionOutput":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteFleetInput":{
@@ -2806,6 +3046,52 @@
       "members":{
       }
     },
+    "DeploymentConfiguration":{
+      "type":"structure",
+      "members":{
+        "ProtectionStrategy":{"shape":"DeploymentProtectionStrategy"},
+        "MinimumHealthyPercentage":{"shape":"MinimumHealthyPercentage"},
+        "ImpairmentStrategy":{"shape":"DeploymentImpairmentStrategy"}
+      }
+    },
+    "DeploymentDetails":{
+      "type":"structure",
+      "members":{
+        "LatestDeploymentId":{"shape":"DeploymentId"}
+      }
+    },
+    "DeploymentId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\-]+$"
+    },
+    "DeploymentImpairmentStrategy":{
+      "type":"string",
+      "enum":[
+        "MAINTAIN",
+        "ROLLBACK"
+      ]
+    },
+    "DeploymentProtectionStrategy":{
+      "type":"string",
+      "enum":[
+        "WITH_PROTECTION",
+        "IGNORE_PROTECTION"
+      ]
+    },
+    "DeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "IMPAIRED",
+        "COMPLETE",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_COMPLETE",
+        "CANCELLED",
+        "PENDING"
+      ]
+    },
     "DeregisterComputeInput":{
       "type":"structure",
       "required":[
@@ -2876,11 +3162,25 @@
         "Compute":{"shape":"Compute"}
       }
     },
+    "DescribeContainerFleetInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"}
+      }
+    },
+    "DescribeContainerFleetOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerFleet":{"shape":"ContainerFleet"}
+      }
+    },
     "DescribeContainerGroupDefinitionInput":{
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"}
+        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "VersionNumber":{"shape":"PositiveInteger"}
       }
     },
     "DescribeContainerGroupDefinitionOutput":{
@@ -2930,6 +3230,21 @@
       "members":{
         "FleetCapacity":{"shape":"FleetCapacityList"},
         "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "DescribeFleetDeploymentInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "DeploymentId":{"shape":"DeploymentId"}
+      }
+    },
+    "DescribeFleetDeploymentOutput":{
+      "type":"structure",
+      "members":{
+        "FleetDeployment":{"shape":"FleetDeployment"},
+        "LocationalDeployments":{"shape":"LocationalDeployments"}
       }
     },
     "DescribeFleetEventsInput":{
@@ -3547,6 +3862,10 @@
         "FLEET_STATE_ACTIVATING",
         "FLEET_STATE_ACTIVE",
         "FLEET_STATE_ERROR",
+        "FLEET_STATE_PENDING",
+        "FLEET_STATE_CREATING",
+        "FLEET_STATE_CREATED",
+        "FLEET_STATE_UPDATING",
         "FLEET_INITIALIZATION_FAILED",
         "FLEET_BINARY_DOWNLOAD_FAILED",
         "FLEET_VALIDATION_LAUNCH_PATH_NOT_FOUND",
@@ -3562,6 +3881,8 @@
         "SERVER_PROCESS_TERMINATED_UNHEALTHY",
         "SERVER_PROCESS_FORCE_TERMINATED",
         "SERVER_PROCESS_PROCESS_EXIT_TIMEOUT",
+        "SERVER_PROCESS_SDK_INITIALIZATION_FAILED",
+        "SERVER_PROCESS_MISCONFIGURED_CONTAINER_PORT",
         "GAME_SESSION_ACTIVATION_TIMEOUT",
         "FLEET_CREATION_EXTRACTING_BUILD",
         "FLEET_CREATION_RUNNING_INSTALLER",
@@ -3570,7 +3891,23 @@
         "FLEET_VPC_PEERING_FAILED",
         "FLEET_VPC_PEERING_DELETED",
         "INSTANCE_INTERRUPTED",
-        "INSTANCE_RECYCLED"
+        "INSTANCE_RECYCLED",
+        "INSTANCE_REPLACED_UNHEALTHY",
+        "FLEET_CREATION_COMPLETED_INSTALLER",
+        "FLEET_CREATION_FAILED_INSTALLER",
+        "COMPUTE_LOG_UPLOAD_FAILED",
+        "GAME_SERVER_CONTAINER_GROUP_CRASHED",
+        "PER_INSTANCE_CONTAINER_GROUP_CRASHED",
+        "GAME_SERVER_CONTAINER_GROUP_REPLACED_UNHEALTHY",
+        "LOCATION_STATE_PENDING",
+        "LOCATION_STATE_CREATING",
+        "LOCATION_STATE_CREATED",
+        "LOCATION_STATE_ACTIVATING",
+        "LOCATION_STATE_ACTIVE",
+        "LOCATION_STATE_UPDATING",
+        "LOCATION_STATE_ERROR",
+        "LOCATION_STATE_DELETING",
+        "LOCATION_STATE_DELETED"
       ]
     },
     "EventCount":{
@@ -3611,7 +3948,9 @@
     },
     "FleetArn":{
       "type":"string",
-      "pattern":"^arn:.*:fleet\\/fleet-\\S+"
+      "max":512,
+      "min":1,
+      "pattern":"^arn:.*:[a-z]*fleet\\/[a-z]*fleet-[a-zA-Z0-9\\-]+$"
     },
     "FleetAttributes":{
       "type":"structure",
@@ -3641,13 +3980,18 @@
         "CertificateConfiguration":{"shape":"CertificateConfiguration"},
         "ComputeType":{"shape":"ComputeType"},
         "AnywhereConfiguration":{"shape":"AnywhereConfiguration"},
-        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"},
-        "ContainerGroupsAttributes":{"shape":"ContainerGroupsAttributes"}
+        "InstanceRoleCredentialsProvider":{"shape":"InstanceRoleCredentialsProvider"}
       }
     },
     "FleetAttributesList":{
       "type":"list",
       "member":{"shape":"FleetAttributes"}
+    },
+    "FleetBinaryArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/-]+"
     },
     "FleetCapacity":{
       "type":"structure",
@@ -3657,7 +4001,7 @@
         "InstanceType":{"shape":"EC2InstanceType"},
         "InstanceCounts":{"shape":"EC2InstanceCounts"},
         "Location":{"shape":"LocationStringModel"},
-        "ReplicaContainerGroupCounts":{"shape":"ReplicaContainerGroupCounts"}
+        "GameServerContainerGroupCounts":{"shape":"GameServerContainerGroupCounts"}
       }
     },
     "FleetCapacityExceededException":{
@@ -3671,9 +4015,29 @@
       "type":"list",
       "member":{"shape":"FleetCapacity"}
     },
+    "FleetDeployment":{
+      "type":"structure",
+      "members":{
+        "DeploymentId":{"shape":"DeploymentId"},
+        "FleetId":{"shape":"FleetId"},
+        "GameServerBinaryArn":{"shape":"FleetBinaryArn"},
+        "RollbackGameServerBinaryArn":{"shape":"FleetBinaryArn"},
+        "PerInstanceBinaryArn":{"shape":"FleetBinaryArn"},
+        "RollbackPerInstanceBinaryArn":{"shape":"FleetBinaryArn"},
+        "DeploymentStatus":{"shape":"DeploymentStatus"},
+        "DeploymentConfiguration":{"shape":"DeploymentConfiguration"},
+        "CreationTime":{"shape":"Timestamp"}
+      }
+    },
+    "FleetDeployments":{
+      "type":"list",
+      "member":{"shape":"FleetDeployment"}
+    },
     "FleetId":{
       "type":"string",
-      "pattern":"^fleet-\\S+"
+      "max":128,
+      "min":1,
+      "pattern":"^[a-z]*fleet-[a-zA-Z0-9\\-]+"
     },
     "FleetIdList":{
       "type":"list",
@@ -3682,7 +4046,9 @@
     },
     "FleetIdOrArn":{
       "type":"string",
-      "pattern":"^fleet-\\S+|^arn:.*:fleet\\/fleet-\\S+"
+      "max":512,
+      "min":1,
+      "pattern":"^[a-z]*fleet-[a-zA-Z0-9\\-]+$|^arn:.*:[a-z]*fleet\\/[a-z]*fleet-[a-zA-Z0-9\\-]+$"
     },
     "FleetIdOrArnList":{
       "type":"list",
@@ -3795,6 +4161,51 @@
       "max":512,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "GameServerContainerDefinition":{
+      "type":"structure",
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "DependsOn":{"shape":"ContainerDependencyList"},
+        "MountPoints":{"shape":"ContainerMountPointList"},
+        "EnvironmentOverride":{"shape":"ContainerEnvironmentList"},
+        "ImageUri":{"shape":"ImageUriString"},
+        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
+        "ResolvedImageDigest":{"shape":"Sha256"},
+        "ServerSdkVersion":{"shape":"ServerSdkVersion"}
+      }
+    },
+    "GameServerContainerDefinitionInput":{
+      "type":"structure",
+      "required":[
+        "ContainerName",
+        "ImageUri",
+        "PortConfiguration",
+        "ServerSdkVersion"
+      ],
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "DependsOn":{"shape":"ContainerDependencyList"},
+        "MountPoints":{"shape":"ContainerMountPointList"},
+        "EnvironmentOverride":{"shape":"ContainerEnvironmentList"},
+        "ImageUri":{"shape":"ImageUriString"},
+        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
+        "ServerSdkVersion":{"shape":"ServerSdkVersion"}
+      }
+    },
+    "GameServerContainerGroupCounts":{
+      "type":"structure",
+      "members":{
+        "PENDING":{"shape":"WholeNumber"},
+        "ACTIVE":{"shape":"WholeNumber"},
+        "IDLE":{"shape":"WholeNumber"},
+        "TERMINATING":{"shape":"WholeNumber"}
+      }
+    },
+    "GameServerContainerGroupsPerInstance":{
+      "type":"integer",
+      "max":5000,
+      "min":1
     },
     "GameServerData":{
       "type":"string",
@@ -4072,6 +4483,13 @@
         "MatchedPlayerSessions":{"shape":"MatchedPlayerSessionList"}
       }
     },
+    "GameSessionCreationLimitPolicy":{
+      "type":"structure",
+      "members":{
+        "NewGameSessionsPerCreator":{"shape":"WholeNumber"},
+        "PolicyPeriodInMinutes":{"shape":"WholeNumber"}
+      }
+    },
     "GameSessionData":{
       "type":"string",
       "max":4096,
@@ -4119,7 +4537,8 @@
         "Port":{"shape":"PortNumber"},
         "PlacedPlayerSessions":{"shape":"PlacedPlayerSessionList"},
         "GameSessionData":{"shape":"LargeGameSessionData"},
-        "MatchmakerData":{"shape":"MatchmakerData"}
+        "MatchmakerData":{"shape":"MatchmakerData"},
+        "PriorityConfigurationOverride":{"shape":"PriorityConfigurationOverride"}
       }
     },
     "GameSessionPlacementState":{
@@ -4194,7 +4613,11 @@
     },
     "GameSessionStatusReason":{
       "type":"string",
-      "enum":["INTERRUPTED"]
+      "enum":[
+        "INTERRUPTED",
+        "TRIGGERED_ON_PROCESS_TERMINATE",
+        "FORCE_TERMINATED"
+      ]
     },
     "GetComputeAccessInput":{
       "type":"structure",
@@ -4215,7 +4638,8 @@
         "ComputeName":{"shape":"ComputeNameOrArn"},
         "ComputeArn":{"shape":"ComputeArn"},
         "Credentials":{"shape":"AwsCredentials"},
-        "Target":{"shape":"SessionTarget"}
+        "Target":{"shape":"SessionTarget"},
+        "ContainerIdentifiers":{"shape":"ContainerIdentifierList"}
       }
     },
     "GetComputeAuthTokenInput":{
@@ -4349,6 +4773,12 @@
     "InstanceList":{
       "type":"list",
       "member":{"shape":"Instance"}
+    },
+    "InstancePathString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^\\/[\\s\\S]*$"
     },
     "InstanceRoleCredentialsProvider":{
       "type":"string",
@@ -4523,9 +4953,18 @@
       "members":{
         "FleetId":{"shape":"FleetIdOrArn"},
         "Location":{"shape":"LocationStringModel"},
+        "ContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "ComputeStatus":{"shape":"ListComputeInputStatus"},
         "Limit":{"shape":"PositiveInteger"},
         "NextToken":{"shape":"NonZeroAndMaxString"}
       }
+    },
+    "ListComputeInputStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "IMPAIRED"
+      ]
     },
     "ListComputeOutput":{
       "type":"structure",
@@ -4534,24 +4973,75 @@
         "NextToken":{"shape":"NonZeroAndMaxString"}
       }
     },
+    "ListContainerFleetsInput":{
+      "type":"structure",
+      "members":{
+        "ContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "Limit":{"shape":"PositiveInteger"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListContainerFleetsOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerFleets":{"shape":"ContainerFleetList"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListContainerGroupDefinitionVersionsInput":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "Limit":{"shape":"ListContainerGroupDefinitionVersionsLimit"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListContainerGroupDefinitionVersionsLimit":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListContainerGroupDefinitionVersionsOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerGroupDefinitions":{"shape":"ContainerGroupDefinitionList"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
     "ListContainerGroupDefinitionsInput":{
       "type":"structure",
       "members":{
-        "SchedulingStrategy":{"shape":"ContainerSchedulingStrategy"},
+        "ContainerGroupType":{"shape":"ContainerGroupType"},
         "Limit":{"shape":"ListContainerGroupDefinitionsLimit"},
-        "NextToken":{"shape":"NonEmptyString"}
+        "NextToken":{"shape":"NonZeroAndMaxString"}
       }
     },
     "ListContainerGroupDefinitionsLimit":{
       "type":"integer",
-      "max":10,
+      "max":100,
       "min":1
     },
     "ListContainerGroupDefinitionsOutput":{
       "type":"structure",
       "members":{
         "ContainerGroupDefinitions":{"shape":"ContainerGroupDefinitionList"},
-        "NextToken":{"shape":"NonEmptyString"}
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListFleetDeploymentsInput":{
+      "type":"structure",
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "Limit":{"shape":"PositiveInteger"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
+      }
+    },
+    "ListFleetDeploymentsOutput":{
+      "type":"structure",
+      "members":{
+        "FleetDeployments":{"shape":"FleetDeployments"},
+        "NextToken":{"shape":"NonZeroAndMaxString"}
       }
     },
     "ListFleetsInput":{
@@ -4559,7 +5049,6 @@
       "members":{
         "BuildId":{"shape":"BuildIdOrArn"},
         "ScriptId":{"shape":"ScriptIdOrArn"},
-        "ContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
         "Limit":{"shape":"PositiveInteger"},
         "NextToken":{"shape":"NonZeroAndMaxString"}
       }
@@ -4710,6 +5199,12 @@
       "type":"list",
       "member":{"shape":"LocationModel"}
     },
+    "LocationOrderOverrideList":{
+      "type":"list",
+      "member":{"shape":"LocationStringModel"},
+      "max":10,
+      "min":1
+    },
     "LocationState":{
       "type":"structure",
       "members":{
@@ -4730,6 +5225,39 @@
     "LocationUpdateStatus":{
       "type":"string",
       "enum":["PENDING_UPDATE"]
+    },
+    "LocationalDeployment":{
+      "type":"structure",
+      "members":{
+        "DeploymentStatus":{"shape":"DeploymentStatus"}
+      }
+    },
+    "LocationalDeployments":{
+      "type":"map",
+      "key":{"shape":"NonZeroAnd128MaxAsciiString"},
+      "value":{"shape":"LocationalDeployment"}
+    },
+    "LogConfiguration":{
+      "type":"structure",
+      "members":{
+        "LogDestination":{"shape":"LogDestination"},
+        "S3BucketName":{"shape":"NonEmptyString"},
+        "LogGroupArn":{"shape":"LogGroupArnStringModel"}
+      }
+    },
+    "LogDestination":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "CLOUDWATCH",
+        "S3"
+      ]
+    },
+    "LogGroupArnStringModel":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/\\-\\*]+"
     },
     "MatchedPlayerSession":{
       "type":"structure",
@@ -4874,6 +5402,11 @@
       "max":2147483647,
       "min":1
     },
+    "MaximumGameServerContainerGroupsPerInstance":{
+      "type":"integer",
+      "max":5000,
+      "min":1
+    },
     "MetricGroup":{
       "type":"string",
       "max":255,
@@ -4900,6 +5433,11 @@
         "WaitTime",
         "ConcurrentActivatableGameSessions"
       ]
+    },
+    "MinimumHealthyPercentage":{
+      "type":"integer",
+      "max":75,
+      "min":30
     },
     "NonBlankAndLengthConstraintString":{
       "type":"string",
@@ -4978,6 +5516,13 @@
     "PlacedPlayerSessionList":{
       "type":"list",
       "member":{"shape":"PlacedPlayerSession"}
+    },
+    "PlacementFallbackStrategy":{
+      "type":"string",
+      "enum":[
+        "DEFAULT_AFTER_SINGLE_PASS",
+        "NONE"
+      ]
     },
     "Player":{
       "type":"structure",
@@ -5131,6 +5676,14 @@
         "LocationOrder":{"shape":"LocationList"}
       }
     },
+    "PriorityConfigurationOverride":{
+      "type":"structure",
+      "required":["LocationOrder"],
+      "members":{
+        "PlacementFallbackStrategy":{"shape":"PlacementFallbackStrategy"},
+        "LocationOrder":{"shape":"LocationOrderOverrideList"}
+      }
+    },
     "PriorityType":{
       "type":"string",
       "enum":[
@@ -5236,20 +5789,6 @@
       "members":{
         "GameServer":{"shape":"GameServer"}
       }
-    },
-    "ReplicaContainerGroupCounts":{
-      "type":"structure",
-      "members":{
-        "PENDING":{"shape":"WholeNumber"},
-        "ACTIVE":{"shape":"WholeNumber"},
-        "IDLE":{"shape":"WholeNumber"},
-        "TERMINATING":{"shape":"WholeNumber"}
-      }
-    },
-    "ReplicaContainerGroupsPerInstance":{
-      "type":"integer",
-      "max":5000,
-      "min":1
     },
     "RequestUploadCredentialsInput":{
       "type":"structure",
@@ -5514,7 +6053,8 @@
         "GameSessionName":{"shape":"NonZeroAndMaxString"},
         "PlayerLatencies":{"shape":"PlayerLatencyList"},
         "DesiredPlayerSessions":{"shape":"DesiredPlayerSessionList"},
-        "GameSessionData":{"shape":"LargeGameSessionData"}
+        "GameSessionData":{"shape":"LargeGameSessionData"},
+        "PriorityConfigurationOverride":{"shape":"PriorityConfigurationOverride"}
       }
     },
     "StartGameSessionPlacementOutput":{
@@ -5609,6 +6149,53 @@
       "member":{"shape":"NonZeroAndMaxString"}
     },
     "StringModel":{"type":"string"},
+    "SupportContainerDefinition":{
+      "type":"structure",
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "DependsOn":{"shape":"ContainerDependencyList"},
+        "MountPoints":{"shape":"ContainerMountPointList"},
+        "EnvironmentOverride":{"shape":"ContainerEnvironmentList"},
+        "Essential":{"shape":"BooleanModel"},
+        "HealthCheck":{"shape":"ContainerHealthCheck"},
+        "ImageUri":{"shape":"ImageUriString"},
+        "MemoryHardLimitMebibytes":{"shape":"ContainerMemoryLimit"},
+        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
+        "ResolvedImageDigest":{"shape":"Sha256"},
+        "Vcpu":{"shape":"ContainerVcpu"}
+      }
+    },
+    "SupportContainerDefinitionInput":{
+      "type":"structure",
+      "required":[
+        "ContainerName",
+        "ImageUri"
+      ],
+      "members":{
+        "ContainerName":{"shape":"NonZeroAnd128MaxAsciiString"},
+        "DependsOn":{"shape":"ContainerDependencyList"},
+        "MountPoints":{"shape":"ContainerMountPointList"},
+        "EnvironmentOverride":{"shape":"ContainerEnvironmentList"},
+        "Essential":{"shape":"BooleanModel"},
+        "HealthCheck":{"shape":"ContainerHealthCheck"},
+        "ImageUri":{"shape":"ImageUriString"},
+        "MemoryHardLimitMebibytes":{"shape":"ContainerMemoryLimit"},
+        "PortConfiguration":{"shape":"ContainerPortConfiguration"},
+        "Vcpu":{"shape":"ContainerVcpu"}
+      }
+    },
+    "SupportContainerDefinitionInputList":{
+      "type":"list",
+      "member":{"shape":"SupportContainerDefinitionInput"},
+      "max":10,
+      "min":0
+    },
+    "SupportContainerDefinitionList":{
+      "type":"list",
+      "member":{"shape":"SupportContainerDefinition"},
+      "max":10,
+      "min":1
+    },
     "SuspendGameServerGroupInput":{
       "type":"structure",
       "required":[
@@ -5703,6 +6290,30 @@
       },
       "exception":true
     },
+    "TerminateGameSessionInput":{
+      "type":"structure",
+      "required":[
+        "GameSessionId",
+        "TerminationMode"
+      ],
+      "members":{
+        "GameSessionId":{"shape":"ArnStringModel"},
+        "TerminationMode":{"shape":"TerminationMode"}
+      }
+    },
+    "TerminateGameSessionOutput":{
+      "type":"structure",
+      "members":{
+        "GameSession":{"shape":"GameSession"}
+      }
+    },
+    "TerminationMode":{
+      "type":"string",
+      "enum":[
+        "TRIGGER_ON_PROCESS_TERMINATE",
+        "FORCE_TERMINATE"
+      ]
+    },
     "Timestamp":{"type":"timestamp"},
     "UnauthorizedException":{
       "type":"structure",
@@ -5763,6 +6374,52 @@
       "type":"structure",
       "members":{
         "Build":{"shape":"Build"}
+      }
+    },
+    "UpdateContainerFleetInput":{
+      "type":"structure",
+      "required":["FleetId"],
+      "members":{
+        "FleetId":{"shape":"FleetIdOrArn"},
+        "GameServerContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "PerInstanceContainerGroupDefinitionName":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "GameServerContainerGroupsPerInstance":{"shape":"GameServerContainerGroupsPerInstance"},
+        "InstanceConnectionPortRange":{"shape":"ConnectionPortRange"},
+        "InstanceInboundPermissionAuthorizations":{"shape":"IpPermissionsList"},
+        "InstanceInboundPermissionRevocations":{"shape":"IpPermissionsList"},
+        "DeploymentConfiguration":{"shape":"DeploymentConfiguration"},
+        "Description":{"shape":"NonZeroAndMaxString"},
+        "MetricGroups":{"shape":"MetricGroupList"},
+        "NewGameSessionProtectionPolicy":{"shape":"ProtectionPolicy"},
+        "GameSessionCreationLimitPolicy":{"shape":"GameSessionCreationLimitPolicy"},
+        "LogConfiguration":{"shape":"LogConfiguration"},
+        "RemoveAttributes":{"shape":"ContainerFleetRemoveAttributeList"}
+      }
+    },
+    "UpdateContainerFleetOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerFleet":{"shape":"ContainerFleet"}
+      }
+    },
+    "UpdateContainerGroupDefinitionInput":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ContainerGroupDefinitionNameOrArn"},
+        "GameServerContainerDefinition":{"shape":"GameServerContainerDefinitionInput"},
+        "SupportContainerDefinitions":{"shape":"SupportContainerDefinitionInputList"},
+        "TotalMemoryLimitMebibytes":{"shape":"ContainerTotalMemoryLimit"},
+        "TotalVcpuLimit":{"shape":"ContainerTotalVcpuLimit"},
+        "VersionDescription":{"shape":"NonZeroAndMaxString"},
+        "SourceVersionNumber":{"shape":"PositiveInteger"},
+        "OperatingSystem":{"shape":"ContainerOperatingSystem"}
+      }
+    },
+    "UpdateContainerGroupDefinitionOutput":{
+      "type":"structure",
+      "members":{
+        "ContainerGroupDefinition":{"shape":"ContainerGroupDefinition"}
       }
     },
     "UpdateFleetAttributesInput":{

@@ -5,12 +5,14 @@
     "endpointPrefix":"finspace",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"finspace",
     "serviceFullName":"FinSpace User Environment Management service",
     "serviceId":"finspace",
     "signatureVersion":"v4",
     "signingName":"finspace",
-    "uid":"finspace-2021-03-12"
+    "uid":"finspace-2021-03-12",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateEnvironment":{
@@ -2376,7 +2378,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_:./,]+$"
+      "pattern":"^[a-zA-Z0-9_:./,; ]+$"
     },
     "KxCommandLineArguments":{
       "type":"list",

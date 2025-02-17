@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "endpointPrefix": "svcname",
+    "serviceId": "sample_svc",
+    "jsonVersion":"1.1",
+    "protocol":"json"
+  },
+  "operations": {
+    "NoBindingsOperation": {
+      "input": { "shape": "EmptyOperationRequest" },
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      }
+    },
+    "EmptyStaticContextOperation": {
+      "input": { "shape": "EmptyOperationRequest" },
+      "staticContextParams": {
+        "stringArrayParam": {
+          "value": []
+        }
+      },
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      }
+    },
+    "StaticContextOperation": {
+      "input": { "shape": "EmptyOperationRequest" },
+      "staticContextParams": {
+        "stringArrayParam": {
+          "value": ["staticValue1"]
+        }
+      },
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      }
+    },
+    "ListOfObjectsOperation": {
+      "input": { "shape": "ListOfObjectsOperationRequest" },
+      "operationContextParams": {
+        "stringArrayParam": {
+          "path": "nested.listOfObjects[*].key"
+        }
+      },
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      }
+    },
+    "MapOperation": {
+      "input": { "shape": "MapOperationRequest" },
+      "operationContextParams": {
+        "stringArrayParam": {
+          "path": "keys(map)"
+        }
+      },
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      }
+    }
+  },
+  "shapes": {
+    "EmptyOperationRequest": {
+      "type": "structure",
+      "members": {}
+    },
+    "ListOfObjectsOperationRequest": {
+      "type": "structure",
+      "members": {
+        "nested":{"shape":"Nested"}
+      }
+    },
+    "Nested": {
+      "type": "structure",
+      "members": {
+        "listOfObjects":{"shape":"ListOfObjects"}
+      }
+    },
+    "ListOfObjects": {
+      "type": "list",
+      "member":{"shape":"ObjectMember"}
+    },
+    "ObjectMember": {
+      "type": "structure",
+      "members": {
+        "key":{"shape":"String"}
+      }
+    },
+    "MapOperationRequest": {
+      "type": "structure",
+      "members": {
+        "map":{"shape":"Map"}
+      }
+    },
+    "Map":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "String":{
+      "type":"string"
+    }
+  }
+}

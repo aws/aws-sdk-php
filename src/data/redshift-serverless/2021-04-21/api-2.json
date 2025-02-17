@@ -5,12 +5,14 @@
     "endpointPrefix":"redshift-serverless",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Redshift Serverless",
     "serviceId":"Redshift Serverless",
     "signatureVersion":"v4",
     "signingName":"redshift-serverless",
     "targetPrefix":"RedshiftServerless",
-    "uid":"redshift-serverless-2021-04-21"
+    "uid":"redshift-serverless-2021-04-21",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ConvertRecoveryPointToSnapshot":{
@@ -164,7 +166,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"TooManyTagsException"}
+        {"shape":"TooManyTagsException"},
+        {"shape":"Ipv6CidrBlockNotFoundException"}
       ],
       "idempotent":true
     },
@@ -499,6 +502,19 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListManagedWorkgroups":{
+      "name":"ListManagedWorkgroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListManagedWorkgroupsRequest"},
+      "output":{"shape":"ListManagedWorkgroupsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListNamespaces":{
@@ -862,7 +878,8 @@
         {"shape":"InsufficientCapacityException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"}
+        {"shape":"ValidationException"},
+        {"shape":"Ipv6CidrBlockNotFoundException"}
       ]
     }
   },
@@ -1116,9 +1133,11 @@
         "baseCapacity":{"shape":"Integer"},
         "configParameters":{"shape":"ConfigParameterList"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"NamespaceName"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
@@ -1502,16 +1521,25 @@
       },
       "exception":true
     },
+    "IpAddressType":{
+      "type":"string",
+      "pattern":"^(ipv4|dualstack)$"
+    },
+    "Ipv6CidrBlockNotFoundException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "KmsKeyId":{"type":"string"},
     "ListCustomDomainAssociationsRequest":{
       "type":"structure",
       "members":{
         "customDomainCertificateArn":{"shape":"CustomDomainCertificateArnString"},
         "customDomainName":{"shape":"CustomDomainName"},
-        "maxResults":{
-          "shape":"ListCustomDomainAssociationsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListCustomDomainAssociationsRequestMaxResultsInteger"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1531,10 +1559,7 @@
     "ListEndpointAccessRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListEndpointAccessRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListEndpointAccessRequestMaxResultsInteger"},
         "nextToken":{"shape":"String"},
         "ownerAccount":{"shape":"OwnerAccount"},
         "vpcId":{"shape":"String"},
@@ -1555,13 +1580,31 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListManagedWorkgroupsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListManagedWorkgroupsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"},
+        "sourceArn":{"shape":"SourceArn"}
+      }
+    },
+    "ListManagedWorkgroupsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListManagedWorkgroupsResponse":{
+      "type":"structure",
+      "members":{
+        "managedWorkgroups":{"shape":"ManagedWorkgroups"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListNamespacesRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListNamespacesRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListNamespacesRequestMaxResultsInteger"},
         "nextToken":{"shape":"String"}
       }
     },
@@ -1583,10 +1626,7 @@
       "type":"structure",
       "members":{
         "endTime":{"shape":"Timestamp"},
-        "maxResults":{
-          "shape":"ListRecoveryPointsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListRecoveryPointsRequestMaxResultsInteger"},
         "namespaceArn":{"shape":"String"},
         "namespaceName":{"shape":"NamespaceName"},
         "nextToken":{"shape":"String"},
@@ -1609,10 +1649,7 @@
     "ListScheduledActionsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListScheduledActionsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListScheduledActionsRequestMaxResultsInteger"},
         "namespaceName":{"shape":"NamespaceName"},
         "nextToken":{"shape":"PaginationToken"}
       }
@@ -1633,10 +1670,7 @@
     "ListSnapshotCopyConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListSnapshotCopyConfigurationsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListSnapshotCopyConfigurationsRequestMaxResultsInteger"},
         "namespaceName":{"shape":"NamespaceName"},
         "nextToken":{"shape":"PaginationToken"}
       }
@@ -1659,10 +1693,7 @@
       "type":"structure",
       "members":{
         "endTime":{"shape":"Timestamp"},
-        "maxResults":{
-          "shape":"ListSnapshotsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListSnapshotsRequestMaxResultsInteger"},
         "namespaceArn":{"shape":"String"},
         "namespaceName":{"shape":"String"},
         "nextToken":{"shape":"String"},
@@ -1686,10 +1717,7 @@
     "ListTableRestoreStatusRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListTableRestoreStatusRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListTableRestoreStatusRequestMaxResultsInteger"},
         "namespaceName":{"shape":"String"},
         "nextToken":{"shape":"PaginationToken"},
         "workgroupName":{"shape":"String"}
@@ -1724,10 +1752,7 @@
     "ListUsageLimitsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListUsageLimitsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListUsageLimitsRequestMaxResultsInteger"},
         "nextToken":{"shape":"PaginationToken"},
         "resourceArn":{"shape":"String"},
         "usageType":{"shape":"UsageLimitUsageType"}
@@ -1749,10 +1774,7 @@
     "ListWorkgroupsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListWorkgroupsRequestMaxResultsInteger",
-          "box":true
-        },
+        "maxResults":{"shape":"ListWorkgroupsRequestMaxResultsInteger"},
         "nextToken":{"shape":"String"},
         "ownerAccount":{"shape":"OwnerAccount"}
       }
@@ -1788,6 +1810,36 @@
     "Long":{
       "type":"long",
       "box":true
+    },
+    "ManagedWorkgroupListItem":{
+      "type":"structure",
+      "members":{
+        "creationDate":{"shape":"SyntheticTimestamp_date_time"},
+        "managedWorkgroupId":{"shape":"String"},
+        "managedWorkgroupName":{"shape":"ManagedWorkgroupName"},
+        "sourceArn":{"shape":"SourceArn"},
+        "status":{"shape":"ManagedWorkgroupStatus"}
+      }
+    },
+    "ManagedWorkgroupName":{
+      "type":"string",
+      "max":255,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9_:\\-]+$"
+    },
+    "ManagedWorkgroupStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "DELETING",
+        "MODIFYING",
+        "AVAILABLE",
+        "NOT_AVAILABLE"
+      ]
+    },
+    "ManagedWorkgroups":{
+      "type":"list",
+      "member":{"shape":"ManagedWorkgroupListItem"}
     },
     "Namespace":{
       "type":"structure",
@@ -1829,6 +1881,7 @@
       "type":"structure",
       "members":{
         "availabilityZone":{"shape":"String"},
+        "ipv6Address":{"shape":"String"},
         "networkInterfaceId":{"shape":"String"},
         "privateIpAddress":{"shape":"String"},
         "subnetId":{"shape":"String"}
@@ -1855,6 +1908,26 @@
     },
     "ParameterKey":{"type":"string"},
     "ParameterValue":{"type":"string"},
+    "PerformanceTarget":{
+      "type":"structure",
+      "members":{
+        "level":{"shape":"PerformanceTargetLevelInteger"},
+        "status":{"shape":"PerformanceTargetStatus"}
+      }
+    },
+    "PerformanceTargetLevelInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "PerformanceTargetStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "PutResourcePolicyRequest":{
       "type":"structure",
       "required":[
@@ -2128,6 +2201,10 @@
         "COPYING"
       ]
     },
+    "SourceArn":{
+      "type":"string",
+      "pattern":"^arn:aws[a-z-]*:glue:[a-z0-9-]+:\\d+:(database|catalog)[a-z0-9-:]*(?:/[A-Za-z0-9-_]{1,255})*$"
+    },
     "State":{
       "type":"string",
       "enum":[
@@ -2389,8 +2466,10 @@
         "baseCapacity":{"shape":"Integer"},
         "configParameters":{"shape":"ConfigParameterList"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "maxCapacity":{"shape":"Integer"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
@@ -2497,10 +2576,12 @@
         "customDomainName":{"shape":"CustomDomainName"},
         "endpoint":{"shape":"Endpoint"},
         "enhancedVpcRouting":{"shape":"Boolean"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"String"},
         "patchVersion":{"shape":"String"},
         "port":{"shape":"Integer"},
+        "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "status":{"shape":"WorkgroupStatus"},

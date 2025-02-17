@@ -9,6 +9,7 @@
     "CreateDocumentationPart": "<p>Creates a documentation part.</p>",
     "CreateDocumentationVersion": "<p>Creates a documentation version</p>",
     "CreateDomainName": "<p>Creates a new domain name.</p>",
+    "CreateDomainNameAccessAssociation": "<p> Creates a domain name access association resource between an access association source and a private custom domain name.</p>",
     "CreateModel": "<p>Adds a new Model resource to an existing RestApi resource.</p>",
     "CreateRequestValidator": "<p>Creates a RequestValidator of a given RestApi.</p>",
     "CreateResource": "<p>Creates a Resource resource.</p>",
@@ -25,6 +26,7 @@
     "DeleteDocumentationPart": "<p>Deletes a documentation part</p>",
     "DeleteDocumentationVersion": "<p>Deletes a documentation version.</p>",
     "DeleteDomainName": "<p>Deletes the DomainName resource.</p>",
+    "DeleteDomainNameAccessAssociation": "<p> Deletes the DomainNameAccessAssociation resource.</p> <p>Only the AWS account that created the DomainNameAccessAssociation resource can delete it. To stop an access association source in another AWS account from accessing your private custom domain name, use the RejectDomainNameAccessAssociation operation.</p>",
     "DeleteGatewayResponse": "<p>Clears any customization of a GatewayResponse of a specified response type on the given RestApi and resets it with the default settings.</p>",
     "DeleteIntegration": "<p>Represents a delete integration.</p>",
     "DeleteIntegrationResponse": "<p>Represents a delete integration response.</p>",
@@ -57,6 +59,7 @@
     "GetDocumentationVersion": "<p>Gets a documentation version.</p>",
     "GetDocumentationVersions": "<p>Gets documentation versions.</p>",
     "GetDomainName": "<p>Represents a domain name that is contained in a simpler, more intuitive URL that can be called.</p>",
+    "GetDomainNameAccessAssociations": "<p>Represents a collection on DomainNameAccessAssociations resources.</p>",
     "GetDomainNames": "<p>Represents a collection of DomainName resources.</p>",
     "GetExport": "<p>Exports a deployed version of a RestApi in a specified format.</p>",
     "GetGatewayResponse": "<p>Gets a GatewayResponse of a specified response type on the given RestApi.</p>",
@@ -96,6 +99,7 @@
     "PutMethod": "<p>Add a method to an existing Resource resource.</p>",
     "PutMethodResponse": "<p>Adds a MethodResponse to an existing Method resource.</p>",
     "PutRestApi": "<p>A feature of the API Gateway control service for updating an existing API with an input of external API definitions. The update can take the form of merging the supplied definition into the existing API or overwriting the existing API.</p>",
+    "RejectDomainNameAccessAssociation": "<p>Rejects a domain name access association with a private custom domain name.</p> <p>To reject a domain name access association with an access association source in another AWS account, use this operation. To remove a domain name access association with an access association source in your own account, use the DeleteDomainNameAccessAssociation operation.</p>",
     "TagResource": "<p>Adds or updates a tag on a given resource.</p>",
     "TestInvokeAuthorizer": "<p>Simulate the execution of an Authorizer in your RestApi with headers, parameters, and an incoming request body.</p>",
     "TestInvokeMethod": "<p>Simulate the invocation of a Method in your RestApi with headers, parameters, and an incoming request body.</p>",
@@ -124,6 +128,13 @@
     "UpdateVpcLink": "<p>Updates an existing VpcLink of a specified identifier.</p>"
   },
   "shapes": {
+    "AccessAssociationSourceType": {
+      "base": null,
+      "refs": {
+        "CreateDomainNameAccessAssociationRequest$accessAssociationSourceType": "<p> The type of the domain name access association source. </p>",
+        "DomainNameAccessAssociation$accessAssociationSourceType": "<p> The type of the domain name access association source. </p>"
+      }
+    },
     "AccessLogSettings": {
       "base": "<p>Access log settings, including the access log format and access log destination ARN.</p>",
       "refs": {
@@ -333,6 +344,11 @@
       "refs": {
       }
     },
+    "CreateDomainNameAccessAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateDomainNameRequest": {
       "base": "<p>A request to create a new domain name.</p>",
       "refs": {
@@ -410,6 +426,11 @@
     },
     "DeleteDocumentationVersionRequest": {
       "base": "<p>Deletes an existing documentation version of an API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteDomainNameAccessAssociationRequest": {
+      "base": null,
       "refs": {
       }
     },
@@ -551,6 +572,17 @@
       "base": "<p>Represents a custom domain name as a user-friendly host name of an API (RestApi).</p>",
       "refs": {
         "ListOfDomainName$member": null
+      }
+    },
+    "DomainNameAccessAssociation": {
+      "base": "<p>Represents a domain name access association between an access association source and a private custom domain name. With a domain name access association, an access association source can invoke a private custom domain name while isolated from the public internet.</p>",
+      "refs": {
+        "ListOfDomainNameAccessAssociation$member": null
+      }
+    },
+    "DomainNameAccessAssociations": {
+      "base": null,
+      "refs": {
       }
     },
     "DomainNameStatus": {
@@ -701,6 +733,11 @@
     },
     "GetDocumentationVersionsRequest": {
       "base": "<p>Gets the documentation versions of an API.</p>",
+      "refs": {
+      }
+    },
+    "GetDomainNameAccessAssociationsRequest": {
+      "base": null,
       "refs": {
       }
     },
@@ -973,6 +1010,12 @@
         "DomainNames$items": "<p>The current page of elements from this collection.</p>"
       }
     },
+    "ListOfDomainNameAccessAssociation": {
+      "base": null,
+      "refs": {
+        "DomainNameAccessAssociations$items": "<p> The current page of elements from this collection. </p>"
+      }
+    },
     "ListOfEndpointType": {
       "base": null,
       "refs": {
@@ -1200,6 +1243,7 @@
         "ClientCertificate$tags": "<p>The collection of tags. Each tag element is associated with a given resource.</p>",
         "CreateApiKeyRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateDeploymentRequest$variables": "<p>A map that defines the stage variables for the Stage resource that is associated with the new deployment. Variable names can have alphanumeric and underscore characters, and the values must match <code>[A-Za-z0-9-._~:/?#&amp;=,]+</code>.</p>",
+        "CreateDomainNameAccessAssociationRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateDomainNameRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateRestApiRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateStageRequest$variables": "<p>A map that defines the stage variables for the new Stage resource. Variable names can have alphanumeric and underscore characters, and the values must match <code>[A-Za-z0-9-._~:/?#&amp;=,]+</code>.</p>",
@@ -1208,6 +1252,7 @@
         "CreateVpcLinkRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "DeploymentCanarySettings$stageVariableOverrides": "<p>A stage variable overrides used for the canary release deployment. They can override existing stage variables or add new stage variables for the canary release deployment. These stage variables are represented as a string-to-string map between stage variable names and their values.</p>",
         "DomainName$tags": "<p>The collection of tags. Each tag element is associated with a given resource.</p>",
+        "DomainNameAccessAssociation$tags": "<p> The collection of tags. Each tag element is associated with a given resource. </p>",
         "GatewayResponse$responseParameters": "<p>Response parameters (paths, query strings and headers) of the GatewayResponse as a string-to-string map of key-value pairs.</p>",
         "GatewayResponse$responseTemplates": "<p>Response templates of the GatewayResponse as a string-to-string map of key-value pairs.</p>",
         "GenerateClientCertificateRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
@@ -1321,6 +1366,7 @@
         "GetDeploymentsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetDocumentationPartsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetDocumentationVersionsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
+        "GetDomainNameAccessAssociationsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500. </p>",
         "GetDomainNamesRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetGatewayResponsesRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500. The GatewayResponses collection does not support pagination and the limit does not apply here.</p>",
         "GetModelsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
@@ -1411,6 +1457,11 @@
         "UsagePlan$quota": "<p>The target maximum number of permitted requests per a given unit time interval.</p>"
       }
     },
+    "RejectDomainNameAccessAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "RequestValidator": {
       "base": "<p>A set of validation rules for incoming Method requests.</p>",
       "refs": {
@@ -1426,6 +1477,13 @@
       "base": "<p>Represents an API resource.</p>",
       "refs": {
         "ListOfResource$member": null
+      }
+    },
+    "ResourceOwner": {
+      "base": null,
+      "refs": {
+        "GetDomainNameAccessAssociationsRequest$resourceOwner": "<p> The owner of the domain name access association. Use <code>SELF</code> to only list the domain name access associations owned by your own account. Use <code>OTHER_ACCOUNTS</code> to list the domain name access associations with your private custom domain names that are owned by other AWS accounts.</p>",
+        "GetDomainNamesRequest$resourceOwner": "<p>The owner of the domain name access association. </p>"
       }
     },
     "Resources": {
@@ -1558,6 +1616,7 @@
         "CreateAuthorizerRequest$identitySource": "<p>The identity source for which authorization is requested. For a <code>TOKEN</code> or <code>COGNITO_USER_POOLS</code> authorizer, this is required and specifies the request header mapping expression for the custom header holding the authorization token submitted by the client. For example, if the token header name is <code>Auth</code>, the header mapping expression is <code>method.request.header.Auth</code>. For the <code>REQUEST</code> authorizer, this is required when authorization caching is enabled. The value is a comma-separated string of one or more mapping expressions of the specified request parameters. For example, if an <code>Auth</code> header, a <code>Name</code> query string parameter are defined as identity sources, this value is <code>method.request.header.Auth, method.request.querystring.Name</code>. These parameters will be used to derive the authorization caching key and to perform runtime validation of the <code>REQUEST</code> authorizer by verifying all of the identity-related request parameters are present, not null and non-empty. Only when this is true does the authorizer invoke the authorizer Lambda function, otherwise, it returns a 401 Unauthorized response without calling the Lambda function. The valid value is a string of comma-separated mapping expressions of the specified request parameters. When the authorization caching is not enabled, this property is optional.</p>",
         "CreateAuthorizerRequest$identityValidationExpression": "<p>A validation expression for the incoming identity token. For <code>TOKEN</code> authorizers, this value is a regular expression. For <code>COGNITO_USER_POOLS</code> authorizers, API Gateway will match the <code>aud</code> field of the incoming token from the client against the specified regular expression. It will invoke the authorizer's Lambda function when there is a match. Otherwise, it will return a 401 Unauthorized response without calling the Lambda function. The validation expression does not apply to the <code>REQUEST</code> authorizer.</p>",
         "CreateBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to create.</p>",
+        "CreateBasePathMappingRequest$domainNameId": "<p>The identifier for the domain name resource. Required for private custom domain names.</p>",
         "CreateBasePathMappingRequest$basePath": "<p>The base path name that callers of the API must provide as part of the URL after the domain name. This value must be unique for all of the mappings across a single API. Specify '(none)' if you do not want callers to specify a base path name after the domain name.</p>",
         "CreateBasePathMappingRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "CreateBasePathMappingRequest$stage": "<p>The name of the API's stage that you want to use for this mapping. Specify '(none)' if you want callers to explicitly specify the stage name after any base path name.</p>",
@@ -1571,15 +1630,18 @@
         "CreateDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the new snapshot.</p>",
         "CreateDocumentationVersionRequest$stageName": "<p>The stage name to be associated with the new documentation snapshot.</p>",
         "CreateDocumentationVersionRequest$description": "<p>A description about the new documentation snapshot.</p>",
+        "CreateDomainNameAccessAssociationRequest$domainNameArn": "<p> The ARN of the domain name. </p>",
+        "CreateDomainNameAccessAssociationRequest$accessAssociationSource": "<p> The identifier of the domain name access association source. For a VPCE, the value is the VPC endpoint ID. </p>",
         "CreateDomainNameRequest$domainName": "<p>The name of the DomainName resource.</p>",
-        "CreateDomainNameRequest$certificateName": "<p>The user-friendly name of the certificate that will be used by edge-optimized endpoint for this domain name.</p>",
-        "CreateDomainNameRequest$certificateBody": "<p>[Deprecated] The body of the server certificate that will be used by edge-optimized endpoint for this domain name provided by your certificate authority.</p>",
+        "CreateDomainNameRequest$certificateName": "<p>The user-friendly name of the certificate that will be used by edge-optimized endpoint or private endpoint for this domain name.</p>",
+        "CreateDomainNameRequest$certificateBody": "<p>[Deprecated] The body of the server certificate that will be used by edge-optimized endpoint or private endpoint for this domain name provided by your certificate authority.</p>",
         "CreateDomainNameRequest$certificatePrivateKey": "<p>[Deprecated] Your edge-optimized endpoint's domain name certificate's private key.</p>",
         "CreateDomainNameRequest$certificateChain": "<p>[Deprecated] The intermediate certificates and optionally the root certificate, one after the other without any blank lines, used by an edge-optimized endpoint for this domain name. If you include the root certificate, your certificate chain must start with intermediate certificates and end with the root certificate. Use the intermediate certificates that were provided by your certificate authority. Do not include any intermediaries that are not in the chain of trust path.</p>",
-        "CreateDomainNameRequest$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint for this domain name. Certificate Manager is the only supported source.</p>",
+        "CreateDomainNameRequest$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint or private endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "CreateDomainNameRequest$regionalCertificateName": "<p>The user-friendly name of the certificate that will be used by regional endpoint for this domain name.</p>",
         "CreateDomainNameRequest$regionalCertificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by regional endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "CreateDomainNameRequest$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
+        "CreateDomainNameRequest$policy": "<p>A stringified JSON policy document that applies to the <code>execute-api</code> service for this DomainName regardless of the caller and Method configuration. Supported only for private custom domain names.</p>",
         "CreateModelRequest$restApiId": "<p>The RestApi identifier under which the Model will be created.</p>",
         "CreateModelRequest$name": "<p>The name of the model. Must be alphanumeric.</p>",
         "CreateModelRequest$description": "<p>The description of the model.</p>",
@@ -1611,6 +1673,7 @@
         "DeleteAuthorizerRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteAuthorizerRequest$authorizerId": "<p>The identifier of the Authorizer resource.</p>",
         "DeleteBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to delete.</p>",
+        "DeleteBasePathMappingRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "DeleteBasePathMappingRequest$basePath": "<p>The base path name of the BasePathMapping resource to delete.</p> <p>To specify an empty base path, set this parameter to <code>'(none)'</code>.</p>",
         "DeleteClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be deleted.</p>",
         "DeleteDeploymentRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
@@ -1619,7 +1682,9 @@
         "DeleteDocumentationPartRequest$documentationPartId": "<p>The identifier of the to-be-deleted documentation part.</p>",
         "DeleteDocumentationVersionRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteDocumentationVersionRequest$documentationVersion": "<p>The version identifier of a to-be-deleted documentation snapshot.</p>",
+        "DeleteDomainNameAccessAssociationRequest$domainNameAccessAssociationArn": "<p> The ARN of the domain name access association resource.</p>",
         "DeleteDomainNameRequest$domainName": "<p>The name of the DomainName resource to be deleted.</p>",
+        "DeleteDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "DeleteGatewayResponseRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteIntegrationRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteIntegrationRequest$resourceId": "<p>Specifies a delete integration request's resource identifier.</p>",
@@ -1659,8 +1724,10 @@
         "DocumentationVersion$description": "<p>The description of the API documentation snapshot.</p>",
         "DocumentationVersions$position": null,
         "DomainName$domainName": "<p>The custom domain name as an API host name, for example, <code>my-api.example.com</code>.</p>",
-        "DomainName$certificateName": "<p>The name of the certificate that will be used by edge-optimized endpoint for this domain name.</p>",
-        "DomainName$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint for this domain name. Certificate Manager is the only supported source.</p>",
+        "DomainName$domainNameId": "<p>The identifier for the domain name resource. Supported only for private custom domain names.</p>",
+        "DomainName$domainNameArn": "<p>The ARN of the domain name. Supported only for private custom domain names. </p>",
+        "DomainName$certificateName": "<p>The name of the certificate that will be used by edge-optimized endpoint or private endpoint for this domain name.</p>",
+        "DomainName$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint or private endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "DomainName$regionalDomainName": "<p>The domain name associated with the regional endpoint for this custom domain name. You set up this association by adding a DNS record that points the custom domain name to this regional domain name. The regional domain name is returned by API Gateway when you create a regional endpoint.</p>",
         "DomainName$regionalHostedZoneId": "<p>The region-specific Amazon Route 53 Hosted Zone ID of the regional endpoint. For more information, see Set up a Regional Custom Domain Name and AWS Regions and Endpoints for API Gateway. </p>",
         "DomainName$regionalCertificateName": "<p>The name of the certificate that will be used for validating the regional domain name.</p>",
@@ -1669,6 +1736,12 @@
         "DomainName$distributionHostedZoneId": "<p>The region-agnostic Amazon Route 53 Hosted Zone ID of the edge-optimized endpoint. The valid value is <code>Z2FDTNDATAQYW2</code> for all the regions. For more information, see Set up a Regional Custom Domain Name and AWS Regions and Endpoints for API Gateway. </p>",
         "DomainName$domainNameStatusMessage": "<p>An optional text message containing detailed information about status of the DomainName migration.</p>",
         "DomainName$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
+        "DomainName$managementPolicy": "<p>A stringified JSON policy document that applies to the API Gateway Management service for this DomainName. This policy document controls access for access association sources to create domain name access associations with this DomainName. Supported only for private custom domain names.</p>",
+        "DomainName$policy": "<p>A stringified JSON policy document that applies to the <code>execute-api</code> service for this DomainName regardless of the caller and Method configuration. Supported only for private custom domain names.</p>",
+        "DomainNameAccessAssociation$domainNameAccessAssociationArn": "<p>The ARN of the domain name access association resource. </p>",
+        "DomainNameAccessAssociation$domainNameArn": "<p>The ARN of the domain name. </p>",
+        "DomainNameAccessAssociation$accessAssociationSource": "<p> The ARN of the domain name access association source. For a VPCE, the ARN must be a VPC endpoint. </p>",
+        "DomainNameAccessAssociations$position": null,
         "DomainNames$position": null,
         "ExportResponse$contentType": "<p>The content-type header value in the HTTP response. This will correspond to a valid 'accept' type in the request.</p>",
         "ExportResponse$contentDisposition": "<p>The content-disposition header value in the HTTP response.</p>",
@@ -1687,8 +1760,10 @@
         "GetAuthorizersRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetAuthorizersRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to be described.</p>",
+        "GetBasePathMappingRequest$domainNameId": "<p>The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "GetBasePathMappingRequest$basePath": "<p>The base path name that callers of the API must provide as part of the URL after the domain name. This value must be unique for all of the mappings across a single API. Specify '(none)' if you do not want callers to specify any base path name after the domain name.</p>",
         "GetBasePathMappingsRequest$domainName": "<p>The domain name of a BasePathMapping resource.</p>",
+        "GetBasePathMappingsRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "GetBasePathMappingsRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be described.</p>",
         "GetClientCertificatesRequest$position": "<p>The current pagination position in the paged result set.</p>",
@@ -1706,7 +1781,9 @@
         "GetDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the to-be-retrieved documentation snapshot.</p>",
         "GetDocumentationVersionsRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetDocumentationVersionsRequest$position": "<p>The current pagination position in the paged result set.</p>",
+        "GetDomainNameAccessAssociationsRequest$position": "<p>The current pagination position in the paged result set. </p>",
         "GetDomainNameRequest$domainName": "<p>The name of the DomainName resource.</p>",
+        "GetDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Required for private custom domain names. </p>",
         "GetDomainNamesRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetExportRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetExportRequest$stageName": "<p>The name of the Stage that will be exported.</p>",
@@ -1838,6 +1915,8 @@
         "PutMethodResponseRequest$resourceId": "<p>The Resource identifier for the Method resource.</p>",
         "PutMethodResponseRequest$httpMethod": "<p>The HTTP verb of the Method resource.</p>",
         "PutRestApiRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
+        "RejectDomainNameAccessAssociationRequest$domainNameAccessAssociationArn": "<p>The ARN of the domain name access association resource. </p>",
+        "RejectDomainNameAccessAssociationRequest$domainNameArn": "<p> The ARN of the domain name. </p>",
         "RequestValidator$id": "<p>The identifier of this RequestValidator.</p>",
         "RequestValidator$name": "<p>The name of this RequestValidator</p>",
         "RequestValidators$position": null,
@@ -1898,6 +1977,7 @@
         "UpdateAuthorizerRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateAuthorizerRequest$authorizerId": "<p>The identifier of the Authorizer resource.</p>",
         "UpdateBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to change.</p>",
+        "UpdateBasePathMappingRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "UpdateBasePathMappingRequest$basePath": "<p>The base path of the BasePathMapping resource to change.</p> <p>To specify an empty base path, set this parameter to <code>'(none)'</code>.</p>",
         "UpdateClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be updated.</p>",
         "UpdateDeploymentRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
@@ -1907,6 +1987,7 @@
         "UpdateDocumentationVersionRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the to-be-updated documentation version.</p>",
         "UpdateDomainNameRequest$domainName": "<p>The name of the DomainName resource to be changed.</p>",
+        "UpdateDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "UpdateGatewayResponseRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateIntegrationRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateIntegrationRequest$resourceId": "<p>Represents an update integration request's resource identifier.</p>",
@@ -2007,7 +2088,7 @@
         "ClientCertificate$expirationDate": "<p>The timestamp when the client certificate will expire.</p>",
         "Deployment$createdDate": "<p>The date and time that the deployment resource was created.</p>",
         "DocumentationVersion$createdDate": "<p>The date when the API documentation snapshot is created.</p>",
-        "DomainName$certificateUploadDate": "<p>The timestamp when the certificate that was used by edge-optimized endpoint for this domain name was uploaded.</p>",
+        "DomainName$certificateUploadDate": "<p>The timestamp when the certificate that was used by edge-optimized endpoint or private endpoint for this domain name was uploaded.</p>",
         "RestApi$createdDate": "<p>The timestamp when the API was created.</p>",
         "Stage$createdDate": "<p>The timestamp when the stage was created.</p>",
         "Stage$lastUpdatedDate": "<p>The timestamp when the stage last updated.</p>"

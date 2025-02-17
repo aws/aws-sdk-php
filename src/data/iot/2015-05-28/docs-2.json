@@ -5,6 +5,7 @@
     "AcceptCertificateTransfer": "<p>Accepts a pending certificate transfer. The default state of the certificate is INACTIVE.</p> <p>To check for pending certificate transfers, call <a>ListCertificates</a> to enumerate your certificates.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AcceptCertificateTransfer</a> action.</p>",
     "AddThingToBillingGroup": "<p>Adds a thing to a billing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AddThingToBillingGroup</a> action.</p>",
     "AddThingToThingGroup": "<p>Adds a thing to a thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AddThingToThingGroup</a> action.</p>",
+    "AssociateSbomWithPackageVersion": "<p>Associates the selected software bill of materials (SBOM) with a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AssociateSbomWithPackageVersion</a> action.</p>",
     "AssociateTargetsWithJob": "<p>Associates a group with a continuous job. The following criteria must be met: </p> <ul> <li> <p>The job must have been created with the <code>targetSelection</code> field set to \"CONTINUOUS\".</p> </li> <li> <p>The job status must currently be \"IN_PROGRESS\".</p> </li> <li> <p>The total number of targets associated with a job must not exceed 100.</p> </li> </ul> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AssociateTargetsWithJob</a> action.</p>",
     "AttachPolicy": "<p>Attaches the specified policy to the specified principal (certificate or other credential).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AttachPolicy</a> action.</p>",
     "AttachPrincipalPolicy": "<p>Attaches the specified policy to the specified principal (certificate or other credential).</p> <p> <b>Note:</b> This action is deprecated and works as expected for backward compatibility, but we won't add enhancements. Use <a>AttachPolicy</a> instead.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">AttachPrincipalPolicy</a> action.</p>",
@@ -20,9 +21,10 @@
     "ConfirmTopicRuleDestination": "<p>Confirms a topic rule destination. When you create a rule requiring a destination, IoT sends a confirmation message to the endpoint or base address you specify. The message includes a token which you pass back when calling <code>ConfirmTopicRuleDestination</code> to confirm that you own or have access to the endpoint.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ConfirmTopicRuleDestination</a> action.</p>",
     "CreateAuditSuppression": "<p> Creates a Device Defender audit suppression. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateAuditSuppression</a> action.</p>",
     "CreateAuthorizer": "<p>Creates an authorizer.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateAuthorizer</a> action.</p>",
-    "CreateBillingGroup": "<p>Creates a billing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateBillingGroup</a> action.</p>",
+    "CreateBillingGroup": "<p>Creates a billing group. If this call is made multiple times using the same billing group name and configuration, the call will succeed. If this call is made with the same billing group name but different configuration a <code>ResourceAlreadyExistsException</code> is thrown.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateBillingGroup</a> action.</p>",
     "CreateCertificateFromCsr": "<p>Creates an X.509 certificate using the specified certificate signing request. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateCertificateFromCsr</a> action. </p> <note> <p>The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256, NIST P-384, or NIST P-521 curves. For supported certificates, consult <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html#x509-cert-algorithms\"> Certificate signing algorithms supported by IoT</a>. </p> </note> <note> <p>Reusing the same certificate signing request (CSR) results in a distinct certificate.</p> </note> <p>You can create multiple certificates in a batch by creating a directory, copying multiple <code>.csr</code> files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs. In the following commands, we assume that a set of CSRs are located inside of the directory my-csr-directory:</p> <p>On Linux and OS X, the command is: </p> <p> <code>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</code> </p> <p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the <code>aws iot create-certificate-from-csr</code> Amazon Web Services CLI command to create a certificate for the corresponding CSR. </p> <p>You can also run the <code>aws iot create-certificate-from-csr</code> part of the command in parallel to speed up the certificate creation process:</p> <p> <code>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{} </code> </p> <p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p> <p> <code>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_} </code> </p> <p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p> <p> <code>&gt; forfiles /p my-csr-directory /c \"cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path\" </code> </p>",
     "CreateCertificateProvider": "<p>Creates an Amazon Web Services IoT Core certificate provider. You can use Amazon Web Services IoT Core certificate provider to customize how to sign a certificate signing request (CSR) in IoT fleet provisioning. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/provisioning-cert-provider.html\">Customizing certificate signing using Amazon Web Services IoT Core certificate provider</a> from <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateCertificateProvider</a> action.</p> <important> <p>After you create a certificate provider, the behavior of <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/fleet-provision-api.html#create-cert-csr\"> <code>CreateCertificateFromCsr</code> API for fleet provisioning</a> will change and all API calls to <code>CreateCertificateFromCsr</code> will invoke the certificate provider to create the certificates. It can take up to a few minutes for this behavior to change after a certificate provider is created.</p> </important>",
+    "CreateCommand": "<p>Creates a command. A command contains reusable configurations that can be applied before they are sent to the devices.</p>",
     "CreateCustomMetric": "<p> Use this API to define a Custom Metric published by your devices to Device Defender. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateCustomMetric</a> action.</p>",
     "CreateDimension": "<p>Create a dimension that you can use to limit the scope of a metric used in a security profile for IoT Device Defender. For example, using a <code>TOPIC_FILTER</code> dimension, you can narrow down the scope of the metric only to MQTT topics whose name match the pattern specified in the dimension.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateDimension</a> action.</p>",
     "CreateDomainConfiguration": "<p>Creates a domain configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateDomainConfiguration</a> action.</p>",
@@ -40,13 +42,13 @@
     "CreateProvisioningClaim": "<p>Creates a provisioning claim.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateProvisioningClaim</a> action.</p>",
     "CreateProvisioningTemplate": "<p>Creates a provisioning template.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateProvisioningTemplate</a> action.</p>",
     "CreateProvisioningTemplateVersion": "<p>Creates a new version of a provisioning template.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateProvisioningTemplateVersion</a> action.</p>",
-    "CreateRoleAlias": "<p>Creates a role alias.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateRoleAlias</a> action.</p>",
+    "CreateRoleAlias": "<p>Creates a role alias.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateRoleAlias</a> action.</p> <important> <p>The value of <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_CreateRoleAlias.html#iot-CreateRoleAlias-request-credentialDurationSeconds\"> <code>credentialDurationSeconds</code> </a> must be less than or equal to the maximum session duration of the IAM role that the role alias references. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-managingrole-editing-api.html#roles-modify_max-session-duration-api\"> Modifying a role maximum session duration (Amazon Web Services API)</a> from the Amazon Web Services Identity and Access Management User Guide.</p> </important>",
     "CreateScheduledAudit": "<p>Creates a scheduled audit that is run at a specified time interval.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateScheduledAudit</a> action.</p>",
     "CreateSecurityProfile": "<p>Creates a Device Defender security profile.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateSecurityProfile</a> action.</p>",
     "CreateStream": "<p>Creates a stream for delivering one or more large files in chunks over MQTT. A stream transports data bytes in chunks or blocks packaged as MQTT messages from a source like S3. You can have one or more files associated with a stream.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateStream</a> action.</p>",
     "CreateThing": "<p>Creates a thing record in the registry. If this call is made multiple times using the same thing name and configuration, the call will succeed. If this call is made with the same thing name but different configuration a <code>ResourceAlreadyExistsException</code> is thrown.</p> <note> <p>This is a control plane operation. See <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html\">Authorization</a> for information about authorizing control plane actions.</p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateThing</a> action.</p>",
     "CreateThingGroup": "<p>Create a thing group.</p> <note> <p>This is a control plane operation. See <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-authorization.html\">Authorization</a> for information about authorizing control plane actions.</p> <p>If the <code>ThingGroup</code> that you create has the exact same attributes as an existing <code>ThingGroup</code>, you will get a 200 success response. </p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateThingGroup</a> action.</p>",
-    "CreateThingType": "<p>Creates a new thing type.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateThingType</a> action.</p>",
+    "CreateThingType": "<p>Creates a new thing type. If this call is made multiple times using the same thing type name and configuration, the call will succeed. If this call is made with the same thing type name but different configuration a <code>ResourceAlreadyExistsException</code> is thrown. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateThingType</a> action.</p>",
     "CreateTopicRule": "<p>Creates a rule. Creating rules is an administrator-level action. Any user who has permission to create rules will be able to access data processed by the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateTopicRule</a> action.</p>",
     "CreateTopicRuleDestination": "<p>Creates a topic rule destination. The destination must be confirmed prior to use.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateTopicRuleDestination</a> action.</p>",
     "DeleteAccountAuditConfiguration": "<p>Restores the default settings for Device Defender audits for this account. Any configuration data you entered is deleted and all audit checks are reset to disabled. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteAccountAuditConfiguration</a> action.</p>",
@@ -56,6 +58,8 @@
     "DeleteCACertificate": "<p>Deletes a registered CA certificate.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteCACertificate</a> action.</p>",
     "DeleteCertificate": "<p>Deletes the specified certificate.</p> <p>A certificate cannot be deleted if it has a policy or IoT thing attached to it or if its status is set to ACTIVE. To delete a certificate, first use the <a>DetachPolicy</a> action to detach all policies. Next, use the <a>UpdateCertificate</a> action to set the certificate to the INACTIVE status.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteCertificate</a> action.</p>",
     "DeleteCertificateProvider": "<p>Deletes a certificate provider.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteCertificateProvider</a> action. </p> <p>If you delete the certificate provider resource, the behavior of <code>CreateCertificateFromCsr</code> will resume, and IoT will create certificates signed by IoT from a certificate signing request (CSR).</p>",
+    "DeleteCommand": "<p>Delete a command resource.</p>",
+    "DeleteCommandExecution": "<p>Delete a command execution.</p> <note> <p>Only command executions that enter a terminal state can be deleted from your account.</p> </note>",
     "DeleteCustomMetric": "<p> Deletes a Device Defender detect custom metric. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteCustomMetric</a> action.</p> <note> <p>Before you can delete a custom metric, you must first remove the custom metric from all security profiles it's a part of. The security profile associated with the custom metric can be found using the <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_ListSecurityProfiles.html\">ListSecurityProfiles</a> API with <code>metricName</code> set to your custom metric name.</p> </note>",
     "DeleteDimension": "<p>Removes the specified dimension from your Amazon Web Services accounts.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteDimension</a> action.</p>",
     "DeleteDomainConfiguration": "<p>Deletes the specified domain configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteDomainConfiguration</a> action.</p>",
@@ -123,10 +127,13 @@
     "DetachSecurityProfile": "<p>Disassociates a Device Defender security profile from a thing group or from this account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DetachSecurityProfile</a> action.</p>",
     "DetachThingPrincipal": "<p>Detaches the specified principal from the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <note> <p>This call is asynchronous. It might take several seconds for the detachment to propagate.</p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DetachThingPrincipal</a> action.</p>",
     "DisableTopicRule": "<p>Disables the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DisableTopicRule</a> action.</p>",
+    "DisassociateSbomFromPackageVersion": "<p>Disassociates the selected software bill of materials (SBOM) from a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DisassociateSbomWithPackageVersion</a> action.</p>",
     "EnableTopicRule": "<p>Enables the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">EnableTopicRule</a> action.</p>",
     "GetBehaviorModelTrainingSummaries": "<p> Returns a Device Defender's ML Detect Security Profile training model's status. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetBehaviorModelTrainingSummaries</a> action.</p>",
     "GetBucketsAggregation": "<p>Aggregates on indexed data with search queries pertaining to particular fields. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetBucketsAggregation</a> action.</p>",
     "GetCardinality": "<p>Returns the approximate count of unique values that match the query.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetCardinality</a> action.</p>",
+    "GetCommand": "<p>Gets information about the specified command.</p>",
+    "GetCommandExecution": "<p>Gets information about the specific command execution on a single device.</p>",
     "GetEffectivePolicies": "<p>Gets a list of the policies that have an effect on the authorization behavior of the specified device when it connects to the IoT device gateway.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetEffectivePolicies</a> action.</p>",
     "GetIndexingConfiguration": "<p>Gets the indexing configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetIndexingConfiguration</a> action.</p>",
     "GetJobDocument": "<p>Gets a job document.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetJobDocument</a> action.</p>",
@@ -140,6 +147,7 @@
     "GetPolicyVersion": "<p>Gets information about the specified policy version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetPolicyVersion</a> action.</p>",
     "GetRegistrationCode": "<p>Gets a registration code used to register a CA certificate with IoT.</p> <p>IoT will create a registration code as part of this API call if the registration code doesn't exist or has been deleted. If you already have a registration code, this API call will return the same registration code.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetRegistrationCode</a> action.</p>",
     "GetStatistics": "<p>Returns the count, average, sum, minimum, maximum, sum of squares, variance, and standard deviation for the specified aggregated field. If the aggregation field is of type <code>String</code>, only the count statistic is returned.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetStatistics</a> action.</p>",
+    "GetThingConnectivityData": "<p>Retrieves the live connectivity status per device.</p>",
     "GetTopicRule": "<p>Gets information about the rule.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetTopicRule</a> action.</p>",
     "GetTopicRuleDestination": "<p>Gets information about a topic rule destination.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetTopicRuleDestination</a> action.</p>",
     "GetV2LoggingOptions": "<p>Gets the fine grained logging options.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetV2LoggingOptions</a> action.</p>",
@@ -156,6 +164,8 @@
     "ListCertificateProviders": "<p>Lists all your certificate providers in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificateProviders</a> action. </p>",
     "ListCertificates": "<p>Lists the certificates registered in your Amazon Web Services account.</p> <p>The results are paginated with a default page size of 25. You can use the returned marker to retrieve additional results.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificates</a> action.</p>",
     "ListCertificatesByCA": "<p>List the device certificates signed by the specified CA certificate.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCertificatesByCA</a> action.</p>",
+    "ListCommandExecutions": "<p>List all command executions.</p> <important> <ul> <li> <p>You must provide only the <code>startedTimeFilter</code> or the <code>completedTimeFilter</code> information. If you provide both time filters, the API will generate an error. You can use this information to retrieve a list of command executions within a specific timeframe.</p> </li> <li> <p>You must provide only the <code>commandArn</code> or the <code>thingArn</code> information depending on whether you want to list executions for a specific command or an IoT thing. If you provide both fields, the API will generate an error.</p> </li> </ul> <p>For more information about considerations for using this API, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-remote-command-execution-start-monitor.html#iot-remote-command-execution-list-cli\">List command executions in your account (CLI)</a>.</p> </important>",
+    "ListCommands": "<p>List all commands in your account.</p>",
     "ListCustomMetrics": "<p> Lists your Device Defender detect custom metrics. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListCustomMetrics</a> action.</p>",
     "ListDetectMitigationActionsExecutions": "<p> Lists mitigation actions executions for a Device Defender ML Detect Security Profile. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListDetectMitigationActionsExecutions</a> action.</p>",
     "ListDetectMitigationActionsTasks": "<p> List of Device Defender ML Detect mitigation actions tasks. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListDetectMitigationActionsTasks</a> action.</p>",
@@ -179,10 +189,12 @@
     "ListPolicyVersions": "<p>Lists the versions of the specified policy and identifies the default version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPolicyVersions</a> action.</p>",
     "ListPrincipalPolicies": "<p>Lists the policies attached to the specified principal. If you use an Cognito identity, the ID must be in <a href=\"https://docs.aws.amazon.com/cognitoidentity/latest/APIReference/API_GetCredentialsForIdentity.html#API_GetCredentialsForIdentity_RequestSyntax\">AmazonCognito Identity format</a>.</p> <p> <b>Note:</b> This action is deprecated and works as expected for backward compatibility, but we won't add enhancements. Use <a>ListAttachedPolicies</a> instead.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalPolicies</a> action.</p>",
     "ListPrincipalThings": "<p>Lists the things associated with the specified principal. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalThings</a> action.</p>",
+    "ListPrincipalThingsV2": "<p>Lists the things associated with the specified principal. A principal can be an X.509 certificate or an Amazon Cognito ID.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListPrincipalThings</a> action.</p>",
     "ListProvisioningTemplateVersions": "<p>A list of provisioning template versions.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplateVersions</a> action.</p>",
     "ListProvisioningTemplates": "<p>Lists the provisioning templates in your Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListProvisioningTemplates</a> action.</p>",
     "ListRelatedResourcesForAuditFinding": "<p>The related resources of an Audit finding. The following resources can be returned from calling this API:</p> <ul> <li> <p>DEVICE_CERTIFICATE</p> </li> <li> <p>CA_CERTIFICATE</p> </li> <li> <p>IOT_POLICY</p> </li> <li> <p>COGNITO_IDENTITY_POOL</p> </li> <li> <p>CLIENT_ID</p> </li> <li> <p>ACCOUNT_SETTINGS</p> </li> <li> <p>ROLE_ALIAS</p> </li> <li> <p>IAM_ROLE</p> </li> <li> <p>ISSUER_CERTIFICATE</p> </li> </ul> <note> <p>This API is similar to DescribeAuditFinding's <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">RelatedResources</a> but provides pagination and is not limited to 10 resources. When calling <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_DescribeAuditFinding.html\">DescribeAuditFinding</a> for the intermediate CA revoked for active device certificates check, RelatedResources will not be populated. You must use this API, ListRelatedResourcesForAuditFinding, to list the certificates.</p> </note>",
     "ListRoleAliases": "<p>Lists the role aliases registered in your account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListRoleAliases</a> action.</p>",
+    "ListSbomValidationResults": "<p>The validation results for all software bill of materials (SBOM) attached to a specific software package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSbomValidationResults</a> action.</p>",
     "ListScheduledAudits": "<p>Lists all of your scheduled audits.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListScheduledAudits</a> action.</p>",
     "ListSecurityProfiles": "<p>Lists the Device Defender security profiles you've created. You can filter security profiles by dimension or custom metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSecurityProfiles</a> action.</p> <note> <p> <code>dimensionName</code> and <code>metricName</code> cannot be used in the same request.</p> </note>",
     "ListSecurityProfilesForTarget": "<p>Lists the Device Defender security profiles attached to a target (thing group).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListSecurityProfilesForTarget</a> action.</p>",
@@ -193,6 +205,7 @@
     "ListThingGroups": "<p>List the thing groups in your account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingGroups</a> action.</p>",
     "ListThingGroupsForThing": "<p>List the thing groups to which the specified thing belongs.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingGroupsForThing</a> action.</p>",
     "ListThingPrincipals": "<p>Lists the principals associated with the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingPrincipals</a> action.</p>",
+    "ListThingPrincipalsV2": "<p>Lists the principals associated with the specified thing. A principal can be an X.509 certificate or an Amazon Cognito ID.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingPrincipals</a> action.</p>",
     "ListThingRegistrationTaskReports": "<p>Information about the thing registration tasks.</p>",
     "ListThingRegistrationTasks": "<p>List bulk thing provisioning tasks.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingRegistrationTasks</a> action.</p>",
     "ListThingTypes": "<p>Lists the existing thing types.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListThingTypes</a> action.</p>",
@@ -235,6 +248,7 @@
     "UpdateCACertificate": "<p>Updates a registered CA certificate.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateCACertificate</a> action.</p>",
     "UpdateCertificate": "<p>Updates the status of the specified certificate. This operation is idempotent.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateCertificate</a> action.</p> <p>Certificates must be in the ACTIVE state to authenticate devices that use a certificate to connect to IoT.</p> <p>Within a few minutes of updating a certificate from the ACTIVE state to any other state, IoT disconnects all devices that used that certificate to connect. Devices cannot use a certificate that is not in the ACTIVE state to reconnect.</p>",
     "UpdateCertificateProvider": "<p>Updates a certificate provider.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateCertificateProvider</a> action. </p>",
+    "UpdateCommand": "<p>Update information about a command or mark a command for deprecation.</p>",
     "UpdateCustomMetric": "<p>Updates a Device Defender detect custom metric. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateCustomMetric</a> action.</p>",
     "UpdateDimension": "<p>Updates the definition for a dimension. You cannot change the type of a dimension after it is created (you can delete it and recreate it).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDimension</a> action.</p>",
     "UpdateDomainConfiguration": "<p>Updates values stored in the domain configuration. Domain configurations for default endpoints can't be updated.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDomainConfiguration</a> action.</p>",
@@ -248,13 +262,14 @@
     "UpdatePackageConfiguration": "<p>Updates the software package configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdatePackageConfiguration</a> and <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html\">iam:PassRole</a> actions.</p>",
     "UpdatePackageVersion": "<p>Updates the supported fields for a specific package version.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdatePackageVersion</a> and <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetIndexingConfiguration</a> actions.</p>",
     "UpdateProvisioningTemplate": "<p>Updates a provisioning template.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateProvisioningTemplate</a> action.</p>",
-    "UpdateRoleAlias": "<p>Updates a role alias.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateRoleAlias</a> action.</p>",
+    "UpdateRoleAlias": "<p>Updates a role alias.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateRoleAlias</a> action.</p> <important> <p>The value of <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_UpdateRoleAlias.html#iot-UpdateRoleAlias-request-credentialDurationSeconds\"> <code>credentialDurationSeconds</code> </a> must be less than or equal to the maximum session duration of the IAM role that the role alias references. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-managingrole-editing-api.html#roles-modify_max-session-duration-api\"> Modifying a role maximum session duration (Amazon Web Services API)</a> from the Amazon Web Services Identity and Access Management User Guide.</p> </important>",
     "UpdateScheduledAudit": "<p>Updates a scheduled audit, including which checks are performed and how often the audit takes place.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateScheduledAudit</a> action.</p>",
     "UpdateSecurityProfile": "<p>Updates a Device Defender security profile.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateSecurityProfile</a> action.</p>",
     "UpdateStream": "<p>Updates an existing stream. The stream version will be incremented by one.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateStream</a> action.</p>",
     "UpdateThing": "<p>Updates the data for a thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThing</a> action.</p>",
     "UpdateThingGroup": "<p>Update a thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingGroup</a> action.</p>",
     "UpdateThingGroupsForThing": "<p>Updates the groups to which the thing belongs.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingGroupsForThing</a> action.</p>",
+    "UpdateThingType": "<p>Updates a thing type.</p>",
     "UpdateTopicRuleDestination": "<p>Updates a topic rule destination. You use this to change the status, endpoint URL, or confirmation URL of the destination.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateTopicRuleDestination</a> action.</p>",
     "ValidateSecurityProfileBehaviors": "<p>Validates a Device Defender security profile behaviors specification.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ValidateSecurityProfileBehaviors</a> action.</p>"
   },
@@ -303,6 +318,7 @@
       "refs": {
         "CreateDomainConfigurationRequest$validationCertificateArn": "<p>The certificate used to validate the server certificate and prove domain name ownership. This certificate must be signed by a public certificate authority. This value is not required for Amazon Web Services-managed domains.</p>",
         "ServerCertificateArns$member": null,
+        "ServerCertificateConfig$ocspAuthorizedResponderArn": "<p>The Amazon Resource Name (ARN) for an X.509 certificate stored in Amazon Web Services Certificate Manager (ACM). If provided, Amazon Web Services IoT Core will use this certificate to validate the signature of the received OCSP response. The OCSP responder must sign responses using either this authorized responder certificate or the issuing certificate, depending on whether the ARN is provided or not. The certificate must be in the same Amazon Web Services account and region as the domain configuration.</p>",
         "ServerCertificateSummary$serverCertificateArn": "<p>The ARN of the server certificate.</p>"
       }
     },
@@ -479,6 +495,14 @@
         "AuthResult$allowed": "<p>The policies and statements that allowed the specified action.</p>"
       }
     },
+    "ApplicationProtocol": {
+      "base": null,
+      "refs": {
+        "CreateDomainConfigurationRequest$applicationProtocol": "<p>An enumerated string that speciﬁes the application-layer protocol.</p> <ul> <li> <p> <code>SECURE_MQTT</code> - MQTT over TLS.</p> </li> </ul> <ul> <li> <p> <code>MQTT_WSS</code> - MQTT over WebSocket.</p> </li> </ul> <ul> <li> <p> <code>HTTPS</code> - HTTP over TLS.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT</code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify application_layer protocol. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>",
+        "DescribeDomainConfigurationResponse$applicationProtocol": "<p>An enumerated string that speciﬁes the application-layer protocol.</p> <ul> <li> <p> <code>SECURE_MQTT</code> - MQTT over TLS.</p> </li> </ul> <ul> <li> <p> <code>MQTT_WSS</code> - MQTT over WebSocket.</p> </li> </ul> <ul> <li> <p> <code>HTTPS</code> - HTTP over TLS.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT</code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify application_layer protocol. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>",
+        "UpdateDomainConfigurationRequest$applicationProtocol": "<p>An enumerated string that speciﬁes the application-layer protocol.</p> <ul> <li> <p> <code>SECURE_MQTT</code> - MQTT over TLS.</p> </li> </ul> <ul> <li> <p> <code>MQTT_WSS</code> - MQTT over WebSocket.</p> </li> </ul> <ul> <li> <p> <code>HTTPS</code> - HTTP over TLS.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT</code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify application_layer protocol. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>"
+      }
+    },
     "ApproximateSecondsBeforeTimedOut": {
       "base": null,
       "refs": {
@@ -592,6 +616,16 @@
         "AssetPropertyValue$value": "<p>The value of the asset property.</p>"
       }
     },
+    "AssociateSbomWithPackageVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSbomWithPackageVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AssociateTargetsWithJobRequest": {
       "base": null,
       "refs": {
@@ -644,6 +678,7 @@
       "refs": {
         "Attributes$key": null,
         "ListThingsRequest$attributeName": "<p>The attribute name used to search for things.</p>",
+        "PropagatingAttribute$thingAttribute": "<p>The user-defined thing attribute that is propagating for MQTT 5 message enrichment.</p>",
         "SearchableAttributes$member": null
       }
     },
@@ -934,6 +969,14 @@
         "TestAuthorizationResponse$authResults": "<p>The authentication results.</p>"
       }
     },
+    "AuthenticationType": {
+      "base": null,
+      "refs": {
+        "CreateDomainConfigurationRequest$authenticationType": "<p>An enumerated string that speciﬁes the authentication type.</p> <ul> <li> <p> <code>CUSTOM_AUTH_X509</code> - Use custom authentication and authorization with additional details from the X.509 client certificate.</p> </li> </ul> <ul> <li> <p> <code>CUSTOM_AUTH</code> - Use custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">Custom authentication and authorization</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_X509</code> - Use X.509 client certificates without custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html\">X.509 client certificates</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_SIGV4</code> - Use Amazon Web Services Signature Version 4. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">IAM users, groups, and roles</a>.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT</code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify authentication type. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>",
+        "DescribeDomainConfigurationResponse$authenticationType": "<p>An enumerated string that speciﬁes the authentication type.</p> <ul> <li> <p> <code>CUSTOM_AUTH_X509</code> - Use custom authentication and authorization with additional details from the X.509 client certificate.</p> </li> </ul> <ul> <li> <p> <code>CUSTOM_AUTH</code> - Use custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">Custom authentication and authorization</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_X509</code> - Use X.509 client certificates without custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html\">X.509 client certificates</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_SIGV4</code> - Use Amazon Web Services Signature Version 4. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">IAM users, groups, and roles</a>.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT</code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify authentication type. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>",
+        "UpdateDomainConfigurationRequest$authenticationType": "<p>An enumerated string that speciﬁes the authentication type.</p> <ul> <li> <p> <code>CUSTOM_AUTH_X509</code> - Use custom authentication and authorization with additional details from the X.509 client certificate.</p> </li> </ul> <ul> <li> <p> <code>CUSTOM_AUTH</code> - Use custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">Custom authentication and authorization</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_X509</code> - Use X.509 client certificates without custom authentication and authorization. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/x509-client-certs.html\">X.509 client certificates</a>.</p> </li> </ul> <ul> <li> <p> <code>AWS_SIGV4</code> - Use Amazon Web Services Signature Version 4. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/custom-authentication.html\">IAM users, groups, and roles</a>.</p> </li> </ul> <ul> <li> <p> <code>DEFAULT </code> - Use a combination of port and Application Layer Protocol Negotiation (ALPN) to specify authentication type. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a>.</p> </li> </ul>"
+      }
+    },
     "AuthorizerArn": {
       "base": null,
       "refs": {
@@ -1199,6 +1242,13 @@
         "IotEventsAction$batchMode": "<p>Whether to process the event actions as a batch. The default value is <code>false</code>.</p> <p>When <code>batchMode</code> is <code>true</code>, you can't specify a <code>messageId</code>. </p> <p>When <code>batchMode</code> is <code>true</code> and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to IoT Events by calling <a href=\"https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_BatchPutMessage.html\"> <code>BatchPutMessage</code> </a>. The resulting array can't have more than 10 messages.</p>"
       }
     },
+    "BeforeSubstitutionFlag": {
+      "base": null,
+      "refs": {
+        "DescribeJobRequest$beforeSubstitution": "<p>Provides a view of the job document before and after the substitution parameters have been resolved with their exact values.</p>",
+        "GetJobDocumentRequest$beforeSubstitution": "<p>Provides a view of the job document before and after the substitution parameters have been resolved with their exact values.</p>"
+      }
+    },
     "Behavior": {
       "base": "<p>A Device Defender security profile behavior.</p>",
       "refs": {
@@ -1318,11 +1368,30 @@
         "UpdateBillingGroupRequest$billingGroupProperties": "<p>The properties of the billing group.</p>"
       }
     },
+    "BinaryCommandExecutionResult": {
+      "base": null,
+      "refs": {
+        "CommandExecutionResult$BIN": "<p>An attribute of type Binary.</p>"
+      }
+    },
+    "BinaryParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$BIN": "<p>An attribute of type Binary. For example:</p> <p> <code>\"B\": \"dGhpcyB0ZXh0IGlzIGJhc2U2NC1lbmNvZGVk\"</code> </p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
+        "GetThingConnectivityDataResponse$connected": "<p>A Boolean that indicates the connectivity status.</p>",
         "ThingConnectivity$connected": "<p>True if the thing is connected to the Amazon Web Services IoT Core service; false if it is not connected.</p>",
         "ThingTypeMetadata$deprecated": "<p>Whether the thing type is deprecated. If <b>true</b>, no new things could be associated with this type.</p>"
+      }
+    },
+    "BooleanCommandExecutionResult": {
+      "base": null,
+      "refs": {
+        "CommandExecutionResult$B": "<p>An attribute of type Boolean. For example:</p> <p> <code>\"BOOL\": true</code> </p>"
       }
     },
     "BooleanKey": {
@@ -1332,9 +1401,18 @@
         "CreateAuthorizerRequest$signingDisabled": "<p>Specifies whether IoT validates the token signature in an authorization request.</p>"
       }
     },
+    "BooleanParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$B": "<p>An attribute of type Boolean. For example:</p> <p> <code>\"BOOL\": true</code> </p>"
+      }
+    },
     "BooleanWrapperObject": {
       "base": null,
       "refs": {
+        "CommandSummary$pendingDeletion": "<p>Indicates whether the command is pending deletion.</p>",
+        "GetCommandExecutionRequest$includeResult": "<p>Can be used to specify whether to include the result of the command execution in the <code>GetCommandExecution</code> API response. Your device can use this field to provide additional information about the command execution. You only need to specify this field when using the <code>AWS-IoT</code> namespace.</p>",
+        "GetCommandResponse$pendingDeletion": "<p>Indicates whether the command is being deleted.</p>",
         "Job$isConcurrent": "<p>Indicates whether a job is concurrent. Will be true when a job is rolling out new job executions or canceling previously created executions, otherwise false.</p>",
         "JobSummary$isConcurrent": "<p>Indicates whether a job is concurrent. Will be true when a job is rolling out new job executions or canceling previously created executions, otherwise false.</p>"
       }
@@ -1707,6 +1785,20 @@
       "refs": {
       }
     },
+    "ClientCertificateCallbackArn": {
+      "base": null,
+      "refs": {
+        "ClientCertificateConfig$clientCertificateCallbackArn": "<p>The ARN of the Lambda function that IoT invokes after mutual TLS authentication during the connection.</p>"
+      }
+    },
+    "ClientCertificateConfig": {
+      "base": "<p>An object that speciﬁes the client certificate conﬁguration for a domain.</p>",
+      "refs": {
+        "CreateDomainConfigurationRequest$clientCertificateConfig": "<p>An object that speciﬁes the client certificate conﬁguration for a domain.</p>",
+        "DescribeDomainConfigurationResponse$clientCertificateConfig": "<p>An object that speciﬁes the client certificate conﬁguration for a domain.</p>",
+        "UpdateDomainConfigurationRequest$clientCertificateConfig": "<p>An object that speciﬁes the client certificate conﬁguration for a domain.</p>"
+      }
+    },
     "ClientId": {
       "base": null,
       "refs": {
@@ -1734,11 +1826,13 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateCertificateProviderRequest$clientToken": "<p>A string that you can optionally pass in the <code>CreateCertificateProvider</code> request to make sure the request is idempotent.</p>",
         "CreatePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreatePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeletePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeletePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "DisassociateSbomFromPackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageConfigurationRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePackageVersionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>"
@@ -1794,6 +1888,174 @@
         "TestAuthorizationRequest$cognitoIdentityPoolId": "<p>The Cognito identity pool ID.</p>"
       }
     },
+    "CommandArn": {
+      "base": null,
+      "refs": {
+        "CommandExecutionSummary$commandArn": "<p>The Amazon Resource Name (ARN) of the command execution.</p>",
+        "CommandSummary$commandArn": "<p>The Amazon Resource Name (ARN) of the command.</p>",
+        "CreateCommandResponse$commandArn": "<p>The Amazon Resource Number (ARN) of the command. For example, <code>arn:aws:iot:&lt;region&gt;:&lt;accountid&gt;:command/&lt;commandId&gt;</code> </p>",
+        "GetCommandExecutionResponse$commandArn": "<p>The Amazon Resource Number (ARN) of the command. For example, <code/>arn:aws:iot:&lt;region&gt;:&lt;accountid&gt;:command/&lt;commandId&gt;</p>",
+        "GetCommandResponse$commandArn": "<p>The Amazon Resource Number (ARN) of the command. For example, <code>arn:aws:iot:&lt;region&gt;:&lt;accountid&gt;:command/&lt;commandId&gt;</code> </p>",
+        "ListCommandExecutionsRequest$commandArn": "<p>The Amazon Resource Number (ARN) of the command. You can use this information to list all command executions for a particular command.</p>"
+      }
+    },
+    "CommandDescription": {
+      "base": null,
+      "refs": {
+        "CreateCommandRequest$description": "<p>A short text decription of the command.</p>",
+        "GetCommandResponse$description": "<p>A short text description of the command.</p>",
+        "UpdateCommandRequest$description": "<p>A short text description of the command.</p>",
+        "UpdateCommandResponse$description": "<p>The updated text description of the command.</p>"
+      }
+    },
+    "CommandExecutionId": {
+      "base": null,
+      "refs": {
+        "CommandExecutionSummary$executionId": "<p>The unique identifier of the command execution.</p>",
+        "DeleteCommandExecutionRequest$executionId": "<p>The unique identifier of the command execution that you want to delete from your account.</p>",
+        "GetCommandExecutionRequest$executionId": "<p>The unique identifier for the command execution. This information is returned as a response of the <code>StartCommandExecution</code> API request.</p>",
+        "GetCommandExecutionResponse$executionId": "<p>The unique identifier of the command execution.</p>"
+      }
+    },
+    "CommandExecutionParameterMap": {
+      "base": null,
+      "refs": {
+        "GetCommandExecutionResponse$parameters": "<p>The list of parameters that the <code>StartCommandExecution</code> API used when performing the command on the device.</p>"
+      }
+    },
+    "CommandExecutionResult": {
+      "base": "<p>The result value of the command execution. The device can use the result field to share additional details about the execution such as a return value of a remote function call.</p> <note> <p>This field is not applicable if you use the <code>AWS-IoT-FleetWise</code> namespace.</p> </note>",
+      "refs": {
+        "CommandExecutionResultMap$value": null
+      }
+    },
+    "CommandExecutionResultMap": {
+      "base": null,
+      "refs": {
+        "GetCommandExecutionResponse$result": "<p>The result value for the current state of the command execution. The status provides information about the progress of the command execution. The device can use the result field to share additional details about the execution such as a return value of a remote function call.</p> <note> <p>If you use the <code>AWS-IoT-FleetWise</code> namespace, then this field is not applicable in the API response.</p> </note>"
+      }
+    },
+    "CommandExecutionResultName": {
+      "base": null,
+      "refs": {
+        "CommandExecutionResultMap$key": null
+      }
+    },
+    "CommandExecutionStatus": {
+      "base": null,
+      "refs": {
+        "CommandExecutionSummary$status": "<p>The status of the command executions.</p>",
+        "GetCommandExecutionResponse$status": "<p>The status of the command execution. After your devices receive the command and start performing the operations specified in the command, it can use the <code>UpdateCommandExecution</code> MQTT API to update the status information.</p>",
+        "ListCommandExecutionsRequest$status": "<p>List all command executions for the device that have a particular status. For example, you can filter the list to display only command executions that have failed or timed out.</p>"
+      }
+    },
+    "CommandExecutionSummary": {
+      "base": "<p>Summary information about a particular command execution.</p>",
+      "refs": {
+        "CommandExecutionSummaryList$member": null
+      }
+    },
+    "CommandExecutionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCommandExecutionsResponse$commandExecutions": "<p>The list of command executions.</p>"
+      }
+    },
+    "CommandExecutionTimeoutInSeconds": {
+      "base": null,
+      "refs": {
+        "GetCommandExecutionResponse$executionTimeoutSeconds": "<p>Specifies the amount of time in seconds that the device can take to finish a command execution. A timer starts when the command execution is created. If the command execution status is not set to another terminal state before the timer expires, it will automatically update to <code>TIMED_OUT</code>.</p>"
+      }
+    },
+    "CommandId": {
+      "base": null,
+      "refs": {
+        "CommandSummary$commandId": "<p>The unique identifier of the command.</p>",
+        "CreateCommandRequest$commandId": "<p>A unique identifier for the command. We recommend using UUID. Alpha-numeric characters, hyphens, and underscores are valid for use here.</p>",
+        "CreateCommandResponse$commandId": "<p>The unique identifier for the command.</p>",
+        "DeleteCommandRequest$commandId": "<p>The unique identifier of the command to be deleted.</p>",
+        "GetCommandRequest$commandId": "<p>The unique identifier of the command for which you want to retrieve information.</p>",
+        "GetCommandResponse$commandId": "<p>The unique identifier of the command.</p>",
+        "UpdateCommandRequest$commandId": "<p>The unique identifier of the command to be updated.</p>",
+        "UpdateCommandResponse$commandId": "<p>The unique identifier of the command.</p>"
+      }
+    },
+    "CommandMaxResults": {
+      "base": null,
+      "refs": {
+        "ListCommandExecutionsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
+        "ListCommandsRequest$maxResults": "<p>The maximum number of results to return in this operation. By default, the API returns up to a maximum of 25 results. You can override this default value to return up to a maximum of 100 results for this operation.</p>"
+      }
+    },
+    "CommandNamespace": {
+      "base": null,
+      "refs": {
+        "CreateCommandRequest$namespace": "<p>The namespace of the command. The MQTT reserved topics and validations will be used for command executions according to the namespace setting.</p>",
+        "GetCommandResponse$namespace": "<p>The namespace of the command.</p>",
+        "ListCommandExecutionsRequest$namespace": "<p>The namespace of the command.</p>",
+        "ListCommandsRequest$namespace": "<p>The namespace of the command. By default, the API returns all commands that have been created for both <code>AWS-IoT</code> and <code>AWS-IoT-FleetWise</code> namespaces. You can override this default value if you want to return all commands that have been created only for a specific namespace.</p>"
+      }
+    },
+    "CommandParameter": {
+      "base": "<p>A map of key-value pairs that describe the command.</p>",
+      "refs": {
+        "CommandParameterList$member": null
+      }
+    },
+    "CommandParameterDescription": {
+      "base": null,
+      "refs": {
+        "CommandParameter$description": "<p>The description of the command parameter.</p>"
+      }
+    },
+    "CommandParameterList": {
+      "base": null,
+      "refs": {
+        "CreateCommandRequest$mandatoryParameters": "<p>A list of parameters that are required by the <code>StartCommandExecution</code> API. These parameters need to be specified only when using the <code>AWS-IoT-FleetWise</code> namespace. You can either specify them here or when running the command using the <code>StartCommandExecution</code> API.</p>",
+        "GetCommandResponse$mandatoryParameters": "<p>A list of parameters for the command created.</p>"
+      }
+    },
+    "CommandParameterName": {
+      "base": null,
+      "refs": {
+        "CommandExecutionParameterMap$key": null,
+        "CommandParameter$name": "<p>The name of a specific parameter used in a command and command execution.</p>",
+        "ListCommandsRequest$commandParameterName": "<p>A filter that can be used to display the list of commands that have a specific command parameter name.</p>"
+      }
+    },
+    "CommandParameterValue": {
+      "base": "<p>The range of possible values that's used to describe a specific command parameter.</p> <note> <p>The <code>commandParameterValue</code> can only have one of the below fields listed.</p> </note>",
+      "refs": {
+        "CommandExecutionParameterMap$value": null,
+        "CommandParameter$value": "<p>The value used to describe the command. When you assign a value to a parameter, it will override any default value that you had already specified.</p>",
+        "CommandParameter$defaultValue": "<p>The default value used to describe the command. This is the value assumed by the parameter if no other value is assigned to it.</p>"
+      }
+    },
+    "CommandPayload": {
+      "base": "<p>The command payload object that contains the instructions for the device to process.</p>",
+      "refs": {
+        "CreateCommandRequest$payload": "<p>The payload object for the command. You must specify this information when using the <code>AWS-IoT</code> namespace.</p> <p>You can upload a static payload file from your local storage that contains the instructions for the device to process. The payload file can use any format. To make sure that the device correctly interprets the payload, we recommend you to specify the payload content type.</p>",
+        "GetCommandResponse$payload": "<p>The payload object that you provided for the command.</p>"
+      }
+    },
+    "CommandPayloadBlob": {
+      "base": null,
+      "refs": {
+        "CommandPayload$content": "<p>The static payload file for the command.</p>"
+      }
+    },
+    "CommandSummary": {
+      "base": "<p>Summary information about a particular command resource.</p>",
+      "refs": {
+        "CommandSummaryList$member": null
+      }
+    },
+    "CommandSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCommandsResponse$commands": "<p>The list of commands.</p>"
+      }
+    },
     "Comment": {
       "base": null,
       "refs": {
@@ -1844,13 +2106,26 @@
       }
     },
     "ConflictException": {
-      "base": "<p>A resource with the same name already exists.</p>",
+      "base": "<p>The request conflicts with the current state of the resource.</p>",
       "refs": {
       }
     },
     "ConflictingResourceUpdateException": {
       "base": "<p>A conflicting resource update exception. This exception is thrown when two pending updates cause a conflict.</p>",
       "refs": {
+      }
+    },
+    "ConnectionAttributeName": {
+      "base": null,
+      "refs": {
+        "PropagatingAttribute$connectionAttribute": "<p>The attribute associated with the connection between a device and Amazon Web Services IoT Core.</p>"
+      }
+    },
+    "ConnectivityApiThingName": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataRequest$thingName": "<p>The name of your IoT thing.</p>",
+        "GetThingConnectivityDataResponse$thingName": "<p>The name of your IoT thing.</p>"
       }
     },
     "ConnectivityTimestamp": {
@@ -1940,6 +2215,16 @@
       }
     },
     "CreateCertificateProviderResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCommandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCommandResponse": {
       "base": null,
       "refs": {
       }
@@ -2294,6 +2579,11 @@
         "CertificateDescription$lastModifiedDate": "<p>The date and time the certificate was last modified.</p>",
         "CertificateValidity$notBefore": "<p>The certificate is not valid before this date.</p>",
         "CertificateValidity$notAfter": "<p>The certificate is not valid after this date.</p>",
+        "CommandExecutionSummary$createdAt": "<p>The date and time at which the command execution was created for the target device.</p>",
+        "CommandExecutionSummary$startedAt": "<p>The date and time at which the command started executing on the target device.</p>",
+        "CommandExecutionSummary$completedAt": "<p>The date and time at which the command completed executing on the target device.</p>",
+        "CommandSummary$createdAt": "<p>The timestamp, when the command was created.</p>",
+        "CommandSummary$lastUpdatedAt": "<p>The timestamp, when the command was last updated.</p>",
         "CreateProvisioningClaimResponse$expiration": "<p>The provisioning claim expiration time.</p>",
         "DescribeCertificateProviderResponse$creationDate": "<p>The date-time string that indicates when the certificate provider was created.</p>",
         "DescribeCertificateProviderResponse$lastModifiedDate": "<p>The date-time string that indicates when the certificate provider was last updated.</p>",
@@ -2302,6 +2592,13 @@
         "DescribeProvisioningTemplateResponse$creationDate": "<p>The date when the provisioning template was created.</p>",
         "DescribeProvisioningTemplateResponse$lastModifiedDate": "<p>The date when the provisioning template was last modified.</p>",
         "DescribeProvisioningTemplateVersionResponse$creationDate": "<p>The date when the provisioning template version was created.</p>",
+        "GetCommandExecutionResponse$createdAt": "<p>The timestamp, when the command execution was created.</p>",
+        "GetCommandExecutionResponse$lastUpdatedAt": "<p>The timestamp, when the command execution was last updated.</p>",
+        "GetCommandExecutionResponse$startedAt": "<p>The timestamp, when the command execution was started.</p>",
+        "GetCommandExecutionResponse$completedAt": "<p>The timestamp, when the command execution was completed.</p>",
+        "GetCommandExecutionResponse$timeToLive": "<p>The time to live (TTL) parameter that indicates the duration for which executions will be retained in your account. The default value is six months.</p>",
+        "GetCommandResponse$createdAt": "<p>The timestamp, when the command was created.</p>",
+        "GetCommandResponse$lastUpdatedAt": "<p>The timestamp, when the command was last updated.</p>",
         "GetPolicyResponse$creationDate": "<p>The date the policy was created.</p>",
         "GetPolicyResponse$lastModifiedDate": "<p>The date the policy was last modified.</p>",
         "GetPolicyVersionResponse$creationDate": "<p>The date the policy was created.</p>",
@@ -2334,7 +2631,8 @@
         "StreamInfo$lastUpdatedAt": "<p>The date when the stream was last updated.</p>",
         "TransferData$transferDate": "<p>The date the transfer took place.</p>",
         "TransferData$acceptDate": "<p>The date the transfer was accepted.</p>",
-        "TransferData$rejectDate": "<p>The date the transfer was rejected.</p>"
+        "TransferData$rejectDate": "<p>The date the transfer was rejected.</p>",
+        "UpdateCommandResponse$lastUpdatedAt": "<p>The date and time (epoch timestamp in seconds) when the command was last updated.</p>"
       }
     },
     "DayOfMonth": {
@@ -2435,6 +2733,26 @@
     },
     "DeleteCertificateRequest": {
       "base": "<p>The input for the DeleteCertificate operation.</p>",
+      "refs": {
+      }
+    },
+    "DeleteCommandExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCommandExecutionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCommandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCommandResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -2717,6 +3035,15 @@
       "base": null,
       "refs": {
         "ThingTypeMetadata$deprecationDate": "<p>The date and time when the thing type was deprecated.</p>"
+      }
+    },
+    "DeprecationFlag": {
+      "base": null,
+      "refs": {
+        "CommandSummary$deprecated": "<p>Indicates whether the command has been deprecated.</p>",
+        "GetCommandResponse$deprecated": "<p>Indicates whether the command has been deprecated.</p>",
+        "UpdateCommandRequest$deprecated": "<p>A boolean that you can use to specify whether to deprecate a command.</p>",
+        "UpdateCommandResponse$deprecated": "<p>The boolean that indicates whether the command was deprecated.</p>"
       }
     },
     "DescribeAccountAuditConfigurationRequest": {
@@ -3288,10 +3615,36 @@
       "refs": {
       }
     },
+    "DisassociateSbomFromPackageVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateSbomFromPackageVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisconnectReason": {
       "base": null,
       "refs": {
         "ThingConnectivity$disconnectReason": "<p>The reason why the client is disconnected. If the thing has been disconnected for approximately an hour, the <code>disconnectReason</code> value might be missing.</p>"
+      }
+    },
+    "DisconnectReasonValue": {
+      "base": null,
+      "refs": {
+        "GetThingConnectivityDataResponse$disconnectReason": "<p>The reason why the client is disconnecting.</p>"
+      }
+    },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "CommandSummary$displayName": "<p>The display name of the command.</p>",
+        "CreateCommandRequest$displayName": "<p>The user-friendly name in the console for the command. This name doesn't have to be unique. You can update the user-friendly name after you define it.</p>",
+        "GetCommandResponse$displayName": "<p>The user-friendly name in the console for the command.</p>",
+        "UpdateCommandRequest$displayName": "<p>The new user-friendly name to use in the console for the command.</p>",
+        "UpdateCommandResponse$displayName": "<p>The updated user-friendly display name in the console for the command.</p>"
       }
     },
     "DocumentParameter": {
@@ -3353,6 +3706,12 @@
       "base": null,
       "refs": {
         "DescribeDomainConfigurationResponse$domainType": "<p>The type of the domain.</p>"
+      }
+    },
+    "DoubleParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$D": "<p>An attribute of type Double (Sixty-Four Bits).</p>"
       }
     },
     "DurationInMinutes": {
@@ -3461,7 +3820,7 @@
     "EnableOCSPCheck": {
       "base": null,
       "refs": {
-        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-domain-ocsp-config.html\">Configuring OCSP server-certificate stapling in domain configuration</a> from Amazon Web Services IoT Core Developer Guide.</p>"
+        "ServerCertificateConfig$enableOCSPCheck": "<p>A Boolean value that indicates whether Online Certificate Status Protocol (OCSP) server certificate check is enabled or not.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html\"> Server certificate configuration for OCSP stapling</a> from Amazon Web Services IoT Core Developer Guide.</p>"
       }
     },
     "EnableTopicRuleRequest": {
@@ -3673,7 +4032,8 @@
     "FileName": {
       "base": null,
       "refs": {
-        "OTAUpdateFile$fileName": "<p>The name of the file.</p>"
+        "OTAUpdateFile$fileName": "<p>The name of the file.</p>",
+        "SbomValidationResultSummary$fileName": "<p>The name of the SBOM file.</p>"
       }
     },
     "FileType": {
@@ -3867,6 +4227,26 @@
       "refs": {
       }
     },
+    "GetCommandExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCommandExecutionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCommandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCommandResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetEffectivePoliciesRequest": {
       "base": null,
       "refs": {
@@ -3993,6 +4373,16 @@
       }
     },
     "GetStatisticsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetThingConnectivityDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetThingConnectivityDataResponse": {
       "base": null,
       "refs": {
       }
@@ -4225,6 +4615,12 @@
       "base": null,
       "refs": {
         "IotEventsAction$inputName": "<p>The name of the IoT Events input.</p>"
+      }
+    },
+    "IntegerParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$I": "<p>An attribute of type Integer (Thirty-Two Bits).</p>"
       }
     },
     "InternalException": {
@@ -4486,7 +4882,7 @@
         "CancelJobExecutionRequest$jobId": "<p>The ID of the job to be canceled.</p>",
         "CancelJobRequest$jobId": "<p>The unique identifier you assigned to this job when it was created.</p>",
         "CancelJobResponse$jobId": "<p>The unique identifier you assigned to this job when it was created.</p>",
-        "CreateJobRequest$jobId": "<p>A job identifier which must be unique for your Amazon Web Services account. We recommend using a UUID. Alpha-numeric characters, \"-\" and \"_\" are valid for use here.</p>",
+        "CreateJobRequest$jobId": "<p>A job identifier which must be unique for your account. We recommend using a UUID. Alpha-numeric characters, \"-\" and \"_\" are valid for use here.</p>",
         "CreateJobResponse$jobId": "<p>The unique identifier you assigned to this job.</p>",
         "DeleteJobExecutionRequest$jobId": "<p>The ID of the job whose execution on a particular device will be deleted.</p>",
         "DeleteJobRequest$jobId": "<p>The ID of the job to be deleted.</p> <p>After a job deletion is completed, you may reuse this jobId when you create a new job. However, this is not recommended, and you must ensure that your devices are not using the jobId to refer to the deleted job.</p>",
@@ -4809,6 +5205,26 @@
       "refs": {
       }
     },
+    "ListCommandExecutionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCommandExecutionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCommandsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCommandsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListCustomMetricsRequest": {
       "base": null,
       "refs": {
@@ -5039,6 +5455,16 @@
       "refs": {
       }
     },
+    "ListPrincipalThingsV2Request": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPrincipalThingsV2Response": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListProvisioningTemplateVersionsRequest": {
       "base": null,
       "refs": {
@@ -5075,6 +5501,16 @@
       }
     },
     "ListRoleAliasesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSbomValidationResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSbomValidationResultsResponse": {
       "base": null,
       "refs": {
       }
@@ -5189,6 +5625,16 @@
     },
     "ListThingPrincipalsResponse": {
       "base": "<p>The output from the ListThingPrincipals operation.</p>",
+      "refs": {
+      }
+    },
+    "ListThingPrincipalsV2Request": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListThingPrincipalsV2Response": {
+      "base": null,
       "refs": {
       }
     },
@@ -5360,6 +5806,12 @@
       "base": "<p>Describes the logging options payload.</p>",
       "refs": {
         "SetLoggingOptionsRequest$loggingOptionsPayload": "<p>The logging options payload.</p>"
+      }
+    },
+    "LongParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$L": "<p>An attribute of type Long.</p>"
       }
     },
     "MachineLearningDetectionConfig": {
@@ -5590,6 +6042,12 @@
         "UpdateSecurityProfileResponse$metricsExportConfig": "<p>Specifies the MQTT topic and role ARN required for metric export.</p>"
       }
     },
+    "MimeType": {
+      "base": null,
+      "refs": {
+        "CommandPayload$contentType": "<p>The content type that specifies the format type of the payload file. This field must use a type/subtype format, such as <code>application/json</code>. For information about various content types, see <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types/Common_types\">Common MIME types</a>.</p>"
+      }
+    },
     "Minimum": {
       "base": null,
       "refs": {
@@ -5721,6 +6179,12 @@
         "BehaviorModelTrainingSummary$modelStatus": "<p> The status of the behavior model. </p>"
       }
     },
+    "Mqtt5Configuration": {
+      "base": "<p>The configuration to add user-defined properties to enrich MQTT 5 messages.</p>",
+      "refs": {
+        "ThingTypeProperties$mqtt5Configuration": "<p>The configuration to add user-defined properties to enrich MQTT 5 messages.</p>"
+      }
+    },
     "MqttClientId": {
       "base": null,
       "refs": {
@@ -5801,6 +6265,10 @@
         "ListAuditTasksResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListBillingGroupsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListBillingGroupsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListCommandExecutionsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <code>null</code> to receive the first set of results.</p>",
+        "ListCommandExecutionsResponse$nextToken": "<p>The token to use to get the next set of results, or <code>null</code> if there are no additional results.</p>",
+        "ListCommandsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <code>null</code> to receive the first set of results.</p>",
+        "ListCommandsResponse$nextToken": "<p>The token to use to get the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListCustomMetricsRequest$nextToken": "<p> The token for the next set of results. </p>",
         "ListCustomMetricsResponse$nextToken": "<p> A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results. </p>",
         "ListDetectMitigationActionsExecutionsRequest$nextToken": "<p> The token for the next set of results. </p>",
@@ -5835,12 +6303,16 @@
         "ListPackagesResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListPrincipalThingsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListPrincipalThingsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListPrincipalThingsV2Request$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListPrincipalThingsV2Response$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListProvisioningTemplateVersionsRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplateVersionsResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListRelatedResourcesForAuditFindingRequest$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListRelatedResourcesForAuditFindingResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> for the first API call.</p>",
+        "ListSbomValidationResultsRequest$nextToken": "<p>A token that can be used to retrieve the next set of results, or null if there are no additional results.</p>",
+        "ListSbomValidationResultsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or null if there are no additional results.</p>",
         "ListScheduledAuditsRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListScheduledAuditsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListSecurityProfilesForTargetRequest$nextToken": "<p>The token for the next set of results.</p>",
@@ -5859,6 +6331,8 @@
         "ListThingGroupsResponse$nextToken": "<p>The token to use to get the next set of results. Will not be returned if operation has returned all results.</p>",
         "ListThingPrincipalsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListThingPrincipalsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingPrincipalsV2Request$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingPrincipalsV2Response$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListThingRegistrationTaskReportsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListThingRegistrationTaskReportsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListThingRegistrationTasksRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
@@ -5938,6 +6412,12 @@
       "refs": {
         "RateIncreaseCriteria$numberOfNotifiedThings": "<p>The threshold for number of notified things that will initiate the increase in rate of rollout.</p>",
         "RateIncreaseCriteria$numberOfSucceededThings": "<p>The threshold for number of succeeded things that will initiate the increase in rate of rollout.</p>"
+      }
+    },
+    "OCSPLambdaArn": {
+      "base": null,
+      "refs": {
+        "ServerCertificateConfig$ocspLambdaArn": "<p>The Amazon Resource Name (ARN) for a Lambda function that acts as a Request for Comments (RFC) 6960-compliant Online Certificate Status Protocol (OCSP) responder, supporting basic OCSP responses. The Lambda function accepts a base64-encoding of the OCSP request in the Distinguished Encoding Rules (DER) format. The Lambda function's response is also a base64-encoded OCSP response in the DER format. The response size must not exceed 4 kilobytes (KiB). The Lambda function must be in the same Amazon Web Services account and region as the domain configuration. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html#iot-custom-endpoints-cert-config-ocsp-private-endpoint.html\">Configuring server certificate OCSP for private endpoints in Amazon Web Services IoT Core</a> from the Amazon Web Services IoT Core developer guide.</p>"
       }
     },
     "OTAUpdateArn": {
@@ -6076,23 +6556,28 @@
       "base": null,
       "refs": {
         "ListPackageVersionsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
-        "ListPackagesRequest$maxResults": "<p>The maximum number of results returned at one time.</p>"
+        "ListPackagesRequest$maxResults": "<p>The maximum number of results returned at one time.</p>",
+        "ListSbomValidationResultsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>"
       }
     },
     "PackageName": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$packageName": "<p>The name of the new software package.</p>",
+        "AssociateSbomWithPackageVersionResponse$packageName": "<p>The name of the new software package.</p>",
         "CreatePackageRequest$packageName": "<p>The name of the new software package.</p>",
         "CreatePackageResponse$packageName": "<p>The name of the software package.</p>",
         "CreatePackageVersionRequest$packageName": "<p>The name of the associated software package.</p>",
         "CreatePackageVersionResponse$packageName": "<p>The name of the associated software package.</p>",
         "DeletePackageRequest$packageName": "<p>The name of the target software package.</p>",
         "DeletePackageVersionRequest$packageName": "<p>The name of the associated software package.</p>",
+        "DisassociateSbomFromPackageVersionRequest$packageName": "<p>The name of the new software package.</p>",
         "GetPackageRequest$packageName": "<p>The name of the target software package.</p>",
         "GetPackageResponse$packageName": "<p>The name of the software package.</p>",
         "GetPackageVersionRequest$packageName": "<p>The name of the associated package.</p>",
         "GetPackageVersionResponse$packageName": "<p>The name of the software package.</p>",
         "ListPackageVersionsRequest$packageName": "<p>The name of the target software package.</p>",
+        "ListSbomValidationResultsRequest$packageName": "<p>The name of the new software package.</p>",
         "PackageSummary$packageName": "<p>The name for the target software package.</p>",
         "PackageVersionSummary$packageName": "<p>The name of the associated software package.</p>",
         "UpdatePackageRequest$packageName": "<p>The name of the target software package.</p>",
@@ -6125,11 +6610,27 @@
         "GetPackageVersionResponse$packageVersionArn": "<p>The ARN for the package version.</p>"
       }
     },
+    "PackageVersionArtifact": {
+      "base": "<p>A specific package version artifact associated with a software package version.</p>",
+      "refs": {
+        "CreatePackageVersionRequest$artifact": "<p>The various build components created during the build process such as libraries and configuration files that make up a software package version.</p>",
+        "GetPackageVersionResponse$artifact": "<p>The various components that make up a software package version.</p>",
+        "UpdatePackageVersionRequest$artifact": "<p>The various components that make up a software package version.</p>"
+      }
+    },
     "PackageVersionErrorReason": {
       "base": null,
       "refs": {
         "CreatePackageVersionResponse$errorReason": "<p>Error reason for a package version failure during creation or update.</p>",
         "GetPackageVersionResponse$errorReason": "<p>Error reason for a package version failure during creation or update.</p>"
+      }
+    },
+    "PackageVersionRecipe": {
+      "base": null,
+      "refs": {
+        "CreatePackageVersionRequest$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment.</p>",
+        "GetPackageVersionResponse$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment.</p>",
+        "UpdatePackageVersionRequest$recipe": "<p>The inline job document associated with a software package version used for a quick job deployment.</p>"
       }
     },
     "PackageVersionStatus": {
@@ -6447,7 +6948,9 @@
         "GetEffectivePoliciesRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ListPrincipalPoliciesRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
         "ListPrincipalThingsRequest$principal": "<p>The principal.</p>",
-        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>"
+        "ListPrincipalThingsV2Request$principal": "<p>The principal. A principal can be an X.509 certificate or an Amazon Cognito ID.</p>",
+        "TestAuthorizationRequest$principal": "<p>The principal. Valid principals are CertificateArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:cert/<i>certificateId</i>), thingGroupArn (arn:aws:iot:<i>region</i>:<i>accountId</i>:thinggroup/<i>groupName</i>) and CognitoId (<i>region</i>:<i>id</i>).</p>",
+        "ThingPrincipalObject$principal": "<p>The principal of the thing principal object.</p>"
       }
     },
     "PrincipalArn": {
@@ -6460,6 +6963,18 @@
       "base": null,
       "refs": {
         "TestInvokeAuthorizerResponse$principalId": "<p>The principal ID.</p>"
+      }
+    },
+    "PrincipalThingObject": {
+      "base": "<p>An object that represents the thing and the type of relation it has with the principal.</p>",
+      "refs": {
+        "PrincipalThingObjects$member": null
+      }
+    },
+    "PrincipalThingObjects": {
+      "base": null,
+      "refs": {
+        "ListPrincipalThingsV2Response$principalThingObjects": "<p>A list of <code>thingPrincipalObject</code> that represents the principal and the type of relation it has with the thing.</p>"
       }
     },
     "Principals": {
@@ -6485,6 +7000,18 @@
       "base": null,
       "refs": {
         "JobProcessDetails$processingTargets": "<p>The target devices to which the job execution is being rolled out. This value will be null after the job execution has finished rolling out to all the target devices.</p>"
+      }
+    },
+    "PropagatingAttribute": {
+      "base": "<p>An object that represents the connection attribute, thing attribute, and the user property key.</p>",
+      "refs": {
+        "PropagatingAttributeList$member": null
+      }
+    },
+    "PropagatingAttributeList": {
+      "base": null,
+      "refs": {
+        "Mqtt5Configuration$propagatingAttributes": "<p>An object that represents the propagating thing attributes and the connection attributes.</p>"
       }
     },
     "Protocol": {
@@ -6766,9 +7293,11 @@
       "refs": {
         "ListBillingGroupsRequest$maxResults": "<p>The maximum number of results to return per request.</p>",
         "ListPrincipalThingsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
+        "ListPrincipalThingsV2Request$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingGroupsForThingRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingGroupsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingPrincipalsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
+        "ListThingPrincipalsV2Request$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingRegistrationTaskReportsRequest$maxResults": "<p>The maximum number of results to return per request.</p>",
         "ListThingRegistrationTasksRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingTypesRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
@@ -7072,6 +7601,7 @@
       "refs": {
         "AlertTarget$roleArn": "<p>The ARN of the role that grants permission to send alerts to the notification target.</p>",
         "AuditNotificationTarget$roleArn": "<p>The ARN of the role that grants permission to send notifications to the target.</p>",
+        "CreateCommandRequest$roleArn": "<p>The IAM role that you must provide when using the <code>AWS-IoT-FleetWise</code> namespace. The role grants IoT Device Management the permission to access IoT FleetWise resources for generating the payload for the command. This field is not required when you use the <code>AWS-IoT</code> namespace.</p>",
         "CreateMitigationActionRequest$roleArn": "<p>The ARN of the IAM role that is used to apply the mitigation action.</p>",
         "CreateOTAUpdateRequest$roleArn": "<p>The IAM role that grants Amazon Web Services IoT Core access to the Amazon S3, IoT jobs and Amazon Web Services Code Signing resources to create an OTA update job.</p>",
         "CreateProvisioningTemplateRequest$provisioningRoleArn": "<p>The role ARN for the role associated with the provisioning template. This IoT role grants permission to provision a device.</p>",
@@ -7082,6 +7612,7 @@
         "DescribeProvisioningTemplateResponse$provisioningRoleArn": "<p>The ARN of the role associated with the provisioning template. This IoT role grants permission to provision a device.</p>",
         "DescribeThingRegistrationTaskResponse$roleArn": "<p>The role ARN that grants access to the input file bucket.</p>",
         "EnableIoTLoggingParams$roleArnForLogging": "<p>The Amazon Resource Name (ARN) of the IAM role used for logging.</p>",
+        "GetCommandResponse$roleArn": "<p>The IAM role that you provided when creating the command with <code>AWS-IoT-FleetWise</code> as the namespace.</p>",
         "MetricsExportConfig$roleArn": "<p>This role ARN has permission to publish MQTT messages, after which Device Defender Detect can assume the role and publish messages on your behalf.</p>",
         "MitigationAction$roleArn": "<p>The IAM role ARN used to apply this mitigation action.</p>",
         "PresignedUrlConfig$roleArn": "<p>The ARN of an IAM role that grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.</p> <important> <p>For information about addressing the confused deputy problem, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/cross-service-confused-deputy-prevention.html\">cross-service confused deputy prevention</a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p> </important>",
@@ -7165,6 +7696,8 @@
       "base": "<p>The S3 location.</p>",
       "refs": {
         "FileLocation$s3Location": "<p>The location of the updated firmware in S3.</p>",
+        "PackageVersionArtifact$s3Location": null,
+        "Sbom$s3Location": null,
         "StreamFile$s3Location": "<p>The location of the file in S3.</p>"
       }
     },
@@ -7197,6 +7730,52 @@
       "base": null,
       "refs": {
         "SalesforceAction$token": "<p>The token used to authenticate access to the Salesforce IoT Cloud Input Stream. The token is available from the Salesforce IoT Cloud platform after creation of the Input Stream.</p>"
+      }
+    },
+    "Sbom": {
+      "base": "<p>A specific software bill of matrerials associated with a software package version.</p>",
+      "refs": {
+        "AssociateSbomWithPackageVersionRequest$sbom": null,
+        "AssociateSbomWithPackageVersionResponse$sbom": null,
+        "GetPackageVersionResponse$sbom": "<p>The software bill of materials for a software package version.</p>"
+      }
+    },
+    "SbomValidationErrorCode": {
+      "base": null,
+      "refs": {
+        "SbomValidationResultSummary$errorCode": "<p>The <code>errorCode</code> representing the validation failure error if the SBOM validation failed.</p>"
+      }
+    },
+    "SbomValidationErrorMessage": {
+      "base": null,
+      "refs": {
+        "SbomValidationResultSummary$errorMessage": "<p>The <code>errorMessage</code> representing the validation failure error if the SBOM validation failed.</p>"
+      }
+    },
+    "SbomValidationResult": {
+      "base": null,
+      "refs": {
+        "ListSbomValidationResultsRequest$validationResult": "<p>The end result of the </p>",
+        "SbomValidationResultSummary$validationResult": "<p>The end result of the SBOM validation.</p>"
+      }
+    },
+    "SbomValidationResultSummary": {
+      "base": "<p>A summary of the validation results for a specific software bill of materials (SBOM) attached to a software package version.</p>",
+      "refs": {
+        "SbomValidationResultSummaryList$member": null
+      }
+    },
+    "SbomValidationResultSummaryList": {
+      "base": null,
+      "refs": {
+        "ListSbomValidationResultsResponse$validationResultSummaries": "<p>A summary of the validation results for each software bill of materials attached to a software package version.</p>"
+      }
+    },
+    "SbomValidationStatus": {
+      "base": null,
+      "refs": {
+        "AssociateSbomWithPackageVersionResponse$sbomValidationStatus": "<p>The status of the initial validation for the software bill of materials against the Software Package Data Exchange (SPDX) and CycloneDX industry standard formats.</p>",
+        "GetPackageVersionResponse$sbomValidationStatus": "<p>The status of the validation for a new software bill of materials added to a software package version.</p>"
       }
     },
     "ScheduledAuditArn": {
@@ -7439,7 +8018,7 @@
       }
     },
     "ServiceQuotaExceededException": {
-      "base": "<p>A limit has been exceeded.</p>",
+      "base": "<p>Service quota has been exceeded.</p>",
       "refs": {
       }
     },
@@ -7581,6 +8160,13 @@
         "PublishFindingToSnsParams$topicArn": "<p>The ARN of the topic to which you want to publish the findings.</p>"
       }
     },
+    "SortOrder": {
+      "base": null,
+      "refs": {
+        "ListCommandExecutionsRequest$sortOrder": "<p>Specify whether to list the command executions that were created in the ascending or descending order. By default, the API returns all commands in the descending order based on the start time or completion time of the executions, that are determined by the <code>startTimeFilter</code> and <code>completeTimeFilter</code> parameters.</p>",
+        "ListCommandsRequest$sortOrder": "<p>Specify whether to list the commands that you have created in the ascending or descending order. By default, the API returns all commands in the descending order based on the time that they were created.</p>"
+      }
+    },
     "SqlParseException": {
       "base": "<p>The Rule-SQL expression can't be parsed correctly.</p>",
       "refs": {
@@ -7673,6 +8259,30 @@
       "refs": {
         "DescribeThingRegistrationTaskResponse$status": "<p>The status of the bulk thing provisioning task.</p>",
         "ListThingRegistrationTasksRequest$status": "<p>The status of the bulk thing provisioning task.</p>"
+      }
+    },
+    "StatusCode": {
+      "base": null,
+      "refs": {
+        "DeleteCommandResponse$statusCode": "<p>The status code for the command deletion request. The status code is in the 200 range for a successful request.</p> <ul> <li> <p>If the command hasn't been deprecated, or has been deprecated for a duration that is shorter than the maximum time out duration of 12 hours, when calling the <code>DeleteCommand</code> request, the deletion will be scheduled and a 202 status code will be returned. While the command is being deleted, it will be in a <code>pendingDeletion</code> state. Once the time out duration has been reached, the command will be permanently removed from your account.</p> </li> <li> <p>If the command has been deprecated for a duration that is longer than the maximum time out duration of 12 hours, when calling the <code>DeleteCommand</code> request, the command will be deleted immediately and a 204 status code will be returned.</p> </li> </ul>"
+      }
+    },
+    "StatusReason": {
+      "base": "<p>Provide additional context about the status of a command execution using a reason code and description.</p>",
+      "refs": {
+        "GetCommandExecutionResponse$statusReason": "<p>Your devices can use this parameter to provide additional context about the status of a command execution using a reason code and description.</p>"
+      }
+    },
+    "StatusReasonCode": {
+      "base": null,
+      "refs": {
+        "StatusReason$reasonCode": "<p>A code that provides additional context for the command execution status.</p>"
+      }
+    },
+    "StatusReasonDescription": {
+      "base": null,
+      "refs": {
+        "StatusReason$reasonDescription": "<p>A literal string for devices to optionally provide additional information about the reason code for a command execution status.</p>"
       }
     },
     "StdDeviation": {
@@ -7810,12 +8420,20 @@
         "TopicRuleDestinationSummary$statusReason": "<p>The reason the topic rule destination is in the current status.</p>"
       }
     },
+    "StringCommandExecutionResult": {
+      "base": null,
+      "refs": {
+        "CommandExecutionResult$S": "<p>An attribute of type String. For example:</p> <p> <code>\"S\": \"Hello\"</code> </p>"
+      }
+    },
     "StringDateTime": {
       "base": null,
       "refs": {
         "ScheduledJobRollout$startTime": "<p>Displays the start times of the next seven maintenance window occurrences.</p>",
         "SchedulingConfig$startTime": "<p>The time a job will begin rollout of the job document to all devices in the target group for a job. The <code>startTime</code> can be scheduled up to a year in advance and must be scheduled a minimum of thirty minutes from the current time. The date and time format for the <code>startTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p> <p>For more information on the syntax for <code>startTime</code> when using an API command or the Command Line Interface, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a>.</p>",
-        "SchedulingConfig$endTime": "<p>The time a job will stop rollout of the job document to all devices in the target group for a job. The <code>endTime</code> must take place no later than two years from the current time and be scheduled a minimum of thirty minutes from the current time. The minimum duration between <code>startTime</code> and <code>endTime</code> is thirty minutes. The maximum duration between <code>startTime</code> and <code>endTime</code> is two years. The date and time format for the <code>endTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p> <p>For more information on the syntax for <code>endTime</code> when using an API command or the Command Line Interface, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a>.</p>"
+        "SchedulingConfig$endTime": "<p>The time a job will stop rollout of the job document to all devices in the target group for a job. The <code>endTime</code> must take place no later than two years from the current time and be scheduled a minimum of thirty minutes from the current time. The minimum duration between <code>startTime</code> and <code>endTime</code> is thirty minutes. The maximum duration between <code>startTime</code> and <code>endTime</code> is two years. The date and time format for the <code>endTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p> <p>For more information on the syntax for <code>endTime</code> when using an API command or the Command Line Interface, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-types.html#parameter-type-timestamp\">Timestamp</a>.</p>",
+        "TimeFilter$after": "<p>Filter to display command executions that started or completed only after a particular date and time.</p>",
+        "TimeFilter$before": "<p>Filter to display command executions that started or completed only before a particular date and time.</p>"
       }
     },
     "StringList": {
@@ -7829,6 +8447,12 @@
       "refs": {
         "NonCompliantResource$additionalInfo": "<p>Other information about the noncompliant resource.</p>",
         "RelatedResource$additionalInfo": "<p>Other information about the resource.</p>"
+      }
+    },
+    "StringParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$S": "<p>An attribute of type String. For example:</p> <p> <code>\"S\": \"Hello\"</code> </p>"
       }
     },
     "SubnetId": {
@@ -7923,6 +8547,7 @@
         "CreateAuthorizerRequest$tags": "<p>Metadata which can be used to manage the custom authorizer.</p> <note> <p>For URI Request parameters use format: ...key1=value1&amp;key2=value2...</p> <p>For the CLI command-line parameter use format: &amp;&amp;tags \"key1=value1&amp;key2=value2...\"</p> <p>For the cli-input-json file use format: \"tags\": \"key1=value1&amp;key2=value2...\"</p> </note>",
         "CreateBillingGroupRequest$tags": "<p>Metadata which can be used to manage the billing group.</p>",
         "CreateCertificateProviderRequest$tags": "<p>Metadata which can be used to manage the certificate provider.</p>",
+        "CreateCommandRequest$tags": "<p>Name-value pairs that are used as metadata to manage a command.</p>",
         "CreateCustomMetricRequest$tags": "<p> Metadata that can be used to manage the custom metric. </p>",
         "CreateDimensionRequest$tags": "<p>Metadata that can be used to manage the dimension.</p>",
         "CreateDomainConfigurationRequest$tags": "<p>Metadata which can be used to manage the domain configuration.</p> <note> <p>For URI Request parameters use format: ...key1=value1&amp;key2=value2...</p> <p>For the CLI command-line parameter use format: &amp;&amp;tags \"key1=value1&amp;key2=value2...\"</p> <p>For the cli-input-json file use format: \"tags\": \"key1=value1&amp;key2=value2...\"</p> </note>",
@@ -7979,7 +8604,12 @@
       "base": null,
       "refs": {
         "AuditNotificationTarget$targetArn": "<p>The ARN of the target (SNS topic) to which audit notifications are sent.</p>",
+        "CommandExecutionSummary$targetArn": "<p>The Amazon Resource Name (ARN) of the target device for which the command is being executed.</p>",
+        "DeleteCommandExecutionRequest$targetArn": "<p>The Amazon Resource Number (ARN) of the target device for which you want to delete command executions.</p>",
+        "GetCommandExecutionRequest$targetArn": "<p>The Amazon Resource Number (ARN) of the device on which the command execution is being performed.</p>",
+        "GetCommandExecutionResponse$targetArn": "<p>The Amazon Resource Number (ARN) of the device on which the command execution is being performed.</p>",
         "JobTargets$member": null,
+        "ListCommandExecutionsRequest$targetArn": "<p>The Amazon Resource Number (ARN) of the target device. You can use this information to list all command executions for a particular device.</p>",
         "ProvisioningHook$targetArn": "<p>The ARN of the target function.</p> <p> <i>Note:</i> Only Lambda functions are currently supported.</p>"
       }
     },
@@ -8316,7 +8946,7 @@
     "ThingGroupNameList": {
       "base": null,
       "refs": {
-        "ThingDocument$thingGroupNames": "<p>Thing group names.</p>",
+        "ThingDocument$thingGroupNames": "<p>Thing group and billing group names.</p>",
         "ThingGroupDocument$parentGroupNames": "<p>Parent group names.</p>"
       }
     },
@@ -8376,6 +9006,8 @@
         "ListJobExecutionsForThingRequest$thingName": "<p>The thing name.</p>",
         "ListThingGroupsForThingRequest$thingName": "<p>The thing name.</p>",
         "ListThingPrincipalsRequest$thingName": "<p>The name of the thing.</p>",
+        "ListThingPrincipalsV2Request$thingName": "<p>The name of the thing.</p>",
+        "PrincipalThingObject$thingName": "<p>The name of the thing.</p>",
         "RemoveThingFromBillingGroupRequest$thingName": "<p>The name of the thing to be removed from the billing group.</p>",
         "RemoveThingFromThingGroupRequest$thingName": "<p>The name of the thing to remove from the group.</p>",
         "ThingAttribute$thingName": "<p>The name of the thing.</p>",
@@ -8391,6 +9023,28 @@
         "ListPrincipalThingsResponse$things": "<p>The things.</p>",
         "ListThingsInBillingGroupResponse$things": "<p>A list of things in the billing group.</p>",
         "ListThingsInThingGroupResponse$things": "<p>The things in the specified thing group.</p>"
+      }
+    },
+    "ThingPrincipalObject": {
+      "base": "<p>An object that represents the principal and the type of relation it has with the thing.</p>",
+      "refs": {
+        "ThingPrincipalObjects$member": null
+      }
+    },
+    "ThingPrincipalObjects": {
+      "base": null,
+      "refs": {
+        "ListThingPrincipalsV2Response$thingPrincipalObjects": "<p>A list of <code>thingPrincipalObject</code> that represents the principal and the type of relation it has with the thing.</p>"
+      }
+    },
+    "ThingPrincipalType": {
+      "base": null,
+      "refs": {
+        "AttachThingPrincipalRequest$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ListPrincipalThingsV2Request$thingPrincipalType": "<p>The type of the relation you want to filter in the response. If no value is provided in this field, the response will list all things, including both the <code>EXCLUSIVE_THING</code> and <code>NON_EXCLUSIVE_THING</code> attachment types.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ListThingPrincipalsV2Request$thingPrincipalType": "<p>The type of the relation you want to filter in the response. If no value is provided in this field, the response will list all principals, including both the <code>EXCLUSIVE_THING</code> and <code>NON_EXCLUSIVE_THING</code> attachment types.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "PrincipalThingObject$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing. The value defaults to <code>NON_EXCLUSIVE_THING</code>.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>",
+        "ThingPrincipalObject$thingPrincipalType": "<p>The type of the relation you want to specify when you attach a principal to a thing. The value defaults to <code>NON_EXCLUSIVE_THING</code>.</p> <ul> <li> <p> <code>EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing, exclusively. The thing will be the only thing that’s attached to the principal.</p> </li> </ul> <ul> <li> <p> <code>NON_EXCLUSIVE_THING</code> - Attaches the specified principal to the specified thing. Multiple things can be attached to the principal.</p> </li> </ul>"
       }
     },
     "ThingTypeArn": {
@@ -8449,20 +9103,29 @@
         "ThingAttribute$thingTypeName": "<p>The name of the thing type, if the thing has been associated with a type.</p>",
         "ThingDocument$thingTypeName": "<p>The thing type name.</p>",
         "ThingTypeDefinition$thingTypeName": "<p>The name of the thing type.</p>",
-        "UpdateThingRequest$thingTypeName": "<p>The name of the thing type.</p>"
+        "UpdateThingRequest$thingTypeName": "<p>The name of the thing type.</p>",
+        "UpdateThingTypeRequest$thingTypeName": "<p>The name of a thing type.</p>"
       }
     },
     "ThingTypeProperties": {
       "base": "<p>The ThingTypeProperties contains information about the thing type including: a thing type description, and a list of searchable thing attribute names.</p>",
       "refs": {
         "CreateThingTypeRequest$thingTypeProperties": "<p>The ThingTypeProperties for the thing type to create. It contains information about the new thing type including a description, and a list of searchable thing attribute names.</p>",
-        "DescribeThingTypeResponse$thingTypeProperties": "<p>The ThingTypeProperties contains information about the thing type including description, and a list of searchable thing attribute names.</p>",
-        "ThingTypeDefinition$thingTypeProperties": "<p>The ThingTypeProperties for the thing type.</p>"
+        "DescribeThingTypeResponse$thingTypeProperties": "<p>The ThingTypeProperties contains information about the thing type including description, a list of searchable thing attribute names, and MQTT5 configuration.</p>",
+        "ThingTypeDefinition$thingTypeProperties": "<p>The ThingTypeProperties for the thing type.</p>",
+        "UpdateThingTypeRequest$thingTypeProperties": null
       }
     },
     "ThrottlingException": {
       "base": "<p>The rate exceeds the limit.</p>",
       "refs": {
+      }
+    },
+    "TimeFilter": {
+      "base": "<p>A filter that can be used to list command executions for a device that started or completed before or after a particular date and time.</p>",
+      "refs": {
+        "ListCommandExecutionsRequest$startedTimeFilter": "<p>List all command executions that started any time before or after the date and time that you specify. The date and time uses the format <code>yyyy-MM-dd'T'HH:mm</code>.</p>",
+        "ListCommandExecutionsRequest$completedTimeFilter": "<p>List all command executions that completed any time before or after the date and time that you specify. The date and time uses the format <code>yyyy-MM-dd'T'HH:mm</code>.</p>"
       }
     },
     "TimedOutThings": {
@@ -8511,6 +9174,7 @@
         "DetectMitigationActionExecution$executionEndDate": "<p> The date a mitigation action ended. </p>",
         "DetectMitigationActionsTaskSummary$taskStartTime": "<p> The date the task started. </p>",
         "DetectMitigationActionsTaskSummary$taskEndTime": "<p> The date the task ended. </p>",
+        "GetThingConnectivityDataResponse$timestamp": "<p>The timestamp of when the event occurred.</p>",
         "ListAuditFindingsRequest$startTime": "<p>A filter to limit results to those found after the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditFindingsRequest$endTime": "<p>A filter to limit results to those found before the specified time. You must specify either the startTime and endTime or the taskId, but not both.</p>",
         "ListAuditMitigationActionsTasksRequest$startTime": "<p>Specify this filter to limit results to tasks that began on or after a specific date and time.</p>",
@@ -8789,6 +9453,12 @@
         "MetricValue$count": "<p>If the <code>comparisonOperator</code> calls for a numeric value, use this to specify that numeric value to be compared with the <code>metric</code>.</p>"
       }
     },
+    "UnsignedLongParameterValue": {
+      "base": null,
+      "refs": {
+        "CommandParameterValue$UL": "<p>An attribute of type unsigned long.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {
@@ -8862,6 +9532,16 @@
     },
     "UpdateCertificateRequest": {
       "base": "<p>The input for the UpdateCertificate operation.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCommandRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCommandResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -9061,6 +9741,16 @@
       "refs": {
       }
     },
+    "UpdateThingTypeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateThingTypeResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateTopicRuleDestinationRequest": {
       "base": null,
       "refs": {
@@ -9103,6 +9793,12 @@
       "base": null,
       "refs": {
         "UserProperty$key": "<p>A key to be specified in <code>UserProperty</code>.</p>"
+      }
+    },
+    "UserPropertyKeyName": {
+      "base": null,
+      "refs": {
+        "PropagatingAttribute$userPropertyKey": "<p>The key of the user property key-value pair.</p>"
       }
     },
     "UserPropertyValue": {
@@ -9199,12 +9895,16 @@
     "VersionName": {
       "base": null,
       "refs": {
+        "AssociateSbomWithPackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
+        "AssociateSbomWithPackageVersionResponse$versionName": "<p>The name of the new package version.</p>",
         "CreatePackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
         "CreatePackageVersionResponse$versionName": "<p>The name of the new package version.</p>",
         "DeletePackageVersionRequest$versionName": "<p>The name of the target package version.</p>",
+        "DisassociateSbomFromPackageVersionRequest$versionName": "<p>The name of the new package version.</p>",
         "GetPackageResponse$defaultVersionName": "<p>The name of the default package version.</p>",
         "GetPackageVersionRequest$versionName": "<p>The name of the target package version.</p>",
         "GetPackageVersionResponse$versionName": "<p>The name of the package version.</p>",
+        "ListSbomValidationResultsRequest$versionName": "<p>The name of the new package version.</p>",
         "PackageSummary$defaultVersionName": "<p>The name of the default package version.</p>",
         "PackageVersionSummary$versionName": "<p>The name of the target package version.</p>",
         "UpdatePackageRequest$defaultVersionName": "<p>The name of the default package version.</p> <p> <b>Note:</b> You cannot name a <code>defaultVersion</code> and set <code>unsetDefaultVersion</code> equal to <code>true</code> at the same time.</p>",

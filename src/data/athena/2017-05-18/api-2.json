@@ -1280,6 +1280,31 @@
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "ConnectionType":{
+      "type":"string",
+      "enum":[
+        "DYNAMODB",
+        "MYSQL",
+        "POSTGRESQL",
+        "REDSHIFT",
+        "ORACLE",
+        "SYNAPSE",
+        "SQLSERVER",
+        "DB2",
+        "OPENSEARCH",
+        "BIGQUERY",
+        "GOOGLECLOUDSTORAGE",
+        "HBASE",
+        "DOCUMENTDB",
+        "CMDB",
+        "TPCDS",
+        "TIMESTREAM",
+        "SAPHANA",
+        "SNOWFLAKE",
+        "DATALAKEGEN2",
+        "DB2AS400"
+      ]
+    },
     "CoordinatorDpuSize":{
       "type":"integer",
       "box":true,
@@ -1320,6 +1345,7 @@
     "CreateDataCatalogOutput":{
       "type":"structure",
       "members":{
+        "DataCatalog":{"shape":"DataCatalog"}
       }
     },
     "CreateNamedQueryInput":{
@@ -1436,14 +1462,34 @@
         "Name":{"shape":"CatalogNameString"},
         "Description":{"shape":"DescriptionString"},
         "Type":{"shape":"DataCatalogType"},
-        "Parameters":{"shape":"ParametersMap"}
+        "Parameters":{"shape":"ParametersMap"},
+        "Status":{"shape":"DataCatalogStatus"},
+        "ConnectionType":{"shape":"ConnectionType"},
+        "Error":{"shape":"ErrorMessage"}
       }
+    },
+    "DataCatalogStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETE",
+        "CREATE_FAILED",
+        "CREATE_FAILED_CLEANUP_IN_PROGRESS",
+        "CREATE_FAILED_CLEANUP_COMPLETE",
+        "CREATE_FAILED_CLEANUP_FAILED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_COMPLETE",
+        "DELETE_FAILED"
+      ]
     },
     "DataCatalogSummary":{
       "type":"structure",
       "members":{
         "CatalogName":{"shape":"CatalogNameString"},
-        "Type":{"shape":"DataCatalogType"}
+        "Type":{"shape":"DataCatalogType"},
+        "Status":{"shape":"DataCatalogStatus"},
+        "ConnectionType":{"shape":"ConnectionType"},
+        "Error":{"shape":"ErrorMessage"}
       }
     },
     "DataCatalogSummaryList":{
@@ -1455,7 +1501,8 @@
       "enum":[
         "LAMBDA",
         "GLUE",
-        "HIVE"
+        "HIVE",
+        "FEDERATED"
       ]
     },
     "Database":{
@@ -1505,12 +1552,14 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"CatalogNameString"}
+        "Name":{"shape":"CatalogNameString"},
+        "DeleteCatalogOnly":{"shape":"Boolean"}
       }
     },
     "DeleteDataCatalogOutput":{
       "type":"structure",
       "members":{
+        "DataCatalog":{"shape":"DataCatalog"}
       }
     },
     "DeleteNamedQueryInput":{

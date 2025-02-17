@@ -5,14 +5,35 @@
     "endpointPrefix":"docdb-elastic",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"DocDB Elastic",
     "serviceFullName":"Amazon DocumentDB Elastic Clusters",
     "serviceId":"DocDB Elastic",
     "signatureVersion":"v4",
     "signingName":"docdb-elastic",
-    "uid":"docdb-elastic-2022-11-28"
+    "uid":"docdb-elastic-2022-11-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "ApplyPendingMaintenanceAction":{
+      "name":"ApplyPendingMaintenanceAction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/pending-action",
+        "responseCode":200
+      },
+      "input":{"shape":"ApplyPendingMaintenanceActionInput"},
+      "output":{"shape":"ApplyPendingMaintenanceActionOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CopyClusterSnapshot":{
       "name":"CopyClusterSnapshot",
       "http":{
@@ -144,6 +165,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetPendingMaintenanceAction":{
+      "name":"GetPendingMaintenanceAction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/pending-action/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPendingMaintenanceActionInput"},
+      "output":{"shape":"GetPendingMaintenanceActionOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListClusterSnapshots":{
       "name":"ListClusterSnapshots",
       "http":{
@@ -169,6 +208,22 @@
       },
       "input":{"shape":"ListClustersInput"},
       "output":{"shape":"ListClustersOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListPendingMaintenanceActions":{
+      "name":"ListPendingMaintenanceActions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/pending-actions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPendingMaintenanceActionsInput"},
+      "output":{"shape":"ListPendingMaintenanceActionsOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -313,6 +368,27 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ApplyPendingMaintenanceActionInput":{
+      "type":"structure",
+      "required":[
+        "applyAction",
+        "optInType",
+        "resourceArn"
+      ],
+      "members":{
+        "applyAction":{"shape":"InputString"},
+        "applyOn":{"shape":"InputString"},
+        "optInType":{"shape":"OptInType"},
+        "resourceArn":{"shape":"InputString"}
+      }
+    },
+    "ApplyPendingMaintenanceActionOutput":{
+      "type":"structure",
+      "required":["resourcePendingMaintenanceAction"],
+      "members":{
+        "resourcePendingMaintenanceAction":{"shape":"ResourcePendingMaintenanceAction"}
+      }
     },
     "Arn":{
       "type":"string",
@@ -615,6 +691,29 @@
         "snapshot":{"shape":"ClusterSnapshot"}
       }
     },
+    "GetPendingMaintenanceActionInput":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"InputString",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "GetPendingMaintenanceActionOutput":{
+      "type":"structure",
+      "required":["resourcePendingMaintenanceAction"],
+      "members":{
+        "resourcePendingMaintenanceAction":{"shape":"ResourcePendingMaintenanceAction"}
+      }
+    },
+    "InputString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -696,6 +795,35 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListPendingMaintenanceActionsInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListPendingMaintenanceActionsInputMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPendingMaintenanceActionsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListPendingMaintenanceActionsOutput":{
+      "type":"structure",
+      "required":["resourcePendingMaintenanceActions"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "resourcePendingMaintenanceActions":{"shape":"ResourcePendingMaintenanceActionList"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -713,10 +841,35 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "OptInType":{
+      "type":"string",
+      "enum":[
+        "IMMEDIATE",
+        "NEXT_MAINTENANCE",
+        "APPLY_ON",
+        "UNDO_OPT_IN"
+      ]
+    },
     "PaginationToken":{"type":"string"},
     "Password":{
       "type":"string",
       "sensitive":true
+    },
+    "PendingMaintenanceActionDetails":{
+      "type":"structure",
+      "required":["action"],
+      "members":{
+        "action":{"shape":"String"},
+        "autoAppliedAfterDate":{"shape":"String"},
+        "currentApplyDate":{"shape":"String"},
+        "description":{"shape":"String"},
+        "forcedApplyDate":{"shape":"String"},
+        "optInStatus":{"shape":"String"}
+      }
+    },
+    "PendingMaintenanceActionDetailsList":{
+      "type":"list",
+      "member":{"shape":"PendingMaintenanceActionDetails"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -735,6 +888,17 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResourcePendingMaintenanceAction":{
+      "type":"structure",
+      "members":{
+        "pendingMaintenanceActionDetails":{"shape":"PendingMaintenanceActionDetailsList"},
+        "resourceArn":{"shape":"String"}
+      }
+    },
+    "ResourcePendingMaintenanceActionList":{
+      "type":"list",
+      "member":{"shape":"ResourcePendingMaintenanceAction"}
     },
     "RestoreClusterFromSnapshotInput":{
       "type":"structure",
@@ -839,7 +1003,9 @@
         "COPYING",
         "STARTING",
         "STOPPING",
-        "STOPPED"
+        "STOPPED",
+        "MAINTENANCE",
+        "INACCESSIBLE_ENCRYPTION_CREDENTIALS_RECOVERABLE"
       ]
     },
     "StopClusterInput":{

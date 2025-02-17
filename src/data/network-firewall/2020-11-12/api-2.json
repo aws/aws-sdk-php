@@ -5,13 +5,15 @@
     "endpointPrefix":"network-firewall",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Network Firewall",
     "serviceFullName":"AWS Network Firewall",
     "serviceId":"Network Firewall",
     "signatureVersion":"v4",
     "signingName":"network-firewall",
     "targetPrefix":"NetworkFirewall_20201112",
-    "uid":"network-firewall-2020-11-12"
+    "uid":"network-firewall-2020-11-12",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateFirewallPolicy":{
@@ -1232,6 +1234,12 @@
       "type":"list",
       "member":{"shape":"TCPFlag"}
     },
+    "FlowTimeouts":{
+      "type":"structure",
+      "members":{
+        "TcpIdleTimeoutSeconds":{"shape":"TcpIdleTimeoutRangeBound"}
+      }
+    },
     "GeneratedRulesType":{
       "type":"string",
       "enum":[
@@ -1510,7 +1518,8 @@
       "type":"string",
       "enum":[
         "ALERT",
-        "FLOW"
+        "FLOW",
+        "TLS"
       ]
     },
     "LoggingConfiguration":{
@@ -1925,7 +1934,8 @@
       "type":"structure",
       "members":{
         "RuleOrder":{"shape":"RuleOrder"},
-        "StreamExceptionPolicy":{"shape":"StreamExceptionPolicy"}
+        "StreamExceptionPolicy":{"shape":"StreamExceptionPolicy"},
+        "FlowTimeouts":{"shape":"FlowTimeouts"}
       }
     },
     "StatefulRule":{
@@ -2220,6 +2230,7 @@
       "type":"list",
       "member":{"shape":"TargetType"}
     },
+    "TcpIdleTimeoutRangeBound":{"type":"integer"},
     "ThrottlingException":{
       "type":"structure",
       "members":{

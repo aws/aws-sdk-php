@@ -5,12 +5,14 @@
     "endpointPrefix":"sts",
     "globalEndpoint":"sts.amazonaws.com",
     "protocol":"query",
+    "protocols":["query"],
     "serviceAbbreviation":"AWS STS",
     "serviceFullName":"AWS Security Token Service",
     "serviceId":"STS",
     "signatureVersion":"v4",
     "uid":"sts-2011-06-15",
-    "xmlNamespace":"https://sts.amazonaws.com/doc/2011-06-15/"
+    "xmlNamespace":"https://sts.amazonaws.com/doc/2011-06-15/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssumeRole":{
@@ -70,6 +72,22 @@
         {"shape":"InvalidIdentityTokenException"},
         {"shape":"ExpiredTokenException"},
         {"shape":"RegionDisabledException"}
+      ]
+    },
+    "AssumeRoot":{
+      "name":"AssumeRoot",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssumeRootRequest"},
+      "output":{
+        "shape":"AssumeRootResponse",
+        "resultWrapper":"AssumeRootResult"
+      },
+      "errors":[
+        {"shape":"RegionDisabledException"},
+        {"shape":"ExpiredTokenException"}
       ]
     },
     "DecodeAuthorizationMessage":{
@@ -231,6 +249,25 @@
         "PackedPolicySize":{"shape":"nonNegativeIntegerType"},
         "Provider":{"shape":"Issuer"},
         "Audience":{"shape":"Audience"},
+        "SourceIdentity":{"shape":"sourceIdentityType"}
+      }
+    },
+    "AssumeRootRequest":{
+      "type":"structure",
+      "required":[
+        "TargetPrincipal",
+        "TaskPolicyArn"
+      ],
+      "members":{
+        "TargetPrincipal":{"shape":"TargetPrincipalType"},
+        "TaskPolicyArn":{"shape":"PolicyDescriptorType"},
+        "DurationSeconds":{"shape":"RootDurationSecondsType"}
+      }
+    },
+    "AssumeRootResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
         "SourceIdentity":{"shape":"sourceIdentityType"}
       }
     },
@@ -460,6 +497,11 @@
       },
       "exception":true
     },
+    "RootDurationSecondsType":{
+      "type":"integer",
+      "max":900,
+      "min":0
+    },
     "SAMLAssertionType":{
       "type":"string",
       "max":100000,
@@ -478,6 +520,11 @@
         "Key":{"shape":"tagKeyType"},
         "Value":{"shape":"tagValueType"}
       }
+    },
+    "TargetPrincipalType":{
+      "type":"string",
+      "max":2048,
+      "min":12
     },
     "accessKeyIdType":{
       "type":"string",

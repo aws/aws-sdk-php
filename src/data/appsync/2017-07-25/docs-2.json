@@ -5,16 +5,20 @@
     "AssociateApi": "<p>Maps an endpoint to your custom domain.</p>",
     "AssociateMergedGraphqlApi": "<p>Creates an association between a Merged API and source API using the source API's identifier.</p>",
     "AssociateSourceGraphqlApi": "<p>Creates an association between a Merged API and source API using the Merged API's identifier.</p>",
+    "CreateApi": "<p>Creates an <code>Api</code> object. Use this operation to create an AppSync API with your preferred configuration, such as an Event API that provides real-time message publishing and message subscriptions over WebSockets.</p>",
     "CreateApiCache": "<p>Creates a cache for the GraphQL API.</p>",
     "CreateApiKey": "<p>Creates a unique key that you can distribute to clients who invoke your API.</p>",
+    "CreateChannelNamespace": "<p>Creates a <code>ChannelNamespace</code> for an <code>Api</code>.</p>",
     "CreateDataSource": "<p>Creates a <code>DataSource</code> object.</p>",
     "CreateDomainName": "<p>Creates a custom <code>DomainName</code> object.</p>",
     "CreateFunction": "<p>Creates a <code>Function</code> object.</p> <p>A function is a reusable entity. You can use multiple functions to compose the resolver logic.</p>",
     "CreateGraphqlApi": "<p>Creates a <code>GraphqlApi</code> object.</p>",
     "CreateResolver": "<p>Creates a <code>Resolver</code> object.</p> <p>A resolver converts incoming requests into a format that a data source can understand, and converts the data source's responses into GraphQL.</p>",
     "CreateType": "<p>Creates a <code>Type</code> object.</p>",
+    "DeleteApi": "<p>Deletes an <code>Api</code> object</p>",
     "DeleteApiCache": "<p>Deletes an <code>ApiCache</code> object.</p>",
     "DeleteApiKey": "<p>Deletes an API key.</p>",
+    "DeleteChannelNamespace": "<p>Deletes a <code>ChannelNamespace</code>.</p>",
     "DeleteDataSource": "<p>Deletes a <code>DataSource</code> object.</p>",
     "DeleteDomainName": "<p>Deletes a custom <code>DomainName</code> object.</p>",
     "DeleteFunction": "<p>Deletes a <code>Function</code>.</p>",
@@ -27,8 +31,10 @@
     "EvaluateCode": "<p>Evaluates the given code and returns the response. The code definition requirements depend on the specified runtime. For <code>APPSYNC_JS</code> runtimes, the code defines the request and response functions. The request function takes the incoming request after a GraphQL operation is parsed and converts it into a request configuration for the selected data source operation. The response function interprets responses from the data source and maps it to the shape of the GraphQL field output type. </p>",
     "EvaluateMappingTemplate": "<p>Evaluates a given template and returns the response. The mapping template can be a request or response template.</p> <p>Request templates take the incoming request after a GraphQL operation is parsed and convert it into a request configuration for the selected data source operation. Response templates interpret responses from the data source and map it to the shape of the GraphQL field output type.</p> <p>Mapping templates are written in the Apache Velocity Template Language (VTL).</p>",
     "FlushApiCache": "<p>Flushes an <code>ApiCache</code> object.</p>",
+    "GetApi": "<p>Retrieves an <code>Api</code> object.</p>",
     "GetApiAssociation": "<p>Retrieves an <code>ApiAssociation</code> object.</p>",
     "GetApiCache": "<p>Retrieves an <code>ApiCache</code> object.</p>",
+    "GetChannelNamespace": "<p>Retrieves the channel namespace for a specified <code>Api</code>.</p>",
     "GetDataSource": "<p>Retrieves a <code>DataSource</code> object.</p>",
     "GetDataSourceIntrospection": "<p>Retrieves the record of an existing introspection. If the retrieval is successful, the result of the instrospection will also be returned. If the retrieval fails the operation, an error message will be returned instead.</p>",
     "GetDomainName": "<p>Retrieves a custom <code>DomainName</code> object.</p>",
@@ -41,6 +47,8 @@
     "GetSourceApiAssociation": "<p>Retrieves a <code>SourceApiAssociation</code> object.</p>",
     "GetType": "<p>Retrieves a <code>Type</code> object.</p>",
     "ListApiKeys": "<p>Lists the API keys for a given API.</p> <note> <p>API keys are deleted automatically 60 days after they expire. However, they may still be included in the response until they have actually been deleted. You can safely call <code>DeleteApiKey</code> to manually delete a key before it's automatically deleted.</p> </note>",
+    "ListApis": "<p>Lists the APIs in your AppSync account.</p> <p> <code>ListApis</code> returns only the high level API details. For more detailed information about an API, use <code>GetApi</code>.</p>",
+    "ListChannelNamespaces": "<p>Lists the channel namespaces for a specified <code>Api</code>.</p> <p> <code>ListChannelNamespaces</code> returns only high level details for the channel namespace. To retrieve code handlers, use <code>GetChannelNamespace</code>.</p>",
     "ListDataSources": "<p>Lists the data sources for a given API.</p>",
     "ListDomainNames": "<p>Lists multiple custom domain names.</p>",
     "ListFunctions": "<p>List multiple functions.</p>",
@@ -57,8 +65,10 @@
     "StartSchemaMerge": "<p>Initiates a merge operation. Returns a status that shows the result of the merge operation.</p>",
     "TagResource": "<p>Tags a resource with user-supplied tags.</p>",
     "UntagResource": "<p>Untags a resource.</p>",
+    "UpdateApi": "<p>Updates an <code>Api</code>.</p>",
     "UpdateApiCache": "<p>Updates the cache for the GraphQL API.</p>",
     "UpdateApiKey": "<p>Updates an API key. You can update the key as long as it's not deleted.</p>",
+    "UpdateChannelNamespace": "<p>Updates a <code>ChannelNamespace</code> associated with an <code>Api</code>.</p>",
     "UpdateDataSource": "<p>Updates a <code>DataSource</code> object.</p>",
     "UpdateDomainName": "<p>Updates a custom <code>DomainName</code> object.</p>",
     "UpdateFunction": "<p>Updates a <code>Function</code> object.</p>",
@@ -85,6 +95,15 @@
         "CreateGraphqlApiRequest$additionalAuthenticationProviders": "<p>A list of additional authentication providers for the <code>GraphqlApi</code> API.</p>",
         "GraphqlApi$additionalAuthenticationProviders": "<p>A list of additional authentication providers for the <code>GraphqlApi</code> API.</p>",
         "UpdateGraphqlApiRequest$additionalAuthenticationProviders": "<p>A list of additional authentication providers for the <code>GraphqlApi</code> API.</p>"
+      }
+    },
+    "Api": {
+      "base": "<p>Describes an AppSync API. You can use <code>Api</code> for an AppSync API with your preferred configuration, such as an Event API that provides real-time message publishing and message subscriptions over WebSockets.</p>",
+      "refs": {
+        "Apis$member": null,
+        "CreateApiResponse$api": "<p>The <code>Api</code> object.</p>",
+        "GetApiResponse$api": "<p>The <code>Api</code> object.</p>",
+        "UpdateApiResponse$api": "<p>The <code>Api</code> object.</p>"
       }
     },
     "ApiAssociation": {
@@ -119,9 +138,9 @@
     "ApiCachingBehavior": {
       "base": null,
       "refs": {
-        "ApiCache$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests are fully cached.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> </ul>",
-        "CreateApiCacheRequest$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests are fully cached.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> </ul>",
-        "UpdateApiCacheRequest$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests are fully cached.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> </ul>"
+        "ApiCache$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests from the same user are cached. Individual resolvers are automatically cached. All API calls will try to return responses from the cache.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> <li> <p> <b>OPERATION_LEVEL_CACHING</b>: Full requests are cached together and returned without executing resolvers.</p> </li> </ul>",
+        "CreateApiCacheRequest$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests from the same user are cached. Individual resolvers are automatically cached. All API calls will try to return responses from the cache.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> <li> <p> <b>OPERATION_LEVEL_CACHING</b>: Full requests are cached together and returned without executing resolvers.</p> </li> </ul>",
+        "UpdateApiCacheRequest$apiCachingBehavior": "<p>Caching behavior.</p> <ul> <li> <p> <b>FULL_REQUEST_CACHING</b>: All requests from the same user are cached. Individual resolvers are automatically cached. All API calls will try to return responses from the cache.</p> </li> <li> <p> <b>PER_RESOLVER_CACHING</b>: Individual resolvers that you specify are cached.</p> </li> <li> <p> <b>OPERATION_LEVEL_CACHING</b>: Full requests are cached together and returned without executing resolvers.</p> </li> </ul>"
       }
     },
     "ApiKey": {
@@ -151,6 +170,20 @@
     "ApiLimitExceededException": {
       "base": "<p>The GraphQL API exceeded a limit. Try your request again.</p>",
       "refs": {
+      }
+    },
+    "ApiName": {
+      "base": null,
+      "refs": {
+        "Api$name": "<p>The name of the <code>Api</code>.</p>",
+        "CreateApiRequest$name": "<p>The name for the <code>Api</code>.</p>",
+        "UpdateApiRequest$name": "<p>The name of the Api.</p>"
+      }
+    },
+    "Apis": {
+      "base": null,
+      "refs": {
+        "ListApisResponse$apis": "<p>The <code>Api</code> objects.</p>"
       }
     },
     "AppSyncRuntime": {
@@ -201,10 +234,44 @@
         "ApiAssociation$associationStatus": "<p>Identifies the status of an association.</p> <ul> <li> <p> <b>PROCESSING</b>: The API association is being created. You cannot modify association requests during processing.</p> </li> <li> <p> <b>SUCCESS</b>: The API association was successful. You can modify associations after success.</p> </li> <li> <p> <b>FAILED</b>: The API association has failed. You can modify associations after failure.</p> </li> </ul>"
       }
     },
+    "AuthMode": {
+      "base": "<p>Describes an authorization configuration. Use <code>AuthMode</code> to specify the publishing and subscription authorization configuration for an Event API.</p>",
+      "refs": {
+        "AuthModes$member": null
+      }
+    },
+    "AuthModes": {
+      "base": null,
+      "refs": {
+        "ChannelNamespace$subscribeAuthModes": "<p>The authorization mode to use for subscribing to messages on the channel namespace. This configuration overrides the default <code>Api</code>authorization configuration.</p>",
+        "ChannelNamespace$publishAuthModes": "<p>The authorization mode to use for publishing messages on the channel namespace. This configuration overrides the default <code>Api</code>authorization configuration.</p>",
+        "CreateChannelNamespaceRequest$subscribeAuthModes": "<p>The authorization mode to use for subscribing to messages on the channel namespace. This configuration overrides the default <code>Api</code> authorization configuration.</p>",
+        "CreateChannelNamespaceRequest$publishAuthModes": "<p>The authorization mode to use for publishing messages on the channel namespace. This configuration overrides the default <code>Api</code> authorization configuration.</p>",
+        "EventConfig$connectionAuthModes": "<p>A list of valid authorization modes for the Event API connections.</p>",
+        "EventConfig$defaultPublishAuthModes": "<p>A list of valid authorization modes for the Event API publishing.</p>",
+        "EventConfig$defaultSubscribeAuthModes": "<p>A list of valid authorization modes for the Event API subscriptions.</p>",
+        "UpdateChannelNamespaceRequest$subscribeAuthModes": "<p>The authorization mode to use for subscribing to messages on the channel namespace. This configuration overrides the default <code>Api</code> authorization configuration.</p>",
+        "UpdateChannelNamespaceRequest$publishAuthModes": "<p>The authorization mode to use for publishing messages on the channel namespace. This configuration overrides the default <code>Api</code> authorization configuration.</p>"
+      }
+    },
+    "AuthProvider": {
+      "base": "<p>Describes an authorization provider.</p>",
+      "refs": {
+        "AuthProviders$member": null
+      }
+    },
+    "AuthProviders": {
+      "base": null,
+      "refs": {
+        "EventConfig$authProviders": "<p>A list of authorization providers.</p>"
+      }
+    },
     "AuthenticationType": {
       "base": null,
       "refs": {
         "AdditionalAuthenticationProvider$authenticationType": "<p>The authentication type: API key, Identity and Access Management (IAM), OpenID Connect (OIDC), Amazon Cognito user pools, or Lambda.</p>",
+        "AuthMode$authType": "<p>The authorization type.</p>",
+        "AuthProvider$authType": "<p>The authorization type.</p>",
         "CreateGraphqlApiRequest$authenticationType": "<p>The authentication type: API key, Identity and Access Management (IAM), OpenID Connect (OIDC), Amazon Cognito user pools, or Lambda.</p>",
         "GraphqlApi$authenticationType": "<p>The authentication type.</p>",
         "UpdateGraphqlApiRequest$authenticationType": "<p>The new authentication type for the <code>GraphqlApi</code> object.</p>"
@@ -255,6 +322,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "Api$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for this <code>Api</code>.</p>",
         "ApiCache$transitEncryptionEnabled": "<p>Transit encryption flag when connecting to cache. You cannot update this setting after creation.</p>",
         "ApiCache$atRestEncryptionEnabled": "<p>At-rest encryption flag for cache. You cannot update this setting after creation.</p>",
         "CreateApiCacheRequest$transitEncryptionEnabled": "<p>Transit encryption flag when connecting to cache. You cannot update this setting after creation.</p>",
@@ -262,7 +330,7 @@
         "CreateGraphqlApiRequest$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for the <code>GraphqlApi</code>.</p>",
         "DynamodbDataSourceConfig$useCallerCredentials": "<p>Set to TRUE to use Amazon Cognito credentials with this data source.</p>",
         "DynamodbDataSourceConfig$versioned": "<p>Set to TRUE to use Conflict Detection and Resolution with this data source.</p>",
-        "GetDataSourceIntrospectionRequest$includeModelsSDL": "<p>A boolean flag that determines whether SDL should be generated for introspected types or not. If set to <code>true</code>, each model will contain an <code>sdl</code> property that contains the SDL for that type. The SDL only contains the type data and no additional metadata or directives. </p>",
+        "GetDataSourceIntrospectionRequest$includeModelsSDL": "<p>A boolean flag that determines whether SDL should be generated for introspected types. If set to <code>true</code>, each model will contain an <code>sdl</code> property that contains the SDL for that type. The SDL only contains the type data and no additional metadata or directives. </p>",
         "GraphqlApi$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for this <code>GraphqlApi</code>.</p>",
         "LogConfig$excludeVerboseContent": "<p>Set to TRUE to exclude sections that contain information such as headers, context, and evaluated mapping templates, regardless of logging level.</p>",
         "UpdateGraphqlApiRequest$xrayEnabled": "<p>A flag indicating whether to use X-Ray tracing for the <code>GraphqlApi</code>.</p>"
@@ -303,14 +371,32 @@
         "DomainNameConfig$certificateArn": "<p>The Amazon Resource Name (ARN) of the certificate. This can be an Certificate Manager (ACM) certificate or an Identity and Access Management (IAM) server certificate.</p>"
       }
     },
+    "ChannelNamespace": {
+      "base": "<p>Describes a channel namespace associated with an <code>Api</code>. The <code>ChannelNamespace</code> contains the definitions for code handlers for the <code>Api</code>.</p>",
+      "refs": {
+        "ChannelNamespaces$member": null,
+        "CreateChannelNamespaceResponse$channelNamespace": "<p>The <code>ChannelNamespace</code> object.</p>",
+        "GetChannelNamespaceResponse$channelNamespace": "<p>The <code>ChannelNamespace</code> object.</p>",
+        "UpdateChannelNamespaceResponse$channelNamespace": "<p>The <code>ChannelNamespace</code> object.</p>"
+      }
+    },
+    "ChannelNamespaces": {
+      "base": null,
+      "refs": {
+        "ListChannelNamespacesResponse$channelNamespaces": "<p>The <code>ChannelNamespace</code> objects.</p>"
+      }
+    },
     "Code": {
       "base": null,
       "refs": {
+        "ChannelNamespace$codeHandlers": "<p>The event handler functions that run custom business logic to process published events and subscribe requests.</p>",
+        "CreateChannelNamespaceRequest$codeHandlers": "<p>The event handler functions that run custom business logic to process published events and subscribe requests.</p>",
         "CreateFunctionRequest$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
         "CreateResolverRequest$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
         "EvaluateCodeRequest$code": "<p>The code definition to be evaluated. Note that <code>code</code> and <code>runtime</code> are both required for this action. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
         "FunctionConfiguration$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
         "Resolver$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
+        "UpdateChannelNamespaceRequest$codeHandlers": "<p>The event handler functions that run custom business logic to process published events and subscribe requests.</p>",
         "UpdateFunctionRequest$code": "<p>The <code>function</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>",
         "UpdateResolverRequest$code": "<p>The <code>resolver</code> code that contains the request and response functions. When code is used, the <code>runtime</code> is required. The <code>runtime</code> value must be <code>APPSYNC_JS</code>.</p>"
       }
@@ -352,6 +438,12 @@
         "EvaluateCodeErrorDetail$codeErrors": "<p>Contains the list of <code>CodeError</code> objects.</p>"
       }
     },
+    "CognitoConfig": {
+      "base": "<p>Describes an Amazon Cognito configuration.</p>",
+      "refs": {
+        "AuthProvider$cognitoConfig": "<p>Describes an Amazon Cognito user pool configuration.</p>"
+      }
+    },
     "CognitoUserPoolConfig": {
       "base": "<p>Describes an Amazon Cognito user pool configuration.</p>",
       "refs": {
@@ -367,6 +459,11 @@
       "base": null,
       "refs": {
         "SyncConfig$conflictDetection": "<p>The Conflict Detection strategy to use.</p> <ul> <li> <p> <b>VERSION</b>: Detect conflicts based on object versions for this resolver.</p> </li> <li> <p> <b>NONE</b>: Do not detect conflicts when invoking this resolver.</p> </li> </ul>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>A conflict with a previous successful update is detected. This typically occurs when the previous update did not have time to propagate before the next update was made. A retry (with appropriate backoff logic) is the recommended response to this exception.</p>",
+      "refs": {
       }
     },
     "ConflictHandlerType": {
@@ -398,6 +495,26 @@
       }
     },
     "CreateApiKeyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateApiRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateApiResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateChannelNamespaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateChannelNamespaceResponse": {
       "base": null,
       "refs": {
       }
@@ -558,7 +675,7 @@
       "base": null,
       "refs": {
         "CreateDataSourceRequest$type": "<p>The type of the <code>DataSource</code>.</p>",
-        "DataSource$type": "<p>The type of the data source.</p> <ul> <li> <p> <b>AWS_LAMBDA</b>: The data source is an Lambda function.</p> </li> <li> <p> <b>AMAZON_DYNAMODB</b>: The data source is an Amazon DynamoDB table.</p> </li> <li> <p> <b>AMAZON_ELASTICSEARCH</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_OPENSEARCH_SERVICE</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_EVENTBRIDGE</b>: The data source is an Amazon EventBridge configuration.</p> </li> <li> <p> <b>NONE</b>: There is no data source. Use this type when you want to invoke a GraphQL operation without connecting to a data source, such as when you're performing data transformation with resolvers or invoking a subscription from a mutation.</p> </li> <li> <p> <b>HTTP</b>: The data source is an HTTP endpoint.</p> </li> <li> <p> <b>RELATIONAL_DATABASE</b>: The data source is a relational database.</p> </li> </ul>",
+        "DataSource$type": "<p>The type of the data source.</p> <ul> <li> <p> <b>AWS_LAMBDA</b>: The data source is an Lambda function.</p> </li> <li> <p> <b>AMAZON_DYNAMODB</b>: The data source is an Amazon DynamoDB table.</p> </li> <li> <p> <b>AMAZON_ELASTICSEARCH</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_OPENSEARCH_SERVICE</b>: The data source is an Amazon OpenSearch Service domain.</p> </li> <li> <p> <b>AMAZON_EVENTBRIDGE</b>: The data source is an Amazon EventBridge configuration.</p> </li> <li> <p> <b>AMAZON_BEDROCK_RUNTIME</b>: The data source is the Amazon Bedrock runtime.</p> </li> <li> <p> <b>NONE</b>: There is no data source. Use this type when you want to invoke a GraphQL operation without connecting to a data source, such as when you're performing data transformation with resolvers or invoking a subscription from a mutation.</p> </li> <li> <p> <b>HTTP</b>: The data source is an HTTP endpoint.</p> </li> <li> <p> <b>RELATIONAL_DATABASE</b>: The data source is a relational database.</p> </li> </ul>",
         "UpdateDataSourceRequest$type": "<p>The new data source type.</p>"
       }
     },
@@ -596,6 +713,26 @@
       }
     },
     "DeleteApiKeyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteApiRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteApiResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteChannelNamespaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteChannelNamespaceResponse": {
       "base": null,
       "refs": {
       }
@@ -834,6 +971,26 @@
         "UpdateDataSourceRequest$eventBridgeConfig": "<p>The new Amazon EventBridge settings.</p>"
       }
     },
+    "EventConfig": {
+      "base": "<p>Describes the authorization configuration for connections, message publishing, message subscriptions, and logging for an Event API.</p>",
+      "refs": {
+        "Api$eventConfig": "<p>The Event API configuration. This includes the default authorization configuration for connecting, publishing, and subscribing to an Event API.</p>",
+        "CreateApiRequest$eventConfig": "<p>The Event API configuration. This includes the default authorization configuration for connecting, publishing, and subscribing to an Event API.</p>",
+        "UpdateApiRequest$eventConfig": "<p>The new event configuration. This includes the default authorization configuration for connecting, publishing, and subscribing to an Event API.</p>"
+      }
+    },
+    "EventLogConfig": {
+      "base": "<p>Describes the CloudWatch Logs configuration for the Event API.</p>",
+      "refs": {
+        "EventConfig$logConfig": "<p>The CloudWatch Logs configuration for the Event API.</p>"
+      }
+    },
+    "EventLogLevel": {
+      "base": null,
+      "refs": {
+        "EventLogConfig$logLevel": "<p>The type of information to log for the Event API. </p>"
+      }
+    },
     "FieldLogLevel": {
       "base": null,
       "refs": {
@@ -888,6 +1045,26 @@
     },
     "GetApiCacheResponse": {
       "base": "<p>Represents the output of a <code>GetApiCache</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "GetApiRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetApiResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetChannelNamespaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetChannelNamespaceResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -1061,6 +1238,7 @@
       "base": "<p>A <code>LambdaAuthorizerConfig</code> specifies how to authorize AppSync API access when using the <code>AWS_LAMBDA</code> authorizer mode. Be aware that an AppSync API can have only one Lambda authorizer configured at a time.</p>",
       "refs": {
         "AdditionalAuthenticationProvider$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>",
+        "AuthProvider$lambdaAuthorizerConfig": null,
         "CreateGraphqlApiRequest$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>",
         "GraphqlApi$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>",
         "UpdateGraphqlApiRequest$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>"
@@ -1091,6 +1269,26 @@
       }
     },
     "ListApiKeysResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListApisRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListApisResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListChannelNamespacesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListChannelNamespacesResponse": {
       "base": null,
       "refs": {
       }
@@ -1231,6 +1429,7 @@
     "MapOfStringToString": {
       "base": null,
       "refs": {
+        "Api$dns": "<p>The DNS records for the API. This will include an HTTP and a real-time endpoint.</p>",
         "GraphqlApi$uris": "<p>The URIs.</p>",
         "GraphqlApi$dns": "<p>The DNS records for the API.</p>"
       }
@@ -1268,6 +1467,8 @@
       "refs": {
         "GetDataSourceIntrospectionRequest$maxResults": "<p>The maximum number of introspected types that will be returned in a single response.</p>",
         "ListApiKeysRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
+        "ListApisRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
+        "ListChannelNamespacesRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
         "ListDataSourcesRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
         "ListDomainNamesRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
         "ListFunctionsRequest$maxResults": "<p>The maximum number of results that you want the request to return.</p>",
@@ -1285,6 +1486,16 @@
         "SourceApiAssociationConfig$mergeType": "<p>The property that indicates which merging option is enabled in the source API association.</p> <p>Valid merge types are <code>MANUAL_MERGE</code> (default) and <code>AUTO_MERGE</code>. Manual merges are the default behavior and require the user to trigger any changes from the source APIs to the merged API manually. Auto merges subscribe the merged API to the changes performed on the source APIs so that any change in the source APIs are also made to the merged API. Auto merges use <code>MergedApiExecutionRoleArn</code> to perform merge operations.</p>"
       }
     },
+    "Namespace": {
+      "base": null,
+      "refs": {
+        "ChannelNamespace$name": "<p>The name of the channel namespace. This name must be unique within the <code>Api</code>.</p>",
+        "CreateChannelNamespaceRequest$name": "<p>The name of the <code>ChannelNamespace</code>. This name must be unique within the <code>Api</code> </p>",
+        "DeleteChannelNamespaceRequest$name": "<p>The name of the <code>ChannelNamespace</code>.</p>",
+        "GetChannelNamespaceRequest$name": "<p>The name of the <code>ChannelNamespace</code>.</p>",
+        "UpdateChannelNamespaceRequest$name": "<p>The name of the <code>ChannelNamespace</code>.</p>"
+      }
+    },
     "NotFoundException": {
       "base": "<p>The resource specified in the request was not found. Check the resource, and then try again.</p>",
       "refs": {
@@ -1294,6 +1505,7 @@
       "base": "<p>Describes an OpenID Connect (OIDC) configuration.</p>",
       "refs": {
         "AdditionalAuthenticationProvider$openIDConnectConfig": "<p>The OIDC configuration.</p>",
+        "AuthProvider$openIDConnectConfig": null,
         "CreateGraphqlApiRequest$openIDConnectConfig": "<p>The OIDC configuration.</p>",
         "GraphqlApi$openIDConnectConfig": "<p>The OpenID Connect configuration.</p>",
         "UpdateGraphqlApiRequest$openIDConnectConfig": "<p>The OpenID Connect configuration for the <code>GraphqlApi</code> object.</p>"
@@ -1313,10 +1525,23 @@
         "EnhancedMetricsConfig$operationLevelMetricsConfig": "<p> Controls how operation metrics will be emitted to CloudWatch. Operation metrics include:</p> <ul> <li> <p>Requests: The number of times a specified GraphQL operation was called.</p> </li> <li> <p>GraphQL errors: The number of GraphQL errors that occurred during a specified GraphQL operation.</p> </li> </ul> <p>Metrics will be recorded by API ID and operation name. You can set the value to <code>ENABLED</code> or <code>DISABLED</code>.</p>"
       }
     },
+    "OutErrors": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$outErrors": "<p>The list of runtime errors that are added to the GraphQL operation response.</p>",
+        "EvaluateMappingTemplateResponse$outErrors": "<p>The list of runtime errors that are added to the GraphQL operation response.</p>"
+      }
+    },
     "OutputType": {
       "base": null,
       "refs": {
         "GetIntrospectionSchemaRequest$format": "<p>The schema format: SDL or JSON.</p>"
+      }
+    },
+    "OwnerContact": {
+      "base": null,
+      "refs": {
+        "Api$ownerContact": "<p>The owner contact information for the <code>Api</code> </p>"
       }
     },
     "Ownership": {
@@ -1332,6 +1557,10 @@
         "GetDataSourceIntrospectionRequest$nextToken": "<p>Determines the number of types to be returned in a single response before paginating. This value is typically taken from <code>nextToken</code> value from the previous response.</p>",
         "ListApiKeysRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
         "ListApiKeysResponse$nextToken": "<p>An identifier to pass in the next request to this operation to return the next set of items in the list.</p>",
+        "ListApisRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
+        "ListApisResponse$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
+        "ListChannelNamespacesRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
+        "ListChannelNamespacesResponse$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
         "ListDataSourcesRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
         "ListDataSourcesResponse$nextToken": "<p>An identifier to pass in the next request to this operation to return the next set of items in the list.</p>",
         "ListDomainNamesRequest$nextToken": "<p>An identifier that was returned from the previous call to this operation, which you can use to return the next set of items in the list.</p>",
@@ -1526,6 +1755,11 @@
         "StartSchemaCreationResponse$status": "<p>The current state of the schema (PROCESSING, FAILED, SUCCESS, or NOT_APPLICABLE). When the schema is in the ACTIVE state, you can add data.</p>"
       }
     },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The operation exceeded the service quota for this resource.</p>",
+      "refs": {
+      }
+    },
     "SourceApiAssociation": {
       "base": "<p>Describes the configuration of a source API. A source API is a GraphQL API that is linked to a merged API. There can be multiple source APIs attached to each merged API. When linked to a merged API, the source API's schema, data sources, and resolvers will be combined with other linked source API data to form a new, singular API. </p> <p>Source APIs can originate from your account or from other accounts via Amazon Web Services Resource Access Manager. For more information about sharing resources from other accounts, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/what-is.html\">What is Amazon Web Services Resource Access Manager?</a> in the <i>Amazon Web Services Resource Access Manager</i> guide.</p>",
       "refs": {
@@ -1595,10 +1829,20 @@
       "refs": {
       }
     },
+    "Stash": {
+      "base": null,
+      "refs": {
+        "EvaluateCodeResponse$stash": "<p>An object available inside each resolver and function handler. A single <code>stash</code> object lives through a single resolver run. Therefore, you can use the stash to pass arbitrary data across request and response handlers and across functions in a pipeline resolver.</p>",
+        "EvaluateMappingTemplateResponse$stash": "<p>An object available inside each resolver and function handler. A single <code>stash</code> object lives through a single resolver run. Therefore, you can use the stash to pass arbitrary data across request and response handlers and across functions in a pipeline resolver.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "Api$apiId": "<p>The <code>Api</code> ID.</p>",
+        "Api$apiArn": "<p>The Amazon Resource Name (ARN) for the <code>Api</code>.</p>",
+        "Api$wafWebAclArn": "<p>The Amazon Resource Name (ARN) of the WAF web access control list (web ACL) associated with this <code>Api</code>, if one exists.</p>",
         "ApiAssociation$apiId": "<p>The API ID.</p>",
         "ApiAssociation$deploymentDetail": "<p>Details about the last deployment status.</p>",
         "ApiKey$id": "<p>The API key ID.</p>",
@@ -1617,14 +1861,22 @@
         "AwsIamConfig$signingRegion": "<p>The signing Amazon Web Services Region for IAM authorization.</p>",
         "AwsIamConfig$signingServiceName": "<p>The signing service name for IAM authorization.</p>",
         "CachingKeys$member": null,
+        "ChannelNamespace$apiId": "<p>The <code>Api</code> ID.</p>",
+        "ChannelNamespace$channelNamespaceArn": "<p>The Amazon Resource Name (ARN) for the <code>ChannelNamespace</code>.</p>",
         "CodeError$errorType": "<p>The type of code error. </p> <p>Examples include, but aren't limited to: <code>LINT_ERROR</code>, <code>PARSER_ERROR</code>.</p>",
         "CodeError$value": "<p>A user presentable error.</p> <p>Examples include, but aren't limited to: <code>Parsing error: Unterminated string literal</code>.</p>",
+        "CognitoConfig$userPoolId": "<p>The user pool ID.</p>",
+        "CognitoConfig$awsRegion": "<p>The Amazon Web Services Region in which the user pool was created.</p>",
+        "CognitoConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID. If this value isn't set, no filtering is applied.</p>",
         "CognitoUserPoolConfig$userPoolId": "<p>The user pool ID.</p>",
         "CognitoUserPoolConfig$awsRegion": "<p>The Amazon Web Services Region in which the user pool was created.</p>",
         "CognitoUserPoolConfig$appIdClientRegex": "<p>A regular expression for validating the incoming Amazon Cognito user pool app client ID. If this value isn't set, no filtering is applied.</p>",
+        "ConflictException$message": null,
         "CreateApiCacheRequest$apiId": "<p>The GraphQL API ID.</p>",
         "CreateApiKeyRequest$apiId": "<p>The ID for your GraphQL API.</p>",
         "CreateApiKeyRequest$description": "<p>A description of the purpose of the API key.</p>",
+        "CreateApiRequest$ownerContact": "<p>The owner contact information for the <code>Api</code>.</p>",
+        "CreateChannelNamespaceRequest$apiId": "<p>The <code>Api</code> ID.</p>",
         "CreateDataSourceRequest$apiId": "<p>The API ID for the GraphQL API for the <code>DataSource</code>.</p>",
         "CreateDataSourceRequest$description": "<p>A description of the <code>DataSource</code>.</p>",
         "CreateDataSourceRequest$serviceRoleArn": "<p>The Identity and Access Management (IAM) service role Amazon Resource Name (ARN) for the data source. The system assumes this role when accessing the data source.</p>",
@@ -1651,6 +1903,8 @@
         "DeleteApiCacheRequest$apiId": "<p>The API ID.</p>",
         "DeleteApiKeyRequest$apiId": "<p>The API ID.</p>",
         "DeleteApiKeyRequest$id": "<p>The ID for the API key.</p>",
+        "DeleteApiRequest$apiId": "<p>The <code>Api</code> ID.</p>",
+        "DeleteChannelNamespaceRequest$apiId": "<p>The ID of the <code>Api</code> associated with the <code>ChannelNamespace</code>.</p>",
         "DeleteDataSourceRequest$apiId": "<p>The API ID.</p>",
         "DeleteFunctionRequest$apiId": "<p>The GraphQL API ID.</p>",
         "DeleteGraphqlApiRequest$apiId": "<p>The API ID.</p>",
@@ -1669,6 +1923,7 @@
         "ElasticsearchDataSourceConfig$awsRegion": "<p>The Amazon Web Services Region.</p>",
         "EvaluateCodeRequest$function": "<p>The function within the code to be evaluated. If provided, the valid values are <code>request</code> and <code>response</code>.</p>",
         "EventBridgeDataSourceConfig$eventBusArn": "<p>The ARN of the event bus. For more information about event buses, see <a href=\"https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus.html\">Amazon EventBridge event buses</a>.</p>",
+        "EventLogConfig$cloudWatchLogsRoleArn": "<p>The IAM service role that AppSync assumes to publish CloudWatch Logs in your account.</p>",
         "FlushApiCacheRequest$apiId": "<p>The API ID.</p>",
         "FunctionConfiguration$functionId": "<p>A unique ID representing the <code>Function</code> object.</p>",
         "FunctionConfiguration$functionArn": "<p>The Amazon Resource Name (ARN) of the <code>Function</code> object.</p>",
@@ -1676,6 +1931,8 @@
         "FunctionConfiguration$functionVersion": "<p>The version of the request mapping template. Currently, only the 2018-05-29 version of the template is supported.</p>",
         "FunctionsIds$member": null,
         "GetApiCacheRequest$apiId": "<p>The API ID.</p>",
+        "GetApiRequest$apiId": "<p>The <code>Api</code> ID.</p>",
+        "GetChannelNamespaceRequest$apiId": "<p>The <code>Api</code> ID.</p>",
         "GetDataSourceIntrospectionRequest$introspectionId": "<p>The introspection ID. Each introspection contains a unique ID that can be used to reference the instrospection record.</p>",
         "GetDataSourceIntrospectionResponse$introspectionId": "<p>The introspection ID. Each introspection contains a unique ID that can be used to reference the instrospection record.</p>",
         "GetDataSourceIntrospectionResponse$introspectionStatusDetail": "<p>The error detail field. When a <code>FAILED</code> <code>introspectionStatus</code> is returned, the <code>introspectionStatusDetail</code> will also return the exact error that was generated during the operation.</p>",
@@ -1704,6 +1961,7 @@
         "LambdaDataSourceConfig$lambdaFunctionArn": "<p>The Amazon Resource Name (ARN) for the Lambda function.</p>",
         "LimitExceededException$message": null,
         "ListApiKeysRequest$apiId": "<p>The API ID.</p>",
+        "ListChannelNamespacesRequest$apiId": "<p>The <code>Api</code> ID.</p>",
         "ListDataSourcesRequest$apiId": "<p>The API ID.</p>",
         "ListFunctionsRequest$apiId": "<p>The GraphQL API ID.</p>",
         "ListResolversByFunctionRequest$apiId": "<p>The API ID.</p>",
@@ -1730,6 +1988,7 @@
         "RdsHttpEndpointConfig$schema": "<p>Logical schema name.</p>",
         "RdsHttpEndpointConfig$awsSecretStoreArn": "<p>Amazon Web Services secret store Amazon Resource Name (ARN) for database credentials.</p>",
         "Resolver$resolverArn": "<p>The resolver Amazon Resource Name (ARN).</p>",
+        "ServiceQuotaExceededException$message": null,
         "SourceApiAssociation$associationId": "<p>The ID generated by the AppSync service for the source API association.</p>",
         "SourceApiAssociation$associationArn": "<p>The Amazon Resource Name (ARN) of the source API association.</p>",
         "SourceApiAssociation$sourceApiId": "<p>The ID of the AppSync source API.</p>",
@@ -1758,6 +2017,9 @@
         "UpdateApiKeyRequest$apiId": "<p>The ID for the GraphQL API.</p>",
         "UpdateApiKeyRequest$id": "<p>The API key ID.</p>",
         "UpdateApiKeyRequest$description": "<p>A description of the purpose of the API key.</p>",
+        "UpdateApiRequest$apiId": "<p>The <code>Api</code> ID.</p>",
+        "UpdateApiRequest$ownerContact": "<p>The owner contact information for the <code>Api</code>.</p>",
+        "UpdateChannelNamespaceRequest$apiId": "<p>The <code>Api</code> ID.</p>",
         "UpdateDataSourceRequest$apiId": "<p>The API ID.</p>",
         "UpdateDataSourceRequest$description": "<p>The new description for the data source.</p>",
         "UpdateDataSourceRequest$serviceRoleArn": "<p>The new service role Amazon Resource Name (ARN) for the data source.</p>",
@@ -1812,6 +2074,10 @@
     "TagMap": {
       "base": "<p>A map with keys of <code>TagKey</code> objects and values of <code>TagValue</code> objects.</p>",
       "refs": {
+        "Api$tags": null,
+        "ChannelNamespace$tags": null,
+        "CreateApiRequest$tags": null,
+        "CreateChannelNamespaceRequest$tags": null,
         "CreateGraphqlApiRequest$tags": "<p>A <code>TagMap</code> object.</p>",
         "GraphqlApi$tags": "<p>The tags.</p>",
         "ListTagsForResourceResponse$tags": "<p>A <code>TagMap</code> object.</p>",
@@ -1838,6 +2104,14 @@
       "base": null,
       "refs": {
         "EvaluateMappingTemplateRequest$template": "<p>The mapping template; this can be a request or response template. A <code>template</code> is required for this action.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "Api$created": "<p>The date and time that the <code>Api</code> was created.</p>",
+        "ChannelNamespace$created": "<p>The date and time that the <code>ChannelNamespace</code> was created.</p>",
+        "ChannelNamespace$lastModified": "<p>The date and time that the <code>ChannelNamespace</code> was last changed.</p>"
       }
     },
     "Type": {
@@ -1898,6 +2172,26 @@
       }
     },
     "UpdateApiKeyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateApiRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateApiResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateChannelNamespaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateChannelNamespaceResponse": {
       "base": null,
       "refs": {
       }

@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-08-22",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"thinclient",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -539,7 +540,9 @@
     },
     "DeviceName":{
       "type":"string",
-      "pattern":"[0-9\\p{IsAlphabetic}+:,.@'\" -]{1,64}",
+      "max":64,
+      "min":0,
+      "pattern":"$|^[0-9\\p{IsAlphabetic}+:,.@'\" -]*",
       "sensitive":true
     },
     "DeviceSoftwareSetComplianceStatus":{
@@ -614,7 +617,9 @@
     },
     "EnvironmentName":{
       "type":"string",
-      "pattern":"[0-9\\p{IsAlphabetic}+:,.@'\" -][0-9\\p{IsAlphabetic}+=:,.@'\" -]{0,63}",
+      "max":64,
+      "min":0,
+      "pattern":"$|^[0-9\\p{IsAlphabetic}+:,.@'\" -][0-9\\p{IsAlphabetic}+=:,.@'\" -]*",
       "sensitive":true
     },
     "EnvironmentSoftwareSetComplianceStatus":{
@@ -812,6 +817,7 @@
     },
     "MaintenanceWindow":{
       "type":"structure",
+      "required":["type"],
       "members":{
         "type":{"shape":"MaintenanceWindowType"},
         "startTimeHour":{"shape":"Hour"},

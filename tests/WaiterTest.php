@@ -2,12 +2,16 @@
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
+use Aws\AwsClientInterface;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
+use Aws\MetricsBuilder;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Waiter;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -23,6 +27,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
+    use MetricsBuilderTestTrait;
 
     public function testErrorOnBadConfig()
     {
@@ -399,5 +404,159 @@ class WaiterTest extends TestCase
         }
 
         return new Result($data + ['@metadata' => ['statusCode' => 200]]);
+    }
+
+
+    /**
+     * Tests the waiter expects not error.
+     * This means the operation should succeed.
+     *
+     * @return void
+     */
+    public function testWaiterMatcherExpectNoError(): void
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $_) {
+                $responseBody = <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?><Operation></Operation>
+EOXML;
+                return new Response(200, [], $responseBody);
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'fuzz',
+            'Key' => 'bazz'
+        ];
+        $acceptors = [
+            [
+                'expected' => false,
+                'matcher' => 'error',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headObject',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()
+            ->then(function (CommandInterface $_) {
+                $this->assertTrue(true); // Waiter succeeded
+            })->wait();
+    }
+
+    /**
+     * Tests the waiter should receive an error.
+     * This means the operation should fail.
+     *
+     * @return void
+     */
+    public function testWaiterMatcherExpectsAnyError(): void
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $responseBody = <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?><Operation></Operation>
+EOXML;
+                $response = new Response(200, [], $responseBody);
+                return new RejectedPromise([
+                    'connection_error' => true,
+                    'exception' => new RequestException(
+                        'Error',
+                        $request,
+                        $response
+                    ),
+                ]);
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'fuzz',
+            'Key' => 'bazz'
+        ];
+        $acceptors = [
+            [
+                'expected' => true,
+                'matcher' => 'error',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headObject',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()
+            ->then(function (CommandInterface $_) {
+                $this->assertTrue(true); // Waiter succeeded
+            })->wait();
+    }
+
+    public function testAppendsMetricsCaptureMiddleware()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::WAITER,
+                        $this->getMetricsAsArray($request)
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'foo'
+        ];
+        $acceptors = [
+            [
+                'expected' => 200,
+                'matcher' => 'status',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headBucket',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()->wait();
+    }
+
+    /**
+     * Creates a test waiter.
+     *
+     * @param string $operation
+     * @param array $commandArgs
+     * @param AwsClientInterface $client
+     *
+     * @return Waiter
+     */
+    private function getTestWaiter(
+        array $acceptors,
+        string $operation,
+        array $commandArgs,
+        AwsClientInterface $client
+    ): Waiter
+    {
+        $waiterConfig = [
+            'delay' => 5,
+            'operation' => $operation,
+            'maxAttempts' => 20,
+            'acceptors' => $acceptors
+        ];
+
+        return new Waiter(
+            $client,
+            'waiter-' . $operation,
+            $commandArgs,
+            $waiterConfig
+        );
     }
 }

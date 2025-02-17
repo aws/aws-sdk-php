@@ -149,6 +149,27 @@
         "title": "Example: Delete service"
       }
     ],
+    "DeleteServiceAttributes": [
+      {
+        "input": {
+          "Attributes": [
+            "port"
+          ],
+          "ServiceId": "srv-e4anhexample0004"
+        },
+        "output": {
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Example: Delete service attribute by providing attribute key and service ID",
+        "id": "example-delete-service-attributes-1587416462902",
+        "title": "DeleteServiceAttributes example"
+      }
+    ],
     "DeregisterInstance": [
       {
         "input": {
@@ -365,6 +386,30 @@
         "description": "This example gets the settings for a specified service.",
         "id": "getservice-example-1590117234294",
         "title": "GetService Example"
+      }
+    ],
+    "GetServiceAttributes": [
+      {
+        "input": {
+          "ServiceId": "srv-e4anhexample0004"
+        },
+        "output": {
+          "ServiceAttributes": {
+            "Attributes": {
+              "port": "80"
+            },
+            "ServiceArn": "arn:aws:servicediscovery:us-west-2:123456789012:service/srv-e4anhexample0004"
+          }
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example gets the attributes for a specified service.",
+        "id": "get-service-attributes-example-1590117234294",
+        "title": "GetServiceAttributes Example"
       }
     ],
     "ListInstances": [
@@ -686,27 +731,6 @@
           "UpdaterRequestId": ""
         },
         "output": {
-          "OperationId": "ft52xe2koxhoeormaceymagglsdjyvEXAMPLE"
-        },
-        "comments": {
-          "input": {
-          },
-          "output": {
-          }
-        },
-        "description": "The following example updates the description of a private DNS namespace.",
-        "id": "to-update-a-private-dns-namespace-1712868389604",
-        "title": "To update a private DNS namespace"
-      },
-      {
-        "input": {
-          "Id": "ns-bk3aEXAMPLE",
-          "Namespace": {
-            "Description": "The updated namespace description."
-          },
-          "UpdaterRequestId": ""
-        },
-        "output": {
           "OperationId": "ft52xe2koxhoeormaceymagglsdjEXAMPLE"
         },
         "comments": {
@@ -718,6 +742,27 @@
         "description": "The following example updates the description of a public DNS namespace.",
         "id": "to-update-a-public-dns-namespace-1712868389604",
         "title": "To update a public DNS namespace"
+      },
+      {
+        "input": {
+          "Id": "ns-bk3aEXAMPLE",
+          "Namespace": {
+            "Description": "The updated namespace description."
+          },
+          "UpdaterRequestId": ""
+        },
+        "output": {
+          "OperationId": "ft52xe2koxhoeormaceymagglsdjyvEXAMPLE"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "The following example updates the description of a private DNS namespace.",
+        "id": "to-update-a-private-dns-namespace-1712868389604",
+        "title": "To update a private DNS namespace"
       }
     ],
     "UpdateService": [
@@ -752,6 +797,27 @@
         "description": "This example submits a request to replace the DnsConfig and HealthCheckConfig settings of a specified service.",
         "id": "updateservice-example-1590117830880",
         "title": "UpdateService Example"
+      }
+    ],
+    "UpdateServiceAttributes": [
+      {
+        "input": {
+          "Attributes": {
+            "port": "80"
+          },
+          "ServiceId": "srv-e4anhexample0004"
+        },
+        "output": {
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "This example submits a request to update the specified service to add a port attribute with the value 80.",
+        "id": "update-service-attributes-example-1590117830880",
+        "title": "UpdateServiceAttributes Example"
       }
     ]
   }
