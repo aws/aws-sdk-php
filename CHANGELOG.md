@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.16 - 2025-02-18
 
 * `Aws\EMRContainers` - EMR on EKS StartJobRun Api will be supporting the configuration of log storage in AWS by using "managedLogs" under "MonitoringConfiguration".
 * `Aws\Batch` - This documentation-only update corrects some typos.
