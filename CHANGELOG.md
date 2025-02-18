@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMRContainers` - EMR on EKS StartJobRun Api will be supporting the configuration of log storage in AWS by using "managedLogs" under "MonitoringConfiguration".
+* `Aws\Batch` - This documentation-only update corrects some typos.
+* `Aws\MediaLive` - Adds support for creating CloudWatchAlarmTemplates for AWS Elemental MediaTailor Playback Configuration resources.
+
 ## 3.339.15 - 2025-02-17
 
 * `Aws\TimestreamInfluxDB` - This release introduces APIs to manage DbClusters and adds support for read replicas

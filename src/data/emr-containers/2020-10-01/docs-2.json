@@ -35,6 +35,12 @@
         "Endpoint$certificateArn": "<p>The certificate ARN of the endpoint. This field is under deprecation and will be removed in future.</p>"
       }
     },
+    "AllowAWSToRetainLogs": {
+      "base": null,
+      "refs": {
+        "ManagedLogs$allowAWSToRetainLogs": "<p>Determines whether Amazon Web Services can retain logs.</p>"
+      }
+    },
     "AuthorizationConfiguration": {
       "base": "<p>Authorization-related configuration inputs for the security configuration.</p>",
       "refs": {
@@ -511,7 +517,8 @@
       "base": null,
       "refs": {
         "CreateJobTemplateRequest$kmsKeyArn": "<p>The KMS key ARN used to encrypt the job template.</p>",
-        "JobTemplate$kmsKeyArn": "<p> The KMS key ARN used to encrypt the job template.</p>"
+        "JobTemplate$kmsKeyArn": "<p> The KMS key ARN used to encrypt the job template.</p>",
+        "ManagedLogs$encryptionKeyArn": "<p>The Amazon resource name (ARN) of the encryption key for logs.</p>"
       }
     },
     "KubernetesNamespace": {
@@ -597,6 +604,12 @@
       "base": null,
       "refs": {
         "CloudWatchMonitoringConfiguration$logGroupName": "<p>The name of the log group for log publishing.</p>"
+      }
+    },
+    "ManagedLogs": {
+      "base": "<p>The entity that provides configuration control over managed logs.</p>",
+      "refs": {
+        "MonitoringConfiguration$managedLogs": "<p>The entity that controls configuration for managed logs.</p>"
       }
     },
     "MaxFilesToKeep": {
