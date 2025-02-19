@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.17 - 2025-02-19
 
 * `Aws\` - When doing a putObject request and the body is provided with the `SourceFile` parameter then, internally a lazy open stream is created in order to populate the body of the request. This change makes sure that created stream is closed after request completion.
 * `Aws\CodePipeline` - Add environment variables to codepipeline action declaration.
