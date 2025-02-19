@@ -70,6 +70,7 @@
     "PutAccountSendingAttributes": "<p>Enable or disable the ability of your account to send email.</p>",
     "PutAccountSuppressionAttributes": "<p>Change the settings for the account-level suppression list.</p>",
     "PutAccountVdmAttributes": "<p>Update your Amazon SES account VDM attributes.</p> <p>You can execute this operation no more than once per second.</p>",
+    "PutConfigurationSetArchivingOptions": "<p>Associate the configuration set with a MailManager archive. When you send email using the <code>SendEmail</code> or <code>SendBulkEmail</code> operations the message as it will be given to the receiving SMTP server will be archived, along with the recipient information.</p>",
     "PutConfigurationSetDeliveryOptions": "<p>Associate a configuration set with a dedicated IP pool. You can use dedicated IP pools to create groups of dedicated IP addresses for sending specific types of email.</p>",
     "PutConfigurationSetReputationOptions": "<p>Enable or disable collection of reputation metrics for emails that you send using a particular configuration set in a specific Amazon Web Services Region.</p>",
     "PutConfigurationSetSendingOptions": "<p>Enable or disable email sending for messages that use a particular configuration set in a specific Amazon Web Services Region.</p>",
@@ -152,6 +153,20 @@
         "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to add one or more tags to.</p>",
         "Template$TemplateArn": "<p>The Amazon Resource Name (ARN) of the template.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to remove one or more tags from.</p>"
+      }
+    },
+    "ArchiveArn": {
+      "base": null,
+      "refs": {
+        "ArchivingOptions$ArchiveArn": "<p>The Amazon Resource Name (ARN) of the MailManager archive where the Amazon SES API v2 will archive sent emails.</p>",
+        "PutConfigurationSetArchivingOptionsRequest$ArchiveArn": "<p>The Amazon Resource Name (ARN) of the MailManager archive that the Amazon SES API v2 sends email to.</p>"
+      }
+    },
+    "ArchivingOptions": {
+      "base": "<p>Used to associate a configuration set with a MailManager archive.</p>",
+      "refs": {
+        "CreateConfigurationSetRequest$ArchivingOptions": "<p>An object that defines the MailManager archiving options for emails that you send using the configuration set.</p>",
+        "GetConfigurationSetResponse$ArchivingOptions": "<p>An object that defines the MailManager archive where sent emails are archived that you send using the configuration set.</p>"
       }
     },
     "AttributesData": {
@@ -377,6 +392,7 @@
         "GetConfigurationSetRequest$ConfigurationSetName": "<p>The name of the configuration set.</p>",
         "GetConfigurationSetResponse$ConfigurationSetName": "<p>The name of the configuration set.</p>",
         "GetEmailIdentityResponse$ConfigurationSetName": "<p>The configuration set used by default when sending from this identity.</p>",
+        "PutConfigurationSetArchivingOptionsRequest$ConfigurationSetName": "<p>The name of the configuration set to associate with a MailManager archive.</p>",
         "PutConfigurationSetDeliveryOptionsRequest$ConfigurationSetName": "<p>The name of the configuration set to associate with a dedicated IP pool.</p>",
         "PutConfigurationSetReputationOptionsRequest$ConfigurationSetName": "<p>The name of the configuration set.</p>",
         "PutConfigurationSetSendingOptionsRequest$ConfigurationSetName": "<p>The name of the configuration set to enable or disable email sending for.</p>",
@@ -2001,7 +2017,7 @@
       }
     },
     "ListRecommendationsFilterKey": {
-      "base": "<p>The <code>ListRecommendations</code> filter type. This can be one of the following:</p> <ul> <li> <p> <code>TYPE</code> – The recommendation type, with values like <code>DKIM</code>, <code>SPF</code>, <code>DMARC</code> or <code>BIMI</code>.</p> </li> <li> <p> <code>IMPACT</code> – The recommendation impact, with values like <code>HIGH</code> or <code>LOW</code>.</p> </li> <li> <p> <code>STATUS</code> – The recommendation status, with values like <code>OPEN</code> or <code>FIXED</code>.</p> </li> <li> <p> <code>RESOURCE_ARN</code> – The resource affected by the recommendation, with values like <code>arn:aws:ses:us-east-1:123456789012:identity/example.com</code>.</p> </li> </ul>",
+      "base": "<p>The <code>ListRecommendations</code> filter type. This can be one of the following:</p> <ul> <li> <p> <code>TYPE</code> – The recommendation type, with values like <code>DKIM</code>, <code>SPF</code>, <code>DMARC</code>, <code>BIMI</code>, or <code>COMPLAINT</code>.</p> </li> <li> <p> <code>IMPACT</code> – The recommendation impact, with values like <code>HIGH</code> or <code>LOW</code>.</p> </li> <li> <p> <code>STATUS</code> – The recommendation status, with values like <code>OPEN</code> or <code>FIXED</code>.</p> </li> <li> <p> <code>RESOURCE_ARN</code> – The resource affected by the recommendation, with values like <code>arn:aws:ses:us-east-1:123456789012:identity/example.com</code>.</p> </li> </ul>",
       "refs": {
         "ListRecommendationsFilter$key": null
       }
@@ -2496,6 +2512,16 @@
       "refs": {
       }
     },
+    "PutConfigurationSetArchivingOptionsRequest": {
+      "base": "<p>A request to associate a configuration set with a MailManager archive.</p>",
+      "refs": {
+      }
+    },
+    "PutConfigurationSetArchivingOptionsResponse": {
+      "base": "<p>An HTTP 200 response if the request succeeds, or an error message if the request fails.</p>",
+      "refs": {
+      }
+    },
     "PutConfigurationSetDeliveryOptionsRequest": {
       "base": "<p>A request to associate a configuration set with a dedicated IP pool.</p>",
       "refs": {
@@ -2721,7 +2747,7 @@
     "RecommendationType": {
       "base": null,
       "refs": {
-        "Recommendation$Type": "<p>The recommendation type, with values like <code>DKIM</code>, <code>SPF</code>, <code>DMARC</code> or <code>BIMI</code>.</p>"
+        "Recommendation$Type": "<p>The recommendation type, with values like <code>DKIM</code>, <code>SPF</code>, <code>DMARC</code>, <code>BIMI</code>, or <code>COMPLAINT</code>.</p>"
       }
     },
     "RecommendationsList": {
@@ -3329,7 +3355,7 @@
     "VerificationError": {
       "base": null,
       "refs": {
-        "VerificationInfo$ErrorType": "<p>Provides the reason for the failure describing why Amazon SES was not able to successfully verify the identity. Below are the possible values: </p> <ul> <li> <p> <code>INVALID_VALUE</code> – Amazon SES was able to find the record, but the value contained within the record was invalid. Ensure you have published the correct values for the record.</p> </li> <li> <p> <code>TYPE_NOT_FOUND</code> – The queried hostname exists but does not have the requested type of DNS record. Ensure that you have published the correct type of DNS record.</p> </li> <li> <p> <code>HOST_NOT_FOUND</code> – The queried hostname does not exist or was not reachable at the time of the request. Ensure that you have published the required DNS record(s). </p> </li> <li> <p> <code>SERVICE_ERROR</code> – A temporary issue is preventing Amazon SES from determining the verification status of the domain.</p> </li> <li> <p> <code>DNS_SERVER_ERROR</code> – The DNS server encountered an issue and was unable to complete the request.</p> </li> <li> <p> <code>REPLICATION_ACCESS_DENIED</code> – The verification failed because the user does not have the required permissions to replicate the DKIM key from the primary region. Ensure you have the necessary permissions in both primary and replica regions. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_NOT_FOUND</code> – The verification failed because no corresponding identity was found in the specified primary region. Ensure the identity exists in the primary region before attempting replication. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_BYO_DKIM_NOT_SUPPORTED</code> – The verification failed because the identity in the primary region is configured with Bring Your Own DKIM (BYODKIM). DKIM key replication is only supported for identities using Easy DKIM. </p> </li> <li> <p> <code>REPLICATION_REPLICA_AS_PRIMARY_NOT_SUPPORTED</code> – The verification failed because the specified primary identity is a replica of another identity, and multi-level replication is not supported; the primary identity must be a non-replica identity. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_INVALID_REGION</code> – The verification failed due to an invalid primary region specified. Ensure you provide a valid AWS region where Amazon SES is available and different from the replica region. </p> </li> </ul>"
+        "VerificationInfo$ErrorType": "<p>Provides the reason for the failure describing why Amazon SES was not able to successfully verify the identity. Below are the possible values: </p> <ul> <li> <p> <code>INVALID_VALUE</code> – Amazon SES was able to find the record, but the value contained within the record was invalid. Ensure you have published the correct values for the record.</p> </li> <li> <p> <code>TYPE_NOT_FOUND</code> – The queried hostname exists but does not have the requested type of DNS record. Ensure that you have published the correct type of DNS record.</p> </li> <li> <p> <code>HOST_NOT_FOUND</code> – The queried hostname does not exist or was not reachable at the time of the request. Ensure that you have published the required DNS record(s). </p> </li> <li> <p> <code>SERVICE_ERROR</code> – A temporary issue is preventing Amazon SES from determining the verification status of the domain.</p> </li> <li> <p> <code>DNS_SERVER_ERROR</code> – The DNS server encountered an issue and was unable to complete the request.</p> </li> <li> <p> <code>REPLICATION_ACCESS_DENIED</code> – The verification failed because the user does not have the required permissions to replicate the DKIM key from the primary region. Ensure you have the necessary permissions in both primary and replica regions. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_NOT_FOUND</code> – The verification failed because no corresponding identity was found in the specified primary region. Ensure the identity exists in the primary region before attempting replication. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_BYO_DKIM_NOT_SUPPORTED</code> – The verification failed because the identity in the primary region is configured with Bring Your Own DKIM (BYODKIM). DKIM key replication is only supported for identities using Easy DKIM. </p> </li> <li> <p> <code>REPLICATION_REPLICA_AS_PRIMARY_NOT_SUPPORTED</code> – The verification failed because the specified primary identity is a replica of another identity, and multi-level replication is not supported; the primary identity must be a non-replica identity. </p> </li> <li> <p> <code>REPLICATION_PRIMARY_INVALID_REGION</code> – The verification failed due to an invalid primary region specified. Ensure you provide a valid Amazon Web Services region where Amazon SES is available and different from the replica region. </p> </li> </ul>"
       }
     },
     "VerificationInfo": {

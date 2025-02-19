@@ -1968,7 +1968,7 @@
       "base": null,
       "refs": {
         "Metadata$SenderIpAddress": "<p>The IP address of the host from which the email was received.</p>",
-        "Row$SenderIpAddress": "<p>The IP address of the host from which the email was received.</p>"
+        "Row$SenderIpAddress": "<ul> <li> <p>Mail archived with Mail Manager: The IP address of the client that connects to the ingress endpoint.</p> </li> <li> <p>Mail sent through a configuration set with the archiving option enabled: The IP address of the client that makes the SendEmail API call.</p> </li> </ul>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -2052,7 +2052,12 @@
         "IngressPointPasswordConfiguration$SmtpPasswordVersion": "<p>The current password expiry timestamp of the ingress endpoint resource.</p>",
         "MessageBody$Html": "<p>The HTML body content of the message.</p>",
         "MessageBody$Text": "<p>The plain text body content of the message.</p>",
+        "Metadata$ConfigurationSet": "<p>The name of the configuration set used when sent through a configuration set with archiving enabled.</p>",
         "Metadata$SenderHostname": "<p>The name of the host from which the email was received.</p>",
+        "Metadata$SendingMethod": "<p>The name of the API call used when sent through a configuration set with archiving enabled.</p>",
+        "Metadata$SendingPool": "<p>The name of the dedicated IP pool used when sent through a configuration set with archiving enabled.</p>",
+        "Metadata$SourceArn": "<p>Specifies the archived email source, identified by either a Rule Set's ARN with an Archive action, or a Configuration Set's Archive ARN.</p>",
+        "Metadata$SourceIdentity": "<p>The identity name used to authorize the sending action when sent through a configuration set with archiving enabled.</p>",
         "Metadata$TlsCipherSuite": "<p>The TLS cipher suite used to communicate with the host from which the email was received.</p>",
         "Metadata$TlsProtocol": "<p>The TLS protocol used to communicate with the host from which the email was received.</p>",
         "Row$Cc": "<p>The email addresses in the CC header.</p>",
@@ -2061,6 +2066,7 @@
         "Row$InReplyTo": "<p>The email message ID this is a reply to.</p>",
         "Row$MessageId": "<p>The unique message ID of the email.</p>",
         "Row$SenderHostname": "<p>The name of the host from which the email was received.</p>",
+        "Row$SourceArn": "<p>Specifies the archived email source, identified by either a Rule Set's ARN with an Archive action, or a Configuration Set's Archive ARN.</p>",
         "Row$Subject": "<p>The subject header value of the email.</p>",
         "Row$To": "<p>The email addresses in the To header.</p>",
         "Row$XMailer": "<p>The user agent that sent the email.</p>",

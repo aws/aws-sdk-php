@@ -803,7 +803,8 @@
         "roleArn":{"shape":"RoleArn"},
         "region":{"shape":"AWSRegionName"},
         "namespace":{"shape":"ActionNamespace"},
-        "timeoutInMinutes":{"shape":"ActionTimeout"}
+        "timeoutInMinutes":{"shape":"ActionTimeout"},
+        "environmentVariables":{"shape":"EnvironmentVariableList"}
       }
     },
     "ActionExecution":{
@@ -1560,6 +1561,35 @@
     "EncryptionKeyType":{
       "type":"string",
       "enum":["KMS"]
+    },
+    "EnvironmentVariable":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"EnvironmentVariableName"},
+        "value":{"shape":"EnvironmentVariableValue"}
+      }
+    },
+    "EnvironmentVariableList":{
+      "type":"list",
+      "member":{"shape":"EnvironmentVariable"},
+      "max":10,
+      "min":1
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*"
     },
     "ErrorDetails":{
       "type":"structure",

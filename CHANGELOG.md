@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - When doing a putObject request and the body is provided with the `SourceFile` parameter then, internally a lazy open stream is created in order to populate the body of the request. This change makes sure that created stream is closed after request completion.
+* `Aws\CodePipeline` - Add environment variables to codepipeline action declaration.
+* `Aws\SESv2` - This release adds the ability for outbound email sent with SES to preserve emails to a Mail Manager archive.
+* `Aws\Lightsail` - Documentation updates for Amazon Lightsail.
+* `Aws\LocationService` - Adds support for larger property maps for tracking and geofence positions changes. It increases the maximum number of items from 3 to 4, and the maximum value length from 40 to 150.
+* `Aws\ECS` - This is a documentation only release for Amazon ECS that supports the CPU task limit increase.
+* `Aws\SageMaker` - Adds r8g instance type support to SageMaker Realtime Endpoints
+* `Aws\MailManager` - This release adds additional metadata fields in Mail Manager archive searches to show email source and details about emails that were archived when being sent with SES.
+* `Aws\NetworkFirewall` - This release introduces Network Firewall's Automated Domain List feature. New APIs include UpdateFirewallAnalysisSettings, StartAnalysisReport, GetAnalysisReportResults, and ListAnalysisReports. These allow customers to enable analysis on firewalls to identify and report frequently accessed domain.
+
 ## 3.339.16 - 2025-02-18
 
 * `Aws\EMRContainers` - EMR on EKS StartJobRun Api will be supporting the configuration of log storage in AWS by using "managedLogs" under "MonitoringConfiguration".

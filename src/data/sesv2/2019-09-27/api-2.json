@@ -984,6 +984,21 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "PutConfigurationSetArchivingOptions":{
+      "name":"PutConfigurationSetArchivingOptions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/configuration-sets/{ConfigurationSetName}/archiving-options"
+      },
+      "input":{"shape":"PutConfigurationSetArchivingOptionsRequest"},
+      "output":{"shape":"PutConfigurationSetArchivingOptionsResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
+    },
     "PutConfigurationSetDeliveryOptions":{
       "name":"PutConfigurationSetDeliveryOptions",
       "http":{
@@ -1440,6 +1455,18 @@
       "exception":true
     },
     "AmazonResourceName":{"type":"string"},
+    "ArchiveArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:(aws|aws-[a-z-]+):ses:[a-z]{2}-[a-z-]+-[0-9]:[0-9]{1,20}:mailmanager-archive/a-[a-z0-9]{24,62}"
+    },
+    "ArchivingOptions":{
+      "type":"structure",
+      "members":{
+        "ArchiveArn":{"shape":"ArchiveArn"}
+      }
+    },
     "AttributesData":{"type":"string"},
     "BadRequestException":{
       "type":"structure",
@@ -1748,7 +1775,8 @@
         "SendingOptions":{"shape":"SendingOptions"},
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
-        "VdmOptions":{"shape":"VdmOptions"}
+        "VdmOptions":{"shape":"VdmOptions"},
+        "ArchivingOptions":{"shape":"ArchivingOptions"}
       }
     },
     "CreateConfigurationSetResponse":{
@@ -2775,7 +2803,8 @@
         "SendingOptions":{"shape":"SendingOptions"},
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
-        "VdmOptions":{"shape":"VdmOptions"}
+        "VdmOptions":{"shape":"VdmOptions"},
+        "ArchivingOptions":{"shape":"ArchivingOptions"}
       }
     },
     "GetContactListRequest":{
@@ -4141,6 +4170,23 @@
       }
     },
     "PutAccountVdmAttributesResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "PutConfigurationSetArchivingOptionsRequest":{
+      "type":"structure",
+      "required":["ConfigurationSetName"],
+      "members":{
+        "ConfigurationSetName":{
+          "shape":"ConfigurationSetName",
+          "location":"uri",
+          "locationName":"ConfigurationSetName"
+        },
+        "ArchiveArn":{"shape":"ArchiveArn"}
+      }
+    },
+    "PutConfigurationSetArchivingOptionsResponse":{
       "type":"structure",
       "members":{
       }
