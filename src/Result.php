@@ -23,7 +23,7 @@ class Result implements ResultInterface, MonitoringEventsInterface
 
     public function get($key)
     {
-        return $this[$key];
+        return $this->$key;
     }
 
     public function search($expression)
