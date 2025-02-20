@@ -30,9 +30,6 @@ class Service extends AbstractModel
     /** @var boolean */
     private $modifiedModel = false;
 
-    /** @var string */
-    private $protocol;
-
     /**
      * @param array    $definition
      * @param callable $provider
@@ -72,8 +69,6 @@ class Service extends AbstractModel
         if (isset($definition['clientContextParams'])) {
            $this->clientContextParams = $definition['clientContextParams'];
         }
-
-        $this->protocol = $this->selectProtocol($definition);
     }
 
     /**
@@ -246,7 +241,7 @@ class Service extends AbstractModel
      */
     public function getProtocol()
     {
-        return $this->protocol;
+        return $this->definition['metadata']['protocol'];
     }
 
     /**
@@ -537,27 +532,5 @@ class Service extends AbstractModel
     public function isModifiedModel()
     {
         return $this->modifiedModel;
-    }
-
-    /**
-     * Accepts a priority-ordered list of protocols derived from the service model.
-     * Returns the first compatible auth scheme is the `protocols` trait is present.
-     * Otherwise, returns the value of the `protocol` field, if set, or null.
-     *
-     * @param array $definition
-     *
-     * @return string|null
-     */
-    private function selectProtocol(array $definition): string | null
-    {
-        if (!empty($definition['metadata']['protocols'])) {
-            foreach($definition['metadata']['protocols'] as $protocol) {
-                if (SupportedProtocols::isSupported($protocol)) {
-                    return $protocol;
-                }
-            }
-        }
-
-        return $definition['metadata']['protocol'] ?? null;
     }
 }
