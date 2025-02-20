@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.18 - 2025-02-20
 
 * `Aws\LicenseManagerUserSubscriptions` - Updates entity to include Microsoft RDS SAL as a valid type of user subscription.
 * `Aws\GuardDuty` - Reduce the minimum number of required attack sequence signals from 2 to 1
