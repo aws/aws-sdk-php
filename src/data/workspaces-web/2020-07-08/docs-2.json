@@ -983,6 +983,12 @@
         "InlineRedactionConfiguration$globalExemptUrls": "<p>The global exempt URL configuration for the inline redaction configuration. This is applied to patterns that do not have a pattern-level exempt URL list.</p>"
       }
     },
+    "HiddenToolbarItemList": {
+      "base": null,
+      "refs": {
+        "ToolbarConfiguration$hiddenToolbarItems": "<p>The list of toolbar items to be hidden.</p>"
+      }
+    },
     "IdentityProvider": {
       "base": "<p>The identity provider.</p>",
       "refs": {
@@ -1272,6 +1278,12 @@
         "Portal$maxConcurrentSessions": "<p>The maximum number of concurrent sessions for the portal.</p>",
         "PortalSummary$maxConcurrentSessions": "<p>The maximum number of concurrent sessions for the portal.</p>",
         "UpdatePortalRequest$maxConcurrentSessions": "<p>The maximum number of concurrent sessions for the portal.</p>"
+      }
+    },
+    "MaxDisplayResolution": {
+      "base": null,
+      "refs": {
+        "ToolbarConfiguration$maxDisplayResolution": "<p>The maximum display resolution that is allowed for the session.</p>"
       }
     },
     "MaxResults": {
@@ -1651,6 +1663,27 @@
       "refs": {
       }
     },
+    "ToolbarConfiguration": {
+      "base": "<p>The configuration of the toolbar. This allows administrators to select the toolbar type and visual mode, set maximum display resolution for sessions, and choose which items are visible to end users during their sessions. If administrators do not modify these settings, end users retain control over their toolbar preferences.</p>",
+      "refs": {
+        "CreateUserSettingsRequest$toolbarConfiguration": "<p>The configuration of the toolbar. This allows administrators to select the toolbar type and visual mode, set maximum display resolution for sessions, and choose which items are visible to end users during their sessions. If administrators do not modify these settings, end users retain control over their toolbar preferences.</p>",
+        "UpdateUserSettingsRequest$toolbarConfiguration": "<p>The configuration of the toolbar. This allows administrators to select the toolbar type and visual mode, set maximum display resolution for sessions, and choose which items are visible to end users during their sessions. If administrators do not modify these settings, end users retain control over their toolbar preferences.</p>",
+        "UserSettings$toolbarConfiguration": "<p>The configuration of the toolbar. This allows administrators to select the toolbar type and visual mode, set maximum display resolution for sessions, and choose which items are visible to end users during their sessions. If administrators do not modify these settings, end users retain control over their toolbar preferences.</p>",
+        "UserSettingsSummary$toolbarConfiguration": "<p>The configuration of the toolbar. This allows administrators to select the toolbar type and visual mode, set maximum display resolution for sessions, and choose which items are visible to end users during their sessions. If administrators do not modify these settings, end users retain control over their toolbar preferences.</p>"
+      }
+    },
+    "ToolbarItem": {
+      "base": null,
+      "refs": {
+        "HiddenToolbarItemList$member": null
+      }
+    },
+    "ToolbarType": {
+      "base": null,
+      "refs": {
+        "ToolbarConfiguration$toolbarType": "<p>The type of toolbar displayed during the session.</p>"
+      }
+    },
     "TrustStore": {
       "base": "<p>A trust store that can be associated with a web portal. A trust store contains certificate authority (CA) certificates. Once associated with a web portal, the browser in a streaming session will recognize certificates that have been issued using any of the CAs in the trust store. If your organization has internal websites that use certificates issued by private CAs, you should add the private CA certificate to the trust store. </p>",
       "refs": {
@@ -1836,6 +1869,12 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>Reason the request failed validation</p>"
+      }
+    },
+    "VisualMode": {
+      "base": null,
+      "refs": {
+        "ToolbarConfiguration$visualMode": "<p>The visual mode of the toolbar.</p>"
       }
     },
     "VpcId": {

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LicenseManagerUserSubscriptions` - Updates entity to include Microsoft RDS SAL as a valid type of user subscription.
+* `Aws\GuardDuty` - Reduce the minimum number of required attack sequence signals from 2 to 1
+* `Aws\RDS` - CloudWatch Database Insights now supports Amazon RDS.
+* `Aws\CodeBuild` - Add webhook status and status message to AWS CodeBuild webhooks
+* `Aws\WorkSpacesWeb` - Add support for toolbar configuration under user settings.
+* `Aws\SageMaker` - Added new capability in the UpdateCluster operation to remove instance groups from your SageMaker HyperPod cluster.
+
 ## 3.339.17 - 2025-02-19
 
 * `Aws\` - When doing a putObject request and the body is provided with the `SourceFile` parameter then, internally a lazy open stream is created in order to populate the body of the request. This change makes sure that created stream is closed after request completion.

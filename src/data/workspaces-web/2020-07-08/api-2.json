@@ -1820,6 +1820,7 @@
         "pasteAllowed":{"shape":"EnabledType"},
         "printAllowed":{"shape":"EnabledType"},
         "tags":{"shape":"TagList"},
+        "toolbarConfiguration":{"shape":"ToolbarConfiguration"},
         "uploadAllowed":{"shape":"EnabledType"}
       }
     },
@@ -2429,6 +2430,10 @@
       "max":100,
       "min":1
     },
+    "HiddenToolbarItemList":{
+      "type":"list",
+      "member":{"shape":"ToolbarItem"}
+    },
     "IdentityProvider":{
       "type":"structure",
       "required":["identityProviderArn"],
@@ -2916,6 +2921,19 @@
       "max":5000,
       "min":1
     },
+    "MaxDisplayResolution":{
+      "type":"string",
+      "enum":[
+        "size4096X2160",
+        "size3840X2160",
+        "size3440X1440",
+        "size2560X1440",
+        "size1920X1080",
+        "size1280X720",
+        "size1024X768",
+        "size800X600"
+      ]
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -3282,6 +3300,32 @@
       },
       "exception":true
     },
+    "ToolbarConfiguration":{
+      "type":"structure",
+      "members":{
+        "hiddenToolbarItems":{"shape":"HiddenToolbarItemList"},
+        "maxDisplayResolution":{"shape":"MaxDisplayResolution"},
+        "toolbarType":{"shape":"ToolbarType"},
+        "visualMode":{"shape":"VisualMode"}
+      }
+    },
+    "ToolbarItem":{
+      "type":"string",
+      "enum":[
+        "Windows",
+        "DualMonitor",
+        "FullScreen",
+        "Webcam",
+        "Microphone"
+      ]
+    },
+    "ToolbarType":{
+      "type":"string",
+      "enum":[
+        "Floating",
+        "Docked"
+      ]
+    },
     "TrustStore":{
       "type":"structure",
       "required":["trustStoreArn"],
@@ -3531,6 +3575,7 @@
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
         "pasteAllowed":{"shape":"EnabledType"},
         "printAllowed":{"shape":"EnabledType"},
+        "toolbarConfiguration":{"shape":"ToolbarConfiguration"},
         "uploadAllowed":{"shape":"EnabledType"},
         "userSettingsArn":{
           "shape":"ARN",
@@ -3582,6 +3627,7 @@
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
         "pasteAllowed":{"shape":"EnabledType"},
         "printAllowed":{"shape":"EnabledType"},
+        "toolbarConfiguration":{"shape":"ToolbarConfiguration"},
         "uploadAllowed":{"shape":"EnabledType"},
         "userSettingsArn":{"shape":"ARN"}
       }
@@ -3602,6 +3648,7 @@
         "idleDisconnectTimeoutInMinutes":{"shape":"IdleDisconnectTimeoutInMinutes"},
         "pasteAllowed":{"shape":"EnabledType"},
         "printAllowed":{"shape":"EnabledType"},
+        "toolbarConfiguration":{"shape":"ToolbarConfiguration"},
         "uploadAllowed":{"shape":"EnabledType"},
         "userSettingsArn":{"shape":"ARN"}
       }
@@ -3648,6 +3695,13 @@
         "cannotParse",
         "fieldValidationFailed",
         "other"
+      ]
+    },
+    "VisualMode":{
+      "type":"string",
+      "enum":[
+        "Dark",
+        "Light"
       ]
     },
     "VpcId":{

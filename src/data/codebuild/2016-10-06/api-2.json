@@ -2970,7 +2970,9 @@
         "buildType":{"shape":"WebhookBuildType"},
         "manualCreation":{"shape":"WrapperBoolean"},
         "lastModifiedSecret":{"shape":"Timestamp"},
-        "scopeConfiguration":{"shape":"ScopeConfiguration"}
+        "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "status":{"shape":"WebhookStatus"},
+        "statusMessage":{"shape":"String"}
       }
     },
     "WebhookBuildType":{
@@ -3014,6 +3016,15 @@
         "GITHUB_ORGANIZATION",
         "GITHUB_GLOBAL",
         "GITLAB_GROUP"
+      ]
+    },
+    "WebhookStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DELETING"
       ]
     },
     "WrapperBoolean":{"type":"boolean"},

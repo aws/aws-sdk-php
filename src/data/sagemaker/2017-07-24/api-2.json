@@ -6304,6 +6304,12 @@
       "max":100,
       "min":1
     },
+    "ClusterInstanceGroupsToDelete":{
+      "type":"list",
+      "member":{"shape":"ClusterInstanceGroupName"},
+      "max":100,
+      "min":0
+    },
     "ClusterInstancePlacement":{
       "type":"structure",
       "members":{
@@ -25068,7 +25074,8 @@
       "members":{
         "ClusterName":{"shape":"ClusterNameOrArn"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
-        "NodeRecovery":{"shape":"ClusterNodeRecovery"}
+        "NodeRecovery":{"shape":"ClusterNodeRecovery"},
+        "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"}
       }
     },
     "UpdateClusterResponse":{
