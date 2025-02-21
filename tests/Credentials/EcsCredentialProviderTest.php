@@ -5,7 +5,7 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
-use Aws\Handler\GuzzleV6\GuzzleHandler;
+use Aws\Handler\Guzzle\GuzzleHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -260,48 +260,23 @@ class EcsCredentialProviderTest extends TestCase
     {
         $t = (time() + 1000);
         $credentials = $this->getCredentialArray('foo', 'baz', null, "@{$t}");
-        $version = \Aws\guzzle_major_version();
-
-        if ($version === 5) {
-            return new \Aws\Handler\GuzzleV5\GuzzleHandler(
-                new Client([
-                    'handler' => function (
-                        array $request
-                    ) use ($credentials) {
-                        $this->assertSame('', $request['client']['proxy']);
-                        return new CompletedFutureArray([
-                            'status'  => 200,
-                            'headers' => [],
-                            'body'    => Psr7\Utils::streamFor(
-                                json_encode($credentials)
-                            ),
-                        ]);
-                    }
-                ])
-            );
-        }
-
-        if ($version === 6 || $version === 7) {
-            return new \Aws\Handler\GuzzleV6\GuzzleHandler(
-                new Client([
-                    'handler' => function (
-                        Psr7\Request $request,
-                        array $options
-                    ) use ($credentials) {
-                        $this->assertSame('', $options['proxy']);
-                        return Promise\Create::promiseFor(
-                            new Response(
-                                200,
-                                [],
-                                Psr7\Utils::streamFor(json_encode($credentials))
-                            )
-                        );
-                    }
-                ])
-            );
-        }
-
-        throw new \RuntimeException('Unknown Guzzle version: ' . $version);
+        return new \Aws\Handler\Guzzle\GuzzleHandler(
+            new Client([
+                'handler' => function (
+                    Psr7\Request $request,
+                    array $options
+                ) use ($credentials) {
+                    $this->assertSame('', $options['proxy']);
+                    return Promise\Create::promiseFor(
+                        new Response(
+                            200,
+                            [],
+                            Psr7\Utils::streamFor(json_encode($credentials))
+                        )
+                    );
+                }
+            ])
+        );
     }
 
     private function getClientWithHeaderMiddleware($expectedValue)
