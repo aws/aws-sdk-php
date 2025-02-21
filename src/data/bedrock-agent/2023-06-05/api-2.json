@@ -7270,6 +7270,12 @@
       "min":15,
       "sensitive":true
     },
+    "UserAgentHeader":{
+      "type":"string",
+      "max":86,
+      "min":61,
+      "sensitive":true
+    },
     "ValidateFlowDefinitionRequest":{
       "type":"structure",
       "required":["definition"],
@@ -7341,7 +7347,8 @@
         "exclusionFilters":{"shape":"FilterList"},
         "inclusionFilters":{"shape":"FilterList"},
         "scope":{"shape":"WebScopeType"},
-        "userAgent":{"shape":"UserAgent"}
+        "userAgent":{"shape":"UserAgent"},
+        "userAgentHeader":{"shape":"UserAgentHeader"}
       }
     },
     "WebCrawlerLimits":{

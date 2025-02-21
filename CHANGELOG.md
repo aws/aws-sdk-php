@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Added support for Certificate-Based Authentication on AppStream 2.0 multi-session fleets.
+* `Aws\BedrockAgent` - Introduce a new parameter which represents the user-agent header value used by the Bedrock Knowledge Base Web Connector.
+
 ## 3.339.18 - 2025-02-20
 
 * `Aws\LicenseManagerUserSubscriptions` - Updates entity to include Microsoft RDS SAL as a valid type of user subscription.
