@@ -255,14 +255,7 @@ class S3EncryptionClientTest extends TestCase
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
-        ?callable $skipCheck = null
     ) {
-        if ($skipCheck && $skipCheck()) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         } else {
@@ -385,12 +378,6 @@ EOXML;
 
     public function testPutObjectWrapsBodyInAesGcmEncryptingStream()
     {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -654,12 +641,6 @@ EOXML;
 
     public function testGetObjectWrapsBodyInAesGcmDecryptingStream()
     {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProvider($kms);
         $this->addMockResults($kms, [
