@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.339.19 - 2025-02-21
 
 * `Aws\AppStream` - Added support for Certificate-Based Authentication on AppStream 2.0 multi-session fleets.
 * `Aws\BedrockAgent` - Introduce a new parameter which represents the user-agent header value used by the Bedrock Knowledge Base Web Connector.
