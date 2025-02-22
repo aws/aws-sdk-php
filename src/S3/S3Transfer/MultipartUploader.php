@@ -5,10 +5,12 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\PromisorInterface;
+use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
 use Throwable;
@@ -29,12 +31,6 @@ class MultipartUploader implements PromisorInterface
     private readonly array $createMultipartArgs;
 
     /** @var array */
-    private readonly array $uploadPartArgs;
-
-    /** @var array */
-    private readonly array $completeMultipartArgs;
-
-    /** @var array */
     private readonly array $config;
 
     /** @var string | null */
@@ -47,55 +43,46 @@ class MultipartUploader implements PromisorInterface
     private StreamInterface $body;
 
     /** @var int */
-    private int $objectSizeInBytes;
+    private int $calculatedObjectSize;
 
     /** @var array */
     private array $deferFns = [];
 
-    /** @var TransferListener | null */
-    private TransferListener | null $progressTracker;
+    /** @var TransferListenerNotifier | null */
+    private TransferListenerNotifier | null $listenerNotifier;
 
     /** Tracking Members */
-    /** @var string */
-    private string $objectKey;
-
-    /** @var int */
-    private int $objectBytesTransferred = 0;
+    /** @var TransferProgressSnapshot|null */
+    private ?TransferProgressSnapshot $currentSnapshot;
 
     /**
      * @param S3ClientInterface $s3Client
      * @param array $createMultipartArgs
-     * @param array $uploadPartArgs
-     * @param array $completeMultipartArgs
      * @param array $config
      * @param string | StreamInterface $source
-     * @param int $objectSizeInBytes
      * @param string|null $uploadId
      * @param array $parts
-     * @param TransferListener|null $progressTracker
+     * @param TransferProgressSnapshot|null $currentSnapshot
+     * @param TransferListenerNotifier|null $listenerNotifier
      */
     public function __construct(
         S3ClientInterface $s3Client,
         array $createMultipartArgs,
-        array $uploadPartArgs,
-        array $completeMultipartArgs,
         array $config,
         string | StreamInterface $source,
-        int $objectSizeInBytes = 0,
         ?string $uploadId = null,
         array $parts = [],
-        ?TransferListener $progressTracker = null
+        ?TransferProgressSnapshot $currentSnapshot = null,
+        TransferListenerNotifier $listenerNotifier = null,
     ) {
         $this->s3Client = $s3Client;
         $this->createMultipartArgs = $createMultipartArgs;
-        $this->uploadPartArgs = $uploadPartArgs;
-        $this->completeMultipartArgs = $completeMultipartArgs;
         $this->config = $config;
         $this->body = $this->parseBody($source);
-        $this->objectSizeInBytes = $objectSizeInBytes;
         $this->uploadId = $uploadId;
         $this->parts = $parts;
-        $this->progressTracker = $progressTracker;
+        $this->currentSnapshot = $currentSnapshot;
+        $this->listenerNotifier = $listenerNotifier;
     }
 
     /**
@@ -117,17 +104,17 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return int
      */
-    public function getObjectSizeInBytes(): int
+    public function getCalculatedObjectSize(): int
     {
-        return $this->objectSizeInBytes;
+        return $this->calculatedObjectSize;
     }
 
     /**
-     * @return int
+     * @return TransferProgressSnapshot|null
      */
-    public function getObjectBytesTransferred(): int
+    public function getCurrentSnapshot(): ?TransferProgressSnapshot
     {
-        return $this->objectBytesTransferred;
+        return $this->currentSnapshot;
     }
 
     /**
@@ -155,7 +142,8 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function createMultipartUpload(): PromiseInterface {
+    public function createMultipartUpload(): PromiseInterface
+    {
         $requestArgs = [...$this->createMultipartArgs];
         $this->uploadInitiated($requestArgs);
         $command = $this->s3Client->getCommand(
@@ -176,7 +164,7 @@ class MultipartUploader implements PromisorInterface
      */
     public function uploadParts(): PromiseInterface
     {
-        $this->objectSizeInBytes = 0; // To repopulate
+        $this->calculatedObjectSize = 0;
         $isSeekable = $this->body->isSeekable();
         $partSize = $this->config['part_size'] ?? self::PART_MIN_SIZE;
         if ($partSize > self::PART_MAX_SIZE) {
@@ -202,22 +190,23 @@ class MultipartUploader implements PromisorInterface
                 $this->body->read($readSize)
             );
             // To make sure we do not create an empty part when
-            // we already reached end of file.
+            // we already reached the end of file.
             if (!$isSeekable && $this->body->eof() && $partBody->getSize() === 0) {
                 break;
             }
 
             $uploadPartCommandArgs = [
-                    'UploadId' => $this->uploadId,
-                    'PartNumber' => $partNo,
-                    'Body' => $partBody,
-                    'ContentLength' => $partBody->getSize(),
-                ] + $this->uploadPartArgs;
-
+                ...$this->createMultipartArgs,
+                'UploadId' => $this->uploadId,
+                'PartNumber' => $partNo,
+                'Body' => $partBody,
+                'ContentLength' => $partBody->getSize(),
+            ];
+            // To get `requestArgs` when notifying the bytesTransfer listeners.
+            $uploadPartCommandArgs['requestArgs'] = $uploadPartCommandArgs;
             $command = $this->s3Client->getCommand('UploadPart', $uploadPartCommandArgs);
             $commands[] = $command;
-            $this->objectSizeInBytes += $partBody->getSize();
-
+            $this->calculatedObjectSize += $partBody->getSize();
             if ($partNo > self::PART_MAX_NUM) {
                 return Create::rejectionFor(
                     "The max number of parts has been exceeded. " .
@@ -238,9 +227,11 @@ class MultipartUploader implements PromisorInterface
                             $result,
                             $command
                         );
-
                         // Part Upload Completed Event
-                        $this->partUploadCompleted($result, $command['ContentLength']);
+                        $this->partUploadCompleted(
+                            $command['ContentLength'],
+                            $command['requestArgs']
+                        );
                 },
                 'rejected'     => function (Throwable $e) {
                     $this->partUploadFailed($e);
@@ -255,13 +246,21 @@ class MultipartUploader implements PromisorInterface
     public function completeMultipartUpload(): PromiseInterface
     {
         $this->sortParts();
-        $command = $this->s3Client->getCommand('CompleteMultipartUpload', [
-                'UploadId' => $this->uploadId,
-                'MpuObjectSize' => $this->objectSizeInBytes,
-                'MultipartUpload' => [
-                    'Parts' => $this->parts,
-                ]
-            ] + $this->completeMultipartArgs
+        $completeMultipartUploadArgs = [
+            ...$this->createMultipartArgs,
+            'UploadId' => $this->uploadId,
+            'MpuObjectSize' => $this->calculatedObjectSize,
+            'MultipartUpload' => [
+                'Parts' => $this->parts,
+            ]
+        ];
+        if ($this->containsChecksum($this->createMultipartArgs)) {
+            $completeMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+        }
+
+        $command = $this->s3Client->getCommand(
+            'CompleteMultipartUpload',
+            $completeMultipartUploadArgs
         );
 
         return $this->s3Client->executeAsync($command)
@@ -275,7 +274,8 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function abortMultipartUpload(): PromiseInterface {
+    public function abortMultipartUpload(): PromiseInterface
+    {
         $command = $this->s3Client->getCommand('AbortMultipartUpload', [
             ...$this->createMultipartArgs,
             'UploadId' => $this->uploadId,
@@ -316,12 +316,13 @@ class MultipartUploader implements PromisorInterface
     private function sortParts(): void
     {
         usort($this->parts, function($partOne, $partTwo) {
-            return $partOne['PartNumber'] <=> $partTwo['PartNumber']; // Ascending order by age
+            return $partOne['PartNumber'] <=> $partTwo['PartNumber'];
         });
     }
 
     /**
      * @param string|StreamInterface $source
+     *
      * @return StreamInterface
      */
     private function parseBody(string | StreamInterface $source): StreamInterface
@@ -333,12 +334,11 @@ class MultipartUploader implements PromisorInterface
                     "The source for this upload must be either a readable file or a valid stream."
                 );
             }
-            $file = Utils::tryFopen($source, 'r');
+            $body = new LazyOpenStream($source, 'r');
             // To make sure the resource is closed.
-            $this->deferFns[] = function () use ($file) {
-                fclose($file);
+            $this->deferFns[] = function () use ($body) {
+                $body->close();
             };
-            $body = Utils::streamFor($file);
         } elseif ($source instanceof StreamInterface) {
             $body = $source;
         } else {
@@ -351,14 +351,31 @@ class MultipartUploader implements PromisorInterface
     }
 
     /**
+     * @param array $requestArgs
+     *
      * @return void
      */
-    private function uploadInitiated(array &$requestArgs): void {
-        $this->objectKey = $this->createMultipartArgs['Key'];
-        $this->progressTracker?->objectTransferInitiated(
-            $this->objectKey,
-            $requestArgs
-        );
+    private function uploadInitiated(array $requestArgs): void
+    {
+        if ($this->currentSnapshot === null) {
+            $this->currentSnapshot = new TransferProgressSnapshot(
+                $requestArgs['Key'],
+                0,
+                $this->body->getSize(),
+            );
+        } else {
+            $this->currentSnapshot = new TransferProgressSnapshot(
+                $this->currentSnapshot->getIdentifier(),
+                $this->currentSnapshot->getTransferredBytes(),
+                $this->currentSnapshot->getTotalBytes(),
+                $this->currentSnapshot->getResponse()
+            );
+        }
+
+        $this->listenerNotifier?->transferInitiated([
+            'request_args' => $requestArgs,
+            'progress_snapshot' => $this->currentSnapshot
+        ]);
     }
 
     /**
@@ -370,11 +387,11 @@ class MultipartUploader implements PromisorInterface
         if (!empty($this->uploadId)) {
             $this->abortMultipartUpload()->wait();
         }
-        $this->progressTracker?->objectTransferFailed(
-            $this->objectKey,
-            $this->objectBytesTransferred,
-            $reason
-        );
+        $this->listenerNotifier?->transferFail([
+            'request_args' => $this->createMultipartArgs,
+            'progress_snapshot' => $this->currentSnapshot,
+            'reason' => $reason,
+        ]);
     }
 
     /**
@@ -383,25 +400,41 @@ class MultipartUploader implements PromisorInterface
      * @return void
      */
     private function uploadCompleted(ResultInterface $result): void {
-        $this->progressTracker?->objectTransferCompleted(
-            $this->objectKey,
-            $this->objectBytesTransferred,
+        $newSnapshot = new TransferProgressSnapshot(
+            $this->currentSnapshot->getIdentifier(),
+            $this->currentSnapshot->getTransferredBytes(),
+            $this->currentSnapshot->getTotalBytes(),
+            $result->toArray()
         );
+        $this->currentSnapshot = $newSnapshot;
+        $this->listenerNotifier?->transferComplete([
+            'request_args' => $this->createMultipartArgs,
+            'progress_snapshot' => $this->currentSnapshot,
+        ]);
     }
 
     /**
-     * @param ResultInterface $result
-     * @param int $partSize
+     * @param int $partCompletedBytes
+     * @param array $requestArgs
      *
      * @return void
      */
-    private function partUploadCompleted(ResultInterface $result, int $partSize): void {
-        $this->objectBytesTransferred = $this->objectBytesTransferred + $partSize;
-        $this->progressTracker?->objectTransferProgress(
-            $this->objectKey,
-            $partSize,
-            $this->objectSizeInBytes
+    private function partUploadCompleted(
+        int $partCompletedBytes,
+        array $requestArgs
+    ): void
+    {
+        $newSnapshot = new TransferProgressSnapshot(
+            $this->currentSnapshot->getIdentifier(),
+            $this->currentSnapshot->getTransferredBytes() + $partCompletedBytes,
+            $this->currentSnapshot->getTotalBytes()
         );
+        $this->currentSnapshot = $newSnapshot;
+        $this->listenerNotifier?->bytesTransferred([
+            'request_args' => $requestArgs,
+            'progress_snapshot' => $this->currentSnapshot,
+            $this->currentSnapshot
+        ]);
     }
 
     /**
@@ -411,6 +444,7 @@ class MultipartUploader implements PromisorInterface
      */
     private function partUploadFailed(Throwable $reason): void
     {
+        $this->uploadFailed($reason);
     }
 
     /**
@@ -423,5 +457,30 @@ class MultipartUploader implements PromisorInterface
         }
 
         $this->deferFns = [];
+    }
+
+    /**
+     * Verifies if a checksum was provided.
+     *
+     * @param array $requestArgs
+     *
+     * @return bool
+     */
+    private function containsChecksum(array $requestArgs): bool
+    {
+        $algorithms = [
+            'ChecksumCRC32',
+            'ChecksumCRC32C',
+            'ChecksumCRC64NVME',
+            'ChecksumSHA1',
+            'ChecksumSHA256',
+        ];
+        foreach ($algorithms as $algorithm) {
+            if (isset($requestArgs[$algorithm])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

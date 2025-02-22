@@ -5,6 +5,9 @@ namespace Aws\S3\S3Transfer;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
+use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
+use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -24,8 +27,6 @@ class S3TransferManager
         'track_progress' => false,
         'region' => 'us-east-1',
     ];
-
-    private const MIN_PART_SIZE = 5 * 1024 * 1024;
 
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
@@ -52,11 +53,9 @@ class S3TransferManager
      *   Maximum number of concurrent operations allowed during a multipart
      *   upload/download.
      * - track_progress: (bool, default=false) \
-     *   To enable progress tracker in a multipart upload/download.
+     *   To enable progress tracker in a multipart upload/download, and or
+     *   a directory upload/download operation.
      * - region: (string, default="us-east-2")
-     * - progress_tracker_factory: (callable|TransferListenerFactory) \
-     *   A factory to create the listener which will receive notifications
-     *   based in the different stages an upload/download is.
      */
     public function __construct(
         ?S3ClientInterface $s3Client = null,
@@ -80,11 +79,13 @@ class S3TransferManager
      * @param array $config The config options for this upload operation.
      * - multipart_upload_threshold_bytes: (int, optional)
      *   To override the default threshold for when to use multipart upload.
-     * - target_part_size_bytes: (int, optional) To override the default
+     * - part_size: (int, optional) To override the default
      *   target part size in bytes.
      * - track_progress: (bool, optional) To override the default option for
-     *   enabling progress tracking.
-     * @param MultipartUploadListener|null $uploadListener
+     *   enabling progress tracking. If this option is resolved as true and
+     *   a progressTracker parameter is not provided then, a default implementation
+     *   will be resolved.
+     * @param TransferListener[]|null $listeners
      * @param TransferListener|null $progressTracker
      *
      * @return PromiseInterface
@@ -93,7 +94,7 @@ class S3TransferManager
         string | StreamInterface $source,
         array $requestArgs = [],
         array $config = [],
-        ?MultipartUploadListener $uploadListener = null,
+        array $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
@@ -119,35 +120,39 @@ class S3TransferManager
 
         $mupThreshold = $config['multipart_upload_threshold_bytes']
             ?? $this->config['multipart_upload_threshold_bytes'];
-        if ($mupThreshold < self::MIN_PART_SIZE) {
+        if ($mupThreshold < MultipartUploader::PART_MIN_SIZE) {
             throw new \InvalidArgumentException(
                 "The provided config `multipart_upload_threshold_bytes`"
-                ."must be greater than or equal to " . self::MIN_PART_SIZE
+                ."must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE
             );
         }
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
-            $progressTracker = $this->resolveDefaultProgressTracker(
-                DefaultProgressTracker::TRACKING_OPERATION_UPLOADING
-            );
+            $progressTracker = new SingleProgressTracker();
         }
 
+        if ($progressTracker !== null) {
+            $listeners[] = $progressTracker;
+        }
+
+        $listenerNotifier = new TransferListenerNotifier($listeners);
         if ($this->requiresMultipartUpload($source, $mupThreshold)) {
             return $this->tryMultipartUpload(
                 $source,
                 $requestArgs,
-                $config['target_part_size_bytes']
-                    ?? $this->config['target_part_size_bytes'],
-                $uploadListener,
-                $progressTracker,
+                [
+                    'part_size' => $config['part_size'] ?? $this->config['target_part_size_bytes'],
+                    'concurrency' => $this->config['concurrency'],
+                ],
+                $listenerNotifier
             );
         }
 
         return $this->trySingleUpload(
             $source,
             $requestArgs,
-            $progressTracker
+            $listenerNotifier
         );
     }
 
@@ -164,9 +169,16 @@ class S3TransferManager
      * - s3_delimiter: (string, optional, defaulted to `/`)
      * - put_object_request_callback: (Closure, optional)
      * - failure_policy: (Closure, optional)
-     * @param MultipartUploadListener|null $uploadListener
-     * @param TransferListener|null $progressTracker
-     *
+     * - track_progress: (bool, optional) To override the default option for
+     *   enabling progress tracking. If this option is resolved as true and
+     *   a progressTracker parameter is not provided then, a default implementation
+     *   will be resolved.
+     * @param TransferListener[]|null $listeners The listeners for watching
+     * transfer events. Each listener will be cloned per file upload.
+     * @param TransferListener|null $progressTracker Ideally the progress
+     * tracker implementation provided here should be able to track multiple
+     * transfers at once. Please see MultiProgressTracker implementation.
+ *
      * @return PromiseInterface
      */
     public function uploadDirectory(
@@ -174,7 +186,7 @@ class S3TransferManager
         string $bucketTo,
         array $requestArgs = [],
         array $config = [],
-        ?MultipartUploadListener $uploadListener = null,
+        array $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
@@ -187,9 +199,7 @@ class S3TransferManager
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
-            $progressTracker = $this->resolveDefaultProgressTracker(
-                DefaultProgressTracker::TRACKING_OPERATION_UPLOADING
-            );
+            $progressTracker = new MultiProgressTracker();
         }
 
         $filter = null;
@@ -242,7 +252,7 @@ class S3TransferManager
                     'Key' => $objectKey,
                 ],
                 $config,
-                $uploadListener,
+                array_map(function ($listener) { return clone $listener; }, $listeners),
                 $progressTracker,
             )->then(function ($result) use (&$objectsUploaded) {
                 $objectsUploaded++;
@@ -251,7 +261,7 @@ class S3TransferManager
             })->otherwise(function ($reason) use (&$objectsFailed) {
                 $objectsFailed++;
 
-                return $reason;
+                throw $reason;
             });
         }
 
@@ -269,19 +279,20 @@ class S3TransferManager
      * of each get object operation, except for the bucket and key, which
      * are already provided as the source.
      * @param array $config The configuration to be used for this operation.
+     *  - multipart_download_type: (string, optional) \
+     *    Overrides the resolved value from the transfer manager config.
      *  - track_progress: (bool) \
      *    Overrides the config option set in the transfer manager instantiation
      *    to decide whether transfer progress should be tracked. If a `progressListenerFactory`
      *    was not provided when the transfer manager instance was created
      *    and track_progress resolved as true then, a default progress listener
      *    implementation will be used.
-     *  - minimumPartSize: (int) \
+     *  - minimum_part_size: (int) \
      *    The minimum part size in bytes to be used in a range multipart download.
-     * @param MultipartDownloadListener|null $downloadListener A multipart download
-     * specific listener of the different states a multipart download can be.
-     * @param TransferListener|null $progressTracker A transfer listener implementation
-     * aimed to track the progress of a transfer. If not provided and track_progress
-     * is resolved as true then, the default progress_tracker_factory will be used.
+     *    If this parameter is not provided then it fallbacks to the transfer
+     *    manager `target_part_size_bytes` config value.
+     * @param TransferListener[]|null $listeners
+     * @param TransferListener|null $progressTracker
      *
      * @return PromiseInterface
      */
@@ -289,7 +300,7 @@ class S3TransferManager
         string | array $source,
         array $downloadArgs = [],
         array $config = [],
-        ?MultipartDownloadListener $downloadListener = null,
+        array $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
@@ -306,21 +317,25 @@ class S3TransferManager
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
-            $progressTracker = $this->resolveDefaultProgressTracker(
-                DefaultProgressTracker::TRACKING_OPERATION_DOWNLOADING
-            );
+            $progressTracker = new SingleProgressTracker();
         }
 
+        if ($progressTracker !== null) {
+            $listeners[] = $progressTracker;
+        }
+
+        $listenerNotifier = new TransferListenerNotifier($listeners);
         $requestArgs = $sourceArgs + $downloadArgs;
         if (empty($downloadArgs['PartNumber']) && empty($downloadArgs['Range'])) {
             return $this->tryMultipartDownload(
                 $requestArgs,
                 [
-                    'minimumPartSize' => $config['minimumPartSize']
-                        ?? 0
+                    'minimum_part_size' => $config['minimum_part_size']
+                        ?? $this->config['target_part_size_bytes'],
+                    'multipart_download_type' => $config['multipart_download_type']
+                        ?? $this->config['multipart_download_type'],
                 ],
-                $downloadListener,
-                $progressTracker,
+                $listenerNotifier,
             );
         }
 
@@ -354,11 +369,12 @@ class S3TransferManager
      *  - filter: (Closure)  \
      *    A callable which will receive an object key as parameter and should return
      *    true or false in order to determine whether the object should be downloaded.
-     * @param MultipartDownloadListenerFactory|null $downloadListenerFactory
-     * A factory of multipart download listeners `MultipartDownloadListenerFactory`
-     * for listening to multipart download events.
-     * @param TransferListener|null $progressTracker
-     *
+     * @param TransferListener[] $listeners The listeners for watching
+     * transfer events. Each listener will be cloned per file upload.
+     * @param TransferListener|null $progressTracker Ideally the progress
+     * tracker implementation provided here should be able to track multiple
+     * transfers at once. Please see MultiProgressTracker implementation.
+ *
      * @return PromiseInterface
      */
     public function downloadDirectory(
@@ -366,7 +382,7 @@ class S3TransferManager
         string $destinationDirectory,
         array $downloadArgs,
         array $config = [],
-        ?MultipartDownloadListenerFactory $downloadListenerFactory = null,
+        array $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
@@ -378,9 +394,7 @@ class S3TransferManager
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
-            $progressTracker = $this->resolveDefaultProgressTracker(
-                DefaultProgressTracker::TRACKING_OPERATION_DOWNLOADING
-            );
+            $progressTracker = new MultiProgressTracker();
         }
 
         $listArgs = [
@@ -415,18 +429,13 @@ class S3TransferManager
                 );
             }
 
-            $downloadListener = null;
-            if ($downloadListenerFactory !== null) {
-                $downloadListener = $downloadListenerFactory();
-            }
-
             $promises[] = $this->download(
                 $object,
                 $downloadArgs,
                 [
                     'minimumPartSize' => $config['minimumPartSize'] ?? 0,
                 ],
-                $downloadListener,
+                array_map(function ($listener) { return clone $listener; }, $listeners),
                 $progressTracker,
             )->then(function (DownloadResponse $result) use ($destinationFile) {
                 $directory = dirname($destinationFile);
@@ -446,31 +455,33 @@ class S3TransferManager
      *
      * @param array $requestArgs
      * @param array $config
-     *  - minimumPartSize: (int) \
-     *    The minimum part size in bytes for a range multipart download. If
-     *    this parameter is not provided then it fallbacks to the transfer
-     *    manager `target_part_size_bytes` config value.
-     * @param MultipartDownloadListener|null $downloadListener
-     * @param TransferListener|null $progressTracker
+     *  - minimum_part_size: (int) \
+     *    The minimum part size in bytes for a range multipart download.
+     * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function tryMultipartDownload(
         array $requestArgs,
         array $config = [],
-        ?MultipartDownloadListener $downloadListener = null,
-        ?TransferListener $progressTracker = null,
+        ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
-        $multipartDownloader = MultipartDownloader::chooseDownloader(
-            s3Client: $this->s3Client,
-            multipartDownloadType: $this->config['multipart_download_type'],
-            requestArgs: $requestArgs,
-            config: [
-                'target_part_size_bytes' => $config['target_part_size_bytes'] ?? 0,
-            ],
-            listener:  $downloadListener,
-            progressTracker:  $progressTracker,
+        $downloaderClassName = match ($config['multipart_download_type']) {
+            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\PartGetMultipartDownloader',
+            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\RangeGetMultipartDownloader',
+            default => throw new \InvalidArgumentException(
+                "The config value for `multipart_download_type` must be one of:\n"
+                . "\t* " . MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER
+                ."\n"
+                . "\t* " . MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER
+            )
+        };
+        $multipartDownloader = new $downloaderClassName(
+            $this->s3Client,
+            $requestArgs,
+            $config,
+            listenerNotifier: $listenerNotifier,
         );
 
         return $multipartDownloader->promise();
@@ -480,48 +491,60 @@ class S3TransferManager
      * Does a single object download.
      *
      * @param array $requestArgs
-     * @param TransferListener|null $progressTracker
+     * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function trySingleDownload(
         array $requestArgs,
-        ?TransferListener $progressTracker
+        ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
-        if ($progressTracker !== null) {
-            $progressTracker->objectTransferInitiated($requestArgs['Key'], $requestArgs);
+        if ($listenerNotifier !== null) {
+            $listenerNotifier->transferInitiated([
+                'request_args' => $requestArgs,
+                'progress_snapshot' => new TransferProgressSnapshot(
+                    $requestArgs['Key'],
+                    0,
+                    0
+                )
+            ]);
             $command = $this->s3Client->getCommand(
                 MultipartDownloader::GET_OBJECT_COMMAND,
                 $requestArgs
             );
 
             return $this->s3Client->executeAsync($command)->then(
-                function ($result) use ($progressTracker, $requestArgs) {
+                function ($result) use ($requestArgs, $listenerNotifier) {
                     // Notify progress
-                    $progressTracker->objectTransferProgress(
-                        $requestArgs['Key'],
-                        $result['Content-Length'] ?? 0,
-                        $result['Content-Length'] ?? 0,
-                    );
-
+                    $progressContext = [
+                        'request_args' => $requestArgs,
+                        'progress_snapshot' => new TransferProgressSnapshot(
+                            $requestArgs['Key'],
+                            $result['Content-Length'] ?? 0,
+                            $result['Content-Length'] ?? 0,
+                            $result->toArray()
+                        )
+                    ];
+                    $listenerNotifier->bytesTransferred($progressContext);
                     // Notify Completion
-                    $progressTracker->objectTransferCompleted(
-                        $requestArgs['Key'],
-                        $result['Content-Length'] ?? 0,
-                    );
+                    $listenerNotifier->transferComplete($progressContext);
 
                     return new DownloadResponse(
                         content: $result['Body'],
                         metadata: $result['@metadata'],
                     );
                 }
-            )->otherwise(function ($reason) use ($requestArgs, $progressTracker) {
-                $progressTracker->objectTransferFailed(
-                    $requestArgs['Key'],
-                    0,
-                    $reason->getMessage(),
-                );
+            )->otherwise(function ($reason) use ($requestArgs, $listenerNotifier) {
+                $listenerNotifier->transferFail([
+                    'request_args' => $requestArgs,
+                    'progress_snapshot' => new TransferProgressSnapshot(
+                        $requestArgs['Key'],
+                        0,
+                        0,
+                    ),
+                    'reason' => $reason
+                ]);
 
                 return $reason;
             });
@@ -544,14 +567,14 @@ class S3TransferManager
     /**
      * @param string|StreamInterface $source
      * @param array $requestArgs
-     * @param TransferListener|null $progressTracker
+     * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function trySingleUpload(
         string | StreamInterface $source,
         array $requestArgs,
-        ?TransferListener $progressTracker  = null
+        ?TransferListenerNotifier $listenerNotifier  = null
     ): PromiseInterface {
         if (is_string($source) && is_readable($source)) {
             $requestArgs['SourceFile'] = $source;
@@ -565,33 +588,57 @@ class S3TransferManager
             );
         }
 
-        if ($progressTracker !== null) {
-            $progressTracker->objectTransferInitiated(
-                $requestArgs['Key'],
-                $requestArgs
+        if (!empty($listenerNotifier)) {
+            $listenerNotifier->transferInitiated(
+                [
+                    'request_args' => $requestArgs,
+                    'progress_snapshot' => new TransferProgressSnapshot(
+                        $requestArgs['Key'],
+                        0,
+                        $objectSize,
+                    ),
+                ]
             );
 
             $command = $this->s3Client->getCommand('PutObject', $requestArgs);
             return $this->s3Client->executeAsync($command)->then(
-                function ($result) use ($objectSize, $progressTracker, $requestArgs) {
-                    $progressTracker->objectTransferProgress(
-                        $requestArgs['Key'],
-                        $objectSize,
-                        $objectSize,
+                function ($result) use ($objectSize, $listenerNotifier, $requestArgs) {
+                    $listenerNotifier->bytesTransferred(
+                        [
+                            'request_args' => $requestArgs,
+                            'progress_snapshot' => new TransferProgressSnapshot(
+                                $requestArgs['Key'],
+                                $objectSize,
+                                $objectSize,
+                            ),
+                        ]
                     );
 
-                    $progressTracker->objectTransferCompleted(
-                        $requestArgs['Key'],
-                        $objectSize,
+                    $listenerNotifier->transferComplete(
+                        [
+                            'request_args' => $requestArgs,
+                            'progress_snapshot' => new TransferProgressSnapshot(
+                                $requestArgs['Key'],
+                                $objectSize,
+                                $objectSize,
+                                $result->toArray()
+                            ),
+                        ]
                     );
 
                     return new UploadResponse($result->toArray());
                 }
-            )->otherwise(function ($reason) use ($requestArgs, $progressTracker) {
-                $progressTracker->objectTransferFailed(
-                    $requestArgs['Key'],
-                    0,
-                    $reason->getMessage()
+            )->otherwise(function ($reason) use ($objectSize, $requestArgs, $listenerNotifier) {
+                $listenerNotifier->transferFail(
+                    [
+                        'request_args' => $requestArgs,
+                        'progress_snapshot' => new TransferProgressSnapshot(
+                            $requestArgs['Key'],
+                            0,
+                            $objectSize,
+                        ),
+                        'reason' => $reason,
+                    ]
                 );
 
                 return $reason;
@@ -610,36 +657,23 @@ class S3TransferManager
      * @param string|StreamInterface $source
      * @param array $requestArgs
      * @param array $config
-     * @param MultipartUploadListener|null $uploadListener
-     * @param TransferListener|null $progressTracker
+     * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function tryMultipartUpload(
         string | StreamInterface $source,
         array $requestArgs,
-        int $partSizeBytes,
-        ?MultipartUploadListener $uploadListener = null,
-        ?TransferListener $progressTracker = null,
+        array $config = [],
+        ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface {
         $createMultipartArgs = [...$requestArgs];
-        $uploadPartArgs = [...$requestArgs];
-        $completeMultipartArgs = [...$requestArgs];
-        if ($this->containsChecksum($requestArgs)) {
-            $completeMultipartArgs['ChecksumType'] = 'FULL_OBJECT';
-        }
-
         return (new MultipartUploader(
             $this->s3Client,
             $createMultipartArgs,
-            $uploadPartArgs,
-            $completeMultipartArgs,
-            [
-                'part_size_bytes' => $partSizeBytes,
-                'concurrency' => $this->config['concurrency'],
-            ],
+            $config,
             $source,
-            progressTracker: $progressTracker,
+            listenerNotifier: $listenerNotifier,
         ))->promise();
     }
 
@@ -745,26 +779,6 @@ class S3TransferManager
     }
 
     /**
-     * Resolves the progress tracker to be used in the
-     * transfer operation if `$track_progress` is true.
-     *
-     * @param string $trackingOperation
-     *
-     * @return TransferListener|null
-     */
-    private function resolveDefaultProgressTracker(
-        string $trackingOperation
-    ): ?TransferListener
-    {
-        $progress_tracker_factory = $this->config['progress_tracker_factory'] ?? null;
-        if ($progress_tracker_factory === null) {
-            return (new DefaultProgressTracker(trackingOperation: $trackingOperation))->getTransferListener();
-        }
-
-        return $progress_tracker_factory([]);
-    }
-
-    /**
      * @param string $sink
      * @param string $objectKey
      *
@@ -792,31 +806,6 @@ class S3TransferManager
                 }
             } else {
                 $resolved []= $section;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Verifies if a checksum was provided.
-     *
-     * @param array $requestArgs
-     *
-     * @return bool
-     */
-    private function containsChecksum(array $requestArgs): bool
-    {
-        $algorithms = [
-            'ChecksumCRC32',
-            'ChecksumCRC32C',
-            'ChecksumCRC64NVME',
-            'ChecksumSHA1',
-            'ChecksumSHA256',
-        ];
-        foreach ($algorithms as $algorithm) {
-            if (isset($requestArgs[$algorithm])) {
-                return true;
             }
         }
 
