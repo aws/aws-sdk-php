@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Adds protocol selection behavior for services that specify the `protocols` field
+* `Aws\ElastiCache` - Documentation update, adding clarity and rephrasing.
+* `Aws\BedrockAgent` - This release improves support for newer models in Amazon Bedrock Flows.
+* `Aws\BedrockRuntime` - This release adds Reasoning Content support to Converse and ConverseStream APIs
+* `Aws\BedrockAgentRuntime` - Adding support for ReasoningContent fields in Pre-Processing, Post-Processing and Orchestration Trace outputs.
+
 ## 3.339.19 - 2025-02-21
 
 * `Aws\AppStream` - Added support for Certificate-Based Authentication on AppStream 2.0 multi-session fleets.

@@ -309,6 +309,7 @@
       "members":{
       }
     },
+    "Blob":{"type":"blob"},
     "Body":{
       "type":"blob",
       "max":25000000,
@@ -335,7 +336,8 @@
         "video":{"shape":"VideoBlock"},
         "toolUse":{"shape":"ToolUseBlock"},
         "toolResult":{"shape":"ToolResultBlock"},
-        "guardContent":{"shape":"GuardrailConverseContentBlock"}
+        "guardContent":{"shape":"GuardrailConverseContentBlock"},
+        "reasoningContent":{"shape":"ReasoningContentBlock"}
       },
       "union":true
     },
@@ -343,7 +345,8 @@
       "type":"structure",
       "members":{
         "text":{"shape":"String"},
-        "toolUse":{"shape":"ToolUseBlockDelta"}
+        "toolUse":{"shape":"ToolUseBlockDelta"},
+        "reasoningContent":{"shape":"ReasoningContentBlockDelta"}
       },
       "union":true
     },
@@ -1665,6 +1668,34 @@
         "text":{"shape":"String"}
       },
       "union":true
+    },
+    "ReasoningContentBlock":{
+      "type":"structure",
+      "members":{
+        "reasoningText":{"shape":"ReasoningTextBlock"},
+        "redactedContent":{"shape":"Blob"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ReasoningContentBlockDelta":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"},
+        "redactedContent":{"shape":"Blob"},
+        "signature":{"shape":"String"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ReasoningTextBlock":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "text":{"shape":"String"},
+        "signature":{"shape":"String"}
+      },
+      "sensitive":true
     },
     "RequestMetadata":{
       "type":"map",

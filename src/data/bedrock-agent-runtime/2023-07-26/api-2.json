@@ -547,6 +547,7 @@
         "modelArn":{"shape":"BedrockModelArn"}
       }
     },
+    "Blob":{"type":"blob"},
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -2143,7 +2144,7 @@
     "MaximumLength":{
       "type":"integer",
       "box":true,
-      "max":4096,
+      "max":8192,
       "min":0
     },
     "Memories":{
@@ -2399,6 +2400,7 @@
       "members":{
         "metadata":{"shape":"Metadata"},
         "rawResponse":{"shape":"RawResponse"},
+        "reasoningContent":{"shape":"ReasoningContentBlock"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true
@@ -2528,6 +2530,7 @@
         "metadata":{"shape":"Metadata"},
         "parsedResponse":{"shape":"PostProcessingParsedResponse"},
         "rawResponse":{"shape":"RawResponse"},
+        "reasoningContent":{"shape":"ReasoningContentBlock"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true
@@ -2554,6 +2557,7 @@
         "metadata":{"shape":"Metadata"},
         "parsedResponse":{"shape":"PreProcessingParsedResponse"},
         "rawResponse":{"shape":"RawResponse"},
+        "reasoningContent":{"shape":"ReasoningContentBlock"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true
@@ -2699,6 +2703,24 @@
       "type":"structure",
       "members":{
         "content":{"shape":"String"}
+      },
+      "sensitive":true
+    },
+    "ReasoningContentBlock":{
+      "type":"structure",
+      "members":{
+        "reasoningText":{"shape":"ReasoningTextBlock"},
+        "redactedContent":{"shape":"Blob"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "ReasoningTextBlock":{
+      "type":"structure",
+      "required":["text"],
+      "members":{
+        "signature":{"shape":"String"},
+        "text":{"shape":"String"}
       },
       "sensitive":true
     },

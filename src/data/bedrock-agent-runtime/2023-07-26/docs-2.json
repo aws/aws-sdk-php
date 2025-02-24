@@ -295,6 +295,12 @@
         "BedrockRerankingConfiguration$modelConfiguration": "<p>Contains configurations for a reranker model.</p>"
       }
     },
+    "Blob": {
+      "base": null,
+      "refs": {
+        "ReasoningContentBlock$redactedContent": "<p>The content in the reasoning that was encrypted by the model provider for trust and safety reasons.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -435,7 +441,7 @@
       "refs": {
         "ModelInvocationInput$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>.</p>",
         "ModelInvocationInput$promptCreationMode": "<p>Specifies whether the default prompt template was <code>OVERRIDDEN</code>. If it was, the <code>basePromptTemplate</code> that was set in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> object when the agent was created or updated is used instead.</p>",
-        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>",
+        "PromptConfiguration$parserMode": "<p>Specifies whether to override the default parser Lambda function when parsing the raw foundation model output in the part of the agent sequence defined by the <code>promptType</code>. If you set the field as <code>OVERRIDDEN</code>, the <code>overrideLambda</code> field in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html\">PromptOverrideConfiguration</a> must be specified with the ARN of a Lambda function.</p>",
         "PromptConfiguration$promptCreationMode": "<p>Specifies whether to override the default prompt template for this <code>promptType</code>. Set this value to <code>OVERRIDDEN</code> to use the prompt that you provide in the <code>basePromptTemplate</code>. If you leave it as <code>DEFAULT</code>, the agent uses a default prompt template.</p>"
       }
     },
@@ -1998,6 +2004,20 @@
         "RoutingClassifierModelInvocationOutput$rawResponse": "<p>The invocation's raw response.</p>"
       }
     },
+    "ReasoningContentBlock": {
+      "base": "<p>Contains content regarding the reasoning that the foundation model made with respect to the content in the content block. Reasoning refers to a Chain of Thought (CoT) that the model generates to enhance the accuracy of its final response.</p>",
+      "refs": {
+        "OrchestrationModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the orchestration step. </p>",
+        "PostProcessingModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the post-processing step.</p>",
+        "PreProcessingModelInvocationOutput$reasoningContent": "<p>Contains content about the reasoning that the model made during the pre-processing step. </p>"
+      }
+    },
+    "ReasoningTextBlock": {
+      "base": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>",
+      "refs": {
+        "ReasoningContentBlock$reasoningText": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>"
+      }
+    },
     "RepromptResponse": {
       "base": "<p>Contains details about the agent's response to reprompt the input.</p>",
       "refs": {
@@ -2611,6 +2631,8 @@
         "PromptSessionAttributesMap$key": null,
         "PromptSessionAttributesMap$value": null,
         "RawResponse$content": "<p>The foundation model's raw output content.</p>",
+        "ReasoningTextBlock$signature": "<p>A hash of all the messages in the conversation to ensure that the content in the reasoning text block isn't tampered with. You must submit the signature in subsequent <code>Converse</code> requests, in addition to the previous messages. If the previous messages are tampered with, the response throws an error.</p>",
+        "ReasoningTextBlock$text": "<p>Text describing the reasoning that the model used to return the content in the content block.</p>",
         "RepromptResponse$text": "<p>The text reprompting the input.</p>",
         "ResponseBody$key": null,
         "RetrievalResultConfluenceLocation$url": "<p>The Confluence host URL for the data source location.</p>",
