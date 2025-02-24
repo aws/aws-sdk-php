@@ -49,7 +49,7 @@ class MultipartUploader implements PromisorInterface
     private array $deferFns = [];
 
     /** @var TransferListenerNotifier | null */
-    private TransferListenerNotifier | null $listenerNotifier;
+    private ?TransferListenerNotifier $listenerNotifier;
 
     /** Tracking Members */
     /** @var TransferProgressSnapshot|null */
@@ -73,7 +73,7 @@ class MultipartUploader implements PromisorInterface
         ?string $uploadId = null,
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
-        TransferListenerNotifier $listenerNotifier = null,
+        ?TransferListenerNotifier $listenerNotifier = null,
     ) {
         $this->s3Client = $s3Client;
         $this->createMultipartArgs = $createMultipartArgs;
