@@ -7,6 +7,7 @@
 * `Aws\BedrockAgent` - This release improves support for newer models in Amazon Bedrock Flows.
 * `Aws\BedrockRuntime` - This release adds Reasoning Content support to Converse and ConverseStream APIs
 * `Aws\BedrockAgentRuntime` - Adding support for ReasoningContent fields in Pre-Processing, Post-Processing and Orchestration Trace outputs.
+* `Aws\ElasticInference` - Removes the Elastic Inference Service, which has been deprecated.
 
 ## 3.339.19 - 2025-02-21
 
