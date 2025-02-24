@@ -467,16 +467,9 @@ class S3TransferManager
         ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
-        $downloaderClassName = match ($config['multipart_download_type']) {
-            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\PartGetMultipartDownloader',
-            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\RangeGetMultipartDownloader',
-            default => throw new \InvalidArgumentException(
-                "The config value for `multipart_download_type` must be one of:\n"
-                . "\t* " . MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER
-                ."\n"
-                . "\t* " . MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER
-            )
-        };
+        $downloaderClassName = MultipartDownloader::chooseDownloaderClassName(
+            $config['multipart_download_type']
+        );
         $multipartDownloader = new $downloaderClassName(
             $this->s3Client,
             $requestArgs,

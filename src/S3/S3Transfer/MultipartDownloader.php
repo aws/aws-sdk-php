@@ -51,9 +51,7 @@ abstract class MultipartDownloader implements PromisorInterface
      *   using range get. This option MUST be set when using range get.
      * @param int $currentPartNo
      * @param int $objectPartsCount
-     * @param int $objectCompletedPartsCount
      * @param int $objectSizeInBytes
-     * @param int $objectBytesTransferred
      * @param string $eTag
      * @param StreamInterface|null $stream
      * @param TransferProgressSnapshot|null $currentSnapshot
@@ -336,5 +334,26 @@ abstract class MultipartDownloader implements PromisorInterface
             'request_args' => $this->requestArgs,
             'progress_snapshot' => $this->currentSnapshot,
         ]);
+    }
+
+    /**
+     * @param mixed $multipartDownloadType
+     *
+     * @return string
+     */
+    public static function chooseDownloaderClassName(
+        string $multipartDownloadType
+    ): string
+    {
+        return match ($multipartDownloadType) {
+            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\PartGetMultipartDownloader',
+            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\RangeGetMultipartDownloader',
+            default => throw new \InvalidArgumentException(
+                "The config value for `multipart_download_type` must be one of:\n"
+                . "\t* " . MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER
+                ."\n"
+                . "\t* " . MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER
+            )
+        };
     }
 }

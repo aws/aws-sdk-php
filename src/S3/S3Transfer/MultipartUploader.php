@@ -132,7 +132,7 @@ class MultipartUploader implements PromisorInterface
                 );
             } catch (Throwable $e) {
                 $this->uploadFailed($e);
-                throw $e;
+                yield Create::rejectionFor($e);
             } finally {
                 $this->callDeferredFns();
             }

@@ -90,11 +90,15 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     {
         $this->transferCount++;
         $snapshot = $context['progress_snapshot'];
-        $progressTracker = new SingleProgressTracker(
-            clear: false,
-        );
+        if (isset($this->singleProgressTrackers[$snapshot['key']])) {
+            $progressTracker = $this->singleProgressTrackers[$snapshot['key']];
+        } else {
+            $progressTracker = new SingleProgressTracker(
+                clear: false,
+            );
+            $this->singleProgressTrackers[$snapshot->getIdentifier()] = $progressTracker;
+        }
         $progressTracker->transferInitiated($context);
-        $this->singleProgressTrackers[$snapshot->getIdentifier()] = $progressTracker;
         $this->showProgress();
     }
 

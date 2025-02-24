@@ -5,6 +5,7 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
+use Aws\S3\S3Transfer\DownloadResponse;
 use Aws\S3\S3Transfer\MultipartDownloader;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
@@ -25,9 +26,9 @@ class MultipartDownloaderTest extends TestCase
      * @param int $objectSizeInBytes
      * @param int $targetPartSize
      *
-     * @return void
      * @dataProvider partGetMultipartDownloaderProvider
      *
+     * @return void
      */
     public function testMultipartDownloader(
         string $multipartDownloadType,
@@ -67,25 +68,30 @@ class MultipartDownloaderTest extends TestCase
             -> willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
-        $downloader = MultipartDownloader::chooseDownloader(
+        $downloaderClassName = MultipartDownloader::chooseDownloaderClassName(
+            $multipartDownloadType
+        );
+        /** @var MultipartDownloader $downloader */
+        $downloader = new $downloaderClassName(
             $mockClient,
-            $multipartDownloadType,
             [
                 'Bucket' => 'FooBucket',
                 'Key' => $objectKey,
             ],
             [
-                'minimumPartSize' => $targetPartSize,
+                'minimum_part_size' => $targetPartSize,
             ]
         );
-        $stream = $downloader->promise()->wait();
+        /** @var DownloadResponse $response */
+        $response = $downloader->promise()->wait();
+        $snapshot = $downloader->getCurrentSnapshot();
 
-        $this->assertInstanceOf(StreamInterface::class, $stream);
-        $this->assertEquals($objectKey, $downloader->getObjectKey());
-        $this->assertEquals($objectSizeInBytes, $downloader->getObjectSizeInBytes());
-        $this->assertEquals($objectSizeInBytes, $downloader->getObjectBytesTransferred());
+        $this->assertInstanceOf(DownloadResponse::class, $response);
+        $this->assertEquals($objectKey, $snapshot->getIdentifier());
+        $this->assertEquals($objectSizeInBytes, $snapshot->getTotalBytes());
+        $this->assertEquals($objectSizeInBytes, $snapshot->getTransferredBytes());
         $this->assertEquals($partsCount, $downloader->getObjectPartsCount());
-        $this->assertEquals($partsCount, $downloader->getObjectCompletedPartsCount());
+        $this->assertEquals($partsCount, $downloader->getCurrentPartNo());
     }
 
     /**

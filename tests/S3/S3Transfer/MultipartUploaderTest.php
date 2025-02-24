@@ -7,6 +7,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\MultipartUploader;
+use Aws\S3\S3Transfer\UploadResponse;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
@@ -62,18 +63,19 @@ class MultipartUploaderTest extends TestCase
         $multipartUploader = new MultipartUploader(
             $s3Client,
             $requestArgs,
-            $requestArgs,
-            $requestArgs,
             $config + [
                 'concurrency' => 3,
             ],
             $stream
         );
-        $multipartUploader->promise()->wait();
+        /** @var UploadResponse $response */
+        $response = $multipartUploader->promise()->wait();
+        $snapshot = $multipartUploader->getCurrentSnapshot();
 
+        $this->assertInstanceOf(UploadResponse::class, $response);
         $this->assertCount($expected['parts'], $multipartUploader->getParts());
-        $this->assertEquals($expected['bytesUploaded'], $multipartUploader->getObjectBytesTransferred());
-        $this->assertEquals($expected['bytesUploaded'], $multipartUploader->getObjectSizeInBytes());
+        $this->assertEquals($expected['bytesUploaded'], $snapshot->getTransferredBytes());
+        $this->assertEquals($expected['bytesUploaded'], $snapshot->getTotalBytes());
     }
 
     /**
@@ -187,8 +189,6 @@ EOF;
             $this->multipartUploadS3Client(),
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
             [],
-            [],
-            [],
             $nonExistentFile
         );
     }
@@ -205,8 +205,6 @@ EOF;
         new MultipartUploader(
             $this->multipartUploadS3Client(),
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
-            [],
-            [],
             [],
             12345
         );
