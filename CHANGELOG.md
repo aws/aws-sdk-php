@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.0 - 2025-02-24
 
 * `Aws\Api` - Adds protocol selection behavior for services that specify the `protocols` field
 * `Aws\ElastiCache` - Documentation update, adding clarity and rephrasing.
