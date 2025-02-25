@@ -211,33 +211,6 @@ class FunctionsTest extends TestCase
         $this->assertSame('string(4) "test"', Aws\describe_type("test"));
     }
 
-    /**
-     * @covers Aws\default_http_handler()
-     */
-    public function testGuzzleV5HttpHandler()
-    {
-        if (!class_exists('GuzzleHttp\Ring\Core')) {
-            $this->markTestSkipped();
-        }
-        $this->assertInstanceOf(
-            Aws\Handler\GuzzleV5\GuzzleHandler::class,
-            Aws\default_http_handler()
-        );
-    }
-
-    /**
-     * @covers Aws\default_http_handler()
-     */
-    public function testGuzzleV6HttpHandler()
-    {
-        if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
-            $this->markTestSkipped();
-        }
-        $this->assertInstanceOf(
-            Aws\Handler\GuzzleV6\GuzzleHandler::class,
-            Aws\default_http_handler()
-        );
-    }
 
     /**
      * @covers Aws\serialize()
