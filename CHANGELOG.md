@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.1 - 2025-02-25
 
 * `Aws\DeviceFarm` - Add an optional configuration to the ScheduleRun and CreateRemoteAccessSession API to set a device level http/s proxy.
 * `Aws\EC2` - Adds support for time-based EBS-backed AMI copy operations. Time-based copy ensures that EBS-backed AMIs are copied within and across Regions in a specified timeframe.
