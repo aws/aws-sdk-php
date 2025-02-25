@@ -318,8 +318,10 @@
       "type":"structure",
       "members":{
         "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
         "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
         "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
         "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
         "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
         "kenyaAdditionalInfo":{"shape":"KenyaAdditionalInfo"},
@@ -330,7 +332,8 @@
         "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
-        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"}
+        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
     "AdditionalInfoResponse":{
@@ -338,8 +341,10 @@
       "members":{
         "brazilAdditionalInfo":{"shape":"BrazilAdditionalInfo"},
         "canadaAdditionalInfo":{"shape":"CanadaAdditionalInfo"},
+        "egyptAdditionalInfo":{"shape":"EgyptAdditionalInfo"},
         "estoniaAdditionalInfo":{"shape":"EstoniaAdditionalInfo"},
         "georgiaAdditionalInfo":{"shape":"GeorgiaAdditionalInfo"},
+        "greeceAdditionalInfo":{"shape":"GreeceAdditionalInfo"},
         "indiaAdditionalInfo":{"shape":"IndiaAdditionalInfo"},
         "israelAdditionalInfo":{"shape":"IsraelAdditionalInfo"},
         "italyAdditionalInfo":{"shape":"ItalyAdditionalInfo"},
@@ -351,7 +356,8 @@
         "southKoreaAdditionalInfo":{"shape":"SouthKoreaAdditionalInfo"},
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
-        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"}
+        "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
     "Address":{
@@ -599,6 +605,10 @@
       },
       "exception":true
     },
+    "ContractingAuthorityCode":{
+      "type":"string",
+      "pattern":"^\\d{4}\\.[A-Z]\\d{5}\\.\\d{4}$"
+    },
     "CountryCode":{
       "type":"string",
       "max":2,
@@ -613,6 +623,10 @@
       "type":"string",
       "max":10,
       "min":10,
+      "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
+    },
+    "DateString":{
+      "type":"string",
       "pattern":"^(\\d{4}-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1]))$"
     },
     "DeleteSupplementalTaxRegistrationRequest":{
@@ -661,6 +675,21 @@
       "max":50,
       "min":1,
       "pattern":"^(?!\\s*$)[\\s\\S]+$"
+    },
+    "EgyptAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "uniqueIdentificationNumber":{"shape":"UniqueIdentificationNumber"},
+        "uniqueIdentificationNumberExpirationDate":{"shape":"DateString"}
+      }
+    },
+    "ElectronicTransactionCodeNumber":{
+      "type":"string",
+      "pattern":"^\\d{17}$"
+    },
+    "EnterpriseIdentificationNumber":{
+      "type":"string",
+      "pattern":"^(\\d{10}|(\\d{10}-\\d{3}))$"
     },
     "EntityExemptionAccountStatus":{
       "type":"string",
@@ -782,6 +811,12 @@
       "type":"structure",
       "members":{
         "taxRegistration":{"shape":"TaxRegistration"}
+      }
+    },
+    "GreeceAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "contractingAuthorityCode":{"shape":"ContractingAuthorityCode"}
       }
     },
     "HeritageStatus":{
@@ -989,6 +1024,10 @@
     "Pan":{
       "type":"string",
       "pattern":"^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+    },
+    "PaymentVoucherNumber":{
+      "type":"string",
+      "pattern":"^\\d{17}$"
     },
     "PersonType":{
       "type":"string",
@@ -1477,6 +1516,10 @@
         "Individual"
       ]
     },
+    "UniqueIdentificationNumber":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9]{39}$"
+    },
     "Url":{
       "type":"string",
       "max":200,
@@ -1526,6 +1569,15 @@
       "members":{
         "dateOfBirth":{"shape":"DateOfBirth"},
         "taxRegistrationDocuments":{"shape":"TaxRegistrationDocuments"}
+      }
+    },
+    "VietnamAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "electronicTransactionCodeNumber":{"shape":"ElectronicTransactionCodeNumber"},
+        "enterpriseIdentificationNumber":{"shape":"EnterpriseIdentificationNumber"},
+        "paymentVoucherNumber":{"shape":"PaymentVoucherNumber"},
+        "paymentVoucherNumberDate":{"shape":"DateString"}
       }
     }
   }

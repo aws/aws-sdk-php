@@ -5203,8 +5203,8 @@
       "base": null,
       "refs": {
         "CreateVerifiedAccessEndpointCidrOptions$SubnetIds": "<p>The IDs of the subnets.</p>",
-        "CreateVerifiedAccessEndpointLoadBalancerOptions$SubnetIds": "<p>The IDs of the subnets.</p>",
-        "CreateVerifiedAccessEndpointRdsOptions$SubnetIds": "<p>The IDs of the subnets.</p>"
+        "CreateVerifiedAccessEndpointLoadBalancerOptions$SubnetIds": "<p>The IDs of the subnets. You can specify only one subnet per Availability Zone.</p>",
+        "CreateVerifiedAccessEndpointRdsOptions$SubnetIds": "<p>The IDs of the subnets. You can specify only one subnet per Availability Zone.</p>"
       }
     },
     "CreateVerifiedAccessGroupRequest": {
@@ -15323,6 +15323,7 @@
     "Long": {
       "base": null,
       "refs": {
+        "CopyImageRequest$SnapshotCopyCompletionDurationMinutes": "<p>Specify a completion duration, in 15 minute increments, to initiate a time-based AMI copy. The specified completion duration applies to each of the snapshots associated with the AMI. Each snapshot associated with the AMI will be completed within the specified completion duration, regardless of their size.</p> <p>If you do not specify a value, the AMI copy operation is completed on a best-effort basis.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html\"> Time-based copies</a>.</p>",
         "CreateCustomerGatewayRequest$BgpAsnExtended": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Valid values: <code>2,147,483,648</code> to <code>4,294,967,295</code> </p>",
         "CreateVpnGatewayRequest$AmazonSideAsn": "<p>A private Autonomous System Number (ASN) for the Amazon side of a BGP session. If you're using a 16-bit ASN, it must be in the 64512 to 65534 range. If you're using a 32-bit ASN, it must be in the 4200000000 to 4294967294 range.</p> <p>Default: 64512</p>",
         "DeleteLaunchTemplateVersionsResponseErrorItem$VersionNumber": "<p>The version number of the launch template.</p>",
@@ -22451,7 +22452,7 @@
         "SecurityGroupReference$GroupId": "<p>The ID of your security group.</p>",
         "SecurityGroupReference$ReferencingVpcId": "<p>The ID of the VPC with the referencing security group.</p>",
         "SecurityGroupReference$VpcPeeringConnectionId": "<p>The ID of the VPC peering connection (if applicable). For more information about security group referencing for peering connections, see <a href=\"https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html\">Update your security groups to reference peer security groups</a> in the <i>VPC Peering Guide</i>.</p>",
-        "SecurityGroupReference$TransitGatewayId": "<note> <p>This parameter is in preview and may not be available for your account.</p> </note> <p>The ID of the transit gateway (if applicable).</p>",
+        "SecurityGroupReference$TransitGatewayId": "<p>The ID of the transit gateway (if applicable).</p>",
         "SecurityGroupRule$GroupOwnerId": "<p>The ID of the Amazon Web Services account that owns the security group. </p>",
         "SecurityGroupRule$IpProtocol": "<p>The IP protocol name (<code>tcp</code>, <code>udp</code>, <code>icmp</code>, <code>icmpv6</code>) or number (see <a href=\"http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml\">Protocol Numbers</a>). </p> <p>Use <code>-1</code> to specify all protocols.</p>",
         "SecurityGroupRule$CidrIpv4": "<p>The IPv4 CIDR range.</p>",

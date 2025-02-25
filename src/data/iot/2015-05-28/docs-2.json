@@ -1763,6 +1763,12 @@
         "AuditCheckDetails$checkCompliant": "<p>True if the check is complete and found all resources compliant.</p>"
       }
     },
+    "CheckCustomConfiguration": {
+      "base": null,
+      "refs": {
+        "AuditCheckConfiguration$configuration": "<p>A structure containing the configName and corresponding configValue for configuring audit checks.</p>"
+      }
+    },
     "Cidr": {
       "base": null,
       "refs": {
@@ -2081,6 +2087,18 @@
       "refs": {
         "MachineLearningDetectionConfig$confidenceLevel": "<p> The sensitivity of anomalous behavior evaluation. Can be <code>Low</code>, <code>Medium</code>, or <code>High</code>. </p>",
         "ViolationEventAdditionalInfo$confidenceLevel": "<p> The sensitivity of anomalous behavior evaluation. Can be <code>Low</code>, <code>Medium</code>, or <code>High</code>. </p>"
+      }
+    },
+    "ConfigName": {
+      "base": null,
+      "refs": {
+        "CheckCustomConfiguration$key": null
+      }
+    },
+    "ConfigValue": {
+      "base": null,
+      "refs": {
+        "CheckCustomConfiguration$value": null
       }
     },
     "Configuration": {
