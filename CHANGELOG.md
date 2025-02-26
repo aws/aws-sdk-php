@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.2 - 2025-02-26
 
 * `Aws\OAM` - This release adds support for sharing AWS::ApplicationSignals::Service and AWS::ApplicationSignals::ServiceLevelObjective resources.
 * `Aws\Batch` - AWS Batch: Resource Aware Scheduling feature support
