@@ -752,6 +752,42 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "DisableOrganizationsRootCredentialsManagement":{
+      "name":"DisableOrganizationsRootCredentialsManagement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableOrganizationsRootCredentialsManagementRequest"},
+      "output":{
+        "shape":"DisableOrganizationsRootCredentialsManagementResponse",
+        "resultWrapper":"DisableOrganizationsRootCredentialsManagementResult"
+      },
+      "errors":[
+        {"shape":"ServiceAccessNotEnabledException"},
+        {"shape":"AccountNotManagementOrDelegatedAdministratorException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"}
+      ]
+    },
+    "DisableOrganizationsRootSessions":{
+      "name":"DisableOrganizationsRootSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableOrganizationsRootSessionsRequest"},
+      "output":{
+        "shape":"DisableOrganizationsRootSessionsResponse",
+        "resultWrapper":"DisableOrganizationsRootSessionsResult"
+      },
+      "errors":[
+        {"shape":"ServiceAccessNotEnabledException"},
+        {"shape":"AccountNotManagementOrDelegatedAdministratorException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"}
+      ]
+    },
     "EnableMFADevice":{
       "name":"EnableMFADevice",
       "http":{
@@ -767,6 +803,44 @@
         {"shape":"NoSuchEntityException"},
         {"shape":"ServiceFailureException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "EnableOrganizationsRootCredentialsManagement":{
+      "name":"EnableOrganizationsRootCredentialsManagement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableOrganizationsRootCredentialsManagementRequest"},
+      "output":{
+        "shape":"EnableOrganizationsRootCredentialsManagementResponse",
+        "resultWrapper":"EnableOrganizationsRootCredentialsManagementResult"
+      },
+      "errors":[
+        {"shape":"ServiceAccessNotEnabledException"},
+        {"shape":"AccountNotManagementOrDelegatedAdministratorException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"CallerIsNotManagementAccountException"}
+      ]
+    },
+    "EnableOrganizationsRootSessions":{
+      "name":"EnableOrganizationsRootSessions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableOrganizationsRootSessionsRequest"},
+      "output":{
+        "shape":"EnableOrganizationsRootSessionsResponse",
+        "resultWrapper":"EnableOrganizationsRootSessionsResult"
+      },
+      "errors":[
+        {"shape":"ServiceAccessNotEnabledException"},
+        {"shape":"AccountNotManagementOrDelegatedAdministratorException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"},
+        {"shape":"CallerIsNotManagementAccountException"}
       ]
     },
     "GenerateCredentialReport":{
@@ -1483,6 +1557,24 @@
       },
       "errors":[
         {"shape":"ServiceFailureException"}
+      ]
+    },
+    "ListOrganizationsFeatures":{
+      "name":"ListOrganizationsFeatures",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOrganizationsFeaturesRequest"},
+      "output":{
+        "shape":"ListOrganizationsFeaturesResponse",
+        "resultWrapper":"ListOrganizationsFeaturesResult"
+      },
+      "errors":[
+        {"shape":"ServiceAccessNotEnabledException"},
+        {"shape":"AccountNotManagementOrDelegatedAdministratorException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationNotInAllFeaturesModeException"}
       ]
     },
     "ListPolicies":{
@@ -2524,6 +2616,12 @@
         "CreateDate":{"shape":"dateType"}
       }
     },
+    "AccountNotManagementOrDelegatedAdministratorException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "ActionNameListType":{
       "type":"list",
       "member":{"shape":"ActionNameType"}
@@ -2620,6 +2718,12 @@
     "BootstrapDatum":{
       "type":"blob",
       "sensitive":true
+    },
+    "CallerIsNotManagementAccountException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "CertificationKeyType":{
       "type":"string",
@@ -2759,10 +2863,6 @@
     },
     "CreateLoginProfileRequest":{
       "type":"structure",
-      "required":[
-        "UserName",
-        "Password"
-      ],
       "members":{
         "UserName":{"shape":"userNameType"},
         "Password":{"shape":"passwordType"},
@@ -2863,7 +2963,9 @@
       "members":{
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
         "Name":{"shape":"SAMLProviderNameType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "AddPrivateKey":{"shape":"privateKeyType"}
       }
     },
     "CreateSAMLProviderResponse":{
@@ -2975,10 +3077,7 @@
     },
     "DeactivateMFADeviceRequest":{
       "type":"structure",
-      "required":[
-        "UserName",
-        "SerialNumber"
-      ],
+      "required":["SerialNumber"],
       "members":{
         "UserName":{"shape":"existingUserNameType"},
         "SerialNumber":{"shape":"serialNumberType"}
@@ -3038,7 +3137,6 @@
     },
     "DeleteLoginProfileRequest":{
       "type":"structure",
-      "required":["UserName"],
       "members":{
         "UserName":{"shape":"userNameType"}
       }
@@ -3234,6 +3332,30 @@
         "PolicyArn":{"shape":"arnType"}
       }
     },
+    "DisableOrganizationsRootCredentialsManagementRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DisableOrganizationsRootCredentialsManagementResponse":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"OrganizationIdType"},
+        "EnabledFeatures":{"shape":"FeaturesListType"}
+      }
+    },
+    "DisableOrganizationsRootSessionsRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DisableOrganizationsRootSessionsResponse":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"OrganizationIdType"},
+        "EnabledFeatures":{"shape":"FeaturesListType"}
+      }
+    },
     "DuplicateCertificateException":{
       "type":"structure",
       "members":{
@@ -3271,6 +3393,30 @@
         "SerialNumber":{"shape":"serialNumberType"},
         "AuthenticationCode1":{"shape":"authenticationCodeType"},
         "AuthenticationCode2":{"shape":"authenticationCodeType"}
+      }
+    },
+    "EnableOrganizationsRootCredentialsManagementRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "EnableOrganizationsRootCredentialsManagementResponse":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"OrganizationIdType"},
+        "EnabledFeatures":{"shape":"FeaturesListType"}
+      }
+    },
+    "EnableOrganizationsRootSessionsRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "EnableOrganizationsRootSessionsResponse":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"OrganizationIdType"},
+        "EnabledFeatures":{"shape":"FeaturesListType"}
       }
     },
     "EntityAlreadyExistsException":{
@@ -3373,6 +3519,17 @@
     "EvaluationResultsListType":{
       "type":"list",
       "member":{"shape":"EvaluationResult"}
+    },
+    "FeatureType":{
+      "type":"string",
+      "enum":[
+        "RootCredentialsManagement",
+        "RootSessions"
+      ]
+    },
+    "FeaturesListType":{
+      "type":"list",
+      "member":{"shape":"FeatureType"}
     },
     "GenerateCredentialReportResponse":{
       "type":"structure",
@@ -3546,7 +3703,6 @@
     },
     "GetLoginProfileRequest":{
       "type":"structure",
-      "required":["UserName"],
       "members":{
         "UserName":{"shape":"userNameType"}
       }
@@ -3699,10 +3855,13 @@
     "GetSAMLProviderResponse":{
       "type":"structure",
       "members":{
+        "SAMLProviderUUID":{"shape":"privateKeyIdType"},
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
         "CreateDate":{"shape":"dateType"},
         "ValidUntil":{"shape":"dateType"},
-        "Tags":{"shape":"tagListType"}
+        "Tags":{"shape":"tagListType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "PrivateKeyList":{"shape":"privateKeyList"}
       }
     },
     "GetSSHPublicKeyRequest":{
@@ -4262,6 +4421,18 @@
         "OpenIDConnectProviderList":{"shape":"OpenIDConnectProviderListType"}
       }
     },
+    "ListOrganizationsFeaturesRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "ListOrganizationsFeaturesResponse":{
+      "type":"structure",
+      "members":{
+        "OrganizationId":{"shape":"OrganizationIdType"},
+        "EnabledFeatures":{"shape":"FeaturesListType"}
+      }
+    },
     "ListPoliciesGrantingServiceAccessEntry":{
       "type":"structure",
       "members":{
@@ -4683,6 +4854,23 @@
         "code":"OpenIdIdpCommunicationError",
         "httpStatusCode":400,
         "senderFault":true
+      },
+      "exception":true
+    },
+    "OrganizationIdType":{
+      "type":"string",
+      "max":34,
+      "pattern":"^o-[a-z0-9]{10,32}$"
+    },
+    "OrganizationNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "OrganizationNotInAllFeaturesModeException":{
+      "type":"structure",
+      "members":{
       },
       "exception":true
     },
@@ -5121,6 +5309,13 @@
       "max":10000000,
       "min":1000
     },
+    "SAMLPrivateKey":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"privateKeyIdType"},
+        "Timestamp":{"shape":"dateType"}
+      }
+    },
     "SAMLProviderListEntry":{
       "type":"structure",
       "members":{
@@ -5205,6 +5400,12 @@
         "UploadDate":{"shape":"dateType"},
         "Expiration":{"shape":"dateType"}
       }
+    },
+    "ServiceAccessNotEnabledException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "ServiceFailureException":{
       "type":"structure",
@@ -5716,13 +5917,13 @@
     },
     "UpdateSAMLProviderRequest":{
       "type":"structure",
-      "required":[
-        "SAMLMetadataDocument",
-        "SAMLProviderArn"
-      ],
+      "required":["SAMLProviderArn"],
       "members":{
         "SAMLMetadataDocument":{"shape":"SAMLMetadataDocumentType"},
-        "SAMLProviderArn":{"shape":"arnType"}
+        "SAMLProviderArn":{"shape":"arnType"},
+        "AssertionEncryptionMode":{"shape":"assertionEncryptionModeType"},
+        "AddPrivateKey":{"shape":"privateKeyType"},
+        "RemovePrivateKey":{"shape":"privateKeyIdType"}
       }
     },
     "UpdateSAMLProviderResponse":{
@@ -5916,6 +6117,13 @@
       "type":"string",
       "max":2048,
       "min":20
+    },
+    "assertionEncryptionModeType":{
+      "type":"string",
+      "enum":[
+        "Required",
+        "Allowed"
+      ]
     },
     "assignmentStatusType":{
       "type":"string",
@@ -6217,6 +6425,17 @@
       "type":"string",
       "pattern":"v[1-9][0-9]*(\\.[A-Za-z0-9-]*)?"
     },
+    "privateKeyIdType":{
+      "type":"string",
+      "max":64,
+      "min":22,
+      "pattern":"[A-Z0-9]+"
+    },
+    "privateKeyList":{
+      "type":"list",
+      "member":{"shape":"SAMLPrivateKey"},
+      "max":2
+    },
     "privateKeyType":{
       "type":"string",
       "max":16384,
@@ -6351,6 +6570,7 @@
         "MFADevicesInUse",
         "AccountMFAEnabled",
         "AccountAccessKeysPresent",
+        "AccountPasswordPresent",
         "AccountSigningCertificatesPresent",
         "AttachedPoliciesPerGroupQuota",
         "AttachedPoliciesPerRoleQuota",

@@ -1801,6 +1801,12 @@
         "AutoScalingPolicyDescription$Rules": "<p>The scale-in and scale-out rules that comprise the automatic scaling policy.</p>"
       }
     },
+    "ScalingStrategy": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$ScalingStrategy": "<p>Determines whether a custom scaling utilization performance index can be set. Possible values include <i>ADVANCED</i> or <i>DEFAULT</i>.</p>"
+      }
+    },
     "ScalingTrigger": {
       "base": "<p>The conditions that trigger an automatic scaling activity.</p>",
       "refs": {
@@ -2275,6 +2281,12 @@
         "Credentials$UsernamePassword": "<p>The username and password that you use to connect to cluster endpoints.</p>"
       }
     },
+    "UtilizationPerformanceIndexInteger": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$UtilizationPerformanceIndex": "<p>An integer value that represents an advanced scaling strategy. Setting a higher value optimizes for performance. Setting a lower value optimizes for resource conservation. Setting the value to 50 balances performance and resource conservation. Possible values are 1, 25, 50, 75, and 100.</p>"
+      }
+    },
     "VolumeSpecification": {
       "base": "<p>EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.</p>",
       "refs": {
@@ -2412,7 +2424,10 @@
         "GetStudioSessionMappingInput$IdentityId": "<p>The globally unique identifier (GUID) of the user or group. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId\">UserId</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId\">GroupId</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "GetStudioSessionMappingInput$IdentityName": "<p>The name of the user or group to fetch. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName\">UserName</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName\">DisplayName</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "InstanceFleet$Name": "<p>A friendly name for the instance fleet.</p>",
+        "InstanceFleet$Context": "<p>Reserved.</p>",
         "InstanceFleetConfig$Name": "<p>The friendly name of the instance fleet.</p>",
+        "InstanceFleetConfig$Context": "<p>Reserved.</p>",
+        "InstanceFleetModifyConfig$Context": "<p>Reserved.</p>",
         "InstanceGroup$CustomAmiId": "<p>The custom AMI ID to use for the provisioned instance group.</p>",
         "InstanceGroupConfig$Name": "<p>Friendly name given to the instance group.</p>",
         "InstanceGroupConfig$BidPrice": "<p>If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify <code>OnDemandPrice</code> to set the amount equal to the On-Demand price, or specify an amount in USD.</p>",

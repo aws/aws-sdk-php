@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"redshift-data",
     "targetPrefix":"RedshiftData",
-    "uid":"redshift-data-2019-12-20"
+    "uid":"redshift-data-2019-12-20",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchExecuteStatement":{
@@ -98,6 +99,20 @@
       },
       "input":{"shape":"GetStatementResultRequest"},
       "output":{"shape":"GetStatementResultResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetStatementResultV2":{
+      "name":"GetStatementResultV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetStatementResultV2Request"},
+      "output":{"shape":"GetStatementResultV2Response"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -202,6 +217,7 @@
         "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
+        "ResultFormat":{"shape":"ResultFormatString"},
         "SecretArn":{"shape":"SecretArn"},
         "SessionId":{"shape":"UUID"},
         "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
@@ -263,8 +279,7 @@
     "ClusterIdentifierString":{
       "type":"string",
       "max":63,
-      "min":1,
-      "pattern":"^[a-z]([a-z0-9]|-[a-z0-9])*$"
+      "min":1
     },
     "ColumnList":{
       "type":"list",
@@ -332,6 +347,7 @@
         "QueryString":{"shape":"StatementString"},
         "RedshiftPid":{"shape":"Long"},
         "RedshiftQueryId":{"shape":"Long"},
+        "ResultFormat":{"shape":"ResultFormatString"},
         "ResultRows":{"shape":"Long"},
         "ResultSize":{"shape":"Long"},
         "SecretArn":{"shape":"SecretArn"},
@@ -391,6 +407,7 @@
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "Parameters":{"shape":"SqlParametersList"},
+        "ResultFormat":{"shape":"ResultFormatString"},
         "SecretArn":{"shape":"SecretArn"},
         "SessionId":{"shape":"UUID"},
         "SessionKeepAliveSeconds":{"shape":"SessionAliveSeconds"},
@@ -430,6 +447,10 @@
       "type":"list",
       "member":{"shape":"Field"}
     },
+    "FormattedSqlRecords":{
+      "type":"list",
+      "member":{"shape":"QueryRecords"}
+    },
     "GetStatementResultRequest":{
       "type":"structure",
       "required":["Id"],
@@ -445,6 +466,25 @@
         "ColumnMetadata":{"shape":"ColumnMetadataList"},
         "NextToken":{"shape":"String"},
         "Records":{"shape":"SqlRecords"},
+        "TotalNumRows":{"shape":"Long"}
+      }
+    },
+    "GetStatementResultV2Request":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"UUID"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "GetStatementResultV2Response":{
+      "type":"structure",
+      "required":["Records"],
+      "members":{
+        "ColumnMetadata":{"shape":"ColumnMetadataList"},
+        "NextToken":{"shape":"String"},
+        "Records":{"shape":"FormattedSqlRecords"},
+        "ResultFormat":{"shape":"ResultFormatString"},
         "TotalNumRows":{"shape":"Long"}
       }
     },
@@ -560,6 +600,13 @@
       "type":"string",
       "min":1
     },
+    "QueryRecords":{
+      "type":"structure",
+      "members":{
+        "CSVRecords":{"shape":"String"}
+      },
+      "union":true
+    },
     "QueryTimeoutException":{
       "type":"structure",
       "members":{
@@ -578,6 +625,13 @@
         "ResourceId":{"shape":"String"}
       },
       "exception":true
+    },
+    "ResultFormatString":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "CSV"
+      ]
     },
     "SchemaList":{
       "type":"list",
@@ -626,6 +680,7 @@
         "QueryParameters":{"shape":"SqlParametersList"},
         "QueryString":{"shape":"StatementString"},
         "QueryStrings":{"shape":"StatementStringList"},
+        "ResultFormat":{"shape":"ResultFormatString"},
         "SecretArn":{"shape":"SecretArn"},
         "SessionId":{"shape":"UUID"},
         "StatementName":{"shape":"StatementNameString"},

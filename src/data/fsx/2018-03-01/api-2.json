@@ -1014,7 +1014,8 @@
         "SourceBackupId":{"shape":"BackupId"},
         "SourceBackupRegion":{"shape":"Region"},
         "ResourceType":{"shape":"ResourceType"},
-        "Volume":{"shape":"Volume"}
+        "Volume":{"shape":"Volume"},
+        "SizeInBytes":{"shape":"SizeInBytes"}
       }
     },
     "BackupBeingCopied":{
@@ -1357,6 +1358,7 @@
         "CopyTagsToBackups":{"shape":"Flag"},
         "DriveCacheType":{"shape":"DriveCacheType"},
         "DataCompressionType":{"shape":"DataCompressionType"},
+        "EfaEnabled":{"shape":"Flag"},
         "LogConfiguration":{"shape":"LustreLogCreateConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
         "MetadataConfiguration":{"shape":"CreateFileSystemLustreMetadataConfiguration"}
@@ -1406,14 +1408,14 @@
         "RootVolumeConfiguration":{"shape":"OpenZFSCreateRootVolumeConfiguration"},
         "PreferredSubnetId":{"shape":"SubnetId"},
         "EndpointIpAddressRange":{"shape":"IpAddressRange"},
-        "RouteTableIds":{"shape":"RouteTableIds"}
+        "RouteTableIds":{"shape":"RouteTableIds"},
+        "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
     },
     "CreateFileSystemRequest":{
       "type":"structure",
       "required":[
         "FileSystemType",
-        "StorageCapacity",
         "SubnetIds"
       ],
       "members":{
@@ -2662,7 +2664,7 @@
     },
     "IntegerRecordSizeKiB":{
       "type":"integer",
-      "max":1024,
+      "max":4096,
       "min":4
     },
     "InternalServerError":{
@@ -2822,7 +2824,8 @@
         "DataCompressionType":{"shape":"DataCompressionType"},
         "LogConfiguration":{"shape":"LustreLogConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
-        "MetadataConfiguration":{"shape":"FileSystemLustreMetadataConfiguration"}
+        "MetadataConfiguration":{"shape":"FileSystemLustreMetadataConfiguration"},
+        "EfaEnabled":{"shape":"Flag"}
       }
     },
     "LustreFileSystemMountName":{
@@ -3111,7 +3114,8 @@
         "PreferredSubnetId":{"shape":"SubnetId"},
         "EndpointIpAddressRange":{"shape":"IpAddressRange"},
         "RouteTableIds":{"shape":"RouteTableIds"},
-        "EndpointIpAddress":{"shape":"IpAddress"}
+        "EndpointIpAddress":{"shape":"IpAddress"},
+        "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
     },
     "OpenZFSNfsExport":{
@@ -3150,6 +3154,21 @@
       "enum":[
         "USER",
         "GROUP"
+      ]
+    },
+    "OpenZFSReadCacheConfiguration":{
+      "type":"structure",
+      "members":{
+        "SizingMode":{"shape":"OpenZFSReadCacheSizingMode"},
+        "SizeGiB":{"shape":"StorageCapacity"}
+      }
+    },
+    "OpenZFSReadCacheSizingMode":{
+      "type":"string",
+      "enum":[
+        "NO_CACHE",
+        "USER_PROVISIONED",
+        "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
       ]
     },
     "OpenZFSUserAndGroupQuotas":{
@@ -3462,6 +3481,10 @@
       },
       "exception":true
     },
+    "SizeInBytes":{
+      "type":"long",
+      "min":0
+    },
     "SnaplockConfiguration":{
       "type":"structure",
       "members":{
@@ -3632,7 +3655,8 @@
       "type":"string",
       "enum":[
         "SSD",
-        "HDD"
+        "HDD",
+        "INTELLIGENT_TIERING"
       ]
     },
     "StorageVirtualMachine":{
@@ -3992,7 +4016,8 @@
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
         "AddRouteTableIds":{"shape":"RouteTableIds"},
-        "RemoveRouteTableIds":{"shape":"RouteTableIds"}
+        "RemoveRouteTableIds":{"shape":"RouteTableIds"},
+        "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
     },
     "UpdateFileSystemRequest":{
@@ -4009,7 +4034,8 @@
         "LustreConfiguration":{"shape":"UpdateFileSystemLustreConfiguration"},
         "OntapConfiguration":{"shape":"UpdateFileSystemOntapConfiguration"},
         "OpenZFSConfiguration":{"shape":"UpdateFileSystemOpenZFSConfiguration"},
-        "StorageType":{"shape":"StorageType"}
+        "StorageType":{"shape":"StorageType"},
+        "FileSystemTypeVersion":{"shape":"FileSystemTypeVersion"}
       }
     },
     "UpdateFileSystemResponse":{

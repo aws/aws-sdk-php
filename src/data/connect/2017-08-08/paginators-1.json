@@ -55,6 +55,12 @@
       "output_token": "NextToken",
       "result_key": "ContactFlowModulesSummaryList"
     },
+    "ListContactFlowVersions": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "output_token": "NextToken",
+      "result_key": "ContactFlowVersionSummaryList"
+    },
     "ListContactFlows": {
       "input_token": "NextToken",
       "limit_key": "MaxResults",
@@ -89,6 +95,16 @@
       "limit_key": "MaxResults",
       "output_token": "NextToken",
       "result_key": "FlowAssociationSummaryList"
+    },
+    "ListHoursOfOperationOverrides": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "LastModifiedRegion",
+        "LastModifiedTime"
+      ],
+      "output_token": "NextToken",
+      "result_key": "HoursOfOperationOverrideList"
     },
     "ListHoursOfOperations": {
       "input_token": "NextToken",
@@ -336,6 +352,15 @@
       ],
       "output_token": "NextToken",
       "result_key": "Contacts"
+    },
+    "SearchHoursOfOperationOverrides": {
+      "input_token": "NextToken",
+      "limit_key": "MaxResults",
+      "non_aggregate_keys": [
+        "ApproximateTotalCount"
+      ],
+      "output_token": "NextToken",
+      "result_key": "HoursOfOperationOverrides"
     },
     "SearchHoursOfOperations": {
       "input_token": "NextToken",

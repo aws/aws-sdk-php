@@ -46,6 +46,39 @@
       ],
       "idempotent":true
     },
+    "CreateAddressList":{
+      "name":"CreateAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAddressListRequest"},
+      "output":{"shape":"CreateAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "CreateAddressListImportJob":{
+      "name":"CreateAddressListImportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAddressListImportJobRequest"},
+      "output":{"shape":"CreateAddressListImportJobResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateArchive":{
       "name":"CreateArchive",
       "http":{
@@ -151,6 +184,21 @@
       ],
       "idempotent":true
     },
+    "DeleteAddressList":{
+      "name":"DeleteAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAddressListRequest"},
+      "output":{"shape":"DeleteAddressListResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "DeleteArchive":{
       "name":"DeleteArchive",
       "http":{
@@ -226,6 +274,22 @@
       ],
       "idempotent":true
     },
+    "DeregisterMemberFromAddressList":{
+      "name":"DeregisterMemberFromAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterMemberFromAddressListRequest"},
+      "output":{"shape":"DeregisterMemberFromAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "GetAddonInstance":{
       "name":"GetAddonInstance",
       "http":{
@@ -250,6 +314,36 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetAddressList":{
+      "name":"GetAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAddressListRequest"},
+      "output":{"shape":"GetAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetAddressListImportJob":{
+      "name":"GetAddressListImportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAddressListImportJobRequest"},
+      "output":{"shape":"GetAddressListImportJobResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "GetArchive":{
@@ -351,6 +445,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetMemberOfAddressList":{
+      "name":"GetMemberOfAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMemberOfAddressListRequest"},
+      "output":{"shape":"GetMemberOfAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetRelay":{
       "name":"GetRelay",
       "http":{
@@ -414,6 +523,35 @@
         {"shape":"ValidationException"}
       ]
     },
+    "ListAddressListImportJobs":{
+      "name":"ListAddressListImportJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAddressListImportJobsRequest"},
+      "output":{"shape":"ListAddressListImportJobsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAddressLists":{
+      "name":"ListAddressLists",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAddressListsRequest"},
+      "output":{"shape":"ListAddressListsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListArchiveExports":{
       "name":"ListArchiveExports",
       "http":{
@@ -470,6 +608,21 @@
         {"shape":"ValidationException"}
       ]
     },
+    "ListMembersOfAddressList":{
+      "name":"ListMembersOfAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMembersOfAddressListRequest"},
+      "output":{"shape":"ListMembersOfAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListRelays":{
       "name":"ListRelays",
       "http":{
@@ -519,6 +672,41 @@
         {"shape":"ValidationException"}
       ]
     },
+    "RegisterMemberToAddressList":{
+      "name":"RegisterMemberToAddressList",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterMemberToAddressListRequest"},
+      "output":{"shape":"RegisterMemberToAddressListResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
+    "StartAddressListImportJob":{
+      "name":"StartAddressListImportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAddressListImportJobRequest"},
+      "output":{"shape":"StartAddressListImportJobResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "StartArchiveExport":{
       "name":"StartArchiveExport",
       "http":{
@@ -551,6 +739,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
+    },
+    "StopAddressListImportJob":{
+      "name":"StopAddressListImportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopAddressListImportJobRequest"},
+      "output":{"shape":"StopAddressListImportJobResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
     },
     "StopArchiveExport":{
       "name":"StopArchiveExport",
@@ -766,6 +971,64 @@
       "type":"list",
       "member":{"shape":"AddonSubscription"}
     },
+    "Address":{
+      "type":"string",
+      "max":320,
+      "min":3,
+      "sensitive":true
+    },
+    "AddressFilter":{
+      "type":"structure",
+      "members":{
+        "AddressPrefix":{"shape":"AddressPrefix"}
+      }
+    },
+    "AddressList":{
+      "type":"structure",
+      "required":[
+        "AddressListArn",
+        "AddressListId",
+        "AddressListName",
+        "CreatedTimestamp",
+        "LastUpdatedTimestamp"
+      ],
+      "members":{
+        "AddressListArn":{"shape":"AddressListArn"},
+        "AddressListId":{"shape":"AddressListId"},
+        "AddressListName":{"shape":"AddressListName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "AddressListArn":{"type":"string"},
+    "AddressListId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-]+$"
+    },
+    "AddressListName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.-]+$"
+    },
+    "AddressLists":{
+      "type":"list",
+      "member":{"shape":"AddressList"}
+    },
+    "AddressPageSize":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "AddressPrefix":{
+      "type":"string",
+      "max":320,
+      "min":1,
+      "sensitive":true
+    },
     "Analysis":{
       "type":"structure",
       "required":[
@@ -887,7 +1150,9 @@
         "TO",
         "FROM",
         "CC",
-        "SUBJECT"
+        "SUBJECT",
+        "ENVELOPE_TO",
+        "ENVELOPE_FROM"
       ]
     },
     "ArchiveStringExpression":{
@@ -966,6 +1231,53 @@
       "required":["AddonSubscriptionId"],
       "members":{
         "AddonSubscriptionId":{"shape":"AddonSubscriptionId"}
+      }
+    },
+    "CreateAddressListImportJobRequest":{
+      "type":"structure",
+      "required":[
+        "AddressListId",
+        "ImportDataFormat",
+        "Name"
+      ],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"},
+        "ClientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "ImportDataFormat":{"shape":"ImportDataFormat"},
+        "Name":{"shape":"JobName"}
+      }
+    },
+    "CreateAddressListImportJobResponse":{
+      "type":"structure",
+      "required":[
+        "JobId",
+        "PreSignedUrl"
+      ],
+      "members":{
+        "JobId":{"shape":"JobId"},
+        "PreSignedUrl":{"shape":"PreSignedUrl"}
+      }
+    },
+    "CreateAddressListRequest":{
+      "type":"structure",
+      "required":["AddressListName"],
+      "members":{
+        "AddressListName":{"shape":"AddressListName"},
+        "ClientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateAddressListResponse":{
+      "type":"structure",
+      "required":["AddressListId"],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"}
       }
     },
     "CreateArchiveRequest":{
@@ -1117,6 +1429,18 @@
       "members":{
       }
     },
+    "DeleteAddressListRequest":{
+      "type":"structure",
+      "required":["AddressListId"],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"}
+      }
+    },
+    "DeleteAddressListResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteArchiveRequest":{
       "type":"structure",
       "required":["ArchiveId"],
@@ -1189,6 +1513,36 @@
         "RoleArn":{"shape":"IamRoleArn"}
       }
     },
+    "DeliverToQBusinessAction":{
+      "type":"structure",
+      "required":[
+        "ApplicationId",
+        "IndexId",
+        "RoleArn"
+      ],
+      "members":{
+        "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
+        "ApplicationId":{"shape":"QBusinessApplicationId"},
+        "IndexId":{"shape":"QBusinessIndexId"},
+        "RoleArn":{"shape":"IamRoleArn"}
+      }
+    },
+    "DeregisterMemberFromAddressListRequest":{
+      "type":"structure",
+      "required":[
+        "Address",
+        "AddressListId"
+      ],
+      "members":{
+        "Address":{"shape":"Address"},
+        "AddressListId":{"shape":"AddressListId"}
+      }
+    },
+    "DeregisterMemberFromAddressListResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Double":{
       "type":"double",
       "box":true
@@ -1208,6 +1562,14 @@
     "EmailReceivedHeadersList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "Envelope":{
+      "type":"structure",
+      "members":{
+        "From":{"shape":"String"},
+        "Helo":{"shape":"String"},
+        "To":{"shape":"StringList"}
+      }
     },
     "ErrorMessage":{"type":"string"},
     "ExportDestinationConfiguration":{
@@ -1288,6 +1650,63 @@
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
+    "GetAddressListImportJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "GetAddressListImportJobResponse":{
+      "type":"structure",
+      "required":[
+        "AddressListId",
+        "CreatedTimestamp",
+        "ImportDataFormat",
+        "JobId",
+        "Name",
+        "PreSignedUrl",
+        "Status"
+      ],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"},
+        "CompletedTimestamp":{"shape":"Timestamp"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Error":{"shape":"ErrorMessage"},
+        "FailedItemsCount":{"shape":"JobItemsCount"},
+        "ImportDataFormat":{"shape":"ImportDataFormat"},
+        "ImportedItemsCount":{"shape":"JobItemsCount"},
+        "JobId":{"shape":"JobId"},
+        "Name":{"shape":"JobName"},
+        "PreSignedUrl":{"shape":"PreSignedUrl"},
+        "StartTimestamp":{"shape":"Timestamp"},
+        "Status":{"shape":"ImportJobStatus"}
+      }
+    },
+    "GetAddressListRequest":{
+      "type":"structure",
+      "required":["AddressListId"],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"}
+      }
+    },
+    "GetAddressListResponse":{
+      "type":"structure",
+      "required":[
+        "AddressListArn",
+        "AddressListId",
+        "AddressListName",
+        "CreatedTimestamp",
+        "LastUpdatedTimestamp"
+      ],
+      "members":{
+        "AddressListArn":{"shape":"AddressListArn"},
+        "AddressListId":{"shape":"AddressListId"},
+        "AddressListName":{"shape":"AddressListName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
     "GetArchiveExportRequest":{
       "type":"structure",
       "required":["ExportId"],
@@ -1330,7 +1749,9 @@
     "GetArchiveMessageResponse":{
       "type":"structure",
       "members":{
-        "MessageDownloadLink":{"shape":"S3PresignedURL"}
+        "Envelope":{"shape":"Envelope"},
+        "MessageDownloadLink":{"shape":"S3PresignedURL"},
+        "Metadata":{"shape":"Metadata"}
       }
     },
     "GetArchiveRequest":{
@@ -1416,6 +1837,28 @@
         "Status":{"shape":"IngressPointStatus"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
         "Type":{"shape":"IngressPointType"}
+      }
+    },
+    "GetMemberOfAddressListRequest":{
+      "type":"structure",
+      "required":[
+        "Address",
+        "AddressListId"
+      ],
+      "members":{
+        "Address":{"shape":"Address"},
+        "AddressListId":{"shape":"AddressListId"}
+      }
+    },
+    "GetMemberOfAddressListResponse":{
+      "type":"structure",
+      "required":[
+        "Address",
+        "CreatedTimestamp"
+      ],
+      "members":{
+        "Address":{"shape":"Address"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "GetRelayRequest":{
@@ -1517,6 +1960,70 @@
       "max":128,
       "min":1
     },
+    "ImportDataFormat":{
+      "type":"structure",
+      "required":["ImportDataType"],
+      "members":{
+        "ImportDataType":{"shape":"ImportDataType"}
+      }
+    },
+    "ImportDataType":{
+      "type":"string",
+      "enum":[
+        "CSV",
+        "JSON"
+      ]
+    },
+    "ImportJob":{
+      "type":"structure",
+      "required":[
+        "AddressListId",
+        "CreatedTimestamp",
+        "ImportDataFormat",
+        "JobId",
+        "Name",
+        "PreSignedUrl",
+        "Status"
+      ],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"},
+        "CompletedTimestamp":{"shape":"Timestamp"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Error":{"shape":"ErrorMessage"},
+        "FailedItemsCount":{"shape":"JobItemsCount"},
+        "ImportDataFormat":{"shape":"ImportDataFormat"},
+        "ImportedItemsCount":{"shape":"JobItemsCount"},
+        "JobId":{"shape":"JobId"},
+        "Name":{"shape":"JobName"},
+        "PreSignedUrl":{"shape":"PreSignedUrl"},
+        "StartTimestamp":{"shape":"Timestamp"},
+        "Status":{"shape":"ImportJobStatus"}
+      }
+    },
+    "ImportJobStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "PROCESSING",
+        "COMPLETED",
+        "FAILED",
+        "STOPPED"
+      ]
+    },
+    "ImportJobs":{
+      "type":"list",
+      "member":{"shape":"ImportJob"}
+    },
+    "IngressAddressListArnList":{
+      "type":"list",
+      "member":{"shape":"AddressListArn"},
+      "max":1,
+      "min":1
+    },
+    "IngressAddressListEmailAttribute":{
+      "type":"string",
+      "enum":["RECIPIENT"]
+    },
     "IngressAnalysis":{
       "type":"structure",
       "required":[
@@ -1549,7 +2056,8 @@
     "IngressBooleanToEvaluate":{
       "type":"structure",
       "members":{
-        "Analysis":{"shape":"IngressAnalysis"}
+        "Analysis":{"shape":"IngressAnalysis"},
+        "IsInAddressList":{"shape":"IngressIsInAddressList"}
       },
       "union":true
     },
@@ -1582,6 +2090,17 @@
         "Evaluate":{"shape":"IngressIpToEvaluate"},
         "Operator":{"shape":"IngressIpOperator"},
         "Values":{"shape":"Ipv4Cidrs"}
+      }
+    },
+    "IngressIsInAddressList":{
+      "type":"structure",
+      "required":[
+        "AddressLists",
+        "Attribute"
+      ],
+      "members":{
+        "AddressLists":{"shape":"IngressAddressListArnList"},
+        "Attribute":{"shape":"IngressAddressListEmailAttribute"}
       }
     },
     "IngressPoint":{
@@ -1749,6 +2268,22 @@
       "type":"list",
       "member":{"shape":"Ipv4Cidr"}
     },
+    "JobId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9-]+$"
+    },
+    "JobItemsCount":{
+      "type":"integer",
+      "box":true
+    },
+    "JobName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.-]+$"
+    },
     "KmsKeyArn":{
       "type":"string",
       "pattern":"^arn:aws(|-cn|-us-gov):kms:[a-z0-9-]{1,20}:[0-9]{12}:(key|alias)/.+$"
@@ -1784,6 +2319,38 @@
       "type":"structure",
       "members":{
         "AddonSubscriptions":{"shape":"AddonSubscriptions"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListAddressListImportJobsRequest":{
+      "type":"structure",
+      "required":["AddressListId"],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"},
+        "NextToken":{"shape":"PaginationToken"},
+        "PageSize":{"shape":"PageSize"}
+      }
+    },
+    "ListAddressListImportJobsResponse":{
+      "type":"structure",
+      "required":["ImportJobs"],
+      "members":{
+        "ImportJobs":{"shape":"ImportJobs"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListAddressListsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "PageSize":{"shape":"PageSize"}
+      }
+    },
+    "ListAddressListsResponse":{
+      "type":"structure",
+      "required":["AddressLists"],
+      "members":{
+        "AddressLists":{"shape":"AddressLists"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1845,6 +2412,24 @@
       "type":"structure",
       "members":{
         "IngressPoints":{"shape":"IngressPointsList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListMembersOfAddressListRequest":{
+      "type":"structure",
+      "required":["AddressListId"],
+      "members":{
+        "AddressListId":{"shape":"AddressListId"},
+        "Filter":{"shape":"AddressFilter"},
+        "NextToken":{"shape":"PaginationToken"},
+        "PageSize":{"shape":"AddressPageSize"}
+      }
+    },
+    "ListMembersOfAddressListResponse":{
+      "type":"structure",
+      "required":["Addresses"],
+      "members":{
+        "Addresses":{"shape":"SavedAddresses"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1926,6 +2511,24 @@
         "Text":{"shape":"String"}
       }
     },
+    "Metadata":{
+      "type":"structure",
+      "members":{
+        "ConfigurationSet":{"shape":"String"},
+        "IngressPointId":{"shape":"IngressPointId"},
+        "RuleSetId":{"shape":"RuleSetId"},
+        "SenderHostname":{"shape":"String"},
+        "SenderIpAddress":{"shape":"SenderIpAddress"},
+        "SendingMethod":{"shape":"String"},
+        "SendingPool":{"shape":"String"},
+        "SourceArn":{"shape":"String"},
+        "SourceIdentity":{"shape":"String"},
+        "Timestamp":{"shape":"Timestamp"},
+        "TlsCipherSuite":{"shape":"String"},
+        "TlsProtocol":{"shape":"String"},
+        "TrafficPolicyId":{"shape":"TrafficPolicyId"}
+      }
+    },
     "MimeHeaderAttribute":{
       "type":"string",
       "pattern":"^X-[a-zA-Z0-9-]{1,256}$"
@@ -1982,11 +2585,43 @@
       "type":"list",
       "member":{"shape":"PolicyStatement"}
     },
+    "PreSignedUrl":{
+      "type":"string",
+      "sensitive":true
+    },
+    "QBusinessApplicationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-z0-9-]+$"
+    },
+    "QBusinessIndexId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-z0-9-]+$"
+    },
     "Recipients":{
       "type":"list",
       "member":{"shape":"EmailAddress"},
       "max":100,
       "min":1
+    },
+    "RegisterMemberToAddressListRequest":{
+      "type":"structure",
+      "required":[
+        "Address",
+        "AddressListId"
+      ],
+      "members":{
+        "Address":{"shape":"Address"},
+        "AddressListId":{"shape":"AddressListId"}
+      }
+    },
+    "RegisterMemberToAddressListResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Relay":{
       "type":"structure",
@@ -2088,12 +2723,17 @@
         "ArchivedMessageId":{"shape":"ArchivedMessageId"},
         "Cc":{"shape":"String"},
         "Date":{"shape":"String"},
+        "Envelope":{"shape":"Envelope"},
         "From":{"shape":"String"},
         "HasAttachments":{"shape":"Boolean"},
         "InReplyTo":{"shape":"String"},
+        "IngressPointId":{"shape":"IngressPointId"},
         "MessageId":{"shape":"String"},
         "ReceivedHeaders":{"shape":"EmailReceivedHeadersList"},
         "ReceivedTimestamp":{"shape":"Timestamp"},
+        "SenderHostname":{"shape":"String"},
+        "SenderIpAddress":{"shape":"SenderIpAddress"},
+        "SourceArn":{"shape":"String"},
         "Subject":{"shape":"String"},
         "To":{"shape":"String"},
         "XMailer":{"shape":"String"},
@@ -2121,6 +2761,7 @@
         "AddHeader":{"shape":"AddHeaderAction"},
         "Archive":{"shape":"ArchiveAction"},
         "DeliverToMailbox":{"shape":"DeliverToMailboxAction"},
+        "DeliverToQBusiness":{"shape":"DeliverToQBusinessAction"},
         "Drop":{"shape":"DropAction"},
         "Relay":{"shape":"RelayAction"},
         "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},
@@ -2134,6 +2775,23 @@
       "member":{"shape":"RuleAction"},
       "max":10,
       "min":1
+    },
+    "RuleAddressListArnList":{
+      "type":"list",
+      "member":{"shape":"AddressListArn"},
+      "max":1,
+      "min":1
+    },
+    "RuleAddressListEmailAttribute":{
+      "type":"string",
+      "enum":[
+        "RECIPIENT",
+        "MAIL_FROM",
+        "SENDER",
+        "FROM",
+        "TO",
+        "CC"
+      ]
     },
     "RuleBooleanEmailAttribute":{
       "type":"string",
@@ -2164,7 +2822,8 @@
     "RuleBooleanToEvaluate":{
       "type":"structure",
       "members":{
-        "Attribute":{"shape":"RuleBooleanEmailAttribute"}
+        "Attribute":{"shape":"RuleBooleanEmailAttribute"},
+        "IsInAddressList":{"shape":"RuleIsInAddressList"}
       },
       "union":true
     },
@@ -2260,6 +2919,17 @@
       "member":{"shape":"RuleIpStringValue"},
       "max":10,
       "min":1
+    },
+    "RuleIsInAddressList":{
+      "type":"structure",
+      "required":[
+        "AddressLists",
+        "Attribute"
+      ],
+      "members":{
+        "AddressLists":{"shape":"RuleAddressListArnList"},
+        "Attribute":{"shape":"RuleAddressListEmailAttribute"}
+      }
     },
     "RuleName":{
       "type":"string",
@@ -2474,6 +3144,21 @@
       "pattern":"^[a-zA-Z0-9!_.*'()/-]+$"
     },
     "S3PresignedURL":{"type":"string"},
+    "SavedAddress":{
+      "type":"structure",
+      "required":[
+        "Address",
+        "CreatedTimestamp"
+      ],
+      "members":{
+        "Address":{"shape":"Address"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "SavedAddresses":{
+      "type":"list",
+      "member":{"shape":"SavedAddress"}
+    },
     "SearchId":{
       "type":"string",
       "max":64,
@@ -2527,6 +3212,10 @@
         "RoleArn":{"shape":"IamRoleArn"}
       }
     },
+    "SenderIpAddress":{
+      "type":"string",
+      "sensitive":true
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -2541,6 +3230,18 @@
       "pattern":"^[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{}|.,?]+$",
       "sensitive":true
     },
+    "StartAddressListImportJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "StartAddressListImportJobResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StartArchiveExportRequest":{
       "type":"structure",
       "required":[
@@ -2554,6 +3255,7 @@
         "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
+        "IncludeMetadata":{"shape":"Boolean"},
         "MaxResults":{"shape":"ExportMaxResults"},
         "ToTimestamp":{"shape":"Timestamp"}
       }
@@ -2584,6 +3286,18 @@
       "type":"structure",
       "members":{
         "SearchId":{"shape":"SearchId"}
+      }
+    },
+    "StopAddressListImportJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "StopAddressListImportJobResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "StopArchiveExportRequest":{
@@ -2641,8 +3355,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]+$",
-      "sensitive":true
+      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]+$"
     },
     "TagKeyList":{
       "type":"list",
@@ -2676,8 +3389,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]*$",
-      "sensitive":true
+      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]*$"
     },
     "TaggableResourceArn":{
       "type":"string",

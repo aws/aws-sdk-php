@@ -25,12 +25,13 @@
     "DescribeAppVersionResourcesResolutionStatus": "<p>Returns the resolution status for the specified resolution identifier for an application version. If <code>resolutionId</code> is not specified, the current resolution status is returned.</p>",
     "DescribeAppVersionTemplate": "<p>Describes details about an Resilience Hub application.</p>",
     "DescribeDraftAppVersionResourcesImportStatus": "<p>Describes the status of importing resources to an application version.</p> <note> <p>If you get a 404 error with <code>ResourceImportStatusNotFoundAppMetadataException</code>, you must call <code>importResourcesToDraftAppVersion</code> after creating the application and before calling <code>describeDraftAppVersionResourcesImportStatus</code> to obtain the status.</p> </note>",
+    "DescribeMetricsExport": "<p>Describes the metrics of the application configuration being exported.</p>",
     "DescribeResiliencyPolicy": "<p>Describes a specified resiliency policy for an Resilience Hub application. The returned policy object includes creation time, data location constraints, the Amazon Resource Name (ARN) for the policy, tags, tier, and more.</p>",
     "DescribeResourceGroupingRecommendationTask": "<p>Describes the resource grouping recommendation tasks run by Resilience Hub for your application.</p>",
     "ImportResourcesToDraftAppVersion": "<p>Imports resources to Resilience Hub application draft version from different input sources. For more information about the input sources supported by Resilience Hub, see <a href=\"https://docs.aws.amazon.com/resilience-hub/latest/userguide/discover-structure.html\">Discover the structure and describe your Resilience Hub application</a>.</p>",
     "ListAlarmRecommendations": "<p>Lists the alarm recommendations for an Resilience Hub application.</p>",
     "ListAppAssessmentComplianceDrifts": "<p>List of compliance drifts that were detected while running an assessment.</p>",
-    "ListAppAssessmentResourceDrifts": "<p>Indicates the list of resource drifts that were detected while running an assessment.</p>",
+    "ListAppAssessmentResourceDrifts": "<p>List of resource drifts that were detected while running an assessment.</p>",
     "ListAppAssessments": "<p>Lists the assessments for an Resilience Hub application. You can use request parameters to refine the results for the response object.</p>",
     "ListAppComponentCompliances": "<p>Lists the compliances for an Resilience Hub Application Component.</p>",
     "ListAppComponentRecommendations": "<p>Lists the recommendations for an Resilience Hub Application Component.</p>",
@@ -40,6 +41,7 @@
     "ListAppVersionResources": "<p>Lists all the resources in an Resilience Hub application.</p>",
     "ListAppVersions": "<p>Lists the different versions for the Resilience Hub applications.</p>",
     "ListApps": "<p>Lists your Resilience Hub applications.</p> <note> <p>You can filter applications using only one filter at a time or without using any filter. If you try to filter applications using multiple filters, you will get the following error:</p> <p> <code>An error occurred (ValidationException) when calling the ListApps operation: Only one filter is supported for this operation.</code> </p> </note>",
+    "ListMetrics": "<p>Lists the metrics that can be exported.</p>",
     "ListRecommendationTemplates": "<p>Lists the recommendation templates for the Resilience Hub applications.</p>",
     "ListResiliencyPolicies": "<p>Lists the resiliency policies for the Resilience Hub applications.</p>",
     "ListResourceGroupingRecommendations": "<p>Lists the resource grouping recommendations suggested by Resilience Hub for your application.</p>",
@@ -54,6 +56,7 @@
     "RemoveDraftAppVersionResourceMappings": "<p>Removes resource mappings from a draft application version.</p>",
     "ResolveAppVersionResources": "<p>Resolves the resources for an application version.</p>",
     "StartAppAssessment": "<p>Creates a new application assessment for an application.</p>",
+    "StartMetricsExport": "<p>Initiates the export task of metrics.</p>",
     "StartResourceGroupingRecommendationTask": "<p>Starts grouping recommendation task.</p>",
     "TagResource": "<p>Applies one or more tags to a resource.</p>",
     "UntagResource": "<p>Removes one or more tags from a resource.</p>",
@@ -67,7 +70,7 @@
     "AcceptGroupingRecommendationEntries": {
       "base": null,
       "refs": {
-        "AcceptResourceGroupingRecommendationsRequest$entries": "<p>Indicates the list of resource grouping recommendations you want to include in your application.</p>"
+        "AcceptResourceGroupingRecommendationsRequest$entries": "<p>List of resource grouping recommendations you want to include in your application.</p>"
       }
     },
     "AcceptGroupingRecommendationEntry": {
@@ -119,6 +122,12 @@
       "base": null,
       "refs": {
         "AdditionalInfoMap$value": null
+      }
+    },
+    "Alarm": {
+      "base": "<p>Indicates the Amazon CloudWatch alarm detected while running an assessment.</p>",
+      "refs": {
+        "RecommendationItem$discoveredAlarm": "<p>Indicates the previously implemented Amazon CloudWatch alarm discovered by Resilience Hub.</p>"
       }
     },
     "AlarmRecommendation": {
@@ -215,7 +224,7 @@
       "base": null,
       "refs": {
         "AlarmRecommendation$appComponentNames": "<p>List of Application Component names for the CloudWatch alarm recommendation.</p>",
-        "AssessmentRiskRecommendation$appComponents": "<p>Indicates the Application Components (AppComponents) that were assessed as part of the assessnent and are associated with the identified risk and recommendation.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
+        "AssessmentRiskRecommendation$appComponents": "<p>Indicates the Application Components (AppComponents) that were assessed as part of the assessment and are associated with the identified risk and recommendation.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
         "CreateAppVersionResourceRequest$appComponents": "<p>List of Application Components that this resource belongs to. If an Application Component is not part of the Resilience Hub application, it will be added.</p>",
         "UpdateAppVersionResourceRequest$appComponents": "<p>List of Application Components that this resource belongs to. If an Application Component is not part of the Resilience Hub application, it will be added.</p>"
       }
@@ -285,7 +294,9 @@
         "AcceptResourceGroupingRecommendationsResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AddDraftAppVersionResourceMappingsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AddDraftAppVersionResourceMappingsResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "Alarm$alarmArn": "<p>Amazon Resource Name (ARN) of the Amazon CloudWatch alarm.</p>",
         "App$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "App$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "App$policyArn": "<p>Amazon Resource Name (ARN) of the resiliency policy. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:resiliency-policy/<code>policy-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppAssessment$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppAssessment$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -293,9 +304,11 @@
         "AppAssessmentSummary$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppInputSource$sourceArn": "<p>The Amazon Resource Name (ARN) of the input source. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "AppSummary$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "AppSummary$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ArnList$member": null,
         "BatchUpdateRecommendationStatusRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "BatchUpdateRecommendationStatusResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "CreateAppRequest$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppRequest$policyArn": "<p>Amazon Resource Name (ARN) of the resiliency policy. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:resiliency-policy/<code>policy-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppVersionAppComponentRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "CreateAppVersionAppComponentResponse$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -351,6 +364,7 @@
         "ListAppVersionResourcesRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListAppVersionsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListAppsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
+        "ListAppsRequest$awsApplicationArn": "<p>Amazon Resource Name (ARN) of Resource Groups group that is integrated with an AppRegistry application. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListRecommendationTemplatesRequest$assessmentArn": "<p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
         "ListRecommendationTemplatesRequest$recommendationTemplateArn": "<p>The Amazon Resource Name (ARN) for a recommendation template.</p>",
         "ListResourceGroupingRecommendationsRequest$appArn": "<p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for this ARN is: arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>. For more information about ARNs, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\"> Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General Reference</i> guide.</p>",
@@ -444,7 +458,7 @@
     "AssessmentSummary": {
       "base": "<p>Indicates the AI-generated summary for the Resilience Hub assessment, providing a concise overview that highlights the top risks and recommendations.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
       "refs": {
-        "AppAssessment$summary": "<p>Indicates a concise summary that provides an overview of the Resilience Hub assessment.</p>"
+        "AppAssessment$summary": "<p>Indicates the AI-generated summary for the Resilience Hub assessment, providing a concise overview that highlights the top risks and recommendations.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>"
       }
     },
     "AwsRegion": {
@@ -506,6 +520,7 @@
         "RecommendationItem$excluded": "<p>Indicates if an operational recommendation item is excluded.</p>",
         "RecommendationTemplate$needsReplacements": "<p>Indicates if replacements are needed.</p>",
         "ResourceErrorsDetails$hasMoreErrors": "<p> This indicates if there are more errors not listed in the <code>resourceErrors</code> list. </p>",
+        "Sort$ascending": "<p>Indicates the name or identifier of the field or attribute that should be used as the basis for sorting the metrics.</p>",
         "UpdateAppRequest$clearResiliencyPolicyArn": "<p>Specifies if the resiliency policy ARN should be cleared.</p>",
         "UpdateAppVersionResourceRequest$excluded": "<p>Indicates if a resource is excluded from an Resilience Hub application.</p> <note> <p>You can exclude only imported resources from an Resilience Hub application.</p> </note>",
         "UpdateRecommendationStatusRequestEntry$excluded": "<p>Indicates if the operational recommendation needs to be excluded. If set to True, the operational recommendation will be excluded.</p>"
@@ -526,7 +541,8 @@
         "DeleteAppVersionResourceRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>",
         "DeleteRecommendationTemplateRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>",
         "DeleteResiliencyPolicyRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>",
-        "StartAppAssessmentRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>"
+        "StartAppAssessmentRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>",
+        "StartMetricsExportRequest$clientToken": "<p>Used for an idempotency token. A client token is a unique, case-sensitive string of up to 64 ASCII characters. You should not reuse the same client token for other API requests.</p>"
       }
     },
     "ComplianceDrift": {
@@ -568,6 +584,24 @@
       "base": null,
       "refs": {
         "ListAppComponentRecommendationsResponse$componentRecommendations": "<p>The recommendations for an Resilience Hub Application Component, returned as an object. This object contains the names of the Application Components, configuration recommendations, and recommendation statuses.</p>"
+      }
+    },
+    "Condition": {
+      "base": "<p>Indicates the condition based on which you want to filter the metrics.</p>",
+      "refs": {
+        "ConditionList$member": null
+      }
+    },
+    "ConditionList": {
+      "base": null,
+      "refs": {
+        "ListMetricsRequest$conditions": "<p>Indicates the list of all the conditions that were applied on the metrics.</p>"
+      }
+    },
+    "ConditionOperatorType": {
+      "base": null,
+      "refs": {
+        "Condition$operator": "<p>Indicates the type of operator or comparison to be used when evaluating a condition against the specified field. </p>"
       }
     },
     "ConfigRecommendation": {
@@ -834,6 +868,16 @@
       "refs": {
       }
     },
+    "DescribeMetricsExportRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeMetricsExportResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeResiliencyPolicyRequest": {
       "base": null,
       "refs": {
@@ -872,7 +916,7 @@
       "refs": {
         "CreateResiliencyPolicyRequest$policy": "<p>The type of resiliency policy to be created, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>",
         "ResiliencyPolicy$policy": "<p>The resiliency policy.</p>",
-        "UpdateResiliencyPolicyRequest$policy": "<p>The type of resiliency policy to be created, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>"
+        "UpdateResiliencyPolicyRequest$policy": "<p>Resiliency policy to be created, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>"
       }
     },
     "DisruptionResiliencyScore": {
@@ -965,12 +1009,12 @@
         "AppSummary$description": "<p>The optional description for an app.</p>",
         "ConfigRecommendation$description": "<p>The optional description for an app.</p>",
         "CreateAppRequest$description": "<p>The optional description for an app.</p>",
-        "CreateResiliencyPolicyRequest$policyDescription": "<p>The description for the policy.</p>",
-        "ResiliencyPolicy$policyDescription": "<p>The description for the policy.</p>",
+        "CreateResiliencyPolicyRequest$policyDescription": "<p>Description of the resiliency policy.</p>",
+        "ResiliencyPolicy$policyDescription": "<p>Description of the resiliency policy.</p>",
         "SuggestedChangesList$member": null,
         "TestRecommendation$intent": "<p>Intent of the test recommendation.</p>",
         "UpdateAppRequest$description": "<p>The optional description for an app.</p>",
-        "UpdateResiliencyPolicyRequest$policyDescription": "<p>The description for the policy.</p>"
+        "UpdateResiliencyPolicyRequest$policyDescription": "<p>Description of the resiliency policy.</p>"
       }
     },
     "EntityId": {
@@ -997,14 +1041,14 @@
         "CreateAppVersionResourceRequest$resourceName": "<p>Name of the resource.</p>",
         "CreateRecommendationTemplateRequest$bucketName": "<p>The name of the Amazon S3 bucket that will contain the recommendation template.</p>",
         "CreateRecommendationTemplateRequest$name": "<p>The name for the recommendation template.</p>",
-        "CreateResiliencyPolicyRequest$policyName": "<p>The name of the policy</p>",
+        "CreateResiliencyPolicyRequest$policyName": "<p>Name of the resiliency policy.</p>",
         "DeleteAppVersionResourceRequest$resourceName": "<p>Name of the resource.</p>",
         "DescribeAppVersionResourceRequest$resourceName": "<p>Name of the resource.</p>",
         "EntityNameList$member": null,
         "ListAppAssessmentsRequest$assessmentName": "<p>The name for the assessment.</p>",
         "ListAppsRequest$name": "<p>The name for the one of the listed applications.</p>",
         "ListRecommendationTemplatesRequest$name": "<p>The name for one of the listed recommendation templates.</p>",
-        "ListResiliencyPoliciesRequest$policyName": "<p>The name of the policy</p>",
+        "ListResiliencyPoliciesRequest$policyName": "<p>Name of the resiliency policy.</p>",
         "LogicalResourceId$resourceGroupName": "<p>The name of the resource group that this resource belongs to.</p>",
         "PhysicalResource$parentResourceName": "<p>Name of the parent resource.</p>",
         "PhysicalResource$resourceName": "<p>The name of the resource.</p>",
@@ -1014,8 +1058,9 @@
         "ResourceMapping$resourceGroupName": "<p>Name of the Resource Groups that this resource is mapped to when the <code>mappingType</code> is <code>ResourceGroup</code>.</p>",
         "ResourceMapping$resourceName": "<p>Name of the resource that this resource is mapped to when the <code>mappingType</code> is <code>Resource</code>.</p>",
         "StartAppAssessmentRequest$assessmentName": "<p>The name for the assessment.</p>",
+        "StartMetricsExportRequest$bucketName": "<p>(Optional) Specifies the name of the Amazon Simple Storage Service bucket where the exported metrics will be stored.</p>",
         "UpdateAppVersionResourceRequest$resourceName": "<p>Name of the resource.</p>",
-        "UpdateResiliencyPolicyRequest$policyName": "<p>The name of the policy</p>"
+        "UpdateResiliencyPolicyRequest$policyName": "<p>Name of the resiliency policy.</p>"
       }
     },
     "EntityName255": {
@@ -1023,8 +1068,11 @@
       "refs": {
         "AppComponent$id": "<p>Identifier of the Application Component.</p>",
         "AppComponent$name": "<p>Name of the Application Component.</p>",
+        "BatchUpdateRecommendationStatusSuccessfulEntry$appComponentId": "<p>Indicates the identifier of an AppComponent.</p>",
         "GroupingAppComponent$appComponentId": "<p>Indicates the identifier of an AppComponent.</p>",
-        "GroupingAppComponent$appComponentName": "<p>Indicates the name of an AppComponent.</p>"
+        "GroupingAppComponent$appComponentName": "<p>Indicates the name of an AppComponent.</p>",
+        "TestRecommendation$appComponentId": "<p>Indicates the identifier of the AppComponent.</p>",
+        "UpdateRecommendationStatusRequestEntry$appComponentId": "<p>Indicates the identifier of the AppComponent.</p>"
       }
     },
     "EntityNameList": {
@@ -1081,10 +1129,23 @@
         "UpdateAppVersionResponse$appVersion": "<p>Resilience Hub application version.</p>"
       }
     },
+    "ErrorDetail": {
+      "base": "<p>Indicates the error that was encountered while importing a resource.</p>",
+      "refs": {
+        "ErrorDetailList$member": null
+      }
+    },
+    "ErrorDetailList": {
+      "base": null,
+      "refs": {
+        "DescribeDraftAppVersionResourcesImportStatusResponse$errorDetails": "<p>List of errors that were encountered while importing resources.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
         "BatchUpdateRecommendationStatusFailedEntry$errorMessage": "<p>Indicates the error that occurred while excluding an operational recommendation.</p>",
+        "ErrorDetail$errorMessage": "<p>Provides additional information about the error.</p>",
         "FailedGroupingRecommendationEntry$errorMessage": "<p>Indicates the error that occurred while implementing a grouping recommendation.</p>",
         "ResourceError$reason": "<p> This is the error message. </p>"
       }
@@ -1123,11 +1184,17 @@
         "UpdateRecommendationStatusRequestEntry$excludeReason": "<p>Indicates the reason for excluding an operational recommendation.</p>"
       }
     },
+    "Experiment": {
+      "base": "<p>Indicates the FIS experiment detected while running an assessment.</p>",
+      "refs": {
+        "RecommendationItem$latestDiscoveredExperiment": "<p>Indicates the experiment created in FIS that was discovered by Resilience Hub, which matches the recommendation.</p>"
+      }
+    },
     "FailedGroupingRecommendationEntries": {
       "base": null,
       "refs": {
-        "AcceptResourceGroupingRecommendationsResponse$failedEntries": "<p>Indicates the list of resource grouping recommendations that could not be included in your application.</p>",
-        "RejectResourceGroupingRecommendationsResponse$failedEntries": "<p>Indicates the list of resource grouping recommendations that failed to get excluded in your application.</p>"
+        "AcceptResourceGroupingRecommendationsResponse$failedEntries": "<p>List of resource grouping recommendations that could not be included in your application.</p>",
+        "RejectResourceGroupingRecommendationsResponse$failedEntries": "<p>List of resource grouping recommendations that failed to get excluded in your application.</p>"
       }
     },
     "FailedGroupingRecommendationEntry": {
@@ -1140,6 +1207,24 @@
       "base": "<p>Defines a failure policy.</p>",
       "refs": {
         "DisruptionPolicy$value": null
+      }
+    },
+    "Field": {
+      "base": "<p>Indicates the field or attribute of a resource or data structure on which a condition is being applied or evaluated.</p>",
+      "refs": {
+        "FieldList$member": null
+      }
+    },
+    "FieldAggregationType": {
+      "base": null,
+      "refs": {
+        "Field$aggregation": "<p>(Optional) Indicates the type of aggregation or summary operation (such as Sum, Average, and so on) to be performed on a particular field or set of data.</p>"
+      }
+    },
+    "FieldList": {
+      "base": null,
+      "refs": {
+        "ListMetricsRequest$fields": "<p>Indicates the list of fields in the data source.</p>"
       }
     },
     "GroupingAppComponent": {
@@ -1212,7 +1297,7 @@
     "IamRoleName": {
       "base": null,
       "refs": {
-        "PermissionModel$invokerRoleName": "<p>Existing Amazon Web Services IAM role name in the primary Amazon Web Services account that will be assumed by Resilience Hub Service Principle to obtain a read-only access to your application resources while running an assessment.</p> <note> <ul> <li> <p>You must have <code>iam:passRole</code> permission for this role while creating or updating the application.</p> </li> <li> <p>Currently, <code>invokerRoleName</code> accepts only <code>[A-Za-z0-9_+=,.@-]</code> characters.</p> </li> </ul> </note>"
+        "PermissionModel$invokerRoleName": "<p>Existing Amazon Web Services IAM role name in the primary Amazon Web Services account that will be assumed by Resilience Hub Service Principle to obtain a read-only access to your application resources while running an assessment. </p> <p>If your IAM role includes a path, you must include the path in the <code>invokerRoleName</code> parameter. For example, if your IAM role's ARN is <code>arn:aws:iam:123456789012:role/my-path/role-name</code>, you should pass <code>my-path/role-name</code>. </p> <note> <ul> <li> <p>You must have <code>iam:passRole</code> permission for this role while creating or updating the application.</p> </li> <li> <p>Currently, <code>invokerRoleName</code> accepts only <code>[A-Za-z0-9_+=,.@-]</code> characters.</p> </li> </ul> </note>"
       }
     },
     "ImportResourcesToDraftAppVersionRequest": {
@@ -1365,6 +1450,16 @@
       "refs": {
       }
     },
+    "ListMetricsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMetricsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListRecommendationTemplatesRequest": {
       "base": null,
       "refs": {
@@ -1476,8 +1571,8 @@
       "base": null,
       "refs": {
         "ListAlarmRecommendationsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
-        "ListAppAssessmentComplianceDriftsRequest$maxResults": "<p>Indicates the maximum number of compliance drifts requested.</p>",
-        "ListAppAssessmentResourceDriftsRequest$maxResults": "<p>Indicates the maximum number of drift results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListAppAssessmentComplianceDriftsRequest$maxResults": "<p>Maximum number of compliance drifts requested.</p>",
+        "ListAppAssessmentResourceDriftsRequest$maxResults": "<p>Maximum number of drift results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAppAssessmentsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAppComponentCompliancesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAppComponentRecommendationsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
@@ -1487,6 +1582,7 @@
         "ListAppVersionResourcesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAppVersionsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListAppsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListMetricsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListRecommendationTemplatesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListResiliencyPoliciesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListResourceGroupingRecommendationsRequest$maxResults": "<p>Maximum number of grouping recommendations to be displayed per Resilience Hub application.</p>",
@@ -1494,6 +1590,13 @@
         "ListSuggestedResiliencyPoliciesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListTestRecommendationsRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListUnsupportedAppVersionResourcesRequest$maxResults": "<p>Maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>"
+      }
+    },
+    "MetricsExportStatusType": {
+      "base": null,
+      "refs": {
+        "DescribeMetricsExportResponse$status": "<p>Indicates the status of the metrics export task.</p>",
+        "StartMetricsExportResponse$status": "<p>Indicates the status of the metrics export task.</p>"
       }
     },
     "NextToken": {
@@ -1523,6 +1626,8 @@
         "ListAppVersionsResponse$nextToken": "<p>Token for the next set of results, or null if there are no more results.</p>",
         "ListAppsRequest$nextToken": "<p>Null, or the token from a previous call to get the next set of results.</p>",
         "ListAppsResponse$nextToken": "<p>Token for the next set of results, or null if there are no more results.</p>",
+        "ListMetricsRequest$nextToken": "<p>Null, or the token from a previous call to get the next set of results.</p>",
+        "ListMetricsResponse$nextToken": "<p>Token for the next set of results, or null if there are no more results.</p>",
         "ListRecommendationTemplatesRequest$nextToken": "<p>Null, or the token from a previous call to get the next set of results.</p>",
         "ListRecommendationTemplatesResponse$nextToken": "<p>Token for the next set of results, or null if there are no more results.</p>",
         "ListResiliencyPoliciesRequest$nextToken": "<p>Null, or the token from a previous call to get the next set of results.</p>",
@@ -1681,7 +1786,7 @@
     "RejectGroupingRecommendationEntries": {
       "base": null,
       "refs": {
-        "RejectResourceGroupingRecommendationsRequest$entries": "<p>Indicates the list of resource grouping recommendations you have selected to exclude from your application.</p>"
+        "RejectResourceGroupingRecommendationsRequest$entries": "<p>List of resource grouping recommendations you have selected to exclude from your application.</p>"
       }
     },
     "RejectGroupingRecommendationEntry": {
@@ -1737,7 +1842,7 @@
         "CreateResiliencyPolicyResponse$policy": "<p>The type of resiliency policy that was created, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>",
         "DescribeResiliencyPolicyResponse$policy": "<p>Information about the specific resiliency policy, returned as an object. This object includes creation time, data location constraints, its name, description, tags, the recovery time objective (RTO) and recovery point objective (RPO) in seconds, and more.</p>",
         "ResiliencyPolicies$member": null,
-        "UpdateResiliencyPolicyResponse$policy": "<p>The type of resiliency policy that was updated, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>"
+        "UpdateResiliencyPolicyResponse$policy": "<p>The resiliency policy that was updated, including the recovery time objective (RTO) and recovery point objective (RPO) in seconds.</p>"
       }
     },
     "ResiliencyPolicyTier": {
@@ -1886,9 +1991,22 @@
         "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the operation.</p>"
       }
     },
+    "Row": {
+      "base": null,
+      "refs": {
+        "RowList$member": null
+      }
+    },
+    "RowList": {
+      "base": null,
+      "refs": {
+        "ListMetricsResponse$rows": "<p>Specifies all the list of metric values for each row of metrics.</p>"
+      }
+    },
     "S3Location": {
       "base": "<p>The location of the Amazon S3 bucket.</p>",
       "refs": {
+        "DescribeMetricsExportResponse$exportLocation": "<p>Specifies the name of the Amazon S3 bucket where the exported metrics is stored.</p>",
         "RecommendationTemplate$templatesLocation": "<p>The file location of the template.</p>"
       }
     },
@@ -1946,6 +2064,18 @@
         "SopRecommendation$serviceType": "<p>The service type.</p>"
       }
     },
+    "Sort": {
+      "base": "<p>Indicates the sorting order of the fields in the metrics.</p>",
+      "refs": {
+        "SortList$member": null
+      }
+    },
+    "SortList": {
+      "base": null,
+      "refs": {
+        "ListMetricsRequest$sorts": "<p>(Optional) Indicates the order in which you want to sort the fields in the metrics. By default, the fields are sorted in the ascending order.</p>"
+      }
+    },
     "SpecReferenceId": {
       "base": null,
       "refs": {
@@ -1963,6 +2093,16 @@
       }
     },
     "StartAppAssessmentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartMetricsExportRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartMetricsExportResponse": {
       "base": null,
       "refs": {
       }
@@ -2002,6 +2142,7 @@
       "base": null,
       "refs": {
         "AcceptGroupingRecommendationEntry$groupingRecommendationId": "<p>Indicates the identifier of the grouping recommendation.</p>",
+        "Alarm$source": "<p>Indicates the source of the Amazon CloudWatch alarm. That is, it indicates if the alarm was created using Resilience Hub recommendation (<code>AwsResilienceHub</code>), or if you had created the alarm in Amazon CloudWatch (<code>Customer</code>).</p>",
         "AppComponent$type": "<p>The type of Application Component.</p>",
         "AppComponentNameList$member": null,
         "AppInputSource$sourceName": "<p>The name of the input source.</p>",
@@ -2015,6 +2156,8 @@
         "ComplianceDrift$entityId": "<p>Identifier of an entity in which drift was detected. For compliance drift, the entity ID can be either application ID or the AppComponent ID.</p>",
         "ComplianceDrift$entityType": "<p>The type of entity in which drift was detected. For compliance drifts, Resilience Hub supports <code>AWS::ResilienceHub::AppComponent</code> and <code>AWS::ResilienceHub::Application</code>.</p>",
         "ComplianceDrift$expectedReferenceId": "<p>Assessment identifier of a previous assessment of the same application version. Resilience Hub uses the previous assessment (associated with the reference identifier) to compare the compliance with the current assessment to identify drifts.</p>",
+        "Condition$field": "<p>Indicates the field in the metric.</p>",
+        "Condition$value": "<p>Indicates the value or data against which a condition is evaluated.</p>",
         "CreateAppVersionAppComponentRequest$id": "<p>Identifier of the Application Component.</p>",
         "CreateAppVersionAppComponentRequest$name": "<p>Name of the Application Component.</p>",
         "CreateAppVersionAppComponentRequest$type": "<p>Type of Application Component. For more information about the types of Application Component, see <a href=\"https://docs.aws.amazon.com/resilience-hub/latest/userguide/AppComponent.grouping.html\">Grouping resources in an AppComponent</a>.</p>",
@@ -2023,16 +2166,22 @@
         "DescribeAppVersionAppComponentRequest$id": "<p>Identifier of the Application Component.</p>",
         "DescribeAppVersionResourcesResolutionStatusRequest$resolutionId": "<p>The identifier for a specific resolution.</p>",
         "DescribeAppVersionResourcesResolutionStatusResponse$resolutionId": "<p>The identifier for a specific resolution.</p>",
-        "DescribeResourceGroupingRecommendationTaskRequest$groupingId": "<p>Indicates the identifier of the grouping recommendation task.</p>",
-        "DescribeResourceGroupingRecommendationTaskResponse$groupingId": "<p>Indicates the identifier of the grouping recommendation task.</p>",
+        "DescribeMetricsExportRequest$metricsExportId": "<p>Identifier of the metrics export task.</p>",
+        "DescribeMetricsExportResponse$metricsExportId": "<p>Identifier for the metrics export task.</p>",
+        "DescribeResourceGroupingRecommendationTaskRequest$groupingId": "<p>Identifier of the grouping recommendation task.</p>",
+        "DescribeResourceGroupingRecommendationTaskResponse$groupingId": "<p>Identifier of the grouping recommendation task.</p>",
         "EventSubscription$name": "<p>Unique name to identify an event subscription.</p>",
+        "Experiment$experimentArn": "<p>Amazon Resource Name (ARN) of the FIS experiment.</p>",
+        "Experiment$experimentTemplateId": "<p>Identifier of the FIS experiment template.</p>",
         "FailedGroupingRecommendationEntry$groupingRecommendationId": "<p>Indicates the identifier of the grouping recommendation.</p>",
+        "Field$name": "<p>Name of the field.</p>",
         "GroupingAppComponent$appComponentType": "<p>Indicates the type of an AppComponent.</p>",
         "GroupingRecommendation$groupingRecommendationId": "<p>Indicates all the reasons available for rejecting a grouping recommendation.</p>",
         "GroupingResource$resourceName": "<p>Indicates the resource name.</p>",
         "GroupingResource$resourceType": "<p>Indicates the resource type.</p>",
         "ListAppVersionResourcesRequest$resolutionId": "<p>The identifier for a specific resolution.</p>",
         "ListAppVersionResourcesResponse$resolutionId": "<p>The ID for a specific resolution.</p>",
+        "ListMetricsRequest$dataSource": "<p>Indicates the data source of the metrics.</p>",
         "ListUnsupportedAppVersionResourcesRequest$resolutionId": "<p>The identifier for a specific resolution.</p>",
         "ListUnsupportedAppVersionResourcesResponse$resolutionId": "<p>The identifier for a specific resolution.</p>",
         "LogicalResourceId$eksSourceName": "<p>Name of the Amazon Elastic Kubernetes Service cluster and namespace this resource belongs to.</p> <note> <p>This parameter accepts values in \"eks-cluster/namespace\" format.</p> </note>",
@@ -2049,7 +2198,10 @@
         "ResourceMapping$eksSourceName": "<p>Name of the Amazon Elastic Kubernetes Service cluster and namespace that this resource is mapped to when the <code>mappingType</code> is <code>EKS</code>.</p> <note> <p>This parameter accepts values in \"eks-cluster/namespace\" format.</p> </note>",
         "ResourceMapping$logicalStackName": "<p>Name of the CloudFormation stack this resource is mapped to when the <code>mappingType</code> is <code>CfnStack</code>.</p>",
         "ResourceMapping$terraformSourceName": "<p>Name of the Terraform source that this resource is mapped to when the <code>mappingType</code> is <code>Terraform</code>.</p>",
-        "StartResourceGroupingRecommendationTaskResponse$groupingId": "<p>Indicates the identifier of the grouping recommendation task.</p>",
+        "Row$member": null,
+        "Sort$field": "<p>Indicates the order in which you want to sort the metrics. By default, the list is sorted in ascending order. To sort the list in descending order, set this field to False.</p>",
+        "StartMetricsExportResponse$metricsExportId": "<p>Identifier of the metrics export task.</p>",
+        "StartResourceGroupingRecommendationTaskResponse$groupingId": "<p>Identifier of the grouping recommendation task.</p>",
         "String255List$member": null,
         "UnsupportedResource$resourceType": "<p>The type of resource.</p>",
         "UnsupportedResource$unsupportedResourceStatus": "<p>The status of the unsupported resource.</p>",
@@ -2083,8 +2235,9 @@
         "AssessmentSummary$summary": "<p>Indicates a concise summary that provides an overview of the Resilience Hub assessment.</p> <note> <p>This property is available only in the US East (N. Virginia) Region.</p> </note>",
         "ConflictException$message": null,
         "DescribeAppVersionResourcesResolutionStatusResponse$errorMessage": "<p>The returned error message for the request.</p>",
-        "DescribeDraftAppVersionResourcesImportStatusResponse$errorMessage": "<p>The returned error message for the request.</p>",
-        "DescribeResourceGroupingRecommendationTaskResponse$errorMessage": "<p>Indicates the error that occurred while generating a grouping recommendation.</p>",
+        "DescribeDraftAppVersionResourcesImportStatusResponse$errorMessage": "<p>The error message returned for the resource request.</p>",
+        "DescribeMetricsExportResponse$errorMessage": "<p>Explains the error that occurred while exporting the metrics.</p>",
+        "DescribeResourceGroupingRecommendationTaskResponse$errorMessage": "<p>Error that occurred while generating a grouping recommendation.</p>",
         "DisruptionCompliance$message": "<p>The disruption compliance message.</p>",
         "DisruptionCompliance$rpoDescription": "<p>The RPO description.</p>",
         "DisruptionCompliance$rpoReferenceId": "<p>Reference identifier of the RPO .</p>",
@@ -2101,7 +2254,7 @@
         "ServiceQuotaExceededException$message": null,
         "SopRecommendation$description": "<p>Description of the SOP recommendation.</p>",
         "SopRecommendation$prerequisite": "<p>Prerequisite for the SOP recommendation.</p>",
-        "StartResourceGroupingRecommendationTaskResponse$errorMessage": "<p>Indicates the error that occurred while executing a grouping recommendation task.</p>",
+        "StartResourceGroupingRecommendationTaskResponse$errorMessage": "<p>Error that occurred while executing a grouping recommendation task.</p>",
         "TestRecommendation$description": "<p>Description for the test recommendation.</p>",
         "TestRecommendation$prerequisite": "<p>Prerequisite of the test recommendation.</p>",
         "ThrottlingException$message": null,
@@ -2213,7 +2366,7 @@
     "TimeStamp": {
       "base": null,
       "refs": {
-        "App$creationTime": "<p>Date and time when the app was created.</p>",
+        "App$creationTime": "<p>Date and time when the application was created.</p>",
         "App$lastAppComplianceEvaluationTime": "<p>Date and time the most recent compliance evaluation.</p>",
         "App$lastDriftEvaluationTime": "<p>Indicates the last time that a drift was evaluated.</p>",
         "App$lastResiliencyScoreEvaluationTime": "<p>Date and time the most recent resiliency score evaluation.</p>",
@@ -2228,8 +2381,8 @@
         "GroupingRecommendation$creationTime": "<p>Indicates the creation time of the grouping recommendation.</p>",
         "ListAppVersionsRequest$endTime": "<p>Upper limit of the time range to filter the application versions.</p>",
         "ListAppVersionsRequest$startTime": "<p>Lower limit of the time range to filter the application versions.</p>",
-        "ListAppsRequest$fromLastAssessmentTime": "<p>Indicates the lower limit of the range that is used to filter applications based on their last assessment times.</p>",
-        "ListAppsRequest$toLastAssessmentTime": "<p>Indicates the upper limit of the range that is used to filter the applications based on their last assessment times.</p>",
+        "ListAppsRequest$fromLastAssessmentTime": "<p>Lower limit of the range that is used to filter applications based on their last assessment times.</p>",
+        "ListAppsRequest$toLastAssessmentTime": "<p>Upper limit of the range that is used to filter the applications based on their last assessment times.</p>",
         "RecommendationTemplate$endTime": "<p>The end time for the action.</p>",
         "RecommendationTemplate$startTime": "<p>The start time for the action.</p>",
         "ResiliencyPolicy$creationTime": "<p>Date and time when the resiliency policy was created.</p>"

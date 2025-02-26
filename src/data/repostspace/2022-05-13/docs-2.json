@@ -2,6 +2,8 @@
   "version": "2.0",
   "service": "<p>AWS re:Post Private is a private version of AWS re:Post for enterprises with Enterprise Support or Enterprise On-Ramp Support plans. It provides access to knowledge and experts to accelerate cloud adoption and increase developer productivity. With your organization-specific private re:Post, you can build an organization-specific developer community that drives efficiencies at scale and provides access to valuable knowledge resources. Additionally, re:Post Private centralizes trusted AWS technical content and offers private discussion forums to improve how your teams collaborate internally and with AWS to remove technical obstacles, accelerate innovation, and scale more efficiently in the cloud.</p>",
   "operations": {
+    "BatchAddRole": "<p>Add role to multiple users or groups in a private re:Post.</p>",
+    "BatchRemoveRole": "<p>Remove role from multiple users or groups in a private re:Post.</p>",
     "CreateSpace": "<p>Creates an AWS re:Post Private private re:Post.</p>",
     "DeleteSpace": "<p>Deletes an AWS re:Post Private private re:Post.</p>",
     "DeregisterAdmin": "<p>Removes the user or group from the list of administrators of the private re:Post.</p>",
@@ -23,12 +25,18 @@
     "AccessorId": {
       "base": null,
       "refs": {
-        "AccessorIdList$member": null
+        "AccessorIdList$member": null,
+        "BatchError$accessorId": "<p>The accessor identifier that's related to the error.</p>",
+        "Roles$key": null
       }
     },
     "AccessorIdList": {
       "base": null,
       "refs": {
+        "BatchAddRoleInput$accessorIds": "<p>The user or group accessor identifiers to add the role to.</p>",
+        "BatchAddRoleOutput$addedAccessorIds": "<p>An array of successfully updated accessor identifiers.</p>",
+        "BatchRemoveRoleInput$accessorIds": "<p>The user or group accessor identifiers to remove the role from.</p>",
+        "BatchRemoveRoleOutput$removedAccessorIds": "<p>An array of successfully updated accessor identifiers.</p>",
         "SendInvitesInput$accessorIds": "<p>The array of identifiers for the users and groups.</p>"
       }
     },
@@ -52,6 +60,39 @@
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource that the tag is associated with.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
         "UpdateSpaceInput$roleArn": "<p>The IAM role that grants permissions to the private re:Post to convert unanswered questions into AWS support tickets.</p>"
+      }
+    },
+    "BatchAddRoleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchAddRoleOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchError": {
+      "base": "<p>An error that occurred during a batch operation.</p>",
+      "refs": {
+        "BatchErrorList$member": null
+      }
+    },
+    "BatchErrorList": {
+      "base": null,
+      "refs": {
+        "BatchAddRoleOutput$errors": "<p>An array of errors that occurred when roles were added.</p>",
+        "BatchRemoveRoleOutput$errors": "<p>An array of errors that occurred when roles were removed.</p>"
+      }
+    },
+    "BatchRemoveRoleInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchRemoveRoleOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ClientId": {
@@ -97,6 +138,18 @@
     "DeregisterAdminInput": {
       "base": null,
       "refs": {
+      }
+    },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchError$error": "<p>The error code.</p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "BatchError$message": "<p>Description of the error.</p>"
       }
     },
     "GetSpaceInput": {
@@ -190,6 +243,26 @@
       "refs": {
       }
     },
+    "Role": {
+      "base": null,
+      "refs": {
+        "BatchAddRoleInput$role": "<p>The role to add to the users or groups.</p>",
+        "BatchRemoveRoleInput$role": "<p>The role to remove from the users or groups.</p>",
+        "RoleList$member": null
+      }
+    },
+    "RoleList": {
+      "base": null,
+      "refs": {
+        "Roles$value": null
+      }
+    },
+    "Roles": {
+      "base": null,
+      "refs": {
+        "GetSpaceOutput$roles": "<p>A map of accessor identifiers and their roles.</p>"
+      }
+    },
     "SendInvitesInput": {
       "base": null,
       "refs": {
@@ -218,6 +291,8 @@
     "SpaceId": {
       "base": null,
       "refs": {
+        "BatchAddRoleInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "BatchRemoveRoleInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "CreateSpaceOutput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "DeleteSpaceInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "DeregisterAdminInput$spaceId": "<p>The ID of the private re:Post to remove the admin from.</p>",

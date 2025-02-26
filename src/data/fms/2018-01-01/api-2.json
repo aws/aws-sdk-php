@@ -2060,7 +2060,8 @@
         "ExcludeMap":{"shape":"CustomerPolicyScopeMap"},
         "ResourceSetIds":{"shape":"ResourceSetIds"},
         "PolicyDescription":{"shape":"ResourceDescription"},
-        "PolicyStatus":{"shape":"CustomerPolicyStatus"}
+        "PolicyStatus":{"shape":"CustomerPolicyStatus"},
+        "ResourceTagLogicalOperator":{"shape":"ResourceTagLogicalOperator"}
       }
     },
     "PolicyComplianceDetail":{
@@ -2371,6 +2372,10 @@
       "min":1,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
+    "ResourceArnList":{
+      "type":"list",
+      "member":{"shape":"ResourceArn"}
+    },
     "ResourceCount":{
       "type":"long",
       "min":0
@@ -2460,12 +2465,19 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@*\\\\]*)$"
+    },
+    "ResourceTagLogicalOperator":{
+      "type":"string",
+      "enum":[
+        "AND",
+        "OR"
+      ]
     },
     "ResourceTagValue":{
       "type":"string",
       "max":256,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@*\\\\]*)$"
     },
     "ResourceTags":{
       "type":"list",
@@ -2509,7 +2521,9 @@
         "ThirdPartyFirewallMissingExpectedRouteTableViolation":{"shape":"ThirdPartyFirewallMissingExpectedRouteTableViolation"},
         "FirewallSubnetMissingVPCEndpointViolation":{"shape":"FirewallSubnetMissingVPCEndpointViolation"},
         "InvalidNetworkAclEntriesViolation":{"shape":"InvalidNetworkAclEntriesViolation"},
-        "PossibleRemediationActions":{"shape":"PossibleRemediationActions"}
+        "PossibleRemediationActions":{"shape":"PossibleRemediationActions"},
+        "WebACLHasIncompatibleConfigurationViolation":{"shape":"WebACLHasIncompatibleConfigurationViolation"},
+        "WebACLHasOutOfScopeResourcesViolation":{"shape":"WebACLHasOutOfScopeResourcesViolation"}
       }
     },
     "ResourceViolations":{
@@ -2865,7 +2879,8 @@
         "RESOURCE_MISSING_DNS_FIREWALL",
         "ROUTE_HAS_OUT_OF_SCOPE_ENDPOINT",
         "FIREWALL_SUBNET_MISSING_VPCE_ENDPOINT",
-        "INVALID_NETWORK_ACL_ENTRY"
+        "INVALID_NETWORK_ACL_ENTRY",
+        "WEB_ACL_CONFIGURATION_OR_SCOPE_OF_USE"
       ]
     },
     "ViolationTarget":{
@@ -2873,6 +2888,20 @@
       "max":1024,
       "min":0,
       "pattern":".*"
+    },
+    "WebACLHasIncompatibleConfigurationViolation":{
+      "type":"structure",
+      "members":{
+        "WebACLArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"LengthBoundedString"}
+      }
+    },
+    "WebACLHasOutOfScopeResourcesViolation":{
+      "type":"structure",
+      "members":{
+        "WebACLArn":{"shape":"ResourceArn"},
+        "OutOfScopeResourceList":{"shape":"ResourceArnList"}
+      }
     }
   }
 }

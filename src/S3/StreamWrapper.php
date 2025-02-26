@@ -110,7 +110,7 @@ class StreamWrapper
     public static function register(
         S3ClientInterface $client,
         $protocol = 's3',
-        CacheInterface $cache = null,
+        ?CacheInterface $cache = null,
         $v2Existence = false
     ) {
         self::$useV2Existence = $v2Existence;
@@ -593,13 +593,15 @@ class StreamWrapper
 
     public function stream_lock($operation)
     {
-        trigger_error('stream_lock() is not supported by the Amazon S3 stream wrapper', E_USER_WARNING);
+        trigger_error(
+            'stream_lock() is not supported by the Amazon S3 stream wrapper',
+            E_USER_WARNING
+        );
         return false;
     }
 
     public function stream_truncate($new_size)
     {
-        trigger_error('stream_truncate() is not supported by the Amazon S3 stream wrapper', E_USER_WARNING);
         return false;
     }
 

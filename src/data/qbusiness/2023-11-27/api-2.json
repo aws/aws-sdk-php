@@ -20,6 +20,43 @@
         "uid": "qbusiness-2023-11-27"
     },
     "operations": {
+        "AssociatePermission": {
+            "name": "AssociatePermission",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/applications\/{applicationId}\/policy",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "AssociatePermissionRequest"
+            },
+            "output": {
+                "shape": "AssociatePermissionResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ServiceQuotaExceededException"
+                }
+            ]
+        },
         "BatchDeleteDocument": {
             "name": "BatchDeleteDocument",
             "http": {
@@ -91,6 +128,38 @@
                 }
             ]
         },
+        "CancelSubscription": {
+            "name": "CancelSubscription",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/applications\/{applicationId}\/subscriptions\/{subscriptionId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CancelSubscriptionRequest"
+            },
+            "output": {
+                "shape": "CancelSubscriptionResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
         "ChatSync": {
             "name": "ChatSync",
             "http": {
@@ -118,6 +187,9 @@
                     "shape": "ConflictException"
                 },
                 {
+                    "shape": "ExternalResourceException"
+                },
+                {
                     "shape": "ThrottlingException"
                 },
                 {
@@ -140,6 +212,44 @@
             },
             "output": {
                 "shape": "CreateApplicationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ServiceQuotaExceededException"
+                }
+            ],
+            "idempotent": true
+        },
+        "CreateDataAccessor": {
+            "name": "CreateDataAccessor",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/applications\/{applicationId}\/dataaccessors",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CreateDataAccessorRequest"
+            },
+            "output": {
+                "shape": "CreateDataAccessorResponse"
             },
             "errors": [
                 {
@@ -316,6 +426,41 @@
                 }
             ]
         },
+        "CreateSubscription": {
+            "name": "CreateSubscription",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/applications\/{applicationId}\/subscriptions",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CreateSubscriptionRequest"
+            },
+            "output": {
+                "shape": "CreateSubscriptionResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
         "CreateUser": {
             "name": "CreateUser",
             "http": {
@@ -480,6 +625,41 @@
                 },
                 {
                     "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
+        "DeleteDataAccessor": {
+            "name": "DeleteDataAccessor",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/applications\/{applicationId}\/dataaccessors\/{dataAccessorId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "DeleteDataAccessorRequest"
+            },
+            "output": {
+                "shape": "DeleteDataAccessorResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -738,6 +918,41 @@
             ],
             "idempotent": true
         },
+        "DisassociatePermission": {
+            "name": "DisassociatePermission",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/applications\/{applicationId}\/policy\/{statementId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "DisassociatePermissionRequest"
+            },
+            "output": {
+                "shape": "DisassociatePermissionResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
         "GetApplication": {
             "name": "GetApplication",
             "http": {
@@ -781,6 +996,37 @@
             },
             "output": {
                 "shape": "GetChatControlsConfigurationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "GetDataAccessor": {
+            "name": "GetDataAccessor",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/dataaccessors\/{dataAccessorId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetDataAccessorRequest"
+            },
+            "output": {
+                "shape": "GetDataAccessorResponse"
             },
             "errors": [
                 {
@@ -896,6 +1142,43 @@
                 }
             ]
         },
+        "GetMedia": {
+            "name": "GetMedia",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/conversations\/{conversationId}\/messages\/{messageId}\/media\/{mediaId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetMediaRequest"
+            },
+            "output": {
+                "shape": "GetMediaResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "MediaTooLargeException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "GetPlugin": {
             "name": "GetPlugin",
             "http": {
@@ -908,6 +1191,37 @@
             },
             "output": {
                 "shape": "GetPluginResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "GetPolicy": {
+            "name": "GetPolicy",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/policy",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetPolicyRequest"
+            },
+            "output": {
+                "shape": "GetPolicyResponse"
             },
             "errors": [
                 {
@@ -1051,6 +1365,40 @@
                 }
             ]
         },
+        "ListAttachments": {
+            "name": "ListAttachments",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/attachments",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListAttachmentsRequest"
+            },
+            "output": {
+                "shape": "ListAttachmentsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "ListConversations": {
             "name": "ListConversations",
             "http": {
@@ -1085,6 +1433,37 @@
                 }
             ]
         },
+        "ListDataAccessors": {
+            "name": "ListDataAccessors",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/dataaccessors",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListDataAccessorsRequest"
+            },
+            "output": {
+                "shape": "ListDataAccessorsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "ListDataSourceSyncJobs": {
             "name": "ListDataSourceSyncJobs",
             "http": {
@@ -1104,6 +1483,9 @@
                 },
                 {
                     "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -1277,6 +1659,93 @@
                 }
             ]
         },
+        "ListPluginActions": {
+            "name": "ListPluginActions",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/plugins\/{pluginId}\/actions",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListPluginActionsRequest"
+            },
+            "output": {
+                "shape": "ListPluginActionsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "ListPluginTypeActions": {
+            "name": "ListPluginTypeActions",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/pluginTypes\/{pluginType}\/actions",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListPluginTypeActionsRequest"
+            },
+            "output": {
+                "shape": "ListPluginTypeActionsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "ListPluginTypeMetadata": {
+            "name": "ListPluginTypeMetadata",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/pluginTypeMetadata",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListPluginTypeMetadataRequest"
+            },
+            "output": {
+                "shape": "ListPluginTypeMetadataResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "ListPlugins": {
             "name": "ListPlugins",
             "http": {
@@ -1327,6 +1796,40 @@
                 },
                 {
                     "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "ListSubscriptions": {
+            "name": "ListSubscriptions",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/subscriptions",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListSubscriptionsRequest"
+            },
+            "output": {
+                "shape": "ListSubscriptionsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -1467,6 +1970,40 @@
             ],
             "idempotent": true
         },
+        "SearchRelevantContent": {
+            "name": "SearchRelevantContent",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/applications\/{applicationId}\/relevant-content",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "SearchRelevantContentRequest"
+            },
+            "output": {
+                "shape": "SearchRelevantContentResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "StartDataSourceSyncJob": {
             "name": "StartDataSourceSyncJob",
             "http": {
@@ -1523,6 +2060,9 @@
                 },
                 {
                     "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -1671,6 +2211,41 @@
                 },
                 {
                     "shape": "ServiceQuotaExceededException"
+                }
+            ],
+            "idempotent": true
+        },
+        "UpdateDataAccessor": {
+            "name": "UpdateDataAccessor",
+            "http": {
+                "method": "PUT",
+                "requestUri": "\/applications\/{applicationId}\/dataaccessors\/{dataAccessorId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "UpdateDataAccessorRequest"
+            },
+            "output": {
+                "shape": "UpdateDataAccessorResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
             ],
             "idempotent": true
@@ -1824,6 +2399,41 @@
             ],
             "idempotent": true
         },
+        "UpdateSubscription": {
+            "name": "UpdateSubscription",
+            "http": {
+                "method": "PUT",
+                "requestUri": "\/applications\/{applicationId}\/subscriptions\/{subscriptionId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "UpdateSubscriptionRequest"
+            },
+            "output": {
+                "shape": "UpdateSubscriptionResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
         "UpdateUser": {
             "name": "UpdateUser",
             "http": {
@@ -1964,6 +2574,28 @@
             },
             "exception": true
         },
+        "ActionConfiguration": {
+            "type": "structure",
+            "required": [
+                "action"
+            ],
+            "members": {
+                "action": {
+                    "shape": "QIamAction"
+                },
+                "filterConfiguration": {
+                    "shape": "ActionFilterConfiguration"
+                }
+            }
+        },
+        "ActionConfigurationList": {
+            "type": "list",
+            "member": {
+                "shape": "ActionConfiguration"
+            },
+            "max": 10,
+            "min": 1
+        },
         "ActionExecution": {
             "type": "structure",
             "required": [
@@ -2020,6 +2652,17 @@
             "members": {
                 "value": {
                     "shape": "ActionPayloadFieldValue"
+                }
+            }
+        },
+        "ActionFilterConfiguration": {
+            "type": "structure",
+            "required": [
+                "documentAttributeFilter"
+            ],
+            "members": {
+                "documentAttributeFilter": {
+                    "shape": "AttributeFilter"
                 }
             }
         },
@@ -2123,6 +2766,9 @@
                 "allowedFormat": {
                     "shape": "String"
                 },
+                "arrayItemJsonSchema": {
+                    "shape": "ActionReviewPayloadFieldArrayItemJsonSchema"
+                },
                 "required": {
                     "shape": "Boolean"
                 }
@@ -2143,6 +2789,34 @@
             "type": "list",
             "member": {
                 "shape": "ActionReviewPayloadFieldAllowedValue"
+            }
+        },
+        "ActionReviewPayloadFieldArrayItemJsonSchema": {
+            "type": "structure",
+            "members": [],
+            "document": true
+        },
+        "ActionSummary": {
+            "type": "structure",
+            "members": {
+                "actionIdentifier": {
+                    "shape": "String"
+                },
+                "displayName": {
+                    "shape": "String"
+                },
+                "instructionExample": {
+                    "shape": "String"
+                },
+                "description": {
+                    "shape": "String"
+                }
+            }
+        },
+        "Actions": {
+            "type": "list",
+            "member": {
+                "shape": "ActionSummary"
             }
         },
         "AmazonResourceName": {
@@ -2170,6 +2844,9 @@
                 },
                 "identityType": {
                     "shape": "IdentityType"
+                },
+                "quickSightConfiguration": {
+                    "shape": "QuickSightConfiguration"
                 }
             }
         },
@@ -2226,18 +2903,100 @@
                 }
             }
         },
-        "AttachmentInput": {
+        "AppliedOrchestrationConfiguration": {
             "type": "structure",
             "required": [
-                "name",
-                "data"
+                "control"
             ],
             "members": {
+                "control": {
+                    "shape": "OrchestrationControl"
+                }
+            }
+        },
+        "AssociatePermissionRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "statementId",
+                "actions",
+                "principal"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "statementId": {
+                    "shape": "StatementId"
+                },
+                "actions": {
+                    "shape": "QIamActions"
+                },
+                "principal": {
+                    "shape": "PrincipalRoleArn"
+                }
+            }
+        },
+        "AssociatePermissionResponse": {
+            "type": "structure",
+            "members": {
+                "statement": {
+                    "shape": "String"
+                }
+            }
+        },
+        "Attachment": {
+            "type": "structure",
+            "members": {
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId"
+                },
                 "name": {
                     "shape": "AttachmentName"
                 },
+                "copyFrom": {
+                    "shape": "CopyFromSource"
+                },
+                "fileType": {
+                    "shape": "String"
+                },
+                "fileSize": {
+                    "shape": "Integer"
+                },
+                "md5chksum": {
+                    "shape": "String"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "status": {
+                    "shape": "AttachmentStatus"
+                },
+                "error": {
+                    "shape": "ErrorDetail"
+                }
+            }
+        },
+        "AttachmentId": {
+            "type": "string",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+        },
+        "AttachmentInput": {
+            "type": "structure",
+            "members": {
                 "data": {
                     "shape": "Blob"
+                },
+                "name": {
+                    "shape": "AttachmentName"
+                },
+                "copyFrom": {
+                    "shape": "CopyFromSource"
                 }
             }
         },
@@ -2249,6 +3008,12 @@
                 }
             },
             "event": true
+        },
+        "AttachmentList": {
+            "type": "list",
+            "member": {
+                "shape": "Attachment"
+            }
         },
         "AttachmentName": {
             "type": "string",
@@ -2267,6 +3032,12 @@
                 },
                 "error": {
                     "shape": "ErrorDetail"
+                },
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId"
                 }
             }
         },
@@ -2274,7 +3045,7 @@
             "type": "string",
             "enum": [
                 "FAILED",
-                "SUCCEEDED"
+                "SUCCESS"
             ]
         },
         "AttachmentsConfiguration": {
@@ -2549,9 +3320,7 @@
             "type": "list",
             "member": {
                 "shape": "BlockedPhrase"
-            },
-            "max": 5,
-            "min": 0
+            }
         },
         "BlockedPhrasesConfiguration": {
             "type": "structure",
@@ -2587,6 +3356,65 @@
             "box": true,
             "max": 999999999,
             "min": 0
+        },
+        "BrowserExtension": {
+            "type": "string",
+            "enum": [
+                "FIREFOX",
+                "CHROME"
+            ]
+        },
+        "BrowserExtensionConfiguration": {
+            "type": "structure",
+            "required": [
+                "enabledBrowserExtensions"
+            ],
+            "members": {
+                "enabledBrowserExtensions": {
+                    "shape": "BrowserExtensionList"
+                }
+            }
+        },
+        "BrowserExtensionList": {
+            "type": "list",
+            "member": {
+                "shape": "BrowserExtension"
+            },
+            "max": 2,
+            "min": 0
+        },
+        "CancelSubscriptionRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "subscriptionId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "subscriptionId": {
+                    "shape": "SubscriptionId",
+                    "location": "uri",
+                    "locationName": "subscriptionId"
+                }
+            }
+        },
+        "CancelSubscriptionResponse": {
+            "type": "structure",
+            "members": {
+                "subscriptionArn": {
+                    "shape": "SubscriptionArn"
+                },
+                "currentSubscription": {
+                    "shape": "SubscriptionDetails"
+                },
+                "nextSubscription": {
+                    "shape": "SubscriptionDetails"
+                }
+            }
         },
         "ChatInput": {
             "type": "structure",
@@ -2788,13 +3616,20 @@
         "ClientIdForOIDC": {
             "type": "string",
             "max": 255,
-            "min": 1
+            "min": 1,
+            "pattern": "[a-zA-Z0-9_.:\/()*?=-]*"
         },
         "ClientIdsForOIDC": {
             "type": "list",
             "member": {
                 "shape": "ClientIdForOIDC"
             }
+        },
+        "ClientNamespace": {
+            "type": "string",
+            "max": 64,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9._-]*"
         },
         "ClientToken": {
             "type": "string",
@@ -2856,6 +3691,15 @@
                 }
             }
         },
+        "ContentSource": {
+            "type": "structure",
+            "members": {
+                "retriever": {
+                    "shape": "RetrieverContentSource"
+                }
+            },
+            "union": true
+        },
         "ContentType": {
             "type": "string",
             "enum": [
@@ -2893,6 +3737,21 @@
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
         },
+        "ConversationSource": {
+            "type": "structure",
+            "required": [
+                "conversationId",
+                "attachmentId"
+            ],
+            "members": {
+                "conversationId": {
+                    "shape": "ConversationId"
+                },
+                "attachmentId": {
+                    "shape": "AttachmentId"
+                }
+            }
+        },
         "ConversationTitle": {
             "type": "string"
         },
@@ -2901,6 +3760,15 @@
             "member": {
                 "shape": "Conversation"
             }
+        },
+        "CopyFromSource": {
+            "type": "structure",
+            "members": {
+                "conversation": {
+                    "shape": "ConversationSource"
+                }
+            },
+            "union": true
         },
         "CreateApplicationRequest": {
             "type": "structure",
@@ -2918,7 +3786,7 @@
                     "shape": "IdentityType"
                 },
                 "iamIdentityProviderArn": {
-                    "shape": "IamIdentityProviderArn"
+                    "shape": "IAMIdentityProviderArn"
                 },
                 "identityCenterInstanceArn": {
                     "shape": "InstanceArn"
@@ -2947,6 +3815,9 @@
                 },
                 "personalizationConfiguration": {
                     "shape": "PersonalizationConfiguration"
+                },
+                "quickSightConfiguration": {
+                    "shape": "QuickSightConfiguration"
                 }
             }
         },
@@ -2958,6 +3829,57 @@
                 },
                 "applicationArn": {
                     "shape": "ApplicationArn"
+                }
+            }
+        },
+        "CreateDataAccessorRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "principal",
+                "actionConfigurations",
+                "displayName"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "principal": {
+                    "shape": "PrincipalRoleArn"
+                },
+                "actionConfigurations": {
+                    "shape": "ActionConfigurationList"
+                },
+                "clientToken": {
+                    "shape": "ClientToken",
+                    "idempotencyToken": true
+                },
+                "displayName": {
+                    "shape": "DataAccessorName"
+                },
+                "tags": {
+                    "shape": "Tags"
+                }
+            }
+        },
+        "CreateDataAccessorResponse": {
+            "type": "structure",
+            "required": [
+                "dataAccessorId",
+                "idcApplicationArn",
+                "dataAccessorArn"
+            ],
+            "members": {
+                "dataAccessorId": {
+                    "shape": "DataAccessorId"
+                },
+                "idcApplicationArn": {
+                    "shape": "IdcApplicationArn"
+                },
+                "dataAccessorArn": {
+                    "shape": "DataAccessorArn"
                 }
             }
         },
@@ -3007,6 +3929,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -3036,11 +3961,11 @@
                 "displayName": {
                     "shape": "IndexName"
                 },
-                "type": {
-                    "shape": "IndexType"
-                },
                 "description": {
                     "shape": "Description"
+                },
+                "type": {
+                    "shape": "IndexType"
                 },
                 "tags": {
                     "shape": "Tags"
@@ -3163,6 +4088,48 @@
                 }
             }
         },
+        "CreateSubscriptionRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "principal",
+                "type"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "principal": {
+                    "shape": "SubscriptionPrincipal"
+                },
+                "type": {
+                    "shape": "SubscriptionType"
+                },
+                "clientToken": {
+                    "shape": "ClientToken",
+                    "idempotencyToken": true
+                }
+            }
+        },
+        "CreateSubscriptionResponse": {
+            "type": "structure",
+            "members": {
+                "subscriptionId": {
+                    "shape": "SubscriptionId"
+                },
+                "subscriptionArn": {
+                    "shape": "SubscriptionArn"
+                },
+                "currentSubscription": {
+                    "shape": "SubscriptionDetails"
+                },
+                "nextSubscription": {
+                    "shape": "SubscriptionDetails"
+                }
+            }
+        },
         "CreateUserRequest": {
             "type": "structure",
             "required": [
@@ -3222,6 +4189,9 @@
                 "samplePromptsControlMode": {
                     "shape": "WebExperienceSamplePromptsControlMode"
                 },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
+                },
                 "roleArn": {
                     "shape": "RoleArn"
                 },
@@ -3234,6 +4204,12 @@
                 },
                 "identityProviderConfiguration": {
                     "shape": "IdentityProviderConfiguration"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
+                },
+                "customizationConfiguration": {
+                    "shape": "CustomizationConfiguration"
                 }
             }
         },
@@ -3266,6 +4242,12 @@
                 "DISABLED"
             ]
         },
+        "CustomCSSUrl": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "(https?:\/\/[a-zA-Z0-9-_.+%\/]+\\.css)?"
+        },
         "CustomPluginConfiguration": {
             "type": "structure",
             "required": [
@@ -3283,6 +4265,74 @@
                 "apiSchema": {
                     "shape": "APISchema"
                 }
+            }
+        },
+        "CustomizationConfiguration": {
+            "type": "structure",
+            "members": {
+                "customCSSUrl": {
+                    "shape": "CustomCSSUrl"
+                },
+                "logoUrl": {
+                    "shape": "LogoUrl"
+                },
+                "fontUrl": {
+                    "shape": "FontUrl"
+                },
+                "faviconUrl": {
+                    "shape": "FaviconUrl"
+                }
+            }
+        },
+        "DataAccessor": {
+            "type": "structure",
+            "members": {
+                "displayName": {
+                    "shape": "DataAccessorName"
+                },
+                "dataAccessorId": {
+                    "shape": "DataAccessorId"
+                },
+                "dataAccessorArn": {
+                    "shape": "DataAccessorArn"
+                },
+                "idcApplicationArn": {
+                    "shape": "IdcApplicationArn"
+                },
+                "principal": {
+                    "shape": "PrincipalRoleArn"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "updatedAt": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "DataAccessorArn": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^\/].{0,1023}"
+        },
+        "DataAccessorId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "DataAccessorName": {
+            "type": "string",
+            "max": 100,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9_-]*",
+            "sensitive": true
+        },
+        "DataAccessors": {
+            "type": "list",
+            "member": {
+                "shape": "DataAccessor"
             }
         },
         "DataSource": {
@@ -3517,6 +4567,29 @@
             "type": "structure",
             "members": []
         },
+        "DeleteDataAccessorRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "dataAccessorId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "dataAccessorId": {
+                    "shape": "DataAccessorId",
+                    "location": "uri",
+                    "locationName": "dataAccessorId"
+                }
+            }
+        },
+        "DeleteDataAccessorResponse": {
+            "type": "structure",
+            "members": []
+        },
         "DeleteDataSourceRequest": {
             "type": "structure",
             "required": [
@@ -3716,7 +4789,30 @@
             "type": "string",
             "max": 1000,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
+        },
+        "DisassociatePermissionRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "statementId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "statementId": {
+                    "shape": "String",
+                    "location": "uri",
+                    "locationName": "statementId"
+                }
+            }
+        },
+        "DisassociatePermissionResponse": {
+            "type": "structure",
+            "members": []
         },
         "Document": {
             "type": "structure",
@@ -3744,6 +4840,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -4063,7 +5162,7 @@
             "type": "string",
             "max": 2048,
             "min": 1,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "ExampleChatMessage": {
             "type": "string",
@@ -4084,6 +5183,22 @@
             "max": 36,
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "ExternalResourceException": {
+            "type": "structure",
+            "required": [
+                "message"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 424,
+                "senderFault": true
+            },
+            "exception": true
         },
         "FailedAttachmentEvent": {
             "type": "structure",
@@ -4123,6 +5238,18 @@
                 "shape": "FailedDocument"
             }
         },
+        "FaviconUrl": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "(https?:\/\/[a-zA-Z0-9-_.+%\/]+\\.(svg|ico))?"
+        },
+        "FontUrl": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "(https?:\/\/[a-zA-Z0-9-_.+%\/]+\\.(ttf|woff|woff2|otf))?"
+        },
         "GetApplicationRequest": {
             "type": "structure",
             "required": [
@@ -4152,7 +5279,7 @@
                     "shape": "IdentityType"
                 },
                 "iamIdentityProviderArn": {
-                    "shape": "IamIdentityProviderArn"
+                    "shape": "IAMIdentityProviderArn"
                 },
                 "identityCenterApplicationArn": {
                     "shape": "IdcApplicationArn"
@@ -4192,6 +5319,9 @@
                 },
                 "clientIdsForOIDC": {
                     "shape": "ClientIdsForOIDC"
+                },
+                "quickSightConfiguration": {
+                    "shape": "QuickSightConfiguration"
                 }
             }
         },
@@ -4224,6 +5354,9 @@
                 "responseScope": {
                     "shape": "ResponseScope"
                 },
+                "orchestrationConfiguration": {
+                    "shape": "AppliedOrchestrationConfiguration"
+                },
                 "blockedPhrases": {
                     "shape": "BlockedPhrasesConfiguration"
                 },
@@ -4235,6 +5368,57 @@
                 },
                 "nextToken": {
                     "shape": "NextToken"
+                }
+            }
+        },
+        "GetDataAccessorRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "dataAccessorId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "dataAccessorId": {
+                    "shape": "DataAccessorId",
+                    "location": "uri",
+                    "locationName": "dataAccessorId"
+                }
+            }
+        },
+        "GetDataAccessorResponse": {
+            "type": "structure",
+            "members": {
+                "displayName": {
+                    "shape": "DataAccessorName"
+                },
+                "dataAccessorId": {
+                    "shape": "DataAccessorId"
+                },
+                "dataAccessorArn": {
+                    "shape": "DataAccessorArn"
+                },
+                "applicationId": {
+                    "shape": "ApplicationId"
+                },
+                "idcApplicationArn": {
+                    "shape": "IdcApplicationArn"
+                },
+                "principal": {
+                    "shape": "PrincipalRoleArn"
+                },
+                "actionConfigurations": {
+                    "shape": "ActionConfigurationList"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "updatedAt": {
+                    "shape": "Timestamp"
                 }
             }
         },
@@ -4313,6 +5497,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -4388,14 +5575,14 @@
                 "displayName": {
                     "shape": "IndexName"
                 },
-                "type": {
-                    "shape": "IndexType"
-                },
                 "indexArn": {
                     "shape": "IndexArn"
                 },
                 "status": {
                     "shape": "IndexStatus"
+                },
+                "type": {
+                    "shape": "IndexType"
                 },
                 "description": {
                     "shape": "Description"
@@ -4417,6 +5604,48 @@
                 },
                 "indexStatistics": {
                     "shape": "IndexStatistics"
+                }
+            }
+        },
+        "GetMediaRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "conversationId",
+                "messageId",
+                "mediaId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId",
+                    "location": "uri",
+                    "locationName": "conversationId"
+                },
+                "messageId": {
+                    "shape": "MessageId",
+                    "location": "uri",
+                    "locationName": "messageId"
+                },
+                "mediaId": {
+                    "shape": "MediaId",
+                    "location": "uri",
+                    "locationName": "mediaId"
+                }
+            }
+        },
+        "GetMediaResponse": {
+            "type": "structure",
+            "members": {
+                "mediaBytes": {
+                    "shape": "Blob"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
                 }
             }
         },
@@ -4477,6 +5706,27 @@
                 },
                 "updatedAt": {
                     "shape": "Timestamp"
+                }
+            }
+        },
+        "GetPolicyRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                }
+            }
+        },
+        "GetPolicyResponse": {
+            "type": "structure",
+            "members": {
+                "policy": {
+                    "shape": "String"
                 }
             }
         },
@@ -4616,6 +5866,9 @@
                 "samplePromptsControlMode": {
                     "shape": "WebExperienceSamplePromptsControlMode"
                 },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
+                },
                 "roleArn": {
                     "shape": "RoleArn"
                 },
@@ -4629,8 +5882,20 @@
                 },
                 "error": {
                     "shape": "ErrorDetail"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
+                },
+                "customizationConfiguration": {
+                    "shape": "CustomizationConfiguration"
                 }
             }
+        },
+        "GroupIdentifier": {
+            "type": "string",
+            "max": 47,
+            "min": 1,
+            "pattern": "([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"
         },
         "GroupMembers": {
             "type": "structure",
@@ -4640,6 +5905,9 @@
                 },
                 "memberUsers": {
                     "shape": "MemberUsers"
+                },
+                "s3PathForGroupMembers": {
+                    "shape": "S3"
                 }
             }
         },
@@ -4710,7 +5978,7 @@
                 }
             }
         },
-        "IamIdentityProviderArn": {
+        "IAMIdentityProviderArn": {
             "type": "string",
             "max": 2048,
             "min": 20,
@@ -4721,6 +5989,21 @@
             "max": 1224,
             "min": 10,
             "pattern": "arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application\/(sso)?ins-[a-zA-Z0-9-.]{16}\/apl-[a-zA-Z0-9]{16}"
+        },
+        "IdcAuthConfiguration": {
+            "type": "structure",
+            "required": [
+                "idcApplicationArn",
+                "roleArn"
+            ],
+            "members": {
+                "idcApplicationArn": {
+                    "shape": "IdcApplicationArn"
+                },
+                "roleArn": {
+                    "shape": "RoleArn"
+                }
+            }
         },
         "IdentityProviderConfiguration": {
             "type": "structure",
@@ -4739,7 +6022,26 @@
             "enum": [
                 "AWS_IAM_IDP_SAML",
                 "AWS_IAM_IDP_OIDC",
-                "AWS_IAM_IDC"
+                "AWS_IAM_IDC",
+                "AWS_QUICKSIGHT_IDP"
+            ]
+        },
+        "ImageExtractionConfiguration": {
+            "type": "structure",
+            "required": [
+                "imageExtractionStatus"
+            ],
+            "members": {
+                "imageExtractionStatus": {
+                    "shape": "ImageExtractionStatus"
+                }
+            }
+        },
+        "ImageExtractionStatus": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
             ]
         },
         "Index": {
@@ -4953,6 +6255,50 @@
                 }
             }
         },
+        "ListAttachmentsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId",
+                    "location": "querystring",
+                    "locationName": "conversationId"
+                },
+                "userId": {
+                    "shape": "UserId",
+                    "location": "querystring",
+                    "locationName": "userId"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListAttachments",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListAttachmentsResponse": {
+            "type": "structure",
+            "members": {
+                "attachments": {
+                    "shape": "AttachmentList"
+                },
+                "nextToken": {
+                    "shape": "NextToken"
+                }
+            }
+        },
         "ListConversationsRequest": {
             "type": "structure",
             "required": [
@@ -4989,6 +6335,40 @@
                 },
                 "conversations": {
                     "shape": "Conversations"
+                }
+            }
+        },
+        "ListDataAccessorsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "nextToken": {
+                    "shape": "NextToken1500",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListDataAccessors",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListDataAccessorsResponse": {
+            "type": "structure",
+            "members": {
+                "dataAccessors": {
+                    "shape": "DataAccessors"
+                },
+                "nextToken": {
+                    "shape": "NextToken1500"
                 }
             }
         },
@@ -5268,6 +6648,112 @@
                 }
             }
         },
+        "ListPluginActionsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "pluginId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "pluginId": {
+                    "shape": "PluginId",
+                    "location": "uri",
+                    "locationName": "pluginId"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListPluginActions",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListPluginActionsResponse": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "shape": "NextToken"
+                },
+                "items": {
+                    "shape": "Actions"
+                }
+            }
+        },
+        "ListPluginTypeActionsRequest": {
+            "type": "structure",
+            "required": [
+                "pluginType"
+            ],
+            "members": {
+                "pluginType": {
+                    "shape": "PluginType",
+                    "location": "uri",
+                    "locationName": "pluginType"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListPluginTypeActions",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListPluginTypeActionsResponse": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "shape": "NextToken"
+                },
+                "items": {
+                    "shape": "Actions"
+                }
+            }
+        },
+        "ListPluginTypeMetadataRequest": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListPluginTypeMetadata",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListPluginTypeMetadataResponse": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "shape": "NextToken"
+                },
+                "items": {
+                    "shape": "ListPluginTypeMetadataSummaries"
+                }
+            }
+        },
+        "ListPluginTypeMetadataSummaries": {
+            "type": "list",
+            "member": {
+                "shape": "PluginTypeMetadataSummary"
+            }
+        },
         "ListPluginsRequest": {
             "type": "structure",
             "required": [
@@ -5336,6 +6822,40 @@
                 }
             }
         },
+        "ListSubscriptionsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                },
+                "maxResults": {
+                    "shape": "MaxResultsIntegerForListSubscriptions",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                }
+            }
+        },
+        "ListSubscriptionsResponse": {
+            "type": "structure",
+            "members": {
+                "nextToken": {
+                    "shape": "NextToken"
+                },
+                "subscriptions": {
+                    "shape": "Subscriptions"
+                }
+            }
+        },
         "ListTagsForResourceRequest": {
             "type": "structure",
             "required": [
@@ -5391,8 +6911,18 @@
                 }
             }
         },
+        "LogoUrl": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "(https?:\/\/[a-zA-Z0-9-_.+%\/]+\\.(svg|png))?"
+        },
         "Long": {
             "type": "long",
+            "box": true
+        },
+        "MaxResults": {
+            "type": "integer",
             "box": true
         },
         "MaxResultsIntegerForGetTopicConfigurations": {
@@ -5407,10 +6937,22 @@
             "max": 100,
             "min": 1
         },
+        "MaxResultsIntegerForListAttachments": {
+            "type": "integer",
+            "box": true,
+            "max": 100,
+            "min": 1
+        },
         "MaxResultsIntegerForListConversations": {
             "type": "integer",
             "box": true,
             "max": 100,
+            "min": 1
+        },
+        "MaxResultsIntegerForListDataAccessors": {
+            "type": "integer",
+            "box": true,
+            "max": 10,
             "min": 1
         },
         "MaxResultsIntegerForListDataSources": {
@@ -5449,6 +6991,24 @@
             "max": 100,
             "min": 1
         },
+        "MaxResultsIntegerForListPluginActions": {
+            "type": "integer",
+            "box": true,
+            "max": 50,
+            "min": 1
+        },
+        "MaxResultsIntegerForListPluginTypeActions": {
+            "type": "integer",
+            "box": true,
+            "max": 50,
+            "min": 1
+        },
+        "MaxResultsIntegerForListPluginTypeMetadata": {
+            "type": "integer",
+            "box": true,
+            "max": 50,
+            "min": 1
+        },
         "MaxResultsIntegerForListPlugins": {
             "type": "integer",
             "box": true,
@@ -5461,11 +7021,47 @@
             "max": 50,
             "min": 1
         },
+        "MaxResultsIntegerForListSubscriptions": {
+            "type": "integer",
+            "box": true,
+            "max": 100,
+            "min": 1
+        },
         "MaxResultsIntegerForListWebExperiencesRequest": {
             "type": "integer",
             "box": true,
             "max": 100,
             "min": 1
+        },
+        "MediaExtractionConfiguration": {
+            "type": "structure",
+            "members": {
+                "imageExtractionConfiguration": {
+                    "shape": "ImageExtractionConfiguration"
+                }
+            }
+        },
+        "MediaId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "MediaTooLargeException": {
+            "type": "structure",
+            "required": [
+                "message"
+            ],
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "error": {
+                "httpStatusCode": 400,
+                "senderFault": true
+            },
+            "exception": true
         },
         "MemberGroup": {
             "type": "structure",
@@ -5485,9 +7081,7 @@
             "type": "list",
             "member": {
                 "shape": "MemberGroup"
-            },
-            "max": 1000,
-            "min": 1
+            }
         },
         "MemberRelation": {
             "type": "string",
@@ -5514,9 +7108,7 @@
             "type": "list",
             "member": {
                 "shape": "MemberUser"
-            },
-            "max": 1000,
-            "min": 1
+            }
         },
         "MembershipType": {
             "type": "string",
@@ -5674,6 +7266,11 @@
             "max": 800,
             "min": 1
         },
+        "NextToken1500": {
+            "type": "string",
+            "max": 1500,
+            "min": 1
+        },
         "NoAuthConfiguration": {
             "type": "structure",
             "members": []
@@ -5711,6 +7308,12 @@
                 },
                 "roleArn": {
                     "shape": "RoleArn"
+                },
+                "authorizationUrl": {
+                    "shape": "Url"
+                },
+                "tokenUrl": {
+                    "shape": "Url"
                 }
             }
         },
@@ -5728,6 +7331,30 @@
                     "shape": "RoleArn"
                 }
             }
+        },
+        "OrchestrationConfiguration": {
+            "type": "structure",
+            "required": [
+                "control"
+            ],
+            "members": {
+                "control": {
+                    "shape": "OrchestrationControl"
+                }
+            }
+        },
+        "OrchestrationControl": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
+        "Origin": {
+            "type": "string",
+            "max": 256,
+            "min": 1,
+            "pattern": "(http:\/\/|https:\/\/)[a-zA-Z0-9-_.]+(?::[0-9]{1,5})?"
         },
         "Payload": {
             "type": "string",
@@ -5797,6 +7424,9 @@
                 },
                 "noAuthConfiguration": {
                     "shape": "NoAuthConfiguration"
+                },
+                "idcAuthConfiguration": {
+                    "shape": "IdcAuthConfiguration"
                 }
             },
             "union": true
@@ -5855,8 +7485,44 @@
                 "SALESFORCE",
                 "JIRA",
                 "ZENDESK",
-                "CUSTOM"
+                "CUSTOM",
+                "QUICKSIGHT",
+                "SERVICENOW_NOW_PLATFORM",
+                "JIRA_CLOUD",
+                "SALESFORCE_CRM",
+                "ZENDESK_SUITE",
+                "ATLASSIAN_CONFLUENCE",
+                "GOOGLE_CALENDAR",
+                "MICROSOFT_TEAMS",
+                "MICROSOFT_EXCHANGE",
+                "PAGERDUTY_ADVANCE",
+                "SMARTSHEET",
+                "ASANA"
             ]
+        },
+        "PluginTypeCategory": {
+            "type": "string",
+            "enum": [
+                "Customer relationship management (CRM)",
+                "Project management",
+                "Communication",
+                "Productivity",
+                "Ticketing and incident management"
+            ]
+        },
+        "PluginTypeMetadataSummary": {
+            "type": "structure",
+            "members": {
+                "type": {
+                    "shape": "PluginType"
+                },
+                "category": {
+                    "shape": "PluginTypeCategory"
+                },
+                "description": {
+                    "shape": "String"
+                }
+            }
         },
         "Plugins": {
             "type": "list",
@@ -5892,6 +7558,12 @@
                     "shape": "MembershipType"
                 }
             }
+        },
+        "PrincipalRoleArn": {
+            "type": "string",
+            "max": 1284,
+            "min": 1,
+            "pattern": "arn:aws:iam::[0-9]{12}:role\/[a-zA-Z0-9_\/+=,.@-]+"
         },
         "PrincipalUser": {
             "type": "structure",
@@ -5983,6 +7655,9 @@
                 },
                 "groupMembers": {
                     "shape": "GroupMembers"
+                },
+                "roleArn": {
+                    "shape": "RoleArn"
                 }
             }
         },
@@ -6008,12 +7683,67 @@
                 "DISABLED"
             ]
         },
+        "QIamAction": {
+            "type": "string",
+            "pattern": "qbusiness:[a-zA-Z]+"
+        },
+        "QIamActions": {
+            "type": "list",
+            "member": {
+                "shape": "QIamAction"
+            },
+            "max": 10,
+            "min": 1
+        },
+        "QueryText": {
+            "type": "string"
+        },
+        "QuickSightConfiguration": {
+            "type": "structure",
+            "required": [
+                "clientNamespace"
+            ],
+            "members": {
+                "clientNamespace": {
+                    "shape": "ClientNamespace"
+                }
+            }
+        },
         "ReadAccessType": {
             "type": "string",
             "enum": [
                 "ALLOW",
                 "DENY"
             ]
+        },
+        "RelevantContent": {
+            "type": "structure",
+            "members": {
+                "content": {
+                    "shape": "String"
+                },
+                "documentId": {
+                    "shape": "DocumentId"
+                },
+                "documentTitle": {
+                    "shape": "Title"
+                },
+                "documentUri": {
+                    "shape": "Url"
+                },
+                "documentAttributes": {
+                    "shape": "DocumentAttributes"
+                },
+                "scoreAttributes": {
+                    "shape": "ScoreAttributes"
+                }
+            }
+        },
+        "RelevantContentList": {
+            "type": "list",
+            "member": {
+                "shape": "RelevantContent"
+            }
         },
         "ResourceNotFoundException": {
             "type": "structure",
@@ -6083,6 +7813,17 @@
                 }
             },
             "union": true
+        },
+        "RetrieverContentSource": {
+            "type": "structure",
+            "required": [
+                "retrieverId"
+            ],
+            "members": {
+                "retrieverId": {
+                    "shape": "RetrieverId"
+                }
+            }
         },
         "RetrieverId": {
             "type": "string",
@@ -6246,6 +7987,65 @@
                 }
             }
         },
+        "ScoreAttributes": {
+            "type": "structure",
+            "members": {
+                "scoreConfidence": {
+                    "shape": "ScoreConfidence"
+                }
+            }
+        },
+        "ScoreConfidence": {
+            "type": "string",
+            "enum": [
+                "VERY_HIGH",
+                "HIGH",
+                "MEDIUM",
+                "LOW",
+                "NOT_AVAILABLE"
+            ]
+        },
+        "SearchRelevantContentRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "queryText",
+                "contentSource"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "queryText": {
+                    "shape": "QueryText"
+                },
+                "contentSource": {
+                    "shape": "ContentSource"
+                },
+                "attributeFilter": {
+                    "shape": "AttributeFilter"
+                },
+                "maxResults": {
+                    "shape": "MaxResults"
+                },
+                "nextToken": {
+                    "shape": "NextToken"
+                }
+            }
+        },
+        "SearchRelevantContentResponse": {
+            "type": "structure",
+            "members": {
+                "relevantContent": {
+                    "shape": "RelevantContentList"
+                },
+                "nextToken": {
+                    "shape": "NextToken"
+                }
+            }
+        },
         "SecretArn": {
             "type": "string",
             "max": 1284,
@@ -6324,6 +8124,12 @@
                 }
             }
         },
+        "SourceAttributionMediaId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
         "SourceAttributions": {
             "type": "list",
             "member": {
@@ -6362,6 +8168,12 @@
                     "shape": "ExecutionId"
                 }
             }
+        },
+        "StatementId": {
+            "type": "string",
+            "max": 100,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9_-]+"
         },
         "Status": {
             "type": "string",
@@ -6461,6 +8273,57 @@
                 "shape": "SubnetId"
             }
         },
+        "Subscription": {
+            "type": "structure",
+            "members": {
+                "subscriptionId": {
+                    "shape": "SubscriptionId"
+                },
+                "subscriptionArn": {
+                    "shape": "SubscriptionArn"
+                },
+                "principal": {
+                    "shape": "SubscriptionPrincipal"
+                },
+                "currentSubscription": {
+                    "shape": "SubscriptionDetails"
+                },
+                "nextSubscription": {
+                    "shape": "SubscriptionDetails"
+                }
+            }
+        },
+        "SubscriptionArn": {
+            "type": "string",
+            "max": 1224,
+            "min": 10,
+            "pattern": "arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^\/].{0,1023}"
+        },
+        "SubscriptionDetails": {
+            "type": "structure",
+            "members": {
+                "type": {
+                    "shape": "SubscriptionType"
+                }
+            }
+        },
+        "SubscriptionId": {
+            "type": "string",
+            "max": 1224,
+            "min": 0
+        },
+        "SubscriptionPrincipal": {
+            "type": "structure",
+            "members": {
+                "user": {
+                    "shape": "UserIdentifier"
+                },
+                "group": {
+                    "shape": "GroupIdentifier"
+                }
+            },
+            "union": true
+        },
         "SubscriptionType": {
             "type": "string",
             "enum": [
@@ -6468,11 +8331,17 @@
                 "Q_BUSINESS"
             ]
         },
+        "Subscriptions": {
+            "type": "list",
+            "member": {
+                "shape": "Subscription"
+            }
+        },
         "SyncSchedule": {
             "type": "string",
             "max": 998,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "SystemMessageId": {
             "type": "string",
@@ -6600,6 +8469,12 @@
                 },
                 "snippetExcerpt": {
                     "shape": "SnippetExcerpt"
+                },
+                "mediaId": {
+                    "shape": "SourceAttributionMediaId"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
                 }
             }
         },
@@ -6756,6 +8631,9 @@
                 "responseScope": {
                     "shape": "ResponseScope"
                 },
+                "orchestrationConfiguration": {
+                    "shape": "OrchestrationConfiguration"
+                },
                 "blockedPhrasesConfigurationUpdate": {
                     "shape": "BlockedPhrasesConfigurationUpdate"
                 },
@@ -6771,6 +8649,36 @@
             }
         },
         "UpdateChatControlsConfigurationResponse": {
+            "type": "structure",
+            "members": []
+        },
+        "UpdateDataAccessorRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "dataAccessorId",
+                "actionConfigurations"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "dataAccessorId": {
+                    "shape": "DataAccessorId",
+                    "location": "uri",
+                    "locationName": "dataAccessorId"
+                },
+                "actionConfigurations": {
+                    "shape": "ActionConfigurationList"
+                },
+                "displayName": {
+                    "shape": "DataAccessorName"
+                }
+            }
+        },
+        "UpdateDataAccessorResponse": {
             "type": "structure",
             "members": []
         },
@@ -6817,6 +8725,9 @@
                 },
                 "documentEnrichmentConfiguration": {
                     "shape": "DocumentEnrichmentConfiguration"
+                },
+                "mediaExtractionConfiguration": {
+                    "shape": "MediaExtractionConfiguration"
                 }
             }
         },
@@ -6929,6 +8840,43 @@
             "type": "structure",
             "members": []
         },
+        "UpdateSubscriptionRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "subscriptionId",
+                "type"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "subscriptionId": {
+                    "shape": "SubscriptionId",
+                    "location": "uri",
+                    "locationName": "subscriptionId"
+                },
+                "type": {
+                    "shape": "SubscriptionType"
+                }
+            }
+        },
+        "UpdateSubscriptionResponse": {
+            "type": "structure",
+            "members": {
+                "subscriptionArn": {
+                    "shape": "SubscriptionArn"
+                },
+                "currentSubscription": {
+                    "shape": "SubscriptionDetails"
+                },
+                "nextSubscription": {
+                    "shape": "SubscriptionDetails"
+                }
+            }
+        },
         "UpdateUserRequest": {
             "type": "structure",
             "required": [
@@ -7007,6 +8955,15 @@
                 },
                 "identityProviderConfiguration": {
                     "shape": "IdentityProviderConfiguration"
+                },
+                "origins": {
+                    "shape": "WebExperienceOrigins"
+                },
+                "browserExtensionConfiguration": {
+                    "shape": "BrowserExtensionConfiguration"
+                },
+                "customizationConfiguration": {
+                    "shape": "CustomizationConfiguration"
                 }
             }
         },
@@ -7055,6 +9012,12 @@
             "min": 1,
             "pattern": "\\P{C}*"
         },
+        "UserIdentifier": {
+            "type": "string",
+            "max": 47,
+            "min": 1,
+            "pattern": "([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"
+        },
         "UserIds": {
             "type": "list",
             "member": {
@@ -7062,9 +9025,7 @@
             }
         },
         "UserMessage": {
-            "type": "string",
-            "max": 7000,
-            "min": 1
+            "type": "string"
         },
         "UsersAndGroups": {
             "type": "structure",
@@ -7170,6 +9131,14 @@
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]*"
         },
+        "WebExperienceOrigins": {
+            "type": "list",
+            "member": {
+                "shape": "Origin"
+            },
+            "max": 10,
+            "min": 0
+        },
         "WebExperienceSamplePromptsControlMode": {
             "type": "string",
             "enum": [
@@ -7191,13 +9160,13 @@
             "type": "string",
             "max": 500,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "WebExperienceTitle": {
             "type": "string",
             "max": 500,
             "min": 0,
-            "pattern": "\\P{C}*"
+            "pattern": "[\\s\\S]*"
         },
         "WebExperienceWelcomeMessage": {
             "type": "string",

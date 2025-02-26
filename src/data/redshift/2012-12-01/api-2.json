@@ -448,6 +448,29 @@
         {"shape":"InvalidTagFault"}
       ]
     },
+    "CreateIntegration":{
+      "name":"CreateIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIntegrationMessage"},
+      "output":{
+        "shape":"Integration",
+        "resultWrapper":"CreateIntegrationResult"
+      },
+      "errors":[
+        {"shape":"IntegrationAlreadyExistsFault"},
+        {"shape":"IntegrationConflictOperationFault"},
+        {"shape":"IntegrationQuotaExceededFault"},
+        {"shape":"IntegrationSourceNotFoundFault"},
+        {"shape":"IntegrationTargetNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"InvalidClusterStateFault"},
+        {"shape":"TagLimitExceededFault"},
+        {"shape":"InvalidTagFault"}
+      ]
+    },
     "CreateRedshiftIdcApplication":{
       "name":"CreateRedshiftIdcApplication",
       "http":{
@@ -736,6 +759,24 @@
         {"shape":"HsmConfigurationNotFoundFault"}
       ]
     },
+    "DeleteIntegration":{
+      "name":"DeleteIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIntegrationMessage"},
+      "output":{
+        "shape":"Integration",
+        "resultWrapper":"DeleteIntegrationResult"
+      },
+      "errors":[
+        {"shape":"IntegrationNotFoundFault"},
+        {"shape":"IntegrationConflictStateFault"},
+        {"shape":"IntegrationConflictOperationFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "DeletePartner":{
       "name":"DeletePartner",
       "http":{
@@ -838,6 +879,23 @@
       "errors":[
         {"shape":"UsageLimitNotFoundFault"},
         {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DeregisterNamespace":{
+      "name":"DeregisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterNamespaceInputMessage"},
+      "output":{
+        "shape":"DeregisterNamespaceOutputMessage",
+        "resultWrapper":"DeregisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
       ]
     },
     "DescribeAccountAttributes":{
@@ -1201,6 +1259,22 @@
       "errors":[
         {"shape":"IntegrationNotFoundFault"},
         {"shape":"InvalidNamespaceFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "DescribeIntegrations":{
+      "name":"DescribeIntegrations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIntegrationsMessage"},
+      "output":{
+        "shape":"IntegrationsMessage",
+        "resultWrapper":"DescribeIntegrationsResult"
+      },
+      "errors":[
+        {"shape":"IntegrationNotFoundFault"},
         {"shape":"UnsupportedOperationFault"}
       ]
     },
@@ -1926,6 +2000,25 @@
         {"shape":"InvalidSubscriptionStateFault"}
       ]
     },
+    "ModifyIntegration":{
+      "name":"ModifyIntegration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIntegrationMessage"},
+      "output":{
+        "shape":"Integration",
+        "resultWrapper":"ModifyIntegrationResult"
+      },
+      "errors":[
+        {"shape":"IntegrationNotFoundFault"},
+        {"shape":"IntegrationConflictStateFault"},
+        {"shape":"IntegrationConflictOperationFault"},
+        {"shape":"IntegrationAlreadyExistsFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "ModifyRedshiftIdcApplication":{
       "name":"ModifyRedshiftIdcApplication",
       "http":{
@@ -2085,6 +2178,23 @@
       "errors":[
         {"shape":"InvalidClusterStateFault"},
         {"shape":"ClusterNotFoundFault"}
+      ]
+    },
+    "RegisterNamespace":{
+      "name":"RegisterNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterNamespaceInputMessage"},
+      "output":{
+        "shape":"RegisterNamespaceOutputMessage",
+        "resultWrapper":"RegisterNamespaceResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidNamespaceFault"},
+        {"shape":"InvalidClusterStateFault"}
       ]
     },
     "RejectDataShare":{
@@ -3270,6 +3380,12 @@
       },
       "exception":true
     },
+    "ConsumerIdentifierList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":1,
+      "min":1
+    },
     "CopyClusterSnapshotMessage":{
       "type":"structure",
       "required":[
@@ -3549,6 +3665,23 @@
         "HsmConfiguration":{"shape":"HsmConfiguration"}
       }
     },
+    "CreateIntegrationMessage":{
+      "type":"structure",
+      "required":[
+        "SourceArn",
+        "TargetArn",
+        "IntegrationName"
+      ],
+      "members":{
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
+        "IntegrationName":{"shape":"IntegrationName"},
+        "KMSKeyId":{"shape":"String"},
+        "TagList":{"shape":"TagList"},
+        "AdditionalEncryptionContext":{"shape":"EncryptionContextMap"},
+        "Description":{"shape":"IntegrationDescription"}
+      }
+    },
     "CreateRedshiftIdcApplicationMessage":{
       "type":"structure",
       "required":[
@@ -3702,7 +3835,8 @@
         "ProducerArn":{"shape":"String"},
         "AllowPubliclyAccessibleConsumers":{"shape":"Boolean"},
         "DataShareAssociations":{"shape":"DataShareAssociationList"},
-        "ManagedBy":{"shape":"String"}
+        "ManagedBy":{"shape":"String"},
+        "DataShareType":{"shape":"DataShareType"}
       }
     },
     "DataShareAssociation":{
@@ -3752,6 +3886,10 @@
         "DEAUTHORIZED",
         "REJECTED"
       ]
+    },
+    "DataShareType":{
+      "type":"string",
+      "enum":["INTERNAL"]
     },
     "DataTransferProgress":{
       "type":"structure",
@@ -3916,6 +4054,13 @@
         "HsmConfigurationIdentifier":{"shape":"String"}
       }
     },
+    "DeleteIntegrationMessage":{
+      "type":"structure",
+      "required":["IntegrationArn"],
+      "members":{
+        "IntegrationArn":{"shape":"IntegrationArn"}
+      }
+    },
     "DeleteRedshiftIdcApplicationMessage":{
       "type":"structure",
       "required":["RedshiftIdcApplicationArn"],
@@ -4001,6 +4146,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DeregisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "DeregisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
+      }
     },
     "DescribeAccountAttributesMessage":{
       "type":"structure",
@@ -4256,10 +4418,53 @@
     "DescribeInboundIntegrationsMessage":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
+        "TargetArn":{"shape":"TargetArn"},
         "MaxRecords":{"shape":"IntegerOptional"},
         "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeIntegrationsFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"DescribeIntegrationsFilterName"},
+        "Values":{"shape":"DescribeIntegrationsFilterValueList"}
+      }
+    },
+    "DescribeIntegrationsFilterList":{
+      "type":"list",
+      "member":{
+        "shape":"DescribeIntegrationsFilter",
+        "locationName":"DescribeIntegrationsFilter"
+      }
+    },
+    "DescribeIntegrationsFilterName":{
+      "type":"string",
+      "enum":[
+        "integration-arn",
+        "source-arn",
+        "source-types",
+        "status"
+      ]
+    },
+    "DescribeIntegrationsFilterValueList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"Value"
+      }
+    },
+    "DescribeIntegrationsMessage":{
+      "type":"structure",
+      "members":{
+        "IntegrationArn":{"shape":"IntegrationArn"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"},
+        "Filters":{"shape":"DescribeIntegrationsFilterList"}
       }
     },
     "DescribeLoggingStatusMessage":{
@@ -4441,6 +4646,12 @@
         "TagValues":{"shape":"TagValueList"}
       }
     },
+    "Description":{
+      "type":"string",
+      "max":1000,
+      "min":1,
+      "pattern":"^.*$"
+    },
     "DisableLoggingMessage":{
       "type":"structure",
       "required":["ClusterIdentifier"],
@@ -4509,7 +4720,7 @@
       "members":{
         "ClusterIdentifier":{"shape":"String"},
         "BucketName":{"shape":"String"},
-        "S3KeyPrefix":{"shape":"String"},
+        "S3KeyPrefix":{"shape":"S3KeyPrefixValue"},
         "LogDestinationType":{"shape":"LogDestinationType"},
         "LogExports":{"shape":"LogTypeList"}
       }
@@ -4533,6 +4744,11 @@
       "members":{
         "Cluster":{"shape":"Cluster"}
       }
+    },
+    "EncryptionContextMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
     },
     "Endpoint":{
       "type":"structure",
@@ -5055,13 +5271,19 @@
     "InboundIntegration":{
       "type":"structure",
       "members":{
-        "IntegrationArn":{"shape":"String"},
+        "IntegrationArn":{"shape":"InboundIntegrationArn"},
         "SourceArn":{"shape":"String"},
-        "TargetArn":{"shape":"String"},
+        "TargetArn":{"shape":"TargetArn"},
         "Status":{"shape":"ZeroETLIntegrationStatus"},
         "Errors":{"shape":"IntegrationErrorList"},
         "CreateTime":{"shape":"TStamp"}
       }
+    },
+    "InboundIntegrationArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:.+:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "InboundIntegrationList":{
       "type":"list",
@@ -5112,6 +5334,67 @@
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
+    "Integration":{
+      "type":"structure",
+      "members":{
+        "IntegrationArn":{"shape":"IntegrationArn"},
+        "IntegrationName":{"shape":"IntegrationName"},
+        "SourceArn":{"shape":"SourceArn"},
+        "TargetArn":{"shape":"TargetArn"},
+        "Status":{"shape":"ZeroETLIntegrationStatus"},
+        "Errors":{"shape":"IntegrationErrorList"},
+        "CreateTime":{"shape":"TStamp"},
+        "Description":{"shape":"Description"},
+        "KMSKeyId":{"shape":"String"},
+        "AdditionalEncryptionContext":{"shape":"EncryptionContextMap"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "IntegrationAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationAlreadyExistsFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:redshift:[a-z0-9\\-]*:[0-9]*:integration:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "IntegrationConflictOperationFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationConflictOperationFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationConflictStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationConflictStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationDescription":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "pattern":"^.*$"
+    },
     "IntegrationError":{
       "type":"structure",
       "required":["ErrorCode"],
@@ -5127,6 +5410,19 @@
         "locationName":"IntegrationError"
       }
     },
+    "IntegrationList":{
+      "type":"list",
+      "member":{
+        "shape":"Integration",
+        "locationName":"Integration"
+      }
+    },
+    "IntegrationName":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[a-zA-Z][a-zA-Z0-9]*(-[a-zA-Z0-9]+)*$"
+    },
     "IntegrationNotFoundFault":{
       "type":"structure",
       "members":{
@@ -5137,6 +5433,46 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "IntegrationQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationQuotaExceededFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationSourceNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationSourceNotFoundFault",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationTargetNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"IntegrationTargetNotFoundFault",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "IntegrationsMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "Integrations":{"shape":"IntegrationList"}
+      }
     },
     "InvalidAuthenticationProfileRequestFault":{
       "type":"structure",
@@ -5551,7 +5887,7 @@
       "members":{
         "LoggingEnabled":{"shape":"Boolean"},
         "BucketName":{"shape":"String"},
-        "S3KeyPrefix":{"shape":"String"},
+        "S3KeyPrefix":{"shape":"S3KeyPrefixValue"},
         "LastSuccessfulDeliveryTime":{"shape":"TStamp"},
         "LastFailureTime":{"shape":"TStamp"},
         "LastFailureMessage":{"shape":"String"},
@@ -5802,6 +6138,15 @@
         "EventSubscription":{"shape":"EventSubscription"}
       }
     },
+    "ModifyIntegrationMessage":{
+      "type":"structure",
+      "required":["IntegrationArn"],
+      "members":{
+        "IntegrationArn":{"shape":"IntegrationArn"},
+        "Description":{"shape":"IntegrationDescription"},
+        "IntegrationName":{"shape":"IntegrationName"}
+      }
+    },
     "ModifyRedshiftIdcApplicationMessage":{
       "type":"structure",
       "required":["RedshiftIdcApplicationArn"],
@@ -5871,6 +6216,21 @@
         "Amount":{"shape":"LongOptional"},
         "BreachAction":{"shape":"UsageLimitBreachAction"}
       }
+    },
+    "NamespaceIdentifierUnion":{
+      "type":"structure",
+      "members":{
+        "ServerlessIdentifier":{"shape":"ServerlessIdentifier"},
+        "ProvisionedIdentifier":{"shape":"ProvisionedIdentifier"}
+      },
+      "union":true
+    },
+    "NamespaceRegistrationStatus":{
+      "type":"string",
+      "enum":[
+        "Registering",
+        "Deregistering"
+      ]
     },
     "NetworkInterface":{
       "type":"structure",
@@ -6151,6 +6511,13 @@
         "EncryptionType":{"shape":"String"}
       }
     },
+    "ProvisionedIdentifier":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "ClusterIdentifier":{"shape":"String"}
+      }
+    },
     "PurchaseReservedNodeOfferingMessage":{
       "type":"structure",
       "required":["ReservedNodeOfferingId"],
@@ -6180,6 +6547,13 @@
       "type":"structure",
       "members":{
         "ResourcePolicy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "ReadWriteAccess":{
+      "type":"structure",
+      "required":["Authorization"],
+      "members":{
+        "Authorization":{"shape":"ServiceAuthorization"}
       }
     },
     "RebootClusterMessage":{
@@ -6328,6 +6702,23 @@
       "member":{
         "shape":"ReferenceLink",
         "locationName":"ReferenceLink"
+      }
+    },
+    "RegisterNamespaceInputMessage":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "ConsumerIdentifiers"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"NamespaceIdentifierUnion"},
+        "ConsumerIdentifiers":{"shape":"ConsumerIdentifierList"}
+      }
+    },
+    "RegisterNamespaceOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NamespaceRegistrationStatus"}
       }
     },
     "RejectDataShareMessage":{
@@ -6789,6 +7180,22 @@
         "Cluster":{"shape":"Cluster"}
       }
     },
+    "S3AccessGrantsScopeUnion":{
+      "type":"structure",
+      "members":{
+        "ReadWriteAccess":{"shape":"ReadWriteAccess"}
+      },
+      "union":true
+    },
+    "S3AccessGrantsServiceIntegrations":{
+      "type":"list",
+      "member":{"shape":"S3AccessGrantsScopeUnion"}
+    },
+    "S3KeyPrefixValue":{
+      "type":"string",
+      "max":256,
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*"
+    },
     "SNSInvalidTopicFault":{
       "type":"structure",
       "members":{
@@ -6993,6 +7400,17 @@
       "type":"string",
       "sensitive":true
     },
+    "ServerlessIdentifier":{
+      "type":"structure",
+      "required":[
+        "NamespaceIdentifier",
+        "WorkgroupIdentifier"
+      ],
+      "members":{
+        "NamespaceIdentifier":{"shape":"String"},
+        "WorkgroupIdentifier":{"shape":"String"}
+      }
+    },
     "ServiceAuthorization":{
       "type":"string",
       "enum":[
@@ -7007,7 +7425,8 @@
     "ServiceIntegrationsUnion":{
       "type":"structure",
       "members":{
-        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"}
+        "LakeFormation":{"shape":"LakeFormationServiceIntegrations"},
+        "S3AccessGrants":{"shape":"S3AccessGrantsServiceIntegrations"}
       },
       "union":true
     },
@@ -7265,6 +7684,12 @@
         "ASC",
         "DESC"
       ]
+    },
+    "SourceArn":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^arn:aws[a-z\\-]*:(s3|dynamodb):.*:.*:[a-zA-Z0-9._\\-\\/]+$"
     },
     "SourceIdsList":{
       "type":"list",
@@ -7540,6 +7965,12 @@
         "TaggedResources":{"shape":"TaggedResourceList"},
         "Marker":{"shape":"String"}
       }
+    },
+    "TargetArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\-]*:redshift(-serverless)?:[a-z0-9\\-]+:[0-9]{12}:(namespace\\/|namespace:)[a-z0-9\\-]+$"
     },
     "TrackList":{
       "type":"list",

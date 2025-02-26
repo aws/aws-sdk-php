@@ -401,7 +401,7 @@
     },
     "AWSPolicy":{
       "type":"string",
-      "max":20480,
+      "max":81920,
       "min":1,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
@@ -672,7 +672,9 @@
         "CustomCname":{"shape":"CnameString"},
         "S3BucketName":{"shape":"S3BucketName3To255"},
         "S3ObjectAcl":{"shape":"S3ObjectAcl"},
-        "CrlDistributionPointExtensionConfiguration":{"shape":"CrlDistributionPointExtensionConfiguration"}
+        "CrlDistributionPointExtensionConfiguration":{"shape":"CrlDistributionPointExtensionConfiguration"},
+        "CrlType":{"shape":"CrlType"},
+        "CustomPath":{"shape":"CrlPathString"}
       }
     },
     "CrlDistributionPointExtensionConfiguration":{
@@ -684,6 +686,19 @@
           "box":true
         }
       }
+    },
+    "CrlPathString":{
+      "type":"string",
+      "max":253,
+      "min":0,
+      "pattern":"[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+(/[-a-zA-Z0-9;?:@&=+$,%_.!~*()']+)*"
+    },
+    "CrlType":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "PARTITIONED"
+      ]
     },
     "CsrBlob":{
       "type":"blob",

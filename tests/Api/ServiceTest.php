@@ -305,4 +305,65 @@ class ServiceTest extends TestCase
             $s->getOperation('FooOperation')->getOutput()->getMember('Expires')->getType()
         );
     }
+
+    /**
+     * @dataProvider selectsProtocolProvider
+     */
+    public function testSelectsProtocol($protocols, $expected)
+    {
+        $s = new Service(
+            [
+                'metadata' => [
+                    'serviceFullName' => 'Foo Service',
+                    'serviceIdentifier' => 'foo',
+                    'serviceId'         => 'Foo',
+                    'endpointPrefix'  => 'bar',
+                    'apiVersion'      => 'baz',
+                    'signingName'     => 'qux',
+                    'protocols'        => $protocols,
+                    'protocol'          => 'json',
+                    'uid'             => 'foo-2016-12-09'
+                ],
+                'operations' => [
+                    'FooOperation' => [
+                        'name' => 'FooOperation',
+                        'output' => [
+                            'shape' => 'FooOperationOutput'
+                        ]
+                    ]
+                ],
+                'shapes' => [
+                    'FooOperationOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'Expires' => [
+                                'shape' => 'Expires',
+                            ]
+                        ]
+                    ],
+                    'Expires' => [
+                        'type' => 'string'
+                    ]
+                ]
+            ],
+            function () { return []; }
+        );
+        $protocol = $s->getProtocol();
+        $this->assertEquals($expected, $protocol);
+    }
+
+    public function selectsProtocolProvider()
+    {
+        return [
+            [['smithy-rpc-v2-cbor', 'json'], 'json'],
+            //Handles failure to select by falling back to 'protocol'
+            [['smithy-rpc-v2-cbor'], 'json'],
+            [['smithy-rpc-v2-cbor', 'json', 'query'], 'json'],
+            [['json', 'query'], 'json'],
+            [['query'], 'query'],
+            [['rest-xml', 'rest-json'], 'rest-json'],
+            [['foo', 'ec2'], 'ec2'],
+            [['foo', 'bar', 'baz'], 'json']
+        ];
+    }
 }

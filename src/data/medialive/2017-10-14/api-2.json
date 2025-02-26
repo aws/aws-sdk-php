@@ -4160,6 +4160,46 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "ListVersions": {
+      "name": "ListVersions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/versions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListVersionsRequest"
+      },
+      "output": {
+        "shape": "ListVersionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -5740,6 +5780,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -5858,6 +5902,14 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
+        },
+        "UsedChannelEngineVersions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "usedChannelEngineVersions"
         }
       }
     },
@@ -6000,6 +6052,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -6067,6 +6127,14 @@
         "AnywhereSettings": {
           "shape": "AnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -6575,6 +6643,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -6961,6 +7033,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -9263,6 +9339,10 @@
         "MinQp": {
           "shape": "__integerMin1Max51",
           "locationName": "minQp"
+        },
+        "Deblocking": {
+          "shape": "H265Deblocking",
+          "locationName": "deblocking"
         }
       },
       "required": [
@@ -12108,6 +12188,14 @@
         "ChannelId": {
           "shape": "__stringMin1",
           "locationName": "channelId"
+        },
+        "ChannelGroup": {
+          "shape": "__stringMin1",
+          "locationName": "channelGroup"
+        },
+        "ChannelName": {
+          "shape": "__stringMin1",
+          "locationName": "channelName"
         }
       }
     },
@@ -13291,6 +13379,10 @@
         "PipelineId": {
           "shape": "__string",
           "locationName": "pipelineId"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -13921,6 +14013,14 @@
         "StaticImageOutputDeactivateSettings": {
           "shape": "StaticImageOutputDeactivateScheduleActionSettings",
           "locationName": "staticImageOutputDeactivateSettings"
+        },
+        "Id3SegmentTaggingSettings": {
+          "shape": "Id3SegmentTaggingScheduleActionSettings",
+          "locationName": "id3SegmentTaggingSettings"
+        },
+        "TimedMetadataSettings": {
+          "shape": "TimedMetadataScheduleActionSettings",
+          "locationName": "timedMetadataSettings"
         }
       }
     },
@@ -14459,6 +14559,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -14806,6 +14910,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -15366,6 +15474,14 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -15459,6 +15575,14 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       },
       "required": [
@@ -15720,7 +15844,10 @@
         },
         "Tags": {
           "shape": "Tags",
-          "locationName": "tags"
+          "locationName": "tags",
+          "deprecated": true,
+          "deprecatedMessage": "This API is deprecated. You must use UpdateTagsForResource instead.",
+          "deprecatedSince": "2024-11-20"
         },
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRuleCidr",
@@ -17079,6 +17206,10 @@
         "AnywhereSettings": {
           "shape": "DescribeAnywhereSettings",
           "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -17152,6 +17283,30 @@
         "SendDelayMs": {
           "shape": "__integerMin0Max2000",
           "locationName": "sendDelayMs"
+        },
+        "KlvBehavior": {
+          "shape": "CmafKLVBehavior",
+          "locationName": "klvBehavior"
+        },
+        "KlvNameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "klvNameModifier"
+        },
+        "NielsenId3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "nielsenId3NameModifier"
+        },
+        "Scte35NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "scte35NameModifier"
+        },
+        "Id3Behavior": {
+          "shape": "CmafId3Behavior",
+          "locationName": "id3Behavior"
+        },
+        "Id3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "id3NameModifier"
         }
       },
       "required": [
@@ -17414,7 +17569,8 @@
         "MEDIAPACKAGE_CHANNEL",
         "MEDIAPACKAGE_ORIGIN_ENDPOINT",
         "MEDIACONNECT_FLOW",
-        "S3_BUCKET"
+        "S3_BUCKET",
+        "MEDIATAILOR_PLAYBACK_CONFIGURATION"
       ]
     },
     "CloudWatchAlarmTemplateTreatMissingData": {
@@ -17449,6 +17605,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17469,6 +17630,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17601,6 +17767,11 @@
         "TreatMissingData": {
           "shape": "CloudWatchAlarmTemplateTreatMissingData",
           "locationName": "treatMissingData"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17670,6 +17841,11 @@
         "TreatMissingData": {
           "shape": "CloudWatchAlarmTemplateTreatMissingData",
           "locationName": "treatMissingData"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17860,6 +18036,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17880,6 +18061,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17984,6 +18170,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -18018,6 +18209,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -18150,6 +18346,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -18183,6 +18384,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -23602,6 +23808,104 @@
           "locationName": "scte35PrerollPullupMilliseconds"
         }
       }
+    },
+    "H265Deblocking": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "CmafKLVBehavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
+    "__stringMax100": {
+      "type": "string",
+      "max": 100
+    },
+    "ChannelEngineVersionRequest": {
+      "type": "structure",
+      "members": {
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ChannelEngineVersionResponse": {
+      "type": "structure",
+      "members": {
+        "ExpirationDate": {
+          "shape": "__timestampIso8601",
+          "locationName": "expirationDate"
+        },
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ListVersionsRequest": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "ListVersionsResponse": {
+      "type": "structure",
+      "members": {
+        "Versions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "versions"
+        }
+      }
+    },
+    "__listOfChannelEngineVersionResponse": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelEngineVersionResponse"
+      }
+    },
+    "CmafId3Behavior": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Id3SegmentTaggingScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        },
+        "Tag": {
+          "shape": "__string",
+          "locationName": "tag"
+        }
+      }
+    },
+    "TimedMetadataScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        }
+      },
+      "required": [
+        "Id3"
+      ]
+    },
+    "__stringMin1Max256PatternS": {
+      "type": "string",
+      "min": 1,
+      "max": 256,
+      "pattern": "^[\\S]+$"
     }
   }
 }

@@ -188,6 +188,12 @@
       "refs": {
       }
     },
+    "AssociatedCoreNetwork": {
+      "base": "<p>The Amazon Web Services Cloud WAN core network that the Direct Connect attachment is associated with.</p>",
+      "refs": {
+        "DirectConnectGatewayAssociation$associatedCoreNetwork": "<p>The ID of the Cloud WAN core network associated with the Direct Connect attachment.</p>"
+      }
+    },
     "AssociatedGateway": {
       "base": "<p>Information about the associated gateway.</p>",
       "refs": {
@@ -449,6 +455,18 @@
     "Connections": {
       "base": null,
       "refs": {
+      }
+    },
+    "CoreNetworkAttachmentId": {
+      "base": null,
+      "refs": {
+        "AssociatedCoreNetwork$attachmentId": "<p>the ID of the Direct Connect attachment</p>"
+      }
+    },
+    "CoreNetworkIdentifier": {
+      "base": null,
+      "refs": {
+        "AssociatedCoreNetwork$id": "<p>The ID of the Cloud WAN core network.</p>"
       }
     },
     "Count": {
@@ -1257,6 +1275,7 @@
         "AllocatePrivateVirtualInterfaceRequest$ownerAccount": "<p>The ID of the Amazon Web Services account that owns the virtual private interface.</p>",
         "AllocatePublicVirtualInterfaceRequest$ownerAccount": "<p>The ID of the Amazon Web Services account that owns the public virtual interface.</p>",
         "AllocateTransitVirtualInterfaceRequest$ownerAccount": "<p>The ID of the Amazon Web Services account that owns the transit virtual interface.</p>",
+        "AssociatedCoreNetwork$ownerAccount": "<p>The account owner of the Cloud WAN core network.</p>",
         "AssociatedGateway$ownerAccount": "<p>The ID of the Amazon Web Services account that owns the associated virtual private gateway or transit gateway.</p>",
         "Connection$ownerAccount": "<p>The ID of the Amazon Web Services account that owns the connection.</p>",
         "CreateDirectConnectGatewayAssociationProposalRequest$directConnectGatewayOwnerAccount": "<p>The ID of the Amazon Web Services account that owns the Direct Connect gateway.</p>",

@@ -5,12 +5,14 @@
     "endpointPrefix":"dlm",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon DLM",
     "serviceFullName":"Amazon Data Lifecycle Manager",
     "serviceId":"DLM",
     "signatureVersion":"v4",
     "signingName":"dlm",
-    "uid":"dlm-2018-01-12"
+    "uid":"dlm-2018-01-12",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateLifecyclePolicy":{
@@ -607,7 +609,8 @@
       "type":"string",
       "enum":[
         "CLOUD",
-        "OUTPOST_LOCAL"
+        "OUTPOST_LOCAL",
+        "LOCAL_ZONE"
       ]
     },
     "NoReboot":{"type":"boolean"},
@@ -692,7 +695,8 @@
       "type":"string",
       "enum":[
         "CLOUD",
-        "OUTPOST"
+        "OUTPOST",
+        "LOCAL_ZONE"
       ]
     },
     "ResourceNotFoundException":{

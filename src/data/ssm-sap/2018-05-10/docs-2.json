@@ -200,6 +200,18 @@
         "Component$ChildComponents": "<p>The child components of a highly available environment. For example, in a highly available SAP on AWS workload, the child component consists of the primary and secondar instances.</p>"
       }
     },
+    "ComponentInfo": {
+      "base": "<p>This is information about the component of your SAP application, such as Web Dispatcher.</p>",
+      "refs": {
+        "ComponentInfoList$member": null
+      }
+    },
+    "ComponentInfoList": {
+      "base": null,
+      "refs": {
+        "RegisterApplicationInput$ComponentsInfo": "<p>This is an optional parameter for component details to which the SAP ABAP application is attached, such as Web Dispatcher.</p> <p>This is an array of ApplicationComponent objects. You may input 0 to 5 items.</p>"
+      }
+    },
     "ComponentStatus": {
       "base": null,
       "refs": {
@@ -222,6 +234,7 @@
       "base": null,
       "refs": {
         "Component$ComponentType": "<p>The type of the component.</p>",
+        "ComponentInfo$ComponentType": "<p>This string is the type of the component.</p> <p>Accepted value is <code>WD</code>.</p>",
         "ComponentSummary$ComponentType": "<p>The type of the component.</p>"
       }
     },
@@ -429,6 +442,7 @@
     "InstanceId": {
       "base": null,
       "refs": {
+        "ComponentInfo$Ec2InstanceId": "<p>This is the Amazon EC2 instance on which your SAP component is running.</p> <p>Accepted values are alphanumeric.</p>",
         "InstanceList$member": null
       }
     },
@@ -700,6 +714,7 @@
       "base": null,
       "refs": {
         "Component$Sid": "<p>The SAP System Identifier of the application component.</p>",
+        "ComponentInfo$Sid": "<p>This string is the SAP System ID of the component.</p> <p>Accepted values are alphanumeric.</p>",
         "RegisterApplicationInput$Sid": "<p>The System ID of the application.</p>"
       }
     },

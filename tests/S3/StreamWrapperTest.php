@@ -1038,51 +1038,63 @@ class StreamWrapperTest extends TestCase
 
     public function testStreamSetOptionReturnsFalse()
     {
-        $this->addMockResults(
-            $this->client,
-            [
-                new Result(),
-            ]
-        );
-        $stream = fopen('s3://bucket/key', 'r');
-        $this->assertFalse(stream_set_option($stream, STREAM_OPTION_READ_TIMEOUT, 1));
+        $reflection = new \ReflectionClass(StreamWrapper::class);
+        $instance = $reflection->newInstanceWithoutConstructor();
+        $result = $instance->stream_set_option(STREAM_OPTION_READ_TIMEOUT, 1, 'bar');
+        $this->assertFalse($result);
     }
 
     public function testStreamMetadataReturnsFalse()
     {
+        $reflection = new \ReflectionClass(StreamWrapper::class);
+        $instance = $reflection->newInstanceWithoutConstructor();
+        $stream = $this->getMockBuilder(Psr7\Stream::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->addMockResults(
             $this->client,
             [
-                new Result(),
+                new Result(['Body' => $stream]),
             ]
         );
-        $stream = fopen('s3://bucket/key', 'r');
-        $this->assertFalse(stream_metadata($stream, STREAM_META_TOUCH, 1));
+        $handle = fopen('s3://bucket/key', 'r');
+        $this->assertFalse($instance->stream_metadata($handle, STREAM_META_TOUCH, 1));
     }
 
     public function testStreamLockReturnsFalse()
     {
+        $this->expectWarning();
+        $this->expectWarningMessage(
+            'stream_lock() is not supported by the Amazon S3 stream wrapper'
+        );
+        $stream = $this->getMockBuilder(Psr7\Stream::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->addMockResults(
             $this->client,
             [
-                new Result(),
+                new Result(['Body' => $stream]),
             ]
         );
-        $stream = fopen('s3://bucket/key', 'r');
-        $this->assertFalse(flock($stream, LOCK_EX));
-        $this->assertFalse(flock($stream, LOCK_UN));
-        $this->assertFalse(flock($stream, LOCK_SH));
+        $handle = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(flock($handle, LOCK_EX));
     }
 
     public function testStreamTruncateReturnsFalse()
     {
+        $stream = $this->getMockBuilder(Psr7\Stream::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->addMockResults(
             $this->client,
             [
-                new Result(),
+                new Result(['Body' => $stream]),
             ]
         );
-        $stream = fopen('s3://bucket/key', 'r');
-        $this->assertFalse(ftruncate($stream, 1));
+        $handle = fopen('s3://bucket/key', 'r');
+        $this->assertFalse(ftruncate($handle, 1));
     }
 }

@@ -13,6 +13,7 @@
     "CreateAnnotationStoreVersion": "<p> Creates a new version of an annotation store. </p>",
     "CreateMultipartReadSetUpload": "<p>Begins a multipart read set upload.</p>",
     "CreateReferenceStore": "<p>Creates a reference store.</p>",
+    "CreateRunCache": "<p>You can create a run cache to save the task outputs from completed tasks in a run for a private workflow. Subsequent runs use the task outputs from the cache, rather than computing the task outputs again. You specify an Amazon S3 location where HealthOmics saves the cached data. This data must be immediately accessible (not in an archived state).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-create.html\">Creating a run cache</a> in the AWS HealthOmics User Guide.</p>",
     "CreateRunGroup": "<p>You can optionally create a run group to limit the compute resources for the runs that you add to the group.</p>",
     "CreateSequenceStore": "<p>Creates a sequence store.</p>",
     "CreateShare": "<p>Creates a cross-account shared resource. The resource owner makes an offer to share the resource with the principal subscriber (an AWS user with a different account than the resource owner).</p> <p>The following resources support cross-account sharing:</p> <ul> <li> <p>HealthOmics variant stores</p> </li> <li> <p>HealthOmics annotation stores</p> </li> <li> <p>Private workflows</p> </li> </ul>",
@@ -23,7 +24,9 @@
     "DeleteReference": "<p>Deletes a genome reference.</p>",
     "DeleteReferenceStore": "<p>Deletes a genome reference store.</p>",
     "DeleteRun": "<p>Deletes a workflow run.</p>",
+    "DeleteRunCache": "<p>Delete a run cache. This action removes the cache metadata stored in the service account, but doesn't delete the data in Amazon S3. You can access the cache data in Amazon S3, for inspection or to troubleshoot issues. You can remove old cache data using standard S3 <code>Delete</code> operations. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-delete.html\">Deleting a run cache</a> in the AWS HealthOmics User Guide.</p>",
     "DeleteRunGroup": "<p>Deletes a workflow run group.</p>",
+    "DeleteS3AccessPolicy": "<p>Deletes an access policy for the specified store.</p>",
     "DeleteSequenceStore": "<p>Deletes a sequence store.</p>",
     "DeleteShare": "<p>Deletes a resource share. If you are the resource owner, the subscriber will no longer have access to the shared resource. If you are the subscriber, this operation deletes your access to the share.</p>",
     "DeleteVariantStore": "<p>Deletes a variant store.</p>",
@@ -40,9 +43,11 @@
     "GetReferenceImportJob": "<p>Gets information about a reference import job.</p>",
     "GetReferenceMetadata": "<p>Gets information about a genome reference's metadata.</p>",
     "GetReferenceStore": "<p>Gets information about a reference store.</p>",
-    "GetRun": "<p>Gets information about a workflow run.</p> <p>If a workflow is shared with you, you cannot export information about the run.</p>",
+    "GetRun": "<p>Gets information about a workflow run.</p> <p>If a workflow is shared with you, you cannot export information about the run.</p> <p>HealthOmics stores a fixed number of runs that are available to the console and API. If GetRun doesn't return the requested run, you can find run logs for all runs in the CloudWatch logs. For more information about viewing the run logs, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/cloudwatch-logs.html\">CloudWatch logs</a> in the <i>AWS HealthOmics User Guide</i>.</p>",
+    "GetRunCache": "<p>Retrieve the details for the specified run cache.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-call-caching.html\">Call caching for HealthOmics runs</a> in the AWS HealthOmics User Guide.</p>",
     "GetRunGroup": "<p>Gets information about a workflow run group.</p>",
     "GetRunTask": "<p>Gets information about a workflow run task.</p>",
+    "GetS3AccessPolicy": "<p>Retrieves details about an access policy on a given store.</p>",
     "GetSequenceStore": "<p>Gets information about a sequence store.</p>",
     "GetShare": "<p>Retrieves the metadata for the specified resource share.</p>",
     "GetVariantImportJob": "<p>Gets information about a variant import job.</p>",
@@ -60,27 +65,31 @@
     "ListReferenceImportJobs": "<p>Retrieves a list of reference import jobs.</p>",
     "ListReferenceStores": "<p>Retrieves a list of reference stores.</p>",
     "ListReferences": "<p>Retrieves a list of references.</p>",
+    "ListRunCaches": "<p>Retrieves a list of your run caches.</p>",
     "ListRunGroups": "<p>Retrieves a list of run groups.</p>",
     "ListRunTasks": "<p>Retrieves a list of tasks for a run.</p>",
-    "ListRuns": "<p>Retrieves a list of runs.</p>",
+    "ListRuns": "<p>Retrieves a list of runs.</p> <p>HealthOmics stores a fixed number of runs that are available to the console and API. If the ListRuns response doesn't include specific runs that you expected, you can find run logs for all runs in the CloudWatch logs. For more information about viewing the run logs, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/cloudwatch-logs.html\">CloudWatch logs</a> in the <i>AWS HealthOmics User Guide</i>.</p>",
     "ListSequenceStores": "<p>Retrieves a list of sequence stores.</p>",
     "ListShares": "<p>Retrieves the resource shares associated with an account. Use the filter parameter to retrieve a specific subset of the shares.</p>",
     "ListTagsForResource": "<p>Retrieves a list of tags for a resource.</p>",
     "ListVariantImportJobs": "<p>Retrieves a list of variant import jobs.</p>",
     "ListVariantStores": "<p>Retrieves a list of variant stores.</p>",
     "ListWorkflows": "<p>Retrieves a list of workflows.</p>",
+    "PutS3AccessPolicy": "<p>Adds an access policy to the specified store.</p>",
     "StartAnnotationImportJob": "<p>Starts an annotation import job.</p>",
     "StartReadSetActivationJob": "<p>Activates an archived read set. To reduce storage charges, Amazon Omics archives unused read sets after 30 days.</p>",
     "StartReadSetExportJob": "<p>Exports a read set to Amazon S3.</p>",
     "StartReadSetImportJob": "<p>Starts a read set import job.</p>",
     "StartReferenceImportJob": "<p>Starts a reference import job.</p>",
-    "StartRun": "<p>Starts a workflow run. To duplicate a run, specify the run's ID and a role ARN. The remaining parameters are copied from the previous run.</p> <p>StartRun will not support re-run for a workflow that is shared with you.</p> <p>The total number of runs in your account is subject to a quota per Region. To avoid needing to delete runs manually, you can set the retention mode to <code>REMOVE</code>. Runs with this setting are deleted automatically when the run quoata is exceeded.</p> <p>By default, the run uses STATIC storage. For STATIC storage, set the <code>storageCapacity</code> field. You can set the storage type to DYNAMIC. You do not set <code>storageCapacity</code>, because HealthOmics dynamically scales the storage up or down as required. For more information about static and dynamic storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html\">Running workflows</a> in the <i>AWS HealthOmics User Guide</i>.</p>",
+    "StartRun": "<p>Starts a workflow run. To duplicate a run, specify the run's ID and a role ARN. The remaining parameters are copied from the previous run.</p> <p>StartRun will not support re-run for a workflow that is shared with you.</p> <p>HealthOmics stores a fixed number of runs that are available to the console and API. By default, HealthOmics doesn't any remove any runs. If HealthOmics reaches the maximum number of runs, you must manually remove runs. To have older runs removed automatically, set the retention mode to <code>REMOVE</code>.</p> <p>By default, the run uses STATIC storage. For STATIC storage, set the <code>storageCapacity</code> field. You can set the storage type to DYNAMIC. You do not set <code>storageCapacity</code>, because HealthOmics dynamically scales the storage up or down as required. For more information about static and dynamic storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html\">Running workflows</a> in the <i>AWS HealthOmics User Guide</i>.</p>",
     "StartVariantImportJob": "<p>Starts a variant import job.</p>",
     "TagResource": "<p>Tags a resource.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateAnnotationStore": "<p>Updates an annotation store.</p>",
     "UpdateAnnotationStoreVersion": "<p> Updates the description of an annotation store version. </p>",
+    "UpdateRunCache": "<p>Update a run cache. </p>",
     "UpdateRunGroup": "<p>Updates a run group.</p>",
+    "UpdateSequenceStore": "<p>Update one or more parameters for the sequence store.</p>",
     "UpdateVariantStore": "<p>Updates a variant store.</p>",
     "UpdateWorkflow": "<p>Updates a workflow.</p>",
     "UploadReadSetPart": "<p>This operation uploads a specific part of a read set. If you upload a new part using a previously used part number, the previously uploaded part will be overwritten.</p>"
@@ -117,6 +126,13 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AccessLogLocation": {
+      "base": null,
+      "refs": {
+        "S3AccessConfig$accessLogLocation": "<p>Location of the access logs.</p>",
+        "SequenceStoreS3Access$accessLogLocation": "<p>Location of the access logs.</p>"
       }
     },
     "ActivateReadSetFilter": {
@@ -271,6 +287,13 @@
         "Filter$resourceArns": "<p>Filter based on the Amazon Resource Number (ARN) of the resource. You can specify up to 10 values.</p>"
       }
     },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheRequest$cacheBucketOwnerId": "<p>The AWS account ID of the expected owner of the S3 bucket for the run cache. If not provided, your account ID is set as the owner of the bucket.</p>",
+        "GetRunCacheResponse$cacheBucketOwnerId": "<p>The identifier of the bucket owner.</p>"
+      }
+    },
     "BatchDeleteReadSetRequest": {
       "base": null,
       "refs": {
@@ -290,9 +313,22 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "GetRunTaskResponse$cacheHit": "<p>Set to true if AWS HealthOmics found a matching entry in the run cache for this task.</p>",
+        "TaskListItem$cacheHit": "<p>Set to true if AWS HealthOmics found a matching entry in the run cache for this task.</p>",
         "VcfOptions$ignoreQualField": "<p>The file's ignore qual field setting.</p>",
         "VcfOptions$ignoreFilterField": "<p>The file's ignore filter field setting.</p>",
         "WorkflowParameter$optional": "<p>Whether the parameter is optional.</p>"
+      }
+    },
+    "CacheBehavior": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheRequest$cacheBehavior": "<p>Default cache behavior for runs that use this cache. Supported values are:</p> <p> <code>CACHE_ON_FAILURE</code>: Caches task outputs from completed tasks for runs that fail. This setting is useful if you're debugging a workflow that fails after several tasks completed successfully. The subsequent run uses the cache outputs for previously-completed tasks if the task definition, inputs, and container in ECR are identical to the prior run.</p> <p> <code>CACHE_ALWAYS</code>: Caches task outputs from completed tasks for all runs. This setting is useful in development mode, but do not use it in a production setting.</p> <p>If you don't specify a value, the default behavior is CACHE_ON_FAILURE. When you start a run that uses this cache, you can override the default cache behavior.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior\">Run cache behavior</a> in the AWS HealthOmics User Guide.</p>",
+        "GetRunCacheResponse$cacheBehavior": "<p>The default cache behavior for runs using this cache.</p>",
+        "GetRunResponse$cacheBehavior": "<p>The run cache behavior for the run.</p>",
+        "RunCacheListItem$cacheBehavior": "<p>Default cache behavior for the run cache.</p>",
+        "StartRunRequest$cacheBehavior": "<p>The cache behavior for the run. You specify this value if you want to override the default behavior for the cache. You had set the default value when you created the cache. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior\">Run cache behavior</a> in the AWS HealthOmics User Guide.</p>",
+        "UpdateRunCacheRequest$cacheBehavior": "<p>Update the default run cache behavior.</p>"
       }
     },
     "CancelAnnotationImportRequest": {
@@ -329,7 +365,8 @@
         "StartReadSetActivationJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
         "StartReadSetExportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
         "StartReadSetImportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
-        "StartReferenceImportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>"
+        "StartReferenceImportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
+        "UpdateSequenceStoreRequest$clientToken": "<p>To ensure that requests don't run multiple times, specify a unique token for each request.</p>"
       }
     },
     "CommentChar": {
@@ -422,6 +459,16 @@
       }
     },
     "CreateReferenceStoreResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRunCacheRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRunCacheResponse": {
       "base": null,
       "refs": {
       }
@@ -583,12 +630,27 @@
       "refs": {
       }
     },
+    "DeleteRunCacheRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteRunGroupRequest": {
       "base": null,
       "refs": {
       }
     },
     "DeleteRunRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteS3AccessPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteS3AccessPolicyResponse": {
       "base": null,
       "refs": {
       }
@@ -667,7 +729,8 @@
         "CreateSequenceStoreRequest$eTagAlgorithmFamily": "<p>The ETag algorithm family to use for ingested read sets.</p>",
         "CreateSequenceStoreResponse$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
         "GetSequenceStoreResponse$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
-        "SequenceStoreDetail$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>"
+        "SequenceStoreDetail$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
+        "UpdateSequenceStoreResponse$eTagAlgorithmFamily": "<p>The ETag algorithm family to use on ingested read sets.</p>"
       }
     },
     "Encoding": {
@@ -686,6 +749,12 @@
       "base": null,
       "refs": {
         "RunLogLocation$engineLogStream": "<p>The log stream ARN for the engine log.</p>"
+      }
+    },
+    "EngineVersion": {
+      "base": null,
+      "refs": {
+        "GetRunResponse$engineVersion": "<p>The workflow engine version.</p>"
       }
     },
     "EscapeChar": {
@@ -961,6 +1030,16 @@
       "refs": {
       }
     },
+    "GetRunCacheRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRunCacheResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetRunGroupRequest": {
       "base": null,
       "refs": {
@@ -1043,6 +1122,16 @@
       "base": null,
       "refs": {
         "GetRunTaskResponse$memory": "<p>The task's memory use in gigabytes.</p>"
+      }
+    },
+    "GetS3AccessPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetS3AccessPolicyResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetSequenceStoreRequest": {
@@ -1472,6 +1561,22 @@
       "refs": {
       }
     },
+    "ListRunCachesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListRunCachesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRunCachesRequest$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "ListRunCachesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListRunGroupsRequest": {
       "base": null,
       "refs": {
@@ -1554,6 +1659,13 @@
     "ListTagsForResourceResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "ListToken": {
+      "base": null,
+      "refs": {
+        "ListRunCachesRequest$startingToken": "<p>Optional pagination token returned from a prior call to the <code>ListRunCaches</code> API operation.</p>",
+        "ListRunCachesResponse$nextToken": "<p>Pagination token to retrieve additional run caches. If the response does not have a <code>nextToken</code>value, you have reached to the end of the list.</p>"
       }
     },
     "ListVariantImportJobsFilter": {
@@ -1703,12 +1815,39 @@
       "refs": {
       }
     },
+    "NumericIdInArn": {
+      "base": null,
+      "refs": {
+        "GetRunResponse$cacheId": "<p>The run cache associated with the run.</p>",
+        "StartRunRequest$cacheId": "<p>Identifier of the cache associated with this run. If you don't specify a cache ID, no task outputs are cached for this run.</p>"
+      }
+    },
     "PrimitiveBoolean": {
       "base": null,
       "refs": {
         "DeleteAnnotationStoreRequest$force": "<p>Whether to force deletion.</p>",
         "DeleteAnnotationStoreVersionsRequest$force": "<p> Forces the deletion of an annotation store version when imports are in-progress.. </p>",
         "DeleteVariantStoreRequest$force": "<p>Whether to force deletion.</p>"
+      }
+    },
+    "PropagatedSetLevelTags": {
+      "base": null,
+      "refs": {
+        "CreateSequenceStoreRequest$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
+        "CreateSequenceStoreResponse$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
+        "GetSequenceStoreResponse$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
+        "UpdateSequenceStoreRequest$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
+        "UpdateSequenceStoreResponse$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>"
+      }
+    },
+    "PutS3AccessPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutS3AccessPolicyResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "Quote": {
@@ -2224,7 +2363,59 @@
       "refs": {
         "GetRunResponse$arn": "<p>The run's ARN.</p>",
         "RunListItem$arn": "<p>The run's ARN.</p>",
-        "StartRunResponse$arn": "<p>The run's ARN.</p>"
+        "StartRunResponse$arn": "<p>Unique resource identifier for the run.</p>"
+      }
+    },
+    "RunCacheArn": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheResponse$arn": "<p>Unique resource identifier for the run cache.</p>",
+        "GetRunCacheResponse$arn": "<p>Unique resource identifier for the run cache.</p>",
+        "RunCacheListItem$arn": "<p>Unique resource identifier for the run cache.</p>"
+      }
+    },
+    "RunCacheId": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheResponse$id": "<p>Identifier for the run cache.</p>",
+        "DeleteRunCacheRequest$id": "<p>Run cache identifier for the cache you want to delete.</p>",
+        "GetRunCacheRequest$id": "<p>The identifier of the run cache to retrieve.</p>",
+        "GetRunCacheResponse$id": "<p>The run cache ID.</p>",
+        "RunCacheListItem$id": "<p>The identifier for this run cache.</p>",
+        "UpdateRunCacheRequest$id": "<p>The identifier of the run cache you want to update.</p>"
+      }
+    },
+    "RunCacheList": {
+      "base": null,
+      "refs": {
+        "ListRunCachesResponse$items": "<p>Details about each run cache in the response.</p>"
+      }
+    },
+    "RunCacheListItem": {
+      "base": "<p>List entry for one run cache.</p>",
+      "refs": {
+        "RunCacheList$member": null
+      }
+    },
+    "RunCacheRequestId": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheRequest$requestId": "<p>A unique request token, to ensure idempotency. If you don't specify a token, HealthOmics automatically generates a universally unique identifier (UUID) for the request.</p>"
+      }
+    },
+    "RunCacheStatus": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheResponse$status": "<p>Run cache status.</p>",
+        "GetRunCacheResponse$status": "<p>The run cache status.</p>",
+        "RunCacheListItem$status": "<p>The run cache status.</p>"
+      }
+    },
+    "RunCacheTimestamp": {
+      "base": null,
+      "refs": {
+        "GetRunCacheResponse$creationTime": "<p>Creation time of the run cache (an ISO 8601 formatted string).</p>",
+        "RunCacheListItem$creationTime": "<p>The time that this run cache was created (an ISO 8601 formatted string).</p>"
       }
     },
     "RunExport": {
@@ -2462,7 +2653,7 @@
       "base": null,
       "refs": {
         "GetRunResponse$retentionMode": "<p>The run's retention mode.</p>",
-        "StartRunRequest$retentionMode": "<p>The retention mode for the run.</p>"
+        "StartRunRequest$retentionMode": "<p>The retention mode for the run. The default value is RETAIN. </p> <p>HealthOmics stores a fixed number of runs that are available to the console and API. In the default mode (RETAIN), you need to remove runs manually when the number of run exceeds the maximum. If you set the retention mode to <code>REMOVE</code>, HealthOmics automatically removes runs (that have mode set to REMOVE) when the number of run exceeds the maximum. All run logs are available in CloudWatch logs, if you need information about a run that is no longer available to the API.</p> <p>For more information about retention mode, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/starting-a-run.html\">Specifying run retention mode</a> in the <i>AWS HealthOmics User Guide</i>.</p>"
       }
     },
     "RunRoleArn": {
@@ -2511,10 +2702,29 @@
         "StartRunResponse$uuid": "<p>The universally unique identifier for a run.</p>"
       }
     },
+    "S3AccessConfig": {
+      "base": "<p>S3 access configuration parameters.</p>",
+      "refs": {
+        "CreateSequenceStoreRequest$s3AccessConfig": "<p>S3 access configuration parameters</p>",
+        "UpdateSequenceStoreRequest$s3AccessConfig": "<p>S3 access configuration parameters.</p>"
+      }
+    },
     "S3AccessPointArn": {
       "base": null,
       "refs": {
+        "DeleteS3AccessPolicyRequest$s3AccessPointArn": "<p>The S3 access point ARN that has the access policy.</p>",
+        "GetS3AccessPolicyRequest$s3AccessPointArn": "<p>The S3 access point ARN that has the access policy.</p>",
+        "GetS3AccessPolicyResponse$s3AccessPointArn": "<p>The S3 access point ARN that has the access policy.</p>",
+        "PutS3AccessPolicyRequest$s3AccessPointArn": "<p>The S3 access point ARN where you want to put the access policy.</p>",
+        "PutS3AccessPolicyResponse$s3AccessPointArn": "<p>The S3 access point ARN that now has the access policy.</p>",
         "SequenceStoreS3Access$s3AccessPointArn": "<p>This is ARN of the access point associated with the S3 bucket storing read sets.</p>"
+      }
+    },
+    "S3AccessPolicy": {
+      "base": null,
+      "refs": {
+        "GetS3AccessPolicyResponse$s3AccessPolicy": "<p>The current resource policy that controls S3 access on the store.</p>",
+        "PutS3AccessPolicyRequest$s3AccessPolicy": "<p>The resource policy that controls S3 access to the store.</p>"
       }
     },
     "S3Destination": {
@@ -2527,7 +2737,9 @@
         "GetSequenceStoreResponse$fallbackLocation": "<p>An S3 location that is used to store files that have failed a direct upload.</p>",
         "SequenceStoreDetail$fallbackLocation": "<p> An S3 location that is used to store files that have failed a direct upload. </p>",
         "StartReadSetExportJobRequest$destination": "<p>A location for exported files in Amazon S3.</p>",
-        "StartReadSetExportJobResponse$destination": "<p>The job's output location.</p>"
+        "StartReadSetExportJobResponse$destination": "<p>The job's output location.</p>",
+        "UpdateSequenceStoreRequest$fallbackLocation": "<p>The S3 URI of a bucket and folder to store Read Sets that fail to upload.</p>",
+        "UpdateSequenceStoreResponse$fallbackLocation": "<p>The S3 URI of a bucket and folder to store Read Sets that fail to upload.</p>"
       }
     },
     "S3Uri": {
@@ -2543,6 +2755,16 @@
         "StartReferenceImportJobSourceItem$sourceFile": "<p>The source file's location in Amazon S3.</p>",
         "VariantImportItemDetail$source": "<p>The source file's location in Amazon S3.</p>",
         "VariantImportItemSource$source": "<p>The source file's location in Amazon S3.</p>"
+      }
+    },
+    "S3UriForBucketOrObject": {
+      "base": "<p>Uri to a S3 object or bucket</p>",
+      "refs": {
+        "CreateRunCacheRequest$cacheS3Location": "<p>Specify the S3 location for storing the cached task outputs. This data must be immediately accessible (not in an archived state).</p>",
+        "GetRunCacheResponse$cacheS3Uri": "<p>The S3 URI where the cache data is stored.</p>",
+        "GetRunTaskResponse$cacheS3Uri": "<p>The S3 URI of the cache location.</p>",
+        "RunCacheListItem$cacheS3Uri": "<p>The S3 uri for the run cache data.</p>",
+        "TaskListItem$cacheS3Uri": "<p>The S3 URI of the cache location.</p>"
       }
     },
     "SampleId": {
@@ -2595,7 +2817,8 @@
       "refs": {
         "CreateSequenceStoreResponse$arn": "<p>The store's ARN.</p>",
         "GetSequenceStoreResponse$arn": "<p>The store's ARN.</p>",
-        "SequenceStoreDetail$arn": "<p>The store's ARN.</p>"
+        "SequenceStoreDetail$arn": "<p>The store's ARN.</p>",
+        "UpdateSequenceStoreResponse$arn": "<p>The ARN of the sequence store.</p>"
       }
     },
     "SequenceStoreDescription": {
@@ -2604,7 +2827,9 @@
         "CreateSequenceStoreRequest$description": "<p>A description for the store.</p>",
         "CreateSequenceStoreResponse$description": "<p>The store's description.</p>",
         "GetSequenceStoreResponse$description": "<p>The store's description.</p>",
-        "SequenceStoreDetail$description": "<p>The store's description.</p>"
+        "SequenceStoreDetail$description": "<p>The store's description.</p>",
+        "UpdateSequenceStoreRequest$description": "<p>A description for the sequence store.</p>",
+        "UpdateSequenceStoreResponse$description": "<p>Description of the sequence store.</p>"
       }
     },
     "SequenceStoreDetail": {
@@ -2664,6 +2889,8 @@
         "StartReadSetExportJobResponse$sequenceStoreId": "<p>The read set's sequence store ID.</p>",
         "StartReadSetImportJobRequest$sequenceStoreId": "<p>The read set's sequence store ID.</p>",
         "StartReadSetImportJobResponse$sequenceStoreId": "<p>The read set's sequence store ID.</p>",
+        "UpdateSequenceStoreRequest$id": "<p>The ID of the sequence store.</p>",
+        "UpdateSequenceStoreResponse$id": "<p>The ID of the sequence store.</p>",
         "UploadReadSetPartRequest$sequenceStoreId": "<p>The Sequence Store ID used for the multipart upload.</p>"
       }
     },
@@ -2674,13 +2901,36 @@
         "CreateSequenceStoreResponse$name": "<p>The store's name.</p>",
         "GetSequenceStoreResponse$name": "<p>The store's name.</p>",
         "SequenceStoreDetail$name": "<p>The store's name.</p>",
-        "SequenceStoreFilter$name": "<p>A name to filter on.</p>"
+        "SequenceStoreFilter$name": "<p>A name to filter on.</p>",
+        "UpdateSequenceStoreRequest$name": "<p>A name for the sequence store.</p>",
+        "UpdateSequenceStoreResponse$name": "<p>The name of the sequence store.</p>"
       }
     },
     "SequenceStoreS3Access": {
       "base": "<p>The S3 access metadata of the sequence store.</p>",
       "refs": {
-        "GetSequenceStoreResponse$s3Access": "<p>The S3 metadata of a sequence store, including the ARN and S3 URI of the S3 bucket.</p>"
+        "CreateSequenceStoreResponse$s3Access": null,
+        "GetSequenceStoreResponse$s3Access": "<p>The S3 metadata of a sequence store, including the ARN and S3 URI of the S3 bucket.</p>",
+        "UpdateSequenceStoreResponse$s3Access": null
+      }
+    },
+    "SequenceStoreStatus": {
+      "base": null,
+      "refs": {
+        "CreateSequenceStoreResponse$status": "<p>The status of the sequence store.</p>",
+        "GetSequenceStoreResponse$status": "<p>The status of the sequence store.</p>",
+        "SequenceStoreDetail$status": "<p>Status of the sequence store.</p>",
+        "SequenceStoreFilter$status": "<p>Filter results based on status.</p>",
+        "UpdateSequenceStoreResponse$status": "<p>The status of the sequence store.</p>"
+      }
+    },
+    "SequenceStoreStatusMessage": {
+      "base": null,
+      "refs": {
+        "CreateSequenceStoreResponse$statusMessage": "<p>The status message of the sequence store.</p>",
+        "GetSequenceStoreResponse$statusMessage": "<p>The status message of the sequence store.</p>",
+        "SequenceStoreDetail$statusMessage": "<p>The status message of the sequence store.</p>",
+        "UpdateSequenceStoreResponse$statusMessage": "<p>The status message of the sequence store.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -2748,6 +2998,7 @@
         "GetVariantStoreResponse$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>",
         "ReferenceStoreDetail$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>",
         "SequenceStoreDetail$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>",
+        "UpdateSequenceStoreResponse$sseConfig": null,
         "VariantStoreItem$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>"
       }
     },
@@ -2917,6 +3168,13 @@
         "UpdateAnnotationStoreResponse$storeFormat": "<p>The annotation file format of the store.</p>"
       }
     },
+    "StoreId": {
+      "base": null,
+      "refs": {
+        "GetS3AccessPolicyResponse$storeId": "<p>The AWS-generated Sequence Store or Reference Store ID.</p>",
+        "PutS3AccessPolicyResponse$storeId": "<p>The AWS-generated Sequence Store or Reference Store ID.</p>"
+      }
+    },
     "StoreName": {
       "base": null,
       "refs": {
@@ -2957,6 +3215,13 @@
         "UpdateAnnotationStoreResponse$status": "<p>The store's status.</p>",
         "UpdateVariantStoreResponse$status": "<p>The store's status.</p>",
         "VariantStoreItem$status": "<p>The store's status.</p>"
+      }
+    },
+    "StoreType": {
+      "base": null,
+      "refs": {
+        "GetS3AccessPolicyResponse$storeType": "<p>The type of store associated with the access point.</p>",
+        "PutS3AccessPolicyResponse$storeType": "<p>The type of store associated with the access point.</p>"
       }
     },
     "String": {
@@ -3066,7 +3331,9 @@
         "GetReferenceMetadataResponse$creationTime": "<p>When the reference was created.</p>",
         "GetReferenceMetadataResponse$updateTime": "<p>When the reference was updated.</p>",
         "GetReferenceStoreResponse$creationTime": "<p>When the store was created.</p>",
+        "GetS3AccessPolicyResponse$updateTime": "<p>The time when the policy was last updated.</p>",
         "GetSequenceStoreResponse$creationTime": "<p>When the store was created.</p>",
+        "GetSequenceStoreResponse$updateTime": "<p>The last-updated time of the sequence store.</p>",
         "ImportReadSetFilter$createdAfter": "<p>The filter's start date.</p>",
         "ImportReadSetFilter$createdBefore": "<p>The filter's end date.</p>",
         "ImportReadSetJobItem$creationTime": "<p>When the job was created.</p>",
@@ -3091,12 +3358,17 @@
         "ReferenceStoreFilter$createdAfter": "<p>The filter's start date.</p>",
         "ReferenceStoreFilter$createdBefore": "<p>The filter's end date.</p>",
         "SequenceStoreDetail$creationTime": "<p>When the store was created.</p>",
+        "SequenceStoreDetail$updateTime": "<p>The last-updated time of the Sequence Store.</p>",
         "SequenceStoreFilter$createdAfter": "<p>The filter's start date.</p>",
         "SequenceStoreFilter$createdBefore": "<p>The filter's end date.</p>",
+        "SequenceStoreFilter$updatedAfter": "<p>Filter results based on stores updated after the specified time.</p>",
+        "SequenceStoreFilter$updatedBefore": "<p>Filter results based on stores updated before the specified time.</p>",
         "StartReadSetActivationJobResponse$creationTime": "<p>When the job was created.</p>",
         "StartReadSetExportJobResponse$creationTime": "<p>When the job was created.</p>",
         "StartReadSetImportJobResponse$creationTime": "<p>When the job was created.</p>",
-        "StartReferenceImportJobResponse$creationTime": "<p>When the job was created.</p>"
+        "StartReferenceImportJobResponse$creationTime": "<p>When the job was created.</p>",
+        "UpdateSequenceStoreResponse$creationTime": "<p>The time when the store was created.</p>",
+        "UpdateSequenceStoreResponse$updateTime": "<p>The last-updated time of the Sequence Store.</p>"
       }
     },
     "TagArn": {
@@ -3110,6 +3382,7 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "PropagatedSetLevelTags$member": null,
         "TagKeyList$member": null,
         "TagMap$key": null,
         "TagResourceRequestTagsMap$key": null
@@ -3129,6 +3402,8 @@
         "CreateMultipartReadSetUploadRequest$tags": "<p>Any tags to add to the read set.</p>",
         "CreateMultipartReadSetUploadResponse$tags": "<p>The tags to add to the read set.</p>",
         "CreateReferenceStoreRequest$tags": "<p>Tags for the store.</p>",
+        "CreateRunCacheRequest$tags": "<p>Specify one or more tags to associate with this run cache.</p>",
+        "CreateRunCacheResponse$tags": "<p>The tags associated with this run cache.</p>",
         "CreateRunGroupRequest$tags": "<p>Tags for the group.</p>",
         "CreateRunGroupResponse$tags": "<p>Tags for the run group.</p>",
         "CreateSequenceStoreRequest$tags": "<p>Tags for the store.</p>",
@@ -3137,6 +3412,7 @@
         "CreateWorkflowResponse$tags": "<p>The workflow's tags.</p>",
         "GetAnnotationStoreResponse$tags": "<p>The store's tags.</p>",
         "GetAnnotationStoreVersionResponse$tags": "<p> Any tags associated with an annotation store version. </p>",
+        "GetRunCacheResponse$tags": "<p>The tags associated with the run cache.</p>",
         "GetRunGroupResponse$tags": "<p>The group's tags.</p>",
         "GetRunResponse$tags": "<p>The run's tags.</p>",
         "GetVariantStoreResponse$tags": "<p>The store's tags.</p>",
@@ -3341,6 +3617,11 @@
       "refs": {
       }
     },
+    "UpdateRunCacheRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateRunGroupRequest": {
       "base": null,
       "refs": {
@@ -3368,6 +3649,16 @@
       "base": null,
       "refs": {
         "UpdateRunGroupRequest$maxRuns": "<p>The maximum number of concurrent runs for the group.</p>"
+      }
+    },
+    "UpdateSequenceStoreRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSequenceStoreResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateTime": {
@@ -3429,6 +3720,23 @@
     "UploadReadSetPartResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UserCustomDescription": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheRequest$description": "<p>Enter a description of the run cache.</p>",
+        "GetRunCacheResponse$description": "<p>The run cache description.</p>",
+        "UpdateRunCacheRequest$description": "<p>Update the run cache description.</p>"
+      }
+    },
+    "UserCustomName": {
+      "base": null,
+      "refs": {
+        "CreateRunCacheRequest$name": "<p>Enter a user-friendly name for the run cache.</p>",
+        "GetRunCacheResponse$name": "<p>The run cache name.</p>",
+        "RunCacheListItem$name": "<p>The name of the run cache.</p>",
+        "UpdateRunCacheRequest$name": "<p>Update the name of the run cache.</p>"
       }
     },
     "ValidationException": {

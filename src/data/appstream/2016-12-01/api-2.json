@@ -1081,7 +1081,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidRoleException"}
+        {"shape":"InvalidRoleException"},
+        {"shape":"IncompatibleImageException"}
       ]
     },
     "UpdateEntitlement":{
@@ -1212,7 +1213,8 @@
         "FILE_DOWNLOAD",
         "PRINTING_TO_LOCAL_DEVICE",
         "DOMAIN_PASSWORD_SIGNIN",
-        "DOMAIN_SMART_CARD_SIGNIN"
+        "DOMAIN_SMART_CARD_SIGNIN",
+        "AUTO_TIME_ZONE_REDIRECTION"
       ]
     },
     "AppBlock":{
@@ -3068,7 +3070,8 @@
         "WINDOWS_SERVER_2019",
         "WINDOWS_SERVER_2022",
         "AMAZON_LINUX2",
-        "RHEL8"
+        "RHEL8",
+        "ROCKY_LINUX8"
       ]
     },
     "Platforms":{
@@ -3400,7 +3403,8 @@
       "members":{
         "ConnectorType":{"shape":"StorageConnectorType"},
         "ResourceIdentifier":{"shape":"ResourceIdentifier"},
-        "Domains":{"shape":"DomainList"}
+        "Domains":{"shape":"DomainList"},
+        "DomainsRequireAdminConsent":{"shape":"DomainList"}
       }
     },
     "StorageConnectorList":{

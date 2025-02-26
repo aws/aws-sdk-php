@@ -1,10 +1,13 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Exception\MultipartUploadException;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\S3\MultipartCopy;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
 class MultipartCopyTest extends TestCase
@@ -142,5 +145,84 @@ class MultipartCopyTest extends TestCase
 
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testCopyPrintsProgress()
+    {
+        $progressBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n",
+            "|=======             | 37.5%\n",
+            "|==========          | 50.0%\n",
+            "|============        | 62.5%\n",
+            "|===============     | 75.0%\n",
+            "|=================   | 87.5%\n",
+            "|====================| 100.0%\nTransfer complete!\n"
+        ];
+        $client = $this->getTestClient('s3');
+        $copyOptions = [
+            'bucket' => 'foo',
+            'key' => 'bar',
+            'display_progress' => true,
+            'source_metadata' => new Result(['ContentLength' => 11 * self::MB])
+        ];
+        $url = 'http://foo.s3.amazonaws.com/bar';
+
+        $this->expectOutputString(implode("", $progressBar));
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new MultipartCopy($client, '/bucket/key', $copyOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertSame($url, $result['ObjectURL']);
+    }
+
+    public function testFailedCopyPrintsPartialProgress()
+    {
+        $partialBar = [
+            "Transfer initiated...\n|                    | 0.0%\n",
+            "|==                  | 12.5%\n",
+            "|=====               | 25.0%\n"
+        ];
+        $this->expectOutputString(implode("", $partialBar));
+
+        $this->expectExceptionMessage(
+            "An exception occurred while uploading parts to a multipart upload"
+        );
+        $this->expectException(MultipartUploadException::class);
+        $counter = 0;
+
+        $httpHandler = function ($request, array $options) use (&$counter) {
+            if ($counter < 4) {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><OperationNameResponse>" .
+                    "<UploadId>baz</UploadId></OperationNameResponse>";
+            } else {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n";
+            }
+            $counter++;
+
+            return Promise\Create::promiseFor(
+                new Psr7\Response(200, [], $body)
+            );
+        };
+
+        $client = $this->getTestClient('s3', ['http_handler' => $httpHandler]);
+        $copyOptions = [
+            'bucket' => 'foo',
+            'key' => 'bar',
+            'display_progress' => true,
+            'source_metadata' => new Result(['ContentLength' => 50 * self::MB])
+        ];
+
+        $uploader = new MultipartCopy($client, '/bucket/key', $copyOptions);
+        $uploader->upload();
     }
 }

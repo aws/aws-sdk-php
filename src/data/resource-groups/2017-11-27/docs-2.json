@@ -1,20 +1,25 @@
 {
   "version": "2.0",
-  "service": "<p>Resource Groups lets you organize Amazon Web Services resources such as Amazon Elastic Compute Cloud instances, Amazon Relational Database Service databases, and Amazon Simple Storage Service buckets into groups using criteria that you define as tags. A resource group is a collection of resources that match the resource types specified in a query, and share one or more tags or portions of tags. You can create a group of resources based on their roles in your cloud infrastructure, lifecycle stages, regions, application layers, or virtually any criteria. Resource Groups enable you to automate management tasks, such as those in Amazon Web Services Systems Manager Automation documents, on tag-related resources in Amazon Web Services Systems Manager. Groups of tagged resources also let you quickly view a custom console in Amazon Web Services Systems Manager that shows Config compliance and other monitoring data about member resources.</p> <p>To create a resource group, build a resource query, and specify tags that identify the criteria that members of the group have in common. Tags are key-value pairs.</p> <p>For more information about Resource Groups, see the <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html\">Resource Groups User Guide</a>.</p> <p>Resource Groups uses a REST-compliant API that you can use to perform the following types of operations.</p> <ul> <li> <p>Create, Read, Update, and Delete (CRUD) operations on resource groups and resource query entities</p> </li> <li> <p>Applying, editing, and removing tags from resource groups</p> </li> <li> <p>Resolving resource group member ARNs so they can be returned as search results</p> </li> <li> <p>Getting data about resources that are members of a group</p> </li> <li> <p>Searching Amazon Web Services resources based on a resource query</p> </li> </ul>",
+  "service": "<p>Resource Groups lets you organize Amazon Web Services resources such as Amazon Elastic Compute Cloud instances, Amazon Relational Database Service databases, and Amazon Simple Storage Service buckets into groups using criteria that you define as tags. A resource group is a collection of resources that match the resource types specified in a query, and share one or more tags or portions of tags. You can create a group of resources based on their roles in your cloud infrastructure, lifecycle stages, regions, application layers, or virtually any criteria. Resource Groups enable you to automate management tasks, such as those in Amazon Web Services Systems Manager Automation documents, on tag-related resources in Amazon Web Services Systems Manager. Groups of tagged resources also let you quickly view a custom console in Amazon Web Services Systems Manager that shows Config compliance and other monitoring data about member resources.</p> <p>To create a resource group, build a resource query, and specify tags that identify the criteria that members of the group have in common. Tags are key-value pairs.</p> <p>For more information about Resource Groups, see the <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/welcome.html\">Resource Groups User Guide</a>.</p> <p>Resource Groups uses a REST-compliant API that you can use to perform the following types of operations.</p> <ul> <li> <p>Create, Read, Update, and Delete (CRUD) operations on resource groups and resource query entities</p> </li> <li> <p>Applying, editing, and removing tags from resource groups</p> </li> <li> <p>Resolving resource group member Amazon resource names (ARN)s so they can be returned as search results</p> </li> <li> <p>Getting data about resources that are members of a group</p> </li> <li> <p>Searching Amazon Web Services resources based on a resource query</p> </li> </ul>",
   "operations": {
+    "CancelTagSyncTask": "<p>Cancels the specified tag-sync task. </p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:CancelTagSyncTask</code> on the application group</p> </li> <li> <p> <code>resource-groups:DeleteGroup</code> </p> </li> </ul>",
     "CreateGroup": "<p>Creates a resource group with the specified name and description. You can optionally include either a resource query or a service configuration. For more information about constructing a resource query, see <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/getting_started-query.html\">Build queries and groups in Resource Groups</a> in the <i>Resource Groups User Guide</i>. For more information about service-linked groups and service configurations, see <a href=\"https://docs.aws.amazon.com/ARG/latest/APIReference/about-slg.html\">Service configurations for Resource Groups</a>.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:CreateGroup</code> </p> </li> </ul>",
     "DeleteGroup": "<p>Deletes the specified resource group. Deleting a resource group does not delete any resources that are members of the group; it only deletes the group structure.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:DeleteGroup</code> </p> </li> </ul>",
     "GetAccountSettings": "<p>Retrieves the current status of optional features in Resource Groups.</p>",
     "GetGroup": "<p>Returns information about a specified resource group.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetGroup</code> </p> </li> </ul>",
     "GetGroupConfiguration": "<p>Retrieves the service configuration associated with the specified resource group. For details about the service configuration syntax, see <a href=\"https://docs.aws.amazon.com/ARG/latest/APIReference/about-slg.html\">Service configurations for Resource Groups</a>.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetGroupConfiguration</code> </p> </li> </ul>",
     "GetGroupQuery": "<p>Retrieves the resource query associated with the specified resource group. For more information about resource queries, see <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/gettingstarted-query.html#gettingstarted-query-cli-tag\">Create a tag-based group in Resource Groups</a>.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetGroupQuery</code> </p> </li> </ul>",
-    "GetTags": "<p>Returns a list of tags that are associated with a resource group, specified by an ARN.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetTags</code> </p> </li> </ul>",
-    "GroupResources": "<p>Adds the specified resources to the specified group.</p> <important> <p>You can use this operation with only resource groups that are configured with the following types:</p> <ul> <li> <p> <code>AWS::EC2::HostManagement</code> </p> </li> <li> <p> <code>AWS::EC2::CapacityReservationPool</code> </p> </li> </ul> <p>Other resource group type and resource types aren't currently supported by this operation.</p> </important> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GroupResources</code> </p> </li> </ul>",
-    "ListGroupResources": "<p>Returns a list of ARNs of the resources that are members of a specified resource group.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:ListGroupResources</code> </p> </li> <li> <p> <code>cloudformation:DescribeStacks</code> </p> </li> <li> <p> <code>cloudformation:ListStackResources</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> </ul>",
+    "GetTagSyncTask": "<p>Returns information about a specified tag-sync task. </p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetTagSyncTask</code> on the application group</p> </li> </ul>",
+    "GetTags": "<p>Returns a list of tags that are associated with a resource group, specified by an Amazon resource name (ARN).</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GetTags</code> </p> </li> </ul>",
+    "GroupResources": "<p>Adds the specified resources to the specified group.</p> <important> <p>You can only use this operation with the following groups:</p> <ul> <li> <p> <code>AWS::EC2::HostManagement</code> </p> </li> <li> <p> <code>AWS::EC2::CapacityReservationPool</code> </p> </li> <li> <p> <code>AWS::ResourceGroups::ApplicationGroup</code> </p> </li> </ul> <p>Other resource group types and resource types are not currently supported by this operation.</p> </important> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:GroupResources</code> </p> </li> </ul>",
+    "ListGroupResources": "<p>Returns a list of Amazon resource names (ARNs) of the resources that are members of a specified resource group.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:ListGroupResources</code> </p> </li> <li> <p> <code>cloudformation:DescribeStacks</code> </p> </li> <li> <p> <code>cloudformation:ListStackResources</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> </ul>",
+    "ListGroupingStatuses": "<p>Returns the status of the last grouping or ungrouping action for each resource in the specified application group. </p>",
     "ListGroups": "<p>Returns a list of existing Resource Groups in your account.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:ListGroups</code> </p> </li> </ul>",
+    "ListTagSyncTasks": "<p>Returns a list of tag-sync tasks. </p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:ListTagSyncTasks</code> with the group passed in the filters as the resource or * if using no filters </p> </li> </ul>",
     "PutGroupConfiguration": "<p>Attaches a service configuration to the specified group. This occurs asynchronously, and can take time to complete. You can use <a>GetGroupConfiguration</a> to check the status of the update.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:PutGroupConfiguration</code> </p> </li> </ul>",
     "SearchResources": "<p>Returns a list of Amazon Web Services resource identifiers that matches the specified query. The query uses the same format as a resource query in a <a>CreateGroup</a> or <a>UpdateGroupQuery</a> operation.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:SearchResources</code> </p> </li> <li> <p> <code>cloudformation:DescribeStacks</code> </p> </li> <li> <p> <code>cloudformation:ListStackResources</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> </ul>",
-    "Tag": "<p>Adds tags to a resource group with the specified ARN. Existing tags on a resource group are not changed if they are not specified in the request parameters.</p> <important> <p>Do not store personally identifiable information (PII) or other confidential or sensitive information in tags. We use tags to provide you with billing and administration services. Tags are not intended to be used for private or sensitive data.</p> </important> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:Tag</code> </p> </li> </ul>",
+    "StartTagSyncTask": "<p>Creates a new tag-sync task to onboard and sync resources tagged with a specific tag key-value pair to an application. </p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:StartTagSyncTask</code> on the application group</p> </li> <li> <p> <code>resource-groups:CreateGroup</code> </p> </li> <li> <p> <code>iam:PassRole</code> on the role provided in the request </p> </li> </ul>",
+    "Tag": "<p>Adds tags to a resource group with the specified Amazon resource name (ARN). Existing tags on a resource group are not changed if they are not specified in the request parameters.</p> <important> <p>Do not store personally identifiable information (PII) or other confidential or sensitive information in tags. We use tags to provide you with billing and administration services. Tags are not intended to be used for private or sensitive data.</p> </important> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:Tag</code> </p> </li> </ul>",
     "UngroupResources": "<p>Removes the specified resources from the specified group. This operation works only with static groups that you populated using the <a>GroupResources</a> operation. It doesn't work with any resource groups that are automatically populated by tag-based or CloudFormation stack-based queries.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:UngroupResources</code> </p> </li> </ul>",
     "Untag": "<p>Deletes tags from a specified resource group.</p> <p> <b>Minimum permissions</b> </p> <p>To run this command, you must have the following permissions:</p> <ul> <li> <p> <code>resource-groups:Untag</code> </p> </li> </ul>",
     "UpdateAccountSettings": "<p>Turns on or turns off optional features in Resource Groups.</p> <p>The preceding example shows that the request to turn on group lifecycle events is <code>IN_PROGRESS</code>. You can call the <a>GetAccountSettings</a> operation to check for completion by looking for <code>GroupLifecycleEventsStatus</code> to change to <code>ACTIVE</code>.</p>",
@@ -29,8 +34,31 @@
         "UpdateAccountSettingsOutput$AccountSettings": "<p>A structure that displays the status of the optional features in the account.</p>"
       }
     },
+    "ApplicationArn": {
+      "base": null,
+      "refs": {
+        "ApplicationTag$value": null
+      }
+    },
+    "ApplicationTag": {
+      "base": null,
+      "refs": {
+        "Group$ApplicationTag": "<p>A tag that defines the application group membership. This tag is only supported for application groups. </p>"
+      }
+    },
+    "ApplicationTagKey": {
+      "base": null,
+      "refs": {
+        "ApplicationTag$key": null
+      }
+    },
     "BadRequestException": {
       "base": "<p>The request includes one or more parameters that violate validation rules.</p>",
+      "refs": {
+      }
+    },
+    "CancelTagSyncTaskInput": {
+      "base": null,
       "refs": {
       }
     },
@@ -39,9 +67,24 @@
       "refs": {
       }
     },
+    "CreateGroupName": {
+      "base": null,
+      "refs": {
+        "CreateGroupInput$Name": "<p>The name of the group, which is the identifier of the group in other operations. You can't change the name of a resource group after you create it. A resource group name can consist of letters, numbers, hyphens, periods, and underscores. The name cannot start with <code>AWS</code>, <code>aws</code>, or any other possible capitalization; these are reserved. A resource group name must be unique within each Amazon Web Services Region in your Amazon Web Services account.</p>"
+      }
+    },
     "CreateGroupOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "Criticality": {
+      "base": null,
+      "refs": {
+        "CreateGroupInput$Criticality": "<p>The critical rank of the application group on a scale of 1 to 10, with a rank of 1 being the most critical, and a rank of 10 being least critical.</p>",
+        "Group$Criticality": "<p>The critical rank of the application group on a scale of 1 to 10, with a rank of 1 being the most critical, and a rank of 10 being least critical.</p>",
+        "GroupIdentifier$Criticality": "<p>The critical rank of the application group on a scale of 1 to 10, with a rank of 1 being the most critical, and a rank of 10 being least critical.</p>",
+        "UpdateGroupInput$Criticality": "<p>The critical rank of the application group on a scale of 1 to 10, with a rank of 1 being the most critical, and a rank of 10 being least critical.</p>"
       }
     },
     "DeleteGroupInput": {
@@ -59,13 +102,24 @@
       "refs": {
         "CreateGroupInput$Description": "<p>The description of the resource group. Descriptions can consist of letters, numbers, hyphens, underscores, periods, and spaces.</p>",
         "Group$Description": "<p>The description of the resource group.</p>",
+        "GroupIdentifier$Description": "<p>The description of the application group. </p>",
         "UpdateGroupInput$Description": "<p>The new description that you want to update the resource group with. Descriptions can contain letters, numbers, hyphens, underscores, periods, and spaces.</p>"
+      }
+    },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "CreateGroupInput$DisplayName": "<p>The name of the application group, which you can change at any time. </p>",
+        "Group$DisplayName": "<p>The name of the application group, which you can change at any time. </p>",
+        "GroupIdentifier$DisplayName": "<p>The name of the application group, which you can change at any time. </p>",
+        "UpdateGroupInput$DisplayName": "<p>The name of the application group, which you can change at any time. </p>"
       }
     },
     "ErrorCode": {
       "base": null,
       "refs": {
-        "FailedResource$ErrorCode": "<p>The error code associated with the failure.</p>"
+        "FailedResource$ErrorCode": "<p>The error code associated with the failure.</p>",
+        "GroupingStatusesItem$ErrorCode": "<p>Specifies the error code that was raised. </p>"
       }
     },
     "ErrorMessage": {
@@ -74,9 +128,12 @@
         "BadRequestException$Message": null,
         "FailedResource$ErrorMessage": "<p>The error message text associated with the failure.</p>",
         "ForbiddenException$Message": null,
+        "GetTagSyncTaskOutput$ErrorMessage": "<p>The specific error message in cases where the tag-sync task status is <code>ERROR</code>. </p>",
+        "GroupingStatusesItem$ErrorMessage": "<p>A message that explains the <code>ErrorCode</code>. </p>",
         "InternalServerErrorException$Message": null,
         "MethodNotAllowedException$Message": null,
         "NotFoundException$Message": null,
+        "TagSyncTaskItem$ErrorMessage": "<p>The specific error message in cases where the tag-sync task status is <code>Error</code>.</p>",
         "TooManyRequestsException$Message": null,
         "UnauthorizedException$Message": null
       }
@@ -90,7 +147,7 @@
     "FailedResourceList": {
       "base": null,
       "refs": {
-        "GroupResourcesOutput$Failed": "<p>A list of ARNs of any resources that this operation failed to add to the group.</p>",
+        "GroupResourcesOutput$Failed": "<p>A list of Amazon resource names (ARNs) of any resources that this operation failed to add to the group.</p>",
         "UngroupResourcesOutput$Failed": "<p>A list of any resources that failed to be removed from the group by this operation.</p>"
       }
     },
@@ -134,6 +191,16 @@
       "refs": {
       }
     },
+    "GetTagSyncTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTagSyncTaskOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetTagsInput": {
       "base": null,
       "refs": {
@@ -157,14 +224,23 @@
     "GroupArn": {
       "base": null,
       "refs": {
-        "GetTagsInput$Arn": "<p>The ARN of the resource group whose tags you want to retrieve.</p>",
-        "GetTagsOutput$Arn": "<p>The ARN of the tagged resource group.</p>",
-        "Group$GroupArn": "<p>The ARN of the resource group.</p>",
-        "GroupIdentifier$GroupArn": "<p>The ARN of the resource group.</p>",
-        "TagInput$Arn": "<p>The ARN of the resource group to which to add tags.</p>",
-        "TagOutput$Arn": "<p>The ARN of the tagged resource.</p>",
-        "UntagInput$Arn": "<p>The ARN of the resource group from which to remove tags. The command removed both the specified keys and any values associated with those keys.</p>",
-        "UntagOutput$Arn": "<p>The ARN of the resource group from which tags have been removed.</p>"
+        "GroupIdentifier$GroupArn": "<p>The Amazon resource name (ARN) of the resource group.</p>"
+      }
+    },
+    "GroupArnV2": {
+      "base": null,
+      "refs": {
+        "GetTagSyncTaskOutput$GroupArn": "<p>The Amazon resource name (ARN) of the application group. </p>",
+        "GetTagsInput$Arn": "<p>The Amazon resource name (ARN) of the resource group whose tags you want to retrieve.</p>",
+        "GetTagsOutput$Arn": "<p>TheAmazon resource name (ARN) of the tagged resource group.</p>",
+        "Group$GroupArn": "<p>The Amazon resource name (ARN) of the resource group.</p>",
+        "ListTagSyncTasksFilter$GroupArn": "<p>The Amazon resource name (ARN) of the application group. </p>",
+        "StartTagSyncTaskOutput$GroupArn": "<p>The Amazon resource name (ARN) of the application group for which you want to add or remove resources. </p>",
+        "TagInput$Arn": "<p>The Amazon resource name (ARN) of the resource group to which to add tags.</p>",
+        "TagOutput$Arn": "<p>The Amazon resource name (ARN) of the tagged resource.</p>",
+        "TagSyncTaskItem$GroupArn": "<p>The Amazon resource name (ARN) of the application group. </p>",
+        "UntagInput$Arn": "<p>The Amazon resource name (ARN) of the resource group from which to remove tags. The command removed both the specified keys and any values associated with those keys.</p>",
+        "UntagOutput$Arn": "<p>The Amazon resource name (ARN) of the resource group from which tags have been removed.</p>"
       }
     },
     "GroupConfiguration": {
@@ -240,7 +316,7 @@
     "GroupFilterList": {
       "base": null,
       "refs": {
-        "ListGroupsInput$Filters": "<p>Filters, formatted as <a>GroupFilter</a> objects, that you want to apply to a <code>ListGroups</code> operation.</p> <ul> <li> <p> <code>resource-type</code> - Filter the results to include only those resource groups that have the specified resource type in their <code>ResourceTypeFilter</code>. For example, <code>AWS::EC2::Instance</code> would return any resource group with a <code>ResourceTypeFilter</code> that includes <code>AWS::EC2::Instance</code>.</p> </li> <li> <p> <code>configuration-type</code> - Filter the results to include only those groups that have the specified configuration types attached. The current supported values are:</p> <ul> <li> <p> <code>AWS::AppRegistry::Application</code> </p> </li> <li> <p> <code>AWS::AppRegistry::ApplicationResourceGroups</code> </p> </li> <li> <p> <code>AWS::CloudFormation::Stack</code> </p> </li> <li> <p> <code>AWS::EC2::CapacityReservationPool</code> </p> </li> <li> <p> <code>AWS::EC2::HostManagement</code> </p> </li> <li> <p> <code>AWS::NetworkFirewall::RuleGroup</code> </p> </li> </ul> </li> </ul>"
+        "ListGroupsInput$Filters": "<p>Filters, formatted as <a>GroupFilter</a> objects, that you want to apply to a <code>ListGroups</code> operation.</p> <ul> <li> <p> <code>resource-type</code> - Filter the results to include only those resource groups that have the specified resource type in their <code>ResourceTypeFilter</code>. For example, <code>AWS::EC2::Instance</code> would return any resource group with a <code>ResourceTypeFilter</code> that includes <code>AWS::EC2::Instance</code>.</p> </li> <li> <p> <code>configuration-type</code> - Filter the results to include only those groups that have the specified configuration types attached. The current supported values are:</p> <ul> <li> <p> <code>AWS::ResourceGroups::ApplicationGroup</code> </p> </li> <li> <p> <code>AWS::AppRegistry::Application</code> </p> </li> <li> <p> <code>AWS::AppRegistry::ApplicationResourceGroups</code> </p> </li> <li> <p> <code>AWS::CloudFormation::Stack</code> </p> </li> <li> <p> <code>AWS::EC2::CapacityReservationPool</code> </p> </li> <li> <p> <code>AWS::EC2::HostManagement</code> </p> </li> <li> <p> <code>AWS::NetworkFirewall::RuleGroup</code> </p> </li> </ul> </li> </ul>"
       }
     },
     "GroupFilterName": {
@@ -277,7 +353,7 @@
       "base": null,
       "refs": {
         "AccountSettings$GroupLifecycleEventsDesiredStatus": "<p>The desired target status of the group lifecycle events feature. If</p>",
-        "UpdateAccountSettingsInput$GroupLifecycleEventsDesiredStatus": "<p>Specifies whether you want to turn <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/monitor-groups.html\">group lifecycle events</a> on or off.</p>"
+        "UpdateAccountSettingsInput$GroupLifecycleEventsDesiredStatus": "<p>Specifies whether you want to turn <a href=\"https://docs.aws.amazon.com/ARG/latest/userguide/monitor-groups.html\">group lifecycle events</a> on or off.</p> <p>You can't turn on group lifecycle events if your resource groups quota is greater than 2,000. </p>"
       }
     },
     "GroupLifecycleEventsStatus": {
@@ -301,14 +377,17 @@
     "GroupName": {
       "base": null,
       "refs": {
-        "CreateGroupInput$Name": "<p>The name of the group, which is the identifier of the group in other operations. You can't change the name of a resource group after you create it. A resource group name can consist of letters, numbers, hyphens, periods, and underscores. The name cannot start with <code>AWS</code>, <code>aws</code>, or any other possible capitalization; these are reserved. A resource group name must be unique within each Amazon Web Services Region in your Amazon Web Services account.</p>",
         "DeleteGroupInput$GroupName": "<p>Deprecated - don't use this parameter. Use <code>Group</code> instead.</p>",
         "GetGroupInput$GroupName": "<p>Deprecated - don't use this parameter. Use <code>Group</code> instead.</p>",
         "GetGroupQueryInput$GroupName": "<p>Don't use this parameter. Use <code>Group</code> instead.</p>",
+        "GetTagSyncTaskOutput$GroupName": "<p>The name of the application group. </p>",
         "Group$Name": "<p>The name of the resource group.</p>",
         "GroupIdentifier$GroupName": "<p>The name of the resource group.</p>",
         "GroupQuery$GroupName": "<p>The name of the resource group that is associated with the specified resource query.</p>",
         "ListGroupResourcesInput$GroupName": "<important> <p> <i> <b>Deprecated - don't use this parameter. Use the <code>Group</code> request field instead.</b> </i> </p> </important>",
+        "ListTagSyncTasksFilter$GroupName": "<p>The name of the application group. </p>",
+        "StartTagSyncTaskOutput$GroupName": "<p>The name of the application group to onboard and sync resources.</p>",
+        "TagSyncTaskItem$GroupName": "<p>The name of the application group. </p>",
         "UpdateGroupInput$GroupName": "<p>Don't use this parameter. Use <code>Group</code> instead.</p>",
         "UpdateGroupQueryInput$GroupName": "<p>Don't use this parameter. Use <code>Group</code> instead.</p>"
       }
@@ -339,16 +418,48 @@
     "GroupString": {
       "base": null,
       "refs": {
-        "DeleteGroupInput$Group": "<p>The name or the ARN of the resource group to delete.</p>",
-        "GetGroupConfigurationInput$Group": "<p>The name or the ARN of the resource group for which you want to retrive the service configuration.</p>",
-        "GetGroupInput$Group": "<p>The name or the ARN of the resource group to retrieve.</p>",
-        "GetGroupQueryInput$Group": "<p>The name or the ARN of the resource group to query.</p>",
-        "GroupResourcesInput$Group": "<p>The name or the ARN of the resource group to add resources to.</p>",
-        "ListGroupResourcesInput$Group": "<p>The name or the ARN of the resource group</p>",
-        "PutGroupConfigurationInput$Group": "<p>The name or ARN of the resource group with the configuration that you want to update.</p>",
-        "UngroupResourcesInput$Group": "<p>The name or the ARN of the resource group from which to remove the resources.</p>",
-        "UpdateGroupInput$Group": "<p>The name or the ARN of the resource group to modify.</p>",
-        "UpdateGroupQueryInput$Group": "<p>The name or the ARN of the resource group to query.</p>"
+        "GetGroupConfigurationInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group for which you want to retrive the service configuration.</p>",
+        "GetGroupQueryInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group to query.</p>",
+        "PutGroupConfigurationInput$Group": "<p>The name or Amazon resource name (ARN) of the resource group with the configuration that you want to update.</p>",
+        "UpdateGroupQueryInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group to query.</p>"
+      }
+    },
+    "GroupStringV2": {
+      "base": null,
+      "refs": {
+        "DeleteGroupInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group to delete.</p>",
+        "GetGroupInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group to retrieve.</p>",
+        "GroupResourcesInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group to add resources to.</p>",
+        "ListGroupResourcesInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group. </p>",
+        "ListGroupingStatusesInput$Group": "<p>The application group identifier, expressed as an Amazon resource name (ARN) or the application group name. </p>",
+        "ListGroupingStatusesOutput$Group": "<p>The application group identifier, expressed as an Amazon resource name (ARN) or the application group name.</p>",
+        "StartTagSyncTaskInput$Group": "<p>The Amazon resource name (ARN) or name of the application group for which you want to create a tag-sync task. </p>",
+        "UngroupResourcesInput$Group": "<p>The name or the Amazon resource name (ARN) of the resource group from which to remove the resources.</p>",
+        "UpdateGroupInput$Group": "<p>The name or the ARN of the resource group to update.</p>"
+      }
+    },
+    "GroupingStatus": {
+      "base": null,
+      "refs": {
+        "GroupingStatusesItem$Status": "<p>Describes the resource grouping status with values of <code>SUCCESS</code>, <code>FAILED</code>, <code>IN_PROGRESS</code>, or <code>SKIPPED</code>. </p>"
+      }
+    },
+    "GroupingStatusesItem": {
+      "base": "<p>The information about a grouping or ungrouping resource action. </p>",
+      "refs": {
+        "GroupingStatusesList$member": null
+      }
+    },
+    "GroupingStatusesList": {
+      "base": null,
+      "refs": {
+        "ListGroupingStatusesOutput$GroupingStatuses": "<p>Returns details about the grouping or ungrouping status of the resources in the specified application group. </p>"
+      }
+    },
+    "GroupingType": {
+      "base": null,
+      "refs": {
+        "GroupingStatusesItem$Action": "<p>Describes the resource grouping action with values of <code>GROUP</code> or <code>UNGROUP</code>. </p>"
       }
     },
     "InternalServerErrorException": {
@@ -378,6 +489,46 @@
       "refs": {
       }
     },
+    "ListGroupingStatusesFilter": {
+      "base": "<p>A filter name and value pair that is used to obtain more specific results from the list of grouping statuses. </p>",
+      "refs": {
+        "ListGroupingStatusesFilterList$member": null
+      }
+    },
+    "ListGroupingStatusesFilterList": {
+      "base": null,
+      "refs": {
+        "ListGroupingStatusesInput$Filters": "<p>The filter name and value pair that is used to return more specific results from a list of resources. </p>"
+      }
+    },
+    "ListGroupingStatusesFilterName": {
+      "base": null,
+      "refs": {
+        "ListGroupingStatusesFilter$Name": "<p>The name of the filter. Filter names are case-sensitive. </p>"
+      }
+    },
+    "ListGroupingStatusesFilterValue": {
+      "base": null,
+      "refs": {
+        "ListGroupingStatusesFilterValues$member": null
+      }
+    },
+    "ListGroupingStatusesFilterValues": {
+      "base": null,
+      "refs": {
+        "ListGroupingStatusesFilter$Values": "<p>One or more filter values. Allowed filter values vary by resource filter name, and are case-sensitive. </p>"
+      }
+    },
+    "ListGroupingStatusesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupingStatusesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListGroupsInput": {
       "base": null,
       "refs": {
@@ -388,11 +539,35 @@
       "refs": {
       }
     },
+    "ListTagSyncTasksFilter": {
+      "base": "<p>Returns tag-sync tasks filtered by the Amazon resource name (ARN) or name of a specified application group. </p>",
+      "refs": {
+        "ListTagSyncTasksFilterList$member": null
+      }
+    },
+    "ListTagSyncTasksFilterList": {
+      "base": null,
+      "refs": {
+        "ListTagSyncTasksInput$Filters": "<p>The Amazon resource name (ARN) or name of the application group for which you want to return a list of tag-sync tasks. </p>"
+      }
+    },
+    "ListTagSyncTasksInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagSyncTasksOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
         "ListGroupResourcesInput$MaxResults": "<p>The total number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that the service might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>",
+        "ListGroupingStatusesInput$MaxResults": "<p>The maximum number of resources and their statuses returned in the response. </p>",
         "ListGroupsInput$MaxResults": "<p>The total number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that the service might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>",
+        "ListTagSyncTasksInput$MaxResults": "<p>The maximum number of results to be included in the response. </p>",
         "SearchResourcesInput$MaxResults": "<p>The total number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value that is specific to the operation. If additional items exist beyond the maximum you specify, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results. Note that the service might return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p>"
       }
     },
@@ -406,8 +581,12 @@
       "refs": {
         "ListGroupResourcesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value provided by a previous call's <code>NextToken</code> response to indicate where the output should continue from.</p>",
         "ListGroupResourcesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>",
+        "ListGroupingStatusesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value provided by a previous call's <code>NextToken</code> response to indicate where the output should continue from. </p>",
+        "ListGroupingStatusesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. </p>",
         "ListGroupsInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value provided by a previous call's <code>NextToken</code> response to indicate where the output should continue from.</p>",
         "ListGroupsOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>",
+        "ListTagSyncTasksInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value provided by a previous call's <code>NextToken</code> response to indicate where the output should continue from. </p>",
+        "ListTagSyncTasksOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>",
         "SearchResourcesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value provided by a previous call's <code>NextToken</code> response to indicate where the output should continue from.</p>",
         "SearchResourcesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>.</p>"
       }
@@ -415,6 +594,15 @@
     "NotFoundException": {
       "base": "<p>One or more of the specified resources don't exist.</p>",
       "refs": {
+      }
+    },
+    "Owner": {
+      "base": null,
+      "refs": {
+        "CreateGroupInput$Owner": "<p>A name, email address or other identifier for the person or group who is considered as the owner of this application group within your organization. </p>",
+        "Group$Owner": "<p>A name, email address or other identifier for the person or group who is considered as the owner of this application group within your organization. </p>",
+        "GroupIdentifier$Owner": "<p>A name, email address or other identifier for the person or group who is considered as the owner of this group within your organization. </p>",
+        "UpdateGroupInput$Owner": "<p>A name, email address or other identifier for the person or group who is considered as the owner of this application group within your organization. </p>"
       }
     },
     "PendingResource": {
@@ -426,7 +614,7 @@
     "PendingResourceList": {
       "base": null,
       "refs": {
-        "GroupResourcesOutput$Pending": "<p>A list of ARNs of any resources that this operation is still in the process adding to the group. These pending additions continue asynchronously. You can check the status of pending additions by using the <code> <a>ListGroupResources</a> </code> operation, and checking the <code>Resources</code> array in the response and the <code>Status</code> field of each object in that array. </p>",
+        "GroupResourcesOutput$Pending": "<p>A list of Amazon resource names (ARNs) of any resources that this operation is still in the process adding to the group. These pending additions continue asynchronously. You can check the status of pending additions by using the <code> <a>ListGroupResources</a> </code> operation, and checking the <code>Resources</code> array in the response and the <code>Status</code> field of each object in that array. </p>",
         "UngroupResourcesOutput$Pending": "<p>A list of any resources that are still in the process of being removed from the group by this operation. These pending removals continue asynchronously. You can check the status of pending removals by using the <code> <a>ListGroupResources</a> </code> operation. After the resource is successfully removed, it no longer appears in the response.</p>"
       }
     },
@@ -474,24 +662,25 @@
     "QueryType": {
       "base": null,
       "refs": {
-        "ResourceQuery$Type": "<p>The type of the query to perform. This can have one of two values:</p> <ul> <li> <p> <i> <code>CLOUDFORMATION_STACK_1_0:</code> </i> Specifies that you want the group to contain the members of an CloudFormation stack. The <code>Query</code> contains a <code>StackIdentifier</code> element with an ARN for a CloudFormation stack.</p> </li> <li> <p> <i> <code>TAG_FILTERS_1_0:</code> </i> Specifies that you want the group to include resource that have tags that match the query. </p> </li> </ul>"
+        "ResourceQuery$Type": "<p>The type of the query to perform. This can have one of two values:</p> <ul> <li> <p> <i> <code>CLOUDFORMATION_STACK_1_0:</code> </i> Specifies that you want the group to contain the members of an CloudFormation stack. The <code>Query</code> contains a <code>StackIdentifier</code> element with an Amazon resource name (ARN) for a CloudFormation stack.</p> </li> <li> <p> <i> <code>TAG_FILTERS_1_0:</code> </i> Specifies that you want the group to include resource that have tags that match the query. </p> </li> </ul>"
       }
     },
     "ResourceArn": {
       "base": null,
       "refs": {
-        "FailedResource$ResourceArn": "<p>The ARN of the resource that failed to be added or removed.</p>",
+        "FailedResource$ResourceArn": "<p>The Amazon resource name (ARN) of the resource that failed to be added or removed.</p>",
+        "GroupingStatusesItem$ResourceArn": "<p>The Amazon resource name (ARN) of a resource. </p>",
         "PendingResource$ResourceArn": "<p>The Amazon resource name (ARN) of the resource that's in a pending state.</p>",
         "ResourceArnList$member": null,
-        "ResourceIdentifier$ResourceArn": "<p>The ARN of a resource.</p>"
+        "ResourceIdentifier$ResourceArn": "<p>The Amazon resource name (ARN) of a resource.</p>"
       }
     },
     "ResourceArnList": {
       "base": null,
       "refs": {
-        "GroupResourcesInput$ResourceArns": "<p>The list of ARNs of the resources to be added to the group. </p>",
-        "GroupResourcesOutput$Succeeded": "<p>A list of ARNs of the resources that this operation successfully added to the group.</p>",
-        "UngroupResourcesInput$ResourceArns": "<p>The ARNs of the resources to be removed from the group.</p>",
+        "GroupResourcesInput$ResourceArns": "<p>The list of Amazon resource names (ARNs) of the resources to be added to the group. </p>",
+        "GroupResourcesOutput$Succeeded": "<p>A list of Amazon resource names (ARNs) of the resources that this operation successfully added to the group.</p>",
+        "UngroupResourcesInput$ResourceArns": "<p>The Amazon resource names (ARNs) of the resources to be removed from the group.</p>",
         "UngroupResourcesOutput$Succeeded": "<p>A list of resources that were successfully removed from the group by this operation.</p>"
       }
     },
@@ -567,12 +756,31 @@
         "ResourceIdentifier$ResourceType": "<p>The resource type of a resource, such as <code>AWS::EC2::Instance</code>.</p>"
       }
     },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "GetTagSyncTaskOutput$RoleArn": "<p>The Amazon resource name (ARN) of the role assumed by Resource Groups to tag and untag resources on your behalf. </p> <p>For more information about this role, review <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/arguide/app-tag-sync.html#tag-sync-role\">Tag-sync required permissions</a>. </p>",
+        "StartTagSyncTaskInput$RoleArn": "<p>The Amazon resource name (ARN) of the role assumed by the service to tag and untag resources on your behalf.</p>",
+        "StartTagSyncTaskOutput$RoleArn": "<p>The Amazon resource name (ARN) of the role assumed by the service to tag and untag resources on your behalf.</p>",
+        "TagSyncTaskItem$RoleArn": "<p>The Amazon resource name (ARN) of the role assumed by the service to tag and untag resources on your behalf.</p>"
+      }
+    },
     "SearchResourcesInput": {
       "base": null,
       "refs": {
       }
     },
     "SearchResourcesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartTagSyncTaskInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartTagSyncTaskOutput": {
       "base": null,
       "refs": {
       }
@@ -585,7 +793,11 @@
     "TagKey": {
       "base": null,
       "refs": {
+        "GetTagSyncTaskOutput$TagKey": "<p>The tag key. </p>",
+        "StartTagSyncTaskInput$TagKey": "<p>The tag key. Resources tagged with this tag key-value pair will be added to the application. If a resource with this tag is later untagged, the tag-sync task removes the resource from the application. </p>",
+        "StartTagSyncTaskOutput$TagKey": "<p>The tag key of the tag-sync task. </p>",
         "TagKeyList$member": null,
+        "TagSyncTaskItem$TagKey": "<p>The tag key. </p>",
         "Tags$key": null
       }
     },
@@ -601,9 +813,42 @@
       "refs": {
       }
     },
+    "TagSyncTaskArn": {
+      "base": null,
+      "refs": {
+        "CancelTagSyncTaskInput$TaskArn": "<p>The Amazon resource name (ARN) of the tag-sync task. </p>",
+        "GetTagSyncTaskInput$TaskArn": "<p>The Amazon resource name (ARN) of the tag-sync task. </p>",
+        "GetTagSyncTaskOutput$TaskArn": "<p>The Amazon resource name (ARN) of the tag-sync task. </p>",
+        "StartTagSyncTaskOutput$TaskArn": "<p>The Amazon resource name (ARN) of the new tag-sync task. </p>",
+        "TagSyncTaskItem$TaskArn": "<p>The Amazon resource name (ARN) of the tag-sync task. </p>"
+      }
+    },
+    "TagSyncTaskItem": {
+      "base": "<p>The Amazon resource name (ARN) of the tag-sync task. </p>",
+      "refs": {
+        "TagSyncTaskList$member": null
+      }
+    },
+    "TagSyncTaskList": {
+      "base": null,
+      "refs": {
+        "ListTagSyncTasksOutput$TagSyncTasks": "<p>A list of tag-sync tasks and information about each task. </p>"
+      }
+    },
+    "TagSyncTaskStatus": {
+      "base": null,
+      "refs": {
+        "GetTagSyncTaskOutput$Status": "<p>The status of the tag-sync task. </p> <p>Valid values include:</p> <ul> <li> <p> <code>ACTIVE</code> - The tag-sync task is actively managing resources in the application by adding or removing the <code>awsApplication</code> tag from resources when they are tagged or untagged with the specified tag key-value pair. </p> </li> <li> <p> <code>ERROR</code> - The tag-sync task is not actively managing resources in the application. Review the <code>ErrorMessage</code> for more information about resolving the error. </p> </li> </ul>",
+        "TagSyncTaskItem$Status": "<p>The status of the tag-sync task. </p> <p>Valid values include:</p> <ul> <li> <p> <code>ACTIVE</code> - The tag-sync task is actively managing resources in the application by adding or removing the <code>awsApplication</code> tag from resources when they are tagged or untagged with the specified tag key-value pair. </p> </li> <li> <p> <code>ERROR</code> - The tag-sync task is not actively managing resources in the application. Review the <code>ErrorMessage</code> for more information about resolving the error. </p> </li> </ul>"
+      }
+    },
     "TagValue": {
       "base": null,
       "refs": {
+        "GetTagSyncTaskOutput$TagValue": "<p>The tag value. </p>",
+        "StartTagSyncTaskInput$TagValue": "<p>The tag value. Resources tagged with this tag key-value pair will be added to the application. If a resource with this tag is later untagged, the tag-sync task removes the resource from the application. </p>",
+        "StartTagSyncTaskOutput$TagValue": "<p>The tag value of the tag-sync task. </p>",
+        "TagSyncTaskItem$TagValue": "<p>The tag value. </p>",
         "Tags$value": null
       }
     },
@@ -675,6 +920,14 @@
     "UpdateGroupQueryOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "timestamp": {
+      "base": null,
+      "refs": {
+        "GetTagSyncTaskOutput$CreatedAt": "<p>The timestamp of when the tag-sync task was created. </p>",
+        "GroupingStatusesItem$UpdatedAt": "<p>A timestamp of when the status was last updated. </p>",
+        "TagSyncTaskItem$CreatedAt": "<p>The timestamp of when the tag-sync task was created. </p>"
       }
     }
   }

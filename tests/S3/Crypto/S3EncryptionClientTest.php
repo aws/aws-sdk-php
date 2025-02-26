@@ -2,15 +2,14 @@
 namespace Aws\Test\S3\Crypto;
 
 use Aws\Crypto\KmsMaterialsProviderV2;
+use Aws\MetricsBuilder;
 use Aws\S3\Crypto\S3EncryptionClient;
 use Aws\Result;
 use Aws\HashingStream;
-use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\KmsMaterialsProvider;
 use Aws\Crypto\MetadataEnvelope;
-use Aws\S3\Crypto\S3EncryptionClientV2;
 use Aws\S3\S3Client;
 use Aws\S3\Crypto\HeadersMetadataStrategy;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
@@ -20,6 +19,7 @@ use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
+use Aws\Test\MetricsBuilderTestTrait;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -29,6 +29,7 @@ class S3EncryptionClientTest extends TestCase
     use UsesCryptoParamsTrait;
     use UsesMetadataEnvelopeTrait;
     use UsesServiceTrait;
+    use MetricsBuilderTestTrait;
 
     protected function getS3Client()
     {
@@ -254,7 +255,7 @@ class S3EncryptionClientTest extends TestCase
     public function testPutObjectValidatesCipher(
         $cipher,
         $exception = null,
-        callable $skipCheck = null
+        ?callable $skipCheck = null
     ) {
         if ($skipCheck && $skipCheck()) {
             $this->markTestSkipped(
@@ -766,7 +767,7 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    public function testAddsCryptoUserAgent()
+    public function testAppendsMetricsCaptureMiddleware()
     {
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProvider($kms);
@@ -778,10 +779,13 @@ EOXML;
             'region' => 'us-west-2',
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
-                $this->assertStringContainsString(
-                    'feat/s3-encrypt/' . S3EncryptionClient::CRYPTO_VERSION,
-                    $req->getHeaderLine('User-Agent')
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::S3_CRYPTO_V1N,
+                        $this->getMetricsAsArray($req)
+                    )
                 );
+
                 return Promise\Create::promiseFor(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(

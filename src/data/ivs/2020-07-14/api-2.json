@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
-    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivs",
+    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceAbbreviation":"Amazon IVS",
@@ -11,7 +11,8 @@
     "serviceId":"ivs",
     "signatureVersion":"v4",
     "signingName":"ivs",
-    "uid":"ivs-2020-07-14"
+    "uid":"ivs-2020-07-14",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchGetChannel":{
@@ -574,11 +575,16 @@
     "AudioConfiguration":{
       "type":"structure",
       "members":{
+        "channels":{"shape":"Integer"},
         "codec":{"shape":"String"},
-        "targetBitrate":{"shape":"Integer"},
         "sampleRate":{"shape":"Integer"},
-        "channels":{"shape":"Integer"}
+        "targetBitrate":{"shape":"Integer"},
+        "track":{"shape":"String"}
       }
+    },
+    "AudioConfigurationList":{
+      "type":"list",
+      "member":{"shape":"AudioConfiguration"}
     },
     "BatchError":{
       "type":"structure",
@@ -616,8 +622,8 @@
     "BatchGetStreamKeyResponse":{
       "type":"structure",
       "members":{
-        "streamKeys":{"shape":"StreamKeys"},
-        "errors":{"shape":"BatchErrors"}
+        "errors":{"shape":"BatchErrors"},
+        "streamKeys":{"shape":"StreamKeys"}
       }
     },
     "BatchStartViewerSessionRevocationError":{
@@ -628,9 +634,9 @@
       ],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "viewerId":{"shape":"ViewerId"},
         "code":{"shape":"errorCode"},
-        "message":{"shape":"errorMessage"}
+        "message":{"shape":"errorMessage"},
+        "viewerId":{"shape":"ViewerId"}
       }
     },
     "BatchStartViewerSessionRevocationErrors":{
@@ -673,25 +679,27 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "name":{"shape":"ChannelName"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "type":{"shape":"ChannelType"},
-        "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
-        "ingestEndpoint":{"shape":"IngestEndpoint"},
-        "playbackUrl":{"shape":"PlaybackURL"},
         "authorized":{"shape":"IsAuthorized"},
-        "tags":{"shape":"Tags"},
+        "containerFormat":{"shape":"ContainerFormat"},
+        "ingestEndpoint":{"shape":"IngestEndpoint"},
         "insecureIngest":{"shape":"InsecureIngest"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "name":{"shape":"ChannelName"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "playbackUrl":{"shape":"PlaybackURL"},
         "preset":{"shape":"TranscodePreset"},
+        "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "srt":{"shape":"Srt"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"}
+        "tags":{"shape":"Tags"},
+        "type":{"shape":"ChannelType"}
       }
     },
     "ChannelArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+$"
     },
     "ChannelArnList":{
       "type":"list",
@@ -714,7 +722,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"[a-zA-Z0-9-_]*"
+      "pattern":"^[a-zA-Z0-9-_]*$"
     },
     "ChannelNotBroadcasting":{
       "type":"structure",
@@ -731,27 +739,27 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$"
+      "pattern":"^^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$$"
     },
     "ChannelRecordingConfigurationArn":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$"
+      "pattern":"^^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$$"
     },
     "ChannelSummary":{
       "type":"structure",
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "name":{"shape":"ChannelName"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
         "authorized":{"shape":"IsAuthorized"},
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "name":{"shape":"ChannelName"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "preset":{"shape":"TranscodePreset"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "tags":{"shape":"Tags"},
-        "insecureIngest":{"shape":"InsecureIngest"},
-        "type":{"shape":"ChannelType"},
-        "preset":{"shape":"TranscodePreset"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"}
+        "type":{"shape":"ChannelType"}
       }
     },
     "ChannelType":{
@@ -778,18 +786,27 @@
       },
       "exception":true
     },
+    "ContainerFormat":{
+      "type":"string",
+      "enum":[
+        "TS",
+        "FRAGMENTED_MP4"
+      ]
+    },
     "CreateChannelRequest":{
       "type":"structure",
       "members":{
-        "name":{"shape":"ChannelName"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "type":{"shape":"ChannelType"},
         "authorized":{"shape":"Boolean"},
+        "containerFormat":{"shape":"ContainerFormat"},
+        "insecureIngest":{"shape":"Boolean"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "name":{"shape":"ChannelName"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
+        "preset":{"shape":"TranscodePreset"},
         "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "tags":{"shape":"Tags"},
-        "insecureIngest":{"shape":"Boolean"},
-        "preset":{"shape":"TranscodePreset"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"}
+        "type":{"shape":"ChannelType"}
       }
     },
     "CreateChannelResponse":{
@@ -819,12 +836,12 @@
       "type":"structure",
       "required":["destinationConfiguration"],
       "members":{
-        "name":{"shape":"RecordingConfigurationName"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
-        "tags":{"shape":"Tags"},
-        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"},
+        "name":{"shape":"RecordingConfigurationName"},
         "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
-        "renditionConfiguration":{"shape":"RenditionConfiguration"}
+        "renditionConfiguration":{"shape":"RenditionConfiguration"},
+        "tags":{"shape":"Tags"},
+        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"}
       }
     },
     "CreateRecordingConfigurationResponse":{
@@ -989,8 +1006,8 @@
       "type":"structure",
       "required":["publicKeyMaterial"],
       "members":{
-        "publicKeyMaterial":{"shape":"PlaybackPublicKeyMaterial"},
         "name":{"shape":"PlaybackKeyPairName"},
+        "publicKeyMaterial":{"shape":"PlaybackPublicKeyMaterial"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1003,8 +1020,19 @@
     "IngestConfiguration":{
       "type":"structure",
       "members":{
-        "video":{"shape":"VideoConfiguration"},
-        "audio":{"shape":"AudioConfiguration"}
+        "audio":{"shape":"AudioConfiguration"},
+        "video":{"shape":"VideoConfiguration"}
+      }
+    },
+    "IngestConfigurations":{
+      "type":"structure",
+      "required":[
+        "audioConfigurations",
+        "videoConfigurations"
+      ],
+      "members":{
+        "audioConfigurations":{"shape":"AudioConfigurationList"},
+        "videoConfigurations":{"shape":"VideoConfigurationList"}
       }
     },
     "IngestEndpoint":{"type":"string"},
@@ -1020,14 +1048,15 @@
       "fault":true
     },
     "IsAuthorized":{"type":"boolean"},
+    "IsMultitrackInputEnabled":{"type":"boolean"},
     "ListChannelsRequest":{
       "type":"structure",
       "members":{
         "filterByName":{"shape":"ChannelName"},
-        "filterByRecordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
         "filterByPlaybackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxChannelResults"}
+        "filterByRecordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
+        "maxResults":{"shape":"MaxChannelResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListChannelsResponse":{
@@ -1041,8 +1070,8 @@
     "ListPlaybackKeyPairsRequest":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxPlaybackKeyPairResults"}
+        "maxResults":{"shape":"MaxPlaybackKeyPairResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListPlaybackKeyPairsResponse":{
@@ -1056,31 +1085,31 @@
     "ListPlaybackRestrictionPoliciesRequest":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxPlaybackRestrictionPolicyResults"}
+        "maxResults":{"shape":"MaxPlaybackRestrictionPolicyResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListPlaybackRestrictionPoliciesResponse":{
       "type":"structure",
       "required":["playbackRestrictionPolicies"],
       "members":{
-        "playbackRestrictionPolicies":{"shape":"PlaybackRestrictionPolicyList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "playbackRestrictionPolicies":{"shape":"PlaybackRestrictionPolicyList"}
       }
     },
     "ListRecordingConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxRecordingConfigurationResults"}
+        "maxResults":{"shape":"MaxRecordingConfigurationResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListRecordingConfigurationsResponse":{
       "type":"structure",
       "required":["recordingConfigurations"],
       "members":{
-        "recordingConfigurations":{"shape":"RecordingConfigurationList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "recordingConfigurations":{"shape":"RecordingConfigurationList"}
       }
     },
     "ListStreamKeysRequest":{
@@ -1088,16 +1117,16 @@
       "required":["channelArn"],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxStreamKeyResults"}
+        "maxResults":{"shape":"MaxStreamKeyResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamKeysResponse":{
       "type":"structure",
       "required":["streamKeys"],
       "members":{
-        "streamKeys":{"shape":"StreamKeyList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "streamKeys":{"shape":"StreamKeyList"}
       }
     },
     "ListStreamSessionsRequest":{
@@ -1105,32 +1134,32 @@
       "required":["channelArn"],
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxStreamResults"}
+        "maxResults":{"shape":"MaxStreamResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamSessionsResponse":{
       "type":"structure",
       "required":["streamSessions"],
       "members":{
-        "streamSessions":{"shape":"StreamSessionList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "streamSessions":{"shape":"StreamSessionList"}
       }
     },
     "ListStreamsRequest":{
       "type":"structure",
       "members":{
         "filterBy":{"shape":"StreamFilters"},
-        "nextToken":{"shape":"PaginationToken"},
-        "maxResults":{"shape":"MaxStreamResults"}
+        "maxResults":{"shape":"MaxStreamResults"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStreamsResponse":{
       "type":"structure",
       "required":["streams"],
       "members":{
-        "streams":{"shape":"StreamList"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "streams":{"shape":"StreamList"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1187,11 +1216,34 @@
       "max":100,
       "min":1
     },
+    "MultitrackInputConfiguration":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"IsMultitrackInputEnabled"},
+        "maximumResolution":{"shape":"MultitrackMaximumResolution"},
+        "policy":{"shape":"MultitrackPolicy"}
+      }
+    },
+    "MultitrackMaximumResolution":{
+      "type":"string",
+      "enum":[
+        "SD",
+        "HD",
+        "FULL_HD"
+      ]
+    },
+    "MultitrackPolicy":{
+      "type":"string",
+      "enum":[
+        "ALLOW",
+        "REQUIRE"
+      ]
+    },
     "PaginationToken":{
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"[a-zA-Z0-9+/=_-]*"
+      "pattern":"^[a-zA-Z0-9+/=_-]*$"
     },
     "PendingVerification":{
       "type":"structure",
@@ -1208,8 +1260,8 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"PlaybackKeyPairArn"},
-        "name":{"shape":"PlaybackKeyPairName"},
         "fingerprint":{"shape":"PlaybackKeyPairFingerprint"},
+        "name":{"shape":"PlaybackKeyPairName"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1217,7 +1269,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-key/[a-zA-Z0-9-]+$"
     },
     "PlaybackKeyPairFingerprint":{"type":"string"},
     "PlaybackKeyPairList":{
@@ -1228,7 +1280,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"[a-zA-Z0-9-_]*"
+      "pattern":"^[a-zA-Z0-9-_]*$"
     },
     "PlaybackKeyPairSummary":{
       "type":"structure",
@@ -1242,14 +1294,14 @@
     "PlaybackRestrictionPolicy":{
       "type":"structure",
       "required":[
-        "arn",
         "allowedCountries",
-        "allowedOrigins"
+        "allowedOrigins",
+        "arn"
       ],
       "members":{
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"},
         "tags":{"shape":"Tags"}
@@ -1277,7 +1329,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:playback-restriction-policy/[a-zA-Z0-9-]+$"
     },
     "PlaybackRestrictionPolicyEnableStrictOriginEnforcement":{
       "type":"boolean",
@@ -1291,19 +1343,19 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"[a-zA-Z0-9-_]*"
+      "pattern":"^[a-zA-Z0-9-_]*$"
     },
     "PlaybackRestrictionPolicySummary":{
       "type":"structure",
       "required":[
-        "arn",
         "allowedCountries",
-        "allowedOrigins"
+        "allowedOrigins",
+        "arn"
       ],
       "members":{
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"},
         "tags":{"shape":"Tags"}
@@ -1330,20 +1382,20 @@
       ],
       "members":{
         "arn":{"shape":"RecordingConfigurationArn"},
-        "name":{"shape":"RecordingConfigurationName"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "name":{"shape":"RecordingConfigurationName"},
+        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
+        "renditionConfiguration":{"shape":"RenditionConfiguration"},
         "state":{"shape":"RecordingConfigurationState"},
         "tags":{"shape":"Tags"},
-        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"},
-        "recordingReconnectWindowSeconds":{"shape":"RecordingReconnectWindowSeconds"},
-        "renditionConfiguration":{"shape":"RenditionConfiguration"}
+        "thumbnailConfiguration":{"shape":"ThumbnailConfiguration"}
       }
     },
     "RecordingConfigurationArn":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:recording-configuration/[a-zA-Z0-9-]+$"
     },
     "RecordingConfigurationList":{
       "type":"list",
@@ -1353,7 +1405,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"[a-zA-Z0-9-_]*"
+      "pattern":"^[a-zA-Z0-9-_]*$"
     },
     "RecordingConfigurationState":{
       "type":"string",
@@ -1372,8 +1424,8 @@
       ],
       "members":{
         "arn":{"shape":"RecordingConfigurationArn"},
-        "name":{"shape":"RecordingConfigurationName"},
         "destinationConfiguration":{"shape":"DestinationConfiguration"},
+        "name":{"shape":"RecordingConfigurationName"},
         "state":{"shape":"RecordingConfigurationState"},
         "tags":{"shape":"Tags"}
       }
@@ -1422,7 +1474,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+$"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1439,7 +1491,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"[a-z0-9-.]+"
+      "pattern":"^[a-z0-9-.]+$"
     },
     "S3DestinationConfiguration":{
       "type":"structure",
@@ -1504,20 +1556,21 @@
       "type":"structure",
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "streamId":{"shape":"StreamId"},
+        "health":{"shape":"StreamHealth"},
         "playbackUrl":{"shape":"PlaybackURL"},
         "startTime":{"shape":"StreamStartTime"},
         "state":{"shape":"StreamState"},
-        "health":{"shape":"StreamHealth"},
+        "streamId":{"shape":"StreamId"},
         "viewerCount":{"shape":"StreamViewerCount"}
       }
     },
     "StreamEvent":{
       "type":"structure",
       "members":{
+        "code":{"shape":"String"},
+        "eventTime":{"shape":"Time"},
         "name":{"shape":"String"},
-        "type":{"shape":"String"},
-        "eventTime":{"shape":"Time"}
+        "type":{"shape":"String"}
       }
     },
     "StreamEvents":{
@@ -1544,22 +1597,22 @@
       "type":"string",
       "max":26,
       "min":26,
-      "pattern":"st-[a-zA-Z0-9]+"
+      "pattern":"^st-[a-zA-Z0-9]+$"
     },
     "StreamKey":{
       "type":"structure",
       "members":{
         "arn":{"shape":"StreamKeyArn"},
-        "value":{"shape":"StreamKeyValue"},
         "channelArn":{"shape":"ChannelArn"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "value":{"shape":"StreamKeyValue"}
       }
     },
     "StreamKeyArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+"
+      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stream-key/[a-zA-Z0-9-]+$"
     },
     "StreamKeyArnList":{
       "type":"list",
@@ -1599,12 +1652,13 @@
     "StreamSession":{
       "type":"structure",
       "members":{
-        "streamId":{"shape":"StreamId"},
-        "startTime":{"shape":"Time"},
-        "endTime":{"shape":"Time"},
         "channel":{"shape":"Channel"},
+        "endTime":{"shape":"Time"},
         "ingestConfiguration":{"shape":"IngestConfiguration"},
+        "ingestConfigurations":{"shape":"IngestConfigurations"},
         "recordingConfiguration":{"shape":"RecordingConfiguration"},
+        "startTime":{"shape":"Time"},
+        "streamId":{"shape":"StreamId"},
         "truncatedEvents":{"shape":"StreamEvents"}
       }
     },
@@ -1615,10 +1669,10 @@
     "StreamSessionSummary":{
       "type":"structure",
       "members":{
-        "streamId":{"shape":"StreamId"},
-        "startTime":{"shape":"Time"},
         "endTime":{"shape":"Time"},
-        "hasErrorEvent":{"shape":"Boolean"}
+        "hasErrorEvent":{"shape":"Boolean"},
+        "startTime":{"shape":"Time"},
+        "streamId":{"shape":"StreamId"}
       }
     },
     "StreamStartTime":{
@@ -1636,11 +1690,11 @@
       "type":"structure",
       "members":{
         "channelArn":{"shape":"ChannelArn"},
-        "streamId":{"shape":"StreamId"},
-        "state":{"shape":"StreamState"},
         "health":{"shape":"StreamHealth"},
-        "viewerCount":{"shape":"StreamViewerCount"},
-        "startTime":{"shape":"StreamStartTime"}
+        "startTime":{"shape":"StreamStartTime"},
+        "state":{"shape":"StreamState"},
+        "streamId":{"shape":"StreamId"},
+        "viewerCount":{"shape":"StreamViewerCount"}
       }
     },
     "StreamUnavailable":{
@@ -1718,9 +1772,9 @@
       "type":"structure",
       "members":{
         "recordingMode":{"shape":"RecordingMode"},
-        "targetIntervalSeconds":{"shape":"TargetIntervalSeconds"},
         "resolution":{"shape":"ThumbnailConfigurationResolution"},
-        "storage":{"shape":"ThumbnailConfigurationStorageList"}
+        "storage":{"shape":"ThumbnailConfigurationStorageList"},
+        "targetIntervalSeconds":{"shape":"TargetIntervalSeconds"}
       }
     },
     "ThumbnailConfigurationResolution":{
@@ -1783,14 +1837,16 @@
       "required":["arn"],
       "members":{
         "arn":{"shape":"ChannelArn"},
-        "name":{"shape":"ChannelName"},
-        "latencyMode":{"shape":"ChannelLatencyMode"},
-        "type":{"shape":"ChannelType"},
         "authorized":{"shape":"Boolean"},
-        "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
+        "containerFormat":{"shape":"ContainerFormat"},
         "insecureIngest":{"shape":"Boolean"},
+        "latencyMode":{"shape":"ChannelLatencyMode"},
+        "multitrackInputConfiguration":{"shape":"MultitrackInputConfiguration"},
+        "name":{"shape":"ChannelName"},
+        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"},
         "preset":{"shape":"TranscodePreset"},
-        "playbackRestrictionPolicyArn":{"shape":"ChannelPlaybackRestrictionPolicyArn"}
+        "recordingConfigurationArn":{"shape":"ChannelRecordingConfigurationArn"},
+        "type":{"shape":"ChannelType"}
       }
     },
     "UpdateChannelResponse":{
@@ -1803,9 +1859,9 @@
       "type":"structure",
       "required":["arn"],
       "members":{
-        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "allowedCountries":{"shape":"PlaybackRestrictionPolicyAllowedCountryList"},
         "allowedOrigins":{"shape":"PlaybackRestrictionPolicyAllowedOriginList"},
+        "arn":{"shape":"PlaybackRestrictionPolicyArn"},
         "enableStrictOriginEnforcement":{"shape":"PlaybackRestrictionPolicyEnableStrictOriginEnforcement"},
         "name":{"shape":"PlaybackRestrictionPolicyName"}
       }
@@ -1830,15 +1886,22 @@
     "VideoConfiguration":{
       "type":"structure",
       "members":{
-        "avcProfile":{"shape":"String"},
         "avcLevel":{"shape":"String"},
+        "avcProfile":{"shape":"String"},
         "codec":{"shape":"String"},
         "encoder":{"shape":"String"},
+        "level":{"shape":"String"},
+        "profile":{"shape":"String"},
         "targetBitrate":{"shape":"Integer"},
         "targetFramerate":{"shape":"Integer"},
+        "track":{"shape":"String"},
         "videoHeight":{"shape":"Integer"},
         "videoWidth":{"shape":"Integer"}
       }
+    },
+    "VideoConfigurationList":{
+      "type":"list",
+      "member":{"shape":"VideoConfiguration"}
     },
     "ViewerId":{
       "type":"string",

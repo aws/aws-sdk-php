@@ -1,0 +1,593 @@
+{
+  "version": "2.0",
+  "service": "<p> <i>Amazon Web Services End User Messaging Social</i>, also referred to as Social messaging, is a messaging service that enables application developers to incorporate WhatsApp into their existing workflows. The <i>Amazon Web Services End User Messaging Social API</i> provides information about the <i>Amazon Web Services End User Messaging Social API</i> resources, including supported HTTP methods, parameters, and schemas.</p> <p>The <i>Amazon Web Services End User Messaging Social API</i> provides programmatic access to options that are unique to the WhatsApp Business Platform.</p> <p>If you're new to the <i>Amazon Web Services End User Messaging Social API</i>, it's also helpful to review <a href=\"https://docs.aws.amazon.com/sms-voice/latest/userguide/what-is-service.html\">What is Amazon Web Services End User Messaging Social</a> in the <i>Amazon Web Services End User Messaging Social User Guide</i>. The <i>Amazon Web Services End User Messaging Social User Guide</i> provides tutorials, code samples, and procedures that demonstrate how to use <i>Amazon Web Services End User Messaging Social API</i> features programmatically and how to integrate functionality into applications. The guide also provides key information, such as integration with other Amazon Web Services services, and the quotas that apply to use of the service.</p> <p> <b>Regional availability</b> </p> <p>The <i>Amazon Web Services End User Messaging Social API</i> is available across several Amazon Web Services Regions and it provides a dedicated endpoint for each of these Regions. For a list of all the Regions and endpoints where the API is currently available, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#pinpoint_region\">Amazon Web Services Service Endpoints</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\">Amazon Web Services End User Messaging endpoints and quotas</a> in the Amazon Web Services General Reference. To learn more about Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\">Managing Amazon Web Services Regions</a> in the Amazon Web Services General Reference.</p> <p>In each Region, Amazon Web Services maintains multiple Availability Zones. These Availability Zones are physically isolated from each other, but are united by private, low-latency, high-throughput, and highly redundant network connections. These Availability Zones enable us to provide very high levels of availability and redundancy, while also minimizing latency. To learn more about the number of Availability Zones that are available in each Region, see <a href=\"https://aws.amazon.com/about-aws/global-infrastructure/\">Amazon Web Services Global Infrastructure.</a> </p>",
+  "operations": {
+    "AssociateWhatsAppBusinessAccount": "<p>This is only used through the Amazon Web Services console during sign-up to associate your WhatsApp Business Account to your Amazon Web Services account.</p>",
+    "DeleteWhatsAppMessageMedia": "<p>Delete a media object from the WhatsApp service. If the object is still in an Amazon S3 bucket you should delete it from there too.</p>",
+    "DisassociateWhatsAppBusinessAccount": "<p>Disassociate a WhatsApp Business Account (WABA) from your Amazon Web Services account.</p>",
+    "GetLinkedWhatsAppBusinessAccount": "<p>Get the details of your linked WhatsApp Business Account.</p>",
+    "GetLinkedWhatsAppBusinessAccountPhoneNumber": "<p>Use your WhatsApp phone number id to get the WABA account id and phone number details.</p>",
+    "GetWhatsAppMessageMedia": "<p>Get a media file from the WhatsApp service. On successful completion the media file is retrieved from Meta and stored in the specified Amazon S3 bucket. Use either <code>destinationS3File</code> or <code>destinationS3PresignedUrl</code> for the destination. If both are used then an <code>InvalidParameterException</code> is returned.</p>",
+    "ListLinkedWhatsAppBusinessAccounts": "<p>List all WhatsApp Business Accounts linked to your Amazon Web Services account.</p>",
+    "ListTagsForResource": "<p>List all tags associated with a resource, such as a phone number or WABA.</p>",
+    "PostWhatsAppMessageMedia": "<p>Upload a media file to the WhatsApp service. Only the specified <code>originationPhoneNumberId</code> has the permissions to send the media file when using <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_SendWhatsAppMessage.html\">SendWhatsAppMessage</a>. You must use either <code>sourceS3File</code> or <code>sourceS3PresignedUrl</code> for the source. If both or neither are specified then an <code>InvalidParameterException</code> is returned.</p>",
+    "PutWhatsAppBusinessAccountEventDestinations": "<p>Add an event destination to log event data from WhatsApp for a WhatsApp Business Account (WABA). A WABA can only have one event destination at a time. All resources associated with the WABA use the same event destination.</p>",
+    "SendWhatsAppMessage": "<p>Send a WhatsApp message. For examples of sending a message using the Amazon Web Services CLI, see <a href=\"https://docs.aws.amazon.com/social-messaging/latest/userguide/send-message.html\">Sending messages</a> in the <i> <i>Amazon Web Services End User Messaging Social User Guide</i> </i>.</p>",
+    "TagResource": "<p>Adds or overwrites only the specified tags for the specified resource. When you specify an existing tag key, the value is overwritten with the new value.</p>",
+    "UntagResource": "<p>Removes the specified tags from a resource. </p>"
+  },
+  "shapes": {
+    "AccessDeniedByMetaException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to retrieve the tags from.</p>",
+        "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag.</p>",
+        "UntagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
+      }
+    },
+    "AssociateInProgressToken": {
+      "base": null,
+      "refs": {
+        "WhatsAppSetupFinalization$associateInProgressToken": "<p>An Amazon Web Services access token generated by <code>WhatsAppSignupCallback</code> and used by <code>WhatsAppSetupFinalization</code>.</p>",
+        "WhatsAppSignupCallbackResult$associateInProgressToken": "<p>An Amazon Web Services access token generated by <code>WhatsAppSignupCallback</code> and used by <code>WhatsAppSetupFinalization</code>.</p>"
+      }
+    },
+    "AssociateWhatsAppBusinessAccountInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateWhatsAppBusinessAccountOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DeleteWhatsAppMessageMediaOutput$success": "<p>Success indicator for deleting the media file.</p>",
+        "GetWhatsAppMessageMediaInput$metadataOnly": "<p>Set to <code>True</code> to get only the metadata for the file.</p>"
+      }
+    },
+    "DeleteWhatsAppMessageMediaInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWhatsAppMessageMediaOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DependencyException": {
+      "base": "<p>Thrown when performing an action because a dependency would be broken.</p>",
+      "refs": {
+      }
+    },
+    "DisassociateWhatsAppBusinessAccountInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateWhatsAppBusinessAccountOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "AccessDeniedByMetaException$message": null,
+        "AccessDeniedException$message": null,
+        "DependencyException$message": null,
+        "InternalServiceException$message": null,
+        "InvalidParametersException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ThrottledRequestException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "EventDestinationArn": {
+      "base": null,
+      "refs": {
+        "WhatsAppBusinessAccountEventDestination$eventDestinationArn": "<p>The ARN of the event destination.</p>"
+      }
+    },
+    "GetLinkedWhatsAppBusinessAccountInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLinkedWhatsAppBusinessAccountOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLinkedWhatsAppBusinessAccountPhoneNumberInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetWhatsAppMessageMediaInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetWhatsAppMessageMediaOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Headers": {
+      "base": null,
+      "refs": {
+        "S3PresignedUrl$headers": "<p>A map of headers and their values. You must specify the <code>Content-Type</code> header when using <code>PostWhatsAppMessageMedia</code>. For a list of common headers, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonRequestHeaders.html\">Common Request Headers</a> in the <i>Amazon S3 API Reference</i> </p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "AssociateWhatsAppBusinessAccountOutput$statusCode": "<p>The status code for the response.</p>",
+        "ListTagsForResourceOutput$statusCode": "<p>The status code of the response.</p>",
+        "TagResourceOutput$statusCode": "<p>The status code of the tag resource operation.</p>",
+        "UntagResourceOutput$statusCode": "<p>The status code of the untag resource operation.</p>"
+      }
+    },
+    "InternalServiceException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p>",
+      "refs": {
+      }
+    },
+    "InvalidParametersException": {
+      "base": "<p>One or more parameters provided to the action are not valid.</p>",
+      "refs": {
+      }
+    },
+    "IsoCountryCode": {
+      "base": null,
+      "refs": {
+        "WabaPhoneNumberSetupFinalization$dataLocalizationRegion": "<p>The two letter ISO region for the location of where Meta will store data.</p> <p class=\"title\"> <b>Asia–Pacific (APAC)</b> </p> <ul> <li> <p>Australia <b>AU</b> </p> </li> <li> <p>Indonesia <b>ID</b> </p> </li> <li> <p>India <b>IN</b> </p> </li> <li> <p>Japan <b>JP</b> </p> </li> <li> <p>Singapore <b>SG</b> </p> </li> <li> <p>South Korea <b>KR</b> </p> </li> </ul> <p class=\"title\"> <b>Europe</b> </p> <ul> <li> <p>Germany <b>DE</b> </p> </li> <li> <p>Switzerland <b>CH</b> </p> </li> <li> <p>United Kingdom <b>GB</b> </p> </li> </ul> <p class=\"title\"> <b>Latin America (LATAM)</b> </p> <ul> <li> <p>Brazil <b>BR</b> </p> </li> </ul> <p class=\"title\"> <b>Middle East and Africa (MEA)</b> </p> <ul> <li> <p>Bahrain <b>BH</b> </p> </li> <li> <p>South Africa <b>ZA</b> </p> </li> <li> <p>United Arab Emirates <b>AE</b> </p> </li> </ul> <p class=\"title\"> <b>North America (NORAM)</b> </p> <ul> <li> <p>Canada <b>CA</b> </p> </li> </ul>"
+      }
+    },
+    "LinkedAccountWithIncompleteSetup": {
+      "base": null,
+      "refs": {
+        "WhatsAppSignupCallbackResult$linkedAccountsWithIncompleteSetup": "<p>A LinkedWhatsAppBusinessAccountIdMetaData object map containing the details of any WhatsAppBusiness accounts that have incomplete setup.</p>"
+      }
+    },
+    "LinkedWhatsAppBusinessAccount": {
+      "base": "<p>The details of your linked WhatsApp Business Account.</p>",
+      "refs": {
+        "GetLinkedWhatsAppBusinessAccountOutput$account": "<p>The details of the linked WhatsApp Business Account.</p>"
+      }
+    },
+    "LinkedWhatsAppBusinessAccountArn": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$arn": "<p>The ARN of the linked WhatsApp Business Account.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$arn": "<p>The ARN of the linked WhatsApp Business Account.</p>"
+      }
+    },
+    "LinkedWhatsAppBusinessAccountId": {
+      "base": null,
+      "refs": {
+        "DisassociateWhatsAppBusinessAccountInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "GetLinkedWhatsAppBusinessAccountInput$id": "<p>The unique identifier, from Amazon Web Services, of the linked WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$linkedWhatsAppBusinessAccountId": "<p>The WABA identifier linked to the phone number, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "LinkedWhatsAppBusinessAccount$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "LinkedWhatsAppBusinessAccountIdMetaData$wabaId": "<p>The Amazon Resource Name (ARN) of the WhatsApp Business Account ID.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>",
+        "PutWhatsAppBusinessAccountEventDestinationsInput$id": "<p>The unique identifier of your WhatsApp Business Account. WABA identifiers are formatted as <code>waba-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_ListLinkedWhatsAppBusinessAccounts.html\">ListLinkedWhatsAppBusinessAccounts</a> to list all WABAs and their details.</p>",
+        "WhatsAppSetupFinalization$phoneNumberParent": "<p>Used to add a new phone number to an existing WhatsApp Business Account. This field can't be used when the <code>waba</code> field is present.</p>"
+      }
+    },
+    "LinkedWhatsAppBusinessAccountIdMetaData": {
+      "base": "<p>Contains your WhatsApp registration status and details of any unregistered WhatsApp phone number.</p>",
+      "refs": {
+        "LinkedAccountWithIncompleteSetup$value": null
+      }
+    },
+    "LinkedWhatsAppBusinessAccountSummary": {
+      "base": "<p>The details of a linked WhatsApp Business Account.</p>",
+      "refs": {
+        "LinkedWhatsAppBusinessAccountSummaryList$member": null
+      }
+    },
+    "LinkedWhatsAppBusinessAccountSummaryList": {
+      "base": null,
+      "refs": {
+        "ListLinkedWhatsAppBusinessAccountsOutput$linkedAccounts": "<p>A list of WhatsApp Business Accounts linked to your Amazon Web Services account.</p>"
+      }
+    },
+    "LinkedWhatsAppPhoneNumberArn": {
+      "base": null,
+      "refs": {
+        "WhatsAppPhoneNumberDetail$arn": "<p>The ARN of the WhatsApp phone number.</p>",
+        "WhatsAppPhoneNumberSummary$arn": "<p>The full Amazon Resource Name (ARN) for the phone number.</p>"
+      }
+    },
+    "ListLinkedWhatsAppBusinessAccountsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLinkedWhatsAppBusinessAccountsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Long": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppMessageMediaOutput$fileSize": "<p>The file size of the media, in KB.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListLinkedWhatsAppBusinessAccountsInput$maxResults": "<p>The maximum number of results to return.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListLinkedWhatsAppBusinessAccountsInput$nextToken": "<p>The next token for pagination.</p>",
+        "ListLinkedWhatsAppBusinessAccountsOutput$nextToken": "<p>The next token for pagination.</p>"
+      }
+    },
+    "PhoneNumber": {
+      "base": null,
+      "refs": {
+        "WhatsAppPhoneNumberDetail$phoneNumber": "<p>The phone number for sending WhatsApp.</p>",
+        "WhatsAppPhoneNumberSummary$phoneNumber": "<p>The phone number associated with the Linked WhatsApp Business Account.</p>"
+      }
+    },
+    "PostWhatsAppMessageMediaInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PostWhatsAppMessageMediaOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutWhatsAppBusinessAccountEventDestinationsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutWhatsAppBusinessAccountEventDestinationsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RegistrationStatus": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$registrationStatus": "<p>The registration status of the linked WhatsApp Business Account.</p>",
+        "LinkedWhatsAppBusinessAccountIdMetaData$registrationStatus": "<p>The registration status of the linked WhatsApp Business Account.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$registrationStatus": "<p>The registration status of the linked WhatsApp Business Account.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The resource was not found.</p>",
+      "refs": {
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "WhatsAppBusinessAccountEventDestination$roleArn": "<p>The Amazon Resource Name (ARN) of an Identity and Access Management role that is able to import phone numbers and write events.</p>"
+      }
+    },
+    "S3File": {
+      "base": "<p>Contains information for the S3 bucket that contains media files.</p>",
+      "refs": {
+        "GetWhatsAppMessageMediaInput$destinationS3File": "<p>The <code>bucketName</code> and <code>key</code> of the S3 media file.</p>",
+        "PostWhatsAppMessageMediaInput$sourceS3File": "<p>The source S3 url for the media file.</p>"
+      }
+    },
+    "S3FileBucketNameString": {
+      "base": null,
+      "refs": {
+        "S3File$bucketName": "<p>The bucket name.</p>"
+      }
+    },
+    "S3FileKeyString": {
+      "base": null,
+      "refs": {
+        "S3File$key": "<p>The object key of the media file.</p>"
+      }
+    },
+    "S3PresignedUrl": {
+      "base": "<p>You can use presigned URLs to grant time-limited access to objects in Amazon S3 without updating your bucket policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html\">Working with presigned URLs</a> in the <i>Amazon S3 User Guide</i>.</p>",
+      "refs": {
+        "GetWhatsAppMessageMediaInput$destinationS3PresignedUrl": "<p>The presign url of the media file.</p>",
+        "PostWhatsAppMessageMediaInput$sourceS3PresignedUrl": "<p>The source presign url of the media file.</p>"
+      }
+    },
+    "S3PresignedUrlUrlString": {
+      "base": null,
+      "refs": {
+        "S3PresignedUrl$url": "<p>The presign url to the object.</p>"
+      }
+    },
+    "SendWhatsAppMessageInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendWhatsAppMessageOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "GetWhatsAppMessageMediaOutput$mimeType": "<p>The MIME type of the media.</p>",
+        "Headers$key": null,
+        "Headers$value": null,
+        "SendWhatsAppMessageInput$metaApiVersion": "<p>The API version for the request formatted as <code>v{VersionNumber}</code>. For a list of supported API versions and Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/end-user-messaging.html\"> <i>Amazon Web Services End User Messaging Social API</i> Service Endpoints</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+        "SendWhatsAppMessageOutput$messageId": "<p>The unique identifier of the message.</p>",
+        "StringList$member": null
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>The keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>The tag for a resource.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKeyString": {
+      "base": null,
+      "refs": {
+        "Tag$key": "<p>The tag key.</p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceOutput$tags": "<p>The tags for the resource.</p>",
+        "TagResourceInput$tags": "<p>The tags to add to the resource.</p>",
+        "WabaPhoneNumberSetupFinalization$tags": "<p>An array of key and value pair tags.</p>",
+        "WabaSetupFinalization$tags": "<p>An array of key and value pair tags.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValueString": {
+      "base": null,
+      "refs": {
+        "Tag$value": "<p>The tag value.</p>"
+      }
+    },
+    "ThrottledRequestException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "TwoFactorPin": {
+      "base": null,
+      "refs": {
+        "WabaPhoneNumberSetupFinalization$twoFactorPin": "<p>The PIN to use for two-step verification. To reset your PIN follow the directions in <a href=\"https://developers.facebook.com/docs/whatsapp/cloud-api/reference/two-step-verification/#updating-pin\">Updating PIN</a> in the <i>WhatsApp Business Platform Cloud API Reference</i>.</p>"
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request contains an invalid parameter value. </p>",
+      "refs": {
+      }
+    },
+    "WabaPhoneNumberSetupFinalization": {
+      "base": "<p>The registration details for a linked phone number.</p>",
+      "refs": {
+        "WabaPhoneNumberSetupFinalizationList$member": null
+      }
+    },
+    "WabaPhoneNumberSetupFinalizationList": {
+      "base": null,
+      "refs": {
+        "WhatsAppSetupFinalization$phoneNumbers": "<p>An array of WabaPhoneNumberSetupFinalization objects containing the details of each phone number associated with the WhatsApp Business Account.</p>"
+      }
+    },
+    "WabaSetupFinalization": {
+      "base": "<p>The registration details for a linked WhatsApp Business Account.</p>",
+      "refs": {
+        "WhatsAppSetupFinalization$waba": "<p>Used to create a new WhatsApp Business Account and add a phone number. This field can't be used when the <code>phoneNumberParent</code> field is present.</p>"
+      }
+    },
+    "WhatsAppBusinessAccountEventDestination": {
+      "base": "<p>Contains information on the event destination.</p>",
+      "refs": {
+        "WhatsAppBusinessAccountEventDestinations$member": null
+      }
+    },
+    "WhatsAppBusinessAccountEventDestinations": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$eventDestinations": "<p>The event destinations for the linked WhatsApp Business Account.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$eventDestinations": "<p>The event destinations for the linked WhatsApp Business Account.</p>",
+        "PutWhatsAppBusinessAccountEventDestinationsInput$eventDestinations": "<p>An array of <code>WhatsAppBusinessAccountEventDestination</code> event destinations.</p>",
+        "WabaSetupFinalization$eventDestinations": "<p>The event destinations for the linked WhatsApp Business Account.</p>"
+      }
+    },
+    "WhatsAppBusinessAccountId": {
+      "base": null,
+      "refs": {
+        "LinkedAccountWithIncompleteSetup$key": null,
+        "LinkedWhatsAppBusinessAccount$wabaId": "<p>The WhatsApp Business Account ID from meta.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$wabaId": "<p>The WhatsApp Business Account ID provided by Meta.</p>",
+        "WabaSetupFinalization$id": "<p>The ID of the linked WhatsApp Business Account, formatted as <code>waba-01234567890123456789012345678901</code>.</p>"
+      }
+    },
+    "WhatsAppBusinessAccountLinkDate": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$linkDate": "<p>The date the WhatsApp Business Account was linked.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$linkDate": "<p>The date the WhatsApp Business Account was linked.</p>"
+      }
+    },
+    "WhatsAppBusinessAccountName": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>",
+        "LinkedWhatsAppBusinessAccountIdMetaData$accountName": "<p>The name of your account.</p>",
+        "LinkedWhatsAppBusinessAccountSummary$wabaName": "<p>The name of the linked WhatsApp Business Account.</p>"
+      }
+    },
+    "WhatsAppDisplayPhoneNumber": {
+      "base": null,
+      "refs": {
+        "WhatsAppPhoneNumberDetail$displayPhoneNumber": "<p>The phone number that appears in the recipients display.</p>",
+        "WhatsAppPhoneNumberSummary$displayPhoneNumber": "<p>The phone number that appears in the recipients display.</p>"
+      }
+    },
+    "WhatsAppMediaId": {
+      "base": null,
+      "refs": {
+        "DeleteWhatsAppMessageMediaInput$mediaId": "<p>The unique identifier of the media file to delete. Use the <code>mediaId</code> returned from <a href=\"https://console.aws.amazon.com/social-messaging/latest/APIReference/API_PostWhatsAppMessageMedia.html\">PostWhatsAppMessageMedia</a>.</p>",
+        "GetWhatsAppMessageMediaInput$mediaId": "<p>The unique identifier for the media file.</p>",
+        "PostWhatsAppMessageMediaOutput$mediaId": "<p>The unique identifier of the posted WhatsApp message.</p>"
+      }
+    },
+    "WhatsAppMessageBlob": {
+      "base": null,
+      "refs": {
+        "SendWhatsAppMessageInput$message": "<p>The message to send through WhatsApp. The length is in KB. The message field passes through a WhatsApp Message object, see <a href=\"https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages\">Messages</a> in the <i>WhatsApp Business Platform Cloud API Reference</i>.</p>"
+      }
+    },
+    "WhatsAppPhoneNumber": {
+      "base": null,
+      "refs": {
+        "WabaPhoneNumberSetupFinalization$id": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "WhatsAppPhoneNumberDetail$metaPhoneNumberId": "<p>The phone number ID from Meta.</p>",
+        "WhatsAppPhoneNumberSummary$metaPhoneNumberId": "<p>The phone number ID from Meta.</p>"
+      }
+    },
+    "WhatsAppPhoneNumberDetail": {
+      "base": "<p>The details of your WhatsApp phone number.</p>",
+      "refs": {
+        "GetLinkedWhatsAppBusinessAccountPhoneNumberOutput$phoneNumber": null,
+        "WhatsAppPhoneNumberDetailList$member": null
+      }
+    },
+    "WhatsAppPhoneNumberDetailList": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccountIdMetaData$unregisteredWhatsAppPhoneNumbers": "<p>The details for unregistered WhatsApp phone numbers.</p>"
+      }
+    },
+    "WhatsAppPhoneNumberId": {
+      "base": null,
+      "refs": {
+        "DeleteWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number associated with the media. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "GetLinkedWhatsAppBusinessAccountPhoneNumberInput$id": "<p>The unique identifier of the phone number. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "GetWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The unique identifier of the originating phone number for the WhatsApp message media. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "PostWhatsAppMessageMediaInput$originationPhoneNumberId": "<p>The ID of the phone number to associate with the WhatsApp media file. The phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "SendWhatsAppMessageInput$originationPhoneNumberId": "<p>The ID of the phone number used to send the WhatsApp message. If you are sending a media file only the <code>originationPhoneNumberId</code> used to upload the file can be used. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. Use <a href=\"https://docs.aws.amazon.com/social-messaging/latest/APIReference/API_GetLinkedWhatsAppBusinessAccountPhoneNumber.html\">GetLinkedWhatsAppBusinessAccount</a> to find a phone number's id.</p>",
+        "WhatsAppPhoneNumberDetail$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>",
+        "WhatsAppPhoneNumberSummary$phoneNumberId": "<p>The phone number ID. Phone number identifiers are formatted as <code>phone-number-id-01234567890123456789012345678901</code>. </p>"
+      }
+    },
+    "WhatsAppPhoneNumberName": {
+      "base": null,
+      "refs": {
+        "WhatsAppPhoneNumberDetail$displayPhoneNumberName": "<p>The display name for this phone number.</p>",
+        "WhatsAppPhoneNumberSummary$displayPhoneNumberName": "<p>The display name for this phone number.</p>"
+      }
+    },
+    "WhatsAppPhoneNumberQualityRating": {
+      "base": null,
+      "refs": {
+        "WhatsAppPhoneNumberDetail$qualityRating": "<p>The quality rating of the phone number.</p>",
+        "WhatsAppPhoneNumberSummary$qualityRating": "<p>The quality rating of the phone number. This is from Meta.</p>"
+      }
+    },
+    "WhatsAppPhoneNumberSummary": {
+      "base": "<p>The details of a linked phone number.</p>",
+      "refs": {
+        "WhatsAppPhoneNumberSummaryList$member": null
+      }
+    },
+    "WhatsAppPhoneNumberSummaryList": {
+      "base": null,
+      "refs": {
+        "LinkedWhatsAppBusinessAccount$phoneNumbers": "<p>The phone numbers associated with the Linked WhatsApp Business Account.</p>"
+      }
+    },
+    "WhatsAppSetupFinalization": {
+      "base": "<p>The details of linking a WhatsApp Business Account to your Amazon Web Services account.</p>",
+      "refs": {
+        "AssociateWhatsAppBusinessAccountInput$setupFinalization": "<p>A JSON object that contains the phone numbers and WhatsApp Business Account to link to your account.</p>"
+      }
+    },
+    "WhatsAppSignupCallback": {
+      "base": "<p>Contains the <code>accessToken</code> provided by Meta during signup.</p>",
+      "refs": {
+        "AssociateWhatsAppBusinessAccountInput$signupCallback": "<p>Contains the callback access token.</p>"
+      }
+    },
+    "WhatsAppSignupCallbackAccessTokenString": {
+      "base": null,
+      "refs": {
+        "WhatsAppSignupCallback$accessToken": "<p>The access token for your WhatsApp Business Account. The <code>accessToken</code> value is provided by Meta.</p>"
+      }
+    },
+    "WhatsAppSignupCallbackResult": {
+      "base": "<p>Contains the results of WhatsAppSignupCallback.</p>",
+      "refs": {
+        "AssociateWhatsAppBusinessAccountOutput$signupCallbackResult": "<p>Contains your WhatsApp registration status.</p>"
+      }
+    }
+  }
+}

@@ -1333,6 +1333,36 @@
     }
   },
   "shapes":{
+    "AGAModeForDirectoryEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED_AUTO",
+        "DISABLED"
+      ]
+    },
+    "AGAModeForWorkSpaceEnum":{
+      "type":"string",
+      "enum":[
+        "ENABLED_AUTO",
+        "DISABLED",
+        "INHERITED"
+      ]
+    },
+    "AGAPreferredProtocolForDirectory":{
+      "type":"string",
+      "enum":[
+        "TCP",
+        "NONE"
+      ]
+    },
+    "AGAPreferredProtocolForWorkSpace":{
+      "type":"string",
+      "enum":[
+        "TCP",
+        "NONE",
+        "INHERITED"
+      ]
+    },
     "ARN":{
       "type":"string",
       "pattern":"^arn:aws[a-z-]{0,7}:[A-Za-z0-9][A-za-z0-9_/.-]{0,62}:[A-za-z0-9_/.-]{0,63}:[A-za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.\\\\-]{0,1023}$"
@@ -1792,6 +1822,8 @@
         "POWER",
         "GRAPHICS",
         "POWERPRO",
+        "GENERALPURPOSE_4XLARGE",
+        "GENERALPURPOSE_8XLARGE",
         "GRAPHICSPRO",
         "GRAPHICS_G4DN",
         "GRAPHICSPRO_G4DN"
@@ -2917,7 +2949,7 @@
     },
     "DomainName":{
       "type":"string",
-      "pattern":"^([a-zA-Z0-9]+[\\\\.-])+([a-zA-Z0-9])+$"
+      "pattern":"^([a-zA-Z0-9]+[.-])+([a-zA-Z0-9])+$"
     },
     "Ec2ImageId":{
       "type":"string",
@@ -3001,6 +3033,22 @@
       "type":"structure",
       "members":{
         "AccountLink":{"shape":"AccountLink"}
+      }
+    },
+    "GlobalAcceleratorForDirectory":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AGAModeForDirectoryEnum"},
+        "PreferredProtocol":{"shape":"AGAPreferredProtocolForDirectory"}
+      }
+    },
+    "GlobalAcceleratorForWorkSpace":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"AGAModeForWorkSpaceEnum"},
+        "PreferredProtocol":{"shape":"AGAPreferredProtocolForWorkSpace"}
       }
     },
     "IDCConfig":{
@@ -3509,7 +3557,8 @@
         "WINDOWS_SERVER_2016",
         "WINDOWS_SERVER_2019",
         "WINDOWS_SERVER_2022",
-        "RHEL_8"
+        "RHEL_8",
+        "ROCKY_8"
       ]
     },
     "OperatingSystemNameList":{
@@ -4022,7 +4071,8 @@
       "members":{
         "StreamingExperiencePreferredProtocol":{"shape":"StreamingExperiencePreferredProtocolEnum"},
         "UserSettings":{"shape":"UserSettings"},
-        "StorageConnectors":{"shape":"StorageConnectors"}
+        "StorageConnectors":{"shape":"StorageConnectors"},
+        "GlobalAccelerator":{"shape":"GlobalAcceleratorForDirectory"}
       }
     },
     "String2048":{
@@ -4619,7 +4669,23 @@
         "UEFINotSupported",
         "UnknownError",
         "AppXPackagesInstalled",
-        "ReservedStorageInUse"
+        "ReservedStorageInUse",
+        "AdditionalDrivesPresent",
+        "WindowsUpdatesRequired",
+        "SysPrepFileMissing",
+        "UserProfileMissing",
+        "InsufficientDiskSpace",
+        "EnvironmentVariablesPathMissingEntries",
+        "DomainAccountServicesFound",
+        "InvalidIp",
+        "RemoteDesktopServicesDisabled",
+        "WindowsModulesInstallerDisabled",
+        "AmazonSsmAgentEnabled",
+        "UnsupportedSecurityProtocol",
+        "MultipleUserProfiles",
+        "StagedAppxPackage",
+        "UnsupportedOsUpgrade",
+        "InsufficientRearmCount"
       ]
     },
     "WorkspaceImageId":{
@@ -4687,7 +4753,8 @@
         "UserVolumeSizeGib":{"shape":"UserVolumeSizeGib"},
         "ComputeTypeName":{"shape":"Compute"},
         "Protocols":{"shape":"ProtocolList"},
-        "OperatingSystemName":{"shape":"OperatingSystemName"}
+        "OperatingSystemName":{"shape":"OperatingSystemName"},
+        "GlobalAccelerator":{"shape":"GlobalAcceleratorForWorkSpace"}
       }
     },
     "WorkspaceRequest":{

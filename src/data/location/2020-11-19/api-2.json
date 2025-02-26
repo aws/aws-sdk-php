@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-11-19",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"geo",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -1163,7 +1164,7 @@
     "ApiKeyRestrictionsAllowActionsList":{
       "type":"list",
       "member":{"shape":"ApiKeyAction"},
-      "max":7,
+      "max":24,
       "min":1
     },
     "ApiKeyRestrictionsAllowReferersList":{
@@ -1175,7 +1176,7 @@
     "ApiKeyRestrictionsAllowResourcesList":{
       "type":"list",
       "member":{"shape":"GeoArnV2"},
-      "max":5,
+      "max":8,
       "min":1
     },
     "Arn":{
@@ -1798,12 +1799,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. No longer allowed."
+          "deprecatedMessage":"Deprecated. No longer allowed.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"},
@@ -1865,7 +1868,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"}
@@ -1896,7 +1900,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
@@ -1928,7 +1933,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"}
@@ -1955,13 +1961,15 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "KmsKeyId":{"shape":"KmsKeyId"},
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. No longer allowed."
+          "deprecatedMessage":"Deprecated. No longer allowed.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"},
@@ -2129,12 +2137,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Unused."
+          "deprecatedMessage":"Deprecated. Unused.",
+          "deprecatedSince":"2022-02-01"
         },
         "KmsKeyId":{"shape":"KmsKeyId"},
         "Tags":{"shape":"TagMap"},
@@ -2210,7 +2220,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "DataSource":{"shape":"String"},
         "Configuration":{"shape":"MapConfiguration"},
@@ -2248,7 +2259,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "CreateTime":{"shape":"Timestamp"},
@@ -2285,7 +2297,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "CreateTime":{"shape":"Timestamp"},
@@ -2321,12 +2334,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Unused."
+          "deprecatedMessage":"Deprecated. Unused.",
+          "deprecatedSince":"2022-02-01"
         },
         "Tags":{"shape":"TagMap"},
         "CreateTime":{"shape":"Timestamp"},
@@ -2350,7 +2365,7 @@
         "ReceivedTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
         "Accuracy":{"shape":"PositionalAccuracy"},
-        "PositionProperties":{"shape":"PropertyMap"}
+        "PositionProperties":{"shape":"PositionPropertyMap"}
       }
     },
     "DevicePositionList":{
@@ -2369,7 +2384,7 @@
         "SampleTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
         "Accuracy":{"shape":"PositionalAccuracy"},
-        "PositionProperties":{"shape":"PropertyMap"}
+        "PositionProperties":{"shape":"PositionPropertyMap"}
       }
     },
     "DeviceState":{
@@ -2629,7 +2644,7 @@
         "ReceivedTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
         "Accuracy":{"shape":"PositionalAccuracy"},
-        "PositionProperties":{"shape":"PropertyMap"}
+        "PositionProperties":{"shape":"PositionPropertyMap"}
       }
     },
     "GetGeofenceRequest":{
@@ -3048,7 +3063,7 @@
         "SampleTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
         "Accuracy":{"shape":"PositionalAccuracy"},
-        "PositionProperties":{"shape":"PropertyMap"}
+        "PositionProperties":{"shape":"PositionPropertyMap"}
       }
     },
     "ListDevicePositionsResponseEntryList":{
@@ -3090,12 +3105,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Unused."
+          "deprecatedMessage":"Deprecated. Unused.",
+          "deprecatedSince":"2022-02-01"
         },
         "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
@@ -3235,7 +3252,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
@@ -3282,7 +3300,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
@@ -3329,7 +3348,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
@@ -3418,12 +3438,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. Unused."
+          "deprecatedMessage":"Deprecated. Unused.",
+          "deprecatedSince":"2022-02-01"
         },
         "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
@@ -3619,6 +3641,24 @@
         "DistanceBased",
         "AccuracyBased"
       ]
+    },
+    "PositionPropertyMap":{
+      "type":"map",
+      "key":{"shape":"PositionPropertyMapKeyString"},
+      "value":{"shape":"PositionPropertyMapValueString"},
+      "max":4,
+      "min":0,
+      "sensitive":true
+    },
+    "PositionPropertyMapKeyString":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
+    "PositionPropertyMapValueString":{
+      "type":"string",
+      "max":150,
+      "min":1
     },
     "PositionalAccuracy":{
       "type":"structure",
@@ -4089,7 +4129,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[a-zA-Z+-=._:/]+"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.,:/=+\\-@]*)"
     },
     "TagKeys":{
       "type":"list",
@@ -4128,7 +4168,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"[A-Za-z0-9 _=@:.+-/]*"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.,:/=+\\-@]*)"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -4251,12 +4291,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. No longer allowed."
+          "deprecatedMessage":"Deprecated. No longer allowed.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"}
       }
@@ -4315,7 +4357,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "ConfigurationUpdate":{"shape":"MapConfigurationUpdate"}
@@ -4346,7 +4389,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "DataSourceConfiguration":{"shape":"DataSourceConfiguration"}
@@ -4377,7 +4421,8 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"}
       }
@@ -4407,12 +4452,14 @@
         "PricingPlan":{
           "shape":"PricingPlan",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage.",
+          "deprecatedSince":"2022-02-01"
         },
         "PricingPlanDataSource":{
           "shape":"String",
           "deprecated":true,
-          "deprecatedMessage":"Deprecated. No longer allowed."
+          "deprecatedMessage":"Deprecated. No longer allowed.",
+          "deprecatedSince":"2022-02-01"
         },
         "Description":{"shape":"ResourceDescription"},
         "PositionFiltering":{"shape":"PositionFiltering"},
@@ -4492,7 +4539,8 @@
         "Missing",
         "CannotParse",
         "FieldValidationFailed",
-        "Other"
+        "Other",
+        "UnknownField"
       ]
     },
     "VehicleWeightUnit":{
@@ -4554,7 +4602,7 @@
       "type":"string",
       "max":17,
       "min":12,
-      "pattern":"([0-9A-Fa-f]{2}[:-]?){5}([0-9A-Fa-f]{2})"
+      "pattern":"([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})"
     },
     "WiFiAccessPointRssInteger":{
       "type":"integer",

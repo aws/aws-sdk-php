@@ -7,7 +7,7 @@
     "BatchGetQueryExecution": "<p>Returns the details of a single query execution or a list of up to 50 query executions, which you provide as an array of query execution ID strings. Requires you to have access to the workgroup in which the queries ran. To get a list of query execution IDs, use <a>ListQueryExecutionsInput$WorkGroup</a>. Query executions differ from named (saved) queries. Use <a>BatchGetNamedQueryInput</a> to get details about named queries.</p>",
     "CancelCapacityReservation": "<p>Cancels the capacity reservation with the specified name. Cancelled reservations remain in your account and will be deleted 45 days after cancellation. During the 45 days, you cannot re-purpose or reuse a reservation that has been cancelled, but you can refer to its tags and view it for historical reference. </p>",
     "CreateCapacityReservation": "<p>Creates a capacity reservation with the specified name and number of requested data processing units.</p>",
-    "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p>",
+    "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p> <p>This API operation creates the following resources.</p> <ul> <li> <p>CFN Stack Name with a maximum length of 128 characters and prefix <code>athenafederatedcatalog-CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Lambda Function Name with a maximum length of 64 characters and prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Glue Connection Name with a maximum length of 255 characters and a prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters. </p> </li> </ul>",
     "CreateNamedQuery": "<p>Creates a named query in the specified workgroup. Requires that you have access to the workgroup.</p>",
     "CreateNotebook": "<p>Creates an empty <code>ipynb</code> file in the specified Apache Spark enabled workgroup. Throws an error if a file in the workgroup with the same name already exists.</p>",
     "CreatePreparedStatement": "<p>Creates a prepared statement for use with SQL queries in Athena.</p>",
@@ -73,7 +73,7 @@
   },
   "shapes": {
     "AclConfiguration": {
-      "base": "<p>Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results. When Athena stores query results in Amazon S3, the canned ACL is set with the <code>x-amz-acl</code> request header. For more information about S3 Object Ownership, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html#object-ownership-overview\">Object Ownership settings</a> in the <i>Amazon S3 User Guide</i>.</p>",
+      "base": "<p>Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results, including data files inserted by Athena as the result of statements like CTAS or INSERT INTO. When Athena stores query results in Amazon S3, the canned ACL is set with the <code>x-amz-acl</code> request header. For more information about S3 Object Ownership, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html#object-ownership-overview\">Object Ownership settings</a> in the <i>Amazon S3 User Guide</i>.</p>",
       "refs": {
         "ResultConfiguration$AclConfiguration": "<p>Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results. Currently the only supported canned ACL is <code>BUCKET_OWNER_FULL_CONTROL</code>. This is a client-side setting. If workgroup settings override client-side settings, then the query uses the ACL configuration that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. For more information, see <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "ResultConfigurationUpdates$AclConfiguration": "<p>The ACL configuration for the query results.</p>"
@@ -172,6 +172,7 @@
       "refs": {
         "AthenaError$Retryable": "<p>True if the query might succeed if resubmitted.</p>",
         "ColumnInfo$CaseSensitive": "<p>Indicates whether values in the column are case-sensitive.</p>",
+        "DeleteDataCatalogInput$DeleteCatalogOnly": "<p>Deletes the Athena Data Catalog. You can only use this with the <code>FEDERATED</code> catalogs. You usually perform this before registering the connector with Glue Data Catalog. After deletion, you will have to manage the Glue Connection and Lambda function. </p>",
         "ResultReuseByAgeConfiguration$Enabled": "<p>True if previous query results can be reused when the query is run; otherwise, false. The default is false.</p>",
         "ResultReuseInformation$ReusedPreviousResult": "<p>True if a previous query result was reused; false if the result was generated from a new run of the query.</p>"
       }
@@ -349,7 +350,7 @@
     "CatalogNameString": {
       "base": null,
       "refs": {
-        "CreateDataCatalogInput$Name": "<p>The name of the data catalog to create. The catalog name must be unique for the Amazon Web Services account and can use a maximum of 127 alphanumeric, underscore, at sign, or hyphen characters. The remainder of the length constraint of 256 is reserved for use by Athena.</p>",
+        "CreateDataCatalogInput$Name": "<p>The name of the data catalog to create. The catalog name must be unique for the Amazon Web Services account and can use a maximum of 127 alphanumeric, underscore, at sign, or hyphen characters. The remainder of the length constraint of 256 is reserved for use by Athena.</p> <p>For <code>FEDERATED</code> type the catalog name has following considerations and limits:</p> <ul> <li> <p>The catalog name allows special characters such as <code>_ , @ , \\ , - </code>. These characters are replaced with a hyphen (-) when creating the CFN Stack Name and with an underscore (_) when creating the Lambda Function and Glue Connection Name.</p> </li> <li> <p>The catalog name has a theoretical limit of 128 characters. However, since we use it to create other resources that allow less characters and we prepend a prefix to it, the actual catalog name limit for <code>FEDERATED</code> catalog is 64 - 23 = 41 characters.</p> </li> </ul>",
         "DataCatalog$Name": "<p>The name of the data catalog. The catalog name must be unique for the Amazon Web Services account and can use a maximum of 127 alphanumeric, underscore, at sign, or hyphen characters. The remainder of the length constraint of 256 is reserved for use by Athena.</p>",
         "DataCatalogSummary$CatalogName": "<p>The name of the data catalog. The catalog name is unique for the Amazon Web Services account and can use a maximum of 127 alphanumeric, underscore, at sign, or hyphen characters. The remainder of the length constraint of 256 is reserved for use by Athena.</p>",
         "DeleteDataCatalogInput$Name": "<p>The name of the data catalog to delete.</p>",
@@ -1225,7 +1226,7 @@
         "ExecutorsSummary$StartDateTime": "<p>The date and time that the executor started.</p>",
         "ExecutorsSummary$TerminationDateTime": "<p>The date and time that the executor was terminated.</p>",
         "ExecutorsSummary$ExecutorSize": "<p>The smallest unit of compute that a session can request from Athena. Size is measured in data processing unit (DPU) values, a relative measure of processing power.</p>",
-        "GetQueryResultsOutput$UpdateCount": "<p>The number of rows inserted with a <code>CREATE TABLE AS SELECT</code> statement. </p>",
+        "GetQueryResultsOutput$UpdateCount": "<p>The number of rows inserted with a <code>CREATE TABLE AS SELECT</code>, <code>INSERT INTO</code>, or <code>UPDATE</code> statement. </p>",
         "QueryExecutionStatistics$EngineExecutionTimeInMillis": "<p>The number of milliseconds that the query took to execute.</p>",
         "QueryExecutionStatistics$DataScannedInBytes": "<p>The number of bytes in the data that was queried.</p>",
         "QueryExecutionStatistics$TotalExecutionTimeInMillis": "<p>The number of milliseconds that Athena took to run the query.</p>",
@@ -1752,7 +1753,7 @@
     "S3AclOption": {
       "base": null,
       "refs": {
-        "AclConfiguration$S3AclOption": "<p>The Amazon S3 canned ACL that Athena should specify when storing query results. Currently the only supported canned ACL is <code>BUCKET_OWNER_FULL_CONTROL</code>. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl\">Canned ACL</a> in the <i>Amazon S3 User Guide</i>.</p>"
+        "AclConfiguration$S3AclOption": "<p>The Amazon S3 canned ACL that Athena should specify when storing query results, including data files inserted by Athena as the result of statements like CTAS or INSERT INTO. Currently the only supported canned ACL is <code>BUCKET_OWNER_FULL_CONTROL</code>. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl\">Canned ACL</a> in the <i>Amazon S3 User Guide</i>.</p>"
       }
     },
     "S3Uri": {
@@ -1993,7 +1994,7 @@
       "base": null,
       "refs": {
         "CreateCapacityReservationInput$Tags": "<p>The tags for the capacity reservation.</p>",
-        "CreateDataCatalogInput$Tags": "<p>A list of comma separated tags to add to the data catalog that is created.</p>",
+        "CreateDataCatalogInput$Tags": "<p>A list of comma separated tags to add to the data catalog that is created. All the resources that are created by the <code>CreateDataCatalog</code> API operation with <code>FEDERATED</code> type will have the tag <code>federated_athena_datacatalog=\"true\"</code>. This includes the CFN Stack, Glue Connection, Athena DataCatalog, and all the resources created as part of the CFN Stack (Lambda Function, IAM policies/roles).</p>",
         "CreateWorkGroupInput$Tags": "<p>A list of comma separated tags to add to the workgroup that is created.</p>",
         "ListTagsForResourceOutput$Tags": "<p>The list of tags associated with the specified resource.</p>",
         "TagResourceInput$Tags": "<p>A collection of one or more tags, separated by commas, to be added to an Athena resource.</p>"
