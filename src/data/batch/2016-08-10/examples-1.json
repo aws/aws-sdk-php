@@ -114,6 +114,32 @@
         "title": "To create a managed EC2 Spot compute environment"
       }
     ],
+    "CreateConsumableResource": [
+      {
+        "input": {
+          "consumableResourceName": "myConsumableResource",
+          "resourceType": "REPLENISHABLE",
+          "tags": {
+            "Department": "Engineering",
+            "User": "JaneDoe"
+          },
+          "totalQuantity": 123
+        },
+        "output": {
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource"
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Creates a Batch consumable resource.",
+        "id": "to-create-a-consumable-resource-1739494856623",
+        "title": "To create a consumable resource"
+      }
+    ],
     "CreateJobQueue": [
       {
         "input": {
@@ -188,6 +214,24 @@
         "description": "This example deletes the P2OnDemand compute environment.",
         "id": "to-delete-a-compute-environment-1481153105644",
         "title": "To delete a compute environment"
+      }
+    ],
+    "DeleteConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource"
+        },
+        "output": {
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Deletes the specified consumable resource.",
+        "id": "to-delete-a-consumable-resource-1739495667751",
+        "title": "To delete a consumable resource"
       }
     ],
     "DeleteJobQueue": [
@@ -278,6 +322,35 @@
         "description": "This example describes the P2OnDemand compute environment.",
         "id": "to-describe-a-compute-environment-1481153713334",
         "title": "To describe a compute environment"
+      }
+    ],
+    "DescribeConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource"
+        },
+        "output": {
+          "availableQuantity": 123,
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource",
+          "createdAt": 123,
+          "inUseQuantity": 123,
+          "resourceType": "REPLENISHABLE",
+          "tags": {
+            "Department": "Engineering",
+            "User": "JaneDoe"
+          },
+          "totalQuantity": 123
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Returns a description of the specified consumable resource.",
+        "id": "to-get-a-description-of-a-consumable-resource-1739495864808",
+        "title": "To get a description of a consumable resource"
       }
     ],
     "DescribeJobDefinitions": [
@@ -432,6 +505,41 @@
         "title": "To describe a specific job"
       }
     ],
+    "ListConsumableResources": [
+      {
+        "input": {
+          "filters": [
+            {
+              "name": "CONSUMABLE_RESOURCE_NAME",
+              "values": [
+                "my*"
+              ]
+            }
+          ],
+          "maxResults": 123
+        },
+        "output": {
+          "consumableResources": [
+            {
+              "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+              "consumableResourceName": "myConsumableResource",
+              "inUseQuantity": 12,
+              "resourceType": "REPLENISHABLE",
+              "totalQuantity": 123
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Returns a list of the consumable resources for your account.",
+        "id": "to-get-a-list-of-a-consumable-resources-1739496071960",
+        "title": "To get a list of a consumable resources"
+      }
+    ],
     "ListJobs": [
       {
         "input": {
@@ -477,6 +585,52 @@
         "description": "This example lists jobs in the HighPriority job queue that are in the SUBMITTED job status.",
         "id": "to-list-submitted-jobs-1481154251623",
         "title": "To list submitted jobs"
+      }
+    ],
+    "ListJobsByConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource",
+          "filters": [
+            {
+              "name": "CONSUMABLE_RESOURCE_NAME",
+              "values": [
+                "my*"
+              ]
+            }
+          ],
+          "maxResults": 123
+        },
+        "output": {
+          "jobs": [
+            {
+              "consumableResourceProperties": {
+                "consumableResourceList": [
+                  {
+                    "consumableResource": "myConsumableResource",
+                    "quantity": 123
+                  }
+                ]
+              },
+              "createdAt": 1480460782010,
+              "jobArn": "arn:aws:batch:us-east-1:012345678910:job/myJob",
+              "jobDefinitionArn": "arn:aws:batch:us-east-1:012345678910:job-definition/myJobDef",
+              "jobName": "myJob",
+              "jobQueueArn": "arn:aws:batch:us-east-1:012345678910:job-queue/myJobQueue",
+              "jobStatus": "PENDING",
+              "quantity": 123
+            }
+          ]
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Returns a list of Batch jobs that require a specific consumable resource.",
+        "id": "to-get-a-list-of-batch-jobs-by-consumable-resource-1739496640347",
+        "title": "To get a list of Batch jobs by consumable resource"
       }
     ],
     "ListTagsForResource": [
@@ -684,6 +838,29 @@
         "description": "This example disables the P2OnDemand compute environment so it can be deleted.",
         "id": "to-update-a-compute-environment-1481154702731",
         "title": "To update a compute environment"
+      }
+    ],
+    "UpdateConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource",
+          "operation": "ADD",
+          "quantity": 12
+        },
+        "output": {
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource",
+          "totalQuantity": 135
+        },
+        "comments": {
+          "input": {
+          },
+          "output": {
+          }
+        },
+        "description": "Updates a consumable resource.",
+        "id": "to-update-a-consumable-resource-1739497761692",
+        "title": "To update a consumable resource"
       }
     ],
     "UpdateJobQueue": [

@@ -1529,7 +1529,7 @@
     "DataDestinationConfigs":{
       "type":"list",
       "member":{"shape":"DataDestinationConfig"},
-      "max":1,
+      "max":3,
       "min":1
     },
     "DataExtraDimensionNodePathList":{
@@ -2220,7 +2220,8 @@
       "members":{
         "nextToken":{"shape":"nextToken"},
         "maxResults":{"shape":"maxResults"},
-        "status":{"shape":"statusStr"}
+        "status":{"shape":"statusStr"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListCampaignsResponse":{
@@ -2267,7 +2268,8 @@
       "members":{
         "modelManifestArn":{"shape":"arn"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListDecoderManifestsResponse":{
@@ -2297,7 +2299,8 @@
       "type":"structure",
       "members":{
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListFleetsResponse":{
@@ -2328,7 +2331,8 @@
       "members":{
         "signalCatalogArn":{"shape":"arn"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListModelManifestsResponse":{
@@ -2337,6 +2341,10 @@
         "summaries":{"shape":"modelManifestSummaries"},
         "nextToken":{"shape":"nextToken"}
       }
+    },
+    "ListResponseScope":{
+      "type":"string",
+      "enum":["METADATA_ONLY"]
     },
     "ListSignalCatalogNodesRequest":{
       "type":"structure",
@@ -2373,7 +2381,8 @@
       "type":"structure",
       "members":{
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"maxResults"}
+        "maxResults":{"shape":"maxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListStateTemplatesResponse":{
@@ -2419,7 +2428,8 @@
         "attributeNames":{"shape":"attributeNamesList"},
         "attributeValues":{"shape":"attributeValuesList"},
         "nextToken":{"shape":"nextToken"},
-        "maxResults":{"shape":"listVehiclesMaxResults"}
+        "maxResults":{"shape":"listVehiclesMaxResults"},
+        "listResponseScope":{"shape":"ListResponseScope"}
       }
     },
     "ListVehiclesResponse":{
@@ -3001,7 +3011,8 @@
       "type":"list",
       "member":{"shape":"SignalFetchInformation"},
       "max":2,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "SignalInformation":{
       "type":"structure",

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OAM` - This release adds support for sharing AWS::ApplicationSignals::Service and AWS::ApplicationSignals::ServiceLevelObjective resources.
+* `Aws\Batch` - AWS Batch: Resource Aware Scheduling feature support
+* `Aws\Chime` - Removes the Amazon Chime SDK APIs from the "chime" namespace. Amazon Chime SDK APIs continue to be available in the AWS SDK via the dedicated Amazon Chime SDK namespaces: chime-sdk-identity, chime-sdk-mediapipelines, chime-sdk-meetings, chime-sdk-messaging, and chime-sdk-voice.
+* `Aws\EC2` - Amazon EC2 Fleet customers can now override the Block Device Mapping specified in the Launch Template when creating a new Fleet request, saving the effort of creating and associating new Launch Templates to customize the Block Device Mapping.
+* `Aws\IoTFleetWise` - This release adds an optional listResponseScope request parameter in certain list API requests to limit the response to metadata only.
+* `Aws\SageMaker` - AWS SageMaker InferenceComponents now support rolling update deployments for Inference Components.
+* `Aws\ApplicationSignals` - This release adds API support for reading Service Level Objectives and Services from monitoring accounts, from SLO and Service-scoped operations, including ListServices and ListServiceLevelObjectives.
+* `Aws\CloudFront` - Documentation update for VPC origin config.
+
 ## 3.340.1 - 2025-02-25
 
 * `Aws\DeviceFarm` - Add an optional configuration to the ScheduleRun and CreateRemoteAccessSession API to set a device level http/s proxy.

@@ -2011,7 +2011,8 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"DeregisterImageRequest"}
+      "input":{"shape":"DeregisterImageRequest"},
+      "output":{"shape":"DeregisterImageResult"}
     },
     "DeregisterInstanceEventNotificationAttributes":{
       "name":"DeregisterInstanceEventNotificationAttributes",
@@ -8595,6 +8596,34 @@
       "member":{
         "shape":"BlockDeviceMapping",
         "locationName":"BlockDeviceMapping"
+      }
+    },
+    "BlockDeviceMappingResponse":{
+      "type":"structure",
+      "members":{
+        "DeviceName":{
+          "shape":"String",
+          "locationName":"deviceName"
+        },
+        "VirtualName":{
+          "shape":"String",
+          "locationName":"virtualName"
+        },
+        "Ebs":{
+          "shape":"EbsBlockDeviceResponse",
+          "locationName":"ebs"
+        },
+        "NoDevice":{
+          "shape":"String",
+          "locationName":"noDevice"
+        }
+      }
+    },
+    "BlockDeviceMappingResponseList":{
+      "type":"list",
+      "member":{
+        "shape":"BlockDeviceMappingResponse",
+        "locationName":"item"
       }
     },
     "BlockPublicAccessMode":{
@@ -15755,6 +15784,11 @@
         }
       }
     },
+    "DeregisterImageResult":{
+      "type":"structure",
+      "members":{
+}
+    },
     "DeregisterInstanceEventNotificationAttributesRequest":{
       "type":"structure",
       "required":["InstanceTagAttribute"],
@@ -22301,6 +22335,43 @@
         }
       }
     },
+    "EbsBlockDeviceResponse":{
+      "type":"structure",
+      "members":{
+        "Encrypted":{
+          "shape":"Boolean",
+          "locationName":"encrypted"
+        },
+        "DeleteOnTermination":{
+          "shape":"Boolean",
+          "locationName":"deleteOnTermination"
+        },
+        "Iops":{
+          "shape":"Integer",
+          "locationName":"iops"
+        },
+        "Throughput":{
+          "shape":"Integer",
+          "locationName":"throughput"
+        },
+        "KmsKeyId":{
+          "shape":"KmsKeyId",
+          "locationName":"kmsKeyId"
+        },
+        "SnapshotId":{
+          "shape":"SnapshotId",
+          "locationName":"snapshotId"
+        },
+        "VolumeSize":{
+          "shape":"Integer",
+          "locationName":"volumeSize"
+        },
+        "VolumeType":{
+          "shape":"VolumeType",
+          "locationName":"volumeType"
+        }
+      }
+    },
     "EbsEncryptionSupport":{
       "type":"string",
       "enum":[
@@ -24240,6 +24311,22 @@
         "fulfilled"
       ]
     },
+    "FleetBlockDeviceMappingRequest":{
+      "type":"structure",
+      "members":{
+        "DeviceName":{"shape":"String"},
+        "VirtualName":{"shape":"String"},
+        "Ebs":{"shape":"FleetEbsBlockDeviceRequest"},
+        "NoDevice":{"shape":"String"}
+      }
+    },
+    "FleetBlockDeviceMappingRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"FleetBlockDeviceMappingRequest",
+        "locationName":"BlockDeviceMapping"
+      }
+    },
     "FleetCapacityReservation":{
       "type":"structure",
       "members":{
@@ -24393,6 +24480,19 @@
         }
       }
     },
+    "FleetEbsBlockDeviceRequest":{
+      "type":"structure",
+      "members":{
+        "Encrypted":{"shape":"Boolean"},
+        "DeleteOnTermination":{"shape":"Boolean"},
+        "Iops":{"shape":"Integer"},
+        "Throughput":{"shape":"Integer"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "SnapshotId":{"shape":"SnapshotId"},
+        "VolumeSize":{"shape":"Integer"},
+        "VolumeType":{"shape":"VolumeType"}
+      }
+    },
     "FleetEventType":{
       "type":"string",
       "enum":[
@@ -24491,6 +24591,10 @@
         "ImageId":{
           "shape":"ImageId",
           "locationName":"imageId"
+        },
+        "BlockDeviceMappings":{
+          "shape":"BlockDeviceMappingResponseList",
+          "locationName":"blockDeviceMappingSet"
         }
       }
     },
@@ -24518,6 +24622,10 @@
         "WeightedCapacity":{"shape":"Double"},
         "Priority":{"shape":"Double"},
         "Placement":{"shape":"Placement"},
+        "BlockDeviceMappings":{
+          "shape":"FleetBlockDeviceMappingRequestList",
+          "locationName":"BlockDeviceMapping"
+        },
         "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
         "ImageId":{"shape":"ImageId"}
       }

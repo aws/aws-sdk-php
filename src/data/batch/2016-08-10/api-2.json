@@ -40,6 +40,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "CreateConsumableResource":{
+      "name":"CreateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/createconsumableresource"
+      },
+      "input":{"shape":"CreateConsumableResourceRequest"},
+      "output":{"shape":"CreateConsumableResourceResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "CreateJobQueue":{
       "name":"CreateJobQueue",
       "http":{
@@ -74,6 +87,19 @@
       },
       "input":{"shape":"DeleteComputeEnvironmentRequest"},
       "output":{"shape":"DeleteComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DeleteConsumableResource":{
+      "name":"DeleteConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/deleteconsumableresource"
+      },
+      "input":{"shape":"DeleteConsumableResourceRequest"},
+      "output":{"shape":"DeleteConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -126,6 +152,19 @@
       },
       "input":{"shape":"DescribeComputeEnvironmentsRequest"},
       "output":{"shape":"DescribeComputeEnvironmentsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DescribeConsumableResource":{
+      "name":"DescribeConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/describeconsumableresource"
+      },
+      "input":{"shape":"DescribeConsumableResourceRequest"},
+      "output":{"shape":"DescribeConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -196,6 +235,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "ListConsumableResources":{
+      "name":"ListConsumableResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listconsumableresources"
+      },
+      "input":{"shape":"ListConsumableResourcesRequest"},
+      "output":{"shape":"ListConsumableResourcesResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "ListJobs":{
       "name":"ListJobs",
       "http":{
@@ -204,6 +256,19 @@
       },
       "input":{"shape":"ListJobsRequest"},
       "output":{"shape":"ListJobsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "ListJobsByConsumableResource":{
+      "name":"ListJobsByConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listjobsbyconsumableresource"
+      },
+      "input":{"shape":"ListJobsByConsumableResourceRequest"},
+      "output":{"shape":"ListJobsByConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -308,6 +373,19 @@
       },
       "input":{"shape":"UpdateComputeEnvironmentRequest"},
       "output":{"shape":"UpdateComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "UpdateConsumableResource":{
+      "name":"UpdateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/updateconsumableresource"
+      },
+      "input":{"shape":"UpdateConsumableResourceRequest"},
+      "output":{"shape":"UpdateConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -500,6 +578,11 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ClientRequestToken":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ComputeEnvironmentDetail":{
       "type":"structure",
       "required":[
@@ -596,6 +679,41 @@
         "type":{"shape":"CRType"},
         "imageId":{"shape":"String"}
       }
+    },
+    "ConsumableResourceList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceRequirement"}
+    },
+    "ConsumableResourceProperties":{
+      "type":"structure",
+      "members":{
+        "consumableResourceList":{"shape":"ConsumableResourceList"}
+      }
+    },
+    "ConsumableResourceRequirement":{
+      "type":"structure",
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "quantity":{"shape":"Long"}
+      }
+    },
+    "ConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "consumableResourceArn",
+        "consumableResourceName"
+      ],
+      "members":{
+        "consumableResourceArn":{"shape":"String"},
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"}
+      }
+    },
+    "ConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceSummary"}
     },
     "ContainerDetail":{
       "type":"structure",
@@ -718,6 +836,27 @@
         "computeEnvironmentArn":{"shape":"String"}
       }
     },
+    "CreateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResourceName"],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "tags":{"shape":"TagrisTagsMap"}
+      }
+    },
+    "CreateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"}
+      }
+    },
     "CreateJobQueueRequest":{
       "type":"structure",
       "required":[
@@ -778,6 +917,18 @@
       "members":{
       }
     },
+    "DeleteConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"}
+      }
+    },
+    "DeleteConsumableResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteJobQueueRequest":{
       "type":"structure",
       "required":["jobQueue"],
@@ -827,6 +978,30 @@
       "members":{
         "computeEnvironments":{"shape":"ComputeEnvironmentDetailList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "availableQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "createdAt":{"shape":"Long"},
+        "tags":{"shape":"TagrisTagsMap"}
       }
     },
     "DescribeJobDefinitionsRequest":{
@@ -1418,7 +1593,8 @@
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "ecsProperties":{"shape":"EcsProperties"},
         "eksProperties":{"shape":"EksProperties"},
-        "containerOrchestrationType":{"shape":"OrchestrationType"}
+        "containerOrchestrationType":{"shape":"OrchestrationType"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDefinitionList":{
@@ -1482,7 +1658,8 @@
         "eksAttempts":{"shape":"EksAttemptDetails"},
         "ecsProperties":{"shape":"EcsPropertiesDetail"},
         "isCancelled":{"shape":"Boolean"},
-        "isTerminated":{"shape":"Boolean"}
+        "isTerminated":{"shape":"Boolean"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDetailList":{
@@ -1650,6 +1827,26 @@
       "type":"list",
       "member":{"shape":"AttemptTaskContainerDetails"}
     },
+    "ListConsumableResourcesFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListConsumableResourcesRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListConsumableResourcesFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListConsumableResourcesResponse":{
+      "type":"structure",
+      "required":["consumableResources"],
+      "members":{
+        "consumableResources":{"shape":"ConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListEcsTaskDetails":{
       "type":"list",
       "member":{"shape":"EcsTaskDetails"}
@@ -1657,6 +1854,57 @@
     "ListEcsTaskProperties":{
       "type":"list",
       "member":{"shape":"EcsTaskProperties"}
+    },
+    "ListJobsByConsumableResourceFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListJobsByConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "filters":{"shape":"ListJobsByConsumableResourceFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"ListJobsByConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobQueueArn",
+        "jobName",
+        "jobStatus",
+        "quantity",
+        "createdAt",
+        "consumableResourceProperties"
+      ],
+      "members":{
+        "jobArn":{"shape":"String"},
+        "jobQueueArn":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "jobDefinitionArn":{"shape":"String"},
+        "shareIdentifier":{"shape":"String"},
+        "jobStatus":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Long"},
+        "createdAt":{"shape":"Long"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
+      }
+    },
+    "ListJobsByConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ListJobsByConsumableResourceSummary"}
     },
     "ListJobsFilterList":{
       "type":"list",
@@ -1829,7 +2077,8 @@
         "containerOverrides":{"shape":"ContainerOverrides"},
         "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
         "instanceTypes":{"shape":"StringList"},
-        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"}
+        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "NodePropertyOverrides":{
@@ -1848,7 +2097,8 @@
         "container":{"shape":"ContainerProperties"},
         "instanceTypes":{"shape":"StringList"},
         "ecsProperties":{"shape":"EcsProperties"},
-        "eksProperties":{"shape":"EksProperties"}
+        "eksProperties":{"shape":"EksProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "OrchestrationType":{
@@ -1898,7 +2148,8 @@
         "tags":{"shape":"TagrisTagsMap"},
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "eksProperties":{"shape":"EksProperties"},
-        "ecsProperties":{"shape":"EcsProperties"}
+        "ecsProperties":{"shape":"EcsProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "RegisterJobDefinitionResponse":{
@@ -2057,7 +2308,8 @@
         "timeout":{"shape":"JobTimeout"},
         "tags":{"shape":"TagrisTagsMap"},
         "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
-        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"}
+        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "SubmitJobResponse":{
@@ -2283,6 +2535,31 @@
       "members":{
         "computeEnvironmentName":{"shape":"String"},
         "computeEnvironmentArn":{"shape":"String"}
+      }
+    },
+    "UpdateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "operation":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "clientToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"}
       }
     },
     "UpdateJobQueueRequest":{

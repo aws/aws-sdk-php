@@ -5518,7 +5518,7 @@
     "BatchDeleteClusterNodesErrorList":{
       "type":"list",
       "member":{"shape":"BatchDeleteClusterNodesError"},
-      "max":99,
+      "max":3000,
       "min":1
     },
     "BatchDeleteClusterNodesRequest":{
@@ -6494,7 +6494,7 @@
     "ClusterNodeIds":{
       "type":"list",
       "member":{"shape":"ClusterNodeId"},
-      "max":99,
+      "max":3000,
       "min":1
     },
     "ClusterNodeRecovery":{
@@ -10736,7 +10736,8 @@
         "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfigSummary"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "InferenceComponentStatus":{"shape":"InferenceComponentStatus"}
+        "InferenceComponentStatus":{"shape":"InferenceComponentStatus"},
+        "LastDeploymentConfig":{"shape":"InferenceComponentDeploymentConfig"}
       }
     },
     "DescribeInferenceExperimentRequest":{
@@ -14545,6 +14546,24 @@
       "max":2048,
       "min":20
     },
+    "InferenceComponentCapacitySize":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Type":{"shape":"InferenceComponentCapacitySizeType"},
+        "Value":{"shape":"CapacitySizeValue"}
+      }
+    },
+    "InferenceComponentCapacitySizeType":{
+      "type":"string",
+      "enum":[
+        "COPY_COUNT",
+        "CAPACITY_PERCENT"
+      ]
+    },
     "InferenceComponentComputeResourceRequirements":{
       "type":"structure",
       "required":["MinMemoryRequiredInMb"],
@@ -14575,6 +14594,14 @@
       "type":"integer",
       "min":0
     },
+    "InferenceComponentDeploymentConfig":{
+      "type":"structure",
+      "required":["RollingUpdatePolicy"],
+      "members":{
+        "RollingUpdatePolicy":{"shape":"InferenceComponentRollingUpdatePolicy"},
+        "AutoRollbackConfiguration":{"shape":"AutoRollbackConfig"}
+      }
+    },
     "InferenceComponentName":{
       "type":"string",
       "max":63,
@@ -14584,6 +14611,19 @@
       "type":"string",
       "max":63,
       "pattern":"[a-zA-Z0-9-]+"
+    },
+    "InferenceComponentRollingUpdatePolicy":{
+      "type":"structure",
+      "required":[
+        "MaximumBatchSize",
+        "WaitIntervalInSeconds"
+      ],
+      "members":{
+        "MaximumBatchSize":{"shape":"InferenceComponentCapacitySize"},
+        "WaitIntervalInSeconds":{"shape":"WaitIntervalInSeconds"},
+        "MaximumExecutionTimeoutInSeconds":{"shape":"MaximumExecutionTimeoutInSeconds"},
+        "RollbackMaximumBatchSize":{"shape":"InferenceComponentCapacitySize"}
+      }
     },
     "InferenceComponentRuntimeConfig":{
       "type":"structure",
@@ -25375,7 +25415,8 @@
       "members":{
         "InferenceComponentName":{"shape":"InferenceComponentName"},
         "Specification":{"shape":"InferenceComponentSpecification"},
-        "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfig"}
+        "RuntimeConfig":{"shape":"InferenceComponentRuntimeConfig"},
+        "DeploymentConfig":{"shape":"InferenceComponentDeploymentConfig"}
       }
     },
     "UpdateInferenceComponentOutput":{

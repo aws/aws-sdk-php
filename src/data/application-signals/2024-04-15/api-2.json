@@ -276,8 +276,12 @@
       "type":"map",
       "key":{"shape":"KeyAttributeName"},
       "value":{"shape":"KeyAttributeValue"},
-      "max":3,
+      "max":4,
       "min":1
+    },
+    "AwsAccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "BatchGetServiceLevelObjectiveBudgetReportInput":{
       "type":"structure",
@@ -302,6 +306,10 @@
         "Reports":{"shape":"ServiceLevelObjectiveBudgetReports"},
         "Errors":{"shape":"ServiceLevelObjectiveBudgetReportErrors"}
       }
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "BudgetRequestsRemaining":{
       "type":"integer",
@@ -639,6 +647,16 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "SloOwnerAwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"SloOwnerAwsAccountId"
         }
       }
     },
@@ -732,6 +750,16 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"AwsAccountId"
         }
       }
     },
@@ -828,7 +856,8 @@
         "Namespace":{"shape":"Namespace"},
         "MetricType":{"shape":"MetricType"},
         "Dimensions":{"shape":"Dimensions"},
-        "MetricName":{"shape":"MetricName"}
+        "MetricName":{"shape":"MetricName"},
+        "AccountId":{"shape":"AwsAccountId"}
       }
     },
     "MetricReferences":{
