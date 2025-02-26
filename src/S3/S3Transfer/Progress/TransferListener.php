@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\S3\S3Transfer;
+namespace Aws\S3\S3Transfer\Progress;
 
 abstract class TransferListener
 {

@@ -20,7 +20,8 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return void
      */
-    public function testDefaultValues(): void {
+    public function testDefaultValues(): void
+    {
         $progressBar = new ConsoleProgressBar();
         $this->assertEquals(
             ConsoleProgressBar::DEFAULT_PROGRESS_BAR_WIDTH,
@@ -45,7 +46,8 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return void
      */
-    public function testSetPercentCompleted(): void {
+    public function testSetPercentCompleted(): void
+    {
         $progressBar = new ConsoleProgressBar();
         $progressBar->setPercentCompleted(10);
         $this->assertEquals(10, $progressBar->getPercentCompleted());
@@ -56,7 +58,8 @@ class ConsoleProgressBarTest extends TestCase
     /**
      * @return void
      */
-    public function testSetCustomValues(): void {
+    public function testSetCustomValues(): void
+    {
         $progressBar = new ConsoleProgressBar(
             progressBarChar: '-',
             progressBarWidth: 10,
@@ -77,7 +80,8 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return void
      */
-    public function testPercentIsNotOverOneHundred(): void {
+    public function testPercentIsNotOverOneHundred(): void
+    {
         $progressBar = new ConsoleProgressBar();
         $progressBar->setPercentCompleted(150);
         $this->assertEquals(100, $progressBar->getPercentCompleted());
@@ -87,7 +91,7 @@ class ConsoleProgressBarTest extends TestCase
      * @param string $progressBarChar
      * @param int $progressBarWidth
      * @param int $percentCompleted
-     * @param ProgressBarFormat $progressBarFormat
+     * @param ProgressBarFormatTest $progressBarFormat
      * @param array $progressBarFormatArgs
      * @param string $expectedOutput
      *
@@ -102,7 +106,8 @@ class ConsoleProgressBarTest extends TestCase
         ProgressBarFormat $progressBarFormat,
         array $progressBarFormatArgs,
         string $expectedOutput
-    ): void {
+    ): void
+    {
         $progressBarFormat->setArgs($progressBarFormatArgs);
         $progressBar = new ConsoleProgressBar(
             $progressBarChar,
@@ -119,39 +124,48 @@ class ConsoleProgressBarTest extends TestCase
      *
      * @return array
      */
-    public function progressBarRenderingProvider(): array {
+    public function progressBarRenderingProvider(): array
+    {
         return [
             'plain_progress_bar_format_1' => [
                 'progress_bar_char' => '#',
                 'progress_bar_width' => 50,
                 'percent_completed' => 15,
                 'progress_bar_format' => new PlainProgressBarFormat(),
-                'progress_bar_format_args' => [],
-                'expected_output' => '[########                                          ] 15%'
+                'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
+                ],
+                'expected_output' => "FooObject:\n[########                                          ] 15%"
             ],
             'plain_progress_bar_format_2' => [
                 'progress_bar_char' => '#',
                 'progress_bar_width' => 50,
                 'percent_completed' => 45,
                 'progress_bar_format' => new PlainProgressBarFormat(),
-                'progress_bar_format_args' => [],
-                'expected_output' => '[#######################                           ] 45%'
+                'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
+                ],
+                'expected_output' => "FooObject:\n[#######################                           ] 45%"
             ],
             'plain_progress_bar_format_3' => [
                 'progress_bar_char' => '#',
                 'progress_bar_width' => 50,
                 'percent_completed' => 100,
                 'progress_bar_format' => new PlainProgressBarFormat(),
-                'progress_bar_format_args' => [],
-                'expected_output' => '[##################################################] 100%'
+                'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
+                ],
+                'expected_output' => "FooObject:\n[##################################################] 100%"
             ],
             'plain_progress_bar_format_4' => [
                 'progress_bar_char' => '.',
                 'progress_bar_width' => 50,
                 'percent_completed' => 100,
                 'progress_bar_format' => new PlainProgressBarFormat(),
-                'progress_bar_format_args' => [],
-                'expected_output' => '[..................................................] 100%'
+                'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
+                ],
+                'expected_output' => "FooObject:\n[..................................................] 100%"
             ],
             'transfer_progress_bar_format_1' => [
                 'progress_bar_char' => '#',
@@ -159,11 +173,12 @@ class ConsoleProgressBarTest extends TestCase
                 'percent_completed' => 23,
                 'progress_bar_format' => new TransferProgressBarFormat(),
                 'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
                     'transferred' => 23,
                     'tobe_transferred' => 100,
                     'unit' => 'B'
                 ],
-                'expected_output' => '[############                                      ] 23% 23/100 B'
+                'expected_output' => "FooObject:\n[############                                      ] 23% 23/100 B"
             ],
             'transfer_progress_bar_format_2' => [
                 'progress_bar_char' => '#',
@@ -171,11 +186,12 @@ class ConsoleProgressBarTest extends TestCase
                 'percent_completed' => 75,
                 'progress_bar_format' => new TransferProgressBarFormat(),
                 'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
                     'transferred' => 75,
                     'tobe_transferred' => 100,
                     'unit' => 'B'
                 ],
-                'expected_output' => '[###################      ] 75% 75/100 B'
+                'expected_output' => "FooObject:\n[###################      ] 75% 75/100 B"
             ],
             'transfer_progress_bar_format_3' => [
                 'progress_bar_char' => '#',
@@ -183,11 +199,12 @@ class ConsoleProgressBarTest extends TestCase
                 'percent_completed' => 100,
                 'progress_bar_format' => new TransferProgressBarFormat(),
                 'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
                     'transferred' => 100,
                     'tobe_transferred' => 100,
                     'unit' => 'B'
                 ],
-                'expected_output' => '[##############################] 100% 100/100 B'
+                'expected_output' => "FooObject:\n[##############################] 100% 100/100 B"
             ],
             'transfer_progress_bar_format_4' => [
                 'progress_bar_char' => '*',
@@ -195,11 +212,12 @@ class ConsoleProgressBarTest extends TestCase
                 'percent_completed' => 100,
                 'progress_bar_format' => new TransferProgressBarFormat(),
                 'progress_bar_format_args' => [
+                    'object_name' => 'FooObject',
                     'transferred' => 100,
                     'tobe_transferred' => 100,
                     'unit' => 'B'
                 ],
-                'expected_output' => '[******************************] 100% 100/100 B'
+                'expected_output' => "FooObject:\n[******************************] 100% 100/100 B"
             ],
             'colored_progress_bar_format_1' => [
                 'progress_bar_char' => '#',

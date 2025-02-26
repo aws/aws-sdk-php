@@ -5,6 +5,7 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
@@ -468,7 +469,7 @@ class MultipartUploader implements PromisorInterface
      */
     private function containsChecksum(array $requestArgs): bool
     {
-        $algorithms = [
+        static $algorithms = [
             'ChecksumCRC32',
             'ChecksumCRC32C',
             'ChecksumCRC64NVME',

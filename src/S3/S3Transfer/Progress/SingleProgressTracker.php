@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-use Aws\S3\S3Transfer\TransferListener;
+use Aws\S3\S3Transfer\Exceptions\ProgressTrackerException;
 
 /**
  * To track single object transfers.
@@ -15,23 +15,28 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
     /** @var resource */
     private mixed $output;
 
-    /** @var string */
-    private string $objectName;
-
     /** @var bool */
     private bool $clear;
+
+    /** @var TransferProgressSnapshot | null */
+    private ?TransferProgressSnapshot $currentSnapshot;
+
+    /** @var bool */
+    private bool $showProgressOnUpdate;
 
     /**
      * @param ProgressBarInterface $progressBar
      * @param mixed|false|resource $output
-     * @param string $objectName
      * @param bool $clear
+     * @param TransferProgressSnapshot|null $currentSnapshot
+     * @param bool $showProgressOnUpdate
      */
     public function __construct(
         ProgressBarInterface $progressBar = new ConsoleProgressBar(),
         mixed $output = STDOUT,
-        string $objectName = '',
         bool $clear = true,
+        ?TransferProgressSnapshot $currentSnapshot = null,
+        bool $showProgressOnUpdate = true
     )
     {
         $this->progressBar = $progressBar;
@@ -39,8 +44,9 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
             throw new \InvalidArgumentException("The type for $output must be a stream");
         }
         $this->output = $output;
-        $this->objectName = $objectName;
         $this->clear = $clear;
+        $this->currentSnapshot = $currentSnapshot;
+        $this->showProgressOnUpdate = $showProgressOnUpdate;
     }
 
     /**
@@ -60,18 +66,26 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getObjectName(): string
+    public function isClear(): bool {
+        return $this->clear;
+    }
+
+    /**
+     * @return TransferProgressSnapshot|null
+     */
+    public function getCurrentSnapshot(): ?TransferProgressSnapshot
     {
-        return $this->objectName;
+        return $this->currentSnapshot;
     }
 
     /**
      * @return bool
      */
-    public function isClear(): bool {
-        return $this->clear;
+    public function isShowProgressOnUpdate(): bool
+    {
+        return $this->showProgressOnUpdate;
     }
 
     /**
@@ -81,17 +95,15 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferInitiated(array $context): void
     {
-        $snapshot = $context['progress_snapshot'];
-        $this->objectName = $snapshot->getIdentifier();
+        $this->currentSnapshot = $context['progress_snapshot'];
         $progressFormat = $this->progressBar->getProgressBarFormat();
-        if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
-            $progressFormat->setArg(
-                'object_name',
-                $this->objectName
-            );
-        }
+        // Probably a common argument
+        $progressFormat->setArg(
+            'object_name',
+            $this->currentSnapshot->getIdentifier()
+        );
 
-        $this->updateProgressBar($snapshot);
+        $this->updateProgressBar();
     }
 
     /**
@@ -101,6 +113,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function bytesTransferred(array $context): void
     {
+        $this->currentSnapshot = $context['progress_snapshot'];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -109,7 +122,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
             );
         }
 
-        $this->updateProgressBar($context['progress_snapshot']);
+        $this->updateProgressBar();
     }
 
     /**
@@ -119,6 +132,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferComplete(array $context): void
     {
+        $this->currentSnapshot = $context['progress_snapshot'];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -127,10 +141,8 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
             );
         }
 
-        $snapshot = $context['progress_snapshot'];
         $this->updateProgressBar(
-            $snapshot,
-            $snapshot->getTotalBytes() === 0
+            $this->currentSnapshot->getTotalBytes() === 0
         );
     }
 
@@ -141,6 +153,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferFail(array $context): void
     {
+        $this->currentSnapshot = $context['progress_snapshot'];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -153,14 +166,13 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
             );
         }
 
-        $this->updateProgressBar($context['progress_snapshot']);
+        $this->updateProgressBar();
     }
 
     /**
      * Updates the progress bar with the transfer snapshot
      * and also call showProgress.
      *
-     * @param TransferProgressSnapshot $snapshot
      * @param bool $forceCompletion To force the progress bar to be
      * completed. This is useful for files where its size is zero,
      * for which a ratio will return zero, and hence the percent
@@ -169,25 +181,26 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      * @return void
      */
     private function updateProgressBar(
-        TransferProgressSnapshot $snapshot,
         bool $forceCompletion = false
     ): void
     {
         if (!$forceCompletion) {
             $this->progressBar->setPercentCompleted(
-                ((int)floor($snapshot->ratioTransferred() * 100))
+                ((int)floor($this->currentSnapshot->ratioTransferred() * 100))
             );
         } else {
             $this->progressBar->setPercentCompleted(100);
         }
 
         $this->progressBar->getProgressBarFormat()->setArgs([
-            'transferred' => $snapshot->getTransferredBytes(),
-            'tobe_transferred' => $snapshot->getTotalBytes(),
+            'transferred' => $this->currentSnapshot->getTransferredBytes(),
+            'tobe_transferred' => $this->currentSnapshot->getTotalBytes(),
             'unit' => 'B',
         ]);
         // Display progress
-        $this->showProgress();
+        if ($this->showProgressOnUpdate) {
+            $this->showProgress();
+        }
     }
 
     /**
@@ -197,9 +210,9 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function showProgress(): void
     {
-        if (empty($this->objectName)) {
-            throw new \RuntimeException(
-                "Progress tracker requires an object name to be set."
+        if ($this->currentSnapshot === null) {
+            throw new ProgressTrackerException(
+                "There is not snapshot to show progress for."
             );
         }
 

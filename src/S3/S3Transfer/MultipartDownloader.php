@@ -5,6 +5,7 @@ namespace Aws\S3\S3Transfer;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
@@ -346,8 +347,8 @@ abstract class MultipartDownloader implements PromisorInterface
     ): string
     {
         return match ($multipartDownloadType) {
-            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\PartGetMultipartDownloader',
-            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => 'Aws\S3\S3Transfer\RangeGetMultipartDownloader',
+            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
+            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
             default => throw new \InvalidArgumentException(
                 "The config value for `multipart_download_type` must be one of:\n"
                 . "\t* " . MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER

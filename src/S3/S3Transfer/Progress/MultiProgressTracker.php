@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-use Aws\S3\S3Transfer\TransferListener;
+use Closure;
 
 final class MultiProgressTracker extends TransferListener implements ProgressTrackerInterface
 {
@@ -21,12 +21,16 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     /** @var int */
     private int $failed;
 
+    /** @var ProgressBarFactoryInterface | Closure | null */
+    private readonly ProgressBarFactoryInterface | Closure | null $progressBarFactory;
+
     /**
      * @param array $singleProgressTrackers
      * @param mixed|false|resource $output
      * @param int $transferCount
      * @param int $completed
      * @param int $failed
+     * @param ProgressBarFactoryInterface|Closure|null $progressBarFactory
      */
     public function __construct(
         array $singleProgressTrackers = [],
@@ -34,6 +38,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
         int $transferCount = 0,
         int $completed = 0,
         int $failed = 0,
+        ProgressBarFactoryInterface | Closure | null $progressBarFactory = null
     )
     {
         $this->singleProgressTrackers = $singleProgressTrackers;
@@ -41,6 +46,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
         $this->transferCount = $transferCount;
         $this->completed = $completed;
         $this->failed = $failed;
+        $this->progressBarFactory = $progressBarFactory;
     }
 
     /**
@@ -84,20 +90,42 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     }
 
     /**
+     * @return ProgressBarFactoryInterface|Closure|null
+     */
+    public function getProgressBarFactory(): ProgressBarFactoryInterface | Closure | null
+    {
+        return $this->progressBarFactory;
+    }
+
+    /**
      * @inheritDoc
      */
     public function transferInitiated(array $context): void
     {
         $this->transferCount++;
         $snapshot = $context['progress_snapshot'];
-        if (isset($this->singleProgressTrackers[$snapshot['key']])) {
-            $progressTracker = $this->singleProgressTrackers[$snapshot['key']];
+        if (isset($this->singleProgressTrackers[$snapshot->getIdentifier()])) {
+            $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         } else {
-            $progressTracker = new SingleProgressTracker(
-                clear: false,
-            );
+            if ($this->progressBarFactory === null) {
+                $progressTracker = new SingleProgressTracker(
+                    output: $this->output,
+                    clear: false,
+                    showProgressOnUpdate: false,
+                );
+            } else {
+                $progressBarFactoryFn = $this->progressBarFactory;
+                $progressTracker = new SingleProgressTracker(
+                    progressBar: $progressBarFactoryFn(),
+                    output: $this->output,
+                    clear: false,
+                    showProgressOnUpdate: false,
+                );
+            }
+
             $this->singleProgressTrackers[$snapshot->getIdentifier()] = $progressTracker;
         }
+
         $progressTracker->transferInitiated($context);
         $this->showProgress();
     }
@@ -144,29 +172,49 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     {
         fwrite($this->output, "\033[2J\033[H");
         $percentsSum = 0;
+        /**
+         * @var  $_
+         * @var SingleProgressTracker $progressTracker
+         */
         foreach ($this->singleProgressTrackers as $_ => $progressTracker) {
             $progressTracker->showProgress();
             $percentsSum += $progressTracker->getProgressBar()->getPercentCompleted();
         }
 
+        $allProgressBarWidth = ConsoleProgressBar::DEFAULT_PROGRESS_BAR_WIDTH;
+        if (count($this->singleProgressTrackers) !== 0) {
+            $firstKey = array_key_first($this->singleProgressTrackers);
+            $allProgressBarWidth = $this->singleProgressTrackers[$firstKey]
+                ->getProgressBar()->getProgressBarWidth();
+        }
+
         $percent = (int) floor($percentsSum / $this->transferCount);
+        $multiProgressBarFormat = new MultiProgressBarFormat();
+        $multiProgressBarFormat->setArgs([
+            'completed' => $this->completed,
+            'failed' => $this->failed,
+            'total' => $this->transferCount,
+        ]);
         $allTransferProgressBar = new ConsoleProgressBar(
+            progressBarWidth: $allProgressBarWidth,
             percentCompleted: $percent,
-            progressBarFormat: new PlainProgressBarFormat()
-        );
-        fwrite($this->output, "\n" . str_repeat(
-                '-',
-                $allTransferProgressBar->getProgressBarWidth())
+            progressBarFormat: $multiProgressBarFormat
         );
         fwrite(
             $this->output,
             sprintf(
-                "\n%s Completed: %d/%d, Failed: %d/%d\n",
+                "\n%s\n",
+                str_repeat(
+                    '-',
+                    $allTransferProgressBar->getProgressBarWidth()
+                )
+            )
+        );
+        fwrite(
+            $this->output,
+            sprintf(
+                "%s\n",
                 $allTransferProgressBar->render(),
-                $this->completed,
-                $this->transferCount,
-                $this->failed,
-                $this->transferCount
             )
         );
     }

@@ -6,12 +6,13 @@ final class PlainProgressBarFormat extends ProgressBarFormat
 {
     public function getFormatTemplate(): string
     {
-        return '[|progress_bar|] |percent|%';
+        return "|object_name|:\n[|progress_bar|] |percent|%";
     }
 
     public function getFormatParameters(): array
     {
         return [
+            'object_name',
             'progress_bar',
             'percent',
         ];

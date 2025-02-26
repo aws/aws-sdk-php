@@ -1,8 +1,6 @@
 <?php
 
-namespace Aws\S3\S3Transfer;
-
-use function Aws\is_associative;
+namespace Aws\S3\S3Transfer\Progress;
 
 class TransferListenerNotifier extends TransferListener
 {

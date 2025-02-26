@@ -2,31 +2,33 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-final class TransferProgressBarFormat extends ProgressBarFormat
+class MultiProgressBarFormat extends ProgressBarFormat
 {
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getFormatTemplate(): string
     {
-        return "|object_name|:\n[|progress_bar|] |percent|% |transferred|/|tobe_transferred| |unit|";
+        return "[|progress_bar|] |percent|% Completed: |completed|/|total|, Failed: |failed|/|total|";
     }
 
     /**
-     * @inheritDoc
+     * @return array
      */
     public function getFormatParameters(): array
     {
         return [
-            'object_name',
-            'progress_bar',
+            'completed',
+            'failed',
+            'total',
             'percent',
-            'transferred',
-            'tobe_transferred',
-            'unit',
+            'progress_bar'
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getFormatDefaultParameterValues(): array
     {
         return [];
