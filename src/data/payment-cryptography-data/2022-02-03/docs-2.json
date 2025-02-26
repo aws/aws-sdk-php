@@ -2,13 +2,14 @@
   "version": "2.0",
   "service": "<p>You use the Amazon Web Services Payment Cryptography Data Plane to manage how encryption keys are used for payment-related transaction processing and associated cryptographic operations. You can encrypt, decrypt, generate, verify, and translate payment-related cryptographic operations in Amazon Web Services Payment Cryptography. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/data-operations.html\">Data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>To manage your encryption keys, you use the <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/Welcome.html\">Amazon Web Services Payment Cryptography Control Plane</a>. You can create, import, export, share, manage, and delete keys. You can also manage Identity and Access Management (IAM) policies for keys. </p>",
   "operations": {
-    "DecryptData": "<p>Decrypts ciphertext data to plaintext using a symmetric (TDES, AES), asymmetric (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/decrypt-data.html\">Decrypt data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>You can use an encryption key generated within Amazon Web Services Payment Cryptography, or you can import your own encryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. For this operation, the key must have <code>KeyModesOfUse</code> set to <code>Decrypt</code>. In asymmetric decryption, Amazon Web Services Payment Cryptography decrypts the ciphertext using the private component of the asymmetric encryption key pair. For data encryption outside of Amazon Web Services Payment Cryptography, you can export the public component of the asymmetric key pair by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a>.</p> <p>For symmetric and DUKPT decryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. For EMV decryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> algorithms. For asymmetric decryption, Amazon Web Services Payment Cryptography supports <code>RSA</code>. </p> <p>When you use TDES or TDES DUKPT, the ciphertext data length must be a multiple of 8 bytes. For AES or AES DUKPT, the ciphertext data length must be a multiple of 16 bytes. For RSA, it sould be equal to the key size unless padding is enabled.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>EncryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> </ul>",
-    "EncryptData": "<p>Encrypts plaintext data to ciphertext using a symmetric (TDES, AES), asymmetric (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/encrypt-data.html\">Encrypt data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>You can generate an encryption key within Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>. You can import your own encryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. For this operation, the key must have <code>KeyModesOfUse</code> set to <code>Encrypt</code>. In asymmetric encryption, plaintext is encrypted using public component. You can import the public component of an asymmetric key pair created outside Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. </p> <p>For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. For EMV encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> algorithms.For asymmetric encryption, Amazon Web Services Payment Cryptography supports <code>RSA</code>. </p> <p>When you use TDES or TDES DUKPT, the plaintext data length must be a multiple of 8 bytes. For AES or AES DUKPT, the plaintext data length must be a multiple of 16 bytes. For RSA, it sould be equal to the key size unless padding is enabled.</p> <p>To encrypt using DUKPT, you must already have a BDK (Base Derivation Key) key in your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code>, or you can generate a new DUKPT key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>. To encrypt using EMV, you must already have an IMK (Issuer Master Key) key in your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>DecryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> <li> <p> <a>ReEncryptData</a> </p> </li> </ul>",
+    "DecryptData": "<p>Decrypts ciphertext data to plaintext using a symmetric (TDES, AES), asymmetric (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/decrypt-data.html\">Decrypt data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>You can use an decryption key generated within Amazon Web Services Payment Cryptography, or you can import your own decryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. For this operation, the key must have <code>KeyModesOfUse</code> set to <code>Decrypt</code>. In asymmetric decryption, Amazon Web Services Payment Cryptography decrypts the ciphertext using the private component of the asymmetric encryption key pair. For data encryption outside of Amazon Web Services Payment Cryptography, you can export the public component of the asymmetric key pair by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a>.</p> <p>This operation also supports dynamic keys, allowing you to pass a dynamic decryption key as a TR-31 WrappedKeyBlock. This can be used when key material is frequently rotated, such as during every card transaction, and there is need to avoid importing short-lived keys into Amazon Web Services Payment Cryptography. To decrypt using dynamic keys, the <code>keyARN</code> is the Key Encryption Key (KEK) of the TR-31 wrapped decryption key material. The incoming wrapped key shall have a key purpose of D0 with a mode of use of B or D. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/use-cases-acquirers-dynamickeys.html\">Using Dynamic Keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>For symmetric and DUKPT decryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. For EMV decryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> algorithms. For asymmetric decryption, Amazon Web Services Payment Cryptography supports <code>RSA</code>. </p> <p>When you use TDES or TDES DUKPT, the ciphertext data length must be a multiple of 8 bytes. For AES or AES DUKPT, the ciphertext data length must be a multiple of 16 bytes. For RSA, it sould be equal to the key size unless padding is enabled.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>EncryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> </ul>",
+    "EncryptData": "<p>Encrypts plaintext data to ciphertext using a symmetric (TDES, AES), asymmetric (RSA), or derived (DUKPT or EMV) encryption key scheme. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/encrypt-data.html\">Encrypt data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>You can generate an encryption key within Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>. You can import your own encryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>.</p> <p>For this operation, the key must have <code>KeyModesOfUse</code> set to <code>Encrypt</code>. In asymmetric encryption, plaintext is encrypted using public component. You can import the public component of an asymmetric key pair created outside Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. </p> <p>This operation also supports dynamic keys, allowing you to pass a dynamic encryption key as a TR-31 WrappedKeyBlock. This can be used when key material is frequently rotated, such as during every card transaction, and there is need to avoid importing short-lived keys into Amazon Web Services Payment Cryptography. To encrypt using dynamic keys, the <code>keyARN</code> is the Key Encryption Key (KEK) of the TR-31 wrapped encryption key material. The incoming wrapped key shall have a key purpose of D0 with a mode of use of B or D. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/use-cases-acquirers-dynamickeys.html\">Using Dynamic Keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. For EMV encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> algorithms.For asymmetric encryption, Amazon Web Services Payment Cryptography supports <code>RSA</code>. </p> <p>When you use TDES or TDES DUKPT, the plaintext data length must be a multiple of 8 bytes. For AES or AES DUKPT, the plaintext data length must be a multiple of 16 bytes. For RSA, it sould be equal to the key size unless padding is enabled.</p> <p>To encrypt using DUKPT, you must already have a BDK (Base Derivation Key) key in your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code>, or you can generate a new DUKPT key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>. To encrypt using EMV, you must already have an IMK (Issuer Master Key) key in your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>DecryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> <li> <p> <a>ReEncryptData</a> </p> </li> </ul>",
     "GenerateCardValidationData": "<p>Generates card-related validation data using algorithms such as Card Verification Values (CVV/CVV2), Dynamic Card Verification Values (dCVV/dCVV2), or Card Security Codes (CSC). For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/generate-card-data.html\">Generate card data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>This operation generates a CVV or CSC value that is printed on a payment credit or debit card during card production. The CVV or CSC, PAN (Primary Account Number) and expiration date of the card are required to check its validity during transaction processing. To begin this operation, a CVK (Card Verification Key) encryption key is required. You can use <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a> or <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> to establish a CVK within Amazon Web Services Payment Cryptography. The <code>KeyModesOfUse</code> should be set to <code>Generate</code> and <code>Verify</code> for a CVK encryption key. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> <li> <p> <a>VerifyCardValidationData</a> </p> </li> </ul>",
     "GenerateMac": "<p>Generates a Message Authentication Code (MAC) cryptogram within Amazon Web Services Payment Cryptography. </p> <p>You can use this operation to authenticate card-related data by using known data values to generate MAC for data validation between the sending and receiving parties. This operation uses message data, a secret encryption key and MAC algorithm to generate a unique MAC value for transmission. The receiving party of the MAC must use the same message data, secret encryption key and MAC algorithm to reproduce another MAC value for comparision.</p> <p>You can use this operation to generate a DUPKT, CMAC, HMAC or EMV MAC by setting generation attributes and algorithm to the associated values. The MAC generation encryption key must have valid values for <code>KeyUsage</code> such as <code>TR31_M7_HMAC_KEY</code> for HMAC generation, and they key must have <code>KeyModesOfUse</code> set to <code>Generate</code> and <code>Verify</code>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>VerifyMac</a> </p> </li> </ul>",
-    "GeneratePinData": "<p>Generates pin-related data such as PIN, PIN Verification Value (PVV), PIN Block, and PIN Offset during new card issuance or reissuance. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/generate-pin-data.html\">Generate PIN data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>PIN data is never transmitted in clear to or from Amazon Web Services Payment Cryptography. This operation generates PIN, PVV, or PIN Offset and then encrypts it using Pin Encryption Key (PEK) to create an <code>EncryptedPinBlock</code> for transmission from Amazon Web Services Payment Cryptography. This operation uses a separate Pin Verification Key (PVK) for VISA PVV generation. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GenerateCardValidationData</a> </p> </li> <li> <p> <a>TranslatePinData</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
-    "ReEncryptData": "<p>Re-encrypt ciphertext using DUKPT or Symmetric data encryption keys. </p> <p>You can either generate an encryption key within Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a> or import your own encryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. The <code>KeyArn</code> for use with this operation must be in a compatible key state with <code>KeyModesOfUse</code> set to <code>Encrypt</code>. </p> <p>For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. To encrypt using DUKPT, a DUKPT key must already exist within your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code> or a new DUKPT can be generated by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>DecryptData</a> </p> </li> <li> <p> <a>EncryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> </ul>",
-    "TranslatePinData": "<p>Translates encrypted PIN block from and to ISO 9564 formats 0,1,3,4. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/translate-pin-data.html\">Translate PIN data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>PIN block translation involves changing the encrytion of PIN block from one encryption key to another encryption key and changing PIN block format from one to another without PIN block data leaving Amazon Web Services Payment Cryptography. The encryption key transformation can be from PEK (Pin Encryption Key) to BDK (Base Derivation Key) for DUKPT or from BDK for DUKPT to PEK. Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> key derivation type for DUKPT translations. </p> <p>The allowed combinations of PIN block format translations are guided by PCI. It is important to note that not all encrypted PIN block formats (example, format 1) require PAN (Primary Account Number) as input. And as such, PIN block format that requires PAN (example, formats 0,3,4) cannot be translated to a format (format 1) that does not require a PAN for generation. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <note> <p>Amazon Web Services Payment Cryptography currently supports ISO PIN block 4 translation for PIN block built using legacy PAN length. That is, PAN is the right most 12 digits excluding the check digits.</p> </note> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GeneratePinData</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
+    "GenerateMacEmvPinChange": "<p>Generates an issuer script mac for EMV payment cards that use offline PINs as the cardholder verification method (CVM).</p> <p>This operation generates an authenticated issuer script response by appending the incoming message data (APDU command) with the target encrypted PIN block in ISO2 format. The command structure and method to send the issuer script update to the card is not defined by this operation and is typically determined by the applicable payment card scheme.</p> <p>The primary inputs to this operation include the incoming new encrypted pinblock, PIN encryption key (PEK), issuer master key (IMK), primary account number (PAN), and the payment card derivation method.</p> <p>The operation uses two issuer master keys - secure messaging for confidentiality (IMK-SMC) and secure messaging for integrity (IMK-SMI). The SMC key is used to internally derive a key to secure the pin, while SMI key is used to internally derive a key to authenticate the script reponse as per the <a href=\"https://www.emvco.com/specifications/\">EMV 4.4 - Book 2 - Security and Key Management</a> specification. </p> <p>This operation supports Amex, EMV2000, EMVCommon, Mastercard and Visa derivation methods, each requiring specific input parameters. Users must follow the specific derivation method and input parameters defined by the respective payment card scheme.</p> <note> <p>Use <a>GenerateMac</a> operation when sending a script update to an EMV card that does not involve PIN change. When assigning IAM permissions, it is important to understand that <a>EncryptData</a> using EMV keys and <a>GenerateMac</a> perform similar functions to this command.</p> </note> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>EncryptData</a> </p> </li> <li> <p> <a>GenerateMac</a> </p> </li> </ul>",
+    "GeneratePinData": "<p>Generates pin-related data such as PIN, PIN Verification Value (PVV), PIN Block, and PIN Offset during new card issuance or reissuance. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/generate-pin-data.html\">Generate PIN data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>PIN data is never transmitted in clear to or from Amazon Web Services Payment Cryptography. This operation generates PIN, PVV, or PIN Offset and then encrypts it using Pin Encryption Key (PEK) to create an <code>EncryptedPinBlock</code> for transmission from Amazon Web Services Payment Cryptography. This operation uses a separate Pin Verification Key (PVK) for VISA PVV generation. </p> <p>Using ECDH key exchange, you can receive cardholder selectable PINs into Amazon Web Services Payment Cryptography. The ECDH derived key protects the incoming PIN block. You can also use it for reveal PIN, wherein the generated PIN block is protected by the ECDH derived key before transmission from Amazon Web Services Payment Cryptography. For more information on establishing ECDH derived keys, see the <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/create-keys.html\">Generating keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GenerateCardValidationData</a> </p> </li> <li> <p> <a>TranslatePinData</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
+    "ReEncryptData": "<p>Re-encrypt ciphertext using DUKPT or Symmetric data encryption keys. </p> <p>You can either generate an encryption key within Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a> or import your own encryption key by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. The <code>KeyArn</code> for use with this operation must be in a compatible key state with <code>KeyModesOfUse</code> set to <code>Encrypt</code>. </p> <p>This operation also supports dynamic keys, allowing you to pass a dynamic encryption key as a TR-31 WrappedKeyBlock. This can be used when key material is frequently rotated, such as during every card transaction, and there is need to avoid importing short-lived keys into Amazon Web Services Payment Cryptography. To re-encrypt using dynamic keys, the <code>keyARN</code> is the Key Encryption Key (KEK) of the TR-31 wrapped encryption key material. The incoming wrapped key shall have a key purpose of D0 with a mode of use of B or D. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/use-cases-acquirers-dynamickeys.html\">Using Dynamic Keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>For symmetric and DUKPT encryption, Amazon Web Services Payment Cryptography supports <code>TDES</code> and <code>AES</code> algorithms. To encrypt using DUKPT, a DUKPT key must already exist within your account with <code>KeyModesOfUse</code> set to <code>DeriveKey</code> or a new DUKPT can be generated by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a>.</p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>DecryptData</a> </p> </li> <li> <p> <a>EncryptData</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_GetPublicKeyCertificate.html\">GetPublicCertificate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a> </p> </li> </ul>",
+    "TranslatePinData": "<p>Translates encrypted PIN block from and to ISO 9564 formats 0,1,3,4. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/translate-pin-data.html\">Translate PIN data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>PIN block translation involves changing a PIN block from one encryption key to another and optionally change its format. PIN block translation occurs entirely within the HSM boundary and PIN data never enters or leaves Amazon Web Services Payment Cryptography in clear text. The encryption key transformation can be from PEK (Pin Encryption Key) to BDK (Base Derivation Key) for DUKPT or from BDK for DUKPT to PEK.</p> <p>Amazon Web Services Payment Cryptography also supports use of dynamic keys and ECDH (Elliptic Curve Diffie-Hellman) based key exchange for this operation.</p> <p>Dynamic keys allow you to pass a PEK as a TR-31 WrappedKeyBlock. They can be used when key material is frequently rotated, such as during every card transaction, and there is need to avoid importing short-lived keys into Amazon Web Services Payment Cryptography. To translate PIN block using dynamic keys, the <code>keyARN</code> is the Key Encryption Key (KEK) of the TR-31 wrapped PEK. The incoming wrapped key shall have a key purpose of P0 with a mode of use of B or D. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/use-cases-acquirers-dynamickeys.html\">Using Dynamic Keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>Using ECDH key exchange, you can receive cardholder selectable PINs into Amazon Web Services Payment Cryptography. The ECDH derived key protects the incoming PIN block, which is translated to a PEK encrypted PIN block for use within the service. You can also use ECDH for reveal PIN, wherein the service translates the PIN block from PEK to a ECDH derived encryption key. For more information on establishing ECDH derived keys, see the <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/create-keys.html\">Generating keys</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>The allowed combinations of PIN block format translations are guided by PCI. It is important to note that not all encrypted PIN block formats (example, format 1) require PAN (Primary Account Number) as input. And as such, PIN block format that requires PAN (example, formats 0,3,4) cannot be translated to a format (format 1) that does not require a PAN for generation. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <note> <p>Amazon Web Services Payment Cryptography currently supports ISO PIN block 4 translation for PIN block built using legacy PAN length. That is, PAN is the right most 12 digits excluding the check digits.</p> </note> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GeneratePinData</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
     "VerifyAuthRequestCryptogram": "<p>Verifies Authorization Request Cryptogram (ARQC) for a EMV chip payment card authorization. For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/data-operations.verifyauthrequestcryptogram.html\">Verify auth request cryptogram</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>ARQC generation is done outside of Amazon Web Services Payment Cryptography and is typically generated on a point of sale terminal for an EMV chip card to obtain payment authorization during transaction time. For ARQC verification, you must first import the ARQC generated outside of Amazon Web Services Payment Cryptography by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_ImportKey.html\">ImportKey</a>. This operation uses the imported ARQC and an major encryption key (DUKPT) created by calling <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/APIReference/API_CreateKey.html\">CreateKey</a> to either provide a boolean ARQC verification result or provide an APRC (Authorization Response Cryptogram) response using Method 1 or Method 2. The <code>ARPC_METHOD_1</code> uses <code>AuthResponseCode</code> to generate ARPC and <code>ARPC_METHOD_2</code> uses <code>CardStatusUpdate</code> to generate ARPC. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>VerifyCardValidationData</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
     "VerifyCardValidationData": "<p>Verifies card-related validation data using algorithms such as Card Verification Values (CVV/CVV2), Dynamic Card Verification Values (dCVV/dCVV2) and Card Security Codes (CSC). For more information, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/verify-card-data.html\">Verify card data</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>.</p> <p>This operation validates the CVV or CSC codes that is printed on a payment credit or debit card during card payment transaction. The input values are typically provided as part of an inbound transaction to an issuer or supporting platform partner. Amazon Web Services Payment Cryptography uses CVV or CSC, PAN (Primary Account Number) and expiration date of the card to check its validity during transaction processing. In this operation, the CVK (Card Verification Key) encryption key for use with card data verification is same as the one in used for <a>GenerateCardValidationData</a>. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GenerateCardValidationData</a> </p> </li> <li> <p> <a>VerifyAuthRequestCryptogram</a> </p> </li> <li> <p> <a>VerifyPinData</a> </p> </li> </ul>",
     "VerifyMac": "<p>Verifies a Message Authentication Code (MAC). </p> <p>You can use this operation to verify MAC for message data authentication such as . In this operation, you must use the same message data, secret encryption key and MAC algorithm that was used to generate MAC. You can use this operation to verify a DUPKT, CMAC, HMAC or EMV MAC by setting generation attributes and algorithm to the associated values. </p> <p>For information about valid keys for this operation, see <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/keys-validattributes.html\">Understanding key attributes</a> and <a href=\"https://docs.aws.amazon.com/payment-cryptography/latest/userguide/crypto-ops-validkeys-ops.html\">Key types for specific data operations</a> in the <i>Amazon Web Services Payment Cryptography User Guide</i>. </p> <p> <b>Cross-account use</b>: This operation can't be used across different Amazon Web Services accounts.</p> <p> <b>Related operations:</b> </p> <ul> <li> <p> <a>GenerateMac</a> </p> </li> </ul>",
@@ -18,6 +19,12 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AmexAttributes": {
+      "base": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using Amex derivation method.</p>",
+      "refs": {
+        "DerivationMethodAttributes$Amex": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using Amex derivation method.</p>"
       }
     },
     "AmexCardSecurityCodeVersion1": {
@@ -37,6 +44,8 @@
     "ApplicationCryptogramType": {
       "base": null,
       "refs": {
+        "EmvCommonAttributes$ApplicationCryptogram": "<p>The application cryptogram for the current transaction that is provided by the terminal during transaction processing.</p>",
+        "MasterCardAttributes$ApplicationCryptogram": "<p>The application cryptogram for the current transaction that is provided by the terminal during transaction processing.</p>",
         "SessionKeyDerivationValue$ApplicationCryptogram": "<p>The cryptogram provided by the terminal during transaction processing.</p>"
       }
     },
@@ -102,6 +111,12 @@
         "CardVerificationAttributes$CardVerificationValue2": "<p>Card data parameters that are required to verify Card Verification Value (CVV2) for the payment card.</p>"
       }
     },
+    "CertificateType": {
+      "base": null,
+      "refs": {
+        "EcdhDerivationAttributes$PublicKeyCertificate": "<p>The client's public key certificate in PEM format (base64 encoded) to use for ECDH key derivation.</p>"
+      }
+    },
     "CipherTextType": {
       "base": null,
       "refs": {
@@ -109,6 +124,12 @@
         "EncryptDataOutput$CipherText": "<p>The encrypted ciphertext.</p>",
         "ReEncryptDataInput$CipherText": "<p>Ciphertext to be encrypted. The minimum allowed length is 16 bytes and maximum allowed length is 4096 bytes.</p>",
         "ReEncryptDataOutput$CipherText": "<p>The encrypted ciphertext.</p>"
+      }
+    },
+    "CommandMessageDataType": {
+      "base": null,
+      "refs": {
+        "GenerateMacEmvPinChangeInput$MessageData": "<p>The message data is the APDU command from the card reader or terminal. The target encrypted PIN block, after translation to ISO2 format, is appended to this message data to generate an issuer script response.</p>"
       }
     },
     "CryptogramAuthResponse": {
@@ -129,6 +150,13 @@
         "CryptogramAuthResponse$ArpcMethod2": "<p>Parameters that are required for ARPC response generation using method2 after ARQC verification is successful.</p>"
       }
     },
+    "CurrentPinAttributes": {
+      "base": "<p>The parameter values of the current PIN to be changed on the EMV chip card.</p>",
+      "refs": {
+        "AmexAttributes$CurrentPinAttributes": "<p>The encrypted pinblock of the old pin stored on the chip card.</p>",
+        "VisaAttributes$CurrentPinAttributes": "<p>The encrypted pinblock of the old pin stored on the chip card.</p>"
+      }
+    },
     "DecimalizationTableType": {
       "base": null,
       "refs": {
@@ -147,6 +175,12 @@
     "DecryptDataOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "DerivationMethodAttributes": {
+      "base": "<p>Parameters to derive the payment card specific confidentiality and integrity keys.</p>",
+      "refs": {
+        "GenerateMacEmvPinChangeInput$DerivationMethodAttributes": "<p>The attributes and data values to derive payment card specific confidentiality and integrity keys.</p>"
       }
     },
     "DiscoverDynamicCardVerificationCode": {
@@ -212,6 +246,24 @@
         "CardVerificationAttributes$DynamicCardVerificationValue": "<p>Card data parameters that are required to verify CDynamic Card Verification Value (dCVV) for the payment card.</p>"
       }
     },
+    "EcdhDerivationAttributes": {
+      "base": "<p>Parameters required to establish ECDH based key exchange.</p>",
+      "refs": {
+        "WrappedKeyMaterial$DiffieHellmanSymmetricKey": "<p>The parameter information for deriving a ECDH shared key.</p>"
+      }
+    },
+    "Emv2000Attributes": {
+      "base": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using EMV2000 deruv.</p>",
+      "refs": {
+        "DerivationMethodAttributes$Emv2000": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using Emv2000 derivation method.</p>"
+      }
+    },
+    "EmvCommonAttributes": {
+      "base": "<p>Parameters to derive the confidentiality and integrity keys for an Emv common payment card.</p>",
+      "refs": {
+        "DerivationMethodAttributes$EmvCommon": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using Emv common derivation method.</p>"
+      }
+    },
     "EmvEncryptionAttributes": {
       "base": "<p>Parameters for plaintext encryption using EMV keys.</p>",
       "refs": {
@@ -221,6 +273,7 @@
     "EmvEncryptionMode": {
       "base": null,
       "refs": {
+        "EmvCommonAttributes$Mode": "<p>The block cipher method to use for encryption.</p>",
         "EmvEncryptionAttributes$Mode": "<p>The block cipher method to use for encryption.</p>"
       }
     },
@@ -243,6 +296,7 @@
     "EncryptedPinBlockType": {
       "base": null,
       "refs": {
+        "GenerateMacEmvPinChangeOutput$EncryptedPinBlock": "<p>Returns the incoming new encrpted PIN block.</p>",
         "GeneratePinDataOutput$EncryptedPinBlock": "<p>The PIN block encrypted under PEK from Amazon Web Services Payment Cryptography. The encrypted PIN block is a composite of PAN (Primary Account Number) and PIN (Personal Identification Number), generated in accordance with ISO 9564 standard.</p>",
         "Ibm3624PinOffset$EncryptedPinBlock": "<p>The encrypted PIN block data. According to ISO 9564 standard, a PIN Block is an encoded representation of a payment card Personal Account Number (PAN) and the cardholder Personal Identification Number (PIN).</p>",
         "TranslatePinDataOutput$PinBlock": "<p>The outgoing encrypted PIN block data after translation.</p>",
@@ -269,6 +323,16 @@
       }
     },
     "GenerateCardValidationDataOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMacEmvPinChangeInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMacEmvPinChangeOutput": {
       "base": null,
       "refs": {
       }
@@ -314,11 +378,7 @@
         "CardHolderVerificationValue$ApplicationTransactionCounter": "<p>The transaction counter value that comes from a point of sale terminal.</p>",
         "DiscoverDynamicCardVerificationCode$ApplicationTransactionCounter": "<p>The transaction counter value that comes from the terminal.</p>",
         "DynamicCardVerificationCode$ApplicationTransactionCounter": "<p>The transaction counter value that comes from the terminal.</p>",
-        "DynamicCardVerificationValue$ApplicationTransactionCounter": "<p>The transaction counter value that comes from the terminal.</p>",
-        "SessionKeyDerivationValue$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
-        "SessionKeyEmv2000$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
-        "SessionKeyEmvCommon$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
-        "SessionKeyMastercard$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>"
+        "DynamicCardVerificationValue$ApplicationTransactionCounter": "<p>The transaction counter value that comes from the terminal.</p>"
       }
     },
     "HexLengthBetween2And8": {
@@ -343,7 +403,14 @@
     "HexLengthEquals4": {
       "base": null,
       "refs": {
-        "CryptogramVerificationArpcMethod1$AuthResponseCode": "<p>The auth code used to calculate APRC after ARQC verification is successful. This is the same auth code used for ARQC generation outside of Amazon Web Services Payment Cryptography.</p>"
+        "AmexAttributes$ApplicationTransactionCounter": "<p>The transaction counter of the current transaction that is provided by the terminal during transaction processing.</p>",
+        "CryptogramVerificationArpcMethod1$AuthResponseCode": "<p>The auth code used to calculate APRC after ARQC verification is successful. This is the same auth code used for ARQC generation outside of Amazon Web Services Payment Cryptography.</p>",
+        "Emv2000Attributes$ApplicationTransactionCounter": "<p>The transaction counter of the current transaction that is provided by the terminal during transaction processing.</p>",
+        "SessionKeyDerivationValue$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
+        "SessionKeyEmv2000$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
+        "SessionKeyEmvCommon$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
+        "SessionKeyMastercard$ApplicationTransactionCounter": "<p>The transaction counter that is provided by the terminal during transaction processing.</p>",
+        "VisaAttributes$ApplicationTransactionCounter": "<p>The transaction counter of the current transaction that is provided by the terminal during transaction processing.</p>"
       }
     },
     "HexLengthEquals8": {
@@ -429,36 +496,48 @@
         "DecryptDataOutput$KeyArn": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for ciphertext decryption.</p>",
         "EncryptDataOutput$KeyArn": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for plaintext encryption.</p>",
         "GenerateCardValidationDataOutput$KeyArn": "<p>The <code>keyARN</code> of the CVK encryption key that Amazon Web Services Payment Cryptography uses to generate CVV or CSC.</p>",
+        "GenerateMacEmvPinChangeOutput$NewPinPekArn": "<p>Returns the <code>keyArn</code> of the PEK protecting the incoming new encrypted PIN block.</p>",
+        "GenerateMacEmvPinChangeOutput$SecureMessagingIntegrityKeyArn": "<p>Returns the <code>keyArn</code> of the IMK-SMI used by the operation.</p>",
+        "GenerateMacEmvPinChangeOutput$SecureMessagingConfidentialityKeyArn": "<p>Returns the <code>keyArn</code> of the IMK-SMC used by the operation.</p>",
         "GenerateMacOutput$KeyArn": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for MAC generation.</p>",
         "GeneratePinDataOutput$GenerationKeyArn": "<p>The <code>keyARN</code> of the pin data generation key that Amazon Web Services Payment Cryptography uses for PIN, PVV or PIN Offset generation.</p>",
-        "GeneratePinDataOutput$EncryptionKeyArn": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses for encrypted pin block generation.</p>",
+        "GeneratePinDataOutput$EncryptionKeyArn": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses for encrypted pin block generation. For ECDH, it is the <code>keyARN</code> of the asymmetric ECC key.</p>",
         "ReEncryptDataOutput$KeyArn": "<p>The keyARN (Amazon Resource Name) of the encryption key that Amazon Web Services Payment Cryptography uses for plaintext encryption.</p>",
         "TranslatePinDataOutput$KeyArn": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses to encrypt outgoing PIN block data after translation.</p>",
         "VerifyAuthRequestCryptogramOutput$KeyArn": "<p>The <code>keyARN</code> of the major encryption key that Amazon Web Services Payment Cryptography uses for ARQC verification.</p>",
         "VerifyCardValidationDataOutput$KeyArn": "<p>The <code>keyARN</code> of the CVK encryption key that Amazon Web Services Payment Cryptography uses to verify CVV or CSC.</p>",
         "VerifyMacOutput$KeyArn": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for MAC verification.</p>",
         "VerifyPinDataOutput$VerificationKeyArn": "<p>The <code>keyARN</code> of the PIN encryption key that Amazon Web Services Payment Cryptography uses for PIN or PIN Offset verification.</p>",
-        "VerifyPinDataOutput$EncryptionKeyArn": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses for encrypted pin block generation.</p>"
+        "VerifyPinDataOutput$EncryptionKeyArn": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses for encrypted pin block generation.</p>",
+        "VisaAmexDerivationOutputs$AuthorizationRequestKeyArn": "<p>The <code>keyArn</code> of the issuer master key for cryptogram (IMK-AC) used by the operation.</p>",
+        "VisaAmexDerivationOutputs$CurrentPinPekArn": "<p>The <code>keyArn</code> of the current PIN PEK.</p>"
       }
     },
     "KeyArnOrKeyAliasType": {
       "base": null,
       "refs": {
+        "AmexAttributes$AuthorizationRequestKeyIdentifier": "<p>The <code>keyArn</code> of the issuer master key for cryptogram (IMK-AC) for the payment card.</p>",
+        "CurrentPinAttributes$CurrentPinPekIdentifier": "<p>The <code>keyArn</code> of the current PIN PEK.</p>",
         "DecryptDataInput$KeyIdentifier": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for ciphertext decryption.</p> <p>When a WrappedKeyBlock is provided, this value will be the identifier to the key wrapping key. Otherwise, it is the key identifier used to perform the operation.</p>",
+        "EcdhDerivationAttributes$CertificateAuthorityPublicKeyIdentifier": "<p>The <code>keyArn</code> of the certificate that signed the client's <code>PublicKeyCertificate</code>.</p>",
         "EncryptDataInput$KeyIdentifier": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses for plaintext encryption.</p> <p>When a WrappedKeyBlock is provided, this value will be the identifier to the key wrapping key. Otherwise, it is the key identifier used to perform the operation.</p>",
         "GenerateCardValidationDataInput$KeyIdentifier": "<p>The <code>keyARN</code> of the CVK encryption key that Amazon Web Services Payment Cryptography uses to generate card data.</p>",
+        "GenerateMacEmvPinChangeInput$NewPinPekIdentifier": "<p>The <code>keyARN</code> of the PEK protecting the incoming new encrypted PIN block.</p>",
+        "GenerateMacEmvPinChangeInput$SecureMessagingIntegrityKeyIdentifier": "<p>The <code>keyARN</code> of the issuer master key (IMK-SMI) used to authenticate the issuer script response.</p>",
+        "GenerateMacEmvPinChangeInput$SecureMessagingConfidentialityKeyIdentifier": "<p>The <code>keyARN</code> of the issuer master key (IMK-SMC) used to protect the PIN block data in the issuer script response.</p>",
         "GenerateMacInput$KeyIdentifier": "<p>The <code>keyARN</code> of the MAC generation encryption key.</p>",
         "GeneratePinDataInput$GenerationKeyIdentifier": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses for pin data generation.</p>",
-        "GeneratePinDataInput$EncryptionKeyIdentifier": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses to encrypt the PIN Block.</p>",
+        "GeneratePinDataInput$EncryptionKeyIdentifier": "<p>The <code>keyARN</code> of the PEK that Amazon Web Services Payment Cryptography uses to encrypt the PIN Block. For ECDH, it is the <code>keyARN</code> of the asymmetric ECC key.</p>",
         "ReEncryptDataInput$IncomingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key of incoming ciphertext data.</p> <p>When a WrappedKeyBlock is provided, this value will be the identifier to the key wrapping key. Otherwise, it is the key identifier used to perform the operation.</p>",
         "ReEncryptDataInput$OutgoingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key of outgoing ciphertext data after encryption by Amazon Web Services Payment Cryptography.</p>",
-        "TranslatePinDataInput$IncomingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key under which incoming PIN block data is encrypted. This key type can be PEK or BDK.</p> <p>When a WrappedKeyBlock is provided, this value will be the identifier to the key wrapping key for PIN block. Otherwise, it is the key identifier used to perform the operation.</p>",
-        "TranslatePinDataInput$OutgoingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key for encrypting outgoing PIN block data. This key type can be PEK or BDK.</p>",
+        "TranslatePinDataInput$IncomingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key under which incoming PIN block data is encrypted. This key type can be PEK or BDK.</p> <p>For dynamic keys, it is the <code>keyARN</code> of KEK of the TR-31 wrapped PEK. For ECDH, it is the <code>keyARN</code> of the asymmetric ECC key.</p>",
+        "TranslatePinDataInput$OutgoingKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key for encrypting outgoing PIN block data. This key type can be PEK or BDK.</p> <p>For ECDH, it is the <code>keyARN</code> of the asymmetric ECC key.</p>",
         "VerifyAuthRequestCryptogramInput$KeyIdentifier": "<p>The <code>keyARN</code> of the major encryption key that Amazon Web Services Payment Cryptography uses for ARQC verification.</p>",
         "VerifyCardValidationDataInput$KeyIdentifier": "<p>The <code>keyARN</code> of the CVK encryption key that Amazon Web Services Payment Cryptography uses to verify card data.</p>",
         "VerifyMacInput$KeyIdentifier": "<p>The <code>keyARN</code> of the encryption key that Amazon Web Services Payment Cryptography uses to verify MAC data.</p>",
         "VerifyPinDataInput$VerificationKeyIdentifier": "<p>The <code>keyARN</code> of the PIN verification key.</p>",
-        "VerifyPinDataInput$EncryptionKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key under which the PIN block data is encrypted. This key type can be PEK or BDK.</p>"
+        "VerifyPinDataInput$EncryptionKeyIdentifier": "<p>The <code>keyARN</code> of the encryption key under which the PIN block data is encrypted. This key type can be PEK or BDK.</p>",
+        "VisaAttributes$AuthorizationRequestKeyIdentifier": "<p>The <code>keyArn</code> of the issuer master key for cryptogram (IMK-AC) for the payment card.</p>"
       }
     },
     "KeyCheckValue": {
@@ -467,6 +546,9 @@
         "DecryptDataOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "EncryptDataOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "GenerateCardValidationDataOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
+        "GenerateMacEmvPinChangeOutput$NewPinPekKeyCheckValue": "<p>The key check value (KCV) of the PEK uprotecting the incoming new encrypted PIN block.</p>",
+        "GenerateMacEmvPinChangeOutput$SecureMessagingIntegrityKeyCheckValue": "<p>The key check value (KCV) of the SMI issuer master key used by the operation.</p>",
+        "GenerateMacEmvPinChangeOutput$SecureMessagingConfidentialityKeyCheckValue": "<p>The key check value (KCV) of the SMC issuer master key used by the operation.</p>",
         "GenerateMacOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "GeneratePinDataOutput$GenerationKeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "GeneratePinDataOutput$EncryptionKeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
@@ -476,13 +558,27 @@
         "VerifyCardValidationDataOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "VerifyMacOutput$KeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
         "VerifyPinDataOutput$VerificationKeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
-        "VerifyPinDataOutput$EncryptionKeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>"
+        "VerifyPinDataOutput$EncryptionKeyCheckValue": "<p>The key check value (KCV) of the encryption key. The KCV is used to check if all parties holding a given key have the same key or to detect that a key has changed.</p> <p>Amazon Web Services Payment Cryptography computes the KCV according to the CMAC specification.</p>",
+        "VisaAmexDerivationOutputs$AuthorizationRequestKeyCheckValue": "<p>The key check value (KCV) of the issuer master key for cryptogram (IMK-AC) used by the operation.</p>",
+        "VisaAmexDerivationOutputs$CurrentPinPekKeyCheckValue": "<p>The key check value (KCV) of the current PIN PEK.</p>"
       }
     },
     "KeyCheckValueAlgorithm": {
       "base": null,
       "refs": {
         "WrappedKey$KeyCheckValueAlgorithm": "<p>The algorithm that Amazon Web Services Payment Cryptography uses to calculate the key check value (KCV). It is used to validate the key integrity.</p> <p>For TDES keys, the KCV is computed by encrypting 8 bytes, each with value of zero, with the key to be checked and retaining the 3 highest order bytes of the encrypted result. For AES keys, the KCV is computed using a CMAC algorithm where the input data is 16 bytes of zero and retaining the 3 highest order bytes of the encrypted result.</p>"
+      }
+    },
+    "KeyDerivationFunction": {
+      "base": null,
+      "refs": {
+        "EcdhDerivationAttributes$KeyDerivationFunction": "<p>The key derivation function to use for deriving a key using ECDH.</p>"
+      }
+    },
+    "KeyDerivationHashAlgorithm": {
+      "base": null,
+      "refs": {
+        "EcdhDerivationAttributes$KeyDerivationHashAlgorithm": "<p>The hash type to use for deriving a key using ECDH.</p>"
       }
     },
     "MacAlgorithm": {
@@ -527,8 +623,19 @@
     "MajorKeyDerivationMode": {
       "base": null,
       "refs": {
+        "AmexAttributes$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for a payment card using Amex derivation.</p>",
+        "Emv2000Attributes$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for the payment card.</p>",
+        "EmvCommonAttributes$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for the payment card.</p>",
         "MacAlgorithmEmv$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for EMV MAC generation or verification.</p>",
-        "VerifyAuthRequestCryptogramInput$MajorKeyDerivationMode": "<p>The method to use when deriving the major encryption key for ARQC verification within Amazon Web Services Payment Cryptography. The same key derivation mode was used for ARQC generation outside of Amazon Web Services Payment Cryptography.</p>"
+        "MasterCardAttributes$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for the payment card.</p>",
+        "VerifyAuthRequestCryptogramInput$MajorKeyDerivationMode": "<p>The method to use when deriving the major encryption key for ARQC verification within Amazon Web Services Payment Cryptography. The same key derivation mode was used for ARQC generation outside of Amazon Web Services Payment Cryptography.</p>",
+        "VisaAttributes$MajorKeyDerivationMode": "<p>The method to use when deriving the master key for the payment card.</p>"
+      }
+    },
+    "MasterCardAttributes": {
+      "base": "<p>Parameters to derive the confidentiality and integrity keys for a Mastercard payment card.</p>",
+      "refs": {
+        "DerivationMethodAttributes$Mastercard": "<p>Parameters to derive the confidentiality and integrity keys for a payment card using Mastercard derivation method.</p>"
       }
     },
     "MessageDataType": {
@@ -541,16 +648,21 @@
     "NumberLengthEquals2": {
       "base": null,
       "refs": {
+        "AmexAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>",
         "CardHolderVerificationValue$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "DynamicCardVerificationCode$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "DynamicCardVerificationValue$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
-        "EmvEncryptionAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
+        "Emv2000Attributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>",
+        "EmvCommonAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>",
+        "EmvEncryptionAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>",
         "MacAlgorithmEmv$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
+        "MasterCardAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>",
         "SessionKeyAmex$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "SessionKeyEmv2000$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "SessionKeyEmvCommon$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
         "SessionKeyMastercard$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
-        "SessionKeyVisa$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>"
+        "SessionKeyVisa$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN).</p>",
+        "VisaAttributes$PanSequenceNumber": "<p>A number that identifies and differentiates payment cards with the same Primary Account Number (PAN). Typically 00 is used, if no value is provided by the terminal.</p>"
       }
     },
     "PaddingType": {
@@ -560,11 +672,42 @@
         "SymmetricEncryptionAttributes$PaddingType": "<p>The padding to be included with the data.</p>"
       }
     },
+    "PinBlockFormatForEmvPinChange": {
+      "base": null,
+      "refs": {
+        "GenerateMacEmvPinChangeInput$PinBlockFormat": "<p>The PIN encoding format of the incoming new encrypted PIN block as specified in ISO 9564.</p>"
+      }
+    },
     "PinBlockFormatForPinData": {
       "base": null,
       "refs": {
         "GeneratePinDataInput$PinBlockFormat": "<p>The PIN encoding format for pin data generation as specified in ISO 9564. Amazon Web Services Payment Cryptography supports <code>ISO_Format_0</code> and <code>ISO_Format_3</code>.</p> <p>The <code>ISO_Format_0</code> PIN block format is equivalent to the ANSI X9.8, VISA-1, and ECI-1 PIN block formats. It is similar to a VISA-4 PIN block format. It supports a PIN from 4 to 12 digits in length.</p> <p>The <code>ISO_Format_3</code> PIN block format is the same as <code>ISO_Format_0</code> except that the fill digits are random values from 10 to 15.</p>",
         "VerifyPinDataInput$PinBlockFormat": "<p>The PIN encoding format for pin data generation as specified in ISO 9564. Amazon Web Services Payment Cryptography supports <code>ISO_Format_0</code> and <code>ISO_Format_3</code>.</p> <p>The <code>ISO_Format_0</code> PIN block format is equivalent to the ANSI X9.8, VISA-1, and ECI-1 PIN block formats. It is similar to a VISA-4 PIN block format. It supports a PIN from 4 to 12 digits in length.</p> <p>The <code>ISO_Format_3</code> PIN block format is the same as <code>ISO_Format_0</code> except that the fill digits are random values from 10 to 15.</p>"
+      }
+    },
+    "PinBlockLengthEquals16": {
+      "base": null,
+      "refs": {
+        "CurrentPinAttributes$CurrentEncryptedPinBlock": "<p>The encrypted pinblock of the current pin stored on the chip card.</p>",
+        "GenerateMacEmvPinChangeInput$NewEncryptedPinBlock": "<p>The incoming new encrypted PIN block data for offline pin change on an EMV card.</p>"
+      }
+    },
+    "PinBlockLengthPosition": {
+      "base": null,
+      "refs": {
+        "EmvCommonAttributes$PinBlockLengthPosition": "<p>Specifies if PIN block length should be added to front of the pin block. </p> <p>If value is set to <code>FRONT_OF_PIN_BLOCK</code>, then PIN block padding type should be <code>ISO_IEC_7816_4</code>.</p>"
+      }
+    },
+    "PinBlockPaddingType": {
+      "base": null,
+      "refs": {
+        "EmvCommonAttributes$PinBlockPaddingType": "<p>The padding to be added to the PIN block prior to encryption.</p> <p>Padding type should be <code>ISO_IEC_7816_4</code>, if <code>PinBlockLengthPosition</code> is set to <code>FRONT_OF_PIN_BLOCK</code>. No padding is required, if <code>PinBlockLengthPosition</code> is set to <code>NONE</code>.</p>"
+      }
+    },
+    "PinChangeMacOutputType": {
+      "base": null,
+      "refs": {
+        "GenerateMacEmvPinChangeOutput$Mac": "<p>Returns the mac of the issuer script containing message data and appended target encrypted pin block in ISO2 format.</p>"
       }
     },
     "PinData": {
@@ -618,10 +761,14 @@
     "PrimaryAccountNumberType": {
       "base": null,
       "refs": {
+        "AmexAttributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder.</p>",
+        "Emv2000Attributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder.</p>",
+        "EmvCommonAttributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder.</p>",
         "EmvEncryptionAttributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "GenerateCardValidationDataInput$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.</p>",
         "GeneratePinDataInput$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.</p>",
         "MacAlgorithmEmv$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
+        "MasterCardAttributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder.</p>",
         "SessionKeyAmex$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "SessionKeyEmv2000$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "SessionKeyEmvCommon$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
@@ -629,7 +776,8 @@
         "SessionKeyVisa$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "TranslationPinDataIsoFormat034$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder. A PAN is a unique identifier for a payment credit or debit card and associates the card to a specific account holder.</p>",
         "VerifyCardValidationDataInput$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.</p>",
-        "VerifyPinDataInput$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.</p>"
+        "VerifyPinDataInput$PrimaryAccountNumber": "<p>The Primary Account Number (PAN), a unique identifier for a payment credit or debit card that associates the card with a specific account holder.</p>",
+        "VisaAttributes$PrimaryAccountNumber": "<p>The Primary Account Number (PAN) of the cardholder.</p>"
       }
     },
     "ProprietaryAuthenticationDataType": {
@@ -722,6 +870,12 @@
         "SessionKeyDerivation$Visa": "<p>Parameters to derive session key for a Visa payment cardfor ARQC verification.</p>"
       }
     },
+    "SharedInformation": {
+      "base": null,
+      "refs": {
+        "EcdhDerivationAttributes$SharedInformation": "<p>A byte string containing information that binds the ECDH derived key to the two parties involved or to the context of the key.</p> <p>It may include details like identities of the two parties deriving the key, context of the operation, session IDs, and optionally a nonce. It must not contain zero bytes, and re-using shared information for multiple ECDH key derivations is not recommended.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -740,6 +894,12 @@
       "refs": {
         "EncryptionDecryptionAttributes$Symmetric": "<p>Parameters that are required to perform encryption and decryption using symmetric keys.</p>",
         "ReEncryptionAttributes$Symmetric": "<p>Parameters that are required to encrypt data using symmetric keys.</p>"
+      }
+    },
+    "SymmetricKeyAlgorithm": {
+      "base": null,
+      "refs": {
+        "EcdhDerivationAttributes$KeyAlgorithm": "<p>The key algorithm of the derived ECDH key.</p>"
       }
     },
     "ThrottlingException": {
@@ -878,6 +1038,18 @@
       "refs": {
       }
     },
+    "VisaAmexDerivationOutputs": {
+      "base": "<p>The attributes values used for Amex and Visa derivation methods.</p>",
+      "refs": {
+        "GenerateMacEmvPinChangeOutput$VisaAmexDerivationOutputs": "<p>The attribute values used for Amex and Visa derivation methods.</p>"
+      }
+    },
+    "VisaAttributes": {
+      "base": "<p>Parameters to derive the confidentiality and integrity keys for a Visa payment card.</p>",
+      "refs": {
+        "DerivationMethodAttributes$Visa": "<p>Parameters to derive the confidentiality and integrity keys for a a payment card using Visa derivation method.</p>"
+      }
+    },
     "VisaPin": {
       "base": "<p>Parameters that are required to generate or verify Visa PIN.</p>",
       "refs": {
@@ -901,10 +1073,12 @@
       "refs": {
         "DecryptDataInput$WrappedKey": "<p>The WrappedKeyBlock containing the encryption key for ciphertext decryption.</p>",
         "EncryptDataInput$WrappedKey": "<p>The WrappedKeyBlock containing the encryption key for plaintext encryption.</p>",
+        "GeneratePinDataInput$EncryptionWrappedKey": null,
         "ReEncryptDataInput$IncomingWrappedKey": "<p>The WrappedKeyBlock containing the encryption key of incoming ciphertext data.</p>",
         "ReEncryptDataInput$OutgoingWrappedKey": "<p>The WrappedKeyBlock containing the encryption key of outgoing ciphertext data after encryption by Amazon Web Services Payment Cryptography.</p>",
         "TranslatePinDataInput$IncomingWrappedKey": "<p>The WrappedKeyBlock containing the encryption key under which incoming PIN block data is encrypted.</p>",
-        "TranslatePinDataInput$OutgoingWrappedKey": "<p>The WrappedKeyBlock containing the encryption key for encrypting outgoing PIN block data.</p>"
+        "TranslatePinDataInput$OutgoingWrappedKey": "<p>The WrappedKeyBlock containing the encryption key for encrypting outgoing PIN block data.</p>",
+        "VerifyPinDataInput$EncryptionWrappedKey": null
       }
     },
     "WrappedKeyMaterial": {

@@ -535,4 +535,29 @@ class SignatureV4Test extends TestCase
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
     }
+
+    public function testRemovesIllegalV4aHeadersBeforeSigning()
+    {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+
+        static $headers = [
+            'X-Amz-Content-Sha256' => 'blah',
+            'aws-sdk-invocation-id' => 1,
+            'aws-sdk-retry' => 'foo',
+            'transfer-encoding' => 'chunked'
+        ];
+        $sig = new SignatureV4('foo', 'bar', ['use_v4a' => true]);
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', $headers);
+        $signed = $sig->signRequest($req, $creds, 'foo');
+        $signedHeaders = $signed->getHeaderLine('Authorization');
+
+        foreach ($headers as $key => $value) {
+            $this->assertStringNotContainsString($key, $signedHeaders);
+            $this->assertTrue($req->hasHeader($key));
+            $this->assertEquals($value, $req->getHeaderLine($key));
+        }
+    }
 }

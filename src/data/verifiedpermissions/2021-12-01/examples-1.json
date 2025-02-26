@@ -1,5 +1,1137 @@
 {
   "version": "1.0",
   "examples": {
+    "BatchGetPolicy": [
+      {
+        "input": {
+          "requests": [
+            {
+              "policyId": "PWv5M6d5HePx3gVVLKY1nK",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC"
+            },
+            {
+              "policyId": "LzFn6KgLWvv4Mbegus35jn",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC"
+            },
+            {
+              "policyId": "77gLjer8H5o3mvrnMGrSL5",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC"
+            }
+          ]
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "results": [
+            {
+              "createdDate": "2024-10-18T18:53:39.258153Z",
+              "definition": {
+                "static": {
+                  "description": "Users can manage account resources in any account they own",
+                  "statement": "permit (principal, action in PhotoFlash::Action::\"ManageAccount\",resource) when { resource in principal.Account };"
+                }
+              },
+              "lastUpdatedDate": "2024-10-18T18:53:39.258153Z",
+              "policyId": "PWv5M6d5HePx3gVVLKY1nK",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC",
+              "policyType": "STATIC"
+            },
+            {
+              "createdDate": "2024-10-18T18:57:03.305027Z",
+              "definition": {
+                "static": {
+                  "description": "User alice can't delete any photos.",
+                  "statement": "forbid (principal == PhotoFlash::User::\"alice\", action in [PhotoFlash::Action::\"DeletePhoto\"], resource);"
+                }
+              },
+              "lastUpdatedDate": "2024-10-18T18:57:03.305027Z",
+              "policyId": "LzFn6KgLWvv4Mbegus35jn",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC",
+              "policyType": "STATIC"
+            },
+            {
+              "createdDate": "2024-10-18T18:57:48.005343Z",
+              "definition": {
+                "static": {
+                  "description": "User alice can view and delete photos.",
+                  "statement": "permit (principal == PhotoFlash::User::\"alice\", action in [PhotoFlash::Action::\"DeletePhoto\", PhotoFlash::Action::\"ViewPhoto\"], resource);"
+                }
+              },
+              "lastUpdatedDate": "2024-10-18T18:57:48.005343Z",
+              "policyId": "77gLjer8H5o3mvrnMGrSL5",
+              "policyStoreId": "ERZeDpRc34dkYZeb6FZRVC",
+              "policyType": "STATIC"
+            }
+          ]
+        },
+        "description": "The following example retrieves information about the specified policy contained in the specified policy store. In this example, the requested policy is a template-linked policy, so it returns the ID of the policy template, and the specific principal and resource used by this policy.",
+        "id": "example-1",
+        "title": "To retrieve details about a policy"
+      }
+    ],
+    "BatchIsAuthorized": [
+      {
+        "input": {
+          "entities": {
+            "entityList": [
+              {
+                "attributes": {
+                  "Account": {
+                    "entityIdentifier": {
+                      "entityId": "1234",
+                      "entityType": "PhotoFlash::Account"
+                    }
+                  },
+                  "Email": {
+                    "string": ""
+                  }
+                },
+                "identifier": {
+                  "entityId": "Alice",
+                  "entityType": "PhotoFlash::User"
+                },
+                "parents": [
+
+                ]
+              },
+              {
+                "attributes": {
+                  "Account": {
+                    "entityIdentifier": {
+                      "entityId": "5678",
+                      "entityType": "PhotoFlash::Account"
+                    }
+                  },
+                  "Email": {
+                    "string": ""
+                  }
+                },
+                "identifier": {
+                  "entityId": "Annalisa",
+                  "entityType": "PhotoFlash::User"
+                },
+                "parents": [
+
+                ]
+              },
+              {
+                "attributes": {
+                  "IsPrivate": {
+                    "boolean": false
+                  },
+                  "Name": {
+                    "string": ""
+                  }
+                },
+                "identifier": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                },
+                "parents": [
+                  {
+                    "entityId": "1234",
+                    "entityType": "PhotoFlash::Account"
+                  }
+                ]
+              },
+              {
+                "attributes": {
+                  "Name": {
+                    "string": ""
+                  }
+                },
+                "identifier": {
+                  "entityId": "1234",
+                  "entityType": "PhotoFlash::Account"
+                },
+                "parents": [
+
+                ]
+              }
+            ]
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "requests": [
+            {
+              "action": {
+                "actionId": "ViewPhoto",
+                "actionType": "PhotoFlash::Action"
+              },
+              "principal": {
+                "entityId": "Alice",
+                "entityType": "PhotoFlash::User"
+              },
+              "resource": {
+                "entityId": "VacationPhoto94.jpg",
+                "entityType": "PhotoFlash::Photo"
+              }
+            },
+            {
+              "action": {
+                "actionId": "DeletePhoto",
+                "actionType": "PhotoFlash::Action"
+              },
+              "principal": {
+                "entityId": "Annalisa",
+                "entityType": "PhotoFlash::User"
+              },
+              "resource": {
+                "entityId": "VacationPhoto94.jpg",
+                "entityType": "PhotoFlash::Photo"
+              }
+            }
+          ]
+        },
+        "output": {
+          "results": [
+            {
+              "errors": [
+
+              ],
+              "decision": "ALLOW",
+              "determiningPolicies": [
+                {
+                  "policyId": "9wYxMpljbbZQb5fcZHyJhY"
+                }
+              ],
+              "request": {
+                "action": {
+                  "actionId": "ViewPhoto",
+                  "actionType": "PhotoFlash::Action"
+                },
+                "principal": {
+                  "entityId": "alice",
+                  "entityType": "PhotoFlash::User"
+                },
+                "resource": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                }
+              }
+            },
+            {
+              "errors": [
+
+              ],
+              "decision": "DENY",
+              "determiningPolicies": [
+
+              ],
+              "request": {
+                "action": {
+                  "actionId": "DeletePhoto",
+                  "actionType": "PhotoFlash::Action"
+                },
+                "principal": {
+                  "entityId": "annalisa",
+                  "entityType": "PhotoFlash::User"
+                },
+                "resource": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                }
+              }
+            }
+          ]
+        },
+        "description": "The following example requests two authorization decisions for two principals                     of type Usernamed Alice and Annalisa.",
+        "id": "example-1",
+        "title": "Batch - Example 1"
+      }
+    ],
+    "BatchIsAuthorizedWithToken": [
+      {
+        "input": {
+          "entities": {
+            "entityList": [
+              {
+                "identifier": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                },
+                "parents": [
+                  {
+                    "entityId": "MyExampleAlbum1",
+                    "entityType": "PhotoFlash::Album"
+                  }
+                ]
+              },
+              {
+                "identifier": {
+                  "entityId": "OfficePhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                },
+                "parents": [
+                  {
+                    "entityId": "MyExampleAlbum2",
+                    "entityType": "PhotoFlash::Album"
+                  }
+                ]
+              }
+            ]
+          },
+          "identityToken": "eyJra12345EXAMPLE",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "requests": [
+            {
+              "action": {
+                "actionId": "ViewPhoto",
+                "actionType": "PhotoFlash::Action"
+              },
+              "resource": {
+                "entityId": "VacationPhoto94.jpg",
+                "entityType": "PhotoFlash::Photo"
+              }
+            },
+            {
+              "action": {
+                "actionId": "SharePhoto",
+                "actionType": "PhotoFlash::Action"
+              },
+              "resource": {
+                "entityId": "VacationPhoto94.jpg",
+                "entityType": "PhotoFlash::Photo"
+              }
+            },
+            {
+              "action": {
+                "actionId": "ViewPhoto",
+                "actionType": "PhotoFlash::Action"
+              },
+              "resource": {
+                "entityId": "OfficePhoto94.jpg",
+                "entityType": "PhotoFlash::Photo"
+              }
+            }
+          ]
+        },
+        "output": {
+          "principal": {
+            "entityId": "us-east-1_EXAMPLE|a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+            "entityType": "PhotoFlash::User"
+          },
+          "results": [
+            {
+              "errors": [
+
+              ],
+              "decision": "ALLOW",
+              "determiningPolicies": [
+                {
+                  "policyId": "9wYixMplbbZQb5fcZHyJhY"
+                }
+              ],
+              "request": {
+                "action": {
+                  "actionId": "ViewPhoto",
+                  "actionType": "PhotoFlash::Action"
+                },
+                "resource": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                }
+              }
+            },
+            {
+              "errors": [
+
+              ],
+              "decision": "ALLOW",
+              "determiningPolicies": [
+                {
+                  "policyId": "9wYixMplbbZQb5fcZHyJhY"
+                }
+              ],
+              "request": {
+                "action": {
+                  "actionId": "SharePhoto",
+                  "actionType": "PhotoFlash::Action"
+                },
+                "resource": {
+                  "entityId": "VacationPhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                }
+              }
+            },
+            {
+              "errors": [
+
+              ],
+              "decision": "DENY",
+              "determiningPolicies": [
+
+              ],
+              "request": {
+                "action": {
+                  "actionId": "ViewPhoto",
+                  "actionType": "PhotoFlash::Action"
+                },
+                "resource": {
+                  "entityId": "OfficePhoto94.jpg",
+                  "entityType": "PhotoFlash::Photo"
+                }
+              }
+            }
+          ]
+        },
+        "description": "The following example requests three authorization decisions for two resources                     and two actions in different photo albums.",
+        "id": "example-1",
+        "title": "Batch - Example 1"
+      }
+    ],
+    "CreateIdentitySource": [
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "configuration": {
+            "cognitoUserPoolConfiguration": {
+              "clientIds": [
+                "a1b2c3d4e5f6g7h8i9j0kalbmc"
+              ],
+              "userPoolArn": "arn:aws:cognito-idp:us-east-1:123456789012:userpool/us-east-1_1a2b3c4d5"
+            }
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "principalEntityType": "User"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following ``create-identity-source`` example creates an identity source that lets you reference identities stored in the specified Amazon Cognito user pool. Those identities are available in Verified Permissions as entities of type ``User``. ",
+        "id": "example-1",
+        "title": "To create an identity source"
+      }
+    ],
+    "CreatePolicy": [
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "definition": {
+            "static": {
+              "description": "Grant members of janeFriends UserGroup access to the vacationFolder Album",
+              "statement": "permit( principal in UserGroup::\"janeFriends\", action, resource in Album::\"vacationFolder\" );"
+            }
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "STATIC",
+          "principal": {
+            "entityId": "janeFriends",
+            "entityType": "UserGroup"
+          },
+          "resource": {
+            "entityId": "vacationFolder",
+            "entityType": "Album"
+          }
+        },
+        "description": "The following example request creates a static policy with a policy scope that specifies both a principal and a resource. The response includes both the Principal and Resource elements because both were specified in the request policy scope.",
+        "id": "example-1",
+        "title": "To create a static policy"
+      },
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "definition": {
+            "static": {
+              "description": "Grant members of janeFriends UserGroup access to the vacationFolder Album",
+              "statement": "permit( principal in UserGroup::\"janeFriends\", action, resource in Album::\"vacationFolder\" );"
+            }
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "STATIC",
+          "principal": {
+            "entityId": "janeFriends",
+            "entityType": "UserGroup"
+          },
+          "resource": {
+            "entityId": "vacationFolder",
+            "entityType": "Album"
+          }
+        },
+        "description": "The following example request creates a static policy with a policy scope that specifies both a principal and a resource. The response includes both the Principal and Resource elements because both were specified in the request policy scope.",
+        "id": "example-2",
+        "title": "To create a static policy"
+      },
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "definition": {
+            "templateLinked": {
+              "policyTemplateId": "PTEXAMPLEabcdefg111111",
+              "principal": {
+                "entityId": "alice",
+                "entityType": "User"
+              }
+            }
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "Et9KxMplyaDdyurDw8TeFa",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "TEMPLATE_LINKED",
+          "principal": {
+            "entityId": "alice",
+            "entityType": "User"
+          },
+          "resource": {
+            "entityId": "VacationPhoto94.jpg",
+            "entityType": "Photo"
+          }
+        },
+        "description": "The following example creates a template-linked policy using the specified policy template and associates the specified principal to use with the new template-linked policy.",
+        "id": "example-3",
+        "title": "To create a template-linked policy"
+      }
+    ],
+    "CreatePolicyStore": [
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "validationSettings": {
+            "mode": "STRICT"
+          }
+        },
+        "output": {
+          "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example creates a new policy store with strict validation turned on.",
+        "id": "example-1",
+        "title": "To create policy store"
+      }
+    ],
+    "CreatePolicyTemplate": [
+      {
+        "input": {
+          "clientToken": "a1b2c3d4-e5f6-a1b2-c3d4-TOKEN1111111",
+          "description": "Template for research dept",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "statement": "\"AccessVacation\"\npermit(\n    principal in ?principal,\n    action == Action::\"view\",\n    resource == Photo::\"VacationPhoto94.jpg\"\n)\nwhen {\n    principal has department && principal.department == \"research\"\n};"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111"
+        },
+        "description": "The following example creates a policy template that has a placeholder for the principal.",
+        "id": "example-1",
+        "title": "To create a policy template"
+      }
+    ],
+    "DeleteIdentitySource": [
+      {
+        "input": {
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+        },
+        "description": "The following example request deletes the specified identity source.",
+        "id": "example-1",
+        "title": "To delete an identity source"
+      }
+    ],
+    "DeletePolicy": [
+      {
+        "input": {
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+        },
+        "description": "The following example deletes the specified policy from its policy store.",
+        "id": "example-1",
+        "title": "To delete a policy"
+      }
+    ],
+    "DeletePolicyStore": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+        },
+        "description": "The following example deletes the specified policy store.",
+        "id": "example-1",
+        "title": "To delete a policy store"
+      }
+    ],
+    "DeletePolicyTemplate": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111"
+        },
+        "output": {
+        },
+        "description": "The following example deletes a policy template. Before you can perform this operation, you must first delete any template-linked policies that were instantiated from this policy template. To delete them, use DeletePolicy.",
+        "id": "example-1",
+        "title": "To delete a policy template"
+      }
+    ],
+    "GetIdentitySource": [
+      {
+        "input": {
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "details": {
+            "clientIds": [
+              "a1b2c3d4e5f6g7h8i9j0kalbmc"
+            ],
+            "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_1a2b3c4d5",
+            "openIdIssuer": "COGNITO",
+            "userPoolArn": "arn:aws:cognito-idp:us-east-1:123456789012:userpool/us-east-1_1a2b3c4d5"
+          },
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "principalEntityType": "AWS::Cognito"
+        },
+        "description": "The following example retrieves the details for the specified identity source.",
+        "id": "example-1",
+        "title": "To retrieve details about an identity source"
+      }
+    ],
+    "GetPolicy": [
+      {
+        "input": {
+          "policyId": "9wYixMplbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "definition": {
+            "static": {
+              "description": "Grant everyone of janeFriends UserGroup access to the vacationFolder Album",
+              "statement": "permit(principal, action, resource in Album::\"publicFolder\");"
+            }
+          },
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "STATIC",
+          "resource": {
+            "entityId": "publicFolder",
+            "entityType": "Album"
+          }
+        },
+        "description": "The following example retrieves information about the specified policy contained in the specified policy store. In this example, the requested policy is a template-linked policy, so it returns the ID of the policy template, and the specific principal and resource used by this policy.",
+        "id": "example-1",
+        "title": "To retrieve details about a policy"
+      }
+    ],
+    "GetPolicyStore": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "validationSettings": {
+            "mode": "STRICT"
+          }
+        },
+        "description": "The following example retrieves details about the specified policy store.",
+        "id": "example-1",
+        "title": "GetPolicyStore"
+      }
+    ],
+    "GetPolicyTemplate": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "description": "Template for research dept",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111",
+          "statement": "permit(\n  principal ?principal,\n  action == Action::\"view\",\n  resource in ?resource\n) when {\n  principal has department && principal.department == \"research\" \n};"
+        },
+        "description": "The following example displays the details of the specified policy template.",
+        "id": "example-1",
+        "title": "GetPolicyTemplate"
+      }
+    ],
+    "GetSchema": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "schema": "{\n\"My::Application\": {\n\"actions\": {\n\"remoteAccess\": {\n\"appliesTo\": {\n\"principalTypes\":   [\"Employee\"]\n}\n}\n},\n\"entityTypes\":   {\n\"Employee\": {\n\"shape\": {\n\"attributes\": {\n\"jobLevel\": { \"type\": \"Long\" },\n\"name\": { \"type\":\"String\" }\n},\n\"type\": \"Record\"\n}\n}\n}\n}\n  }"
+        },
+        "description": "The following example retrieves the current schema stored in the specified policy store.\n\nNote\nThe JSON in the parameters of this operation are strings that can contain embedded quotation marks (\") within the outermost quotation mark pair. This requires that you stringify the JSON object by preceding all embedded quotation marks with a backslash character ( \\\" ) and combining all lines into a single text line with no line breaks.\n\nExample strings might be displayed wrapped across multiple lines here for readability, but the operation requires the parameters be submitted as single line strings.",
+        "id": "example-1",
+        "title": "GetSchema"
+      }
+    ],
+    "IsAuthorized": [
+      {
+        "input": {
+          "action": {
+            "actionId": "view",
+            "actionType": "Action"
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "principal": {
+            "entityId": "alice",
+            "entityType": "User"
+          },
+          "resource": {
+            "entityId": "VacationPhoto94.jpg",
+            "entityType": "Photo"
+          }
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "decision": "ALLOW",
+          "determiningPolicies": [
+            {
+              "policyId": "9wYxMpljbbZQb5fcZHyJhY"
+            }
+          ]
+        },
+        "description": "The following example requests an authorization decision for a principal of type User named Alice, who wants to perform the updatePhoto operation, on a resource of type Photo named VacationPhoto94.jpg.\n\nThe response shows that the request was allowed by one policy.",
+        "id": "example-1",
+        "title": "IsAuthorized - Example 1"
+      },
+      {
+        "input": {
+          "action": {
+            "actionId": "view",
+            "actionType": "Action"
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "principal": {
+            "entityId": "bob",
+            "entityType": "User"
+          },
+          "resource": {
+            "entityId": "VacationPhoto94.jpg",
+            "entityType": "Photo"
+          }
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "decision": "DENY",
+          "determiningPolicies": [
+
+          ]
+        },
+        "description": "The following example is the same as the previous example, except that the principal is User::\"bob\", and the policy store doesn't contain any policy that allows that user access to Album::\"alice_folder\". The output infers that the Deny was implicit because the list of DeterminingPolicies is empty.",
+        "id": "example-2",
+        "title": "IsAuthorized - Example 2"
+      }
+    ],
+    "IsAuthorizedWithToken": [
+      {
+        "input": {
+          "action": {
+            "actionId": "View",
+            "actionType": "Action"
+          },
+          "identityToken": "EgZjxMPlbWUyBggAEEUYOdIBCDM3NDlqMGo3qAIAsAIA",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "resource": {
+            "entityId": "vacationPhoto94.jpg",
+            "entityType": "Photo"
+          }
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "decision": "ALLOW",
+          "determiningPolicies": [
+            {
+              "policyId": "9wYxMpljbbZQb5fcZHyJhY"
+            }
+          ]
+        },
+        "description": "The following example requests an authorization decision for a user who was authenticated by Amazon Cognito. The request uses the identity token provided by Amazon Cognito instead of the access token. In this example, the specified information store is configured to return principals as entities of type CognitoUser. The policy store contains a policy with the following statement.\n\npermit(\n    principal == CognitoUser::\"us-east-1_1a2b3c4d5|a1b2c3d4e5f6g7h8i9j0kalbmc\",\n    action,\n    resource == Photo::\"VacationPhoto94.jpg\"\n);",
+        "id": "example-1",
+        "title": "IsAuthorizedWithToken - Example 1"
+      }
+    ],
+    "ListIdentitySources": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "identitySources": [
+            {
+              "createdDate": "2023-05-19T20:29:23.66812Z",
+              "details": {
+                "clientIds": [
+                  "a1b2c3d4e5f6g7h8i9j0kalbmc"
+                ],
+                "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_1a2b3c4d5",
+                "openIdIssuer": "COGNITO",
+                "userPoolArn": "arn:aws:cognito-idp:us-east-1:123456789012:userpool/us-east-1_1a2b3c4d5"
+              },
+              "identitySourceId": "ISEXAMPLEabcdefg111111",
+              "lastUpdatedDate": "2023-05-19T20:29:23.66812Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "principalEntityType": "User"
+            }
+          ]
+        },
+        "description": "The following example request creates lists the identity sources currently defined in the specified policy store.",
+        "id": "example-1",
+        "title": "ListIdentitySources"
+      }
+    ],
+    "ListPolicies": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "policies": [
+            {
+              "createdDate": "2024-08-12T18:20:50.99Z",
+              "definition": {
+                "static": {
+                  "description": "Grant members of janeFriends UserGroup access to the vacationFolder Album"
+                }
+              },
+              "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+              "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyType": "STATIC",
+              "principal": {
+                "entityId": "janeFriends",
+                "entityType": "UserGroup"
+              },
+              "resource": {
+                "entityId": "vacationFolder",
+                "entityType": "Album"
+              }
+            },
+            {
+              "createdDate": "2024-08-12T18:20:50.99Z",
+              "definition": {
+                "static": {
+                  "description": "Grant everyone access to the publicFolder Album"
+                }
+              },
+              "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+              "policyId": "Et9KxMplyaDdyurDw8TeFa",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyType": "STATIC",
+              "resource": {
+                "entityId": "publicFolder",
+                "entityType": "Album"
+              }
+            }
+          ]
+        },
+        "description": "The following example lists all policies in the policy store.",
+        "id": "example-1",
+        "title": "ListPolicies - Example 1"
+      },
+      {
+        "input": {
+          "filter": {
+            "principal": {
+              "identifier": {
+                "entityId": "alice",
+                "entityType": "User"
+              }
+            }
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "policies": [
+            {
+              "createdDate": "2022-12-09T22:55:16.067533Z",
+              "definition": {
+                "static": {
+                  "description": "An example policy"
+                }
+              },
+              "lastUpdatedDate": "2022-12-09T22:55:16.067533Z",
+              "policyId": "Et9KxMplyaDdyurDw8TeFa",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyType": "STATIC",
+              "principal": {
+                "entityId": "alice",
+                "entityType": "User"
+              },
+              "resource": {
+                "entityId": "bob_folder",
+                "entityType": "Album"
+              }
+            },
+            {
+              "createdDate": "2022-12-09T23:00:24.66266Z",
+              "definition": {
+                "static": {
+                }
+              },
+              "lastUpdatedDate": "2022-12-09T23:00:24.66266Z",
+              "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyType": "STATIC",
+              "principal": {
+                "entityId": "alice",
+                "entityType": "User"
+              },
+              "resource": {
+                "entityId": "alice_folder",
+                "entityType": "Album"
+              }
+            }
+          ]
+        },
+        "description": "The following example lists all policies for a specified principal.",
+        "id": "example-2",
+        "title": "ListPolicies - Example 2"
+      },
+      {
+        "input": {
+          "filter": {
+            "policyType": "TEMPLATE_LINKED"
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "policies": [
+            {
+              "createdDate": "2023-06-13T16:03:07.620867Z",
+              "definition": {
+                "templateLinked": {
+                  "policyTemplateId": "PTEXAMPLEabcdefg111111",
+                  "principal": {
+                    "entityId": "alice",
+                    "entityType": "User"
+                  },
+                  "resource": {
+                    "entityId": "pic.jpg",
+                    "entityType": "Photo"
+                  }
+                }
+              },
+              "lastUpdatedDate": "2023-06-13T16:03:07.620867Z",
+              "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyType": "TEMPLATE_LINKED",
+              "principal": {
+                "entityId": "alice",
+                "entityType": "User"
+              },
+              "resource": {
+                "entityId": "pic.jpg",
+                "entityType": "Photo"
+              }
+            }
+          ]
+        },
+        "description": "The following example uses the Filter parameter to list only the template-linked policies in the specified policy store.",
+        "id": "example-3",
+        "title": "ListPolicies - Example 3"
+      }
+    ],
+    "ListPolicyStores": [
+      {
+        "input": {
+        },
+        "output": {
+          "policyStores": [
+            {
+              "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+              "createdDate": "2023-05-16T17:41:29.103459Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+            },
+            {
+              "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/PSEXAMPLEabcdefg222222",
+              "createdDate": "2023-05-16T18:23:04.985521Z",
+              "policyStoreId": "PSEXAMPLEabcdefg222222"
+            }
+          ]
+        },
+        "description": "The following example lists all policy stores in the AWS account in the AWS Region in which you call the operation.",
+        "id": "example-1",
+        "title": "ListPolicyStores"
+      }
+    ],
+    "ListPolicyTemplates": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "policyTemplates": [
+            {
+              "createdDate": "2024-08-12T18:20:50.99Z",
+              "description": "Generic template",
+              "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyTemplateId": "PTEXAMPLEabcdefg111111"
+            },
+            {
+              "createdDate": "2024-08-12T18:20:50.99Z",
+              "description": "Template for research dept",
+              "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+              "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+              "policyTemplateId": "PTEXAMPLEabcdefg222222"
+            }
+          ]
+        },
+        "description": "The following example retrieves a list of all of the policy templates in the specified policy store.",
+        "id": "example-1",
+        "title": "ListPolicyTemplates"
+      }
+    ],
+    "PutSchema": [
+      {
+        "input": {
+          "definition": {
+            "cedarJson": "{\"MySampleNamespace\": {\"actions\": {\"remoteAccess\": {\"appliesTo\": {\"principalTypes\": [\"Employee\"]}}},\"entityTypes\": {\"Employee\": {\"shape\": {\"attributes\": {\"jobLevel\": {\"type\": \"Long\"},\"name\": {\"type\": \"String\"}},\"type\": \"Record\"}}}}}"
+          },
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2023-06-13T19:28:06.003726Z",
+          "lastUpdatedDate": "2023-06-13T19:28:06.003726Z",
+          "namespaces": [
+            "My::Sample::Namespace"
+          ],
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example creates a new schema, or updates an existing schema, in the specified policy store. Note that the schema text is shown line wrapped for readability. You should submit the entire schema text as a single line of text.\n\nNote\nThe JSON in the parameters of this operation are strings that can contain embedded quotation marks (\") within the outermost quotation mark pair. This requires that you stringify the JSON object by preceding all embedded quotation marks with a backslash character ( \\\" ) and combining all lines into a single text line with no line breaks.\n\nExample strings might be displayed wrapped across multiple lines here for readability, but the operation requires the parameters be submitted as single line strings.",
+        "id": "example-1",
+        "title": "PutSchema"
+      }
+    ],
+    "UpdateIdentitySource": [
+      {
+        "input": {
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "updateConfiguration": {
+            "cognitoUserPoolConfiguration": {
+              "clientIds": [
+                "a1b2c3d4e5f6g7h8i9j0kalbmc"
+              ],
+              "userPoolArn": "arn:aws:cognito-idp:us-east-1:123456789012:userpool/us-east-1_1a2b3c4d5"
+            }
+          }
+        },
+        "output": {
+          "createdDate": "2023-05-19T20:30:28.173926Z",
+          "identitySourceId": "ISEXAMPLEabcdefg111111",
+          "lastUpdatedDate": "2023-05-22T20:45:59.962216Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example updates the configuration of the specified identity source with a new configuration.",
+        "id": "example-1",
+        "title": "UpdateIdentitySource"
+      }
+    ],
+    "UpdatePolicy": [
+      {
+        "input": {
+          "definition": {
+            "static": {
+              "statement": "permit(principal, action, resource in Album::\"public_folder\");"
+            }
+          },
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "createdDate": "2024-08-12T18:20:50.99Z",
+          "lastUpdatedDate": "2024-08-12T18:20:50.99Z",
+          "policyId": "9wYxMpljbbZQb5fcZHyJhY",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyType": "STATIC",
+          "resource": {
+            "entityId": "public_folder",
+            "entityType": "Album"
+          }
+        },
+        "description": "The following example replaces the definition of the specified static policy with a new one.",
+        "id": "example-1",
+        "title": "UpdatePolicy"
+      }
+    ],
+    "UpdatePolicyStore": [
+      {
+        "input": {
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "validationSettings": {
+            "mode": "OFF"
+          }
+        },
+        "output": {
+          "arn": "arn:aws:verifiedpermissions::123456789012:policy-store/C7v5xMplfFH3i3e4Jrzb1a",
+          "createdDate": "2023-05-17T18:36:10.134448Z",
+          "lastUpdatedDate": "2023-05-23T18:18:12.443083Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "description": "The following example turns off the validation settings for a policy store.",
+        "id": "example-1",
+        "title": "UpdatePolicyStore"
+      }
+    ],
+    "UpdatePolicyTemplate": [
+      {
+        "input": {
+          "description": "My updated template description",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111",
+          "statement": "\"ResearchAccess\"\npermit(\nprincipal in ?principal,\naction == Action::\"view\",\nresource in ?resource\"\n)\nwhen {\nprincipal has department && principal.department == \"research\"\n};"
+        },
+        "output": {
+          "createdDate": "2023-05-17T18:58:48.795411Z",
+          "lastUpdatedDate": "2023-05-17T19:18:48.870209Z",
+          "policyStoreId": "C7v5xMplfFH3i3e4Jrzb1a",
+          "policyTemplateId": "PTEXAMPLEabcdefg111111"
+        },
+        "description": "The following example updates a policy template with both a new description and a new policy body. The effect, principal, and resource are the same as the original policy template. Only the action in the head, and the when and unless clauses can be different.\n\nNote\nThe JSON in the parameters of this operation are strings that can contain embedded quotation marks (\") within the outermost quotation mark pair. This requires that you stringify the JSON object by preceding all embedded quotation marks with a backslash character ( \\\" ) and combining all lines into a single text line with no line breaks.\n\nExample strings might be displayed wrapped across multiple lines here for readability, but the operation requires the parameters be submitted as single line strings.",
+        "id": "example-1",
+        "title": "UpdatePolicyTemplate"
+      }
+    ]
   }
 }

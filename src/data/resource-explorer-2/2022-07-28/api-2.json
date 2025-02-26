@@ -186,6 +186,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetManagedView":{
+      "name":"GetManagedView",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetManagedView",
+        "responseCode":200
+      },
+      "input":{"shape":"GetManagedViewInput"},
+      "output":{"shape":"GetManagedViewOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetView":{
       "name":"GetView",
       "http":{
@@ -232,6 +250,23 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListManagedViews":{
+      "name":"ListManagedViews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListManagedViews",
+        "responseCode":200
+      },
+      "input":{"shape":"ListManagedViewsInput"},
+      "output":{"shape":"ListManagedViewsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -602,6 +637,24 @@
         "Type":{"shape":"IndexType"}
       }
     },
+    "GetManagedViewInput":{
+      "type":"structure",
+      "required":["ManagedViewArn"],
+      "members":{
+        "ManagedViewArn":{"shape":"GetManagedViewInputManagedViewArnString"}
+      }
+    },
+    "GetManagedViewInputManagedViewArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
+    "GetManagedViewOutput":{
+      "type":"structure",
+      "members":{
+        "ManagedView":{"shape":"ManagedView"}
+      }
+    },
     "GetViewInput":{
       "type":"structure",
       "required":["ViewArn"],
@@ -741,6 +794,37 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListManagedViewsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListManagedViewsInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListManagedViewsInputNextTokenString"},
+        "ServicePrincipal":{"shape":"ListManagedViewsInputServicePrincipalString"}
+      }
+    },
+    "ListManagedViewsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListManagedViewsInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListManagedViewsInputServicePrincipalString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ListManagedViewsOutput":{
+      "type":"structure",
+      "members":{
+        "ManagedViews":{"shape":"ManagedViewArnList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListResourcesInput":{
       "type":"structure",
       "members":{
@@ -844,6 +928,25 @@
     "Long":{
       "type":"long",
       "box":true
+    },
+    "ManagedView":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"SearchFilter"},
+        "IncludedProperties":{"shape":"IncludedPropertyList"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ManagedViewArn":{"shape":"String"},
+        "ManagedViewName":{"shape":"String"},
+        "Owner":{"shape":"String"},
+        "ResourcePolicy":{"shape":"String"},
+        "Scope":{"shape":"String"},
+        "TrustedService":{"shape":"String"},
+        "Version":{"shape":"String"}
+      }
+    },
+    "ManagedViewArnList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "MemberIndex":{
       "type":"structure",

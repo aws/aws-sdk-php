@@ -806,6 +806,11 @@
           "shape":"FileSystemId",
           "location":"uri",
           "locationName":"SourceFileSystemId"
+        },
+        "DeletionMode":{
+          "shape":"DeletionMode",
+          "location":"querystring",
+          "locationName":"deletionMode"
         }
       }
     },
@@ -823,6 +828,13 @@
         },
         "TagKeys":{"shape":"TagKeys"}
       }
+    },
+    "DeletionMode":{
+      "type":"string",
+      "enum":[
+        "ALL_CONFIGURATIONS",
+        "LOCAL_CONFIGURATION_ONLY"
+      ]
     },
     "DependencyTimeout":{
       "type":"structure",
@@ -1070,7 +1082,10 @@
         "Status":{"shape":"ReplicationStatus"},
         "FileSystemId":{"shape":"FileSystemId"},
         "Region":{"shape":"RegionName"},
-        "LastReplicatedTimestamp":{"shape":"Timestamp"}
+        "LastReplicatedTimestamp":{"shape":"Timestamp"},
+        "OwnerId":{"shape":"AwsAccountId"},
+        "StatusMessage":{"shape":"StatusMessage"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "DestinationToCreate":{
@@ -1079,7 +1094,8 @@
         "Region":{"shape":"RegionName"},
         "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "FileSystemId":{"shape":"FileSystemId"}
+        "FileSystemId":{"shape":"FileSystemId"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "Destinations":{
@@ -1602,7 +1618,8 @@
         "SourceFileSystemArn":{"shape":"FileSystemArn"},
         "OriginalSourceFileSystemArn":{"shape":"FileSystemArn"},
         "CreationTime":{"shape":"Timestamp"},
-        "Destinations":{"shape":"Destinations"}
+        "Destinations":{"shape":"Destinations"},
+        "SourceFileSystemOwnerId":{"shape":"AwsAccountId"}
       }
     },
     "ReplicationConfigurationDescriptions":{
@@ -1667,6 +1684,11 @@
       "type":"list",
       "member":{"shape":"Resource"}
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
     "RootDirectory":{
       "type":"structure",
       "members":{
@@ -1720,6 +1742,7 @@
         "DISABLING"
       ]
     },
+    "StatusMessage":{"type":"string"},
     "SubnetId":{
       "type":"string",
       "max":47,

@@ -49,6 +49,24 @@
       ],
       "idempotent":true
     },
+    "GetConfiguration":{
+      "name":"GetConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/getConfiguration/{ConfigurationId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConfigurationInput"},
+      "output":{"shape":"GetConfigurationOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetConfigurationManager":{
       "name":"GetConfigurationManager",
       "http":{
@@ -97,6 +115,23 @@
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListConfigurations":{
+      "name":"ListConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/listConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConfigurationsInput"},
+      "output":{"shape":"ListConfigurationsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListQuickSetupTypes":{
@@ -341,6 +376,25 @@
       "max":40960,
       "min":0
     },
+    "ConfigurationSummary":{
+      "type":"structure",
+      "members":{
+        "Account":{"shape":"String"},
+        "ConfigurationDefinitionId":{"shape":"String"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "FirstClassParameters":{"shape":"ConfigurationParametersMap"},
+        "Id":{"shape":"String"},
+        "ManagerArn":{"shape":"String"},
+        "Region":{"shape":"String"},
+        "StatusSummaries":{"shape":"StatusSummariesList"},
+        "Type":{"shape":"String"},
+        "TypeVersion":{"shape":"String"}
+      }
+    },
+    "ConfigurationsList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationSummary"}
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -423,6 +477,21 @@
       "type":"list",
       "member":{"shape":"Filter"}
     },
+    "GetConfigurationInput":{
+      "type":"structure",
+      "required":["ConfigurationId"],
+      "members":{
+        "ConfigurationId":{
+          "shape":"GetConfigurationInputConfigurationIdString",
+          "location":"uri",
+          "locationName":"ConfigurationId"
+        }
+      }
+    },
+    "GetConfigurationInputConfigurationIdString":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9-_/:]{1,100}$"
+    },
     "GetConfigurationManagerInput":{
       "type":"structure",
       "required":["ManagerArn"],
@@ -451,6 +520,22 @@
         "Name":{"shape":"String"},
         "StatusSummaries":{"shape":"StatusSummariesList"},
         "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "GetConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "Account":{"shape":"String"},
+        "ConfigurationDefinitionId":{"shape":"String"},
+        "CreatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "Id":{"shape":"String"},
+        "LastModifiedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ManagerArn":{"shape":"String"},
+        "Parameters":{"shape":"ConfigurationParametersMap"},
+        "Region":{"shape":"String"},
+        "StatusSummaries":{"shape":"StatusSummariesList"},
+        "Type":{"shape":"String"},
+        "TypeVersion":{"shape":"String"}
       }
     },
     "GetServiceSettingsOutput":{
@@ -494,6 +579,43 @@
       "type":"structure",
       "members":{
         "ConfigurationManagersList":{"shape":"ConfigurationManagerList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListConfigurationsInput":{
+      "type":"structure",
+      "members":{
+        "ConfigurationDefinitionId":{"shape":"ListConfigurationsInputConfigurationDefinitionIdString"},
+        "Filters":{"shape":"FiltersList"},
+        "ManagerArn":{"shape":"ListConfigurationsInputManagerArnString"},
+        "MaxItems":{"shape":"ListConfigurationsInputMaxItemsInteger"},
+        "StartingToken":{"shape":"ListConfigurationsInputStartingTokenString"}
+      }
+    },
+    "ListConfigurationsInputConfigurationDefinitionIdString":{
+      "type":"string",
+      "pattern":"^[a-z0-9-]{1,20}$"
+    },
+    "ListConfigurationsInputManagerArnString":{
+      "type":"string",
+      "pattern":"^arn:aws:ssm-quicksetup:([^:]+):(\\d{12}):configuration-manager/[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$"
+    },
+    "ListConfigurationsInputMaxItemsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListConfigurationsInputStartingTokenString":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"^[A-Za-z0-9+=@_|\\/\\s-]*$"
+    },
+    "ListConfigurationsOutput":{
+      "type":"structure",
+      "members":{
+        "ConfigurationsList":{"shape":"ConfigurationsList"},
         "NextToken":{"shape":"String"}
       }
     },

@@ -15,6 +15,20 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "AssociateResourceTypes":{
+      "name":"AssociateResourceTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateResourceTypesRequest"},
+      "output":{"shape":"AssociateResourceTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"NoSuchConfigurationRecorderException"}
+      ]
+    },
     "BatchGetAggregateResourceConfig":{
       "name":"BatchGetAggregateResourceConfig",
       "http":{
@@ -83,7 +97,8 @@
       },
       "input":{"shape":"DeleteConfigurationRecorderRequest"},
       "errors":[
-        {"shape":"NoSuchConfigurationRecorderException"}
+        {"shape":"NoSuchConfigurationRecorderException"},
+        {"shape":"UnmodifiableEntityException"}
       ]
     },
     "DeleteConformancePack":{
@@ -209,6 +224,20 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"NoSuchRetentionConfigurationException"}
+      ]
+    },
+    "DeleteServiceLinkedConfigurationRecorder":{
+      "name":"DeleteServiceLinkedConfigurationRecorder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteServiceLinkedConfigurationRecorderRequest"},
+      "output":{"shape":"DeleteServiceLinkedConfigurationRecorderResponse"},
+      "errors":[
+        {"shape":"NoSuchConfigurationRecorderException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteStoredQuery":{
@@ -376,7 +405,8 @@
       "input":{"shape":"DescribeConfigurationRecorderStatusRequest"},
       "output":{"shape":"DescribeConfigurationRecorderStatusResponse"},
       "errors":[
-        {"shape":"NoSuchConfigurationRecorderException"}
+        {"shape":"NoSuchConfigurationRecorderException"},
+        {"shape":"ValidationException"}
       ]
     },
     "DescribeConfigurationRecorders":{
@@ -388,7 +418,8 @@
       "input":{"shape":"DescribeConfigurationRecordersRequest"},
       "output":{"shape":"DescribeConfigurationRecordersResponse"},
       "errors":[
-        {"shape":"NoSuchConfigurationRecorderException"}
+        {"shape":"NoSuchConfigurationRecorderException"},
+        {"shape":"ValidationException"}
       ]
     },
     "DescribeConformancePackCompliance":{
@@ -582,6 +613,20 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"NoSuchRetentionConfigurationException"},
         {"shape":"InvalidNextTokenException"}
+      ]
+    },
+    "DisassociateResourceTypes":{
+      "name":"DisassociateResourceTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateResourceTypesRequest"},
+      "output":{"shape":"DisassociateResourceTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"NoSuchConfigurationRecorderException"}
       ]
     },
     "GetAggregateComplianceDetailsByConfigRule":{
@@ -861,6 +906,18 @@
         {"shape":"NoSuchConfigurationAggregatorException"}
       ]
     },
+    "ListConfigurationRecorders":{
+      "name":"ListConfigurationRecorders",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListConfigurationRecordersRequest"},
+      "output":{"shape":"ListConfigurationRecordersResponse"},
+      "errors":[
+        {"shape":"ValidationException"}
+      ]
+    },
     "ListConformancePackComplianceScores":{
       "name":"ListConformancePackComplianceScores",
       "http":{
@@ -988,7 +1045,8 @@
         {"shape":"ValidationException"},
         {"shape":"InvalidConfigurationRecorderNameException"},
         {"shape":"InvalidRoleException"},
-        {"shape":"InvalidRecordingGroupException"}
+        {"shape":"InvalidRecordingGroupException"},
+        {"shape":"UnmodifiableEntityException"}
       ]
     },
     "PutConformancePack":{
@@ -1143,6 +1201,21 @@
         {"shape":"MaxNumberOfRetentionConfigurationsExceededException"}
       ]
     },
+    "PutServiceLinkedConfigurationRecorder":{
+      "name":"PutServiceLinkedConfigurationRecorder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutServiceLinkedConfigurationRecorderRequest"},
+      "output":{"shape":"PutServiceLinkedConfigurationRecorderResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"InsufficientPermissionsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "PutStoredQuery":{
       "name":"PutStoredQuery",
       "http":{
@@ -1210,7 +1283,8 @@
       "input":{"shape":"StartConfigurationRecorderRequest"},
       "errors":[
         {"shape":"NoSuchConfigurationRecorderException"},
-        {"shape":"NoAvailableDeliveryChannelException"}
+        {"shape":"NoAvailableDeliveryChannelException"},
+        {"shape":"UnmodifiableEntityException"}
       ]
     },
     "StartRemediationExecution":{
@@ -1248,7 +1322,8 @@
       },
       "input":{"shape":"StopConfigurationRecorderRequest"},
       "errors":[
-        {"shape":"NoSuchConfigurationRecorderException"}
+        {"shape":"NoSuchConfigurationRecorderException"},
+        {"shape":"UnmodifiableEntityException"}
       ]
     },
     "TagResource":{
@@ -1471,6 +1546,31 @@
       "type":"list",
       "member":{"shape":"AggregationAuthorization"}
     },
+    "AggregatorFilterResourceType":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"AggregatorFilterType"},
+        "Value":{"shape":"ResourceTypeValueList"}
+      }
+    },
+    "AggregatorFilterServicePrincipal":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"AggregatorFilterType"},
+        "Value":{"shape":"ServicePrincipalValueList"}
+      }
+    },
+    "AggregatorFilterType":{
+      "type":"string",
+      "enum":["INCLUDE"]
+    },
+    "AggregatorFilters":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"AggregatorFilterResourceType"},
+        "ServicePrincipal":{"shape":"AggregatorFilterServicePrincipal"}
+      }
+    },
     "AggregatorRegionList":{
       "type":"list",
       "member":{"shape":"String"},
@@ -1486,6 +1586,24 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "AssociateResourceTypesRequest":{
+      "type":"structure",
+      "required":[
+        "ConfigurationRecorderArn",
+        "ResourceTypes"
+      ],
+      "members":{
+        "ConfigurationRecorderArn":{"shape":"AmazonResourceName"},
+        "ResourceTypes":{"shape":"ResourceTypeList"}
+      }
+    },
+    "AssociateResourceTypesResponse":{
+      "type":"structure",
+      "required":["ConfigurationRecorder"],
+      "members":{
+        "ConfigurationRecorder":{"shape":"ConfigurationRecorder"}
+      }
     },
     "AutoRemediationAttemptSeconds":{
       "type":"long",
@@ -1788,7 +1906,8 @@
         "OrganizationAggregationSource":{"shape":"OrganizationAggregationSource"},
         "CreationTime":{"shape":"Date"},
         "LastUpdatedTime":{"shape":"Date"},
-        "CreatedBy":{"shape":"StringWithCharLimit256"}
+        "CreatedBy":{"shape":"StringWithCharLimit256"},
+        "AggregatorFilters":{"shape":"AggregatorFilters"}
       }
     },
     "ConfigurationAggregatorArn":{
@@ -1856,11 +1975,37 @@
     "ConfigurationRecorder":{
       "type":"structure",
       "members":{
+        "arn":{"shape":"AmazonResourceName"},
         "name":{"shape":"RecorderName"},
         "roleARN":{"shape":"String"},
         "recordingGroup":{"shape":"RecordingGroup"},
-        "recordingMode":{"shape":"RecordingMode"}
+        "recordingMode":{"shape":"RecordingMode"},
+        "recordingScope":{"shape":"RecordingScope"},
+        "servicePrincipal":{"shape":"ServicePrincipal"}
       }
+    },
+    "ConfigurationRecorderFilter":{
+      "type":"structure",
+      "members":{
+        "filterName":{"shape":"ConfigurationRecorderFilterName"},
+        "filterValue":{"shape":"ConfigurationRecorderFilterValues"}
+      }
+    },
+    "ConfigurationRecorderFilterList":{
+      "type":"list",
+      "member":{"shape":"ConfigurationRecorderFilter"}
+    },
+    "ConfigurationRecorderFilterName":{
+      "type":"string",
+      "enum":["recordingScope"]
+    },
+    "ConfigurationRecorderFilterValue":{
+      "type":"string",
+      "pattern":"^[0-9a-zA-Z\\\\*\\\\.\\\\\\/\\\\?-]*$"
+    },
+    "ConfigurationRecorderFilterValues":{
+      "type":"list",
+      "member":{"shape":"ConfigurationRecorderFilterValue"}
     },
     "ConfigurationRecorderList":{
       "type":"list",
@@ -1873,6 +2018,7 @@
     "ConfigurationRecorderStatus":{
       "type":"structure",
       "members":{
+        "arn":{"shape":"AmazonResourceName"},
         "name":{"shape":"String"},
         "lastStartTime":{"shape":"Date"},
         "lastStopTime":{"shape":"Date"},
@@ -1880,14 +2026,39 @@
         "lastStatus":{"shape":"RecorderStatus"},
         "lastErrorCode":{"shape":"String"},
         "lastErrorMessage":{"shape":"String"},
-        "lastStatusChangeTime":{"shape":"Date"}
+        "lastStatusChangeTime":{"shape":"Date"},
+        "servicePrincipal":{"shape":"ServicePrincipal"}
       }
     },
     "ConfigurationRecorderStatusList":{
       "type":"list",
       "member":{"shape":"ConfigurationRecorderStatus"}
     },
+    "ConfigurationRecorderSummaries":{
+      "type":"list",
+      "member":{"shape":"ConfigurationRecorderSummary"}
+    },
+    "ConfigurationRecorderSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "name",
+        "recordingScope"
+      ],
+      "members":{
+        "arn":{"shape":"AmazonResourceName"},
+        "name":{"shape":"RecorderName"},
+        "servicePrincipal":{"shape":"ServicePrincipal"},
+        "recordingScope":{"shape":"RecordingScope"}
+      }
+    },
     "ConfigurationStateId":{"type":"string"},
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "ConformancePackArn":{
       "type":"string",
       "max":2048,
@@ -2281,6 +2452,24 @@
         "RetentionConfigurationName":{"shape":"RetentionConfigurationName"}
       }
     },
+    "DeleteServiceLinkedConfigurationRecorderRequest":{
+      "type":"structure",
+      "required":["ServicePrincipal"],
+      "members":{
+        "ServicePrincipal":{"shape":"ServicePrincipal"}
+      }
+    },
+    "DeleteServiceLinkedConfigurationRecorderResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name"
+      ],
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"},
+        "Name":{"shape":"RecorderName"}
+      }
+    },
     "DeleteStoredQueryRequest":{
       "type":"structure",
       "required":["QueryName"],
@@ -2507,7 +2696,9 @@
     "DescribeConfigurationRecorderStatusRequest":{
       "type":"structure",
       "members":{
-        "ConfigurationRecorderNames":{"shape":"ConfigurationRecorderNameList"}
+        "ConfigurationRecorderNames":{"shape":"ConfigurationRecorderNameList"},
+        "ServicePrincipal":{"shape":"ServicePrincipal"},
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "DescribeConfigurationRecorderStatusResponse":{
@@ -2519,7 +2710,9 @@
     "DescribeConfigurationRecordersRequest":{
       "type":"structure",
       "members":{
-        "ConfigurationRecorderNames":{"shape":"ConfigurationRecorderNameList"}
+        "ConfigurationRecorderNames":{"shape":"ConfigurationRecorderNameList"},
+        "ServicePrincipal":{"shape":"ServicePrincipal"},
+        "Arn":{"shape":"AmazonResourceName"}
       }
     },
     "DescribeConfigurationRecordersResponse":{
@@ -2753,6 +2946,24 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "DisassociateResourceTypesRequest":{
+      "type":"structure",
+      "required":[
+        "ConfigurationRecorderArn",
+        "ResourceTypes"
+      ],
+      "members":{
+        "ConfigurationRecorderArn":{"shape":"AmazonResourceName"},
+        "ResourceTypes":{"shape":"ResourceTypeList"}
+      }
+    },
+    "DisassociateResourceTypesResponse":{
+      "type":"structure",
+      "required":["ConfigurationRecorder"],
+      "members":{
+        "ConfigurationRecorder":{"shape":"ConfigurationRecorder"}
+      }
     },
     "DiscoveredResourceIdentifierList":{
       "type":"list",
@@ -3429,6 +3640,25 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListConfigurationRecordersRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"ConfigurationRecorderFilterList"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListConfigurationRecordersResponse":{
+      "type":"structure",
+      "required":["ConfigurationRecorderSummaries"],
+      "members":{
+        "ConfigurationRecorderSummaries":{"shape":"ConfigurationRecorderSummaries"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListConformancePackComplianceScoresRequest":{
       "type":"structure",
       "members":{
@@ -3570,6 +3800,11 @@
       "members":{
       },
       "exception":true
+    },
+    "MaxResults":{
+      "type":"integer",
+      "max":20,
+      "min":0
     },
     "MaximumExecutionFrequency":{
       "type":"string",
@@ -4100,7 +4335,8 @@
         "ConfigurationAggregatorName":{"shape":"ConfigurationAggregatorName"},
         "AccountAggregationSources":{"shape":"AccountAggregationSourceList"},
         "OrganizationAggregationSource":{"shape":"OrganizationAggregationSource"},
-        "Tags":{"shape":"TagsList"}
+        "Tags":{"shape":"TagsList"},
+        "AggregatorFilters":{"shape":"AggregatorFilters"}
       }
     },
     "PutConfigurationAggregatorResponse":{
@@ -4113,7 +4349,8 @@
       "type":"structure",
       "required":["ConfigurationRecorder"],
       "members":{
-        "ConfigurationRecorder":{"shape":"ConfigurationRecorder"}
+        "ConfigurationRecorder":{"shape":"ConfigurationRecorder"},
+        "Tags":{"shape":"TagsList"}
       }
     },
     "PutConformancePackRequest":{
@@ -4271,6 +4508,21 @@
         "RetentionConfiguration":{"shape":"RetentionConfiguration"}
       }
     },
+    "PutServiceLinkedConfigurationRecorderRequest":{
+      "type":"structure",
+      "required":["ServicePrincipal"],
+      "members":{
+        "ServicePrincipal":{"shape":"ServicePrincipal"},
+        "Tags":{"shape":"TagsList"}
+      }
+    },
+    "PutServiceLinkedConfigurationRecorderResponse":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"AmazonResourceName"},
+        "Name":{"shape":"RecorderName"}
+      }
+    },
     "PutStoredQueryRequest":{
       "type":"structure",
       "required":["StoredQuery"],
@@ -4331,7 +4583,8 @@
       "enum":[
         "Pending",
         "Success",
-        "Failure"
+        "Failure",
+        "NotApplicable"
       ]
     },
     "RecordingFrequency":{
@@ -4380,6 +4633,13 @@
     "RecordingModeResourceTypesList":{
       "type":"list",
       "member":{"shape":"ResourceType"}
+    },
+    "RecordingScope":{
+      "type":"string",
+      "enum":[
+        "INTERNAL",
+        "PAID"
+      ]
     },
     "RecordingStrategy":{
       "type":"structure",
@@ -5137,6 +5397,16 @@
       "max":196,
       "min":1
     },
+    "ResourceTypeValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]{2,64}::[a-zA-Z0-9]{2,64}::[a-zA-Z0-9]{2,64}"
+    },
+    "ResourceTypeValueList":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeValue"}
+    },
     "ResourceTypes":{
       "type":"list",
       "member":{"shape":"StringWithCharLimit256"},
@@ -5262,6 +5532,22 @@
         "QueryInfo":{"shape":"QueryInfo"},
         "NextToken":{"shape":"NextToken"}
       }
+    },
+    "ServicePrincipal":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w+=,.@-]+"
+    },
+    "ServicePrincipalValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\w+=,.@-]+"
+    },
+    "ServicePrincipalValueList":{
+      "type":"list",
+      "member":{"shape":"ServicePrincipalValue"}
     },
     "SortBy":{
       "type":"string",
@@ -5555,6 +5841,12 @@
       }
     },
     "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "UnmodifiableEntityException":{
       "type":"structure",
       "members":{
       },

@@ -45,9 +45,16 @@
       }
     },
     "AudioConfiguration": {
-      "base": "<p>Object specifying a stream’s audio configuration, as set up by the broadcaster (usually in an encoder). This is part of the <a>IngestConfiguration</a> object and used for monitoring stream health.</p>",
+      "base": "<p>Object specifying a stream’s audio configuration, as set up by the broadcaster (usually in an encoder). This is part of the <a>IngestConfigurations</a> object and the deprecated <a>IngestConfiguration</a> object. It is used for monitoring stream health.</p>",
       "refs": {
+        "AudioConfigurationList$member": null,
         "IngestConfiguration$audio": "<p>Encoder settings for audio.</p>"
+      }
+    },
+    "AudioConfigurationList": {
+      "base": null,
+      "refs": {
+        "IngestConfigurations$audioConfigurations": "<p>Encoder settings for audio.</p>"
       }
     },
     "BatchError": {
@@ -244,6 +251,14 @@
       "refs": {
       }
     },
+    "ContainerFormat": {
+      "base": null,
+      "refs": {
+        "Channel$containerFormat": "<p>Indicates which content-packaging format is used (MPEG-TS or fMP4). If <code>multitrackInputConfiguration</code> is specified and <code>enabled</code> is <code>true</code>, then <code>containerFormat</code> is required and must be set to <code>FRAGMENTED_MP4</code>. Otherwise, <code>containerFormat</code> may be set to <code>TS</code> or <code>FRAGMENTED_MP4</code>. Default: <code>TS</code>.</p>",
+        "CreateChannelRequest$containerFormat": "<p>Indicates which content-packaging format is used (MPEG-TS or fMP4). If <code>multitrackInputConfiguration</code> is specified and <code>enabled</code> is <code>true</code>, then <code>containerFormat</code> is required and must be set to <code>FRAGMENTED_MP4</code>. Otherwise, <code>containerFormat</code> may be set to <code>TS</code> or <code>FRAGMENTED_MP4</code>. Default: <code>TS</code>.</p>",
+        "UpdateChannelRequest$containerFormat": "<p>Indicates which content-packaging format is used (MPEG-TS or fMP4). If <code>multitrackInputConfiguration</code> is specified and <code>enabled</code> is <code>true</code>, then <code>containerFormat</code> is required and must be set to <code>FRAGMENTED_MP4</code>. Otherwise, <code>containerFormat</code> may be set to <code>TS</code> or <code>FRAGMENTED_MP4</code>. Default: <code>TS</code>.</p>"
+      }
+    },
     "CreateChannelRequest": {
       "base": null,
       "refs": {
@@ -403,9 +418,15 @@
       }
     },
     "IngestConfiguration": {
-      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder.</p>",
+      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder.</p> <p> <b>Note:</b> IngestConfiguration is deprecated in favor of <a>IngestConfigurations</a> but retained to ensure backward compatibility. If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (track0) and IngestConfigurations contains data for all tracks.</p>",
       "refs": {
-        "StreamSession$ingestConfiguration": "<p>The properties of the incoming RTMP stream for the stream.</p>"
+        "StreamSession$ingestConfiguration": "<p>The properties of the incoming RTMP stream.</p> <p> <b>Note:</b> <code>ingestConfiguration</code> is deprecated in favor of <code>ingestConfigurations</code> but retained to ensure backward compatibility. If multitrack is not enabled, <code>ingestConfiguration</code> and <code>ingestConfigurations</code> contain the same data, namely information about track0 (the sole track). If multitrack is enabled, <code>ingestConfiguration</code> contains data for only the first track (track0) and <code>ingestConfigurations</code> contains data for all tracks.</p>"
+      }
+    },
+    "IngestConfigurations": {
+      "base": "<p>Object specifying the ingest configuration set up by the broadcaster, usually in an encoder. </p> <p> <b>Note:</b> Use IngestConfigurations instead of <a>IngestConfiguration</a> (which is deprecated). If multitrack is not enabled, IngestConfiguration and IngestConfigurations contain the same data, namely information about track0 (the sole track). If multitrack is enabled, IngestConfiguration contains data for only the first track (track0) and IngestConfigurations contains data for all tracks.</p>",
+      "refs": {
+        "StreamSession$ingestConfigurations": "<p>The properties of the incoming RTMP stream. If multitrack is enabled, <code>ingestConfigurations</code> contains data for all tracks; otherwise, it contains data only for track0 (the sole track).</p>"
       }
     },
     "IngestEndpoint": {
@@ -424,9 +445,9 @@
     "Integer": {
       "base": null,
       "refs": {
-        "AudioConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
-        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
         "AudioConfiguration$channels": "<p>Number of audio channels.</p>",
+        "AudioConfiguration$sampleRate": "<p>Number of audio samples recorded per second.</p>",
+        "AudioConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
         "VideoConfiguration$targetBitrate": "<p>The expected ingest bitrate (bits per second). This is configured in the encoder.</p>",
         "VideoConfiguration$targetFramerate": "<p>The expected ingest framerate. This is configured in the encoder.</p>",
         "VideoConfiguration$videoHeight": "<p>Video-resolution height in pixels.</p>",
@@ -443,6 +464,12 @@
       "refs": {
         "Channel$authorized": "<p>Whether the channel is private (enabled for playback authorization). Default: <code>false</code>.</p>",
         "ChannelSummary$authorized": "<p>Whether the channel is private (enabled for playback authorization). Default: <code>false</code>.</p>"
+      }
+    },
+    "IsMultitrackInputEnabled": {
+      "base": null,
+      "refs": {
+        "MultitrackInputConfiguration$enabled": "<p>Indicates whether multitrack input is enabled. Can be set to <code>true</code> only if channel type is <code>STANDARD</code>. Setting <code>enabled</code> to <code>true</code> with any other channel type will cause an exception. If <code>true</code>, then <code>policy</code>, <code>maximumResolution</code>, and <code>containerFormat</code> are required, and <code>containerFormat</code> must be set to <code>FRAGMENTED_MP4</code>. Default: <code>false</code>.</p>"
       }
     },
     "ListChannelsRequest": {
@@ -560,6 +587,26 @@
       "refs": {
         "ListStreamSessionsRequest$maxResults": "<p>Maximum number of streams to return. Default: 100.</p>",
         "ListStreamsRequest$maxResults": "<p>Maximum number of streams to return. Default: 100.</p>"
+      }
+    },
+    "MultitrackInputConfiguration": {
+      "base": "<p>A complex type that specifies multitrack input configuration.</p>",
+      "refs": {
+        "Channel$multitrackInputConfiguration": "<p>Object specifying multitrack input configuration. Default: no multitrack input configuration is specified.</p>",
+        "CreateChannelRequest$multitrackInputConfiguration": "<p>Object specifying multitrack input configuration. Default: no multitrack input configuration is specified.</p>",
+        "UpdateChannelRequest$multitrackInputConfiguration": "<p>Object specifying multitrack input configuration. Default: no multitrack input configuration is specified.</p>"
+      }
+    },
+    "MultitrackMaximumResolution": {
+      "base": null,
+      "refs": {
+        "MultitrackInputConfiguration$maximumResolution": "<p>Maximum resolution for multitrack input. Required if <code>enabled</code> is <code>true</code>.</p>"
+      }
+    },
+    "MultitrackPolicy": {
+      "base": null,
+      "refs": {
+        "MultitrackInputConfiguration$policy": "<p>Indicates whether multitrack input is allowed or required. Required if <code>enabled</code> is <code>true</code>.</p>"
       }
     },
     "PaginationToken": {
@@ -1032,12 +1079,17 @@
       "base": null,
       "refs": {
         "AudioConfiguration$codec": "<p>Codec used for the audio encoding.</p>",
+        "AudioConfiguration$track": "<p>Name of the audio track (if the stream has an audio track). If multitrack is not enabled, this is track0 (the sole track).</p>",
+        "StreamEvent$code": "<p>Provides additional details about the stream event. There are several values; the long descriptions are provided in the IVS console but not delivered through the IVS API or EventBridge. Multitrack-related codes are used only for certain Session Ended events.</p> <ul> <li> <p> <code>MultitrackInputNotAllowed</code> — The broadcast client attempted to connect with multitrack input, but multitrack input was not enabled on the channel. Check your broadcast software settings or set <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code> or <code>REQUIRE</code>.</p> </li> <li> <p> <code>MultitrackInputRequired</code> — The broadcast client attempted to connect with single-track video, but multitrack input is required on this channel. Enable multitrack video in your broadcast software or configure the channel’s <code>MultitrackInputConfiguration.Policy</code> to <code>ALLOW</code>.</p> </li> <li> <p> <code>InvalidGetClientConfigurationStreamKey</code> — The broadcast client attempted to connect with an invalid, expired, or corrupt stream key.</p> </li> <li> <p> <code>GetClientConfigurationStreamKeyRequired</code> — The broadcast client attempted to stream multitrack video without providing an authenticated stream key from GetClientConfiguration.</p> </li> <li> <p> <code>InvalidMultitrackInputTrackCount</code> — The multitrack input stream contained an invalid number of tracks.</p> </li> <li> <p> <code>InvalidMultitrackInputVideoTrackMediaProperties</code> — The multitrack input stream contained one or more tracks with an invalid codec, resolution, bitrate, or framerate.</p> </li> <li> <p> <code>StreamTakeoverMediaMismatch</code> — The broadcast client attempted to take over with different media properties (e.g., codec, resolution, or video track type) from the original stream.</p> </li> <li> <p> <code>StreamTakeoverInvalidPriority</code> — The broadcast client attempted a takeover with either a priority integer value equal to or lower than the original stream's value or a value outside the allowed range of 1 to 2,147,483,647.</p> <p> <code>StreamTakeoverLimitBreached</code> — The broadcast client reached the maximum allowed takeover attempts for this stream.</p> </li> </ul>",
         "StreamEvent$name": "<p>Name that identifies the stream event within a <code>type</code>.</p>",
         "StreamEvent$type": "<p>Logical group for certain events.</p>",
-        "VideoConfiguration$avcProfile": "<p>Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification.</p>",
         "VideoConfiguration$avcLevel": "<p>Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. For details, see the H.264 specification.</p>",
+        "VideoConfiguration$avcProfile": "<p>Indicates to the decoder the requirements for decoding the stream. For definitions of the valid values, see the H.264 specification.</p>",
         "VideoConfiguration$codec": "<p>Codec used for the video encoding.</p>",
-        "VideoConfiguration$encoder": "<p>Software or hardware used to encode the video.</p>"
+        "VideoConfiguration$encoder": "<p>Software or hardware used to encode the video.</p>",
+        "VideoConfiguration$level": "<p>Indicates the degree of required decoder performance for a profile. Normally this is set automatically by the encoder. When an AVC codec is used, this field has the same value as <code>avcLevel</code>.</p>",
+        "VideoConfiguration$profile": "<p>Indicates to the decoder the requirements for decoding the stream. When an AVC codec is used, this field has the same value as <code>avcProfile</code>.</p>",
+        "VideoConfiguration$track": "<p>Name of the video track. If multitrack is not enabled, this is track0 (the sole track).</p>"
       }
     },
     "TagKey": {
@@ -1094,7 +1146,7 @@
     "TargetIntervalSeconds": {
       "base": null,
       "refs": {
-        "ThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. This is configurable (and required) only if <code>recordingMode</code> is <code>INTERVAL</code>. Default: 60.</p> <p> <b>Important:</b> For the <code>BASIC</code> channel type, setting a value for <code>targetIntervalSeconds</code> does not guarantee that thumbnails are generated at the specified interval. For thumbnails to be generated at the <code>targetIntervalSeconds</code> interval, the <code>IDR/Keyframe</code> value for the input video must be less than the <code>targetIntervalSeconds</code> value. See <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/streaming-config.html\"> Amazon IVS Streaming Configuration</a> for information on setting <code>IDR/Keyframe</code> to the recommended value in video-encoder settings.</p>"
+        "ThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. This is configurable (and required) only if <code>recordingMode</code> is <code>INTERVAL</code>. Default: 60.</p> <p> <b>Important:</b> For the <code>BASIC</code> channel type, or the <code>STANDARD</code> channel type with multitrack input, setting a value for <code>targetIntervalSeconds</code> does not guarantee that thumbnails are generated at the specified interval. For thumbnails to be generated at the <code>targetIntervalSeconds</code> interval, the <code>IDR/Keyframe</code> value for the input video must be less than the <code>targetIntervalSeconds</code> value. See <a href=\"https://docs.aws.amazon.com/ivs/latest/userguide/streaming-config.html\"> Amazon IVS Streaming Configuration</a> for information on setting <code>IDR/Keyframe</code> to the recommended value in video-encoder settings.</p>"
       }
     },
     "ThrottlingException": {
@@ -1131,10 +1183,10 @@
       "base": null,
       "refs": {
         "StreamEvent$eventTime": "<p>Time when the event occurred. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "StreamSession$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
-        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>"
+        "StreamSession$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "StreamSessionSummary$endTime": "<p>Time when the channel went offline. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>. For live streams, this is <code>NULL</code>.</p>",
+        "StreamSessionSummary$startTime": "<p>Time when the channel went live. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>"
       }
     },
     "TranscodePreset": {
@@ -1182,9 +1234,16 @@
       }
     },
     "VideoConfiguration": {
-      "base": "<p>Object specifying a stream’s video configuration, as set up by the broadcaster (usually in an encoder). This is part of the <a>IngestConfiguration</a> object and used for monitoring stream health.</p>",
+      "base": "<p>Object specifying a stream’s video configuration, as set up by the broadcaster (usually in an encoder). This is part of the <a>IngestConfigurations</a> object and the deprecated <a>IngestConfiguration</a> object. It is used for monitoring stream health. </p>",
       "refs": {
-        "IngestConfiguration$video": "<p>Encoder settings for video.</p>"
+        "IngestConfiguration$video": "<p>Encoder settings for video.</p>",
+        "VideoConfigurationList$member": null
+      }
+    },
+    "VideoConfigurationList": {
+      "base": null,
+      "refs": {
+        "IngestConfigurations$videoConfigurations": "<p>Encoder settings for video</p>"
       }
     },
     "ViewerId": {

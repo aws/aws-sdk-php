@@ -1,0 +1,320 @@
+{
+  "version": "2.0",
+  "service": "<p>AWS User Notifications Contacts is a service that allows you to create and manage email contacts for AWS User Notifications. The AWS User Notifications Contacts API Reference provides descriptions, API request parameters, and the JSON response for all email contact related API actions.</p>",
+  "operations": {
+    "ActivateEmailContact": "<p>Activates an email contact using an activation code. This code is in the activation email sent to the email address associated with this email contact.</p>",
+    "CreateEmailContact": "<p>Creates an email contact for the provided email address.</p>",
+    "DeleteEmailContact": "<p>Deletes an email contact.</p> <note> <p>Deleting an email contact removes it from all associated notification configurations.</p> </note>",
+    "GetEmailContact": "<p>Returns an email contact.</p>",
+    "ListEmailContacts": "<p>Lists all email contacts created under the Account.</p>",
+    "ListTagsForResource": "<p>Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The resource can be a user, server, or role.</p>",
+    "SendActivationCode": "<p>Sends an activation email to the email address associated with the specified email contact.</p> <note> <p>It might take a few minutes for the activation email to arrive. If it doesn't arrive, check in your spam folder or try sending another activation email.</p> </note>",
+    "TagResource": "<p>Attaches a key-value pair to a resource, as identified by its Amazon Resource Name (ARN). Taggable resources in AWS User Notifications Contacts include email contacts.</p>",
+    "UntagResource": "<p>Detaches a key-value pair from a resource, as identified by its Amazon Resource Name (ARN). Taggable resources in AWS User Notifications Contacts include email contacts..</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "ActivateEmailContactRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ActivateEmailContactResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
+      "refs": {
+      }
+    },
+    "CreateEmailContactRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEmailContactResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreationTime": {
+      "base": null,
+      "refs": {
+        "EmailContact$creationTime": "<p>The creation time of the resource.</p>"
+      }
+    },
+    "DeleteEmailContactRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteEmailContactResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EmailContact": {
+      "base": "<p>An email contact.</p>",
+      "refs": {
+        "EmailContacts$member": null,
+        "GetEmailContactResponse$emailContact": "<p>The email contact for the provided email address.</p>"
+      }
+    },
+    "EmailContactAddress": {
+      "base": null,
+      "refs": {
+        "CreateEmailContactRequest$emailAddress": "<p>The email address this email contact points to. The activation email and any subscribed emails are sent here.</p> <note> <p>This email address can't receive emails until it's activated.</p> </note>"
+      }
+    },
+    "EmailContactArn": {
+      "base": null,
+      "refs": {
+        "ActivateEmailContactRequest$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "CreateEmailContactResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "DeleteEmailContactRequest$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "EmailContact$arn": "<p>The Amazon Resource Name (ARN) of the email contact.</p>",
+        "GetEmailContactRequest$arn": "<p>The Amazon Resource Name (ARN) of the email contact to get.</p>",
+        "ListTagsForResourceRequest$arn": "<p>The ARN you specified to list the tags of.</p>",
+        "SendActivationCodeRequest$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "TagResourceRequest$arn": "<p>The ARN of the configuration.</p>",
+        "UntagResourceRequest$arn": "<p>The value of the resource that will have the tag removed. An Amazon Resource Name (ARN) is an identifier for a specific AWS resource, such as a server, user, or role.</p>"
+      }
+    },
+    "EmailContactName": {
+      "base": null,
+      "refs": {
+        "CreateEmailContactRequest$name": "<p>The name of the email contact.</p>",
+        "EmailContact$name": "<p>The name of the email contact.</p>"
+      }
+    },
+    "EmailContactStatus": {
+      "base": null,
+      "refs": {
+        "EmailContact$status": "<p>The status of the email contact. Only activated email contacts receive emails.</p>"
+      }
+    },
+    "EmailContacts": {
+      "base": null,
+      "refs": {
+        "ListEmailContactsResponse$emailContacts": "<p>A list of email contacts.</p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "GetEmailContactRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEmailContactResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds a client should wait before retrying the request.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Unexpected error during processing of request.</p>",
+      "refs": {
+      }
+    },
+    "ListEmailContactsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListEmailContactsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListEmailContactsRequest$maxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved.</p>"
+      }
+    },
+    "ListEmailContactsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "QuotaCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$quotaCode": "<p>The code for the service quota in <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html\">Service Quotas</a>.</p>",
+        "ThrottlingException$quotaCode": "<p>Identifies the quota that is being throttled.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "ConflictException$resourceId": "<p>The resource ID that prompted the conflict error.</p>",
+        "ResourceNotFoundException$resourceId": "<p>The ID of the resource that wasn't found.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The ID of the resource that exceeds the service quota.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Your request references a resource which does not exist. </p>",
+      "refs": {
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ConflictException$resourceType": "<p>The resource type that prompted the conflict error.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of resource that wasn't found.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of the resource that exceeds the service quota.</p>"
+      }
+    },
+    "SendActivationCodeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendActivationCodeResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SensitiveEmailContactAddress": {
+      "base": null,
+      "refs": {
+        "EmailContact$address": "<p>The email address this email contact points to. The activation email and any subscribed emails are sent here.</p>"
+      }
+    },
+    "ServiceCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$serviceCode": "<p>The code for the service quota exceeded in <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html\">Service Quotas</a>.</p>",
+        "ThrottlingException$serviceCode": "<p>Identifies the service being throttled.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p> Request would cause a service quota to be exceeded.</p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "ListEmailContactsRequest$nextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "ListEmailContactsResponse$nextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by MaxResults.</p>",
+        "ValidationExceptionField$name": "<p>The field name where the invalid entry was detected.</p>",
+        "ValidationExceptionField$message": "<p>A message with the reason for the validation exception error.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeys$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>Specifies a list of tag keys that you want to remove from the specified resources.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>Map of tags assigned to a resource</p>",
+      "refs": {
+        "CreateEmailContactRequest$tags": "<p>A map of tags assigned to a resource. A tag is a string-to-string map of key-value pairs.</p>",
+        "ListTagsForResourceResponse$tags": "<p>Key-value pairs that are assigned to a resource, usually for the purpose of grouping and searching for items. Tags are metadata that you define.</p>",
+        "TagResourceRequest$tags": "<p>A list of tags to apply to the configuration.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "Token": {
+      "base": null,
+      "refs": {
+        "ActivateEmailContactRequest$code": "<p>The activation code for this email contact.</p> <p>An email contact has a maximum of five activation attempts. Activation codes expire after 12 hours and are generated by the <a href=\"https://docs.aws.amazon.com/notificationscontacts/latest/APIReference/API_SendActivationCode.html\">SendActivationCode</a> API action.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateTime": {
+      "base": null,
+      "refs": {
+        "EmailContact$updateTime": "<p>The time the resource was last updated.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Stores information about a field passed inside a request that resulted in an exception.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The list of input fields that are invalid.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason why your input is considered invalid.</p>"
+      }
+    }
+  }
+}

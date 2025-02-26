@@ -1,11 +1,11 @@
 {
   "version": "2.0",
-  "service": "<p><fullname>RDS Data API</fullname> <p>Amazon RDS provides an HTTP endpoint to run SQL statements on an Amazon Aurora DB cluster. To run these statements, you use the RDS Data API (Data API).</p> <p>Data API is available with the following types of Aurora databases:</p> <ul> <li> <p>Aurora PostgreSQL - Serverless v2, Serverless v1, and provisioned</p> </li> <li> <p>Aurora MySQL - Serverless v1 only</p> </li> </ul> <p>For more information about the Data API, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p></p>",
+  "service": "<p><fullname>RDS Data API</fullname> <p>Amazon RDS provides an HTTP endpoint to run SQL statements on an Amazon Aurora DB cluster. To run these statements, you use the RDS Data API (Data API).</p> <p>Data API is available with the following types of Aurora databases:</p> <ul> <li> <p>Aurora PostgreSQL - Serverless v2, provisioned, and Serverless v1</p> </li> <li> <p>Aurora MySQL - Serverless v2, provisioned, and Serverless v1</p> </li> </ul> <p>For more information about the Data API, see <a href=\"https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html\">Using RDS Data API</a> in the <i>Amazon Aurora User Guide</i>.</p></p>",
   "operations": {
     "BatchExecuteStatement": "<p>Runs a batch SQL statement over an array of data.</p> <p>You can run bulk update and insert operations for multiple records using a DML statement with different parameter sets. Bulk operations can provide a significant performance improvement over individual insert and update operations.</p> <note> <p>If a call isn't part of a transaction because it doesn't include the <code>transactionID</code> parameter, changes that result from the call are committed automatically.</p> <p>There isn't a fixed upper limit on the number of parameter sets. However, the maximum size of the HTTP request submitted through the Data API is 4 MiB. If the request exceeds this limit, the Data API returns an error and doesn't process the request. This 4-MiB limit includes the size of the HTTP headers and the JSON notation in the request. Thus, the number of parameter sets that you can include depends on a combination of factors, such as the size of the SQL statement and the size of each parameter set.</p> <p>The response size limit is 1 MiB. If the call returns more than 1 MiB of response data, the call is terminated.</p> </note>",
-    "BeginTransaction": "<p>Starts a SQL transaction.</p> <note> <p>A transaction can run for a maximum of 24 hours. A transaction is terminated and rolled back automatically after 24 hours.</p> <p>A transaction times out if no calls use its transaction ID in three minutes. If a transaction times out before it's committed, it's rolled back automatically.</p> <p>DDL statements inside a transaction cause an implicit commit. We recommend that you run each DDL statement in a separate <code>ExecuteStatement</code> call with <code>continueAfterTimeout</code> enabled.</p> </note>",
+    "BeginTransaction": "<p>Starts a SQL transaction.</p> <note> <p>A transaction can run for a maximum of 24 hours. A transaction is terminated and rolled back automatically after 24 hours.</p> <p>A transaction times out if no calls use its transaction ID in three minutes. If a transaction times out before it's committed, it's rolled back automatically.</p> <p>For Aurora MySQL, DDL statements inside a transaction cause an implicit commit. We recommend that you run each MySQL DDL statement in a separate <code>ExecuteStatement</code> call with <code>continueAfterTimeout</code> enabled.</p> </note>",
     "CommitTransaction": "<p>Ends a SQL transaction started with the <code>BeginTransaction</code> operation and commits the changes.</p>",
-    "ExecuteSql": "<p>Runs one or more SQL statements.</p> <note> <p>This operation isn't supported for Aurora PostgreSQL Serverless v2 and provisioned DB clusters, and for Aurora Serverless v1 DB clusters, the operation is deprecated. Use the <code>BatchExecuteStatement</code> or <code>ExecuteStatement</code> operation.</p> </note>",
+    "ExecuteSql": "<p>Runs one or more SQL statements.</p> <note> <p>This operation isn't supported for Aurora Serverless v2 and provisioned DB clusters. For Aurora Serverless v1 DB clusters, the operation is deprecated. Use the <code>BatchExecuteStatement</code> or <code>ExecuteStatement</code> operation.</p> </note>",
     "ExecuteStatement": "<p>Runs a SQL statement against a database.</p> <note> <p>If a call isn't part of a transaction because it doesn't include the <code>transactionID</code> parameter, changes that result from the call are committed automatically.</p> <p>If the binary response data from the database is more than 1 MB, the call is terminated.</p> </note>",
     "RollbackTransaction": "<p>Performs a rollback of a transaction. Rolling back a transaction cancels its changes.</p>"
   },
@@ -165,6 +165,11 @@
       "refs": {
       }
     },
+    "DatabaseResumingException": {
+      "base": "<p>A request was cancelled because the Aurora Serverless v2 DB instance was paused. The Data API request automatically resumes the DB instance. Wait a few seconds and try again.</p>",
+      "refs": {
+      }
+    },
     "DatabaseUnavailableException": {
       "base": "<p>The writer instance in the DB cluster isn't available.</p>",
       "refs": {
@@ -202,8 +207,10 @@
         "BadRequestException$message": "<p>The error message returned by this <code>BadRequestException</code> error.</p>",
         "DatabaseErrorException$message": null,
         "DatabaseNotFoundException$message": null,
+        "DatabaseResumingException$message": null,
         "ForbiddenException$message": "<p>The error message returned by this <code>ForbiddenException</code> error.</p>",
         "HttpEndpointNotEnabledException$message": null,
+        "InvalidResourceStateException$message": null,
         "InvalidSecretException$message": null,
         "NotFoundException$message": "<p>The error message returned by this <code>NotFoundException</code> error.</p>",
         "SecretsErrorException$message": null,
@@ -285,6 +292,11 @@
     },
     "InternalServerErrorException": {
       "base": "<p>An internal error occurred.</p>",
+      "refs": {
+      }
+    },
+    "InvalidResourceStateException": {
+      "base": "<p>The resource is in an invalid state.</p>",
       "refs": {
       }
     },

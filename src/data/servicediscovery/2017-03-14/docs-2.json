@@ -7,7 +7,8 @@
     "CreatePublicDnsNamespace": "<p>Creates a public namespace based on DNS, which is visible on the internet. The namespace defines your service naming scheme. For example, if you name your namespace <code>example.com</code> and name your service <code>backend</code>, the resulting DNS name for the service is <code>backend.example.com</code>. You can discover instances that were registered with a public DNS namespace by using either a <code>DiscoverInstances</code> request or using DNS. For the current quota on the number of namespaces that you can create using the same Amazon Web Services account, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/cloud-map-limits.html\">Cloud Map quotas</a> in the <i>Cloud Map Developer Guide</i>.</p> <important> <p>The <code>CreatePublicDnsNamespace</code> API operation is not supported in the Amazon Web Services GovCloud (US) Regions.</p> </important>",
     "CreateService": "<p>Creates a service. This action defines the configuration for the following entities:</p> <ul> <li> <p>For public and private DNS namespaces, one of the following combinations of DNS records in Amazon Route 53:</p> <ul> <li> <p> <code>A</code> </p> </li> <li> <p> <code>AAAA</code> </p> </li> <li> <p> <code>A</code> and <code>AAAA</code> </p> </li> <li> <p> <code>SRV</code> </p> </li> <li> <p> <code>CNAME</code> </p> </li> </ul> </li> <li> <p>Optionally, a health check</p> </li> </ul> <p>After you create the service, you can submit a <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_RegisterInstance.html\">RegisterInstance</a> request, and Cloud Map uses the values in the configuration to create the specified entities.</p> <p>For the current quota on the number of instances that you can register using the same namespace and using the same service, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/dg/cloud-map-limits.html\">Cloud Map quotas</a> in the <i>Cloud Map Developer Guide</i>.</p>",
     "DeleteNamespace": "<p>Deletes a namespace from the current account. If the namespace still contains one or more services, the request fails.</p>",
-    "DeleteService": "<p>Deletes a specified service. If the service still contains one or more registered instances, the request fails.</p>",
+    "DeleteService": "<p>Deletes a specified service and all associated service attributes. If the service still contains one or more registered instances, the request fails.</p>",
+    "DeleteServiceAttributes": "<p>Deletes specific attributes associated with a service.</p>",
     "DeregisterInstance": "<p>Deletes the Amazon Route 53 DNS records and health check, if any, that Cloud Map created for the specified instance.</p>",
     "DiscoverInstances": "<p>Discovers registered instances for a specified namespace and service. You can use <code>DiscoverInstances</code> to discover instances for any type of namespace. <code>DiscoverInstances</code> returns a randomized list of instances allowing customers to distribute traffic evenly across instances. For public and private DNS namespaces, you can also use DNS queries to discover instances.</p>",
     "DiscoverInstancesRevision": "<p>Discovers the increasing revision associated with an instance.</p>",
@@ -16,6 +17,7 @@
     "GetNamespace": "<p>Gets information about a namespace.</p>",
     "GetOperation": "<p>Gets information about any operation that returns an operation ID in the response, such as a <code>CreateHttpNamespace</code> request.</p> <note> <p>To get a list of operations that match specified criteria, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_ListOperations.html\">ListOperations</a>.</p> </note>",
     "GetService": "<p>Gets the settings for a specified service.</p>",
+    "GetServiceAttributes": "<p>Returns the attributes associated with a specified service.</p>",
     "ListInstances": "<p>Lists summary information about the instances that you registered by using a specified service.</p>",
     "ListNamespaces": "<p>Lists summary information about the namespaces that were created by the current Amazon Web Services account.</p>",
     "ListOperations": "<p>Lists operations that match the criteria that you specify.</p>",
@@ -28,7 +30,8 @@
     "UpdateInstanceCustomHealthStatus": "<p>Submits a request to change the health status of a custom health check to healthy or unhealthy.</p> <p>You can use <code>UpdateInstanceCustomHealthStatus</code> to change the status only for custom health checks, which you define using <code>HealthCheckCustomConfig</code> when you create a service. You can't use it to change the status for Route 53 health checks, which you define using <code>HealthCheckConfig</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_HealthCheckCustomConfig.html\">HealthCheckCustomConfig</a>.</p>",
     "UpdatePrivateDnsNamespace": "<p>Updates a private DNS namespace.</p>",
     "UpdatePublicDnsNamespace": "<p>Updates a public DNS namespace.</p>",
-    "UpdateService": "<p>Submits a request to perform the following operations:</p> <ul> <li> <p>Update the TTL setting for existing <code>DnsRecords</code> configurations</p> </li> <li> <p>Add, update, or delete <code>HealthCheckConfig</code> for a specified service</p> <note> <p>You can't add, update, or delete a <code>HealthCheckCustomConfig</code> configuration.</p> </note> </li> </ul> <p>For public and private DNS namespaces, note the following:</p> <ul> <li> <p>If you omit any existing <code>DnsRecords</code> or <code>HealthCheckConfig</code> configurations from an <code>UpdateService</code> request, the configurations are deleted from the service.</p> </li> <li> <p>If you omit an existing <code>HealthCheckCustomConfig</code> configuration from an <code>UpdateService</code> request, the configuration isn't deleted from the service.</p> </li> </ul> <p>When you update settings for a service, Cloud Map also updates the corresponding settings in all the records and health checks that were created by using the specified service.</p>"
+    "UpdateService": "<p>Submits a request to perform the following operations:</p> <ul> <li> <p>Update the TTL setting for existing <code>DnsRecords</code> configurations</p> </li> <li> <p>Add, update, or delete <code>HealthCheckConfig</code> for a specified service</p> <note> <p>You can't add, update, or delete a <code>HealthCheckCustomConfig</code> configuration.</p> </note> </li> </ul> <p>For public and private DNS namespaces, note the following:</p> <ul> <li> <p>If you omit any existing <code>DnsRecords</code> or <code>HealthCheckConfig</code> configurations from an <code>UpdateService</code> request, the configurations are deleted from the service.</p> </li> <li> <p>If you omit an existing <code>HealthCheckCustomConfig</code> configuration from an <code>UpdateService</code> request, the configuration isn't deleted from the service.</p> </li> </ul> <p>When you update settings for a service, Cloud Map also updates the corresponding settings in all the records and health checks that were created by using the specified service.</p>",
+    "UpdateServiceAttributes": "<p>Submits a request to update a specified service to add service-level attributes.</p>"
   },
   "shapes": {
     "AmazonResourceName": {
@@ -46,6 +49,7 @@
         "Namespace$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.</p>",
         "NamespaceSummary$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the namespace when you create it.</p>",
         "Service$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.</p>",
+        "ServiceAttributes$ServiceArn": "<p>The ARN of the service that the attributes are associated with.</p>",
         "ServiceSummary$Arn": "<p>The Amazon Resource Name (ARN) that Cloud Map assigns to the service when you create it.</p>"
       }
     },
@@ -139,6 +143,16 @@
       "refs": {
       }
     },
+    "DeleteServiceAttributesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteServiceAttributesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteServiceRequest": {
       "base": null,
       "refs": {
@@ -186,7 +200,7 @@
       }
     },
     "DnsConfig": {
-      "base": "<p>A complex type that contains information about the Amazon Route 53 DNS records that you want Cloud Map to create when you register an instance.</p> <important> <p>The record types of a service can only be changed by deleting the service and recreating it with a new <code>Dnsconfig</code>.</p> </important>",
+      "base": "<p>A complex type that contains information about the Amazon Route 53 DNS records that you want Cloud Map to create when you register an instance.</p>",
       "refs": {
         "CreateServiceRequest$DnsConfig": "<p>A complex type that contains information about the Amazon Route 53 records that you want Cloud Map to create when you register an instance. </p>",
         "Service$DnsConfig": "<p>A complex type that contains information about the Route 53 DNS records that you want Cloud Map to create when you register an instance.</p> <important> <p>The record types of a service can only be changed by deleting the service and recreating it with a new <code>Dnsconfig</code>.</p> </important>",
@@ -214,7 +228,7 @@
     "DnsRecordList": {
       "base": null,
       "refs": {
-        "DnsConfig$DnsRecords": "<p>An array that contains one <code>DnsRecord</code> object for each Route 53 DNS record that you want Cloud Map to create when you register an instance.</p>",
+        "DnsConfig$DnsRecords": "<p>An array that contains one <code>DnsRecord</code> object for each Route 53 DNS record that you want Cloud Map to create when you register an instance.</p> <important> <p>The record type of a service specified in a <code>DnsRecord</code> object can't be updated. To change a record type, you need to delete the service and recreate it with a new <code>DnsConfig</code>.</p> </important>",
         "DnsConfigChange$DnsRecords": "<p>An array that contains one <code>DnsRecord</code> object for each Route 53 record that you want Cloud Map to create when you register an instance.</p>"
       }
     },
@@ -238,6 +252,7 @@
         "ResourceLimitExceeded$Message": null,
         "ResourceNotFoundException$Message": null,
         "ServiceAlreadyExists$Message": null,
+        "ServiceAttributesLimitExceededException$Message": null,
         "ServiceNotFound$Message": null,
         "TooManyTagsException$Message": null
       }
@@ -307,6 +322,16 @@
       }
     },
     "GetOperationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetServiceAttributesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetServiceAttributesResponse": {
       "base": null,
       "refs": {
       }
@@ -805,6 +830,7 @@
         "CreateServiceRequest$NamespaceId": "<p>The ID of the namespace that you want to use to create the service. The namespace ID must be specified, but it can be specified either here or in the <code>DnsConfig</code> object.</p>",
         "CreateServiceRequest$CreatorRequestId": "<p>A unique string that identifies the request and that allows failed <code>CreateService</code> requests to be retried without the risk of running the operation twice. <code>CreatorRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
         "DeleteNamespaceRequest$Id": "<p>The ID of the namespace that you want to delete.</p>",
+        "DeleteServiceAttributesRequest$ServiceId": "<p>The ID of the service from which the attributes will be deleted.</p>",
         "DeleteServiceRequest$Id": "<p>The ID of the service that you want to delete.</p>",
         "DeregisterInstanceRequest$ServiceId": "<p>The ID of the service that the instance is associated with.</p>",
         "DeregisterInstanceRequest$InstanceId": "<p>The value that you specified for <code>Id</code> in the <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_RegisterInstance.html\">RegisterInstance</a> request.</p>",
@@ -816,6 +842,7 @@
         "GetInstancesHealthStatusRequest$ServiceId": "<p>The ID of the service that the instance is associated with.</p>",
         "GetNamespaceRequest$Id": "<p>The ID of the namespace that you want to get information about.</p>",
         "GetOperationRequest$OperationId": "<p>The ID of the operation that you want to get more information about.</p>",
+        "GetServiceAttributesRequest$ServiceId": "<p>The ID of the service that you want to get attributes for.</p>",
         "GetServiceRequest$Id": "<p>The ID of the service that you want to get settings for.</p>",
         "HttpInstanceSummary$InstanceId": "<p>The ID of an instance that matches the values that you specified in the request.</p>",
         "Instance$Id": "<p>An identifier that you want to associate with the instance. Note the following:</p> <ul> <li> <p>If the service that's specified by <code>ServiceId</code> includes settings for an <code>SRV</code> record, the value of <code>InstanceId</code> is automatically included as part of the value for the <code>SRV</code> record. For more information, see <a href=\"https://docs.aws.amazon.com/cloud-map/latest/api/API_DnsRecord.html#cloudmap-Type-DnsRecord-Type\">DnsRecord &gt; Type</a>.</p> </li> <li> <p>You can use this value to update an existing instance.</p> </li> <li> <p>To register a new instance, you must specify a value that's unique among instances that you register by using the same service. </p> </li> <li> <p>If you specify an existing <code>InstanceId</code> and <code>ServiceId</code>, Cloud Map updates the existing DNS records. If there's also an existing health check, Cloud Map deletes the old health check and creates a new one. </p> <note> <p>The health check isn't deleted immediately, so it will still appear for a while if you submit a <code>ListHealthChecks</code> request, for example.</p> </note> </li> </ul>",
@@ -846,6 +873,7 @@
         "UpdatePrivateDnsNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdatePrivateDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
         "UpdatePublicDnsNamespaceRequest$Id": "<p>The ID of the namespace being updated.</p>",
         "UpdatePublicDnsNamespaceRequest$UpdaterRequestId": "<p>A unique string that identifies the request and that allows failed <code>UpdatePublicDnsNamespace</code> requests to be retried without the risk of running the operation twice. <code>UpdaterRequestId</code> can be any unique string (for example, a date/timestamp).</p>",
+        "UpdateServiceAttributesRequest$ServiceId": "<p>The ID of the service that you want to update.</p>",
         "UpdateServiceRequest$Id": "<p>The ID of the service that you want to update.</p>"
       }
     },
@@ -910,10 +938,47 @@
       "refs": {
       }
     },
+    "ServiceAttributeKey": {
+      "base": null,
+      "refs": {
+        "ServiceAttributeKeyList$member": null,
+        "ServiceAttributesMap$key": null
+      }
+    },
+    "ServiceAttributeKeyList": {
+      "base": null,
+      "refs": {
+        "DeleteServiceAttributesRequest$Attributes": "<p>A list of keys corresponding to each attribute that you want to delete.</p>"
+      }
+    },
+    "ServiceAttributeValue": {
+      "base": null,
+      "refs": {
+        "ServiceAttributesMap$value": null
+      }
+    },
+    "ServiceAttributes": {
+      "base": "<p>A complex type that contains information about attributes associated with a specific service.</p>",
+      "refs": {
+        "GetServiceAttributesResponse$ServiceAttributes": "<p>A complex type that contains the service ARN and a list of attribute key-value pairs associated with the service.</p>"
+      }
+    },
+    "ServiceAttributesLimitExceededException": {
+      "base": "<p>The attribute can't be added to the service because you've exceeded the quota for the number of attributes you can add to a service.</p>",
+      "refs": {
+      }
+    },
+    "ServiceAttributesMap": {
+      "base": null,
+      "refs": {
+        "ServiceAttributes$Attributes": "<p>A string map that contains the following information for the service that you specify in <code>ServiceArn</code>:</p> <ul> <li> <p>The attributes that apply to the service. </p> </li> <li> <p>For each attribute, the applicable value.</p> </li> </ul> <p>You can specify a total of 30 attributes.</p>",
+        "UpdateServiceAttributesRequest$Attributes": "<p>A string map that contains attribute key-value pairs.</p>"
+      }
+    },
     "ServiceChange": {
       "base": "<p>A complex type that contains changes to an existing service.</p>",
       "refs": {
-        "UpdateServiceRequest$Service": "<p>A complex type that contains the new settings for the service.</p>"
+        "UpdateServiceRequest$Service": "<p>A complex type that contains the new settings for the service. You can specify a maximum of 30 attributes (key-value pairs).</p>"
       }
     },
     "ServiceFilter": {
@@ -1078,6 +1143,16 @@
       }
     },
     "UpdatePublicDnsNamespaceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateServiceAttributesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateServiceAttributesResponse": {
       "base": null,
       "refs": {
       }

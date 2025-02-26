@@ -11,7 +11,8 @@
     "serviceId":"SSO OIDC",
     "signatureVersion":"v4",
     "signingName":"sso-oauth",
-    "uid":"sso-oidc-2019-06-10"
+    "uid":"sso-oidc-2019-06-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateToken":{
@@ -35,7 +36,8 @@
         {"shape":"ExpiredTokenException"},
         {"shape":"InternalServerException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "CreateTokenWithIAM":{
       "name":"CreateTokenWithIAM",
@@ -76,7 +78,8 @@
         {"shape":"InvalidRedirectUriException"},
         {"shape":"UnsupportedGrantTypeException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "StartDeviceAuthorization":{
       "name":"StartDeviceAuthorization",
@@ -93,7 +96,8 @@
         {"shape":"SlowDownException"},
         {"shape":"InternalServerException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     }
   },
   "shapes":{

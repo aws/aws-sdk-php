@@ -18,6 +18,7 @@ trait S3ControlTestingTrait
         $params = [
             'version' => '2018-08-20',
             'region' => 'us-west-2',
+            'endpoint_provider' => $args['endpoint_provider'] ?? null
         ];
 
         return new S3ControlClient(array_merge($params, $args));

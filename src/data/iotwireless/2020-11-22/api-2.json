@@ -2451,7 +2451,8 @@
         "Tags":{"shape":"TagList"},
         "RedundancyPercent":{"shape":"RedundancyPercent"},
         "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
-        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"},
+        "Descriptor":{"shape":"FileDescriptor"}
       }
     },
     "CreateFuotaTaskResponse":{
@@ -3275,6 +3276,7 @@
     "EventNotificationResourceType":{
       "type":"string",
       "enum":[
+        "FuotaTask",
         "SidewalkAccount",
         "WirelessDevice",
         "WirelessGateway"
@@ -3329,6 +3331,11 @@
       "min":0
     },
     "FactorySupport":{"type":"boolean"},
+    "FileDescriptor":{
+      "type":"string",
+      "max":332,
+      "pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    },
     "Fingerprint":{
       "type":"string",
       "max":64,
@@ -3383,6 +3390,25 @@
       "type":"string",
       "max":128
     },
+    "FuotaTaskEvent":{
+      "type":"string",
+      "enum":["Fuota"]
+    },
+    "FuotaTaskEventLogOption":{
+      "type":"structure",
+      "required":[
+        "Event",
+        "LogLevel"
+      ],
+      "members":{
+        "Event":{"shape":"FuotaTaskEvent"},
+        "LogLevel":{"shape":"LogLevel"}
+      }
+    },
+    "FuotaTaskEventLogOptionList":{
+      "type":"list",
+      "member":{"shape":"FuotaTaskEventLogOption"}
+    },
     "FuotaTaskId":{
       "type":"string",
       "max":256
@@ -3390,6 +3416,22 @@
     "FuotaTaskList":{
       "type":"list",
       "member":{"shape":"FuotaTask"}
+    },
+    "FuotaTaskLogOption":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "LogLevel"
+      ],
+      "members":{
+        "Type":{"shape":"FuotaTaskType"},
+        "LogLevel":{"shape":"LogLevel"},
+        "Events":{"shape":"FuotaTaskEventLogOptionList"}
+      }
+    },
+    "FuotaTaskLogOptionList":{
+      "type":"list",
+      "member":{"shape":"FuotaTaskLogOption"}
     },
     "FuotaTaskName":{
       "type":"string",
@@ -3404,6 +3446,10 @@
         "FuotaDone",
         "Delete_Waiting"
       ]
+    },
+    "FuotaTaskType":{
+      "type":"string",
+      "enum":["LoRaWAN"]
     },
     "GPST":{"type":"float"},
     "GatewayEui":{
@@ -3424,6 +3470,11 @@
         "GatewayId":{"shape":"WirelessGatewayId"},
         "DownlinkFrequency":{"shape":"DownlinkFrequency"}
       }
+    },
+    "GatewayListMulticast":{
+      "type":"list",
+      "member":{"shape":"WirelessGatewayId"},
+      "max":20
     },
     "GatewayMaxEirp":{
       "type":"float",
@@ -3523,7 +3574,8 @@
         "CreatedAt":{"shape":"CreatedAt"},
         "RedundancyPercent":{"shape":"RedundancyPercent"},
         "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
-        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"},
+        "Descriptor":{"shape":"FileDescriptor"}
       }
     },
     "GetLogLevelsByResourceTypesRequest":{
@@ -3536,7 +3588,8 @@
       "members":{
         "DefaultLogLevel":{"shape":"LogLevel"},
         "WirelessGatewayLogOptions":{"shape":"WirelessGatewayLogOptionList"},
-        "WirelessDeviceLogOptions":{"shape":"WirelessDeviceLogOptionList"}
+        "WirelessDeviceLogOptions":{"shape":"WirelessDeviceLogOptionList"},
+        "FuotaTaskLogOptions":{"shape":"FuotaTaskLogOptionList"}
       }
     },
     "GetMetricConfigurationRequest":{
@@ -4173,6 +4226,7 @@
       "enum":[
         "PartnerAccountId",
         "DevEui",
+        "FuotaTaskId",
         "GatewayEui",
         "WirelessDeviceId",
         "WirelessGatewayId"
@@ -4887,7 +4941,8 @@
       "type":"structure",
       "members":{
         "RfRegion":{"shape":"SupportedRfRegion"},
-        "DlClass":{"shape":"DlClass"}
+        "DlClass":{"shape":"DlClass"},
+        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"}
       }
     },
     "LoRaWANMulticastGet":{
@@ -4896,7 +4951,8 @@
         "RfRegion":{"shape":"SupportedRfRegion"},
         "DlClass":{"shape":"DlClass"},
         "NumberOfDevicesRequested":{"shape":"NumberOfDevicesRequested"},
-        "NumberOfDevicesInGroup":{"shape":"NumberOfDevicesInGroup"}
+        "NumberOfDevicesInGroup":{"shape":"NumberOfDevicesInGroup"},
+        "ParticipatingGateways":{"shape":"ParticipatingGatewaysMulticast"}
       }
     },
     "LoRaWANMulticastMetadata":{
@@ -5384,6 +5440,13 @@
         "DownlinkMode":{"shape":"DownlinkMode"},
         "GatewayList":{"shape":"GatewayList"},
         "TransmissionInterval":{"shape":"TransmissionInterval"}
+      }
+    },
+    "ParticipatingGatewaysMulticast":{
+      "type":"structure",
+      "members":{
+        "GatewayList":{"shape":"GatewayListMulticast"},
+        "TransmissionInterval":{"shape":"TransmissionIntervalMulticast"}
       }
     },
     "PartnerAccountArn":{"type":"string"},
@@ -6381,6 +6444,11 @@
       "max":604800,
       "min":1
     },
+    "TransmissionIntervalMulticast":{
+      "type":"integer",
+      "max":60000,
+      "min":0
+    },
     "TransmitMode":{
       "type":"integer",
       "max":1,
@@ -6509,7 +6577,8 @@
         "FirmwareUpdateRole":{"shape":"FirmwareUpdateRole"},
         "RedundancyPercent":{"shape":"RedundancyPercent"},
         "FragmentSizeBytes":{"shape":"FragmentSizeBytes"},
-        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"}
+        "FragmentIntervalMS":{"shape":"FragmentIntervalMS"},
+        "Descriptor":{"shape":"FileDescriptor"}
       }
     },
     "UpdateFuotaTaskResponse":{
@@ -6521,6 +6590,7 @@
       "type":"structure",
       "members":{
         "DefaultLogLevel":{"shape":"LogLevel"},
+        "FuotaTaskLogOptions":{"shape":"FuotaTaskLogOptionList"},
         "WirelessDeviceLogOptions":{"shape":"WirelessDeviceLogOptionList"},
         "WirelessGatewayLogOptions":{"shape":"WirelessGatewayLogOptionList"}
       }

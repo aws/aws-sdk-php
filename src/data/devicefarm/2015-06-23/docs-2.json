@@ -694,6 +694,27 @@
         "ListDevicePoolsResult$devicePools": "<p>Information about the device pools.</p>"
       }
     },
+    "DeviceProxy": {
+      "base": "<p>Represents the http/s proxy configuration that will be applied to a device during a run.</p>",
+      "refs": {
+        "CreateRemoteAccessSessionConfiguration$deviceProxy": "<p>The device proxy to be configured on the device for the remote access session.</p>",
+        "RemoteAccessSession$deviceProxy": "<p>The device proxy configured for the remote access session.</p>",
+        "Run$deviceProxy": "<p>The device proxy configured for the devices in the run.</p>",
+        "ScheduleRunConfiguration$deviceProxy": "<p>The device proxy to be configured on the device for the run.</p>"
+      }
+    },
+    "DeviceProxyHost": {
+      "base": null,
+      "refs": {
+        "DeviceProxy$host": "<p>Hostname or IPv4 address of the proxy.</p>"
+      }
+    },
+    "DeviceProxyPort": {
+      "base": null,
+      "refs": {
+        "DeviceProxy$port": "<p>The port number on which the http/s proxy is listening.</p>"
+      }
+    },
     "DeviceSelectionConfiguration": {
       "base": "<p>Represents the device filters used in a test run and the maximum number of devices to be included in the run. It is passed in as the <code>deviceSelectionConfiguration</code> request parameter in <a>ScheduleRun</a>.</p>",
       "refs": {

@@ -21,6 +21,56 @@
         "title": "Links an Amazon Q App to the invoker's list of apps"
       }
     ],
+    "BatchCreateCategory": [
+      {
+        "input": {
+          "categories": [
+            {
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR"
+            },
+            {
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Marketing"
+            }
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Creates the categories for the library"
+      }
+    ],
+    "BatchDeleteCategory": [
+      {
+        "input": {
+          "categories": [
+            "9c871ed4-1c41-4065-aefe-321cd4b61cf8"
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Deletes the categories in the library"
+      }
+    ],
+    "BatchUpdateCategory": [
+      {
+        "input": {
+          "categories": [
+            {
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR Management"
+            },
+            {
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Sales"
+            }
+          ],
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "id": "example-1",
+        "title": "Updates the categories in the library"
+      }
+    ],
     "CreateLibraryItem": [
       {
         "input": {
@@ -43,6 +93,55 @@
         },
         "id": "example-1",
         "title": "Create a Library Item"
+      }
+    ],
+    "CreatePresignedUrl": [
+      {
+        "input": {
+          "appId": "4263767c-d889-4cb2-a8f6-8b649bc66af0",
+          "cardId": "82f69028-22a9-4bea-8727-0eabf58e9fed",
+          "fileContentsSha256": "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=",
+          "fileName": "myFile.txt",
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f",
+          "scope": "SESSION",
+          "sessionId": "4f0e5b87-9d38-41cd-9eb4-ebce2f2917cc"
+        },
+        "output": {
+          "fileId": "412aa1b4-341c-45af-936d-da52f8a1a3b4",
+          "presignedUrl": "https://qapps-uploaded-files-us-east-1-c819fab7cf78c9205158297913deb9e0.s3.us-east-1.amazonaws.com/",
+          "presignedUrlExpiration": "2024-09-14T00:11:54.232Z",
+          "presignedUrlFields": {
+            "x-amz-checksum-sha256": "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=",
+            "x-amz-server-side-encryption": "aws:kms",
+            "x-amz-server-side-encryption-aws-kms-key-id": "0a6a474b-f2ca-46ea-9e72-deea9077d92f",
+            "x-amz-server-side-encryption-context": "eyJBUFBMSUNBVElPTl9JRCI6IjAxMjM0NTY3ODkwMSJ9"
+          }
+        },
+        "id": "example-1",
+        "title": "Upload a file to a specific session"
+      },
+      {
+        "input": {
+          "appId": "4263767c-d889-4cb2-a8f6-8b649bc66af0",
+          "cardId": "7a11f34b-42d4-4bc8-b668-ae4a788dae1e",
+          "fileContentsSha256": "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=",
+          "fileName": "anApplicationFile.txt",
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f",
+          "scope": "APPLICATION"
+        },
+        "output": {
+          "fileId": "412aa1b4-341c-45af-936d-da52f8a1a3b4",
+          "presignedUrl": "https://qapps-uploaded-files-us-east-1-c819fab7cf78c9205158297913deb9e0.s3.us-east-1.amazonaws.com/",
+          "presignedUrlExpiration": "2024-09-14T00:11:54.232Z",
+          "presignedUrlFields": {
+            "x-amz-checksum-sha256": "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=",
+            "x-amz-server-side-encryption": "aws:kms",
+            "x-amz-server-side-encryption-aws-kms-key-id": "0a6a474b-f2ca-46ea-9e72-deea9077d92f",
+            "x-amz-server-side-encryption-context": "eyJBUFBMSUNBVElPTl9JRCI6IjAxMjM0NTY3ODkwMSJ9"
+          }
+        },
+        "id": "example-2",
+        "title": "Upload a file into a application"
       }
     ],
     "CreateQApp": [
@@ -108,6 +207,36 @@
         },
         "id": "example-1",
         "title": "Delete an Amazon Q App"
+      }
+    ],
+    "DescribeQAppPermissions": [
+      {
+        "input": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "instanceId": "01793661-ad73-4c7d-8eaa-1c95a10151c2"
+        },
+        "output": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "permissions": [
+            {
+              "action": "write",
+              "principal": {
+                "email": "user1@example.com",
+                "userId": "f8f15330-b091-708b-d46e-adb0d914b699"
+              }
+            },
+            {
+              "action": "read",
+              "principal": {
+                "email": "user2@example.com",
+                "userId": "c81133d0-10d1-70eb-aaa3-d427ea6fc0f3"
+              }
+            }
+          ],
+          "resourceArn": "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14"
+        },
+        "id": "example-1",
+        "title": "Describe permissions for the app"
       }
     ],
     "DisassociateLibraryItemReview": [
@@ -226,11 +355,21 @@
           "cardStatus": {
             "1e6caeac-b481-45ff-a082-8b9a4a0b72e8": {
               "currentState": "COMPLETED",
-              "currentValue": "Earth's circumference is 24,901 miles"
+              "currentValue": "Based on the responses, the most popular color is red, with 1 vote from the user \"user1\"."
             },
             "6fb5b404-3b7b-48a4-8a8b-56406922a606": {
               "currentState": "COMPLETED",
-              "currentValue": "What is the circumference of Earth?"
+              "currentValue": "",
+              "submissions": [
+                {
+                  "value": {
+                    "18cee4cb-253e-4f87-9154-849fbb98e482": "user1",
+                    "d52030f9-6c4b-47a9-a946-377f632c77cc": "red"
+                  },
+                  "submissionId": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                  "timestamp": "2023-06-15T14:30:45Z"
+                }
+              ]
             }
           },
           "sessionArn": "arn:aws:qapps:us-west-2:0123456789012:application/a929ecd6-5765-4ec7-bd3e-2ca90098b18e/qapp/65e7dce7-226a-47f9-b689-22850becef89/session/1fca878e-64c5-4dc4-b1d9-c93effed4e82",
@@ -239,6 +378,27 @@
         },
         "id": "example-1",
         "title": "Retrieves an existing session for an Amazon Q App"
+      }
+    ],
+    "GetQAppSessionMetadata": [
+      {
+        "input": {
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f",
+          "sessionId": "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb"
+        },
+        "output": {
+          "sessionArn": "arn:aws:qapps:us-west-2:0123456789012:application/cbea8329-41c0-4566-a112-19250921a220/qapp/387ccac9-4717-489f-841f-729b7d7de355/session/56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb",
+          "sessionId": "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb",
+          "sessionName": "Trip itinerary collection session",
+          "sessionOwner": true,
+          "sharingConfiguration": {
+            "acceptResponses": true,
+            "enabled": true,
+            "revealCards": false
+          }
+        },
+        "id": "example-1",
+        "title": "Retrieves an existing session metadata for an Amazon Q App"
       }
     ],
     "ImportDocument": [
@@ -272,6 +432,31 @@
         },
         "id": "example-2",
         "title": "Upload a file into a application"
+      }
+    ],
+    "ListCategories": [
+      {
+        "input": {
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f"
+        },
+        "output": {
+          "categories": [
+            {
+              "appCount": 10,
+              "color": "#FF6600",
+              "id": "549abfe0-f5c4-45a2-bb9b-c05987a49c6d",
+              "title": "HR"
+            },
+            {
+              "appCount": 11,
+              "color": "#FFFF00",
+              "id": "18cbebaa-196a-4aa5-a840-88d548e07f8f",
+              "title": "Marketing"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List categories available for the library items in this instance"
       }
     ],
     "ListLibraryItems": [
@@ -600,6 +785,95 @@
         },
         "id": "example-2",
         "title": "Updating the app so it has a single q-query card"
+      }
+    ],
+    "UpdateQAppPermissions": [
+      {
+        "input": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "grantPermissions": [
+            {
+              "action": "read",
+              "principal": "user2@example.com"
+            }
+          ],
+          "instanceId": "01793661-ad73-4c7d-8eaa-1c95a10151c2"
+        },
+        "output": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "permissions": [
+            {
+              "action": "write",
+              "principal": {
+                "email": "user1@example.com",
+                "userId": "f8f15330-b091-708b-d46e-adb0d914b699"
+              }
+            },
+            {
+              "action": "read",
+              "principal": {
+                "email": "user2@example.com",
+                "userId": "c81133d0-10d1-70eb-aaa3-d427ea6fc0f3"
+              }
+            }
+          ],
+          "resourceArn": "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14"
+        },
+        "id": "example-1",
+        "title": "Grant permissions for the app"
+      },
+      {
+        "input": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "instanceId": "01793661-ad73-4c7d-8eaa-1c95a10151c2",
+          "revokePermissions": [
+            {
+              "action": "read",
+              "principal": "user2@example.com"
+            }
+          ]
+        },
+        "output": {
+          "appId": "fe0acf86-49e5-4def-a0c2-40ce0cafee14",
+          "permissions": [
+            {
+              "action": "write",
+              "principal": {
+                "email": "user1@example.com",
+                "userId": "f8f15330-b091-708b-d46e-adb0d914b699"
+              }
+            }
+          ],
+          "resourceArn": "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14"
+        },
+        "id": "example-2",
+        "title": "Revoke permissions for the app"
+      }
+    ],
+    "UpdateQAppSessionMetadata": [
+      {
+        "input": {
+          "instanceId": "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f",
+          "sessionId": "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb",
+          "sessionName": "Trip itinerary collection session",
+          "sharingConfiguration": {
+            "acceptResponses": true,
+            "enabled": true,
+            "revealCards": false
+          }
+        },
+        "output": {
+          "sessionArn": "arn:aws:qapps:us-west-2:0123456789012:application/cbea8329-41c0-4566-a112-19250921a220/qapp/387ccac9-4717-489f-841f-729b7d7de355/session/56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb",
+          "sessionId": "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb",
+          "sessionName": "Trip itinerary collection session",
+          "sharingConfiguration": {
+            "acceptResponses": true,
+            "enabled": true,
+            "revealCards": false
+          }
+        },
+        "id": "example-1",
+        "title": "Updates an existing session metadata for an Amazon Q App"
       }
     ]
   }

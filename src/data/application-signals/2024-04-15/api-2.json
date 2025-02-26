@@ -311,6 +311,25 @@
       "type":"integer",
       "box":true
     },
+    "BurnRateConfiguration":{
+      "type":"structure",
+      "required":["LookBackWindowMinutes"],
+      "members":{
+        "LookBackWindowMinutes":{"shape":"BurnRateLookBackWindowMinutes"}
+      }
+    },
+    "BurnRateConfigurations":{
+      "type":"list",
+      "member":{"shape":"BurnRateConfiguration"},
+      "max":10,
+      "min":0
+    },
+    "BurnRateLookBackWindowMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":10080,
+      "min":1
+    },
     "CalendarInterval":{
       "type":"structure",
       "required":[
@@ -350,7 +369,8 @@
         "SliConfig":{"shape":"ServiceLevelIndicatorConfig"},
         "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
         "Goal":{"shape":"Goal"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
       }
     },
     "CreateServiceLevelObjectiveOutput":{
@@ -1091,7 +1111,8 @@
         "Sli":{"shape":"ServiceLevelIndicator"},
         "RequestBasedSli":{"shape":"RequestBasedServiceLevelIndicator"},
         "EvaluationType":{"shape":"EvaluationType"},
-        "Goal":{"shape":"Goal"}
+        "Goal":{"shape":"Goal"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
       }
     },
     "ServiceLevelObjectiveArn":{
@@ -1384,7 +1405,8 @@
         "Description":{"shape":"ServiceLevelObjectiveDescription"},
         "SliConfig":{"shape":"ServiceLevelIndicatorConfig"},
         "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
-        "Goal":{"shape":"Goal"}
+        "Goal":{"shape":"Goal"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
       }
     },
     "UpdateServiceLevelObjectiveOutput":{

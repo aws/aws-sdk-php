@@ -300,11 +300,6 @@ function default_user_agent()
         return \GuzzleHttp\default_user_agent();
     }
 
-    // If Guzzle 5 installed
-    if ($version === 5) {
-        return \GuzzleHttp\Client::getDefaultUserAgent();
-    }
-
     throw new \RuntimeException('Unknown Guzzle version: ' . $version);
 }
 

@@ -272,6 +272,42 @@
         {"shape":"ClusterNotFoundException"}
       ]
     },
+    "DescribeServiceDeployments":{
+      "name":"DescribeServiceDeployments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServiceDeploymentsRequest"},
+      "output":{"shape":"DescribeServiceDeploymentsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
+    "DescribeServiceRevisions":{
+      "name":"DescribeServiceRevisions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServiceRevisionsRequest"},
+      "output":{"shape":"DescribeServiceRevisionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ClusterNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "DescribeServices":{
       "name":"DescribeServices",
       "http":{
@@ -437,6 +473,23 @@
         {"shape":"ClientException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ClusterNotFoundException"}
+      ]
+    },
+    "ListServiceDeployments":{
+      "name":"ListServiceDeployments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListServiceDeploymentsRequest"},
+      "output":{"shape":"ListServiceDeploymentsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
       ]
     },
     "ListServices":{
@@ -1006,6 +1059,13 @@
         "managedDraining":{"shape":"ManagedDraining"}
       }
     },
+    "AvailabilityZoneRebalancing":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AwsVpcConfiguration":{
       "type":"structure",
       "required":["subnets"],
@@ -1288,6 +1348,7 @@
         "dependsOn":{"shape":"ContainerDependencies"},
         "startTimeout":{"shape":"BoxedInteger"},
         "stopTimeout":{"shape":"BoxedInteger"},
+        "versionConsistency":{"shape":"VersionConsistency"},
         "hostname":{"shape":"String"},
         "user":{"shape":"String"},
         "workingDirectory":{"shape":"String"},
@@ -1328,6 +1389,18 @@
         "containerName":{"shape":"String"},
         "condition":{"shape":"ContainerCondition"}
       }
+    },
+    "ContainerImage":{
+      "type":"structure",
+      "members":{
+        "containerName":{"shape":"String"},
+        "imageDigest":{"shape":"String"},
+        "image":{"shape":"String"}
+      }
+    },
+    "ContainerImages":{
+      "type":"list",
+      "member":{"shape":"ContainerImage"}
     },
     "ContainerInstance":{
       "type":"structure",
@@ -1473,6 +1546,7 @@
         "cluster":{"shape":"String"},
         "serviceName":{"shape":"String"},
         "taskDefinition":{"shape":"String"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"},
         "loadBalancers":{"shape":"LoadBalancers"},
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "desiredCount":{"shape":"BoxedInteger"},
@@ -1493,7 +1567,8 @@
         "propagateTags":{"shape":"PropagateTags"},
         "enableExecuteCommand":{"shape":"Boolean"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
-        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "CreateServiceResponse":{
@@ -1529,6 +1604,13 @@
       "type":"structure",
       "members":{
         "taskSet":{"shape":"TaskSet"}
+      }
+    },
+    "CreatedAt":{
+      "type":"structure",
+      "members":{
+        "before":{"shape":"Timestamp"},
+        "after":{"shape":"Timestamp"}
       }
     },
     "DeleteAccountSettingRequest":{
@@ -1656,20 +1738,21 @@
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
         "serviceConnectResources":{"shape":"ServiceConnectServiceResourceList"},
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
-        "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"}
+        "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "DeploymentAlarms":{
       "type":"structure",
       "required":[
         "alarmNames",
-        "enable",
-        "rollback"
+        "rollback",
+        "enable"
       ],
       "members":{
         "alarmNames":{"shape":"StringList"},
-        "enable":{"shape":"Boolean"},
-        "rollback":{"shape":"Boolean"}
+        "rollback":{"shape":"Boolean"},
+        "enable":{"shape":"Boolean"}
       }
     },
     "DeploymentCircuitBreaker":{
@@ -1797,6 +1880,34 @@
       "type":"structure",
       "members":{
         "containerInstances":{"shape":"ContainerInstances"},
+        "failures":{"shape":"Failures"}
+      }
+    },
+    "DescribeServiceDeploymentsRequest":{
+      "type":"structure",
+      "required":["serviceDeploymentArns"],
+      "members":{
+        "serviceDeploymentArns":{"shape":"StringList"}
+      }
+    },
+    "DescribeServiceDeploymentsResponse":{
+      "type":"structure",
+      "members":{
+        "serviceDeployments":{"shape":"ServiceDeployments"},
+        "failures":{"shape":"Failures"}
+      }
+    },
+    "DescribeServiceRevisionsRequest":{
+      "type":"structure",
+      "required":["serviceRevisionArns"],
+      "members":{
+        "serviceRevisionArns":{"shape":"StringList"}
+      }
+    },
+    "DescribeServiceRevisionsResponse":{
+      "type":"structure",
+      "members":{
+        "serviceRevisions":{"shape":"ServiceRevisions"},
         "failures":{"shape":"Failures"}
       }
     },
@@ -2366,6 +2477,25 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListServiceDeploymentsRequest":{
+      "type":"structure",
+      "required":["service"],
+      "members":{
+        "service":{"shape":"String"},
+        "cluster":{"shape":"String"},
+        "status":{"shape":"ServiceDeploymentStatusList"},
+        "createdAt":{"shape":"CreatedAt"},
+        "nextToken":{"shape":"String"},
+        "maxResults":{"shape":"BoxedInteger"}
+      }
+    },
+    "ListServiceDeploymentsResponse":{
+      "type":"structure",
+      "members":{
+        "serviceDeployments":{"shape":"ServiceDeploymentsBrief"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListServicesByNamespaceRequest":{
       "type":"structure",
       "required":["namespace"],
@@ -2924,7 +3054,8 @@
         "proxyConfiguration":{"shape":"ProxyConfiguration"},
         "inferenceAccelerators":{"shape":"InferenceAccelerators"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
-        "runtimePlatform":{"shape":"RuntimePlatform"}
+        "runtimePlatform":{"shape":"RuntimePlatform"},
+        "enableFaultInjection":{"shape":"BoxedBoolean"}
       }
     },
     "RegisterTaskDefinitionResponse":{
@@ -2997,6 +3128,14 @@
     "Resources":{
       "type":"list",
       "member":{"shape":"Resource"}
+    },
+    "Rollback":{
+      "type":"structure",
+      "members":{
+        "reason":{"shape":"String"},
+        "startedAt":{"shape":"Timestamp"},
+        "serviceRevisionArn":{"shape":"String"}
+      }
     },
     "RunTaskRequest":{
       "type":"structure",
@@ -3125,7 +3264,8 @@
         "createdBy":{"shape":"String"},
         "enableECSManagedTags":{"shape":"Boolean"},
         "propagateTags":{"shape":"PropagateTags"},
-        "enableExecuteCommand":{"shape":"Boolean"}
+        "enableExecuteCommand":{"shape":"Boolean"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"}
       }
     },
     "ServiceConnectClientAlias":{
@@ -3192,6 +3332,91 @@
         "roleArn":{"shape":"String"}
       }
     },
+    "ServiceDeployment":{
+      "type":"structure",
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"},
+        "serviceArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "createdAt":{"shape":"Timestamp"},
+        "startedAt":{"shape":"Timestamp"},
+        "finishedAt":{"shape":"Timestamp"},
+        "stoppedAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "sourceServiceRevisions":{"shape":"ServiceRevisionsSummaryList"},
+        "targetServiceRevision":{"shape":"ServiceRevisionSummary"},
+        "status":{"shape":"ServiceDeploymentStatus"},
+        "statusReason":{"shape":"String"},
+        "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
+        "rollback":{"shape":"Rollback"},
+        "deploymentCircuitBreaker":{"shape":"ServiceDeploymentCircuitBreaker"},
+        "alarms":{"shape":"ServiceDeploymentAlarms"}
+      }
+    },
+    "ServiceDeploymentAlarms":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ServiceDeploymentRollbackMonitorsStatus"},
+        "alarmNames":{"shape":"StringList"},
+        "triggeredAlarmNames":{"shape":"StringList"}
+      }
+    },
+    "ServiceDeploymentBrief":{
+      "type":"structure",
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"},
+        "serviceArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "startedAt":{"shape":"Timestamp"},
+        "createdAt":{"shape":"Timestamp"},
+        "finishedAt":{"shape":"Timestamp"},
+        "targetServiceRevisionArn":{"shape":"String"},
+        "status":{"shape":"ServiceDeploymentStatus"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "ServiceDeploymentCircuitBreaker":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ServiceDeploymentRollbackMonitorsStatus"},
+        "failureCount":{"shape":"Integer"},
+        "threshold":{"shape":"Integer"}
+      }
+    },
+    "ServiceDeploymentRollbackMonitorsStatus":{
+      "type":"string",
+      "enum":[
+        "TRIGGERED",
+        "MONITORING",
+        "MONITORING_COMPLETE",
+        "DISABLED"
+      ]
+    },
+    "ServiceDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "SUCCESSFUL",
+        "STOPPED",
+        "STOP_REQUESTED",
+        "IN_PROGRESS",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_SUCCESSFUL",
+        "ROLLBACK_FAILED"
+      ]
+    },
+    "ServiceDeploymentStatusList":{
+      "type":"list",
+      "member":{"shape":"ServiceDeploymentStatus"}
+    },
+    "ServiceDeployments":{
+      "type":"list",
+      "member":{"shape":"ServiceDeployment"}
+    },
+    "ServiceDeploymentsBrief":{
+      "type":"list",
+      "member":{"shape":"ServiceDeploymentBrief"}
+    },
     "ServiceEvent":{
       "type":"structure",
       "members":{
@@ -3252,6 +3477,46 @@
         "containerName":{"shape":"String"},
         "containerPort":{"shape":"BoxedInteger"}
       }
+    },
+    "ServiceRevision":{
+      "type":"structure",
+      "members":{
+        "serviceRevisionArn":{"shape":"String"},
+        "serviceArn":{"shape":"String"},
+        "clusterArn":{"shape":"String"},
+        "taskDefinition":{"shape":"String"},
+        "capacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
+        "launchType":{"shape":"LaunchType"},
+        "platformVersion":{"shape":"String"},
+        "platformFamily":{"shape":"String"},
+        "loadBalancers":{"shape":"LoadBalancers"},
+        "serviceRegistries":{"shape":"ServiceRegistries"},
+        "networkConfiguration":{"shape":"NetworkConfiguration"},
+        "containerImages":{"shape":"ContainerImages"},
+        "guardDutyEnabled":{"shape":"Boolean"},
+        "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
+        "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"},
+        "createdAt":{"shape":"Timestamp"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+      }
+    },
+    "ServiceRevisionSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"String"},
+        "requestedTaskCount":{"shape":"Integer"},
+        "runningTaskCount":{"shape":"Integer"},
+        "pendingTaskCount":{"shape":"Integer"}
+      }
+    },
+    "ServiceRevisions":{
+      "type":"list",
+      "member":{"shape":"ServiceRevision"}
+    },
+    "ServiceRevisionsSummaryList":{
+      "type":"list",
+      "member":{"shape":"ServiceRevisionSummary"}
     },
     "ServiceVolumeConfiguration":{
       "type":"structure",
@@ -3577,7 +3842,8 @@
         "registeredAt":{"shape":"Timestamp"},
         "deregisteredAt":{"shape":"Timestamp"},
         "registeredBy":{"shape":"String"},
-        "ephemeralStorage":{"shape":"EphemeralStorage"}
+        "ephemeralStorage":{"shape":"EphemeralStorage"},
+        "enableFaultInjection":{"shape":"BoxedBoolean"}
       }
     },
     "TaskDefinitionFamilyStatus":{
@@ -3643,7 +3909,8 @@
       "enum":[
         "ext3",
         "ext4",
-        "xfs"
+        "xfs",
+        "ntfs"
       ]
     },
     "TaskManagedEBSVolumeConfiguration":{
@@ -3965,6 +4232,7 @@
         "taskDefinition":{"shape":"String"},
         "capacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
         "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
+        "availabilityZoneRebalancing":{"shape":"AvailabilityZoneRebalancing"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "placementConstraints":{"shape":"PlacementConstraints"},
         "placementStrategy":{"shape":"PlacementStrategies"},
@@ -3977,7 +4245,8 @@
         "propagateTags":{"shape":"PropagateTags"},
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "serviceConnectConfiguration":{"shape":"ServiceConnectConfiguration"},
-        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"}
+        "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
       }
     },
     "UpdateServiceResponse":{
@@ -4028,6 +4297,13 @@
         "taskSet":{"shape":"TaskSet"}
       }
     },
+    "VersionConsistency":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
+    },
     "VersionInfo":{
       "type":"structure",
       "members":{
@@ -4061,6 +4337,23 @@
     "VolumeList":{
       "type":"list",
       "member":{"shape":"Volume"}
+    },
+    "VpcLatticeConfiguration":{
+      "type":"structure",
+      "required":[
+        "roleArn",
+        "targetGroupArn",
+        "portName"
+      ],
+      "members":{
+        "roleArn":{"shape":"IAMRoleArn"},
+        "targetGroupArn":{"shape":"String"},
+        "portName":{"shape":"String"}
+      }
+    },
+    "VpcLatticeConfigurations":{
+      "type":"list",
+      "member":{"shape":"VpcLatticeConfiguration"}
     }
   }
 }

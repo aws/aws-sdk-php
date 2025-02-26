@@ -289,6 +289,7 @@
         {"shape":"CloudHsmAccessDeniedException"},
         {"shape":"CloudHsmInternalFailureException"},
         {"shape":"CloudHsmInvalidRequestException"},
+        {"shape":"CloudHsmResourceLimitExceededException"},
         {"shape":"CloudHsmResourceNotFoundException"},
         {"shape":"CloudHsmServiceException"},
         {"shape":"CloudHsmTagException"}
@@ -422,6 +423,13 @@
       },
       "exception":true
     },
+    "CloudHsmResourceLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"errorMessage"}
+      },
+      "exception":true
+    },
     "CloudHsmResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -452,6 +460,7 @@
         "CreateTimestamp":{"shape":"Timestamp"},
         "Hsms":{"shape":"Hsms"},
         "HsmType":{"shape":"HsmType"},
+        "HsmTypeRollbackExpiration":{"shape":"Timestamp"},
         "PreCoPassword":{"shape":"PreCoPassword"},
         "SecurityGroup":{"shape":"SecurityGroup"},
         "SourceBackupId":{"shape":"BackupId"},
@@ -459,6 +468,7 @@
         "StateMessage":{"shape":"StateMessage"},
         "SubnetMapping":{"shape":"ExternalSubnetMapping"},
         "VpcId":{"shape":"VpcId"},
+        "NetworkType":{"shape":"NetworkType"},
         "Certificates":{"shape":"Certificates"},
         "TagList":{"shape":"TagList"},
         "Mode":{"shape":"ClusterMode"}
@@ -484,6 +494,8 @@
         "INITIALIZED",
         "ACTIVE",
         "UPDATE_IN_PROGRESS",
+        "MODIFY_IN_PROGRESS",
+        "ROLLBACK_IN_PROGRESS",
         "DELETE_IN_PROGRESS",
         "DELETED",
         "DEGRADED"
@@ -527,6 +539,7 @@
         "HsmType":{"shape":"HsmType"},
         "SourceBackupId":{"shape":"BackupArn"},
         "SubnetIds":{"shape":"SubnetIds"},
+        "NetworkType":{"shape":"NetworkType"},
         "TagList":{"shape":"TagList"},
         "Mode":{"shape":"ClusterMode"}
       }
@@ -695,7 +708,9 @@
         "SubnetId":{"shape":"SubnetId"},
         "EniId":{"shape":"EniId"},
         "EniIp":{"shape":"IpAddress"},
+        "EniIpV6":{"shape":"IpV6Address"},
         "HsmId":{"shape":"HsmId"},
+        "HsmType":{"shape":"HsmType"},
         "State":{"shape":"HsmState"},
         "StateMessage":{"shape":"String"}
       }
@@ -747,6 +762,10 @@
       "type":"string",
       "pattern":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"
     },
+    "IpV6Address":{
+      "type":"string",
+      "max":100
+    },
     "ListTagsRequest":{
       "type":"structure",
       "required":["ResourceId"],
@@ -788,11 +807,9 @@
     },
     "ModifyClusterRequest":{
       "type":"structure",
-      "required":[
-        "BackupRetentionPolicy",
-        "ClusterId"
-      ],
+      "required":["ClusterId"],
       "members":{
+        "HsmType":{"shape":"HsmType"},
         "BackupRetentionPolicy":{"shape":"BackupRetentionPolicy"},
         "ClusterId":{"shape":"ClusterId"}
       }
@@ -802,6 +819,13 @@
       "members":{
         "Cluster":{"shape":"Cluster"}
       }
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
     },
     "NextToken":{
       "type":"string",

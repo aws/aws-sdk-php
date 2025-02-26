@@ -423,6 +423,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "DescribeMetricsExport":{
+      "name":"DescribeMetricsExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/describe-metrics-export",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeMetricsExportRequest"},
+      "output":{"shape":"DescribeMetricsExportResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeResiliencyPolicy":{
       "name":"DescribeResiliencyPolicy",
       "http":{
@@ -678,6 +695,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListMetrics":{
+      "name":"ListMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-metrics",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMetricsRequest"},
+      "output":{"shape":"ListMetricsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListRecommendationTemplates":{
       "name":"ListRecommendationTemplates",
       "http":{
@@ -924,6 +957,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "StartMetricsExport":{
+      "name":"StartMetricsExport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/start-metrics-export",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMetricsExportRequest"},
+      "output":{"shape":"StartMetricsExportResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StartResourceGroupingRecommendationTask":{
       "name":"StartResourceGroupingRecommendationTask",
       "http":{
@@ -1150,6 +1201,13 @@
       "max":10,
       "min":1
     },
+    "Alarm":{
+      "type":"structure",
+      "members":{
+        "alarmArn":{"shape":"Arn"},
+        "source":{"shape":"String255"}
+      }
+    },
     "AlarmRecommendation":{
       "type":"structure",
       "required":[
@@ -1205,6 +1263,7 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "complianceStatus":{"shape":"AppComplianceStatusType"},
         "creationTime":{"shape":"TimeStamp"},
         "description":{"shape":"EntityDescription"},
@@ -1370,6 +1429,7 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "complianceStatus":{"shape":"AppComplianceStatusType"},
         "creationTime":{"shape":"TimeStamp"},
         "description":{"shape":"EntityDescription"},
@@ -1512,10 +1572,10 @@
       "required":[
         "entryId",
         "excluded",
-        "item",
         "referenceId"
       ],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "entryId":{"shape":"String255"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},
@@ -1531,7 +1591,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[A-za-z0-9_.-]{0,63}$"
+      "pattern":"^[A-Za-z0-9_.-]{0,63}$"
     },
     "ComplianceDrift":{
       "type":"structure",
@@ -1581,6 +1641,35 @@
     "ComponentRecommendationList":{
       "type":"list",
       "member":{"shape":"ComponentRecommendation"}
+    },
+    "Condition":{
+      "type":"structure",
+      "required":[
+        "field",
+        "operator"
+      ],
+      "members":{
+        "field":{"shape":"String255"},
+        "operator":{"shape":"ConditionOperatorType"},
+        "value":{"shape":"String255"}
+      }
+    },
+    "ConditionList":{
+      "type":"list",
+      "member":{"shape":"Condition"},
+      "max":50,
+      "min":0
+    },
+    "ConditionOperatorType":{
+      "type":"string",
+      "enum":[
+        "Equals",
+        "NotEquals",
+        "GreaterThen",
+        "GreaterOrEquals",
+        "LessThen",
+        "LessOrEquals"
+      ]
     },
     "ConfigRecommendation":{
       "type":"structure",
@@ -1657,6 +1746,7 @@
       "required":["name"],
       "members":{
         "assessmentSchedule":{"shape":"AppAssessmentScheduleType"},
+        "awsApplicationArn":{"shape":"Arn"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2145,9 +2235,30 @@
       "members":{
         "appArn":{"shape":"Arn"},
         "appVersion":{"shape":"EntityVersion"},
+        "errorDetails":{"shape":"ErrorDetailList"},
         "errorMessage":{"shape":"String500"},
         "status":{"shape":"ResourceImportStatusType"},
         "statusChangeTime":{"shape":"TimeStamp"}
+      }
+    },
+    "DescribeMetricsExportRequest":{
+      "type":"structure",
+      "required":["metricsExportId"],
+      "members":{
+        "metricsExportId":{"shape":"String255"}
+      }
+    },
+    "DescribeMetricsExportResponse":{
+      "type":"structure",
+      "required":[
+        "metricsExportId",
+        "status"
+      ],
+      "members":{
+        "errorMessage":{"shape":"String500"},
+        "exportLocation":{"shape":"S3Location"},
+        "metricsExportId":{"shape":"String255"},
+        "status":{"shape":"MetricsExportStatusType"}
       }
     },
     "DescribeResiliencyPolicyRequest":{
@@ -2309,6 +2420,16 @@
       "type":"string",
       "pattern":"^\\S{1,50}$"
     },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ErrorDetailList":{
+      "type":"list",
+      "member":{"shape":"ErrorDetail"}
+    },
     "ErrorMessage":{
       "type":"string",
       "max":500,
@@ -2356,6 +2477,13 @@
         "ComplexityOfImplementation"
       ]
     },
+    "Experiment":{
+      "type":"structure",
+      "members":{
+        "experimentArn":{"shape":"String255"},
+        "experimentTemplateId":{"shape":"String255"}
+      }
+    },
     "FailedGroupingRecommendationEntries":{
       "type":"list",
       "member":{"shape":"FailedGroupingRecommendationEntry"}
@@ -2381,6 +2509,30 @@
         "rpoInSecs":{"shape":"Seconds"},
         "rtoInSecs":{"shape":"Seconds"}
       }
+    },
+    "Field":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "aggregation":{"shape":"FieldAggregationType"},
+        "name":{"shape":"String255"}
+      }
+    },
+    "FieldAggregationType":{
+      "type":"string",
+      "enum":[
+        "Min",
+        "Max",
+        "Sum",
+        "Avg",
+        "Count"
+      ]
+    },
+    "FieldList":{
+      "type":"list",
+      "member":{"shape":"Field"},
+      "max":50,
+      "min":0
     },
     "GroupingAppComponent":{
       "type":"structure",
@@ -2792,6 +2944,11 @@
           "location":"querystring",
           "locationName":"appArn"
         },
+        "awsApplicationArn":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"awsApplicationArn"
+        },
         "fromLastAssessmentTime":{
           "shape":"TimeStamp",
           "location":"querystring",
@@ -2830,6 +2987,25 @@
       "members":{
         "appSummaries":{"shape":"AppSummaryList"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMetricsRequest":{
+      "type":"structure",
+      "members":{
+        "conditions":{"shape":"ConditionList"},
+        "dataSource":{"shape":"String255"},
+        "fields":{"shape":"FieldList"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"},
+        "sorts":{"shape":"SortList"}
+      }
+    },
+    "ListMetricsResponse":{
+      "type":"structure",
+      "required":["rows"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "rows":{"shape":"RowList"}
       }
     },
     "ListRecommendationTemplatesRequest":{
@@ -3057,6 +3233,15 @@
       "max":100,
       "min":1
     },
+    "MetricsExportStatusType":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "InProgress",
+        "Failed",
+        "Success"
+      ]
+    },
     "NextToken":{
       "type":"string",
       "pattern":"^\\S{1,2000}$"
@@ -3191,8 +3376,10 @@
       "type":"structure",
       "members":{
         "alreadyImplemented":{"shape":"BooleanOptional"},
+        "discoveredAlarm":{"shape":"Alarm"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},
+        "latestDiscoveredExperiment":{"shape":"Experiment"},
         "resourceId":{"shape":"String500"},
         "targetAccountId":{"shape":"CustomerId"},
         "targetRegion":{"shape":"AwsRegion"}
@@ -3541,6 +3728,14 @@
       "type":"integer",
       "box":true
     },
+    "Row":{
+      "type":"list",
+      "member":{"shape":"String255"}
+    },
+    "RowList":{
+      "type":"list",
+      "member":{"shape":"Row"}
+    },
     "S3Location":{
       "type":"structure",
       "members":{
@@ -3610,6 +3805,20 @@
       "type":"string",
       "enum":["SSM"]
     },
+    "Sort":{
+      "type":"structure",
+      "required":["field"],
+      "members":{
+        "ascending":{"shape":"BooleanOptional"},
+        "field":{"shape":"String255"}
+      }
+    },
+    "SortList":{
+      "type":"list",
+      "member":{"shape":"Sort"},
+      "max":50,
+      "min":0
+    },
     "SpecReferenceId":{
       "type":"string",
       "max":500,
@@ -3638,6 +3847,27 @@
       "required":["assessment"],
       "members":{
         "assessment":{"shape":"AppAssessment"}
+      }
+    },
+    "StartMetricsExportRequest":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"EntityName"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartMetricsExportResponse":{
+      "type":"structure",
+      "required":[
+        "metricsExportId",
+        "status"
+      ],
+      "members":{
+        "metricsExportId":{"shape":"String255"},
+        "status":{"shape":"MetricsExportStatusType"}
       }
     },
     "StartResourceGroupingRecommendationTaskRequest":{
@@ -3762,6 +3992,7 @@
       "type":"structure",
       "required":["referenceId"],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "appComponentName":{"shape":"EntityId"},
         "dependsOnAlarms":{"shape":"AlarmReferenceIdList"},
         "description":{"shape":"String500"},
@@ -3965,10 +4196,10 @@
       "required":[
         "entryId",
         "excluded",
-        "item",
         "referenceId"
       ],
       "members":{
+        "appComponentId":{"shape":"EntityName255"},
         "entryId":{"shape":"String255"},
         "excludeReason":{"shape":"ExcludeRecommendationReason"},
         "excluded":{"shape":"BooleanOptional"},

@@ -95,7 +95,7 @@
     "ApplicationDescription": {
       "base": null,
       "refs": {
-        "CreateApplicationRequest$description": "<p>Description of the application to be created.</p>",
+        "CreateApplicationRequest$description": "<p>The description of the application to be created.</p>",
         "UpdateApplicationRequest$description": "<p>New description of the application to be updated.</p>"
       }
     },
@@ -117,8 +117,15 @@
     "ApplicationName": {
       "base": null,
       "refs": {
-        "CreateApplicationRequest$name": "<p>Name of the application to be created.</p>",
+        "CreateApplicationRequest$name": "<p>The name of the application to be created.</p>",
         "UpdateApplicationRequest$name": "<p>New name of the application to be updated.</p>"
+      }
+    },
+    "ApplicationWave": {
+      "base": null,
+      "refs": {
+        "CreateApplicationRequest$wave": "<p>The name of the migration wave of the application to be created.</p>",
+        "UpdateApplicationRequest$wave": "<p>The new migration wave of the application that you want to update.</p>"
       }
     },
     "AssociateConfigurationItemsToApplicationRequest": {
@@ -695,6 +702,12 @@
         "BatchDeleteConfigurationTask$failedConfigurations": "<p> A list of configuration IDs that failed to delete during the deletion task, each paired with an error message. </p>"
       }
     },
+    "FileClassification": {
+      "base": null,
+      "refs": {
+        "ImportTask$fileClassification": "<p>The type of file detected by the import task.</p>"
+      }
+    },
     "Filter": {
       "base": "<p>A filter that can use conditional operators.</p> <p>For more information about filters, see <a href=\"https://docs.aws.amazon.com/application-discovery/latest/userguide/discovery-api-queries.html\">Querying Discovered Configuration Items</a> in the <i>Amazon Web Services Application Discovery Service User Guide</i>. </p>",
       "refs": {
@@ -1107,7 +1120,7 @@
         "BatchDeleteAgentError$errorMessage": "<p> The description of the error that occurred for the delete failed agent. </p>",
         "Configuration$key": null,
         "Configuration$value": null,
-        "CreateApplicationResponse$configurationId": "<p>Configuration ID of an application to be created.</p>",
+        "CreateApplicationResponse$configurationId": "<p>The configuration ID of an application to be created.</p>",
         "DescribeConfigurationsAttribute$key": null,
         "DescribeConfigurationsAttribute$value": null,
         "Filter$name": "<p>The name of the filter.</p>",

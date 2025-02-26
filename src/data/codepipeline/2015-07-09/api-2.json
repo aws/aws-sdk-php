@@ -716,7 +716,8 @@
         "Deploy",
         "Test",
         "Invoke",
-        "Approval"
+        "Approval",
+        "Compute"
       ]
     },
     "ActionConfiguration":{
@@ -795,12 +796,15 @@
         "actionTypeId":{"shape":"ActionTypeId"},
         "runOrder":{"shape":"ActionRunOrder"},
         "configuration":{"shape":"ActionConfigurationMap"},
+        "commands":{"shape":"CommandList"},
         "outputArtifacts":{"shape":"OutputArtifactList"},
         "inputArtifacts":{"shape":"InputArtifactList"},
+        "outputVariables":{"shape":"OutputVariableList"},
         "roleArn":{"shape":"RoleArn"},
         "region":{"shape":"AWSRegionName"},
         "namespace":{"shape":"ActionNamespace"},
-        "timeoutInMinutes":{"shape":"ActionTimeout"}
+        "timeoutInMinutes":{"shape":"ActionTimeout"},
+        "environmentVariables":{"shape":"EnvironmentVariableList"}
       }
     },
     "ActionExecution":{
@@ -815,7 +819,8 @@
         "externalExecutionId":{"shape":"ExecutionId"},
         "externalExecutionUrl":{"shape":"Url"},
         "percentComplete":{"shape":"Percentage"},
-        "errorDetails":{"shape":"ErrorDetails"}
+        "errorDetails":{"shape":"ErrorDetails"},
+        "logStreamARN":{"shape":"LogStreamARN"}
       }
     },
     "ActionExecutionDetail":{
@@ -872,7 +877,8 @@
         "externalExecutionId":{"shape":"ExternalExecutionId"},
         "externalExecutionSummary":{"shape":"ExternalExecutionSummary"},
         "externalExecutionUrl":{"shape":"Url"},
-        "errorDetails":{"shape":"ErrorDetails"}
+        "errorDetails":{"shape":"ErrorDetails"},
+        "logStreamARN":{"shape":"LogStreamARN"}
       }
     },
     "ActionExecutionStatus":{
@@ -1295,6 +1301,17 @@
       "min":1
     },
     "Code":{"type":"string"},
+    "Command":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "CommandList":{
+      "type":"list",
+      "member":{"shape":"Command"},
+      "max":50,
+      "min":1
+    },
     "ConcurrentModificationException":{
       "type":"structure",
       "members":{
@@ -1545,6 +1562,35 @@
       "type":"string",
       "enum":["KMS"]
     },
+    "EnvironmentVariable":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"EnvironmentVariableName"},
+        "value":{"shape":"EnvironmentVariableValue"}
+      }
+    },
+    "EnvironmentVariableList":{
+      "type":"list",
+      "member":{"shape":"EnvironmentVariable"},
+      "max":10,
+      "min":1
+    },
+    "EnvironmentVariableName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z0-9_]+"
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":".*"
+    },
     "ErrorDetails":{
       "type":"structure",
       "members":{
@@ -1612,6 +1658,7 @@
       "type":"structure",
       "members":{
         "result":{"shape":"Result"},
+        "retryConfiguration":{"shape":"RetryConfiguration"},
         "conditions":{"shape":"ConditionList"}
       }
     },
@@ -1637,6 +1684,17 @@
         "RevisionUnavailable",
         "SystemUnavailable"
       ]
+    },
+    "FilePath":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FilePathList":{
+      "type":"list",
+      "member":{"shape":"FilePath"},
+      "max":10,
+      "min":1
     },
     "GetActionTypeInput":{
       "type":"structure",
@@ -2189,6 +2247,11 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "LogStreamARN":{
+      "type":"string",
+      "max":250,
+      "min":1
+    },
     "MatchEquals":{
       "type":"string",
       "max":150,
@@ -2253,12 +2316,24 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "name":{"shape":"ArtifactName"}
+        "name":{"shape":"ArtifactName"},
+        "files":{"shape":"FilePathList"}
       }
     },
     "OutputArtifactList":{
       "type":"list",
       "member":{"shape":"OutputArtifact"}
+    },
+    "OutputVariable":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "OutputVariableList":{
+      "type":"list",
+      "member":{"shape":"OutputVariable"},
+      "max":15,
+      "min":1
     },
     "OutputVariablesKey":{
       "type":"string",
@@ -2767,8 +2842,20 @@
       "type":"string",
       "enum":[
         "ROLLBACK",
-        "FAIL"
+        "FAIL",
+        "RETRY",
+        "SKIP"
       ]
+    },
+    "RetryAttempt":{
+      "type":"integer",
+      "min":1
+    },
+    "RetryConfiguration":{
+      "type":"structure",
+      "members":{
+        "retryMode":{"shape":"StageRetryMode"}
+      }
     },
     "RetryStageExecutionInput":{
       "type":"structure",
@@ -2790,6 +2877,21 @@
       "members":{
         "pipelineExecutionId":{"shape":"PipelineExecutionId"}
       }
+    },
+    "RetryStageMetadata":{
+      "type":"structure",
+      "members":{
+        "autoStageRetryAttempt":{"shape":"RetryAttempt"},
+        "manualStageRetryAttempt":{"shape":"RetryAttempt"},
+        "latestRetryTrigger":{"shape":"RetryTrigger"}
+      }
+    },
+    "RetryTrigger":{
+      "type":"string",
+      "enum":[
+        "AutomatedStageRetry",
+        "ManualStageRetry"
+      ]
     },
     "Revision":{
       "type":"string",
@@ -2893,6 +2995,7 @@
         "name":{"shape":"RuleName"},
         "ruleTypeId":{"shape":"RuleTypeId"},
         "configuration":{"shape":"RuleConfigurationMap"},
+        "commands":{"shape":"CommandList"},
         "inputArtifacts":{"shape":"InputArtifactList"},
         "roleArn":{"shape":"RoleArn"},
         "region":{"shape":"AWSRegionName"},
@@ -3232,7 +3335,8 @@
         "Failed",
         "Stopped",
         "Stopping",
-        "Succeeded"
+        "Succeeded",
+        "Skipped"
       ]
     },
     "StageName":{
@@ -3271,7 +3375,8 @@
         "latestExecution":{"shape":"StageExecution"},
         "beforeEntryConditionState":{"shape":"StageConditionState"},
         "onSuccessConditionState":{"shape":"StageConditionState"},
-        "onFailureConditionState":{"shape":"StageConditionState"}
+        "onFailureConditionState":{"shape":"StageConditionState"},
+        "retryStageMetadata":{"shape":"RetryStageMetadata"}
       }
     },
     "StageStateList":{

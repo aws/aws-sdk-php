@@ -2,12 +2,12 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
-use Aws\Auth\AuthSchemeResolver;
 use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -830,267 +830,7 @@ EOT;
         $this->assertArrayHasKey('ua_append', $conf);
         $this->assertIsArray($conf['ua_append']);
         $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
-        $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
     }
-
-    public function testUserAgentAlwaysStartsWithSdkAgentString()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-    public function testUserAgentAddsEndpointDiscoveryConfiguration()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
-                true,
-                1000
-            ),
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-
-    public function testUserAgentAddsEndpointDiscoveryArray()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'endpoint_discovery' => [
-                'enabled' => true,
-                'cache_limit' => 1000
-            ],
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-    public function testUserAgentAddsRetryModeConfiguration()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'retries' => new \Aws\Retry\Configuration('adaptive', 10)
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-
-    public function testUserAgentAddsRetryWithArray()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'retries' => [
-                'mode' => 'standard',
-            ],
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
 
     /**
      * @dataProvider statValueProvider
@@ -1694,6 +1434,92 @@ EOF;
             $r->resolve(['service' => 'sqs', 'region' => 'x'], new HandlerList());
         } finally {
             putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        }
+    }
+
+    /**
+     * Tests the flag `use_aws_shared_config_files` is applied to the method
+     * for resolving a default value for a config.
+     *
+     * @return void
+     */
+    public function testResolveFromEnvIniUseAwsSharedFiles(): void
+    {
+        // The config being tested
+        $configKey = 'foo-config-key';
+        $configValue = 'foo-config-value';
+        // Populate config file
+        $tempDir = sys_get_temp_dir();
+        $awsDir = $tempDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $configFile = $awsDir . "/config";
+        $configData = <<<EOF
+[default]
+$configKey=$configValue
+EOF;
+        file_put_contents($configFile, $configData);
+        $currentEnvConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        putenv(ConfigurationResolver::ENV_CONFIG_FILE . "=" . $configFile);
+
+        try {
+            $resolver = new ClientResolver([
+                $configKey => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'fn' => function ($value, array &$args) use ($configKey) {
+                        if (empty($value)) {
+                            $args[$configKey] = null;
+
+                            return;
+                        }
+
+                        $args[$configKey] = $value;
+                    },
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI
+                ]
+            ]);
+            $testCases = [
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => true
+                    ],
+                    'expected' => $configValue
+                ],
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => false
+                    ],
+                    'expected' => null
+                ]
+            ];
+            foreach ($testCases as $case) {
+                $resolvedArgs = $resolver->resolve(
+                    $case['args'],
+                    new HandlerList()
+                );
+                if ($case['expected']) {
+                    $this->assertEquals(
+                        $case['expected'],
+                        $resolvedArgs[$configKey]
+                    );
+                } else {
+                    $this->assertNull($resolvedArgs[$configKey]);
+                }
+            }
+        } finally {
+            unlink($configFile);
+            rmdir($awsDir);
+            if ($currentEnvConfigFile) {
+                putenv(
+                    ConfigurationResolver::ENV_CONFIG_FILE
+                    . "="
+                    . $currentEnvConfigFile
+                );
+            } else {
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            }
         }
     }
 }

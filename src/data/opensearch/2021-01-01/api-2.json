@@ -44,6 +44,23 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "AddDirectQueryDataSource":{
+      "name":"AddDirectQueryDataSource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource"
+      },
+      "input":{"shape":"AddDirectQueryDataSourceRequest"},
+      "output":{"shape":"AddDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "AddTags":{
       "name":"AddTags",
       "http":{
@@ -73,6 +90,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "AssociatePackages":{
+      "name":"AssociatePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/associateMultiple"
+      },
+      "input":{"shape":"AssociatePackagesRequest"},
+      "output":{"shape":"AssociatePackagesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "AuthorizeVpcEndpointAccess":{
@@ -121,6 +155,24 @@
         {"shape":"InternalException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "CreateApplication":{
+      "name":"CreateApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/application",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateApplicationRequest"},
+      "output":{"shape":"CreateApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "CreateDomain":{
@@ -191,6 +243,25 @@
         {"shape":"BaseException"}
       ]
     },
+    "DeleteApplication":{
+      "name":"DeleteApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteApplicationRequest"},
+      "output":{"shape":"DeleteApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "DeleteDataSource":{
       "name":"DeleteDataSource",
       "http":{
@@ -206,6 +277,21 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "DeleteDirectQueryDataSource":{
+      "name":"DeleteDirectQueryDataSource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"DeleteDirectQueryDataSourceRequest"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "DeleteDomain":{
@@ -525,6 +611,41 @@
         {"shape":"ConflictException"}
       ]
     },
+    "DissociatePackages":{
+      "name":"DissociatePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/dissociateMultiple"
+      },
+      "input":{"shape":"DissociatePackagesRequest"},
+      "output":{"shape":"DissociatePackagesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
+    "GetApplication":{
+      "name":"GetApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetApplicationRequest"},
+      "output":{"shape":"GetApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "GetCompatibleVersions":{
       "name":"GetCompatibleVersions",
       "http":{
@@ -556,6 +677,22 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "GetDirectQueryDataSource":{
+      "name":"GetDirectQueryDataSource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"GetDirectQueryDataSourceRequest"},
+      "output":{"shape":"GetDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "GetDomainMaintenanceStatus":{
@@ -622,6 +759,24 @@
         {"shape":"InternalException"}
       ]
     },
+    "ListApplications":{
+      "name":"ListApplications",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/list-applications",
+        "responseCode":200
+      },
+      "input":{"shape":"ListApplicationsRequest"},
+      "output":{"shape":"ListApplicationsResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "ListDataSources":{
       "name":"ListDataSources",
       "http":{
@@ -637,6 +792,22 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "ListDirectQueryDataSources":{
+      "name":"ListDirectQueryDataSources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource"
+      },
+      "input":{"shape":"ListDirectQueryDataSourcesRequest"},
+      "output":{"shape":"ListDirectQueryDataSourcesResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "ListDomainMaintenances":{
@@ -895,6 +1066,25 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateApplication":{
+      "name":"UpdateApplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/application/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateApplicationRequest"},
+      "output":{"shape":"UpdateApplicationResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalException"},
+        {"shape":"DisabledOperationException"}
+      ]
+    },
     "UpdateDataSource":{
       "name":"UpdateDataSource",
       "http":{
@@ -910,6 +1100,22 @@
         {"shape":"ValidationException"},
         {"shape":"DisabledOperationException"},
         {"shape":"DependencyFailureException"}
+      ]
+    },
+    "UpdateDirectQueryDataSource":{
+      "name":"UpdateDirectQueryDataSource",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+      },
+      "input":{"shape":"UpdateDirectQueryDataSourceRequest"},
+      "output":{"shape":"UpdateDirectQueryDataSourceResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "UpdateDomainConfig":{
@@ -944,6 +1150,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "UpdatePackageScope":{
+      "name":"UpdatePackageScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/packages/updateScope"
+      },
+      "input":{"shape":"UpdatePackageScopeRequest"},
+      "output":{"shape":"UpdatePackageScopeResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "UpdateScheduledAction":{
@@ -1038,6 +1260,10 @@
         "Region":{"shape":"Region"}
       }
     },
+    "AWSServicePrincipal":{
+      "type":"string",
+      "enum":["application.opensearchservice.amazonaws.com"]
+    },
     "AcceptInboundConnectionRequest":{
       "type":"structure",
       "required":["ConnectionId"],
@@ -1124,6 +1350,27 @@
         "Message":{"shape":"String"}
       }
     },
+    "AddDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "DataSourceName",
+        "DataSourceType",
+        "OpenSearchArns"
+      ],
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "AddDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceArn":{"shape":"String"}
+      }
+    },
     "AddTagsRequest":{
       "type":"structure",
       "required":[
@@ -1195,6 +1442,66 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "AppConfig":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"AppConfigType"},
+        "value":{"shape":"AppConfigValue"}
+      }
+    },
+    "AppConfigType":{
+      "type":"string",
+      "enum":[
+        "opensearchDashboards.dashboardAdmin.users",
+        "opensearchDashboards.dashboardAdmin.groups"
+      ]
+    },
+    "AppConfigValue":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "AppConfigs":{
+      "type":"list",
+      "member":{"shape":"AppConfig"},
+      "max":200
+    },
+    "ApplicationName":{
+      "type":"string",
+      "max":30,
+      "min":3,
+      "pattern":"[a-z][a-z0-9\\-]+"
+    },
+    "ApplicationStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "UPDATING",
+        "DELETING",
+        "ACTIVE",
+        "FAILED"
+      ]
+    },
+    "ApplicationStatuses":{
+      "type":"list",
+      "member":{"shape":"ApplicationStatus"}
+    },
+    "ApplicationSummaries":{
+      "type":"list",
+      "member":{"shape":"ApplicationSummary"}
+    },
+    "ApplicationSummary":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"ApplicationName"},
+        "endpoint":{"shape":"String"},
+        "status":{"shape":"ApplicationStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "AssociatePackageRequest":{
       "type":"structure",
       "required":[
@@ -1211,7 +1518,9 @@
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
-        }
+        },
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
       }
     },
     "AssociatePackageResponse":{
@@ -1220,19 +1529,34 @@
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
       }
     },
-    "AuthorizeVpcEndpointAccessRequest":{
+    "AssociatePackagesRequest":{
       "type":"structure",
       "required":[
-        "DomainName",
-        "Account"
+        "PackageList",
+        "DomainName"
       ],
+      "members":{
+        "PackageList":{"shape":"PackageDetailsForAssociationList"},
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "AssociatePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
+      }
+    },
+    "AuthorizeVpcEndpointAccessRequest":{
+      "type":"structure",
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
         },
-        "Account":{"shape":"AWSAccount"}
+        "Account":{"shape":"AWSAccount"},
+        "Service":{"shape":"AWSServicePrincipal"}
       }
     },
     "AuthorizeVpcEndpointAccessResponse":{
@@ -1493,6 +1817,13 @@
       "max":64,
       "min":1
     },
+    "CloudWatchDirectQueryDataSource":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"}
+      }
+    },
     "CloudWatchLogsLogGroupArn":{
       "type":"string",
       "max":2048,
@@ -1513,7 +1844,8 @@
         "WarmType":{"shape":"OpenSearchWarmPartitionInstanceType"},
         "WarmCount":{"shape":"IntegerClass"},
         "ColdStorageOptions":{"shape":"ColdStorageOptions"},
-        "MultiAZWithStandbyEnabled":{"shape":"Boolean"}
+        "MultiAZWithStandbyEnabled":{"shape":"Boolean"},
+        "NodeOptions":{"shape":"NodeOptionsList"}
       }
     },
     "ClusterConfigStatus":{
@@ -1616,6 +1948,34 @@
       }
     },
     "ConnectionStatusMessage":{"type":"string"},
+    "CreateApplicationRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "name":{"shape":"ApplicationName"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptionsInput"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "tagList":{"shape":"TagList"}
+      }
+    },
+    "CreateApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "name":{"shape":"ApplicationName"},
+        "arn":{"shape":"ARN"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "tagList":{"shape":"TagList"},
+        "createdAt":{"shape":"Timestamp"}
+      }
+    },
     "CreateDomainRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1635,6 +1995,7 @@
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsInput"},
         "TagList":{"shape":"TagList"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
@@ -1686,7 +2047,11 @@
         "PackageName":{"shape":"PackageName"},
         "PackageType":{"shape":"PackageType"},
         "PackageDescription":{"shape":"PackageDescription"},
-        "PackageSource":{"shape":"PackageSource"}
+        "PackageSource":{"shape":"PackageSource"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"},
+        "EngineVersion":{"shape":"EngineVersion"},
+        "PackageVendingOptions":{"shape":"PackageVendingOptions"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
     },
     "CreatePackageResponse":{
@@ -1719,6 +2084,13 @@
       "type":"structure",
       "members":{
         "SkipUnavailable":{"shape":"SkipUnavailableStatus"}
+      }
+    },
+    "DataSource":{
+      "type":"structure",
+      "members":{
+        "dataSourceArn":{"shape":"ARN"},
+        "dataSourceDescription":{"shape":"DataSourceDescription"}
       }
     },
     "DataSourceDescription":{
@@ -1759,6 +2131,26 @@
       },
       "union":true
     },
+    "DataSources":{
+      "type":"list",
+      "member":{"shape":"DataSource"}
+    },
+    "DeleteApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "DeleteApplicationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteDataSourceRequest":{
       "type":"structure",
       "required":[
@@ -1782,6 +2174,17 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
+      }
+    },
+    "DeleteDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":["DataSourceName"],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        }
       }
     },
     "DeleteDomainRequest":{
@@ -2138,7 +2541,8 @@
         "PackageName",
         "PackageStatus",
         "PackageType",
-        "EngineVersion"
+        "EngineVersion",
+        "PackageOwner"
       ]
     },
     "DescribePackagesFilterValue":{
@@ -2238,6 +2642,50 @@
       }
     },
     "Description":{"type":"string"},
+    "DirectQueryDataSource":{
+      "type":"structure",
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceArn":{"shape":"String"},
+        "TagList":{"shape":"TagList"}
+      }
+    },
+    "DirectQueryDataSourceDescription":{
+      "type":"string",
+      "max":1000,
+      "pattern":"^([a-zA-Z0-9_])*[\\\\a-zA-Z0-9_@#%*+=:?./!\\s-]*$"
+    },
+    "DirectQueryDataSourceList":{
+      "type":"list",
+      "member":{"shape":"DirectQueryDataSource"}
+    },
+    "DirectQueryDataSourceName":{
+      "type":"string",
+      "max":80,
+      "min":3,
+      "pattern":"[a-z][a-z0-9_]+"
+    },
+    "DirectQueryDataSourceRoleArn":{
+      "type":"string",
+      "max":200,
+      "min":32,
+      "pattern":"^arn:aws[a-zA-Z-]*:iam::\\d{12}:role(\\/service-role)?\\/[A-Za-z0-9+=,.@\\-_]{1,64}$"
+    },
+    "DirectQueryDataSourceType":{
+      "type":"structure",
+      "members":{
+        "CloudWatchLog":{"shape":"CloudWatchDirectQueryDataSource"},
+        "SecurityLake":{"shape":"SecurityLakeDirectQueryDataSource"}
+      },
+      "union":true
+    },
+    "DirectQueryOpenSearchARNList":{
+      "type":"list",
+      "member":{"shape":"ARN"}
+    },
     "DisableTimestamp":{"type":"timestamp"},
     "DisabledOperationException":{
       "type":"structure",
@@ -2271,6 +2719,23 @@
         "DomainPackageDetails":{"shape":"DomainPackageDetails"}
       }
     },
+    "DissociatePackagesRequest":{
+      "type":"structure",
+      "required":[
+        "PackageList",
+        "DomainName"
+      ],
+      "members":{
+        "PackageList":{"shape":"PackageIDList"},
+        "DomainName":{"shape":"DomainName"}
+      }
+    },
+    "DissociatePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "DomainPackageDetailsList":{"shape":"DomainPackageDetailsList"}
+      }
+    },
     "DomainArn":{
       "type":"string",
       "max":512,
@@ -2294,6 +2759,7 @@
         "LogPublishingOptions":{"shape":"LogPublishingOptionsStatus"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsStatus"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
@@ -2414,8 +2880,10 @@
         "DomainName":{"shape":"DomainName"},
         "DomainPackageStatus":{"shape":"DomainPackageStatus"},
         "PackageVersion":{"shape":"PackageVersion"},
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
         "ReferencePath":{"shape":"ReferencePath"},
-        "ErrorDetails":{"shape":"ErrorDetails"}
+        "ErrorDetails":{"shape":"ErrorDetails"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
       }
     },
     "DomainPackageDetailsList":{
@@ -2487,6 +2955,7 @@
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptions"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
@@ -2643,6 +3112,32 @@
       "type":"list",
       "member":{"shape":"GUID"}
     },
+    "GetApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"ApplicationName"},
+        "endpoint":{"shape":"String"},
+        "status":{"shape":"ApplicationStatus"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "dataSources":{"shape":"DataSources"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "GetCompatibleVersionsRequest":{
       "type":"structure",
       "members":{
@@ -2685,6 +3180,27 @@
         "Name":{"shape":"DataSourceName"},
         "Description":{"shape":"DataSourceDescription"},
         "Status":{"shape":"DataSourceStatus"}
+      }
+    },
+    "GetDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":["DataSourceName"],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        }
+      }
+    },
+    "GetDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceName":{"shape":"DirectQueryDataSourceName"},
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"},
+        "DataSourceArn":{"shape":"String"}
       }
     },
     "GetDomainMaintenanceStatusRequest":{
@@ -2812,11 +3328,81 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
+    "IamIdentityCenterOptions":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "iamIdentityCenterInstanceArn":{"shape":"ARN"},
+        "iamRoleForIdentityCenterApplicationArn":{"shape":"RoleArn"},
+        "iamIdentityCenterApplicationArn":{"shape":"ARN"}
+      }
+    },
+    "IamIdentityCenterOptionsInput":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"Boolean"},
+        "iamIdentityCenterInstanceArn":{"shape":"ARN"},
+        "iamRoleForIdentityCenterApplicationArn":{"shape":"RoleArn"}
+      }
+    },
+    "Id":{
+      "type":"string",
+      "pattern":"[a-z0-9]{3,30}"
+    },
+    "IdentityCenterApplicationARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\\\-]*:[a-z]+:[a-z0-9\\\\-]*:[0-9]*:[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+"
+    },
+    "IdentityCenterInstanceARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z\\\\-]*:[a-z]+:[a-z0-9\\\\-]*:[0-9]*:[a-z0-9\\\\-]+\\/[a-z0-9\\\\-]+"
+    },
+    "IdentityCenterOptions":{
+      "type":"structure",
+      "members":{
+        "EnabledAPIAccess":{"shape":"Boolean"},
+        "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "SubjectKey":{"shape":"SubjectKeyIdCOption"},
+        "RolesKey":{"shape":"RolesKeyIdCOption"},
+        "IdentityCenterApplicationARN":{"shape":"IdentityCenterApplicationARN"},
+        "IdentityStoreId":{"shape":"IdentityStoreId"}
+      }
+    },
+    "IdentityCenterOptionsInput":{
+      "type":"structure",
+      "members":{
+        "EnabledAPIAccess":{"shape":"Boolean"},
+        "IdentityCenterInstanceARN":{"shape":"IdentityCenterInstanceARN"},
+        "SubjectKey":{"shape":"SubjectKeyIdCOption"},
+        "RolesKey":{"shape":"RolesKeyIdCOption"}
+      }
+    },
+    "IdentityCenterOptionsStatus":{
+      "type":"structure",
+      "required":[
+        "Options",
+        "Status"
+      ],
+      "members":{
+        "Options":{"shape":"IdentityCenterOptions"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "IdentityPoolId":{
       "type":"string",
       "max":55,
       "min":1,
       "pattern":"[\\w-]+:[0-9a-f-]+"
+    },
+    "IdentityStoreId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^d-[0-9a-f]{10}$|^[0-9a-f]{8}\\\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\\\b[0-9a-f]{12}$"
     },
     "InboundConnection":{
       "type":"structure",
@@ -2950,6 +3536,14 @@
         "PublicKey":{"shape":"String"}
       }
     },
+    "KeyStoreAccessOption":{
+      "type":"structure",
+      "required":["KeyStoreAccessEnabled"],
+      "members":{
+        "KeyAccessRoleArn":{"shape":"RoleArn"},
+        "KeyStoreAccessEnabled":{"shape":"Boolean"}
+      }
+    },
     "KmsKeyId":{
       "type":"string",
       "max":500,
@@ -2957,6 +3551,11 @@
       "pattern":".*"
     },
     "LastUpdated":{"type":"timestamp"},
+    "LicenseFilepath":{
+      "type":"string",
+      "max":256,
+      "pattern":"^(?!.*\\/\\.{2,})(?!.*\\.\\.)[a-zA-Z0-9_.-]+(?:\\/[a-zA-Z0-9_.-]+)*$"
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -2983,6 +3582,33 @@
       "key":{"shape":"InstanceRole"},
       "value":{"shape":"Limits"}
     },
+    "ListApplicationsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "statuses":{
+          "shape":"ApplicationStatuses",
+          "location":"querystring",
+          "locationName":"statuses"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListApplicationsResponse":{
+      "type":"structure",
+      "members":{
+        "ApplicationSummaries":{"shape":"ApplicationSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDataSourcesRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -2998,6 +3624,23 @@
       "type":"structure",
       "members":{
         "DataSources":{"shape":"DataSourceList"}
+      }
+    },
+    "ListDirectQueryDataSourcesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nexttoken"
+        }
+      }
+    },
+    "ListDirectQueryDataSourcesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "DirectQueryDataSources":{"shape":"DirectQueryDataSourceList"}
       }
     },
     "ListDomainMaintenancesRequest":{
@@ -3420,10 +4063,33 @@
       }
     },
     "NextToken":{"type":"string"},
+    "NodeConfig":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "Type":{"shape":"OpenSearchPartitionInstanceType"},
+        "Count":{"shape":"IntegerClass"}
+      }
+    },
     "NodeId":{
       "type":"string",
       "max":40,
       "min":10
+    },
+    "NodeOption":{
+      "type":"structure",
+      "members":{
+        "NodeType":{"shape":"NodeOptionsNodeType"},
+        "NodeConfig":{"shape":"NodeConfig"}
+      }
+    },
+    "NodeOptionsList":{
+      "type":"list",
+      "member":{"shape":"NodeOption"}
+    },
+    "NodeOptionsNodeType":{
+      "type":"string",
+      "enum":["coordinator"]
     },
     "NodeStatus":{
       "type":"string",
@@ -3688,6 +4354,25 @@
       "min":12,
       "pattern":"[0-9]+"
     },
+    "PackageAssociationConfiguration":{
+      "type":"structure",
+      "members":{
+        "KeyStoreAccessOption":{"shape":"KeyStoreAccessOption"}
+      }
+    },
+    "PackageConfiguration":{
+      "type":"structure",
+      "required":[
+        "LicenseRequirement",
+        "ConfigurationRequirement"
+      ],
+      "members":{
+        "LicenseRequirement":{"shape":"RequirementLevel"},
+        "LicenseFilepath":{"shape":"LicenseFilepath"},
+        "ConfigurationRequirement":{"shape":"RequirementLevel"},
+        "RequiresRestartForConfigurationUpdate":{"shape":"Boolean"}
+      }
+    },
     "PackageDescription":{
       "type":"string",
       "max":1024
@@ -3705,22 +4390,64 @@
         "AvailablePackageVersion":{"shape":"PackageVersion"},
         "ErrorDetails":{"shape":"ErrorDetails"},
         "EngineVersion":{"shape":"EngineVersion"},
-        "AvailablePluginProperties":{"shape":"PluginProperties"}
+        "AvailablePluginProperties":{"shape":"PluginProperties"},
+        "AvailablePackageConfiguration":{"shape":"PackageConfiguration"},
+        "AllowListedUserList":{"shape":"PackageUserList"},
+        "PackageOwner":{"shape":"PackageOwner"},
+        "PackageVendingOptions":{"shape":"PackageVendingOptions"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
+    },
+    "PackageDetailsForAssociation":{
+      "type":"structure",
+      "required":["PackageID"],
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "PrerequisitePackageIDList":{"shape":"PackageIDList"},
+        "AssociationConfiguration":{"shape":"PackageAssociationConfiguration"}
+      }
+    },
+    "PackageDetailsForAssociationList":{
+      "type":"list",
+      "member":{"shape":"PackageDetailsForAssociation"}
     },
     "PackageDetailsList":{
       "type":"list",
       "member":{"shape":"PackageDetails"}
     },
+    "PackageEncryptionOptions":{
+      "type":"structure",
+      "required":["EncryptionEnabled"],
+      "members":{
+        "KmsKeyIdentifier":{"shape":"KmsKeyId"},
+        "EncryptionEnabled":{"shape":"Boolean"}
+      }
+    },
     "PackageID":{
       "type":"string",
-      "pattern":"^([FG][0-9]+)$"
+      "pattern":"^([FG][0-9]+)$|^(pkg-[a-f0-9]+)$"
+    },
+    "PackageIDList":{
+      "type":"list",
+      "member":{"shape":"PackageID"}
     },
     "PackageName":{
       "type":"string",
       "max":256,
       "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
+    },
+    "PackageOwner":{
+      "type":"string",
+      "max":1024
+    },
+    "PackageScopeOperationEnum":{
+      "type":"string",
+      "enum":[
+        "ADD",
+        "OVERRIDE",
+        "REMOVE"
+      ]
     },
     "PackageSource":{
       "type":"structure",
@@ -3746,8 +4473,27 @@
       "type":"string",
       "enum":[
         "TXT-DICTIONARY",
-        "ZIP-PLUGIN"
+        "ZIP-PLUGIN",
+        "PACKAGE-LICENSE",
+        "PACKAGE-CONFIG"
       ]
+    },
+    "PackageUser":{
+      "type":"string",
+      "max":12,
+      "min":6,
+      "pattern":"^[0-9]{12}$|^GLOBAL$"
+    },
+    "PackageUserList":{
+      "type":"list",
+      "member":{"shape":"PackageUser"}
+    },
+    "PackageVendingOptions":{
+      "type":"structure",
+      "required":["VendingEnabled"],
+      "members":{
+        "VendingEnabled":{"shape":"Boolean"}
+      }
     },
     "PackageVersion":{"type":"string"},
     "PackageVersionHistory":{
@@ -3756,7 +4502,8 @@
         "PackageVersion":{"shape":"PackageVersion"},
         "CommitMessage":{"shape":"CommitMessage"},
         "CreatedAt":{"shape":"CreatedAt"},
-        "PluginProperties":{"shape":"PluginProperties"}
+        "PluginProperties":{"shape":"PluginProperties"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"}
       }
     },
     "PackageVersionHistoryList":{
@@ -3887,6 +4634,14 @@
       "min":1,
       "pattern":"^([\\s\\S]*)$"
     },
+    "RequirementLevel":{
+      "type":"string",
+      "enum":[
+        "REQUIRED",
+        "OPTIONAL",
+        "NONE"
+      ]
+    },
     "ReservationToken":{
       "type":"string",
       "max":64,
@@ -3957,17 +4712,15 @@
     },
     "RevokeVpcEndpointAccessRequest":{
       "type":"structure",
-      "required":[
-        "DomainName",
-        "Account"
-      ],
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"DomainName",
           "location":"uri",
           "locationName":"DomainName"
         },
-        "Account":{"shape":"AWSAccount"}
+        "Account":{"shape":"AWSAccount"},
+        "Service":{"shape":"AWSServicePrincipal"}
       }
     },
     "RevokeVpcEndpointAccessResponse":{
@@ -3985,6 +4738,13 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "RolesKeyIdCOption":{
+      "type":"string",
+      "enum":[
+        "GroupName",
+        "GroupId"
+      ]
     },
     "RollbackOnDisable":{
       "type":"string",
@@ -4115,6 +4875,13 @@
         "CUSTOMER",
         "SYSTEM"
       ]
+    },
+    "SecurityLakeDirectQueryDataSource":{
+      "type":"structure",
+      "required":["RoleArn"],
+      "members":{
+        "RoleArn":{"shape":"DirectQueryDataSourceRoleArn"}
+      }
     },
     "ServiceSoftwareOptions":{
       "type":"structure",
@@ -4263,6 +5030,14 @@
       "max":64,
       "min":1
     },
+    "SubjectKeyIdCOption":{
+      "type":"string",
+      "enum":[
+        "UserName",
+        "UserId",
+        "Email"
+      ]
+    },
     "TLSSecurityPolicy":{
       "type":"string",
       "enum":[
@@ -4302,12 +5077,39 @@
       "type":"string",
       "enum":["HOURS"]
     },
+    "Timestamp":{"type":"timestamp"},
     "TotalNumberOfStages":{"type":"integer"},
     "UIntValue":{
       "type":"integer",
       "min":0
     },
     "UncompressedPluginSizeInBytes":{"type":"long"},
+    "UpdateApplicationRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "dataSources":{"shape":"DataSources"},
+        "appConfigs":{"shape":"AppConfigs"}
+      }
+    },
+    "UpdateApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"Id"},
+        "name":{"shape":"ApplicationName"},
+        "arn":{"shape":"ARN"},
+        "dataSources":{"shape":"DataSources"},
+        "iamIdentityCenterOptions":{"shape":"IamIdentityCenterOptions"},
+        "appConfigs":{"shape":"AppConfigs"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastUpdatedAt":{"shape":"Timestamp"}
+      }
+    },
     "UpdateDataSourceRequest":{
       "type":"structure",
       "required":[
@@ -4337,6 +5139,30 @@
         "Message":{"shape":"String"}
       }
     },
+    "UpdateDirectQueryDataSourceRequest":{
+      "type":"structure",
+      "required":[
+        "DataSourceName",
+        "DataSourceType",
+        "OpenSearchArns"
+      ],
+      "members":{
+        "DataSourceName":{
+          "shape":"DirectQueryDataSourceName",
+          "location":"uri",
+          "locationName":"DataSourceName"
+        },
+        "DataSourceType":{"shape":"DirectQueryDataSourceType"},
+        "Description":{"shape":"DirectQueryDataSourceDescription"},
+        "OpenSearchArns":{"shape":"DirectQueryOpenSearchARNList"}
+      }
+    },
+    "UpdateDirectQueryDataSourceResponse":{
+      "type":"structure",
+      "members":{
+        "DataSourceArn":{"shape":"String"}
+      }
+    },
     "UpdateDomainConfigRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -4359,6 +5185,7 @@
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
+        "IdentityCenterOptions":{"shape":"IdentityCenterOptionsInput"},
         "AutoTuneOptions":{"shape":"AutoTuneOptions"},
         "DryRun":{"shape":"DryRun"},
         "DryRunMode":{"shape":"DryRunMode"},
@@ -4386,13 +5213,36 @@
         "PackageID":{"shape":"PackageID"},
         "PackageSource":{"shape":"PackageSource"},
         "PackageDescription":{"shape":"PackageDescription"},
-        "CommitMessage":{"shape":"CommitMessage"}
+        "CommitMessage":{"shape":"CommitMessage"},
+        "PackageConfiguration":{"shape":"PackageConfiguration"},
+        "PackageEncryptionOptions":{"shape":"PackageEncryptionOptions"}
       }
     },
     "UpdatePackageResponse":{
       "type":"structure",
       "members":{
         "PackageDetails":{"shape":"PackageDetails"}
+      }
+    },
+    "UpdatePackageScopeRequest":{
+      "type":"structure",
+      "required":[
+        "PackageID",
+        "Operation",
+        "PackageUserList"
+      ],
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "Operation":{"shape":"PackageScopeOperationEnum"},
+        "PackageUserList":{"shape":"PackageUserList"}
+      }
+    },
+    "UpdatePackageScopeResponse":{
+      "type":"structure",
+      "members":{
+        "PackageID":{"shape":"PackageID"},
+        "Operation":{"shape":"PackageScopeOperationEnum"},
+        "PackageUserList":{"shape":"PackageUserList"}
       }
     },
     "UpdateScheduledActionRequest":{

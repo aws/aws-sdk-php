@@ -5,13 +5,51 @@
     "endpointPrefix":"repostspace",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS re:Post Private",
     "serviceId":"repostspace",
     "signatureVersion":"v4",
     "signingName":"repostspace",
-    "uid":"repostspace-2022-05-13"
+    "uid":"repostspace-2022-05-13",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "BatchAddRole":{
+      "name":"BatchAddRole",
+      "http":{
+        "method":"POST",
+        "requestUri":"/spaces/{spaceId}/roles",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchAddRoleInput"},
+      "output":{"shape":"BatchAddRoleOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "BatchRemoveRole":{
+      "name":"BatchRemoveRole",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/spaces/{spaceId}/roles",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchRemoveRoleInput"},
+      "output":{"shape":"BatchRemoveRoleOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateSpace":{
       "name":"CreateSpace",
       "http":{
@@ -231,6 +269,79 @@
       "max":2048,
       "min":20
     },
+    "BatchAddRoleInput":{
+      "type":"structure",
+      "required":[
+        "accessorIds",
+        "role",
+        "spaceId"
+      ],
+      "members":{
+        "accessorIds":{"shape":"AccessorIdList"},
+        "role":{"shape":"Role"},
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        }
+      }
+    },
+    "BatchAddRoleOutput":{
+      "type":"structure",
+      "required":[
+        "addedAccessorIds",
+        "errors"
+      ],
+      "members":{
+        "addedAccessorIds":{"shape":"AccessorIdList"},
+        "errors":{"shape":"BatchErrorList"}
+      }
+    },
+    "BatchError":{
+      "type":"structure",
+      "required":[
+        "accessorId",
+        "error",
+        "message"
+      ],
+      "members":{
+        "accessorId":{"shape":"AccessorId"},
+        "error":{"shape":"ErrorCode"},
+        "message":{"shape":"ErrorMessage"}
+      }
+    },
+    "BatchErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchError"}
+    },
+    "BatchRemoveRoleInput":{
+      "type":"structure",
+      "required":[
+        "accessorIds",
+        "role",
+        "spaceId"
+      ],
+      "members":{
+        "accessorIds":{"shape":"AccessorIdList"},
+        "role":{"shape":"Role"},
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        }
+      }
+    },
+    "BatchRemoveRoleOutput":{
+      "type":"structure",
+      "required":[
+        "errors",
+        "removedAccessorIds"
+      ],
+      "members":{
+        "errors":{"shape":"BatchErrorList"},
+        "removedAccessorIds":{"shape":"AccessorIdList"}
+      }
+    },
     "ClientId":{"type":"string"},
     "ConfigurationStatus":{
       "type":"string",
@@ -315,6 +426,11 @@
         }
       }
     },
+    "ErrorCode":{
+      "type":"integer",
+      "box":true
+    },
+    "ErrorMessage":{"type":"string"},
     "GetSpaceInput":{
       "type":"structure",
       "required":["spaceId"],
@@ -351,14 +467,23 @@
         "customerRoleArn":{"shape":"Arn"},
         "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
         "description":{"shape":"SpaceDescription"},
-        "groupAdmins":{"shape":"GroupAdmins"},
+        "groupAdmins":{
+          "shape":"GroupAdmins",
+          "deprecated":true,
+          "deprecatedMessage":"This property has been depracted and will be replaced by the roles property."
+        },
         "name":{"shape":"SpaceName"},
         "randomDomain":{"shape":"Url"},
+        "roles":{"shape":"Roles"},
         "spaceId":{"shape":"SpaceId"},
         "status":{"shape":"ProvisioningStatus"},
         "storageLimit":{"shape":"StorageLimit"},
         "tier":{"shape":"TierLevel"},
-        "userAdmins":{"shape":"UserAdmins"},
+        "userAdmins":{
+          "shape":"UserAdmins",
+          "deprecated":true,
+          "deprecatedMessage":"This property has been depracted and will be replaced by the roles property."
+        },
         "userCount":{"shape":"UserCount"},
         "userKMSKey":{"shape":"KMSKey"},
         "vanityDomain":{"shape":"Url"},
@@ -489,6 +614,24 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "Role":{
+      "type":"string",
+      "enum":[
+        "EXPERT",
+        "MODERATOR",
+        "ADMINISTRATOR",
+        "SUPPORTREQUESTOR"
+      ]
+    },
+    "RoleList":{
+      "type":"list",
+      "member":{"shape":"Role"}
+    },
+    "Roles":{
+      "type":"map",
+      "key":{"shape":"AccessorId"},
+      "value":{"shape":"RoleList"}
     },
     "SendInvitesInput":{
       "type":"structure",

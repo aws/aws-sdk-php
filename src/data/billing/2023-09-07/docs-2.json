@@ -1,0 +1,438 @@
+{
+  "version": "2.0",
+  "service": "<p> You can use the Billing API to programatically list the billing views available to you for a given time period. A billing view represents a set of billing data. </p> <p>The Billing API provides the following endpoint:</p> <p> <code>https://billing.us-east-1.api.aws</code> </p>",
+  "operations": {
+    "CreateBillingView": "<p> Creates a billing view with the specified billing view attributes. </p>",
+    "DeleteBillingView": "<p>Deletes the specified billing view.</p>",
+    "GetBillingView": "<p>Returns the metadata associated to the specified billing view ARN. </p>",
+    "GetResourcePolicy": "<p>Returns the resource-based policy document attached to the resource in <code>JSON</code> format. </p>",
+    "ListBillingViews": "<p>Lists the billing views available for a given time period. </p> <p>Every Amazon Web Services account has a unique <code>PRIMARY</code> billing view that represents the billing data available by default. Accounts that use Billing Conductor also have <code>BILLING_GROUP</code> billing views representing pro forma costs associated with each created billing group.</p>",
+    "ListSourceViewsForBillingView": "<p>Lists the source views (managed Amazon Web Services billing views) associated with the billing view. </p>",
+    "ListTagsForResource": "<p>Lists tags associated with the billing view resource. </p>",
+    "TagResource": "<p> An API operation for adding one or more tags (key-value pairs) to a resource. </p>",
+    "UntagResource": "<p> Removes one or more tags from a resource. Specify only tag keys in your request. Don't specify the value. </p>",
+    "UpdateBillingView": "<p>An API to update the attributes of the billing view. </p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "BillingViewElement$ownerAccountId": "<p> The list of owners of the billing view. </p>",
+        "BillingViewListElement$ownerAccountId": "<p> The list of owners of the Billing view. </p>",
+        "ListBillingViewsRequest$ownerAccountId": "<p> The list of owners of the billing view. </p>"
+      }
+    },
+    "ActiveTimeRange": {
+      "base": "<p>A time range with a start and end time.</p>",
+      "refs": {
+        "ListBillingViewsRequest$activeTimeRange": "<p> The time range for the billing views listed. <code>PRIMARY</code> billing view is always listed. <code>BILLING_GROUP</code> billing views are listed for time ranges when the associated billing group resource in Billing Conductor is active. The time range must be within one calendar month. </p>"
+      }
+    },
+    "BillingViewArn": {
+      "base": null,
+      "refs": {
+        "BillingViewArnList$member": null,
+        "BillingViewElement$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "BillingViewListElement$arn": "<p>The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "BillingViewSourceViewsList$member": null,
+        "CreateBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "DeleteBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "DeleteBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "GetBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "ListSourceViewsForBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "UpdateBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "UpdateBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>"
+      }
+    },
+    "BillingViewArnList": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$arns": "<p>The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>"
+      }
+    },
+    "BillingViewDescription": {
+      "base": null,
+      "refs": {
+        "BillingViewElement$description": "<p> The description of the billing view. </p>",
+        "BillingViewListElement$description": "<p> The description of the billing view. </p>",
+        "CreateBillingViewRequest$description": "<p> The description of the billing view. </p>",
+        "UpdateBillingViewRequest$description": "<p> The description of the billing view. </p>"
+      }
+    },
+    "BillingViewElement": {
+      "base": "<p>The metadata associated to the billing view. </p>",
+      "refs": {
+        "GetBillingViewResponse$billingView": "<p>The billing view element associated with the specified ARN. </p>"
+      }
+    },
+    "BillingViewList": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsResponse$billingViews": "<p>A list of <code>BillingViewListElement</code> retrieved.</p>"
+      }
+    },
+    "BillingViewListElement": {
+      "base": "<p>A representation of a billing view.</p>",
+      "refs": {
+        "BillingViewList$member": null
+      }
+    },
+    "BillingViewName": {
+      "base": null,
+      "refs": {
+        "BillingViewElement$name": "<p> A list of names of the billing view. </p>",
+        "BillingViewListElement$name": "<p> A list of names of the Billing view. </p>",
+        "CreateBillingViewRequest$name": "<p> The name of the billing view. </p>",
+        "UpdateBillingViewRequest$name": "<p> The name of the billing view. </p>"
+      }
+    },
+    "BillingViewSourceViewsList": {
+      "base": null,
+      "refs": {
+        "CreateBillingViewRequest$sourceViews": "<p>A list of billing views used as the data source for the custom billing view.</p>",
+        "ListSourceViewsForBillingViewResponse$sourceViews": "<p>A list of billing views used as the data source for the custom billing view. </p>"
+      }
+    },
+    "BillingViewType": {
+      "base": null,
+      "refs": {
+        "BillingViewElement$billingViewType": "<p>The type of billing group. </p>",
+        "BillingViewListElement$billingViewType": "<p>The type of billing view.</p>",
+        "BillingViewTypeList$member": null
+      }
+    },
+    "BillingViewTypeList": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$billingViewTypes": "<p>The type of billing view.</p>"
+      }
+    },
+    "BillingViewsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$maxResults": "<p>The maximum number of billing views to retrieve. Default is 100. </p>",
+        "ListSourceViewsForBillingViewRequest$maxResults": "<p> The number of entries a paginated response contains. </p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateBillingViewRequest$clientToken": "<p>A unique, case-sensitive identifier you specify to ensure idempotency of the request. Idempotency ensures that an API request completes no more than one time. If the original request completes successfully, any subsequent retries complete successfully without performing any further actions with an idempotent request. </p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p> The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request. </p>",
+      "refs": {
+      }
+    },
+    "CreateBillingViewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBillingViewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBillingViewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBillingViewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Dimension": {
+      "base": null,
+      "refs": {
+        "DimensionValues$key": "<p> The names of the metadata types that you can use to filter and group your results. </p>"
+      }
+    },
+    "DimensionValues": {
+      "base": "<p> The metadata that you can use to filter and group your results. </p>",
+      "refs": {
+        "Expression$dimensions": "<p> The specific <code>Dimension</code> to use for <code>Expression</code>. </p>"
+      }
+    },
+    "ErrorMessage": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null,
+        "ValidationExceptionField$message": "<p>The message describing why the field failed validation.</p>"
+      }
+    },
+    "Expression": {
+      "base": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+      "refs": {
+        "BillingViewElement$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+        "CreateBillingViewRequest$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+        "UpdateBillingViewRequest$dataFilterExpression": "<p>See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>"
+      }
+    },
+    "FieldName": {
+      "base": null,
+      "refs": {
+        "ValidationExceptionField$name": "<p>The name of the field.</p>"
+      }
+    },
+    "GetBillingViewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetBillingViewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing failed because of an unknown error, exception, or failure. </p>",
+      "refs": {
+      }
+    },
+    "ListBillingViewsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillingViewsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSourceViewsForBillingViewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSourceViewsForBillingViewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PageToken": {
+      "base": null,
+      "refs": {
+        "ListBillingViewsRequest$nextToken": "<p>The pagination token that is used on subsequent calls to list billing views.</p>",
+        "ListBillingViewsResponse$nextToken": "<p>The pagination token to use on subsequent calls to list billing views. </p>",
+        "ListSourceViewsForBillingViewRequest$nextToken": "<p> The pagination token that is used on subsequent calls to list billing views. </p>",
+        "ListSourceViewsForBillingViewResponse$nextToken": "<p> The pagination token that is used on subsequent calls to list billing views. </p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$policy": "<p>The resource-based policy document attached to the resource in <code>JSON</code> format. </p>"
+      }
+    },
+    "QuotaCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$quotaCode": "<p> The container for the <code>quotaCode</code>. </p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the billing view resource to which the policy is attached to. </p>",
+        "GetResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the billing view resource to which the policy is attached to. </p>",
+        "ListTagsForResourceRequest$resourceArn": "<p> The Amazon Resource Name (ARN) of the resource. </p>",
+        "TagResourceRequest$resourceArn": "<p> The Amazon Resource Name (ARN) of the resource. </p>",
+        "UntagResourceRequest$resourceArn": "<p> The Amazon Resource Name (ARN) of the resource. </p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "ConflictException$resourceId": "<p> The identifier for the service resource associated with the request. </p>",
+        "ResourceNotFoundException$resourceId": "<p> Value is a list of resource IDs that were not found. </p>",
+        "ServiceQuotaExceededException$resourceId": "<p> The ID of the resource. </p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p> The specified ARN in the request doesn't exist. </p>",
+      "refs": {
+      }
+    },
+    "ResourceTag": {
+      "base": "<p> The tag structure that contains a tag key and value. </p>",
+      "refs": {
+        "ResourceTagList$member": null
+      }
+    },
+    "ResourceTagKey": {
+      "base": null,
+      "refs": {
+        "ResourceTag$key": "<p> The key that's associated with the tag. </p>",
+        "ResourceTagKeyList$member": null
+      }
+    },
+    "ResourceTagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$resourceTagKeys": "<p> A list of tag key value pairs that are associated with the resource. </p>"
+      }
+    },
+    "ResourceTagList": {
+      "base": null,
+      "refs": {
+        "CreateBillingViewRequest$resourceTags": "<p>A list of key value map specifying tags associated to the billing view being created. </p>",
+        "ListTagsForResourceResponse$resourceTags": "<p> A list of tag key value pairs that are associated with the resource. </p>",
+        "TagResourceRequest$resourceTags": "<p> A list of tag key value pairs that are associated with the resource. </p>"
+      }
+    },
+    "ResourceTagValue": {
+      "base": null,
+      "refs": {
+        "ResourceTag$value": "<p> The value that's associated with the tag. </p>"
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ConflictException$resourceType": "<p> The type of resource associated with the request. </p>",
+        "ResourceNotFoundException$resourceType": "<p> Value is the type of resource that was not found. </p>",
+        "ServiceQuotaExceededException$resourceType": "<p> The type of Amazon Web Services resource. </p>"
+      }
+    },
+    "ServiceCode": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$serviceCode": "<p> The container for the <code>serviceCode</code>. </p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p> You've reached the limit of resources you can create, or exceeded the size of an individual resource. </p>",
+      "refs": {
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagValues$key": "<p> The key for the tag. </p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValues": {
+      "base": "<p> The values that are available for a tag. </p>",
+      "refs": {
+        "Expression$tags": "<p> The specific <code>Tag</code> to use for <code>Expression</code>. </p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. </p>",
+      "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "ActiveTimeRange$activeAfterInclusive": "<p>The inclusive time range start date.</p>",
+        "ActiveTimeRange$activeBeforeInclusive": "<p> The inclusive time range end date. </p>",
+        "BillingViewElement$createdAt": "<p>The time when the billing view was created. </p>",
+        "BillingViewElement$updatedAt": "<p>The time when the billing view was last updated. </p>",
+        "CreateBillingViewResponse$createdAt": "<p> The time when the billing view was created. </p>",
+        "UpdateBillingViewResponse$updatedAt": "<p> The time when the billing view was last updated. </p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillingViewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillingViewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>The field's information of a request that resulted in an exception. </p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>"
+      }
+    },
+    "Value": {
+      "base": null,
+      "refs": {
+        "Values$member": null
+      }
+    },
+    "Values": {
+      "base": null,
+      "refs": {
+        "DimensionValues$values": "<p> The metadata values that you can use to filter and group your results. </p>",
+        "TagValues$values": "<p> The specific value of the tag. </p>"
+      }
+    }
+  }
+}

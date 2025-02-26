@@ -267,6 +267,26 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "CreateDataset":{
+      "name":"CreateDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/datasets",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateDatasetRequest"},
+      "output":{"shape":"CreateDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "CreateGateway":{
       "name":"CreateGateway",
       "http":{
@@ -410,6 +430,24 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "DeleteDataset":{
+      "name":"DeleteDataset",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/datasets/{datasetId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteDatasetRequest"},
+      "output":{"shape":"DeleteDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
     },
     "DeleteGateway":{
       "name":"DeleteGateway",
@@ -623,6 +661,22 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "DescribeDataset":{
+      "name":"DescribeDataset",
+      "http":{
+        "method":"GET",
+        "requestUri":"/datasets/{datasetId}"
+      },
+      "input":{"shape":"DescribeDatasetRequest"},
+      "output":{"shape":"DescribeDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
     },
     "DescribeDefaultEncryptionConfiguration":{
       "name":"DescribeDefaultEncryptionConfiguration",
@@ -893,6 +947,26 @@
       ],
       "endpoint":{"hostPrefix":"data."}
     },
+    "InvokeAssistant":{
+      "name":"InvokeAssistant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assistant/invocation",
+        "responseCode":200
+      },
+      "input":{"shape":"InvokeAssistantRequest"},
+      "output":{"shape":"InvokeAssistantResponse"},
+      "errors":[
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"data."}
+    },
     "ListAccessPolicies":{
       "name":"ListAccessPolicies",
       "http":{
@@ -1083,6 +1157,21 @@
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"monitor."}
+    },
+    "ListDatasets":{
+      "name":"ListDatasets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/datasets"
+      },
+      "input":{"shape":"ListDatasetsRequest"},
+      "output":{"shape":"ListDatasetsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
     },
     "ListGateways":{
       "name":"ListGateways",
@@ -1385,6 +1474,25 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "UpdateDataset":{
+      "name":"UpdateDataset",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/datasets/{datasetId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateDatasetRequest"},
+      "output":{"shape":"UpdateDatasetResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "UpdateGateway":{
       "name":"UpdateGateway",
       "http":{
@@ -1466,7 +1574,7 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"errorMessage"}
+        "message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":403},
       "exception":true
@@ -1581,7 +1689,7 @@
       "type":"structure",
       "required":["alarmRoleArn"],
       "members":{
-        "alarmRoleArn":{"shape":"ARN"},
+        "alarmRoleArn":{"shape":"IamArn"},
         "notificationLambdaArn":{"shape":"ARN"}
       }
     },
@@ -2609,6 +2717,7 @@
       "type":"structure",
       "required":["entries"],
       "members":{
+        "enablePartialEntryProcessing":{"shape":"BooleanValue"},
         "entries":{"shape":"PutAssetPropertyValueEntries"}
       }
     },
@@ -2619,6 +2728,7 @@
         "errorEntries":{"shape":"BatchPutAssetPropertyErrorEntries"}
       }
     },
+    "BooleanValue":{"type":"boolean"},
     "Bucket":{
       "type":"string",
       "max":63,
@@ -2644,6 +2754,17 @@
         "UNKNOWN",
         "NOT_APPLICABLE"
       ]
+    },
+    "Citation":{
+      "type":"structure",
+      "members":{
+        "reference":{"shape":"Reference"},
+        "content":{"shape":"Content"}
+      }
+    },
+    "Citations":{
+      "type":"list",
+      "member":{"shape":"Citation"}
     },
     "ClientToken":{
       "type":"string",
@@ -2781,6 +2902,18 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "Content":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      }
+    },
+    "ConversationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "CoreDeviceThingName":{
       "type":"string",
@@ -2998,6 +3131,37 @@
         "dashboardArn":{"shape":"ARN"}
       }
     },
+    "CreateDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetName",
+        "datasetSource"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetName":{"shape":"RestrictedName"},
+        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetSource":{"shape":"DatasetSource"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateDatasetResponse":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetArn",
+        "datasetStatus"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetArn":{"shape":"ARN"},
+        "datasetStatus":{"shape":"DatasetStatus"}
+      }
+    },
     "CreateGatewayRequest":{
       "type":"structure",
       "required":[
@@ -3037,11 +3201,13 @@
           "idempotencyToken":true
         },
         "portalLogoImageFile":{"shape":"ImageFile"},
-        "roleArn":{"shape":"ARN"},
+        "roleArn":{"shape":"IamArn"},
         "tags":{"shape":"TagMap"},
         "portalAuthMode":{"shape":"AuthMode"},
         "notificationSenderEmail":{"shape":"Email"},
-        "alarms":{"shape":"Alarms"}
+        "alarms":{"shape":"Alarms"},
+        "portalType":{"shape":"PortalType"},
+        "portalTypeConfiguration":{"shape":"PortalTypeConfiguration"}
       }
     },
     "CreatePortalResponse":{
@@ -3135,6 +3301,76 @@
         "description":{"shape":"Description"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"}
+      }
+    },
+    "DataSetReference":{
+      "type":"structure",
+      "members":{
+        "datasetArn":{"shape":"String"},
+        "source":{"shape":"Source"}
+      }
+    },
+    "DatasetSource":{
+      "type":"structure",
+      "required":[
+        "sourceType",
+        "sourceFormat"
+      ],
+      "members":{
+        "sourceType":{"shape":"DatasetSourceType"},
+        "sourceFormat":{"shape":"DatasetSourceFormat"},
+        "sourceDetail":{"shape":"SourceDetail"}
+      }
+    },
+    "DatasetSourceFormat":{
+      "type":"string",
+      "enum":["KNOWLEDGE_BASE"]
+    },
+    "DatasetSourceType":{
+      "type":"string",
+      "enum":["KENDRA"]
+    },
+    "DatasetState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "DatasetStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"DatasetState"},
+        "error":{"shape":"ErrorDetails"}
+      }
+    },
+    "DatasetSummaries":{
+      "type":"list",
+      "member":{"shape":"DatasetSummary"}
+    },
+    "DatasetSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "name",
+        "description",
+        "creationDate",
+        "lastUpdateDate",
+        "status"
+      ],
+      "members":{
+        "id":{"shape":"ID"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"RestrictedName"},
+        "description":{"shape":"RestrictedDescription"},
+        "creationDate":{"shape":"Timestamp"},
+        "lastUpdateDate":{"shape":"Timestamp"},
+        "status":{"shape":"DatasetStatus"}
       }
     },
     "Datum":{
@@ -3306,6 +3542,30 @@
     "DeleteDashboardResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DeleteDatasetRequest":{
+      "type":"structure",
+      "required":["datasetId"],
+      "members":{
+        "datasetId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteDatasetResponse":{
+      "type":"structure",
+      "required":["datasetStatus"],
+      "members":{
+        "datasetStatus":{"shape":"DatasetStatus"}
       }
     },
     "DeleteFilesAfterImport":{"type":"boolean"},
@@ -3751,6 +4011,41 @@
         "dashboardLastUpdateDate":{"shape":"Timestamp"}
       }
     },
+    "DescribeDatasetRequest":{
+      "type":"structure",
+      "required":["datasetId"],
+      "members":{
+        "datasetId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"datasetId"
+        }
+      }
+    },
+    "DescribeDatasetResponse":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetArn",
+        "datasetName",
+        "datasetDescription",
+        "datasetSource",
+        "datasetStatus",
+        "datasetCreationDate",
+        "datasetLastUpdateDate"
+      ],
+      "members":{
+        "datasetId":{"shape":"ID"},
+        "datasetArn":{"shape":"ARN"},
+        "datasetName":{"shape":"RestrictedName"},
+        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetSource":{"shape":"DatasetSource"},
+        "datasetStatus":{"shape":"DatasetStatus"},
+        "datasetCreationDate":{"shape":"Timestamp"},
+        "datasetLastUpdateDate":{"shape":"Timestamp"},
+        "datasetVersion":{"shape":"Version"}
+      }
+    },
     "DescribeDefaultEncryptionConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -3881,10 +4176,12 @@
         "portalCreationDate":{"shape":"Timestamp"},
         "portalLastUpdateDate":{"shape":"Timestamp"},
         "portalLogoImageLocation":{"shape":"ImageLocation"},
-        "roleArn":{"shape":"ARN"},
+        "roleArn":{"shape":"IamArn"},
         "portalAuthMode":{"shape":"AuthMode"},
         "notificationSenderEmail":{"shape":"Email"},
-        "alarms":{"shape":"Alarms"}
+        "alarms":{"shape":"Alarms"},
+        "portalType":{"shape":"PortalType"},
+        "portalTypeConfiguration":{"shape":"PortalTypeConfiguration"}
       }
     },
     "DescribeProjectRequest":{
@@ -3937,7 +4234,8 @@
         "configurationStatus":{"shape":"ConfigurationStatus"},
         "lastUpdateDate":{"shape":"Timestamp"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "DescribeTimeSeriesRequest":{
@@ -4010,6 +4308,7 @@
       "type":"list",
       "member":{"shape":"DetailedError"}
     },
+    "DisallowIngestNullNaN":{"type":"boolean"},
     "DisassociateAssetsRequest":{
       "type":"structure",
       "required":[
@@ -4075,7 +4374,8 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[^@]+@[^@]+"
+      "pattern":"^[a-zA-Z0-9_\\-\\.\\+]+@[a-zA-Z0-9_\\-\\.\\+]+\\.[a-zA-Z]{2,}$",
+      "sensitive":true
     },
     "EncryptionType":{
       "type":"string",
@@ -4159,7 +4459,11 @@
       "members":{
         "queryStatement":{"shape":"QueryStatement"},
         "nextToken":{"shape":"ExecuteQueryNextToken"},
-        "maxResults":{"shape":"ExecuteQueryMaxResults"}
+        "maxResults":{"shape":"ExecuteQueryMaxResults"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "ExecuteQueryResponse":{
@@ -4559,14 +4863,14 @@
       "type":"structure",
       "required":["arn"],
       "members":{
-        "arn":{"shape":"ARN"}
+        "arn":{"shape":"IamArn"}
       }
     },
     "IAMUserIdentity":{
       "type":"structure",
       "required":["arn"],
       "members":{
-        "arn":{"shape":"ARN"}
+        "arn":{"shape":"IamArn"}
       }
     },
     "ID":{
@@ -4580,6 +4884,12 @@
       "member":{"shape":"ID"},
       "max":100,
       "min":1
+    },
+    "IamArn":{
+      "type":"string",
+      "max":1600,
+      "min":1,
+      "pattern":"^arn:aws(-cn|-us-gov)?:[a-zA-Z0-9-:\\/_\\.\\+=,@]+$"
     },
     "Identity":{
       "type":"structure",
@@ -4696,6 +5006,39 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InvocationOutput":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "citations":{"shape":"Citations"}
+      },
+      "event":true
+    },
+    "InvokeAssistantRequest":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "conversationId":{"shape":"ConversationId"},
+        "message":{"shape":"MessageInput"},
+        "enableTrace":{"shape":"PrimitiveBoolean"}
+      }
+    },
+    "InvokeAssistantResponse":{
+      "type":"structure",
+      "required":[
+        "body",
+        "conversationId"
+      ],
+      "members":{
+        "body":{"shape":"ResponseStream"},
+        "conversationId":{
+          "shape":"ConversationId",
+          "location":"header",
+          "locationName":"x-amz-iotsitewise-assistant-conversation-id"
+        }
+      },
+      "payload":"body"
+    },
     "IotCoreThingName":{
       "type":"string",
       "max":128,
@@ -4737,6 +5080,17 @@
         "status":{"shape":"JobStatus"}
       }
     },
+    "KendraSourceDetail":{
+      "type":"structure",
+      "required":[
+        "knowledgeBaseArn",
+        "roleArn"
+      ],
+      "members":{
+        "knowledgeBaseArn":{"shape":"ARN"},
+        "roleArn":{"shape":"ARN"}
+      }
+    },
     "KmsKeyId":{
       "type":"string",
       "max":2048,
@@ -4775,7 +5129,7 @@
           "locationName":"resourceId"
         },
         "iamArn":{
-          "shape":"ARN",
+          "shape":"IamArn",
           "location":"querystring",
           "locationName":"iamArn"
         },
@@ -5211,6 +5565,35 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListDatasetsRequest":{
+      "type":"structure",
+      "required":["sourceType"],
+      "members":{
+        "sourceType":{
+          "shape":"DatasetSourceType",
+          "location":"querystring",
+          "locationName":"sourceType"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListDatasetsResponse":{
+      "type":"structure",
+      "required":["datasetSummaries"],
+      "members":{
+        "datasetSummaries":{"shape":"DatasetSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListGatewaysRequest":{
       "type":"structure",
       "members":{
@@ -5376,6 +5759,12 @@
         "DISASSOCIATED"
       ]
     },
+    "Location":{
+      "type":"structure",
+      "members":{
+        "uri":{"shape":"String"}
+      }
+    },
     "LoggingLevel":{
       "type":"string",
       "enum":[
@@ -5418,6 +5807,12 @@
       "members":{
         "forwardingConfig":{"shape":"ForwardingConfig"}
       }
+    },
+    "MessageInput":{
+      "type":"string",
+      "max":10000,
+      "min":1,
+      "sensitive":true
     },
     "Metric":{
       "type":"structure",
@@ -5485,10 +5880,7 @@
       "type":"boolean",
       "box":true
     },
-    "NumberOfDays":{
-      "type":"integer",
-      "min":30
-    },
+    "NumberOfDays":{"type":"integer"},
     "Offset":{
       "type":"string",
       "max":25,
@@ -5528,6 +5920,7 @@
       "type":"string",
       "enum":[
         "CREATING",
+        "PENDING",
         "UPDATING",
         "DELETING",
         "ACTIVE",
@@ -5561,9 +5954,37 @@
         "startUrl":{"shape":"Url"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"},
-        "roleArn":{"shape":"ARN"},
-        "status":{"shape":"PortalStatus"}
+        "roleArn":{"shape":"IamArn"},
+        "status":{"shape":"PortalStatus"},
+        "portalType":{"shape":"PortalType"}
       }
+    },
+    "PortalTools":{
+      "type":"list",
+      "member":{"shape":"Name"}
+    },
+    "PortalType":{
+      "type":"string",
+      "enum":[
+        "SITEWISE_PORTAL_V1",
+        "SITEWISE_PORTAL_V2"
+      ]
+    },
+    "PortalTypeConfiguration":{
+      "type":"map",
+      "key":{"shape":"PortalTypeKey"},
+      "value":{"shape":"PortalTypeEntry"}
+    },
+    "PortalTypeEntry":{
+      "type":"structure",
+      "members":{
+        "portalTools":{"shape":"PortalTools"}
+      }
+    },
+    "PortalTypeKey":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "PreconditionFailedException":{
       "type":"structure",
@@ -5580,6 +6001,7 @@
       "error":{"httpStatusCode":412},
       "exception":true
     },
+    "PrimitiveBoolean":{"type":"boolean"},
     "ProjectResource":{
       "type":"structure",
       "required":["id"],
@@ -5676,6 +6098,13 @@
     "PropertyValueBooleanValue":{"type":"boolean"},
     "PropertyValueDoubleValue":{"type":"double"},
     "PropertyValueIntegerValue":{"type":"integer"},
+    "PropertyValueNullValue":{
+      "type":"structure",
+      "required":["valueType"],
+      "members":{
+        "valueType":{"shape":"RawValueType"}
+      }
+    },
     "PropertyValueStringValue":{"type":"string"},
     "PutAssetPropertyValueEntries":{
       "type":"list",
@@ -5736,7 +6165,8 @@
         "disassociatedDataStorage":{"shape":"DisassociatedDataStorageState"},
         "retentionPeriod":{"shape":"RetentionPeriod"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "PutStorageConfigurationResponse":{
@@ -5752,7 +6182,8 @@
         "retentionPeriod":{"shape":"RetentionPeriod"},
         "configurationStatus":{"shape":"ConfigurationStatus"},
         "warmTier":{"shape":"WarmTierState"},
-        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"}
+        "warmTierRetentionPeriod":{"shape":"WarmTierRetentionPeriod"},
+        "disallowIngestNullNaN":{"shape":"DisallowIngestNullNaN"}
       }
     },
     "Qualities":{
@@ -5777,10 +6208,26 @@
     "QueryTimeoutException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"errorMessage"}
+        "message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "RawValueType":{
+      "type":"string",
+      "enum":[
+        "D",
+        "B",
+        "S",
+        "I",
+        "U"
+      ]
+    },
+    "Reference":{
+      "type":"structure",
+      "members":{
+        "dataset":{"shape":"DataSetReference"}
+      }
     },
     "Resolution":{
       "type":"string",
@@ -5827,6 +6274,33 @@
         "PORTAL",
         "PROJECT"
       ]
+    },
+    "ResponseStream":{
+      "type":"structure",
+      "members":{
+        "trace":{"shape":"Trace"},
+        "output":{"shape":"InvocationOutput"},
+        "accessDeniedException":{"shape":"AccessDeniedException"},
+        "conflictingOperationException":{"shape":"ConflictingOperationException"},
+        "internalFailureException":{"shape":"InternalFailureException"},
+        "invalidRequestException":{"shape":"InvalidRequestException"},
+        "limitExceededException":{"shape":"LimitExceededException"},
+        "resourceNotFoundException":{"shape":"ResourceNotFoundException"},
+        "throttlingException":{"shape":"ThrottlingException"}
+      },
+      "eventstream":true
+    },
+    "RestrictedDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "RestrictedName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
     },
     "RetentionPeriod":{
       "type":"structure",
@@ -5882,6 +6356,19 @@
       "required":["iotCoreThingName"],
       "members":{
         "iotCoreThingName":{"shape":"IotCoreThingName"}
+      }
+    },
+    "Source":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"String"},
+        "location":{"shape":"Location"}
+      }
+    },
+    "SourceDetail":{
+      "type":"structure",
+      "members":{
+        "kendra":{"shape":"KendraSourceDetail"}
       }
     },
     "StorageType":{
@@ -6018,6 +6505,13 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Trace":{
+      "type":"structure",
+      "members":{
+        "text":{"shape":"String"}
+      },
+      "event":true
     },
     "Transform":{
       "type":"structure",
@@ -6301,6 +6795,36 @@
       "members":{
       }
     },
+    "UpdateDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "datasetId",
+        "datasetName",
+        "datasetSource"
+      ],
+      "members":{
+        "datasetId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"datasetId"
+        },
+        "datasetName":{"shape":"RestrictedName"},
+        "datasetDescription":{"shape":"RestrictedDescription"},
+        "datasetSource":{"shape":"DatasetSource"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateDatasetResponse":{
+      "type":"structure",
+      "members":{
+        "datasetId":{"shape":"CustomID"},
+        "datasetArn":{"shape":"ARN"},
+        "datasetStatus":{"shape":"DatasetStatus"}
+      }
+    },
     "UpdateGatewayCapabilityConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -6362,13 +6886,15 @@
         "portalDescription":{"shape":"Description"},
         "portalContactEmail":{"shape":"Email"},
         "portalLogoImage":{"shape":"Image"},
-        "roleArn":{"shape":"ARN"},
+        "roleArn":{"shape":"IamArn"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
         "notificationSenderEmail":{"shape":"Email"},
-        "alarms":{"shape":"Alarms"}
+        "alarms":{"shape":"Alarms"},
+        "portalType":{"shape":"PortalType"},
+        "portalTypeConfiguration":{"shape":"PortalTypeConfiguration"}
       }
     },
     "UpdatePortalResponse":{
@@ -6419,7 +6945,7 @@
     "ValidationException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"errorMessage"}
+        "message":{"shape":"ErrorMessage"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
@@ -6444,7 +6970,8 @@
         "stringValue":{"shape":"PropertyValueStringValue"},
         "integerValue":{"shape":"PropertyValueIntegerValue"},
         "doubleValue":{"shape":"PropertyValueDoubleValue"},
-        "booleanValue":{"shape":"PropertyValueBooleanValue"}
+        "booleanValue":{"shape":"PropertyValueBooleanValue"},
+        "nullValue":{"shape":"PropertyValueNullValue"}
       }
     },
     "Version":{
@@ -6466,7 +6993,6 @@
         "ENABLED",
         "DISABLED"
       ]
-    },
-    "errorMessage":{"type":"string"}
+    }
   }
 }

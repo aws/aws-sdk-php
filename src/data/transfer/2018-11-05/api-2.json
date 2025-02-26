@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-11-05",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"transfer",
     "jsonVersion":"1.1",
     "protocol":"json",
@@ -115,6 +116,22 @@
         {"shape":"ResourceExistsException"}
       ],
       "idempotent":true
+    },
+    "CreateWebApp":{
+      "name":"CreateWebApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateWebAppRequest"},
+      "output":{"shape":"CreateWebAppResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ]
     },
     "CreateWorkflow":{
       "name":"CreateWorkflow",
@@ -265,6 +282,39 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteWebApp":{
+      "name":"DeleteWebApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteWebAppRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteWebAppCustomization":{
+      "name":"DeleteWebAppCustomization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteWebAppCustomizationRequest"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -434,6 +484,38 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DescribeWebApp":{
+      "name":"DescribeWebApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeWebAppRequest"},
+      "output":{"shape":"DescribeWebAppResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DescribeWebAppCustomization":{
+      "name":"DescribeWebAppCustomization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeWebAppCustomizationRequest"},
+      "output":{"shape":"DescribeWebAppCustomizationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeWorkflow":{
       "name":"DescribeWorkflow",
       "http":{
@@ -578,6 +660,21 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListFileTransferResults":{
+      "name":"ListFileTransferResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFileTransferResultsRequest"},
+      "output":{"shape":"ListFileTransferResultsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListHostKeys":{
       "name":"ListHostKeys",
       "http":{
@@ -668,6 +765,21 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidNextTokenException"}
+      ]
+    },
+    "ListWebApps":{
+      "name":"ListWebApps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListWebAppsRequest"},
+      "output":{"shape":"ListWebAppsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
         {"shape":"InvalidNextTokenException"}
       ]
     },
@@ -956,6 +1068,40 @@
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
       ]
+    },
+    "UpdateWebApp":{
+      "name":"UpdateWebApp",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateWebAppRequest"},
+      "output":{"shape":"UpdateWebAppResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "UpdateWebAppCustomization":{
+      "name":"UpdateWebAppCustomization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateWebAppCustomizationRequest"},
+      "output":{"shape":"UpdateWebAppCustomizationResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"AccessDeniedException"}
+      ]
     }
   },
   "shapes":{
@@ -1001,7 +1147,8 @@
         "SigningAlgorithm":{"shape":"SigningAlg"},
         "MdnSigningAlgorithm":{"shape":"MdnSigningAlg"},
         "MdnResponse":{"shape":"MdnResponse"},
-        "BasicAuthSecretId":{"shape":"As2ConnectorSecretId"}
+        "BasicAuthSecretId":{"shape":"As2ConnectorSecretId"},
+        "PreserveContentType":{"shape":"PreserveContentType"}
       }
     },
     "As2ConnectorSecretId":{
@@ -1105,6 +1252,25 @@
       },
       "exception":true
     },
+    "ConnectorFileTransferResult":{
+      "type":"structure",
+      "required":[
+        "FilePath",
+        "StatusCode"
+      ],
+      "members":{
+        "FilePath":{"shape":"FilePath"},
+        "StatusCode":{"shape":"TransferTableStatus"},
+        "FailureCode":{"shape":"FailureCode"},
+        "FailureMessage":{"shape":"Message"}
+      }
+    },
+    "ConnectorFileTransferResults":{
+      "type":"list",
+      "member":{"shape":"ConnectorFileTransferResult"},
+      "max":1000,
+      "min":0
+    },
     "ConnectorId":{
       "type":"string",
       "max":19,
@@ -1161,7 +1327,6 @@
         "ServerId",
         "LocalProfileId",
         "PartnerProfileId",
-        "BaseDirectory",
         "AccessRole"
       ],
       "members":{
@@ -1172,7 +1337,10 @@
         "BaseDirectory":{"shape":"HomeDirectory"},
         "AccessRole":{"shape":"Role"},
         "Status":{"shape":"AgreementStatusType"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "PreserveFilename":{"shape":"PreserveFilenameType"},
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "CreateAgreementResponse":{
@@ -1285,6 +1453,23 @@
         "UserName":{"shape":"UserName"}
       }
     },
+    "CreateWebAppRequest":{
+      "type":"structure",
+      "required":["IdentityProviderDetails"],
+      "members":{
+        "IdentityProviderDetails":{"shape":"WebAppIdentityProviderDetails"},
+        "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
+        "WebAppUnits":{"shape":"WebAppUnits"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateWebAppResponse":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
     "CreateWorkflowRequest":{
       "type":"structure",
       "required":["Steps"],
@@ -1300,6 +1485,23 @@
       "required":["WorkflowId"],
       "members":{
         "WorkflowId":{"shape":"WorkflowId"}
+      }
+    },
+    "CustomDirectoriesType":{
+      "type":"structure",
+      "required":[
+        "FailedFilesDirectory",
+        "MdnFilesDirectory",
+        "PayloadFilesDirectory",
+        "StatusFilesDirectory",
+        "TemporaryFilesDirectory"
+      ],
+      "members":{
+        "FailedFilesDirectory":{"shape":"HomeDirectory"},
+        "MdnFilesDirectory":{"shape":"HomeDirectory"},
+        "PayloadFilesDirectory":{"shape":"HomeDirectory"},
+        "StatusFilesDirectory":{"shape":"HomeDirectory"},
+        "TemporaryFilesDirectory":{"shape":"HomeDirectory"}
       }
     },
     "CustomStepDetails":{
@@ -1435,6 +1637,20 @@
       "members":{
         "ServerId":{"shape":"ServerId"},
         "UserName":{"shape":"UserName"}
+      }
+    },
+    "DeleteWebAppCustomizationRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
+    "DeleteWebAppRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
       }
     },
     "DeleteWorkflowRequest":{
@@ -1616,6 +1832,34 @@
         "User":{"shape":"DescribedUser"}
       }
     },
+    "DescribeWebAppCustomizationRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
+    "DescribeWebAppCustomizationResponse":{
+      "type":"structure",
+      "required":["WebAppCustomization"],
+      "members":{
+        "WebAppCustomization":{"shape":"DescribedWebAppCustomization"}
+      }
+    },
+    "DescribeWebAppRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
+    "DescribeWebAppResponse":{
+      "type":"structure",
+      "required":["WebApp"],
+      "members":{
+        "WebApp":{"shape":"DescribedWebApp"}
+      }
+    },
     "DescribeWorkflowRequest":{
       "type":"structure",
       "required":["WorkflowId"],
@@ -1655,7 +1899,10 @@
         "PartnerProfileId":{"shape":"ProfileId"},
         "BaseDirectory":{"shape":"HomeDirectory"},
         "AccessRole":{"shape":"Role"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "PreserveFilename":{"shape":"PreserveFilenameType"},
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "DescribedCertificate":{
@@ -1718,6 +1965,14 @@
         "Type":{"shape":"HostKeyType"},
         "DateImported":{"shape":"DateImported"},
         "Tags":{"shape":"Tags"}
+      }
+    },
+    "DescribedIdentityCenterConfig":{
+      "type":"structure",
+      "members":{
+        "ApplicationArn":{"shape":"IdentityCenterApplicationArn"},
+        "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "Role":{"shape":"Role"}
       }
     },
     "DescribedProfile":{
@@ -1790,6 +2045,43 @@
         "Tags":{"shape":"Tags"},
         "UserName":{"shape":"UserName"}
       }
+    },
+    "DescribedWebApp":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "WebAppId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "WebAppId":{"shape":"WebAppId"},
+        "DescribedIdentityProviderDetails":{"shape":"DescribedWebAppIdentityProviderDetails"},
+        "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
+        "WebAppEndpoint":{"shape":"WebAppEndpoint"},
+        "WebAppUnits":{"shape":"WebAppUnits"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "DescribedWebAppCustomization":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "WebAppId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "WebAppId":{"shape":"WebAppId"},
+        "Title":{"shape":"WebAppTitle"},
+        "LogoFile":{"shape":"WebAppLogoFile"},
+        "FaviconFile":{"shape":"WebAppFaviconFile"}
+      }
+    },
+    "DescribedWebAppIdentityProviderDetails":{
+      "type":"structure",
+      "members":{
+        "IdentityCenterConfig":{"shape":"DescribedIdentityCenterConfig"}
+      },
+      "union":true
     },
     "DescribedWorkflow":{
       "type":"structure",
@@ -1880,6 +2172,13 @@
         "VPC_ENDPOINT"
       ]
     },
+    "EnforceMessageSigningType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ExecutionError":{
       "type":"structure",
       "required":[
@@ -1947,6 +2246,7 @@
       "min":1,
       "pattern":"S-1-[\\d-]+"
     },
+    "FailureCode":{"type":"string"},
     "FileLocation":{
       "type":"structure",
       "members":{
@@ -2027,6 +2327,25 @@
       "pattern":"hostkey-[0-9a-f]{17}"
     },
     "HostKeyType":{"type":"string"},
+    "IdentityCenterApplicationArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"arn:[\\w-]+:sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
+    },
+    "IdentityCenterConfig":{
+      "type":"structure",
+      "members":{
+        "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "Role":{"shape":"Role"}
+      }
+    },
+    "IdentityCenterInstanceArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"arn:[\\w-]+:sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
+    },
     "IdentityProviderDetails":{
       "type":"structure",
       "members":{
@@ -2241,6 +2560,27 @@
         "Executions":{"shape":"ListedExecutions"}
       }
     },
+    "ListFileTransferResultsRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "TransferId"
+      ],
+      "members":{
+        "ConnectorId":{"shape":"ConnectorId"},
+        "TransferId":{"shape":"TransferId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListFileTransferResultsResponse":{
+      "type":"structure",
+      "required":["FileTransferResults"],
+      "members":{
+        "FileTransferResults":{"shape":"ConnectorFileTransferResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListHostKeysRequest":{
       "type":"structure",
       "required":["ServerId"],
@@ -2344,6 +2684,21 @@
         "NextToken":{"shape":"NextToken"},
         "ServerId":{"shape":"ServerId"},
         "Users":{"shape":"ListedUsers"}
+      }
+    },
+    "ListWebAppsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListWebAppsResponse":{
+      "type":"structure",
+      "required":["WebApps"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "WebApps":{"shape":"ListedWebApps"}
       }
     },
     "ListWorkflowsRequest":{
@@ -2494,6 +2849,23 @@
     "ListedUsers":{
       "type":"list",
       "member":{"shape":"ListedUser"}
+    },
+    "ListedWebApp":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "WebAppId"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "WebAppId":{"shape":"WebAppId"},
+        "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
+        "WebAppEndpoint":{"shape":"WebAppEndpoint"}
+      }
+    },
+    "ListedWebApps":{
+      "type":"list",
+      "member":{"shape":"ListedWebApp"}
     },
     "ListedWorkflow":{
       "type":"structure",
@@ -2657,6 +3029,20 @@
       "max":4096,
       "min":0,
       "pattern":"[\\x09-\\x0D\\x20-\\x7E]*"
+    },
+    "PreserveContentType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "PreserveFilenameType":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "PrivateKeyType":{
       "type":"string",
@@ -3223,6 +3609,15 @@
       "min":1,
       "pattern":"[0-9a-zA-Z./-]+"
     },
+    "TransferTableStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -3276,7 +3671,10 @@
         "LocalProfileId":{"shape":"ProfileId"},
         "PartnerProfileId":{"shape":"ProfileId"},
         "BaseDirectory":{"shape":"HomeDirectory"},
-        "AccessRole":{"shape":"Role"}
+        "AccessRole":{"shape":"Role"},
+        "PreserveFilename":{"shape":"PreserveFilenameType"},
+        "EnforceMessageSigning":{"shape":"EnforceMessageSigningType"},
+        "CustomDirectories":{"shape":"CustomDirectoriesType"}
       }
     },
     "UpdateAgreementResponse":{
@@ -3418,6 +3816,53 @@
         "UserName":{"shape":"UserName"}
       }
     },
+    "UpdateWebAppCustomizationRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"},
+        "Title":{"shape":"WebAppTitle"},
+        "LogoFile":{"shape":"WebAppLogoFile"},
+        "FaviconFile":{"shape":"WebAppFaviconFile"}
+      }
+    },
+    "UpdateWebAppCustomizationResponse":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
+    "UpdateWebAppIdentityCenterConfig":{
+      "type":"structure",
+      "members":{
+        "Role":{"shape":"Role"}
+      }
+    },
+    "UpdateWebAppIdentityProviderDetails":{
+      "type":"structure",
+      "members":{
+        "IdentityCenterConfig":{"shape":"UpdateWebAppIdentityCenterConfig"}
+      },
+      "union":true
+    },
+    "UpdateWebAppRequest":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"},
+        "IdentityProviderDetails":{"shape":"UpdateWebAppIdentityProviderDetails"},
+        "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
+        "WebAppUnits":{"shape":"WebAppUnits"}
+      }
+    },
+    "UpdateWebAppResponse":{
+      "type":"structure",
+      "required":["WebAppId"],
+      "members":{
+        "WebAppId":{"shape":"WebAppId"}
+      }
+    },
     "Url":{
       "type":"string",
       "max":255,
@@ -3458,6 +3903,58 @@
       "pattern":"vpce-[0-9a-f]{17}"
     },
     "VpcId":{"type":"string"},
+    "WebAppAccessEndpoint":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "WebAppEndpoint":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "WebAppFaviconFile":{
+      "type":"blob",
+      "max":20960,
+      "min":1,
+      "sensitive":true
+    },
+    "WebAppId":{
+      "type":"string",
+      "max":24,
+      "min":24,
+      "pattern":"webapp-[0-9a-f]{17}"
+    },
+    "WebAppIdentityProviderDetails":{
+      "type":"structure",
+      "members":{
+        "IdentityCenterConfig":{"shape":"IdentityCenterConfig"}
+      },
+      "union":true
+    },
+    "WebAppLogoFile":{
+      "type":"blob",
+      "max":51200,
+      "min":1,
+      "sensitive":true
+    },
+    "WebAppTitle":{
+      "type":"string",
+      "max":100,
+      "min":0
+    },
+    "WebAppUnitCount":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "WebAppUnits":{
+      "type":"structure",
+      "members":{
+        "Provisioned":{"shape":"WebAppUnitCount"}
+      },
+      "union":true
+    },
     "WorkflowDescription":{
       "type":"string",
       "max":256,

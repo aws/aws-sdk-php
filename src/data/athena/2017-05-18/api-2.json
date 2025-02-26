@@ -1296,23 +1296,13 @@
         "GOOGLECLOUDSTORAGE",
         "HBASE",
         "DOCUMENTDB",
-        "MSK",
-        "NEPTUNE",
         "CMDB",
         "TPCDS",
-        "REDIS",
-        "CLOUDWATCH",
         "TIMESTREAM",
         "SAPHANA",
         "SNOWFLAKE",
-        "TERADATA",
-        "VERTICA",
-        "CLOUDERAIMPALA",
-        "CLOUDERAHIVE",
-        "HORTONWORKSHIVE",
         "DATALAKEGEN2",
-        "DB2AS400",
-        "CLOUDWATCHMETRICS"
+        "DB2AS400"
       ]
     },
     "CoordinatorDpuSize":{
@@ -1562,7 +1552,8 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"CatalogNameString"}
+        "Name":{"shape":"CatalogNameString"},
+        "DeleteCatalogOnly":{"shape":"Boolean"}
       }
     },
     "DeleteDataCatalogOutput":{

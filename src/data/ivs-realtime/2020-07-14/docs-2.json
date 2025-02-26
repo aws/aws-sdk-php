@@ -132,6 +132,18 @@
         "ListCompositionsResponse$compositions": "<p>List of the matching Compositions (summary information only).</p>"
       }
     },
+    "CompositionThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video for a <a>Composition</a>.</p>",
+      "refs": {
+        "CompositionThumbnailConfigurationList$member": null
+      }
+    },
+    "CompositionThumbnailConfigurationList": {
+      "base": null,
+      "refs": {
+        "S3DestinationConfiguration$thumbnailConfigurations": "<p>A complex type that allows you to enable/disable the recording of thumbnails for a <a>Composition</a> and modify the interval at which thumbnails are generated for the live session.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p/>",
       "refs": {
@@ -363,7 +375,7 @@
     "EventErrorCode": {
       "base": null,
       "refs": {
-        "Event$errorCode": "<p>If the event is an error event, the error code is provided to give insight into the specific error that occurred. If the event is not an error event, this field is null. <code>INSUFFICIENT_CAPABILITIES</code> indicates that the participant tried to take an action that the participant’s token is not allowed to do. For more information about participant capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>. <code>QUOTA_EXCEEDED</code> indicates that the number of participants who want to publish/subscribe to a stage exceeds the quota; for more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\">Service Quotas</a>. <code>PUBLISHER_NOT_FOUND</code> indicates that the participant tried to subscribe to a publisher that doesn’t exist. </p>"
+        "Event$errorCode": "<p>If the event is an error event, the error code is provided to give insight into the specific error that occurred. If the event is not an error event, this field is null.</p> <ul> <li> <p> <code>B_FRAME_PRESENT</code> — The participant's stream includes B-frames. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>BITRATE_EXCEEDED</code> — The participant exceeded the maximum supported bitrate. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>INSUFFICIENT_CAPABILITIES</code> — The participant tried to take an action that the participant’s token is not allowed to do. For details on participant capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>.</p> </li> <li> <p> <code>INTERNAL_SERVER_EXCEPTION</code> — The participant failed to publish to the stage due to an internal server error.</p> </li> <li> <p> <code>INVALID_AUDIO_CODEC</code> — The participant is using an invalid audio codec. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-stream-ingest.html\"> Stream Ingest</a>.</p> </li> <li> <p> <code>INVALID_INPUT</code> — The participant is using an invalid input stream.</p> </li> <li> <p> <code>INVALID_PROTOCOL</code> — The participant's IngestConfiguration resource is configured for RTMPS but they tried streaming with RTMP. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>INVALID_STREAM_KEY</code> — The participant is using an invalid stream key. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>INVALID_VIDEO_CODEC</code> — The participant is using an invalid video codec. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-stream-ingest.html\"> Stream Ingest</a>.</p> </li> <li> <p> <code>PUBLISHER_NOT_FOUND</code> — The participant tried to subscribe to a publisher that doesn’t exist.</p> </li> <li> <p> <code>QUOTA_EXCEEDED</code> — The number of participants who want to publish/subscribe to a stage exceeds the quota. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>RESOLUTION_EXCEEDED</code> — The participant exceeded the maximum supported resolution. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>REUSE_OF_STREAM_KEY</code> — The participant tried to use a stream key that is associated with another active stage session.</p> </li> <li> <p> <code>STREAM_DURATION_EXCEEDED</code> — The participant exceeded the maximum allowed stream duration. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> </ul>"
       }
     },
     "EventList": {
@@ -480,7 +492,7 @@
     "Height": {
       "base": null,
       "refs": {
-        "Video$height": "<p>Video-resolution height. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 720.</p>"
+        "Video$height": "<p>Video-resolution height. This must be an even number. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 720.</p>"
       }
     },
     "ImportPublicKeyRequest": {
@@ -857,6 +869,12 @@
       "base": "<p>Summary object describing a participant that has joined a stage.</p>",
       "refs": {
         "ParticipantList$member": null
+      }
+    },
+    "ParticipantThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video from an individual participant.</p>",
+      "refs": {
+        "AutoParticipantRecordingConfiguration$thumbnailConfiguration": "<p>A complex type that allows you to enable/disable the recording of thumbnails for individual participant recording and modify the interval at which thumbnails are generated for the live session.</p>"
       }
     },
     "ParticipantToken": {
@@ -1320,6 +1338,32 @@
         "TagResourceRequest$tags": "<p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
       }
     },
+    "ThumbnailIntervalSeconds": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. Default: 60.</p>",
+        "ParticipantThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. This is configurable only if <code>recordingMode</code> is <code>INTERVAL</code>. Default: 60.</p>"
+      }
+    },
+    "ThumbnailRecordingMode": {
+      "base": null,
+      "refs": {
+        "ParticipantThumbnailConfiguration$recordingMode": "<p>Thumbnail recording mode. Default: <code>DISABLED</code>.</p>"
+      }
+    },
+    "ThumbnailStorageType": {
+      "base": null,
+      "refs": {
+        "ThumbnailStorageTypeList$member": null
+      }
+    },
+    "ThumbnailStorageTypeList": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/(width)x(height) directory, where (width) and (height) are the width and height of the thumbnail. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/(width)x(height)/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>",
+        "ParticipantThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/high directory. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/high/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>"
+      }
+    },
     "Time": {
       "base": null,
       "refs": {
@@ -1409,7 +1453,7 @@
     "Width": {
       "base": null,
       "refs": {
-        "Video$width": "<p>Video-resolution width. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 1280.</p>"
+        "Video$width": "<p>Video-resolution width. This must be an even number. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 1280.</p>"
       }
     },
     "errorMessage": {

@@ -44,6 +44,7 @@
     "GetBackupVaultAccessPolicy": "<p>Returns the access policy document that is associated with the named backup vault.</p>",
     "GetBackupVaultNotifications": "<p>Returns event notifications for the specified backup vault.</p>",
     "GetLegalHold": "<p>This action returns details for a specified legal hold. The details are the body of a legal hold in JSON format, in addition to metadata.</p>",
+    "GetRecoveryPointIndexDetails": "<p>This operation returns the metadata and details specific to the backup index associated with the specified recovery point.</p>",
     "GetRecoveryPointRestoreMetadata": "<p>Returns a set of metadata key-value pairs that were used to create the backup.</p>",
     "GetRestoreJobMetadata": "<p>This request returns the metadata for the specified restore job.</p>",
     "GetRestoreTestingInferredMetadata": "<p>This request returns the minimal required set of metadata needed to start a restore job with secure default settings. <code>BackupVaultName</code> and <code>RecoveryPointArn</code> are required parameters. <code>BackupVaultAccountId</code> is an optional parameter.</p>",
@@ -60,6 +61,7 @@
     "ListCopyJobSummaries": "<p>This request obtains a list of copy jobs created or running within the the most recent 30 days. You can include parameters AccountID, State, ResourceType, MessageCategory, AggregationPeriod, MaxResults, or NextToken to filter results.</p> <p>This request returns a summary that contains Region, Account, State, RestourceType, MessageCategory, StartTime, EndTime, and Count of included jobs.</p>",
     "ListCopyJobs": "<p>Returns metadata about your copy jobs.</p>",
     "ListFrameworks": "<p>Returns a list of all frameworks for an Amazon Web Services account and Amazon Web Services Region.</p>",
+    "ListIndexedRecoveryPoints": "<p>This operation returns a list of recovery points that have an associated index, belonging to the specified account.</p> <p>Optional parameters you can include are: MaxResults; NextToken; SourceResourceArns; CreatedBefore; CreatedAfter; and ResourceType.</p>",
     "ListLegalHolds": "<p>This action returns metadata about active and previous legal holds.</p>",
     "ListProtectedResources": "<p>Returns an array of resources successfully backed up by Backup, including the time the resource was saved, an Amazon Resource Name (ARN) of the resource, and a resource type.</p>",
     "ListProtectedResourcesByBackupVault": "<p>This request lists the protected resources corresponding to each backup vault.</p>",
@@ -88,6 +90,7 @@
     "UpdateBackupPlan": "<p>Updates the specified backup plan. The new version is uniquely identified by its ID.</p>",
     "UpdateFramework": "<p>Updates the specified framework.</p>",
     "UpdateGlobalSettings": "<p>Updates whether the Amazon Web Services account is opted in to cross-account backup. Returns an error if the account is not an Organizations management account. Use the <code>DescribeGlobalSettings</code> API to determine the current settings.</p>",
+    "UpdateRecoveryPointIndexSettings": "<p>This operation updates the settings of a recovery point index.</p> <p>Required: BackupVaultName, RecoveryPointArn, and IAMRoleArn</p>",
     "UpdateRecoveryPointLifecycle": "<p>Sets the transition lifecycle of a recovery point.</p> <p>The lifecycle defines when a protected resource is transitioned to cold storage and when it expires. Backup transitions and expires backups automatically according to the lifecycle that you define.</p> <p>Resource types that can transition to cold storage are listed in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table. Backup ignores this expression for other resource types.</p> <p>Backups transitioned to cold storage must be stored in cold storage for a minimum of 90 days. Therefore, the “retention” setting must be 90 days greater than the “transition to cold after days” setting. The “transition to cold after days” setting cannot be changed after a backup has been transitioned to cold.</p> <important> <p>If your lifecycle currently uses the parameters <code>DeleteAfterDays</code> and <code>MoveToColdStorageAfterDays</code>, include these parameters and their values when you call this operation. Not including them may result in your plan updating with null values.</p> </important> <p>This operation does not support continuous backups.</p>",
     "UpdateRegionSettings": "<p>Updates the current service opt-in settings for the Region.</p> <p>Use the <code>DescribeRegionSettings</code> API to determine the resource types that are supported.</p>",
     "UpdateReportPlan": "<p>Updates the specified report plan.</p>",
@@ -146,12 +149,21 @@
         "GetBackupVaultNotificationsOutput$BackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "GetBackupVaultNotificationsOutput$SNSTopicArn": "<p>An ARN that uniquely identifies an Amazon Simple Notification Service (Amazon SNS) topic; for example, <code>arn:aws:sns:us-west-2:111122223333:MyTopic</code>.</p>",
         "GetLegalHoldOutput$LegalHoldArn": "<p>The framework ARN for the specified legal hold. The format of the ARN depends on the resource type.</p>",
+        "GetRecoveryPointIndexDetailsInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "GetRecoveryPointIndexDetailsOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "GetRecoveryPointIndexDetailsOutput$BackupVaultArn": "<p>An ARN that uniquely identifies the backup vault where the recovery point index is stored.</p> <p>For example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
+        "GetRecoveryPointIndexDetailsOutput$SourceResourceArn": "<p>A string of the Amazon Resource Name (ARN) that uniquely identifies the source resource.</p>",
         "GetRecoveryPointRestoreMetadataInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "GetRecoveryPointRestoreMetadataOutput$BackupVaultArn": "<p>An ARN that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "GetRecoveryPointRestoreMetadataOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "IndexedRecoveryPoint$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code> </p>",
+        "IndexedRecoveryPoint$SourceResourceArn": "<p>A string of the Amazon Resource Name (ARN) that uniquely identifies the source resource.</p>",
+        "IndexedRecoveryPoint$IamRoleArn": "<p>This specifies the IAM role ARN used for this operation.</p> <p>For example, arn:aws:iam::123456789012:role/S3Access</p>",
+        "IndexedRecoveryPoint$BackupVaultArn": "<p>An ARN that uniquely identifies the backup vault where the recovery point index is stored.</p> <p>For example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "LegalHold$LegalHoldArn": "<p>The Amazon Resource Name (ARN) of the legal hold; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "ListBackupJobsInput$ByResourceArn": "<p>Returns only backup jobs that match the specified resource Amazon Resource Name (ARN).</p>",
         "ListCopyJobsInput$ByResourceArn": "<p>Returns only copy jobs that match the specified resource Amazon Resource Name (ARN). </p>",
+        "ListIndexedRecoveryPointsInput$SourceResourceArn": "<p>A string of the Amazon Resource Name (ARN) that uniquely identifies the source resource.</p>",
         "ListRecoveryPointsByBackupVaultInput$ByResourceArn": "<p>Returns only recovery points that match the specified resource Amazon Resource Name (ARN).</p>",
         "ListRecoveryPointsByBackupVaultInput$ByParentRecoveryPointArn": "<p>This returns only recovery points that match the specified parent (composite) recovery point Amazon Resource Name (ARN).</p>",
         "ListRecoveryPointsByResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
@@ -190,6 +202,8 @@
         "UntagResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.</p> <p>ARNs that do not include <code>backup</code> are incompatible with tagging. <code>TagResource</code> and <code>UntagResource</code> with invalid ARNs will result in an error. Acceptable ARN content can include <code>arn:aws:backup:us-east</code>. Invalid ARN content may look like <code>arn:aws:ec2:us-east</code>.</p>",
         "UpdateBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "UpdateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
+        "UpdateRecoveryPointIndexSettingsInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
+        "UpdateRecoveryPointIndexSettingsOutput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "UpdateRecoveryPointLifecycleInput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$BackupVaultArn": "<p>An ARN that uniquely identifies a backup vault; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "UpdateRecoveryPointLifecycleOutput$RecoveryPointArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
@@ -476,6 +490,7 @@
         "GetBackupVaultAccessPolicyOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
         "GetBackupVaultNotificationsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "GetBackupVaultNotificationsOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
+        "GetRecoveryPointIndexDetailsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p> <p>Accepted characters include lowercase letters, numbers, and hyphens.</p>",
         "GetRecoveryPointRestoreMetadataInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "ListBackupJobsInput$ByBackupVaultName": "<p>Returns only backup jobs that will be stored in the specified backup vault. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "ListProtectedResourcesByBackupVaultInput$BackupVaultName": "<p>The list of protected resources by backup vault within the vault(s) you specify by name.</p>",
@@ -488,6 +503,8 @@
         "RecoveryPointMember$BackupVaultName": "<p>The name of the backup vault (the logical container in which backups are stored).</p>",
         "StartBackupJobInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
         "StartCopyJobInput$SourceBackupVaultName": "<p>The name of a logical source container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>",
+        "UpdateRecoveryPointIndexSettingsInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p> <p>Accepted characters include lowercase letters, numbers, and hyphens.</p>",
+        "UpdateRecoveryPointIndexSettingsOutput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Region where they are created.</p>",
         "UpdateRecoveryPointLifecycleInput$BackupVaultName": "<p>The name of a logical container where backups are stored. Backup vaults are identified by names that are unique to the account used to create them and the Amazon Web Services Region where they are created.</p>"
       }
     },
@@ -1083,6 +1100,16 @@
       "refs": {
       }
     },
+    "GetRecoveryPointIndexDetailsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRecoveryPointIndexDetailsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetRecoveryPointRestoreMetadataInput": {
       "base": null,
       "refs": {
@@ -1178,7 +1205,53 @@
         "RestoreJobsListMember$IamRoleArn": "<p>The IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartBackupJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to create the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
         "StartCopyJobInput$IamRoleArn": "<p>Specifies the IAM role ARN used to copy the target recovery point; for example, <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
-        "StartRestoreJobInput$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>"
+        "StartRestoreJobInput$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>",
+        "UpdateRecoveryPointIndexSettingsInput$IamRoleArn": "<p>This specifies the IAM role ARN used for this operation.</p> <p>For example, arn:aws:iam::123456789012:role/S3Access</p>"
+      }
+    },
+    "Index": {
+      "base": null,
+      "refs": {
+        "StartBackupJobInput$Index": "<p>Include this parameter to enable index creation if your backup job has a resource type that supports backup indexes.</p> <p>Resource types that support backup indexes include:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul> <p>Index can have 1 of 2 possible values, either <code>ENABLED</code> or <code>DISABLED</code>.</p> <p>To create a backup index for an eligible <code>ACTIVE</code> recovery point that does not yet have a backup index, set value to <code>ENABLED</code>.</p> <p>To delete a backup index, set value to <code>DISABLED</code>.</p>",
+        "UpdateRecoveryPointIndexSettingsInput$Index": "<p>Index can have 1 of 2 possible values, either <code>ENABLED</code> or <code>DISABLED</code>.</p> <p>To create a backup index for an eligible <code>ACTIVE</code> recovery point that does not yet have a backup index, set value to <code>ENABLED</code>.</p> <p>To delete a backup index, set value to <code>DISABLED</code>.</p>",
+        "UpdateRecoveryPointIndexSettingsOutput$Index": "<p>Index can have 1 of 2 possible values, either <code>ENABLED</code> or <code>DISABLED</code>.</p> <p>A value of <code>ENABLED</code> means a backup index for an eligible <code>ACTIVE</code> recovery point has been created.</p> <p>A value of <code>DISABLED</code> means a backup index was deleted.</p>"
+      }
+    },
+    "IndexAction": {
+      "base": "<p>This is an optional array within a BackupRule.</p> <p>IndexAction consists of one ResourceTypes.</p>",
+      "refs": {
+        "IndexActions$member": null
+      }
+    },
+    "IndexActions": {
+      "base": null,
+      "refs": {
+        "BackupRule$IndexActions": "<p>IndexActions is an array you use to specify how backup data should be indexed.</p> <p>eEach BackupRule can have 0 or 1 IndexAction, as each backup can have up to one index associated with it.</p> <p>Within the array is ResourceType. Only one will be accepted for each BackupRule.</p>",
+        "BackupRuleInput$IndexActions": "<p>There can up to one IndexAction in each BackupRule, as each backup can have 0 or 1 backup index associated with it.</p> <p>Within the array is ResourceTypes. Only 1 resource type will be accepted for each BackupRule. Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>"
+      }
+    },
+    "IndexStatus": {
+      "base": null,
+      "refs": {
+        "DescribeRecoveryPointOutput$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "GetRecoveryPointIndexDetailsOutput$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "IndexedRecoveryPoint$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "ListIndexedRecoveryPointsInput$IndexStatus": "<p>Include this parameter to filter the returned list by the indicated statuses.</p> <p>Accepted values: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "RecoveryPointByBackupVault$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "RecoveryPointByResource$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>",
+        "UpdateRecoveryPointIndexSettingsOutput$IndexStatus": "<p>This is the current status for the backup index associated with the specified recovery point.</p> <p>Statuses are: <code>PENDING</code> | <code>ACTIVE</code> | <code>FAILED</code> | <code>DELETING</code> </p> <p>A recovery point with an index that has the status of <code>ACTIVE</code> can be included in a search.</p>"
+      }
+    },
+    "IndexedRecoveryPoint": {
+      "base": "<p>This is a recovery point that has an associated backup index.</p> <p>Only recovery points with a backup index can be included in a search.</p>",
+      "refs": {
+        "IndexedRecoveryPointList$member": null
+      }
+    },
+    "IndexedRecoveryPointList": {
+      "base": null,
+      "refs": {
+        "ListIndexedRecoveryPointsOutput$IndexedRecoveryPoints": "<p>This is a list of recovery points that have an associated index, belonging to the specified account.</p>"
       }
     },
     "InvalidParameterValueException": {
@@ -1351,6 +1424,16 @@
       }
     },
     "ListFrameworksOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIndexedRecoveryPointsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIndexedRecoveryPointsOutput": {
       "base": null,
       "refs": {
       }
@@ -1536,6 +1619,7 @@
         "DescribeRecoveryPointOutput$BackupSizeInBytes": "<p>The size, in bytes, of a backup.</p>",
         "DescribeRestoreJobOutput$BackupSizeInBytes": "<p>The size, in bytes, of the restored resource.</p>",
         "DescribeRestoreJobOutput$ExpectedCompletionTimeMinutes": "<p>The amount of time in minutes that a job restoring a recovery point is expected to take.</p>",
+        "GetRecoveryPointIndexDetailsOutput$TotalItemsIndexed": "<p>Count of items within the backup index associated with the recovery point.</p>",
         "Lifecycle$MoveToColdStorageAfterDays": "<p>The number of days after creation that a recovery point is moved to cold storage.</p>",
         "Lifecycle$DeleteAfterDays": "<p>The number of days after creation that a recovery point is deleted. This value must be at least 90 days after the number of days specified in <code>MoveToColdStorageAfterDays</code>.</p>",
         "PutBackupVaultLockConfigurationInput$MinRetentionDays": "<p>The Backup Vault Lock configuration that specifies the minimum retention period that the vault retains its recovery points. This setting can be useful if, for example, your organization's policies require you to retain certain data for at least seven years (2555 days).</p> <p>This parameter is required when a vault lock is created through CloudFormation; otherwise, this parameter is optional. If this parameter is not specified, Vault Lock will not enforce a minimum retention period.</p> <p>If this parameter is specified, any backup or copy job to the vault must have a lifecycle policy with a retention period equal to or longer than the minimum retention period. If the job's retention period is shorter than that minimum retention period, then the vault fails that backup or copy job, and you should either modify your lifecycle settings or use a different vault. The shortest minimum retention period you can specify is 1 day. Recovery points already saved in the vault prior to Vault Lock are not affected.</p>",
@@ -1565,6 +1649,7 @@
         "ListBackupVaultsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListCopyJobSummariesInput$MaxResults": "<p>This parameter sets the maximum number of items to be returned.</p> <p>The value is an integer. Range of accepted values is from 1 to 500.</p>",
         "ListCopyJobsInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
+        "ListIndexedRecoveryPointsInput$MaxResults": "<p>The maximum number of resource list items to be returned.</p>",
         "ListLegalHoldsInput$MaxResults": "<p>The maximum number of resource list items to be returned.</p>",
         "ListProtectedResourcesByBackupVaultInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
         "ListProtectedResourcesInput$MaxResults": "<p>The maximum number of items to be returned.</p>",
@@ -1845,10 +1930,12 @@
         "DescribeRecoveryPointOutput$ResourceType": "<p>The type of Amazon Web Services resource to save as a recovery point; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "DescribeRestoreJobOutput$ResourceType": "<p>Returns metadata associated with a restore job listed by resource type.</p>",
         "GetRecoveryPointRestoreMetadataOutput$ResourceType": "<p>The resource type of the recovery point.</p>",
+        "IndexedRecoveryPoint$ResourceType": "<p>The resource type of the indexed recovery point.</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>",
         "ListBackupJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value ANY returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p> <p>The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "ListBackupJobsInput$ByResourceType": "<p>Returns only backup jobs for the specified resources:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
         "ListCopyJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value ANY returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p> <p>The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "ListCopyJobsInput$ByResourceType": "<p>Returns only backup jobs for the specified resources:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
+        "ListIndexedRecoveryPointsInput$ResourceType": "<p>Returns a list of indexed recovery points for the specified resource type(s).</p> <p>Accepted values include:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>",
         "ListRecoveryPointsByBackupVaultInput$ByResourceType": "<p>Returns only recovery points that match the specified resource type(s):</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
         "ListRestoreJobSummariesInput$ResourceType": "<p>Returns the job count for the specified resource type. Use request <code>GetSupportedResourceTypes</code> to obtain strings for supported resource types.</p> <p>The the value ANY returns count of all resource types.</p> <p> <code>AGGREGATE_ALL</code> aggregates job counts for all resource types and returns the sum.</p> <p>The type of Amazon Web Services resource to be backed up; for example, an Amazon Elastic Block Store (Amazon EBS) volume or an Amazon Relational Database Service (Amazon RDS) database.</p>",
         "ListRestoreJobsInput$ByResourceType": "<p>Include this parameter to return only restore jobs for the specified resources:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
@@ -1886,7 +1973,8 @@
     "ResourceTypes": {
       "base": null,
       "refs": {
-        "GetSupportedResourceTypesOutput$ResourceTypes": "<p>Contains a string with the supported Amazon Web Services resource types:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>"
+        "GetSupportedResourceTypesOutput$ResourceTypes": "<p>Contains a string with the supported Amazon Web Services resource types:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>CloudFormation</code> for CloudFormation</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>Redshift</code> for Amazon Redshift</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> <li> <p> <code>SAP HANA on Amazon EC2</code> for SAP HANA databases on Amazon Elastic Compute Cloud instances</p> </li> <li> <p> <code>Storage Gateway</code> for Storage Gateway</p> </li> <li> <p> <code>Timestream</code> for Amazon Timestream</p> </li> <li> <p> <code>VirtualMachine</code> for VMware virtual machines</p> </li> </ul>",
+        "IndexAction$ResourceTypes": "<p>0 or 1 index action will be accepted for each BackupRule.</p> <p>Valid values:</p> <ul> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>S3</code> for Amazon Simple Storage Service (Amazon S3)</p> </li> </ul>"
       }
     },
     "RestoreDeletionStatus": {
@@ -2272,6 +2360,16 @@
       "refs": {
       }
     },
+    "UpdateRecoveryPointIndexSettingsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateRecoveryPointIndexSettingsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateRecoveryPointLifecycleInput": {
       "base": null,
       "refs": {
@@ -2483,6 +2581,7 @@
         "DescribeRecoveryPointOutput$StatusMessage": "<p>A status message explaining the status of the recovery point.</p>",
         "DescribeRecoveryPointOutput$CompositeMemberIdentifier": "<p>The identifier of a resource within a composite group, such as nested (child) recovery point belonging to a composite (parent) stack. The ID is transferred from the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html#resources-section-structure-syntax\"> logical ID</a> within a stack.</p>",
         "DescribeRecoveryPointOutput$ResourceName": "<p>The name of the resource that belongs to the specified backup.</p>",
+        "DescribeRecoveryPointOutput$IndexStatusMessage": "<p>A string in the form of a detailed message explaining the status of a backup index associated with the recovery point.</p>",
         "DescribeRestoreJobOutput$RestoreJobId": "<p>Uniquely identifies the job that restores a recovery point.</p>",
         "DescribeRestoreJobOutput$StatusMessage": "<p>A message showing the status of a job to restore a recovery point.</p>",
         "DescribeRestoreJobOutput$PercentDone": "<p>Contains an estimated percentage that is complete of a job at the time the job status was queried.</p>",
@@ -2509,6 +2608,8 @@
         "GetLegalHoldOutput$Description": "<p>The description of the legal hold.</p>",
         "GetLegalHoldOutput$CancelDescription": "<p>The reason for removing the legal hold.</p>",
         "GetLegalHoldOutput$LegalHoldId": "<p>The ID of the legal hold.</p>",
+        "GetRecoveryPointIndexDetailsOutput$IndexStatusMessage": "<p>A detailed message explaining the status of a backup index associated with the recovery point.</p>",
+        "IndexedRecoveryPoint$IndexStatusMessage": "<p>A string in the form of a detailed message explaining the status of a backup index associated with the recovery point.</p>",
         "InvalidParameterValueException$Code": null,
         "InvalidParameterValueException$Message": null,
         "InvalidParameterValueException$Type": "<p/>",
@@ -2557,6 +2658,8 @@
         "ListCopyJobsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return MaxResults number of items, NextToken allows you to return more items in your list starting at the location pointed to by the next token. </p>",
         "ListFrameworksInput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
         "ListFrameworksOutput$NextToken": "<p>An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.</p>",
+        "ListIndexedRecoveryPointsInput$NextToken": "<p>The next item following a partial list of returned recovery points.</p> <p>For example, if a request is made to return <code>MaxResults</code> number of indexed recovery points, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
+        "ListIndexedRecoveryPointsOutput$NextToken": "<p>The next item following a partial list of returned recovery points.</p> <p>For example, if a request is made to return <code>MaxResults</code> number of indexed recovery points, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListLegalHoldsInput$NextToken": "<p>The next item following a partial list of returned resources. For example, if a request is made to return <code>MaxResults</code> number of resources, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListLegalHoldsOutput$NextToken": "<p>The next item following a partial list of returned resources. For example, if a request is made to return <code>MaxResults</code> number of resources, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
         "ListProtectedResourcesByBackupVaultInput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the next token.</p>",
@@ -2594,8 +2697,10 @@
         "RecoveryPointByBackupVault$StatusMessage": "<p>A message explaining the current status of the recovery point.</p>",
         "RecoveryPointByBackupVault$CompositeMemberIdentifier": "<p>The identifier of a resource within a composite group, such as nested (child) recovery point belonging to a composite (parent) stack. The ID is transferred from the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html#resources-section-structure-syntax\"> logical ID</a> within a stack.</p>",
         "RecoveryPointByBackupVault$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "RecoveryPointByBackupVault$IndexStatusMessage": "<p>A string in the form of a detailed message explaining the status of a backup index associated with the recovery point.</p>",
         "RecoveryPointByResource$StatusMessage": "<p>A message explaining the current status of the recovery point.</p>",
         "RecoveryPointByResource$ResourceName": "<p>The non-unique name of the resource that belongs to the specified backup.</p>",
+        "RecoveryPointByResource$IndexStatusMessage": "<p>A string in the form of a detailed message explaining the status of a backup index associated with the recovery point.</p>",
         "RecoveryPointCreator$BackupPlanId": "<p>Uniquely identifies a backup plan.</p>",
         "RecoveryPointCreator$BackupPlanVersion": "<p>Version IDs are unique, randomly generated, Unicode, UTF-8 encoded strings that are at most 1,024 bytes long. They cannot be edited.</p>",
         "RecoveryPointCreator$BackupRuleId": "<p>Uniquely identifies a rule used to schedule the backup of a selection of resources.</p>",
@@ -2721,6 +2826,11 @@
         "GetLegalHoldOutput$CreationDate": "<p>The time when the legal hold was created.</p>",
         "GetLegalHoldOutput$CancellationDate": "<p>The time when the legal hold was cancelled.</p>",
         "GetLegalHoldOutput$RetainRecordUntil": "<p>The date and time until which the legal hold record is retained.</p>",
+        "GetRecoveryPointIndexDetailsOutput$IndexCreationDate": "<p>The date and time that a backup index was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "GetRecoveryPointIndexDetailsOutput$IndexDeletionDate": "<p>The date and time that a backup index was deleted, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "GetRecoveryPointIndexDetailsOutput$IndexCompletionDate": "<p>The date and time that a backup index finished creation, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "IndexedRecoveryPoint$BackupCreationDate": "<p>The date and time that a backup was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
+        "IndexedRecoveryPoint$IndexCreationDate": "<p>The date and time that a backup index was created, in Unix format and Coordinated Universal Time (UTC). The value of <code>CreationDate</code> is accurate to milliseconds. For example, the value 1516925490.087 represents Friday, January 26, 2018 12:11:30.087 AM.</p>",
         "LegalHold$CreationDate": "<p>The time when the legal hold was created.</p>",
         "LegalHold$CancellationDate": "<p>The time when the legal hold was cancelled.</p>",
         "ListBackupJobsInput$ByCreatedBefore": "<p>Returns only backup jobs that were created before the specified date.</p>",
@@ -2731,6 +2841,8 @@
         "ListCopyJobsInput$ByCreatedAfter": "<p>Returns only copy jobs that were created after the specified date.</p>",
         "ListCopyJobsInput$ByCompleteBefore": "<p>Returns only copy jobs completed before a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
         "ListCopyJobsInput$ByCompleteAfter": "<p>Returns only copy jobs completed after a date expressed in Unix format and Coordinated Universal Time (UTC).</p>",
+        "ListIndexedRecoveryPointsInput$CreatedBefore": "<p>Returns only indexed recovery points that were created before the specified date.</p>",
+        "ListIndexedRecoveryPointsInput$CreatedAfter": "<p>Returns only indexed recovery points that were created after the specified date.</p>",
         "ListRecoveryPointsByBackupVaultInput$ByCreatedBefore": "<p>Returns only recovery points that were created before the specified timestamp.</p>",
         "ListRecoveryPointsByBackupVaultInput$ByCreatedAfter": "<p>Returns only recovery points that were created after the specified timestamp.</p>",
         "ListReportJobsInput$ByCreationBefore": "<p>Returns only report jobs that were created before the date and time specified in Unix format and Coordinated Universal Time (UTC). For example, the value 1516925490 represents Friday, January 26, 2018 12:11:30 AM.</p>",

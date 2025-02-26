@@ -1,0 +1,310 @@
+{
+  "version": "1.0",
+  "examples": {
+    "BatchGetInvoiceProfile": [
+      {
+        "input": {
+          "AccountIds": [
+            "111111111111"
+          ]
+        },
+        "output": {
+          "Profiles": [
+            {
+              "AccountId": "111111111111",
+              "Issuer": "Test",
+              "ReceiverAddress": {
+                "AddressLine1": "Test",
+                "City": "Test",
+                "CountryCode": "LU",
+                "PostalCode": "Test",
+                "StateOrRegion": "Test"
+              },
+              "ReceiverEmail": "test@amazon.com",
+              "ReceiverName": "TestAccount"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "BatchGetInvoiceProfile"
+      }
+    ],
+    "CreateInvoiceUnit": [
+      {
+        "input": {
+          "Description": "Example Invoice Unit Description",
+          "InvoiceReceiver": "111111111111",
+          "Name": "Example Invoice Unit",
+          "ResourceTags": [
+            {
+              "Key": "TagKey",
+              "Value": "TagValue"
+            }
+          ],
+          "Rule": {
+            "LinkedAccounts": [
+              "222222222222"
+            ]
+          },
+          "TaxInheritanceDisabled": false
+        },
+        "output": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "id": "example-1",
+        "title": "CreateInvoiceUnit"
+      }
+    ],
+    "DeleteInvoiceUnit": [
+      {
+        "input": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "output": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "id": "example-1",
+        "title": "DeleteInvoiceUnit"
+      }
+    ],
+    "GetInvoiceUnit": [
+      {
+        "input": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "output": {
+          "Description": "Description changed on 1733788800",
+          "InvoiceReceiver": "111111111111",
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+          "LastModified": 1733788800,
+          "Name": "Example Invoice Unit A",
+          "Rule": {
+            "LinkedAccounts": [
+              "222222222222"
+            ]
+          },
+          "TaxInheritanceDisabled": false
+        },
+        "id": "example-1",
+        "title": "GetInvoiceUnit as of current time"
+      },
+      {
+        "input": {
+          "AsOf": 1733097600,
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/87654321"
+        },
+        "output": {
+          "Description": "Description changed on 1733011200",
+          "InvoiceReceiver": "333333333333",
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/87654321",
+          "LastModified": 1733011200,
+          "Name": "Example Invoice Unit B",
+          "Rule": {
+            "LinkedAccounts": [
+              "333333333333"
+            ]
+          },
+          "TaxInheritanceDisabled": false
+        },
+        "id": "example-2",
+        "title": "GetInvoiceUnit as of specified time"
+      }
+    ],
+    "ListInvoiceUnits": [
+      {
+        "input": {
+        },
+        "output": {
+          "InvoiceUnits": [
+            {
+              "Description": "Description changed on 1733788800",
+              "InvoiceReceiver": "111111111111",
+              "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+              "LastModified": 1733788800,
+              "Name": "Example Invoice Unit A",
+              "Rule": {
+                "LinkedAccounts": [
+                  "222222222222"
+                ]
+              },
+              "TaxInheritanceDisabled": false
+            },
+            {
+              "Description": "Description changed on 1733788800",
+              "InvoiceReceiver": "333333333333",
+              "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/87654321",
+              "LastModified": 1733788800,
+              "Name": "Example Invoice Unit B",
+              "Rule": {
+                "LinkedAccounts": [
+                  "333333333333"
+                ]
+              },
+              "TaxInheritanceDisabled": true
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListInvoiceUnits without filters as of current time"
+      },
+      {
+        "input": {
+          "AsOf": 1733097600,
+          "Filters": {
+            "InvoiceReceivers": [
+              "333333333333"
+            ]
+          }
+        },
+        "output": {
+          "InvoiceUnits": [
+            {
+              "Description": "Description changed on 1733011200",
+              "InvoiceReceiver": "333333333333",
+              "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/87654321",
+              "LastModified": 1733011200,
+              "Name": "Example Invoice Unit B",
+              "Rule": {
+                "LinkedAccounts": [
+                  "333333333333"
+                ]
+              },
+              "TaxInheritanceDisabled": false
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "ListInvoiceUnits with filters as of specified time"
+      },
+      {
+        "input": {
+          "MaxResults": 1
+        },
+        "output": {
+          "InvoiceUnits": [
+            {
+              "Description": "Description changed on 1733788800",
+              "InvoiceReceiver": "111111111111",
+              "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+              "LastModified": 1733788800,
+              "Name": "Example Invoice Unit A",
+              "Rule": {
+                "LinkedAccounts": [
+                  "222222222222"
+                ]
+              },
+              "TaxInheritanceDisabled": false
+            }
+          ],
+          "NextToken": "nextTokenExample"
+        },
+        "id": "example-3",
+        "title": "ListInvoiceUnits with pagination - first page"
+      },
+      {
+        "input": {
+          "MaxResults": 1,
+          "NextToken": "nextTokenExample"
+        },
+        "output": {
+          "InvoiceUnits": [
+            {
+              "Description": "Description changed on 1733788800",
+              "InvoiceReceiver": "333333333333",
+              "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/87654321",
+              "LastModified": 1733788800,
+              "Name": "Example Invoice Unit B",
+              "Rule": {
+                "LinkedAccounts": [
+                  "333333333333"
+                ]
+              },
+              "TaxInheritanceDisabled": true
+            }
+          ]
+        },
+        "id": "example-4",
+        "title": "ListInvoiceUnits with pagination - second page"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "output": {
+          "ResourceTags": [
+            {
+              "Key": "TagKey",
+              "Value": "TagValue"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListTagsForResource"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+          "ResourceTags": [
+            {
+              "Key": "TagKey",
+              "Value": "TagValue"
+            }
+          ]
+        },
+        "output": {
+        },
+        "id": "example-1",
+        "title": "TagResource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "ResourceArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+          "ResourceTagKeys": [
+            "TagKey"
+          ]
+        },
+        "output": {
+        },
+        "id": "example-1",
+        "title": "UntagResource"
+      }
+    ],
+    "UpdateInvoiceUnit": [
+      {
+        "input": {
+          "Description": "Updated IU description",
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678",
+          "Rule": {
+            "LinkedAccounts": [
+              "111111111111",
+              "222222222222"
+            ]
+          },
+          "TaxInheritanceDisabled": false
+        },
+        "output": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "id": "example-1",
+        "title": "UpdateInvoiceUnit with all updatable fields"
+      },
+      {
+        "input": {
+          "Description": "Updated IU description. All other fields remain unchanged",
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "output": {
+          "InvoiceUnitArn": "arn:aws:invoicing::000000000000:invoice-unit/12345678"
+        },
+        "id": "example-2",
+        "title": "UpdateInvoiceUnit with specific fields"
+      }
+    ]
+  }
+}

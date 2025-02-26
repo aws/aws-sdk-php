@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"transcribe",
     "targetPrefix":"Transcribe",
-    "uid":"transcribe-2017-10-26"
+    "uid":"transcribe-2017-10-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateCallAnalyticsCategory":{
@@ -703,7 +704,8 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
         "Settings":{"shape":"CallAnalyticsJobSettings"},
-        "ChannelDefinitions":{"shape":"ChannelDefinitions"}
+        "ChannelDefinitions":{"shape":"ChannelDefinitions"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CallAnalyticsJobDetails":{
@@ -789,6 +791,7 @@
         "Rules":{"shape":"RuleList"},
         "CreateTime":{"shape":"DateTime"},
         "LastUpdateTime":{"shape":"DateTime"},
+        "Tags":{"shape":"TagList"},
         "InputType":{"shape":"InputType"}
       }
     },
@@ -813,6 +816,12 @@
       "type":"integer",
       "max":1,
       "min":0
+    },
+    "ClinicalNoteGenerationSettings":{
+      "type":"structure",
+      "members":{
+        "NoteTemplate":{"shape":"MedicalScribeNoteTemplate"}
+      }
     },
     "ConflictException":{
       "type":"structure",
@@ -842,6 +851,7 @@
       "members":{
         "CategoryName":{"shape":"CategoryName"},
         "Rules":{"shape":"RuleList"},
+        "Tags":{"shape":"TagList"},
         "InputType":{"shape":"InputType"}
       }
     },
@@ -1658,6 +1668,13 @@
       "type":"string",
       "enum":["en-US"]
     },
+    "MedicalScribeNoteTemplate":{
+      "type":"string",
+      "enum":[
+        "HISTORY_AND_PHYSICAL",
+        "GIRPP"
+      ]
+    },
     "MedicalScribeOutput":{
       "type":"structure",
       "required":[
@@ -1684,7 +1701,8 @@
         "ChannelIdentification":{"shape":"Boolean"},
         "VocabularyName":{"shape":"VocabularyName"},
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
-        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"}
+        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
+        "ClinicalNoteGenerationSettings":{"shape":"ClinicalNoteGenerationSettings"}
       }
     },
     "MedicalTranscript":{
@@ -1951,6 +1969,7 @@
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "Settings":{"shape":"CallAnalyticsJobSettings"},
+        "Tags":{"shape":"TagList"},
         "ChannelDefinitions":{"shape":"ChannelDefinitions"}
       }
     },

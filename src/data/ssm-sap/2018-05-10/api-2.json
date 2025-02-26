@@ -525,6 +525,25 @@
       "type":"list",
       "member":{"shape":"ComponentId"}
     },
+    "ComponentInfo":{
+      "type":"structure",
+      "required":[
+        "ComponentType",
+        "Sid",
+        "Ec2InstanceId"
+      ],
+      "members":{
+        "ComponentType":{"shape":"ComponentType"},
+        "Sid":{"shape":"SID"},
+        "Ec2InstanceId":{"shape":"InstanceId"}
+      }
+    },
+    "ComponentInfoList":{
+      "type":"list",
+      "member":{"shape":"ComponentInfo"},
+      "max":5,
+      "min":0
+    },
     "ComponentStatus":{
       "type":"string",
       "enum":[
@@ -1085,7 +1104,8 @@
         "Sid":{"shape":"SID"},
         "Tags":{"shape":"TagMap"},
         "Credentials":{"shape":"ApplicationCredentialList"},
-        "DatabaseArn":{"shape":"SsmSapArn"}
+        "DatabaseArn":{"shape":"SsmSapArn"},
+        "ComponentsInfo":{"shape":"ComponentInfoList"}
       }
     },
     "RegisterApplicationOutput":{

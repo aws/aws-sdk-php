@@ -147,6 +147,11 @@
       "refs": {
       }
     },
+    "CloudHsmResourceLimitExceededException": {
+      "base": "<p>The request was rejected because it exceeds an CloudHSM limit.</p>",
+      "refs": {
+      }
+    },
     "CloudHsmResourceNotFoundException": {
       "base": "<p>The request was rejected because it refers to a resource that cannot be found.</p>",
       "refs": {
@@ -379,7 +384,9 @@
       "refs": {
         "Backup$HsmType": "<p>The HSM type used to create the backup.</p>",
         "Cluster$HsmType": "<p>The type of HSM that the cluster contains.</p>",
-        "CreateClusterRequest$HsmType": "<p>The type of HSM to use in the cluster. The allowed values are <code>hsm1.medium</code> and <code>hsm2m.medium</code>.</p>"
+        "CreateClusterRequest$HsmType": "<p>The type of HSM to use in the cluster. The allowed values are <code>hsm1.medium</code> and <code>hsm2m.medium</code>.</p>",
+        "Hsm$HsmType": "<p>The type of HSM.</p>",
+        "ModifyClusterRequest$HsmType": "<p>The desired HSM type of the cluster.</p>"
       }
     },
     "Hsms": {
@@ -404,6 +411,12 @@
         "CreateHsmRequest$IpAddress": "<p>The HSM's IP address. If you specify an IP address, use an available address from the subnet that maps to the Availability Zone where you are creating the HSM. If you don't specify an IP address, one is chosen for you from that subnet.</p>",
         "DeleteHsmRequest$EniIp": "<p>The IP address of the elastic network interface (ENI) of the HSM that you are deleting.</p>",
         "Hsm$EniIp": "<p>The IP address of the HSM's elastic network interface (ENI).</p>"
+      }
+    },
+    "IpV6Address": {
+      "base": null,
+      "refs": {
+        "Hsm$EniIpV6": "<p>The IPv6 address (if any) of the HSM's elastic network interface (ENI).</p>"
       }
     },
     "ListTagsRequest": {
@@ -440,6 +453,13 @@
     "ModifyClusterResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "NetworkType": {
+      "base": null,
+      "refs": {
+        "Cluster$NetworkType": "<p>The cluster's NetworkType can be IPv4 (the default) or DUALSTACK. The IPv4 NetworkType restricts communication between your application and the hardware security modules (HSMs) to the IPv4 protocol only. The DUALSTACK NetworkType enables communication over both IPv4 and IPv6 protocols. To use DUALSTACK, configure your virtual private cloud (VPC) and subnets to support both IPv4 and IPv6. This configuration involves adding IPv6 Classless Inter-Domain Routing (CIDR) blocks to the existing IPv4 CIDR blocks in your subnets. The NetworkType you choose affects the network addressing options for your cluster. DUALSTACK provides more flexibility by supporting both IPv4 and IPv6 communication.</p>",
+        "CreateClusterRequest$NetworkType": "<p>The NetworkType to create a cluster with. The allowed values are <code>IPV4</code> and <code>DUALSTACK</code>. </p>"
       }
     },
     "NextToken": {
@@ -597,6 +617,7 @@
         "Backup$CopyTimestamp": "<p>The date and time when the backup was copied from a source backup.</p>",
         "Backup$DeleteTimestamp": "<p>The date and time when the backup will be permanently deleted.</p>",
         "Cluster$CreateTimestamp": "<p>The date and time when the cluster was created.</p>",
+        "Cluster$HsmTypeRollbackExpiration": "<p>The timestamp until when the cluster can be rolled back to its original HSM type.</p>",
         "DestinationBackup$CreateTimestamp": "<p>The date and time when both the source backup was created.</p>"
       }
     },
@@ -622,6 +643,7 @@
         "CloudHsmAccessDeniedException$Message": null,
         "CloudHsmInternalFailureException$Message": null,
         "CloudHsmInvalidRequestException$Message": null,
+        "CloudHsmResourceLimitExceededException$Message": null,
         "CloudHsmResourceNotFoundException$Message": null,
         "CloudHsmServiceException$Message": null,
         "CloudHsmTagException$Message": null

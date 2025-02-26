@@ -144,6 +144,42 @@
         "ListResourcesOutput$NextToken": "<p>If the request doesn't return all of the remaining results, <code>NextToken</code> is set to a token. To retrieve the next set of results, call <code>ListResources</code> again and assign that token to the request object's <code>NextToken</code> parameter. If the request returns all results, <code>NextToken</code> is set to null.</p>"
       }
     },
+    "HookFailureMode": {
+      "base": null,
+      "refs": {
+        "HookProgressEvent$FailureMode": "<p>The failure mode of the invocation. The following are the potential statuses:</p> <ul> <li> <p> <code>FAIL</code>: This will fail the Hook invocation and the request associated with it.</p> </li> <li> <p> <code>WARN</code>: This will fail the Hook invocation, but not the request associated with it.</p> </li> </ul>"
+      }
+    },
+    "HookInvocationPoint": {
+      "base": null,
+      "refs": {
+        "HookProgressEvent$InvocationPoint": "<p>States whether the Hook is invoked before or after resource provisioning.</p>"
+      }
+    },
+    "HookProgressEvent": {
+      "base": "<p>Represents the current status of applicable Hooks for a resource operation request. It contains list of Hook invocation information for the resource specified in the request since the same target can invoke multiple Hooks. For more information, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-manage-requests.html\">Managing resource operation requests with Amazon Web Services Cloud Control API </a>.</p>",
+      "refs": {
+        "HooksProgressEvent$member": null
+      }
+    },
+    "HookStatus": {
+      "base": null,
+      "refs": {
+        "HookProgressEvent$HookStatus": "<p>The status of the Hook invocation. The following are potential statuses:</p> <ul> <li> <p> <code>HOOK_PENDING</code>: The Hook was added to the invocation plan, but not yet invoked.</p> </li> <li> <p> <code>HOOK_IN_PROGRESS</code>: The Hook was invoked, but hasn't completed.</p> </li> <li> <p> <code>HOOK_COMPLETE_SUCCEEDED</code>: The Hook invocation is complete with a successful result.</p> </li> <li> <p> <code>HOOK_COMPLETE_FAILED</code>: The Hook invocation is complete with a failed result.</p> </li> <li> <p> <code>HOOK_FAILED</code>: The Hook invocation didn't complete successfully.</p> </li> </ul>"
+      }
+    },
+    "HookTypeArn": {
+      "base": null,
+      "refs": {
+        "HookProgressEvent$HookTypeArn": "<p>The ARN of the Hook being invoked.</p>"
+      }
+    },
+    "HooksProgressEvent": {
+      "base": null,
+      "refs": {
+        "GetResourceRequestStatusOutput$HooksProgressEvent": "<p>Lists Hook invocations for the specified target in the request. This is a list since the same target can invoke multiple Hooks.</p>"
+      }
+    },
     "Identifier": {
       "base": null,
       "refs": {
@@ -240,7 +276,7 @@
       }
     },
     "PatchDocument": {
-      "base": null,
+      "base": "<p>Allow up to 256K length of Resource properties</p>",
       "refs": {
         "UpdateResourceInput$PatchDocument": "<p>A JavaScript Object Notation (JSON) document listing the patch operations that represent the updates to apply to the current resource properties. For details, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-update.html#resource-operations-update-patch\">Composing the patch document</a> in the <i>Amazon Web Services Cloud Control API User Guide</i>.</p>"
       }
@@ -262,7 +298,7 @@
       }
     },
     "Properties": {
-      "base": null,
+      "base": "<p>Allow up to 256K length of Resource properties</p>",
       "refs": {
         "CreateResourceInput$DesiredState": "<p>Structured data format representing the desired state of the resource, consisting of that resource's properties and their desired values.</p> <note> <p>Cloud Control API currently supports JSON as a structured data format.</p> </note> <p>Specify the desired state as one of the following:</p> <ul> <li> <p>A JSON blob</p> </li> <li> <p>A local path containing the desired state in JSON data format</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-create.html#resource-operations-create-desiredstate\">Composing the desired state of the resource</a> in the <i>Amazon Web Services Cloud Control API User Guide</i>.</p> <p>For more information about the properties of a specific resource, refer to the related topic for the resource in the <a href=\"https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html\">Resource and property types reference</a> in the <i>CloudFormation Users Guide</i>.</p>",
         "ListResourcesInput$ResourceModel": "<p>The resource model to use to select the resources to return.</p>",
@@ -275,7 +311,8 @@
       "refs": {
         "CancelResourceRequestInput$RequestToken": "<p>The <code>RequestToken</code> of the <code>ProgressEvent</code> object returned by the resource operation request.</p>",
         "GetResourceRequestStatusInput$RequestToken": "<p>A unique token used to track the progress of the resource operation request.</p> <p>Request tokens are included in the <code>ProgressEvent</code> type returned by a resource operation request.</p>",
-        "ProgressEvent$RequestToken": "<p>The unique token representing this resource operation request.</p> <p>Use the <code>RequestToken</code> with <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_GetResourceRequestStatus.html\">GetResourceRequestStatus</a> to return the current status of a resource operation request.</p>"
+        "ProgressEvent$RequestToken": "<p>The unique token representing this resource operation request.</p> <p>Use the <code>RequestToken</code> with <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_GetResourceRequestStatus.html\">GetResourceRequestStatus</a> to return the current status of a resource operation request.</p>",
+        "ProgressEvent$HooksRequestToken": "<p>The unique token representing the Hooks operation for the request.</p>"
       }
     },
     "RequestTokenNotFoundException": {
@@ -341,6 +378,7 @@
     "StatusMessage": {
       "base": null,
       "refs": {
+        "HookProgressEvent$HookStatusMessage": "<p>The message explaining the current Hook status.</p>",
         "ProgressEvent$StatusMessage": "<p>Any message explaining the current status.</p>"
       }
     },
@@ -352,6 +390,7 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "HookProgressEvent$HookEventTime": "<p>The time that the Hook invocation request initiated.</p>",
         "ProgressEvent$EventTime": "<p>When the resource operation request was initiated.</p>",
         "ProgressEvent$RetryAfter": "<p>When to next request the status of this resource operation request.</p>"
       }
@@ -363,6 +402,7 @@
         "DeleteResourceInput$TypeName": "<p>The name of the resource type.</p>",
         "GetResourceInput$TypeName": "<p>The name of the resource type.</p>",
         "GetResourceOutput$TypeName": "<p>The name of the resource type.</p>",
+        "HookProgressEvent$HookTypeName": "<p>The type name of the Hook being invoked.</p>",
         "ListResourcesInput$TypeName": "<p>The name of the resource type.</p>",
         "ListResourcesOutput$TypeName": "<p>The name of the resource type.</p>",
         "ProgressEvent$TypeName": "<p>The name of the resource type used in the operation.</p>",
@@ -380,6 +420,7 @@
         "CreateResourceInput$TypeVersionId": "<p>For private resource types, the type version to use in this resource operation. If you do not specify a resource version, CloudFormation uses the default version.</p>",
         "DeleteResourceInput$TypeVersionId": "<p>For private resource types, the type version to use in this resource operation. If you do not specify a resource version, CloudFormation uses the default version.</p>",
         "GetResourceInput$TypeVersionId": "<p>For private resource types, the type version to use in this resource operation. If you do not specify a resource version, CloudFormation uses the default version.</p>",
+        "HookProgressEvent$HookTypeVersionId": "<p>The type version of the Hook being invoked.</p>",
         "ListResourcesInput$TypeVersionId": "<p>For private resource types, the type version to use in this resource operation. If you do not specify a resource version, CloudFormation uses the default version.</p>",
         "UpdateResourceInput$TypeVersionId": "<p>For private resource types, the type version to use in this resource operation. If you do not specify a resource version, CloudFormation uses the default version.</p>"
       }

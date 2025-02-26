@@ -172,6 +172,17 @@
         "DETECTIVE"
       ]
     },
+    "ControlParameter":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"String"}
+      }
+    },
+    "ControlParameters":{
+      "type":"list",
+      "member":{"shape":"ControlParameter"}
+    },
     "ControlScope":{
       "type":"string",
       "enum":[
@@ -258,8 +269,23 @@
         "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Behavior":{"shape":"ControlBehavior"},
-        "RegionConfiguration":{"shape":"RegionConfiguration"}
+        "RegionConfiguration":{"shape":"RegionConfiguration"},
+        "Implementation":{"shape":"ImplementationDetails"},
+        "Parameters":{"shape":"ControlParameters"}
       }
+    },
+    "ImplementationDetails":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ImplementationType"}
+      }
+    },
+    "ImplementationType":{
+      "type":"string",
+      "max":2048,
+      "min":7,
+      "pattern":"[A-Za-z0-9]+(::[A-Za-z0-9_]+){2,3}"
     },
     "InternalServerException":{
       "type":"structure",

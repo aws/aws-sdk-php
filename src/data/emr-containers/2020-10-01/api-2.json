@@ -336,6 +336,13 @@
       "min":44,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):acm:.+:(\\d{12}):certificate/.+$"
     },
+    "AllowAWSToRetainLogs":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "AuthorizationConfiguration":{
       "type":"structure",
       "members":{
@@ -1286,6 +1293,13 @@
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
     },
+    "ManagedLogs":{
+      "type":"structure",
+      "members":{
+        "allowAWSToRetainLogs":{"shape":"AllowAWSToRetainLogs"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "MaxFilesToKeep":{
       "type":"integer",
       "max":50,
@@ -1294,6 +1308,7 @@
     "MonitoringConfiguration":{
       "type":"structure",
       "members":{
+        "managedLogs":{"shape":"ManagedLogs"},
         "persistentAppUI":{"shape":"PersistentAppUI"},
         "cloudWatchMonitoringConfiguration":{"shape":"CloudWatchMonitoringConfiguration"},
         "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"},

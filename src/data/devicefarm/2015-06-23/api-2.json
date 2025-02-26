@@ -1390,7 +1390,8 @@
       "type":"structure",
       "members":{
         "billingMethod":{"shape":"BillingMethod"},
-        "vpceConfigurationArns":{"shape":"AmazonResourceNames"}
+        "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
+        "deviceProxy":{"shape":"DeviceProxy"}
       }
     },
     "CreateRemoteAccessSessionRequest":{
@@ -1785,6 +1786,29 @@
     "DevicePools":{
       "type":"list",
       "member":{"shape":"DevicePool"}
+    },
+    "DeviceProxy":{
+      "type":"structure",
+      "required":[
+        "host",
+        "port"
+      ],
+      "members":{
+        "host":{"shape":"DeviceProxyHost"},
+        "port":{"shape":"DeviceProxyPort"}
+      }
+    },
+    "DeviceProxyHost":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^([a-zA-Z0-9])([a-zA-Z0-9-.]+)([a-zA-Z0-9])$"
+    },
+    "DeviceProxyPort":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
     },
     "DeviceSelectionConfiguration":{
       "type":"structure",
@@ -2877,7 +2901,8 @@
         "deviceUdid":{"shape":"String"},
         "interactionMode":{"shape":"InteractionMode"},
         "skipAppResign":{"shape":"SkipAppResign"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "deviceProxy":{"shape":"DeviceProxy"}
       }
     },
     "RemoteAccessSessions":{
@@ -2970,6 +2995,7 @@
         "billingMethod":{"shape":"BillingMethod"},
         "deviceMinutes":{"shape":"DeviceMinutes"},
         "networkProfile":{"shape":"NetworkProfile"},
+        "deviceProxy":{"shape":"DeviceProxy"},
         "parsingResultUrl":{"shape":"String"},
         "resultCode":{"shape":"ExecutionResultCode"},
         "seed":{"shape":"Integer"},
@@ -3034,6 +3060,7 @@
         "locale":{"shape":"String"},
         "location":{"shape":"Location"},
         "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
+        "deviceProxy":{"shape":"DeviceProxy"},
         "customerArtifactPaths":{"shape":"CustomerArtifactPaths"},
         "radios":{"shape":"Radios"},
         "auxiliaryApps":{"shape":"AmazonResourceNames"},

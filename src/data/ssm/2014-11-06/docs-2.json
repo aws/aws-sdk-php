@@ -1,20 +1,20 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Web Services Systems Manager is the operations hub for your Amazon Web Services applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and secure operations at scale.</p> <p>This reference is intended to be used with the <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon Web Services Systems Manager User Guide</a>. To get started, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up.html\">Setting up Amazon Web Services Systems Manager</a>.</p> <p class=\"title\"> <b>Related resources</b> </p> <ul> <li> <p>For information about each of the capabilities that comprise Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html#systems-manager-capabilities\">Systems Manager capabilities</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </li> <li> <p>For details about predefined runbooks for Automation, a capability of Amazon Web Services Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-runbook-reference.html\">Systems Manager Automation runbook reference</a> </i>.</p> </li> <li> <p>For information about AppConfig, a capability of Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/\">AppConfig User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/\">AppConfig API Reference</a> </i>.</p> </li> <li> <p>For information about Incident Manager, a capability of Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/userguide/\">Systems Manager Incident Manager User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/APIReference/\">Systems Manager Incident Manager API Reference</a> </i>.</p> </li> </ul>",
+  "service": "<p>Amazon Web Services Systems Manager is the operations hub for your Amazon Web Services applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and secure operations at scale.</p> <p>This reference is intended to be used with the <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon Web Services Systems Manager User Guide</a>. To get started, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up.html\">Setting up Amazon Web Services Systems Manager</a>.</p> <p class=\"title\"> <b>Related resources</b> </p> <ul> <li> <p>For information about each of the tools that comprise Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-tools.html\">Using Systems Manager tools</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </li> <li> <p>For details about predefined runbooks for Automation, a tool in Amazon Web Services Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-runbook-reference.html\">Systems Manager Automation runbook reference</a> </i>.</p> </li> <li> <p>For information about AppConfig, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/\">AppConfig User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/\">AppConfig API Reference</a> </i>.</p> </li> <li> <p>For information about Incident Manager, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/userguide/\">Systems Manager Incident Manager User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/APIReference/\">Systems Manager Incident Manager API Reference</a> </i>.</p> </li> </ul>",
   "operations": {
     "AddTagsToResource": "<p>Adds or overwrites one or more tags for the specified resource. <i>Tags</i> are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:</p> <ul> <li> <p> <code>Key=Owner,Value=DbAdmin</code> </p> </li> <li> <p> <code>Key=Owner,Value=SysAdmin</code> </p> </li> <li> <p> <code>Key=Owner,Value=Dev</code> </p> </li> <li> <p> <code>Key=Stack,Value=Production</code> </p> </li> <li> <p> <code>Key=Stack,Value=Pre-Production</code> </p> </li> <li> <p> <code>Key=Stack,Value=Test</code> </p> </li> </ul> <p>Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.</p> <p>We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.</p> <p>For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">Tag your Amazon EC2 resources</a> in the <i>Amazon EC2 User Guide</i>.</p>",
-    "AssociateOpsItemRelatedItem": "<p>Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are capabilities of Amazon Web Services Systems Manager.</p>",
+    "AssociateOpsItemRelatedItem": "<p>Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are tools in Amazon Web Services Systems Manager.</p>",
     "CancelCommand": "<p>Attempts to cancel the command specified by the Command ID. There is no guarantee that the command will be terminated and the underlying process stopped.</p>",
     "CancelMaintenanceWindowExecution": "<p>Stops a maintenance window execution that is already in progress and cancels any tasks in the window that haven't already starting running. Tasks already in progress will continue to completion.</p>",
-    "CreateActivation": "<p>Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager capabilities. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-hybrid-multicloud.html\">Using Amazon Web Services Systems Manager in hybrid and multicloud environments</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p> <note> <p>Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called <i>managed nodes</i>.</p> </note>",
-    "CreateAssociation": "<p>A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a capability of Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service. </p>",
+    "CreateActivation": "<p>Generates an activation code and activation ID you can use to register your on-premises servers, edge devices, or virtual machine (VM) with Amazon Web Services Systems Manager. Registering these machines with Systems Manager makes it possible to manage them using Systems Manager tools. You use the activation code and ID when installing SSM Agent on machines in your hybrid environment. For more information about requirements for managing on-premises machines using Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-hybrid-multicloud.html\">Using Amazon Web Services Systems Manager in hybrid and multicloud environments</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p> <note> <p>Amazon Elastic Compute Cloud (Amazon EC2) instances, edge devices, and on-premises servers and VMs that are configured for Systems Manager are all called <i>managed nodes</i>.</p> </note>",
+    "CreateAssociation": "<p>A State Manager association defines the state that you want to maintain on your managed nodes. For example, an association can specify that anti-virus software must be installed and running on your managed nodes, or that certain ports must be closed. For static targets, the association specifies a schedule for when the configuration is reapplied. For dynamic targets, such as an Amazon Web Services resource group or an Amazon Web Services autoscaling group, State Manager, a tool in Amazon Web Services Systems Manager applies the configuration when new managed nodes are added to the group. The association also specifies actions to take when applying the configuration. For example, an association for anti-virus software might run once a day. If the software isn't installed, then State Manager installs it. If the software is installed, but the service isn't running, then the association might instruct State Manager to start the service. </p>",
     "CreateAssociationBatch": "<p>Associates the specified Amazon Web Services Systems Manager document (SSM document) with the specified managed nodes or targets.</p> <p>When you associate a document with one or more managed nodes using IDs or tags, Amazon Web Services Systems Manager Agent (SSM Agent) running on the managed node processes the document and configures the node as specified.</p> <p>If you associate a document with a managed node that already has an associated document, the system returns the AssociationAlreadyExists exception.</p>",
     "CreateDocument": "<p>Creates a Amazon Web Services Systems Manager (SSM document). An SSM document defines the actions that Systems Manager performs on your managed nodes. For more information about SSM documents, including information about supported schemas, features, and syntax, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/documents.html\">Amazon Web Services Systems Manager Documents</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
     "CreateMaintenanceWindow": "<p>Creates a new maintenance window.</p> <note> <p>The value you specify for <code>Duration</code> determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for <code>Cutoff</code>. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for <code>Cutoff</code> is one hour, no maintenance window tasks can start after 5 PM.</p> </note>",
     "CreateOpsItem": "<p>Creates a new OpsItem. You must have permission in Identity and Access Management (IAM) to create a new OpsItem. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-setup.html\">Set up OpsCenter</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">Amazon Web Services Systems Manager OpsCenter</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p>",
     "CreateOpsMetadata": "<p>If you create a new application in Application Manager, Amazon Web Services Systems Manager calls this API operation to specify information about the new application, including the application type.</p>",
     "CreatePatchBaseline": "<p>Creates a patch baseline.</p> <note> <p>For information about valid key-value pairs in <code>PatchFilters</code> for each supported operating system type, see <a>PatchFilter</a>.</p> </note>",
-    "CreateResourceDataSync": "<p>A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: <code>SyncToDestination</code> and <code>SyncFromSource</code>.</p> <p>You can configure Systems Manager Inventory to use the <code>SyncToDestination</code> type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-create-resource-data-sync.html\">Creatinga a resource data sync for Inventory</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>You can configure Systems Manager Explorer to use the <code>SyncFromSource</code> type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or <code>EntireOrganization</code> by using Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html\">Setting up Systems Manager Explorer to display data from multiple accounts and Regions</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the <a>ListResourceDataSync</a>.</p> <note> <p>By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. </p> </note>",
+    "CreateResourceDataSync": "<p>A resource data sync helps you view data from multiple sources in a single location. Amazon Web Services Systems Manager offers two types of resource data sync: <code>SyncToDestination</code> and <code>SyncFromSource</code>.</p> <p>You can configure Systems Manager Inventory to use the <code>SyncToDestination</code> type to synchronize Inventory data from multiple Amazon Web Services Regions to a single Amazon Simple Storage Service (Amazon S3) bucket. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/inventory-create-resource-data-sync.html\">Creating a resource data sync for Inventory</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>You can configure Systems Manager Explorer to use the <code>SyncFromSource</code> type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple Amazon Web Services Regions to a single Amazon S3 bucket. This type can synchronize OpsItems and OpsData from multiple Amazon Web Services accounts and Amazon Web Services Regions or <code>EntireOrganization</code> by using Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html\">Setting up Systems Manager Explorer to display data from multiple accounts and Regions</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the <a>ListResourceDataSync</a>.</p> <note> <p>By default, data isn't encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. </p> </note>",
     "DeleteActivation": "<p>Deletes an activation. You aren't required to delete an activation. If you delete an activation, you can no longer use it to register additional managed nodes. Deleting an activation doesn't de-register managed nodes. You must manually de-register managed nodes.</p>",
     "DeleteAssociation": "<p>Disassociates the specified Amazon Web Services Systems Manager document (SSM document) from the specified managed node. If you created the association by using the <code>Targets</code> parameter, then you must delete the association by using the association ID.</p> <p>When you disassociate a document from a managed node, it doesn't change the configuration of the node. To change the configuration state of a managed node after you disassociate a document, you must create a new document with the desired configuration and associate it with the node.</p>",
     "DeleteDocument": "<p>Deletes the Amazon Web Services Systems Manager document (SSM document) and all managed node associations to the document.</p> <p>Before you delete the document, we recommend that you use <a>DeleteAssociation</a> to disassociate all managed nodes that are associated with the document.</p>",
@@ -64,14 +64,15 @@
     "DescribePatchGroups": "<p>Lists all patch groups that have been registered with patch baselines.</p>",
     "DescribePatchProperties": "<p>Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as <a>CreatePatchBaseline</a>, <a>UpdatePatchBaseline</a>, <a>DescribeAvailablePatches</a>, and <a>DescribePatchBaselines</a>.</p> <p>The following section lists the properties that can be used in filters for each major operating system type:</p> <dl> <dt>AMAZON_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>AMAZON_LINUX_2</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>AMAZON_LINUX_2023</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>CENTOS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>DEBIAN</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRIORITY</code> </p> </dd> <dt>MACOS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> </p> </dd> <dt>ORACLE_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>REDHAT_ENTERPRISE_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>SUSE</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>UBUNTU</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRIORITY</code> </p> </dd> <dt>WINDOWS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRODUCT_FAMILY</code> | <code>CLASSIFICATION</code> | <code>MSRC_SEVERITY</code> </p> </dd> </dl>",
     "DescribeSessions": "<p>Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.</p>",
-    "DisassociateOpsItemRelatedItem": "<p>Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a capability of Amazon Web Services Systems Manager.</p>",
+    "DisassociateOpsItemRelatedItem": "<p>Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a tool in Amazon Web Services Systems Manager.</p>",
     "GetAutomationExecution": "<p>Get detailed information about a particular Automation execution.</p>",
-    "GetCalendarState": "<p>Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, <code>GetCalendarState</code> returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, <code>GetCalendarState</code> uses the current time. Change Calendar entries have two possible states: <code>OPEN</code> or <code>CLOSED</code>.</p> <p>If you specify more than one calendar in a request, the command returns the status of <code>OPEN</code> only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is <code>CLOSED</code>.</p> <p>For more information about Change Calendar, a capability of Amazon Web Services Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html\">Amazon Web Services Systems Manager Change Calendar</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
+    "GetCalendarState": "<p>Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, <code>GetCalendarState</code> returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, <code>GetCalendarState</code> uses the current time. Change Calendar entries have two possible states: <code>OPEN</code> or <code>CLOSED</code>.</p> <p>If you specify more than one calendar in a request, the command returns the status of <code>OPEN</code> only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is <code>CLOSED</code>.</p> <p>For more information about Change Calendar, a tool in Amazon Web Services Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html\">Amazon Web Services Systems Manager Change Calendar</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
     "GetCommandInvocation": "<p>Returns detailed information about command execution for an invocation or plugin. The Run Command API follows an eventual consistency model, due to the distributed nature of the system supporting the API. This means that the result of an API command you run that affects your resources might not be immediately visible to all subsequent commands you run. You should keep this in mind when you carry out an API command that immediately follows a previous API command.</p> <p> <code>GetCommandInvocation</code> only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use <a>ListCommandInvocations</a>. To get the command execution status across managed nodes, use <a>ListCommands</a>.</p>",
     "GetConnectionStatus": "<p>Retrieves the Session Manager connection status for a managed node to determine whether it is running and ready to receive Session Manager connections.</p>",
     "GetDefaultPatchBaseline": "<p>Retrieves the default patch baseline. Amazon Web Services Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.</p> <p>If you don't specify an operating system value, the default patch baseline for Windows is returned.</p>",
-    "GetDeployablePatchSnapshotForInstance": "<p>Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the <code>AWS-RunPatchBaseline</code> Systems Manager document (SSM document).</p> <note> <p>If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a capability of Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the <code>AWS-RunShellScript</code> document or the <code>AWS-RunPowerShellScript</code> document.</p> </note>",
+    "GetDeployablePatchSnapshotForInstance": "<p>Retrieves the current snapshot for the patch baseline the managed node uses. This API is primarily used by the <code>AWS-RunPatchBaseline</code> Systems Manager document (SSM document).</p> <note> <p>If you run the command locally, such as with the Command Line Interface (CLI), the system attempts to use your local Amazon Web Services credentials and the operation fails. To avoid this, you can run the command in the Amazon Web Services Systems Manager console. Use Run Command, a tool in Amazon Web Services Systems Manager, with an SSM document that enables you to target a managed node with a script or command. For example, run the command using the <code>AWS-RunShellScript</code> document or the <code>AWS-RunPowerShellScript</code> document.</p> </note>",
     "GetDocument": "<p>Gets the contents of the specified Amazon Web Services Systems Manager document (SSM document).</p>",
+    "GetExecutionPreview": "<p>Initiates the process of retrieving an existing preview that shows the effects that running a specified Automation runbook would have on the targeted resources.</p>",
     "GetInventory": "<p>Query inventory information. This includes managed node status, such as <code>Stopped</code> or <code>Terminated</code>.</p>",
     "GetInventorySchema": "<p>Return a list of inventory type names for the account, or return a list of attribute names for a specific Inventory item type.</p>",
     "GetMaintenanceWindow": "<p>Retrieves a maintenance window.</p>",
@@ -85,14 +86,14 @@
     "GetParameter": "<p>Get information about a single parameter by specifying the parameter name.</p> <note> <p>To get information about more than one parameter at a time, use the <a>GetParameters</a> operation.</p> </note>",
     "GetParameterHistory": "<p>Retrieves the history of all changes to a parameter.</p> <important> <p>If you change the KMS key alias for the KMS key used to encrypt a parameter, then you must also update the key alias the parameter uses to reference KMS. Otherwise, <code>GetParameterHistory</code> retrieves whatever the original key alias was referencing.</p> </important>",
     "GetParameters": "<p>Get information about one or more parameters by specifying multiple parameter names.</p> <note> <p>To get information about a single parameter, you can use the <a>GetParameter</a> operation instead.</p> </note>",
-    "GetParametersByPath": "<p>Retrieve information about one or more parameters in a specific hierarchy. </p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p>",
+    "GetParametersByPath": "<p>Retrieve information about one or more parameters under a specified level in a hierarchy. </p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p>",
     "GetPatchBaseline": "<p>Retrieves information about a patch baseline.</p>",
     "GetPatchBaselineForPatchGroup": "<p>Retrieves the patch baseline that should be used for the specified patch group.</p>",
     "GetResourcePolicies": "<p>Returns an array of the <code>Policy</code> object.</p>",
     "GetServiceSetting": "<p> <code>ServiceSetting</code> is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of <code>false</code>. This means the user can't use this feature unless they change the setting to <code>true</code> and intentionally opt in for a paid feature.</p> <p>Services map a <code>SettingId</code> object to a setting value. Amazon Web Services services teams define the default value for a <code>SettingId</code>. You can't create a new <code>SettingId</code>, but you can overwrite the default value if you have the <code>ssm:UpdateServiceSetting</code> permission for the setting. Use the <a>UpdateServiceSetting</a> API operation to change the default setting. Or use the <a>ResetServiceSetting</a> to change the value back to the original value defined by the Amazon Web Services service team.</p> <p>Query the current service setting for the Amazon Web Services account. </p>",
     "LabelParameterVersion": "<p>A parameter label is a user-defined alias to help you manage different versions of a parameter. When you modify a parameter, Amazon Web Services Systems Manager automatically saves a new version and increments the version number by one. A label can help you remember the purpose of a parameter when there are multiple versions. </p> <p>Parameter labels have the following requirements and restrictions.</p> <ul> <li> <p>A version of a parameter can have a maximum of 10 labels.</p> </li> <li> <p>You can't attach the same label to different versions of the same parameter. For example, if version 1 has the label Production, then you can't attach Production to version 2.</p> </li> <li> <p>You can move a label from one version of a parameter to another.</p> </li> <li> <p>You can't create a label when you create a new parameter. You must attach a label to a specific version of a parameter.</p> </li> <li> <p>If you no longer want to use a parameter label, then you can either delete it or move it to a different version of a parameter.</p> </li> <li> <p>A label can have a maximum of 100 characters.</p> </li> <li> <p>Labels can contain letters (case sensitive), numbers, periods (.), hyphens (-), or underscores (_).</p> </li> <li> <p>Labels can't begin with a number, \"<code>aws</code>\" or \"<code>ssm</code>\" (not case sensitive). If a label fails to meet these requirements, then the label isn't associated with a parameter and the system displays it in the list of InvalidLabels.</p> </li> </ul>",
     "ListAssociationVersions": "<p>Retrieves all versions of an association for a specific association ID.</p>",
-    "ListAssociations": "<p>Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a capability of Amazon Web Services Systems Manager.</p>",
+    "ListAssociations": "<p>Returns all State Manager associations in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results to a specific State Manager association document or managed node by specifying a filter. State Manager is a tool in Amazon Web Services Systems Manager.</p>",
     "ListCommandInvocations": "<p>An invocation is copy of a command sent to a specific managed node. A command can apply to one or more managed nodes. A command invocation applies to one managed node. For example, if a user runs <code>SendCommand</code> against three managed nodes, then a command invocation is created for each requested managed node ID. <code>ListCommandInvocations</code> provide status about command execution.</p>",
     "ListCommands": "<p>Lists the commands requested by users of the Amazon Web Services account.</p>",
     "ListComplianceItems": "<p>For a specified resource ID, this API operation returns a list of compliance statuses for different resource types. Currently, you can only specify one resource ID per call. List results depend on the criteria specified in the filter.</p>",
@@ -101,8 +102,10 @@
     "ListDocumentVersions": "<p>List all versions for a document.</p>",
     "ListDocuments": "<p>Returns all Systems Manager (SSM) documents in the current Amazon Web Services account and Amazon Web Services Region. You can limit the results of this request by using a filter.</p>",
     "ListInventoryEntries": "<p>A list of inventory items returned by the request.</p>",
+    "ListNodes": "<p>Takes in filters and returns a list of managed nodes matching the filter criteria.</p>",
+    "ListNodesSummary": "<p>Generates a summary of managed instance/node metadata based on the filters and aggregators you specify. Results are grouped by the input aggregator you specify.</p>",
     "ListOpsItemEvents": "<p>Returns a list of all OpsItem events in the current Amazon Web Services Region and Amazon Web Services account. You can limit the results to events associated with specific OpsItems by specifying a filter.</p>",
-    "ListOpsItemRelatedItems": "<p>Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a capability of Amazon Web Services Systems Manager.</p>",
+    "ListOpsItemRelatedItems": "<p>Lists all related-item resources associated with a Systems Manager OpsCenter OpsItem. OpsCenter is a tool in Amazon Web Services Systems Manager.</p>",
     "ListOpsMetadata": "<p>Amazon Web Services Systems Manager calls this API operation when displaying all Application Manager OpsMetadata objects or blobs.</p>",
     "ListResourceComplianceSummaries": "<p>Returns a resource-level summary count. The summary includes information about compliant and non-compliant statuses and detailed compliance-item severity counts, according to the filter criteria you specify.</p>",
     "ListResourceDataSync": "<p>Lists your resource data sync configurations. Includes information about the last time a sync attempted to start, the last sync status, and the last time a sync successfully completed.</p> <p>The number of sync configurations might be too large to return using a single call to <code>ListResourceDataSync</code>. You can limit the number of sync configurations returned by using the <code>MaxResults</code> parameter. To determine whether there are more sync configurations to list, check the value of <code>NextToken</code> in the output. If there are more sync configurations to list, you can request them by specifying the <code>NextToken</code> returned in the call to the parameter of a subsequent call. </p>",
@@ -124,6 +127,7 @@
     "StartAssociationsOnce": "<p>Runs an association immediately and only one time. This operation can be helpful when troubleshooting associations.</p>",
     "StartAutomationExecution": "<p>Initiates execution of an Automation runbook.</p>",
     "StartChangeRequestExecution": "<p>Creates a change request for Change Manager. The Automation runbooks specified in the change request run only after all required approvals for the change request have been received.</p>",
+    "StartExecutionPreview": "<p>Initiates the process of creating a preview showing the effects that running a specified Automation runbook would have on the targeted resources.</p>",
     "StartSession": "<p>Initiates a connection to a target (for example, a managed node) for a Session Manager session. Returns a URL and token that can be used to open a WebSocket connection for sending input and receiving outputs.</p> <note> <p>Amazon Web Services CLI usage: <code>start-session</code> is an interactive command that requires the Session Manager plugin to be installed on the client machine making the call. For information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html\">Install the Session Manager plugin for the Amazon Web Services CLI</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>Amazon Web Services Tools for PowerShell usage: Start-SSMSession isn't currently supported by Amazon Web Services Tools for PowerShell on Windows local machines.</p> </note>",
     "StopAutomationExecution": "<p>Stop an Automation that is currently running.</p>",
     "TerminateSession": "<p>Permanently ends a session and closes the data connection between the Session Manager client and SSM Agent on the managed node. A terminated session can't be resumed.</p>",
@@ -232,6 +236,18 @@
       "base": null,
       "refs": {
         "InstanceAssociationStatusInfo$ErrorCode": "<p>An error code returned by the request to create the association.</p>"
+      }
+    },
+    "AgentType": {
+      "base": null,
+      "refs": {
+        "InstanceInfo$AgentType": "<p>The type of agent installed on the node.</p>"
+      }
+    },
+    "AgentVersion": {
+      "base": null,
+      "refs": {
+        "InstanceInfo$AgentVersion": "<p>The version number of the agent installed on the node.</p>"
       }
     },
     "AggregatorSchemaOnly": {
@@ -597,11 +613,11 @@
     "AssociationSyncCompliance": {
       "base": null,
       "refs": {
-        "AssociationDescription$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
-        "AssociationVersionInfo$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
-        "CreateAssociationBatchRequestEntry$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>. </p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
+        "AssociationDescription$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
+        "AssociationVersionInfo$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
+        "CreateAssociationBatchRequestEntry$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>. </p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
         "CreateAssociationRequest$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>",
-        "UpdateAssociationRequest$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a capability of Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>"
+        "UpdateAssociationRequest$SyncCompliance": "<p>The mode for generating association compliance. You can specify <code>AUTO</code> or <code>MANUAL</code>. In <code>AUTO</code> mode, the system uses the status of the association execution to determine the compliance status. If the association execution runs successfully, then the association is <code>COMPLIANT</code>. If the association execution doesn't run successfully, the association is <code>NON-COMPLIANT</code>.</p> <p>In <code>MANUAL</code> mode, you must specify the <code>AssociationId</code> as a parameter for the <a>PutComplianceItems</a> API operation. In this case, compliance data isn't managed by State Manager, a tool in Amazon Web Services Systems Manager. It is managed by your direct call to the <a>PutComplianceItems</a> API operation.</p> <p>By default, all associations use <code>AUTO</code> mode.</p>"
       }
     },
     "AssociationVersion": {
@@ -727,6 +743,7 @@
         "ComplianceItemDetails$key": null,
         "InventoryItemContentContext$key": null,
         "InventoryItemEntry$key": null,
+        "NodeSummary$key": null,
         "OpsEntityItemEntry$key": null,
         "PatchPropertyEntry$key": null
       }
@@ -737,6 +754,7 @@
         "ComplianceItemDetails$value": null,
         "InventoryItemContentContext$value": null,
         "InventoryItemEntry$value": null,
+        "NodeSummary$value": null,
         "OpsEntityItemEntry$value": null,
         "PatchPropertyEntry$value": null
       }
@@ -814,6 +832,12 @@
         "StopAutomationExecutionRequest$AutomationExecutionId": "<p>The execution ID of the Automation to stop.</p>"
       }
     },
+    "AutomationExecutionInputs": {
+      "base": "<p>Information about the optional inputs that can be specified for an automation execution preview.</p>",
+      "refs": {
+        "ExecutionInputs$Automation": "<p>Information about the optional inputs that can be specified for an automation execution preview.</p>"
+      }
+    },
     "AutomationExecutionLimitExceededException": {
       "base": "<p>The number of simultaneously running Automation executions exceeded the allowable limit.</p>",
       "refs": {
@@ -836,6 +860,12 @@
       "refs": {
       }
     },
+    "AutomationExecutionPreview": {
+      "base": "<p>Information about the results of the execution preview.</p>",
+      "refs": {
+        "ExecutionPreview$Automation": "<p>Information about the changes that would be made if an Automation workflow were run.</p>"
+      }
+    },
     "AutomationExecutionStatus": {
       "base": null,
       "refs": {
@@ -848,6 +878,7 @@
       "base": null,
       "refs": {
         "AutomationExecution$TargetParameterName": "<p>The parameter name.</p>",
+        "AutomationExecutionInputs$TargetParameterName": "<p>The name of the parameter used as the target resource for the rate-controlled execution. Required if you specify targets.</p>",
         "AutomationExecutionMetadata$TargetParameterName": "<p>The list of execution outputs as defined in the Automation runbook.</p>",
         "AutomationParameterMap$key": null,
         "Runbook$TargetParameterName": "<p>The name of the parameter used as the target resource for the rate-controlled runbook workflow. Required if you specify <code>Targets</code>. </p>",
@@ -860,6 +891,7 @@
         "AutomationExecution$Parameters": "<p>The key-value map of execution parameters, which were supplied when calling <a>StartAutomationExecution</a>.</p>",
         "AutomationExecution$Outputs": "<p>The list of execution outputs as defined in the Automation runbook.</p>",
         "AutomationExecution$Variables": "<p>Variables defined for the automation.</p>",
+        "AutomationExecutionInputs$Parameters": "<p>Information about parameters that can be specified for the preview operation. </p>",
         "AutomationExecutionMetadata$Outputs": "<p>The list of execution outputs as defined in the Automation runbook.</p>",
         "FailureDetails$Details": "<p>Detailed information about the Automation step failure.</p>",
         "MaintenanceWindowAutomationParameters$Parameters": "<p>The parameters for the <code>AUTOMATION</code> task.</p> <p>For information about specifying and updating task parameters, see <a>RegisterTaskWithMaintenanceWindow</a> and <a>UpdateMaintenanceWindowTask</a>.</p> <note> <p> <code>LoggingInfo</code> has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the <code>TaskInvocationParameters</code> structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.</p> <p> <code>TaskParameters</code> has been deprecated. To specify parameters to pass to a task when it runs, instead use the <code>Parameters</code> option in the <code>TaskInvocationParameters</code> structure. For information about how Systems Manager handles these options for the supported maintenance window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.</p> <p>For <code>AUTOMATION</code> task types, Amazon Web Services Systems Manager ignores any values specified for these parameters.</p> </note>",
@@ -898,10 +930,10 @@
     "AutomationTargetParameterName": {
       "base": null,
       "refs": {
-        "AssociationDescription$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.</p>",
-        "CreateAssociationBatchRequestEntry$AutomationTargetParameterName": "<p>Specify the target for the association. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.</p>",
-        "CreateAssociationRequest$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.</p>",
-        "UpdateAssociationRequest$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a capability of Amazon Web Services Systems Manager.</p>"
+        "AssociationDescription$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.</p>",
+        "CreateAssociationBatchRequestEntry$AutomationTargetParameterName": "<p>Specify the target for the association. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.</p>",
+        "CreateAssociationRequest$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.</p>",
+        "UpdateAssociationRequest$AutomationTargetParameterName": "<p>Choose the parameter that will define how your automation will branch out. This target is required for associations that use an Automation runbook and target resources by using rate controls. Automation is a tool in Amazon Web Services Systems Manager.</p>"
       }
     },
     "AutomationType": {
@@ -1099,7 +1131,7 @@
         "CommandInvocation$CloudWatchOutputConfig": "<p>Amazon CloudWatch Logs information where you want Amazon Web Services Systems Manager to send the command output.</p>",
         "GetCommandInvocationResult$CloudWatchOutputConfig": "<p>Amazon CloudWatch Logs information where Systems Manager sent the command output.</p>",
         "MaintenanceWindowRunCommandParameters$CloudWatchOutputConfig": null,
-        "SendCommandRequest$CloudWatchOutputConfig": "<p>Enables Amazon Web Services Systems Manager to send Run Command output to Amazon CloudWatch Logs. Run Command is a capability of Amazon Web Services Systems Manager.</p>"
+        "SendCommandRequest$CloudWatchOutputConfig": "<p>Enables Amazon Web Services Systems Manager to send Run Command output to Amazon CloudWatch Logs. Run Command is a tool in Amazon Web Services Systems Manager.</p>"
       }
     },
     "CloudWatchOutputEnabled": {
@@ -1448,6 +1480,7 @@
     "ComputerName": {
       "base": null,
       "refs": {
+        "InstanceInfo$ComputerName": "<p>The fully qualified host name of the managed node.</p>",
         "InstanceInformation$ComputerName": "<p>The fully qualified host name of the managed node.</p>",
         "InstanceProperty$ComputerName": "<p>The fully qualified host name of the managed node.</p>"
       }
@@ -1613,6 +1646,7 @@
         "DocumentReviewerResponseSource$UpdatedTime": "<p>The date and time that a reviewer last updated a response to a document review request.</p>",
         "DocumentVersionInfo$CreatedDate": "<p>The date the document was created.</p>",
         "GetDocumentResult$CreatedDate": "<p>The date the SSM document was created.</p>",
+        "GetExecutionPreviewResponse$EndedAt": "<p>A UTC timestamp indicating when the execution preview operation ended.</p>",
         "GetMaintenanceWindowExecutionResult$StartTime": "<p>The time the maintenance window started running.</p>",
         "GetMaintenanceWindowExecutionResult$EndTime": "<p>The time the maintenance window finished running.</p>",
         "GetMaintenanceWindowExecutionTaskInvocationResult$StartTime": "<p>The time that the task started running on the target.</p>",
@@ -2432,6 +2466,7 @@
         "ListDocumentMetadataHistoryResponse$Name": "<p>The name of the change template.</p>",
         "ModifyDocumentPermissionRequest$Name": "<p>The name of the document that you want to share.</p>",
         "Session$DocumentName": "<p>The name of the Session Manager SSM document used to define the parameters and plugin settings for the session. For example, <code>SSM-SessionManagerRunShell</code>.</p>",
+        "StartExecutionPreviewRequest$DocumentName": "<p>The name of the Automation runbook to run. The result of the execution preview indicates what the impact would be of running this runbook.</p>",
         "UpdateDocumentDefaultVersionRequest$Name": "<p>The name of a custom document that you want to set as the default version.</p>",
         "UpdateDocumentMetadataRequest$Name": "<p>The name of the change template for which a version's metadata is to be updated.</p>",
         "UpdateDocumentRequest$Name": "<p>The name of the SSM document that you want to update.</p>"
@@ -2635,6 +2670,7 @@
         "SendCommandRequest$DocumentVersion": "<p>The SSM document version to use in the request. You can specify $DEFAULT, $LATEST, or a specific version number. If you run commands by using the Command Line Interface (Amazon Web Services CLI), then you must escape the first two options by using a backslash. If you specify a version number, then you don't need to use the backslash. For example:</p> <p>--document-version \"\\$DEFAULT\"</p> <p>--document-version \"\\$LATEST\"</p> <p>--document-version \"3\"</p>",
         "StartAutomationExecutionRequest$DocumentVersion": "<p>The version of the Automation runbook to use for this execution.</p>",
         "StartChangeRequestExecutionRequest$DocumentVersion": "<p>The version of the change template document to run during the runbook workflow.</p>",
+        "StartExecutionPreviewRequest$DocumentVersion": "<p>The version of the Automation runbook to run. The default value is <code>$DEFAULT</code>.</p>",
         "UpdateAssociationRequest$DocumentVersion": "<p>The document version you want update for the association. </p> <important> <p>State Manager doesn't support running associations that use a new version of a document if that document is shared from another account. State Manager always runs the <code>default</code> version of a document if shared from another account, even though the Systems Manager console shows that a new version was processed. If you want to run an association using a new version of a document shared form another account, you must set the document version to <code>default</code>.</p> </important>",
         "UpdateDocumentMetadataRequest$DocumentVersion": "<p>The version of a change template in which to update approval metadata.</p>",
         "UpdateDocumentRequest$DocumentVersion": "<p>The version of the document that you want to update. Currently, Systems Manager supports updating only the latest version of the document. You can specify the version number of the latest version or use the <code>$LATEST</code> variable.</p> <note> <p>If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the <code>apply-only-at-cron-interval</code> parameter.</p> </note>"
@@ -2752,12 +2788,38 @@
         "TargetLocation$ExcludeAccounts": "<p>Amazon Web Services accounts or organizational units to exclude as expanded targets.</p>"
       }
     },
+    "ExecutionInputs": {
+      "base": "<p>Information about the inputs for an execution preview.</p>",
+      "refs": {
+        "StartExecutionPreviewRequest$ExecutionInputs": "<p>Information about the inputs that can be specified for the preview operation. </p>"
+      }
+    },
     "ExecutionMode": {
       "base": null,
       "refs": {
         "AutomationExecution$Mode": "<p>The automation execution mode.</p>",
         "AutomationExecutionMetadata$Mode": "<p>The Automation execution mode.</p>",
         "StartAutomationExecutionRequest$Mode": "<p>The execution mode of the automation. Valid modes include the following: Auto and Interactive. The default mode is Auto.</p>"
+      }
+    },
+    "ExecutionPreview": {
+      "base": "<p>Information about the changes that would be made if an execution were run.</p>",
+      "refs": {
+        "GetExecutionPreviewResponse$ExecutionPreview": null
+      }
+    },
+    "ExecutionPreviewId": {
+      "base": null,
+      "refs": {
+        "GetExecutionPreviewRequest$ExecutionPreviewId": "<p>The ID of the existing execution preview.</p>",
+        "GetExecutionPreviewResponse$ExecutionPreviewId": "<p>The generated ID for the existing execution preview.</p>",
+        "StartExecutionPreviewResponse$ExecutionPreviewId": "<p>The ID of the execution preview generated by the system.</p>"
+      }
+    },
+    "ExecutionPreviewStatus": {
+      "base": null,
+      "refs": {
+        "GetExecutionPreviewResponse$Status": "<p>The current status of the execution preview operation.</p>"
       }
     },
     "ExecutionRoleName": {
@@ -2874,6 +2936,16 @@
       }
     },
     "GetDocumentResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetExecutionPreviewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetExecutionPreviewResponse": {
       "base": null,
       "refs": {
       }
@@ -3135,6 +3207,12 @@
       "refs": {
       }
     },
+    "ImpactType": {
+      "base": null,
+      "refs": {
+        "StepPreviewMap$key": null
+      }
+    },
     "IncompatiblePolicyException": {
       "base": "<p>There is a conflict in the policies specified for this parameter. You can't, for example, specify two Expiration policies for a parameter. Review your policies, and try again.</p>",
       "refs": {
@@ -3250,6 +3328,12 @@
         "Command$InstanceIds": "<p>The managed node IDs against which this command was requested.</p>",
         "DescribeInstancePatchStatesRequest$InstanceIds": "<p>The ID of the managed node for which patch state information should be retrieved.</p>",
         "SendCommandRequest$InstanceIds": "<p>The IDs of the managed nodes where the command should run. Specifying managed node IDs is most useful when you are targeting a limited number of managed nodes, though you can specify up to 50 IDs.</p> <p>To target a larger number of managed nodes, or if you prefer not to list individual node IDs, we recommend using the <code>Targets</code> option instead. Using <code>Targets</code>, which accepts tag key-value pairs to identify the managed nodes to send commands to, you can a send command to tens, hundreds, or thousands of nodes at once.</p> <p>For more information about how to use targets, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Run commands at scale</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>"
+      }
+    },
+    "InstanceInfo": {
+      "base": "<p>Details about a specific managed node.</p>",
+      "refs": {
+        "NodeType$Instance": "<p>Information about a specific managed node.</p>"
       }
     },
     "InstanceInformation": {
@@ -3453,6 +3537,12 @@
         "InstanceProperty$InstanceState": "<p>The current state of the node.</p>"
       }
     },
+    "InstanceStatus": {
+      "base": null,
+      "refs": {
+        "InstanceInfo$InstanceStatus": "<p>The current status of the managed node.</p>"
+      }
+    },
     "InstanceTagName": {
       "base": null,
       "refs": {
@@ -3478,13 +3568,14 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AutomationExecutionPreview$TotalAccounts": "<p>Information about the Amazon Web Services accounts that were included in the execution preview.</p>",
         "DescribePatchGroupStateResult$Instances": "<p>The number of managed nodes in the patch group.</p>",
         "DescribePatchGroupStateResult$InstancesWithInstalledPatches": "<p>The number of managed nodes with installed patches.</p>",
         "DescribePatchGroupStateResult$InstancesWithInstalledOtherPatches": "<p>The number of managed nodes with patches installed that aren't defined in the patch baseline.</p>",
         "DescribePatchGroupStateResult$InstancesWithMissingPatches": "<p>The number of managed nodes with missing patches from the patch baseline.</p>",
         "DescribePatchGroupStateResult$InstancesWithFailedPatches": "<p>The number of managed nodes with patches from the patch baseline that failed to install.</p>",
         "DescribePatchGroupStateResult$InstancesWithNotApplicablePatches": "<p>The number of managed nodes with patches that aren't applicable.</p>",
-        "DescribePatchGroupStateResult$InstancesWithUnreportedNotApplicablePatches": "<p>The number of managed nodes with <code>NotApplicable</code> patches beyond the supported limit, which aren't reported by name to Inventory. Inventory is a capability of Amazon Web Services Systems Manager.</p>",
+        "DescribePatchGroupStateResult$InstancesWithUnreportedNotApplicablePatches": "<p>The number of managed nodes with <code>NotApplicable</code> patches beyond the supported limit, which aren't reported by name to Inventory. Inventory is a tool in Amazon Web Services Systems Manager.</p>",
         "OpsItemLimitExceededException$Limit": null,
         "ParentStepDetails$Iteration": "<p>The current repetition of the loop represented by an integer.</p>",
         "ProgressCounters$TotalSteps": "<p>The total number of steps run in all specified Amazon Web Services Regions and Amazon Web Services accounts for the current Automation execution.</p>",
@@ -3493,7 +3584,9 @@
         "ProgressCounters$CancelledSteps": "<p>The total number of steps that the system cancelled in all specified Amazon Web Services Regions and Amazon Web Services accounts for the current Automation execution.</p>",
         "ProgressCounters$TimedOutSteps": "<p>The total number of steps that timed out in all specified Amazon Web Services Regions and Amazon Web Services accounts for the current Automation execution.</p>",
         "ResourcePolicyLimitExceededException$Limit": null,
-        "StepExecution$MaxAttempts": "<p>The maximum number of tries to run the action of the step. The default value is <code>1</code>.</p>"
+        "StepExecution$MaxAttempts": "<p>The maximum number of tries to run the action of the step. The default value is <code>1</code>.</p>",
+        "StepPreviewMap$value": null,
+        "TargetPreview$Count": "<p>The number of resources of a certain type included in an execution preview.</p>"
       }
     },
     "InternalServerError": {
@@ -3507,12 +3600,12 @@
       }
     },
     "InvalidActivationId": {
-      "base": "<p>The activation ID isn't valid. Verify the you entered the correct ActivationId or ActivationCode and try again.</p>",
+      "base": "<p>The activation ID isn't valid. Verify that you entered the correct ActivationId or ActivationCode and try again.</p>",
       "refs": {
       }
     },
     "InvalidAggregatorException": {
-      "base": "<p>The specified aggregator isn't valid for inventory groups. Verify that the aggregator uses a valid inventory type such as <code>AWS:Application</code> or <code>AWS:InstanceInformation</code>.</p>",
+      "base": "<p>The specified aggregator isn't valid for the group type. Verify that the aggregator you provided is supported.</p>",
       "refs": {
       }
     },
@@ -3592,7 +3685,7 @@
       }
     },
     "InvalidFilter": {
-      "base": "<p>The filter name isn't valid. Verify the you entered the correct name and try again.</p>",
+      "base": "<p>The filter name isn't valid. Verify that you entered the correct name and try again.</p>",
       "refs": {
       }
     },
@@ -4057,6 +4150,12 @@
         "CommandInvocation$TraceOutput": "<p> Gets the trace output sent by the agent. </p>"
       }
     },
+    "IpAddress": {
+      "base": null,
+      "refs": {
+        "InstanceInfo$IpAddress": "<p>The IP address of the managed node.</p>"
+      }
+    },
     "IsSubTypeSchema": {
       "base": null,
       "refs": {
@@ -4215,6 +4314,26 @@
       }
     },
     "ListInventoryEntriesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListNodesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListNodesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListNodesSummaryRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListNodesSummaryResult": {
       "base": null,
       "refs": {
       }
@@ -4880,6 +4999,12 @@
         "UpdateManagedInstanceRoleRequest$InstanceId": "<p>The ID of the managed node where you want to update the role.</p>"
       }
     },
+    "ManagedStatus": {
+      "base": null,
+      "refs": {
+        "InstanceInfo$ManagedStatus": "<p>Indicates whether the node is managed by Systems Manager.</p>"
+      }
+    },
     "MaxConcurrency": {
       "base": null,
       "refs": {
@@ -4956,6 +5081,8 @@
         "ListDocumentVersionsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListDocumentsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListInventoryEntriesRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "ListNodesRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "ListNodesSummaryRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListResourceComplianceSummariesRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "ListResourceDataSyncRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"
       }
@@ -5108,12 +5235,156 @@
         "ListDocumentsResult$NextToken": "<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>",
         "ListInventoryEntriesRequest$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "ListInventoryEntriesResult$NextToken": "<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>",
+        "ListNodesRequest$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
+        "ListNodesResult$NextToken": "<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>",
+        "ListNodesSummaryRequest$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.) The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "ListNodesSummaryResult$NextToken": "<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>",
         "ListOpsMetadataRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results.</p>",
         "ListOpsMetadataResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "ListResourceComplianceSummariesRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
         "ListResourceComplianceSummariesResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "ListResourceDataSyncRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
         "ListResourceDataSyncResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>"
+      }
+    },
+    "Node": {
+      "base": "<p>Details about an individual managed node.</p>",
+      "refs": {
+        "NodeList$member": null
+      }
+    },
+    "NodeAccountId": {
+      "base": null,
+      "refs": {
+        "NodeOwnerInfo$AccountId": "<p>The ID of the Amazon Web Services account that owns the managed node.</p>"
+      }
+    },
+    "NodeAggregator": {
+      "base": "<p>One or more aggregators for viewing counts of nodes using different dimensions.</p>",
+      "refs": {
+        "NodeAggregatorList$member": null
+      }
+    },
+    "NodeAggregatorList": {
+      "base": null,
+      "refs": {
+        "ListNodesSummaryRequest$Aggregators": "<p>Specify one or more aggregators to return a count of managed nodes that match that expression. For example, a count of managed nodes by operating system.</p>",
+        "NodeAggregator$Aggregators": "<p>Information about aggregators used to refine a node summary.</p>"
+      }
+    },
+    "NodeAggregatorType": {
+      "base": null,
+      "refs": {
+        "NodeAggregator$AggregatorType": "<p>The aggregator type for limiting a node summary. Currently, only <code>Count</code> is supported.</p>"
+      }
+    },
+    "NodeAttributeName": {
+      "base": null,
+      "refs": {
+        "NodeAggregator$AttributeName": "<p>The name of a node attribute on which to limit the count of nodes.</p>"
+      }
+    },
+    "NodeCaptureTime": {
+      "base": null,
+      "refs": {
+        "Node$CaptureTime": "<p>The UTC timestamp for when the managed node data was last captured.</p>"
+      }
+    },
+    "NodeFilter": {
+      "base": "<p>The filters for the operation.</p>",
+      "refs": {
+        "NodeFilterList$member": null
+      }
+    },
+    "NodeFilterKey": {
+      "base": null,
+      "refs": {
+        "NodeFilter$Key": "<p>The name of the filter.</p>"
+      }
+    },
+    "NodeFilterList": {
+      "base": null,
+      "refs": {
+        "ListNodesRequest$Filters": "<p>One or more filters. Use a filter to return a more specific list of managed nodes.</p>",
+        "ListNodesSummaryRequest$Filters": "<p>One or more filters. Use a filter to generate a summary that matches your specified filter criteria.</p>"
+      }
+    },
+    "NodeFilterOperatorType": {
+      "base": null,
+      "refs": {
+        "NodeFilter$Type": "<p>The type of filter operator.</p>"
+      }
+    },
+    "NodeFilterValue": {
+      "base": null,
+      "refs": {
+        "NodeFilterValueList$member": null
+      }
+    },
+    "NodeFilterValueList": {
+      "base": null,
+      "refs": {
+        "NodeFilter$Values": "<p>A filter value supported by the specified key. For example, for the key <code>PlatformType</code>, supported values include <code>Linux</code> and <code>Windows</code>.</p>"
+      }
+    },
+    "NodeId": {
+      "base": null,
+      "refs": {
+        "Node$Id": "<p>The ID of the managed node.</p>"
+      }
+    },
+    "NodeList": {
+      "base": null,
+      "refs": {
+        "ListNodesResult$Nodes": "<p>A list of managed nodes that match the specified filter criteria.</p>"
+      }
+    },
+    "NodeOrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "NodeOwnerInfo$OrganizationalUnitId": "<p>The ID of the organization unit (OU) that the account is part of.</p>"
+      }
+    },
+    "NodeOrganizationalUnitPath": {
+      "base": null,
+      "refs": {
+        "NodeOwnerInfo$OrganizationalUnitPath": "<p>The path for the organizational unit (OU) that owns the managed node. The path for the OU is built using the IDs of the organization, root, and all OUs in the path down to and including the OU. For example:</p> <p> <code>o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/</code> </p>"
+      }
+    },
+    "NodeOwnerInfo": {
+      "base": "<p>Information about ownership of a managed node.</p>",
+      "refs": {
+        "Node$Owner": "<p>Information about the ownership of the managed node.</p>"
+      }
+    },
+    "NodeRegion": {
+      "base": null,
+      "refs": {
+        "Node$Region": "<p>The Amazon Web Services Region that a managed node was created in or assigned to.</p>"
+      }
+    },
+    "NodeSummary": {
+      "base": null,
+      "refs": {
+        "NodeSummaryList$member": null
+      }
+    },
+    "NodeSummaryList": {
+      "base": null,
+      "refs": {
+        "ListNodesSummaryResult$Summary": "<p>A collection of objects reporting information about your managed nodes, such as the count of nodes by operating system.</p>"
+      }
+    },
+    "NodeType": {
+      "base": "<p>Information about a managed node's type.</p>",
+      "refs": {
+        "Node$NodeType": "<p>Information about the type of node.</p>"
+      }
+    },
+    "NodeTypeName": {
+      "base": null,
+      "refs": {
+        "NodeAggregator$TypeName": "<p>The data type name to use for viewing counts of nodes. Currently, only <code>Instance</code> is supported.</p>"
       }
     },
     "NonCompliantSummary": {
@@ -5882,7 +6153,7 @@
       "refs": {
         "Parameter$Value": "<p>The parameter value.</p> <note> <p>If type is <code>StringList</code>, the system returns a comma-separated string with no spaces between commas in the <code>Value</code> field.</p> </note>",
         "ParameterHistory$Value": "<p>The parameter value.</p>",
-        "PutParameterRequest$Value": "<p>The parameter value that you want to add to the system. Standard parameters have a value limit of 4 KB. Advanced parameters have a value limit of 8 KB.</p> <note> <p>Parameters can't be referenced or nested in the values of other parameters. You can't include <code>{{}}</code> or <code>{{ssm:<i>parameter-name</i>}}</code> in a parameter value.</p> </note>"
+        "PutParameterRequest$Value": "<p>The parameter value that you want to add to the system. Standard parameters have a value limit of 4 KB. Advanced parameters have a value limit of 8 KB.</p> <note> <p>Parameters can't be referenced or nested in the values of other parameters. You can't include values wrapped in double brackets <code>{{}}</code> or <code>{{ssm:<i>parameter-name</i>}}</code> in a parameter value.</p> </note>"
       }
     },
     "PSParameterVersion": {
@@ -6027,7 +6298,7 @@
     "ParameterPolicies": {
       "base": null,
       "refs": {
-        "PutParameterRequest$Policies": "<p>One or more policies to apply to a parameter. This operation takes a JSON array. Parameter Store, a capability of Amazon Web Services Systems Manager supports the following policy types:</p> <p>Expiration: This policy deletes the parameter after it expires. When you create the policy, you specify the expiration date. You can update the expiration date and time by updating the policy. Updating the <i>parameter</i> doesn't affect the expiration date and time. When the expiration time is reached, Parameter Store deletes the parameter.</p> <p>ExpirationNotification: This policy initiates an event in Amazon CloudWatch Events that notifies you about the expiration. By using this policy, you can receive notification before or after the expiration time is reached, in units of days or hours.</p> <p>NoChangeNotification: This policy initiates a CloudWatch Events event if a parameter hasn't been modified for a specified period of time. This policy type is useful when, for example, a secret needs to be changed within a period of time, but it hasn't been changed.</p> <p>All existing policies are preserved until you send new policies or an empty policy. For more information about parameter policies, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-policies.html\">Assigning parameter policies</a>. </p>"
+        "PutParameterRequest$Policies": "<p>One or more policies to apply to a parameter. This operation takes a JSON array. Parameter Store, a tool in Amazon Web Services Systems Manager supports the following policy types:</p> <p>Expiration: This policy deletes the parameter after it expires. When you create the policy, you specify the expiration date. You can update the expiration date and time by updating the policy. Updating the <i>parameter</i> doesn't affect the expiration date and time. When the expiration time is reached, Parameter Store deletes the parameter.</p> <p>ExpirationNotification: This policy initiates an event in Amazon CloudWatch Events that notifies you about the expiration. By using this policy, you can receive notification before or after the expiration time is reached, in units of days or hours.</p> <p>NoChangeNotification: This policy initiates a CloudWatch Events event if a parameter hasn't been modified for a specified period of time. This policy type is useful when, for example, a secret needs to be changed within a period of time, but it hasn't been changed.</p> <p>All existing policies are preserved until you send new policies or an empty policy. For more information about parameter policies, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-policies.html\">Assigning parameter policies</a>. </p>"
       }
     },
     "ParameterPolicyList": {
@@ -6125,7 +6396,7 @@
         "CreateAssociationRequest$Parameters": "<p>The parameters for the runtime configuration of the document.</p>",
         "MaintenanceWindowRunCommandParameters$Parameters": "<p>The parameters for the <code>RUN_COMMAND</code> task execution.</p>",
         "SendCommandRequest$Parameters": "<p>The required and optional parameters specified in the document being run.</p>",
-        "UpdateAssociationRequest$Parameters": "<p>The parameters you want to update for the association. If you create a parameter using Parameter Store, a capability of Amazon Web Services Systems Manager, you can reference the parameter using <code>{{ssm:parameter-name}}</code>.</p>"
+        "UpdateAssociationRequest$Parameters": "<p>The parameters you want to update for the association. If you create a parameter using Parameter Store, a tool in Amazon Web Services Systems Manager, you can reference the parameter using <code>{{ssm:parameter-name}}</code>.</p>"
       }
     },
     "ParametersFilter": {
@@ -6342,10 +6613,10 @@
       "base": "<p>A set of patch filters, typically used for approval rules.</p>",
       "refs": {
         "BaselineOverride$GlobalFilters": null,
-        "CreatePatchBaselineRequest$GlobalFilters": "<p>A set of global filters used to include patches in the baseline.</p>",
+        "CreatePatchBaselineRequest$GlobalFilters": "<p>A set of global filters used to include patches in the baseline.</p> <important> <p>The <code>GlobalFilters</code> parameter can be configured only by using the CLI or an Amazon Web Services SDK. It can't be configured from the Patch Manager console, and its value isn't displayed in the console.</p> </important>",
         "GetPatchBaselineResult$GlobalFilters": "<p>A set of global filters used to exclude patches from the baseline.</p>",
         "PatchRule$PatchFilterGroup": "<p>The patch filter group that defines the criteria for the rule.</p>",
-        "UpdatePatchBaselineRequest$GlobalFilters": "<p>A set of global filters used to include patches in the baseline.</p>",
+        "UpdatePatchBaselineRequest$GlobalFilters": "<p>A set of global filters used to include patches in the baseline.</p> <important> <p>The <code>GlobalFilters</code> parameter can be configured only by using the CLI or an Amazon Web Services SDK. It can't be configured from the Patch Manager console, and its value isn't displayed in the console.</p> </important>",
         "UpdatePatchBaselineResult$GlobalFilters": "<p>A set of global filters used to exclude patches from the baseline.</p>"
       }
     },
@@ -6693,7 +6964,7 @@
     "PatchUnreportedNotApplicableCount": {
       "base": null,
       "refs": {
-        "InstancePatchState$UnreportedNotApplicableCount": "<p>The number of patches beyond the supported limit of <code>NotApplicableCount</code> that aren't reported by name to Inventory. Inventory is a capability of Amazon Web Services Systems Manager.</p>"
+        "InstancePatchState$UnreportedNotApplicableCount": "<p>The number of patches beyond the supported limit of <code>NotApplicableCount</code> that aren't reported by name to Inventory. Inventory is a tool in Amazon Web Services Systems Manager.</p>"
       }
     },
     "PatchVendor": {
@@ -6718,14 +6989,16 @@
     "PlatformName": {
       "base": null,
       "refs": {
+        "InstanceInfo$PlatformName": "<p>The name of the operating system platform running on your managed node.</p>",
         "InstanceProperty$PlatformName": "<p>The name of the operating system platform running on your managed node.</p>"
       }
     },
     "PlatformType": {
       "base": null,
       "refs": {
-        "InstanceInformation$PlatformType": "<p>The operating system platform type. </p>",
-        "InstanceProperty$PlatformType": "<p>The operating system platform type of the managed node. For example, Windows.</p>",
+        "InstanceInfo$PlatformType": "<p>The operating system platform type of the managed node.</p>",
+        "InstanceInformation$PlatformType": "<p>The operating system platform type.</p>",
+        "InstanceProperty$PlatformType": "<p>The operating system platform type of the managed node. For example, Windows Server or Amazon Linux 2.</p>",
         "PlatformTypeList$member": null
       }
     },
@@ -6739,6 +7012,7 @@
     "PlatformVersion": {
       "base": null,
       "refs": {
+        "InstanceInfo$PlatformVersion": "<p>The version of the OS platform running on your managed node. </p>",
         "InstanceProperty$PlatformVersion": "<p>The version of the OS platform running on your managed node.</p>"
       }
     },
@@ -6839,7 +7113,14 @@
     "Region": {
       "base": null,
       "refs": {
+        "RegionList$member": null,
         "Regions$member": null
+      }
+    },
+    "RegionList": {
+      "base": null,
+      "refs": {
+        "AutomationExecutionPreview$Regions": "<p>Information about the Amazon Web Services Regions targeted by the execution preview.</p>"
       }
     },
     "Regions": {
@@ -7100,6 +7381,8 @@
         "CreateResourceDataSyncRequest$SyncName": "<p>A name for the configuration.</p>",
         "DeleteResourceDataSyncRequest$SyncName": "<p>The name of the configuration to delete.</p>",
         "GetOpsSummaryRequest$SyncName": "<p>Specify the name of a resource data sync to get.</p>",
+        "ListNodesRequest$SyncName": "<p>The name of the resource data sync to retrieve information about. Required for cross-account/cross-Region configurations. Optional for single account/single-Region configurations.</p>",
+        "ListNodesSummaryRequest$SyncName": "<p>The name of the resource data sync to retrieve information about. Required for cross-account/cross-Region configuration. Optional for single account/single-Region configurations.</p>",
         "ResourceDataSyncAlreadyExistsException$SyncName": null,
         "ResourceDataSyncItem$SyncName": "<p>The name of the resource data sync.</p>",
         "ResourceDataSyncNotFoundException$SyncName": null,
@@ -7274,6 +7557,7 @@
     "ResourceType": {
       "base": null,
       "refs": {
+        "InstanceInfo$ResourceType": "<p>The type of instance, either an EC2 instance or another supported machine type in a hybrid fleet.</p>",
         "InstanceInformation$ResourceType": "<p>The type of instance. Instances are either EC2 instances or managed instances. </p>"
       }
     },
@@ -7459,8 +7743,8 @@
     "ServiceRole": {
       "base": null,
       "refs": {
-        "Command$ServiceRole": "<p>The Identity and Access Management (IAM) service role that Run Command, a capability of Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes. </p>",
-        "CommandInvocation$ServiceRole": "<p>The Identity and Access Management (IAM) service role that Run Command, a capability of Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes on a per managed node basis.</p>",
+        "Command$ServiceRole": "<p>The Identity and Access Management (IAM) service role that Run Command, a tool in Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes. </p>",
+        "CommandInvocation$ServiceRole": "<p>The Identity and Access Management (IAM) service role that Run Command, a tool in Amazon Web Services Systems Manager, uses to act on your behalf when sending notifications about command status changes on a per managed node basis.</p>",
         "GetMaintenanceWindowExecutionTaskResult$ServiceRole": "<p>The role that was assumed when running the task.</p>",
         "GetMaintenanceWindowTaskResult$ServiceRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run <code>RegisterTaskWithMaintenanceWindow</code>.</p> <p>However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html\">Setting up Maintenance Windows</a> in the in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
         "MaintenanceWindowRunCommandParameters$ServiceRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role for Amazon Web Services Systems Manager to assume when running a maintenance window task. If you do not specify a service role ARN, Systems Manager uses a service-linked role in your account. If no appropriate service-linked role for Systems Manager exists in your account, it is created when you run <code>RegisterTaskWithMaintenanceWindow</code>.</p> <p>However, for an improved security posture, we strongly recommend creating a custom policy and custom service role for running your maintenance window tasks. The policy can be crafted to provide only the permissions needed for your particular maintenance window tasks. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-maintenance-permissions.html\">Setting up Maintenance Windows</a> in the in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
@@ -7481,10 +7765,10 @@
     "ServiceSettingId": {
       "base": null,
       "refs": {
-        "GetServiceSettingRequest$SettingId": "<p>The ID of the service setting to get. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul>",
-        "ResetServiceSettingRequest$SettingId": "<p>The Amazon Resource Name (ARN) of the service setting to reset. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul>",
+        "GetServiceSettingRequest$SettingId": "<p>The ID of the service setting to get. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/appmanager/appmanager-enabled</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p>/ssm/automation/enable-adaptive-concurrency</p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul>",
+        "ResetServiceSettingRequest$SettingId": "<p>The Amazon Resource Name (ARN) of the service setting to reset. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/appmanager/appmanager-enabled</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p>/ssm/automation/enable-adaptive-concurrency</p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul>",
         "ServiceSetting$SettingId": "<p>The ID of the service setting.</p>",
-        "UpdateServiceSettingRequest$SettingId": "<p>The Amazon Resource Name (ARN) of the service setting to update. For example, <code>arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled</code>. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul> <note> <p>Permissions to update the <code>/ssm/managed-instance/default-ec2-instance-management-role</code> setting should only be provided to administrators. Implement least privilege access when allowing individuals to configure or modify the Default Host Management Configuration.</p> </note>"
+        "UpdateServiceSettingRequest$SettingId": "<p>The Amazon Resource Name (ARN) of the service setting to update. For example, <code>arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled</code>. The setting ID can be one of the following.</p> <ul> <li> <p> <code>/ssm/appmanager/appmanager-enabled</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-destination</code> </p> </li> <li> <p> <code>/ssm/automation/customer-script-log-group-name</code> </p> </li> <li> <p>/ssm/automation/enable-adaptive-concurrency</p> </li> <li> <p> <code>/ssm/documents/console/public-sharing-permission</code> </p> </li> <li> <p> <code>/ssm/managed-instance/activation-tier</code> </p> </li> <li> <p> <code>/ssm/managed-instance/default-ec2-instance-management-role</code> </p> </li> <li> <p> <code>/ssm/opsinsights/opscenter</code> </p> </li> <li> <p> <code>/ssm/parameter-store/default-parameter-tier</code> </p> </li> <li> <p> <code>/ssm/parameter-store/high-throughput-enabled</code> </p> </li> </ul> <note> <p>Permissions to update the <code>/ssm/managed-instance/default-ec2-instance-management-role</code> setting should only be provided to administrators. Implement least privilege access when allowing individuals to configure or modify the Default Host Management Configuration.</p> </note>"
       }
     },
     "ServiceSettingNotFound": {
@@ -7496,7 +7780,7 @@
       "base": null,
       "refs": {
         "ServiceSetting$SettingValue": "<p>The value of the service setting.</p>",
-        "UpdateServiceSettingRequest$SettingValue": "<p>The new value to specify for the service setting. The following list specifies the available values for each setting.</p> <ul> <li> <p>For <code>/ssm/managed-instance/default-ec2-instance-management-role</code>, enter the name of an IAM role. </p> </li> <li> <p>For <code>/ssm/automation/customer-script-log-destination</code>, enter <code>CloudWatch</code>.</p> </li> <li> <p>For <code>/ssm/automation/customer-script-log-group-name</code>, enter the name of an Amazon CloudWatch Logs log group.</p> </li> <li> <p>For <code>/ssm/documents/console/public-sharing-permission</code>, enter <code>Enable</code> or <code>Disable</code>.</p> </li> <li> <p>For <code>/ssm/managed-instance/activation-tier</code>, enter <code>standard</code> or <code>advanced</code>.</p> </li> <li> <p> For <code>/ssm/opsinsights/opscenter</code>, enter <code>Enabled</code> or <code>Disabled</code>. </p> </li> <li> <p>For <code>/ssm/parameter-store/default-parameter-tier</code>, enter <code>Standard</code>, <code>Advanced</code>, or <code>Intelligent-Tiering</code> </p> </li> <li> <p>For <code>/ssm/parameter-store/high-throughput-enabled</code>, enter <code>true</code> or <code>false</code>.</p> </li> </ul>"
+        "UpdateServiceSettingRequest$SettingValue": "<p>The new value to specify for the service setting. The following list specifies the available values for each setting.</p> <ul> <li> <p>For <code>/ssm/appmanager/appmanager-enabled</code>, enter <code>True</code> or <code>False</code>.</p> </li> <li> <p>For <code>/ssm/automation/customer-script-log-destination</code>, enter <code>CloudWatch</code>.</p> </li> <li> <p>For <code>/ssm/automation/customer-script-log-group-name</code>, enter the name of an Amazon CloudWatch Logs log group.</p> </li> <li> <p>For <code>/ssm/documents/console/public-sharing-permission</code>, enter <code>Enable</code> or <code>Disable</code>.</p> </li> <li> <p>For <code>/ssm/managed-instance/activation-tier</code>, enter <code>standard</code> or <code>advanced</code>.</p> </li> <li> <p>For <code>/ssm/managed-instance/default-ec2-instance-management-role</code>, enter the name of an IAM role. </p> </li> <li> <p> For <code>/ssm/opsinsights/opscenter</code>, enter <code>Enabled</code> or <code>Disabled</code>. </p> </li> <li> <p>For <code>/ssm/parameter-store/default-parameter-tier</code>, enter <code>Standard</code>, <code>Advanced</code>, or <code>Intelligent-Tiering</code> </p> </li> <li> <p>For <code>/ssm/parameter-store/high-throughput-enabled</code>, enter <code>true</code> or <code>false</code>.</p> </li> </ul>"
       }
     },
     "Session": {
@@ -7585,7 +7869,7 @@
     "SessionManagerParameters": {
       "base": null,
       "refs": {
-        "StartSessionRequest$Parameters": "<p>The values you want to specify for the parameters defined in the Session document.</p>"
+        "StartSessionRequest$Parameters": "<p>The values you want to specify for the parameters defined in the Session document. For more information about these parameters, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/getting-started-create-preferences-cli.html\">Create a Session Manager preferences document</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>"
       }
     },
     "SessionManagerS3OutputUrl": {
@@ -7724,6 +8008,16 @@
       "refs": {
       }
     },
+    "StartExecutionPreviewRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartExecutionPreviewResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartSessionRequest": {
       "base": null,
       "refs": {
@@ -7821,6 +8115,12 @@
         "DescribeAutomationStepExecutionsResult$StepExecutions": "<p>A list of details about the current state of all steps that make up an execution.</p>"
       }
     },
+    "StepPreviewMap": {
+      "base": null,
+      "refs": {
+        "AutomationExecutionPreview$StepPreviews": "<p>Information about the type of impact a runbook step would have on a resource.</p> <ul> <li> <p> <code>Mutating</code>: The runbook step would make changes to the targets through actions that create, modify, or delete resources.</p> </li> <li> <p> <code>Non_Mutating</code>: The runbook step would retrieve data about resources but not make changes to them. This category generally includes <code>Describe*</code>, <code>List*</code>, <code>Get*</code>, and similar read-only API actions.</p> </li> <li> <p> <code>Undetermined</code>: An undetermined step invokes executions performed by another orchestration service like Lambda, Step Functions, or Amazon Web Services Systems Manager Run Command. An undetermined step might also call a third-party API. Systems Manager Automation doesn't know the outcome of the orchestration processes or third-party API executions, so the results of the steps are undetermined.</p> </li> </ul>"
+      }
+    },
     "StopAutomationExecutionRequest": {
       "base": null,
       "refs": {
@@ -7887,6 +8187,7 @@
         "FailureDetails$FailureStage": "<p>The stage of the Automation execution when the failure occurred. The stages include the following: InputValidation, PreVerification, Invocation, PostVerification.</p>",
         "FailureDetails$FailureType": "<p>The type of Automation failure. Failure types include the following: Action, Permission, Throttling, Verification, Internal.</p>",
         "FeatureNotAvailableException$Message": null,
+        "GetExecutionPreviewResponse$StatusMessage": "<p>Supplemental information about the current status of the execution preview.</p>",
         "GetResourcePoliciesRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results.</p>",
         "GetResourcePoliciesResponse$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "HierarchyLevelLimitExceededException$message": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-create.html#sysman-parameter-name-constraints\">About requirements and constraints for parameter names</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p>",
@@ -7987,11 +8288,11 @@
         "ParameterAlreadyExists$message": null,
         "ParameterHistory$LastModifiedUser": "<p>Amazon Resource Name (ARN) of the Amazon Web Services user who last changed the parameter.</p>",
         "ParameterInlinePolicy$PolicyText": "<p>The JSON text of the policy.</p>",
-        "ParameterInlinePolicy$PolicyType": "<p>The type of policy. Parameter Store, a capability of Amazon Web Services Systems Manager, supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification. </p>",
+        "ParameterInlinePolicy$PolicyType": "<p>The type of policy. Parameter Store, a tool in Amazon Web Services Systems Manager, supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification. </p>",
         "ParameterInlinePolicy$PolicyStatus": "<p>The status of the policy. Policies report the following statuses: Pending (the policy hasn't been enforced or applied yet), Finished (the policy was applied), Failed (the policy wasn't applied), or InProgress (the policy is being applied now). </p>",
         "ParameterLimitExceeded$message": null,
         "ParameterMaxVersionLimitExceeded$message": null,
-        "ParameterMetadata$ARN": "<p>The (ARN) of the last user to update the parameter.</p>",
+        "ParameterMetadata$ARN": "<p>The Amazon Resource Name (ARN) of the parameter.</p>",
         "ParameterMetadata$LastModifiedUser": "<p>Amazon Resource Name (ARN) of the Amazon Web Services user who last changed the parameter.</p>",
         "ParameterNotFound$message": null,
         "ParameterPatternMismatchException$message": "<p>The parameter name isn't valid.</p>",
@@ -8030,6 +8331,7 @@
         "SubTypeCountLimitExceededException$Message": null,
         "TargetInUseException$Message": null,
         "TargetNotConnected$Message": null,
+        "TargetPreview$TargetType": "<p>A type of resource that was included in the execution preview.</p>",
         "TooManyUpdates$Message": null,
         "TotalSizeLimitExceededException$Message": null,
         "UnsupportedCalendarException$Message": null,
@@ -8037,8 +8339,11 @@
         "UnsupportedInventoryItemContextException$Message": null,
         "UnsupportedInventorySchemaVersionException$Message": null,
         "UnsupportedOperatingSystem$Message": null,
+        "UnsupportedOperationException$Message": null,
         "UnsupportedParameterType$message": null,
-        "UnsupportedPlatformType$Message": null
+        "UnsupportedPlatformType$Message": null,
+        "ValidationException$Message": null,
+        "ValidationException$ReasonCode": "<p>The reason code for the invalid request.</p>"
       }
     },
     "StringDateTime": {
@@ -8089,8 +8394,8 @@
         "DocumentIdentifier$Tags": "<p>The tags, or metadata, that have been applied to the document.</p>",
         "ListTagsForResourceResult$TagList": "<p>A list of tags.</p>",
         "PutParameterRequest$Tags": "<p>Optional metadata that you assign to a resource. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a Systems Manager parameter to identify the type of resource to which it applies, the environment, or the type of configuration data referenced by the parameter. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=Resource,Value=S3bucket</code> </p> </li> <li> <p> <code>Key=OS,Value=Windows</code> </p> </li> <li> <p> <code>Key=ParameterType,Value=LicenseKey</code> </p> </li> </ul> <note> <p>To add tags to an existing Systems Manager parameter, use the <a>AddTagsToResource</a> operation.</p> </note>",
-        "StartAutomationExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for an automation. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an automation to identify an environment or operating system. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=environment,Value=test</code> </p> </li> <li> <p> <code>Key=OS,Value=Windows</code> </p> </li> </ul> <note> <p>To add tags to an existing automation, use the <a>AddTagsToResource</a> operation.</p> </note>",
-        "StartChangeRequestExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for a change request. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a change request to identify an environment or target Amazon Web Services Region. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=Environment,Value=Production</code> </p> </li> <li> <p> <code>Key=Region,Value=us-east-2</code> </p> </li> </ul>"
+        "StartAutomationExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for an automation. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an automation to identify an environment or operating system. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=environment,Value=test</code> </p> </li> <li> <p> <code>Key=OS,Value=Windows</code> </p> </li> </ul> <note> <p>The <code>Array Members</code> maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the <code>StartAutomationExecution</code> action, you can specify a maximum of 5 tags. You can, however, use the <a>AddTagsToResource</a> action to add up to a total of 50 tags to an existing automation configuration.</p> </note>",
+        "StartChangeRequestExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for a change request. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a change request to identify an environment or target Amazon Web Services Region. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=Environment,Value=Production</code> </p> </li> <li> <p> <code>Key=Region,Value=us-east-2</code> </p> </li> </ul> <note> <p>The <code>Array Members</code> maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the <code>StartChangeRequestExecution</code> action, you can specify a maximum of 5 tags. You can, however, use the <a>AddTagsToResource</a> action to add up to a total of 50 tags to an existing change request configuration.</p> </note>"
       }
     },
     "TagValue": {
@@ -8100,7 +8405,7 @@
       }
     },
     "Target": {
-      "base": "<p>An array of search criteria that targets managed nodes using a key-value pair that you specify.</p> <note> <p> One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html\">Registering maintenance window tasks without targets</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </note> <p>Supported formats include the following.</p> <p> <b>For all Systems Manager capabilities:</b> </p> <ul> <li> <p> <code>Key=tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> </ul> <p> <b>For Automation and Change Manager:</b> </p> <ul> <li> <p> <code>Key=tag:tag-key,Values=tag-value</code> </p> </li> <li> <p> <code>Key=ResourceGroup,Values=resource-group-name</code> </p> </li> <li> <p> <code>Key=ParameterValues,Values=value-1,value-2,value-3</code> </p> </li> <li> <p>To target all instances in the Amazon Web Services Region:</p> <ul> <li> <p> <code>Key=AWS::EC2::Instance,Values=*</code> </p> </li> <li> <p> <code>Key=InstanceIds,Values=*</code> </p> </li> </ul> </li> </ul> <p> <b>For Run Command and Maintenance Windows:</b> </p> <ul> <li> <p> <code>Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3</code> </p> </li> <li> <p> <code>Key=tag:tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> <li> <p> <code>Key=resource-groups:Name,Values=resource-group-name</code> </p> </li> <li> <p>Additionally, Maintenance Windows support targeting resource types:</p> <ul> <li> <p> <code>Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2</code> </p> </li> </ul> </li> </ul> <p> <b>For State Manager:</b> </p> <ul> <li> <p> <code>Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3</code> </p> </li> <li> <p> <code>Key=tag:tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> <li> <p>To target all instances in the Amazon Web Services Region:</p> <ul> <li> <p> <code>Key=InstanceIds,Values=*</code> </p> </li> </ul> </li> </ul> <p>For more information about how to send commands that target managed nodes using <code>Key,Value</code> parameters, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting\">Targeting multiple managed nodes</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
+      "base": "<p>An array of search criteria that targets managed nodes using a key-value pair that you specify.</p> <note> <p> One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html\">Registering maintenance window tasks without targets</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </note> <p>Supported formats include the following.</p> <p> <b>For all Systems Manager tools:</b> </p> <ul> <li> <p> <code>Key=tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> </ul> <p> <b>For Automation and Change Manager:</b> </p> <ul> <li> <p> <code>Key=tag:tag-key,Values=tag-value</code> </p> </li> <li> <p> <code>Key=ResourceGroup,Values=resource-group-name</code> </p> </li> <li> <p> <code>Key=ParameterValues,Values=value-1,value-2,value-3</code> </p> </li> <li> <p>To target all instances in the Amazon Web Services Region:</p> <ul> <li> <p> <code>Key=AWS::EC2::Instance,Values=*</code> </p> </li> <li> <p> <code>Key=InstanceIds,Values=*</code> </p> </li> </ul> </li> </ul> <p> <b>For Run Command and Maintenance Windows:</b> </p> <ul> <li> <p> <code>Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3</code> </p> </li> <li> <p> <code>Key=tag:tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> <li> <p> <code>Key=resource-groups:Name,Values=resource-group-name</code> </p> </li> <li> <p>Additionally, Maintenance Windows support targeting resource types:</p> <ul> <li> <p> <code>Key=resource-groups:ResourceTypeFilters,Values=resource-type-1,resource-type-2</code> </p> </li> </ul> </li> </ul> <p> <b>For State Manager:</b> </p> <ul> <li> <p> <code>Key=InstanceIds,Values=instance-id-1,instance-id-2,instance-id-3</code> </p> </li> <li> <p> <code>Key=tag:tag-key,Values=tag-value-1,tag-value-2</code> </p> </li> <li> <p>To target all instances in the Amazon Web Services Region:</p> <ul> <li> <p> <code>Key=InstanceIds,Values=*</code> </p> </li> </ul> </li> </ul> <p>For more information about how to send commands that target managed nodes using <code>Key,Value</code> parameters, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting\">Targeting multiple managed nodes</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
       "refs": {
         "Targets$member": null
       }
@@ -8135,6 +8440,7 @@
         "AssociationDescription$TargetLocations": "<p>The combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association.</p>",
         "AssociationVersionInfo$TargetLocations": "<p>The combination of Amazon Web Services Regions and Amazon Web Services accounts where you wanted to run the association when this association version was created.</p>",
         "AutomationExecution$TargetLocations": "<p>The combination of Amazon Web Services Regions and/or Amazon Web Services accounts where you want to run the Automation.</p>",
+        "AutomationExecutionInputs$TargetLocations": "<p>Information about the Amazon Web Services Regions and Amazon Web Services accounts targeted by the Automation execution preview operation.</p>",
         "CreateAssociationBatchRequestEntry$TargetLocations": "<p>Use this action to create an association in multiple Regions and multiple accounts.</p>",
         "CreateAssociationRequest$TargetLocations": "<p>A location is a combination of Amazon Web Services Regions and Amazon Web Services accounts where you want to run the association. Use this action to create an association in multiple Regions and multiple accounts.</p>",
         "Runbook$TargetLocations": "<p>Information about the Amazon Web Services Regions and Amazon Web Services accounts targeted by the current Runbook operation.</p>",
@@ -8146,6 +8452,7 @@
       "base": null,
       "refs": {
         "AutomationExecution$TargetLocationsURL": "<p>A publicly accessible URL for a file that contains the <code>TargetLocations</code> body. Currently, only files in presigned Amazon S3 buckets are supported</p>",
+        "AutomationExecutionInputs$TargetLocationsURL": "<p>A publicly accessible URL for a file that contains the <code>TargetLocations</code> body. Currently, only files in presigned Amazon S3 buckets are supported.</p>",
         "AutomationExecutionMetadata$TargetLocationsURL": "<p>A publicly accessible URL for a file that contains the <code>TargetLocations</code> body. Currently, only files in presigned Amazon S3 buckets are supported</p>",
         "StartAutomationExecutionRequest$TargetLocationsURL": "<p>Specify a publicly accessible URL for a file that contains the <code>TargetLocations</code> body. Currently, only files in presigned Amazon S3 buckets are supported. </p>"
       }
@@ -8181,6 +8488,7 @@
         "AssociationDescription$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
         "AssociationVersionInfo$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
         "AutomationExecution$TargetMaps": "<p>The specified key-value mapping of document parameters to target resources.</p>",
+        "AutomationExecutionInputs$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
         "AutomationExecutionMetadata$TargetMaps": "<p>The specified key-value mapping of document parameters to target resources.</p>",
         "CreateAssociationBatchRequestEntry$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
         "CreateAssociationRequest$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
@@ -8198,6 +8506,18 @@
       "base": null,
       "refs": {
         "ResolvedTargets$ParameterValues": "<p>A list of parameter values sent to targets that resolved during the Automation execution.</p>"
+      }
+    },
+    "TargetPreview": {
+      "base": "<p>Information about the resources that would be included in the actual runbook execution, if it were to be run.</p>",
+      "refs": {
+        "TargetPreviewList$member": null
+      }
+    },
+    "TargetPreviewList": {
+      "base": null,
+      "refs": {
+        "AutomationExecutionPreview$TargetPreviews": "<p>Information that provides a preview of what the impact of running the specified Automation runbook would be.</p>"
       }
     },
     "TargetType": {
@@ -8228,6 +8548,7 @@
         "AssociationDescription$Targets": "<p>The managed nodes targeted by the request. </p>",
         "AssociationVersionInfo$Targets": "<p>The targets specified for the association when the association version was created. </p>",
         "AutomationExecution$Targets": "<p>The specified targets.</p>",
+        "AutomationExecutionInputs$Targets": "<p>Information about the resources that would be included in the actual runbook execution, if it were to be run. Both Targets and TargetMaps can't be specified together.</p>",
         "AutomationExecutionMetadata$Targets": "<p>The targets defined by the user when starting the automation.</p>",
         "Command$Targets": "<p>An array of search criteria that targets managed nodes using a Key,Value combination that you specify. Targets is required if you don't provide one or more managed node IDs in the call.</p>",
         "CreateAssociationBatchRequestEntry$Targets": "<p>The managed nodes targeted by the request.</p>",
@@ -8338,6 +8659,11 @@
     },
     "UnsupportedOperatingSystem": {
       "base": "<p>The operating systems you specified isn't supported, or the operation isn't supported for the operating system.</p>",
+      "refs": {
+      }
+    },
+    "UnsupportedOperationException": {
+      "base": "<p>This operation is not supported for the current account. You must first enable the Systems Manager integrated experience in your account.</p>",
       "refs": {
       }
     },
@@ -8513,6 +8839,11 @@
       "base": null,
       "refs": {
         "StepExecution$ValidNextSteps": "<p>Strategies used when step fails, we support Continue and Abort. Abort will fail the automation when the step fails. Continue will ignore the failure of current step and allow automation to run the next step. With conditional branching, we add step:stepName to support the automation to go to another specific step.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The request isn't valid. Verify that you entered valid contents for the command and try again.</p>",
+      "refs": {
       }
     },
     "Version": {

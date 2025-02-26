@@ -131,6 +131,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "CancelCacheReport":{
+      "name":"CancelCacheReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CancelCacheReportInput"},
+      "output":{"shape":"CancelCacheReportOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "CancelRetrieval":{
       "name":"CancelRetrieval",
       "http":{
@@ -289,6 +302,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DeleteCacheReport":{
+      "name":"DeleteCacheReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteCacheReportInput"},
+      "output":{"shape":"DeleteCacheReportOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "DeleteChapCredentials":{
       "name":"DeleteChapCredentials",
       "http":{
@@ -440,6 +466,19 @@
       },
       "input":{"shape":"DescribeCacheInput"},
       "output":{"shape":"DescribeCacheOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "DescribeCacheReport":{
+      "name":"DescribeCacheReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCacheReportInput"},
+      "output":{"shape":"DescribeCacheReportOutput"},
       "errors":[
         {"shape":"InvalidGatewayRequestException"},
         {"shape":"InternalServerError"}
@@ -718,6 +757,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "ListCacheReports":{
+      "name":"ListCacheReports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCacheReportsInput"},
+      "output":{"shape":"ListCacheReportsOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "ListFileShares":{
       "name":"ListFileShares",
       "http":{
@@ -973,6 +1025,19 @@
       },
       "input":{"shape":"StartAvailabilityMonitorTestInput"},
       "output":{"shape":"StartAvailabilityMonitorTestOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "StartCacheReport":{
+      "name":"StartCacheReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartCacheReportInput"},
+      "output":{"shape":"StartCacheReportOutput"},
       "errors":[
         {"shape":"InvalidGatewayRequestException"},
         {"shape":"InternalServerError"}
@@ -1467,6 +1532,78 @@
         "CacheStaleTimeoutInSeconds":{"shape":"CacheStaleTimeoutInSeconds"}
       }
     },
+    "CacheReportARN":{
+      "type":"string",
+      "max":500,
+      "min":50
+    },
+    "CacheReportFilter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Values"
+      ],
+      "members":{
+        "Name":{"shape":"CacheReportFilterName"},
+        "Values":{"shape":"CacheReportFilterValues"}
+      }
+    },
+    "CacheReportFilterList":{
+      "type":"list",
+      "member":{"shape":"CacheReportFilter"}
+    },
+    "CacheReportFilterName":{
+      "type":"string",
+      "enum":[
+        "UploadState",
+        "UploadFailureReason"
+      ]
+    },
+    "CacheReportFilterValue":{
+      "type":"string",
+      "max":25,
+      "min":1
+    },
+    "CacheReportFilterValues":{
+      "type":"list",
+      "member":{"shape":"CacheReportFilterValue"}
+    },
+    "CacheReportInfo":{
+      "type":"structure",
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"},
+        "CacheReportStatus":{"shape":"CacheReportStatus"},
+        "ReportCompletionPercent":{"shape":"ReportCompletionPercent"},
+        "EndTime":{"shape":"Time"},
+        "Role":{"shape":"Role"},
+        "FileShareARN":{"shape":"FileShareARN"},
+        "LocationARN":{"shape":"LocationARN"},
+        "StartTime":{"shape":"Time"},
+        "InclusionFilters":{"shape":"CacheReportFilterList"},
+        "ExclusionFilters":{"shape":"CacheReportFilterList"},
+        "ReportName":{"shape":"CacheReportName"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CacheReportList":{
+      "type":"list",
+      "member":{"shape":"CacheReportInfo"}
+    },
+    "CacheReportName":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "CacheReportStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "CANCELED",
+        "FAILED",
+        "ERROR"
+      ]
+    },
     "CacheStaleTimeoutInSeconds":{"type":"integer"},
     "CachediSCSIVolume":{
       "type":"structure",
@@ -1505,6 +1642,19 @@
       "type":"structure",
       "members":{
         "TapeARN":{"shape":"TapeARN"}
+      }
+    },
+    "CancelCacheReportInput":{
+      "type":"structure",
+      "required":["CacheReportARN"],
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
+      }
+    },
+    "CancelCacheReportOutput":{
+      "type":"structure",
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
       }
     },
     "CancelRetrievalInput":{
@@ -1872,6 +2022,19 @@
         "GatewayARN":{"shape":"GatewayARN"}
       }
     },
+    "DeleteCacheReportInput":{
+      "type":"structure",
+      "required":["CacheReportARN"],
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
+      }
+    },
+    "DeleteCacheReportOutput":{
+      "type":"structure",
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
+      }
+    },
     "DeleteChapCredentialsInput":{
       "type":"structure",
       "required":[
@@ -2054,6 +2217,19 @@
         "CacheDirtyPercentage":{"shape":"double"},
         "CacheHitPercentage":{"shape":"double"},
         "CacheMissPercentage":{"shape":"double"}
+      }
+    },
+    "DescribeCacheReportInput":{
+      "type":"structure",
+      "required":["CacheReportARN"],
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
+      }
+    },
+    "DescribeCacheReportOutput":{
+      "type":"structure",
+      "members":{
+        "CacheReportInfo":{"shape":"CacheReportInfo"}
       }
     },
     "DescribeCachediSCSIVolumesInput":{
@@ -2859,6 +3035,19 @@
         "AutomaticTapeCreationPolicyInfos":{"shape":"AutomaticTapeCreationPolicyInfos"}
       }
     },
+    "ListCacheReportsInput":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"Marker"}
+      }
+    },
+    "ListCacheReportsOutput":{
+      "type":"structure",
+      "members":{
+        "CacheReportList":{"shape":"CacheReportList"},
+        "Marker":{"shape":"Marker"}
+      }
+    },
     "ListFileSharesInput":{
       "type":"structure",
       "members":{
@@ -3254,6 +3443,11 @@
         "ResourceARN":{"shape":"ResourceARN"}
       }
     },
+    "ReportCompletionPercent":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "ResetCacheInput":{
       "type":"structure",
       "required":["GatewayARN"],
@@ -3482,6 +3676,33 @@
       "type":"structure",
       "members":{
         "GatewayARN":{"shape":"GatewayARN"}
+      }
+    },
+    "StartCacheReportInput":{
+      "type":"structure",
+      "required":[
+        "FileShareARN",
+        "Role",
+        "LocationARN",
+        "BucketRegion",
+        "ClientToken"
+      ],
+      "members":{
+        "FileShareARN":{"shape":"FileShareARN"},
+        "Role":{"shape":"Role"},
+        "LocationARN":{"shape":"LocationARN"},
+        "BucketRegion":{"shape":"RegionId"},
+        "VPCEndpointDNSName":{"shape":"DNSHostName"},
+        "InclusionFilters":{"shape":"CacheReportFilterList"},
+        "ExclusionFilters":{"shape":"CacheReportFilterList"},
+        "ClientToken":{"shape":"ClientToken"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "StartCacheReportOutput":{
+      "type":"structure",
+      "members":{
+        "CacheReportARN":{"shape":"CacheReportARN"}
       }
     },
     "StartGatewayInput":{

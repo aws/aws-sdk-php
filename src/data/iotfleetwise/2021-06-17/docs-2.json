@@ -1,24 +1,26 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Web Services IoT FleetWise is a fully managed service that you can use to collect, model, and transfer vehicle data to the Amazon Web Services cloud at scale. With Amazon Web Services IoT FleetWise, you can standardize all of your vehicle data models, independent of the in-vehicle communication architecture, and define data collection rules to transfer only high-value data to the cloud. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/\">What is Amazon Web Services IoT FleetWise?</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
+  "service": "<p>Amazon Web Services IoT FleetWise is a fully managed service that you can use to collect, model, and transfer vehicle data to the Amazon Web Services cloud at scale. With Amazon Web Services IoT FleetWise, you can standardize all of your vehicle data models, independent of the in-vehicle communication architecture, and define data collection rules to transfer only high-value data to the cloud. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/\">What is Amazon Web Services IoT FleetWise?</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
   "operations": {
     "AssociateVehicleFleet": "<p> Adds, or associates, a vehicle with a fleet. </p>",
     "BatchCreateVehicle": "<p> Creates a group, or batch, of vehicles. </p> <note> <p> You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicles-cli.html\">Create multiple vehicles (AWS CLI)</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>. </p>",
     "BatchUpdateVehicle": "<p> Updates a group, or batch, of vehicles.</p> <note> <p> You must specify a decoder manifest and a vehicle model (model manifest) for each vehicle. </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/update-vehicles-cli.html\">Update multiple vehicles (AWS CLI)</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>. </p>",
-    "CreateCampaign": "<p>Creates an orchestration of data collection rules. The Amazon Web Services IoT FleetWise Edge Agent software running in vehicles uses campaigns to decide how to collect and transfer data to the cloud. You create campaigns in the cloud. After you or your team approve campaigns, Amazon Web Services IoT FleetWise automatically deploys them to vehicles. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/campaigns.html\">Collect and transfer data with campaigns</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
+    "CreateCampaign": "<p>Creates an orchestration of data collection rules. The Amazon Web Services IoT FleetWise Edge Agent software running in vehicles uses campaigns to decide how to collect and transfer data to the cloud. You create campaigns in the cloud. After you or your team approve campaigns, Amazon Web Services IoT FleetWise automatically deploys them to vehicles. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/campaigns.html\">Collect and transfer data with campaigns</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "CreateDecoderManifest": "<p>Creates the decoder manifest associated with a model manifest. To create a decoder manifest, the following must be true:</p> <ul> <li> <p>Every signal decoder has a unique name.</p> </li> <li> <p>Each signal decoder is associated with a network interface.</p> </li> <li> <p>Each network interface has a unique ID.</p> </li> <li> <p>The signal decoders are specified in the model manifest.</p> </li> </ul>",
     "CreateFleet": "<p> Creates a fleet that represents a group of vehicles. </p> <note> <p>You must create both a signal catalog and vehicles before you can create a fleet. </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleets.html\">Fleets</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
     "CreateModelManifest": "<p> Creates a vehicle model (model manifest) that specifies signals (attributes, branches, sensors, and actuators). </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/vehicle-models.html\">Vehicle models</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
     "CreateSignalCatalog": "<p> Creates a collection of standardized signals that can be reused to create vehicle models.</p>",
+    "CreateStateTemplate": "<p>Creates a state template. State templates contain state properties, which are signals that belong to a signal catalog that is synchronized between the Amazon Web Services IoT FleetWise Edge and the Amazon Web Services Cloud.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "CreateVehicle": "<p> Creates a vehicle, which is an instance of a vehicle model (model manifest). Vehicles created from the same vehicle model consist of the same signals inherited from the vehicle model.</p> <note> <p> If you have an existing Amazon Web Services IoT thing, you can use Amazon Web Services IoT FleetWise to create a vehicle and collect data from your thing. </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/create-vehicle-cli.html\">Create a vehicle (AWS CLI)</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
     "DeleteCampaign": "<p> Deletes a data collection campaign. Deleting a campaign suspends all data collection and removes it from any vehicles. </p>",
-    "DeleteDecoderManifest": "<p> Deletes a decoder manifest. You can't delete a decoder manifest if it has vehicles associated with it. </p> <note> <p>If the decoder manifest is successfully deleted, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "DeleteFleet": "<p> Deletes a fleet. Before you delete a fleet, all vehicles must be dissociated from the fleet. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/delete-fleet-cli.html\">Delete a fleet (AWS CLI)</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> <note> <p>If the fleet is successfully deleted, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "DeleteModelManifest": "<p> Deletes a vehicle model (model manifest).</p> <note> <p>If the vehicle model is successfully deleted, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "DeleteSignalCatalog": "<p> Deletes a signal catalog. </p> <note> <p>If the signal catalog is successfully deleted, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "DeleteVehicle": "<p> Deletes a vehicle and removes it from any campaigns.</p> <note> <p>If the vehicle is successfully deleted, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "DisassociateVehicleFleet": "<p>Removes, or disassociates, a vehicle from a fleet. Disassociating a vehicle from a fleet doesn't delete the vehicle.</p> <note> <p>If the vehicle is successfully dissociated from a fleet, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty body.</p> </note>",
-    "GetCampaign": "<p> Retrieves information about a campaign. </p>",
+    "DeleteDecoderManifest": "<p> Deletes a decoder manifest. You can't delete a decoder manifest if it has vehicles associated with it. </p>",
+    "DeleteFleet": "<p> Deletes a fleet. Before you delete a fleet, all vehicles must be dissociated from the fleet. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/delete-fleet-cli.html\">Delete a fleet (AWS CLI)</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p>",
+    "DeleteModelManifest": "<p> Deletes a vehicle model (model manifest).</p>",
+    "DeleteSignalCatalog": "<p> Deletes a signal catalog. </p>",
+    "DeleteStateTemplate": "<p>Deletes a state template.</p>",
+    "DeleteVehicle": "<p> Deletes a vehicle and removes it from any campaigns.</p>",
+    "DisassociateVehicleFleet": "<p>Removes, or disassociates, a vehicle from a fleet. Disassociating a vehicle from a fleet doesn't delete the vehicle.</p>",
+    "GetCampaign": "<p> Retrieves information about a campaign. </p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "GetDecoderManifest": "<p> Retrieves information about a created decoder manifest. </p>",
     "GetEncryptionConfiguration": "<p>Retrieves the encryption configuration for resources and data in Amazon Web Services IoT FleetWise.</p>",
     "GetFleet": "<p> Retrieves information about a fleet. </p>",
@@ -26,9 +28,10 @@
     "GetModelManifest": "<p> Retrieves information about a vehicle model (model manifest). </p>",
     "GetRegisterAccountStatus": "<p> Retrieves information about the status of registering your Amazon Web Services account, IAM, and Amazon Timestream resources so that Amazon Web Services IoT FleetWise can transfer your vehicle data to the Amazon Web Services Cloud. </p> <p>For more information, including step-by-step procedures, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/setting-up.html\">Setting up Amazon Web Services IoT FleetWise</a>. </p> <note> <p>This API operation doesn't require input parameters.</p> </note>",
     "GetSignalCatalog": "<p> Retrieves information about a signal catalog. </p>",
+    "GetStateTemplate": "<p>Retrieves information about a state template.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "GetVehicle": "<p> Retrieves information about a vehicle. </p>",
-    "GetVehicleStatus": "<p> Retrieves information about the status of a vehicle with any associated campaigns. </p>",
-    "ImportDecoderManifest": "<p> Creates a decoder manifest using your existing CAN DBC file from your local device. </p>",
+    "GetVehicleStatus": "<p> Retrieves information about the status of campaigns, decoder manifests, or state templates associated with a vehicle.</p>",
+    "ImportDecoderManifest": "<p> Creates a decoder manifest using your existing CAN DBC file from your local device. </p> <p>The CAN signal name must be unique and not repeated across CAN message definitions in a .dbc file. </p>",
     "ImportSignalCatalog": "<p> Creates a signal catalog using your existing VSS formatted content from your local device. </p>",
     "ListCampaigns": "<p> Lists information about created campaigns. </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
     "ListDecoderManifestNetworkInterfaces": "<p> Lists the network interfaces specified in a decoder manifest. </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
@@ -40,6 +43,7 @@
     "ListModelManifests": "<p> Retrieves a list of vehicle models (model manifests). </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
     "ListSignalCatalogNodes": "<p> Lists of information about the signals (nodes) specified in a signal catalog. </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
     "ListSignalCatalogs": "<p> Lists all the created signal catalogs in an Amazon Web Services account. </p> <p>You can use to list information about each signal (node) specified in a signal catalog.</p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
+    "ListStateTemplates": "<p>Lists information about created state templates.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "ListTagsForResource": "<p>Lists the tags (metadata) you have assigned to the resource.</p>",
     "ListVehicles": "<p> Retrieves a list of summaries of created vehicles. </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
     "ListVehiclesInFleet": "<p> Retrieves a list of summaries of all vehicles associated with a fleet. </p> <note> <p>This API operation uses pagination. Specify the <code>nextToken</code> parameter in the request to return more results.</p> </note>",
@@ -50,9 +54,10 @@
     "UntagResource": "<p>Removes the given tags (metadata) from the resource.</p>",
     "UpdateCampaign": "<p> Updates a campaign. </p>",
     "UpdateDecoderManifest": "<p> Updates a decoder manifest.</p> <p>A decoder manifest can only be updated when the status is <code>DRAFT</code>. Only <code>ACTIVE</code> decoder manifests can be associated with vehicles.</p>",
-    "UpdateFleet": "<p> Updates the description of an existing fleet. </p> <note> <p>If the fleet is successfully updated, Amazon Web Services IoT FleetWise sends back an HTTP 200 response with an empty HTTP body.</p> </note>",
+    "UpdateFleet": "<p> Updates the description of an existing fleet. </p>",
     "UpdateModelManifest": "<p> Updates a vehicle model (model manifest). If created vehicles are associated with a vehicle model, it can't be updated.</p>",
     "UpdateSignalCatalog": "<p> Updates a signal catalog. </p>",
+    "UpdateStateTemplate": "<p>Updates a state template.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
     "UpdateVehicle": "<p> Updates a vehicle. </p>"
   },
   "shapes": {
@@ -184,7 +189,7 @@
     "Compression": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$compression": "<p> (Optional) Whether to compress signals before transmitting data to Amazon Web Services IoT FleetWise. If you don't want to compress the signals, use <code>OFF</code>. If it's not specified, <code>SNAPPY</code> is used. </p> <p>Default: <code>SNAPPY</code> </p>",
+        "CreateCampaignRequest$compression": "<p>Determines whether to compress signals before transmitting data to Amazon Web Services IoT FleetWise. If you don't want to compress the signals, use <code>OFF</code>. If it's not specified, <code>SNAPPY</code> is used. </p> <p>Default: <code>SNAPPY</code> </p>",
         "GetCampaignResponse$compression": "<p> Whether to compress signals before transmitting data to Amazon Web Services IoT FleetWise. If <code>OFF</code> is specified, the signals aren't compressed. If it's not specified, <code>SNAPPY</code> is used. </p>"
       }
     },
@@ -192,6 +197,12 @@
       "base": "<p>Information about a collection scheme that uses a simple logical expression to recognize what data to collect.</p>",
       "refs": {
         "CollectionScheme$conditionBasedCollectionScheme": "<p>Information about a collection scheme that uses a simple logical expression to recognize what data to collect.</p>"
+      }
+    },
+    "ConditionBasedSignalFetchConfig": {
+      "base": "<p>Specifies the condition under which a signal fetch occurs.</p>",
+      "refs": {
+        "SignalFetchConfig$conditionBased": "<p>The configuration of a condition-based signal fetch operation.</p>"
       }
     },
     "ConflictException": {
@@ -249,6 +260,16 @@
       "refs": {
       }
     },
+    "CreateStateTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateStateTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateVehicleError": {
       "base": "<p>An HTTP error resulting from creating a vehicle.</p>",
       "refs": {
@@ -277,6 +298,30 @@
         "createVehicleResponses$member": null
       }
     },
+    "CustomDecodingId": {
+      "base": null,
+      "refs": {
+        "CustomDecodingSignal$id": "<p>The ID of the signal.</p>"
+      }
+    },
+    "CustomDecodingInterface": {
+      "base": "<p>Represents a custom network interface as defined by the customer.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "NetworkInterface$customDecodingInterface": "<p>Information about a <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_CustomDecodingInterface.html\">custom network interface</a>.</p>"
+      }
+    },
+    "CustomDecodingSignal": {
+      "base": "<p>Information about signals using a custom decoding protocol as defined by the customer.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "SignalDecoder$customDecodingSignal": "<p>Information about a <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_CustomDecodingSignal.html\">custom signal decoder</a>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
+      }
+    },
+    "CustomDecodingSignalInterfaceName": {
+      "base": null,
+      "refs": {
+        "CustomDecodingInterface$name": "<p>The name of the interface.</p>"
+      }
+    },
     "CustomProperty": {
       "base": "<p>Represents a member of the complex data structure. The data type of the property can be either primitive or another <code>struct</code>.</p>",
       "refs": {
@@ -290,7 +335,7 @@
       }
     },
     "DataDestinationConfig": {
-      "base": "<p>The destination where the Amazon Web Services IoT FleetWise campaign sends data. You can send data to be stored in Amazon S3 or Amazon Timestream.</p>",
+      "base": "<p>The destination where the campaign sends data. You can send data to an MQTT topic, or store it in Amazon S3 or Amazon Timestream.</p>",
       "refs": {
         "DataDestinationConfigs$member": null
       }
@@ -298,14 +343,14 @@
     "DataDestinationConfigs": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$dataDestinationConfigs": "<p>The destination where the campaign sends data. You can choose to send data to be stored in Amazon S3 or Amazon Timestream.</p> <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. Amazon Web Services IoT FleetWise supports at-least-once file delivery to S3. Your vehicle data is stored on multiple Amazon Web Services IoT FleetWise servers for redundancy and high availability.</p> <p>You can use Amazon Timestream to access and analyze time series data, and Timestream to query vehicle data so that you can identify trends and patterns.</p>",
-        "GetCampaignResponse$dataDestinationConfigs": "<p>The destination where the campaign sends data. You can choose to send data to be stored in Amazon S3 or Amazon Timestream.</p> <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. </p> <p>You can use Amazon Timestream to access and analyze time series data, and Timestream to query vehicle data so that you can identify trends and patterns.</p>"
+        "CreateCampaignRequest$dataDestinationConfigs": "<p>The destination where the campaign sends data. You can send data to an MQTT topic, or store it in Amazon S3 or Amazon Timestream.</p> <p>MQTT is the publish/subscribe messaging protocol used by Amazon Web Services IoT to communicate with your devices.</p> <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. Amazon Web Services IoT FleetWise supports at-least-once file delivery to S3. Your vehicle data is stored on multiple Amazon Web Services IoT FleetWise servers for redundancy and high availability.</p> <p>You can use Amazon Timestream to access and analyze time series data, and Timestream to query vehicle data so that you can identify trends and patterns.</p>",
+        "GetCampaignResponse$dataDestinationConfigs": "<p>The destination where the campaign sends data. You can send data to an MQTT topic, or store it in Amazon S3 or Amazon Timestream.</p> <p>MQTT is the publish/subscribe messaging protocol used by Amazon Web Services IoT to communicate with your devices.</p> <p>Amazon S3 optimizes the cost of data storage and provides additional mechanisms to use vehicle data, such as data lakes, centralized data storage, data processing pipelines, and analytics. </p> <p>You can use Amazon Timestream to access and analyze time series data, and Timestream to query vehicle data so that you can identify trends and patterns.</p>"
       }
     },
     "DataExtraDimensionNodePathList": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$dataExtraDimensions": "<p> (Optional) A list of vehicle attributes to associate with a campaign. </p> <p>Enrich the data with specified vehicle attributes. For example, add <code>make</code> and <code>model</code> to the campaign, and Amazon Web Services IoT FleetWise will associate the data with those attributes as dimensions in Amazon Timestream. You can then query the data against <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>",
+        "CreateCampaignRequest$dataExtraDimensions": "<p>A list of vehicle attributes to associate with a campaign. </p> <p>Enrich the data with specified vehicle attributes. For example, add <code>make</code> and <code>model</code> to the campaign, and Amazon Web Services IoT FleetWise will associate the data with those attributes as dimensions in Amazon Timestream. You can then query the data against <code>make</code> and <code>model</code>.</p> <p>Default: An empty array</p>",
         "GetCampaignResponse$dataExtraDimensions": "<p> A list of vehicle attributes associated with the campaign. </p>",
         "UpdateCampaignRequest$dataExtraDimensions": "<p> A list of vehicle attributes to associate with a signal. </p> <p>Default: An empty array</p>"
       }
@@ -314,6 +359,38 @@
       "base": null,
       "refs": {
         "S3Config$dataFormat": "<p>Specify the format that files are saved in the Amazon S3 bucket. You can save files in an Apache Parquet or JSON format.</p> <ul> <li> <p>Parquet - Store data in a columnar storage file format. Parquet is optimal for fast data retrieval and can reduce costs. This option is selected by default.</p> </li> <li> <p>JSON - Store data in a standard text-based JSON file format.</p> </li> </ul>"
+      }
+    },
+    "DataPartition": {
+      "base": "<p>The configuration for signal data storage and upload options. You can only specify these options when the campaign's spooling mode is <code>TO_DISK</code>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "DataPartitions$member": null
+      }
+    },
+    "DataPartitionId": {
+      "base": null,
+      "refs": {
+        "DataPartition$id": "<p>The ID of the data partition. The data partition ID must be unique within a campaign. You can establish a data partition as the default partition for a campaign by using <code>default</code> as the ID.</p>",
+        "SignalInformation$dataPartitionId": "<p>The ID of the data partition this signal is associated with.</p> <p>The ID must match one of the IDs provided in <code>dataPartitions</code>. This is accomplished either by specifying a particular data partition ID or by using <code>default</code> for an established default partition. You can establish a default partition in the <code>DataPartition</code> data type.</p> <note> <p>If you upload a signal as a condition for a campaign's data partition, the same signal must be included in <code>signalsToCollect</code>.</p> </note> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
+      }
+    },
+    "DataPartitionStorageOptions": {
+      "base": "<p>Size, time, and location options for the data partition.</p>",
+      "refs": {
+        "DataPartition$storageOptions": "<p>The storage options for a data partition.</p>"
+      }
+    },
+    "DataPartitionUploadOptions": {
+      "base": "<p>The upload options for the data partition. If upload options are specified, you must also specify storage options. See <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_DataPartitionStorageOptions.html\">DataPartitionStorageOptions</a>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "DataPartition$uploadOptions": "<p>The upload options for the data partition.</p>"
+      }
+    },
+    "DataPartitions": {
+      "base": null,
+      "refs": {
+        "CreateCampaignRequest$dataPartitions": "<p>The data partitions associated with the signals collected from the vehicle.</p>",
+        "GetCampaignResponse$dataPartitions": "<p>The data partitions associated with the signals collected from the vehicle.</p>"
       }
     },
     "DecoderManifestSummary": {
@@ -325,6 +402,13 @@
     "DecoderManifestValidationException": {
       "base": "<p>The request couldn't be completed because it contains signal decoders with one or more validation errors.</p>",
       "refs": {
+      }
+    },
+    "DefaultForUnmappedSignalsType": {
+      "base": null,
+      "refs": {
+        "CreateDecoderManifestRequest$defaultForUnmappedSignals": "<p>Use default decoders for all unmapped signals in the model. You don't need to provide any detailed decoding information.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+        "UpdateDecoderManifestRequest$defaultForUnmappedSignals": "<p>Use default decoders for all unmapped signals in the model. You don't need to provide any detailed decoding information.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
       }
     },
     "DeleteCampaignRequest": {
@@ -377,6 +461,16 @@
       "refs": {
       }
     },
+    "DeleteStateTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteStateTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteVehicleRequest": {
       "base": null,
       "refs": {
@@ -390,7 +484,7 @@
     "DiagnosticsMode": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$diagnosticsMode": "<p> (Optional) Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise. If you want to send diagnostic trouble codes, use <code>SEND_ACTIVE_DTCS</code>. If it's not specified, <code>OFF</code> is used.</p> <p>Default: <code>OFF</code> </p>",
+        "CreateCampaignRequest$diagnosticsMode": "<p>Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise. If you want to send diagnostic trouble codes, use <code>SEND_ACTIVE_DTCS</code>. If it's not specified, <code>OFF</code> is used.</p> <p>Default: <code>OFF</code> </p>",
         "GetCampaignResponse$diagnosticsMode": "<p> Option for a vehicle to send diagnostic trouble codes to Amazon Web Services IoT FleetWise. </p>"
       }
     },
@@ -417,6 +511,12 @@
         "GetEncryptionConfigurationResponse$encryptionType": "<p>The type of encryption. Set to <code>KMS_BASED_ENCRYPTION</code> to use a KMS key that you own and manage. Set to <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key that is owned by the Amazon Web Services IoT FleetWise service account.</p>",
         "PutEncryptionConfigurationRequest$encryptionType": "<p>The type of encryption. Choose <code>KMS_BASED_ENCRYPTION</code> to use a KMS key or <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key.</p>",
         "PutEncryptionConfigurationResponse$encryptionType": "<p>The type of encryption. Set to <code>KMS_BASED_ENCRYPTION</code> to use an KMS key that you own and manage. Set to <code>FLEETWISE_DEFAULT_ENCRYPTION</code> to use an Amazon Web Services managed key that is owned by the Amazon Web Services IoT FleetWise service account.</p>"
+      }
+    },
+    "EventExpressionList": {
+      "base": null,
+      "refs": {
+        "SignalFetchInformation$actions": "<p>The actions to be performed by the signal fetch.</p>"
       }
     },
     "FleetSummary": {
@@ -526,6 +626,16 @@
       "refs": {
       }
     },
+    "GetStateTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetStateTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetVehicleRequest": {
       "base": null,
       "refs": {
@@ -550,6 +660,7 @@
       "base": null,
       "refs": {
         "IamResources$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM resource that allows Amazon Web Services IoT FleetWise to send data to Amazon Timestream. For example, <code>arn:aws:iam::123456789012:role/SERVICE-ROLE-ARN</code>. </p>",
+        "MqttTopicConfig$executionRoleArn": "<p>The ARN of the role that grants Amazon Web Services IoT FleetWise permission to access and act on messages sent to the MQTT topic.</p>",
         "TimestreamConfig$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the task execution role that grants Amazon Web Services IoT FleetWise permission to deliver data to the Amazon Timestream table.</p>"
       }
     },
@@ -758,6 +869,16 @@
       "refs": {
       }
     },
+    "ListStateTemplatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListStateTemplatesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTagsForResourceRequest": {
       "base": null,
       "refs": {
@@ -821,6 +942,18 @@
       "base": null,
       "refs": {
         "CanDbcDefinition$signalsMap": "<p>Pairs every signal specified in your vehicle model with a signal decoder.</p>"
+      }
+    },
+    "MqttTopicArn": {
+      "base": null,
+      "refs": {
+        "MqttTopicConfig$mqttTopicArn": "<p>The ARN of the MQTT topic.</p>"
+      }
+    },
+    "MqttTopicConfig": {
+      "base": "<p>The MQTT topic to which the Amazon Web Services IoT FleetWise campaign routes data. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html\">Device communication protocols</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "DataDestinationConfig$mqttTopicConfig": "<p>The MQTT topic to which the Amazon Web Services IoT FleetWise campaign routes data.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
       }
     },
     "NetworkFileBlob": {
@@ -908,7 +1041,11 @@
         "CustomProperty$structFullyQualifiedName": "<p>The fully qualified name of the struct node for the custom property if the data type of the custom property is <code>Struct</code> or <code>StructArray</code>. </p>",
         "DataExtraDimensionNodePathList$member": null,
         "NodePaths$member": null,
-        "Sensor$structFullyQualifiedName": "<p>The fully qualified name of the struct node for a sensor if the data type of the actuator is <code>Struct</code> or <code>StructArray</code>. For example, the struct fully qualified name of a sensor might be <code>Vehicle.ADAS.CameraStruct</code>.</p>"
+        "Sensor$structFullyQualifiedName": "<p>The fully qualified name of the struct node for a sensor if the data type of the actuator is <code>Struct</code> or <code>StructArray</code>. For example, the struct fully qualified name of a sensor might be <code>Vehicle.ADAS.CameraStruct</code>.</p>",
+        "SignalFetchInformation$fullyQualifiedName": "<p>The fully qualified name of the signal to be fetched.</p>",
+        "StateTemplateDataExtraDimensionNodePathList$member": null,
+        "StateTemplateMetadataExtraDimensionNodePathList$member": null,
+        "StateTemplateProperties$member": null
       }
     },
     "NodePaths": {
@@ -943,9 +1080,9 @@
       }
     },
     "ObdInterface": {
-      "base": "<p>A network interface that specifies the On-board diagnostic (OBD) II network protocol.</p>",
+      "base": "<p>A network interface that specifies the on-board diagnostic (OBD) II network protocol.</p>",
       "refs": {
-        "NetworkInterface$obdInterface": "<p>Information about a network interface specified by the On-board diagnostic (OBD) II protocol.</p>"
+        "NetworkInterface$obdInterface": "<p>Information about a network interface specified by the on-board diagnostic (OBD) II protocol.</p>"
       }
     },
     "ObdInterfaceName": {
@@ -957,7 +1094,7 @@
     "ObdSignal": {
       "base": "<p>Information about signal messages using the on-board diagnostics (OBD) II protocol in a vehicle.</p>",
       "refs": {
-        "SignalDecoder$obdSignal": "<p>Information about signal decoder using the On-board diagnostic (OBD) II protocol.</p>"
+        "SignalDecoder$obdSignal": "<p>Information about signal decoder using the on-board diagnostic (OBD) II protocol.</p>"
       }
     },
     "ObdStandard": {
@@ -966,10 +1103,22 @@
         "ObdInterface$obdStandard": "<p>The standard OBD II PID.</p>"
       }
     },
+    "OnChangeStateTemplateUpdateStrategy": {
+      "base": "<p>Vehicles associated with the state template will stream telemetry data when there is a change.</p>",
+      "refs": {
+        "StateTemplateUpdateStrategy$onChange": null
+      }
+    },
+    "PeriodicStateTemplateUpdateStrategy": {
+      "base": "<p>Vehicles associated with the state template will stream telemetry data during a specified time period.</p>",
+      "refs": {
+        "StateTemplateUpdateStrategy$periodic": null
+      }
+    },
     "Prefix": {
       "base": null,
       "refs": {
-        "S3Config$prefix": "<p>(Optional) Enter an S3 bucket prefix. The prefix is the string of characters after the bucket name and before the object name. You can use the prefix to organize data stored in Amazon S3 buckets. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-prefixes.html\">Organizing objects using prefixes</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <p>By default, Amazon Web Services IoT FleetWise sets the prefix <code>processed-data/year=YY/month=MM/date=DD/hour=HH/</code> (in UTC) to data it delivers to Amazon S3. You can enter a prefix to append it to this default prefix. For example, if you enter the prefix <code>vehicles</code>, the prefix will be <code>vehicles/processed-data/year=YY/month=MM/date=DD/hour=HH/</code>.</p>"
+        "S3Config$prefix": "<p>Enter an S3 bucket prefix. The prefix is the string of characters after the bucket name and before the object name. You can use the prefix to organize data stored in Amazon S3 buckets. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-prefixes.html\">Organizing objects using prefixes</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <p>By default, Amazon Web Services IoT FleetWise sets the prefix <code>processed-data/year=YY/month=MM/date=DD/hour=HH/</code> (in UTC) to data it delivers to Amazon S3. You can enter a prefix to append it to this default prefix. For example, if you enter the prefix <code>vehicles</code>, the prefix will be <code>vehicles/processed-data/year=YY/month=MM/date=DD/hour=HH/</code>.</p>"
       }
     },
     "PrimitiveBoolean": {
@@ -1062,9 +1211,29 @@
         "TimestreamRegistrationResponse$registrationStatus": "<p>The status of registering your Amazon Timestream resources. The status can be one of <code>REGISTRATION_SUCCESS</code>, <code>REGISTRATION_PENDING</code>, <code>REGISTRATION_FAILURE</code>.</p>"
       }
     },
+    "ResourceIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>",
+        "GetStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>",
+        "StateTemplateAssociation$identifier": "<p>A unique, service-generated identifier.</p>",
+        "StateTemplateAssociationIdentifiers$member": null,
+        "UpdateStateTemplateRequest$identifier": "<p>A unique, service-generated identifier.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The resource wasn't found.</p>",
       "refs": {
+      }
+    },
+    "ResourceUniqueId": {
+      "base": null,
+      "refs": {
+        "CreateStateTemplateResponse$id": "<p>The unique ID of the state template.</p>",
+        "DeleteStateTemplateResponse$id": "<p>The unique ID of the state template.</p>",
+        "GetStateTemplateResponse$id": "<p>The unique ID of the state template.</p>",
+        "StateTemplateSummary$id": "<p>The unique ID of the state template.</p>",
+        "UpdateStateTemplateResponse$id": "<p>The unique ID of the state template.</p>"
       }
     },
     "RetryAfterSeconds": {
@@ -1125,6 +1294,25 @@
         "UpdateDecoderManifestRequest$signalDecodersToUpdate": "<p> A list of updated information about decoding signals to update in the decoder manifest. </p>"
       }
     },
+    "SignalFetchConfig": {
+      "base": "<p>The configuration of the signal fetch operation.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "SignalFetchInformation$signalFetchConfig": "<p>The configuration of the signal fetch operation.</p>"
+      }
+    },
+    "SignalFetchInformation": {
+      "base": "<p>Information about the signal to be fetched.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "SignalFetchInformationList$member": null
+      }
+    },
+    "SignalFetchInformationList": {
+      "base": null,
+      "refs": {
+        "CreateCampaignRequest$signalsToFetch": "<p>A list of information about signals to fetch.</p>",
+        "GetCampaignResponse$signalsToFetch": "<p>Information about a list of signals to fetch data from.</p>"
+      }
+    },
     "SignalInformation": {
       "base": "<p>Information about a signal.</p>",
       "refs": {
@@ -1134,7 +1322,7 @@
     "SignalInformationList": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$signalsToCollect": "<p>(Optional) A list of information about signals to collect. </p>",
+        "CreateCampaignRequest$signalsToCollect": "<p>A list of information about signals to collect. </p> <note> <p>If you upload a signal as a condition in a data partition for a campaign, then those same signals must be included in <code>signalsToCollect</code>.</p> </note>",
         "GetCampaignResponse$signalsToCollect": "<p> Information about a list of signals to collect data on. </p>"
       }
     },
@@ -1147,14 +1335,122 @@
     "SpoolingMode": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$spoolingMode": "<p>(Optional) Whether to store collected data after a vehicle lost a connection with the cloud. After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise. If you want to store collected data when a vehicle loses connection with the cloud, use <code>TO_DISK</code>. If it's not specified, <code>OFF</code> is used.</p> <p>Default: <code>OFF</code> </p>",
+        "CreateCampaignRequest$spoolingMode": "<p>Determines whether to store collected data after a vehicle lost a connection with the cloud. After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise. If you want to store collected data when a vehicle loses connection with the cloud, use <code>TO_DISK</code>. If it's not specified, <code>OFF</code> is used.</p> <p>Default: <code>OFF</code> </p>",
         "GetCampaignResponse$spoolingMode": "<p> Whether to store collected data after a vehicle lost a connection with the cloud. After a connection is re-established, the data is automatically forwarded to Amazon Web Services IoT FleetWise. </p>"
+      }
+    },
+    "StateTemplateAssociation": {
+      "base": "<p>The state template associated with a vehicle. State templates contain state properties, which are signals that belong to a signal catalog that is synchronized between the Amazon Web Services IoT FleetWise Edge and the Amazon Web Services Cloud.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "StateTemplateAssociations$member": null
+      }
+    },
+    "StateTemplateAssociationIdentifiers": {
+      "base": null,
+      "refs": {
+        "UpdateVehicleRequest$stateTemplatesToRemove": "<p>Remove state templates from the vehicle.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToRemove": "<p>Remove existing state template associations from the vehicle.</p>"
+      }
+    },
+    "StateTemplateAssociations": {
+      "base": null,
+      "refs": {
+        "CreateVehicleRequest$stateTemplates": "<p>Associate state templates with the vehicle. You can monitor the last known state of the vehicle in near real time.</p>",
+        "CreateVehicleRequestItem$stateTemplates": "<p>Associate state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>",
+        "GetVehicleResponse$stateTemplates": "<p>State templates associated with the vehicle.</p>",
+        "UpdateVehicleRequest$stateTemplatesToAdd": "<p>Associate state templates with the vehicle.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToAdd": "<p>Associate additional state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>"
+      }
+    },
+    "StateTemplateDataExtraDimensionNodePathList": {
+      "base": null,
+      "refs": {
+        "CreateStateTemplateRequest$dataExtraDimensions": "<p>A list of vehicle attributes to associate with the payload published on the state template's MQTT topic. (See <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data\"> Processing last known state vehicle data using MQTT messaging</a>). For example, if you add <code>Vehicle.Attributes.Make</code> and <code>Vehicle.Attributes.Model</code> attributes, Amazon Web Services IoT FleetWise will enrich the protobuf encoded payload with those attributes in the <code>extraDimensions</code> field.</p>",
+        "GetStateTemplateResponse$dataExtraDimensions": "<p>A list of vehicle attributes associated with the payload published on the state template's MQTT topic. </p> <p>Default: An empty array</p>",
+        "UpdateStateTemplateRequest$dataExtraDimensions": "<p>A list of vehicle attributes to associate with the payload published on the state template's MQTT topic. (See <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data\"> Processing last known state vehicle data using MQTT messaging</a>). For example, if you add <code>Vehicle.Attributes.Make</code> and <code>Vehicle.Attributes.Model</code> attributes, Amazon Web Services IoT FleetWise will enrich the protobuf encoded payload with those attributes in the <code>extraDimensions</code> field.</p> <p>Default: An empty array</p>"
+      }
+    },
+    "StateTemplateMetadataExtraDimensionNodePathList": {
+      "base": null,
+      "refs": {
+        "CreateStateTemplateRequest$metadataExtraDimensions": "<p>A list of vehicle attributes to associate with user properties of the messages published on the state template's MQTT topic. (See <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data\"> Processing last known state vehicle data using MQTT messaging</a>). For example, if you add <code>Vehicle.Attributes.Make</code> and <code>Vehicle.Attributes.Model</code> attributes, Amazon Web Services IoT FleetWise will include these attributes as User Properties with the MQTT message.</p> <p>Default: An empty array</p>",
+        "GetStateTemplateResponse$metadataExtraDimensions": "<p>A list of vehicle attributes to associate with user properties of the messages published on the state template's MQTT topic.</p> <p>Default: An empty array</p>",
+        "UpdateStateTemplateRequest$metadataExtraDimensions": "<p>A list of vehicle attributes to associate with user properties of the messages published on the state template's MQTT topic. (See <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data\"> Processing last known state vehicle data using MQTT messaging</a>). For example, if you add <code>Vehicle.Attributes.Make</code> and <code>Vehicle.Attributes.Model</code> attributes, Amazon Web Services IoT FleetWise will include these attributes as User Properties with the MQTT message.</p>"
+      }
+    },
+    "StateTemplateProperties": {
+      "base": null,
+      "refs": {
+        "CreateStateTemplateRequest$stateTemplateProperties": "<p>A list of signals from which data is collected. The state template properties contain the fully qualified names of the signals.</p>",
+        "GetStateTemplateResponse$stateTemplateProperties": "<p>A list of signals from which data is collected. The state template properties contain the fully qualified names of the signals.</p>",
+        "UpdateStateTemplateRequest$stateTemplatePropertiesToAdd": "<p>Add signals from which data is collected as part of the state template.</p>",
+        "UpdateStateTemplateRequest$stateTemplatePropertiesToRemove": "<p>Remove signals from which data is collected as part of the state template.</p>"
+      }
+    },
+    "StateTemplateSummaries": {
+      "base": null,
+      "refs": {
+        "ListStateTemplatesResponse$summaries": "<p>A list of information about each state template.</p>"
+      }
+    },
+    "StateTemplateSummary": {
+      "base": "<p>Information about a state template.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "StateTemplateSummaries$member": null
+      }
+    },
+    "StateTemplateUpdateStrategy": {
+      "base": "<p>The update strategy for the state template. Vehicles associated with the state template can stream telemetry data with either an <code>onChange</code> or <code>periodic</code> update strategy. </p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "StateTemplateAssociation$stateTemplateUpdateStrategy": null
       }
     },
     "StorageCompressionFormat": {
       "base": null,
       "refs": {
         "S3Config$storageCompressionFormat": "<p>By default, stored data is compressed as a .gzip file. Compressed files have a reduced file size, which can optimize the cost of data storage.</p>"
+      }
+    },
+    "StorageLocation": {
+      "base": null,
+      "refs": {
+        "DataPartitionStorageOptions$storageLocation": "<p>The folder name for the data partition under the campaign storage folder.</p>"
+      }
+    },
+    "StorageMaximumSize": {
+      "base": "<p>The maximum storage size for the data partition.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "DataPartitionStorageOptions$maximumSize": "<p>The maximum storage size of the data stored in the data partition.</p> <note> <p>Newer data overwrites older data when the partition reaches the maximum size.</p> </note>"
+      }
+    },
+    "StorageMaximumSizeUnit": {
+      "base": null,
+      "refs": {
+        "StorageMaximumSize$unit": "<p>The data type of the data to store.</p>"
+      }
+    },
+    "StorageMaximumSizeValue": {
+      "base": null,
+      "refs": {
+        "StorageMaximumSize$value": "<p>The maximum amount of time to store data.</p>"
+      }
+    },
+    "StorageMinimumTimeToLive": {
+      "base": "<p>Information about the minimum amount of time that data will be kept.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
+      "refs": {
+        "DataPartitionStorageOptions$minimumTimeToLive": "<p>The amount of time that data in this partition will be kept on disk.</p> <ul> <li> <p>After the designated amount of time passes, the data can be removed, but it's not guaranteed to be removed.</p> </li> <li> <p>Before the time expires, data in this partition can still be deleted if the partition reaches its configured maximum size.</p> </li> <li> <p>Newer data will overwrite older data when the partition reaches the maximum size.</p> </li> </ul>"
+      }
+    },
+    "StorageMinimumTimeToLiveUnit": {
+      "base": null,
+      "refs": {
+        "StorageMinimumTimeToLive$unit": "<p>The time increment type.</p>"
+      }
+    },
+    "StorageMinimumTimeToLiveValue": {
+      "base": null,
+      "refs": {
+        "StorageMinimumTimeToLive$value": "<p>The minimum amount of time to store the data.</p>"
       }
     },
     "String": {
@@ -1233,6 +1529,7 @@
         "CreateFleetRequest$tags": "<p>Metadata that can be used to manage the fleet.</p>",
         "CreateModelManifestRequest$tags": "<p>Metadata that can be used to manage the vehicle model.</p>",
         "CreateSignalCatalogRequest$tags": "<p>Metadata that can be used to manage the signal catalog.</p>",
+        "CreateStateTemplateRequest$tags": "<p>Metadata that can be used to manage the state template.</p>",
         "CreateVehicleRequest$tags": "<p>Metadata that can be used to manage the vehicle.</p>",
         "CreateVehicleRequestItem$tags": "<p>Metadata which can be used to manage the vehicle.</p>",
         "ImportSignalCatalogRequest$tags": "<p>Metadata that can be used to manage the signal catalog.</p>",
@@ -1265,6 +1562,24 @@
       "base": "<p>Information about a collection scheme that uses a time period to decide how often to collect data.</p>",
       "refs": {
         "CollectionScheme$timeBasedCollectionScheme": "<p>Information about a collection scheme that uses a time period to decide how often to collect data.</p>"
+      }
+    },
+    "TimeBasedSignalFetchConfig": {
+      "base": "<p>Used to configure a frequency-based vehicle signal fetch.</p>",
+      "refs": {
+        "SignalFetchConfig$timeBased": "<p>The configuration of a time-based signal fetch operation.</p>"
+      }
+    },
+    "TimePeriod": {
+      "base": "<p>The length of time between state template updates.</p>",
+      "refs": {
+        "PeriodicStateTemplateUpdateStrategy$stateTemplateUpdateRate": null
+      }
+    },
+    "TimeUnit": {
+      "base": null,
+      "refs": {
+        "TimePeriod$unit": "<p>A unit of time.</p>"
       }
     },
     "TimestreamConfig": {
@@ -1315,7 +1630,8 @@
     "TriggerMode": {
       "base": null,
       "refs": {
-        "ConditionBasedCollectionScheme$triggerMode": "<p>Whether to collect data for all triggering events (<code>ALWAYS</code>). Specify (<code>RISING_EDGE</code>), or specify only when the condition first evaluates to false. For example, triggering on \"AirbagDeployed\"; Users aren't interested on triggering when the airbag is already exploded; they only care about the change from not deployed =&gt; deployed.</p>"
+        "ConditionBasedCollectionScheme$triggerMode": "<p>Whether to collect data for all triggering events (<code>ALWAYS</code>). Specify (<code>RISING_EDGE</code>), or specify only when the condition first evaluates to false. For example, triggering on \"AirbagDeployed\"; Users aren't interested on triggering when the airbag is already exploded; they only care about the change from not deployed =&gt; deployed.</p>",
+        "ConditionBasedSignalFetchConfig$triggerMode": "<p>Indicates the mode in which the signal fetch is triggered.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -1387,6 +1703,16 @@
       }
     },
     "UpdateSignalCatalogResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateStateTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateStateTemplateResponse": {
       "base": null,
       "refs": {
       }
@@ -1470,11 +1796,11 @@
     "VehicleState": {
       "base": null,
       "refs": {
-        "VehicleStatus$status": "<p>The state of a vehicle, which can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> - Amazon Web Services IoT FleetWise sucessfully created the vehicle. </p> </li> <li> <p> <code>READY</code> - The vehicle is ready to receive a campaign deployment. </p> </li> <li> <p> <code>HEALTHY</code> - A campaign deployment was delivered to the vehicle. </p> </li> <li> <p> <code>SUSPENDED</code> - A campaign associated with the vehicle was suspended and data collection was paused. </p> </li> <li> <p> <code>DELETING</code> - Amazon Web Services IoT FleetWise is removing a campaign from the vehicle. </p> </li> </ul>"
+        "VehicleStatus$status": "<p>The status of a campaign, which can be one of the following:</p> <ul> <li> <p> <code>CREATED</code> - The campaign has been created successfully but has not been approved. </p> </li> <li> <p> <code>READY</code> - The campaign has been approved but has not been deployed to the vehicle.</p> </li> <li> <p> <code>HEALTHY</code> - The campaign has been deployed to the vehicle. </p> </li> <li> <p> <code>SUSPENDED</code> - The campaign has been suspended and data collection is paused. </p> </li> <li> <p> <code>DELETING</code> - The campaign is being removed from the vehicle.</p> </li> </ul>"
       }
     },
     "VehicleStatus": {
-      "base": "<p>Information about the state of a vehicle and how it relates to the status of a campaign.</p>",
+      "base": "<p>Information about a campaign associated with a vehicle.</p>",
       "refs": {
         "VehicleStatusList$member": null
       }
@@ -1491,15 +1817,19 @@
         "vehicleSummaries$member": null
       }
     },
+    "actionEventExpression": {
+      "base": null,
+      "refs": {
+        "EventExpressionList$member": null
+      }
+    },
     "arn": {
       "base": null,
       "refs": {
-        "CampaignSummary$arn": "<p>The Amazon Resource Name (ARN) of a campaign.</p>",
         "CampaignSummary$signalCatalogArn": "<p>The ARN of the signal catalog associated with the campaign.</p>",
         "CampaignSummary$targetArn": "<p>The ARN of a vehicle or fleet to which the campaign is deployed.</p>",
         "CreateCampaignRequest$signalCatalogArn": "<p>The Amazon Resource Name (ARN) of the signal catalog to associate with the campaign. </p>",
         "CreateCampaignRequest$targetArn": "<p> The ARN of the vehicle or fleet to deploy a campaign to. </p>",
-        "CreateCampaignResponse$arn": "<p> The ARN of the created campaign. </p>",
         "CreateDecoderManifestRequest$modelManifestArn": "<p> The Amazon Resource Name (ARN) of the vehicle model (model manifest). </p>",
         "CreateDecoderManifestResponse$arn": "<p> The ARN of the created decoder manifest. </p>",
         "CreateFleetRequest$signalCatalogArn": "<p> The Amazon Resource Name (ARN) of a signal catalog. </p>",
@@ -1507,6 +1837,8 @@
         "CreateModelManifestRequest$signalCatalogArn": "<p> The Amazon Resource Name (ARN) of a signal catalog. </p>",
         "CreateModelManifestResponse$arn": "<p> The ARN of the created vehicle model.</p>",
         "CreateSignalCatalogResponse$arn": "<p> The ARN of the created signal catalog. </p>",
+        "CreateStateTemplateRequest$signalCatalogArn": "<p>The ARN of the signal catalog associated with the state template.</p>",
+        "CreateStateTemplateResponse$arn": "<p>The Amazon Resource Name (ARN) of the state template.</p>",
         "CreateVehicleRequest$modelManifestArn": "<p> The Amazon Resource Name ARN of a vehicle model. </p>",
         "CreateVehicleRequest$decoderManifestArn": "<p> The ARN of a decoder manifest. </p>",
         "CreateVehicleRequestItem$modelManifestArn": "<p>The ARN of the vehicle model (model manifest) to create the vehicle from.</p>",
@@ -1517,15 +1849,14 @@
         "CreateVehicleResponseItem$thingArn": "<p>The ARN of a created or validated Amazon Web Services IoT thing.</p>",
         "DecoderManifestSummary$arn": "<p>The ARN of a vehicle model (model manifest) associated with the decoder manifest. </p>",
         "DecoderManifestSummary$modelManifestArn": "<p>The ARN of a vehicle model (model manifest) associated with the decoder manifest.</p>",
-        "DeleteCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the deleted campaign.</p> <note> <p>The ARN isn’t returned if a campaign doesn’t exist.</p> </note>",
         "DeleteDecoderManifestResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted decoder manifest.</p>",
         "DeleteFleetResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted fleet.</p>",
         "DeleteModelManifestResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted model manifest.</p>",
         "DeleteSignalCatalogResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted signal catalog.</p>",
+        "DeleteStateTemplateResponse$arn": "<p>The Amazon Resource Name (ARN) of the state template.</p>",
         "DeleteVehicleResponse$arn": "<p>The Amazon Resource Name (ARN) of the deleted vehicle.</p>",
         "FleetSummary$arn": "<p>The Amazon Resource Name (ARN) of the fleet.</p>",
         "FleetSummary$signalCatalogArn": "<p>The ARN of the signal catalog associated with the fleet.</p>",
-        "GetCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the campaign. </p>",
         "GetCampaignResponse$signalCatalogArn": "<p> The ARN of a signal catalog. </p>",
         "GetCampaignResponse$targetArn": "<p> The ARN of the vehicle or the fleet targeted by the campaign. </p>",
         "GetDecoderManifestResponse$arn": "<p> The Amazon Resource Name (ARN) of the decoder manifest. </p>",
@@ -1535,6 +1866,8 @@
         "GetModelManifestResponse$arn": "<p> The Amazon Resource Name (ARN) of the vehicle model. </p>",
         "GetModelManifestResponse$signalCatalogArn": "<p> The ARN of the signal catalog associated with the vehicle model. </p>",
         "GetSignalCatalogResponse$arn": "<p> The Amazon Resource Name (ARN) of the signal catalog. </p>",
+        "GetStateTemplateResponse$arn": "<p>The Amazon Resource Name (ARN) of the state template.</p>",
+        "GetStateTemplateResponse$signalCatalogArn": "<p>The ARN of the signal catalog associated with the state template.</p>",
         "GetVehicleResponse$arn": "<p> The Amazon Resource Name (ARN) of the vehicle to retrieve information about. </p>",
         "GetVehicleResponse$modelManifestArn": "<p> The ARN of a vehicle model (model manifest) associated with the vehicle. </p>",
         "GetVehicleResponse$decoderManifestArn": "<p> The ARN of a decoder manifest associated with the vehicle. </p>",
@@ -1547,13 +1880,15 @@
         "ModelManifestSummary$arn": "<p>The Amazon Resource Name (ARN) of the vehicle model.</p>",
         "ModelManifestSummary$signalCatalogArn": "<p>The ARN of the signal catalog associated with the vehicle model.</p>",
         "SignalCatalogSummary$arn": "<p>The Amazon Resource Name (ARN) of the signal catalog.</p>",
+        "StateTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the state template.</p>",
+        "StateTemplateSummary$signalCatalogArn": "<p>The Amazon Resource Name (ARN) of the signal catalog associated with the state template.</p>",
         "TimestreamRegistrationResponse$timestreamDatabaseArn": "<p>The Amazon Resource Name (ARN) of the Timestream database.</p>",
         "TimestreamRegistrationResponse$timestreamTableArn": "<p>The ARN of the Timestream database table.</p>",
-        "UpdateCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the campaign. </p>",
         "UpdateDecoderManifestResponse$arn": "<p> The Amazon Resource Name (ARN) of the updated decoder manifest. </p>",
         "UpdateFleetResponse$arn": "<p>The Amazon Resource Name (ARN) of the updated fleet.</p>",
         "UpdateModelManifestResponse$arn": "<p> The Amazon Resource Name (ARN) of the updated vehicle model. </p>",
         "UpdateSignalCatalogResponse$arn": "<p> The ARN of the updated signal catalog. </p>",
+        "UpdateStateTemplateResponse$arn": "<p>The Amazon Resource Name (ARN) of the state template.</p>",
         "UpdateVehicleRequest$modelManifestArn": "<p>The ARN of a vehicle model (model manifest) associated with the vehicle.</p>",
         "UpdateVehicleRequest$decoderManifestArn": "<p>The ARN of the decoder manifest associated with this vehicle.</p>",
         "UpdateVehicleRequestItem$modelManifestArn": "<p>The ARN of the vehicle model (model manifest) associated with the vehicle to update.</p>",
@@ -1575,7 +1910,7 @@
     "attributeNamesList": {
       "base": null,
       "refs": {
-        "ListVehiclesRequest$attributeNames": "<p>The fully qualified names of the attributes. For example, the fully qualified name of an attribute might be <code>Vehicle.Body.Engine.Type</code>.</p>"
+        "ListVehiclesRequest$attributeNames": "<p>The fully qualified names of the attributes. You can use this optional parameter to list the vehicles containing all the attributes in the request. For example, <code>attributeNames</code> could be \"<code>Vehicle.Body.Engine.Type, Vehicle.Color</code>\" and the corresponding <code>attributeValues</code> could be \"<code>1.3 L R2, Blue</code>\" . In this case, the API will filter vehicles with an attribute name <code>Vehicle.Body.Engine.Type</code> that contains a value of <code>1.3 L R2</code> AND an attribute name <code>Vehicle.Color</code> that contains a value of \"<code>Blue</code>\". A request must contain unique values for the <code>attributeNames</code> filter and the matching number of <code>attributeValues</code> filters to return the subset of vehicles that match the attributes filter condition.</p>"
       }
     },
     "attributeValue": {
@@ -1588,18 +1923,28 @@
     "attributeValuesList": {
       "base": null,
       "refs": {
-        "ListVehiclesRequest$attributeValues": "<p>Static information about a vehicle attribute value in string format. For example:</p> <p> <code>\"1.3 L R2\"</code> </p>"
+        "ListVehiclesRequest$attributeValues": "<p>Static information about a vehicle attribute value in string format. You can use this optional parameter in conjunction with <code>attributeNames</code> to list the vehicles containing all the <code>attributeValues</code> corresponding to the <code>attributeNames</code> filter. For example, <code>attributeValues</code> could be \"<code>1.3 L R2, Blue</code>\" and the corresponding <code>attributeNames</code> filter could be \"<code>Vehicle.Body.Engine.Type, Vehicle.Color</code>\". In this case, the API will filter vehicles with attribute name <code>Vehicle.Body.Engine.Type</code> that contains a value of <code>1.3 L R2</code> AND an attribute name <code>Vehicle.Color</code> that contains a value of \"<code>Blue</code>\". A request must contain unique values for the <code>attributeNames</code> filter and the matching number of <code>attributeValues</code> filter to return the subset of vehicles that match the attributes filter condition.</p>"
       }
     },
     "attributesMap": {
       "base": null,
       "refs": {
-        "CreateVehicleRequest$attributes": "<p>Static information about a vehicle in a key-value pair. For example: <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p> <p>A campaign must include the keys (attribute names) in <code>dataExtraDimensions</code> for them to display in Amazon Timestream.</p>",
+        "CreateVehicleRequest$attributes": "<p>Static information about a vehicle in a key-value pair. For example: <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p> <p>To use attributes with Campaigns or State Templates, you must include them using the request parameters <code>dataExtraDimensions</code> and/or <code>metadataExtraDimensions</code> (for state templates only) when creating your campaign/state template. </p>",
         "CreateVehicleRequestItem$attributes": "<p>Static information about a vehicle in a key-value pair. For example: <code>\"engine Type\"</code> : <code>\"v6\"</code> </p>",
         "GetVehicleResponse$attributes": "<p>Static information about a vehicle in a key-value pair. For example:</p> <p> <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p>",
         "UpdateVehicleRequest$attributes": "<p>Static information about a vehicle in a key-value pair. For example:</p> <p> <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p>",
         "UpdateVehicleRequestItem$attributes": "<p>Static information about a vehicle in a key-value pair. For example:</p> <p> <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p>",
         "VehicleSummary$attributes": "<p>Static information about a vehicle in a key-value pair. For example:</p> <p> <code>\"engineType\"</code> : <code>\"1.3 L R2\"</code> </p>"
+      }
+    },
+    "campaignArn": {
+      "base": null,
+      "refs": {
+        "CampaignSummary$arn": "<p>The Amazon Resource Name (ARN) of a campaign.</p>",
+        "CreateCampaignResponse$arn": "<p> The ARN of the created campaign. </p>",
+        "DeleteCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the deleted campaign.</p> <note> <p>The ARN isn’t returned if a campaign doesn’t exist.</p> </note>",
+        "GetCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the campaign. </p>",
+        "UpdateCampaignResponse$arn": "<p> The Amazon Resource Name (ARN) of the campaign. </p>"
       }
     },
     "campaignName": {
@@ -1613,7 +1958,8 @@
         "GetCampaignRequest$name": "<p> The name of the campaign to retrieve information about. </p>",
         "GetCampaignResponse$name": "<p>The name of the campaign.</p>",
         "UpdateCampaignRequest$name": "<p> The name of the campaign to update. </p>",
-        "UpdateCampaignResponse$name": "<p>The name of the updated campaign.</p>"
+        "UpdateCampaignResponse$name": "<p>The name of the updated campaign.</p>",
+        "VehicleStatus$campaignName": "<p>The name of a campaign.</p>"
       }
     },
     "campaignSummaries": {
@@ -1666,10 +2012,11 @@
         "Branch$description": "<p>A brief description of the branch.</p>",
         "CampaignSummary$description": "<p>The description of the campaign.</p>",
         "CreateCampaignRequest$description": "<p>An optional description of the campaign to help identify its purpose.</p>",
-        "CreateDecoderManifestRequest$description": "<p> A brief description of the decoder manifest. </p>",
+        "CreateDecoderManifestRequest$description": "<p>A brief description of the decoder manifest. </p>",
         "CreateFleetRequest$description": "<p> A brief description of the fleet to create. </p>",
         "CreateModelManifestRequest$description": "<p> A brief description of the vehicle model. </p>",
         "CreateSignalCatalogRequest$description": "<p>A brief description of the signal catalog.</p>",
+        "CreateStateTemplateRequest$description": "<p>A brief description of the state template.</p>",
         "CustomProperty$description": "<p>A brief description of the custom property.</p>",
         "CustomStruct$description": "<p>A brief description of the custom structure.</p>",
         "DecoderManifestSummary$description": "<p>A brief description of the decoder manifest.</p>",
@@ -1679,14 +2026,17 @@
         "GetFleetResponse$description": "<p> A brief description of the fleet. </p>",
         "GetModelManifestResponse$description": "<p> A brief description of the vehicle model. </p>",
         "GetSignalCatalogResponse$description": "<p> A brief description of the signal catalog. </p>",
+        "GetStateTemplateResponse$description": "<p>A brief description of the state template.</p>",
         "ImportSignalCatalogRequest$description": "<p> A brief description of the signal catalog. </p>",
         "ModelManifestSummary$description": "<p>A brief description of the vehicle model.</p>",
         "Sensor$description": "<p>A brief description of a sensor.</p>",
+        "StateTemplateSummary$description": "<p>A brief description of the state template.</p>",
         "UpdateCampaignRequest$description": "<p>The description of the campaign.</p>",
         "UpdateDecoderManifestRequest$description": "<p> A brief description of the decoder manifest to update. </p>",
         "UpdateFleetRequest$description": "<p> An updated description of the fleet. </p>",
         "UpdateModelManifestRequest$description": "<p> A brief description of the vehicle model. </p>",
-        "UpdateSignalCatalogRequest$description": "<p> A brief description of the signal catalog to update.</p>"
+        "UpdateSignalCatalogRequest$description": "<p> A brief description of the signal catalog to update.</p>",
+        "UpdateStateTemplateRequest$description": "<p>A brief description of the state template.</p>"
       }
     },
     "double": {
@@ -1717,7 +2067,14 @@
     "eventExpression": {
       "base": null,
       "refs": {
-        "ConditionBasedCollectionScheme$expression": "<p>The logical expression used to recognize what data to collect. For example, <code>$variable.`Vehicle.OutsideAirTemperature` &gt;= 105.0</code>.</p>"
+        "ConditionBasedCollectionScheme$expression": "<p>The logical expression used to recognize what data to collect. For example, <code>$variable.`Vehicle.OutsideAirTemperature` &gt;= 105.0</code>.</p>",
+        "DataPartitionUploadOptions$expression": "<p>The logical expression used to recognize what data to collect. For example, <code>$variable.`Vehicle.OutsideAirTemperature` &gt;= 105.0</code>.</p>"
+      }
+    },
+    "fetchConfigEventExpression": {
+      "base": null,
+      "refs": {
+        "ConditionBasedSignalFetchConfig$conditionExpression": "<p>The condition that must be satisfied to trigger a signal fetch.</p>"
       }
     },
     "fleetId": {
@@ -1753,7 +2110,9 @@
     "languageVersion": {
       "base": null,
       "refs": {
-        "ConditionBasedCollectionScheme$conditionLanguageVersion": "<p>Specifies the version of the conditional expression language.</p>"
+        "ConditionBasedCollectionScheme$conditionLanguageVersion": "<p>Specifies the version of the conditional expression language.</p>",
+        "DataPartitionUploadOptions$conditionLanguageVersion": "<p>The version of the condition language. Defaults to the most recent condition language version.</p>",
+        "SignalFetchInformation$conditionLanguageVersion": "<p>The version of the condition language used.</p>"
       }
     },
     "listOfStrings": {
@@ -1768,24 +2127,25 @@
     "listVehiclesMaxResults": {
       "base": null,
       "refs": {
-        "ListVehiclesRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>"
+        "ListVehiclesRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>"
       }
     },
     "maxResults": {
       "base": null,
       "refs": {
-        "GetVehicleStatusRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListCampaignsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListDecoderManifestNetworkInterfacesRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListDecoderManifestSignalsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListDecoderManifestsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListFleetsForVehicleRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListFleetsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListModelManifestNodesRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListModelManifestsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListSignalCatalogNodesRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListSignalCatalogsRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>",
-        "ListVehiclesInFleetRequest$maxResults": "<p> The maximum number of items to return, between 1 and 100, inclusive. </p>"
+        "GetVehicleStatusRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive. This parameter is only supported for resources of type <code>CAMPAIGN</code>.</p>",
+        "ListCampaignsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListDecoderManifestNetworkInterfacesRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListDecoderManifestSignalsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListDecoderManifestsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListFleetsForVehicleRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListFleetsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListModelManifestNodesRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListModelManifestsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListSignalCatalogNodesRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListSignalCatalogsRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListStateTemplatesRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>",
+        "ListVehiclesInFleetRequest$maxResults": "<p>The maximum number of items to return, between 1 and 100, inclusive.</p>"
       }
     },
     "maxSampleCount": {
@@ -1823,7 +2183,7 @@
     "nextToken": {
       "base": null,
       "refs": {
-        "GetVehicleStatusRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. </p>",
+        "GetVehicleStatusRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. This parameter is only supported for resources of type <code>CAMPAIGN</code>.</p>",
         "GetVehicleStatusResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
         "ListCampaignsRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. </p>",
         "ListCampaignsResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
@@ -1845,6 +2205,8 @@
         "ListSignalCatalogNodesResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
         "ListSignalCatalogsRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. </p>",
         "ListSignalCatalogsResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
+        "ListStateTemplatesRequest$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
+        "ListStateTemplatesResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
         "ListVehiclesInFleetRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. </p>",
         "ListVehiclesInFleetResponse$nextToken": "<p> The token to retrieve the next set of results, or <code>null</code> if there are no more results. </p>",
         "ListVehiclesRequest$nextToken": "<p>A pagination token for the next set of results.</p> <p>If the results of a search are large, only a portion of the results are returned, and a <code>nextToken</code> pagination token is returned in the response. To retrieve the next set of results, reissue the search request and include the returned token. When all results have been returned, the response does not contain a pagination token value. </p>",
@@ -1883,13 +2245,20 @@
     "positiveInteger": {
       "base": null,
       "refs": {
-        "ObdSignal$pidResponseLength": "<p>The length of the requested data.</p>"
+        "ObdSignal$pidResponseLength": "<p>The length of the requested data.</p>",
+        "TimePeriod$value": "<p>A number of time units.</p>"
+      }
+    },
+    "positiveLong": {
+      "base": null,
+      "refs": {
+        "TimeBasedSignalFetchConfig$executionFrequencyMs": "<p>The frequency with which the signal fetch will be executed.</p>"
       }
     },
     "priority": {
       "base": null,
       "refs": {
-        "CreateCampaignRequest$priority": "<p>(Optional) A number indicating the priority of one campaign over another campaign for a certain vehicle or fleet. A campaign with the lowest value is deployed to vehicles before any other campaigns. If it's not specified, <code>0</code> is used. </p> <p>Default: <code>0</code> </p>",
+        "CreateCampaignRequest$priority": "<p>A number indicating the priority of one campaign over another campaign for a certain vehicle or fleet. A campaign with the lowest value is deployed to vehicles before any other campaigns. If it's not specified, <code>0</code> is used. </p> <p>Default: <code>0</code> </p>",
         "GetCampaignResponse$priority": "<p> A number indicating the priority of one campaign over another campaign for a certain vehicle or fleet. A campaign with the lowest value is deployed to vehicles before any other campaigns.</p>"
       }
     },
@@ -1902,17 +2271,21 @@
         "CreateModelManifestResponse$name": "<p> The name of the created vehicle model.</p>",
         "CreateSignalCatalogRequest$name": "<p> The name of the signal catalog to create. </p>",
         "CreateSignalCatalogResponse$name": "<p> The name of the created signal catalog. </p>",
+        "CreateStateTemplateRequest$name": "<p>The name of the state template.</p>",
+        "CreateStateTemplateResponse$name": "<p>The name of the state template.</p>",
         "DeleteDecoderManifestRequest$name": "<p> The name of the decoder manifest to delete. </p>",
         "DeleteDecoderManifestResponse$name": "<p>The name of the deleted decoder manifest.</p>",
         "DeleteModelManifestRequest$name": "<p> The name of the model manifest to delete. </p>",
         "DeleteModelManifestResponse$name": "<p>The name of the deleted model manifest.</p>",
         "DeleteSignalCatalogRequest$name": "<p> The name of the signal catalog to delete. </p>",
         "DeleteSignalCatalogResponse$name": "<p>The name of the deleted signal catalog.</p>",
+        "DeleteStateTemplateResponse$name": "<p>The name of the state template.</p>",
         "GetDecoderManifestRequest$name": "<p> The name of the decoder manifest to retrieve information about. </p>",
         "GetModelManifestRequest$name": "<p> The name of the vehicle model to retrieve information about. </p>",
         "GetModelManifestResponse$name": "<p> The name of the vehicle model. </p>",
         "GetSignalCatalogRequest$name": "<p> The name of the signal catalog to retrieve information about. </p>",
         "GetSignalCatalogResponse$name": "<p> The name of the signal catalog. </p>",
+        "GetStateTemplateResponse$name": "<p>The name of the state template.</p>",
         "ImportDecoderManifestRequest$name": "<p> The name of the decoder manifest to import. </p>",
         "ImportDecoderManifestResponse$name": "<p> The name of the imported decoder manifest. </p>",
         "ImportSignalCatalogRequest$name": "<p>The name of the signal catalog to import.</p>",
@@ -1921,12 +2294,14 @@
         "ListDecoderManifestSignalsRequest$name": "<p> The name of the decoder manifest to list information about. </p>",
         "ListModelManifestNodesRequest$name": "<p> The name of the vehicle model to list information about. </p>",
         "ListSignalCatalogNodesRequest$name": "<p> The name of the signal catalog to list information about. </p>",
+        "StateTemplateSummary$name": "<p>The name of the state template.</p>",
         "UpdateDecoderManifestRequest$name": "<p> The name of the decoder manifest to update.</p>",
         "UpdateDecoderManifestResponse$name": "<p> The name of the updated decoder manifest. </p>",
         "UpdateModelManifestRequest$name": "<p> The name of the vehicle model to update. </p>",
         "UpdateModelManifestResponse$name": "<p> The name of the updated vehicle model. </p>",
         "UpdateSignalCatalogRequest$name": "<p> The name of the signal catalog to update. </p>",
-        "UpdateSignalCatalogResponse$name": "<p> The name of the updated signal catalog. </p>"
+        "UpdateSignalCatalogResponse$name": "<p> The name of the updated signal catalog. </p>",
+        "UpdateStateTemplateResponse$name": "<p>The name of the state template.</p>"
       }
     },
     "signalCatalogSummaries": {
@@ -1935,10 +2310,10 @@
         "ListSignalCatalogsResponse$summaries": "<p> A list of information about each signal catalog. </p>"
       }
     },
-    "status": {
+    "statusStr": {
       "base": null,
       "refs": {
-        "ListCampaignsRequest$status": "<p>Optional parameter to filter the results by the status of each created campaign in your account. The status can be one of: <code>CREATING</code>, <code>WAITING_FOR_APPROVAL</code>, <code>RUNNING</code>, or <code>SUSPENDED</code>.</p>"
+        "ListCampaignsRequest$status": "<p>An optional parameter to filter the results by the status of each created campaign in your account. The status can be one of: <code>CREATING</code>, <code>WAITING_FOR_APPROVAL</code>, <code>RUNNING</code>, or <code>SUSPENDED</code>.</p>"
       }
     },
     "string": {
@@ -1985,7 +2360,6 @@
         "ThrottlingException$serviceCode": "<p>The code for the service that couldn't be completed due to throttling.</p>",
         "UpdateVehicleError$message": "<p>A message associated with the error.</p>",
         "ValidationException$message": null,
-        "VehicleStatus$campaignName": "<p>The name of a campaign.</p>",
         "listOfStrings$member": null
       }
     },
@@ -1994,8 +2368,8 @@
       "refs": {
         "CampaignSummary$creationTime": "<p>The time the campaign was created.</p>",
         "CampaignSummary$lastModificationTime": "<p>The last time the campaign was modified.</p>",
-        "CreateCampaignRequest$startTime": "<p>(Optional) The time, in milliseconds, to deliver a campaign after it was approved. If it's not specified, <code>0</code> is used.</p> <p>Default: <code>0</code> </p>",
-        "CreateCampaignRequest$expiryTime": "<p> (Optional) The time the campaign expires, in seconds since epoch (January 1, 1970 at midnight UTC time). Vehicle data isn't collected after the campaign expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>",
+        "CreateCampaignRequest$startTime": "<p>The time, in milliseconds, to deliver a campaign after it was approved. If it's not specified, <code>0</code> is used.</p> <p>Default: <code>0</code> </p>",
+        "CreateCampaignRequest$expiryTime": "<p>The time the campaign expires, in seconds since epoch (January 1, 1970 at midnight UTC time). Vehicle data isn't collected after the campaign expires. </p> <p>Default: 253402214400 (December 31, 9999, 00:00:00 UTC)</p>",
         "DecoderManifestSummary$creationTime": "<p>The time the decoder manifest was created in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
         "DecoderManifestSummary$lastModificationTime": "<p>The time the decoder manifest was last updated in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
         "FleetSummary$creationTime": "<p>The time the fleet was created, in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
@@ -2016,6 +2390,8 @@
         "GetRegisterAccountStatusResponse$lastModificationTime": "<p> The time this registration was last updated, in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "GetSignalCatalogResponse$creationTime": "<p> The time the signal catalog was created in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "GetSignalCatalogResponse$lastModificationTime": "<p>The last time the signal catalog was modified.</p>",
+        "GetStateTemplateResponse$creationTime": "<p>The time the state template was created in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
+        "GetStateTemplateResponse$lastModificationTime": "<p>The time the state template was last updated in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
         "GetVehicleResponse$creationTime": "<p> The time the vehicle was created in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "GetVehicleResponse$lastModificationTime": "<p> The time the vehicle was last updated in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "ModelManifestSummary$creationTime": "<p>The time the vehicle model was created, in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
@@ -2024,6 +2400,8 @@
         "RegisterAccountResponse$lastModificationTime": "<p> The time this registration was last updated, in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "SignalCatalogSummary$creationTime": "<p>The time the signal catalog was created in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
         "SignalCatalogSummary$lastModificationTime": "<p>The time the signal catalog was last updated in seconds since epoch (January 1, 1970 at midnight UTC time). </p>",
+        "StateTemplateSummary$creationTime": "<p>The time the state template was created, in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
+        "StateTemplateSummary$lastModificationTime": "<p>The time the state template was last updated, in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
         "VehicleSummary$creationTime": "<p>The time the vehicle was created in seconds since epoch (January 1, 1970 at midnight UTC time).</p>",
         "VehicleSummary$lastModificationTime": "<p>The time the vehicle was last updated in seconds since epoch (January 1, 1970 at midnight UTC time). </p>"
       }
@@ -2032,7 +2410,7 @@
       "base": null,
       "refs": {
         "ConditionBasedCollectionScheme$minimumTriggerIntervalMs": "<p>The minimum duration of time between two triggering events to collect data, in milliseconds.</p> <note> <p>If a signal changes often, you might want to collect data at a slower rate.</p> </note>",
-        "CreateCampaignRequest$postTriggerCollectionDuration": "<p> (Optional) How long (in milliseconds) to collect raw data after a triggering event initiates the collection. If it's not specified, <code>0</code> is used.</p> <p>Default: <code>0</code> </p>",
+        "CreateCampaignRequest$postTriggerCollectionDuration": "<p>How long (in milliseconds) to collect raw data after a triggering event initiates the collection. If it's not specified, <code>0</code> is used.</p> <p>Default: <code>0</code> </p>",
         "GetCampaignResponse$postTriggerCollectionDuration": "<p> How long (in seconds) to collect raw data after a triggering event initiates the collection. </p>",
         "SignalInformation$minimumSamplingIntervalMs": "<p>The minimum duration of time (in milliseconds) between two triggering events to collect data.</p> <note> <p>If a signal changes often, you might want to collect data at a slower rate.</p> </note>"
       }

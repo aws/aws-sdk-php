@@ -55,6 +55,12 @@
         "Filter$actionTypes": "<p>The type of action you can take by adopting the recommendation.</p>"
       }
     },
+    "AllocationStrategy": {
+      "base": null,
+      "refs": {
+        "Ec2AutoScalingGroupConfiguration$allocationStrategy": "<p>The strategy used for allocating instances, based on a predefined priority order or based on the lowest available price.</p>"
+      }
+    },
     "BlockStoragePerformanceConfiguration": {
       "base": "<p>Describes the Amazon Elastic Block Store performance configuration of the current and recommended resource configuration for a recommendation.</p>",
       "refs": {
@@ -166,9 +172,15 @@
       }
     },
     "Ec2AutoScalingGroupConfiguration": {
-      "base": "<p>The EC2 auto scaling group configuration used for recommendations.</p>",
+      "base": "<p>The EC2 Auto Scaling group configuration used for recommendations.</p>",
       "refs": {
         "Ec2AutoScalingGroup$configuration": "<p>The EC2 Auto Scaling group configuration used for recommendations.</p>"
+      }
+    },
+    "Ec2AutoScalingGroupType": {
+      "base": null,
+      "refs": {
+        "Ec2AutoScalingGroupConfiguration$type": "<p>The type of EC2 Auto Scaling group, showing whether it consists of a single instance type or mixed instance types.</p>"
       }
     },
     "Ec2Instance": {
@@ -285,9 +297,9 @@
       }
     },
     "InstanceConfiguration": {
-      "base": "<p>The Instance configuration used for recommendations.</p>",
+      "base": "<p>The instance configuration used for recommendations.</p>",
       "refs": {
-        "Ec2AutoScalingGroupConfiguration$instance": "<p>Details about the instance.</p>",
+        "Ec2AutoScalingGroupConfiguration$instance": "<p>Details about the instance for the EC2 Auto Scaling group with a single instance type.</p>",
         "Ec2InstanceConfiguration$instance": "<p>Details about the instance.</p>"
       }
     },
@@ -372,6 +384,18 @@
         "GetPreferencesResponse$memberAccountDiscountVisibility": "<p>Retrieves the status of the \"member account discount visibility\" preference.</p>",
         "UpdatePreferencesRequest$memberAccountDiscountVisibility": "<p>Sets the \"member account discount visibility\" preference.</p>",
         "UpdatePreferencesResponse$memberAccountDiscountVisibility": "<p>Shows the status of the \"member account discount visibility\" preference.</p>"
+      }
+    },
+    "MixedInstanceConfiguration": {
+      "base": "<p>The configuration for the EC2 Auto Scaling group with mixed instance types.</p>",
+      "refs": {
+        "MixedInstanceConfigurationList$member": null
+      }
+    },
+    "MixedInstanceConfigurationList": {
+      "base": null,
+      "refs": {
+        "Ec2AutoScalingGroupConfiguration$mixedInstances": "<p>A list of instance types for an EC2 Auto Scaling group with mixed instance types.</p>"
       }
     },
     "OpenSearchReservedInstances": {
@@ -564,7 +588,7 @@
     "SageMakerSavingsPlans": {
       "base": "<p>The SageMaker Savings Plans recommendation details.</p>",
       "refs": {
-        "ResourceDetails$sageMakerSavingsPlans": "<p>The SageMaker Savings Plans recommendation details.</p>"
+        "ResourceDetails$sageMakerSavingsPlans": "<p>The SageMaker AI Savings Plans recommendation details.</p>"
       }
     },
     "SageMakerSavingsPlansConfiguration": {
@@ -660,7 +684,7 @@
         "GetRecommendationResponse$accountId": "<p>The account that the recommendation is for.</p>",
         "GetRecommendationResponse$currencyCode": "<p>The currency code used for the recommendation.</p>",
         "GetRecommendationResponse$region": "<p>The Amazon Web Services Region of the resource.</p>",
-        "InstanceConfiguration$type": "<p>Details about the type.</p>",
+        "InstanceConfiguration$type": "<p>The instance type of the configuration.</p>",
         "InternalServerException$message": null,
         "ListEnrollmentStatusesRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListEnrollmentStatusesResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
@@ -671,6 +695,7 @@
         "ListRecommendationSummariesResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListRecommendationsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListRecommendationsResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
+        "MixedInstanceConfiguration$type": "<p>The instance type of the configuration.</p>",
         "OpenSearchReservedInstancesConfiguration$accountScope": "<p>The account scope that you want your recommendations for.</p>",
         "OpenSearchReservedInstancesConfiguration$service": "<p>The service that you want your recommendations for.</p>",
         "OpenSearchReservedInstancesConfiguration$normalizedUnitsToPurchase": "<p>The number of normalized units that Amazon Web Services recommends that you purchase.</p>",

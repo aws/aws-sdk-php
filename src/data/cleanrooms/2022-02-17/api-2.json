@@ -1125,6 +1125,7 @@
       "output":{"shape":"PopulateIdMappingTableOutput"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -1442,7 +1443,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:([\\d]{12}|\\*):membership/[\\*\\d\\w-]+/configuredaudiencemodelassociation/[\\*\\d\\w-]+"
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:([\\d]{12}|\\*):membership\\/[\\*\\d\\w-]+\\/configuredaudiencemodelassociation\\/[\\*\\d\\w-]+$|^arn:aws[-a-z]*:cleanrooms-ml:[-a-z0-9]+:([0-9]{12}|\\*):membership\\/[\\*\\d\\w-]+\\/configured-model-algorithm-association\\/([-a-zA-Z0-9_\\/.]+|\\*)"
     },
     "AggregateColumn":{
       "type":"structure",
@@ -1746,7 +1747,7 @@
       "type":"string",
       "max":200,
       "min":0,
-      "pattern":"(ANY_QUERY|arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)"
+      "pattern":"(ANY_QUERY|ANY_JOB|arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/analysistemplate/[\\d\\w-]+)"
     },
     "AnalysisTemplateIdentifier":{
       "type":"string",
@@ -1834,6 +1835,51 @@
         "DIRECT_ANALYSIS",
         "ADDITIONAL_ANALYSIS"
       ]
+    },
+    "AnalyticsEngine":{
+      "type":"string",
+      "enum":[
+        "SPARK",
+        "CLEAN_ROOMS_SQL"
+      ]
+    },
+    "AthenaDatabaseName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9_](([a-zA-Z0-9_]+-)*([a-zA-Z0-9_]+))?"
+    },
+    "AthenaOutputLocation":{
+      "type":"string",
+      "max":1024,
+      "min":8,
+      "pattern":"s3://[a-z0-9.-]{3,63}(.*)"
+    },
+    "AthenaTableName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9_](([a-zA-Z0-9_ ]+-)*([a-zA-Z0-9_ ]+))?"
+    },
+    "AthenaTableReference":{
+      "type":"structure",
+      "required":[
+        "workGroup",
+        "databaseName",
+        "tableName"
+      ],
+      "members":{
+        "workGroup":{"shape":"AthenaWorkGroup"},
+        "outputLocation":{"shape":"AthenaOutputLocation"},
+        "databaseName":{"shape":"AthenaDatabaseName"},
+        "tableName":{"shape":"AthenaTableName"}
+      }
+    },
+    "AthenaWorkGroup":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"([a-zA-Z0-9._-])*"
     },
     "BatchGetCollaborationAnalysisTemplateError":{
       "type":"structure",
@@ -1972,6 +2018,13 @@
         "errors":{"shape":"BatchGetSchemaErrorList"}
       }
     },
+    "BilledResourceUtilization":{
+      "type":"structure",
+      "required":["units"],
+      "members":{
+        "units":{"shape":"Double"}
+      }
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
@@ -2008,7 +2061,8 @@
         "membershipId":{"shape":"UUID"},
         "membershipArn":{"shape":"MembershipArn"},
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
-        "queryLogStatus":{"shape":"CollaborationQueryLogStatus"}
+        "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CollaborationAnalysisTemplate":{
@@ -2330,7 +2384,8 @@
         "updateTime":{"shape":"Timestamp"},
         "memberStatus":{"shape":"MemberStatus"},
         "membershipId":{"shape":"UUID"},
-        "membershipArn":{"shape":"MembershipArn"}
+        "membershipArn":{"shape":"MembershipArn"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CollaborationSummaryList":{
@@ -2363,6 +2418,13 @@
       "max":255,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDBFF-\\uDC00\\uDFFF\\t]*"
+    },
+    "ComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "worker":{"shape":"WorkerComputeConfiguration"}
+      },
+      "union":true
     },
     "ConfigurationDetails":{
       "type":"structure",
@@ -2771,11 +2833,13 @@
         "name":{"shape":"CollaborationName"},
         "description":{"shape":"CollaborationDescription"},
         "creatorMemberAbilities":{"shape":"MemberAbilities"},
+        "creatorMLMemberAbilities":{"shape":"MLMemberAbilities"},
         "creatorDisplayName":{"shape":"DisplayName"},
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
         "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
         "tags":{"shape":"TagMap"},
-        "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"}
+        "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"},
+        "analyticsEngine":{"shape":"AnalyticsEngine"}
       }
     },
     "CreateCollaborationOutput":{
@@ -3020,6 +3084,18 @@
       "members":{
         "privacyBudgetTemplate":{"shape":"PrivacyBudgetTemplate"}
       }
+    },
+    "CustomMLMemberAbilities":{
+      "type":"list",
+      "member":{"shape":"CustomMLMemberAbility"},
+      "min":1
+    },
+    "CustomMLMemberAbility":{
+      "type":"string",
+      "enum":[
+        "CAN_RECEIVE_MODEL_OUTPUT",
+        "CAN_RECEIVE_INFERENCE_OUTPUT"
+      ]
     },
     "DataEncryptionMetadata":{
       "type":"structure",
@@ -4847,6 +4923,20 @@
       "type":"long",
       "box":true
     },
+    "MLMemberAbilities":{
+      "type":"structure",
+      "required":["customMLMemberAbilities"],
+      "members":{
+        "customMLMemberAbilities":{"shape":"CustomMLMemberAbilities"}
+      }
+    },
+    "MLPaymentConfig":{
+      "type":"structure",
+      "members":{
+        "modelTraining":{"shape":"ModelTrainingPaymentConfig"},
+        "modelInference":{"shape":"ModelInferencePaymentConfig"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -4880,6 +4970,7 @@
       "members":{
         "accountId":{"shape":"AccountId"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "displayName":{"shape":"DisplayName"},
         "paymentConfiguration":{"shape":"PaymentConfiguration"}
       }
@@ -4909,6 +5000,7 @@
         "status":{"shape":"MemberStatus"},
         "displayName":{"shape":"DisplayName"},
         "abilities":{"shape":"MemberAbilities"},
+        "mlAbilities":{"shape":"MLMemberAbilities"},
         "createTime":{"shape":"Timestamp"},
         "updateTime":{"shape":"Timestamp"},
         "membershipId":{"shape":"UUID"},
@@ -4949,6 +5041,7 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"MembershipStatus"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "queryLogStatus":{"shape":"MembershipQueryLogStatus"},
         "defaultResultConfiguration":{"shape":"MembershipProtectedQueryResultConfiguration"},
         "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
@@ -4966,11 +5059,33 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "MembershipMLPaymentConfig":{
+      "type":"structure",
+      "members":{
+        "modelTraining":{"shape":"MembershipModelTrainingPaymentConfig"},
+        "modelInference":{"shape":"MembershipModelInferencePaymentConfig"}
+      }
+    },
+    "MembershipModelInferencePaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "MembershipModelTrainingPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
     "MembershipPaymentConfiguration":{
       "type":"structure",
       "required":["queryCompute"],
       "members":{
-        "queryCompute":{"shape":"MembershipQueryComputePaymentConfig"}
+        "queryCompute":{"shape":"MembershipQueryComputePaymentConfig"},
+        "machineLearning":{"shape":"MembershipMLPaymentConfig"}
       }
     },
     "MembershipProtectedQueryOutputConfiguration":{
@@ -5038,12 +5153,27 @@
         "updateTime":{"shape":"Timestamp"},
         "status":{"shape":"MembershipStatus"},
         "memberAbilities":{"shape":"MemberAbilities"},
+        "mlMemberAbilities":{"shape":"MLMemberAbilities"},
         "paymentConfiguration":{"shape":"MembershipPaymentConfiguration"}
       }
     },
     "MembershipSummaryList":{
       "type":"list",
       "member":{"shape":"MembershipSummary"}
+    },
+    "ModelInferencePaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
+    },
+    "ModelTrainingPaymentConfig":{
+      "type":"structure",
+      "required":["isResponsible"],
+      "members":{
+        "isResponsible":{"shape":"Boolean"}
+      }
     },
     "PaginationToken":{
       "type":"string",
@@ -5078,7 +5208,20 @@
         "TIMESTAMPTZ",
         "TIME",
         "TIMETZ",
-        "VARBYTE"
+        "VARBYTE",
+        "BINARY",
+        "BYTE",
+        "CHARACTER",
+        "DOUBLE",
+        "FLOAT",
+        "INT",
+        "LONG",
+        "NUMERIC",
+        "SHORT",
+        "STRING",
+        "TIMESTAMP_LTZ",
+        "TIMESTAMP_NTZ",
+        "TINYINT"
       ]
     },
     "ParameterValue":{
@@ -5090,7 +5233,8 @@
       "type":"structure",
       "required":["queryCompute"],
       "members":{
-        "queryCompute":{"shape":"QueryComputePaymentConfig"}
+        "queryCompute":{"shape":"QueryComputePaymentConfig"},
+        "machineLearning":{"shape":"MLPaymentConfig"}
       }
     },
     "PopulateIdMappingTableInput":{
@@ -5317,7 +5461,8 @@
         "statistics":{"shape":"ProtectedQueryStatistics"},
         "result":{"shape":"ProtectedQueryResult"},
         "error":{"shape":"ProtectedQueryError"},
-        "differentialPrivacy":{"shape":"DifferentialPrivacyParameters"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyParameters"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "ProtectedQueryError":{
@@ -5394,7 +5539,8 @@
       "members":{
         "resultFormat":{"shape":"ResultFormat"},
         "bucket":{"shape":"ProtectedQueryS3OutputConfigurationBucketString"},
-        "keyPrefix":{"shape":"KeyPrefix"}
+        "keyPrefix":{"shape":"KeyPrefix"},
+        "singleFileOutput":{"shape":"Boolean"}
       }
     },
     "ProtectedQueryS3OutputConfigurationBucketString":{
@@ -5427,7 +5573,8 @@
     "ProtectedQueryStatistics":{
       "type":"structure",
       "members":{
-        "totalDurationInMillis":{"shape":"Long"}
+        "totalDurationInMillis":{"shape":"Long"},
+        "billedResourceUtilization":{"shape":"BilledResourceUtilization"}
       }
     },
     "ProtectedQueryStatus":{
@@ -5768,6 +5915,12 @@
       },
       "union":true
     },
+    "SecretsManagerArn":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"arn:aws:secretsmanager:[a-z]{2}-[a-z]+-[0-9]:\\d{12}:secret:.*"
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -5786,6 +5939,73 @@
       },
       "exception":true
     },
+    "SnowflakeAccountIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":3,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{Pc}\\p{Pd}\\p{Zs}.]+"
+    },
+    "SnowflakeDatabaseName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{Pc}\\p{Pd}\\p{Zs}]+"
+    },
+    "SnowflakeSchemaName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{Pc}\\p{Pd}\\p{Zs}]+"
+    },
+    "SnowflakeTableName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}\\p{M}\\p{N}\\p{Pc}\\p{Pd}\\p{Zs}]+"
+    },
+    "SnowflakeTableReference":{
+      "type":"structure",
+      "required":[
+        "secretArn",
+        "accountIdentifier",
+        "databaseName",
+        "tableName",
+        "schemaName",
+        "tableSchema"
+      ],
+      "members":{
+        "secretArn":{"shape":"SecretsManagerArn"},
+        "accountIdentifier":{"shape":"SnowflakeAccountIdentifier"},
+        "databaseName":{"shape":"SnowflakeDatabaseName"},
+        "tableName":{"shape":"SnowflakeTableName"},
+        "schemaName":{"shape":"SnowflakeSchemaName"},
+        "tableSchema":{"shape":"SnowflakeTableSchema"}
+      }
+    },
+    "SnowflakeTableSchema":{
+      "type":"structure",
+      "members":{
+        "v1":{"shape":"SnowflakeTableSchemaList"}
+      },
+      "union":true
+    },
+    "SnowflakeTableSchemaList":{
+      "type":"list",
+      "member":{"shape":"SnowflakeTableSchemaV1"},
+      "max":250,
+      "min":1
+    },
+    "SnowflakeTableSchemaV1":{
+      "type":"structure",
+      "required":[
+        "columnName",
+        "columnType"
+      ],
+      "members":{
+        "columnName":{"shape":"ColumnName"},
+        "columnType":{"shape":"ColumnTypeString"}
+      }
+    },
     "StartProtectedQueryInput":{
       "type":"structure",
       "required":[
@@ -5801,7 +6021,8 @@
           "locationName":"membershipIdentifier"
         },
         "sqlParameters":{"shape":"ProtectedQuerySQLParameters"},
-        "resultConfiguration":{"shape":"ProtectedQueryResultConfiguration"}
+        "resultConfiguration":{"shape":"ProtectedQueryResultConfiguration"},
+        "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
     "StartProtectedQueryOutput":{
@@ -5833,7 +6054,9 @@
     "TableReference":{
       "type":"structure",
       "members":{
-        "glue":{"shape":"GlueTableReference"}
+        "glue":{"shape":"GlueTableReference"},
+        "snowflake":{"shape":"SnowflakeTableReference"},
+        "athena":{"shape":"AthenaTableReference"}
       },
       "union":true
     },
@@ -6284,6 +6507,26 @@
         "INVALID_CONFIGURATION",
         "INVALID_QUERY",
         "IAM_SYNCHRONIZATION_DELAY"
+      ]
+    },
+    "WorkerComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"WorkerComputeType"},
+        "number":{"shape":"WorkerComputeConfigurationNumberInteger"}
+      }
+    },
+    "WorkerComputeConfigurationNumberInteger":{
+      "type":"integer",
+      "box":true,
+      "max":400,
+      "min":2
+    },
+    "WorkerComputeType":{
+      "type":"string",
+      "enum":[
+        "CR.1X",
+        "CR.4X"
       ]
     }
   }

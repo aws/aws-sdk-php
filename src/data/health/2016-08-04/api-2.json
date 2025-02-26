@@ -5,12 +5,14 @@
     "endpointPrefix":"health",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"AWSHealth",
     "serviceFullName":"AWS Health APIs and Notifications",
     "serviceId":"Health",
     "signatureVersion":"v4",
     "targetPrefix":"AWSHealth_20160804",
-    "uid":"health-2016-08-04"
+    "uid":"health-2016-08-04",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DescribeAffectedAccountsForOrganization":{
@@ -210,7 +212,8 @@
         "awsAccountId":{"shape":"accountId"},
         "lastUpdatedTime":{"shape":"timestamp"},
         "statusCode":{"shape":"entityStatusCode"},
-        "tags":{"shape":"tagSet"}
+        "tags":{"shape":"tagSet"},
+        "entityMetadata":{"shape":"entityMetadata"}
       }
     },
     "ConcurrentModificationException":{
@@ -746,6 +749,19 @@
       "member":{"shape":"entityArn"},
       "max":99,
       "min":1
+    },
+    "entityMetadata":{
+      "type":"map",
+      "key":{"shape":"entityMetadataKey"},
+      "value":{"shape":"entityMetadataValue"}
+    },
+    "entityMetadataKey":{
+      "type":"string",
+      "max":1024
+    },
+    "entityMetadataValue":{
+      "type":"string",
+      "max":1024
     },
     "entityStatusCode":{
       "type":"string",

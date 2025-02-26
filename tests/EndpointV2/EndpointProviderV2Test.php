@@ -262,10 +262,16 @@ class EndpointProviderV2Test extends TestCase
             $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
                 $expectedEndpoint = $expected['endpoint'];
                 $expectedUri = new Uri($expected['endpoint']['url']);
+                $expectedPath = $expectedUri->getPath();
+
                 $this->assertStringContainsString(
                     $expectedUri->getHost(),
                     $req->getUri()->getHost()
                 );
+
+                if (!empty($expectedPath)) {
+                    $this->assertStringStartsWith($expectedPath, $req->getUri()->getPath());
+                }
 
                 if (isset($expectedEndpoint['properties']['authSchemes'])) {
                     $expectedAuthScheme = null;
