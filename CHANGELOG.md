@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.3 - 2025-02-27
 
 * `Aws\BedrockAgentRuntime` - Introduces Sessions (preview) to enable stateful conversations in GenAI applications.
 * `Aws\RedshiftServerless` - Add track support for Redshift Serverless workgroup.
