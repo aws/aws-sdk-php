@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgentRuntime` - Introduces Sessions (preview) to enable stateful conversations in GenAI applications.
+* `Aws\RedshiftServerless` - Add track support for Redshift Serverless workgroup.
+* `Aws\StorageGateway` - This release adds support to invoke a process that cleans the specified file share's cache of file entries that are failing upload to Amazon S3.
+* `Aws\QBusiness` - This release supports deleting attachments from conversations.
+* `Aws\SageMaker` - SageMaker HubService is introducing support for creating Training Jobs in Curated Hub (Private Hub). Additionally, it is introducing two new APIs: UpdateHubContent and UpdateHubContentReference.
+* `Aws\EMR` - Definition update for EbsConfiguration.
+
 ## 3.340.2 - 2025-02-26
 
 * `Aws\OAM` - This release adds support for sharing AWS::ApplicationSignals::Service and AWS::ApplicationSignals::ServiceLevelObjective resources.

@@ -57,6 +57,7 @@
     "DetachVolume": "<p>Disconnects a volume from an iSCSI connection and then detaches the volume from the specified gateway. Detaching and attaching a volume enables you to recover your data from one gateway to a different gateway without creating a snapshot. It also makes it easier to move your volumes from an on-premises gateway to a gateway hosted on an Amazon EC2 instance. This operation is only supported in the volume gateway type.</p>",
     "DisableGateway": "<p>Disables a tape gateway when the gateway is no longer functioning. For example, if your gateway VM is damaged, you can disable the gateway so you can recover virtual tapes.</p> <p>Use this operation for a tape gateway that is not reachable or not functioning. This operation is only supported in the tape gateway type.</p> <important> <p>After a gateway is disabled, it cannot be enabled.</p> </important>",
     "DisassociateFileSystem": "<p>Disassociates an Amazon FSx file system from the specified gateway. After the disassociation process finishes, the gateway can no longer access the Amazon FSx file system. This operation is only supported in the FSx File Gateway type.</p>",
+    "EvictFilesFailingUpload": "<p>Starts a process that cleans the specified file share's cache of file entries that are failing upload to Amazon S3. This API operation reports success if the request is received with valid arguments, and there are no other cache clean operations currently in-progress for the specified file share. After a successful request, the cache clean operation occurs asynchronously and reports progress using CloudWatch logs and notifications.</p> <important> <p>If <code>ForceRemove</code> is set to <code>True</code>, the cache clean operation will delete file data from the gateway which might otherwise be recoverable. We recommend using this operation only after all other methods to clear files failing upload have been exhausted, and if your business need outweighs the potential data loss.</p> </important>",
     "JoinDomain": "<p>Adds a file gateway to an Active Directory domain. This operation is only supported for file gateways that support the SMB file protocol.</p> <note> <p>Joining a domain creates an Active Directory computer account in the default organizational unit, using the gateway's <b>Gateway ID</b> as the account name (for example, SGW-1234ADE). If your Active Directory environment requires that you pre-stage accounts to facilitate the join domain process, you will need to create this account ahead of time.</p> <p>To create the gateway's computer account in an organizational unit other than the default, you must specify the organizational unit when joining the domain.</p> </note>",
     "ListAutomaticTapeCreationPolicies": "<p>Lists the automatic tape creation policies for a gateway. If there are no automatic tape creation policies for the gateway, it returns an empty list.</p> <p>This operation is only supported for tape gateways.</p>",
     "ListCacheReports": "<p>Returns a list of existing cache reports for all file shares associated with your Amazon Web Services account. This list includes all information provided by the <code>DescribeCacheReport</code> action, such as report name, status, completion progress, start time, end time, filters, and tags.</p>",
@@ -1139,6 +1140,16 @@
         "StorageGatewayError$errorCode": "<p>Additional information about the error.</p>"
       }
     },
+    "EvictFilesFailingUploadInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EvictFilesFailingUploadOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "FileShareARN": {
       "base": "<p>The Amazon Resource Name (ARN) of the file share.</p>",
       "refs": {
@@ -1147,6 +1158,7 @@
         "CreateSMBFileShareOutput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the newly created file share.</p>",
         "DeleteFileShareInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the file share to be deleted.</p>",
         "DeleteFileShareOutput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the deleted file share.</p>",
+        "EvictFilesFailingUploadInput$FileShareARN": "<p>The Amazon Resource Name (ARN) of the file share for which you want to start the cache clean operation.</p>",
         "FileShareARNList$member": null,
         "FileShareInfo$FileShareARN": null,
         "NFSFileShareInfo$FileShareARN": null,
@@ -2864,6 +2876,7 @@
         "DeleteTapeInput$BypassGovernanceRetention": "<p>Set to <code>TRUE</code> to delete an archived tape that belongs to a custom pool with tape retention lock. Only archived tapes with tape retention lock set to <code>governance</code> can be deleted. Archived tapes with tape retention lock set to <code>compliance</code> can't be deleted.</p>",
         "DeviceiSCSIAttributes$ChapEnabled": "<p>Indicates whether mutual CHAP is enabled for the iSCSI target.</p>",
         "DisassociateFileSystemInput$ForceDelete": "<p>If this value is set to true, the operation disassociates an Amazon FSx file system immediately. It ends all data uploads to the file system, and the file system association enters the <code>FORCE_DELETING</code> status. If this value is set to false, the Amazon FSx file system does not disassociate until all data is uploaded.</p>",
+        "EvictFilesFailingUploadInput$ForceRemove": "<p>Specifies whether cache entries with full or partial file data currently stored on the gateway will be forcibly removed by the cache clean operation.</p> <p>Valid arguments:</p> <ul> <li> <p> <code>False</code> - The cache clean operation skips cache entries failing upload if they are associated with data currently stored on the gateway. This preserves the cached data.</p> </li> <li> <p> <code>True</code> - The cache clean operation removes cache entries failing upload even if they are associated with data currently stored on the gateway. This deletes the cached data.</p> <important> <p>If <code>ForceRemove</code> is set to <code>True</code>, the cache clean operation will delete file data from the gateway which might otherwise be recoverable.</p> </important> </li> </ul>",
         "NFSFileShareInfo$KMSEncrypted": "<p>Optional. Set to <code>true</code> to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or <code>false</code> to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the <code>EncryptionType</code> parameter instead.</p> <note> <p>We recommend using <code>EncryptionType</code> instead of <code>KMSEncrypted</code> to set the file share encryption method. You do not need to provide values for both parameters.</p> <p>If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if <code>EncryptionType</code> is <code>SseS3</code>, then <code>KMSEncrypted</code> must be <code>false</code>. If <code>EncryptionType</code> is <code>SseKms</code> or <code>DsseKms</code>, then <code>KMSEncrypted</code> must be <code>true</code>.</p> </note> <p>Valid Values: <code>true</code> | <code>false</code> </p>",
         "SMBFileShareInfo$KMSEncrypted": "<p>Optional. Set to <code>true</code> to use Amazon S3 server-side encryption with your own KMS key (SSE-KMS), or <code>false</code> to use a key managed by Amazon S3 (SSE-S3). To use dual-layer encryption (DSSE-KMS), set the <code>EncryptionType</code> parameter instead.</p> <note> <p>We recommend using <code>EncryptionType</code> instead of <code>KMSEncrypted</code> to set the file share encryption method. You do not need to provide values for both parameters.</p> <p>If values for both parameters exist in the same request, then the specified encryption methods must not conflict. For example, if <code>EncryptionType</code> is <code>SseS3</code>, then <code>KMSEncrypted</code> must be <code>false</code>. If <code>EncryptionType</code> is <code>SseKms</code> or <code>DsseKms</code>, then <code>KMSEncrypted</code> must be <code>true</code>.</p> </note> <p>Valid Values: <code>true</code> | <code>false</code> </p>",
         "StorediSCSIVolume$PreservedExistingData": "<p>Indicates if when the stored volume was created, existing data on the underlying local disk was preserved.</p> <p>Valid Values: <code>true</code> | <code>false</code> </p>",
@@ -2922,6 +2935,7 @@
         "Disk$DiskNode": "<p>The device node of a local disk as assigned by the virtualization environment.</p>",
         "Disk$DiskStatus": "<p>A value that represents the status of a local disk.</p>",
         "Disk$DiskAllocationResource": "<p>The iSCSI qualified name (IQN) that is defined for a disk. This field is not included in the response if the local disk is not defined as an iSCSI target. The format of this field is <i>targetIqn::LUNNumber::region-volumeId</i>.</p>",
+        "EvictFilesFailingUploadOutput$NotificationId": "<p>The randomly generated ID of the CloudWatch notification associated with the cache clean operation. This ID is in UUID format.</p>",
         "GatewayInfo$GatewayName": "<p>The name of the gateway.</p>",
         "InternalServerError$message": "<p>A human-readable message describing the error that occurred.</p>",
         "InvalidGatewayRequestException$message": "<p>A human-readable message describing the error that occurred.</p>",

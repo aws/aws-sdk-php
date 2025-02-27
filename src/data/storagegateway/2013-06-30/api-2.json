@@ -731,6 +731,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "EvictFilesFailingUpload":{
+      "name":"EvictFilesFailingUpload",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EvictFilesFailingUploadInput"},
+      "output":{"shape":"EvictFilesFailingUploadOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "JoinDomain":{
       "name":"JoinDomain",
       "http":{
@@ -2708,6 +2721,20 @@
         "VolumeNotFound",
         "VolumeNotReady"
       ]
+    },
+    "EvictFilesFailingUploadInput":{
+      "type":"structure",
+      "required":["FileShareARN"],
+      "members":{
+        "FileShareARN":{"shape":"FileShareARN"},
+        "ForceRemove":{"shape":"boolean"}
+      }
+    },
+    "EvictFilesFailingUploadOutput":{
+      "type":"structure",
+      "members":{
+        "NotificationId":{"shape":"string"}
+      }
     },
     "FileShareARN":{
       "type":"string",

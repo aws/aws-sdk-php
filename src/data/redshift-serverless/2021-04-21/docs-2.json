@@ -29,6 +29,7 @@
     "GetScheduledAction": "<p>Returns information about a scheduled action.</p>",
     "GetSnapshot": "<p>Returns information about a specific snapshot.</p>",
     "GetTableRestoreStatus": "<p>Returns information about a <code>TableRestoreStatus</code> object.</p>",
+    "GetTrack": "<p>Get the Redshift Serverless version for a specified track.</p>",
     "GetUsageLimit": "<p>Returns information about a usage limit.</p>",
     "GetWorkgroup": "<p>Returns information about a specific workgroup.</p>",
     "ListCustomDomainAssociations": "<p> Lists custom domain associations for Amazon Redshift Serverless.</p>",
@@ -41,6 +42,7 @@
     "ListSnapshots": "<p>Returns a list of snapshots.</p>",
     "ListTableRestoreStatus": "<p>Returns information about an array of <code>TableRestoreStatus</code> objects.</p>",
     "ListTagsForResource": "<p>Lists the tags assigned to a resource.</p>",
+    "ListTracks": "<p>List the Amazon Redshift Serverless versions.</p>",
     "ListUsageLimits": "<p>Lists all usage limits within Amazon Redshift Serverless.</p>",
     "ListWorkgroups": "<p>Returns information about a list of specified workgroups.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource policy. Currently, you can use policies to share snapshots across Amazon Web Services accounts.</p>",
@@ -491,6 +493,16 @@
       "refs": {
       }
     },
+    "GetTrackRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTrackResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetUsageLimitRequest": {
       "base": null,
       "refs": {
@@ -750,6 +762,22 @@
       "refs": {
       }
     },
+    "ListTracksRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTracksRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListTracksRequest$maxResults": "<p>The maximum number of response records to return in each call. If the number of remaining response records exceeds the specified MaxRecords value, a value is returned in a marker field of the response. You can retrieve the next set of records by retrying the command with the returned marker value.</p>"
+      }
+    },
+    "ListTracksResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListUsageLimitsRequest": {
       "base": null,
       "refs": {
@@ -918,6 +946,8 @@
         "ListSnapshotCopyConfigurationsResponse$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListTableRestoreStatusRequest$nextToken": "<p>If your initial <code>ListTableRestoreStatus</code> operation returns a nextToken, you can include the returned <code>nextToken</code> in following <code>ListTableRestoreStatus</code> operations. This will return results on the next page.</p>",
         "ListTableRestoreStatusResponse$nextToken": "<p>If your initial <code>ListTableRestoreStatus</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in following <code>ListTableRestoreStatus</code> operations. This will returns results on the next page.</p>",
+        "ListTracksRequest$nextToken": "<p>If your initial <code>ListTracksRequest</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in following <code>ListTracksRequest</code> operations, which returns results in the next page.</p>",
+        "ListTracksResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListUsageLimitsRequest$nextToken": "<p>If your initial <code>ListUsageLimits</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in following <code>ListUsageLimits</code> operations, which returns results in the next page. </p>",
         "ListUsageLimitsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>"
       }
@@ -1087,6 +1117,13 @@
         "CreateWorkgroupRequest$securityGroupIds": "<p>An array of security group IDs to associate with the workgroup.</p>",
         "UpdateWorkgroupRequest$securityGroupIds": "<p>An array of security group IDs to associate with the workgroup.</p>",
         "Workgroup$securityGroupIds": "<p>An array of security group IDs to associate with the workgroup.</p>"
+      }
+    },
+    "ServerlessTrack": {
+      "base": "<p>Defines a track that determines which Amazon Redshift version to apply after a new version is released. If the value for <code>ServerlessTrack</code> is <code>current</code>, the workgroup is updated to the most recently certified release. If the value is <code>trailing</code>, the workgroup is updated to the previously certified release.</p>",
+      "refs": {
+        "GetTrackResponse$track": "<p>The version of the specified track.</p>",
+        "TrackList$member": null
       }
     },
     "ServiceQuotaExceededException": {
@@ -1260,6 +1297,7 @@
         "Schedule$cron": "<p>The cron expression to use to schedule a recurring scheduled action. Schedule invocations must be separated by at least one hour. Times are in UTC.</p> <p>Format of cron expressions is <code>(Minutes Hours Day-of-month Month Day-of-week Year)</code>. For example, <code>\"(0 10 ? * MON *)\"</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions\">Cron Expressions</a> in the <i>Amazon CloudWatch Events User Guide</i>.</p>",
         "ScheduledActionResponse$scheduledActionDescription": "<p>The description of the scheduled action.</p>",
         "ScheduledActionResponse$scheduledActionUuid": "<p>The uuid of the scheduled action.</p>",
+        "ServerlessTrack$workgroupVersion": "<p>The workgroup version number for the workgroup release.</p>",
         "ServiceQuotaExceededException$message": null,
         "Snapshot$adminPasswordSecretArn": "<p>The Amazon Resource Name (ARN) for the namespace's admin user credentials secret.</p>",
         "Snapshot$adminUsername": "<p>The username of the database within a snapshot.</p>",
@@ -1293,6 +1331,7 @@
         "UpdateScheduledActionRequest$scheduledActionDescription": "<p>The descripion of the scheduled action to update to.</p>",
         "UpdateSnapshotCopyConfigurationRequest$snapshotCopyConfigurationId": "<p>The ID of the snapshot copy configuration to update.</p>",
         "UpdateSnapshotRequest$snapshotName": "<p>The name of the snapshot.</p>",
+        "UpdateTarget$workgroupVersion": "<p>The workgroup version for the new track.</p>",
         "UpdateUsageLimitRequest$usageLimitId": "<p>The identifier of the usage limit to update.</p>",
         "UsageLimit$resourceArn": "<p>The Amazon Resource Name (ARN) that identifies the Amazon Redshift Serverless resource.</p>",
         "UsageLimit$usageLimitArn": "<p>The Amazon Resource Name (ARN) of the resource associated with the usage limit.</p>",
@@ -1442,6 +1481,24 @@
       "refs": {
       }
     },
+    "TrackList": {
+      "base": null,
+      "refs": {
+        "ListTracksResponse$tracks": "<p>The returned tracks.</p>"
+      }
+    },
+    "TrackName": {
+      "base": null,
+      "refs": {
+        "CreateWorkgroupRequest$trackName": "<p>An optional parameter for the name of the track for the workgroup. If you don't provide a track name, the workgroup is assigned to the <code>current</code> track.</p>",
+        "GetTrackRequest$trackName": "<p>The name of the track of which its version is fetched.</p>",
+        "ServerlessTrack$trackName": "<p>The name of the track. Valid values are <code>current</code> and <code>trailing</code>.</p>",
+        "UpdateTarget$trackName": "<p>The name of the new track.</p>",
+        "UpdateWorkgroupRequest$trackName": "<p>An optional parameter for the name of the track for the workgroup. If you don't provide a track name, the workgroup is assigned to the <code>current</code> track.</p>",
+        "Workgroup$pendingTrackName": "<p>The name for the track that you want to assign to the workgroup. When the track changes, the workgroup is switched to the latest workgroup release available for the track. At this point, the track name is applied.</p>",
+        "Workgroup$trackName": "<p>The name of the track for the workgroup.</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {
@@ -1510,6 +1567,18 @@
     "UpdateSnapshotResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UpdateTarget": {
+      "base": "<p>A track that you can switch the current track to.</p>",
+      "refs": {
+        "UpdateTargetsList$member": null
+      }
+    },
+    "UpdateTargetsList": {
+      "base": null,
+      "refs": {
+        "ServerlessTrack$updateTargets": "<p>An array of <code>UpdateTarget</code> objects to update with the track.</p>"
       }
     },
     "UpdateUsageLimitRequest": {

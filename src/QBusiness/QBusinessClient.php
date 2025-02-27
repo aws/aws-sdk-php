@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createWebExperienceAsync(array $args = [])
  * @method \Aws\Result deleteApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteApplicationAsync(array $args = [])
+ * @method \Aws\Result deleteAttachment(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAttachmentAsync(array $args = [])
  * @method \Aws\Result deleteChatControlsConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteChatControlsConfigurationAsync(array $args = [])
  * @method \Aws\Result deleteConversation(array $args = [])

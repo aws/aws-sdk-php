@@ -444,6 +444,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetTrack":{
+      "name":"GetTrack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTrackRequest"},
+      "output":{"shape":"GetTrackResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetUsageLimit":{
       "name":"GetUsageLimit",
       "http":{
@@ -614,6 +631,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListTracks":{
+      "name":"ListTracks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTracksRequest"},
+      "output":{"shape":"ListTracksResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidPaginationException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1142,6 +1175,7 @@
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
         "tags":{"shape":"TagList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupName":{"shape":"WorkgroupName"}
       }
     },
@@ -1458,6 +1492,19 @@
         "tableRestoreStatus":{"shape":"TableRestoreStatus"}
       }
     },
+    "GetTrackRequest":{
+      "type":"structure",
+      "required":["trackName"],
+      "members":{
+        "trackName":{"shape":"TrackName"}
+      }
+    },
+    "GetTrackResponse":{
+      "type":"structure",
+      "members":{
+        "track":{"shape":"ServerlessTrack"}
+      }
+    },
     "GetUsageLimitRequest":{
       "type":"structure",
       "required":["usageLimitId"],
@@ -1747,6 +1794,26 @@
       "type":"structure",
       "members":{
         "tags":{"shape":"TagList"}
+      }
+    },
+    "ListTracksRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListTracksRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListTracksRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListTracksResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "tracks":{"shape":"TrackList"}
       }
     },
     "ListUsageLimitsRequest":{
@@ -2129,6 +2196,14 @@
       "type":"list",
       "member":{"shape":"SecurityGroupId"}
     },
+    "ServerlessTrack":{
+      "type":"structure",
+      "members":{
+        "trackName":{"shape":"TrackName"},
+        "updateTargets":{"shape":"UpdateTargetsList"},
+        "workgroupVersion":{"shape":"String"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":["message"],
@@ -2321,6 +2396,16 @@
       },
       "exception":true
     },
+    "TrackList":{
+      "type":"list",
+      "member":{"shape":"ServerlessTrack"}
+    },
+    "TrackName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_]+$"
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -2444,6 +2529,17 @@
         "snapshot":{"shape":"Snapshot"}
       }
     },
+    "UpdateTarget":{
+      "type":"structure",
+      "members":{
+        "trackName":{"shape":"TrackName"},
+        "workgroupVersion":{"shape":"String"}
+      }
+    },
+    "UpdateTargetsList":{
+      "type":"list",
+      "member":{"shape":"UpdateTarget"}
+    },
     "UpdateUsageLimitRequest":{
       "type":"structure",
       "required":["usageLimitId"],
@@ -2473,6 +2569,7 @@
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupName":{"shape":"WorkgroupName"}
       }
     },
@@ -2580,12 +2677,14 @@
         "maxCapacity":{"shape":"Integer"},
         "namespaceName":{"shape":"String"},
         "patchVersion":{"shape":"String"},
+        "pendingTrackName":{"shape":"TrackName"},
         "port":{"shape":"Integer"},
         "pricePerformanceTarget":{"shape":"PerformanceTarget"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "status":{"shape":"WorkgroupStatus"},
         "subnetIds":{"shape":"SubnetIdList"},
+        "trackName":{"shape":"TrackName"},
         "workgroupArn":{"shape":"String"},
         "workgroupId":{"shape":"String"},
         "workgroupName":{"shape":"WorkgroupName"},

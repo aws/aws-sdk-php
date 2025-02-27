@@ -3737,6 +3737,32 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "UpdateHubContent":{
+      "name":"UpdateHubContent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateHubContentRequest"},
+      "output":{"shape":"UpdateHubContentResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
+    },
+    "UpdateHubContentReference":{
+      "name":"UpdateHubContentReference",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateHubContentReferenceRequest"},
+      "output":{"shape":"UpdateHubContentReferenceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "UpdateImage":{
       "name":"UpdateImage",
       "http":{
@@ -10563,7 +10589,8 @@
         "HubContentDependencies":{"shape":"HubContentDependencyList"},
         "HubContentStatus":{"shape":"HubContentStatus"},
         "FailureReason":{"shape":"FailureReason"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "DescribeHubRequest":{
@@ -13587,6 +13614,13 @@
       "min":0
     },
     "Horovod":{"type":"boolean"},
+    "HubAccessConfig":{
+      "type":"structure",
+      "required":["HubContentArn"],
+      "members":{
+        "HubContentArn":{"shape":"HubContentArn"}
+      }
+    },
     "HubArn":{
       "type":"string",
       "max":255,
@@ -13691,7 +13725,8 @@
       "type":"string",
       "enum":[
         "Supported",
-        "Deprecated"
+        "Deprecated",
+        "Restricted"
       ]
     },
     "HubContentType":{
@@ -14522,6 +14557,7 @@
         "HubContentDescription":{"shape":"HubContentDescription"},
         "HubContentMarkdown":{"shape":"HubContentMarkdown"},
         "HubContentDocument":{"shape":"HubContentDocument"},
+        "SupportStatus":{"shape":"HubContentSupportStatus"},
         "HubContentSearchKeywords":{"shape":"HubContentSearchKeywordList"},
         "Tags":{"shape":"TagList"}
       }
@@ -22214,7 +22250,9 @@
         "S3Uri":{"shape":"S3Uri"},
         "S3DataDistributionType":{"shape":"S3DataDistribution"},
         "AttributeNames":{"shape":"AttributeNames"},
-        "InstanceGroupNames":{"shape":"InstanceGroupNames"}
+        "InstanceGroupNames":{"shape":"InstanceGroupNames"},
+        "ModelAccessConfig":{"shape":"ModelAccessConfig"},
+        "HubAccessConfig":{"shape":"HubAccessConfig"}
       }
     },
     "S3DataType":{
@@ -25349,6 +25387,62 @@
         "Description":{"shape":"FeatureDescription"},
         "ParameterAdditions":{"shape":"FeatureParameterAdditions"},
         "ParameterRemovals":{"shape":"FeatureParameterRemovals"}
+      }
+    },
+    "UpdateHubContentReferenceRequest":{
+      "type":"structure",
+      "required":[
+        "HubName",
+        "HubContentName",
+        "HubContentType"
+      ],
+      "members":{
+        "HubName":{"shape":"HubNameOrArn"},
+        "HubContentName":{"shape":"HubContentName"},
+        "HubContentType":{"shape":"HubContentType"},
+        "MinVersion":{"shape":"HubContentVersion"}
+      }
+    },
+    "UpdateHubContentReferenceResponse":{
+      "type":"structure",
+      "required":[
+        "HubArn",
+        "HubContentArn"
+      ],
+      "members":{
+        "HubArn":{"shape":"HubArn"},
+        "HubContentArn":{"shape":"HubContentArn"}
+      }
+    },
+    "UpdateHubContentRequest":{
+      "type":"structure",
+      "required":[
+        "HubName",
+        "HubContentName",
+        "HubContentType",
+        "HubContentVersion"
+      ],
+      "members":{
+        "HubName":{"shape":"HubNameOrArn"},
+        "HubContentName":{"shape":"HubContentName"},
+        "HubContentType":{"shape":"HubContentType"},
+        "HubContentVersion":{"shape":"HubContentVersion"},
+        "HubContentDisplayName":{"shape":"HubContentDisplayName"},
+        "HubContentDescription":{"shape":"HubContentDescription"},
+        "HubContentMarkdown":{"shape":"HubContentMarkdown"},
+        "HubContentSearchKeywords":{"shape":"HubContentSearchKeywordList"},
+        "SupportStatus":{"shape":"HubContentSupportStatus"}
+      }
+    },
+    "UpdateHubContentResponse":{
+      "type":"structure",
+      "required":[
+        "HubArn",
+        "HubContentArn"
+      ],
+      "members":{
+        "HubArn":{"shape":"HubArn"},
+        "HubContentArn":{"shape":"HubContentArn"}
       }
     },
     "UpdateHubRequest":{

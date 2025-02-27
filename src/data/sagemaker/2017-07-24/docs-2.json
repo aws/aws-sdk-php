@@ -335,6 +335,8 @@
     "UpdateFeatureGroup": "<p>Updates the feature group by either adding features or updating the online store configuration. Use one of the following request parameters at a time while using the <code>UpdateFeatureGroup</code> API.</p> <p>You can add features for your feature group using the <code>FeatureAdditions</code> request parameter. Features cannot be removed from a feature group.</p> <p>You can update the online store configuration by using the <code>OnlineStoreConfig</code> request parameter. If a <code>TtlDuration</code> is specified, the default <code>TtlDuration</code> applies for all records added to the feature group <i>after the feature group is updated</i>. If a record level <code>TtlDuration</code> exists from using the <code>PutRecord</code> API, the record level <code>TtlDuration</code> applies to that record instead of the default <code>TtlDuration</code>. To remove the default <code>TtlDuration</code> from an existing feature group, use the <code>UpdateFeatureGroup</code> API and set the <code>TtlDuration</code> <code>Unit</code> and <code>Value</code> to <code>null</code>.</p>",
     "UpdateFeatureMetadata": "<p>Updates the description and parameters of the feature group.</p>",
     "UpdateHub": "<p>Update a hub.</p>",
+    "UpdateHubContent": "<p>Updates SageMaker hub content (either a <code>Model</code> or <code>Notebook</code> resource).</p> <p>You can update the metadata that describes the resource. In addition to the required request fields, specify at least one of the following fields to update:</p> <ul> <li> <p> <code>HubContentDescription</code> </p> </li> <li> <p> <code>HubContentDisplayName</code> </p> </li> <li> <p> <code>HubContentMarkdown</code> </p> </li> <li> <p> <code>HubContentSearchKeywords</code> </p> </li> <li> <p> <code>SupportStatus</code> </p> </li> </ul> <p>For more information about hubs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-curated-hubs.html\">Private curated hubs for foundation model access control in JumpStart</a>.</p> <note> <p>If you want to update a <code>ModelReference</code> resource in your hub, use the <code>UpdateHubContentResource</code> API instead.</p> </note>",
+    "UpdateHubContentReference": "<p>Updates the contents of a SageMaker hub for a <code>ModelReference</code> resource. A <code>ModelReference</code> allows you to access public SageMaker JumpStart models from within your private hub.</p> <p>When using this API, you can update the <code>MinVersion</code> field for additional flexibility in the model version. You shouldn't update any additional fields when using this API, because the metadata in your private hub should match the public JumpStart model's metadata.</p> <note> <p>If you want to update a <code>Model</code> or <code>Notebook</code> resource in your hub, use the <code>UpdateHubContent</code> API instead.</p> </note> <p>For more information about adding model references to your hub, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-curated-hubs-admin-guide-add-models.html\"> Add models to a private hub</a>.</p>",
     "UpdateImage": "<p>Updates the properties of a SageMaker AI image. To change the image's tags, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AddTags.html\">AddTags</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteTags.html\">DeleteTags</a> APIs.</p>",
     "UpdateImageVersion": "<p>Updates the properties of a SageMaker AI image version.</p>",
     "UpdateInferenceComponent": "<p>Updates an inference component.</p>",
@@ -7133,6 +7135,12 @@
         "UpdateImageVersionRequest$Horovod": "<p>Indicates Horovod compatibility.</p>"
       }
     },
+    "HubAccessConfig": {
+      "base": "<p>The configuration for a private hub model reference that points to a public SageMaker JumpStart model.</p> <p>For more information about private hubs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-curated-hubs.html\">Private curated hubs for foundation model access control in JumpStart</a>.</p>",
+      "refs": {
+        "S3DataSource$HubAccessConfig": "<p>The configuration for a private hub model reference that points to a SageMaker JumpStart public hub model.</p>"
+      }
+    },
     "HubArn": {
       "base": null,
       "refs": {
@@ -7142,6 +7150,8 @@
         "DescribeHubResponse$HubArn": "<p>The Amazon Resource Name (ARN) of the hub.</p>",
         "HubInfo$HubArn": "<p>The Amazon Resource Name (ARN) of the hub.</p>",
         "ImportHubContentResponse$HubArn": "<p>The ARN of the hub that the content was imported into.</p>",
+        "UpdateHubContentReferenceResponse$HubArn": "<p>The ARN of the private model hub that contains the updated hub content.</p>",
+        "UpdateHubContentResponse$HubArn": "<p>The ARN of the private model hub that contains the updated hub content.</p>",
         "UpdateHubResponse$HubArn": "<p>The Amazon Resource Name (ARN) of the updated hub.</p>"
       }
     },
@@ -7150,9 +7160,12 @@
       "refs": {
         "CreateHubContentReferenceResponse$HubContentArn": "<p>The ARN of the hub content.</p>",
         "DescribeHubContentResponse$HubContentArn": "<p>The Amazon Resource Name (ARN) of the hub content.</p>",
+        "HubAccessConfig$HubContentArn": "<p>The ARN of your private model hub content. This should be a <code>ModelReference</code> resource type that points to a SageMaker JumpStart public hub model.</p>",
         "HubContentInfo$HubContentArn": "<p>The Amazon Resource Name (ARN) of the hub content.</p>",
         "ImportHubContentResponse$HubContentArn": "<p>The ARN of the hub content that was imported.</p>",
-        "InferenceHubAccessConfig$HubContentArn": "<p>The ARN of the hub content for which deployment access is allowed.</p>"
+        "InferenceHubAccessConfig$HubContentArn": "<p>The ARN of the hub content for which deployment access is allowed.</p>",
+        "UpdateHubContentReferenceResponse$HubContentArn": "<p>The ARN of the hub content resource that was updated.</p>",
+        "UpdateHubContentResponse$HubContentArn": "<p>The ARN of the hub content resource that was updated.</p>"
       }
     },
     "HubContentDependency": {
@@ -7172,7 +7185,8 @@
       "refs": {
         "DescribeHubContentResponse$HubContentDescription": "<p>A description of the hub content.</p>",
         "HubContentInfo$HubContentDescription": "<p>A description of the hub content.</p>",
-        "ImportHubContentRequest$HubContentDescription": "<p>A description of the hub content to import.</p>"
+        "ImportHubContentRequest$HubContentDescription": "<p>A description of the hub content to import.</p>",
+        "UpdateHubContentRequest$HubContentDescription": "<p>The description of the hub content.</p>"
       }
     },
     "HubContentDisplayName": {
@@ -7180,7 +7194,8 @@
       "refs": {
         "DescribeHubContentResponse$HubContentDisplayName": "<p>The display name of the hub content.</p>",
         "HubContentInfo$HubContentDisplayName": "<p>The display name of the hub content.</p>",
-        "ImportHubContentRequest$HubContentDisplayName": "<p>The display name of the hub content to import.</p>"
+        "ImportHubContentRequest$HubContentDisplayName": "<p>The display name of the hub content to import.</p>",
+        "UpdateHubContentRequest$HubContentDisplayName": "<p>The display name of the hub content.</p>"
       }
     },
     "HubContentDocument": {
@@ -7207,7 +7222,8 @@
       "base": null,
       "refs": {
         "DescribeHubContentResponse$HubContentMarkdown": "<p>A string that provides a description of the hub content. This string can include links, tables, and standard markdown formating.</p>",
-        "ImportHubContentRequest$HubContentMarkdown": "<p>A string that provides a description of the hub content. This string can include links, tables, and standard markdown formating.</p>"
+        "ImportHubContentRequest$HubContentMarkdown": "<p>A string that provides a description of the hub content. This string can include links, tables, and standard markdown formating.</p>",
+        "UpdateHubContentRequest$HubContentMarkdown": "<p>A string that provides a description of the hub content. This string can include links, tables, and standard markdown formatting.</p>"
       }
     },
     "HubContentName": {
@@ -7220,7 +7236,9 @@
         "DescribeHubContentResponse$HubContentName": "<p>The name of the hub content.</p>",
         "HubContentInfo$HubContentName": "<p>The name of the hub content.</p>",
         "ImportHubContentRequest$HubContentName": "<p>The name of the hub content to import.</p>",
-        "ListHubContentVersionsRequest$HubContentName": "<p>The name of the hub content.</p>"
+        "ListHubContentVersionsRequest$HubContentName": "<p>The name of the hub content.</p>",
+        "UpdateHubContentReferenceRequest$HubContentName": "<p>The name of the hub content resource that you want to update.</p>",
+        "UpdateHubContentRequest$HubContentName": "<p>The name of the hub content resource that you want to update.</p>"
       }
     },
     "HubContentSearchKeywordList": {
@@ -7228,7 +7246,8 @@
       "refs": {
         "DescribeHubContentResponse$HubContentSearchKeywords": "<p>The searchable keywords for the hub content.</p>",
         "HubContentInfo$HubContentSearchKeywords": "<p>The searchable keywords for the hub content.</p>",
-        "ImportHubContentRequest$HubContentSearchKeywords": "<p>The searchable keywords of the hub content.</p>"
+        "ImportHubContentRequest$HubContentSearchKeywords": "<p>The searchable keywords of the hub content.</p>",
+        "UpdateHubContentRequest$HubContentSearchKeywords": "<p>The searchable keywords of the hub content.</p>"
       }
     },
     "HubContentSortBy": {
@@ -7249,7 +7268,9 @@
       "base": null,
       "refs": {
         "DescribeHubContentResponse$SupportStatus": "<p>The support status of the hub content.</p>",
-        "HubContentInfo$SupportStatus": "<p>The support status of the hub content.</p>"
+        "HubContentInfo$SupportStatus": "<p>The support status of the hub content.</p>",
+        "ImportHubContentRequest$SupportStatus": "<p>The status of the hub content resource.</p>",
+        "UpdateHubContentRequest$SupportStatus": "<p>Indicates the current status of the hub content resource.</p>"
       }
     },
     "HubContentType": {
@@ -7262,7 +7283,9 @@
         "HubContentInfo$HubContentType": "<p>The type of hub content.</p>",
         "ImportHubContentRequest$HubContentType": "<p>The type of hub content to import.</p>",
         "ListHubContentVersionsRequest$HubContentType": "<p>The type of hub content to list versions of.</p>",
-        "ListHubContentsRequest$HubContentType": "<p>The type of hub content to list.</p>"
+        "ListHubContentsRequest$HubContentType": "<p>The type of hub content to list.</p>",
+        "UpdateHubContentReferenceRequest$HubContentType": "<p>The content type of the resource that you want to update. Only specify a <code>ModelReference</code> resource for this API. To update a <code>Model</code> or <code>Notebook</code> resource, use the <code>UpdateHubContent</code> API instead.</p>",
+        "UpdateHubContentRequest$HubContentType": "<p>The content type of the resource that you want to update. Only specify a <code>Model</code> or <code>Notebook</code> resource for this API. To update a <code>ModelReference</code>, use the <code>UpdateHubContentReference</code> API instead.</p>"
       }
     },
     "HubContentVersion": {
@@ -7274,7 +7297,9 @@
         "DescribeHubContentResponse$HubContentVersion": "<p>The version of the hub content.</p>",
         "HubContentInfo$HubContentVersion": "<p>The version of the hub content.</p>",
         "ImportHubContentRequest$HubContentVersion": "<p>The version of the hub content to import.</p>",
-        "ListHubContentVersionsRequest$MinVersion": "<p>The lower bound of the hub content versions to list.</p>"
+        "ListHubContentVersionsRequest$MinVersion": "<p>The lower bound of the hub content versions to list.</p>",
+        "UpdateHubContentReferenceRequest$MinVersion": "<p>The minimum hub content version of the referenced model that you want to use. The minimum version must be older than the latest available version of the referenced model. To support all versions of a model, set the value to <code>1.0.0</code>.</p>",
+        "UpdateHubContentRequest$HubContentVersion": "<p>The hub content version that you want to update. For example, if you have two versions of a resource in your hub, you can update the second version.</p>"
       }
     },
     "HubDescription": {
@@ -7328,6 +7353,8 @@
         "ImportHubContentRequest$HubName": "<p>The name of the hub to import content into.</p>",
         "ListHubContentVersionsRequest$HubName": "<p>The name of the hub to list the content versions of.</p>",
         "ListHubContentsRequest$HubName": "<p>The name of the hub to list the contents of.</p>",
+        "UpdateHubContentReferenceRequest$HubName": "<p>The name of the SageMaker hub that contains the hub content you want to update. You can optionally use the hub ARN instead.</p>",
+        "UpdateHubContentRequest$HubName": "<p>The name of the SageMaker hub that contains the hub content you want to update. You can optionally use the hub ARN instead.</p>",
         "UpdateHubRequest$HubName": "<p>The name of the hub to update.</p>"
       }
     },
@@ -10352,6 +10379,7 @@
     "ModelAccessConfig": {
       "base": "<p>The access configuration file to control access to the ML model. You can explicitly accept the model end-user license agreement (EULA) within the <code>ModelAccessConfig</code>.</p> <ul> <li> <p>If you are a Jumpstart user, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-choose.html#jumpstart-foundation-models-choose-eula\">End-user license agreements</a> section for more details on accepting the EULA.</p> </li> <li> <p>If you are an AutoML user, see the <i>Optional Parameters</i> section of <i>Create an AutoML job to fine-tune text generation models using the API</i> for details on <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-create-experiment-finetune-llms.html#autopilot-llms-finetuning-api-optional-params\">How to set the EULA acceptance when fine-tuning a model using the AutoML API</a>.</p> </li> </ul>",
       "refs": {
+        "S3DataSource$ModelAccessConfig": null,
         "S3ModelDataSource$ModelAccessConfig": "<p>Specifies the access configuration file for the ML model. You can explicitly accept the model end-user license agreement (EULA) within the <code>ModelAccessConfig</code>. You are responsible for reviewing and complying with any applicable license terms and making sure they are acceptable for your use case before downloading or using a model.</p>",
         "TextGenerationJobConfig$ModelAccessConfig": null
       }
@@ -16345,6 +16373,7 @@
         "DescribeExperimentResponse$LastModifiedTime": "<p>When the experiment was last modified.</p>",
         "DescribeFlowDefinitionResponse$CreationTime": "<p>The timestamp when the flow definition was created.</p>",
         "DescribeHubContentResponse$CreationTime": "<p>The date and time that hub content was created.</p>",
+        "DescribeHubContentResponse$LastModifiedTime": "<p>The last modified time of the hub content.</p>",
         "DescribeHubResponse$CreationTime": "<p>The date and time that the hub was created.</p>",
         "DescribeHubResponse$LastModifiedTime": "<p>The date and time that the hub was last modified.</p>",
         "DescribeHumanTaskUiResponse$CreationTime": "<p>The timestamp when the human task user interface was created.</p>",
@@ -17749,6 +17778,26 @@
       }
     },
     "UpdateFeatureMetadataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateHubContentReferenceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateHubContentReferenceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateHubContentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateHubContentResponse": {
       "base": null,
       "refs": {
       }

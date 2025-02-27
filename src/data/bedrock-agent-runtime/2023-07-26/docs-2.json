@@ -2,17 +2,31 @@
   "version": "2.0",
   "service": "<p>Contains APIs related to model invocation and querying of knowledge bases.</p>",
   "operations": {
+    "CreateInvocation": "<p>Creates a new invocation within a session. An invocation groups the related invocation steps that store the content from a conversation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> </ul>",
+    "CreateSession": "<p>Creates a session to temporarily store conversations for generative AI (GenAI) applications built with open-source frameworks such as LangGraph and LlamaIndex. Sessions enable you to save the state of conversations at checkpoints, with the added security and infrastructure of Amazon Web Services. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>By default, Amazon Bedrock uses Amazon Web Services-managed keys for session encryption, including session metadata, or you can use your own KMS key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p> <note> <p> You use a session to store state and conversation history for generative AI applications built with open-source frameworks. For Amazon Bedrock Agents, the service automatically manages conversation context and associates them with the agent-specific sessionId you specify in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> API operation. </p> </note> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListSessions.html\">ListSessions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetSession.html\">GetSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_DeleteSession.html\">DeleteSession</a> </p> </li> </ul>",
     "DeleteAgentMemory": "<p>Deletes memory from the specified memory identifier.</p>",
+    "DeleteSession": "<p>Deletes a session that you ended. You can't delete a session with an <code>ACTIVE</code> status. To delete an active session, you must first end it with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_EndSession.html\">EndSession</a> API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "EndSession": "<p>Ends the session. After you end a session, you can still access its content but you can’t add to it. To delete the session and it's content, you use the DeleteSession API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
+    "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "GetSession": "<p>Retrieves details about a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "InvokeAgent": "<note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>To stream agent responses, make sure that only orchestration prompt is enabled. Agent streaming is not supported for the following steps: </p> <ul> <li> <p> <code>Pre-processing</code> </p> </li> <li> <p> <code>Post-processing</code> </p> </li> <li> <p>Agent with 1 Knowledge base and <code>User Input</code> not enabled</p> </li> </ul> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> </note>",
+    "ListInvocationSteps": "<p>Lists all invocation steps associated with a session and optionally, an invocation within the session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListInvocations": "<p>Lists all invocations associated with a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListSessions": "<p>Lists all sessions in your Amazon Web Services account. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+    "ListTagsForResource": "<p>List all the tags for the resource you specify.</p>",
     "OptimizePrompt": "<p>Optimizes a prompt for the task that you specify. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-optimize.html\">Optimize a prompt</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "PutInvocationStep": "<p>Add an invocation step to an invocation in a session. An invocation step stores fine-grained state checkpoints, including text and images, for each interaction. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p> <p>Related APIs:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetInvocationStep.html\">GetInvocationStep</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocationSteps.html\">ListInvocationSteps</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListInvocations</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_ListInvocations.html\">ListSessions</a> </p> </li> </ul>",
     "Rerank": "<p>Reranks the relevance of sources based on queries. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html\">Improve the relevance of query responses with a reranker model</a>.</p>",
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
     "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>",
-    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>"
+    "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>",
+    "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
+    "UntagResource": "<p>Remove tags from a resource.</p>",
+    "UpdateSession": "<p>Updates the metadata or encryption settings of a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>"
   },
   "shapes": {
     "APISchema": {
@@ -295,6 +309,24 @@
         "BedrockRerankingConfiguration$modelConfiguration": "<p>Contains configurations for a reranker model.</p>"
       }
     },
+    "BedrockSessionContentBlock": {
+      "base": "<p>A block of content that you pass to, or receive from, a Amazon Bedrock session in an invocation step. You pass the content to a session in the <code>payLoad</code> of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_PutInvocationStep.html\">PutInvocationStep</a> API operation. You retrieve the content with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_GetInvocationStep.html\">GetInvocationStep</a> API operation.</p> <p>For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "BedrockSessionContentBlocks$member": null
+      }
+    },
+    "BedrockSessionContentBlockTextString": {
+      "base": null,
+      "refs": {
+        "BedrockSessionContentBlock$text": "<p>The text in the invocation step.</p>"
+      }
+    },
+    "BedrockSessionContentBlocks": {
+      "base": null,
+      "refs": {
+        "InvocationStepPayload$contentBlocks": "<p>The content for the invocation step.</p>"
+      }
+    },
     "Blob": {
       "base": null,
       "refs": {
@@ -436,6 +468,26 @@
         "Message$role": "<p>The message's role.</p>"
       }
     },
+    "CreateInvocationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateInvocationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreationMode": {
       "base": null,
       "refs": {
@@ -466,11 +518,23 @@
     "DateTimestamp": {
       "base": "<p>Time Stamp.</p>",
       "refs": {
+        "CreateInvocationResponse$createdAt": "<p>The timestamp for when the invocation was created.</p>",
+        "CreateSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
         "FlowTraceConditionNodeResultEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeInputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeOutputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "GetSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "GetSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
+        "InvocationStep$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
+        "InvocationStepSummary$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
+        "InvocationSummary$createdAt": "<p>The timestamp for when the invocation was created.</p>",
         "MemorySessionSummary$sessionExpiryTime": "<p>The time when the memory duration for the session is set to end.</p>",
-        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>"
+        "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>",
+        "PutInvocationStepRequest$invocationStepTime": "<p>The timestamp for when the invocation step occurred.</p>",
+        "SessionSummary$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "SessionSummary$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
+        "UpdateSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "UpdateSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>"
       }
     },
     "DeleteAgentMemoryRequest": {
@@ -479,6 +543,16 @@
       }
     },
     "DeleteAgentMemoryResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSessionResponse": {
       "base": null,
       "refs": {
       }
@@ -509,6 +583,16 @@
       "base": null,
       "refs": {
         "KnowledgeBaseRetrievalResult$score": "<p>The level of relevance of the result to the query.</p>"
+      }
+    },
+    "EndSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EndSessionResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ExecutionType": {
@@ -923,6 +1007,26 @@
       "refs": {
       }
     },
+    "GetInvocationStepRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetInvocationStepResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GuadrailAction": {
       "base": null,
       "refs": {
@@ -1158,6 +1262,30 @@
         "ByteContentDoc$identifier": "<p>The file name of the document contained in the wrapper object.</p>"
       }
     },
+    "ImageBlock": {
+      "base": "<p>Image content for an invocation step.</p>",
+      "refs": {
+        "BedrockSessionContentBlock$image": "<p>The image in the invocation step.</p>"
+      }
+    },
+    "ImageFormat": {
+      "base": null,
+      "refs": {
+        "ImageBlock$format": "<p>The format of the image.</p>"
+      }
+    },
+    "ImageSource": {
+      "base": "<p>The source for an image.</p>",
+      "refs": {
+        "ImageBlock$source": "<p>The source for the image.</p>"
+      }
+    },
+    "ImageSourceBytesBlob": {
+      "base": null,
+      "refs": {
+        "ImageSource$bytes": "<p> The raw image bytes for the image. If you use an Amazon Web Services SDK, you don't need to encode the image bytes in base64.</p>"
+      }
+    },
     "ImplicitFilterConfiguration": {
       "base": "<p>Settings for implicit filtering, where a model generates a metadata filter based on the prompt.</p>",
       "refs": {
@@ -1277,6 +1405,20 @@
         "RetrieveAndGenerateStreamResponseOutput$internalServerException": "<p>An internal server error occurred. Retry your request.</p>"
       }
     },
+    "InvocationDescription": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$description": "<p>A description for the interactions in the invocation. For example, \"User asking about weather in Seattle\".</p>"
+      }
+    },
+    "InvocationIdentifier": {
+      "base": null,
+      "refs": {
+        "GetInvocationStepRequest$invocationIdentifier": "<p>The unique identifier for the invocation in UUID format.</p>",
+        "ListInvocationStepsRequest$invocationIdentifier": "<p>The unique identifier (in UUID format) for the invocation to list invocation steps for.</p>",
+        "PutInvocationStepRequest$invocationIdentifier": "<p>The unique identifier (in UUID format) of the invocation to add the invocation step to.</p>"
+      }
+    },
     "InvocationInput": {
       "base": "<p>Contains information pertaining to the action group or knowledge base that is being invoked.</p>",
       "refs": {
@@ -1301,6 +1443,43 @@
       "base": "<p>A result from the invocation of an action. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax\">InvokeAgent request</a> </p> </li> </ul>",
       "refs": {
         "ReturnControlInvocationResults$member": null
+      }
+    },
+    "InvocationStep": {
+      "base": "<p>Stores fine-grained state checkpoints, including text and images, for each interaction in an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>. </p>",
+      "refs": {
+        "GetInvocationStepResponse$invocationStep": "<p>The complete details of the requested invocation step.</p>"
+      }
+    },
+    "InvocationStepPayload": {
+      "base": "<p>Payload content, such as text and images, for the invocation step.</p>",
+      "refs": {
+        "InvocationStep$payload": "<p>Payload content, such as text and images, for the invocation step.</p>",
+        "PutInvocationStepRequest$payload": "<p>The payload for the invocation step, including text and images for the interaction.</p>"
+      }
+    },
+    "InvocationStepSummaries": {
+      "base": null,
+      "refs": {
+        "ListInvocationStepsResponse$invocationStepSummaries": "<p>A list of summaries for each invocation step associated with a session and if you specified it, an invocation within the session.</p>"
+      }
+    },
+    "InvocationStepSummary": {
+      "base": "<p>Contains details about an invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "InvocationStepSummaries$member": null
+      }
+    },
+    "InvocationSummaries": {
+      "base": null,
+      "refs": {
+        "ListInvocationsResponse$invocationSummaries": "<p>A list of invocation summaries associated with the session.</p>"
+      }
+    },
+    "InvocationSummary": {
+      "base": "<p>Contains details about an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "InvocationSummaries$member": null
       }
     },
     "InvocationType": {
@@ -1342,6 +1521,8 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateSessionRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to use to encrypt the session data. The user or role creating the session must have permission to use the key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>. </p>",
+        "GetSessionResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service key used to encrypt the session data. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p>",
         "InvokeInlineAgentRequest$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to use to encrypt your inline agent. </p>",
         "RetrieveAndGenerateSessionConfiguration$kmsKeyArn": "<p>The ARN of the KMS key encrypting the session.</p>"
       }
@@ -1467,10 +1648,53 @@
         "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Amazon Bedrock Agents</a>. </p>"
       }
     },
+    "ListInvocationStepsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListInvocationStepsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListInvocationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListInvocationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "MaxResults": {
       "base": "<p>Max Results.</p>",
       "refs": {
-        "GetAgentMemoryRequest$maxItems": "<p>The maximum number of items to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
+        "GetAgentMemoryRequest$maxItems": "<p>The maximum number of items to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListInvocationStepsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListInvocationsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListSessionsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
       }
     },
     "MaxTokens": {
@@ -1620,6 +1844,12 @@
       "refs": {
         "GetAgentMemoryRequest$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "GetAgentMemoryResponse$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListInvocationStepsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListInvocationStepsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListInvocationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListInvocationsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListSessionsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
+        "ListSessionsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "RerankRequest$nextToken": "<p>If the total number of results was greater than could fit in a response, a token is returned in the <code>nextToken</code> field. You can enter that token in this field to return the next batch of results.</p>",
         "RerankResponse$nextToken": "<p>If the total number of results is greater than can fit in the response, use this token in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "RetrieveRequest$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>",
@@ -1938,6 +2168,16 @@
       "base": "<p>Contains the parameters in the request body.</p>",
       "refs": {
         "ApiContentMap$value": null
+      }
+    },
+    "PutInvocationStepRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutInvocationStepResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "QueryGenerationInput": {
@@ -2386,7 +2626,7 @@
     "RetrieveAndGenerateType": {
       "base": null,
       "refs": {
-        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <p>If you choose ot use <code>EXTERNAL_SOURCES</code>, then currently only Claude 3 Sonnet models for knowledge bases are supported.</p>"
+        "RetrieveAndGenerateConfiguration$type": "<p>The type of resource that contains your data for retrieving information and generating responses.</p> <p>If you choose to use <code>EXTERNAL_SOURCES</code>, then currently only Anthropic Claude 3 Sonnet models for knowledge bases are supported.</p>"
       }
     },
     "RetrieveRequest": {
@@ -2458,6 +2698,12 @@
         "APISchema$s3": "<p> Contains details about the S3 object containing the OpenAPI schema for the action group. </p>"
       }
     },
+    "S3Location": {
+      "base": "<p>Information about the Amazon S3 bucket where the image is stored.</p>",
+      "refs": {
+        "ImageSource$s3Location": "<p>The path to the Amazon S3 bucket where the image is stored.</p>"
+      }
+    },
     "S3ObjectDoc": {
       "base": "<p>The unique wrapper object of the document from the S3 location.</p>",
       "refs": {
@@ -2479,6 +2725,7 @@
     "S3Uri": {
       "base": null,
       "refs": {
+        "S3Location$uri": "<p>The path to the Amazon S3 bucket where the image is stored.</p>",
         "S3ObjectDoc$uri": "<p>The file location of the S3 wrapper object.</p>",
         "S3ObjectFile$uri": "<p>The uri of the s3 object.</p>"
       }
@@ -2496,6 +2743,16 @@
         "InlineAgentResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
         "ResponseStream$serviceQuotaExceededException": "<p>The number of requests exceeds the service quota. Resubmit your request later.</p>",
         "RetrieveAndGenerateStreamResponseOutput$serviceQuotaExceededException": "<p>Your request exceeds the service quota for your account. You can view your quotas at <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/gs-request-quota.html\">Viewing service quotas</a>. You can resubmit your request later.</p>"
+      }
+    },
+    "SessionArn": {
+      "base": null,
+      "refs": {
+        "CreateSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the created session.</p>",
+        "EndSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session you ended.</p>",
+        "GetSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "SessionSummary$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "UpdateSessionResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session that was updated.</p>"
       }
     },
     "SessionAttributesMap": {
@@ -2522,10 +2779,66 @@
         "TracePart$sessionId": "<p>The unique identifier of the session with the agent.</p>"
       }
     },
+    "SessionIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$sessionIdentifier": "<p>The unique identifier for the associated session for the invocation. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN). </p>",
+        "DeleteSessionRequest$sessionIdentifier": "<p>The unique identifier for the session to be deleted. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "EndSessionRequest$sessionIdentifier": "<p>The unique identifier for the session to end. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "GetInvocationStepRequest$sessionIdentifier": "<p>The unique identifier for the invocation step's associated session. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "GetSessionRequest$sessionIdentifier": "<p>A unique identifier for the session to retrieve. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "ListInvocationStepsRequest$sessionIdentifier": "<p>The unique identifier for the session associated with the invocation steps. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "ListInvocationsRequest$sessionIdentifier": "<p>The unique identifier for the session to list invocations for. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "PutInvocationStepRequest$sessionIdentifier": "<p>The unique identifier for the session to add the invocation step to. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>",
+        "UpdateSessionRequest$sessionIdentifier": "<p>The unique identifier of the session to modify. You can specify either the session's <code>sessionId</code> or its Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "SessionMetadataKey": {
+      "base": null,
+      "refs": {
+        "SessionMetadataMap$key": null
+      }
+    },
+    "SessionMetadataMap": {
+      "base": null,
+      "refs": {
+        "CreateSessionRequest$sessionMetadata": "<p>A map of key-value pairs containing attributes to be persisted across the session. For example, the user's ID, their language preference, and the type of device they are using.</p>",
+        "GetSessionResponse$sessionMetadata": "<p>A map of key-value pairs containing attributes persisted across the session.</p>",
+        "UpdateSessionRequest$sessionMetadata": "<p>A map of key-value pairs containing attributes to be persisted across the session. For example the user's ID, their language preference, and the type of device they are using.</p>"
+      }
+    },
+    "SessionMetadataValue": {
+      "base": null,
+      "refs": {
+        "SessionMetadataMap$value": null
+      }
+    },
     "SessionState": {
       "base": "<p>Contains parameters that specify various attributes that persist across a session or prompt. You can define session state attributes as key-value pairs when writing a <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html\">Lambda function</a> for an action group or pass them when making an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html\">InvokeAgent</a> request. Use session state attributes to control and provide conversational context for your agent and to help customize your agent's behavior. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
       "refs": {
         "InvokeAgentRequest$sessionState": "<p>Contains parameters that specify various attributes of the session. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p> <note> <p>If you include <code>returnControlInvocationResults</code> in the <code>sessionState</code> field, the <code>inputText</code> field will be ignored.</p> </note>"
+      }
+    },
+    "SessionStatus": {
+      "base": null,
+      "refs": {
+        "CreateSessionResponse$sessionStatus": "<p>The current status of the session.</p>",
+        "EndSessionResponse$sessionStatus": "<p>The current status of the session you ended.</p>",
+        "GetSessionResponse$sessionStatus": "<p>The current status of the session.</p>",
+        "SessionSummary$sessionStatus": "<p>The current status of the session.</p>",
+        "UpdateSessionResponse$sessionStatus": "<p>The status of the session you updated.</p>"
+      }
+    },
+    "SessionSummaries": {
+      "base": null,
+      "refs": {
+        "ListSessionsResponse$sessionSummaries": "<p>A list of summaries for each session in your Amazon Web Services account.</p>"
+      }
+    },
+    "SessionSummary": {
+      "base": "<p>Contains details about a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
+      "refs": {
+        "SessionSummaries$member": null
       }
     },
     "SessionTTL": {
@@ -2664,6 +2977,51 @@
         "MemorySessionSummary$summaryText": "<p>The summarized text for this session.</p>"
       }
     },
+    "TagKey": {
+      "base": "<p>Key of a tag</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of Tag Keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>A list of keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Value of a tag</p>",
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TaggableResourcesArn": {
+      "base": "<p>ARN of Taggable resources: [session]</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which to list tags.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to tag.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource from which to remove tags.</p>"
+      }
+    },
+    "TagsMap": {
+      "base": "<p>A map of tag keys and values</p>",
+      "refs": {
+        "CreateSessionRequest$tags": "<p>Specify the key-value pairs for the tags that you want to attach to the session.</p>",
+        "ListTagsForResourceResponse$tags": "<p>The key-value pairs for the tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>An object containing key-value pairs that define the tags to attach to the resource.</p>"
+      }
+    },
     "Temperature": {
       "base": null,
       "refs": {
@@ -2790,10 +3148,54 @@
         "Observation$type": "<p>Specifies what kind of information the agent returns in the observation. The following values are possible.</p> <ul> <li> <p> <code>ACTION_GROUP</code> – The agent returns the result of an action group.</p> </li> <li> <p> <code>KNOWLEDGE_BASE</code> – The agent returns information from a knowledge base.</p> </li> <li> <p> <code>FINISH</code> – The agent returns a final response to the user with no follow-up.</p> </li> <li> <p> <code>ASK_USER</code> – The agent asks the user a question.</p> </li> <li> <p> <code>REPROMPT</code> – The agent prompts the user again for the same information.</p> </li> </ul>"
       }
     },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Usage": {
       "base": "<p>Contains information of the usage of the foundation model.</p>",
       "refs": {
         "Metadata$usage": "<p>Contains details of the foundation model usage.</p>"
+      }
+    },
+    "Uuid": {
+      "base": null,
+      "refs": {
+        "CreateInvocationRequest$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "CreateInvocationResponse$invocationId": "<p>The unique identifier for the invocation.</p>",
+        "CreateInvocationResponse$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
+        "CreateSessionResponse$sessionId": "<p>The unique identifier for the session.</p>",
+        "EndSessionResponse$sessionId": "<p>The unique identifier of the session you ended.</p>",
+        "GetInvocationStepRequest$invocationStepId": "<p>The unique identifier (in UUID format) for the specific invocation step to retrieve.</p>",
+        "GetSessionResponse$sessionId": "<p>The unique identifier for the session in UUID format.</p>",
+        "InvocationStep$invocationId": "<p>The unique identifier (in UUID format) for the invocation that includes the invocation step.</p>",
+        "InvocationStep$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
+        "InvocationStep$sessionId": "<p>The unique identifier of the session containing the invocation step.</p>",
+        "InvocationStepSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "InvocationStepSummary$invocationStepId": "<p>The unique identifier (in UUID format) for the invocation step.</p>",
+        "InvocationStepSummary$sessionId": "<p>The unique identifier for the session associated with the invocation step.</p>",
+        "InvocationSummary$invocationId": "<p>A unique identifier for the invocation in UUID format.</p>",
+        "InvocationSummary$sessionId": "<p>The unique identifier for the session associated with the invocation.</p>",
+        "PutInvocationStepRequest$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
+        "PutInvocationStepResponse$invocationStepId": "<p>The unique identifier of the invocation step in UUID format.</p>",
+        "SessionSummary$sessionId": "<p>The unique identifier for the session.</p>",
+        "UpdateSessionResponse$sessionId": "<p>The unique identifier of the session you updated.</p>"
       }
     },
     "ValidationException": {

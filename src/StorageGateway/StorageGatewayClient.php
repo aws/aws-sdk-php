@@ -116,6 +116,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableGatewayAsync(array $args = [])
  * @method \Aws\Result disassociateFileSystem(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateFileSystemAsync(array $args = [])
+ * @method \Aws\Result evictFilesFailingUpload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise evictFilesFailingUploadAsync(array $args = [])
  * @method \Aws\Result joinDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise joinDomainAsync(array $args = [])
  * @method \Aws\Result listAutomaticTapeCreationPolicies(array $args = [])

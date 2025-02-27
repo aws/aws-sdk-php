@@ -18,6 +18,7 @@
     "CreateUser": "<p>Creates a universally unique identifier (UUID) mapped to a list of local user ids within an application.</p>",
     "CreateWebExperience": "<p>Creates an Amazon Q Business web experience.</p>",
     "DeleteApplication": "<p>Deletes an Amazon Q Business application.</p>",
+    "DeleteAttachment": "<p>Deletes an attachment associated with a specific Amazon Q Business conversation.</p>",
     "DeleteChatControlsConfiguration": "<p>Deletes chat controls configured for an existing Amazon Q Business application.</p>",
     "DeleteConversation": "<p>Deletes an Amazon Q Business web experience conversation.</p>",
     "DeleteDataAccessor": "<p>Deletes a specified data accessor. This operation permanently removes the data accessor and its associated IAM Identity Center application. Any access granted to the ISV through this data accessor will be revoked.</p>",
@@ -288,6 +289,7 @@
         "CreateUserRequest$applicationId": "<p>The identifier of the application for which the user mapping will be created.</p>",
         "CreateWebExperienceRequest$applicationId": "<p>The identifier of the Amazon Q Business web experience.</p>",
         "DeleteApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
+        "DeleteAttachmentRequest$applicationId": "<p>The unique identifier for the Amazon Q Business application environment.</p>",
         "DeleteChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application the chat controls have been configured for.</p>",
         "DeleteConversationRequest$applicationId": "<p>The identifier of the Amazon Q Business application associated with the conversation.</p>",
         "DeleteDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
@@ -412,7 +414,8 @@
       "refs": {
         "Attachment$attachmentId": "<p>The identifier of the Amazon Q Business attachment.</p>",
         "AttachmentOutput$attachmentId": "<p>The unique identifier of the Amazon Q Business attachment.</p>",
-        "ConversationSource$attachmentId": "<p>The unique identifier of the Amazon Q Business attachment.</p>"
+        "ConversationSource$attachmentId": "<p>The unique identifier of the Amazon Q Business attachment.</p>",
+        "DeleteAttachmentRequest$attachmentId": "<p>The unique identifier for the attachment.</p>"
       }
     },
     "AttachmentInput": {
@@ -805,6 +808,7 @@
         "ChatSyncOutput$conversationId": "<p>The identifier of the Amazon Q Business conversation.</p>",
         "Conversation$conversationId": "<p>The identifier of the Amazon Q Business conversation.</p>",
         "ConversationSource$conversationId": "<p>The unique identifier of the Amazon Q Business conversation.</p>",
+        "DeleteAttachmentRequest$conversationId": "<p>The unique identifier of the conversation.</p>",
         "DeleteConversationRequest$conversationId": "<p>The identifier of the Amazon Q Business web experience conversation being deleted.</p>",
         "FailedAttachmentEvent$conversationId": "<p> The identifier of the conversation associated with the failed file upload.</p>",
         "GetMediaRequest$conversationId": "<p>The identifier of the Amazon Q Business conversation.</p>",
@@ -1133,6 +1137,16 @@
       }
     },
     "DeleteApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAttachmentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAttachmentResponse": {
       "base": null,
       "refs": {
       }
@@ -3528,6 +3542,7 @@
       "refs": {
         "ChatInput$userId": "<p>The identifier of the user attached to the chat input. </p>",
         "ChatSyncInput$userId": "<p>The identifier of the user attached to the chat input.</p>",
+        "DeleteAttachmentRequest$userId": "<p>The unique identifier of the user involved in the conversation.</p>",
         "DeleteConversationRequest$userId": "<p>The identifier of the user who is deleting the conversation.</p>",
         "ListAttachmentsRequest$userId": "<p>The unique identifier of the user involved in the Amazon Q Business web experience conversation.</p>",
         "ListConversationsRequest$userId": "<p>The identifier of the user involved in the Amazon Q Business web experience conversation. </p>",

@@ -571,6 +571,41 @@
             ],
             "idempotent": true
         },
+        "DeleteAttachment": {
+            "name": "DeleteAttachment",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/applications\/{applicationId}\/conversations\/{conversationId}\/attachments\/{attachmentId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "DeleteAttachmentRequest"
+            },
+            "output": {
+                "shape": "DeleteAttachmentResponse"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
         "DeleteChatControlsConfiguration": {
             "name": "DeleteChatControlsConfiguration",
             "http": {
@@ -4519,6 +4554,40 @@
             }
         },
         "DeleteApplicationResponse": {
+            "type": "structure",
+            "members": []
+        },
+        "DeleteAttachmentRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "conversationId",
+                "attachmentId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "conversationId": {
+                    "shape": "ConversationId",
+                    "location": "uri",
+                    "locationName": "conversationId"
+                },
+                "attachmentId": {
+                    "shape": "AttachmentId",
+                    "location": "uri",
+                    "locationName": "attachmentId"
+                },
+                "userId": {
+                    "shape": "UserId",
+                    "location": "querystring",
+                    "locationName": "userId"
+                }
+            }
+        },
+        "DeleteAttachmentResponse": {
             "type": "structure",
             "members": []
         },
