@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.4 - 2025-02-28
 
 * `Aws\S3` - Adds missing, unimplemented streamwrapper methods
 * `Aws\MediaConvert` - The AWS MediaConvert Probe API allows you to analyze media files and retrieve detailed metadata about their content, format, and structure.
