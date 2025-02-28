@@ -58,8 +58,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $provider,
         $exception
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -108,8 +106,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $provider,
         $exception
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -140,8 +136,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $exception,
         $s3MockCount
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -197,8 +191,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $strategy,
         $exception
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -228,8 +220,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
     public function testPutObjectWithClientInstructionFileSuffix()
     {
-        $this->skipTestForPolyfillPhpVersions();
-
         $s3 = $this->getS3Client();
         $this->addMockResults($s3, [
             new Result(['ObjectURL' => 'file_url']),
@@ -278,8 +268,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $cipher,
         $exception = null
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -330,8 +318,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keySize,
         $exception
     ) {
-        $this->skipTestForPolyfillPhpVersions();
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -388,8 +374,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
     public function testPutObjectAppliesParams()
     {
-        $this->skipTestForPolyfillPhpVersions();
-
         $s3 = $this->getS3Client();
         $this->addMockResults($s3, [
             new Result(['UploadId' => 'baz']),
@@ -439,8 +423,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
     public function testCanLoadStateFromService()
     {
-        $this->skipTestForPolyfillPhpVersions();
-
         $s3 = $this->getS3Client();
         $url = 'http://foo.s3.amazonaws.com/bar';
         $this->addMockResults($s3, [
@@ -490,8 +472,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
     public function testAddsCryptoUserAgent()
     {
-        $this->skipTestForPolyfillPhpVersions();
-
         $s3 = $this->getS3Client();
         $this->addMockResults($s3, [
             new Result(['UploadId' => 'baz']),
@@ -536,8 +516,6 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
     public function testAddsUpdatedEncryptionContext()
     {
-        $this->skipTestForPolyfillPhpVersions();
-
         $s3 = $this->getS3Client();
         $this->addMockResults($s3, [
             new Result(['UploadId' => 'baz']),
@@ -592,16 +570,5 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
             ]
         );
         $uploader->upload();
-    }
-
-    private function skipTestForPolyfillPhpVersions()
-    {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'The input sizes for the multipart uploader tests are too large'
-                . ' to reasonably use with the AES-GCM polyfill that was added'
-                . ' for PHP versions earlier than 7.1'
-            );
-        }
     }
 }
