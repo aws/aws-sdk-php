@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Adds missing, unimplemented streamwrapper methods
+* `Aws\MediaConvert` - The AWS MediaConvert Probe API allows you to analyze media files and retrieve detailed metadata about their content, format, and structure.
+* `Aws\EKS` - Adding licenses to EKS Anywhere Subscription operations response.
+* `Aws\BedrockDataAutomationRuntime` - Added a mandatory parameter DataAutomationProfileArn to support for cross region inference for InvokeDataAutomationAsync API. Renamed DataAutomationArn to DataAutomationProjectArn. Added APIs to support tagging.
+* `Aws\BedrockAgent` - This release lets Amazon Bedrock Flows support newer models by increasing the maximum length of output in a prompt configuration. This release also increases the maximum number of prompt variables to 20 and the maximum number of node inputs to 20.
+* `Aws\BedrockDataAutomation` - Renamed and added new StandardConfiguration enums. Added support to update EncryptionConfiguration in UpdateBlueprint and UpdateDataAutomation APIs. Changed HttpStatus code for DeleteBlueprint and DeleteDataAutomationProject APIs to 200 from 204. Added APIs to support tagging.
+* `Aws\SSM` - Systems Manager doc-only updates for Feb. 2025.
+* `Aws\Pricing` - Update GetProducts and DescribeServices API request input validations.
+* `Aws\DatabaseMigrationService` - Add skipped status to the Result Statistics of an Assessment Run
+
 ## 3.340.3 - 2025-02-27
 
 * `Aws\BedrockAgentRuntime` - Introduces Sessions (preview) to enable stateful conversations in GenAI applications.

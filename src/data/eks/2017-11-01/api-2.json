@@ -2373,6 +2373,7 @@
         "status":{"shape":"String"},
         "autoRenew":{"shape":"Boolean"},
         "licenseArns":{"shape":"StringList"},
+        "licenses":{"shape":"LicenseList"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -2723,6 +2724,17 @@
         "version":{"shape":"String"},
         "id":{"shape":"String"}
       }
+    },
+    "License":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "token":{"shape":"String"}
+      }
+    },
+    "LicenseList":{
+      "type":"list",
+      "member":{"shape":"License"}
     },
     "ListAccessEntriesRequest":{
       "type":"structure",

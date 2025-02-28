@@ -68,6 +68,12 @@
       "refs": {
       }
     },
+    "Field": {
+      "base": null,
+      "refs": {
+        "Filter$Field": "<p>The product metadata field that you want to filter on. You can filter by just the service code to see all products for a specific service, filter by just the attribute name to see a specific attribute for multiple services, or use both a service code and an attribute name to retrieve only products that match both fields.</p> <p>Valid values include: <code>ServiceCode</code>, and all attribute names</p> <p>For example, you can filter by the <code>AmazonEC2</code> service code and the <code>volumeType</code> attribute name to get the prices for only Amazon EC2 volumes.</p>"
+      }
+    },
     "FileFormat": {
       "base": null,
       "refs": {
@@ -97,6 +103,15 @@
       "base": null,
       "refs": {
         "GetProductsRequest$Filters": "<p>The list of filters that limit the returned products. only products that match all filters are returned.</p>"
+      }
+    },
+    "FormatVersion": {
+      "base": null,
+      "refs": {
+        "DescribeServicesRequest$FormatVersion": "<p>The format version that you want the response to be in.</p> <p>Valid values are: <code>aws_v1</code> </p>",
+        "DescribeServicesResponse$FormatVersion": "<p>The format version of the response. For example, <code>aws_v1</code>.</p>",
+        "GetProductsRequest$FormatVersion": "<p>The format version that you want the response to be in.</p> <p>Valid values are: <code>aws_v1</code> </p>",
+        "GetProductsResponse$FormatVersion": "<p>The format version of the response. For example, aws_v1.</p>"
       }
     },
     "GetAttributeValuesRequest": {
@@ -226,21 +241,15 @@
         "AttributeNameList$member": null,
         "AttributeValue$Value": "<p>The specific value of an <code>attributeName</code>.</p>",
         "DescribeServicesRequest$ServiceCode": "<p>The code for the service whose information you want to retrieve, such as <code>AmazonEC2</code>. You can use the <code>ServiceCode</code> to filter the results in a <code>GetProducts</code> call. To retrieve a list of all services, leave this blank.</p>",
-        "DescribeServicesRequest$FormatVersion": "<p>The format version that you want the response to be in.</p> <p>Valid values are: <code>aws_v1</code> </p>",
         "DescribeServicesRequest$NextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve.</p>",
-        "DescribeServicesResponse$FormatVersion": "<p>The format version of the response. For example, <code>aws_v1</code>.</p>",
         "DescribeServicesResponse$NextToken": "<p>The pagination token for the next set of retrievable results.</p>",
-        "Filter$Field": "<p>The product metadata field that you want to filter on. You can filter by just the service code to see all products for a specific service, filter by just the attribute name to see a specific attribute for multiple services, or use both a service code and an attribute name to retrieve only products that match both fields.</p> <p>Valid values include: <code>ServiceCode</code>, and all attribute names</p> <p>For example, you can filter by the <code>AmazonEC2</code> service code and the <code>volumeType</code> attribute name to get the prices for only Amazon EC2 volumes.</p>",
-        "Filter$Value": "<p>The service code or attribute value that you want to filter by. If you're filtering by service code this is the actual service code, such as <code>AmazonEC2</code>. If you're filtering by attribute name, this is the attribute value that you want the returned products to match, such as a <code>Provisioned IOPS</code> volume.</p>",
         "GetAttributeValuesRequest$ServiceCode": "<p>The service code for the service whose attributes you want to retrieve. For example, if you want the retrieve an EC2 attribute, use <code>AmazonEC2</code>.</p>",
         "GetAttributeValuesRequest$AttributeName": "<p>The name of the attribute that you want to retrieve the values for, such as <code>volumeType</code>.</p>",
         "GetAttributeValuesRequest$NextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve.</p>",
         "GetAttributeValuesResponse$NextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
         "GetPriceListFileUrlResponse$Url": "<p>The URL to download your Price List file from. </p>",
         "GetProductsRequest$ServiceCode": "<p>The code for the service whose products you want to retrieve. </p>",
-        "GetProductsRequest$FormatVersion": "<p>The format version that you want the response to be in.</p> <p>Valid values are: <code>aws_v1</code> </p>",
         "GetProductsRequest$NextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve.</p>",
-        "GetProductsResponse$FormatVersion": "<p>The format version of the response. For example, aws_v1.</p>",
         "GetProductsResponse$NextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
         "ListPriceListsRequest$NextToken": "<p>The pagination token that indicates the next set of results that you want to retrieve. </p>",
         "ListPriceListsResponse$NextToken": "<p>The pagination token that indicates the next set of results to retrieve. </p>",
@@ -256,6 +265,12 @@
     "ThrottlingException": {
       "base": "<p>You've made too many requests exceeding service quotas. </p>",
       "refs": {
+      }
+    },
+    "Value": {
+      "base": null,
+      "refs": {
+        "Filter$Value": "<p>The service code or attribute value that you want to filter by. If you're filtering by service code this is the actual service code, such as <code>AmazonEC2</code>. If you're filtering by attribute name, this is the attribute value that you want the returned products to match, such as a <code>Provisioned IOPS</code> volume.</p>"
       }
     },
     "errorMessage": {

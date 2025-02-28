@@ -3,7 +3,10 @@
   "service": "<p>Amazon Bedrock Data Automation Runtime</p>",
   "operations": {
     "GetDataAutomationStatus": "<p>API used to get data automation status.</p>",
-    "InvokeDataAutomationAsync": "<p>Async API: Invoke data automation.</p>"
+    "InvokeDataAutomationAsync": "<p>Async API: Invoke data automation.</p>",
+    "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
+    "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
+    "UntagResource": "<p>Untag an Amazon Bedrock Data Automation resource</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -56,13 +59,19 @@
     "DataAutomationArn": {
       "base": "<p>Data automation arn.</p>",
       "refs": {
-        "DataAutomationConfiguration$dataAutomationArn": "<p>Data automation arn.</p>"
+        "DataAutomationConfiguration$dataAutomationProjectArn": "<p>Data automation project arn.</p>"
       }
     },
     "DataAutomationConfiguration": {
       "base": "<p>Data automation configuration.</p>",
       "refs": {
         "InvokeDataAutomationAsyncRequest$dataAutomationConfiguration": "<p>Data automation configuration.</p>"
+      }
+    },
+    "DataAutomationProfileArn": {
+      "base": "<p>Data automation profile arn.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>"
       }
     },
     "DataAutomationStage": {
@@ -145,6 +154,22 @@
       "refs": {
       }
     },
+    "KMSKeyId": {
+      "base": null,
+      "refs": {
+        "EncryptionConfiguration$kmsKeyId": "<p>Customer KMS key used for encryption</p>"
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "NonBlankString": {
       "base": null,
       "refs": {
@@ -154,12 +179,6 @@
         "ServiceQuotaExceededException$message": null,
         "ThrottlingException$message": null,
         "ValidationException$message": null
-      }
-    },
-    "NonEmptyString": {
-      "base": null,
-      "refs": {
-        "EncryptionConfiguration$kmsKeyId": "<p>KMS key id.</p>"
       }
     },
     "NotificationConfiguration": {
@@ -199,8 +218,69 @@
         "GetDataAutomationStatusResponse$errorMessage": "<p>Error Message.</p>"
       }
     },
+    "Tag": {
+      "base": "<p>Key value pair of a tag</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": "<p>Defines the context of the tag.</p>",
+      "refs": {
+        "Tag$key": null,
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagList": {
+      "base": "<p>List of tags</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$tags": "<p>List of tags.</p>",
+        "ListTagsForResourceResponse$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
+      "refs": {
+        "Tag$value": null
+      }
+    },
+    "TaggableResourceArn": {
+      "base": "<p>ARN of a taggable resource</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceARN": null,
+        "TagResourceRequest$resourceARN": null,
+        "UntagResourceRequest$resourceARN": null
+      }
+    },
     "ThrottlingException": {
       "base": "<p>This exception will be thrown when customer reached API TPS limit.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
       "refs": {
       }
     },

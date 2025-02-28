@@ -25,6 +25,7 @@
     "ListQueues": "Retrieve a JSON array of up to twenty of your queues. This will return the queues themselves, not just a list of them. To retrieve the next twenty queues, use the nextToken string returned with the array.",
     "ListTagsForResource": "Retrieve the tags for a MediaConvert resource.",
     "ListVersions": "Retrieve a JSON array of all available Job engine versions and the date they expire.",
+    "Probe": "The Probe operation analyzes the provided media file and returns comprehensive metadata about its container format, tracks, and any encountered errors.",
     "PutPolicy": "Create or change your policy. For more information about policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "SearchJobs": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array.",
     "TagResource": "Add tags to a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
@@ -314,6 +315,12 @@
       "base": "Advanced audio normalization settings. Ignore these settings unless you need to comply with a loudness standard.",
       "refs": {
         "AudioDescription$AudioNormalizationSettings": "Advanced audio normalization settings. Ignore these settings unless you need to comply with a loudness standard."
+      }
+    },
+    "AudioProperties": {
+      "base": "Properties specific to audio tracks.",
+      "refs": {
+        "Track$AudioProperties": "Properties specific to audio tracks."
       }
     },
     "AudioSelector": {
@@ -870,6 +877,12 @@
         "CmfcSettings$TimedMetadataBoxVersion": "Specify the event message box (eMSG) version for ID3 timed metadata in your output.\nFor more information, see ISO/IEC 23009-1:2022 section 5.10.3.3.3 Syntax.\nLeave blank to use the default value Version 0.\nWhen you specify Version 1, you must also set ID3 metadata to Passthrough."
       }
     },
+    "Codec": {
+      "base": null,
+      "refs": {
+        "Track$Codec": "The codec used for the track."
+      }
+    },
     "ColorConversion3DLUTSetting": {
       "base": "Custom 3D lut settings",
       "refs": {
@@ -886,6 +899,12 @@
       "base": "Choose Insert for this setting to include color metadata in this output. Choose Ignore to exclude color metadata from this output. If you don't specify a value, the service sets this to Insert by default.",
       "refs": {
         "VideoDescription$ColorMetadata": "Choose Insert for this setting to include color metadata in this output. Choose Ignore to exclude color metadata from this output. If you don't specify a value, the service sets this to Insert by default."
+      }
+    },
+    "ColorPrimaries": {
+      "base": "the color primaries.",
+      "refs": {
+        "VideoProperties$ColorPrimaries": "the color primaries."
       }
     },
     "ColorSpace": {
@@ -918,6 +937,12 @@
     "ConflictException": {
       "base": null,
       "refs": {
+      }
+    },
+    "Container": {
+      "base": "Information about the container format of the media file.",
+      "refs": {
+        "ProbeResult$Container": "Information about the container format of the media file."
       }
     },
     "ContainerSettings": {
@@ -1080,6 +1105,12 @@
       "refs": {
         "CmafGroupSettings$DashManifestStyle": "Specify how MediaConvert writes SegmentTimeline in your output DASH manifest. To write a SegmentTimeline in each video Representation: Keep the default value, Basic. To write a common SegmentTimeline in the video AdaptationSet: Choose Compact. Note that MediaConvert will still write a SegmentTimeline in any Representation that does not share a common timeline. To write a video AdaptationSet for each different output framerate, and a common SegmentTimeline in each AdaptationSet: Choose Distinct.",
         "DashIsoGroupSettings$DashManifestStyle": "Specify how MediaConvert writes SegmentTimeline in your output DASH manifest. To write a SegmentTimeline in each video Representation: Keep the default value, Basic. To write a common SegmentTimeline in the video AdaptationSet: Choose Compact. Note that MediaConvert will still write a SegmentTimeline in any Representation that does not share a common timeline. To write a video AdaptationSet for each different output framerate, and a common SegmentTimeline in each AdaptationSet: Choose Distinct."
+      }
+    },
+    "DataProperties": {
+      "base": "Properties specific to data tracks.",
+      "refs": {
+        "Track$DataProperties": "Properties specific to data tracks."
       }
     },
     "DecryptionMode": {
@@ -1622,10 +1653,23 @@
         "__listOfForceIncludeRenditionSize$member": null
       }
     },
+    "Format": {
+      "base": null,
+      "refs": {
+        "Container$Format": "The format of the container"
+      }
+    },
     "FrameCaptureSettings": {
       "base": "Required when you set Codec to the value FRAME_CAPTURE.",
       "refs": {
         "VideoCodecSettings$FrameCaptureSettings": "Required when you set Codec to the value FRAME_CAPTURE."
+      }
+    },
+    "FrameRate": {
+      "base": "the calculated frame rate of the asset.",
+      "refs": {
+        "AudioProperties$FrameRate": "the calculated frame rate of the asset.",
+        "VideoProperties$FrameRate": "the calculated frame rate of the asset."
       }
     },
     "GetJobRequest": {
@@ -2698,6 +2742,18 @@
         "ContainerSettings$M3u8Settings": "These settings relate to the MPEG-2 transport stream (MPEG2-TS) container for the MPEG2-TS segments in your HLS outputs."
       }
     },
+    "MatrixCoefficients": {
+      "base": "the matrix coefficients.",
+      "refs": {
+        "VideoProperties$MatrixCoefficients": "the matrix coefficients."
+      }
+    },
+    "Metadata": {
+      "base": "Metadata about the file.",
+      "refs": {
+        "ProbeResult$Metadata": "Metadata about the file."
+      }
+    },
     "MinBottomRenditionSize": {
       "base": "Use Min bottom rendition size to specify a minimum size for the lowest resolution in your ABR stack. * The lowest resolution in your ABR stack will be equal to or greater than the value that you enter. For example: If you specify 640x360 the lowest resolution in your ABR stack will be equal to or greater than to 640x360. * If you specify a Min top rendition size rule, the value that you specify for Min bottom rendition size must be less than, or equal to, Min top rendition size.",
       "refs": {
@@ -3282,6 +3338,28 @@
         "Queue$PricingPlan": "Specifies whether the pricing plan for the queue is on-demand or reserved. For on-demand, you pay per minute, billed in increments of .01 minute. For reserved, you pay for the transcoding capacity of the entire queue, regardless of how much or how little you use it. Reserved pricing requires a 12-month commitment."
       }
     },
+    "ProbeInputFile": {
+      "base": "The input file that needs to be analyzed.",
+      "refs": {
+        "__listOfProbeInputFile$member": null
+      }
+    },
+    "ProbeRequest": {
+      "base": "The request to probe one or more media files and retrieve metadata about them.",
+      "refs": {
+      }
+    },
+    "ProbeResponse": {
+      "base": "The response from a media file probe operation, providing comprehensive metadata about the file, including its container format, tracks (video, audio, data).",
+      "refs": {
+      }
+    },
+    "ProbeResult": {
+      "base": "The metadata and analysis results for a media file.",
+      "refs": {
+        "__listOfProbeResult$member": null
+      }
+    },
     "ProresChromaSampling": {
       "base": "This setting applies only to ProRes 4444 and ProRes 4444 XQ outputs that you create from inputs that use 4:4:4 chroma sampling. Set Preserve 4:4:4 sampling to allow outputs to also use 4:4:4 chroma sampling. You must specify a value for this setting when your output codec profile supports 4:4:4 chroma sampling. Related Settings: For Apple ProRes outputs with 4:4:4 chroma sampling: Choose Preserve 4:4:4 sampling. Use when your input has 4:4:4 chroma sampling and your output codec Profile is Apple ProRes 4444 or 4444 XQ. Note that when you choose Preserve 4:4:4 sampling, you cannot include any of the following Preprocessors: Dolby Vision, HDR10+, or Noise reducer.",
       "refs": {
@@ -3664,10 +3742,34 @@
       "refs": {
       }
     },
+    "Track": {
+      "base": "The track information such as codec, duration, etc.",
+      "refs": {
+        "__listOfTrack$member": null
+      }
+    },
+    "TrackMapping": {
+      "base": "Track mapping information.",
+      "refs": {
+        "__listOfTrackMapping$member": null
+      }
+    },
     "TrackSourceSettings": {
       "base": "Settings specific to caption sources that are specified by track number. Currently, this is only IMSC captions in an IMF package. If your caption source is IMSC 1.1 in a separate xml file, use FileSourceSettings instead of TrackSourceSettings.",
       "refs": {
         "CaptionSourceSettings$TrackSourceSettings": "Settings specific to caption sources that are specified by track number. Currently, this is only IMSC captions in an IMF package. If your caption source is IMSC 1.1 in a separate xml file, use FileSourceSettings instead of TrackSourceSettings."
+      }
+    },
+    "TrackType": {
+      "base": null,
+      "refs": {
+        "Track$TrackType": "The type of the track (video, audio, or data)."
+      }
+    },
+    "TransferCharacteristics": {
+      "base": "the transfer characteristics.",
+      "refs": {
+        "VideoProperties$TransferCharacteristics": "the transfer characteristics."
       }
     },
     "TsPtsOffset": {
@@ -3911,6 +4013,12 @@
       "base": "Find additional transcoding features under Preprocessors. Enable the features at each output individually. These features are disabled by default.",
       "refs": {
         "VideoDescription$VideoPreprocessors": "Find additional transcoding features under Preprocessors. Enable the features at each output individually. These features are disabled by default."
+      }
+    },
+    "VideoProperties": {
+      "base": "Properties specific to video tracks.",
+      "refs": {
+        "Track$VideoProperties": "Properties specific to video tracks."
       }
     },
     "VideoSelector": {
@@ -4210,6 +4318,13 @@
         "XavcSettings$TemporalAdaptiveQuantization": "The best way to set up adaptive quantization is to keep the default value, Auto, for the setting Adaptive quantization. When you do so, MediaConvert automatically applies the best types of quantization for your video content. Include this setting in your JSON job specification only when you choose to change the default value for Adaptive quantization. For this setting, keep the default value, Enabled, to adjust quantization within each frame based on temporal variation of content complexity. When you enable this feature, the encoder uses fewer bits on areas of the frame that aren't moving and uses more bits on complex objects with sharp edges that move a lot. For example, this feature improves the readability of text tickers on newscasts and scoreboards on sports matches. Enabling this feature will almost always improve your video quality. Note, though, that this feature doesn't take into account where the viewer's attention is likely to be. If viewers are likely to be focusing their attention on a part of the screen that doesn't have moving objects with sharp edges, such as sports athletes' faces, you might choose to disable this feature. Related setting: When you enable temporal adaptive quantization, adjust the strength of the filter with the setting Adaptive quantization."
       }
     },
+    "__double": {
+      "base": null,
+      "refs": {
+        "Container$Duration": "The duration of the media file in seconds.",
+        "Track$Duration": "The duration of the track in seconds."
+      }
+    },
     "__doubleMin0": {
       "base": null,
       "refs": {
@@ -4288,7 +4403,13 @@
     "__integer": {
       "base": null,
       "refs": {
+        "AudioProperties$BitDepth": "The bit depth of the audio track.",
+        "AudioProperties$BitRate": "The bit rate of the audio track in bits per second.",
+        "AudioProperties$Channels": "The number of audio channels.",
+        "AudioProperties$SampleRate": "The sample rate of the audio track.",
         "DescribeEndpointsRequest$MaxResults": "Optional. Max number of endpoints, up to twenty, that will be returned at one time.",
+        "FrameRate$Denominator": "the denominator of the frame rate of the asset.",
+        "FrameRate$Numerator": "the numerator of the frame rate of the asset.",
         "HopDestination$WaitMinutes": "Required for setting up a job to use queue hopping. Minimum wait time in minutes until the job can hop to the destination queue. Valid range is 1 to 4320 minutes, inclusive.",
         "Job$ErrorCode": "Error code for the job",
         "Job$JobPercentComplete": "An estimate of how far your job has progressed. This estimate is shown as a percentage of the total time from when your job leaves its queue to when your output files appear in your output Amazon S3 bucket. AWS Elemental MediaConvert provides jobPercentComplete in CloudWatch STATUS_UPDATE events and in the response to GetJob and ListJobs requests. The jobPercentComplete estimate is reliable for the following input containers: Quicktime, Transport Stream, MP4, and MXF. For some jobs, the service can't provide information about job progress. In those cases, jobPercentComplete returns a null value.",
@@ -4296,10 +4417,16 @@
         "OutputDetail$DurationInMs": "Duration in milliseconds",
         "ReservationPlan$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. When you increase this number, you extend your existing commitment with a new 12-month commitment for a larger number of RTS. The new commitment begins when you purchase the additional capacity. You can't decrease the number of RTS in your reserved queue.",
         "ReservationPlanSettings$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. You can't decrease the number of RTS in your reserved queue. You can increase the number of RTS by extending your existing commitment with a new 12-month commitment for the larger number. The new commitment begins when you purchase the additional capacity. You can't cancel your commitment or revert to your original commitment after you increase the capacity.",
+        "Track$Index": "The index of the track.",
         "VideoDetail$HeightInPx": "Height in pixels for the output",
         "VideoDetail$WidthInPx": "Width in pixels for the output",
+        "VideoProperties$BitDepth": "The bit depth of the video track.",
+        "VideoProperties$BitRate": "The bit rate of the video track in bits per second.",
+        "VideoProperties$Height": "The height of the video track in pixels.",
+        "VideoProperties$Width": "The width of the video track in pixels.",
         "WarningGroup$Code": "Warning code that identifies a specific warning in the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/warning_codes.html",
         "WarningGroup$Count": "The number of times this warning occurred in the job.",
+        "__listOf__integer$member": null,
         "Queue$ProgressingJobsCount": "The estimated number of jobs with a PROGRESSING status.",
         "Queue$SubmittedJobsCount": "The estimated number of jobs with a SUBMITTED status.",
         "Queue$ConcurrentJobs": "The maximum number of jobs your queue can process concurrently.",
@@ -5341,6 +5468,18 @@
         "ListPresetsResponse$Presets": "List of presets"
       }
     },
+    "__listOfProbeInputFile": {
+      "base": null,
+      "refs": {
+        "ProbeRequest$InputFiles": "The list of input media files to be probed."
+      }
+    },
+    "__listOfProbeResult": {
+      "base": null,
+      "refs": {
+        "ProbeResponse$ProbeResults": "List of probe results for the input media file(s)."
+      }
+    },
     "__listOfQueue": {
       "base": null,
       "refs": {
@@ -5363,6 +5502,18 @@
       "base": null,
       "refs": {
         "TeletextDestinationSettings$PageTypes": "Specify the page types for this Teletext page. If you don't specify a value here, the service sets the page type to the default value Subtitle. If you pass through the entire set of Teletext data, don't use this field. When you pass through a set of Teletext pages, your output has the same page types as your input."
+      }
+    },
+    "__listOfTrack": {
+      "base": null,
+      "refs": {
+        "Container$Tracks": "List of Track objects."
+      }
+    },
+    "__listOfTrackMapping": {
+      "base": null,
+      "refs": {
+        "ProbeResult$TrackMappings": "List of Track mapping objects."
       }
     },
     "__listOfVideoOverlay": {
@@ -5394,6 +5545,14 @@
       "base": null,
       "refs": {
         "OutputChannelMapping$InputChannelsFineTune": "Use this setting to specify your remix values when they have a decimal component, such as -10.312, 0.08, or 4.9. MediaConvert rounds your remixing values to the nearest thousandth."
+      }
+    },
+    "__listOf__integer": {
+      "base": null,
+      "refs": {
+        "TrackMapping$AudioTrackIndexes": "The indexes of the audio tracks.",
+        "TrackMapping$DataTrackIndexes": "The indexes of the data tracks.",
+        "TrackMapping$VideoTrackIndexes": "The indexes of the video tracks."
       }
     },
     "__listOf__integerMin1Max2147483647": {
@@ -5454,6 +5613,12 @@
         "Input$SupplementalImps": "Provide a list of any necessary supplemental IMPs. You need supplemental IMPs if the CPL that you're using for your input is in an incomplete IMP. Specify either the supplemental IMP directories with a trailing slash or the ASSETMAP.xml files. For example [\"s3://bucket/ov/\", \"s3://bucket/vf2/ASSETMAP.xml\"]. You don't need to specify the IMP that contains your input CPL, because the service automatically detects it."
       }
     },
+    "__long": {
+      "base": null,
+      "refs": {
+        "Metadata$FileSize": "The size of the file in bytes."
+      }
+    },
     "__mapOfAudioSelector": {
       "base": null,
       "refs": {
@@ -5499,6 +5664,7 @@
       "base": null,
       "refs": {
         "AssociateCertificateRequest$Arn": "The ARN of the ACM certificate that you want to associate with your MediaConvert resource.",
+        "AudioProperties$LanguageCode": "the language code of the track",
         "BurninDestinationSettings$FontFileBoldItalic": "Specify a bold italic TrueType font file to use when rendering your output captions.\nEnter an S3, HTTP, or HTTPS URL.\nWhen you do, you must also separately specify a regular, a bold, and an italic font file.",
         "CancelJobRequest$Id": "The Job ID of the job to be cancelled.",
         "CaptionDescription$LanguageDescription": "Specify a label for this set of output captions. For example, \"English\", \"Director commentary\", or \"track_2\". For streaming outputs, MediaConvert passes this information into destination manifests for display on the end-viewer's player device. For outputs in other output groups, the service ignores this setting.",
@@ -5521,6 +5687,7 @@
         "CreateQueueRequest$Description": "Optional. A description of the queue that you are creating.",
         "CreateQueueRequest$Name": "The name of the queue that you are creating.",
         "DashIsoGroupSettings$BaseUrl": "A partial URI prefix that will be put in the manifest (.mpd) file at the top level BaseURL element. Can be used if streams are delivered from a different URL than the manifest file.",
+        "DataProperties$LanguageCode": "the language code of the track",
         "DeleteJobTemplateRequest$Name": "The name of the job template to be deleted.",
         "DeletePresetRequest$Name": "The name of the preset to be deleted.",
         "DeleteQueueRequest$Name": "The name of the queue that you want to delete.",
@@ -5570,6 +5737,8 @@
         "ListTagsForResourceRequest$Arn": "The Amazon Resource Name (ARN) of the resource that you want to list tags for. To get the ARN, send a GET request with the resource name.",
         "ListVersionsRequest$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of Job engine versions.",
         "ListVersionsResponse$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of Job engine versions.",
+        "Metadata$ETag": "The ETag of the file.",
+        "Metadata$MimeType": "The MIME type of the file.",
         "Mp4Settings$Mp4MajorBrand": "Overrides the \"Major Brand\" field in the output file. Usually not necessary to specify.",
         "NielsenConfiguration$DistributorId": "Use Distributor ID to specify the distributor ID that is assigned to your organization by Nielsen.",
         "OutputGroup$CustomName": "Use Custom Group Name to specify a name for the output group. This value is displayed on the console and can make your job settings JSON more human-readable. It does not affect your outputs. Use up to twelve characters that are either letters, numbers, spaces, or underscores.",
@@ -5577,6 +5746,7 @@
         "Preset$Category": "An optional category you create to organize your presets.",
         "Preset$Description": "An optional description you create for each preset.",
         "Preset$Name": "A name you create for each preset. Each name must be unique within your account.",
+        "ProbeInputFile$FileUrl": "The URI to your input file(s) that is stored in Amazon S3 or on an HTTP(S) server.",
         "Queue$Arn": "An identifier for this resource that is unique within all of AWS.",
         "Queue$Description": "An optional description that you create for each queue.",
         "Queue$Name": "A name that you create for each queue. Each name must be unique within your account.",
@@ -5995,6 +6165,7 @@
         "JobEngineVersion$ExpirationDate": "The date that this Job engine version expires. Requests to create jobs with an expired version result in a regular job, as if no specific Job engine version was requested.",
         "JobTemplate$CreatedAt": "The timestamp in epoch seconds for Job template creation.",
         "JobTemplate$LastUpdated": "The timestamp in epoch seconds when the Job template was last updated.",
+        "Metadata$LastModified": "The last modification time of the file.",
         "Preset$CreatedAt": "The timestamp in epoch seconds for preset creation.",
         "Preset$LastUpdated": "The timestamp in epoch seconds when the preset was last updated.",
         "Queue$CreatedAt": "The timestamp in epoch seconds for when you created the queue.",

@@ -11,6 +11,9 @@
     "GetDataAutomationProject": "<p>Gets an existing Amazon Bedrock Data Automation Project</p>",
     "ListBlueprints": "<p>Lists all existing Amazon Bedrock Data Automation Blueprints</p>",
     "ListDataAutomationProjects": "<p>Lists all existing Amazon Bedrock Data Automation Projects</p>",
+    "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
+    "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
+    "UntagResource": "<p>Untag an Amazon Bedrock Data Automation resource</p>",
     "UpdateBlueprint": "<p>Updates an existing Amazon Bedrock Data Automation Blueprint</p>",
     "UpdateDataAutomationProject": "<p>Updates an existing Amazon Bedrock Data Automation Project</p>"
   },
@@ -413,7 +416,21 @@
       "base": "<p>KMS Encryption Configuration</p>",
       "refs": {
         "CreateBlueprintRequest$encryptionConfiguration": null,
-        "CreateDataAutomationProjectRequest$encryptionConfiguration": null
+        "CreateDataAutomationProjectRequest$encryptionConfiguration": null,
+        "UpdateBlueprintRequest$encryptionConfiguration": null,
+        "UpdateDataAutomationProjectRequest$encryptionConfiguration": null
+      }
+    },
+    "EncryptionContextKey": {
+      "base": "<p>Encryption context key.</p>",
+      "refs": {
+        "KmsEncryptionContext$key": null
+      }
+    },
+    "EncryptionContextValue": {
+      "base": "<p>Encryption context value.</p>",
+      "refs": {
+        "KmsEncryptionContext$value": null
       }
     },
     "GetBlueprintRequest": {
@@ -531,6 +548,16 @@
       "refs": {
       }
     },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "MaxResults": {
       "base": "<p>Max Results</p>",
       "refs": {
@@ -617,11 +644,56 @@
         "VideoStandardGenerativeField$state": null
       }
     },
-    "String": {
+    "Tag": {
+      "base": "<p>Key value pair of a tag</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": "<p>Defines the context of the tag.</p>",
+      "refs": {
+        "Tag$key": null,
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagList": {
+      "base": "<p>List of tags</p>",
+      "refs": {
+        "CreateBlueprintRequest$tags": null,
+        "CreateDataAutomationProjectRequest$tags": null,
+        "ListTagsForResourceResponse$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
       "base": null,
       "refs": {
-        "KmsEncryptionContext$key": null,
-        "KmsEncryptionContext$value": null
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
+      "refs": {
+        "Tag$value": null
+      }
+    },
+    "TaggableResourceArn": {
+      "base": "<p>ARN of a taggable resource</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceARN": null,
+        "TagResourceRequest$resourceARN": null,
+        "UntagResourceRequest$resourceARN": null
       }
     },
     "ThrottlingException": {
@@ -634,6 +706,16 @@
       "refs": {
         "Blueprint$type": null,
         "CreateBlueprintRequest$type": null
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateBlueprintRequest": {

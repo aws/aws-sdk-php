@@ -140,7 +140,7 @@
       "type":"structure",
       "members":{
         "ServiceCode":{"shape":"String"},
-        "FormatVersion":{"shape":"String"},
+        "FormatVersion":{"shape":"FormatVersion"},
         "NextToken":{"shape":"String"},
         "MaxResults":{"shape":"BoxedInteger"}
       }
@@ -149,7 +149,7 @@
       "type":"structure",
       "members":{
         "Services":{"shape":"ServiceList"},
-        "FormatVersion":{"shape":"String"},
+        "FormatVersion":{"shape":"FormatVersion"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -160,6 +160,11 @@
         "Message":{"shape":"errorMessage"}
       },
       "exception":true
+    },
+    "Field":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "FileFormat":{
       "type":"string",
@@ -179,8 +184,8 @@
       ],
       "members":{
         "Type":{"shape":"FilterType"},
-        "Field":{"shape":"String"},
-        "Value":{"shape":"String"}
+        "Field":{"shape":"Field"},
+        "Value":{"shape":"Value"}
       }
     },
     "FilterType":{
@@ -189,7 +194,14 @@
     },
     "Filters":{
       "type":"list",
-      "member":{"shape":"Filter"}
+      "member":{"shape":"Filter"},
+      "max":50,
+      "min":0
+    },
+    "FormatVersion":{
+      "type":"string",
+      "max":32,
+      "min":1
     },
     "GetAttributeValuesRequest":{
       "type":"structure",
@@ -234,7 +246,7 @@
       "members":{
         "ServiceCode":{"shape":"String"},
         "Filters":{"shape":"Filters"},
-        "FormatVersion":{"shape":"String"},
+        "FormatVersion":{"shape":"FormatVersion"},
         "NextToken":{"shape":"String"},
         "MaxResults":{"shape":"BoxedInteger"}
       }
@@ -242,7 +254,7 @@
     "GetProductsResponse":{
       "type":"structure",
       "members":{
-        "FormatVersion":{"shape":"String"},
+        "FormatVersion":{"shape":"FormatVersion"},
         "PriceList":{"shape":"PriceListJsonItems"},
         "NextToken":{"shape":"String"}
       }
@@ -370,6 +382,11 @@
       },
       "exception":true,
       "retryable":{"throttling":true}
+    },
+    "Value":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "errorMessage":{"type":"string"}
   }
