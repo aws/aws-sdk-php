@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.340.5 - 2025-03-03
 
 * `Aws\` - Changes to align with current waiter specifications.
 * `Aws\EC2` - Update the DescribeVpcs response
