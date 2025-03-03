@@ -48,6 +48,12 @@ csm_port = 999
 csm_client_id = CustomAltIniApp
 EOT;
 
+ private $portIniFile = <<<EOT
+[port-incorrect]
+csm_enabled = true
+csm_port = foo-bar
+EOT;
+
     public static function set_up_before_class()
     {
         self::$originalEnv = [
@@ -482,5 +488,22 @@ EOT;
         $this->expectExceptionMessage("Not a valid CSM configuration argument.");
         $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::unwrap([]);
+    }
+
+    public function testFallbackOnInvalidIniPort()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/config', $this->portIniFile);
+        putenv(ConfigurationProvider::ENV_ENABLED);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $result = call_user_func(ConfigurationProvider::ini('port-incorrect'))->wait();
+            $this->assertEquals(31000, $result->getPort());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/config');
+        }
     }
 }
