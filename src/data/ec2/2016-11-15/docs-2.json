@@ -22906,6 +22906,8 @@
         "VpcCidrBlockAssociation$CidrBlock": "<p>The IPv4 CIDR block.</p>",
         "VpcCidrBlockState$StatusMessage": "<p>A message about the status of the CIDR block, if applicable.</p>",
         "VpcClassicLink$VpcId": "<p>The ID of the VPC.</p>",
+        "VpcEncryptionControl$StateMessage": null,
+        "VpcEncryptionControlExclusion$StateMessage": null,
         "VpcEndpoint$VpcEndpointId": "<p>The ID of the endpoint.</p>",
         "VpcEndpoint$VpcId": "<p>The ID of the VPC to which the endpoint is associated.</p>",
         "VpcEndpoint$ServiceName": "<p>The name of the service to which the endpoint is associated.</p>",
@@ -23352,6 +23354,7 @@
         "Vpc$Tags": "<p>Any tags assigned to the VPC.</p>",
         "VpcBlockPublicAccessExclusion$Tags": "<p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "VpcClassicLink$Tags": "<p>Any tags assigned to the VPC.</p>",
+        "VpcEncryptionControl$Tags": null,
         "VpcEndpoint$Tags": "<p>The tags assigned to the endpoint.</p>",
         "VpcEndpointAssociation$Tags": "<p>The tags to apply to the VPC endpoint association.</p>",
         "VpcEndpointConnection$Tags": "<p>The tags.</p>",
@@ -25852,6 +25855,52 @@
         "DescribeVpcClassicLinkResult$Vpcs": "<p>The ClassicLink status of the VPCs.</p>"
       }
     },
+    "VpcEncryptionControl": {
+      "base": null,
+      "refs": {
+        "Vpc$EncryptionControl": null
+      }
+    },
+    "VpcEncryptionControlExclusion": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControlExclusions$InternetGateway": null,
+        "VpcEncryptionControlExclusions$EgressOnlyInternetGateway": null,
+        "VpcEncryptionControlExclusions$NatGateway": null,
+        "VpcEncryptionControlExclusions$VirtualPrivateGateway": null,
+        "VpcEncryptionControlExclusions$VpcPeering": null
+      }
+    },
+    "VpcEncryptionControlExclusionState": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControlExclusion$State": null
+      }
+    },
+    "VpcEncryptionControlExclusions": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControl$ResourceExclusions": null
+      }
+    },
+    "VpcEncryptionControlId": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControl$VpcEncryptionControlId": null
+      }
+    },
+    "VpcEncryptionControlMode": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControl$Mode": null
+      }
+    },
+    "VpcEncryptionControlState": {
+      "base": null,
+      "refs": {
+        "VpcEncryptionControl$State": null
+      }
+    },
     "VpcEndpoint": {
       "base": "<p>Describes a VPC endpoint.</p>",
       "refs": {
@@ -26011,6 +26060,7 @@
         "ModifyVpcTenancyRequest$VpcId": "<p>The ID of the VPC.</p>",
         "SecurityGroupVpcAssociation$VpcId": "<p>The association's VPC ID.</p>",
         "VpcClassicLinkIdList$member": null,
+        "VpcEncryptionControl$VpcId": null,
         "VpcIdStringList$member": null
       }
     },

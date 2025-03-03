@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Changes to align with current waiter specifications.
+* `Aws\EC2` - Update the DescribeVpcs response
+* `Aws\CognitoIdentityProvider` - Added the capacity to return available challenges in admin authentication and to set version 3 of the pre token generation event for M2M ATC.
+* `Aws\CloudWatchRUM` - Add support for PutResourcePolicy, GetResourcePolicy and DeleteResourcePolicy to support resource based policies for AWS CloudWatch RUM
+* `Aws\SageMaker` - Add DomainId to CreateDomainResponse
+* `Aws\TranscribeService` - Updating documentation for post call analytics job queueing.
+* `Aws\QBusiness` - Adds support for the ingestion of audio and video files by Q Business, which can be configured with the mediaExtractionConfiguration parameter.
+
 ## 3.340.4 - 2025-02-28
 
 * `Aws\S3` - Adds missing, unimplemented streamwrapper methods

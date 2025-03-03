@@ -624,6 +624,7 @@
         {"shape":"UserNotFoundException"},
         {"shape":"UserNotConfirmedException"},
         {"shape":"InternalErrorException"},
+        {"shape":"DeviceKeyExistsException"},
         {"shape":"ForbiddenException"}
       ],
       "authtype":"none",
@@ -2508,7 +2509,8 @@
         "ChallengeName":{"shape":"ChallengeNameType"},
         "Session":{"shape":"SessionType"},
         "ChallengeParameters":{"shape":"ChallengeParametersType"},
-        "AuthenticationResult":{"shape":"AuthenticationResultType"}
+        "AuthenticationResult":{"shape":"AuthenticationResultType"},
+        "AvailableChallenges":{"shape":"AvailableChallengeListType"}
       }
     },
     "AdminLinkProviderForUserRequest":{
@@ -3888,6 +3890,13 @@
         "DeviceOnlyRememberedOnUserPrompt":{"shape":"BooleanType"}
       }
     },
+    "DeviceKeyExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
     "DeviceKeyType":{
       "type":"string",
       "max":55,
@@ -5048,7 +5057,8 @@
       "type":"string",
       "enum":[
         "V1_0",
-        "V2_0"
+        "V2_0",
+        "V3_0"
       ]
     },
     "PreTokenGenerationVersionConfigType":{

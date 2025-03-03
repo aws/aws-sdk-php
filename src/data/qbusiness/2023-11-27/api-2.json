@@ -3170,6 +3170,51 @@
                 "DELETE"
             ]
         },
+        "AudioExtractionConfiguration": {
+            "type": "structure",
+            "required": [
+                "audioExtractionStatus"
+            ],
+            "members": {
+                "audioExtractionStatus": {
+                    "shape": "AudioExtractionStatus"
+                }
+            }
+        },
+        "AudioExtractionStatus": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
+        "AudioExtractionType": {
+            "type": "string",
+            "enum": [
+                "TRANSCRIPT",
+                "SUMMARY"
+            ]
+        },
+        "AudioSourceDetails": {
+            "type": "structure",
+            "members": {
+                "mediaId": {
+                    "shape": "MediaId"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
+                },
+                "startTimeMilliseconds": {
+                    "shape": "Long"
+                },
+                "endTimeMilliseconds": {
+                    "shape": "Long"
+                },
+                "audioExtractionType": {
+                    "shape": "AudioExtractionType"
+                }
+            }
+        },
         "AuthChallengeRequest": {
             "type": "structure",
             "required": [
@@ -6113,6 +6158,17 @@
                 "DISABLED"
             ]
         },
+        "ImageSourceDetails": {
+            "type": "structure",
+            "members": {
+                "mediaId": {
+                    "shape": "MediaId"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
+                }
+            }
+        },
         "Index": {
             "type": "structure",
             "members": {
@@ -7107,6 +7163,12 @@
             "members": {
                 "imageExtractionConfiguration": {
                     "shape": "ImageExtractionConfiguration"
+                },
+                "audioExtractionConfiguration": {
+                    "shape": "AudioExtractionConfiguration"
+                },
+                "videoExtractionConfiguration": {
+                    "shape": "VideoExtractionConfiguration"
                 }
             }
         },
@@ -8205,6 +8267,21 @@
                 "shape": "SourceAttribution"
             }
         },
+        "SourceDetails": {
+            "type": "structure",
+            "members": {
+                "imageSourceDetails": {
+                    "shape": "ImageSourceDetails"
+                },
+                "audioSourceDetails": {
+                    "shape": "AudioSourceDetails"
+                },
+                "videoSourceDetails": {
+                    "shape": "VideoSourceDetails"
+                }
+            },
+            "union": true
+        },
         "StartDataSourceSyncJobRequest": {
             "type": "structure",
             "required": [
@@ -8540,10 +8617,19 @@
                     "shape": "SnippetExcerpt"
                 },
                 "mediaId": {
-                    "shape": "SourceAttributionMediaId"
+                    "shape": "SourceAttributionMediaId",
+                    "deprecated": true,
+                    "deprecatedMessage": "Deprecated in favor of using mediaId within the respective sourceDetails field.",
+                    "deprecatedSince": "2025-02-28"
                 },
                 "mediaMimeType": {
-                    "shape": "String"
+                    "shape": "String",
+                    "deprecated": true,
+                    "deprecatedMessage": "Deprecated in favor of using mediaMimeType within the respective sourceDetails field.",
+                    "deprecatedSince": "2025-02-28"
+                },
+                "sourceDetails": {
+                    "shape": "SourceDetails"
                 }
             }
         },
@@ -9158,6 +9244,51 @@
                 "FIELD_VALIDATION_FAILED",
                 "UNKNOWN_OPERATION"
             ]
+        },
+        "VideoExtractionConfiguration": {
+            "type": "structure",
+            "required": [
+                "videoExtractionStatus"
+            ],
+            "members": {
+                "videoExtractionStatus": {
+                    "shape": "VideoExtractionStatus"
+                }
+            }
+        },
+        "VideoExtractionStatus": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
+        },
+        "VideoExtractionType": {
+            "type": "string",
+            "enum": [
+                "TRANSCRIPT",
+                "SUMMARY"
+            ]
+        },
+        "VideoSourceDetails": {
+            "type": "structure",
+            "members": {
+                "mediaId": {
+                    "shape": "MediaId"
+                },
+                "mediaMimeType": {
+                    "shape": "String"
+                },
+                "startTimeMilliseconds": {
+                    "shape": "Long"
+                },
+                "endTimeMilliseconds": {
+                    "shape": "Long"
+                },
+                "videoExtractionType": {
+                    "shape": "VideoExtractionType"
+                }
+            }
         },
         "WebExperience": {
             "type": "structure",

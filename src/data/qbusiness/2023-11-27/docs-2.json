@@ -516,6 +516,30 @@
         "DocumentAttributeTarget$attributeValueOperator": "<p> <code>TRUE</code> to delete the existing target value for your specified target attribute key. You cannot create a target value and set this to <code>TRUE</code>.</p>"
       }
     },
+    "AudioExtractionConfiguration": {
+      "base": "<p>Configuration settings for audio content extraction and processing.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$audioExtractionConfiguration": "<p>Configuration settings for extracting and processing audio content from media files.</p>"
+      }
+    },
+    "AudioExtractionStatus": {
+      "base": null,
+      "refs": {
+        "AudioExtractionConfiguration$audioExtractionStatus": "<p>The status of audio extraction (ENABLED or DISABLED) for processing audio content from files.</p>"
+      }
+    },
+    "AudioExtractionType": {
+      "base": null,
+      "refs": {
+        "AudioSourceDetails$audioExtractionType": "<p>The type of audio extraction performed on the content.</p>"
+      }
+    },
+    "AudioSourceDetails": {
+      "base": "<p>Details about an audio source, including its identifier, format, and time information.</p>",
+      "refs": {
+        "SourceDetails$audioSourceDetails": "<p>Details specific to audio content within the source.</p>"
+      }
+    },
     "AuthChallengeRequest": {
       "base": "<p>A request made by Amazon Q Business to a third paty authentication server to authenticate a custom plugin user.</p>",
       "refs": {
@@ -1807,6 +1831,12 @@
         "ImageExtractionConfiguration$imageExtractionStatus": "<p>Specify whether to extract semantic meaning from images and visuals from documents.</p>"
       }
     },
+    "ImageSourceDetails": {
+      "base": "<p>Details about an image source, including its identifier and format.</p>",
+      "refs": {
+        "SourceDetails$imageSourceDetails": "<p>Details specific to image content within the source.</p>"
+      }
+    },
     "Index": {
       "base": "<p>Summary information for your Amazon Q Business index.</p>",
       "refs": {
@@ -2168,7 +2198,11 @@
     "Long": {
       "base": null,
       "refs": {
-        "DocumentAttributeValue$longValue": "<p>A long integer value. </p>"
+        "AudioSourceDetails$startTimeMilliseconds": "<p>The starting timestamp in milliseconds for the relevant audio segment.</p>",
+        "AudioSourceDetails$endTimeMilliseconds": "<p>The ending timestamp in milliseconds for the relevant audio segment.</p>",
+        "DocumentAttributeValue$longValue": "<p>A long integer value. </p>",
+        "VideoSourceDetails$startTimeMilliseconds": "<p>The starting timestamp in milliseconds for the relevant video segment.</p>",
+        "VideoSourceDetails$endTimeMilliseconds": "<p>The ending timestamp in milliseconds for the relevant video segment.</p>"
       }
     },
     "MaxResults": {
@@ -2297,7 +2331,10 @@
     "MediaId": {
       "base": null,
       "refs": {
-        "GetMediaRequest$mediaId": "<p>The identifier of the media object. You can find this in the <code>sourceAttributions</code> returned by the <code>Chat</code>, <code>ChatSync</code>, and <code>ListMessages</code> API responses.</p>"
+        "AudioSourceDetails$mediaId": "<p>Unique identifier for the audio media file.</p>",
+        "GetMediaRequest$mediaId": "<p>The identifier of the media object. You can find this in the <code>sourceAttributions</code> returned by the <code>Chat</code>, <code>ChatSync</code>, and <code>ListMessages</code> API responses.</p>",
+        "ImageSourceDetails$mediaId": "<p>Unique identifier for the image file.</p>",
+        "VideoSourceDetails$mediaId": "<p>Unique identifier for the video media file.</p>"
       }
     },
     "MediaTooLargeException": {
@@ -3025,6 +3062,12 @@
         "MetadataEvent$sourceAttributions": "<p>The source documents used to generate the conversation response.</p>"
       }
     },
+    "SourceDetails": {
+      "base": "<p>Container for details about different types of media sources (image, audio, or video).</p>",
+      "refs": {
+        "TextSegment$sourceDetails": "<p>Source information for a segment of extracted text, including its media type.</p>"
+      }
+    },
     "StartDataSourceSyncJobRequest": {
       "base": null,
       "refs": {
@@ -3070,6 +3113,7 @@
         "AssociatePermissionResponse$statement": "<p>The JSON representation of the added permission statement.</p>",
         "Attachment$fileType": "<p>Filetype of the Amazon Q Business attachment.</p>",
         "Attachment$md5chksum": "<p>MD5 checksum of the Amazon Q Business attachment contents.</p>",
+        "AudioSourceDetails$mediaMimeType": "<p>The MIME type of the audio file (e.g., audio/mp3, audio/wav).</p>",
         "ChatSyncOutput$systemMessage": "<p>An AI-generated message in a conversation.</p>",
         "ConflictException$resourceId": "<p>The identifier of the resource affected.</p>",
         "ConflictException$resourceType": "<p>The type of the resource affected.</p>",
@@ -3083,6 +3127,7 @@
         "GetMediaResponse$mediaMimeType": "<p>The MIME type of the media object (image/png).</p>",
         "GetPolicyResponse$policy": "<p>The JSON representation of the permission policy.</p>",
         "GetUserRequest$userId": "<p>The user email address attached to the user.</p>",
+        "ImageSourceDetails$mediaMimeType": "<p>The MIME type of the image file.</p>",
         "Message$messageId": "<p>The identifier of the Amazon Q Business web experience message.</p>",
         "MetadataEvent$finalTextMessage": "<p>The final text output message generated by the system.</p>",
         "PluginTypeMetadataSummary$description": "<p>The description assigned by Amazon Q Business to a plugin. You can't modify this value.</p>",
@@ -3102,7 +3147,8 @@
         "UserGroups$member": null,
         "UserIds$member": null,
         "ValidationExceptionField$name": "<p>The field name where the invalid entry was detected.</p>",
-        "ValidationExceptionField$message": "<p>A message about the validation exception.</p>"
+        "ValidationExceptionField$message": "<p>A message about the validation exception.</p>",
+        "VideoSourceDetails$mediaMimeType": "<p>The MIME type of the video file (e.g., video/mp4, video/avi).</p>"
       }
     },
     "StringAttributeBoostingConfiguration": {
@@ -3598,6 +3644,30 @@
       "base": null,
       "refs": {
         "ValidationException$reason": "<p>The reason for the <code>ValidationException</code>.</p>"
+      }
+    },
+    "VideoExtractionConfiguration": {
+      "base": "<p>Configuration settings for video content extraction and processing.</p>",
+      "refs": {
+        "MediaExtractionConfiguration$videoExtractionConfiguration": "<p>Configuration settings for extracting and processing video content from media files.</p>"
+      }
+    },
+    "VideoExtractionStatus": {
+      "base": null,
+      "refs": {
+        "VideoExtractionConfiguration$videoExtractionStatus": "<p>The status of video extraction (ENABLED or DISABLED) for processing video content from files.</p>"
+      }
+    },
+    "VideoExtractionType": {
+      "base": null,
+      "refs": {
+        "VideoSourceDetails$videoExtractionType": "<p>The type of video extraction performed on the content.</p>"
+      }
+    },
+    "VideoSourceDetails": {
+      "base": "<p>Details about a video source, including its identifier, format, and time information.</p>",
+      "refs": {
+        "SourceDetails$videoSourceDetails": "<p>Details specific to video content within the source.</p>"
       }
     },
     "WebExperience": {
