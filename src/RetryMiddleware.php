@@ -80,6 +80,7 @@ class RetryMiddleware
     ) {
         $retryCurlErrors = [];
         if (extension_loaded('curl')) {
+            $retryCurlErrors[CURLE_SSL_CONNECT_ERROR] = true;
             $retryCurlErrors[CURLE_RECV_ERROR] = true;
         }
 

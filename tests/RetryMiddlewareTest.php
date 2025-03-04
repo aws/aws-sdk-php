@@ -84,7 +84,12 @@ class RetryMiddlewareTest extends TestCase
         }
     }
 
-    public function testDeciderRetriesWhenCurlErrorCodeMatches()
+    /**
+     * @param int $curlErrorCode
+     * @param bool $expected
+     * @dataProvider curlErrorCodesProvider
+     */
+    public function testDeciderRetriesWhenCurlErrorCodeMatches($curlErrorCode, $expected)
     {
         if (!extension_loaded('curl')) {
             $this->markTestSkipped('Test skipped on no cURL extension');
@@ -99,11 +104,11 @@ class RetryMiddlewareTest extends TestCase
                 $request,
                 null,
                 null,
-                ['errno' => CURLE_RECV_ERROR]
+                ['errno' => $curlErrorCode]
             );
         } elseif ($version === 5) {
             $previous = new RequestException(
-                'cURL error ' . CURLE_RECV_ERROR . ': test',
+                'cURL error ' . $curlErrorCode . ': test',
                 new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
             );
         }
@@ -113,7 +118,16 @@ class RetryMiddlewareTest extends TestCase
             ['connection_error' => false],
             $previous
         );
-        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $this->assertEquals($expected, $decider(0, $command, $request, null, $err));
+    }
+
+    public static function curlErrorCodesProvider()
+    {
+        return [
+            'Error 35 should retry' => [CURLE_SSL_CONNECT_ERROR, true],
+            'Error 56 should retry' => [CURLE_RECV_ERROR, true],
+            'Error 0 should not retry' => [CURLE_OK, false],
+        ];
     }
 
     public function testDeciderRetriesForCustomCurlErrors()
