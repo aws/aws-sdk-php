@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ClientSideMonitoring` - Updates handling of `csm_port` value if provided in ini file
+* `Aws\IoTManagedIntegrations` - Adding managed integrations APIs for IoT Device Management to setup and control devices across different manufacturers and connectivity protocols. APIs include managedthing operations, credential and provisioning profile management, notification configuration, and OTA update.
+* `Aws\RDS` - Note support for Database Insights for Amazon RDS.
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now supports MQTT-enabled, V3 gateways. Configure data destinations for real-time ingestion into AWS IoT SiteWise or buffered ingestion using Amazon S3 storage. You can also use path filters for precise data collection from specific MQTT topics.
+* `Aws\ElastiCache` - Doc only update, listing 'valkey7' and 'valkey8' as engine options for parameter groups.
+
 ## 3.340.5 - 2025-03-03
 
 * `Aws\` - Changes to align with current waiter specifications.

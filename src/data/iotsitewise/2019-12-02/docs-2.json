@@ -1197,6 +1197,12 @@
         "InvokeAssistantResponse$conversationId": "<p>The ID of the conversation, in UUID format. This ID uniquely identifies the conversation within IoT SiteWise.</p>"
       }
     },
+    "CoreDeviceOperatingSystem": {
+      "base": null,
+      "refs": {
+        "GreengrassV2$coreDeviceOperatingSystem": "<p>The operating system of the core device in IoT Greengrass V2.</p>"
+      }
+    },
     "CoreDeviceThingName": {
       "base": null,
       "refs": {
@@ -2098,6 +2104,14 @@
       "base": "<p>Contains a summary of a gateway.</p>",
       "refs": {
         "GatewaySummaries$member": null
+      }
+    },
+    "GatewayVersion": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$gatewayVersion": "<p>The version of the gateway to create. Specify <code>3</code> to create an MQTT-enabled, V3 gateway and <code>2</code> To create a Classic streams, V2 gateway. If the version isn't specified, a Classic streams, V2 gateway is created by default.</p> <p> We recommend creating an MQTT-enabled, V3 gateway for self-hosted gateways. SiteWise Edge gateways on Siemens Industrial Edge should use gateway version <code>2</code>. For more information on gateway versions, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gw-self-host-gg2.html\"> Self-host a SiteWise Edge gateway with IoT Greengrass V2</a>.</p>",
+        "DescribeGatewayResponse$gatewayVersion": "<p>The version of the gateway. A value of <code>3</code> indicates an MQTT-enabled, V3 gateway, while <code>2</code> indicates a Classic streams, V2 gateway.</p>",
+        "GatewaySummary$gatewayVersion": "<p>The version of the gateway. A value of <code>3</code> indicates an MQTT-enabled, V3 gateway, while <code>2</code> indicates a Classic streams, V2 gateway.</p>"
       }
     },
     "GetAssetPropertyAggregatesRequest": {

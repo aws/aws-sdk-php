@@ -2915,6 +2915,14 @@
       "min":36,
       "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
+    "CoreDeviceOperatingSystem":{
+      "type":"string",
+      "enum":[
+        "LINUX_AARCH64",
+        "LINUX_AMD64",
+        "WINDOWS_AMD64"
+      ]
+    },
     "CoreDeviceThingName":{
       "type":"string",
       "max":128,
@@ -3171,6 +3179,7 @@
       "members":{
         "gatewayName":{"shape":"GatewayName"},
         "gatewayPlatform":{"shape":"GatewayPlatform"},
+        "gatewayVersion":{"shape":"GatewayVersion"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -4123,6 +4132,7 @@
         "gatewayName":{"shape":"GatewayName"},
         "gatewayArn":{"shape":"ARN"},
         "gatewayPlatform":{"shape":"GatewayPlatform"},
+        "gatewayVersion":{"shape":"GatewayVersion"},
         "gatewayCapabilitySummaries":{"shape":"GatewayCapabilitySummaries"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"}
@@ -4582,10 +4592,17 @@
         "gatewayId":{"shape":"ID"},
         "gatewayName":{"shape":"GatewayName"},
         "gatewayPlatform":{"shape":"GatewayPlatform"},
+        "gatewayVersion":{"shape":"GatewayVersion"},
         "gatewayCapabilitySummaries":{"shape":"GatewayCapabilitySummaries"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"}
       }
+    },
+    "GatewayVersion":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[0-9]+$"
     },
     "GetAssetPropertyAggregatesRequest":{
       "type":"structure",
@@ -4849,7 +4866,8 @@
       "type":"structure",
       "required":["coreDeviceThingName"],
       "members":{
-        "coreDeviceThingName":{"shape":"CoreDeviceThingName"}
+        "coreDeviceThingName":{"shape":"CoreDeviceThingName"},
+        "coreDeviceOperatingSystem":{"shape":"CoreDeviceOperatingSystem"}
       }
     },
     "GroupIdentity":{
