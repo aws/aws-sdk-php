@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.341.0 - 2025-03-04
 
 * `Aws\ClientSideMonitoring` - Updates handling of `csm_port` value if provided in ini file
 * `Aws\IoTManagedIntegrations` - Adding managed integrations APIs for IoT Device Management to setup and control devices across different manufacturers and connectivity protocols. APIs include managedthing operations, credential and provisioning profile management, notification configuration, and OTA update.
