@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.0 - 2025-03-05
 
 * `Aws\Handler` - Remove code for unsupported version v5 of Guzzle.
 * `Aws\BedrockRuntime` - This releases adds support for Custom Prompt Router ARN
