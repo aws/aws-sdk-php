@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Handler` - Remove code for unsupported version v5 of Guzzle.
+* `Aws\BedrockRuntime` - This releases adds support for Custom Prompt Router ARN
+* `Aws\GameLiftStreams` - New Service: Amazon GameLift Streams delivers low-latency game streaming from AWS global infrastructure to virtually any device with a browser at up to 1080p resolution and 60 fps.
+* `Aws\WorkSpaces` - Added DeviceTypeWorkSpacesThinClient type to allow users to access their WorkSpaces through a WorkSpaces Thin Client.
+* `Aws\DataSync` - AWS DataSync now supports modifying ServerHostname while updating locations SMB, NFS, and ObjectStorage.
+* `Aws\IoTFleetWise` - This release adds floating point support for CAN/OBD signals and adds support for signed OBD signals.
+
 ## 3.341.0 - 2025-03-04
 
 * `Aws\ClientSideMonitoring` - Updates handling of `csm_port` value if provided in ini file

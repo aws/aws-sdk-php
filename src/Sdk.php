@@ -318,6 +318,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionFreeTier(array $args = [])
  * @method \Aws\GameLift\GameLiftClient createGameLift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGameLift(array $args = [])
+ * @method \Aws\GameLiftStreams\GameLiftStreamsClient createGameLiftStreams(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGameLiftStreams(array $args = [])
  * @method \Aws\GeoMaps\GeoMapsClient createGeoMaps(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGeoMaps(array $args = [])
  * @method \Aws\GeoPlaces\GeoPlacesClient createGeoPlaces(array $args = [])

@@ -1136,9 +1136,10 @@
       "base": null,
       "refs": {
         "CanSignal$isBigEndian": "<p>Whether the byte ordering of a CAN message is big-endian.</p>",
-        "CanSignal$isSigned": "<p>Whether the message data is specified as a signed value.</p>",
+        "CanSignal$isSigned": "<p>Determines whether the message is signed (<code>true</code>) or not (<code>false</code>). If it's signed, the message can represent both positive and negative numbers. The <code>isSigned</code> parameter only applies to the <code>INTEGER</code> raw signal type, and it doesn't affect the <code>FLOATING_POINT</code> raw signal type.</p>",
         "ObdInterface$useExtendedIds": "<p>Whether to use extended IDs in the message.</p>",
-        "ObdInterface$hasTransmissionEcu": "<p>Whether the vehicle has a transmission control module (TCM).</p>"
+        "ObdInterface$hasTransmissionEcu": "<p>Whether the vehicle has a transmission control module (TCM).</p>",
+        "ObdSignal$isSigned": "<p>Determines whether the message is signed (<code>true</code>) or not (<code>false</code>). If it's signed, the message can represent both positive and negative numbers. The <code>isSigned</code> parameter only applies to the <code>INTEGER</code> raw signal type, and it doesn't affect the <code>FLOATING_POINT</code> raw signal type. The default value is <code>false</code>.</p>"
       }
     },
     "PrimitiveMessageDefinition": {
@@ -1341,6 +1342,13 @@
       "base": null,
       "refs": {
         "ListSignalCatalogNodesRequest$signalNodeType": "<p>The type of node in the signal catalog.</p>"
+      }
+    },
+    "SignalValueType": {
+      "base": null,
+      "refs": {
+        "CanSignal$signalValueType": "<p>The value type of the signal. The default value is <code>INTEGER</code>.</p>",
+        "ObdSignal$signalValueType": "<p>The value type of the signal. The default value is <code>INTEGER</code>.</p>"
       }
     },
     "SpoolingMode": {

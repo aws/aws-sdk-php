@@ -1086,11 +1086,11 @@
       "base": null,
       "refs": {
         "CreateLocationHdfsRequest$KerberosPrincipal": "<p>The Kerberos principal with access to the files and folders on the HDFS cluster. </p> <note> <p>If <code>KERBEROS</code> is specified for <code>AuthenticationType</code>, this parameter is required.</p> </note>",
-        "CreateLocationSmbRequest$KerberosPrincipal": "<p>Specifies a Kerberos prinicpal, which is an identity in your Kerberos realm that has permission to access the files, folders, and file metadata in your SMB file server.</p> <p>A Kerberos principal might look like <code>HOST/kerberosuser@EXAMPLE.COM</code>.</p> <p>Principal names are case sensitive. Your DataSync task execution will fail if the principal that you specify for this parameter doesn’t exactly match the principal that you use to create the keytab file.</p>",
+        "CreateLocationSmbRequest$KerberosPrincipal": "<p>Specifies a Kerberos prinicpal, which is an identity in your Kerberos realm that has permission to access the files, folders, and file metadata in your SMB file server.</p> <p>A Kerberos principal might look like <code>HOST/kerberosuser@MYDOMAIN.ORG</code>.</p> <p>Principal names are case sensitive. Your DataSync task execution will fail if the principal that you specify for this parameter doesn’t exactly match the principal that you use to create the keytab file.</p>",
         "DescribeLocationHdfsResponse$KerberosPrincipal": "<p>The Kerberos principal with access to the files and folders on the HDFS cluster. This parameter is used if the <code>AuthenticationType</code> is defined as <code>KERBEROS</code>.</p>",
         "DescribeLocationSmbResponse$KerberosPrincipal": "<p>The Kerberos principal that has permission to access the files, folders, and file metadata in your SMB file server.</p>",
         "UpdateLocationHdfsRequest$KerberosPrincipal": "<p>The Kerberos principal with access to the files and folders on the HDFS cluster. </p>",
-        "UpdateLocationSmbRequest$KerberosPrincipal": "<p>Specifies a Kerberos prinicpal, which is an identity in your Kerberos realm that has permission to access the files, folders, and file metadata in your SMB file server.</p> <p>A Kerberos principal might look like <code>HOST/kerberosuser@EXAMPLE.COM</code>.</p> <p>Principal names are case sensitive. Your DataSync task execution will fail if the principal that you specify for this parameter doesn’t exactly match the principal that you use to create the keytab file.</p>"
+        "UpdateLocationSmbRequest$KerberosPrincipal": "<p>Specifies a Kerberos prinicpal, which is an identity in your Kerberos realm that has permission to access the files, folders, and file metadata in your SMB file server.</p> <p>A Kerberos principal might look like <code>HOST/kerberosuser@MYDOMAIN.ORG</code>.</p> <p>Principal names are case sensitive. Your DataSync task execution will fail if the principal that you specify for this parameter doesn’t exactly match the principal that you use to create the keytab file.</p>"
       }
     },
     "KmsKeyProviderUri": {
@@ -1899,9 +1899,12 @@
     "ServerHostname": {
       "base": null,
       "refs": {
-        "CreateLocationNfsRequest$ServerHostname": "<p>Specifies the Domain Name System (DNS) name or IP version 4 address of the NFS file server that your DataSync agent connects to.</p>",
-        "CreateLocationObjectStorageRequest$ServerHostname": "<p>Specifies the domain name or IP address of the object storage server. A DataSync agent uses this hostname to mount the object storage server in a network.</p>",
-        "CreateLocationSmbRequest$ServerHostname": "<p>Specifies the domain name or IP address of the SMB file server that your DataSync agent will mount.</p> <p>Remember the following when configuring this parameter:</p> <ul> <li> <p>You can't specify an IP version 6 (IPv6) address.</p> </li> <li> <p>If you're using Kerberos authentication, you must specify a domain name.</p> </li> </ul>"
+        "CreateLocationNfsRequest$ServerHostname": "<p>Specifies the DNS name or IP version 4 address of the NFS file server that your DataSync agent connects to.</p>",
+        "CreateLocationObjectStorageRequest$ServerHostname": "<p>Specifies the domain name or IP version 4 (IPv4) address of the object storage server that your DataSync agent connects to.</p>",
+        "CreateLocationSmbRequest$ServerHostname": "<p>Specifies the domain name or IP address of the SMB file server that your DataSync agent connects to.</p> <p>Remember the following when configuring this parameter:</p> <ul> <li> <p>You can't specify an IP version 6 (IPv6) address.</p> </li> <li> <p>If you're using Kerberos authentication, you must specify a domain name.</p> </li> </ul>",
+        "UpdateLocationNfsRequest$ServerHostname": "<p>Specifies the DNS name or IP version 4 (IPv4) address of the NFS file server that your DataSync agent connects to.</p>",
+        "UpdateLocationObjectStorageRequest$ServerHostname": "<p>Specifies the domain name or IP version 4 (IPv4) address of the object storage server that your DataSync agent connects to.</p>",
+        "UpdateLocationSmbRequest$ServerHostname": "<p>Specifies the domain name or IP address of the SMB file server that your DataSync agent connects to.</p> <p>Remember the following when configuring this parameter:</p> <ul> <li> <p>You can't specify an IP version 6 (IPv6) address.</p> </li> <li> <p>If you're using Kerberos authentication, you must specify a domain name.</p> </li> </ul>"
       }
     },
     "ServerIpAddress": {
@@ -1913,9 +1916,9 @@
     "SmbAuthenticationType": {
       "base": null,
       "refs": {
-        "CreateLocationSmbRequest$AuthenticationType": "<p>Specifies the authentication protocol that DataSync uses to connect to your SMB file server. DataSync supports <code>NTLM</code> (default) and <code>KERBEROS</code> authentication.</p>",
+        "CreateLocationSmbRequest$AuthenticationType": "<p>Specifies the authentication protocol that DataSync uses to connect to your SMB file server. DataSync supports <code>NTLM</code> (default) and <code>KERBEROS</code> authentication.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions\">Providing DataSync access to SMB file servers</a>.</p>",
         "DescribeLocationSmbResponse$AuthenticationType": "<p>The authentication protocol that DataSync uses to connect to your SMB file server.</p>",
-        "UpdateLocationSmbRequest$AuthenticationType": "<p>Specifies the authentication protocol that DataSync uses to connect to your SMB file server. DataSync supports <code>NTLM</code> (default) and <code>KERBEROS</code> authentication.</p>"
+        "UpdateLocationSmbRequest$AuthenticationType": "<p>Specifies the authentication protocol that DataSync uses to connect to your SMB file server. DataSync supports <code>NTLM</code> (default) and <code>KERBEROS</code> authentication.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions\">Providing DataSync access to SMB file servers</a>.</p>"
       }
     },
     "SmbDomain": {

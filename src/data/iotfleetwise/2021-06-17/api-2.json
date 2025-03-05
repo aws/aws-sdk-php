@@ -1172,7 +1172,8 @@
         "offset":{"shape":"double"},
         "factor":{"shape":"double"},
         "length":{"shape":"nonNegativeInteger"},
-        "name":{"shape":"CanSignalName"}
+        "name":{"shape":"CanSignalName"},
+        "signalValueType":{"shape":"SignalValueType"}
       }
     },
     "CanSignalName":{
@@ -2705,7 +2706,12 @@
         "startByte":{"shape":"nonNegativeInteger"},
         "byteLength":{"shape":"ObdByteLength"},
         "bitRightShift":{"shape":"nonNegativeInteger"},
-        "bitMaskLength":{"shape":"ObdBitmaskLength"}
+        "bitMaskLength":{"shape":"ObdBitmaskLength"},
+        "isSigned":{
+          "shape":"PrimitiveBoolean",
+          "box":true
+        },
+        "signalValueType":{"shape":"SignalValueType"}
       }
     },
     "ObdStandard":{
@@ -3040,6 +3046,13 @@
         "BRANCH",
         "CUSTOM_STRUCT",
         "CUSTOM_PROPERTY"
+      ]
+    },
+    "SignalValueType":{
+      "type":"string",
+      "enum":[
+        "INTEGER",
+        "FLOATING_POINT"
       ]
     },
     "SpoolingMode":{
