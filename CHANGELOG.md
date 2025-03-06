@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.1 - 2025-03-06
 
 * `Aws\NetworkFlowMonitor` - This release contains 2 changes. 1: DeleteScope/GetScope/UpdateScope operations now return 404 instead of 500 when the resource does not exist. 2: Expected string format for clientToken fields of CreateMonitorInput/CreateScopeInput/UpdateMonitorInput have been updated to be an UUID based string.
 * `Aws\RedshiftDataAPIService` - This release adds support for ListStatements API to filter statements by ClusterIdentifier, WorkgroupName, and Database.
