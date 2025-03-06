@@ -1985,7 +1985,8 @@
         "Headers":{"shape":"Headers"},
         "Cookies":{"shape":"Cookies"},
         "HeaderOrder":{"shape":"HeaderOrder"},
-        "JA3Fingerprint":{"shape":"JA3Fingerprint"}
+        "JA3Fingerprint":{"shape":"JA3Fingerprint"},
+        "JA4Fingerprint":{"shape":"JA4Fingerprint"}
       }
     },
     "FieldToMatchData":{
@@ -2499,6 +2500,13 @@
       ]
     },
     "JA3Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
+      "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
+      }
+    },
+    "JA4Fingerprint":{
       "type":"structure",
       "required":["FallbackBehavior"],
       "members":{
@@ -3327,7 +3335,9 @@
         "ForwardedIP":{"shape":"RateLimitForwardedIP"},
         "IP":{"shape":"RateLimitIP"},
         "LabelNamespace":{"shape":"RateLimitLabelNamespace"},
-        "UriPath":{"shape":"RateLimitUriPath"}
+        "UriPath":{"shape":"RateLimitUriPath"},
+        "JA3Fingerprint":{"shape":"RateLimitJA3Fingerprint"},
+        "JA4Fingerprint":{"shape":"RateLimitJA4Fingerprint"}
       }
     },
     "RateBasedStatementCustomKeys":{
@@ -3382,6 +3392,20 @@
     "RateLimitIP":{
       "type":"structure",
       "members":{
+      }
+    },
+    "RateLimitJA3Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
+      "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
+      }
+    },
+    "RateLimitJA4Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
+      "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
       }
     },
     "RateLimitLabelNamespace":{

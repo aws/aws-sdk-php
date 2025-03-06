@@ -12,6 +12,7 @@
     "CreateModelCustomizationJob": "<p>Creates a fine-tuning job to customize a base model.</p> <p>You specify the base foundation model and the location of the training data. After the model-customization job completes successfully, your custom model resource will be ready to use. Amazon Bedrock returns validation loss metrics and output generations after the job completes. </p> <p>For information on the format of training and validation data, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-prepare.html\">Prepare the datasets</a>.</p> <p> Model-customization jobs are asynchronous and the completion time depends on the base model and the training/validation data size. To monitor a job, use the <code>GetModelCustomizationJob</code> operation to retrieve the job status.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "CreateModelImportJob": "<p>Creates a model import job to import model that you have customized in other environments, such as Amazon SageMaker. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> </p>",
     "CreateModelInvocationJob": "<p>Creates a batch inference job to invoke a model on multiple prompts. Format your data according to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data\">Format your inference data</a> and upload it to an Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html\">Process multiple prompts with batch inference</a>.</p> <p>The response returns a <code>jobArn</code> that you can use to stop or get details about the job.</p>",
+    "CreatePromptRouter": "<p>Creates a prompt router that manages the routing of requests between multiple foundation models based on the routing criteria.</p>",
     "CreateProvisionedModelThroughput": "<p>Creates dedicated throughput for a base or custom model with the model units and for the duration that you specify. For pricing details, see <a href=\"http://aws.amazon.com/bedrock/pricing/\">Amazon Bedrock Pricing</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
@@ -19,6 +20,7 @@
     "DeleteInferenceProfile": "<p>Deletes an application inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
     "DeleteMarketplaceModelEndpoint": "<p>Deletes an endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "DeleteModelInvocationLoggingConfiguration": "<p>Delete the invocation logging. </p>",
+    "DeletePromptRouter": "<p>Deletes a specified prompt router. This action cannot be undone.</p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created.For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -349,6 +351,16 @@
       "refs": {
       }
     },
+    "CreatePromptRouterRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePromptRouterResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateProvisionedModelThroughputRequest": {
       "base": null,
       "refs": {
@@ -472,6 +484,16 @@
       }
     },
     "DeleteModelInvocationLoggingConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePromptRouterRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePromptRouterResponse": {
       "base": null,
       "refs": {
       }
@@ -1572,6 +1594,7 @@
         "CreateModelCopyJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateModelCustomizationJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateModelImportJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreatePromptRouterRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of your requests. If not specified, the Amazon Web Services SDK automatically generates one for you.</p>",
         "CreateProvisionedModelThroughputRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the Amazon S3 User Guide.</p>",
         "GetModelCustomizationJobResponse$clientRequestToken": "<p>The token that you specified in the <code>CreateCustomizationJob</code> request.</p>",
         "UpdateMarketplaceModelEndpointRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is listed as not required because Amazon Web Services SDKs automatically generate it for you and set this parameter. If you're not using the Amazon Web Services SDK or the CLI, you must provide this token or the action will fail.</p>"
@@ -2447,6 +2470,8 @@
     "PromptRouterArn": {
       "base": null,
       "refs": {
+        "CreatePromptRouterResponse$promptRouterArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the prompt router.</p>",
+        "DeletePromptRouterRequest$promptRouterArn": "<p>The Amazon Resource Name (ARN) of the prompt router to delete.</p>",
         "GetPromptRouterRequest$promptRouterArn": "<p>The prompt router's ARN</p>",
         "GetPromptRouterResponse$promptRouterArn": "<p>The prompt router's ARN</p>",
         "PromptRouterSummary$promptRouterArn": "<p>The router's ARN.</p>"
@@ -2455,6 +2480,7 @@
     "PromptRouterDescription": {
       "base": null,
       "refs": {
+        "CreatePromptRouterRequest$description": "<p>An optional description of the prompt router to help identify its purpose.</p>",
         "GetPromptRouterResponse$description": "<p>The router's description.</p>",
         "PromptRouterSummary$description": "<p>The router's description.</p>"
       }
@@ -2462,6 +2488,7 @@
     "PromptRouterName": {
       "base": null,
       "refs": {
+        "CreatePromptRouterRequest$promptRouterName": "<p>The name of the prompt router. The name must be unique within your Amazon Web Services account in the current region.</p>",
         "GetPromptRouterResponse$promptRouterName": "<p>The router's name.</p>",
         "PromptRouterSummary$promptRouterName": "<p>The router's name.</p>"
       }
@@ -2488,6 +2515,7 @@
     "PromptRouterTargetModel": {
       "base": "<p>The target model for a prompt router.</p>",
       "refs": {
+        "CreatePromptRouterRequest$fallbackModel": "<p>The default model to use when the routing criteria is not met.</p>",
         "GetPromptRouterResponse$fallbackModel": "<p>The router's fallback model.</p>",
         "PromptRouterSummary$fallbackModel": "<p>The router's fallback model.</p>",
         "PromptRouterTargetModels$member": null
@@ -2502,6 +2530,7 @@
     "PromptRouterTargetModels": {
       "base": null,
       "refs": {
+        "CreatePromptRouterRequest$models": "<p>A list of foundation models that the prompt router can route requests to. At least one model must be specified.</p>",
         "GetPromptRouterResponse$models": "<p>The router's models.</p>",
         "PromptRouterSummary$models": "<p>The router's models.</p>"
       }
@@ -2510,6 +2539,7 @@
       "base": null,
       "refs": {
         "GetPromptRouterResponse$type": "<p>The router's type.</p>",
+        "ListPromptRoutersRequest$type": "<p>The type of the prompt routers, such as whether it's default or custom.</p>",
         "PromptRouterSummary$type": "<p>The summary's type.</p>"
       }
     },
@@ -2730,6 +2760,7 @@
     "RoutingCriteria": {
       "base": "<p>Routing criteria for a prompt router.</p>",
       "refs": {
+        "CreatePromptRouterRequest$routingCriteria": "<p>The criteria, which is the response quality difference, used to determine how incoming requests are routed to different models.</p>",
         "GetPromptRouterResponse$routingCriteria": "<p>The router's routing criteria.</p>",
         "PromptRouterSummary$routingCriteria": "<p>The router's routing criteria.</p>"
       }
@@ -2950,6 +2981,7 @@
         "CreateModelImportJobRequest$jobTags": "<p>Tags to attach to this import job. </p>",
         "CreateModelImportJobRequest$importedModelTags": "<p>Tags to attach to the imported model.</p>",
         "CreateModelInvocationJobRequest$tags": "<p>Any tags to associate with the batch inference job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging Amazon Bedrock resources</a>.</p>",
+        "CreatePromptRouterRequest$tags": "<p>An array of key-value pairs to apply to this resource as tags. You can use tags to categorize and manage your Amazon Web Services resources.</p>",
         "CreateProvisionedModelThroughputRequest$tags": "<p>Tags to associate with this Provisioned Throughput.</p>",
         "GetModelCopyJobResponse$targetModelTags": "<p>The tags associated with the copied model.</p>",
         "ListTagsForResourceResponse$tags": "<p>An array of the tags associated with this resource.</p>",

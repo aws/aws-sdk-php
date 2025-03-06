@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkFlowMonitor` - This release contains 2 changes. 1: DeleteScope/GetScope/UpdateScope operations now return 404 instead of 500 when the resource does not exist. 2: Expected string format for clientToken fields of CreateMonitorInput/CreateScopeInput/UpdateMonitorInput have been updated to be an UUID based string.
+* `Aws\RedshiftDataAPIService` - This release adds support for ListStatements API to filter statements by ClusterIdentifier, WorkgroupName, and Database.
+* `Aws\CloudTrail` - Doc-only update for CloudTrail.
+* `Aws\WAFV2` - You can now perform an exact match or rate limit aggregation against the web request's JA4 fingerprint.
+* `Aws\IVSRealTime` - IVS Real-Time now offers customers the ability to merge fragmented recordings in the event of a participant disconnect.
+* `Aws\WorkSpaces` - Added a new ModifyEndpointEncryptionMode API for managing endpoint encryption settings.
+* `Aws\Bedrock` - This releases adds support for Custom Prompt Router
+
 ## 3.342.0 - 2025-03-05
 
 * `Aws\Handler` - Remove code for unsupported version v5 of Guzzle.

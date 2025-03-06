@@ -64,7 +64,7 @@
     "AutoParticipantRecordingStorageConfigurationArn": {
       "base": null,
       "refs": {
-        "AutoParticipantRecordingConfiguration$storageConfigurationArn": "<p>ARN of the <a>StorageConfiguration</a> resource to use for individual participant recording. Default: <code>\"\"</code> (empty string, no storage configuration is specified). Individual participant recording cannot be started unless a storage configuration is specified, when a <a>Stage</a> is created or updated.</p>"
+        "AutoParticipantRecordingConfiguration$storageConfigurationArn": "<p>ARN of the <a>StorageConfiguration</a> resource to use for individual participant recording. Default: <code>\"\"</code> (empty string, no storage configuration is specified). Individual participant recording cannot be started unless a storage configuration is specified, when a <a>Stage</a> is created or updated. To disable individual participant recording, set this to <code>\"\"</code>; other fields in this object will get reset to their defaults when sending <code>\"\"</code>. </p>"
       }
     },
     "Bitrate": {
@@ -838,6 +838,12 @@
         "AutoParticipantRecordingConfiguration$mediaTypes": "<p>Types of media to be recorded. Default: <code>AUDIO_VIDEO</code>.</p>"
       }
     },
+    "ParticipantRecordingReconnectWindowSeconds": {
+      "base": null,
+      "refs": {
+        "AutoParticipantRecordingConfiguration$recordingReconnectWindowSeconds": "<p>If a stage publisher disconnects and then reconnects within the specified interval, the multiple recordings will be considered a single recording and merged together.</p> <p>The default value is 0, which disables merging.</p>"
+      }
+    },
     "ParticipantRecordingS3BucketName": {
       "base": null,
       "refs": {
@@ -847,7 +853,7 @@
     "ParticipantRecordingS3Prefix": {
       "base": null,
       "refs": {
-        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled.</p>"
+        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled. If individual participant recording merge is enabled, and if a stage publisher disconnects from a stage and then reconnects, IVS tries to record to the same S3 prefix as the previous session. See <a href=\"/ivs/latest/RealTimeUserGuide/rt-individual-participant-recording.html#ind-part-rec-merge-frag\"> Merge Fragmented Individual Participant Recordings</a>.</p>"
       }
     },
     "ParticipantRecordingState": {
@@ -1276,13 +1282,69 @@
     "String": {
       "base": null,
       "refs": {
+        "AccessDeniedException$accessControlAllowOrigin": "<p/>",
+        "AccessDeniedException$accessControlExposeHeaders": "<p/>",
+        "AccessDeniedException$cacheControl": "<p/>",
+        "AccessDeniedException$contentSecurityPolicy": "<p/>",
+        "AccessDeniedException$strictTransportSecurity": "<p/>",
+        "AccessDeniedException$xContentTypeOptions": "<p/>",
+        "AccessDeniedException$xFrameOptions": "<p/>",
+        "AccessDeniedException$xAmznErrorType": "<p/>",
+        "ConflictException$accessControlAllowOrigin": "<p/>",
+        "ConflictException$accessControlExposeHeaders": "<p/>",
+        "ConflictException$cacheControl": "<p/>",
+        "ConflictException$contentSecurityPolicy": "<p/>",
+        "ConflictException$strictTransportSecurity": "<p/>",
+        "ConflictException$xContentTypeOptions": "<p/>",
+        "ConflictException$xFrameOptions": "<p/>",
+        "ConflictException$xAmznErrorType": "<p/>",
         "Destination$id": "<p>Unique identifier for this destination, assigned by IVS.</p>",
         "DestinationSummary$id": "<p>Unique identifier for this destination, assigned by IVS.</p>",
+        "InternalServerException$accessControlAllowOrigin": "<p/>",
+        "InternalServerException$accessControlExposeHeaders": "<p/>",
+        "InternalServerException$cacheControl": "<p/>",
+        "InternalServerException$contentSecurityPolicy": "<p/>",
+        "InternalServerException$strictTransportSecurity": "<p/>",
+        "InternalServerException$xContentTypeOptions": "<p/>",
+        "InternalServerException$xFrameOptions": "<p/>",
+        "InternalServerException$xAmznErrorType": "<p/>",
         "ParticipantAttributes$key": null,
         "ParticipantAttributes$value": null,
         "ParticipantTokenAttributes$key": null,
         "ParticipantTokenAttributes$value": null,
-        "S3Detail$recordingPrefix": "<p>The S3 bucket prefix under which the recording is stored.</p>"
+        "PendingVerification$accessControlAllowOrigin": "<p/>",
+        "PendingVerification$accessControlExposeHeaders": "<p/>",
+        "PendingVerification$cacheControl": "<p/>",
+        "PendingVerification$contentSecurityPolicy": "<p/>",
+        "PendingVerification$strictTransportSecurity": "<p/>",
+        "PendingVerification$xContentTypeOptions": "<p/>",
+        "PendingVerification$xFrameOptions": "<p/>",
+        "PendingVerification$xAmznErrorType": "<p/>",
+        "ResourceNotFoundException$accessControlAllowOrigin": "<p/>",
+        "ResourceNotFoundException$accessControlExposeHeaders": "<p/>",
+        "ResourceNotFoundException$cacheControl": "<p/>",
+        "ResourceNotFoundException$contentSecurityPolicy": "<p/>",
+        "ResourceNotFoundException$strictTransportSecurity": "<p/>",
+        "ResourceNotFoundException$xContentTypeOptions": "<p/>",
+        "ResourceNotFoundException$xFrameOptions": "<p/>",
+        "ResourceNotFoundException$xAmznErrorType": "<p/>",
+        "S3Detail$recordingPrefix": "<p>The S3 bucket prefix under which the recording is stored.</p>",
+        "ServiceQuotaExceededException$accessControlAllowOrigin": "<p/>",
+        "ServiceQuotaExceededException$accessControlExposeHeaders": "<p/>",
+        "ServiceQuotaExceededException$cacheControl": "<p/>",
+        "ServiceQuotaExceededException$contentSecurityPolicy": "<p/>",
+        "ServiceQuotaExceededException$strictTransportSecurity": "<p/>",
+        "ServiceQuotaExceededException$xContentTypeOptions": "<p/>",
+        "ServiceQuotaExceededException$xFrameOptions": "<p/>",
+        "ServiceQuotaExceededException$xAmznErrorType": "<p/>",
+        "ValidationException$accessControlAllowOrigin": "<p/>",
+        "ValidationException$accessControlExposeHeaders": "<p/>",
+        "ValidationException$cacheControl": "<p/>",
+        "ValidationException$contentSecurityPolicy": "<p/>",
+        "ValidationException$strictTransportSecurity": "<p/>",
+        "ValidationException$xContentTypeOptions": "<p/>",
+        "ValidationException$xFrameOptions": "<p/>",
+        "ValidationException$xAmznErrorType": "<p/>"
       }
     },
     "TagKey": {
@@ -1295,7 +1357,7 @@
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$tagKeys": "<p>Array of tags to be removed. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
+        "UntagResourceRequest$tagKeys": "<p>Array of tag keys (strings) for the tags to be removed. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
       }
     },
     "TagResourceRequest": {

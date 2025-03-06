@@ -548,11 +548,14 @@
     "ListStatementsRequest":{
       "type":"structure",
       "members":{
+        "ClusterIdentifier":{"shape":"ClusterIdentifierString"},
+        "Database":{"shape":"String"},
         "MaxResults":{"shape":"ListStatementsLimit"},
         "NextToken":{"shape":"String"},
         "RoleLevel":{"shape":"Boolean"},
         "StatementName":{"shape":"StatementNameString"},
-        "Status":{"shape":"StatusString"}
+        "Status":{"shape":"StatusString"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "ListStatementsResponse":{
@@ -775,7 +778,7 @@
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":"^(([a-z0-9-]+)|(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$"
+      "pattern":"^(([a-z0-9-]+)|(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov|(-iso[a-z]?))?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$"
     },
     "bool":{"type":"boolean"}
   }

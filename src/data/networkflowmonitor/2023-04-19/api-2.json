@@ -80,6 +80,7 @@
       "output":{"shape":"DeleteScopeOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -220,6 +221,7 @@
       "output":{"shape":"GetScopeOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -447,6 +449,7 @@
       "output":{"shape":"UpdateScopeOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -507,7 +510,7 @@
         "remoteResources":{"shape":"MonitorRemoteResources"},
         "scopeArn":{"shape":"Arn"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UuidString",
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"}
@@ -546,7 +549,7 @@
       "members":{
         "targets":{"shape":"CreateScopeInputTargetsList"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UuidString",
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"}
@@ -1520,7 +1523,7 @@
         "remoteResourcesToAdd":{"shape":"MonitorRemoteResources"},
         "remoteResourcesToRemove":{"shape":"MonitorRemoteResources"},
         "clientToken":{
-          "shape":"String",
+          "shape":"UuidString",
           "idempotencyToken":true
         }
       }
@@ -1585,6 +1588,12 @@
         "scopeArn":{"shape":"Arn"},
         "tags":{"shape":"TagMap"}
       }
+    },
+    "UuidString":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "ValidationException":{
       "type":"structure",

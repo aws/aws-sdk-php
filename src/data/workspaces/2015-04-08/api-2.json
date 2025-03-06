@@ -944,6 +944,20 @@
         {"shape":"OperationNotSupportedException"}
       ]
     },
+    "ModifyEndpointEncryptionMode":{
+      "name":"ModifyEndpointEncryptionMode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyEndpointEncryptionModeRequest"},
+      "output":{"shape":"ModifyEndpointEncryptionModeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"}
+      ]
+    },
     "ModifySamlProperties":{
       "name":"ModifySamlProperties",
       "http":{
@@ -2955,6 +2969,13 @@
       "type":"string",
       "pattern":"^ami\\-([a-f0-9]{8}|[a-f0-9]{17})$"
     },
+    "EndpointEncryptionMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD_TLS",
+        "FIPS_VALIDATED"
+      ]
+    },
     "ErrorDetails":{
       "type":"structure",
       "members":{
@@ -3417,6 +3438,22 @@
       }
     },
     "ModifyClientPropertiesResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "ModifyEndpointEncryptionModeRequest":{
+      "type":"structure",
+      "required":[
+        "DirectoryId",
+        "EndpointEncryptionMode"
+      ],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "EndpointEncryptionMode":{"shape":"EndpointEncryptionMode"}
+      }
+    },
+    "ModifyEndpointEncryptionModeResponse":{
       "type":"structure",
       "members":{
       }
@@ -4560,6 +4597,7 @@
         "SelfservicePermissions":{"shape":"SelfservicePermissions"},
         "SamlProperties":{"shape":"SamlProperties"},
         "CertificateBasedAuthProperties":{"shape":"CertificateBasedAuthProperties"},
+        "EndpointEncryptionMode":{"shape":"EndpointEncryptionMode"},
         "MicrosoftEntraConfig":{"shape":"MicrosoftEntraConfig"},
         "WorkspaceDirectoryName":{"shape":"WorkspaceDirectoryName"},
         "WorkspaceDirectoryDescription":{"shape":"WorkspaceDirectoryDescription"},
