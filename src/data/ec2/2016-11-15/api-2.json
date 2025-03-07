@@ -6466,6 +6466,10 @@
           "shape":"String",
           "locationName":"carrierIp"
         },
+        "ServiceManaged":{
+          "shape":"ServiceManaged",
+          "locationName":"serviceManaged"
+        },
         "InstanceId":{
           "shape":"String",
           "locationName":"instanceId"
@@ -43743,6 +43747,13 @@
         "shape":"ServiceDetail",
         "locationName":"item"
       }
+    },
+    "ServiceManaged":{
+      "type":"string",
+      "enum":[
+        "alb",
+        "nlb"
+      ]
     },
     "ServiceNetworkArn":{"type":"string"},
     "ServiceState":{

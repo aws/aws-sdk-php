@@ -618,6 +618,14 @@
       "min":0,
       "pattern":"^[0-9a-zA-Z]+$"
     },
+    "AgentCollaboration":{
+      "type":"string",
+      "enum":[
+        "SUPERVISOR",
+        "SUPERVISOR_ROUTER",
+        "DISABLED"
+      ]
+    },
     "AgentCollaboratorInputPayload":{
       "type":"structure",
       "members":{
@@ -903,6 +911,53 @@
         "executionTimeout":{"shape":"Boolean"},
         "files":{"shape":"Files"}
       }
+    },
+    "CollaborationInstruction":{
+      "type":"string",
+      "max":4000,
+      "min":1,
+      "sensitive":true
+    },
+    "Collaborator":{
+      "type":"structure",
+      "required":[
+        "foundationModel",
+        "instruction"
+      ],
+      "members":{
+        "actionGroups":{"shape":"AgentActionGroups"},
+        "agentCollaboration":{"shape":"AgentCollaboration"},
+        "agentName":{"shape":"Name"},
+        "collaboratorConfigurations":{"shape":"CollaboratorConfigurations"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "guardrailConfiguration":{"shape":"GuardrailConfigurationWithArn"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "instruction":{"shape":"Instruction"},
+        "knowledgeBases":{"shape":"KnowledgeBases"},
+        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"}
+      }
+    },
+    "CollaboratorConfiguration":{
+      "type":"structure",
+      "required":[
+        "collaboratorInstruction",
+        "collaboratorName"
+      ],
+      "members":{
+        "agentAliasArn":{"shape":"AgentAliasArn"},
+        "collaboratorInstruction":{"shape":"CollaborationInstruction"},
+        "collaboratorName":{"shape":"Name"},
+        "relayConversationHistory":{"shape":"RelayConversationHistory"}
+      }
+    },
+    "CollaboratorConfigurations":{
+      "type":"list",
+      "member":{"shape":"CollaboratorConfiguration"}
+    },
+    "Collaborators":{
+      "type":"list",
+      "member":{"shape":"Collaborator"}
     },
     "ConfirmationState":{
       "type":"string",
@@ -2181,6 +2236,7 @@
     "InlineSessionState":{
       "type":"structure",
       "members":{
+        "conversationHistory":{"shape":"ConversationHistory"},
         "files":{"shape":"InputFiles"},
         "invocationId":{"shape":"String"},
         "promptSessionAttributes":{"shape":"PromptSessionAttributesMap"},
@@ -2464,7 +2520,10 @@
       ],
       "members":{
         "actionGroups":{"shape":"AgentActionGroups"},
+        "agentCollaboration":{"shape":"AgentCollaboration"},
         "bedrockModelConfigurations":{"shape":"InlineBedrockModelConfigurations"},
+        "collaboratorConfigurations":{"shape":"CollaboratorConfigurations"},
+        "collaborators":{"shape":"Collaborators"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "enableTrace":{"shape":"Boolean"},
         "endSession":{"shape":"Boolean"},
@@ -3202,6 +3261,7 @@
       "members":{
         "additionalModelRequestFields":{"shape":"Document"},
         "basePromptTemplate":{"shape":"BasePromptTemplate"},
+        "foundationModel":{"shape":"ModelIdentifier"},
         "inferenceConfiguration":{"shape":"InferenceConfiguration"},
         "parserMode":{"shape":"CreationMode"},
         "promptCreationMode":{"shape":"CreationMode"},
@@ -3368,6 +3428,13 @@
         "text":{"shape":"String"}
       },
       "sensitive":true
+    },
+    "RelayConversationHistory":{
+      "type":"string",
+      "enum":[
+        "TO_COLLABORATOR",
+        "DISABLED"
+      ]
     },
     "RepromptResponse":{
       "type":"structure",
@@ -4154,6 +4221,10 @@
       "max":25000000,
       "min":0
     },
+    "SyntheticTimestamp_date_time":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -4320,6 +4391,7 @@
         "agentVersion":{"shape":"AgentVersion"},
         "callerChain":{"shape":"CallerChain"},
         "collaboratorName":{"shape":"Name"},
+        "eventTime":{"shape":"SyntheticTimestamp_date_time"},
         "sessionId":{"shape":"SessionId"},
         "trace":{"shape":"Trace"}
       },

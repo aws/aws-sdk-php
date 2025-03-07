@@ -509,14 +509,14 @@
     "GraphName": {
       "base": null,
       "refs": {
-        "CreateGraphInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
-        "CreateGraphOutput$name": "<p>The graph name. For example: <code>my-graph-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
-        "CreateGraphUsingImportTaskInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "CreateGraphInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
+        "CreateGraphOutput$name": "<p>The graph name. For example: <code>my-graph-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
+        "CreateGraphUsingImportTaskInput$graphName": "<p>A name for the new Neptune Analytics graph to be created.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
         "DeleteGraphOutput$name": "<p>The name of the graph.</p>",
         "GetGraphOutput$name": "<p>The name of the graph.</p>",
         "GraphSummary$name": "<p>The name of the graph.</p>",
         "ResetGraphOutput$name": "<p>The name of the graph.</p>",
-        "RestoreGraphFromSnapshotInput$graphName": "<p>A name for the new Neptune Analytics graph to be created from the snapshot.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. </p>",
+        "RestoreGraphFromSnapshotInput$graphName": "<p>A name for the new Neptune Analytics graph to be created from the snapshot.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
         "RestoreGraphFromSnapshotOutput$name": "<p>The name of the graph.</p>",
         "UpdateGraphOutput$name": "<p>The name of the graph.</p>"
       }
@@ -874,17 +874,17 @@
     "ProvisionedMemory": {
       "base": null,
       "refs": {
-        "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 128</p>",
-        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
+        "CreateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Min = 16</p>",
+        "CreateGraphOutput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
         "CreateGraphUsingImportTaskInput$maxProvisionedMemory": "<p>The maximum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 1024, or the approved upper limit for your account.</p> <p> If both the minimum and maximum values are specified, the final <code>provisioned-memory</code> will be chosen per the actual size of your imported data. If neither value is specified, 128 m-NCUs are used.</p>",
-        "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 128</p>",
+        "CreateGraphUsingImportTaskInput$minProvisionedMemory": "<p>The minimum provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph. Default: 16</p>",
         "DeleteGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "GetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "GraphSummary$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
+        "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
         "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
-        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 128</p>",
+        "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
         "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
       }
     },
@@ -1025,11 +1025,11 @@
     "SnapshotName": {
       "base": null,
       "refs": {
-        "CreateGraphSnapshotInput$snapshotName": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
+        "CreateGraphSnapshotInput$snapshotName": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
         "CreateGraphSnapshotOutput$name": "<p>The name of the snapshot created.</p>",
-        "DeleteGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
-        "GetGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>",
-        "GraphSnapshotSummary$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens.</p>"
+        "DeleteGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
+        "GetGraphSnapshotOutput$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
+        "GraphSnapshotSummary$name": "<p>The snapshot name. For example: <code>my-snapshot-1</code>.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>"
       }
     },
     "SnapshotStatus": {

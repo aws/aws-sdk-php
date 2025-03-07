@@ -628,6 +628,21 @@
         {"shape":"OperationNotPermittedException"}
       ]
     },
+    "ModifyIpPools":{
+      "name":"ModifyIpPools",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpPoolsInput"},
+      "output":{
+        "shape":"ModifyIpPoolsOutput",
+        "resultWrapper":"ModifyIpPoolsResult"
+      },
+      "errors":[
+        {"shape":"LoadBalancerNotFoundException"}
+      ]
+    },
     "ModifyListener":{
       "name":"ModifyListener",
       "http":{
@@ -1301,7 +1316,8 @@
         "Type":{"shape":"LoadBalancerTypeEnum"},
         "IpAddressType":{"shape":"IpAddressType"},
         "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
-        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"},
+        "IpamPools":{"shape":"IpamPools"}
       }
     },
     "CreateLoadBalancerOutput":{
@@ -2070,6 +2086,17 @@
         "dualstack-without-public-ipv4"
       ]
     },
+    "IpamPoolId":{
+      "type":"string",
+      "max":1000,
+      "pattern":"^(ipam-pool-)[a-zA-Z0-9]+$"
+    },
+    "IpamPools":{
+      "type":"structure",
+      "members":{
+        "Ipv4IpamPoolId":{"shape":"IpamPoolId"}
+      }
+    },
     "IsDefault":{"type":"boolean"},
     "LastModifiedTime":{"type":"timestamp"},
     "Limit":{
@@ -2159,7 +2186,8 @@
         "IpAddressType":{"shape":"IpAddressType"},
         "CustomerOwnedIpv4Pool":{"shape":"CustomerOwnedIpv4Pool"},
         "EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic":{"shape":"EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic"},
-        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"}
+        "EnablePrefixForIpv6SourceNat":{"shape":"EnablePrefixForIpv6SourceNatEnum"},
+        "IpamPools":{"shape":"IpamPools"}
       }
     },
     "LoadBalancerAddress":{
@@ -2292,6 +2320,21 @@
         "DecreaseRequestsRemaining":{"shape":"DecreaseRequestsRemaining"},
         "MinimumLoadBalancerCapacity":{"shape":"MinimumLoadBalancerCapacity"},
         "CapacityReservationState":{"shape":"ZonalCapacityReservationStates"}
+      }
+    },
+    "ModifyIpPoolsInput":{
+      "type":"structure",
+      "required":["LoadBalancerArn"],
+      "members":{
+        "LoadBalancerArn":{"shape":"LoadBalancerArn"},
+        "IpamPools":{"shape":"IpamPools"},
+        "RemoveIpamPools":{"shape":"RemoveIpamPools"}
+      }
+    },
+    "ModifyIpPoolsOutput":{
+      "type":"structure",
+      "members":{
+        "IpamPools":{"shape":"IpamPools"}
       }
     },
     "ModifyListenerAttributesInput":{
@@ -2579,6 +2622,14 @@
       "type":"structure",
       "members":{
       }
+    },
+    "RemoveIpamPoolEnum":{
+      "type":"string",
+      "enum":["ipv4"]
+    },
+    "RemoveIpamPools":{
+      "type":"list",
+      "member":{"shape":"RemoveIpamPoolEnum"}
     },
     "RemoveListenerCertificatesInput":{
       "type":"structure",

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgent` - Introduces support for Neptune Analytics as a vector data store and adds Context Enrichment Configurations, enabling use cases such as GraphRAG.
+* `Aws\ElasticLoadBalancingv2` - This release adds support for assigning IP addresses to Application Load Balancers from VPC IP Address Manager pools.
+* `Aws\CloudFront` - Documentation updates for Amazon CloudFront.
+* `Aws\NeptuneGraph` - Several small updates to resolve customer requests.
+* `Aws\BedrockAgentRuntime` - Support Multi Agent Collaboration within Inline Agents
+* `Aws\EC2` - Add serviceManaged field to DescribeAddresses API response.
+
 ## 3.342.1 - 2025-03-06
 
 * `Aws\NetworkFlowMonitor` - This release contains 2 changes. 1: DeleteScope/GetScope/UpdateScope operations now return 404 instead of 500 when the resource does not exist. 2: Expected string format for clientToken fields of CreateMonitorInput/CreateScopeInput/UpdateMonitorInput have been updated to be an UUID based string.

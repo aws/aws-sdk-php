@@ -125,6 +125,7 @@
     "AgentActionGroups": {
       "base": null,
       "refs": {
+        "Collaborator$actionGroups": "<p> List of action groups with each action group defining tasks the inline collaborator agent needs to carry out. </p>",
         "InvokeInlineAgentRequest$actionGroups": "<p> A list of action groups with each action group defining the action the inline agent needs to carry out. </p>"
       }
     },
@@ -133,7 +134,8 @@
       "refs": {
         "AgentCollaboratorInvocationInput$agentCollaboratorAliasArn": "<p>The collaborator's alias ARN.</p>",
         "AgentCollaboratorInvocationOutput$agentCollaboratorAliasArn": "<p>The output's agent collaborator alias ARN.</p>",
-        "Caller$agentAliasArn": "<p>The caller's agent alias ARN.</p>"
+        "Caller$agentAliasArn": "<p>The caller's agent alias ARN.</p>",
+        "CollaboratorConfiguration$agentAliasArn": "<p> The Amazon Resource Name (ARN) of the inline collaborator agent. </p>"
       }
     },
     "AgentAliasId": {
@@ -143,6 +145,13 @@
         "GetAgentMemoryRequest$agentAliasId": "<p>The unique identifier of an alias of an agent.</p>",
         "InvokeAgentRequest$agentAliasId": "<p>The alias of the agent to use.</p>",
         "TracePart$agentAliasId": "<p>The unique identifier of the alias of the agent.</p>"
+      }
+    },
+    "AgentCollaboration": {
+      "base": null,
+      "refs": {
+        "Collaborator$agentCollaboration": "<p> Defines how the inline supervisor agent handles information across multiple collaborator agents to coordinate a final response. </p>",
+        "InvokeInlineAgentRequest$agentCollaboration": "<p> Defines how the inline collaborator agent handles information across multiple collaborator agents to coordinate a final response. The inline collaborator agent can also be the supervisor. </p>"
       }
     },
     "AgentCollaboratorInputPayload": {
@@ -410,6 +419,37 @@
         "Observation$codeInterpreterInvocationOutput": "<p>Contains the JSON-formatted string returned by the API invoked by the code interpreter.</p>"
       }
     },
+    "CollaborationInstruction": {
+      "base": null,
+      "refs": {
+        "CollaboratorConfiguration$collaboratorInstruction": "<p> Instructions that tell the inline collaborator agent what it should do and how it should interact with users. </p>"
+      }
+    },
+    "Collaborator": {
+      "base": "<p> List of inline collaborators. </p>",
+      "refs": {
+        "Collaborators$member": null
+      }
+    },
+    "CollaboratorConfiguration": {
+      "base": "<p> Settings of an inline collaborator agent. </p>",
+      "refs": {
+        "CollaboratorConfigurations$member": null
+      }
+    },
+    "CollaboratorConfigurations": {
+      "base": null,
+      "refs": {
+        "Collaborator$collaboratorConfigurations": "<p> Settings of the collaborator agent. </p>",
+        "InvokeInlineAgentRequest$collaboratorConfigurations": "<p> Settings for an inline agent collaborator called with <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeInlineAgent.html\">InvokeInlineAgent</a>. </p>"
+      }
+    },
+    "Collaborators": {
+      "base": null,
+      "refs": {
+        "InvokeInlineAgentRequest$collaborators": "<p> List of collaborator inline agents. </p>"
+      }
+    },
     "ConfirmationState": {
       "base": null,
       "refs": {
@@ -459,6 +499,7 @@
     "ConversationHistory": {
       "base": "<p>A conversation history.</p>",
       "refs": {
+        "InlineSessionState$conversationHistory": "<p> Contains the conversation history that persist across sessions. </p>",
         "SessionState$conversationHistory": "<p>The state's conversation history.</p>"
       }
     },
@@ -1077,6 +1118,7 @@
     "GuardrailConfigurationWithArn": {
       "base": "<p> The configuration details for the guardrail. </p>",
       "refs": {
+        "Collaborator$guardrailConfiguration": "<p> Details of the guardwrail associated with the inline collaborator. </p>",
         "InvokeInlineAgentRequest$guardrailConfiguration": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">guardrails</a> to assign to the inline agent. </p>"
       }
     },
@@ -1384,6 +1426,7 @@
     "Instruction": {
       "base": null,
       "refs": {
+        "Collaborator$instruction": "<p> Instruction that tell the inline collaborator agent what it should do and how it should interact with users. </p>",
         "InvokeInlineAgentRequest$instruction": "<p> The instructions that tell the inline agent what it should do and how it should interact with users. </p>"
       }
     },
@@ -1521,6 +1564,7 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "Collaborator$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the AWS KMS key that encrypts the inline collaborator. </p>",
         "CreateSessionRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to use to encrypt the session data. The user or role creating the session must have permission to use the key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>. </p>",
         "GetSessionResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service key used to encrypt the session data. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p>",
         "InvokeInlineAgentRequest$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to use to encrypt your inline agent. </p>",
@@ -1632,6 +1676,7 @@
     "KnowledgeBases": {
       "base": null,
       "refs": {
+        "Collaborator$knowledgeBases": "<p> Knowledge base associated with the inline collaborator agent. </p>",
         "InvokeInlineAgentRequest$knowledgeBases": "<p> Contains information of the knowledge bases to associate with. </p>"
       }
     },
@@ -1806,8 +1851,10 @@
     "ModelIdentifier": {
       "base": null,
       "refs": {
+        "Collaborator$foundationModel": "<p> The foundation model used by the inline collaborator agent. </p>",
         "InvokeInlineAgentRequest$foundationModel": "<p> The <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">model identifier (ID)</a> of the model to use for orchestration by the inline agent. For example, <code>meta.llama3-1-70b-instruct-v1:0</code>. </p>",
-        "ModelInvocationInput$foundationModel": "<p>The identifier of a foundation model.</p>"
+        "ModelInvocationInput$foundationModel": "<p>The identifier of a foundation model.</p>",
+        "PromptConfiguration$foundationModel": "<p> The foundation model to use. </p>"
       }
     },
     "ModelInvocationInput": {
@@ -1835,6 +1882,8 @@
       "base": null,
       "refs": {
         "ApiInvocationInput$collaboratorName": "<p>The agent collaborator's name.</p>",
+        "Collaborator$agentName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>collaboratorName</code>. </p>",
+        "CollaboratorConfiguration$collaboratorName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>agentName</code>. </p>",
         "FunctionInvocationInput$collaboratorName": "<p>The collaborator's name.</p>",
         "TracePart$collaboratorName": "<p>The part's collaborator name.</p>"
       }
@@ -2127,6 +2176,7 @@
     "PromptOverrideConfiguration": {
       "base": "<p>Contains configurations to override prompts in different parts of an agent sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>",
       "refs": {
+        "Collaborator$promptOverrideConfiguration": "<p> Contains configurations to override prompt templates in different parts of an inline collaborator sequence. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>. </p>",
         "InvokeInlineAgentRequest$promptOverrideConfiguration": "<p> Configurations for advanced prompts used to override the default prompts to enhance the accuracy of the inline agent. </p>"
       }
     },
@@ -2256,6 +2306,12 @@
       "base": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>",
       "refs": {
         "ReasoningContentBlock$reasoningText": "<p>Contains information about the reasoning that the model used to return the content in the content block.</p>"
+      }
+    },
+    "RelayConversationHistory": {
+      "base": null,
+      "refs": {
+        "CollaboratorConfiguration$relayConversationHistory": "<p> A relay conversation history for the inline collaborator agent. </p>"
       }
     },
     "RepromptResponse": {
@@ -2844,6 +2900,7 @@
     "SessionTTL": {
       "base": null,
       "refs": {
+        "Collaborator$idleSessionTTLInSeconds": "<p> The number of seconds for which the Amazon Bedrock keeps information about the user's conversation with the inline collaborator agent.</p> <p>A user interaction remains active for the amount of time specified. If no conversation occurs during this time, the session expires and Amazon Bedrock deletes any data provided before the timeout. </p>",
         "InvokeInlineAgentRequest$idleSessionTTLInSeconds": "<p> The number of seconds for which the inline agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session. </p> <p>A user interaction remains active for the amount of time specified. If no conversation occurs during this time, the session expires and the data provided before the timeout is deleted.</p>"
       }
     },
@@ -2975,6 +3032,12 @@
       "base": null,
       "refs": {
         "MemorySessionSummary$summaryText": "<p>The summarized text for this session.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "TracePart$eventTime": "<p> The time of the trace. </p>"
       }
     },
     "TagKey": {

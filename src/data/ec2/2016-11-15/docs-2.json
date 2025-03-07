@@ -20093,6 +20093,12 @@
         "DescribeVpcEndpointServicesResult$ServiceDetails": "<p>Information about the service.</p>"
       }
     },
+    "ServiceManaged": {
+      "base": null,
+      "refs": {
+        "Address$ServiceManaged": "<p>The service that manages the elastic IP address.</p> <note> <p>The only option supported today is <code>alb</code>.</p> </note>"
+      }
+    },
     "ServiceNetworkArn": {
       "base": null,
       "refs": {
@@ -21072,7 +21078,7 @@
         "CreateRouteTableRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateRouteTableResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
         "CreateSecurityGroupRequest$Description": "<p>A description for the security group.</p> <p>Constraints: Up to 255 characters in length</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
-        "CreateSecurityGroupRequest$GroupName": "<p>The name of the security group.</p> <p>Constraints: Up to 255 characters in length. Cannot start with <code>sg-</code>.</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
+        "CreateSecurityGroupRequest$GroupName": "<p>The name of the security group. Names are case-insensitive and must be unique within the VPC.</p> <p>Constraints: Up to 255 characters in length. Can't start with <code>sg-</code>.</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
         "CreateSecurityGroupResult$GroupId": "<p>The ID of the security group.</p>",
         "CreateSecurityGroupResult$SecurityGroupArn": "<p>The security group ARN.</p>",
         "CreateSnapshotRequest$Description": "<p>A description for the snapshot.</p>",

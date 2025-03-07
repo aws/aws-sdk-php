@@ -414,10 +414,17 @@
         "ParsingConfiguration$bedrockFoundationModelConfiguration": "<p>If you specify <code>BEDROCK_FOUNDATION_MODEL</code> as the parsing strategy for ingesting your data source, use this object to modify configurations for using a foundation model to parse documents.</p>"
       }
     },
+    "BedrockFoundationModelContextEnrichmentConfiguration": {
+      "base": "<p>Context enrichment configuration is used to provide additional context to the RAG application using Amazon Bedrock foundation models.</p>",
+      "refs": {
+        "ContextEnrichmentConfiguration$bedrockFoundationModelConfiguration": "<p>The configuration of the Amazon Bedrock foundation model used for context enrichment.</p>"
+      }
+    },
     "BedrockModelArn": {
       "base": null,
       "refs": {
-        "BedrockFoundationModelConfiguration$modelArn": "<p>The ARN of the foundation model to use for parsing.</p>"
+        "BedrockFoundationModelConfiguration$modelArn": "<p>The ARN of the foundation model to use for parsing.</p>",
+        "BedrockFoundationModelContextEnrichmentConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model used for context enrichment.</p>"
       }
     },
     "Boolean": {
@@ -595,6 +602,18 @@
       "refs": {
         "DocumentContent$dataSourceType": "<p>The type of data source that is connected to the knowledge base to which to ingest this document.</p>",
         "DocumentIdentifier$dataSourceType": "<p>The type of data source connected to the knowledge base that contains the document.</p>"
+      }
+    },
+    "ContextEnrichmentConfiguration": {
+      "base": "<p>Context enrichment configuration is used to provide additional context to the RAG application.</p>",
+      "refs": {
+        "VectorIngestionConfiguration$contextEnrichmentConfiguration": "<p>The context enrichment configuration used for ingestion of the data into the vector store.</p>"
+      }
+    },
+    "ContextEnrichmentType": {
+      "base": null,
+      "refs": {
+        "ContextEnrichmentConfiguration$type": "<p>The method used for context enrichment. It must be Amazon Bedrock foundation models.</p>"
       }
     },
     "ConversationRole": {
@@ -1199,6 +1218,18 @@
         "MemoryConfiguration$enabledMemoryTypes": "<p>The type of memory that is stored. </p>"
       }
     },
+    "EnrichmentStrategyConfiguration": {
+      "base": "<p>The strategy used for performing context enrichment.</p>",
+      "refs": {
+        "BedrockFoundationModelContextEnrichmentConfiguration$enrichmentStrategyConfiguration": "<p>The enrichment stategy used to provide additional context. For example, Neptune GraphRAG uses Amazon Bedrock foundation models to perform chunk entity extraction.</p>"
+      }
+    },
+    "EnrichmentStrategyMethod": {
+      "base": null,
+      "refs": {
+        "EnrichmentStrategyConfiguration$method": "<p>The method used for the context enrichment strategy.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
@@ -1229,6 +1260,8 @@
         "MongoDbAtlasFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "MongoDbAtlasFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "MongoDbAtlasFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
+        "NeptuneAnalyticsFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
+        "NeptuneAnalyticsFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "OpenSearchServerlessFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "OpenSearchServerlessFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "OpenSearchServerlessFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
@@ -1855,6 +1888,12 @@
     "GetPromptResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GraphArn": {
+      "base": "<p>ARN for Neptune Analytics graph database</p>",
+      "refs": {
+        "NeptuneAnalyticsConfiguration$graphArn": "<p>The Amazon Resource Name (ARN) of the Neptune Analytics vector store.</p>"
       }
     },
     "GuardrailConfiguration": {
@@ -2785,6 +2824,18 @@
       "base": null,
       "refs": {
         "CuratedQuery$naturalLanguage": "<p>An example natural language query.</p>"
+      }
+    },
+    "NeptuneAnalyticsConfiguration": {
+      "base": "<p>Contains details about the storage configuration of the knowledge base in Amazon Neptune Analytics. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-neptune.html\">Create a vector index in Amazon Neptune Analytics</a>.</p>",
+      "refs": {
+        "StorageConfiguration$neptuneAnalyticsConfiguration": "<p>Contains details about the Neptune Analytics configuration of the knowledge base in Amazon Neptune. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-neptune.html\">Create a vector index in Amazon Neptune Analytics.</a>.</p>"
+      }
+    },
+    "NeptuneAnalyticsFieldMapping": {
+      "base": "<p>Contains the names of the fields to which to map information about the vector store.</p>",
+      "refs": {
+        "NeptuneAnalyticsConfiguration$fieldMapping": "<p>Contains the names of the fields to which to map information about the vector store.</p>"
       }
     },
     "NextToken": {
