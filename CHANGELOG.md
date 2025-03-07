@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.2 - 2025-03-07
 
 * `Aws\BedrockAgent` - Introduces support for Neptune Analytics as a vector data store and adds Context Enrichment Configurations, enabling use cases such as GraphRAG.
 * `Aws\ElasticLoadBalancingv2` - This release adds support for assigning IP addresses to Application Load Balancers from VPC IP Address Manager pools.
