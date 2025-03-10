@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgent` - Add support for computer use tools
+* `Aws\MediaLive` - Adds defaultFontSize and defaultLineHeight as options in the EbuTtDDestinationSettings within the caption descriptions for an output stream.
+* `Aws\Connect` - Add support for contact transfers in external voice systems.
+* `Aws\BedrockAgentRuntime` - Add support for computer use tools
+* `Aws\PcaConnectorAd` - PrivateCA Connector for Active Directory now supports dual stack endpoints. This release adds the IpAddressType option to the VpcInformation on a Connector which determines whether the endpoint supports IPv4 only or IPv4 and IPv6 traffic.
+* `Aws\TimestreamInfluxDB` - This release updates the default value of pprof-disabled from false to true.
+* `Aws\SecurityHub` - This release adds new StandardsControlsUpdatable field to the StandardsSubscription resource
+* `Aws\CostExplorer` - Releasing minor partition endpoint updates.
+
 ## 3.342.2 - 2025-03-07
 
 * `Aws\BedrockAgent` - Introduces support for Neptune Analytics as a vector data store and adds Context Enrichment Configurations, enabling use cases such as GraphRAG.

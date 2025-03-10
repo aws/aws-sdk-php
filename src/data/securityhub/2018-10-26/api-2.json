@@ -10317,6 +10317,13 @@
       "type":"list",
       "member":{"shape":"StandardsControl"}
     },
+    "StandardsControlsUpdatable":{
+      "type":"string",
+      "enum":[
+        "READY_FOR_UPDATES",
+        "NOT_READY_FOR_UPDATES"
+      ]
+    },
     "StandardsInputParameterMap":{
       "type":"map",
       "key":{"shape":"NonEmptyString"},
@@ -10359,6 +10366,7 @@
         "StandardsArn":{"shape":"NonEmptyString"},
         "StandardsInput":{"shape":"StandardsInputParameterMap"},
         "StandardsStatus":{"shape":"StandardsStatus"},
+        "StandardsControlsUpdatable":{"shape":"StandardsControlsUpdatable"},
         "StandardsStatusReason":{"shape":"StandardsStatusReason"}
       }
     },
@@ -10456,6 +10464,7 @@
       "type":"string",
       "enum":[
         "NO_AVAILABLE_CONFIGURATION_RECORDER",
+        "MAXIMUM_NUMBER_OF_CONFIG_RULES_EXCEEDED",
         "INTERNAL_ERROR"
       ]
     },

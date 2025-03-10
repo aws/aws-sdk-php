@@ -563,8 +563,26 @@
       "type":"string",
       "enum":[
         "AMAZON.UserInput",
-        "AMAZON.CodeInterpreter"
+        "AMAZON.CodeInterpreter",
+        "ANTHROPIC.Computer",
+        "ANTHROPIC.Bash",
+        "ANTHROPIC.TextEditor"
       ]
+    },
+    "ActionGroupSignatureParams":{
+      "type":"map",
+      "key":{"shape":"ActionGroupSignatureParamsKeyString"},
+      "value":{"shape":"ActionGroupSignatureParamsValueString"}
+    },
+    "ActionGroupSignatureParamsKeyString":{
+      "type":"string",
+      "max":100,
+      "min":0
+    },
+    "ActionGroupSignatureParamsValueString":{
+      "type":"string",
+      "max":100,
+      "min":0
     },
     "ActionInvocationType":{
       "type":"string",
@@ -599,7 +617,8 @@
         "apiSchema":{"shape":"APISchema"},
         "description":{"shape":"ResourceDescription"},
         "functionSchema":{"shape":"FunctionSchema"},
-        "parentActionGroupSignature":{"shape":"ActionGroupSignature"}
+        "parentActionGroupSignature":{"shape":"ActionGroupSignature"},
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"}
       }
     },
     "AgentActionGroups":{
@@ -992,7 +1011,8 @@
     "ContentBody":{
       "type":"structure",
       "members":{
-        "body":{"shape":"String"}
+        "body":{"shape":"String"},
+        "images":{"shape":"ImageInputs"}
       }
     },
     "ContentMap":{
@@ -2134,6 +2154,41 @@
         "gif",
         "webp"
       ]
+    },
+    "ImageInput":{
+      "type":"structure",
+      "required":[
+        "format",
+        "source"
+      ],
+      "members":{
+        "format":{"shape":"ImageInputFormat"},
+        "source":{"shape":"ImageInputSource"}
+      }
+    },
+    "ImageInputFormat":{
+      "type":"string",
+      "enum":[
+        "png",
+        "jpeg",
+        "gif",
+        "webp"
+      ]
+    },
+    "ImageInputSource":{
+      "type":"structure",
+      "members":{
+        "bytes":{"shape":"ImageInputSourceBytesBlob"}
+      },
+      "union":true
+    },
+    "ImageInputSourceBytesBlob":{
+      "type":"blob",
+      "min":1
+    },
+    "ImageInputs":{
+      "type":"list",
+      "member":{"shape":"ImageInput"}
     },
     "ImageSource":{
       "type":"structure",

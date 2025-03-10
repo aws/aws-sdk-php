@@ -1032,13 +1032,13 @@
     "EbuTtDDestinationStyleControl": {
       "base": "Ebu Tt DDestination Style Control",
       "refs": {
-        "EbuTtDDestinationSettings$StyleControl": "Specifies the style information (font color, font position, and so on) to include in the font data that is attached to the EBU-TT captions.\n\n- include: Take the style information (font color, font position, and so on) from the source captions and include that information in the font data attached to the EBU-TT captions. This option is valid only if the source captions are Embedded or Teletext.\n- exclude: In the font data attached to the EBU-TT captions, set the font family to \"monospaced\". Do not include any other style information."
+        "EbuTtDDestinationSettings$StyleControl": "Specifies the style information to include in the font data that is attached to the EBU-TT captions. INCLUDE: Take the style information from the source captions and include that information in the font data attached to the EBU-TT captions. This option is valid only if the source captions are Embedded or Teletext. EXCLUDE: Set the font family to monospaced. Do not include any other style information."
       }
     },
     "EbuTtDFillLineGapControl": {
       "base": "Ebu Tt DFill Line Gap Control",
       "refs": {
-        "EbuTtDDestinationSettings$FillLineGap": "Specifies how to handle the gap between the lines (in multi-line captions).\n\n- enabled: Fill with the captions background color (as specified in the input captions).\n- disabled: Leave the gap unfilled."
+        "EbuTtDDestinationSettings$FillLineGap": "Specifies how to handle the gap between the lines (in multi-line captions). ENABLED: Fill with the captions background color (as specified in the input captions). DISABLED: Leave the gap unfilled"
       }
     },
     "EmbeddedConvert608To708": {
@@ -4878,7 +4878,7 @@
         "CreateMultiplexProgram$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.",
         "CreatePartnerInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.",
         "DvbSubDestinationSettings$FontSize": "When set to auto fontSize will scale depending on the size of the output.  Giving a positive integer will specify the exact font size in points.  All burn-in and DVB-Sub font settings must match.",
-        "EbuTtDDestinationSettings$FontFamily": "Specifies the font family to include in the font data attached to the EBU-TT captions. Valid only if styleControl is set to include. If you leave this field empty, the font family is set to \"monospaced\". (If styleControl is set to exclude, the font family is always set to \"monospaced\".)\n\nYou specify only the font family. All other style information (color, bold, position and so on) is copied from the input captions. The size is always set to 100% to allow the downstream player to choose the size.\n\n- Enter a list of font families, as a comma-separated list of font names, in order of preference. The name can be a font family (such as \u201cArial\u201d), or a generic font family (such as \u201cserif\u201d), or \u201cdefault\u201d (to let the downstream player choose the font).\n- Leave blank to set the family to \u201cmonospace\u201d.",
+        "EbuTtDDestinationSettings$FontFamily": "Specifies the font family to include in the font data attached to the EBU-TT captions. Valid only if style_control is set to include. (If style_control is set to exclude, the font family is always set to monospaced.) Enter a list of font families, as a comma-separated list of font names, in order of preference. The name can be a font family (such as Arial), or a generic font family (such as serif), or default (to let the downstream player choose the font). Or leave blank to set the family to monospace. Note that you can specify only the font family. All other style information (color, bold, position and so on) is copied from the input captions. The size is always set to 100% to allow the downstream player to choose the size.",
         "EpochLockingSettings$CustomEpoch": "Optional. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.",
         "EpochLockingSettings$JamSyncTime": "Optional. Enter a time for the jam sync. The default is midnight UTC. When epoch locking is enabled, MediaLive performs a daily jam sync on every output encode to ensure timecodes don\u2019t diverge from the wall clock. The jam sync applies only to encodes with frame rate of 29.97 or 59.94 FPS. To override, enter a time in HH:MM:SS in UTC. Always set the MM:SS portion to 00:00.",
         "Esam$PasswordParam": "Reference to an AWS parameter store name from which the password can be retrieved if credentials are required to access the POIS endpoint.  AWS Parameter store format: \"ssm://<parameter name>\"",
@@ -6937,6 +6937,18 @@
         "CreateEventBridgeRuleTemplateGroupRequestContent$RequestId": "An ID that you assign to a create request. This ID ensures idempotency when creating resources.",
         "CreateEventBridgeRuleTemplateRequestContent$RequestId": "An ID that you assign to a create request. This ID ensures idempotency when creating resources.",
         "CreateSignalMapRequestContent$RequestId": "An ID that you assign to a create request. This ID ensures idempotency when creating resources."
+      }
+    },
+    "__integerMin1Max800": {
+      "base": null,
+      "refs": {
+        "EbuTtDDestinationSettings$DefaultFontSize": "Specifies the default font size as a percentage of the computed cell size. Valid only if the defaultLineHeight is also set. If you leave this field empty, the default font size is 80% of the cell size."
+      }
+    },
+    "__integerMin80Max800": {
+      "base": null,
+      "refs": {
+        "EbuTtDDestinationSettings$DefaultLineHeight": "Specifies the default line height  as a percentage relative to the font size. Valid only if the defaultFontSize is also set. This field should be > 100 (so the font can fit into a line) If you leave this field empty, the default line height is 120% of the font size."
       }
     }
   },

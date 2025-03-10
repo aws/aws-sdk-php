@@ -1366,8 +1366,26 @@
       "type":"string",
       "enum":[
         "AMAZON.UserInput",
-        "AMAZON.CodeInterpreter"
+        "AMAZON.CodeInterpreter",
+        "ANTHROPIC.Computer",
+        "ANTHROPIC.Bash",
+        "ANTHROPIC.TextEditor"
       ]
+    },
+    "ActionGroupSignatureParams":{
+      "type":"map",
+      "key":{"shape":"ActionGroupSignatureParamsKeyString"},
+      "value":{"shape":"ActionGroupSignatureParamsValueString"}
+    },
+    "ActionGroupSignatureParamsKeyString":{
+      "type":"string",
+      "max":100,
+      "min":0
+    },
+    "ActionGroupSignatureParamsValueString":{
+      "type":"string",
+      "max":100,
+      "min":0
     },
     "ActionGroupState":{
       "type":"string",
@@ -1460,6 +1478,7 @@
         "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
         "functionSchema":{"shape":"FunctionSchema"},
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"},
         "parentActionSignature":{"shape":"ActionGroupSignature"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
@@ -2166,7 +2185,8 @@
         },
         "description":{"shape":"Description"},
         "functionSchema":{"shape":"FunctionSchema"},
-        "parentActionGroupSignature":{"shape":"ActionGroupSignature"}
+        "parentActionGroupSignature":{"shape":"ActionGroupSignature"},
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"}
       }
     },
     "CreateAgentActionGroupResponse":{
@@ -6972,7 +6992,8 @@
         "apiSchema":{"shape":"APISchema"},
         "description":{"shape":"Description"},
         "functionSchema":{"shape":"FunctionSchema"},
-        "parentActionGroupSignature":{"shape":"ActionGroupSignature"}
+        "parentActionGroupSignature":{"shape":"ActionGroupSignature"},
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"}
       }
     },
     "UpdateAgentActionGroupResponse":{

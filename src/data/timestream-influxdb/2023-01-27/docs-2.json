@@ -73,7 +73,7 @@
         "InfluxDBv2Parameters$fluxLogEnabled": "<p>Include option to show detailed logs for Flux queries.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$noTasks": "<p>Disable the task scheduler. If problematic tasks prevent InfluxDB from starting, use this option to start InfluxDB without scheduling or executing tasks.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$metricsDisabled": "<p>Disable the HTTP /metrics endpoint which exposes <a href=\"https://docs.influxdata.com/influxdb/v2/reference/internals/metrics/\">internal InfluxDB metrics</a>.</p> <p>Default: false</p>",
-        "InfluxDBv2Parameters$pprofDisabled": "<p>Disable the /debug/pprof HTTP endpoint. This endpoint provides runtime profiling data and can be helpful when debugging.</p> <p>Default: false</p>",
+        "InfluxDBv2Parameters$pprofDisabled": "<p>Disable the /debug/pprof HTTP endpoint. This endpoint provides runtime profiling data and can be helpful when debugging.</p> <p>Default: true</p>",
         "InfluxDBv2Parameters$sessionRenewDisabled": "<p>Disables automatically extending a user’s session TTL on each request. By default, every request sets the session’s expiration time to five minutes from now. When disabled, sessions expire after the specified <a href=\"https://docs.influxdata.com/influxdb/v2/reference/config-options/#session-length\">session length</a> and the user is redirected to the login page, even if recently active.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$storageNoValidateFieldSize": "<p>Skip field size validation on incoming write requests.</p> <p>Default: false</p>",
         "InfluxDBv2Parameters$uiDisabled": "<p>Disable the InfluxDB user interface (UI). The UI is enabled by default.</p> <p>Default: false</p>",
@@ -220,10 +220,10 @@
         "CreateDbInstanceInput$name": "<p>The name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands. This name will also be a prefix included in the endpoint. DB instance names must be unique per customer and per region.</p>",
         "CreateDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "DbInstanceForClusterSummary$name": "<p>A service-generated name for the DB instance based on the customer-supplied name for the DB cluster.</p>",
-        "DbInstanceSummary$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and Amazon Web Services CLI commands.</p>",
+        "DbInstanceSummary$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "DeleteDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
         "GetDbInstanceOutput$name": "<p>The customer-supplied name that uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>",
-        "UpdateDbInstanceOutput$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and Amazon Web Services CLI commands.</p>"
+        "UpdateDbInstanceOutput$name": "<p>This customer-supplied name uniquely identifies the DB instance when interacting with the Amazon Timestream for InfluxDB API and CLI commands.</p>"
       }
     },
     "DbInstanceSummary": {
@@ -665,8 +665,8 @@
     "Password": {
       "base": null,
       "refs": {
-        "CreateDbClusterInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a secret created in Amazon Web Services Secrets Manager in your account.</p>",
-        "CreateDbInstanceInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a Secret created in Amazon Web Services SecretManager in your account.</p>"
+        "CreateDbClusterInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a secret created in Secrets Manager in your account.</p>",
+        "CreateDbInstanceInput$password": "<p>The password of the initial admin user created in InfluxDB. This password will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a Secret created in Secrets Manager in your account.</p>"
       }
     },
     "Port": {
@@ -744,7 +744,7 @@
         "CreateDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "CreateDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "CreateDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
-        "CreateDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "CreateDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "CreateDbParameterGroupOutput$description": "<p>The description of the DB parameter group.</p>",
         "DbClusterSummary$endpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for write and read operations.</p>",
         "DbClusterSummary$readerEndpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for read-only operations.</p>",
@@ -754,14 +754,14 @@
         "DeleteDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "DeleteDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "DeleteDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
-        "DeleteDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "DeleteDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "GetDbClusterOutput$endpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for write and read operations.</p>",
         "GetDbClusterOutput$readerEndpoint": "<p>The endpoint used to connect to the Timestream for InfluxDB cluster for read-only operations.</p>",
-        "GetDbClusterOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "GetDbClusterOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "GetDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "GetDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "GetDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
-        "GetDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "GetDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "GetDbParameterGroupOutput$description": "<p>A description of the DB parameter group.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
@@ -772,7 +772,7 @@
         "UpdateDbInstanceOutput$endpoint": "<p>The endpoint used to connect to InfluxDB. The default InfluxDB port is 8086.</p>",
         "UpdateDbInstanceOutput$availabilityZone": "<p>The Availability Zone in which the DB instance resides.</p>",
         "UpdateDbInstanceOutput$secondaryAvailabilityZone": "<p>The Availability Zone in which the standby instance is located when deploying with a MultiAZ standby instance.</p>",
-        "UpdateDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
+        "UpdateDbInstanceOutput$influxAuthParametersSecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret containing the initial InfluxDB authorization parameters. The secret value is a JSON formatted key-value pair holding InfluxDB authorization values: organization, bucket, username, and password.</p>",
         "ValidationException$message": null
       }
     },
@@ -841,7 +841,7 @@
     "Username": {
       "base": null,
       "refs": {
-        "CreateDbClusterInput$username": "<p>The username of the initial admin user created in InfluxDB. Must start with a letter and can't end with a hyphen or contain two consecutive hyphens. For example, my-user1. This username will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a secret created in Amazon Web Services Secrets Manager in your account.</p>",
+        "CreateDbClusterInput$username": "<p>The username of the initial admin user created in InfluxDB. Must start with a letter and can't end with a hyphen or contain two consecutive hyphens. For example, my-user1. This username will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a secret created in Secrets Manager in your account.</p>",
         "CreateDbInstanceInput$username": "<p>The username of the initial admin user created in InfluxDB. Must start with a letter and can't end with a hyphen or contain two consecutive hyphens. For example, my-user1. This username will allow you to access the InfluxDB UI to perform various administrative tasks and also use the InfluxDB CLI to create an operator token. These attributes will be stored in a Secret created in Amazon Secrets Manager in your account.</p>"
       }
     },
