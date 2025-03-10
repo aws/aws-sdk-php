@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.3 - 2025-03-10
 
 * `Aws\BedrockAgent` - Add support for computer use tools
 * `Aws\MediaLive` - Adds defaultFontSize and defaultLineHeight as options in the EbuTtDDestinationSettings within the caption descriptions for an output stream.
