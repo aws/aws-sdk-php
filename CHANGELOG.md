@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds the GroupLongName field to the response of the DescribeAvailabilityZones API.
+* `Aws\ECR` - This release adds Amazon ECR to Amazon ECR pull through cache rules support.
+* `Aws\ECS` - This is a documentation only update for Amazon ECS to address various tickets.
+* `Aws\Inspector2` - Adding componentArn to network reachability details
+* `Aws\MediaLive` - Add an enum option DISABLED for Output Locking Mode under Global Configuration.
+
 ## 3.342.3 - 2025-03-10
 
 * `Aws\BedrockAgent` - Add support for computer use tools
