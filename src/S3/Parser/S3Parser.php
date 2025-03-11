@@ -10,8 +10,6 @@ use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
-use GuzzleHttp\Psr7\NoSeekStream;
-use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
