@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.4 - 2025-03-11
 
 * `Aws\EC2` - This release adds the GroupLongName field to the response of the DescribeAvailabilityZones API.
 * `Aws\ECR` - This release adds Amazon ECR to Amazon ECR pull through cache rules support.
