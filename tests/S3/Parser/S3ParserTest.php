@@ -260,7 +260,8 @@ EOXML;
     public function testValidate200ErrorValidationJustInSeekableStreams(
         StreamInterface $stream,
         bool $expectValidation
-    ): void {
+    ): void
+    {
         if ($expectValidation) {
             $this->expectException(AwsException::class);
             $this->expectExceptionMessage(
