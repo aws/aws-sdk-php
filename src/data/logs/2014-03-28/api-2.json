@@ -1660,7 +1660,7 @@
         "detectorName":{"shape":"DetectorName"},
         "evaluationFrequency":{"shape":"EvaluationFrequency"},
         "filterPattern":{"shape":"FilterPattern"},
-        "kmsKeyId":{"shape":"KmsKeyId"},
+        "kmsKeyId":{"shape":"DetectorKmsKeyArn"},
         "anomalyVisibilityTime":{"shape":"AnomalyVisibilityTime"},
         "tags":{"shape":"Tags"}
       }
@@ -2319,6 +2319,11 @@
     "Destinations":{
       "type":"list",
       "member":{"shape":"Destination"}
+    },
+    "DetectorKmsKeyArn":{
+      "type":"string",
+      "max":256,
+      "pattern":"^arn:aws[a-z\\-]*:kms:[-a-z0-9]*:[0-9]*:key/[-a-z0-9]*$"
     },
     "DetectorName":{
       "type":"string",

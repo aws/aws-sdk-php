@@ -12004,7 +12004,10 @@
       ],
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
         "LaunchTemplateName":{"shape":"LaunchTemplateName"},
         "VersionDescription":{"shape":"VersionDescription"},
         "LaunchTemplateData":{"shape":"RequestLaunchTemplateData"},
@@ -12033,7 +12036,10 @@
       "required":["LaunchTemplateData"],
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
         "LaunchTemplateId":{"shape":"LaunchTemplateId"},
         "LaunchTemplateName":{"shape":"LaunchTemplateName"},
         "SourceVersion":{"shape":"String"},
@@ -35613,7 +35619,10 @@
       "type":"structure",
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "ClientToken":{"shape":"String"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
         "LaunchTemplateId":{"shape":"LaunchTemplateId"},
         "LaunchTemplateName":{"shape":"LaunchTemplateName"},
         "DefaultVersion":{

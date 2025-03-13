@@ -422,6 +422,44 @@
       ],
       "idempotent":true
     },
+    "ResetChannelState":{
+      "name":"ResetChannelState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/reset",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetChannelStateRequest"},
+      "output":{"shape":"ResetChannelStateResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "ResetOriginEndpointState":{
+      "name":"ResetOriginEndpointState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/reset",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetOriginEndpointStateRequest"},
+      "output":{"shape":"ResetOriginEndpointStateResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -870,7 +908,8 @@
         "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "CreateHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -898,7 +937,8 @@
         "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -1372,6 +1412,7 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
+        "ResetAt":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "IngestEndpoints":{"shape":"IngestEndpointList"},
         "InputType":{"shape":"InputType"},
@@ -1484,7 +1525,8 @@
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
-        "StartTag":{"shape":"StartTag"}
+        "StartTag":{"shape":"StartTag"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "GetHlsManifests":{
@@ -1505,7 +1547,8 @@
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
         "FilterConfiguration":{"shape":"FilterConfiguration"},
-        "StartTag":{"shape":"StartTag"}
+        "StartTag":{"shape":"StartTag"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "GetLowLatencyHlsManifests":{
@@ -1598,6 +1641,7 @@
         "Segment":{"shape":"Segment"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
+        "ResetAt":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
@@ -2086,6 +2130,82 @@
     "PutOriginEndpointPolicyResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "ResetChannelStateRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        }
+      }
+    },
+    "ResetChannelStateResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "Arn",
+        "ResetAt"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"String"},
+        "ChannelName":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "ResetAt":{"shape":"Timestamp"}
+      }
+    },
+    "ResetOriginEndpointStateRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"OriginEndpointName"
+        }
+      }
+    },
+    "ResetOriginEndpointStateResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "Arn",
+        "ResetAt"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Arn":{"shape":"String"},
+        "ResetAt":{"shape":"Timestamp"}
       }
     },
     "ResourceDescription":{

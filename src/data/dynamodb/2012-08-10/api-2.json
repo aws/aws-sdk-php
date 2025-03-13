@@ -43,6 +43,9 @@
         {"shape":"InternalServerError"}
       ],
       "endpointdiscovery":{
+      },
+      "operationContextParams":{
+        "ResourceArnList":{"path":"keys(RequestItems)"}
       }
     },
     "BatchWriteItem":{
@@ -61,6 +64,9 @@
         {"shape":"InternalServerError"}
       ],
       "endpointdiscovery":{
+      },
+      "operationContextParams":{
+        "ResourceArnList":{"path":"keys(RequestItems)"}
       }
     },
     "CreateBackup":{
@@ -502,7 +508,10 @@
         {"shape":"ResourceInUseException"},
         {"shape":"LimitExceededException"},
         {"shape":"ImportConflictException"}
-      ]
+      ],
+      "operationContextParams":{
+        "ResourceArn":{"path":"TableCreationParameters.TableName"}
+      }
     },
     "ListBackups":{
       "name":"ListBackups",
@@ -743,6 +752,9 @@
         {"shape":"InternalServerError"}
       ],
       "endpointdiscovery":{
+      },
+      "operationContextParams":{
+        "ResourceArnList":{"path":"TransactItems[*].Get.TableName"}
       }
     },
     "TransactWriteItems":{
@@ -1512,7 +1524,10 @@
         "BackupName"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "BackupName":{"shape":"BackupName"}
       }
     },
@@ -1545,7 +1560,10 @@
         "ReplicationGroup"
       ],
       "members":{
-        "GlobalTableName":{"shape":"TableName"},
+        "GlobalTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "ReplicationGroup":{"shape":"ReplicaList"}
       }
     },
@@ -1583,7 +1601,10 @@
       ],
       "members":{
         "AttributeDefinitions":{"shape":"AttributeDefinitions"},
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "KeySchema":{"shape":"KeySchema"},
         "LocalSecondaryIndexes":{"shape":"LocalSecondaryIndexList"},
         "GlobalSecondaryIndexes":{"shape":"GlobalSecondaryIndexList"},
@@ -1650,7 +1671,10 @@
       "type":"structure",
       "required":["BackupArn"],
       "members":{
-        "BackupArn":{"shape":"BackupArn"}
+        "BackupArn":{
+          "shape":"BackupArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DeleteBackupOutput":{
@@ -1673,7 +1697,10 @@
         "Key"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Key":{"shape":"Key"},
         "Expected":{"shape":"ExpectedAttributeMap"},
         "ConditionalOperator":{"shape":"ConditionalOperator"},
@@ -1719,7 +1746,10 @@
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"},
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "ExpectedRevisionId":{"shape":"PolicyRevisionId"}
       }
     },
@@ -1733,7 +1763,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DeleteTableOutput":{
@@ -1747,7 +1780,10 @@
       "type":"structure",
       "required":["BackupArn"],
       "members":{
-        "BackupArn":{"shape":"BackupArn"}
+        "BackupArn":{
+          "shape":"BackupArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeBackupOutput":{
@@ -1760,7 +1796,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeContinuousBackupsOutput":{
@@ -1773,7 +1812,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "IndexName":{"shape":"IndexName"}
       }
     },
@@ -1804,7 +1846,10 @@
       "type":"structure",
       "required":["ExportArn"],
       "members":{
-        "ExportArn":{"shape":"ExportArn"}
+        "ExportArn":{
+          "shape":"ExportArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeExportOutput":{
@@ -1817,7 +1862,10 @@
       "type":"structure",
       "required":["GlobalTableName"],
       "members":{
-        "GlobalTableName":{"shape":"TableName"}
+        "GlobalTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeGlobalTableOutput":{
@@ -1830,7 +1878,10 @@
       "type":"structure",
       "required":["GlobalTableName"],
       "members":{
-        "GlobalTableName":{"shape":"TableName"}
+        "GlobalTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeGlobalTableSettingsOutput":{
@@ -1844,7 +1895,10 @@
       "type":"structure",
       "required":["ImportArn"],
       "members":{
-        "ImportArn":{"shape":"ImportArn"}
+        "ImportArn":{
+          "shape":"ImportArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeImportOutput":{
@@ -1858,7 +1912,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeKinesisStreamingDestinationOutput":{
@@ -1886,7 +1943,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeTableOutput":{
@@ -1899,7 +1959,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeTableReplicaAutoScalingOutput":{
@@ -1912,7 +1975,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"}
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "DescribeTimeToLiveOutput":{
@@ -2107,7 +2173,10 @@
         "S3Bucket"
       ],
       "members":{
-        "TableArn":{"shape":"TableArn"},
+        "TableArn":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "ExportTime":{"shape":"ExportTime"},
         "ClientToken":{
           "shape":"ClientToken",
@@ -2191,7 +2260,10 @@
         "Key"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Key":{"shape":"Key"},
         "AttributesToGet":{"shape":"AttributeNameList"},
         "ConsistentRead":{"shape":"ConsistentRead"},
@@ -2211,7 +2283,10 @@
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"}
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        }
       }
     },
     "GetResourcePolicyOutput":{
@@ -2690,7 +2765,10 @@
         "StreamArn"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "StreamArn":{"shape":"StreamArn"},
         "EnableKinesisStreamingConfiguration":{"shape":"EnableKinesisStreamingConfiguration"}
       }
@@ -2719,7 +2797,10 @@
     "ListBackupsInput":{
       "type":"structure",
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Limit":{"shape":"BackupsInputLimit"},
         "TimeRangeLowerBound":{"shape":"TimeRangeLowerBound"},
         "TimeRangeUpperBound":{"shape":"TimeRangeUpperBound"},
@@ -2737,7 +2818,10 @@
     "ListContributorInsightsInput":{
       "type":"structure",
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "NextToken":{"shape":"NextTokenString"},
         "MaxResults":{"shape":"ListContributorInsightsLimit"}
       }
@@ -2756,7 +2840,10 @@
     "ListExportsInput":{
       "type":"structure",
       "members":{
-        "TableArn":{"shape":"TableArn"},
+        "TableArn":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "MaxResults":{"shape":"ListExportsMaxLimit"},
         "NextToken":{"shape":"ExportNextToken"}
       }
@@ -2791,7 +2878,10 @@
     "ListImportsInput":{
       "type":"structure",
       "members":{
-        "TableArn":{"shape":"TableArn"},
+        "TableArn":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "PageSize":{"shape":"ListImportsMaxLimit"},
         "NextToken":{"shape":"ImportNextToken"}
       }
@@ -2831,7 +2921,10 @@
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"},
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "NextToken":{"shape":"NextTokenString"}
       }
     },
@@ -3102,7 +3195,10 @@
         "Item"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Item":{"shape":"PutItemInputAttributeMap"},
         "Expected":{"shape":"ExpectedAttributeMap"},
         "ReturnValues":{"shape":"ReturnValue"},
@@ -3142,7 +3238,10 @@
         "Policy"
       ],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"},
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Policy":{"shape":"ResourcePolicy"},
         "ExpectedRevisionId":{"shape":"PolicyRevisionId"},
         "ConfirmRemoveSelfResourceAccess":{"shape":"ConfirmRemoveSelfResourceAccess"}
@@ -3158,7 +3257,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "IndexName":{"shape":"IndexName"},
         "Select":{"shape":"Select"},
         "AttributesToGet":{"shape":"AttributeNameList"},
@@ -3476,7 +3578,10 @@
         "BackupArn"
       ],
       "members":{
-        "TargetTableName":{"shape":"TableName"},
+        "TargetTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "BackupArn":{"shape":"BackupArn"},
         "BillingModeOverride":{"shape":"BillingMode"},
         "GlobalSecondaryIndexOverride":{"shape":"GlobalSecondaryIndexList"},
@@ -3498,7 +3603,10 @@
       "members":{
         "SourceTableArn":{"shape":"TableArn"},
         "SourceTableName":{"shape":"TableName"},
-        "TargetTableName":{"shape":"TableName"},
+        "TargetTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "UseLatestRestorableTime":{"shape":"BooleanObject"},
         "RestoreDateTime":{"shape":"Date"},
         "BillingModeOverride":{"shape":"BillingMode"},
@@ -3628,7 +3736,10 @@
       "type":"structure",
       "required":["TableName"],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "IndexName":{"shape":"IndexName"},
         "AttributesToGet":{"shape":"AttributeNameList"},
         "Limit":{"shape":"PositiveIntegerObject"},
@@ -3904,7 +4015,10 @@
         "Tags"
       ],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"},
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Tags":{"shape":"TagList"}
       }
     },
@@ -4040,7 +4154,10 @@
         "TagKeys"
       ],
       "members":{
-        "ResourceArn":{"shape":"ResourceArnString"},
+        "ResourceArn":{
+          "shape":"ResourceArnString",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "TagKeys":{"shape":"TagKeyList"}
       }
     },
@@ -4068,7 +4185,10 @@
         "PointInTimeRecoverySpecification"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "PointInTimeRecoverySpecification":{"shape":"PointInTimeRecoverySpecification"}
       }
     },
@@ -4085,7 +4205,10 @@
         "ContributorInsightsAction"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "IndexName":{"shape":"IndexName"},
         "ContributorInsightsAction":{"shape":"ContributorInsightsAction"}
       }
@@ -4116,7 +4239,10 @@
         "ReplicaUpdates"
       ],
       "members":{
-        "GlobalTableName":{"shape":"TableName"},
+        "GlobalTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "ReplicaUpdates":{"shape":"ReplicaUpdateList"}
       }
     },
@@ -4130,7 +4256,10 @@
       "type":"structure",
       "required":["GlobalTableName"],
       "members":{
-        "GlobalTableName":{"shape":"TableName"},
+        "GlobalTableName":{
+          "shape":"TableName",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "GlobalTableBillingMode":{"shape":"BillingMode"},
         "GlobalTableProvisionedWriteCapacityUnits":{"shape":"PositiveLongObject"},
         "GlobalTableProvisionedWriteCapacityAutoScalingSettingsUpdate":{"shape":"AutoScalingSettingsUpdate"},
@@ -4152,7 +4281,10 @@
         "Key"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "Key":{"shape":"Key"},
         "AttributeUpdates":{"shape":"AttributeUpdates"},
         "Expected":{"shape":"ExpectedAttributeMap"},
@@ -4188,7 +4320,10 @@
         "StreamArn"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "StreamArn":{"shape":"StreamArn"},
         "UpdateKinesisStreamingConfiguration":{"shape":"UpdateKinesisStreamingConfiguration"}
       }
@@ -4219,7 +4354,10 @@
       "required":["TableName"],
       "members":{
         "AttributeDefinitions":{"shape":"AttributeDefinitions"},
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "BillingMode":{"shape":"BillingMode"},
         "ProvisionedThroughput":{"shape":"ProvisionedThroughput"},
         "GlobalSecondaryIndexUpdates":{"shape":"GlobalSecondaryIndexUpdateList"},
@@ -4244,7 +4382,10 @@
       "required":["TableName"],
       "members":{
         "GlobalSecondaryIndexUpdates":{"shape":"GlobalSecondaryIndexAutoScalingUpdateList"},
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "ProvisionedWriteCapacityAutoScalingUpdate":{"shape":"AutoScalingSettingsUpdate"},
         "ReplicaUpdates":{"shape":"ReplicaAutoScalingUpdateList"}
       }
@@ -4262,7 +4403,10 @@
         "TimeToLiveSpecification"
       ],
       "members":{
-        "TableName":{"shape":"TableArn"},
+        "TableName":{
+          "shape":"TableArn",
+          "contextParam":{"name":"ResourceArn"}
+        },
         "TimeToLiveSpecification":{"shape":"TimeToLiveSpecification"}
       }
     },

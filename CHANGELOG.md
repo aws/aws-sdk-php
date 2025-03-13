@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Avoid evaluating 200 errors for responses where its body is not seekable.
+* `Aws\ACMPCA` - Private Certificate Authority service now supports P521 and RSA3072 key algorithms.
+* `Aws\IVSRealTime` - IVS Real-Time now offers customers the ability to adjust the participant & composition recording segment duration
+* `Aws\CloudWatchLogs` - Updated CreateLogAnomalyDetector to accept only kms key arn
+* `Aws\EC2` - This release changes the CreateLaunchTemplate, CreateLaunchTemplateVersion, ModifyLaunchTemplate CLI and SDKs such that if you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.
+* `Aws\DynamoDB` - Generate account endpoints for DynamoDB requests using ARN-sourced account ID when available
+* `Aws\S3Control` - Updating GetDataAccess response for S3 Access Grants to include the matched Grantee for the requested prefix
+* `Aws\Amplify` - Introduced support for Skew Protection. Added enableSkewProtection field to createBranch and updateBranch API.
+* `Aws\CodeBuild` - AWS CodeBuild now supports webhook filtering by organization name
+* `Aws\DataZone` - This release adds support to update projects and environments
+* `Aws\MediaPackageV2` - This release adds the ResetChannelState and ResetOriginEndpointState operation to reset MediaPackage V2 channel and origin endpoint. This release also adds a new field, UrlEncodeChildManifest, for HLS/LL-HLS to allow URL-encoding child manifest query string based on the requirements of AWS SigV4.
+
 ## 3.342.4 - 2025-03-11
 
 * `Aws\EC2` - This release adds the GroupLongName field to the response of the DescribeAvailabilityZones API.

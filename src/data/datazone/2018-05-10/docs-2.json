@@ -1797,7 +1797,7 @@
     "DataSourceType": {
       "base": null,
       "refs": {
-        "CreateDataSourceInput$type": "<p>The type of the data source.</p>",
+        "CreateDataSourceInput$type": "<p>The type of the data source. In Amazon DataZone, you can use data sources to import technical metadata of assets (data) from the source databases or data warehouses into Amazon DataZone. In the current release of Amazon DataZone, you can create and run data sources for Amazon Web Services Glue and Amazon Redshift.</p>",
         "CreateDataSourceOutput$type": "<p>The type of the data source.</p>",
         "DeleteDataSourceOutput$type": "<p>The type of this data source.</p>",
         "GetDataSourceOutput$type": "<p>The type of the data source.</p>",
@@ -2840,7 +2840,11 @@
     "EnvironmentConfigurationId": {
       "base": null,
       "refs": {
-        "EnvironmentConfiguration$id": "<p>The environment ID.</p>"
+        "CreateEnvironmentOutput$environmentConfigurationId": "<p>The configuration ID of the environment.</p>",
+        "EnvironmentConfiguration$id": "<p>The environment ID.</p>",
+        "EnvironmentSummary$environmentConfigurationId": "<p>The configuration ID with which the environment is created.</p>",
+        "GetEnvironmentOutput$environmentConfigurationId": "<p>The configuration ID that is used to create the environment.</p>",
+        "UpdateEnvironmentOutput$environmentConfigurationId": "<p>The configuration ID of the environment.</p>"
       }
     },
     "EnvironmentConfigurationName": {
@@ -2887,6 +2891,7 @@
         "CreateProjectInput$userParameters": "<p>The user parameters of the project.</p>",
         "CreateProjectOutput$userParameters": "<p>The user parameters of the project.</p>",
         "GetProjectOutput$userParameters": "<p>The user parameters of a project.</p>",
+        "UpdateProjectInput$userParameters": "<p>The user parameters of the project.</p>",
         "UpdateProjectOutput$userParameters": "<p>The user parameters of the project.</p>"
       }
     },
@@ -2948,6 +2953,7 @@
         "DeleteSubscriptionTargetInput$environmentIdentifier": "<p>The ID of the Amazon DataZone environment in which the subscription target is deleted.</p>",
         "DisassociateEnvironmentRoleInput$environmentIdentifier": "<p>The ID of the environment.</p>",
         "EnvironmentActionSummary$environmentId": "<p>The environment ID of the environment action.</p>",
+        "EnvironmentConfigurationUserParameter$environmentId": "<p>The ID of the environment.</p>",
         "EnvironmentSummary$id": "<p>The identifier of the environment.</p>",
         "GetConnectionOutput$environmentId": "<p>The ID of the environment.</p>",
         "GetDataSourceOutput$environmentId": "<p>The ID of the environment where this data source creates and publishes assets,</p>",
@@ -2994,6 +3000,7 @@
         "CreateEnvironmentInput$userParameters": "<p>The user parameters of this Amazon DataZone environment.</p>",
         "CreateEnvironmentProfileInput$userParameters": "<p>The user parameters of this Amazon DataZone environment profile.</p>",
         "EnvironmentConfigurationUserParameter$environmentParameters": "<p>The environment parameters.</p>",
+        "UpdateEnvironmentInput$userParameters": "<p>The user parameters of the environment.</p>",
         "UpdateEnvironmentProfileInput$userParameters": "<p>The user parameters to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>"
       }
     },
@@ -6177,7 +6184,7 @@
         "GetDomainOutput$serviceRole": "<p>The service role of the domain.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$manageAccessRoleArn": "<p>The ARN of the manage access role with which this blueprint is created.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$provisioningRoleArn": "<p>The ARN of the provisioning role with which this blueprint is created.</p>",
-        "LakeFormationConfiguration$locationRegistrationRole": "<p>The role that is used to manage read/write access to the chosen Amazon S3 bucket(s) for Data Lake using AWS Lake Formation hybrid access mode.</p>",
+        "LakeFormationConfiguration$locationRegistrationRole": "<p>The role that is used to manage read/write access to the chosen Amazon S3 bucket(s) for Data Lake using Amazon Web Services Lake Formation hybrid access mode.</p>",
         "PutEnvironmentBlueprintConfigurationInput$manageAccessRoleArn": "<p>The ARN of the manage access role.</p>",
         "PutEnvironmentBlueprintConfigurationInput$provisioningRoleArn": "<p>The ARN of the provisioning role.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$manageAccessRoleArn": "<p>The ARN of the manage access role.</p>",
@@ -7100,12 +7107,14 @@
         "UpdateEnvironmentActionInput$name": "<p>The name of the environment action.</p>",
         "UpdateEnvironmentActionOutput$description": "<p>The description of the environment action.</p>",
         "UpdateEnvironmentActionOutput$name": "<p>The name of the environment action.</p>",
+        "UpdateEnvironmentInput$blueprintVersion": "<p>The blueprint version to which the environment should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
         "UpdateEnvironmentInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentInput$name": "<p>The name to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentOutput$createdBy": "<p>The Amazon DataZone user who created the environment.</p>",
         "UpdateEnvironmentOutput$provider": "<p>The provider identifier of the environment.</p>",
         "UpdateEnvironmentProfileInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
         "UpdateEnvironmentProfileOutput$createdBy": "<p>The Amazon DataZone user who created the environment profile.</p>",
+        "UpdateProjectInput$projectProfileVersion": "<p>The project profile version to which the project should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
         "UpdateSubscriptionGrantStatusInput$targetName": "<p>The target name to be updated as part of the <code>UpdateSubscriptionGrantStatus</code> action.</p>",
         "UpdateSubscriptionRequestOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviews the subscription request.</p>",
         "UpdateSubscriptionTargetInput$provider": "<p>The provider to be updated as part of the <code>UpdateSubscriptionTarget</code> action.</p>",

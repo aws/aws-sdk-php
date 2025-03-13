@@ -113,6 +113,18 @@
         "StartCompositionRequest$idempotencyToken": "<p>Idempotency token.</p>"
       }
     },
+    "CompositionRecordingHlsConfiguration": {
+      "base": "<p>An object representing a configuration of HLS recordings for server-side composition.</p>",
+      "refs": {
+        "RecordingConfiguration$hlsConfiguration": "<p>An HLS configuration object to return information about how the recording will be configured.</p>"
+      }
+    },
+    "CompositionRecordingTargetSegmentDurationSeconds": {
+      "base": null,
+      "refs": {
+        "CompositionRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when using composite recording. Segments may have durations shorter than the specified value when needed to ensure each segment begins with a keyframe. Default: 2.</p>"
+      }
+    },
     "CompositionState": {
       "base": null,
       "refs": {
@@ -826,6 +838,12 @@
         "ListParticipantsRequest$filterByRecordingState": "<p>Filters the response list to only show participants with the specified recording state. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, <code>filterByState</code>, or <code>filterByRecordingState</code> can be provided per request.</p>"
       }
     },
+    "ParticipantRecordingHlsConfiguration": {
+      "base": "<p>An object representing a configuration of participant HLS recordings for individual participant recording.</p>",
+      "refs": {
+        "AutoParticipantRecordingConfiguration$hlsConfiguration": "<p>HLS configuration object for individual participant recording.</p>"
+      }
+    },
     "ParticipantRecordingMediaType": {
       "base": null,
       "refs": {
@@ -853,7 +871,7 @@
     "ParticipantRecordingS3Prefix": {
       "base": null,
       "refs": {
-        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled. If individual participant recording merge is enabled, and if a stage publisher disconnects from a stage and then reconnects, IVS tries to record to the same S3 prefix as the previous session. See <a href=\"/ivs/latest/RealTimeUserGuide/rt-individual-participant-recording.html#ind-part-rec-merge-frag\"> Merge Fragmented Individual Participant Recordings</a>.</p>"
+        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled.</p>"
       }
     },
     "ParticipantRecordingState": {
@@ -861,6 +879,12 @@
       "refs": {
         "Participant$recordingState": "<p>The participant’s recording state.</p>",
         "ParticipantSummary$recordingState": "<p>The participant’s recording state.</p>"
+      }
+    },
+    "ParticipantRecordingTargetSegmentDurationSeconds": {
+      "base": null,
+      "refs": {
+        "ParticipantRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when recording a stage participant. Segments may have durations longer than the specified value when needed to ensure each segment begins with a keyframe. Default: 6.</p>"
       }
     },
     "ParticipantState": {

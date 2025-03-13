@@ -670,7 +670,8 @@
         "storageConfigurationArn":{"shape":"AutoParticipantRecordingStorageConfigurationArn"},
         "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
         "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"},
-        "recordingReconnectWindowSeconds":{"shape":"ParticipantRecordingReconnectWindowSeconds"}
+        "recordingReconnectWindowSeconds":{"shape":"ParticipantRecordingReconnectWindowSeconds"},
+        "hlsConfiguration":{"shape":"ParticipantRecordingHlsConfiguration"}
       }
     },
     "AutoParticipantRecordingStorageConfigurationArn":{
@@ -731,6 +732,18 @@
       "max":64,
       "min":1,
       "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "CompositionRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"CompositionRecordingTargetSegmentDurationSeconds"}
+      }
+    },
+    "CompositionRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
     },
     "CompositionState":{
       "type":"string",
@@ -1747,6 +1760,12 @@
         "FAILED"
       ]
     },
+    "ParticipantRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"ParticipantRecordingTargetSegmentDurationSeconds"}
+      }
+    },
     "ParticipantRecordingMediaType":{
       "type":"string",
       "enum":[
@@ -1788,6 +1807,12 @@
         "FAILED",
         "DISABLED"
       ]
+    },
+    "ParticipantRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
     },
     "ParticipantState":{
       "type":"string",
@@ -2023,6 +2048,7 @@
     "RecordingConfiguration":{
       "type":"structure",
       "members":{
+        "hlsConfiguration":{"shape":"CompositionRecordingHlsConfiguration"},
         "format":{"shape":"RecordingConfigurationFormat"}
       }
     },

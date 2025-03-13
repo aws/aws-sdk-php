@@ -4647,6 +4647,7 @@
         "domainId":{"shape":"DomainId"},
         "environmentActions":{"shape":"EnvironmentActionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
+        "environmentConfigurationId":{"shape":"EnvironmentConfigurationId"},
         "environmentProfileId":{"shape":"EnvironmentProfileId"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"EnvironmentId"},
@@ -6805,6 +6806,7 @@
       "type":"structure",
       "members":{
         "environmentConfigurationName":{"shape":"EnvironmentConfigurationName"},
+        "environmentId":{"shape":"EnvironmentId"},
         "environmentParameters":{"shape":"EnvironmentParametersList"}
       }
     },
@@ -6938,6 +6940,7 @@
         "createdBy":{"shape":"String"},
         "description":{"shape":"Description"},
         "domainId":{"shape":"DomainId"},
+        "environmentConfigurationId":{"shape":"EnvironmentConfigurationId"},
         "environmentProfileId":{"shape":"EnvironmentProfileId"},
         "id":{"shape":"EnvironmentId"},
         "name":{"shape":"EnvironmentName"},
@@ -7819,6 +7822,7 @@
         "domainId":{"shape":"DomainId"},
         "environmentActions":{"shape":"EnvironmentActionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
+        "environmentConfigurationId":{"shape":"EnvironmentConfigurationId"},
         "environmentProfileId":{"shape":"EnvironmentProfileId"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"EnvironmentId"},
@@ -11747,7 +11751,9 @@
       "enum":[
         "ACTIVE",
         "DELETING",
-        "DELETE_FAILED"
+        "DELETE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED"
       ]
     },
     "ProjectSummaries":{
@@ -14232,6 +14238,7 @@
         "identifier"
       ],
       "members":{
+        "blueprintVersion":{"shape":"String"},
         "description":{"shape":"String"},
         "domainIdentifier":{
           "shape":"DomainId",
@@ -14244,7 +14251,8 @@
           "location":"uri",
           "locationName":"identifier"
         },
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "userParameters":{"shape":"EnvironmentParametersList"}
       }
     },
     "UpdateEnvironmentOutput":{
@@ -14266,6 +14274,7 @@
         "domainId":{"shape":"DomainId"},
         "environmentActions":{"shape":"EnvironmentActionList"},
         "environmentBlueprintId":{"shape":"EnvironmentBlueprintId"},
+        "environmentConfigurationId":{"shape":"EnvironmentConfigurationId"},
         "environmentProfileId":{"shape":"EnvironmentProfileId"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
         "id":{"shape":"EnvironmentId"},
@@ -14466,7 +14475,9 @@
           "location":"uri",
           "locationName":"identifier"
         },
-        "name":{"shape":"ProjectName"}
+        "name":{"shape":"ProjectName"},
+        "projectProfileVersion":{"shape":"String"},
+        "userParameters":{"shape":"EnvironmentConfigurationUserParametersList"}
       }
     },
     "UpdateProjectOutput":{
