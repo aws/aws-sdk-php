@@ -64,8 +64,8 @@ class MultipartUploader implements PromisorInterface
      * @param S3ClientInterface $s3Client
      * @param array $createMultipartArgs
      * @param array $config
-     *  - part_size: (int, optional)
-     *  - concurrency: (int, required)
+     * - part_size: (int, optional)
+     * - concurrency: (int, required)
      * @param string | StreamInterface $source
      * @param string|null $uploadId
      * @param array $parts

@@ -2,7 +2,6 @@
 
 namespace Aws\S3\S3Transfer;
 
-use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
@@ -20,7 +19,6 @@ use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
-use Throwable;
 use function Aws\filter;
 use function Aws\map;
 
@@ -541,6 +539,14 @@ class S3TransferManager
                 return call_user_func($filter, $key);
             });
         }
+        $failurePolicyCallback = null;
+        if (isset($config['failure_policy']) && !is_callable($config['failure_policy'])) {
+            throw new InvalidArgumentException(
+                "The parameter \$config['failure_policy'] must be callable."
+            );
+        } elseif (isset($config['failure_policy'])) {
+            $failurePolicyCallback = $config['failure_policy'];
+        }
 
         $promises = [];
         $objectsDownloaded = 0;
@@ -589,15 +595,16 @@ class S3TransferManager
                 $result->getData()->close();
                 $objectsDownloaded++;
             })->otherwise(function ($reason) use (
+                $failurePolicyCallback,
                 &$objectsDownloaded,
                 &$objectsFailed,
                 $downloadArgs,
                 $requestArgs
             ) {
                 $objectsFailed++;
-                if (isset($config['failure_policy']) && is_callable($config['failure_policy'])) {
+                if ($failurePolicyCallback !== null) {
                     call_user_func(
-                        $config['failure_policy'],
+                        $failurePolicyCallback,
                         $requestArgs,
                         $downloadArgs,
                         $reason,

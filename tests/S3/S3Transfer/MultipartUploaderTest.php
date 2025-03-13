@@ -18,7 +18,6 @@ use Psr\Http\Message\StreamInterface;
 
 class MultipartUploaderTest extends TestCase
 {
-
     /**
      * @param StreamInterface $stream
      * @param array $config
