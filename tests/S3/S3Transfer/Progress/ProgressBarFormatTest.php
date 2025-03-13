@@ -67,7 +67,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '..........',
                     'percent' => 100,
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_format' => "foo:\n[..........] 100% 100/100 B",
@@ -79,7 +79,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '.....     ',
                     'percent' => 50,
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_format' => "foo:\n[.....     ] 50% 50/100 B",
@@ -90,7 +90,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '.....     ',
                     'percent' => 50,
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'object_name' => 'FooObject'
                 ],
@@ -102,7 +102,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '.....     ',
                     'percent' => 50,
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'object_name' => 'FooObject',
                     'color_code' => ColoredTransferProgressBarFormat::BLUE_COLOR_CODE
@@ -115,7 +115,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '.....     ',
                     'percent' => 50,
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'object_name' => 'FooObject',
                     'color_code' => ColoredTransferProgressBarFormat::GREEN_COLOR_CODE
@@ -128,7 +128,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '.....     ',
                     'percent' => 50,
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'object_name' => 'FooObject',
                     'color_code' => ColoredTransferProgressBarFormat::RED_COLOR_CODE
@@ -141,7 +141,7 @@ class ProgressBarFormatTest extends TestCase
                     'progress_bar' => '..........',
                     'percent' => 100,
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'object_name' => 'FooObject',
                     'color_code' => ColoredTransferProgressBarFormat::BLUE_COLOR_CODE

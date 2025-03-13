@@ -68,6 +68,7 @@ class MultipartDownloaderTest extends TestCase
             -> willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
+
         $downloaderClassName = MultipartDownloader::chooseDownloaderClass(
             $multipartDownloadType
         );

@@ -195,7 +195,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
 
         $this->progressBar->getProgressBarFormat()->setArgs([
             'transferred' => $this->currentSnapshot->getTransferredBytes(),
-            'tobe_transferred' => $this->currentSnapshot->getTotalBytes(),
+            'to_be_transferred' => $this->currentSnapshot->getTotalBytes(),
             'unit' => 'B',
         ]);
         // Display progress

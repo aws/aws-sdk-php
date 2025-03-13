@@ -175,7 +175,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'FooObject',
                     'transferred' => 23,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_output' => "FooObject:\n[############                                      ] 23% 23/100 B"
@@ -188,7 +188,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'FooObject',
                     'transferred' => 75,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_output' => "FooObject:\n[###################      ] 75% 75/100 B"
@@ -201,7 +201,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'FooObject',
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_output' => "FooObject:\n[##############################] 100% 100/100 B"
@@ -214,7 +214,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'FooObject',
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_output' => "FooObject:\n[******************************] 100% 100/100 B"
@@ -227,7 +227,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'ObjectName_1',
                     'transferred' => 10,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B'
                 ],
                 'expected_output' => "ObjectName_1:\n\033[30m[##                  ] 10% 10/100 B \033[0m"
@@ -240,7 +240,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'ObjectName_2',
                     'transferred' => 50,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'color_code' => ColoredTransferProgressBarFormat::BLUE_COLOR_CODE
                 ],
@@ -254,7 +254,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'ObjectName_3',
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'color_code' => ColoredTransferProgressBarFormat::GREEN_COLOR_CODE
                 ],
@@ -268,7 +268,7 @@ class ConsoleProgressBarTest extends TestCase
                 'progress_bar_format_args' => [
                     'object_name' => 'ObjectName_3',
                     'transferred' => 100,
-                    'tobe_transferred' => 100,
+                    'to_be_transferred' => 100,
                     'unit' => 'B',
                     'color_code' => ColoredTransferProgressBarFormat::GREEN_COLOR_CODE
                 ],

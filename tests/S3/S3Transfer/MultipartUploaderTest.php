@@ -85,58 +85,58 @@ class MultipartUploaderTest extends TestCase
         return [
             '5_parts_upload' => [
                 'stream' => Utils::streamFor(
-                    str_repeat('*', 1024 * 5),
+                    str_repeat('*', 10240000 * 5),
                 ),
                 'config' => [
-                    'part_size' => 1024
+                    'part_size' => 10240000
                 ],
                 'expected' => [
                     'succeed' => true,
                     'parts' => 5,
-                    'bytesUploaded' => 1024 * 5,
+                    'bytesUploaded' => 10240000 * 5,
                 ]
             ],
             '100_parts_upload' => [
                 'stream' => Utils::streamFor(
-                    str_repeat('*', 1024 * 100),
+                    str_repeat('*', 10240000 * 100),
                 ),
                 'config' => [
-                    'part_size' => 1024
+                    'part_size' => 10240000
                 ],
                 'expected' => [
                     'succeed' => true,
                     'parts' => 100,
-                    'bytesUploaded' => 1024 * 100,
+                    'bytesUploaded' => 10240000 * 100,
                 ]
             ],
             '5_parts_no_seekable_stream' => [
                 'stream' => new NoSeekStream(
                     Utils::streamFor(
-                        str_repeat('*', 1024 * 5)
+                        str_repeat('*', 10240000 * 5)
                     )
                 ),
                 'config' => [
-                    'part_size' => 1024
+                    'part_size' => 10240000
                 ],
                 'expected' => [
                     'succeed' => true,
                     'parts' => 5,
-                    'bytesUploaded' => 1024 * 5,
+                    'bytesUploaded' => 10240000 * 5,
                 ]
             ],
             '100_parts_no_seekable_stream' => [
                 'stream' => new NoSeekStream(
                     Utils::streamFor(
-                        str_repeat('*', 1024 * 100)
+                        str_repeat('*', 10240000 * 100)
                     )
                 ),
                 'config' => [
-                    'part_size' => 1024
+                    'part_size' => 10240000
                 ],
                 'expected' => [
                     'succeed' => true,
                     'parts' => 100,
-                    'bytesUploaded' => 1024 * 100,
+                    'bytesUploaded' => 10240000 * 100,
                 ]
             ]
         ];

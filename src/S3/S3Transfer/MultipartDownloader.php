@@ -177,7 +177,7 @@ abstract class MultipartDownloader implements PromisorInterface
 
             yield Create::promiseFor(new DownloadResponse(
                 $this->stream,
-                $result['@metadata']
+                $result['@metadata'] ?? []
             ));
         });
     }

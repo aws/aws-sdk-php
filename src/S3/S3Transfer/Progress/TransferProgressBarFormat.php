@@ -9,7 +9,7 @@ final class TransferProgressBarFormat extends ProgressBarFormat
      */
     public function getFormatTemplate(): string
     {
-        return "|object_name|:\n[|progress_bar|] |percent|% |transferred|/|tobe_transferred| |unit|";
+        return "|object_name|:\n[|progress_bar|] |percent|% |transferred|/|to_be_transferred| |unit|";
     }
 
     /**
@@ -22,7 +22,7 @@ final class TransferProgressBarFormat extends ProgressBarFormat
             'progress_bar',
             'percent',
             'transferred',
-            'tobe_transferred',
+            'to_be_transferred',
             'unit',
         ];
     }

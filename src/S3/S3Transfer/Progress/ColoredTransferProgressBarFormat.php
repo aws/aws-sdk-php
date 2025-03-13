@@ -16,7 +16,7 @@ final class ColoredTransferProgressBarFormat extends ProgressBarFormat
     {
         return
             "|object_name|:\n"
-            ."\033|color_code|[|progress_bar|] |percent|% |transferred|/|tobe_transferred| |unit| |message|\033[0m";
+            ."\033|color_code|[|progress_bar|] |percent|% |transferred|/|to_be_transferred| |unit| |message|\033[0m";
     }
 
     /**
@@ -28,7 +28,7 @@ final class ColoredTransferProgressBarFormat extends ProgressBarFormat
             'progress_bar',
             'percent',
             'transferred',
-            'tobe_transferred',
+            'to_be_transferred',
             'unit',
             'color_code',
             'message',
