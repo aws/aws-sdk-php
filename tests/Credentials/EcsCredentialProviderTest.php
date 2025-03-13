@@ -5,7 +5,7 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\EcsCredentialProvider;
 use Aws\Exception\CredentialsException;
-use Aws\Handler\GuzzleV6\GuzzleHandler;
+use Aws\Handler\Guzzle\GuzzleHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -260,7 +260,7 @@ class EcsCredentialProviderTest extends TestCase
     {
         $t = (time() + 1000);
         $credentials = $this->getCredentialArray('foo', 'baz', null, "@{$t}");
-        return new \Aws\Handler\GuzzleV6\GuzzleHandler(
+        return new \Aws\Handler\Guzzle\GuzzleHandler(
             new Client([
                 'handler' => function (
                     Psr7\Request $request,
