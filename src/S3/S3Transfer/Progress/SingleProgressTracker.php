@@ -68,7 +68,8 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
     /**
      * @return bool
      */
-    public function isClear(): bool {
+    public function isClear(): bool
+    {
         return $this->clear;
     }
 

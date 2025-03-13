@@ -25,9 +25,7 @@ class RangeGetMultipartDownloader extends MultipartDownloader
      *   using range get. This option MUST be set when using range get.
      * @param int $currentPartNo
      * @param int $objectPartsCount
-     * @param int $objectCompletedPartsCount
      * @param int $objectSizeInBytes
-     * @param int $objectBytesTransferred
      * @param string $eTag
      * @param StreamInterface|null $stream
      * @param TransferProgressSnapshot|null $currentSnapshot

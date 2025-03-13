@@ -5,6 +5,7 @@ namespace Aws\S3\S3Transfer;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Models\DownloadResponse;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
@@ -81,6 +82,8 @@ abstract class MultipartDownloader implements PromisorInterface
             );
         } else {
             $this->stream = $stream;
+            // Position at the end of the stream
+            $this->stream->seek($stream->getSize());
         }
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier  = $listenerNotifier;
@@ -128,13 +131,16 @@ abstract class MultipartDownloader implements PromisorInterface
     {
         return Coroutine::of(function () {
             $this->downloadInitiated($this->requestArgs);
+            $result = ['@metadata'=>[]];
             try {
-                yield $this->s3Client->executeAsync($this->nextCommand())
+                $result = yield $this->s3Client->executeAsync($this->nextCommand())
                     ->then(function (ResultInterface $result) {
                         // Calculate object size and parts count.
                         $this->computeObjectDimensions($result);
                         // Trigger first part completed
                         $this->partDownloadCompleted($result);
+
+                        return $result;
                     })->otherwise(function ($reason)  {
                         $this->partDownloadFailed($reason);
 
@@ -156,7 +162,7 @@ abstract class MultipartDownloader implements PromisorInterface
                         })->otherwise(function ($reason) {
                             $this->partDownloadFailed($reason);
 
-                            return $reason;
+                            throw $reason;
                         });
                 } catch (\Throwable $reason) {
                     $this->downloadFailed($reason);
@@ -169,10 +175,9 @@ abstract class MultipartDownloader implements PromisorInterface
             // Transfer completed
             $this->downloadComplete();
 
-            // TODO: yield the stream wrapped in a modeled transfer success response.
             yield Create::promiseFor(new DownloadResponse(
                 $this->stream,
-                []
+                $result['@metadata']
             ));
         });
     }
@@ -260,6 +265,7 @@ abstract class MultipartDownloader implements PromisorInterface
      */
     private function downloadFailed(\Throwable $reason): void
     {
+        $this->stream->close();
         $this->listenerNotifier?->transferFail([
             'request_args' => $this->requestArgs,
             'progress_snapshot' => $this->currentSnapshot,
@@ -342,7 +348,7 @@ abstract class MultipartDownloader implements PromisorInterface
      *
      * @return string
      */
-    public static function chooseDownloaderClassName(
+    public static function chooseDownloaderClass(
         string $multipartDownloadType
     ): string
     {

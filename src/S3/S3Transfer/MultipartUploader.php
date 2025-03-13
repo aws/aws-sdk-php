@@ -3,8 +3,11 @@ namespace Aws\S3\S3Transfer;
 
 use Aws\CommandInterface;
 use Aws\CommandPool;
+use Aws\HashingStream;
+use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Models\UploadResponse;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;
@@ -14,6 +17,7 @@ use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\StreamInterface as Stream;
 use Throwable;
 
 /**
@@ -21,8 +25,8 @@ use Throwable;
  */
 class MultipartUploader implements PromisorInterface
 {
-    const PART_MIN_SIZE = 5242880;
-    const PART_MAX_SIZE = 5368709120;
+    public const PART_MIN_SIZE = 5 * 1024 * 1024; // 5 MBs
+    public const PART_MAX_SIZE = 5 * 1024 * 1024 * 1024; // 5 GBs
     public const PART_MAX_NUM = 10000;
 
     /** @var S3ClientInterface */
@@ -60,6 +64,8 @@ class MultipartUploader implements PromisorInterface
      * @param S3ClientInterface $s3Client
      * @param array $createMultipartArgs
      * @param array $config
+     *  - part_size: (int, optional)
+     *  - concurrency: (int, required)
      * @param string | StreamInterface $source
      * @param string|null $uploadId
      * @param array $parts
@@ -78,12 +84,32 @@ class MultipartUploader implements PromisorInterface
     ) {
         $this->s3Client = $s3Client;
         $this->createMultipartArgs = $createMultipartArgs;
+        $this->validateConfig($config);
         $this->config = $config;
         $this->body = $this->parseBody($source);
         $this->uploadId = $uploadId;
         $this->parts = $parts;
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier = $listenerNotifier;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return void
+     */
+    private function validateConfig(array &$config): void
+    {
+        if (isset($config['part_size'])) {
+            if ($config['part_size'] < self::PART_MIN_SIZE || $config['part_size'] > self::PART_MAX_SIZE) {
+                throw new \InvalidArgumentException(
+                    "The config `part_size` value must be between "
+                    . self::PART_MIN_SIZE . " and " . self::PART_MAX_SIZE . "."
+                );
+            }
+        } else {
+            $config['part_size'] = self::PART_MIN_SIZE;
+        }
     }
 
     /**
@@ -143,7 +169,7 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function createMultipartUpload(): PromiseInterface
+    private function createMultipartUpload(): PromiseInterface
     {
         $requestArgs = [...$this->createMultipartArgs];
         $this->uploadInitiated($requestArgs);
@@ -163,19 +189,13 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function uploadParts(): PromiseInterface
+    private function uploadParts(): PromiseInterface
     {
         $this->calculatedObjectSize = 0;
         $isSeekable = $this->body->isSeekable();
-        $partSize = $this->config['part_size'] ?? self::PART_MIN_SIZE;
-        if ($partSize > self::PART_MAX_SIZE) {
-            return Create::rejectionFor(
-                "The part size should not exceed " . self::PART_MAX_SIZE . " bytes."
-            );
-        }
-
+        $partSize = $this->config['part_size'];
         $commands = [];
-        for ($partNo = 1;
+        for ($partNo = count($this->parts) + 1;
              $isSeekable
                  ? $this->body->tell() < $this->body->getSize()
                  : !$this->body->eof();
@@ -196,15 +216,20 @@ class MultipartUploader implements PromisorInterface
                 break;
             }
 
+
             $uploadPartCommandArgs = [
                 ...$this->createMultipartArgs,
                 'UploadId' => $this->uploadId,
                 'PartNumber' => $partNo,
-                'Body' => $partBody,
                 'ContentLength' => $partBody->getSize(),
             ];
             // To get `requestArgs` when notifying the bytesTransfer listeners.
-            $uploadPartCommandArgs['requestArgs'] = $uploadPartCommandArgs;
+            $uploadPartCommandArgs['requestArgs'] = [...$uploadPartCommandArgs];
+            // Attach body
+            $uploadPartCommandArgs['Body'] = $this->decorateWithHashes(
+                $partBody,
+                $uploadPartCommandArgs
+            );
             $command = $this->s3Client->getCommand('UploadPart', $uploadPartCommandArgs);
             $commands[] = $command;
             $this->calculatedObjectSize += $partBody->getSize();
@@ -244,7 +269,7 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function completeMultipartUpload(): PromiseInterface
+    private function completeMultipartUpload(): PromiseInterface
     {
         $this->sortParts();
         $completeMultipartUploadArgs = [
@@ -275,7 +300,7 @@ class MultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    public function abortMultipartUpload(): PromiseInterface
+    private function abortMultipartUpload(): PromiseInterface
     {
         $command = $this->s3Client->getCommand('AbortMultipartUpload', [
             ...$this->createMultipartArgs,
@@ -483,5 +508,20 @@ class MultipartUploader implements PromisorInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param Stream $stream
+     * @param array $data
+     *
+     * @return Stream
+     */
+    private function decorateWithHashes(Stream $stream, array &$data): StreamInterface
+    {
+        // Decorate source with a hashing stream
+        $hash = new PhpHash('sha256');
+        return new HashingStream($stream, $hash, function ($result) use (&$data) {
+            $data['ContentSHA256'] = bin2hex($result);
+        });
     }
 }

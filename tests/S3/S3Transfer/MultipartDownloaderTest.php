@@ -5,19 +5,19 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResponse;
 use Aws\S3\S3Transfer\MultipartDownloader;
+use Aws\S3\S3Transfer\PartGetMultipartDownloader;
+use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Tests multipart download implementation.
  */
 class MultipartDownloaderTest extends TestCase
 {
-
     /**
      * Tests part and range get multipart downloader.
      *
@@ -68,7 +68,7 @@ class MultipartDownloaderTest extends TestCase
             -> willReturnCallback(function ($commandName, $args) {
                 return new Command($commandName, $args);
             });
-        $downloaderClassName = MultipartDownloader::chooseDownloaderClassName(
+        $downloaderClassName = MultipartDownloader::chooseDownloaderClass(
             $multipartDownloadType
         );
         /** @var MultipartDownloader $downloader */
@@ -162,5 +162,19 @@ class MultipartDownloaderTest extends TestCase
                 'targetPartSize' => 458,
             ]
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testChooseDownloaderClass(): void {
+        $multipartDownloadTypes = [
+            MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
+            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
+        ];
+        foreach ($multipartDownloadTypes as $multipartDownloadType => $class) {
+            $resolvedClass = MultipartDownloader::chooseDownloaderClass($multipartDownloadType);
+            $this->assertEquals($class, $resolvedClass);
+        }
     }
 }

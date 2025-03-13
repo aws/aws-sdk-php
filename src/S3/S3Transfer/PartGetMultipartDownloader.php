@@ -16,7 +16,7 @@ class PartGetMultipartDownloader extends MultipartDownloader
      *
      * @return CommandInterface
      */
-    protected function nextCommand() : CommandInterface
+    protected function nextCommand(): CommandInterface
     {
         if ($this->currentPartNo === 0) {
             $this->currentPartNo = 1;
