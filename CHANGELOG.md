@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.5 - 2025-03-13
 
 * `Aws\` - Avoid evaluating 200 errors for responses where its body is not seekable.
 * `Aws\ACMPCA` - Private Certificate Authority service now supports P521 and RSA3072 key algorithms.
