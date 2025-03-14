@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.6 - 2025-03-14
 
 * `Aws\Handler` - Remove code for unsupported version v6 of Guzzle and moved Aws\Handler\GuzzleV6\GuzzleHandler to an unversioned Aws\Handler\Guzzle\GuzzleHandler.
 * `Aws\Glue` - This release added AllowFullTableExternalDataAccess to glue catalog resource.
