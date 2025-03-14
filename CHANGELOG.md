@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Handler` - Remove code for unsupported version v6 of Guzzle and moved Aws\Handler\GuzzleV6\GuzzleHandler to an unversioned Aws\Handler\Guzzle\GuzzleHandler.
+* `Aws\Glue` - This release added AllowFullTableExternalDataAccess to glue catalog resource.
+* `Aws\LakeFormation` - This release added "condition" to LakeFormation OptIn APIs, also added WithPrivilegedAccess flag to RegisterResource and DescribeResource.
+* `Aws\CognitoIdentityProvider` - Minor description updates to API parameters
+* `Aws\CognitoIdentity` - Updated API model build artifacts for identity pools
+
 ## 3.342.5 - 2025-03-13
 
 * `Aws\` - Avoid evaluating 200 errors for responses where its body is not seekable.

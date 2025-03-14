@@ -48,7 +48,7 @@
     "ListTableStorageOptimizers": "<p>Returns the configuration of all storage optimizers associated with a specified table.</p>",
     "ListTransactions": "<p>Returns metadata about transactions and their status. To prevent the response from growing indefinitely, only uncommitted transactions and those available for time-travel queries are returned.</p> <p>This operation can help you identify uncommitted transactions or to get information about transactions.</p>",
     "PutDataLakeSettings": "<p>Sets the list of data lake administrators who have admin privileges on all resources managed by Lake Formation. For more information on admin privileges, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/lake-formation-permissions.html\">Granting Lake Formation Permissions</a>.</p> <p>This API replaces the current list of data lake admins with the new list being passed. To add an admin, fetch the current list and add the new admin to that list and pass that list in this API.</p>",
-    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen Amazon S3 path. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket/ UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
+    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen data location. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket/ UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
     "RemoveLFTagsFromResource": "<p>Removes an LF-tag from the resource. Only database, table, or tableWithColumns resource are allowed. To tag columns, use the column inclusion list in <code>tableWithColumns</code> to specify column input.</p>",
     "RevokePermissions": "<p>Revokes permissions to the principal to access metadata in the Data Catalog and data organized in underlying data storage such as Amazon S3.</p>",
     "SearchDatabasesByLFTags": "<p>This operation allows a search on <code>DATABASE</code> resources by <code>TagCondition</code>. This operation is used by admins who want to grant user permissions on certain <code>TagConditions</code>. Before making a grant, the admin can use <code>SearchDatabasesByTags</code> to find all resources where the given <code>TagConditions</code> are valid to verify whether the returned resources can be shared.</p>",
@@ -199,6 +199,12 @@
       "refs": {
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "RegisterResourceRequest$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>"
+      }
+    },
     "BooleanNullable": {
       "base": null,
       "refs": {
@@ -330,8 +336,13 @@
     "Condition": {
       "base": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
       "refs": {
+        "BatchPermissionsRequestEntry$Condition": null,
+        "CreateLakeFormationOptInRequest$Condition": null,
+        "DeleteLakeFormationOptInRequest$Condition": null,
+        "GrantPermissionsRequest$Condition": null,
         "LakeFormationOptInsInfo$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
-        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
+        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "RevokePermissionsRequest$Condition": null
       }
     },
     "ContextKey": {
@@ -1243,6 +1254,7 @@
         "RegisterResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
         "ResourceInfo$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "ResourceInfo$HybridAccessEnabled": "<p> Indicates whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
+        "ResourceInfo$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>",
         "UpdateResourceRequest$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "UpdateResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>"
       }

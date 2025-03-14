@@ -191,7 +191,8 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ConcurrentModificationException"}
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNumberLimitExceededException"}
       ]
     },
     "DeleteDataCellsFilter":{
@@ -1126,6 +1127,7 @@
         "Principal":{"shape":"DataLakePrincipal"},
         "Resource":{"shape":"Resource"},
         "Permissions":{"shape":"PermissionList"},
+        "Condition":{"shape":"Condition"},
         "PermissionsWithGrantOption":{"shape":"PermissionList"}
       }
     },
@@ -1147,6 +1149,7 @@
         "Failures":{"shape":"BatchPermissionsFailureList"}
       }
     },
+    "Boolean":{"type":"boolean"},
     "BooleanNullable":{"type":"boolean"},
     "CancelTransactionRequest":{
       "type":"structure",
@@ -1315,7 +1318,8 @@
       ],
       "members":{
         "Principal":{"shape":"DataLakePrincipal"},
-        "Resource":{"shape":"Resource"}
+        "Resource":{"shape":"Resource"},
+        "Condition":{"shape":"Condition"}
       }
     },
     "CreateLakeFormationOptInResponse":{
@@ -1490,7 +1494,8 @@
       ],
       "members":{
         "Principal":{"shape":"DataLakePrincipal"},
-        "Resource":{"shape":"Resource"}
+        "Resource":{"shape":"Resource"},
+        "Condition":{"shape":"Condition"}
       }
     },
     "DeleteLakeFormationOptInResponse":{
@@ -1991,6 +1996,7 @@
         "Principal":{"shape":"DataLakePrincipal"},
         "Resource":{"shape":"Resource"},
         "Permissions":{"shape":"PermissionList"},
+        "Condition":{"shape":"Condition"},
         "PermissionsWithGrantOption":{"shape":"PermissionList"}
       }
     },
@@ -2530,7 +2536,8 @@
         "UseServiceLinkedRole":{"shape":"NullableBoolean"},
         "RoleArn":{"shape":"IAMRoleArn"},
         "WithFederation":{"shape":"NullableBoolean"},
-        "HybridAccessEnabled":{"shape":"NullableBoolean"}
+        "HybridAccessEnabled":{"shape":"NullableBoolean"},
+        "WithPrivilegedAccess":{"shape":"Boolean"}
       }
     },
     "RegisterResourceResponse":{
@@ -2578,7 +2585,8 @@
         "RoleArn":{"shape":"IAMRoleArn"},
         "LastModified":{"shape":"LastModifiedTimestamp"},
         "WithFederation":{"shape":"NullableBoolean"},
-        "HybridAccessEnabled":{"shape":"NullableBoolean"}
+        "HybridAccessEnabled":{"shape":"NullableBoolean"},
+        "WithPrivilegedAccess":{"shape":"NullableBoolean"}
       }
     },
     "ResourceInfoList":{
@@ -2635,6 +2643,7 @@
         "Principal":{"shape":"DataLakePrincipal"},
         "Resource":{"shape":"Resource"},
         "Permissions":{"shape":"PermissionList"},
+        "Condition":{"shape":"Condition"},
         "PermissionsWithGrantOption":{"shape":"PermissionList"}
       }
     },

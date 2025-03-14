@@ -4161,6 +4161,13 @@
       "max":30,
       "min":1
     },
+    "AllowFullTableExternalDataAccessEnum":{
+      "type":"string",
+      "enum":[
+        "True",
+        "False"
+      ]
+    },
     "AllowedValue":{
       "type":"structure",
       "required":["Value"],
@@ -5108,7 +5115,8 @@
         "FederatedCatalog":{"shape":"FederatedCatalog"},
         "CatalogProperties":{"shape":"CatalogPropertiesOutput"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
-        "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"}
+        "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"},
+        "AllowFullTableExternalDataAccess":{"shape":"AllowFullTableExternalDataAccessEnum"}
       }
     },
     "CatalogDeltaSource":{
@@ -5193,7 +5201,8 @@
         "TargetRedshiftCatalog":{"shape":"TargetRedshiftCatalog"},
         "CatalogProperties":{"shape":"CatalogProperties"},
         "CreateTableDefaultPermissions":{"shape":"PrincipalPermissionsList"},
-        "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"}
+        "CreateDatabaseDefaultPermissions":{"shape":"PrincipalPermissionsList"},
+        "AllowFullTableExternalDataAccess":{"shape":"AllowFullTableExternalDataAccessEnum"}
       }
     },
     "CatalogKafkaSource":{
