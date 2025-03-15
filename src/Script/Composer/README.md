@@ -1,11 +1,11 @@
 ## Removing Unused Services
-**NOTE:** This feature is currently in beta. If you have general questions about usage or would like to report a 
+**NOTE:** If you have general questions about usage or would like to report a 
 bug, please open an issue with us [here](https://github.com/aws/aws-sdk-php/issues/new/choose). If 
 you have feedback on the implementation, please visit the [open discussion](https://github.com/aws/aws-sdk-php/discussions/2420) 
 we have on the topic.
 
 To avoid shipping unused services, specify which services you would like to keep in your `composer.json` file and
-use the `Aws\\Script\\Composer::removeUnusedServices` script:   
+use the `Aws\\Script\\Composer::removeUnusedServices` or `Aws\\Script\\Composer::removeUnusedServicesInDev` script:   
 
 ```
 {

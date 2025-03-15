@@ -5,12 +5,14 @@
     "endpointPrefix":"ds",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Directory Service",
     "serviceFullName":"AWS Directory Service",
     "serviceId":"Directory Service",
     "signatureVersion":"v4",
     "targetPrefix":"DirectoryService_20150416",
-    "uid":"ds-2015-04-16"
+    "uid":"ds-2015-04-16",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptSharedDirectory":{
@@ -425,6 +427,22 @@
         {"shape":"ServiceException"}
       ]
     },
+    "DescribeDirectoryDataAccess":{
+      "name":"DescribeDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDirectoryDataAccessRequest"},
+      "output":{"shape":"DescribeDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DescribeDomainControllers":{
       "name":"DescribeDomainControllers",
       "http":{
@@ -593,6 +611,24 @@
         {"shape":"ServiceException"}
       ]
     },
+    "DisableDirectoryDataAccess":{
+      "name":"DisableDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableDirectoryDataAccessRequest"},
+      "output":{"shape":"DisableDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryInDesiredStateException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DisableLDAPS":{
       "name":"DisableLDAPS",
       "http":{
@@ -655,6 +691,24 @@
         {"shape":"InvalidClientAuthStatusException"},
         {"shape":"AccessDeniedException"},
         {"shape":"NoAvailableCertificateException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "EnableDirectoryDataAccess":{
+      "name":"EnableDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableDirectoryDataAccessRequest"},
+      "output":{"shape":"EnableDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryInDesiredStateException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
       ]
@@ -1630,6 +1684,16 @@
       "min":1,
       "pattern":"^(?!.*\\\\|.*\"|.*\\/|.*\\[|.*\\]|.*:|.*;|.*\\||.*=|.*,|.*\\+|.*\\*|.*\\?|.*<|.*>|.*@).*$"
     },
+    "DataAccessStatus":{
+      "type":"string",
+      "enum":[
+        "Disabled",
+        "Disabling",
+        "Enabled",
+        "Enabling",
+        "Failed"
+      ]
+    },
     "DeleteAssociatedConditionalForwarder":{"type":"boolean"},
     "DeleteConditionalForwarderRequest":{
       "type":"structure",
@@ -1792,6 +1856,19 @@
       "members":{
         "DirectoryDescriptions":{"shape":"DirectoryDescriptions"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DescribeDirectoryDataAccessResult":{
+      "type":"structure",
+      "members":{
+        "DataAccessStatus":{"shape":"DataAccessStatus"}
       }
     },
     "DescribeDomainControllersRequest":{
@@ -2152,7 +2229,8 @@
         "RestoreFailed",
         "Deleting",
         "Deleted",
-        "Failed"
+        "Failed",
+        "Updating"
       ]
     },
     "DirectoryType":{
@@ -2204,6 +2282,18 @@
       }
     },
     "DisableClientAuthenticationResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DisableDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DisableDirectoryDataAccessResult":{
       "type":"structure",
       "members":{
       }
@@ -2294,7 +2384,8 @@
         "Restoring",
         "Deleting",
         "Deleted",
-        "Failed"
+        "Failed",
+        "Updating"
       ]
     },
     "DomainControllerStatusReason":{"type":"string"},
@@ -2314,6 +2405,18 @@
       }
     },
     "EnableClientAuthenticationResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "EnableDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "EnableDirectoryDataAccessResult":{
       "type":"structure",
       "members":{
       }
@@ -2803,7 +2906,7 @@
     },
     "RadiusTimeout":{
       "type":"integer",
-      "max":20,
+      "max":50,
       "min":1
     },
     "RegionDescription":{

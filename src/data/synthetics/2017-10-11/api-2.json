@@ -5,12 +5,14 @@
     "endpointPrefix":"synthetics",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Synthetics",
     "serviceFullName":"Synthetics",
     "serviceId":"synthetics",
     "signatureVersion":"v4",
     "signingName":"synthetics",
-    "uid":"synthetics-2017-10-11"
+    "uid":"synthetics-2017-10-11",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateResource":{
@@ -415,6 +417,7 @@
         "RuntimeVersion":{"shape":"String"},
         "VpcConfig":{"shape":"VpcConfigOutput"},
         "VisualReference":{"shape":"VisualReferenceOutput"},
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigOutput"}
       }
@@ -423,7 +426,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,21}"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:canary:[0-9a-z_\\-]{1,255}"
     },
     "CanaryCodeInput":{
       "type":"structure",
@@ -452,7 +455,7 @@
     },
     "CanaryName":{
       "type":"string",
-      "max":21,
+      "max":255,
       "min":1,
       "pattern":"^[0-9a-z_\\-]+$"
     },
@@ -615,6 +618,8 @@
         "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
         "RuntimeVersion":{"shape":"String"},
         "VpcConfig":{"shape":"VpcConfigInput"},
+        "ResourcesToReplicateTags":{"shape":"ResourceList"},
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
         "Tags":{"shape":"TagMap"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
@@ -774,7 +779,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "GetCanaryRequest":{
       "type":"structure",
@@ -845,7 +850,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:group:[0-9a-z]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:group:[0-9a-z]+"
     },
     "GroupIdentifier":{
       "type":"string",
@@ -889,7 +894,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:kms:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:key/[\\w\\-\\/]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:kms:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:key/[\\w\\-\\/]+"
     },
     "ListAssociatedGroupsRequest":{
       "type":"structure",
@@ -1012,6 +1017,13 @@
       "min":1,
       "pattern":"^.+$"
     },
+    "ProvisionedResourceCleanupSetting":{
+      "type":"string",
+      "enum":[
+        "AUTOMATIC",
+        "OFF"
+      ]
+    },
     "RequestEntityTooLargeException":{
       "type":"structure",
       "members":{
@@ -1024,7 +1036,13 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:(canary|group):[0-9a-z_\\-]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:synthetics:[a-z]{2,4}(-[a-z]{2,4})?-[a-z]+-\\d{1}:\\d{12}:(canary|group):[0-9a-z_\\-]+"
+    },
+    "ResourceList":{
+      "type":"list",
+      "member":{"shape":"ResourceToTag"},
+      "max":1,
+      "min":1
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1033,6 +1051,10 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "ResourceToTag":{
+      "type":"string",
+      "enum":["lambda-function"]
     },
     "RoleArn":{
       "type":"string",
@@ -1227,7 +1249,8 @@
         "VpcConfig":{"shape":"VpcConfigInput"},
         "VisualReference":{"shape":"VisualReferenceInput"},
         "ArtifactS3Location":{"shape":"String"},
-        "ArtifactConfig":{"shape":"ArtifactConfigInput"}
+        "ArtifactConfig":{"shape":"ArtifactConfigInput"},
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"}
       }
     },
     "UpdateCanaryResponse":{
@@ -1262,7 +1285,8 @@
       "type":"structure",
       "members":{
         "SubnetIds":{"shape":"SubnetIds"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcConfigOutput":{
@@ -1270,7 +1294,8 @@
       "members":{
         "VpcId":{"shape":"VpcId"},
         "SubnetIds":{"shape":"SubnetIds"},
-        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "Ipv6AllowedForDualStack":{"shape":"NullableBoolean"}
       }
     },
     "VpcId":{"type":"string"},

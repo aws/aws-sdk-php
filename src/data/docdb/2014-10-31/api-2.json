@@ -4,13 +4,15 @@
     "apiVersion":"2014-10-31",
     "endpointPrefix":"rds",
     "protocol":"query",
+    "protocols":["query"],
     "serviceAbbreviation":"Amazon DocDB",
     "serviceFullName":"Amazon DocumentDB with MongoDB compatibility",
     "serviceId":"DocDB",
     "signatureVersion":"v4",
     "signingName":"rds",
     "uid":"docdb-2014-10-31",
-    "xmlNamespace":"http://rds.amazonaws.com/doc/2014-10-31/"
+    "xmlNamespace":"http://rds.amazonaws.com/doc/2014-10-31/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddSourceIdentifierToSubscription":{
@@ -602,6 +604,24 @@
         {"shape":"InvalidDBInstanceStateFault"}
       ]
     },
+    "FailoverGlobalCluster":{
+      "name":"FailoverGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"FailoverGlobalClusterMessage"},
+      "output":{
+        "shape":"FailoverGlobalClusterResult",
+        "resultWrapper":"FailoverGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -1100,6 +1120,14 @@
         "DisableLogTypes":{"shape":"LogTypeList"}
       }
     },
+    "ClusterMasterUserSecret":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"String"},
+        "SecretStatus":{"shape":"String"},
+        "KmsKeyId":{"shape":"String"}
+      }
+    },
     "CopyDBClusterParameterGroupMessage":{
       "type":"structure",
       "required":[
@@ -1168,7 +1196,9 @@
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1341,7 +1371,8 @@
         "ClusterCreateTime":{"shape":"TStamp"},
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"Boolean"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "MasterUserSecret":{"shape":"ClusterMasterUserSecret"}
       },
       "wrapper":true
     },
@@ -1355,6 +1386,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "DBClusterIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
     },
     "DBClusterList":{
       "type":"list",
@@ -2207,6 +2244,25 @@
         "DBCluster":{"shape":"DBCluster"}
       }
     },
+    "FailoverGlobalClusterMessage":{
+      "type":"structure",
+      "required":[
+        "GlobalClusterIdentifier",
+        "TargetDbClusterIdentifier"
+      ],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "TargetDbClusterIdentifier":{"shape":"DBClusterIdentifier"},
+        "AllowDataLoss":{"shape":"BooleanOptional"},
+        "Switchover":{"shape":"BooleanOptional"}
+      }
+    },
+    "FailoverGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
+    },
     "Filter":{
       "type":"structure",
       "required":[
@@ -2551,7 +2607,10 @@
         "EngineVersion":{"shape":"String"},
         "AllowMajorVersionUpgrade":{"shape":"Boolean"},
         "DeletionProtection":{"shape":"BooleanOptional"},
-        "StorageType":{"shape":"String"}
+        "StorageType":{"shape":"String"},
+        "ManageMasterUserPassword":{"shape":"BooleanOptional"},
+        "MasterUserSecretKmsKeyId":{"shape":"String"},
+        "RotateMasterUserPassword":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -3134,7 +3193,7 @@
       ],
       "members":{
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
-        "TargetDbClusterIdentifier":{"shape":"String"}
+        "TargetDbClusterIdentifier":{"shape":"DBClusterIdentifier"}
       }
     },
     "SwitchoverGlobalClusterResult":{

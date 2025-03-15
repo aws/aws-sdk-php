@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2015-10-07",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"pipes",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -185,19 +186,19 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.+)"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?)?:(\\d{12})?:(.+)"
     },
     "ArnOrJsonPath":{
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.+)|(\\$(\\.[\\w/_-]+(\\[(\\d+|\\*)\\])*)*)"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?)?:(\\d{12})?:(.+)|(\\$(\\.[\\w/_-]+(\\[(\\d+|\\*)\\])*)*)"
     },
     "ArnOrUrl":{
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"smk://(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]):[0-9]{1,5}|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.+)"
+      "pattern":"smk://(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]):[0-9]{1,5}|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?)?:(\\d{12})?:(.+)"
     },
     "AssignPublicIp":{
       "type":"string",
@@ -343,7 +344,7 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(^arn:aws([a-z]|\\-)*:logs:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}):(\\d{12}):log-group:[\\.\\-_/#A-Za-z0-9]{1,512}(:\\*)?)"
+      "pattern":"(^arn:aws([a-z]|\\-)*:logs:([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?):(\\d{12}):log-group:[\\.\\-_/#A-Za-z0-9]{1,512}(:\\*)?)"
     },
     "CloudwatchLogsLogDestination":{
       "type":"structure",
@@ -400,7 +401,8 @@
         "TargetParameters":{"shape":"PipeTargetParameters"},
         "RoleArn":{"shape":"RoleArn"},
         "Tags":{"shape":"TagMap"},
-        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"}
+        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "CreatePipeResponse":{
@@ -484,7 +486,8 @@
         "Tags":{"shape":"TagMap"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LogConfiguration":{"shape":"PipeLogConfiguration"}
+        "LogConfiguration":{"shape":"PipeLogConfiguration"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "DimensionMapping":{
@@ -703,7 +706,7 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(^arn:aws([a-z]|\\-)*:firehose:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}):(\\d{12}):deliverystream/[a-zA-Z0-9_.-]{1,64})"
+      "pattern":"(^arn:aws([a-z]|\\-)*:firehose:([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?):(\\d{12}):deliverystream/[a-zA-Z0-9_.-]{1,64})"
     },
     "FirehoseLogDestination":{
       "type":"structure",
@@ -801,6 +804,12 @@
         "LATEST",
         "AT_TIMESTAMP"
       ]
+    },
+    "KmsKeyIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"[a-zA-Z0-9_\\-/:]*"
     },
     "LaunchType":{
       "type":"string",
@@ -1067,7 +1076,7 @@
       "type":"string",
       "max":1600,
       "min":0,
-      "pattern":"$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1})?:(\\d{12})?:(.+)"
+      "pattern":"$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-]+):([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?)?:(\\d{12})?:(.+)"
     },
     "PathParameter":{
       "type":"string",
@@ -1618,13 +1627,13 @@
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(^arn:aws([a-z]|\\-)*:secretsmanager:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}):(\\d{12}):secret:.+)"
+      "pattern":"(^arn:aws([a-z]|\\-)*:secretsmanager:([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?):(\\d{12}):secret:.+)"
     },
     "SecretManagerArnOrJsonPath":{
       "type":"string",
       "max":1600,
       "min":1,
-      "pattern":"(^arn:aws([a-z]|\\-)*:secretsmanager:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}):(\\d{12}):secret:.+)|(\\$(\\.[\\w/_-]+(\\[(\\d+|\\*)\\])*)*)"
+      "pattern":"(^arn:aws([a-z]|\\-)*:secretsmanager:([a-z]{2,4}((-gov)|(-de)|(-iso([a-z]?)))?-[a-z]+(-\\d{1})?):(\\d{12}):secret:.+)|(\\$(\\.[\\w/_-]+(\\[(\\d+|\\*)\\])*)*)"
     },
     "SecurityGroup":{
       "type":"string",
@@ -1644,7 +1653,7 @@
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
       "max":5,
-      "min":0
+      "min":1
     },
     "SecurityGroups":{
       "type":"list",
@@ -1802,7 +1811,7 @@
       "type":"list",
       "member":{"shape":"SubnetId"},
       "max":16,
-      "min":0
+      "min":1
     },
     "Subnets":{
       "type":"list",
@@ -1957,7 +1966,8 @@
         "Target":{"shape":"Arn"},
         "TargetParameters":{"shape":"PipeTargetParameters"},
         "RoleArn":{"shape":"RoleArn"},
-        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"}
+        "LogConfiguration":{"shape":"PipeLogConfigurationParameters"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "UpdatePipeResponse":{

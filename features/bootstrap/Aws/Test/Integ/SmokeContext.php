@@ -393,7 +393,7 @@ class SmokeContext extends Assert implements
      * @param string $errorCode
      * @param PyStringNode $string
      */
-    public function theErrorCodeShouldBe($errorCode, PyStringNode $string = null)
+    public function theErrorCodeShouldBe($errorCode, ?PyStringNode $string = null)
     {
         $this->iExpectTheResponseErrorCodeToBe($errorCode);
 

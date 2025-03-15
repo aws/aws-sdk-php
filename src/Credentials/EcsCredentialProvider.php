@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Credentials;
 
+use Aws\Arn\Arn;
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -69,18 +70,13 @@ class EcsCredentialProvider
     public function __invoke()
     {
         $this->attempts = 0;
-
         $uri = $this->getEcsUri();
-
         if ($this->isCompatibleUri($uri)) {
             return Promise\Coroutine::of(function () {
                 $client = $this->client;
                 $request = new Request('GET', $this->getEcsUri());
-
                 $headers = $this->getHeadersForAuthToken();
-
                 $credentials = null;
-
                 while ($credentials === null) {
                     $credentials = (yield $client(
                         $request,
@@ -91,11 +87,22 @@ class EcsCredentialProvider
                         ]
                     )->then(function (ResponseInterface $response) {
                         $result = $this->decodeResult((string)$response->getBody());
+                        if (!isset($result['AccountId']) && isset($result['RoleArn'])) {
+                            try {
+                                $parsedArn = new Arn($result['RoleArn']);
+                                $result['AccountId'] = $parsedArn->getAccountId();
+                            } catch (\Exception $e) {
+                                // AccountId will be null
+                            }
+                        }
+
                         return new Credentials(
                             $result['AccessKeyId'],
                             $result['SecretAccessKey'],
                             $result['Token'],
-                            strtotime($result['Expiration'])
+                            strtotime($result['Expiration']),
+                            $result['AccountId'] ?? null,
+                            CredentialSources::ECS
                         );
                     })->otherwise(function ($reason) {
                         $reason = is_array($reason) ? $reason['exception'] : $reason;

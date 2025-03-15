@@ -5,12 +5,14 @@
     "endpointPrefix":"appconfig",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"AppConfig",
     "serviceFullName":"Amazon AppConfig",
     "serviceId":"AppConfig",
     "signatureVersion":"v4",
     "signingName":"appconfig",
-    "uid":"appconfig-2019-10-09"
+    "uid":"appconfig-2019-10-09",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateApplication":{
@@ -223,6 +225,19 @@
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "GetAccountSettings":{
+      "name":"GetAccountSettings",
+      "http":{
+        "method":"GET",
+        "requestUri":"/settings",
+        "responseCode":200
+      },
+      "output":{"shape":"AccountSettings"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "GetApplication":{
@@ -552,6 +567,20 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateAccountSettings":{
+      "name":"UpdateAccountSettings",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/settings",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAccountSettingsRequest"},
+      "output":{"shape":"AccountSettings"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateApplication":{
       "name":"UpdateApplication",
       "http":{
@@ -659,6 +688,12 @@
     }
   },
   "shapes":{
+    "AccountSettings":{
+      "type":"structure",
+      "members":{
+        "DeletionProtection":{"shape":"DeletionProtectionSettings"}
+      }
+    },
     "Action":{
       "type":"structure",
       "members":{
@@ -695,6 +730,7 @@
       "enum":[
         "PRE_CREATE_HOSTED_CONFIGURATION_VERSION",
         "PRE_START_DEPLOYMENT",
+        "AT_DEPLOYMENT_TICK",
         "ON_DEPLOYMENT_START",
         "ON_DEPLOYMENT_STEP",
         "ON_DEPLOYMENT_BAKING",
@@ -745,7 +781,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1})?:(\\d{12})?:[a-zA-Z0-9-_/:.]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:[a-zA-Z0-9-_/:.]+"
     },
     "BadRequestDetails":{
       "type":"structure",
@@ -1025,6 +1061,11 @@
           "shape":"Id",
           "location":"uri",
           "locationName":"ConfigurationProfileId"
+        },
+        "DeletionProtectionCheck":{
+          "shape":"DeletionProtectionCheck",
+          "location":"header",
+          "locationName":"x-amzn-deletion-protection-check"
         }
       }
     },
@@ -1042,19 +1083,24 @@
     "DeleteEnvironmentRequest":{
       "type":"structure",
       "required":[
-        "ApplicationId",
-        "EnvironmentId"
+        "EnvironmentId",
+        "ApplicationId"
       ],
       "members":{
+        "EnvironmentId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"EnvironmentId"
+        },
         "ApplicationId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"ApplicationId"
         },
-        "EnvironmentId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"EnvironmentId"
+        "DeletionProtectionCheck":{
+          "shape":"DeletionProtectionCheck",
+          "location":"header",
+          "locationName":"x-amzn-deletion-protection-check"
         }
       }
     },
@@ -1111,6 +1157,33 @@
         }
       }
     },
+    "DeletionProtectionCheck":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT_DEFAULT",
+        "APPLY",
+        "BYPASS"
+      ]
+    },
+    "DeletionProtectionDuration":{
+      "type":"integer",
+      "box":true,
+      "max":1440,
+      "min":15
+    },
+    "DeletionProtectionSettings":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "ProtectionPeriodInMinutes":{
+          "shape":"DeletionProtectionDuration",
+          "box":true
+        }
+      }
+    },
     "Deployment":{
       "type":"structure",
       "members":{
@@ -1156,7 +1229,8 @@
         "ROLLBACK_COMPLETED",
         "BAKE_TIME_STARTED",
         "DEPLOYMENT_STARTED",
-        "DEPLOYMENT_COMPLETED"
+        "DEPLOYMENT_COMPLETED",
+        "REVERT_COMPLETED"
       ]
     },
     "DeploymentEvents":{
@@ -1175,7 +1249,8 @@
         "DEPLOYING",
         "COMPLETE",
         "ROLLING_BACK",
-        "ROLLED_BACK"
+        "ROLLED_BACK",
+        "REVERTED"
       ]
     },
     "DeploymentStrategies":{
@@ -1267,7 +1342,8 @@
         "READY_FOR_DEPLOYMENT",
         "DEPLOYING",
         "ROLLING_BACK",
-        "ROLLED_BACK"
+        "ROLLED_BACK",
+        "REVERTED"
       ]
     },
     "Environments":{
@@ -2024,6 +2100,12 @@
           "box":true,
           "location":"uri",
           "locationName":"DeploymentNumber"
+        },
+        "AllowRevert":{
+          "shape":"Boolean",
+          "box":true,
+          "location":"header",
+          "locationName":"Allow-Revert"
         }
       }
     },
@@ -2114,6 +2196,12 @@
         }
       }
     },
+    "UpdateAccountSettingsRequest":{
+      "type":"structure",
+      "members":{
+        "DeletionProtection":{"shape":"DeletionProtectionSettings"}
+      }
+    },
     "UpdateApplicationRequest":{
       "type":"structure",
       "required":["ApplicationId"],
@@ -2144,7 +2232,7 @@
           "location":"uri",
           "locationName":"ConfigurationProfileId"
         },
-        "Name":{"shape":"Name"},
+        "Name":{"shape":"LongName"},
         "Description":{"shape":"Description"},
         "RetrievalRoleArn":{"shape":"RoleArn"},
         "Validators":{"shape":"ValidatorList"},

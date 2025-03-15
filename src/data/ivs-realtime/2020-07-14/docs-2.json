@@ -1,33 +1,42 @@
 {
   "version": "2.0",
-  "service": "<p> <b>Introduction</b> </p> <p>The Amazon Interactive Video Service (IVS) real-time API is REST compatible, using a standard HTTP API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses, including errors. </p> <p>Terminology:</p> <ul> <li> <p>A <i>stage</i> is a virtual space where participants can exchange video in real time.</p> </li> <li> <p>A <i>participant token</i> is a token that authenticates a participant when they join a stage.</p> </li> <li> <p>A <i>participant object</i> represents participants (people) in the stage and contains information about them. When a token is created, it includes a participant ID; when a participant uses that token to join a stage, the participant is associated with that participant ID. There is a 1:1 mapping between participant tokens and participants.</p> </li> <li> <p>Server-side composition: The <i>composition</i> process composites participants of a stage into a single video and forwards it to a set of outputs (e.g., IVS channels). Composition endpoints support this process.</p> </li> <li> <p>Server-side composition: A <i>composition</i> controls the look of the outputs, including how participants are positioned in the video.</p> </li> </ul> <p> <b>Resources</b> </p> <p>The following resources contain information about your IVS live stream (see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html\">Getting Started with Amazon IVS Real-Time Streaming</a>):</p> <ul> <li> <p> <b>Stage</b> — A stage is a virtual space where participants can exchange video in real time.</p> </li> </ul> <p> <b>Tagging</b> </p> <p>A <i>tag</i> is a metadata label that you assign to an AWS resource. A tag comprises a <i>key</i> and a <i>value</i>, both set by you. For example, you might set a tag as <code>topic:nature</code> to label a particular video category. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for more information, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS stages has no service-specific constraints beyond what is documented there.</p> <p>Tags can help you identify and organize your AWS resources. For example, you can use the same tag for different resources to indicate that they are related. You can also use tags to manage access (see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Access Tags</a>).</p> <p>The Amazon IVS real-time API has these tag-related endpoints: <a>TagResource</a>, <a>UntagResource</a>, and <a>ListTagsForResource</a>. The following resource supports tagging: Stage.</p> <p>At most 50 tags can be applied to a resource.</p> <p> <b>Stages Endpoints</b> </p> <ul> <li> <p> <a>CreateParticipantToken</a> — Creates an additional token for a specified stage. This can be done after stage creation or when tokens expire.</p> </li> <li> <p> <a>CreateStage</a> — Creates a new stage (and optionally participant tokens).</p> </li> <li> <p> <a>DeleteStage</a> — Shuts down and deletes the specified stage (disconnecting all participants).</p> </li> <li> <p> <a>DisconnectParticipant</a> — Disconnects a specified participant and revokes the participant permanently from a specified stage.</p> </li> <li> <p> <a>GetParticipant</a> — Gets information about the specified participant token.</p> </li> <li> <p> <a>GetStage</a> — Gets information for the specified stage.</p> </li> <li> <p> <a>GetStageSession</a> — Gets information for the specified stage session.</p> </li> <li> <p> <a>ListParticipantEvents</a> — Lists events for a specified participant that occurred during a specified stage session.</p> </li> <li> <p> <a>ListParticipants</a> — Lists all participants in a specified stage session.</p> </li> <li> <p> <a>ListStages</a> — Gets summary information about all stages in your account, in the AWS region where the API request is processed.</p> </li> <li> <p> <a>ListStageSessions</a> — Gets all sessions for a specified stage.</p> </li> <li> <p> <a>UpdateStage</a> — Updates a stage’s configuration.</p> </li> </ul> <p> <b>Composition Endpoints</b> </p> <ul> <li> <p> <a>GetComposition</a> — Gets information about the specified Composition resource.</p> </li> <li> <p> <a>ListCompositions</a> — Gets summary information about all Compositions in your account, in the AWS region where the API request is processed.</p> </li> <li> <p> <a>StartComposition</a> — Starts a Composition from a stage based on the configuration provided in the request.</p> </li> <li> <p> <a>StopComposition</a> — Stops and deletes a Composition resource. Any broadcast from the Composition resource is stopped.</p> </li> </ul> <p> <b>EncoderConfiguration Endpoints</b> </p> <ul> <li> <p> <a>CreateEncoderConfiguration</a> — Creates an EncoderConfiguration object.</p> </li> <li> <p> <a>DeleteEncoderConfiguration</a> — Deletes an EncoderConfiguration resource. Ensures that no Compositions are using this template; otherwise, returns an error.</p> </li> <li> <p> <a>GetEncoderConfiguration</a> — Gets information about the specified EncoderConfiguration resource.</p> </li> <li> <p> <a>ListEncoderConfigurations</a> — Gets summary information about all EncoderConfigurations in your account, in the AWS region where the API request is processed.</p> </li> </ul> <p> <b>StorageConfiguration Endpoints</b> </p> <ul> <li> <p> <a>CreateStorageConfiguration</a> — Creates a new storage configuration, used to enable recording to Amazon S3.</p> </li> <li> <p> <a>DeleteStorageConfiguration</a> — Deletes the storage configuration for the specified ARN.</p> </li> <li> <p> <a>GetStorageConfiguration</a> — Gets the storage configuration for the specified ARN.</p> </li> <li> <p> <a>ListStorageConfigurations</a> — Gets summary information about all storage configurations in your account, in the AWS region where the API request is processed.</p> </li> </ul> <p> <b>Tags Endpoints</b> </p> <ul> <li> <p> <a>ListTagsForResource</a> — Gets information about AWS tags for the specified ARN.</p> </li> <li> <p> <a>TagResource</a> — Adds or updates tags for the AWS resource with the specified ARN.</p> </li> <li> <p> <a>UntagResource</a> — Removes tags from the resource with the specified ARN.</p> </li> </ul>",
+  "service": "<p>The Amazon Interactive Video Service (IVS) real-time API is REST compatible, using a standard HTTP API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses, including errors. </p> <p> <b>Key Concepts</b> </p> <ul> <li> <p> <b>Stage</b> — A virtual space where participants can exchange video in real time.</p> </li> <li> <p> <b>Participant token</b> — A token that authenticates a participant when they join a stage.</p> </li> <li> <p> <b>Participant object</b> — Represents participants (people) in the stage and contains information about them. When a token is created, it includes a participant ID; when a participant uses that token to join a stage, the participant is associated with that participant ID. There is a 1:1 mapping between participant tokens and participants.</p> </li> </ul> <p>For server-side composition:</p> <ul> <li> <p> <b>Composition process</b> — Composites participants of a stage into a single video and forwards it to a set of outputs (e.g., IVS channels). Composition operations support this process.</p> </li> <li> <p> <b>Composition</b> — Controls the look of the outputs, including how participants are positioned in the video.</p> </li> </ul> <p>For more information about your IVS live stream, also see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html\">Getting Started with Amazon IVS Real-Time Streaming</a>.</p> <p> <b>Tagging</b> </p> <p>A <i>tag</i> is a metadata label that you assign to an AWS resource. A tag comprises a <i>key</i> and a <i>value</i>, both set by you. For example, you might set a tag as <code>topic:nature</code> to label a particular video category. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS stages has no service-specific constraints beyond what is documented there.</p> <p>Tags can help you identify and organize your AWS resources. For example, you can use the same tag for different resources to indicate that they are related. You can also use tags to manage access (see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Access Tags</a>).</p> <p>The Amazon IVS real-time API has these tag-related operations: <a>TagResource</a>, <a>UntagResource</a>, and <a>ListTagsForResource</a>. The following resource supports tagging: Stage.</p> <p>At most 50 tags can be applied to a resource.</p>",
   "operations": {
     "CreateEncoderConfiguration": "<p>Creates an EncoderConfiguration object.</p>",
+    "CreateIngestConfiguration": "<p>Creates a new IngestConfiguration resource, used to specify the ingest protocol for a stage.</p>",
     "CreateParticipantToken": "<p>Creates an additional token for a specified stage. This can be done after stage creation or when tokens expire. Tokens always are scoped to the stage for which they are created.</p> <p>Encryption keys are owned by Amazon IVS and never used directly by your application.</p>",
     "CreateStage": "<p>Creates a new stage (and optionally participant tokens).</p>",
     "CreateStorageConfiguration": "<p>Creates a new storage configuration, used to enable recording to Amazon S3. When a StorageConfiguration is created, IVS will modify the S3 bucketPolicy of the provided bucket. This will ensure that IVS has sufficient permissions to write content to the provided bucket.</p>",
     "DeleteEncoderConfiguration": "<p>Deletes an EncoderConfiguration resource. Ensures that no Compositions are using this template; otherwise, returns an error.</p>",
-    "DeleteStage": "<p>Shuts down and deletes the specified stage (disconnecting all participants).</p>",
+    "DeleteIngestConfiguration": "<p>Deletes a specified IngestConfiguration, so it can no longer be used to broadcast. An IngestConfiguration cannot be deleted if the publisher is actively streaming to a stage, unless <code>force</code> is set to <code>true</code>.</p>",
+    "DeletePublicKey": "<p>Deletes the specified public key used to sign stage participant tokens. This invalidates future participant tokens generated using the key pair’s private key. </p>",
+    "DeleteStage": "<p>Shuts down and deletes the specified stage (disconnecting all participants). This operation also removes the <code>stageArn</code> from the associated <a>IngestConfiguration</a>, if there are participants using the IngestConfiguration to publish to the stage.</p>",
     "DeleteStorageConfiguration": "<p>Deletes the storage configuration for the specified ARN.</p> <p>If you try to delete a storage configuration that is used by a Composition, you will get an error (409 ConflictException). To avoid this, for all Compositions that reference the storage configuration, first use <a>StopComposition</a> and wait for it to complete, then use DeleteStorageConfiguration.</p>",
-    "DisconnectParticipant": "<p>Disconnects a specified participant and revokes the participant permanently from a specified stage.</p>",
+    "DisconnectParticipant": "<p>Disconnects a specified participant from a specified stage. If the participant is publishing using an <a>IngestConfiguration</a>, DisconnectParticipant also updates the <code>stageArn</code> in the IngestConfiguration to be an empty string.</p>",
     "GetComposition": "<p>Get information about the specified Composition resource.</p>",
     "GetEncoderConfiguration": "<p>Gets information about the specified EncoderConfiguration resource. </p>",
+    "GetIngestConfiguration": "<p>Gets information about the specified IngestConfiguration.</p>",
     "GetParticipant": "<p>Gets information about the specified participant token.</p>",
+    "GetPublicKey": "<p>Gets information for the specified public key.</p>",
     "GetStage": "<p>Gets information for the specified stage.</p>",
     "GetStageSession": "<p>Gets information for the specified stage session.</p>",
     "GetStorageConfiguration": "<p>Gets the storage configuration for the specified ARN.</p>",
+    "ImportPublicKey": "<p>Import a public key to be used for signing stage participant tokens.</p>",
     "ListCompositions": "<p>Gets summary information about all Compositions in your account, in the AWS region where the API request is processed. </p>",
     "ListEncoderConfigurations": "<p>Gets summary information about all EncoderConfigurations in your account, in the AWS region where the API request is processed.</p>",
+    "ListIngestConfigurations": "<p>Lists all IngestConfigurations in your account, in the AWS region where the API request is processed.</p>",
     "ListParticipantEvents": "<p>Lists events for a specified participant that occurred during a specified stage session.</p>",
     "ListParticipants": "<p>Lists all participants in a specified stage session.</p>",
+    "ListPublicKeys": "<p>Gets summary information about all public keys in your account, in the AWS region where the API request is processed.</p>",
     "ListStageSessions": "<p>Gets all sessions for a specified stage.</p>",
     "ListStages": "<p>Gets summary information about all stages in your account, in the AWS region where the API request is processed.</p>",
     "ListStorageConfigurations": "<p>Gets summary information about all storage configurations in your account, in the AWS region where the API request is processed.</p>",
     "ListTagsForResource": "<p>Gets information about AWS tags for the specified ARN.</p>",
-    "StartComposition": "<p>Starts a Composition from a stage based on the configuration provided in the request.</p> <p>A Composition is an ephemeral resource that exists after this endpoint returns successfully. Composition stops and the resource is deleted:</p> <ul> <li> <p>When <a>StopComposition</a> is called.</p> </li> <li> <p>After a 1-minute timeout, when all participants are disconnected from the stage.</p> </li> <li> <p>After a 1-minute timeout, if there are no participants in the stage when StartComposition is called.</p> </li> <li> <p>When broadcasting to the IVS channel fails and all retries are exhausted.</p> </li> <li> <p>When broadcasting is disconnected and all attempts to reconnect are exhausted.</p> </li> </ul>",
+    "StartComposition": "<p>Starts a Composition from a stage based on the configuration provided in the request.</p> <p>A Composition is an ephemeral resource that exists after this operation returns successfully. Composition stops and the resource is deleted:</p> <ul> <li> <p>When <a>StopComposition</a> is called.</p> </li> <li> <p>After a 1-minute timeout, when all participants are disconnected from the stage.</p> </li> <li> <p>After a 1-minute timeout, if there are no participants in the stage when StartComposition is called.</p> </li> <li> <p>When broadcasting to the IVS channel fails and all retries are exhausted.</p> </li> <li> <p>When broadcasting is disconnected and all attempts to reconnect are exhausted.</p> </li> </ul>",
     "StopComposition": "<p>Stops and deletes a Composition resource. Any broadcast from the Composition resource is stopped.</p>",
     "TagResource": "<p>Adds or updates tags for the AWS resource with the specified ARN.</p>",
     "UntagResource": "<p>Removes tags from the resource with the specified ARN.</p>",
+    "UpdateIngestConfiguration": "<p>Updates a specified IngestConfiguration. Only the stage ARN attached to the IngestConfiguration can be updated. An IngestConfiguration that is active cannot be updated.</p>",
     "UpdateStage": "<p>Updates a stage’s configuration.</p>"
   },
   "shapes": {
@@ -39,15 +48,35 @@
     "AttributeKey": {
       "base": null,
       "refs": {
-        "GridConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot.</p>",
-        "PipConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot.</p>",
-        "PipConfiguration$pipParticipantAttribute": "<p>Identifies the PiP slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the PiP slot.</p>"
+        "GridConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot. Default: <code>\"\"</code> (no featured participant).</p>",
+        "PipConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot. Default: <code>\"\"</code> (no featured participant).</p>",
+        "PipConfiguration$pipParticipantAttribute": "<p>Specifies the participant for the PiP window. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the PiP slot. Default: <code>\"\"</code> (no PiP participant).</p>"
+      }
+    },
+    "AutoParticipantRecordingConfiguration": {
+      "base": "<p>Object specifying a configuration for individual participant recording.</p>",
+      "refs": {
+        "CreateStageRequest$autoParticipantRecordingConfiguration": "<p>Configuration object for individual participant recording, to attach to the new stage.</p>",
+        "Stage$autoParticipantRecordingConfiguration": "<p>Configuration object for individual participant recording, attached to the stage.</p>",
+        "UpdateStageRequest$autoParticipantRecordingConfiguration": "<p>Configuration object for individual participant recording, to attach to the stage. Note that this cannot be updated while recording is active.</p>"
+      }
+    },
+    "AutoParticipantRecordingStorageConfigurationArn": {
+      "base": null,
+      "refs": {
+        "AutoParticipantRecordingConfiguration$storageConfigurationArn": "<p>ARN of the <a>StorageConfiguration</a> resource to use for individual participant recording. Default: <code>\"\"</code> (empty string, no storage configuration is specified). Individual participant recording cannot be started unless a storage configuration is specified, when a <a>Stage</a> is created or updated. To disable individual participant recording, set this to <code>\"\"</code>; other fields in this object will get reset to their defaults when sending <code>\"\"</code>. </p>"
       }
     },
     "Bitrate": {
       "base": null,
       "refs": {
         "Video$bitrate": "<p>Bitrate for generated output, in bps. Default: 2500000.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DeleteIngestConfigurationRequest$force": "<p>Optional field to force deletion of the IngestConfiguration. If this is set to <code>true</code> when a participant is actively publishing, the participant is disconnected from the stage, followed by deletion of the IngestConfiguration. Default: <code>false</code>.</p>"
       }
     },
     "ChannelArn": {
@@ -84,6 +113,18 @@
         "StartCompositionRequest$idempotencyToken": "<p>Idempotency token.</p>"
       }
     },
+    "CompositionRecordingHlsConfiguration": {
+      "base": "<p>An object representing a configuration of HLS recordings for server-side composition.</p>",
+      "refs": {
+        "RecordingConfiguration$hlsConfiguration": "<p>An HLS configuration object to return information about how the recording will be configured.</p>"
+      }
+    },
+    "CompositionRecordingTargetSegmentDurationSeconds": {
+      "base": null,
+      "refs": {
+        "CompositionRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when using composite recording. Segments may have durations shorter than the specified value when needed to ensure each segment begins with a keyframe. Default: 2.</p>"
+      }
+    },
     "CompositionState": {
       "base": null,
       "refs": {
@@ -103,6 +144,18 @@
         "ListCompositionsResponse$compositions": "<p>List of the matching Compositions (summary information only).</p>"
       }
     },
+    "CompositionThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video for a <a>Composition</a>.</p>",
+      "refs": {
+        "CompositionThumbnailConfigurationList$member": null
+      }
+    },
+    "CompositionThumbnailConfigurationList": {
+      "base": null,
+      "refs": {
+        "S3DestinationConfiguration$thumbnailConfigurations": "<p>A complex type that allows you to enable/disable the recording of thumbnails for a <a>Composition</a> and modify the interval at which thumbnails are generated for the live session.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p/>",
       "refs": {
@@ -114,6 +167,16 @@
       }
     },
     "CreateEncoderConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIngestConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIngestConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -154,6 +217,26 @@
       }
     },
     "DeleteEncoderConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIngestConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIngestConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePublicKeyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeletePublicKeyResponse": {
       "base": null,
       "refs": {
       }
@@ -304,7 +387,7 @@
     "EventErrorCode": {
       "base": null,
       "refs": {
-        "Event$errorCode": "<p>If the event is an error event, the error code is provided to give insight into the specific error that occurred. If the event is not an error event, this field is null. <code>INSUFFICIENT_CAPABILITIES</code> indicates that the participant tried to take an action that the participant’s token is not allowed to do. For more information about participant capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>. <code>QUOTA_EXCEEDED</code> indicates that the number of participants who want to publish/subscribe to a stage exceeds the quota; for more information, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\">Service Quotas</a>. <code>PUBLISHER_NOT_FOUND</code> indicates that the participant tried to subscribe to a publisher that doesn’t exist. </p>"
+        "Event$errorCode": "<p>If the event is an error event, the error code is provided to give insight into the specific error that occurred. If the event is not an error event, this field is null.</p> <ul> <li> <p> <code>B_FRAME_PRESENT</code> — The participant's stream includes B-frames. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>BITRATE_EXCEEDED</code> — The participant exceeded the maximum supported bitrate. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>INSUFFICIENT_CAPABILITIES</code> — The participant tried to take an action that the participant’s token is not allowed to do. For details on participant capabilities, see the <code>capabilities</code> field in <a>CreateParticipantToken</a>.</p> </li> <li> <p> <code>INTERNAL_SERVER_EXCEPTION</code> — The participant failed to publish to the stage due to an internal server error.</p> </li> <li> <p> <code>INVALID_AUDIO_CODEC</code> — The participant is using an invalid audio codec. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-stream-ingest.html\"> Stream Ingest</a>.</p> </li> <li> <p> <code>INVALID_INPUT</code> — The participant is using an invalid input stream.</p> </li> <li> <p> <code>INVALID_PROTOCOL</code> — The participant's IngestConfiguration resource is configured for RTMPS but they tried streaming with RTMP. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>INVALID_STREAM_KEY</code> — The participant is using an invalid stream key. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-rtmp-publishing.html\"> IVS RTMP Publishing</a>.</p> </li> <li> <p> <code>INVALID_VIDEO_CODEC</code> — The participant is using an invalid video codec. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/rt-stream-ingest.html\"> Stream Ingest</a>.</p> </li> <li> <p> <code>PUBLISHER_NOT_FOUND</code> — The participant tried to subscribe to a publisher that doesn’t exist.</p> </li> <li> <p> <code>QUOTA_EXCEEDED</code> — The number of participants who want to publish/subscribe to a stage exceeds the quota. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>RESOLUTION_EXCEEDED</code> — The participant exceeded the maximum supported resolution. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> <li> <p> <code>REUSE_OF_STREAM_KEY</code> — The participant tried to use a stream key that is associated with another active stage session.</p> </li> <li> <p> <code>STREAM_DURATION_EXCEEDED</code> — The participant exceeded the maximum allowed stream duration. For details, see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/service-quotas.html\"> Service Quotas</a>.</p> </li> </ul>"
       }
     },
     "EventList": {
@@ -345,12 +428,32 @@
       "refs": {
       }
     },
+    "GetIngestConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIngestConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetParticipantRequest": {
       "base": null,
       "refs": {
       }
     },
     "GetParticipantResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPublicKeyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPublicKeyResponse": {
       "base": null,
       "refs": {
       }
@@ -401,7 +504,86 @@
     "Height": {
       "base": null,
       "refs": {
-        "Video$height": "<p>Video-resolution height. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 720.</p>"
+        "Video$height": "<p>Video-resolution height. This must be an even number. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 720.</p>"
+      }
+    },
+    "ImportPublicKeyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ImportPublicKeyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "IngestConfiguration": {
+      "base": "<p>Object specifying an ingest configuration.</p>",
+      "refs": {
+        "CreateIngestConfigurationResponse$ingestConfiguration": "<p>The IngestConfiguration that was created.</p>",
+        "GetIngestConfigurationResponse$ingestConfiguration": "<p>The IngestConfiguration that was returned.</p>",
+        "UpdateIngestConfigurationResponse$ingestConfiguration": "<p>The updated IngestConfiguration.</p>"
+      }
+    },
+    "IngestConfigurationArn": {
+      "base": null,
+      "refs": {
+        "DeleteIngestConfigurationRequest$arn": "<p>ARN of the IngestConfiguration.</p>",
+        "GetIngestConfigurationRequest$arn": "<p>ARN of the ingest for which the information is to be retrieved.</p>",
+        "IngestConfiguration$arn": "<p>Ingest configuration ARN.</p>",
+        "IngestConfigurationSummary$arn": "<p>Ingest configuration ARN.</p>",
+        "UpdateIngestConfigurationRequest$arn": "<p>ARN of the IngestConfiguration, for which the related stage ARN needs to be updated.</p>"
+      }
+    },
+    "IngestConfigurationList": {
+      "base": null,
+      "refs": {
+        "ListIngestConfigurationsResponse$ingestConfigurations": "<p>List of the matching ingest configurations (summary information only).</p>"
+      }
+    },
+    "IngestConfigurationName": {
+      "base": null,
+      "refs": {
+        "CreateIngestConfigurationRequest$name": "<p>Optional name that can be specified for the IngestConfiguration being created.</p>",
+        "IngestConfiguration$name": "<p>Ingest name</p>",
+        "IngestConfigurationSummary$name": "<p>Ingest name.</p>"
+      }
+    },
+    "IngestConfigurationStageArn": {
+      "base": null,
+      "refs": {
+        "CreateIngestConfigurationRequest$stageArn": "<p>ARN of the stage with which the IngestConfiguration is associated.</p>",
+        "IngestConfiguration$stageArn": "<p>ARN of the stage with which the IngestConfiguration is associated.</p>",
+        "IngestConfigurationSummary$stageArn": "<p>ARN of the stage with which the IngestConfiguration is associated.</p>",
+        "UpdateIngestConfigurationRequest$stageArn": "<p>Stage ARN that needs to be updated.</p>"
+      }
+    },
+    "IngestConfigurationState": {
+      "base": null,
+      "refs": {
+        "IngestConfiguration$state": "<p>State of the ingest configuration. It is <code>ACTIVE</code> if a publisher currently is publishing to the stage associated with the ingest configuration.</p>",
+        "IngestConfigurationSummary$state": "<p>State of the ingest configuration. It is <code>ACTIVE</code> if a publisher currently is publishing to the stage associated with the ingest configuration.</p>",
+        "ListIngestConfigurationsRequest$filterByState": "<p>Filters the response list to match the specified state. Only one filter (by stage ARN or by state) can be used at a time.</p>"
+      }
+    },
+    "IngestConfigurationSummary": {
+      "base": "<p>Summary information about an IngestConfiguration.</p>",
+      "refs": {
+        "IngestConfigurationList$member": null
+      }
+    },
+    "IngestProtocol": {
+      "base": null,
+      "refs": {
+        "CreateIngestConfigurationRequest$ingestProtocol": "<p>Type of ingest protocol that the user employs to broadcast. If this is set to <code>RTMP</code>, <code>insecureIngest</code> must be set to <code>true</code>.</p>",
+        "IngestConfiguration$ingestProtocol": "<p>Type of ingest protocol that the user employs for broadcasting.</p>",
+        "IngestConfigurationSummary$ingestProtocol": "<p>Type of ingest protocol that the user employs for broadcasting.</p>"
+      }
+    },
+    "InsecureIngest": {
+      "base": null,
+      "refs": {
+        "CreateIngestConfigurationRequest$insecureIngest": "<p>Whether the stage allows insecure RTMP ingest. This must be set to <code>true</code>, if <code>ingestProtocol</code> is set to <code>RTMP</code>. Default: <code>false</code>. </p>"
       }
     },
     "InternalServerException": {
@@ -436,6 +618,16 @@
       "refs": {
       }
     },
+    "ListIngestConfigurationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIngestConfigurationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListParticipantEventsRequest": {
       "base": null,
       "refs": {
@@ -452,6 +644,16 @@
       }
     },
     "ListParticipantsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPublicKeysRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPublicKeysResponse": {
       "base": null,
       "refs": {
       }
@@ -508,6 +710,12 @@
         "ListEncoderConfigurationsRequest$maxResults": "<p>Maximum number of results to return. Default: 100.</p>"
       }
     },
+    "MaxIngestConfigurationResults": {
+      "base": null,
+      "refs": {
+        "ListIngestConfigurationsRequest$maxResults": "<p>Maximum number of results to return. Default: 50.</p>"
+      }
+    },
     "MaxParticipantEventResults": {
       "base": null,
       "refs": {
@@ -518,6 +726,12 @@
       "base": null,
       "refs": {
         "ListParticipantsRequest$maxResults": "<p>Maximum number of results to return. Default: 50.</p>"
+      }
+    },
+    "MaxPublicKeyResults": {
+      "base": null,
+      "refs": {
+        "ListPublicKeysRequest$maxResults": "<p>Maximum number of results to return. Default: 50.</p>"
       }
     },
     "MaxStageResults": {
@@ -552,10 +766,14 @@
         "ListCompositionsResponse$nextToken": "<p>If there are more compositions than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListEncoderConfigurationsRequest$nextToken": "<p>The first encoder configuration to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListEncoderConfigurationsResponse$nextToken": "<p>If there are more encoder configurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
+        "ListIngestConfigurationsRequest$nextToken": "<p>The first IngestConfiguration to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
+        "ListIngestConfigurationsResponse$nextToken": "<p>If there are more IngestConfigurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListParticipantEventsRequest$nextToken": "<p>The first participant event to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListParticipantEventsResponse$nextToken": "<p>If there are more events than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set. </p>",
         "ListParticipantsRequest$nextToken": "<p>The first participant to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListParticipantsResponse$nextToken": "<p>If there are more participants than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
+        "ListPublicKeysRequest$nextToken": "<p>The first public key to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
+        "ListPublicKeysResponse$nextToken": "<p>If there are more public keys than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListStageSessionsRequest$nextToken": "<p>The first stage session to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListStageSessionsResponse$nextToken": "<p>If there are more stage sessions than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListStagesRequest$nextToken": "<p>The first stage to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
@@ -573,17 +791,19 @@
     "ParticipantAttributes": {
       "base": null,
       "refs": {
+        "CreateIngestConfigurationRequest$attributes": "<p>Application-provided attributes to store in the IngestConfiguration and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "IngestConfiguration$attributes": "<p>Application-provided attributes to to store in the IngestConfiguration and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
         "Participant$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information</i>.</p>"
       }
     },
     "ParticipantClientAttribute": {
       "base": null,
       "refs": {
-        "Participant$browserName": "<p>The participant’s browser.</p>",
-        "Participant$browserVersion": "<p>The participant’s browser version.</p>",
         "Participant$ispName": "<p>The participant’s Internet Service Provider.</p>",
         "Participant$osName": "<p>The participant’s operating system.</p>",
         "Participant$osVersion": "<p>The participant’s operating system version.</p>",
+        "Participant$browserName": "<p>The participant’s browser.</p>",
+        "Participant$browserVersion": "<p>The participant’s browser version.</p>",
         "Participant$sdkVersion": "<p>The participant’s SDK version.</p>"
       }
     },
@@ -593,6 +813,8 @@
         "Event$participantId": "<p>Unique identifier for the participant who triggered the event. This is assigned by IVS.</p>",
         "Event$remoteParticipantId": "<p>Unique identifier for the remote participant. For a subscribe event, this is the publisher. For a publish or join event, this is null. This is assigned by IVS.</p>",
         "GetParticipantRequest$participantId": "<p>Unique identifier for the participant. This is assigned by IVS and returned by <a>CreateParticipantToken</a>.</p>",
+        "IngestConfiguration$participantId": "<p>ID of the participant within the stage.</p>",
+        "IngestConfigurationSummary$participantId": "<p>ID of the participant within the stage.</p>",
         "ListParticipantEventsRequest$participantId": "<p>Unique identifier for this participant. This is assigned by IVS and returned by <a>CreateParticipantToken</a>.</p>",
         "Participant$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>",
         "ParticipantSummary$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>"
@@ -604,10 +826,71 @@
         "ListParticipantsResponse$participants": "<p>List of the matching participants (summary information only).</p>"
       }
     },
+    "ParticipantProtocol": {
+      "base": null,
+      "refs": {
+        "Participant$protocol": "<p>Type of ingest protocol that the participant employs for broadcasting.</p>"
+      }
+    },
+    "ParticipantRecordingFilterByRecordingState": {
+      "base": null,
+      "refs": {
+        "ListParticipantsRequest$filterByRecordingState": "<p>Filters the response list to only show participants with the specified recording state. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, <code>filterByState</code>, or <code>filterByRecordingState</code> can be provided per request.</p>"
+      }
+    },
+    "ParticipantRecordingHlsConfiguration": {
+      "base": "<p>An object representing a configuration of participant HLS recordings for individual participant recording.</p>",
+      "refs": {
+        "AutoParticipantRecordingConfiguration$hlsConfiguration": "<p>HLS configuration object for individual participant recording.</p>"
+      }
+    },
+    "ParticipantRecordingMediaType": {
+      "base": null,
+      "refs": {
+        "ParticipantRecordingMediaTypeList$member": null
+      }
+    },
+    "ParticipantRecordingMediaTypeList": {
+      "base": null,
+      "refs": {
+        "AutoParticipantRecordingConfiguration$mediaTypes": "<p>Types of media to be recorded. Default: <code>AUDIO_VIDEO</code>.</p>"
+      }
+    },
+    "ParticipantRecordingReconnectWindowSeconds": {
+      "base": null,
+      "refs": {
+        "AutoParticipantRecordingConfiguration$recordingReconnectWindowSeconds": "<p>If a stage publisher disconnects and then reconnects within the specified interval, the multiple recordings will be considered a single recording and merged together.</p> <p>The default value is 0, which disables merging.</p>"
+      }
+    },
+    "ParticipantRecordingS3BucketName": {
+      "base": null,
+      "refs": {
+        "Participant$recordingS3BucketName": "<p>Name of the S3 bucket to where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled.</p>"
+      }
+    },
+    "ParticipantRecordingS3Prefix": {
+      "base": null,
+      "refs": {
+        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled.</p>"
+      }
+    },
+    "ParticipantRecordingState": {
+      "base": null,
+      "refs": {
+        "Participant$recordingState": "<p>The participant’s recording state.</p>",
+        "ParticipantSummary$recordingState": "<p>The participant’s recording state.</p>"
+      }
+    },
+    "ParticipantRecordingTargetSegmentDurationSeconds": {
+      "base": null,
+      "refs": {
+        "ParticipantRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when recording a stage participant. Segments may have durations longer than the specified value when needed to ensure each segment begins with a keyframe. Default: 6.</p>"
+      }
+    },
     "ParticipantState": {
       "base": null,
       "refs": {
-        "ListParticipantsRequest$filterByState": "<p>Filters the response list to only show participants in the specified state. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, or <code>filterByState</code> can be provided per request.</p>",
+        "ListParticipantsRequest$filterByState": "<p>Filters the response list to only show participants in the specified state. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, <code>filterByState</code>, or <code>filterByRecordingState</code> can be provided per request.</p>",
         "Participant$state": "<p>Whether the participant is connected to or disconnected from the stage.</p>",
         "ParticipantSummary$state": "<p>Whether the participant is connected to or disconnected from the stage.</p>"
       }
@@ -616,6 +899,12 @@
       "base": "<p>Summary object describing a participant that has joined a stage.</p>",
       "refs": {
         "ParticipantList$member": null
+      }
+    },
+    "ParticipantThumbnailConfiguration": {
+      "base": "<p>An object representing a configuration of thumbnails for recorded video from an individual participant.</p>",
+      "refs": {
+        "AutoParticipantRecordingConfiguration$thumbnailConfiguration": "<p>A complex type that allows you to enable/disable the recording of thumbnails for individual participant recording and modify the interval at which thumbnails are generated for the live session.</p>"
       }
     },
     "ParticipantToken": {
@@ -676,7 +965,7 @@
     "ParticipantTokenId": {
       "base": null,
       "refs": {
-        "DisconnectParticipantRequest$participantId": "<p>Identifier of the participant to be disconnected. This is assigned by IVS and returned by <a>CreateParticipantToken</a>.</p>",
+        "DisconnectParticipantRequest$participantId": "<p>Identifier of the participant to be disconnected. IVS assigns this; it is returned by <a>CreateParticipantToken</a> (for streams using WebRTC ingest) or <a>CreateIngestConfiguration</a> (for streams using RTMP ingest).</p>",
         "ParticipantToken$participantId": "<p>Unique identifier for this participant token, assigned by IVS.</p>"
       }
     },
@@ -708,7 +997,7 @@
     "PipBehavior": {
       "base": null,
       "refs": {
-        "PipConfiguration$pipBehavior": "<p>Defines PiP behavior when all participants have left. Default: <code>STATIC</code>.</p>"
+        "PipConfiguration$pipBehavior": "<p>Defines PiP behavior when all participants have left: <code>STATIC</code> (maintains original position/size) or <code>DYNAMIC</code> (expands to full composition). Default: <code>STATIC</code>.</p>"
       }
     },
     "PipConfiguration": {
@@ -741,10 +1030,59 @@
         "PipConfiguration$pipWidth": "<p>Specifies the width of the PiP window in pixels. When this is not set explicitly, <code>pipWidth</code>’s value will be based on the size of the composition and the aspect ratio of the participant’s video.</p>"
       }
     },
+    "PublicKey": {
+      "base": "<p>Object specifying a public key used to sign stage participant tokens.</p>",
+      "refs": {
+        "GetPublicKeyResponse$publicKey": "<p>The public key that is returned.</p>",
+        "ImportPublicKeyResponse$publicKey": "<p>The public key that was imported.</p>"
+      }
+    },
+    "PublicKeyArn": {
+      "base": null,
+      "refs": {
+        "DeletePublicKeyRequest$arn": "<p>ARN of the public key to be deleted.</p>",
+        "GetPublicKeyRequest$arn": "<p>ARN of the public key for which the information is to be retrieved.</p>",
+        "PublicKey$arn": "<p>Public key ARN.</p>",
+        "PublicKeySummary$arn": "<p>Public key ARN.</p>"
+      }
+    },
+    "PublicKeyFingerprint": {
+      "base": null,
+      "refs": {
+        "PublicKey$fingerprint": "<p>The public key fingerprint, a short string used to identify or verify the full public key.</p>"
+      }
+    },
+    "PublicKeyList": {
+      "base": null,
+      "refs": {
+        "ListPublicKeysResponse$publicKeys": "<p>List of the matching public keys (summary information only).</p>"
+      }
+    },
+    "PublicKeyMaterial": {
+      "base": null,
+      "refs": {
+        "ImportPublicKeyRequest$publicKeyMaterial": "<p>The content of the public key to be imported.</p>",
+        "PublicKey$publicKeyMaterial": "<p>Public key material.</p>"
+      }
+    },
+    "PublicKeyName": {
+      "base": null,
+      "refs": {
+        "ImportPublicKeyRequest$name": "<p>Name of the public key to be imported.</p>",
+        "PublicKey$name": "<p>Public key name.</p>",
+        "PublicKeySummary$name": "<p>Public key name.</p>"
+      }
+    },
+    "PublicKeySummary": {
+      "base": "<p>Summary information about a public key.</p>",
+      "refs": {
+        "PublicKeyList$member": null
+      }
+    },
     "Published": {
       "base": null,
       "refs": {
-        "ListParticipantsRequest$filterByPublished": "<p>Filters the response list to only show participants who published during the stage session. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, or <code>filterByState</code> can be provided per request.</p>",
+        "ListParticipantsRequest$filterByPublished": "<p>Filters the response list to only show participants who published during the stage session. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, <code>filterByState</code>, or <code>filterByRecordingState</code> can be provided per request.</p>",
         "Participant$published": "<p>Whether the participant ever published to the stage session.</p>",
         "ParticipantSummary$published": "<p>Whether the participant ever published to the stage session.</p>"
       }
@@ -825,6 +1163,7 @@
         "GetStageRequest$arn": "<p>ARN of the stage for which the information is to be retrieved.</p>",
         "GetStageSessionRequest$stageArn": "<p>ARN of the stage for which the information is to be retrieved.</p>",
         "ListCompositionsRequest$filterByStageArn": "<p>Filters the Composition list to match the specified Stage ARN.</p>",
+        "ListIngestConfigurationsRequest$filterByStageArn": "<p>Filters the response list to match the specified stage ARN. Only one filter (by stage ARN or by state) can be used at a time.</p>",
         "ListParticipantEventsRequest$stageArn": "<p>Stage ARN.</p>",
         "ListParticipantsRequest$stageArn": "<p>Stage ARN.</p>",
         "ListStageSessionsRequest$stageArn": "<p>Stage ARN.</p>",
@@ -832,6 +1171,21 @@
         "StageSummary$arn": "<p>Stage ARN.</p>",
         "StartCompositionRequest$stageArn": "<p>ARN of the stage to be used for compositing.</p>",
         "UpdateStageRequest$arn": "<p>ARN of the stage to be updated.</p>"
+      }
+    },
+    "StageEndpoint": {
+      "base": null,
+      "refs": {
+        "StageEndpoints$events": "<p>Events endpoint.</p>",
+        "StageEndpoints$whip": "<p>The endpoint to be used for IVS real-time streaming using the WHIP protocol.</p>",
+        "StageEndpoints$rtmp": "<p>The endpoint to be used for IVS real-time streaming using the RTMP protocol.</p>",
+        "StageEndpoints$rtmps": "<p>The endpoint to be used for IVS real-time streaming using the RTMPS protocol.</p>"
+      }
+    },
+    "StageEndpoints": {
+      "base": "<p>Summary information about various endpoints for a stage. We recommend that you cache these values at stage creation; the values can be cached for up to 14 days.</p>",
+      "refs": {
+        "Stage$endpoints": "<p>Summary information about various endpoints for a stage.</p>"
       }
     },
     "StageName": {
@@ -943,16 +1297,78 @@
         "ListStorageConfigurationsResponse$storageConfigurations": "<p>List of the matching storage configurations.</p>"
       }
     },
+    "StreamKey": {
+      "base": null,
+      "refs": {
+        "IngestConfiguration$streamKey": "<p>Ingest-key value for the RTMP(S) protocol.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
+        "AccessDeniedException$accessControlAllowOrigin": "<p/>",
+        "AccessDeniedException$accessControlExposeHeaders": "<p/>",
+        "AccessDeniedException$cacheControl": "<p/>",
+        "AccessDeniedException$contentSecurityPolicy": "<p/>",
+        "AccessDeniedException$strictTransportSecurity": "<p/>",
+        "AccessDeniedException$xContentTypeOptions": "<p/>",
+        "AccessDeniedException$xFrameOptions": "<p/>",
+        "AccessDeniedException$xAmznErrorType": "<p/>",
+        "ConflictException$accessControlAllowOrigin": "<p/>",
+        "ConflictException$accessControlExposeHeaders": "<p/>",
+        "ConflictException$cacheControl": "<p/>",
+        "ConflictException$contentSecurityPolicy": "<p/>",
+        "ConflictException$strictTransportSecurity": "<p/>",
+        "ConflictException$xContentTypeOptions": "<p/>",
+        "ConflictException$xFrameOptions": "<p/>",
+        "ConflictException$xAmznErrorType": "<p/>",
         "Destination$id": "<p>Unique identifier for this destination, assigned by IVS.</p>",
         "DestinationSummary$id": "<p>Unique identifier for this destination, assigned by IVS.</p>",
+        "InternalServerException$accessControlAllowOrigin": "<p/>",
+        "InternalServerException$accessControlExposeHeaders": "<p/>",
+        "InternalServerException$cacheControl": "<p/>",
+        "InternalServerException$contentSecurityPolicy": "<p/>",
+        "InternalServerException$strictTransportSecurity": "<p/>",
+        "InternalServerException$xContentTypeOptions": "<p/>",
+        "InternalServerException$xFrameOptions": "<p/>",
+        "InternalServerException$xAmznErrorType": "<p/>",
         "ParticipantAttributes$key": null,
         "ParticipantAttributes$value": null,
         "ParticipantTokenAttributes$key": null,
         "ParticipantTokenAttributes$value": null,
-        "S3Detail$recordingPrefix": "<p>The S3 bucket prefix under which the recording is stored.</p>"
+        "PendingVerification$accessControlAllowOrigin": "<p/>",
+        "PendingVerification$accessControlExposeHeaders": "<p/>",
+        "PendingVerification$cacheControl": "<p/>",
+        "PendingVerification$contentSecurityPolicy": "<p/>",
+        "PendingVerification$strictTransportSecurity": "<p/>",
+        "PendingVerification$xContentTypeOptions": "<p/>",
+        "PendingVerification$xFrameOptions": "<p/>",
+        "PendingVerification$xAmznErrorType": "<p/>",
+        "ResourceNotFoundException$accessControlAllowOrigin": "<p/>",
+        "ResourceNotFoundException$accessControlExposeHeaders": "<p/>",
+        "ResourceNotFoundException$cacheControl": "<p/>",
+        "ResourceNotFoundException$contentSecurityPolicy": "<p/>",
+        "ResourceNotFoundException$strictTransportSecurity": "<p/>",
+        "ResourceNotFoundException$xContentTypeOptions": "<p/>",
+        "ResourceNotFoundException$xFrameOptions": "<p/>",
+        "ResourceNotFoundException$xAmznErrorType": "<p/>",
+        "S3Detail$recordingPrefix": "<p>The S3 bucket prefix under which the recording is stored.</p>",
+        "ServiceQuotaExceededException$accessControlAllowOrigin": "<p/>",
+        "ServiceQuotaExceededException$accessControlExposeHeaders": "<p/>",
+        "ServiceQuotaExceededException$cacheControl": "<p/>",
+        "ServiceQuotaExceededException$contentSecurityPolicy": "<p/>",
+        "ServiceQuotaExceededException$strictTransportSecurity": "<p/>",
+        "ServiceQuotaExceededException$xContentTypeOptions": "<p/>",
+        "ServiceQuotaExceededException$xFrameOptions": "<p/>",
+        "ServiceQuotaExceededException$xAmznErrorType": "<p/>",
+        "ValidationException$accessControlAllowOrigin": "<p/>",
+        "ValidationException$accessControlExposeHeaders": "<p/>",
+        "ValidationException$cacheControl": "<p/>",
+        "ValidationException$contentSecurityPolicy": "<p/>",
+        "ValidationException$strictTransportSecurity": "<p/>",
+        "ValidationException$xContentTypeOptions": "<p/>",
+        "ValidationException$xFrameOptions": "<p/>",
+        "ValidationException$xAmznErrorType": "<p/>"
       }
     },
     "TagKey": {
@@ -965,7 +1381,7 @@
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$tagKeys": "<p>Array of tags to be removed. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints beyond what is documented there.</p>"
+        "UntagResourceRequest$tagKeys": "<p>Array of tag keys (strings) for the tags to be removed. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
       }
     },
     "TagResourceRequest": {
@@ -987,40 +1403,71 @@
     "Tags": {
       "base": null,
       "refs": {
-        "Composition$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "CompositionSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "CreateEncoderConfigurationRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "CreateStageRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there. </p>",
-        "CreateStorageConfigurationRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "EncoderConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "EncoderConfigurationSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "Composition$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "CompositionSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "CreateEncoderConfigurationRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "CreateIngestConfigurationRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "CreateStageRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there. </p>",
+        "CreateStorageConfigurationRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "EncoderConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "EncoderConfigurationSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "ImportPublicKeyRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "IngestConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
         "ListTagsForResourceResponse$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>.</p>",
-        "Stage$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "StageSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "StartCompositionRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "StorageConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "StorageConfigurationSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
-        "TagResourceRequest$tags": "<p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging AWS Resources</a> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints beyond what is documented there.</p>"
+        "PublicKey$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "PublicKeySummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "Stage$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "StageSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "StartCompositionRequest$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "StorageConfiguration$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "StorageConfigurationSummary$tags": "<p>Tags attached to the resource. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>",
+        "TagResourceRequest$tags": "<p>Array of tags to be added or updated. Array of maps, each of the form <code>string:string (key:value)</code>. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS has no constraints on tags beyond what is documented there.</p>"
+      }
+    },
+    "ThumbnailIntervalSeconds": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. Default: 60.</p>",
+        "ParticipantThumbnailConfiguration$targetIntervalSeconds": "<p>The targeted thumbnail-generation interval in seconds. This is configurable only if <code>recordingMode</code> is <code>INTERVAL</code>. Default: 60.</p>"
+      }
+    },
+    "ThumbnailRecordingMode": {
+      "base": null,
+      "refs": {
+        "ParticipantThumbnailConfiguration$recordingMode": "<p>Thumbnail recording mode. Default: <code>DISABLED</code>.</p>"
+      }
+    },
+    "ThumbnailStorageType": {
+      "base": null,
+      "refs": {
+        "ThumbnailStorageTypeList$member": null
+      }
+    },
+    "ThumbnailStorageTypeList": {
+      "base": null,
+      "refs": {
+        "CompositionThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/(width)x(height) directory, where (width) and (height) are the width and height of the thumbnail. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/(width)x(height)/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>",
+        "ParticipantThumbnailConfiguration$storage": "<p>Indicates the format in which thumbnails are recorded. <code>SEQUENTIAL</code> records all generated thumbnails in a serial manner, to the media/thumbnails/high directory. <code>LATEST</code> saves the latest thumbnail in media/latest_thumbnail/high/thumb.jpg and overwrites it at the interval specified by <code>targetIntervalSeconds</code>. You can enable both <code>SEQUENTIAL</code> and <code>LATEST</code>. Default: <code>SEQUENTIAL</code>.</p>"
       }
     },
     "Time": {
       "base": null,
       "refs": {
-        "Composition$endTime": "<p>UTC time of the Composition end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "Composition$startTime": "<p>UTC time of the Composition start. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "CompositionSummary$endTime": "<p>UTC time of the Composition end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "Composition$endTime": "<p>UTC time of the Composition end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "CompositionSummary$startTime": "<p>UTC time of the Composition start. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "Destination$endTime": "<p>UTC time of the destination end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "CompositionSummary$endTime": "<p>UTC time of the Composition end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "Destination$startTime": "<p>UTC time of the destination start. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
-        "DestinationSummary$endTime": "<p>UTC time of the destination end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "Destination$endTime": "<p>UTC time of the destination end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "DestinationSummary$startTime": "<p>UTC time of the destination start. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
+        "DestinationSummary$endTime": "<p>UTC time of the destination end. This is an ISO 8601 timestamp; <i>note that this is returned as a string</i>.</p>",
         "Event$eventTime": "<p>ISO 8601 timestamp (returned as a string) for when the event occurred.</p>",
         "Participant$firstJoinTime": "<p>ISO 8601 timestamp (returned as a string) when the participant first joined the stage session.</p>",
         "ParticipantSummary$firstJoinTime": "<p>ISO 8601 timestamp (returned as a string) when the participant first joined the stage session.</p>",
-        "StageSession$endTime": "<p>ISO 8601 timestamp (returned as a string) when the stage session ended. This is null if the stage is active.</p>",
         "StageSession$startTime": "<p> ISO 8601 timestamp (returned as a string) when this stage session began.</p>",
-        "StageSessionSummary$endTime": "<p>ISO 8601 timestamp (returned as a string) when the stage session ended. This is null if the stage is active.</p>",
-        "StageSessionSummary$startTime": "<p> ISO 8601 timestamp (returned as a string) when this stage session began.</p>"
+        "StageSession$endTime": "<p>ISO 8601 timestamp (returned as a string) when the stage session ended. This is null if the stage is active.</p>",
+        "StageSessionSummary$startTime": "<p> ISO 8601 timestamp (returned as a string) when this stage session began.</p>",
+        "StageSessionSummary$endTime": "<p>ISO 8601 timestamp (returned as a string) when the stage session ended. This is null if the stage is active.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -1029,6 +1476,16 @@
       }
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateIngestConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateIngestConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -1046,7 +1503,10 @@
     "UserId": {
       "base": null,
       "refs": {
-        "ListParticipantsRequest$filterByUserId": "<p>Filters the response list to match the specified user ID. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, or <code>filterByState</code> can be provided per request. A <code>userId</code> is a customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems.</p>",
+        "CreateIngestConfigurationRequest$userId": "<p>Customer-assigned name to help identify the participant using the IngestConfiguration; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "IngestConfiguration$userId": "<p>Customer-assigned name to help identify the participant using the IngestConfiguration; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "IngestConfigurationSummary$userId": "<p>Customer-assigned name to help identify the participant using the IngestConfiguration; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
+        "ListParticipantsRequest$filterByUserId": "<p>Filters the response list to match the specified user ID. Only one of <code>filterByUserId</code>, <code>filterByPublished</code>, <code>filterByState</code>, or <code>filterByRecordingState</code> can be provided per request. A <code>userId</code> is a customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems.</p>",
         "Participant$userId": "<p>Customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information</i>.</p>",
         "ParticipantSummary$userId": "<p>Customer-assigned name to help identify the token; this can be used to link a participant to a user in the customer’s own systems. This can be any UTF-8 encoded text. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information</i>.</p>"
       }
@@ -1066,20 +1526,20 @@
     "VideoAspectRatio": {
       "base": null,
       "refs": {
-        "GridConfiguration$videoAspectRatio": "<p>Sets the non-featured participant display mode. Default: <code>VIDEO</code>.</p>"
+        "GridConfiguration$videoAspectRatio": "<p>Sets the non-featured participant display mode, to control the aspect ratio of video tiles. <code>VIDEO</code> is 16:9, <code>SQUARE</code> is 1:1, and <code>PORTRAIT</code> is 3:4. Default: <code>VIDEO</code>.</p>"
       }
     },
     "VideoFillMode": {
       "base": null,
       "refs": {
-        "GridConfiguration$videoFillMode": "<p>Defines how video fits within the participant tile. When not set, <code>videoFillMode</code> defaults to <code>COVER</code> fill mode for participants in the grid and to <code>CONTAIN</code> fill mode for featured participants.</p>",
-        "PipConfiguration$videoFillMode": "<p>Defines how video fits within the participant tile. Default: <code>COVER</code>. </p>"
+        "GridConfiguration$videoFillMode": "<p>Defines how video content fits within the participant tile: <code>FILL</code> (stretched), <code>COVER</code> (cropped), or <code>CONTAIN</code> (letterboxed). When not set, <code>videoFillMode</code> defaults to <code>COVER</code> fill mode for participants in the grid and to <code>CONTAIN</code> fill mode for featured participants.</p>",
+        "PipConfiguration$videoFillMode": "<p>Defines how video content fits within the participant tile: <code>FILL</code> (stretched), <code>COVER</code> (cropped), or <code>CONTAIN</code> (letterboxed). Default: <code>COVER</code>.</p>"
       }
     },
     "Width": {
       "base": null,
       "refs": {
-        "Video$width": "<p>Video-resolution width. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 1280.</p>"
+        "Video$width": "<p>Video-resolution width. This must be an even number. Note that the maximum value is determined by <code>width</code> times <code>height</code>, such that the maximum total pixels is 2073600 (1920x1080 or 1080x1920). Default: 1280.</p>"
       }
     },
     "errorMessage": {

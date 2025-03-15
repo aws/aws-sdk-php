@@ -237,7 +237,7 @@
       "refs": {
         "Cluster$UnhealthyNodeReplacement": "<p>Indicates whether Amazon EMR should gracefully replace Amazon EC2 core instances that have degraded within the cluster.</p>",
         "CreateStudioInput$TrustedIdentityPropagationEnabled": "<p> A Boolean indicating whether to enable Trusted identity propagation for the Studio. The default value is <code>false</code>. </p>",
-        "EbsConfiguration$EbsOptimized": "<p>Indicates whether an Amazon EBS volume is EBS-optimized.</p>",
+        "EbsConfiguration$EbsOptimized": "<p>Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.</p>",
         "InstanceGroup$EbsOptimized": "<p>If the instance group is EBS-optimized. An Amazon EBS-optimized instance uses an optimized configuration stack and provides additional, dedicated capacity for Amazon EBS I/O.</p>",
         "InstanceTypeSpecification$EbsOptimized": "<p>Evaluates to <code>TRUE</code> when the specified <code>InstanceType</code> is EBS-optimized.</p>",
         "JobFlowInstancesConfig$UnhealthyNodeReplacement": "<p>Indicates whether Amazon EMR should gracefully replace core nodes that have degraded within the cluster.</p>",
@@ -876,7 +876,7 @@
       }
     },
     "InstanceFleetProvisioningSpecifications": {
-      "base": "<p>The launch specification for Spot Instances in the fleet, which determines the defined duration, provisioning timeout behavior, and allocation strategy.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. On-Demand and Spot instance allocation strategies are available in Amazon EMR releases 5.12.1 and later.</p> </note>",
+      "base": "<p>The launch specification for On-Demand and Spot Instances in the fleet.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. On-Demand and Spot instance allocation strategies are available in Amazon EMR releases 5.12.1 and later.</p> </note>",
       "refs": {
         "InstanceFleet$LaunchSpecifications": "<p>Describes the launch specification for an instance fleet. </p>",
         "InstanceFleetConfig$LaunchSpecifications": "<p>The launch specification for the instance fleet.</p>"
@@ -1127,7 +1127,8 @@
     "InstanceTypeConfigList": {
       "base": null,
       "refs": {
-        "InstanceFleetConfig$InstanceTypeConfigs": "<p>The instance type configurations that define the Amazon EC2 instances in the instance fleet.</p>"
+        "InstanceFleetConfig$InstanceTypeConfigs": "<p>The instance type configurations that define the Amazon EC2 instances in the instance fleet.</p>",
+        "InstanceFleetModifyConfig$InstanceTypeConfigs": "<p>An array of InstanceTypeConfig objects that specify how Amazon EMR provisions Amazon EC2 instances when it fulfills On-Demand and Spot capacities. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/APIReference/API_InstanceTypeConfig.html\">InstanceTypeConfig</a>.</p>"
       }
     },
     "InstanceTypeSpecification": {
@@ -1484,7 +1485,9 @@
       "refs": {
         "CloudWatchAlarmDefinition$Threshold": "<p>The value against which the specified statistic is compared.</p>",
         "InstanceTypeConfig$BidPriceAsPercentageOfOnDemandPrice": "<p>The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by <code>InstanceType</code>. Expressed as a number (for example, 20 specifies 20%). If neither <code>BidPrice</code> nor <code>BidPriceAsPercentageOfOnDemandPrice</code> is provided, <code>BidPriceAsPercentageOfOnDemandPrice</code> defaults to 100%.</p>",
-        "InstanceTypeSpecification$BidPriceAsPercentageOfOnDemandPrice": "<p>The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by <code>InstanceType</code>. Expressed as a number (for example, 20 specifies 20%).</p>"
+        "InstanceTypeConfig$Priority": "<p>The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first.</p>",
+        "InstanceTypeSpecification$BidPriceAsPercentageOfOnDemandPrice": "<p>The bid price, as a percentage of On-Demand price, for each Amazon EC2 Spot Instance as defined by <code>InstanceType</code>. Expressed as a number (for example, 20 specifies 20%).</p>",
+        "InstanceTypeSpecification$Priority": "<p>The priority at which Amazon EMR launches the Amazon EC2 instances with this instance type. Priority starts at 0, which is the highest priority. Amazon EMR considers the highest priority first.</p>"
       }
     },
     "NotebookExecution": {
@@ -1541,7 +1544,8 @@
     "OnDemandCapacityReservationOptions": {
       "base": "<p>Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity.</p>",
       "refs": {
-        "OnDemandProvisioningSpecification$CapacityReservationOptions": "<p>The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy.</p>"
+        "OnDemandProvisioningSpecification$CapacityReservationOptions": "<p>The launch specification for On-Demand instances in the instance fleet, which determines the allocation strategy.</p>",
+        "OnDemandResizingSpecification$CapacityReservationOptions": null
       }
     },
     "OnDemandCapacityReservationPreference": {
@@ -1559,19 +1563,20 @@
     "OnDemandProvisioningAllocationStrategy": {
       "base": null,
       "refs": {
-        "OnDemandProvisioningSpecification$AllocationStrategy": "<p>Specifies the strategy to use in launching On-Demand instance fleets. Currently, the only option is <code>lowest-price</code> (the default), which launches the lowest price first.</p>"
+        "OnDemandProvisioningSpecification$AllocationStrategy": "<p>Specifies the strategy to use in launching On-Demand instance fleets. Available options are <code>lowest-price</code> and <code>prioritized</code>. <code>lowest-price</code> specifies to launch the instances with the lowest price first, and <code>prioritized</code> specifies that Amazon EMR should launch the instances with the highest priority first. The default is <code>lowest-price</code>.</p>",
+        "OnDemandResizingSpecification$AllocationStrategy": "<p>Specifies the allocation strategy to use to launch On-Demand instances during a resize. The default is <code>lowest-price</code>.</p>"
       }
     },
     "OnDemandProvisioningSpecification": {
       "base": "<p> The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy. </p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. On-Demand Instances allocation strategy is available in Amazon EMR releases 5.12.1 and later.</p> </note>",
       "refs": {
-        "InstanceFleetProvisioningSpecifications$OnDemandSpecification": "<p> The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy. </p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. On-Demand Instances allocation strategy is available in Amazon EMR releases 5.12.1 and later.</p> </note>"
+        "InstanceFleetProvisioningSpecifications$OnDemandSpecification": "<p> The launch specification for On-Demand Instances in the instance fleet, which determines the allocation strategy and capacity reservation options.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. On-Demand Instances allocation strategy is available in Amazon EMR releases 5.12.1 and later.</p> </note>"
       }
     },
     "OnDemandResizingSpecification": {
       "base": "<p>The resize specification for On-Demand Instances in the instance fleet, which contains the resize timeout period. </p>",
       "refs": {
-        "InstanceFleetResizingSpecifications$OnDemandResizeSpecification": "<p>The resize specification for On-Demand Instances in the instance fleet, which contains the resize timeout period. </p>"
+        "InstanceFleetResizingSpecifications$OnDemandResizeSpecification": "<p>The resize specification for On-Demand Instances in the instance fleet, which contains the allocation strategy, capacity reservation options, and the resize timeout period. </p>"
       }
     },
     "OptionalArnType": {
@@ -1796,6 +1801,12 @@
         "AutoScalingPolicyDescription$Rules": "<p>The scale-in and scale-out rules that comprise the automatic scaling policy.</p>"
       }
     },
+    "ScalingStrategy": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$ScalingStrategy": "<p>Determines whether a custom scaling utilization performance index can be set. Possible values include <i>ADVANCED</i> or <i>DEFAULT</i>.</p>"
+      }
+    },
     "ScalingTrigger": {
       "base": "<p>The conditions that trigger an automatic scaling activity.</p>",
       "refs": {
@@ -1893,13 +1904,14 @@
     "SpotProvisioningAllocationStrategy": {
       "base": null,
       "refs": {
-        "SpotProvisioningSpecification$AllocationStrategy": "<p>Specifies one of the following strategies to launch Spot Instance fleets: <code>price-capacity-optimized</code>, <code>capacity-optimized</code>, <code>lowest-price</code>, or <code>diversified</code>. For more information on the provisioning strategies, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html\">Allocation strategies for Spot Instances</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> <note> <p>When you launch a Spot Instance fleet with the old console, it automatically launches with the <code>capacity-optimized</code> strategy. You can't change the allocation strategy from the old console.</p> </note>"
+        "SpotProvisioningSpecification$AllocationStrategy": "<p>Specifies one of the following strategies to launch Spot Instance fleets: <code>capacity-optimized</code>, <code>price-capacity-optimized</code>, <code>lowest-price</code>, or <code>diversified</code>, and <code>capacity-optimized-prioritized</code>. For more information on the provisioning strategies, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html\">Allocation strategies for Spot Instances</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p> <note> <p>When you launch a Spot Instance fleet with the old console, it automatically launches with the <code>capacity-optimized</code> strategy. You can't change the allocation strategy from the old console.</p> </note>",
+        "SpotResizingSpecification$AllocationStrategy": "<p>Specifies the allocation strategy to use to launch Spot instances during a resize. If you run Amazon EMR releases 6.9.0 or higher, the default is <code>price-capacity-optimized</code>. If you run Amazon EMR releases 6.8.0 or lower, the default is <code>capacity-optimized</code>.</p>"
       }
     },
     "SpotProvisioningSpecification": {
       "base": "<p>The launch specification for Spot Instances in the instance fleet, which determines the defined duration, provisioning timeout behavior, and allocation strategy.</p> <note> <p>The instance fleet configuration is available only in Amazon EMR releases 4.8.0 and later, excluding 5.0.x versions. Spot Instance allocation strategy is available in Amazon EMR releases 5.12.1 and later.</p> </note> <note> <p>Spot Instances with a defined duration (also known as Spot blocks) are no longer available to new customers from July 1, 2021. For customers who have previously used the feature, we will continue to support Spot Instances with a defined duration until December 31, 2022. </p> </note>",
       "refs": {
-        "InstanceFleetProvisioningSpecifications$SpotSpecification": "<p>The launch specification for Spot instances in the fleet, which determines the defined duration, provisioning timeout behavior, and allocation strategy.</p>"
+        "InstanceFleetProvisioningSpecifications$SpotSpecification": "<p>The launch specification for Spot instances in the fleet, which determines the allocation strategy, defined duration, and provisioning timeout behavior.</p>"
       }
     },
     "SpotProvisioningTimeoutAction": {
@@ -1911,7 +1923,7 @@
     "SpotResizingSpecification": {
       "base": "<p>The resize specification for Spot Instances in the instance fleet, which contains the resize timeout period. </p>",
       "refs": {
-        "InstanceFleetResizingSpecifications$SpotResizeSpecification": "<p>The resize specification for Spot Instances in the instance fleet, which contains the resize timeout period. </p>"
+        "InstanceFleetResizingSpecifications$SpotResizeSpecification": "<p>The resize specification for Spot Instances in the instance fleet, which contains the allocation strategy and the resize timeout period. </p>"
       }
     },
     "StartNotebookExecutionInput": {
@@ -2269,6 +2281,12 @@
         "Credentials$UsernamePassword": "<p>The username and password that you use to connect to cluster endpoints.</p>"
       }
     },
+    "UtilizationPerformanceIndexInteger": {
+      "base": null,
+      "refs": {
+        "ManagedScalingPolicy$UtilizationPerformanceIndex": "<p>An integer value that represents an advanced scaling strategy. Setting a higher value optimizes for performance. Setting a lower value optimizes for resource conservation. Setting the value to 50 balances performance and resource conservation. Possible values are 1, 25, 50, 75, and 100.</p>"
+      }
+    },
     "VolumeSpecification": {
       "base": "<p>EBS volume specifications such as volume type, IOPS, size (GiB) and throughput (MiB/s) that are requested for the EBS volume attached to an Amazon EC2 instance in the cluster.</p>",
       "refs": {
@@ -2406,7 +2424,10 @@
         "GetStudioSessionMappingInput$IdentityId": "<p>The globally unique identifier (GUID) of the user or group. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId\">UserId</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId\">GroupId</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "GetStudioSessionMappingInput$IdentityName": "<p>The name of the user or group to fetch. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName\">UserName</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName\">DisplayName</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "InstanceFleet$Name": "<p>A friendly name for the instance fleet.</p>",
+        "InstanceFleet$Context": "<p>Reserved.</p>",
         "InstanceFleetConfig$Name": "<p>The friendly name of the instance fleet.</p>",
+        "InstanceFleetConfig$Context": "<p>Reserved.</p>",
+        "InstanceFleetModifyConfig$Context": "<p>Reserved.</p>",
         "InstanceGroup$CustomAmiId": "<p>The custom AMI ID to use for the provisioned instance group.</p>",
         "InstanceGroupConfig$Name": "<p>Friendly name given to the instance group.</p>",
         "InstanceGroupConfig$BidPrice": "<p>If specified, indicates that the instance group uses Spot Instances. This is the maximum price you are willing to pay for Spot Instances. Specify <code>OnDemandPrice</code> to set the amount equal to the On-Demand price, or specify an amount in USD.</p>",

@@ -10,10 +10,12 @@
     "CommitTransaction": "<p>Attempts to commit the specified transaction. Returns an exception if the transaction was previously aborted. This API action is idempotent if called multiple times for the same transaction.</p>",
     "CreateDataCellsFilter": "<p>Creates a data cell filter to allow one to grant access to certain columns on certain rows.</p>",
     "CreateLFTag": "<p>Creates an LF-tag with the specified name and values.</p>",
+    "CreateLFTagExpression": "<p>Creates a new LF-Tag expression with the provided name, description, catalog ID, and expression body. This call fails if a LF-Tag expression with the same name already exists in the caller’s account or if the underlying LF-Tags don't exist. To call this API operation, caller needs the following Lake Formation permissions:</p> <p> <code>CREATE_LF_TAG_EXPRESSION</code> on the root catalog resource.</p> <p> <code>GRANT_WITH_LF_TAG_EXPRESSION</code> on all underlying LF-Tag key:value pairs included in the expression. </p>",
     "CreateLakeFormationIdentityCenterConfiguration": "<p>Creates an IAM Identity Center connection with Lake Formation to allow IAM Identity Center users and groups to access Data Catalog resources.</p>",
     "CreateLakeFormationOptIn": "<p>Enforce Lake Formation permissions for the given databases, tables, and principals.</p>",
     "DeleteDataCellsFilter": "<p>Deletes a data cell filter.</p>",
     "DeleteLFTag": "<p>Deletes the specified LF-tag given a key name. If the input parameter tag key was not found, then the operation will throw an exception. When you delete an LF-tag, the <code>LFTagPolicy</code> attached to the LF-tag becomes invalid. If the deleted LF-tag was still assigned to any resource, the tag policy attach to the deleted LF-tag will no longer be applied to the resource.</p>",
+    "DeleteLFTagExpression": "<p>Deletes the LF-Tag expression. The caller must be a data lake admin or have <code>DROP</code> permissions on the LF-Tag expression. Deleting a LF-Tag expression will also delete all <code>LFTagPolicy</code> permissions referencing the LF-Tag expression.</p>",
     "DeleteLakeFormationIdentityCenterConfiguration": "<p>Deletes an IAM Identity Center connection with Lake Formation.</p>",
     "DeleteLakeFormationOptIn": "<p>Remove the Lake Formation permissions enforcement of the given databases, tables, and principals.</p>",
     "DeleteObjectsOnCancel": "<p>For a specific governed table, provides a list of Amazon S3 objects that will be written during the current transaction and that can be automatically deleted if the transaction is canceled. Without this call, no Amazon S3 objects are automatically deleted when a transaction cancels. </p> <p> The Glue ETL library function <code>write_dynamic_frame.from_catalog()</code> includes an option to automatically call <code>DeleteObjectsOnCancel</code> before writes. For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/transactions-data-operations.html#rolling-back-writes\">Rolling Back Amazon S3 Writes</a>. </p>",
@@ -27,16 +29,18 @@
     "GetDataLakeSettings": "<p>Retrieves the list of the data lake administrators of a Lake Formation-managed data lake. </p>",
     "GetEffectivePermissionsForPath": "<p>Returns the Lake Formation permissions for a specified table or database resource located at a path in Amazon S3. <code>GetEffectivePermissionsForPath</code> will not return databases and tables if the catalog is encrypted.</p>",
     "GetLFTag": "<p>Returns an LF-tag definition.</p>",
+    "GetLFTagExpression": "<p>Returns the details about the LF-Tag expression. The caller must be a data lake admin or must have <code>DESCRIBE</code> permission on the LF-Tag expression resource. </p>",
     "GetQueryState": "<p>Returns the state of a query previously submitted. Clients are expected to poll <code>GetQueryState</code> to monitor the current state of the planning before retrieving the work units. A query state is only visible to the principal that made the initial call to <code>StartQueryPlanning</code>.</p>",
     "GetQueryStatistics": "<p>Retrieves statistics on the planning and execution of a query.</p>",
     "GetResourceLFTags": "<p>Returns the LF-tags applied to a resource.</p>",
     "GetTableObjects": "<p>Returns the set of Amazon S3 objects that make up the specified governed table. A transaction ID or timestamp can be specified for time-travel queries.</p>",
     "GetTemporaryGluePartitionCredentials": "<p>This API is identical to <code>GetTemporaryTableCredentials</code> except that this is used when the target Data Catalog resource is of type Partition. Lake Formation restricts the permission of the vended credentials with the same scope down policy which restricts access to a single Amazon S3 prefix.</p>",
-    "GetTemporaryGlueTableCredentials": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p>",
+    "GetTemporaryGlueTableCredentials": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p> <p>To call this API, the role that the service assumes must have <code>lakeformation:GetDataAccess</code> permission on the resource.</p>",
     "GetWorkUnitResults": "<p>Returns the work units resulting from the query. Work units can be executed in any order and in parallel. </p>",
     "GetWorkUnits": "<p>Retrieves the work units generated by the <code>StartQueryPlanning</code> operation.</p>",
     "GrantPermissions": "<p>Grants permissions to the principal to access metadata in the Data Catalog and data organized in underlying data storage such as Amazon S3.</p> <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
     "ListDataCellsFilter": "<p>Lists all the data cell filters on a table.</p>",
+    "ListLFTagExpressions": "<p>Returns the LF-Tag expressions in caller’s account filtered based on caller's permissions. Data Lake and read only admins implicitly can see all tag expressions in their account, else caller needs DESCRIBE permissions on tag expression.</p>",
     "ListLFTags": "<p>Lists LF-tags that the requester has permission to view. </p>",
     "ListLakeFormationOptIns": "<p>Retrieve the current list of resources and principals that are opt in to enforce Lake Formation permissions.</p>",
     "ListPermissions": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p> <p>This operation returns only those permissions that have been explicitly granted.</p> <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
@@ -44,7 +48,7 @@
     "ListTableStorageOptimizers": "<p>Returns the configuration of all storage optimizers associated with a specified table.</p>",
     "ListTransactions": "<p>Returns metadata about transactions and their status. To prevent the response from growing indefinitely, only uncommitted transactions and those available for time-travel queries are returned.</p> <p>This operation can help you identify uncommitted transactions or to get information about transactions.</p>",
     "PutDataLakeSettings": "<p>Sets the list of data lake administrators who have admin privileges on all resources managed by Lake Formation. For more information on admin privileges, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/lake-formation-permissions.html\">Granting Lake Formation Permissions</a>.</p> <p>This API replaces the current list of data lake admins with the new list being passed. To add an admin, fetch the current list and add the new admin to that list and pass that list in this API.</p>",
-    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen Amazon S3 path. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
+    "RegisterResource": "<p>Registers the resource as managed by the Data Catalog.</p> <p>To add or update data, Lake Formation needs read/write access to the chosen data location. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p> <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p> <p> <code>ResourceArn = arn:aws:s3:::my-bucket/ UseServiceLinkedRole = true</code> </p> <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p> <p> <code>arn:aws:iam::12345:role/my-data-access-role</code> </p>",
     "RemoveLFTagsFromResource": "<p>Removes an LF-tag from the resource. Only database, table, or tableWithColumns resource are allowed. To tag columns, use the column inclusion list in <code>tableWithColumns</code> to specify column input.</p>",
     "RevokePermissions": "<p>Revokes permissions to the principal to access metadata in the Data Catalog and data organized in underlying data storage such as Amazon S3.</p>",
     "SearchDatabasesByLFTags": "<p>This operation allows a search on <code>DATABASE</code> resources by <code>TagCondition</code>. This operation is used by admins who want to grant user permissions on certain <code>TagConditions</code>. Before making a grant, the admin can use <code>SearchDatabasesByTags</code> to find all resources where the given <code>TagConditions</code> are valid to verify whether the returned resources can be shared.</p>",
@@ -53,6 +57,7 @@
     "StartTransaction": "<p>Starts a new transaction and returns its transaction ID. Transaction IDs are opaque objects that you can use to identify a transaction.</p>",
     "UpdateDataCellsFilter": "<p>Updates a data cell filter.</p>",
     "UpdateLFTag": "<p>Updates the list of possible values for the specified LF-tag key. If the LF-tag does not exist, the operation throws an EntityNotFoundException. The values in the delete key values will be deleted from list of possible values. If any value in the delete key values is attached to a resource, then API errors out with a 400 Exception - \"Update not allowed\". Untag the attribute before deleting the LF-tag key's value. </p>",
+    "UpdateLFTagExpression": "<p>Updates the name of the LF-Tag expression to the new description and expression body provided. Updating a LF-Tag expression immediately changes the permission boundaries of all existing <code>LFTagPolicy</code> permission grants that reference the given LF-Tag expression.</p>",
     "UpdateLakeFormationIdentityCenterConfiguration": "<p>Updates the IAM Identity Center connection parameters.</p>",
     "UpdateResource": "<p>Updates the data access role used for vending access to the given (registered) resource in Lake Formation. </p>",
     "UpdateTableObjects": "<p>Updates the manifest of Amazon S3 objects that make up the specified governed table.</p>",
@@ -194,6 +199,12 @@
       "refs": {
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "RegisterResourceRequest$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>"
+      }
+    },
     "BooleanNullable": {
       "base": null,
       "refs": {
@@ -216,6 +227,8 @@
         "AddLFTagsToResourceRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "BatchGrantPermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "BatchRevokePermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "CatalogResource$Id": "<p>An identifier for the catalog resource.</p>",
+        "CreateLFTagExpressionRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "CreateLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "CreateLakeFormationIdentityCenterConfigurationRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, view definitions, and other control information to manage your Lake Formation environment.</p>",
         "DataCellsFilter$TableCatalogId": "<p>The ID of the catalog to which the table belongs.</p>",
@@ -223,6 +236,7 @@
         "DataLocationResource$CatalogId": "<p>The identifier for the Data Catalog where the location is registered with Lake Formation. By default, it is the account ID of the caller.</p>",
         "DatabaseResource$CatalogId": "<p>The identifier for the Data Catalog. By default, it is the account ID of the caller.</p>",
         "DeleteDataCellsFilterRequest$TableCatalogId": "<p>The ID of the catalog to which the table belongs.</p>",
+        "DeleteLFTagExpressionRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID in which the LF-Tag expression is saved. </p>",
         "DeleteLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "DeleteLakeFormationIdentityCenterConfigurationRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, view definition, and other control information to manage your Lake Formation environment.</p>",
         "DeleteObjectsOnCancelRequest$CatalogId": "<p>The Glue data catalog that contains the governed table. Defaults to the current account ID.</p>",
@@ -231,14 +245,19 @@
         "GetDataCellsFilterRequest$TableCatalogId": "<p>The ID of the catalog to which the table belongs.</p>",
         "GetDataLakeSettingsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "GetEffectivePermissionsForPathRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "GetLFTagExpressionRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID.</p>",
+        "GetLFTagExpressionResponse$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID in which the LF-Tag expression is saved.</p>",
         "GetLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "GetLFTagResponse$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "GetResourceLFTagsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "GetTableObjectsRequest$CatalogId": "<p>The catalog containing the governed table. Defaults to the caller’s account.</p>",
         "GrantPermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "LFTagExpression$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. </p>",
+        "LFTagExpressionResource$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. </p>",
         "LFTagKeyResource$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "LFTagPair$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "LFTagPolicyResource$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
+        "ListLFTagExpressionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. </p>",
         "ListLFTagsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "ListPermissionsRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "ListTableStorageOptimizersRequest$CatalogId": "<p>The Catalog ID of the table.</p>",
@@ -252,6 +271,7 @@
         "TableResource$CatalogId": "<p>The identifier for the Data Catalog. By default, it is the account ID of the caller.</p>",
         "TableWithColumnsResource$CatalogId": "<p>The identifier for the Data Catalog. By default, it is the account ID of the caller.</p>",
         "TrustedResourceOwners$member": null,
+        "UpdateLFTagExpressionRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. </p>",
         "UpdateLFTagRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>",
         "UpdateLakeFormationIdentityCenterConfigurationRequest$CatalogId": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, view definitions, and other control information to manage your Lake Formation environment.</p>",
         "UpdateTableObjectsRequest$CatalogId": "<p>The catalog containing the governed table to update. Defaults to the caller’s account ID.</p>",
@@ -313,6 +333,18 @@
       "refs": {
       }
     },
+    "Condition": {
+      "base": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+      "refs": {
+        "BatchPermissionsRequestEntry$Condition": null,
+        "CreateLakeFormationOptInRequest$Condition": null,
+        "DeleteLakeFormationOptInRequest$Condition": null,
+        "GrantPermissionsRequest$Condition": null,
+        "LakeFormationOptInsInfo$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "PrincipalResourcePermissions$Condition": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>",
+        "RevokePermissionsRequest$Condition": null
+      }
+    },
     "ContextKey": {
       "base": null,
       "refs": {
@@ -331,6 +363,16 @@
       }
     },
     "CreateDataCellsFilterResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLFTagExpressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLFTagExpressionResponse": {
       "base": null,
       "refs": {
       }
@@ -475,6 +517,16 @@
       "refs": {
       }
     },
+    "DeleteLFTagExpressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLFTagExpressionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteLFTagRequest": {
       "base": null,
       "refs": {
@@ -564,7 +616,11 @@
     "DescriptionString": {
       "base": null,
       "refs": {
-        "ErrorDetail$ErrorMessage": "<p>A message describing the error.</p>"
+        "CreateLFTagExpressionRequest$Description": "<p>A description with information about the LF-Tag expression.</p>",
+        "ErrorDetail$ErrorMessage": "<p>A message describing the error.</p>",
+        "GetLFTagExpressionResponse$Description": "<p>The description with information about the LF-Tag expression.</p>",
+        "LFTagExpression$Description": "<p>A structure that contains information about the LF-Tag expression.</p>",
+        "UpdateLFTagExpressionRequest$Description": "<p>The description with information about the saved LF-Tag expression.</p>"
       }
     },
     "DetailsMap": {
@@ -628,9 +684,19 @@
     "Expression": {
       "base": null,
       "refs": {
-        "LFTagPolicyResource$Expression": "<p>A list of LF-tag conditions that apply to the resource's LF-tag policy.</p>",
+        "CreateLFTagExpressionRequest$Expression": "<p>A list of LF-Tag conditions (key-value pairs).</p>",
+        "GetLFTagExpressionResponse$Expression": "<p>The body of the LF-Tag expression. It is composed of one or more LF-Tag key-value pairs.</p>",
+        "LFTagExpression$Expression": "<p>A logical expression composed of one or more LF-Tags.</p>",
+        "LFTagPolicyResource$Expression": "<p>A list of LF-tag conditions or a saved expression that apply to the resource's LF-tag policy.</p>",
         "SearchDatabasesByLFTagsRequest$Expression": "<p>A list of conditions (<code>LFTag</code> structures) to search for in database resources.</p>",
-        "SearchTablesByLFTagsRequest$Expression": "<p>A list of conditions (<code>LFTag</code> structures) to search for in table resources.</p>"
+        "SearchTablesByLFTagsRequest$Expression": "<p>A list of conditions (<code>LFTag</code> structures) to search for in table resources.</p>",
+        "UpdateLFTagExpressionRequest$Expression": "<p>The LF-Tag expression body composed of one more LF-Tag key-value pairs.</p>"
+      }
+    },
+    "ExpressionString": {
+      "base": null,
+      "refs": {
+        "Condition$Expression": "<p>An expression written based on the Cedar Policy Language used to match the principal attributes.</p>"
       }
     },
     "ExtendTransactionRequest": {
@@ -705,6 +771,16 @@
       }
     },
     "GetEffectivePermissionsForPathResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLFTagExpressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetLFTagExpressionResponse": {
       "base": null,
       "refs": {
       }
@@ -926,6 +1002,24 @@
         "RemoveLFTagsFromResourceResponse$Failures": "<p>A list of failures to untag a resource.</p>"
       }
     },
+    "LFTagExpression": {
+      "base": "<p>A structure consists LF-Tag expression name and catalog ID.</p>",
+      "refs": {
+        "LFTagExpressionsList$member": null
+      }
+    },
+    "LFTagExpressionResource": {
+      "base": "<p>A structure containing a LF-Tag expression (keys and values).</p>",
+      "refs": {
+        "Resource$LFTagExpression": "<p>LF-Tag expression resource. A logical expression composed of one or more LF-Tag key:value pairs.</p>"
+      }
+    },
+    "LFTagExpressionsList": {
+      "base": null,
+      "refs": {
+        "ListLFTagExpressionsResponse$LFTagExpressions": "<p>Logical expressions composed of one more LF-Tag key-value pairs.</p>"
+      }
+    },
     "LFTagKey": {
       "base": null,
       "refs": {
@@ -952,9 +1046,9 @@
       }
     },
     "LFTagPolicyResource": {
-      "base": "<p>A structure containing a list of LF-tag conditions that apply to a resource's LF-tag policy.</p>",
+      "base": "<p>A structure containing a list of LF-tag conditions or saved LF-Tag expressions that apply to a resource's LF-tag policy.</p>",
       "refs": {
-        "Resource$LFTagPolicy": "<p>A list of LF-tag conditions that define a resource's LF-tag policy.</p>"
+        "Resource$LFTagPolicy": "<p>A list of LF-tag conditions or saved LF-Tag expressions that define a resource's LF-tag policy.</p>"
       }
     },
     "LFTagValue": {
@@ -1003,6 +1097,16 @@
       }
     },
     "ListDataCellsFilterResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLFTagExpressionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListLFTagExpressionsResponse": {
       "base": null,
       "refs": {
       }
@@ -1099,6 +1203,7 @@
         "AuthorizedSessionTagValueList$member": null,
         "ColumnLFTag$Name": "<p>The name of a column resource.</p>",
         "ColumnNames$member": null,
+        "CreateLFTagExpressionRequest$Name": "<p>A name for the expression.</p>",
         "DataCellsFilter$DatabaseName": "<p>A database in the Glue Data Catalog.</p>",
         "DataCellsFilter$TableName": "<p>A table in the database.</p>",
         "DataCellsFilter$Name": "<p>The name given by the user to the data filter cell.</p>",
@@ -1109,15 +1214,21 @@
         "DeleteDataCellsFilterRequest$DatabaseName": "<p>A database in the Glue Data Catalog.</p>",
         "DeleteDataCellsFilterRequest$TableName": "<p>A table in the database.</p>",
         "DeleteDataCellsFilterRequest$Name": "<p>The name given by the user to the data filter cell.</p>",
+        "DeleteLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression.</p>",
         "DeleteObjectsOnCancelRequest$DatabaseName": "<p>The database that contains the governed table.</p>",
         "DeleteObjectsOnCancelRequest$TableName": "<p>The name of the governed table.</p>",
         "ErrorDetail$ErrorCode": "<p>The code associated with this error.</p>",
         "GetDataCellsFilterRequest$DatabaseName": "<p>A database in the Glue Data Catalog.</p>",
         "GetDataCellsFilterRequest$TableName": "<p>A table in the database.</p>",
         "GetDataCellsFilterRequest$Name": "<p>The name given by the user to the data filter cell.</p>",
+        "GetLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression</p>",
+        "GetLFTagExpressionResponse$Name": "<p>The name for the LF-Tag expression. </p>",
         "GetTableObjectsRequest$DatabaseName": "<p>The database containing the governed table.</p>",
         "GetTableObjectsRequest$TableName": "<p>The governed table for which to retrieve objects.</p>",
+        "LFTagExpression$Name": "<p>The name for saved the LF-Tag expression.</p>",
+        "LFTagExpressionResource$Name": "<p>The name of the LF-Tag expression to grant permissions on.</p>",
         "LFTagKeyResource$TagKey": "<p>The key-name for the LF-tag.</p>",
+        "LFTagPolicyResource$ExpressionName": "<p>If provided, permissions are granted to the Data Catalog resources whose assigned LF-Tags match the expression body of the saved expression under the provided <code>ExpressionName</code>.</p>",
         "LakeFormationOptInsInfo$LastUpdatedBy": "<p>The user who updated the record.</p>",
         "ListTableStorageOptimizersRequest$DatabaseName": "<p>Name of the database where the table is present.</p>",
         "ListTableStorageOptimizersRequest$TableName": "<p>Name of the table.</p>",
@@ -1126,6 +1237,7 @@
         "TableResource$Name": "<p>The name of the table.</p>",
         "TableWithColumnsResource$DatabaseName": "<p>The name of the database for the table with columns resource. Unique to the Data Catalog. A database is a set of associated table definitions organized into a logical group. You can Grant and Revoke database privileges to a principal. </p>",
         "TableWithColumnsResource$Name": "<p>The name of the table resource. A table is a metadata definition that represents your data. You can Grant and Revoke table privileges to a principal. </p>",
+        "UpdateLFTagExpressionRequest$Name": "<p>The name for the LF-Tag expression.</p>",
         "UpdateTableObjectsRequest$DatabaseName": "<p>The database containing the governed table to update.</p>",
         "UpdateTableObjectsRequest$TableName": "<p>The governed table to update.</p>",
         "UpdateTableStorageOptimizerRequest$DatabaseName": "<p>Name of the database where the table is present.</p>",
@@ -1142,6 +1254,7 @@
         "RegisterResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
         "ResourceInfo$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "ResourceInfo$HybridAccessEnabled": "<p> Indicates whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>",
+        "ResourceInfo$WithPrivilegedAccess": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>",
         "UpdateResourceRequest$WithFederation": "<p>Whether or not the resource is a federated resource.</p>",
         "UpdateResourceRequest$HybridAccessEnabled": "<p> Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies. </p>"
       }
@@ -1200,6 +1313,7 @@
         "GetEffectivePermissionsForPathRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "GetTableObjectsRequest$MaxResults": "<p>Specifies how many values to return in a page.</p>",
         "ListDataCellsFilterRequest$MaxResults": "<p>The maximum size of the response.</p>",
+        "ListLFTagExpressionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListLFTagsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListLakeFormationOptInsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
         "ListPermissionsRequest$MaxResults": "<p>The maximum number of results to return.</p>",
@@ -1626,7 +1740,7 @@
     "StorageOptimizerConfigMap": {
       "base": null,
       "refs": {
-        "UpdateTableStorageOptimizerRequest$StorageOptimizerConfig": "<p>Name of the table for which to enable the storage optimizer.</p>"
+        "UpdateTableStorageOptimizerRequest$StorageOptimizerConfig": "<p>Name of the configuration for the storage optimizer.</p>"
       }
     },
     "StorageOptimizerConfigValue": {
@@ -1758,6 +1872,8 @@
         "GetWorkUnitsResponse$NextToken": "<p>A continuation token for paginating the returned list of tokens, returned if the current segment of the list is not the last.</p>",
         "ListDataCellsFilterRequest$NextToken": "<p>A continuation token, if this is a continuation call.</p>",
         "ListDataCellsFilterResponse$NextToken": "<p>A continuation token, if not all requested data cell filters have been returned.</p>",
+        "ListLFTagExpressionsRequest$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
+        "ListLFTagExpressionsResponse$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
         "ListLFTagsRequest$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
         "ListLFTagsResponse$NextToken": "<p>A continuation token, present if the current list segment is not the last.</p>",
         "ListLakeFormationOptInsRequest$NextToken": "<p>A continuation token, if this is not the first call to retrieve this list.</p>",
@@ -1872,6 +1988,16 @@
       }
     },
     "UpdateDataCellsFilterResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateLFTagExpressionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateLFTagExpressionResponse": {
       "base": null,
       "refs": {
       }

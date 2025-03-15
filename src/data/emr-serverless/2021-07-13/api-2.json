@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-07-13",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"emr-serverless",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"EMR Serverless",
     "serviceId":"EMR Serverless",
     "signatureVersion":"v4",
@@ -294,7 +295,8 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
-        "interactiveConfiguration":{"shape":"InteractiveConfiguration"}
+        "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -521,7 +523,8 @@
         "workerTypeSpecifications":{"shape":"WorkerTypeSpecificationInputMap"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
-        "interactiveConfiguration":{"shape":"InteractiveConfiguration"}
+        "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
       }
     },
     "CreateApplicationResponse":{
@@ -576,7 +579,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):kms:[a-zA-Z0-9\\-]*:(\\d{12})?:key\\/[a-zA-Z0-9-]+"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):kms:[a-zA-Z0-9\\-]*:([0-9]{12}):key\\/[a-zA-Z0-9-]+"
     },
     "EngineType":{
       "type":"string",
@@ -596,7 +599,7 @@
     },
     "EntryPointPath":{
       "type":"string",
-      "max":256,
+      "max":4096,
       "min":1,
       "pattern":".*\\S.*",
       "sensitive":true
@@ -640,6 +643,11 @@
           "shape":"AttemptNumber",
           "location":"querystring",
           "locationName":"attempt"
+        },
+        "accessSystemProfileLogs":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"accessSystemProfileLogs"
         }
       }
     },
@@ -700,7 +708,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws[a-zA-Z0-9-]*):iam::(\\d{12})?:(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)"
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):iam::([0-9]{12}):(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)"
     },
     "ImageConfiguration":{
       "type":"structure",
@@ -724,7 +732,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"([a-z0-9]+[a-z0-9-.]*)\\/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)(?:\\:([a-zA-Z0-9_][a-zA-Z0-9-._]{0,299})|@(sha256:[0-9a-f]{64}))"
+      "pattern":"([0-9]{12})\\.dkr\\.ecr\\.([a-z0-9-]+).([a-z0-9._-]+)\\/((?:[a-z0-9]+(?:[-._][a-z0-9]+)*/)*[a-z0-9]+(?:[-._][a-z0-9]+)*)(?::([a-zA-Z0-9_]+[a-zA-Z0-9-._]*)|@(sha256:[0-9a-f]{64}))"
     },
     "InitScriptPath":{
       "type":"string",
@@ -825,7 +833,10 @@
         "retryPolicy":{"shape":"RetryPolicy"},
         "attempt":{"shape":"AttemptNumber"},
         "attemptCreatedAt":{"shape":"Date"},
-        "attemptUpdatedAt":{"shape":"Date"}
+        "attemptUpdatedAt":{"shape":"Date"},
+        "startedAt":{"shape":"Date"},
+        "endedAt":{"shape":"Date"},
+        "queuedDurationMilliseconds":{"shape":"Long"}
       }
     },
     "JobRunAttemptSummary":{
@@ -888,7 +899,8 @@
         "SUCCESS",
         "FAILED",
         "CANCELLING",
-        "CANCELLED"
+        "CANCELLED",
+        "QUEUED"
       ]
     },
     "JobRunStateSet":{
@@ -1115,6 +1127,10 @@
       "min":1,
       "pattern":"[a-zA-Z]+[-_]*[a-zA-Z]+"
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "ManagedPersistenceMonitoringConfiguration":{
       "type":"structure",
       "members":{
@@ -1236,6 +1252,13 @@
       "members":{
         "logUri":{"shape":"UriString"},
         "encryptionKeyArn":{"shape":"EncryptionKeyArn"}
+      }
+    },
+    "SchedulerConfiguration":{
+      "type":"structure",
+      "members":{
+        "queueTimeoutMinutes":{"shape":"Integer"},
+        "maxConcurrentRuns":{"shape":"Integer"}
       }
     },
     "SecurityGroupIds":{
@@ -1489,7 +1512,8 @@
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
         "releaseLabel":{"shape":"ReleaseLabel"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
-        "monitoringConfiguration":{"shape":"MonitoringConfiguration"}
+        "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
       }
     },
     "UpdateApplicationResponse":{

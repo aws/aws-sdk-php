@@ -5,11 +5,13 @@
     "endpointPrefix":"emr-containers",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon EMR Containers",
     "serviceId":"EMR containers",
     "signatureVersion":"v4",
     "signingName":"emr-containers",
-    "uid":"emr-containers-2020-10-01"
+    "uid":"emr-containers-2020-10-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelJobRun":{
@@ -333,6 +335,13 @@
       "max":2048,
       "min":44,
       "pattern":"^arn:(aws[a-zA-Z0-9-]*):acm:.+:(\\d{12}):certificate/.+$"
+    },
+    "AllowAWSToRetainLogs":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "AuthorizationConfiguration":{
       "type":"structure",
@@ -1284,6 +1293,13 @@
       "min":1,
       "pattern":"[\\.\\-_/#A-Za-z0-9]+"
     },
+    "ManagedLogs":{
+      "type":"structure",
+      "members":{
+        "allowAWSToRetainLogs":{"shape":"AllowAWSToRetainLogs"},
+        "encryptionKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "MaxFilesToKeep":{
       "type":"integer",
       "max":50,
@@ -1292,6 +1308,7 @@
     "MonitoringConfiguration":{
       "type":"structure",
       "members":{
+        "managedLogs":{"shape":"ManagedLogs"},
         "persistentAppUI":{"shape":"PersistentAppUI"},
         "cloudWatchMonitoringConfiguration":{"shape":"CloudWatchMonitoringConfiguration"},
         "s3MonitoringConfiguration":{"shape":"S3MonitoringConfiguration"},

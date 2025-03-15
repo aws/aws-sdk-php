@@ -4,11 +4,13 @@
     "apiVersion":"2018-08-20",
     "endpointPrefix":"s3-control",
     "protocol":"rest-xml",
+    "protocols":["rest-xml"],
     "serviceFullName":"AWS S3 Control",
     "serviceId":"S3 Control",
     "signatureVersion":"s3v4",
     "signingName":"s3",
-    "uid":"s3control-2018-08-20"
+    "uid":"s3control-2018-08-20",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateAccessGrantsIdentityCenter":{
@@ -1059,6 +1061,22 @@
         "RequiresAccountId":{"value":true}
       }
     },
+    "ListCallerAccessGrants":{
+      "name":"ListCallerAccessGrants",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20180820/accessgrantsinstance/caller/grants"
+      },
+      "input":{"shape":"ListCallerAccessGrantsRequest"},
+      "output":{"shape":"ListCallerAccessGrantsResult"},
+      "endpoint":{
+        "hostPrefix":"{AccountId}."
+      },
+      "httpChecksumRequired":true,
+      "staticContextParams":{
+        "RequiresAccountId":{"value":true}
+      }
+    },
     "ListJobs":{
       "name":"ListJobs",
       "http":{
@@ -1851,6 +1869,13 @@
         "locationName":"Arn"
       }
     },
+    "CallerAccessGrantsList":{
+      "type":"list",
+      "member":{
+        "shape":"ListCallerAccessGrantsEntry",
+        "locationName":"AccessGrant"
+      }
+    },
     "CloudWatchMetrics":{
       "type":"structure",
       "required":["IsEnabled"],
@@ -1927,7 +1952,13 @@
         "CreatedAt":{"shape":"CreationTimestamp"},
         "AccessGrantsInstanceId":{"shape":"AccessGrantsInstanceId"},
         "AccessGrantsInstanceArn":{"shape":"AccessGrantsInstanceArn"},
-        "IdentityCenterArn":{"shape":"IdentityCenterArn"}
+        "IdentityCenterArn":{
+          "shape":"IdentityCenterArn",
+          "deprecated":true,
+          "deprecatedMessage":"IdentityCenterArn has been deprecated. Use IdentityCenterInstanceArn or IdentityCenterApplicationArn."
+        },
+        "IdentityCenterInstanceArn":{"shape":"IdentityCenterArn"},
+        "IdentityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"}
       }
     },
     "CreateAccessGrantsLocationRequest":{
@@ -2798,7 +2829,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "GeneratedManifestEncryption":{
       "type":"structure",
@@ -2919,7 +2950,13 @@
       "members":{
         "AccessGrantsInstanceArn":{"shape":"AccessGrantsInstanceArn"},
         "AccessGrantsInstanceId":{"shape":"AccessGrantsInstanceId"},
-        "IdentityCenterArn":{"shape":"IdentityCenterArn"},
+        "IdentityCenterArn":{
+          "shape":"IdentityCenterArn",
+          "deprecated":true,
+          "deprecatedMessage":"IdentityCenterArn has been deprecated. Use IdentityCenterInstanceArn or IdentityCenterApplicationArn."
+        },
+        "IdentityCenterInstanceArn":{"shape":"IdentityCenterArn"},
+        "IdentityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"},
         "CreatedAt":{"shape":"CreationTimestamp"}
       }
     },
@@ -3379,7 +3416,8 @@
       "type":"structure",
       "members":{
         "Credentials":{"shape":"Credentials"},
-        "MatchedGrantTarget":{"shape":"S3Prefix"}
+        "MatchedGrantTarget":{"shape":"S3Prefix"},
+        "Grantee":{"shape":"Grantee"}
       }
     },
     "GetJobTaggingRequest":{
@@ -3660,7 +3698,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"arn:[^:]+:sso:.*$"
+      "pattern":"arn:[^:]+:sso::\\d{12}:application/.*$"
     },
     "IdentityCenterArn":{
       "type":"string",
@@ -4164,7 +4202,13 @@
         "AccessGrantsInstanceId":{"shape":"AccessGrantsInstanceId"},
         "AccessGrantsInstanceArn":{"shape":"AccessGrantsInstanceArn"},
         "CreatedAt":{"shape":"CreationTimestamp"},
-        "IdentityCenterArn":{"shape":"IdentityCenterArn"}
+        "IdentityCenterArn":{
+          "shape":"IdentityCenterArn",
+          "deprecated":true,
+          "deprecatedMessage":"IdentityCenterArn has been deprecated. Use IdentityCenterInstanceArn or IdentityCenterApplicationArn."
+        },
+        "IdentityCenterInstanceArn":{"shape":"IdentityCenterArn"},
+        "IdentityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"}
       }
     },
     "ListAccessGrantsInstancesRequest":{
@@ -4363,6 +4407,54 @@
         "NextToken":{"shape":"NonEmptyMaxLength1024String"}
       }
     },
+    "ListCallerAccessGrantsEntry":{
+      "type":"structure",
+      "members":{
+        "Permission":{"shape":"Permission"},
+        "GrantScope":{"shape":"S3Prefix"},
+        "ApplicationArn":{"shape":"IdentityCenterApplicationArn"}
+      }
+    },
+    "ListCallerAccessGrantsRequest":{
+      "type":"structure",
+      "required":["AccountId"],
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "contextParam":{"name":"AccountId"},
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"x-amz-account-id"
+        },
+        "GrantScope":{
+          "shape":"S3Prefix",
+          "location":"querystring",
+          "locationName":"grantscope"
+        },
+        "NextToken":{
+          "shape":"ContinuationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "AllowedByApplication":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"allowedByApplication"
+        }
+      }
+    },
+    "ListCallerAccessGrantsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"ContinuationToken"},
+        "CallerAccessGrantsList":{"shape":"CallerAccessGrantsList"}
+      }
+    },
     "ListJobsRequest":{
       "type":"structure",
       "required":["AccountId"],
@@ -4501,8 +4593,12 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"ContinuationToken"},
-        "StorageLensConfigurationList":{"shape":"StorageLensConfigurationList"}
-      }
+        "StorageLensConfigurationList":{
+          "shape":"StorageLensConfigurationList",
+          "locationName":"StorageLensConfiguration"
+        }
+      },
+      "locationName":"ListStorageLensConfigurationResult"
     },
     "ListStorageLensGroupEntry":{
       "type":"structure",
@@ -4539,7 +4635,10 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"ContinuationToken"},
-        "StorageLensGroupList":{"shape":"StorageLensGroupList"}
+        "StorageLensGroupList":{
+          "shape":"StorageLensGroupList",
+          "locationName":"StorageLensGroup"
+        }
       }
     },
     "ListTagsForResourceRequest":{
@@ -5726,7 +5825,8 @@
         "CRC32",
         "CRC32C",
         "SHA1",
-        "SHA256"
+        "SHA256",
+        "CRC64NVME"
       ]
     },
     "S3ContentLength":{

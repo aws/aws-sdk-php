@@ -182,15 +182,7 @@ class SmokeContext extends Assert implements
                     'destinationS3BucketName' => 'fake-bucket',
                     'snsTopicArn' => 'fake-arn',
                 ]);
-        } catch (\Exception $e) {
-            // If the test failed because the account has no support subscription,
-            // throw the exception to cause the feature to be skipped.
-            if ($e instanceof AwsException
-                && 'SubscriptionRequiredException' === $e->getAwsErrorCode()
-            ) {
-                throw $e;
-            }
-        }
+        } catch (\Exception $e) {}
     }
 
     /**
@@ -367,6 +359,22 @@ class SmokeContext extends Assert implements
     }
 
     /**
+     * @Then I expect the marketplace commerce analytics response error code to be :errorCode
+     *
+     * @param string $errorCode
+     */
+    public function iExpectTheMarketplaceCommerceAnalyticsErrorCodeToBe($errorCode)
+    {
+        if ($this->error->getAwsErrorCode() === 'SubscriptionRequiredException') {
+            // For skipping subscription required exceptions
+            $this->assertTrue(true);
+            return;
+        }
+
+        $this->assertSame($errorCode, $this->error->getAwsErrorCode());
+    }
+
+    /**
      * @Then I expect the response error message to include:
      *
      * @param PyStringNode $string
@@ -393,7 +401,7 @@ class SmokeContext extends Assert implements
      * @param string $errorCode
      * @param PyStringNode $string
      */
-    public function theErrorCodeShouldBe($errorCode, PyStringNode $string = null)
+    public function theErrorCodeShouldBe($errorCode, ?PyStringNode $string = null)
     {
         $this->iExpectTheResponseErrorCodeToBe($errorCode);
 

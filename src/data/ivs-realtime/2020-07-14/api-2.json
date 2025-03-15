@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivsrealtime",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"ivsrealtime",
     "serviceFullName":"Amazon Interactive Video Service RealTime",
     "serviceId":"IVS RealTime",
@@ -29,6 +30,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
+    "CreateIngestConfiguration":{
+      "name":"CreateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateIngestConfigurationRequest"},
+      "output":{"shape":"CreateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"PendingVerification"}
       ]
     },
@@ -100,6 +117,40 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteIngestConfiguration":{
+      "name":"DeleteIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteIngestConfigurationRequest"},
+      "output":{"shape":"DeleteIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
+    "DeletePublicKey":{
+      "name":"DeletePublicKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeletePublicKey",
+        "responseCode":200
+      },
+      "input":{"shape":"DeletePublicKeyRequest"},
+      "output":{"shape":"DeletePublicKeyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
       ]
     },
     "DeleteStage":{
@@ -189,6 +240,21 @@
         {"shape":"ConflictException"}
       ]
     },
+    "GetIngestConfiguration":{
+      "name":"GetIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIngestConfigurationRequest"},
+      "output":{"shape":"GetIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetParticipant":{
       "name":"GetParticipant",
       "http":{
@@ -198,6 +264,21 @@
       },
       "input":{"shape":"GetParticipantRequest"},
       "output":{"shape":"GetParticipantResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetPublicKey":{
+      "name":"GetPublicKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetPublicKey",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPublicKeyRequest"},
+      "output":{"shape":"GetPublicKeyResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -252,6 +333,23 @@
         {"shape":"ConflictException"}
       ]
     },
+    "ImportPublicKey":{
+      "name":"ImportPublicKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ImportPublicKey",
+        "responseCode":200
+      },
+      "input":{"shape":"ImportPublicKeyRequest"},
+      "output":{"shape":"ImportPublicKeyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "ListCompositions":{
       "name":"ListCompositions",
       "http":{
@@ -286,6 +384,20 @@
         {"shape":"ConflictException"}
       ]
     },
+    "ListIngestConfigurations":{
+      "name":"ListIngestConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListIngestConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListIngestConfigurationsRequest"},
+      "output":{"shape":"ListIngestConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListParticipantEvents":{
       "name":"ListParticipantEvents",
       "http":{
@@ -309,6 +421,20 @@
       },
       "input":{"shape":"ListParticipantsRequest"},
       "output":{"shape":"ListParticipantsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListPublicKeys":{
+      "name":"ListPublicKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListPublicKeys",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPublicKeysRequest"},
+      "output":{"shape":"ListPublicKeysResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
@@ -443,6 +569,23 @@
       ],
       "idempotent":true
     },
+    "UpdateIngestConfiguration":{
+      "name":"UpdateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIngestConfigurationRequest"},
+      "output":{"shape":"UpdateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "UpdateStage":{
       "name":"UpdateStage",
       "http":{
@@ -466,6 +609,46 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -478,7 +661,24 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "AutoParticipantRecordingConfiguration":{
+      "type":"structure",
+      "required":["storageConfigurationArn"],
+      "members":{
+        "storageConfigurationArn":{"shape":"AutoParticipantRecordingStorageConfigurationArn"},
+        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
+        "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"},
+        "recordingReconnectWindowSeconds":{"shape":"ParticipantRecordingReconnectWindowSeconds"},
+        "hlsConfiguration":{"shape":"ParticipantRecordingHlsConfiguration"}
+      }
+    },
+    "AutoParticipantRecordingStorageConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:storage-configuration/[a-zA-Z0-9-]+$"
     },
     "Bitrate":{
       "type":"integer",
@@ -486,11 +686,12 @@
       "max":8500000,
       "min":1
     },
+    "Boolean":{"type":"boolean"},
     "ChannelArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:channel/[a-zA-Z0-9-]+"
     },
     "ChannelDestinationConfiguration":{
       "type":"structure",
@@ -504,33 +705,45 @@
       "type":"structure",
       "required":[
         "arn",
-        "destinations",
-        "layout",
         "stageArn",
-        "state"
+        "state",
+        "layout",
+        "destinations"
       ],
       "members":{
         "arn":{"shape":"CompositionArn"},
-        "destinations":{"shape":"DestinationList"},
-        "endTime":{"shape":"Time"},
-        "layout":{"shape":"LayoutConfiguration"},
         "stageArn":{"shape":"StageArn"},
-        "startTime":{"shape":"Time"},
         "state":{"shape":"CompositionState"},
-        "tags":{"shape":"Tags"}
+        "layout":{"shape":"LayoutConfiguration"},
+        "destinations":{"shape":"DestinationList"},
+        "tags":{"shape":"Tags"},
+        "startTime":{"shape":"Time"},
+        "endTime":{"shape":"Time"}
       }
     },
     "CompositionArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:composition/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:composition/[a-zA-Z0-9-]+"
     },
     "CompositionClientToken":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "CompositionRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"CompositionRecordingTargetSegmentDurationSeconds"}
+      }
+    },
+    "CompositionRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
     },
     "CompositionState":{
       "type":"string",
@@ -546,27 +759,80 @@
       "type":"structure",
       "required":[
         "arn",
-        "destinations",
         "stageArn",
+        "destinations",
         "state"
       ],
       "members":{
         "arn":{"shape":"CompositionArn"},
-        "destinations":{"shape":"DestinationSummaryList"},
-        "endTime":{"shape":"Time"},
         "stageArn":{"shape":"StageArn"},
-        "startTime":{"shape":"Time"},
+        "destinations":{"shape":"DestinationSummaryList"},
         "state":{"shape":"CompositionState"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "startTime":{"shape":"Time"},
+        "endTime":{"shape":"Time"}
       }
     },
     "CompositionSummaryList":{
       "type":"list",
       "member":{"shape":"CompositionSummary"}
     },
+    "CompositionThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"}
+      }
+    },
+    "CompositionThumbnailConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CompositionThumbnailConfiguration"},
+      "max":1,
+      "min":0
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -579,8 +845,8 @@
       "type":"structure",
       "members":{
         "name":{"shape":"EncoderConfigurationName"},
-        "tags":{"shape":"Tags"},
-        "video":{"shape":"Video"}
+        "video":{"shape":"Video"},
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateEncoderConfigurationResponse":{
@@ -589,15 +855,34 @@
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
       }
     },
+    "CreateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["ingestProtocol"],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
+      }
+    },
     "CreateParticipantTokenRequest":{
       "type":"structure",
       "required":["stageArn"],
       "members":{
-        "attributes":{"shape":"ParticipantTokenAttributes"},
-        "capabilities":{"shape":"ParticipantTokenCapabilities"},
-        "duration":{"shape":"ParticipantTokenDurationMinutes"},
         "stageArn":{"shape":"StageArn"},
-        "userId":{"shape":"ParticipantTokenUserId"}
+        "duration":{"shape":"ParticipantTokenDurationMinutes"},
+        "userId":{"shape":"ParticipantTokenUserId"},
+        "attributes":{"shape":"ParticipantTokenAttributes"},
+        "capabilities":{"shape":"ParticipantTokenCapabilities"}
       }
     },
     "CreateParticipantTokenResponse":{
@@ -611,14 +896,15 @@
       "members":{
         "name":{"shape":"StageName"},
         "participantTokenConfigurations":{"shape":"ParticipantTokenConfigurations"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "autoParticipantRecordingConfiguration":{"shape":"AutoParticipantRecordingConfiguration"}
       }
     },
     "CreateStageResponse":{
       "type":"structure",
       "members":{
-        "participantTokens":{"shape":"ParticipantTokenList"},
-        "stage":{"shape":"Stage"}
+        "stage":{"shape":"Stage"},
+        "participantTokens":{"shape":"ParticipantTokenList"}
       }
     },
     "CreateStorageConfigurationRequest":{
@@ -644,6 +930,31 @@
       }
     },
     "DeleteEncoderConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "force":{"shape":"Boolean"}
+      }
+    },
+    "DeleteIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeletePublicKeyRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"PublicKeyArn"}
+      }
+    },
+    "DeletePublicKeyResponse":{
       "type":"structure",
       "members":{
       }
@@ -675,24 +986,24 @@
     "Destination":{
       "type":"structure",
       "required":[
-        "configuration",
         "id",
-        "state"
+        "state",
+        "configuration"
       ],
       "members":{
-        "configuration":{"shape":"DestinationConfiguration"},
-        "detail":{"shape":"DestinationDetail"},
-        "endTime":{"shape":"Time"},
         "id":{"shape":"String"},
+        "state":{"shape":"DestinationState"},
         "startTime":{"shape":"Time"},
-        "state":{"shape":"DestinationState"}
+        "endTime":{"shape":"Time"},
+        "configuration":{"shape":"DestinationConfiguration"},
+        "detail":{"shape":"DestinationDetail"}
       }
     },
     "DestinationConfiguration":{
       "type":"structure",
       "members":{
-        "channel":{"shape":"ChannelDestinationConfiguration"},
         "name":{"shape":"DestinationConfigurationName"},
+        "channel":{"shape":"ChannelDestinationConfiguration"},
         "s3":{"shape":"S3DestinationConfiguration"}
       }
     },
@@ -706,7 +1017,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "DestinationDetail":{
       "type":"structure",
@@ -738,10 +1049,10 @@
         "state"
       ],
       "members":{
-        "endTime":{"shape":"Time"},
         "id":{"shape":"String"},
+        "state":{"shape":"DestinationState"},
         "startTime":{"shape":"Time"},
-        "state":{"shape":"DestinationState"}
+        "endTime":{"shape":"Time"}
       }
     },
     "DestinationSummaryList":{
@@ -758,13 +1069,13 @@
     "DisconnectParticipantRequest":{
       "type":"structure",
       "required":[
-        "participantId",
-        "stageArn"
+        "stageArn",
+        "participantId"
       ],
       "members":{
+        "stageArn":{"shape":"StageArn"},
         "participantId":{"shape":"ParticipantTokenId"},
-        "reason":{"shape":"DisconnectParticipantReason"},
-        "stageArn":{"shape":"StageArn"}
+        "reason":{"shape":"DisconnectParticipantReason"}
       }
     },
     "DisconnectParticipantResponse":{
@@ -778,15 +1089,15 @@
       "members":{
         "arn":{"shape":"EncoderConfigurationArn"},
         "name":{"shape":"EncoderConfigurationName"},
-        "tags":{"shape":"Tags"},
-        "video":{"shape":"Video"}
+        "video":{"shape":"Video"},
+        "tags":{"shape":"Tags"}
       }
     },
     "EncoderConfigurationArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:encoder-configuration/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:encoder-configuration/[a-zA-Z0-9-]+"
     },
     "EncoderConfigurationArnList":{
       "type":"list",
@@ -798,7 +1109,7 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "EncoderConfigurationSummary":{
       "type":"structure",
@@ -816,11 +1127,11 @@
     "Event":{
       "type":"structure",
       "members":{
-        "errorCode":{"shape":"EventErrorCode"},
-        "eventTime":{"shape":"Time"},
         "name":{"shape":"EventName"},
         "participantId":{"shape":"ParticipantId"},
-        "remoteParticipantId":{"shape":"ParticipantId"}
+        "eventTime":{"shape":"Time"},
+        "remoteParticipantId":{"shape":"ParticipantId"},
+        "errorCode":{"shape":"EventErrorCode"}
       }
     },
     "EventErrorCode":{
@@ -828,7 +1139,18 @@
       "enum":[
         "INSUFFICIENT_CAPABILITIES",
         "QUOTA_EXCEEDED",
-        "PUBLISHER_NOT_FOUND"
+        "PUBLISHER_NOT_FOUND",
+        "BITRATE_EXCEEDED",
+        "RESOLUTION_EXCEEDED",
+        "STREAM_DURATION_EXCEEDED",
+        "INVALID_AUDIO_CODEC",
+        "INVALID_VIDEO_CODEC",
+        "INVALID_PROTOCOL",
+        "INVALID_STREAM_KEY",
+        "REUSE_OF_STREAM_KEY",
+        "B_FRAME_PRESENT",
+        "INVALID_INPUT",
+        "INTERNAL_SERVER_EXCEPTION"
       ]
     },
     "EventList":{
@@ -881,23 +1203,49 @@
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
       }
     },
+    "GetIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"}
+      }
+    },
+    "GetIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
+      }
+    },
     "GetParticipantRequest":{
       "type":"structure",
       "required":[
-        "participantId",
+        "stageArn",
         "sessionId",
-        "stageArn"
+        "participantId"
       ],
       "members":{
-        "participantId":{"shape":"ParticipantId"},
+        "stageArn":{"shape":"StageArn"},
         "sessionId":{"shape":"StageSessionId"},
-        "stageArn":{"shape":"StageArn"}
+        "participantId":{"shape":"ParticipantId"}
       }
     },
     "GetParticipantResponse":{
       "type":"structure",
       "members":{
         "participant":{"shape":"Participant"}
+      }
+    },
+    "GetPublicKeyRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"PublicKeyArn"}
+      }
+    },
+    "GetPublicKeyResponse":{
+      "type":"structure",
+      "members":{
+        "publicKey":{"shape":"PublicKey"}
       }
     },
     "GetStageRequest":{
@@ -916,12 +1264,12 @@
     "GetStageSessionRequest":{
       "type":"structure",
       "required":[
-        "sessionId",
-        "stageArn"
+        "stageArn",
+        "sessionId"
       ],
       "members":{
-        "sessionId":{"shape":"StageSessionId"},
-        "stageArn":{"shape":"StageArn"}
+        "stageArn":{"shape":"StageArn"},
+        "sessionId":{"shape":"StageSessionId"}
       }
     },
     "GetStageSessionResponse":{
@@ -947,10 +1295,10 @@
       "type":"structure",
       "members":{
         "featuredParticipantAttribute":{"shape":"AttributeKey"},
-        "gridGap":{"shape":"GridGap"},
         "omitStoppedVideo":{"shape":"OmitStoppedVideo"},
         "videoAspectRatio":{"shape":"VideoAspectRatio"},
-        "videoFillMode":{"shape":"VideoFillMode"}
+        "videoFillMode":{"shape":"VideoFillMode"},
+        "gridGap":{"shape":"GridGap"}
       }
     },
     "GridGap":{
@@ -961,11 +1309,145 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
+    "ImportPublicKeyRequest":{
+      "type":"structure",
+      "required":["publicKeyMaterial"],
+      "members":{
+        "publicKeyMaterial":{"shape":"PublicKeyMaterial"},
+        "name":{"shape":"PublicKeyName"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "ImportPublicKeyResponse":{
+      "type":"structure",
+      "members":{
+        "publicKey":{"shape":"PublicKey"}
+      }
+    },
+    "IngestConfiguration":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "streamKey",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "streamKey":{"shape":"StreamKey"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "IngestConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:ingest-configuration/[a-zA-Z0-9-]+"
+    },
+    "IngestConfigurationList":{
+      "type":"list",
+      "member":{"shape":"IngestConfigurationSummary"}
+    },
+    "IngestConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "IngestConfigurationStageArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stage/[a-zA-Z0-9-]+$"
+    },
+    "IngestConfigurationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "IngestConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"}
+      }
+    },
+    "IngestProtocol":{
+      "type":"string",
+      "enum":[
+        "RTMP",
+        "RTMPS"
+      ]
+    },
+    "InsecureIngest":{"type":"boolean"},
     "InternalServerException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":500},
@@ -982,10 +1464,10 @@
     "ListCompositionsRequest":{
       "type":"structure",
       "members":{
-        "filterByEncoderConfigurationArn":{"shape":"EncoderConfigurationArn"},
         "filterByStageArn":{"shape":"StageArn"},
-        "maxResults":{"shape":"MaxCompositionResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "filterByEncoderConfigurationArn":{"shape":"EncoderConfigurationArn"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxCompositionResults"}
       }
     },
     "ListCompositionsResponse":{
@@ -999,8 +1481,8 @@
     "ListEncoderConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxEncoderConfigurationResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxEncoderConfigurationResults"}
       }
     },
     "ListEncoderConfigurationsResponse":{
@@ -1011,19 +1493,36 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListIngestConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "filterByStageArn":{"shape":"StageArn"},
+        "filterByState":{"shape":"IngestConfigurationState"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxIngestConfigurationResults"}
+      }
+    },
+    "ListIngestConfigurationsResponse":{
+      "type":"structure",
+      "required":["ingestConfigurations"],
+      "members":{
+        "ingestConfigurations":{"shape":"IngestConfigurationList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListParticipantEventsRequest":{
       "type":"structure",
       "required":[
-        "participantId",
+        "stageArn",
         "sessionId",
-        "stageArn"
+        "participantId"
       ],
       "members":{
-        "maxResults":{"shape":"MaxParticipantEventResults"},
-        "nextToken":{"shape":"PaginationToken"},
-        "participantId":{"shape":"ParticipantId"},
+        "stageArn":{"shape":"StageArn"},
         "sessionId":{"shape":"StageSessionId"},
-        "stageArn":{"shape":"StageArn"}
+        "participantId":{"shape":"ParticipantId"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxParticipantEventResults"}
       }
     },
     "ListParticipantEventsResponse":{
@@ -1037,72 +1536,88 @@
     "ListParticipantsRequest":{
       "type":"structure",
       "required":[
-        "sessionId",
-        "stageArn"
+        "stageArn",
+        "sessionId"
       ],
       "members":{
+        "stageArn":{"shape":"StageArn"},
+        "sessionId":{"shape":"StageSessionId"},
+        "filterByUserId":{"shape":"UserId"},
         "filterByPublished":{"shape":"Published"},
         "filterByState":{"shape":"ParticipantState"},
-        "filterByUserId":{"shape":"UserId"},
-        "maxResults":{"shape":"MaxParticipantResults"},
         "nextToken":{"shape":"PaginationToken"},
-        "sessionId":{"shape":"StageSessionId"},
-        "stageArn":{"shape":"StageArn"}
+        "maxResults":{"shape":"MaxParticipantResults"},
+        "filterByRecordingState":{"shape":"ParticipantRecordingFilterByRecordingState"}
       }
     },
     "ListParticipantsResponse":{
       "type":"structure",
       "required":["participants"],
       "members":{
+        "participants":{"shape":"ParticipantList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListPublicKeysRequest":{
+      "type":"structure",
+      "members":{
         "nextToken":{"shape":"PaginationToken"},
-        "participants":{"shape":"ParticipantList"}
+        "maxResults":{"shape":"MaxPublicKeyResults"}
+      }
+    },
+    "ListPublicKeysResponse":{
+      "type":"structure",
+      "required":["publicKeys"],
+      "members":{
+        "publicKeys":{"shape":"PublicKeyList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStageSessionsRequest":{
       "type":"structure",
       "required":["stageArn"],
       "members":{
-        "maxResults":{"shape":"MaxStageSessionResults"},
+        "stageArn":{"shape":"StageArn"},
         "nextToken":{"shape":"PaginationToken"},
-        "stageArn":{"shape":"StageArn"}
+        "maxResults":{"shape":"MaxStageSessionResults"}
       }
     },
     "ListStageSessionsResponse":{
       "type":"structure",
       "required":["stageSessions"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "stageSessions":{"shape":"StageSessionList"}
+        "stageSessions":{"shape":"StageSessionList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStagesRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxStageResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxStageResults"}
       }
     },
     "ListStagesResponse":{
       "type":"structure",
       "required":["stages"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "stages":{"shape":"StageSummaryList"}
+        "stages":{"shape":"StageSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListStorageConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{"shape":"MaxStorageConfigurationResults"},
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxStorageConfigurationResults"}
       }
     },
     "ListStorageConfigurationsResponse":{
       "type":"structure",
       "required":["storageConfigurations"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "storageConfigurations":{"shape":"StorageConfigurationSummaryList"}
+        "storageConfigurations":{"shape":"StorageConfigurationSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1135,6 +1650,12 @@
       "max":100,
       "min":1
     },
+    "MaxIngestConfigurationResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "MaxParticipantEventResults":{
       "type":"integer",
       "box":true,
@@ -1142,6 +1663,12 @@
       "min":1
     },
     "MaxParticipantResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "MaxPublicKeyResults":{
       "type":"integer",
       "box":true,
       "max":100,
@@ -1170,23 +1697,27 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[a-zA-Z0-9+/=_-]*$"
+      "pattern":"[a-zA-Z0-9+/=_-]*"
     },
     "Participant":{
       "type":"structure",
       "members":{
-        "attributes":{"shape":"ParticipantAttributes"},
-        "browserName":{"shape":"ParticipantClientAttribute"},
-        "browserVersion":{"shape":"ParticipantClientAttribute"},
+        "participantId":{"shape":"ParticipantId"},
+        "userId":{"shape":"UserId"},
+        "state":{"shape":"ParticipantState"},
         "firstJoinTime":{"shape":"Time"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "published":{"shape":"Published"},
         "ispName":{"shape":"ParticipantClientAttribute"},
         "osName":{"shape":"ParticipantClientAttribute"},
         "osVersion":{"shape":"ParticipantClientAttribute"},
-        "participantId":{"shape":"ParticipantId"},
-        "published":{"shape":"Published"},
+        "browserName":{"shape":"ParticipantClientAttribute"},
+        "browserVersion":{"shape":"ParticipantClientAttribute"},
         "sdkVersion":{"shape":"ParticipantClientAttribute"},
-        "state":{"shape":"ParticipantState"},
-        "userId":{"shape":"UserId"}
+        "recordingS3BucketName":{"shape":"ParticipantRecordingS3BucketName"},
+        "recordingS3Prefix":{"shape":"ParticipantRecordingS3Prefix"},
+        "recordingState":{"shape":"ParticipantRecordingState"},
+        "protocol":{"shape":"ParticipantProtocol"}
       }
     },
     "ParticipantAttributes":{
@@ -1198,17 +1729,90 @@
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_.,:;\\s]*$"
+      "pattern":"[a-zA-Z0-9-_.,:;\\s]*"
     },
     "ParticipantId":{
       "type":"string",
       "max":64,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-]*$"
+      "pattern":"[a-zA-Z0-9-]*"
     },
     "ParticipantList":{
       "type":"list",
       "member":{"shape":"ParticipantSummary"}
+    },
+    "ParticipantProtocol":{
+      "type":"string",
+      "enum":[
+        "UNKNOWN",
+        "WHIP",
+        "RTMP",
+        "RTMPS"
+      ]
+    },
+    "ParticipantRecordingFilterByRecordingState":{
+      "type":"string",
+      "enum":[
+        "STARTING",
+        "ACTIVE",
+        "STOPPING",
+        "STOPPED",
+        "FAILED"
+      ]
+    },
+    "ParticipantRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"ParticipantRecordingTargetSegmentDurationSeconds"}
+      }
+    },
+    "ParticipantRecordingMediaType":{
+      "type":"string",
+      "enum":[
+        "AUDIO_VIDEO",
+        "AUDIO_ONLY",
+        "NONE"
+      ]
+    },
+    "ParticipantRecordingMediaTypeList":{
+      "type":"list",
+      "member":{"shape":"ParticipantRecordingMediaType"},
+      "max":1,
+      "min":0
+    },
+    "ParticipantRecordingReconnectWindowSeconds":{
+      "type":"integer",
+      "max":300,
+      "min":0
+    },
+    "ParticipantRecordingS3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":0,
+      "pattern":"[a-z0-9-.]*"
+    },
+    "ParticipantRecordingS3Prefix":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-]*"
+    },
+    "ParticipantRecordingState":{
+      "type":"string",
+      "enum":[
+        "STARTING",
+        "ACTIVE",
+        "STOPPING",
+        "STOPPED",
+        "FAILED",
+        "DISABLED"
+      ]
+    },
+    "ParticipantRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
     },
     "ParticipantState":{
       "type":"string",
@@ -1220,23 +1824,32 @@
     "ParticipantSummary":{
       "type":"structure",
       "members":{
-        "firstJoinTime":{"shape":"Time"},
         "participantId":{"shape":"ParticipantId"},
-        "published":{"shape":"Published"},
+        "userId":{"shape":"UserId"},
         "state":{"shape":"ParticipantState"},
-        "userId":{"shape":"UserId"}
+        "firstJoinTime":{"shape":"Time"},
+        "published":{"shape":"Published"},
+        "recordingState":{"shape":"ParticipantRecordingState"}
+      }
+    },
+    "ParticipantThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"},
+        "recordingMode":{"shape":"ThumbnailRecordingMode"}
       }
     },
     "ParticipantToken":{
       "type":"structure",
       "members":{
-        "attributes":{"shape":"ParticipantTokenAttributes"},
-        "capabilities":{"shape":"ParticipantTokenCapabilities"},
-        "duration":{"shape":"ParticipantTokenDurationMinutes"},
-        "expirationTime":{"shape":"ParticipantTokenExpirationTime"},
         "participantId":{"shape":"ParticipantTokenId"},
         "token":{"shape":"ParticipantTokenString"},
-        "userId":{"shape":"ParticipantTokenUserId"}
+        "userId":{"shape":"ParticipantTokenUserId"},
+        "attributes":{"shape":"ParticipantTokenAttributes"},
+        "duration":{"shape":"ParticipantTokenDurationMinutes"},
+        "capabilities":{"shape":"ParticipantTokenCapabilities"},
+        "expirationTime":{"shape":"ParticipantTokenExpirationTime"}
       }
     },
     "ParticipantTokenAttributes":{
@@ -1260,10 +1873,10 @@
     "ParticipantTokenConfiguration":{
       "type":"structure",
       "members":{
-        "attributes":{"shape":"ParticipantTokenAttributes"},
-        "capabilities":{"shape":"ParticipantTokenCapabilities"},
         "duration":{"shape":"ParticipantTokenDurationMinutes"},
-        "userId":{"shape":"ParticipantTokenUserId"}
+        "userId":{"shape":"ParticipantTokenUserId"},
+        "attributes":{"shape":"ParticipantTokenAttributes"},
+        "capabilities":{"shape":"ParticipantTokenCapabilities"}
       }
     },
     "ParticipantTokenConfigurations":{
@@ -1299,6 +1912,46 @@
     "PendingVerification":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1318,15 +1971,15 @@
       "type":"structure",
       "members":{
         "featuredParticipantAttribute":{"shape":"AttributeKey"},
-        "gridGap":{"shape":"GridGap"},
         "omitStoppedVideo":{"shape":"OmitStoppedVideo"},
-        "pipBehavior":{"shape":"PipBehavior"},
-        "pipHeight":{"shape":"PipHeight"},
-        "pipOffset":{"shape":"PipOffset"},
+        "videoFillMode":{"shape":"VideoFillMode"},
+        "gridGap":{"shape":"GridGap"},
         "pipParticipantAttribute":{"shape":"AttributeKey"},
+        "pipBehavior":{"shape":"PipBehavior"},
+        "pipOffset":{"shape":"PipOffset"},
         "pipPosition":{"shape":"PipPosition"},
         "pipWidth":{"shape":"PipWidth"},
-        "videoFillMode":{"shape":"VideoFillMode"}
+        "pipHeight":{"shape":"PipHeight"}
       }
     },
     "PipHeight":{
@@ -1352,10 +2005,50 @@
       "box":true,
       "min":1
     },
+    "PublicKey":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"PublicKeyArn"},
+        "name":{"shape":"PublicKeyName"},
+        "publicKeyMaterial":{"shape":"PublicKeyMaterial"},
+        "fingerprint":{"shape":"PublicKeyFingerprint"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "PublicKeyArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:public-key/[a-zA-Z0-9-]+"
+    },
+    "PublicKeyFingerprint":{"type":"string"},
+    "PublicKeyList":{
+      "type":"list",
+      "member":{"shape":"PublicKeySummary"}
+    },
+    "PublicKeyMaterial":{
+      "type":"string",
+      "pattern":".*-----BEGIN PUBLIC KEY-----\\r?\\n([a-zA-Z0-9+/=\\r\\n]+)\\r?\\n-----END PUBLIC KEY-----(\\r?\\n)?.*"
+    },
+    "PublicKeyName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "PublicKeySummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"PublicKeyArn"},
+        "name":{"shape":"PublicKeyName"},
+        "tags":{"shape":"Tags"}
+      }
+    },
     "Published":{"type":"boolean"},
     "RecordingConfiguration":{
       "type":"structure",
       "members":{
+        "hlsConfiguration":{"shape":"CompositionRecordingHlsConfiguration"},
         "format":{"shape":"RecordingConfigurationFormat"}
       }
     },
@@ -1367,11 +2060,51 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:[a-z-]/[a-zA-Z0-9-]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1384,18 +2117,19 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-z0-9-.]+$"
+      "pattern":"[a-z0-9-.]+"
     },
     "S3DestinationConfiguration":{
       "type":"structure",
       "required":[
-        "encoderConfigurationArns",
-        "storageConfigurationArn"
+        "storageConfigurationArn",
+        "encoderConfigurationArns"
       ],
       "members":{
+        "storageConfigurationArn":{"shape":"StorageConfigurationArn"},
         "encoderConfigurationArns":{"shape":"EncoderConfigurationArnList"},
         "recordingConfiguration":{"shape":"RecordingConfiguration"},
-        "storageConfigurationArn":{"shape":"StorageConfigurationArn"}
+        "thumbnailConfigurations":{"shape":"CompositionThumbnailConfigurationList"}
       }
     },
     "S3Detail":{
@@ -1415,6 +2149,46 @@
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1427,37 +2201,53 @@
       "type":"structure",
       "required":["arn"],
       "members":{
-        "activeSessionId":{"shape":"StageSessionId"},
         "arn":{"shape":"StageArn"},
         "name":{"shape":"StageName"},
-        "tags":{"shape":"Tags"}
+        "activeSessionId":{"shape":"StageSessionId"},
+        "tags":{"shape":"Tags"},
+        "autoParticipantRecordingConfiguration":{"shape":"AutoParticipantRecordingConfiguration"},
+        "endpoints":{"shape":"StageEndpoints"}
       }
     },
     "StageArn":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stage/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:stage/[a-zA-Z0-9-]+"
+    },
+    "StageEndpoint":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "StageEndpoints":{
+      "type":"structure",
+      "members":{
+        "events":{"shape":"StageEndpoint"},
+        "whip":{"shape":"StageEndpoint"},
+        "rtmp":{"shape":"StageEndpoint"},
+        "rtmps":{"shape":"StageEndpoint"}
+      }
     },
     "StageName":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "StageSession":{
       "type":"structure",
       "members":{
-        "endTime":{"shape":"Time"},
         "sessionId":{"shape":"StageSessionId"},
-        "startTime":{"shape":"Time"}
+        "startTime":{"shape":"Time"},
+        "endTime":{"shape":"Time"}
       }
     },
     "StageSessionId":{
       "type":"string",
       "max":16,
       "min":16,
-      "pattern":"^st-[a-zA-Z0-9]+$"
+      "pattern":"st-[a-zA-Z0-9]+"
     },
     "StageSessionList":{
       "type":"list",
@@ -1466,18 +2256,18 @@
     "StageSessionSummary":{
       "type":"structure",
       "members":{
-        "endTime":{"shape":"Time"},
         "sessionId":{"shape":"StageSessionId"},
-        "startTime":{"shape":"Time"}
+        "startTime":{"shape":"Time"},
+        "endTime":{"shape":"Time"}
       }
     },
     "StageSummary":{
       "type":"structure",
       "required":["arn"],
       "members":{
-        "activeSessionId":{"shape":"StageSessionId"},
         "arn":{"shape":"StageArn"},
         "name":{"shape":"StageName"},
+        "activeSessionId":{"shape":"StageSessionId"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1488,17 +2278,17 @@
     "StartCompositionRequest":{
       "type":"structure",
       "required":[
-        "destinations",
-        "stageArn"
+        "stageArn",
+        "destinations"
       ],
       "members":{
-        "destinations":{"shape":"DestinationConfigurationList"},
+        "stageArn":{"shape":"StageArn"},
         "idempotencyToken":{
           "shape":"CompositionClientToken",
           "idempotencyToken":true
         },
         "layout":{"shape":"LayoutConfiguration"},
-        "stageArn":{"shape":"StageArn"},
+        "destinations":{"shape":"DestinationConfigurationList"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -1534,13 +2324,13 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:ivs:[a-z0-9-]+:[0-9]+:storage-configuration/[a-zA-Z0-9-]+$"
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:storage-configuration/[a-zA-Z0-9-]+"
     },
     "StorageConfigurationName":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^[a-zA-Z0-9-_]*$"
+      "pattern":"[a-zA-Z0-9-_]*"
     },
     "StorageConfigurationSummary":{
       "type":"structure",
@@ -1555,6 +2345,11 @@
     "StorageConfigurationSummaryList":{
       "type":"list",
       "member":{"shape":"StorageConfigurationSummary"}
+    },
+    "StreamKey":{
+      "type":"string",
+      "pattern":"rt_[0-9]+_[a-z0-9-]+_[a-zA-Z0-9-]+_.+",
+      "sensitive":true
     },
     "String":{"type":"string"},
     "TagKey":{
@@ -1600,6 +2395,32 @@
       "max":50,
       "min":0
     },
+    "ThumbnailIntervalSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":1
+    },
+    "ThumbnailRecordingMode":{
+      "type":"string",
+      "enum":[
+        "INTERVAL",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailStorageType":{
+      "type":"string",
+      "enum":[
+        "SEQUENTIAL",
+        "LATEST"
+      ]
+    },
+    "ThumbnailStorageTypeList":{
+      "type":"list",
+      "member":{"shape":"ThumbnailStorageType"},
+      "max":2,
+      "min":0
+    },
     "Time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -1628,12 +2449,27 @@
       "members":{
       }
     },
+    "UpdateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"}
+      }
+    },
+    "UpdateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
+      }
+    },
     "UpdateStageRequest":{
       "type":"structure",
       "required":["arn"],
       "members":{
         "arn":{"shape":"StageArn"},
-        "name":{"shape":"StageName"}
+        "name":{"shape":"StageName"},
+        "autoParticipantRecordingConfiguration":{"shape":"AutoParticipantRecordingConfiguration"}
       }
     },
     "UpdateStageResponse":{
@@ -1650,6 +2486,46 @@
     "ValidationException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1661,10 +2537,10 @@
     "Video":{
       "type":"structure",
       "members":{
-        "bitrate":{"shape":"Bitrate"},
-        "framerate":{"shape":"Framerate"},
+        "width":{"shape":"Width"},
         "height":{"shape":"Height"},
-        "width":{"shape":"Width"}
+        "framerate":{"shape":"Framerate"},
+        "bitrate":{"shape":"Bitrate"}
       }
     },
     "VideoAspectRatio":{
@@ -1688,7 +2564,7 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
     "errorMessage":{"type":"string"}
   }

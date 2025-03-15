@@ -5,11 +5,13 @@
     "endpointPrefix":"resource-explorer-2",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Resource Explorer",
     "serviceId":"Resource Explorer 2",
     "signatureVersion":"v4",
     "signingName":"resource-explorer-2",
-    "uid":"resource-explorer-2-2022-07-28"
+    "uid":"resource-explorer-2-2022-07-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateDefaultView":{
@@ -184,6 +186,24 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetManagedView":{
+      "name":"GetManagedView",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetManagedView",
+        "responseCode":200
+      },
+      "input":{"shape":"GetManagedViewInput"},
+      "output":{"shape":"GetManagedViewOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetView":{
       "name":"GetView",
       "http":{
@@ -230,6 +250,41 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListManagedViews":{
+      "name":"ListManagedViews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListManagedViews",
+        "responseCode":200
+      },
+      "input":{"shape":"ListManagedViewsInput"},
+      "output":{"shape":"ListManagedViewsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListResources":{
+      "name":"ListResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListResources",
+        "responseCode":200
+      },
+      "input":{"shape":"ListResourcesInput"},
+      "output":{"shape":"ListResourcesOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -582,6 +637,24 @@
         "Type":{"shape":"IndexType"}
       }
     },
+    "GetManagedViewInput":{
+      "type":"structure",
+      "required":["ManagedViewArn"],
+      "members":{
+        "ManagedViewArn":{"shape":"GetManagedViewInputManagedViewArnString"}
+      }
+    },
+    "GetManagedViewInputManagedViewArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
+    "GetManagedViewOutput":{
+      "type":"structure",
+      "members":{
+        "ManagedView":{"shape":"ManagedView"}
+      }
+    },
     "GetViewInput":{
       "type":"structure",
       "required":["ViewArn"],
@@ -721,6 +794,80 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListManagedViewsInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListManagedViewsInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListManagedViewsInputNextTokenString"},
+        "ServicePrincipal":{"shape":"ListManagedViewsInputServicePrincipalString"}
+      }
+    },
+    "ListManagedViewsInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
+    "ListManagedViewsInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListManagedViewsInputServicePrincipalString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ListManagedViewsOutput":{
+      "type":"structure",
+      "members":{
+        "ManagedViews":{"shape":"ManagedViewArnList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListResourcesInput":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"SearchFilter"},
+        "MaxResults":{"shape":"ListResourcesInputMaxResultsInteger"},
+        "NextToken":{"shape":"ListResourcesInputNextTokenString"},
+        "ViewArn":{"shape":"ListResourcesInputViewArnString"}
+      }
+    },
+    "ListResourcesInputMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "ListResourcesInputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListResourcesInputViewArnString":{
+      "type":"string",
+      "max":1000,
+      "min":0
+    },
+    "ListResourcesOutput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"ListResourcesOutputNextTokenString"},
+        "Resources":{"shape":"ResourceList"},
+        "ViewArn":{"shape":"ListResourcesOutputViewArnString"}
+      }
+    },
+    "ListResourcesOutputNextTokenString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "ListResourcesOutputViewArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1
+    },
     "ListSupportedResourceTypesInput":{
       "type":"structure",
       "members":{
@@ -782,6 +929,25 @@
       "type":"long",
       "box":true
     },
+    "ManagedView":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"SearchFilter"},
+        "IncludedProperties":{"shape":"IncludedPropertyList"},
+        "LastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "ManagedViewArn":{"shape":"String"},
+        "ManagedViewName":{"shape":"String"},
+        "Owner":{"shape":"String"},
+        "ResourcePolicy":{"shape":"String"},
+        "Scope":{"shape":"String"},
+        "TrustedService":{"shape":"String"},
+        "Version":{"shape":"String"}
+      }
+    },
+    "ManagedViewArnList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "MemberIndex":{
       "type":"structure",
       "members":{
@@ -805,7 +971,7 @@
     },
     "QueryString":{
       "type":"string",
-      "max":1011,
+      "max":1280,
       "min":0,
       "sensitive":true
     },

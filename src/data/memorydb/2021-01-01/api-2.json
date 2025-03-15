@@ -5,13 +5,15 @@
     "endpointPrefix":"memory-db",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon MemoryDB",
     "serviceFullName":"Amazon MemoryDB",
     "serviceId":"MemoryDB",
     "signatureVersion":"v4",
     "signingName":"memorydb",
     "targetPrefix":"AmazonMemoryDB",
-    "uid":"memorydb-2021-01-01"
+    "uid":"memorydb-2021-01-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchUpdateCluster":{
@@ -88,7 +90,26 @@
         {"shape":"InvalidCredentialsException"},
         {"shape":"TagQuotaPerResourceExceeded"},
         {"shape":"ACLNotFoundFault"},
-        {"shape":"InvalidACLStateFault"}
+        {"shape":"InvalidACLStateFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"}
+      ]
+    },
+    "CreateMultiRegionCluster":{
+      "name":"CreateMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateMultiRegionClusterRequest"},
+      "output":{"shape":"CreateMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterAlreadyExistsFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"ClusterQuotaForCustomerExceededFault"},
+        {"shape":"TagQuotaPerResourceExceeded"}
       ]
     },
     "CreateParameterGroup":{
@@ -192,6 +213,20 @@
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DeleteMultiRegionCluster":{
+      "name":"DeleteMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMultiRegionClusterRequest"},
+      "output":{"shape":"DeleteMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "DeleteParameterGroup":{
@@ -308,6 +343,21 @@
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DescribeMultiRegionClusters":{
+      "name":"DescribeMultiRegionClusters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMultiRegionClustersRequest"},
+      "output":{"shape":"DescribeMultiRegionClustersResponse"},
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionClusterNotFoundFault"}
       ]
     },
     "DescribeParameterGroups":{
@@ -443,6 +493,20 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "ListAllowedMultiRegionClusterUpdates":{
+      "name":"ListAllowedMultiRegionClusterUpdates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAllowedMultiRegionClusterUpdatesRequest"},
+      "output":{"shape":"ListAllowedMultiRegionClusterUpdatesResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"}
+      ]
+    },
     "ListAllowedNodeTypeUpdates":{
       "name":"ListAllowedNodeTypeUpdates",
       "http":{
@@ -475,7 +539,9 @@
         {"shape":"InvalidARNFault"},
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"UserNotFoundFault"},
-        {"shape":"ACLNotFoundFault"}
+        {"shape":"ACLNotFoundFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"}
       ]
     },
     "PurchaseReservedNodesOffering":{
@@ -528,9 +594,12 @@
         {"shape":"SnapshotNotFoundFault"},
         {"shape":"UserNotFoundFault"},
         {"shape":"ACLNotFoundFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
         {"shape":"TagQuotaPerResourceExceeded"},
         {"shape":"InvalidARNFault"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "UntagResource":{
@@ -551,7 +620,10 @@
         {"shape":"TagNotFoundFault"},
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"UserNotFoundFault"},
-        {"shape":"ACLNotFoundFault"}
+        {"shape":"ACLNotFoundFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"}
       ]
     },
     "UpdateACL":{
@@ -597,6 +669,22 @@
         {"shape":"ACLNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "UpdateMultiRegionCluster":{
+      "name":"UpdateMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateMultiRegionClusterRequest"},
+      "output":{"shape":"UpdateMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "UpdateParameterGroup":{
@@ -779,11 +867,13 @@
         "Description":{"shape":"String"},
         "Status":{"shape":"String"},
         "PendingUpdates":{"shape":"ClusterPendingUpdates"},
+        "MultiRegionClusterName":{"shape":"String"},
         "NumberOfShards":{"shape":"IntegerOptional"},
         "Shards":{"shape":"ShardList"},
         "AvailabilityMode":{"shape":"AZStatus"},
         "ClusterEndpoint":{"shape":"Endpoint"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupName":{"shape":"String"},
@@ -815,6 +905,7 @@
         "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "MaintenanceWindow":{"shape":"String"},
         "TopicArn":{"shape":"String"},
@@ -825,7 +916,9 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "SnapshotWindow":{"shape":"String"},
         "NumShards":{"shape":"IntegerOptional"},
-        "Shards":{"shape":"ShardDetails"}
+        "Shards":{"shape":"ShardDetails"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"}
       }
     },
     "ClusterList":{
@@ -902,6 +995,7 @@
       "members":{
         "ClusterName":{"shape":"String"},
         "NodeType":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"},
         "ParameterGroupName":{"shape":"String"},
         "Description":{"shape":"String"},
         "NumShards":{"shape":"IntegerOptional"},
@@ -919,6 +1013,7 @@
         "Tags":{"shape":"TagList"},
         "SnapshotWindow":{"shape":"String"},
         "ACLName":{"shape":"ACLName"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "DataTiering":{"shape":"BooleanOptional"}
@@ -928,6 +1023,30 @@
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "CreateMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":[
+        "MultiRegionClusterNameSuffix",
+        "NodeType"
+      ],
+      "members":{
+        "MultiRegionClusterNameSuffix":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "NumShards":{"shape":"IntegerOptional"},
+        "TLSEnabled":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "CreateParameterGroupRequest":{
@@ -1038,6 +1157,7 @@
       "required":["ClusterName"],
       "members":{
         "ClusterName":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"},
         "FinalSnapshotName":{"shape":"String"}
       }
     },
@@ -1045,6 +1165,19 @@
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "DeleteMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"}
+      }
+    },
+    "DeleteMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "DeleteParameterGroupRequest":{
@@ -1133,6 +1266,7 @@
     "DescribeEngineVersionsRequest":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"},
         "MaxResults":{"shape":"IntegerOptional"},
@@ -1164,6 +1298,22 @@
       "members":{
         "NextToken":{"shape":"String"},
         "Events":{"shape":"EventList"}
+      }
+    },
+    "DescribeMultiRegionClustersRequest":{
+      "type":"structure",
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"},
+        "MaxResults":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"},
+        "ShowClusterDetails":{"shape":"BooleanOptional"}
+      }
+    },
+    "DescribeMultiRegionClustersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MultiRegionClusters":{"shape":"MultiRegionClusterList"}
       }
     },
     "DescribeParameterGroupsRequest":{
@@ -1317,6 +1467,7 @@
     "EngineVersionInfo":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"}
@@ -1429,6 +1580,12 @@
       },
       "exception":true
     },
+    "InvalidMultiRegionClusterStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "InvalidNodeStateFault":{
       "type":"structure",
       "members":{
@@ -1489,6 +1646,20 @@
       "type":"string",
       "max":2048
     },
+    "ListAllowedMultiRegionClusterUpdatesRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"}
+      }
+    },
+    "ListAllowedMultiRegionClusterUpdatesResponse":{
+      "type":"structure",
+      "members":{
+        "ScaleUpNodeTypes":{"shape":"NodeTypeList"},
+        "ScaleDownNodeTypes":{"shape":"NodeTypeList"}
+      }
+    },
     "ListAllowedNodeTypeUpdatesRequest":{
       "type":"structure",
       "required":["ClusterName"],
@@ -1515,6 +1686,44 @@
       "members":{
         "TagList":{"shape":"TagList"}
       }
+    },
+    "MultiRegionCluster":{
+      "type":"structure",
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "NumberOfShards":{"shape":"IntegerOptional"},
+        "Clusters":{"shape":"RegionalClusterList"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "TLSEnabled":{"shape":"BooleanOptional"},
+        "ARN":{"shape":"String"}
+      }
+    },
+    "MultiRegionClusterAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "MultiRegionClusterList":{
+      "type":"list",
+      "member":{"shape":"MultiRegionCluster"}
+    },
+    "MultiRegionClusterNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "MultiRegionParameterGroupNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "NoOperationFault":{
       "type":"structure",
@@ -1656,6 +1865,20 @@
       "type":"list",
       "member":{"shape":"RecurringCharge"}
     },
+    "RegionalCluster":{
+      "type":"structure",
+      "members":{
+        "ClusterName":{"shape":"String"},
+        "Region":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "ARN":{"shape":"String"}
+      },
+      "wrapper":true
+    },
+    "RegionalClusterList":{
+      "type":"list",
+      "member":{"shape":"RegionalCluster"}
+    },
     "ReplicaConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -1772,6 +1995,7 @@
         "Description":{"shape":"String"},
         "Status":{"shape":"ServiceUpdateStatus"},
         "Type":{"shape":"ServiceUpdateType"},
+        "Engine":{"shape":"String"},
         "NodesUpdated":{"shape":"String"},
         "AutoUpdateStartDate":{"shape":"TStamp"}
       }
@@ -2100,6 +2324,7 @@
         "SnapshotWindow":{"shape":"String"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ReplicaConfiguration":{"shape":"ReplicaConfigurationRequest"},
         "ShardConfiguration":{"shape":"ShardConfigurationRequest"},
@@ -2110,6 +2335,25 @@
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "UpdateMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "ShardConfiguration":{"shape":"ShardConfigurationRequest"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "UpdateStrategy":{"shape":"UpdateStrategy"}
+      }
+    },
+    "UpdateMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "UpdateParameterGroupRequest":{
@@ -2128,6 +2372,13 @@
       "members":{
         "ParameterGroup":{"shape":"ParameterGroup"}
       }
+    },
+    "UpdateStrategy":{
+      "type":"string",
+      "enum":[
+        "coordinated",
+        "uncoordinated"
+      ]
     },
     "UpdateSubnetGroupRequest":{
       "type":"structure",

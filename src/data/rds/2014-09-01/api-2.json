@@ -10,7 +10,8 @@
     "serviceId":"RDS",
     "signatureVersion":"v4",
     "uid":"rds-2014-09-01",
-    "xmlNamespace":"http://rds.amazonaws.com/doc/2014-09-01/"
+    "xmlNamespace":"http://rds.amazonaws.com/doc/2014-09-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddSourceIdentifierToSubscription":{
@@ -415,7 +416,8 @@
         "resultWrapper":"DescribeDBLogFilesResult"
       },
       "errors":[
-        {"shape":"DBInstanceNotFoundFault"}
+        {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBInstanceNotReadyFault"}
       ]
     },
     "DescribeDBParameterGroups":{
@@ -626,6 +628,7 @@
       },
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBInstanceNotReadyFault"},
         {"shape":"DBLogFileNotFoundFault"}
       ]
     },
@@ -1373,6 +1376,16 @@
         "code":"DBInstanceNotFound",
         "httpStatusCode":404,
         "senderFault":true
+      },
+      "exception":true
+    },
+    "DBInstanceNotReadyFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"DBInstanceNotReady",
+        "httpStatusCode":503
       },
       "exception":true
     },

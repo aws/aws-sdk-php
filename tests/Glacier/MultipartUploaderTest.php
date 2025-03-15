@@ -28,7 +28,7 @@ class MultipartUploaderTest extends TestCase
      */
     public function testGlacierMultipartUploadWorkflow(
         array $uploadOptions = [],
-        StreamInterface $source = null,
+        ?StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('glacier');

@@ -214,27 +214,13 @@ class FunctionsTest extends TestCase
     /**
      * @covers Aws\default_http_handler()
      */
-    public function testGuzzleV5HttpHandler()
-    {
-        if (!class_exists('GuzzleHttp\Ring\Core')) {
-            $this->markTestSkipped();
-        }
-        $this->assertInstanceOf(
-            Aws\Handler\GuzzleV5\GuzzleHandler::class,
-            Aws\default_http_handler()
-        );
-    }
-
-    /**
-     * @covers Aws\default_http_handler()
-     */
-    public function testGuzzleV6HttpHandler()
+    public function testGuzzleHttpHandler()
     {
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
             $this->markTestSkipped();
         }
         $this->assertInstanceOf(
-            Aws\Handler\GuzzleV6\GuzzleHandler::class,
+            Aws\Handler\Guzzle\GuzzleHandler::class,
             Aws\default_http_handler()
         );
     }
@@ -514,6 +500,32 @@ EOT
                     ]
                 ]
             ]
+        ];
+    }
+
+    /**
+     * @param $array
+     * @param $expected
+     *
+     * @dataProvider isAssociativeProvider
+     */
+    public function testIsAssociative($array, $expected)
+    {
+        $result = Aws\is_associative($array);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function isAssociativeProvider()
+    {
+        return [
+           [[], false],
+           [['foo' => 'bar'], true],
+           [[1, 2, 3, 5], false],
+           [['foo', 'bar', 'baz'], false],
+           [['1' => 1, '2' => 2, '3'], true],
+           [['0' => 0, '1' => 2], false],
+           [[0 => 1, 1 => 2], false],
+           [[1 => 0, 2 => 2], true],
         ];
     }
 }

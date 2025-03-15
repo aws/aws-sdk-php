@@ -11,7 +11,8 @@
     "serviceId":"Inspector2",
     "signatureVersion":"v4",
     "signingName":"inspector2",
-    "uid":"inspector2-2020-06-08"
+    "uid":"inspector2-2020-06-08",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateMember":{
@@ -24,6 +25,7 @@
       "input":{"shape":"AssociateMemberRequest"},
       "output":{"shape":"AssociateMemberResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
@@ -1033,6 +1035,8 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "exploitAvailableCount":{"shape":"Long"},
+        "fixAvailableCount":{"shape":"Long"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -2122,6 +2126,7 @@
       }
     },
     "Component":{"type":"string"},
+    "ComponentArn":{"type":"string"},
     "ComponentType":{"type":"string"},
     "ComputePlatform":{
       "type":"structure",
@@ -2892,7 +2897,9 @@
         "EVENTBRIDGE_THROTTLED",
         "RESOURCE_SCAN_NOT_DISABLED",
         "DISASSOCIATE_ALL_MEMBERS",
-        "ACCOUNT_IS_ISOLATED"
+        "ACCOUNT_IS_ISOLATED",
+        "EC2_SSM_RESOURCE_DATA_SYNC_LIMIT_EXCEEDED",
+        "EC2_SSM_ASSOCIATION_VERSION_LIMIT_EXCEEDED"
       ]
     },
     "ErrorMessage":{"type":"string"},
@@ -3241,6 +3248,8 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "exploitAvailableCount":{"shape":"Long"},
+        "fixAvailableCount":{"shape":"Long"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -4247,6 +4256,7 @@
       "members":{
         "architecture":{"shape":"StringFilter"},
         "epoch":{"shape":"NumberFilter"},
+        "filePath":{"shape":"StringFilter"},
         "name":{"shape":"StringFilter"},
         "release":{"shape":"StringFilter"},
         "sourceLambdaLayerArn":{"shape":"StringFilter"},
@@ -4279,7 +4289,8 @@
         "PYTHONPKG",
         "NODEPKG",
         "POM",
-        "GEMSPEC"
+        "GEMSPEC",
+        "DOTNET_CORE"
       ]
     },
     "PackageName":{
@@ -4735,7 +4746,13 @@
         "NODEJS_18_X",
         "GO_1_X",
         "JAVA_17",
-        "PYTHON_3_10"
+        "PYTHON_3_10",
+        "PYTHON_3_11",
+        "DOTNETCORE_3_1",
+        "DOTNET_6",
+        "DOTNET_7",
+        "RUBY_2_7",
+        "RUBY_3_2"
       ]
     },
     "SbomReportFormat":{
@@ -4796,7 +4813,9 @@
         "DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED",
         "DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED",
         "DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED",
-        "DEEP_INSPECTION_NO_INVENTORY"
+        "DEEP_INSPECTION_NO_INVENTORY",
+        "AGENTLESS_INSTANCE_STORAGE_LIMIT_EXCEEDED",
+        "AGENTLESS_INSTANCE_COLLECTION_TIME_LIMIT_EXCEEDED"
       ]
     },
     "ScanType":{
@@ -5036,6 +5055,7 @@
         "componentType"
       ],
       "members":{
+        "componentArn":{"shape":"ComponentArn"},
         "componentId":{"shape":"Component"},
         "componentType":{"shape":"ComponentType"}
       }
@@ -5229,7 +5249,7 @@
     },
     "TagValueList":{
       "type":"list",
-      "member":{"shape":"String"},
+      "member":{"shape":"TargetResourceTagsValue"},
       "max":5,
       "min":1
     },
@@ -5250,9 +5270,20 @@
     },
     "TargetResourceTags":{
       "type":"map",
-      "key":{"shape":"NonEmptyString"},
+      "key":{"shape":"TargetResourceTagsKey"},
       "value":{"shape":"TagValueList"},
       "max":5,
+      "min":1
+    },
+    "TargetResourceTagsKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:/=\\-@]*$"
+    },
+    "TargetResourceTagsValue":{
+      "type":"string",
+      "max":256,
       "min":1
     },
     "TargetStatusFilterList":{

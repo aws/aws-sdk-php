@@ -4,12 +4,14 @@
     "apiVersion":"2010-08-01",
     "endpointPrefix":"monitoring",
     "protocol":"query",
+    "protocols":["query"],
     "serviceAbbreviation":"CloudWatch",
     "serviceFullName":"Amazon CloudWatch",
     "serviceId":"CloudWatch",
     "signatureVersion":"v4",
     "uid":"monitoring-2010-08-01",
-    "xmlNamespace":"http://monitoring.amazonaws.com/doc/2010-08-01/"
+    "xmlNamespace":"http://monitoring.amazonaws.com/doc/2010-08-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteAlarms":{
@@ -1202,6 +1204,58 @@
         "Failures":{"shape":"BatchFailures"}
       }
     },
+    "Entity":{
+      "type":"structure",
+      "members":{
+        "KeyAttributes":{"shape":"EntityKeyAttributesMap"},
+        "Attributes":{"shape":"EntityAttributesMap"}
+      }
+    },
+    "EntityAttributesMap":{
+      "type":"map",
+      "key":{"shape":"EntityAttributesMapKeyString"},
+      "value":{"shape":"EntityAttributesMapValueString"},
+      "max":10,
+      "min":0
+    },
+    "EntityAttributesMapKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "EntityAttributesMapValueString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "EntityKeyAttributesMap":{
+      "type":"map",
+      "key":{"shape":"EntityKeyAttributesMapKeyString"},
+      "value":{"shape":"EntityKeyAttributesMapValueString"},
+      "max":4,
+      "min":2
+    },
+    "EntityKeyAttributesMapKeyString":{
+      "type":"string",
+      "max":32,
+      "min":1
+    },
+    "EntityKeyAttributesMapValueString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "EntityMetricData":{
+      "type":"structure",
+      "members":{
+        "Entity":{"shape":"Entity"},
+        "MetricData":{"shape":"MetricData"}
+      }
+    },
+    "EntityMetricDataList":{
+      "type":"list",
+      "member":{"shape":"EntityMetricData"}
+    },
     "ErrorMessage":{
       "type":"string",
       "max":255,
@@ -2201,13 +2255,15 @@
     },
     "PutMetricDataInput":{
       "type":"structure",
-      "required":[
-        "Namespace",
-        "MetricData"
-      ],
+      "required":["Namespace"],
       "members":{
         "Namespace":{"shape":"Namespace"},
-        "MetricData":{"shape":"MetricData"}
+        "MetricData":{"shape":"MetricData"},
+        "EntityMetricData":{"shape":"EntityMetricDataList"},
+        "StrictEntityValidation":{
+          "shape":"StrictEntityValidation",
+          "box":true
+        }
       }
     },
     "PutMetricStreamInput":{
@@ -2444,6 +2500,7 @@
       "type":"integer",
       "min":1
     },
+    "StrictEntityValidation":{"type":"boolean"},
     "SuppressorPeriod":{"type":"integer"},
     "Tag":{
       "type":"structure",

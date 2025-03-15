@@ -10,7 +10,8 @@
     "serviceId":"EventBridge",
     "signatureVersion":"v4",
     "targetPrefix":"AWSEvents",
-    "uid":"eventbridge-2015-10-07"
+    "uid":"eventbridge-2015-10-07",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateEventSource":{
@@ -86,7 +87,10 @@
       "errors":[
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"LimitExceededException"},
-        {"shape":"InternalException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateEndpoint":{
@@ -778,7 +782,9 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateEndpoint":{
@@ -812,6 +818,12 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "AccountId":{
       "type":"string",
       "max":12,
@@ -1099,7 +1111,8 @@
         "BasicAuthParameters":{"shape":"ConnectionBasicAuthResponseParameters"},
         "OAuthParameters":{"shape":"ConnectionOAuthResponseParameters"},
         "ApiKeyAuthParameters":{"shape":"ConnectionApiKeyAuthResponseParameters"},
-        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"}
+        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"},
+        "ConnectivityParameters":{"shape":"DescribeConnectionConnectivityParameters"}
       }
     },
     "ConnectionAuthorizationType":{
@@ -1213,13 +1226,29 @@
         "AUTHORIZED",
         "DEAUTHORIZED",
         "AUTHORIZING",
-        "DEAUTHORIZING"
+        "DEAUTHORIZING",
+        "ACTIVE",
+        "FAILED_CONNECTIVITY"
       ]
     },
     "ConnectionStateReason":{
       "type":"string",
       "max":512,
       "pattern":".*"
+    },
+    "ConnectivityResourceConfigurationArn":{
+      "type":"structure",
+      "required":["ResourceConfigurationArn"],
+      "members":{
+        "ResourceConfigurationArn":{"shape":"ResourceConfigurationArn"}
+      }
+    },
+    "ConnectivityResourceParameters":{
+      "type":"structure",
+      "required":["ResourceParameters"],
+      "members":{
+        "ResourceParameters":{"shape":"ConnectivityResourceConfigurationArn"}
+      }
     },
     "CreateApiDestinationRequest":{
       "type":"structure",
@@ -1287,7 +1316,8 @@
         "BasicAuthParameters":{"shape":"CreateConnectionBasicAuthRequestParameters"},
         "OAuthParameters":{"shape":"CreateConnectionOAuthRequestParameters"},
         "ApiKeyAuthParameters":{"shape":"CreateConnectionApiKeyAuthRequestParameters"},
-        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"}
+        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"},
+        "ConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
       }
     },
     "CreateConnectionBasicAuthRequestParameters":{
@@ -1337,7 +1367,8 @@
         "Name":{"shape":"ConnectionName"},
         "Description":{"shape":"ConnectionDescription"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
-        "AuthParameters":{"shape":"CreateConnectionAuthRequestParameters"}
+        "AuthParameters":{"shape":"CreateConnectionAuthRequestParameters"},
+        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
       }
     },
     "CreateConnectionResponse":{
@@ -1585,11 +1616,29 @@
         "CreationTime":{"shape":"Timestamp"}
       }
     },
+    "DescribeConnectionConnectivityParameters":{
+      "type":"structure",
+      "required":["ResourceParameters"],
+      "members":{
+        "ResourceParameters":{"shape":"DescribeConnectionResourceParameters"}
+      }
+    },
     "DescribeConnectionRequest":{
       "type":"structure",
       "required":["Name"],
       "members":{
         "Name":{"shape":"ConnectionName"}
+      }
+    },
+    "DescribeConnectionResourceParameters":{
+      "type":"structure",
+      "required":[
+        "ResourceConfigurationArn",
+        "ResourceAssociationArn"
+      ],
+      "members":{
+        "ResourceConfigurationArn":{"shape":"ResourceConfigurationArn"},
+        "ResourceAssociationArn":{"shape":"ResourceAssociationArn"}
       }
     },
     "DescribeConnectionResponse":{
@@ -1598,6 +1647,7 @@
         "ConnectionArn":{"shape":"ConnectionArn"},
         "Name":{"shape":"ConnectionName"},
         "Description":{"shape":"ConnectionDescription"},
+        "InvocationConnectivityParameters":{"shape":"DescribeConnectionConnectivityParameters"},
         "ConnectionState":{"shape":"ConnectionState"},
         "StateReason":{"shape":"ConnectionStateReason"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
@@ -2778,6 +2828,18 @@
       "max":1600,
       "min":1
     },
+    "ResourceAssociationArn":{
+      "type":"string",
+      "max":2048,
+      "min":17,
+      "pattern":"^arn:[a-z0-9\\\\-]+:vpc-lattice:[a-zA-Z0-9\\\\-]+:\\\\d{12}:servicenetworkresourceassociation/snra-[0-9a-z]{17}$"
+    },
+    "ResourceConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^(?:^arn:[a-z0-9\\-]+:vpc-lattice:[a-zA-Z0-9\\-]+:\\d{12}:resourceconfiguration/rcfg-[0-9a-z]{17}$|^$)"
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -3138,6 +3200,12 @@
         "Result":{"shape":"Boolean"}
       }
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "Timestamp":{"type":"timestamp"},
     "TraceHeader":{
       "type":"string",
@@ -3224,7 +3292,8 @@
         "BasicAuthParameters":{"shape":"UpdateConnectionBasicAuthRequestParameters"},
         "OAuthParameters":{"shape":"UpdateConnectionOAuthRequestParameters"},
         "ApiKeyAuthParameters":{"shape":"UpdateConnectionApiKeyAuthRequestParameters"},
-        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"}
+        "InvocationHttpParameters":{"shape":"ConnectionHttpParameters"},
+        "ConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
       }
     },
     "UpdateConnectionBasicAuthRequestParameters":{
@@ -3257,7 +3326,8 @@
         "Name":{"shape":"ConnectionName"},
         "Description":{"shape":"ConnectionDescription"},
         "AuthorizationType":{"shape":"ConnectionAuthorizationType"},
-        "AuthParameters":{"shape":"UpdateConnectionAuthRequestParameters"}
+        "AuthParameters":{"shape":"UpdateConnectionAuthRequestParameters"},
+        "InvocationConnectivityParameters":{"shape":"ConnectivityResourceParameters"}
       }
     },
     "UpdateConnectionResponse":{

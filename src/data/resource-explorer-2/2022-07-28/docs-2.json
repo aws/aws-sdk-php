@@ -9,12 +9,15 @@
     "DeleteIndex": "<p>Deletes the specified index and turns off Amazon Web Services Resource Explorer in the specified Amazon Web Services Region. When you delete an index, Resource Explorer stops discovering and indexing resources in that Region. Resource Explorer also deletes all views in that Region. These actions occur as asynchronous background tasks. You can check to see when the actions are complete by using the <a>GetIndex</a> operation and checking the <code>Status</code> response value.</p> <note> <p>If the index you delete is the aggregator index for the Amazon Web Services account, you must wait 24 hours before you can promote another local index to be the aggregator index for the account. Users can't perform account-wide searches using Resource Explorer until another aggregator index is configured.</p> </note>",
     "DeleteView": "<p>Deletes the specified view.</p> <p>If the specified view is the default view for its Amazon Web Services Region, then all <a>Search</a> operations in that Region must explicitly specify the view to use until you configure a new default by calling the <a>AssociateDefaultView</a> operation.</p>",
     "DisassociateDefaultView": "<p>After you call this operation, the affected Amazon Web Services Region no longer has a default view. All <a>Search</a> operations in that Region must explicitly specify a view or the operation fails. You can configure a new default by calling the <a>AssociateDefaultView</a> operation.</p> <p>If an Amazon Web Services Region doesn't have a default view configured, then users must explicitly specify a view with every <code>Search</code> operation performed in that Region.</p>",
-    "GetAccountLevelServiceConfiguration": "<p>Retrieves the status of your account's Amazon Web Services service access, and validates the service linked role required to access the multi-account search feature. Only the management account or a delegated administrator with service access enabled can invoke this API call. </p>",
+    "GetAccountLevelServiceConfiguration": "<p>Retrieves the status of your account's Amazon Web Services service access, and validates the service linked role required to access the multi-account search feature. Only the management account can invoke this API call. </p>",
     "GetDefaultView": "<p>Retrieves the Amazon Resource Name (ARN) of the view that is the default for the Amazon Web Services Region in which you call this operation. You can then call <a>GetView</a> to retrieve the details of that view.</p>",
     "GetIndex": "<p>Retrieves details about the Amazon Web Services Resource Explorer index in the Amazon Web Services Region in which you invoked the operation.</p>",
+    "GetManagedView": "<p>Retrieves details of the specified <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Amazon Web Services-managed view</a>. </p>",
     "GetView": "<p>Retrieves details of the specified view.</p>",
     "ListIndexes": "<p>Retrieves a list of all of the indexes in Amazon Web Services Regions that are currently collecting resource information for Amazon Web Services Resource Explorer.</p>",
     "ListIndexesForMembers": "<p>Retrieves a list of a member's indexes in all Amazon Web Services Regions that are currently collecting resource information for Amazon Web Services Resource Explorer. Only the management account or a delegated administrator with service access enabled can invoke this API call. </p>",
+    "ListManagedViews": "<p>Lists the Amazon resource names (ARNs) of the <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Amazon Web Services-managed views</a> available in the Amazon Web Services Region in which you call this operation. </p>",
+    "ListResources": "<p>Returns a list of resources and their details that match the specified criteria. This query must use a view. If you don’t explicitly specify a view, then Resource Explorer uses the default view for the Amazon Web Services Region in which you call this operation. </p>",
     "ListSupportedResourceTypes": "<p>Retrieves a list of all resource types currently supported by Amazon Web Services Resource Explorer.</p>",
     "ListTagsForResource": "<p>Lists the tags that are attached to the specified resource.</p>",
     "ListViews": "<p>Lists the <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource names (ARNs)</a> of the views available in the Amazon Web Services Region in which you call this operation.</p> <note> <p>Always check the <code>NextToken</code> response parameter for a <code>null</code> value when calling a paginated operation. These operations can occasionally return an empty set of results even when there are more results available. The <code>NextToken</code> response parameter value is <code>null</code> <i>only</i> when there are no more results to display.</p> </note>",
@@ -176,6 +179,22 @@
       "refs": {
       }
     },
+    "GetManagedViewInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetManagedViewInputManagedViewArnString": {
+      "base": null,
+      "refs": {
+        "GetManagedViewInput$ManagedViewArn": "<p>The Amazon resource name (ARN) of the managed view.</p>"
+      }
+    },
+    "GetManagedViewOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetViewInput": {
       "base": null,
       "refs": {
@@ -202,6 +221,7 @@
       "base": null,
       "refs": {
         "CreateViewInput$IncludedProperties": "<p>Specifies optional fields that you want included in search results from this view. It is a list of objects that each describe a field to include.</p> <p>The default is an empty list, with no optional fields included in the results.</p>",
+        "ManagedView$IncludedProperties": "<p>A structure that contains additional information about the managed view.</p>",
         "UpdateViewInput$IncludedProperties": "<p>Specifies optional fields that you want included in search results from this view. It is a list of objects that each describe a field to include.</p> <p>The default is an empty list, with no optional fields included in the results.</p>",
         "View$IncludedProperties": "<p>A structure that contains additional information about the view.</p>"
       }
@@ -305,6 +325,74 @@
       "refs": {
       }
     },
+    "ListManagedViewsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListManagedViewsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListManagedViewsInput$MaxResults": "<p>The maximum number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value appropriate to the operation. If additional items exist beyond those included in the current response, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results.</p> <note> <p>An API operation can return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p> </note>"
+      }
+    },
+    "ListManagedViewsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListManagedViewsInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>"
+      }
+    },
+    "ListManagedViewsInputServicePrincipalString": {
+      "base": null,
+      "refs": {
+        "ListManagedViewsInput$ServicePrincipal": "<p>Specifies a service principal name. If specified, then the operation only returns the managed views that are managed by the input service. </p>"
+      }
+    },
+    "ListManagedViewsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListResourcesInput$MaxResults": "<p>The maximum number of results that you want included on each page of the response. If you do not include this parameter, it defaults to a value appropriate to the operation. If additional items exist beyond those included in the current response, the <code>NextToken</code> response element is present and has a value (is not null). Include that value as the <code>NextToken</code> request parameter in the next call to the operation to get the next part of the results.</p> <note> <p>An API operation can return fewer results than the maximum even when there are more results available. You should check <code>NextToken</code> after every operation to ensure that you receive all of the results.</p> </note>"
+      }
+    },
+    "ListResourcesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListResourcesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>"
+      }
+    },
+    "ListResourcesInputViewArnString": {
+      "base": null,
+      "refs": {
+        "ListResourcesInput$ViewArn": "<p>Specifies the Amazon resource name (ARN) of the view to use for the query. If you don't specify a value for this parameter, then the operation automatically uses the default view for the Amazon Web Services Region in which you called this operation. If the Region either doesn't have a default view or if you don't have permission to use the default view, then the operation fails with a 401 Unauthorized exception.</p>"
+      }
+    },
+    "ListResourcesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcesOutputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListResourcesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>"
+      }
+    },
+    "ListResourcesOutputViewArnString": {
+      "base": null,
+      "refs": {
+        "ListResourcesOutput$ViewArn": "<p>The Amazon resource name (ARN) of the view that this operation used to perform the search. </p>"
+      }
+    },
     "ListSupportedResourceTypesInput": {
       "base": null,
       "refs": {
@@ -353,6 +441,18 @@
         "ResourceCount$TotalResources": "<p>The number of resources that match the search query. This value can't exceed 1,000. If there are more than 1,000 resources that match the query, then only 1,000 are counted and the <code>Complete</code> field is set to false. We recommend that you refine your query to return a smaller number of results.</p>"
       }
     },
+    "ManagedView": {
+      "base": "<p>An Amazon Web Services-managed view is how other Amazon Web Services services can access resource information indexed by Resource Explorer for your Amazon Web Services account or organization with your consent. For more information, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Managed views</a>. </p>",
+      "refs": {
+        "GetManagedViewOutput$ManagedView": "<p>Details about the specified managed view. </p>"
+      }
+    },
+    "ManagedViewArnList": {
+      "base": null,
+      "refs": {
+        "ListManagedViewsOutput$ManagedViews": "<p>The list of managed views available in the Amazon Web Services Region in which you called this operation. </p>"
+      }
+    },
     "MemberIndex": {
       "base": "<p>An index is the data store used by Amazon Web Services Resource Explorer to hold information about your Amazon Web Services resources that the service discovers. </p>",
       "refs": {
@@ -399,6 +499,7 @@
     "ResourceList": {
       "base": null,
       "refs": {
+        "ListResourcesOutput$Resources": "<p>The list of structures that describe the resources that match the query. </p>",
         "SearchOutput$Resources": "<p>The list of structures that describe the resources that match the query.</p>"
       }
     },
@@ -429,6 +530,8 @@
       "base": "<p>A search filter defines which resources can be part of a search query result set.</p>",
       "refs": {
         "CreateViewInput$Filters": "<p>An array of strings that specify which resources are included in the results of queries made using this view. When you use this view in a <a>Search</a> operation, the filter string is combined with the search's <code>QueryString</code> parameter using a logical <code>AND</code> operator.</p> <p>For information about the supported syntax, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html\">Search query reference for Resource Explorer</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <important> <p>This query string in the context of this operation supports only <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-filters\">filter prefixes</a> with optional <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-operators\">operators</a>. It doesn't support free-form text. For example, the string <code>region:us* service:ec2 -tag:stage=prod</code> includes all Amazon EC2 resources in any Amazon Web Services Region that begins with the letters <code>us</code> and is <i>not</i> tagged with a key <code>Stage</code> that has the value <code>prod</code>.</p> </important>",
+        "ListResourcesInput$Filters": null,
+        "ManagedView$Filters": null,
         "UpdateViewInput$Filters": "<p>An array of strings that specify which resources are included in the results of queries made using this view. When you use this view in a <a>Search</a> operation, the filter string is combined with the search's <code>QueryString</code> parameter using a logical <code>AND</code> operator.</p> <p>For information about the supported syntax, see <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html\">Search query reference for Resource Explorer</a> in the <i>Amazon Web Services Resource Explorer User Guide</i>.</p> <important> <p>This query string in the context of this operation supports only <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-filters\">filter prefixes</a> with optional <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/using-search-query-syntax.html#query-syntax-operators\">operators</a>. It doesn't support free-form text. For example, the string <code>region:us* service:ec2 -tag:stage=prod</code> includes all Amazon EC2 resources in any Amazon Web Services Region that begins with the letters <code>us</code> and is <i>not</i> tagged with a key <code>Stage</code> that has the value <code>prod</code>.</p> </important>",
         "View$Filters": "<p>An array of <a>SearchFilter</a> objects that specify which resources can be included in the results of queries made using this view.</p>"
       }
@@ -506,11 +609,20 @@
         "ListIndexesForMembersOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListIndexesInputRegionsList$member": null,
         "ListIndexesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
+        "ListManagedViewsOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListSupportedResourceTypesInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>",
         "ListSupportedResourceTypesOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
         "ListTagsForResourceInput$resourceArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the view or index that you want to attach tags to.</p>",
         "ListViewsInput$NextToken": "<p>The parameter for receiving additional results if you receive a <code>NextToken</code> response in a previous request. A <code>NextToken</code> response indicates that more output is available. Set this parameter to the value of the previous call's <code>NextToken</code> response to indicate where the output should continue from. The pagination tokens expire after 24 hours.</p>",
         "ListViewsOutput$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a subsequent call to the operation to get the next part of the output. You should repeat this until the <code>NextToken</code> response element comes back as <code>null</code>. The pagination tokens expire after 24 hours.</p>",
+        "ManagedView$ManagedViewArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the managed view.</p>",
+        "ManagedView$ManagedViewName": "<p>The name of the managed view. </p>",
+        "ManagedView$Owner": "<p>The Amazon Web Services account that owns this managed view.</p>",
+        "ManagedView$ResourcePolicy": "<p>The resource policy that defines access to the managed view. To learn more about this policy, review <a href=\"https://docs.aws.amazon.com/resource-explorer/latest/userguide/aws-managed-views.html\">Managed views</a>.</p>",
+        "ManagedView$Scope": "<p>An <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of an Amazon Web Services account or organization that specifies whether this managed view includes resources from only the specified Amazon Web Services account or all accounts in the specified organization. </p>",
+        "ManagedView$TrustedService": "<p>The service principal of the Amazon Web Services service that created and manages the managed view. </p>",
+        "ManagedView$Version": "<p>The version of the managed view. </p>",
+        "ManagedViewArnList$member": null,
         "MemberIndex$AccountId": "<p>The account ID for the index.</p>",
         "MemberIndex$Arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">Amazon resource name (ARN)</a> of the index.</p>",
         "MemberIndex$Region": "<p>The Amazon Web Services Region in which the index exists.</p>",
@@ -520,7 +632,7 @@
         "Resource$OwningAccountId": "<p>The Amazon Web Services account that owns the resource.</p>",
         "Resource$Region": "<p>The Amazon Web Services Region in which the resource was created and exists.</p>",
         "Resource$ResourceType": "<p>The type of the resource.</p>",
-        "Resource$Service": "<p>The Amazon Web Service that owns the resource and is responsible for creating and updating it.</p>",
+        "Resource$Service": "<p>The Amazon Web Services service that owns the resource and is responsible for creating and updating it.</p>",
         "ResourceNotFoundException$Message": null,
         "ResourceProperty$Name": "<p>The name of this property of the resource.</p>",
         "ServiceQuotaExceededException$Message": null,
@@ -528,7 +640,7 @@
         "ServiceQuotaExceededException$Value": "<p>The current value for the quota that the request tried to exceed.</p>",
         "StringList$member": null,
         "SupportedResourceType$ResourceType": "<p>The unique identifier of the resource type.</p>",
-        "SupportedResourceType$Service": "<p>The Amazon Web Service that is associated with the resource type. This is the primary service that lets you create and interact with resources of this type.</p>",
+        "SupportedResourceType$Service": "<p>The Amazon Web Services service that is associated with the resource type. This is the primary service that lets you create and interact with resources of this type.</p>",
         "TagMap$key": null,
         "TagMap$value": null,
         "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the view or index that you want to attach tags to.</p>",
@@ -565,6 +677,7 @@
         "DeleteIndexOutput$LastUpdatedAt": "<p>The date and time when you last updated this index.</p>",
         "GetIndexOutput$CreatedAt": "<p>The date and time when the index was originally created.</p>",
         "GetIndexOutput$LastUpdatedAt": "<p>The date and time when the index was last updated.</p>",
+        "ManagedView$LastUpdatedAt": "<p>The date and time when this managed view was last modified.</p>",
         "Resource$LastReportedAt": "<p>The date and time that Resource Explorer last queried this resource and updated the index with the latest information about the resource.</p>",
         "ResourceProperty$LastReportedAt": "<p>The date and time that the information about this resource property was last updated.</p>",
         "UpdateIndexTypeOutput$LastUpdatedAt": "<p>The date and timestamp when the index was last updated.</p>",

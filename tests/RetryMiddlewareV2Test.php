@@ -524,21 +524,13 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
-        $version = \Aws\guzzle_major_version();
-        if ($version === 6 || $version === 7) {
-            $previous = new RequestException(
-                'test',
-                $request,
-                null,
-                null,
-                ['errno' => CURLE_RECV_ERROR]
-            );
-        } elseif ($version === 5) {
-            $previous = new RequestException(
-                'cURL error ' . CURLE_RECV_ERROR . ': test',
-                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
-            );
-        }
+        $previous = new RequestException(
+            'test',
+            $request,
+            null,
+            null,
+            ['errno' => CURLE_RECV_ERROR]
+        );
         $err = new AwsException(
             'e',
             $command,
@@ -560,23 +552,13 @@ class RetryMiddlewareV2Test extends TestCase
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
-        $version = \Aws\guzzle_major_version();
-
-        // Custom error passed in to decider config should result in a retry
-        if ($version === 6 || $version === 7) {
-            $previous = new RequestException(
-                'test',
-                $request,
-                null,
-                null,
-                ['errno' => CURLE_BAD_CONTENT_ENCODING]
-            );
-        } elseif ($version === 5) {
-            $previous = new RequestException(
-                'cURL error ' . CURLE_BAD_CONTENT_ENCODING . ': test',
-                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
-            );
-        }
+        $previous = new RequestException(
+            'test',
+            $request,
+            null,
+            null,
+            ['errno' => CURLE_BAD_CONTENT_ENCODING]
+        );
         $err = new AwsException(
             'e',
             $command,
@@ -585,21 +567,13 @@ class RetryMiddlewareV2Test extends TestCase
         );
         $this->assertTrue($decider(0, $command, $err));
 
-        // Error not passed in to decider config should result in no retry
-        if ($version === 6 || $version === 7) {
-            $previous = new RequestException(
-                'test',
-                $request,
-                null,
-                null,
-                ['errno' => CURLE_ABORTED_BY_CALLBACK]
-            );
-        } elseif ($version === 5) {
-            $previous = new RequestException(
-                'cURL error ' . CURLE_ABORTED_BY_CALLBACK . ': test',
-                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
-            );
-        }
+        $previous = new RequestException(
+            'test',
+            $request,
+            null,
+            null,
+            ['errno' => CURLE_ABORTED_BY_CALLBACK]
+        );
         $err = new AwsException(
             'e',
             $command,

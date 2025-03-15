@@ -5,11 +5,13 @@
     "endpointPrefix":"directconnect",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Direct Connect",
     "serviceId":"Direct Connect",
     "signatureVersion":"v4",
     "targetPrefix":"OvertureService",
-    "uid":"directconnect-2012-10-25"
+    "uid":"directconnect-2012-10-25",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptDirectConnectGatewayAssociationProposal":{
@@ -1023,6 +1025,14 @@
         "connectionId":{"shape":"ConnectionId"}
       }
     },
+    "AssociatedCoreNetwork":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"CoreNetworkIdentifier"},
+        "ownerAccount":{"shape":"OwnerAccount"},
+        "attachmentId":{"shape":"CoreNetworkAttachmentId"}
+      }
+    },
     "AssociatedGateway":{
       "type":"structure",
       "members":{
@@ -1217,6 +1227,18 @@
       "members":{
         "connections":{"shape":"ConnectionList"}
       }
+    },
+    "CoreNetworkAttachmentId":{
+      "type":"string",
+      "max":28,
+      "min":12,
+      "pattern":"^attachment-([0-9a-f]{1,17})$"
+    },
+    "CoreNetworkIdentifier":{
+      "type":"string",
+      "max":30,
+      "min":14,
+      "pattern":"^core-network-([0-9a-f]{1,17})$"
     },
     "Count":{"type":"integer"},
     "CreateBGPPeerRequest":{
@@ -1687,6 +1709,7 @@
         "associatedGateway":{"shape":"AssociatedGateway"},
         "associationId":{"shape":"DirectConnectGatewayAssociationId"},
         "allowedPrefixesToDirectConnectGateway":{"shape":"RouteFilterPrefixList"},
+        "associatedCoreNetwork":{"shape":"AssociatedCoreNetwork"},
         "virtualGatewayId":{"shape":"VirtualGatewayId"},
         "virtualGatewayRegion":{"shape":"VirtualGatewayRegion"},
         "virtualGatewayOwnerAccount":{"shape":"OwnerAccount"}

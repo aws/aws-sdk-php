@@ -3,14 +3,28 @@
   "service": "<p>You can use the tax setting API to programmatically set, modify, and delete the tax registration number (TRN), associated business legal name, and address (Collectively referred to as \"TRN information\"). You can also programmatically view TRN information and tax addresses (\"Tax profiles\"). </p> <p>You can use this API to automate your TRN information settings instead of manually using the console.</p> <p>Service Endpoint</p> <ul> <li> <p>https://tax.us-east-1.amazonaws.com</p> </li> </ul>",
   "operations": {
     "BatchDeleteTaxRegistration": "<p>Deletes tax registration for multiple accounts in batch. This can be used to delete tax registrations for up to five accounts in one batch. </p> <note> <p>This API operation can't be used to delete your tax registration in Brazil. Use the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console instead.</p> </note>",
-    "BatchPutTaxRegistration": "<p>Adds or updates tax registration for multiple accounts in batch. This can be used to add or update tax registrations for up to five accounts in one batch. You can't set a TRN if there's a pending TRN. You'll need to delete the pending TRN first.</p> <p>To call this API operation for specific countries, see the following country-specific requirements.</p> <p> <b>Bangladesh</b> </p> <ul> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Brazil</b> </p> <ul> <li> <p>You must complete the tax registration process in the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console. After your TRN and billing address are verified, you can call this API operation.</p> </li> <li> <p>For Amazon Web Services accounts created through Organizations, you can call this API operation when you don't have a billing address.</p> </li> </ul> <p> <b>Georgia</b> </p> <ul> <li> <p>The valid <code>personType</code> values are <code>Physical Person</code> and <code>Business</code>.</p> </li> </ul> <p> <b>Kenya</b> </p> <ul> <li> <p>You must specify the <code>personType</code> in the <code>kenyaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>personType</code> is <code>Physical Person</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Malaysia</b> </p> <ul> <li> <p>If you use this operation to set a tax registration number (TRN) in Malaysia, only resellers with a valid sales and service tax (SST) number are required to provide tax registration information.</p> </li> <li> <p>By using this API operation to set a TRN in Malaysia, Amazon Web Services will regard you as self-declaring that you're an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD) and have a valid SST number.</p> </li> <li> <p>Amazon Web Services reserves the right to seek additional information and/or take other actions to support your self-declaration as appropriate.</p> </li> <li> <p>If you're not a reseller of Amazon Web Services, we don't recommend that you use this operation to set the TRN in Malaysia.</p> </li> <li> <p>Only use this API operation to upload the TRNs for accounts through which you're reselling Amazon Web Services.</p> </li> <li> <p>Amazon Web Services is currently registered under the following service tax codes. You must include at least one of the service tax codes in the service tax code strings to declare yourself as an authorized registered business reseller.</p> <p>Taxable service and service tax codes:</p> <p>Consultancy - 9907061674</p> <p>Training or coaching service - 9907071685</p> <p>IT service - 9907101676</p> <p>Digital services and electronic medium - 9907121690</p> </li> </ul> <p> <b>Nepal</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul> <p> <b>Saudi Arabia</b> </p> <ul> <li> <p>For <code>address</code>, you must specify <code>addressLine3</code>.</p> </li> </ul> <p> <b>South Korea</b> </p> <ul> <li> <p>You must specify the <code>certifiedEmailId</code> and <code>legalName</code> in the <code>TaxRegistrationEntry</code> object. Use Korean characters for <code>legalName</code>.</p> </li> <li> <p>You must specify the <code>businessRepresentativeName</code>, <code>itemOfBusiness</code>, and <code>lineOfBusiness</code> in the <code>southKoreaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object. Use Korean characters for these fields.</p> </li> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> <li> <p>For the <code>address</code> object, use Korean characters for <code>addressLine1</code>, <code>addressLine2</code> <code>city</code>, <code>postalCode</code>, and <code>stateOrRegion</code>.</p> </li> </ul> <p> <b>Spain</b> </p> <ul> <li> <p>You must specify the <code>registrationType</code> in the <code>spainAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>registrationType</code> is <code>Local</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Turkey</b> </p> <ul> <li> <p>You must specify the <code>sector</code> in the <code>taxRegistrationEntry</code> object.</p> </li> <li> <p>If your <code>sector</code> is <code>Business</code>, <code>Individual</code>, or <code>Government</code>:</p> <ul> <li> <p>Specify the <code>taxOffice</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p>(Optional) Specify the <code>kepEmailId</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p> <b>Note:</b> In the <b>Tax Settings</b> page of the Billing console, <code>Government</code> appears as <b>Public institutions</b> </p> </li> </ul> </li> <li> <p>If your <code>sector</code> is <code>Business</code> and you're subject to KDV tax, you must specify your industry in the <code>industries</code> field.</p> </li> <li> <p>For <code>address</code>, you must specify <code>districtOrCounty</code>.</p> </li> </ul> <p> <b>Ukraine</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul>",
+    "BatchGetTaxExemptions": "<p>Get the active tax exemptions for a given list of accounts. The IAM action is <code>tax:GetExemptions</code>. </p>",
+    "BatchPutTaxRegistration": "<p>Adds or updates tax registration for multiple accounts in batch. This can be used to add or update tax registrations for up to five accounts in one batch. You can't set a TRN if there's a pending TRN. You'll need to delete the pending TRN first.</p> <p>To call this API operation for specific countries, see the following country-specific requirements.</p> <p> <b>Bangladesh</b> </p> <ul> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Brazil</b> </p> <ul> <li> <p>You must complete the tax registration process in the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console. After your TRN and billing address are verified, you can call this API operation.</p> </li> <li> <p>For Amazon Web Services accounts created through Organizations, you can call this API operation when you don't have a billing address.</p> </li> </ul> <p> <b>Georgia</b> </p> <ul> <li> <p>The valid <code>personType</code> values are <code>Physical Person</code> and <code>Business</code>.</p> </li> </ul> <p> <b>Kenya</b> </p> <ul> <li> <p>You must specify the <code>personType</code> in the <code>kenyaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>personType</code> is <code>Physical Person</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Malaysia</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> <li> <p> <code>RegistrationType</code> valid values are <code>NRIC</code> for individual, and TIN and sales and service tax (SST) for Business.</p> </li> <li> <p>For individual, you can specify the <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with NRIC type, and a valid <code>MyKad</code> or NRIC number.</p> </li> <li> <p>For business, you must specify a <code>businessRegistrationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a TIN type and tax identification number.</p> </li> <li> <p>For business resellers, you must specify a <code>businessRegistrationNumber</code> and <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a sales and service tax (SST) type and a valid SST number.</p> </li> <li> <p>For business resellers with service codes, you must specify <code>businessRegistrationNumber</code>, <code>taxInformationNumber</code>, and distinct <code>serviceTaxCodes</code> in <code>MalaysiaAdditionalInfo</code> with a SST type and valid sales and service tax (SST) number. By using this API operation, Amazon Web Services registers your self-declaration that you’re an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD), and have a valid SST number.</p> </li> <li> <p>Amazon Web Services reserves the right to seek additional information and/or take other actions to support your self-declaration as appropriate.</p> </li> <li> <p>Amazon Web Services is currently registered under the following service tax codes. You must include at least one of the service tax codes in the service tax code strings to declare yourself as an authorized registered business reseller.</p> <p>Taxable service and service tax codes:</p> <p>Consultancy - 9907061674</p> <p>Training or coaching service - 9907071685</p> <p>IT service - 9907101676</p> <p>Digital services and electronic medium - 9907121690</p> </li> </ul> <p> <b>Nepal</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul> <p> <b>Saudi Arabia</b> </p> <ul> <li> <p>For <code>address</code>, you must specify <code>addressLine3</code>.</p> </li> </ul> <p> <b>South Korea</b> </p> <ul> <li> <p>You must specify the <code>certifiedEmailId</code> and <code>legalName</code> in the <code>TaxRegistrationEntry</code> object. Use Korean characters for <code>legalName</code>.</p> </li> <li> <p>You must specify the <code>businessRepresentativeName</code>, <code>itemOfBusiness</code>, and <code>lineOfBusiness</code> in the <code>southKoreaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object. Use Korean characters for these fields.</p> </li> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> <li> <p>For the <code>address</code> object, use Korean characters for <code>addressLine1</code>, <code>addressLine2</code> <code>city</code>, <code>postalCode</code>, and <code>stateOrRegion</code>.</p> </li> </ul> <p> <b>Spain</b> </p> <ul> <li> <p>You must specify the <code>registrationType</code> in the <code>spainAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>registrationType</code> is <code>Local</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Turkey</b> </p> <ul> <li> <p>You must specify the <code>sector</code> in the <code>taxRegistrationEntry</code> object.</p> </li> <li> <p>If your <code>sector</code> is <code>Business</code>, <code>Individual</code>, or <code>Government</code>:</p> <ul> <li> <p>Specify the <code>taxOffice</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p>(Optional) Specify the <code>kepEmailId</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p> <b>Note:</b> In the <b>Tax Settings</b> page of the Billing console, <code>Government</code> appears as <b>Public institutions</b> </p> </li> </ul> </li> <li> <p>If your <code>sector</code> is <code>Business</code> and you're subject to KDV tax, you must specify your industry in the <code>industries</code> field.</p> </li> <li> <p>For <code>address</code>, you must specify <code>districtOrCounty</code>.</p> </li> </ul> <p> <b>Ukraine</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul>",
+    "DeleteSupplementalTaxRegistration": "<p> Deletes a supplemental tax registration for a single account. </p>",
     "DeleteTaxRegistration": "<p>Deletes tax registration for a single account. </p> <note> <p>This API operation can't be used to delete your tax registration in Brazil. Use the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console instead.</p> </note>",
+    "GetTaxExemptionTypes": "<p>Get supported tax exemption types. The IAM action is <code>tax:GetExemptions</code>. </p>",
+    "GetTaxInheritance": "<p>The get account tax inheritance status. </p>",
     "GetTaxRegistration": "<p>Retrieves tax registration for a single account.</p>",
     "GetTaxRegistrationDocument": "<p>Downloads your tax documents to the Amazon S3 bucket that you specify in your request.</p>",
+    "ListSupplementalTaxRegistrations": "<p> Retrieves supplemental tax registrations for a single account. </p>",
+    "ListTaxExemptions": "<p>Retrieves the tax exemption of accounts listed in a consolidated billing family. The IAM action is <code>tax:GetExemptions</code>.</p>",
     "ListTaxRegistrations": "<p>Retrieves the tax registration of accounts listed in a consolidated billing family. This can be used to retrieve up to 100 accounts' tax registrations in one call (default 50). </p>",
-    "PutTaxRegistration": "<p>Adds or updates tax registration for a single account. You can't set a TRN if there's a pending TRN. You'll need to delete the pending TRN first.</p> <p>To call this API operation for specific countries, see the following country-specific requirements.</p> <p> <b>Bangladesh</b> </p> <ul> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Brazil</b> </p> <ul> <li> <p>You must complete the tax registration process in the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console. After your TRN and billing address are verified, you can call this API operation.</p> </li> <li> <p>For Amazon Web Services accounts created through Organizations, you can call this API operation when you don't have a billing address.</p> </li> </ul> <p> <b>Georgia</b> </p> <ul> <li> <p>The valid <code>personType</code> values are <code>Physical Person</code> and <code>Business</code>.</p> </li> </ul> <p> <b>Kenya</b> </p> <ul> <li> <p>You must specify the <code>personType</code> in the <code>kenyaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>personType</code> is <code>Physical Person</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Malaysia</b> </p> <ul> <li> <p>If you use this operation to set a tax registration number (TRN) in Malaysia, only resellers with a valid sales and service tax (SST) number are required to provide tax registration information.</p> </li> <li> <p>By using this API operation to set a TRN in Malaysia, Amazon Web Services will regard you as self-declaring that you're an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD) and have a valid SST number.</p> </li> <li> <p>Amazon Web Services reserves the right to seek additional information and/or take other actions to support your self-declaration as appropriate.</p> </li> <li> <p>If you're not a reseller of Amazon Web Services, we don't recommend that you use this operation to set the TRN in Malaysia.</p> </li> <li> <p>Only use this API operation to upload the TRNs for accounts through which you're reselling Amazon Web Services.</p> </li> <li> <p>Amazon Web Services is currently registered under the following service tax codes. You must include at least one of the service tax codes in the service tax code strings to declare yourself as an authorized registered business reseller.</p> <p>Taxable service and service tax codes:</p> <p>Consultancy - 9907061674</p> <p>Training or coaching service - 9907071685</p> <p>IT service - 9907101676</p> <p>Digital services and electronic medium - 9907121690</p> </li> </ul> <p> <b>Nepal</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul> <p> <b>Saudi Arabia</b> </p> <ul> <li> <p>For <code>address</code>, you must specify <code>addressLine3</code>.</p> </li> </ul> <p> <b>South Korea</b> </p> <ul> <li> <p>You must specify the <code>certifiedEmailId</code> and <code>legalName</code> in the <code>TaxRegistrationEntry</code> object. Use Korean characters for <code>legalName</code>.</p> </li> <li> <p>You must specify the <code>businessRepresentativeName</code>, <code>itemOfBusiness</code>, and <code>lineOfBusiness</code> in the <code>southKoreaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object. Use Korean characters for these fields.</p> </li> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> <li> <p>For the <code>address</code> object, use Korean characters for <code>addressLine1</code>, <code>addressLine2</code> <code>city</code>, <code>postalCode</code>, and <code>stateOrRegion</code>.</p> </li> </ul> <p> <b>Spain</b> </p> <ul> <li> <p>You must specify the <code>registrationType</code> in the <code>spainAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>registrationType</code> is <code>Local</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Turkey</b> </p> <ul> <li> <p>You must specify the <code>sector</code> in the <code>taxRegistrationEntry</code> object.</p> </li> <li> <p>If your <code>sector</code> is <code>Business</code>, <code>Individual</code>, or <code>Government</code>:</p> <ul> <li> <p>Specify the <code>taxOffice</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p>(Optional) Specify the <code>kepEmailId</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p> <b>Note:</b> In the <b>Tax Settings</b> page of the Billing console, <code>Government</code> appears as <b>Public institutions</b> </p> </li> </ul> </li> <li> <p>If your <code>sector</code> is <code>Business</code> and you're subject to KDV tax, you must specify your industry in the <code>industries</code> field.</p> </li> <li> <p>For <code>address</code>, you must specify <code>districtOrCounty</code>.</p> </li> </ul> <p> <b>Ukraine</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul>"
+    "PutSupplementalTaxRegistration": "<p> Stores supplemental tax registration for a single account. </p>",
+    "PutTaxExemption": "<p>Adds the tax exemption for a single account or all accounts listed in a consolidated billing family. The IAM action is <code>tax:UpdateExemptions</code>. </p>",
+    "PutTaxInheritance": "<p>The updated tax inheritance status. </p>",
+    "PutTaxRegistration": "<p>Adds or updates tax registration for a single account. You can't set a TRN if there's a pending TRN. You'll need to delete the pending TRN first.</p> <p>To call this API operation for specific countries, see the following country-specific requirements.</p> <p> <b>Bangladesh</b> </p> <ul> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Brazil</b> </p> <ul> <li> <p>You must complete the tax registration process in the <a href=\"https://console.aws.amazon.com/billing/home#/paymentpreferences/paymentmethods\">Payment preferences</a> page in the Billing and Cost Management console. After your TRN and billing address are verified, you can call this API operation.</p> </li> <li> <p>For Amazon Web Services accounts created through Organizations, you can call this API operation when you don't have a billing address.</p> </li> </ul> <p> <b>Georgia</b> </p> <ul> <li> <p>The valid <code>personType</code> values are <code>Physical Person</code> and <code>Business</code>.</p> </li> </ul> <p> <b>Kenya</b> </p> <ul> <li> <p>You must specify the <code>personType</code> in the <code>kenyaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>personType</code> is <code>Physical Person</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Malaysia</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> <li> <p> <code>RegistrationType</code> valid values are <code>NRIC</code> for individual, and TIN and sales and service tax (SST) for Business.</p> </li> <li> <p>For individual, you can specify the <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with NRIC type, and a valid <code>MyKad</code> or NRIC number.</p> </li> <li> <p>For business, you must specify a <code>businessRegistrationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a TIN type and tax identification number.</p> </li> <li> <p>For business resellers, you must specify a <code>businessRegistrationNumber</code> and <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a sales and service tax (SST) type and a valid SST number.</p> </li> <li> <p>For business resellers with service codes, you must specify <code>businessRegistrationNumber</code>, <code>taxInformationNumber</code>, and distinct <code>serviceTaxCodes</code> in <code>MalaysiaAdditionalInfo</code> with a SST type and valid sales and service tax (SST) number. By using this API operation, Amazon Web Services registers your self-declaration that you’re an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD), and have a valid SST number.</p> </li> <li> <p>Amazon Web Services reserves the right to seek additional information and/or take other actions to support your self-declaration as appropriate.</p> </li> <li> <p>Amazon Web Services is currently registered under the following service tax codes. You must include at least one of the service tax codes in the service tax code strings to declare yourself as an authorized registered business reseller.</p> <p>Taxable service and service tax codes:</p> <p>Consultancy - 9907061674</p> <p>Training or coaching service - 9907071685</p> <p>IT service - 9907101676</p> <p>Digital services and electronic medium - 9907121690</p> </li> </ul> <p> <b>Nepal</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul> <p> <b>Saudi Arabia</b> </p> <ul> <li> <p>For <code>address</code>, you must specify <code>addressLine3</code>.</p> </li> </ul> <p> <b>South Korea</b> </p> <ul> <li> <p>You must specify the <code>certifiedEmailId</code> and <code>legalName</code> in the <code>TaxRegistrationEntry</code> object. Use Korean characters for <code>legalName</code>.</p> </li> <li> <p>You must specify the <code>businessRepresentativeName</code>, <code>itemOfBusiness</code>, and <code>lineOfBusiness</code> in the <code>southKoreaAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object. Use Korean characters for these fields.</p> </li> <li> <p>You must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> <li> <p>For the <code>address</code> object, use Korean characters for <code>addressLine1</code>, <code>addressLine2</code> <code>city</code>, <code>postalCode</code>, and <code>stateOrRegion</code>.</p> </li> </ul> <p> <b>Spain</b> </p> <ul> <li> <p>You must specify the <code>registrationType</code> in the <code>spainAdditionalInfo</code> field of the <code>additionalTaxInformation</code> object.</p> </li> <li> <p>If the <code>registrationType</code> is <code>Local</code>, you must specify the tax registration certificate document in the <code>taxRegistrationDocuments</code> field of the <code>VerificationDetails</code> object.</p> </li> </ul> <p> <b>Turkey</b> </p> <ul> <li> <p>You must specify the <code>sector</code> in the <code>taxRegistrationEntry</code> object.</p> </li> <li> <p>If your <code>sector</code> is <code>Business</code>, <code>Individual</code>, or <code>Government</code>:</p> <ul> <li> <p>Specify the <code>taxOffice</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p>(Optional) Specify the <code>kepEmailId</code>. If your <code>sector</code> is <code>Individual</code>, don't enter this value.</p> </li> <li> <p> <b>Note:</b> In the <b>Tax Settings</b> page of the Billing console, <code>Government</code> appears as <b>Public institutions</b> </p> </li> </ul> </li> <li> <p>If your <code>sector</code> is <code>Business</code> and you're subject to KDV tax, you must specify your industry in the <code>industries</code> field.</p> </li> <li> <p>For <code>address</code>, you must specify <code>districtOrCounty</code>.</p> </li> </ul> <p> <b>Ukraine</b> </p> <ul> <li> <p>The sector valid values are <code>Business</code> and <code>Individual</code>.</p> </li> </ul>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The access is denied for the Amazon Web ServicesSupport API. </p>",
+      "refs": {
+      }
+    },
     "AccountDetails": {
       "base": "<p> An object with your <code>accountId</code> and TRN information. </p>",
       "refs": {
@@ -33,6 +47,7 @@
         "DeleteTaxRegistrationRequest$accountId": "<p>Unique account identifier for the TRN information that needs to be deleted. If this isn't passed, the account ID corresponding to the credentials of the API caller will be used for this parameter.</p>",
         "GetTaxRegistrationRequest$accountId": "<p>Your unique account identifier.</p>",
         "PutTaxRegistrationRequest$accountId": "<p>Your unique account identifier. </p>",
+        "TaxExemptionDetailsMap$key": null,
         "TaxInheritanceDetails$parentEntityId": "<p> Tax inheritance parent account information associated with the account. </p>"
       }
     },
@@ -40,7 +55,10 @@
       "base": null,
       "refs": {
         "BatchDeleteTaxRegistrationRequest$accountIds": "<p>List of unique account identifiers. </p>",
-        "BatchPutTaxRegistrationRequest$accountIds": "<p> List of unique account identifiers.</p>"
+        "BatchGetTaxExemptionsRequest$accountIds": "<p> List of unique account identifiers. </p>",
+        "BatchGetTaxExemptionsResponse$failedAccounts": "<p>The list of accounts that failed to get tax exemptions. </p>",
+        "BatchPutTaxRegistrationRequest$accountIds": "<p> List of unique account identifiers.</p>",
+        "PutTaxExemptionRequest$accountIds": "<p> The list of unique account identifiers. </p>"
       }
     },
     "AccountMetaData": {
@@ -72,6 +90,8 @@
       "base": "<p> The details of the address associated with the TRN information. </p>",
       "refs": {
         "AccountMetaData$address": null,
+        "SupplementalTaxRegistration$address": null,
+        "SupplementalTaxRegistrationEntry$address": null,
         "TaxRegistration$legalAddress": "<p> The legal address associated with your TRN registration. </p>",
         "TaxRegistrationEntry$legalAddress": "<p>The legal address associated with your TRN.</p> <note> <p>If you're setting a TRN in Brazil for the CNPJ tax type, you don't need to specify the legal address. </p> <p>For TRNs in other countries and for CPF tax types Brazil, you must specify the legal address.</p> </note>"
       }
@@ -107,6 +127,25 @@
         "AddressRoleMap$key": null
       }
     },
+    "AttachmentUploadException": {
+      "base": "<p>Failed to upload the tax exemption document to Amazon Web ServicesSupport case. </p>",
+      "refs": {
+      }
+    },
+    "Authorities": {
+      "base": null,
+      "refs": {
+        "TaxExemptionType$applicableJurisdictions": "<p>The tax exemption's applicable jurisdictions. </p>"
+      }
+    },
+    "Authority": {
+      "base": "<p>The address domain associate with the tax information. </p>",
+      "refs": {
+        "Authorities$member": null,
+        "PutTaxExemptionRequest$authority": null,
+        "TaxExemption$authority": "<p>The address domain associate with tax exemption. </p>"
+      }
+    },
     "BatchDeleteTaxRegistrationError": {
       "base": "<p> The error object for representing failures in the <code>BatchDeleteTaxRegistration</code> operation. </p>",
       "refs": {
@@ -125,6 +164,16 @@
       }
     },
     "BatchDeleteTaxRegistrationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetTaxExemptionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetTaxExemptionsResponse": {
       "base": null,
       "refs": {
       }
@@ -155,13 +204,20 @@
       "base": null,
       "refs": {
         "CanadaAdditionalInfo$isResellerAccount": "<p> The value for this parameter must be <code>true</code> if the <code>provincialSalesTaxId</code> value is provided for a TRN in British Columbia, Saskatchewan, or Manitoba provinces. </p> <p>To claim a provincial sales tax (PST) and retail sales tax (RST) reseller exemption, you must confirm that purchases from this account were made for resale. Otherwise, remove the PST or RST number from the <code>provincialSalesTaxId</code> parameter from your request.</p>",
-        "PolandAdditionalInfo$isGroupVatEnabled": "<p> True if your business is a member of a VAT group with a NIP active for VAT purposes. Otherwise, this is false. </p>"
+        "PolandAdditionalInfo$isGroupVatEnabled": "<p> True if your business is a member of a VAT group with a NIP active for VAT purposes. Otherwise, this is false. </p>",
+        "TaxExemptionDetails$heritageObtainedDetails": "<p>The indicator if the tax exemption is inherited from the consolidated billing family management account. </p>"
       }
     },
     "BrazilAdditionalInfo": {
       "base": "<p>Additional tax information associated with your TRN in Brazil.</p>",
       "refs": {
         "AdditionalInfoResponse$brazilAdditionalInfo": "<p>Additional tax information associated with your TRN in Brazil. The Tax Settings API returns this information in your response when any additional information is present with your TRN in Brazil.</p>"
+      }
+    },
+    "BusinessRegistrationNumber": {
+      "base": null,
+      "refs": {
+        "MalaysiaAdditionalInfo$businessRegistrationNumber": "<p>The tax registration number (TRN) in Malaysia. </p> <p>For individual, you can specify the <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with NRIC type, and a valid MyKad or NRIC number. For business, you must specify a <code>businessRegistrationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a TIN type and tax identification number. For business resellers, you must specify a <code>businessRegistrationNumber</code> and <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a sales and service tax (SST) type and a valid SST number. </p> <p>For business resellers with service codes, you must specify <code>businessRegistrationNumber</code>, <code>taxInformationNumber</code>, and distinct <code>serviceTaxCodes</code> in <code>MalaysiaAdditionalInfo</code> with a SST type and valid sales and service tax (SST) number. By using this API operation, Amazon Web Services registers your self-declaration that you’re an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD), and have a valid SST number.</p>"
       }
     },
     "BusinessRepresentativeName": {
@@ -192,7 +248,12 @@
     "CanadaRetailSalesTaxNumberString": {
       "base": null,
       "refs": {
-        "CanadaAdditionalInfo$canadaRetailSalesTaxNumber": "<p> Manitoba Retail Sales Tax ID number. Customers purchasing Amazon Web Services for resale in Manitoba must provide a valid Retail Sales Tax ID number for Manitoba. Leave this blank if you do not have a Retail Sales Tax ID number in Manitoba or are not purchasing Amazon Web Services for resale. </p>"
+        "CanadaAdditionalInfo$canadaRetailSalesTaxNumber": "<p> Manitoba Retail Sales Tax ID number. Customers purchasing Amazon Web Services services for resale in Manitoba must provide a valid Retail Sales Tax ID number for Manitoba. Leave this blank if you do not have a Retail Sales Tax ID number in Manitoba or are not purchasing Amazon Web Services services for resale. </p>"
+      }
+    },
+    "CaseCreationLimitExceededException": {
+      "base": "<p>You've exceeded the Amazon Web ServicesSupport case creation limit for your account. </p>",
+      "refs": {
       }
     },
     "CcmCode": {
@@ -226,10 +287,17 @@
       "refs": {
       }
     },
+    "ContractingAuthorityCode": {
+      "base": null,
+      "refs": {
+        "GreeceAdditionalInfo$contractingAuthorityCode": "<p>The code of contracting authority for e-invoicing.</p>"
+      }
+    },
     "CountryCode": {
       "base": null,
       "refs": {
         "Address$countryCode": "<p>The country code for the country that the address is in. </p>",
+        "Authority$country": "<p> The country code for the country that the address is in. </p>",
         "Jurisdiction$countryCode": "<p> The country code of the jurisdiction. </p>"
       }
     },
@@ -243,6 +311,23 @@
       "base": null,
       "refs": {
         "VerificationDetails$dateOfBirth": "<p>Date of birth to verify your submitted TRN. Use the <code>YYYY-MM-DD</code> format.</p>"
+      }
+    },
+    "DateString": {
+      "base": null,
+      "refs": {
+        "EgyptAdditionalInfo$uniqueIdentificationNumberExpirationDate": "<p>The expiration date of the unique identification number provided by the Egypt Tax Authority.</p>",
+        "VietnamAdditionalInfo$paymentVoucherNumberDate": "<p>The date on the tax return payment document.</p>"
+      }
+    },
+    "DeleteSupplementalTaxRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSupplementalTaxRegistrationResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteTaxRegistrationRequest": {
@@ -267,10 +352,41 @@
         "GetTaxRegistrationDocumentRequest$destinationS3Location": "<p>The Amazon S3 bucket that you specify to download your tax documents to.</p>"
       }
     },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "TaxExemptionType$displayName": "<p>The tax exemption's type display name. </p>"
+      }
+    },
     "District": {
       "base": null,
       "refs": {
         "Address$districtOrCounty": "<p>The district or county the address is located. </p> <note> <p>For addresses in Brazil, this parameter uses the name of the neighborhood. When you set a TRN in Brazil, use <code>districtOrCounty</code> for the neighborhood name.</p> </note>"
+      }
+    },
+    "EgyptAdditionalInfo": {
+      "base": "<p>Additional tax information to specify for a TRN in Egypt.</p>",
+      "refs": {
+        "AdditionalInfoRequest$egyptAdditionalInfo": "<p>Additional tax information to specify for a TRN in Egypt. </p>",
+        "AdditionalInfoResponse$egyptAdditionalInfo": "<p>Additional tax information to specify for a TRN in Egypt. </p>"
+      }
+    },
+    "ElectronicTransactionCodeNumber": {
+      "base": null,
+      "refs": {
+        "VietnamAdditionalInfo$electronicTransactionCodeNumber": "<p>The electronic transaction code number on the tax return document.</p>"
+      }
+    },
+    "EnterpriseIdentificationNumber": {
+      "base": null,
+      "refs": {
+        "VietnamAdditionalInfo$enterpriseIdentificationNumber": "<p>The enterprise identification number for tax registration.</p>"
+      }
+    },
+    "EntityExemptionAccountStatus": {
+      "base": null,
+      "refs": {
+        "TaxExemption$status": "<p>The tax exemption status. </p>"
       }
     },
     "ErrorCode": {
@@ -286,8 +402,11 @@
     "ErrorMessage": {
       "base": null,
       "refs": {
+        "AccessDeniedException$message": null,
+        "AttachmentUploadException$message": null,
         "BatchDeleteTaxRegistrationError$message": "<p> The error message for an individual failure in the <code>BatchDeleteTaxRegistration</code> operation. </p>",
         "BatchPutTaxRegistrationError$message": "<p> The error message for an individual failure in the <code>BatchPutTaxRegistration</code> operation. </p>",
+        "CaseCreationLimitExceededException$message": null,
         "ConflictException$message": null,
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
@@ -301,10 +420,47 @@
         "AdditionalInfoResponse$estoniaAdditionalInfo": "<p> Additional tax information associated with your TRN in Estonia. </p>"
       }
     },
+    "ExemptionCertificate": {
+      "base": "<p>The exemption certificate. </p>",
+      "refs": {
+        "PutTaxExemptionRequest$exemptionCertificate": null
+      }
+    },
+    "ExemptionDocumentName": {
+      "base": null,
+      "refs": {
+        "ExemptionCertificate$documentName": "<p>The exemption certificate file name. </p>"
+      }
+    },
+    "ExemptionFileBlob": {
+      "base": null,
+      "refs": {
+        "ExemptionCertificate$documentFile": "<p>The exemption certificate file content. </p>"
+      }
+    },
     "FieldName": {
       "base": null,
       "refs": {
         "ValidationExceptionField$name": "<p>The name of the parameter that caused a <code>ValidationException</code> error.</p>"
+      }
+    },
+    "FileBlob": {
+      "base": null,
+      "refs": {
+        "TaxRegistrationDocFile$fileContent": "<p>The tax registration document content. </p>"
+      }
+    },
+    "GenericString": {
+      "base": null,
+      "refs": {
+        "DeleteSupplementalTaxRegistrationRequest$authorityId": "<p> The unique authority Id for the supplemental TRN information that needs to be deleted. </p>",
+        "PutSupplementalTaxRegistrationResponse$authorityId": "<p> Unique authority ID for the supplemental TRN information that was stored. </p>",
+        "PutTaxExemptionRequest$exemptionType": "<p>The exemption type. </p>",
+        "PutTaxExemptionResponse$caseId": "<p>The customer support case ID. </p>",
+        "SupplementalTaxRegistration$authorityId": "<p> Unique authority ID for the supplemental TRN. </p>",
+        "TaxExemptionDetails$heritageObtainedParentEntity": "<p>The consolidated billing family management account the tax exemption inherited from. </p>",
+        "TaxExemptionDetails$heritageObtainedReason": "<p>The reason of the heritage inheritance. </p>",
+        "TaxExemptionType$description": "<p>The tax exemption's type description. </p>"
       }
     },
     "GeorgiaAdditionalInfo": {
@@ -312,6 +468,26 @@
       "refs": {
         "AdditionalInfoRequest$georgiaAdditionalInfo": "<p> Additional tax information to specify for a TRN in Georgia. </p>",
         "AdditionalInfoResponse$georgiaAdditionalInfo": "<p> Additional tax information associated with your TRN in Georgia. </p>"
+      }
+    },
+    "GetTaxExemptionTypesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTaxExemptionTypesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTaxInheritanceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTaxInheritanceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetTaxRegistrationDocumentRequest": {
@@ -332,6 +508,20 @@
     "GetTaxRegistrationResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "GreeceAdditionalInfo": {
+      "base": "<p>Additional tax information to specify for a TRN in Greece. </p>",
+      "refs": {
+        "AdditionalInfoRequest$greeceAdditionalInfo": "<p>Additional tax information to specify for a TRN in Greece.</p>",
+        "AdditionalInfoResponse$greeceAdditionalInfo": "<p>Additional tax information to specify for a TRN in Greece. </p>"
+      }
+    },
+    "HeritageStatus": {
+      "base": null,
+      "refs": {
+        "GetTaxInheritanceResponse$heritageStatus": "<p>The tax inheritance status. </p>",
+        "PutTaxInheritanceRequest$heritageStatus": "<p>The tax inheritance status. </p>"
       }
     },
     "IndiaAdditionalInfo": {
@@ -418,6 +608,8 @@
     "LegalName": {
       "base": null,
       "refs": {
+        "SupplementalTaxRegistration$legalName": "<p> The legal name associated with your TRN registration. </p>",
+        "SupplementalTaxRegistrationEntry$legalName": "<p> The legal name associated with your TRN registration. </p>",
         "TaxRegistration$legalName": "<p> The legal name associated with your TRN registration. </p>",
         "TaxRegistrationEntry$legalName": "<p>The legal name associated with your TRN. </p> <note> <p>If you're setting a TRN in Brazil, you don't need to specify the legal name. For TRNs in other countries, you must specify the legal name.</p> </note>",
         "TaxRegistrationWithJurisdiction$legalName": "<p>The legal name associated with your TRN information. </p>"
@@ -433,6 +625,26 @@
       "base": null,
       "refs": {
         "SouthKoreaAdditionalInfo$lineOfBusiness": "<p>Line of business based on the most recently uploaded tax registration certificate.</p>"
+      }
+    },
+    "ListSupplementalTaxRegistrationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSupplementalTaxRegistrationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTaxExemptionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTaxExemptionsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListTaxRegistrationsRequest": {
@@ -467,12 +679,18 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListSupplementalTaxRegistrationsRequest$maxResults": "<p> The number of <code>taxRegistrations</code> results you want in one response. </p>",
+        "ListTaxExemptionsRequest$maxResults": "<p>The number of results you want in one response. </p>",
         "ListTaxRegistrationsRequest$maxResults": "<p>Number of <code>accountDetails</code> results you want in one response. </p>"
       }
     },
     "PaginationTokenString": {
       "base": null,
       "refs": {
+        "ListSupplementalTaxRegistrationsRequest$nextToken": "<p> The token to retrieve the next set of results. </p>",
+        "ListSupplementalTaxRegistrationsResponse$nextToken": "<p> The token to retrieve the next set of results. </p>",
+        "ListTaxExemptionsRequest$nextToken": "<p>The token to retrieve the next set of results. </p>",
+        "ListTaxExemptionsResponse$nextToken": "<p>The token to retrieve the next set of results. </p>",
         "ListTaxRegistrationsRequest$nextToken": "<p>The token to retrieve the next set of results. </p>",
         "ListTaxRegistrationsResponse$nextToken": "<p> The token to retrieve the next set of results. </p>"
       }
@@ -481,6 +699,12 @@
       "base": null,
       "refs": {
         "IndiaAdditionalInfo$pan": "<p> India pan information associated with the account. </p>"
+      }
+    },
+    "PaymentVoucherNumber": {
+      "base": null,
+      "refs": {
+        "VietnamAdditionalInfo$paymentVoucherNumber": "<p>The payment voucher number on the tax return payment document.</p>"
       }
     },
     "PersonType": {
@@ -503,6 +727,36 @@
         "Address$postalCode": "<p> The postal code associated with the address. </p>"
       }
     },
+    "PutSupplementalTaxRegistrationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutSupplementalTaxRegistrationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutTaxExemptionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutTaxExemptionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutTaxInheritanceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutTaxInheritanceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "PutTaxRegistrationRequest": {
       "base": null,
       "refs": {
@@ -516,6 +770,8 @@
     "RegistrationId": {
       "base": null,
       "refs": {
+        "SupplementalTaxRegistration$registrationId": "<p> The supplemental TRN unique identifier. </p>",
+        "SupplementalTaxRegistrationEntry$registrationId": "<p> The supplemental TRN unique identifier. </p>",
         "TaxRegistration$registrationId": "<p> Your tax registration unique identifier. </p>",
         "TaxRegistrationEntry$registrationId": "<p>Your tax registration unique identifier. </p>",
         "TaxRegistrationWithJurisdiction$registrationId": "<p>Your tax registration unique identifier. </p>"
@@ -626,8 +882,34 @@
     "State": {
       "base": null,
       "refs": {
-        "Address$stateOrRegion": "<p>The state, region, or province that the address is located.</p> <p>If this is required for tax settings, use the same name as shown on the <b>Tax Settings</b> page.</p>",
+        "Address$stateOrRegion": "<p>The state, region, or province that the address is located. This field is only required for Canada, India, United Arab Emirates, Romania, and Brazil (CPF). It is optional for all other countries.</p> <p>If this is required for tax settings, use the same name as shown on the <b>Tax Settings</b> page.</p>",
+        "Authority$state": "<p> The state that the address is located. </p>",
         "Jurisdiction$stateOrRegion": "<p> The state, region, or province associated with the country of the jurisdiction, if applicable. </p>"
+      }
+    },
+    "SupplementalTaxRegistration": {
+      "base": "<p> Supplemental TRN details. </p>",
+      "refs": {
+        "SupplementalTaxRegistrationList$member": null
+      }
+    },
+    "SupplementalTaxRegistrationEntry": {
+      "base": "<p> The supplemental TRN information to provide when adding or updating a supplemental TRN. </p>",
+      "refs": {
+        "PutSupplementalTaxRegistrationRequest$taxRegistrationEntry": "<p> The supplemental TRN information that will be stored for the caller account ID. </p>"
+      }
+    },
+    "SupplementalTaxRegistrationList": {
+      "base": null,
+      "refs": {
+        "ListSupplementalTaxRegistrationsResponse$taxRegistrations": "<p> The list of supplemental tax registrations. </p>"
+      }
+    },
+    "SupplementalTaxRegistrationType": {
+      "base": null,
+      "refs": {
+        "SupplementalTaxRegistration$registrationType": "<p> Type of supplemental TRN. Currently, this can only be VAT. </p>",
+        "SupplementalTaxRegistrationEntry$registrationType": "<p> Type of supplemental TRN. Currently, this can only be VAT. </p>"
       }
     },
     "TaxCode": {
@@ -659,7 +941,52 @@
     "TaxDocumentName": {
       "base": null,
       "refs": {
-        "TaxDocumentMetadata$taxDocumentName": "<p>The name of your tax document.</p>"
+        "TaxDocumentMetadata$taxDocumentName": "<p>The name of your tax document.</p>",
+        "TaxRegistrationDocFile$fileName": "<p>The tax registration document name. </p>"
+      }
+    },
+    "TaxExemption": {
+      "base": "<p>The tax exemption. </p>",
+      "refs": {
+        "TaxExemptions$member": null
+      }
+    },
+    "TaxExemptionDetails": {
+      "base": "<p>The tax exemption details. </p>",
+      "refs": {
+        "TaxExemptionDetailsMap$value": null
+      }
+    },
+    "TaxExemptionDetailsMap": {
+      "base": null,
+      "refs": {
+        "BatchGetTaxExemptionsResponse$taxExemptionDetailsMap": "<p>The tax exemption details map of accountId and tax exemption details. </p>",
+        "ListTaxExemptionsResponse$taxExemptionDetailsMap": "<p>The tax exemption details map of <code>accountId</code> and tax exemption details. </p>"
+      }
+    },
+    "TaxExemptionType": {
+      "base": "<p>The tax exemption type. </p>",
+      "refs": {
+        "TaxExemption$taxExemptionType": "<p>The tax exemption type. </p>",
+        "TaxExemptionTypes$member": null
+      }
+    },
+    "TaxExemptionTypes": {
+      "base": null,
+      "refs": {
+        "GetTaxExemptionTypesResponse$taxExemptionTypes": "<p>The supported types of tax exemptions. </p>"
+      }
+    },
+    "TaxExemptions": {
+      "base": null,
+      "refs": {
+        "TaxExemptionDetails$taxExemptions": "<p>Tax exemptions. </p>"
+      }
+    },
+    "TaxInformationNumber": {
+      "base": null,
+      "refs": {
+        "MalaysiaAdditionalInfo$taxInformationNumber": "<p>The tax information number in Malaysia. </p> <p>For individual, you can specify the <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with NRIC type, and a valid MyKad or NRIC number. For business resellers, you must specify a <code>businessRegistrationNumber</code> and <code>taxInformationNumber</code> in <code>MalaysiaAdditionalInfo</code> with a sales and service tax (SST) type and a valid SST number. </p> <p>For business resellers with service codes, you must specify <code>businessRegistrationNumber</code>, <code>taxInformationNumber</code>, and distinct <code>serviceTaxCodes</code> in <code>MalaysiaAdditionalInfo</code> with a SST type and valid sales and service tax (SST) number. By using this API operation, Amazon Web Services registers your self-declaration that you’re an authorized business reseller registered with the Royal Malaysia Customs Department (RMCD), and have a valid SST number.</p>"
       }
     },
     "TaxInheritanceDetails": {
@@ -678,6 +1005,12 @@
       "base": "<p>Your TRN information. </p>",
       "refs": {
         "GetTaxRegistrationResponse$taxRegistration": "<p>TRN information of the account mentioned in the request. </p>"
+      }
+    },
+    "TaxRegistrationDocFile": {
+      "base": "<p>The tax registration document. </p>",
+      "refs": {
+        "TaxRegistrationDocument$file": "<p>The tax registration document. </p>"
       }
     },
     "TaxRegistrationDocument": {
@@ -709,7 +1042,9 @@
       "base": null,
       "refs": {
         "BatchPutTaxRegistrationResponse$status": "<p>The status of your TRN stored in the system after processing. Based on the validation occurring on the TRN, the status can be <code>Verified</code>, <code>Pending</code> or <code>Rejected</code>. </p>",
+        "PutSupplementalTaxRegistrationResponse$status": "<p> The status of the supplemental TRN stored in the system after processing. Based on the validation occurring on the TRN, the status can be <code>Verified</code>, <code>Pending</code>, <code>Rejected</code>, or <code>Deleted</code>. </p>",
         "PutTaxRegistrationResponse$status": "<p>The status of your TRN stored in the system after processing. Based on the validation occurring on the TRN, the status can be <code>Verified</code>, <code>Pending</code> or <code>Rejected</code>. </p>",
+        "SupplementalTaxRegistration$status": "<p> The status of your TRN. </p>",
         "TaxRegistration$status": "<p> The status of your TRN. This can be either <code>Verified</code>, <code>Pending</code>, <code>Deleted</code>, or <code>Rejected</code>. </p>",
         "TaxRegistrationWithJurisdiction$status": "<p>The status of your TRN. This can be either <code>Verified</code>, <code>Pending</code>, <code>Deleted</code>, or <code>Rejected</code>. </p>"
       }
@@ -726,6 +1061,14 @@
       "base": "<p>Your TRN information with jurisdiction details. This doesn't contain the full legal address associated with the TRN information.</p>",
       "refs": {
         "AccountDetails$taxRegistration": "<p>Your TRN information. Instead of having full legal address, here TRN information will have jurisdiction details (for example, country code and state/region/province if applicable). </p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "TaxExemption$effectiveDate": "<p>The tax exemption effective date. </p>",
+        "TaxExemption$expirationDate": "<p>The tax exemption expiration date. </p>",
+        "TaxExemption$systemEffectiveDate": "<p>The tax exemption recording time in the <code>TaxSettings</code> system. </p>"
       }
     },
     "TurkeyAdditionalInfo": {
@@ -746,6 +1089,18 @@
       "base": null,
       "refs": {
         "UkraineAdditionalInfo$ukraineTrnType": "<p> The tax registration type. </p>"
+      }
+    },
+    "UniqueIdentificationNumber": {
+      "base": null,
+      "refs": {
+        "EgyptAdditionalInfo$uniqueIdentificationNumber": "<p>The unique identification number provided by the Egypt Tax Authority.</p>"
+      }
+    },
+    "Url": {
+      "base": null,
+      "refs": {
+        "GetTaxRegistrationDocumentResponse$presignedS3Url": "<p>The Amazon S3 presigned URL of the tax registration document. </p>"
       }
     },
     "ValidationException": {
@@ -775,6 +1130,13 @@
       "base": "<p>Required information to verify your TRN.</p>",
       "refs": {
         "TaxRegistrationEntry$verificationDetails": "<p>Additional details needed to verify your TRN information in Brazil. You only need to specify this parameter when you set a TRN in Brazil that is the CPF tax type.</p> <note> <p>Don't specify this parameter to set a TRN in Brazil of the CNPJ tax type or to set a TRN for another country. </p> </note>"
+      }
+    },
+    "VietnamAdditionalInfo": {
+      "base": "<p>Additional tax information to specify for a TRN in Vietnam.</p>",
+      "refs": {
+        "AdditionalInfoRequest$vietnamAdditionalInfo": "<p>Additional tax information to specify for a TRN in Vietnam. </p>",
+        "AdditionalInfoResponse$vietnamAdditionalInfo": "<p>Additional tax information to specify for a TRN in Vietnam. </p>"
       }
     }
   }

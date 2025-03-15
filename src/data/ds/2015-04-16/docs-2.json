@@ -27,6 +27,7 @@
     "DescribeClientAuthenticationSettings": "<p>Retrieves information about the type of client authentication for the specified directory, if the type is specified. If no type is specified, information about all client authentication types that are supported for the specified directory is retrieved. Currently, only <code>SmartCard</code> is supported. </p>",
     "DescribeConditionalForwarders": "<p>Obtains information about the conditional forwarders for this account.</p> <p>If no input parameters are provided for RemoteDomainNames, this request describes all conditional forwarders for the specified directory ID.</p>",
     "DescribeDirectories": "<p>Obtains information about the directories that belong to this account.</p> <p>You can retrieve information about specific directories by passing the directory identifiers in the <code>DirectoryIds</code> parameter. Otherwise, all directories that belong to the current account are returned.</p> <p>This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>DescribeDirectoriesResult.NextToken</code> member contains a token that you pass in the next call to <a>DescribeDirectories</a> to retrieve the next set of items.</p> <p>You can also specify a maximum number of return results with the <code>Limit</code> parameter.</p>",
+    "DescribeDirectoryDataAccess": "<p>Obtains status of directory data access enablement through the Directory Service Data API for the specified directory.</p>",
     "DescribeDomainControllers": "<p>Provides information about any domain controllers in your directory.</p>",
     "DescribeEventTopics": "<p>Obtains information about which Amazon SNS topics receive status messages from the specified directory.</p> <p>If no input parameters are provided, such as DirectoryId or TopicName, this request describes all of the associations in the account.</p>",
     "DescribeLDAPSSettings": "<p>Describes the status of LDAP security for the specified directory.</p>",
@@ -37,10 +38,12 @@
     "DescribeTrusts": "<p>Obtains information about the trust relationships for this account.</p> <p>If no input parameters are provided, such as DirectoryId or TrustIds, this request describes all the trust relationships belonging to the account.</p>",
     "DescribeUpdateDirectory": "<p> Describes the updates of a directory for a particular update type. </p>",
     "DisableClientAuthentication": "<p>Disables alternative client authentication methods for the specified directory. </p>",
+    "DisableDirectoryDataAccess": "<p>Deactivates access to directory data via the Directory Service Data API for the specified directory.</p>",
     "DisableLDAPS": "<p>Deactivates LDAP secure calls for the specified directory.</p>",
     "DisableRadius": "<p>Disables multi-factor authentication (MFA) with the Remote Authentication Dial In User Service (RADIUS) server for an AD Connector or Microsoft AD directory.</p>",
     "DisableSso": "<p>Disables single-sign on for a directory.</p>",
     "EnableClientAuthentication": "<p>Enables alternative client authentication methods for the specified directory.</p>",
+    "EnableDirectoryDataAccess": "<p>Enables access to directory data via the Directory Service Data API for the specified directory.</p>",
     "EnableLDAPS": "<p>Activates the switch for the specific directory to always use LDAP secure calls.</p>",
     "EnableRadius": "<p>Enables multi-factor authentication (MFA) with the Remote Authentication Dial In User Service (RADIUS) server for an AD Connector or Microsoft AD directory.</p>",
     "EnableSso": "<p>Enables single sign-on for a directory. Single sign-on allows users in your directory to access certain Amazon Web Services services from a computer joined to the directory without having to enter their credentials separately.</p>",
@@ -57,7 +60,7 @@
     "RemoveIpRoutes": "<p>Removes IP address blocks from a directory.</p>",
     "RemoveRegion": "<p>Stops all replication and removes the domain controllers from the specified Region. You cannot remove the primary Region with this operation. Instead, use the <code>DeleteDirectory</code> API.</p>",
     "RemoveTagsFromResource": "<p>Removes tags from a directory.</p>",
-    "ResetUserPassword": "<p>Resets the password for any user in your Managed Microsoft AD or Simple AD directory.</p> <p>You can reset the password for any user in your directory with the following exceptions:</p> <ul> <li> <p>For Simple AD, you cannot reset the password for any user that is a member of either the <b>Domain Admins</b> or <b>Enterprise Admins</b> group except for the administrator user.</p> </li> <li> <p>For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the <b>Amazon Web Services Reserved</b> OU. For more information about the OU structure for an Managed Microsoft AD directory, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html\">What Gets Created</a> in the <i>Directory Service Administration Guide</i>.</p> </li> </ul>",
+    "ResetUserPassword": "<p>Resets the password for any user in your Managed Microsoft AD or Simple AD directory. Disabled users will become enabled and can be authenticated following the API call.</p> <p>You can reset the password for any user in your directory with the following exceptions:</p> <ul> <li> <p>For Simple AD, you cannot reset the password for any user that is a member of either the <b>Domain Admins</b> or <b>Enterprise Admins</b> group except for the administrator user.</p> </li> <li> <p>For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the <b>Amazon Web Services Reserved</b> OU. For more information about the OU structure for an Managed Microsoft AD directory, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html\">What Gets Created</a> in the <i>Directory Service Administration Guide</i>.</p> </li> </ul>",
     "RestoreFromSnapshot": "<p>Restores a directory using an existing directory snapshot.</p> <p>When you restore a directory from a snapshot, any changes made to the directory after the snapshot date are overwritten.</p> <p>This action returns as soon as the restore operation is initiated. You can monitor the progress of the restore operation by calling the <a>DescribeDirectories</a> operation with the directory identifier. When the <b>DirectoryDescription.Stage</b> value changes to <code>Active</code>, the restore operation is complete.</p>",
     "ShareDirectory": "<p>Shares a specified directory (<code>DirectoryId</code>) in your Amazon Web Services account (directory owner) with another Amazon Web Services account (directory consumer). With this operation you can use your directory from any Amazon Web Services account and from any Amazon VPC within an Amazon Web Services Region.</p> <p>When you share your Managed Microsoft AD directory, Directory Service creates a shared directory in the directory consumer account. This shared directory contains the metadata to provide access to the directory within the directory owner account. The shared directory is visible in all VPCs in the directory consumer account.</p> <p>The <code>ShareMethod</code> parameter determines whether the specified directory can be shared between Amazon Web Services accounts inside the same Amazon Web Services organization (<code>ORGANIZATIONS</code>). It also determines whether you can share the directory with any other Amazon Web Services account either inside or outside of the organization (<code>HANDSHAKE</code>).</p> <p>The <code>ShareNotes</code> parameter is only used when <code>HANDSHAKE</code> is called, which sends a directory sharing request to the directory consumer. </p>",
     "StartSchemaExtension": "<p>Applies a schema extension to a Microsoft AD directory.</p>",
@@ -82,7 +85,7 @@
       }
     },
     "AccessDeniedException": {
-      "base": "<p>Client authentication is not available in this region at this time.</p>",
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
       }
     },
@@ -328,7 +331,7 @@
       "refs": {
         "ClientAuthenticationSettingInfo$Type": "<p>The type of client authentication for the specified directory. If no type is specified, a list of all client authentication types that are supported for the directory is retrieved. </p>",
         "DescribeClientAuthenticationSettingsRequest$Type": "<p>The type of client authentication for which to retrieve information. If no type is specified, a list of all client authentication types that are supported for the specified directory is retrieved.</p>",
-        "DisableClientAuthenticationRequest$Type": "<p>The type of client authentication to disable. Currently, only the parameter, <code>SmartCard</code> is supported.</p>",
+        "DisableClientAuthenticationRequest$Type": "<p>The type of client authentication to disable. Currently the only parameter <code>\"SmartCard\"</code> is supported.</p>",
         "EnableClientAuthenticationRequest$Type": "<p>The type of client authentication to enable. Currently only the value <code>SmartCard</code> is supported. Smart card authentication in AD Connector requires that you enable Kerberos Constrained Delegation for the Service User to the LDAP service in your self-managed AD. </p>"
       }
     },
@@ -520,6 +523,12 @@
         "ResetUserPasswordRequest$UserName": "<p>The user name of the user whose password will be reset.</p>"
       }
     },
+    "DataAccessStatus": {
+      "base": null,
+      "refs": {
+        "DescribeDirectoryDataAccessResult$DataAccessStatus": "<p>The current status of data access through the Directory Service Data API.</p>"
+      }
+    },
     "DeleteAssociatedConditionalForwarder": {
       "base": null,
       "refs": {
@@ -633,6 +642,16 @@
     },
     "DescribeDirectoriesResult": {
       "base": "<p>Contains the results of the <a>DescribeDirectories</a> operation.</p>",
+      "refs": {
+      }
+    },
+    "DescribeDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeDirectoryDataAccessResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -884,6 +903,7 @@
         "DescribeCertificateRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DescribeClientAuthenticationSettingsRequest$DirectoryId": "<p>The identifier of the directory for which to retrieve information.</p>",
         "DescribeConditionalForwardersRequest$DirectoryId": "<p>The directory ID for which to get the list of associated conditional forwarders.</p>",
+        "DescribeDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "DescribeDomainControllersRequest$DirectoryId": "<p>Identifier of the directory for which to retrieve the domain controller information.</p>",
         "DescribeEventTopicsRequest$DirectoryId": "<p>The Directory ID for which to get the list of associated Amazon SNS topics. If this member is null, associations for all Directory IDs are returned.</p>",
         "DescribeLDAPSSettingsRequest$DirectoryId": "<p>The identifier of the directory.</p>",
@@ -897,11 +917,13 @@
         "DirectoryDescription$DirectoryId": "<p>The directory identifier.</p>",
         "DirectoryIds$member": null,
         "DisableClientAuthenticationRequest$DirectoryId": "<p>The identifier of the directory </p>",
+        "DisableDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "DisableLDAPSRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DisableRadiusRequest$DirectoryId": "<p>The identifier of the directory for which to disable MFA.</p>",
         "DisableSsoRequest$DirectoryId": "<p>The identifier of the directory for which to disable single-sign on.</p>",
         "DomainController$DirectoryId": "<p>Identifier of the directory where the domain controller resides.</p>",
         "EnableClientAuthenticationRequest$DirectoryId": "<p>The identifier of the specified directory. </p>",
+        "EnableDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "EnableLDAPSRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "EnableRadiusRequest$DirectoryId": "<p>The identifier of the directory for which to enable MFA.</p>",
         "EnableSsoRequest$DirectoryId": "<p>The identifier of the directory for which to enable single-sign on.</p>",
@@ -1004,11 +1026,11 @@
     "DirectoryType": {
       "base": null,
       "refs": {
-        "DirectoryDescription$Type": "<p>The directory size.</p>"
+        "DirectoryDescription$Type": "<p>The directory type.</p>"
       }
     },
     "DirectoryUnavailableException": {
-      "base": "<p>The specified directory is unavailable or could not be found.</p>",
+      "base": "<p>The specified directory is unavailable.</p>",
       "refs": {
       }
     },
@@ -1034,6 +1056,16 @@
       }
     },
     "DisableClientAuthenticationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableDirectoryDataAccessResult": {
       "base": null,
       "refs": {
       }
@@ -1128,6 +1160,16 @@
       }
     },
     "EnableClientAuthenticationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableDirectoryDataAccessResult": {
       "base": null,
       "refs": {
       }
@@ -1635,7 +1677,7 @@
     "RadiusRetries": {
       "base": null,
       "refs": {
-        "RadiusSettings$RadiusRetries": "<p>The maximum number of times that communication with the RADIUS server is attempted.</p>"
+        "RadiusSettings$RadiusRetries": "<p>The maximum number of times that communication with the RADIUS server is retried after the initial attempt.</p>"
       }
     },
     "RadiusSettings": {
@@ -2138,7 +2180,7 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p>Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
+        "Tag$Key": "<p>Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '@'(Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
         "TagKeys$member": null
       }
     },
@@ -2156,7 +2198,7 @@
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$Value": "<p>The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>"
+        "Tag$Value": "<p>The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '@' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>"
       }
     },
     "Tags": {
@@ -2246,7 +2288,7 @@
     "TrustPassword": {
       "base": null,
       "refs": {
-        "CreateTrustRequest$TrustPassword": "<p>The trust password. The must be the same password that was used when creating the trust relationship on the external domain.</p>"
+        "CreateTrustRequest$TrustPassword": "<p>The trust password. The trust password must be the same password that was used when creating the trust relationship on the external domain.</p>"
       }
     },
     "TrustState": {
@@ -2355,7 +2397,7 @@
     "UpdateSecurityGroupForDirectoryControllers": {
       "base": null,
       "refs": {
-        "AddIpRoutesRequest$UpdateSecurityGroupForDirectoryControllers": "<p>If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for <i>directory ID</i> directory controllers.\" Following are the new rules: </p> <p>Inbound:</p> <ul> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: 0.0.0.0/0</p> </li> <li> <p>Type: DNS (UDP), Protocol: UDP, Range: 53, Source: 0.0.0.0/0</p> </li> <li> <p>Type: DNS (TCP), Protocol: TCP, Range: 53, Source: 0.0.0.0/0</p> </li> <li> <p>Type: LDAP, Protocol: TCP, Range: 389, Source: 0.0.0.0/0</p> </li> <li> <p>Type: All ICMP, Protocol: All, Range: N/A, Source: 0.0.0.0/0</p> </li> </ul> <p/> <p>Outbound:</p> <ul> <li> <p>Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0</p> </li> </ul> <p>These security rules impact an internal network interface that is not exposed publicly.</p>"
+        "AddIpRoutesRequest$UpdateSecurityGroupForDirectoryControllers": "<p>If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for <i>directory ID</i> directory controllers.\" Following are the new rules: </p> <p>Inbound:</p> <ul> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: DNS (UDP), Protocol: UDP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: DNS (TCP), Protocol: TCP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: LDAP, Protocol: TCP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: All ICMP, Protocol: All, Range: N/A, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> </ul> <p/> <p>Outbound:</p> <ul> <li> <p>Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0</p> </li> </ul> <p>These security rules impact an internal network interface that is not exposed publicly.</p>"
       }
     },
     "UpdateSettingsRequest": {

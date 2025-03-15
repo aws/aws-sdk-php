@@ -4,13 +4,15 @@
     "apiVersion":"2010-12-01",
     "endpointPrefix":"email",
     "protocol":"query",
+    "protocols":["query"],
     "serviceAbbreviation":"Amazon SES",
     "serviceFullName":"Amazon Simple Email Service",
     "serviceId":"SES",
     "signatureVersion":"v4",
     "signingName":"ses",
     "uid":"email-2010-12-01",
-    "xmlNamespace":"http://ses.amazonaws.com/doc/2010-12-01/"
+    "xmlNamespace":"http://ses.amazonaws.com/doc/2010-12-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CloneReceiptRuleSet":{
@@ -1270,6 +1272,21 @@
       "type":"list",
       "member":{"shape":"ConfigurationSet"}
     },
+    "ConnectAction":{
+      "type":"structure",
+      "required":[
+        "InstanceARN",
+        "IAMRoleARN"
+      ],
+      "members":{
+        "InstanceARN":{"shape":"ConnectInstanceArn"},
+        "IAMRoleARN":{"shape":"IAMRoleARN"}
+      }
+    },
+    "ConnectInstanceArn":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9-]{1}:[0-9]{1,20}:instance/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
     "Content":{
       "type":"structure",
       "required":["Data"],
@@ -1916,6 +1933,12 @@
     "HeaderName":{"type":"string"},
     "HeaderValue":{"type":"string"},
     "HtmlPart":{"type":"string"},
+    "IAMRoleARN":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:[\\w-]+:iam::[0-9]+:role(\\u002F)([\\u0021-\\u007E]+\\u002F)?([\\w+=,.@-]+)"
+    },
     "Identity":{"type":"string"},
     "IdentityDkimAttributes":{
       "type":"structure",
@@ -2444,7 +2467,8 @@
         "LambdaAction":{"shape":"LambdaAction"},
         "StopAction":{"shape":"StopAction"},
         "AddHeaderAction":{"shape":"AddHeaderAction"},
-        "SNSAction":{"shape":"SNSAction"}
+        "SNSAction":{"shape":"SNSAction"},
+        "ConnectAction":{"shape":"ConnectAction"}
       }
     },
     "ReceiptActionsList":{
@@ -2598,7 +2622,8 @@
         "TopicArn":{"shape":"AmazonResourceName"},
         "BucketName":{"shape":"S3BucketName"},
         "ObjectKeyPrefix":{"shape":"S3KeyPrefix"},
-        "KmsKeyArn":{"shape":"AmazonResourceName"}
+        "KmsKeyArn":{"shape":"AmazonResourceName"},
+        "IamRoleArn":{"shape":"IAMRoleARN"}
       }
     },
     "S3BucketName":{"type":"string"},
@@ -2652,6 +2677,7 @@
       "required":[
         "Source",
         "Template",
+        "DefaultTemplateData",
         "Destinations"
       ],
       "members":{

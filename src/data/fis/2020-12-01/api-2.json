@@ -5,12 +5,14 @@
     "endpointPrefix":"fis",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"FIS",
     "serviceFullName":"AWS Fault Injection Simulator",
     "serviceId":"fis",
     "signatureVersion":"v4",
     "signingName":"fis",
-    "uid":"fis-2020-12-01"
+    "uid":"fis-2020-12-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateExperimentTemplate":{
@@ -126,6 +128,19 @@
       "output":{"shape":"GetExperimentTemplateResponse"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetSafetyLever":{
+      "name":"GetSafetyLever",
+      "http":{
+        "method":"GET",
+        "requestUri":"/safetyLevers/{id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetSafetyLeverRequest"},
+      "output":{"shape":"GetSafetyLeverResponse"},
+      "errors":[
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -326,6 +341,21 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "UpdateSafetyLeverState":{
+      "name":"UpdateSafetyLeverState",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/safetyLevers/{id}/state",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateSafetyLeverStateRequest"},
+      "output":{"shape":"UpdateSafetyLeverStateResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateTargetAccountConfiguration":{
       "name":"UpdateTargetAccountConfiguration",
       "http":{
@@ -485,6 +515,15 @@
         "logSchemaVersion":{"shape":"LogSchemaVersion"}
       }
     },
+    "CreateExperimentTemplateReportConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "outputs":{"shape":"ExperimentTemplateReportConfigurationOutputsInput"},
+        "dataSources":{"shape":"ExperimentTemplateReportConfigurationDataSourcesInput"},
+        "preExperimentDuration":{"shape":"ReportConfigurationDuration"},
+        "postExperimentDuration":{"shape":"ReportConfigurationDuration"}
+      }
+    },
     "CreateExperimentTemplateRequest":{
       "type":"structure",
       "required":[
@@ -506,7 +545,8 @@
         "roleArn":{"shape":"RoleArn"},
         "tags":{"shape":"TagMap"},
         "logConfiguration":{"shape":"CreateExperimentTemplateLogConfigurationInput"},
-        "experimentOptions":{"shape":"CreateExperimentTemplateExperimentOptionsInput"}
+        "experimentOptions":{"shape":"CreateExperimentTemplateExperimentOptionsInput"},
+        "experimentReportConfiguration":{"shape":"CreateExperimentTemplateReportConfigurationInput"}
       }
     },
     "CreateExperimentTemplateResponse":{
@@ -651,7 +691,9 @@
         "tags":{"shape":"TagMap"},
         "logConfiguration":{"shape":"ExperimentLogConfiguration"},
         "experimentOptions":{"shape":"ExperimentOptions"},
-        "targetAccountConfigurationsCount":{"shape":"TargetAccountConfigurationsCount"}
+        "targetAccountConfigurationsCount":{"shape":"TargetAccountConfigurationsCount"},
+        "experimentReportConfiguration":{"shape":"ExperimentReportConfiguration"},
+        "experimentReport":{"shape":"ExperimentReport"}
       }
     },
     "ExperimentAction":{
@@ -751,6 +793,21 @@
       }
     },
     "ExperimentEndTime":{"type":"timestamp"},
+    "ExperimentError":{
+      "type":"structure",
+      "members":{
+        "accountId":{"shape":"ExperimentErrorAccountId"},
+        "code":{"shape":"ExperimentErrorCode"},
+        "location":{"shape":"ExperimentErrorLocation"}
+      }
+    },
+    "ExperimentErrorAccountId":{"type":"string"},
+    "ExperimentErrorCode":{
+      "type":"string",
+      "max":128,
+      "pattern":"[\\S]+"
+    },
+    "ExperimentErrorLocation":{"type":"string"},
     "ExperimentId":{
       "type":"string",
       "max":64,
@@ -772,6 +829,104 @@
         "actionsMode":{"shape":"ActionsMode"}
       }
     },
+    "ExperimentReport":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"ExperimentReportState"},
+        "s3Reports":{"shape":"ExperimentReportS3ReportList"}
+      }
+    },
+    "ExperimentReportConfiguration":{
+      "type":"structure",
+      "members":{
+        "outputs":{"shape":"ExperimentReportConfigurationOutputs"},
+        "dataSources":{"shape":"ExperimentReportConfigurationDataSources"},
+        "preExperimentDuration":{"shape":"ReportConfigurationDuration"},
+        "postExperimentDuration":{"shape":"ReportConfigurationDuration"}
+      }
+    },
+    "ExperimentReportConfigurationCloudWatchDashboard":{
+      "type":"structure",
+      "members":{
+        "dashboardIdentifier":{"shape":"ReportConfigurationCloudWatchDashboardIdentifier"}
+      }
+    },
+    "ExperimentReportConfigurationCloudWatchDashboardList":{
+      "type":"list",
+      "member":{"shape":"ExperimentReportConfigurationCloudWatchDashboard"}
+    },
+    "ExperimentReportConfigurationDataSources":{
+      "type":"structure",
+      "members":{
+        "cloudWatchDashboards":{"shape":"ExperimentReportConfigurationCloudWatchDashboardList"}
+      }
+    },
+    "ExperimentReportConfigurationOutputs":{
+      "type":"structure",
+      "members":{
+        "s3Configuration":{"shape":"ExperimentReportConfigurationOutputsS3Configuration"}
+      }
+    },
+    "ExperimentReportConfigurationOutputsS3Configuration":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
+      }
+    },
+    "ExperimentReportError":{
+      "type":"structure",
+      "members":{
+        "code":{"shape":"ExperimentReportErrorCode"}
+      }
+    },
+    "ExperimentReportErrorCode":{
+      "type":"string",
+      "max":128,
+      "pattern":"[\\s\\S]+"
+    },
+    "ExperimentReportReason":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\s\\S]+"
+    },
+    "ExperimentReportS3Report":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ExperimentReportS3ReportArn"},
+        "reportType":{"shape":"ExperimentReportS3ReportType"}
+      }
+    },
+    "ExperimentReportS3ReportArn":{
+      "type":"string",
+      "pattern":"[\\s\\S]+"
+    },
+    "ExperimentReportS3ReportList":{
+      "type":"list",
+      "member":{"shape":"ExperimentReportS3Report"}
+    },
+    "ExperimentReportS3ReportType":{
+      "type":"string",
+      "pattern":"[\\s\\S]+"
+    },
+    "ExperimentReportState":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ExperimentReportStatus"},
+        "reason":{"shape":"ExperimentReportReason"},
+        "error":{"shape":"ExperimentReportError"}
+      }
+    },
+    "ExperimentReportStatus":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "running",
+        "completed",
+        "cancelled",
+        "failed"
+      ]
+    },
     "ExperimentS3LogConfiguration":{
       "type":"structure",
       "members":{
@@ -784,7 +939,8 @@
       "type":"structure",
       "members":{
         "status":{"shape":"ExperimentStatus"},
-        "reason":{"shape":"ExperimentStatusReason"}
+        "reason":{"shape":"ExperimentStatusReason"},
+        "error":{"shape":"ExperimentError"}
       }
     },
     "ExperimentStatus":{
@@ -796,7 +952,8 @@
         "completed",
         "stopping",
         "stopped",
-        "failed"
+        "failed",
+        "cancelled"
       ]
     },
     "ExperimentStatusReason":{
@@ -932,7 +1089,8 @@
         "tags":{"shape":"TagMap"},
         "logConfiguration":{"shape":"ExperimentTemplateLogConfiguration"},
         "experimentOptions":{"shape":"ExperimentTemplateExperimentOptions"},
-        "targetAccountConfigurationsCount":{"shape":"TargetAccountConfigurationsCount"}
+        "targetAccountConfigurationsCount":{"shape":"TargetAccountConfigurationsCount"},
+        "experimentReportConfiguration":{"shape":"ExperimentTemplateReportConfiguration"}
       }
     },
     "ExperimentTemplateAction":{
@@ -1030,6 +1188,49 @@
         "cloudWatchLogsConfiguration":{"shape":"ExperimentTemplateCloudWatchLogsLogConfiguration"},
         "s3Configuration":{"shape":"ExperimentTemplateS3LogConfiguration"},
         "logSchemaVersion":{"shape":"LogSchemaVersion"}
+      }
+    },
+    "ExperimentTemplateReportConfiguration":{
+      "type":"structure",
+      "members":{
+        "outputs":{"shape":"ExperimentTemplateReportConfigurationOutputs"},
+        "dataSources":{"shape":"ExperimentTemplateReportConfigurationDataSources"},
+        "preExperimentDuration":{"shape":"ReportConfigurationDuration"},
+        "postExperimentDuration":{"shape":"ReportConfigurationDuration"}
+      }
+    },
+    "ExperimentTemplateReportConfigurationCloudWatchDashboard":{
+      "type":"structure",
+      "members":{
+        "dashboardIdentifier":{"shape":"ReportConfigurationCloudWatchDashboardIdentifier"}
+      }
+    },
+    "ExperimentTemplateReportConfigurationCloudWatchDashboardList":{
+      "type":"list",
+      "member":{"shape":"ExperimentTemplateReportConfigurationCloudWatchDashboard"}
+    },
+    "ExperimentTemplateReportConfigurationDataSources":{
+      "type":"structure",
+      "members":{
+        "cloudWatchDashboards":{"shape":"ExperimentTemplateReportConfigurationCloudWatchDashboardList"}
+      }
+    },
+    "ExperimentTemplateReportConfigurationDataSourcesInput":{
+      "type":"structure",
+      "members":{
+        "cloudWatchDashboards":{"shape":"ReportConfigurationCloudWatchDashboardInputList"}
+      }
+    },
+    "ExperimentTemplateReportConfigurationOutputs":{
+      "type":"structure",
+      "members":{
+        "s3Configuration":{"shape":"ReportConfigurationS3Output"}
+      }
+    },
+    "ExperimentTemplateReportConfigurationOutputsInput":{
+      "type":"structure",
+      "members":{
+        "s3Configuration":{"shape":"ReportConfigurationS3OutputInput"}
       }
     },
     "ExperimentTemplateS3LogConfiguration":{
@@ -1229,6 +1430,23 @@
       "type":"structure",
       "members":{
         "experimentTemplate":{"shape":"ExperimentTemplate"}
+      }
+    },
+    "GetSafetyLeverRequest":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{
+          "shape":"SafetyLeverId",
+          "location":"uri",
+          "locationName":"id"
+        }
+      }
+    },
+    "GetSafetyLeverResponse":{
+      "type":"structure",
+      "members":{
+        "safetyLever":{"shape":"SafetyLever"}
       }
     },
     "GetTargetAccountConfigurationRequest":{
@@ -1511,6 +1729,45 @@
       "min":1,
       "pattern":"[\\S]+"
     },
+    "ReportConfigurationCloudWatchDashboardIdentifier":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\S]+"
+    },
+    "ReportConfigurationCloudWatchDashboardInput":{
+      "type":"structure",
+      "members":{
+        "dashboardIdentifier":{"shape":"ReportConfigurationCloudWatchDashboardIdentifier"}
+      }
+    },
+    "ReportConfigurationCloudWatchDashboardInputList":{
+      "type":"list",
+      "member":{"shape":"ReportConfigurationCloudWatchDashboardInput"}
+    },
+    "ReportConfigurationDuration":{
+      "type":"string",
+      "max":32,
+      "pattern":"[\\S]+"
+    },
+    "ReportConfigurationS3Output":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
+      }
+    },
+    "ReportConfigurationS3OutputInput":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"ReportConfigurationS3OutputPrefix"}
+      }
+    },
+    "ReportConfigurationS3OutputPrefix":{
+      "type":"string",
+      "max":256,
+      "pattern":"[\\S]+"
+    },
     "ResolvedTarget":{
       "type":"structure",
       "members":{
@@ -1556,10 +1813,46 @@
     },
     "S3ObjectKey":{
       "type":"string",
-      "max":1024,
+      "max":700,
       "min":1,
       "pattern":"[\\s\\S]+"
     },
+    "SafetyLever":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"SafetyLeverId"},
+        "arn":{"shape":"ResourceArn"},
+        "state":{"shape":"SafetyLeverState"}
+      }
+    },
+    "SafetyLeverId":{
+      "type":"string",
+      "max":64,
+      "pattern":"[\\S]+"
+    },
+    "SafetyLeverState":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"SafetyLeverStatus"},
+        "reason":{"shape":"SafetyLeverStatusReason"}
+      }
+    },
+    "SafetyLeverStatus":{
+      "type":"string",
+      "enum":[
+        "disengaged",
+        "engaged",
+        "engaging"
+      ]
+    },
+    "SafetyLeverStatusInput":{
+      "type":"string",
+      "enum":[
+        "disengaged",
+        "engaged"
+      ]
+    },
+    "SafetyLeverStatusReason":{"type":"string"},
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1824,6 +2117,15 @@
         "logSchemaVersion":{"shape":"LogSchemaVersion"}
       }
     },
+    "UpdateExperimentTemplateReportConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "outputs":{"shape":"ExperimentTemplateReportConfigurationOutputsInput"},
+        "dataSources":{"shape":"ExperimentTemplateReportConfigurationDataSourcesInput"},
+        "preExperimentDuration":{"shape":"ReportConfigurationDuration"},
+        "postExperimentDuration":{"shape":"ReportConfigurationDuration"}
+      }
+    },
     "UpdateExperimentTemplateRequest":{
       "type":"structure",
       "required":["id"],
@@ -1839,7 +2141,8 @@
         "actions":{"shape":"UpdateExperimentTemplateActionInputMap"},
         "roleArn":{"shape":"RoleArn"},
         "logConfiguration":{"shape":"UpdateExperimentTemplateLogConfigurationInput"},
-        "experimentOptions":{"shape":"UpdateExperimentTemplateExperimentOptionsInput"}
+        "experimentOptions":{"shape":"UpdateExperimentTemplateExperimentOptionsInput"},
+        "experimentReportConfiguration":{"shape":"UpdateExperimentTemplateReportConfigurationInput"}
       }
     },
     "UpdateExperimentTemplateResponse":{
@@ -1879,6 +2182,38 @@
       "type":"map",
       "key":{"shape":"ExperimentTemplateTargetName"},
       "value":{"shape":"UpdateExperimentTemplateTargetInput"}
+    },
+    "UpdateSafetyLeverStateInput":{
+      "type":"structure",
+      "required":[
+        "status",
+        "reason"
+      ],
+      "members":{
+        "status":{"shape":"SafetyLeverStatusInput"},
+        "reason":{"shape":"SafetyLeverStatusReason"}
+      }
+    },
+    "UpdateSafetyLeverStateRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "state"
+      ],
+      "members":{
+        "id":{
+          "shape":"SafetyLeverId",
+          "location":"uri",
+          "locationName":"id"
+        },
+        "state":{"shape":"UpdateSafetyLeverStateInput"}
+      }
+    },
+    "UpdateSafetyLeverStateResponse":{
+      "type":"structure",
+      "members":{
+        "safetyLever":{"shape":"SafetyLever"}
+      }
     },
     "UpdateTargetAccountConfigurationRequest":{
       "type":"structure",

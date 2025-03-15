@@ -164,7 +164,7 @@ class Burgomaster
         $sourceDir,
         $destDir,
         $extensions = array('php', 'php.gz'),
-        Iterator $files = null
+        ?Iterator $files = null
     ) {
         if (!realpath($sourceDir)) {
             throw new \InvalidArgumentException("$sourceDir not found");
@@ -326,7 +326,7 @@ EOT
         $this->debug("Creating phar stub at $dest");
 
         $alias = $alias ?: basename($dest);
-        $constName = str_replace('.phar', '', strtoupper($alias)) . '_PHAR';
+        $constName = strtoupper(str_replace('.phar', '', $alias)) . '_PHAR';
         $stub  = "<?php\n";
         $stub .= "define('$constName', true);\n";
         $stub .= "Phar::mapPhar('$alias');\n";

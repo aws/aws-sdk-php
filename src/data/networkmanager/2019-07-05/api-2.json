@@ -191,6 +191,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateDirectConnectGatewayAttachment":{
+      "name":"CreateDirectConnectGatewayAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/direct-connect-gateway-attachments"
+      },
+      "input":{"shape":"CreateDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"CreateDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateGlobalNetwork":{
       "name":"CreateGlobalNetwork",
       "http":{
@@ -778,6 +795,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDirectConnectGatewayAttachment":{
+      "name":"GetDirectConnectGatewayAttachment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/direct-connect-gateway-attachments/{attachmentId}"
+      },
+      "input":{"shape":"GetDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"GetDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetLinkAssociations":{
       "name":"GetLinkAssociations",
       "http":{
@@ -1340,6 +1373,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateDirectConnectGatewayAttachment":{
+      "name":"UpdateDirectConnectGatewayAttachment",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/direct-connect-gateway-attachments/{attachmentId}"
+      },
+      "input":{"shape":"UpdateDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"UpdateDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateGlobalNetwork":{
       "name":"UpdateGlobalNetwork",
       "http":{
@@ -1593,6 +1643,7 @@
         "AttachmentType":{"shape":"AttachmentType"},
         "State":{"shape":"AttachmentState"},
         "EdgeLocation":{"shape":"ExternalRegionCode"},
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"},
         "ResourceArn":{"shape":"ResourceArn"},
         "AttachmentPolicyRuleNumber":{"shape":"Integer"},
         "SegmentName":{"shape":"ConstrainedString"},
@@ -1601,8 +1652,40 @@
         "ProposedSegmentChange":{"shape":"ProposedSegmentChange"},
         "ProposedNetworkFunctionGroupChange":{"shape":"ProposedNetworkFunctionGroupChange"},
         "CreatedAt":{"shape":"DateTime"},
-        "UpdatedAt":{"shape":"DateTime"}
+        "UpdatedAt":{"shape":"DateTime"},
+        "LastModificationErrors":{"shape":"AttachmentErrorList"}
       }
+    },
+    "AttachmentError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"AttachmentErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"}
+      }
+    },
+    "AttachmentErrorCode":{
+      "type":"string",
+      "enum":[
+        "VPC_NOT_FOUND",
+        "SUBNET_NOT_FOUND",
+        "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE",
+        "SUBNET_NO_FREE_ADDRESSES",
+        "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE",
+        "SUBNET_NO_IPV6_CIDRS",
+        "VPN_CONNECTION_NOT_FOUND",
+        "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED",
+        "DIRECT_CONNECT_GATEWAY_NOT_FOUND",
+        "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS",
+        "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
+      ]
+    },
+    "AttachmentErrorList":{
+      "type":"list",
+      "member":{"shape":"AttachmentError"},
+      "max":20,
+      "min":0
     },
     "AttachmentId":{
       "type":"string",
@@ -1634,6 +1717,7 @@
         "CONNECT",
         "SITE_TO_SITE_VPN",
         "VPC",
+        "DIRECT_CONNECT_GATEWAY",
         "TRANSIT_GATEWAY_ROUTE_TABLE"
       ]
     },
@@ -1740,7 +1824,8 @@
         "CreatedAt":{"shape":"DateTime"},
         "Configuration":{"shape":"ConnectPeerConfiguration"},
         "Tags":{"shape":"TagList"},
-        "SubnetArn":{"shape":"SubnetArn"}
+        "SubnetArn":{"shape":"SubnetArn"},
+        "LastModificationErrors":{"shape":"ConnectPeerErrorList"}
       }
     },
     "ConnectPeerAssociation":{
@@ -1788,6 +1873,32 @@
         "Protocol":{"shape":"TunnelProtocol"},
         "BgpConfigurations":{"shape":"ConnectPeerBgpConfigurationList"}
       }
+    },
+    "ConnectPeerError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"ConnectPeerErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"}
+      }
+    },
+    "ConnectPeerErrorCode":{
+      "type":"string",
+      "enum":[
+        "EDGE_LOCATION_NO_FREE_IPS",
+        "EDGE_LOCATION_PEER_DUPLICATE",
+        "SUBNET_NOT_FOUND",
+        "IP_OUTSIDE_SUBNET_CIDR_RANGE",
+        "INVALID_INSIDE_CIDR_BLOCK",
+        "NO_ASSOCIATED_CIDR_BLOCK"
+      ]
+    },
+    "ConnectPeerErrorList":{
+      "type":"list",
+      "member":{"shape":"ConnectPeerError"},
+      "max":20,
+      "min":0
     },
     "ConnectPeerId":{
       "type":"string",
@@ -2253,6 +2364,30 @@
       "type":"structure",
       "members":{
         "Device":{"shape":"Device"}
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "CoreNetworkId",
+        "DirectConnectGatewayArn",
+        "EdgeLocations"
+      ],
+      "members":{
+        "CoreNetworkId":{"shape":"CoreNetworkId"},
+        "DirectConnectGatewayArn":{"shape":"DirectConnectGatewayArn"},
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"},
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "CreateGlobalNetworkRequest":{
@@ -2766,6 +2901,19 @@
         "UPDATING"
       ]
     },
+    "DirectConnectGatewayArn":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"^arn:[^:]{1,63}:directconnect::[^:]{0,63}:dx-gateway\\/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$"
+    },
+    "DirectConnectGatewayAttachment":{
+      "type":"structure",
+      "members":{
+        "Attachment":{"shape":"Attachment"},
+        "DirectConnectGatewayArn":{"shape":"DirectConnectGatewayArn"}
+      }
+    },
     "DisassociateConnectPeerRequest":{
       "type":"structure",
       "required":[
@@ -3237,6 +3385,23 @@
       "members":{
         "Devices":{"shape":"DeviceList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":["AttachmentId"],
+      "members":{
+        "AttachmentId":{
+          "shape":"AttachmentId",
+          "location":"uri",
+          "locationName":"attachmentId"
+        }
+      }
+    },
+    "GetDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "GetLinkAssociationsRequest":{
@@ -4285,8 +4450,36 @@
         "EdgeLocation":{"shape":"ExternalRegionCode"},
         "ResourceArn":{"shape":"ResourceArn"},
         "Tags":{"shape":"TagList"},
-        "CreatedAt":{"shape":"DateTime"}
+        "CreatedAt":{"shape":"DateTime"},
+        "LastModificationErrors":{"shape":"PeeringErrorList"}
       }
+    },
+    "PeeringError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"PeeringErrorCode"},
+        "Message":{"shape":"ServerSideString"},
+        "ResourceArn":{"shape":"ResourceArn"},
+        "RequestId":{"shape":"ServerSideString"},
+        "MissingPermissionsContext":{"shape":"PermissionsErrorContext"}
+      }
+    },
+    "PeeringErrorCode":{
+      "type":"string",
+      "enum":[
+        "TRANSIT_GATEWAY_NOT_FOUND",
+        "TRANSIT_GATEWAY_PEERS_LIMIT_EXCEEDED",
+        "MISSING_PERMISSIONS",
+        "INTERNAL_ERROR",
+        "EDGE_LOCATION_PEER_DUPLICATE",
+        "INVALID_TRANSIT_GATEWAY_STATE"
+      ]
+    },
+    "PeeringErrorList":{
+      "type":"list",
+      "member":{"shape":"PeeringError"},
+      "max":20,
+      "min":0
     },
     "PeeringId":{
       "type":"string",
@@ -4310,6 +4503,12 @@
     "PeeringType":{
       "type":"string",
       "enum":["TRANSIT_GATEWAY"]
+    },
+    "PermissionsErrorContext":{
+      "type":"structure",
+      "members":{
+        "MissingPermission":{"shape":"ServerSideString"}
+      }
     },
     "ProposedNetworkFunctionGroupChange":{
       "type":"structure",
@@ -5055,6 +5254,24 @@
       "type":"structure",
       "members":{
         "Device":{"shape":"Device"}
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":["AttachmentId"],
+      "members":{
+        "AttachmentId":{
+          "shape":"AttachmentId",
+          "location":"uri",
+          "locationName":"attachmentId"
+        },
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"}
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "UpdateGlobalNetworkRequest":{

@@ -10,7 +10,8 @@
     "serviceFullName":"AWS Batch",
     "serviceId":"Batch",
     "signatureVersion":"v4",
-    "uid":"batch-2016-08-10"
+    "uid":"batch-2016-08-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelJob":{
@@ -34,6 +35,19 @@
       },
       "input":{"shape":"CreateComputeEnvironmentRequest"},
       "output":{"shape":"CreateComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "CreateConsumableResource":{
+      "name":"CreateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/createconsumableresource"
+      },
+      "input":{"shape":"CreateConsumableResourceRequest"},
+      "output":{"shape":"CreateConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -73,6 +87,19 @@
       },
       "input":{"shape":"DeleteComputeEnvironmentRequest"},
       "output":{"shape":"DeleteComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DeleteConsumableResource":{
+      "name":"DeleteConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/deleteconsumableresource"
+      },
+      "input":{"shape":"DeleteConsumableResourceRequest"},
+      "output":{"shape":"DeleteConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -125,6 +152,19 @@
       },
       "input":{"shape":"DescribeComputeEnvironmentsRequest"},
       "output":{"shape":"DescribeComputeEnvironmentsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "DescribeConsumableResource":{
+      "name":"DescribeConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/describeconsumableresource"
+      },
+      "input":{"shape":"DescribeConsumableResourceRequest"},
+      "output":{"shape":"DescribeConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -195,6 +235,19 @@
         {"shape":"ServerException"}
       ]
     },
+    "ListConsumableResources":{
+      "name":"ListConsumableResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listconsumableresources"
+      },
+      "input":{"shape":"ListConsumableResourcesRequest"},
+      "output":{"shape":"ListConsumableResourcesResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
     "ListJobs":{
       "name":"ListJobs",
       "http":{
@@ -203,6 +256,19 @@
       },
       "input":{"shape":"ListJobsRequest"},
       "output":{"shape":"ListJobsResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "ListJobsByConsumableResource":{
+      "name":"ListJobsByConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/listjobsbyconsumableresource"
+      },
+      "input":{"shape":"ListJobsByConsumableResourceRequest"},
+      "output":{"shape":"ListJobsByConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -307,6 +373,19 @@
       },
       "input":{"shape":"UpdateComputeEnvironmentRequest"},
       "output":{"shape":"UpdateComputeEnvironmentResponse"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServerException"}
+      ]
+    },
+    "UpdateConsumableResource":{
+      "name":"UpdateConsumableResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/updateconsumableresource"
+      },
+      "input":{"shape":"UpdateConsumableResourceRequest"},
+      "output":{"shape":"UpdateConsumableResourceResponse"},
       "errors":[
         {"shape":"ClientException"},
         {"shape":"ServerException"}
@@ -499,6 +578,11 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ClientRequestToken":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ComputeEnvironmentDetail":{
       "type":"structure",
       "required":[
@@ -520,7 +604,8 @@
         "updatePolicy":{"shape":"UpdatePolicy"},
         "eksConfiguration":{"shape":"EksConfiguration"},
         "containerOrchestrationType":{"shape":"OrchestrationType"},
-        "uuid":{"shape":"String"}
+        "uuid":{"shape":"String"},
+        "context":{"shape":"String"}
       }
     },
     "ComputeEnvironmentDetailList":{
@@ -594,6 +679,41 @@
         "type":{"shape":"CRType"},
         "imageId":{"shape":"String"}
       }
+    },
+    "ConsumableResourceList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceRequirement"}
+    },
+    "ConsumableResourceProperties":{
+      "type":"structure",
+      "members":{
+        "consumableResourceList":{"shape":"ConsumableResourceList"}
+      }
+    },
+    "ConsumableResourceRequirement":{
+      "type":"structure",
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "quantity":{"shape":"Long"}
+      }
+    },
+    "ConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "consumableResourceArn",
+        "consumableResourceName"
+      ],
+      "members":{
+        "consumableResourceArn":{"shape":"String"},
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"}
+      }
+    },
+    "ConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ConsumableResourceSummary"}
     },
     "ContainerDetail":{
       "type":"structure",
@@ -705,7 +825,8 @@
         "computeResources":{"shape":"ComputeResource"},
         "serviceRole":{"shape":"String"},
         "tags":{"shape":"TagrisTagsMap"},
-        "eksConfiguration":{"shape":"EksConfiguration"}
+        "eksConfiguration":{"shape":"EksConfiguration"},
+        "context":{"shape":"String"}
       }
     },
     "CreateComputeEnvironmentResponse":{
@@ -713,6 +834,27 @@
       "members":{
         "computeEnvironmentName":{"shape":"String"},
         "computeEnvironmentArn":{"shape":"String"}
+      }
+    },
+    "CreateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResourceName"],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "tags":{"shape":"TagrisTagsMap"}
+      }
+    },
+    "CreateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"}
       }
     },
     "CreateJobQueueRequest":{
@@ -775,6 +917,18 @@
       "members":{
       }
     },
+    "DeleteConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"}
+      }
+    },
+    "DeleteConsumableResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteJobQueueRequest":{
       "type":"structure",
       "required":["jobQueue"],
@@ -824,6 +978,30 @@
       "members":{
         "computeEnvironments":{"shape":"ComputeEnvironmentDetailList"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"}
+      }
+    },
+    "DescribeConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"},
+        "inUseQuantity":{"shape":"Long"},
+        "availableQuantity":{"shape":"Long"},
+        "resourceType":{"shape":"String"},
+        "createdAt":{"shape":"Long"},
+        "tags":{"shape":"TagrisTagsMap"}
       }
     },
     "DescribeJobDefinitionsRequest":{
@@ -1006,10 +1184,16 @@
         "volumes":{"shape":"Volumes"}
       }
     },
+    "EksAnnotationsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "EksAttemptContainerDetail":{
       "type":"structure",
       "members":{
         "name":{"shape":"String"},
+        "containerID":{"shape":"String"},
         "exitCode":{"shape":"Integer"},
         "reason":{"shape":"String"}
       }
@@ -1023,7 +1207,9 @@
       "members":{
         "containers":{"shape":"EksAttemptContainerDetails"},
         "initContainers":{"shape":"EksAttemptContainerDetails"},
+        "eksClusterArn":{"shape":"String"},
         "podName":{"shape":"String"},
+        "podNamespace":{"shape":"String"},
         "nodeName":{"shape":"String"},
         "startedAt":{"shape":"Long"},
         "stoppedAt":{"shape":"Long"},
@@ -1130,6 +1316,7 @@
       "members":{
         "name":{"shape":"String"},
         "mountPath":{"shape":"String"},
+        "subPath":{"shape":"String"},
         "readOnly":{"shape":"Boolean"}
       }
     },
@@ -1167,7 +1354,17 @@
     "EksMetadata":{
       "type":"structure",
       "members":{
-        "labels":{"shape":"EksLabelsMap"}
+        "labels":{"shape":"EksLabelsMap"},
+        "annotations":{"shape":"EksAnnotationsMap"},
+        "namespace":{"shape":"String"}
+      }
+    },
+    "EksPersistentVolumeClaim":{
+      "type":"structure",
+      "required":["claimName"],
+      "members":{
+        "claimName":{"shape":"String"},
+        "readOnly":{"shape":"Boolean"}
       }
     },
     "EksPodProperties":{
@@ -1246,7 +1443,8 @@
         "name":{"shape":"String"},
         "hostPath":{"shape":"EksHostPath"},
         "emptyDir":{"shape":"EksEmptyDir"},
-        "secret":{"shape":"EksSecret"}
+        "secret":{"shape":"EksSecret"},
+        "persistentVolumeClaim":{"shape":"EksPersistentVolumeClaim"}
       }
     },
     "EksVolumes":{
@@ -1395,7 +1593,8 @@
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "ecsProperties":{"shape":"EcsProperties"},
         "eksProperties":{"shape":"EksProperties"},
-        "containerOrchestrationType":{"shape":"OrchestrationType"}
+        "containerOrchestrationType":{"shape":"OrchestrationType"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDefinitionList":{
@@ -1459,7 +1658,8 @@
         "eksAttempts":{"shape":"EksAttemptDetails"},
         "ecsProperties":{"shape":"EcsPropertiesDetail"},
         "isCancelled":{"shape":"Boolean"},
-        "isTerminated":{"shape":"Boolean"}
+        "isTerminated":{"shape":"Boolean"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "JobDetailList":{
@@ -1591,8 +1791,22 @@
       "members":{
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
-        "version":{"shape":"String"}
+        "version":{"shape":"String"},
+        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"}
       }
+    },
+    "LaunchTemplateSpecificationOverride":{
+      "type":"structure",
+      "members":{
+        "launchTemplateId":{"shape":"String"},
+        "launchTemplateName":{"shape":"String"},
+        "version":{"shape":"String"},
+        "targetInstanceTypes":{"shape":"StringList"}
+      }
+    },
+    "LaunchTemplateSpecificationOverrideList":{
+      "type":"list",
+      "member":{"shape":"LaunchTemplateSpecificationOverride"}
     },
     "LinuxParameters":{
       "type":"structure",
@@ -1613,6 +1827,26 @@
       "type":"list",
       "member":{"shape":"AttemptTaskContainerDetails"}
     },
+    "ListConsumableResourcesFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListConsumableResourcesRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"ListConsumableResourcesFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListConsumableResourcesResponse":{
+      "type":"structure",
+      "required":["consumableResources"],
+      "members":{
+        "consumableResources":{"shape":"ConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListEcsTaskDetails":{
       "type":"list",
       "member":{"shape":"EcsTaskDetails"}
@@ -1620,6 +1854,57 @@
     "ListEcsTaskProperties":{
       "type":"list",
       "member":{"shape":"EcsTaskProperties"}
+    },
+    "ListJobsByConsumableResourceFilterList":{
+      "type":"list",
+      "member":{"shape":"KeyValuesPair"}
+    },
+    "ListJobsByConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "filters":{"shape":"ListJobsByConsumableResourceFilterList"},
+        "maxResults":{"shape":"Integer"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceResponse":{
+      "type":"structure",
+      "required":["jobs"],
+      "members":{
+        "jobs":{"shape":"ListJobsByConsumableResourceSummaryList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListJobsByConsumableResourceSummary":{
+      "type":"structure",
+      "required":[
+        "jobArn",
+        "jobQueueArn",
+        "jobName",
+        "jobStatus",
+        "quantity",
+        "createdAt",
+        "consumableResourceProperties"
+      ],
+      "members":{
+        "jobArn":{"shape":"String"},
+        "jobQueueArn":{"shape":"String"},
+        "jobName":{"shape":"String"},
+        "jobDefinitionArn":{"shape":"String"},
+        "shareIdentifier":{"shape":"String"},
+        "jobStatus":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "statusReason":{"shape":"String"},
+        "startedAt":{"shape":"Long"},
+        "createdAt":{"shape":"Long"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
+      }
+    },
+    "ListJobsByConsumableResourceSummaryList":{
+      "type":"list",
+      "member":{"shape":"ListJobsByConsumableResourceSummary"}
     },
     "ListJobsFilterList":{
       "type":"list",
@@ -1791,7 +2076,9 @@
         "targetNodes":{"shape":"String"},
         "containerOverrides":{"shape":"ContainerOverrides"},
         "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
-        "instanceTypes":{"shape":"StringList"}
+        "instanceTypes":{"shape":"StringList"},
+        "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "NodePropertyOverrides":{
@@ -1809,7 +2096,9 @@
         "targetNodes":{"shape":"String"},
         "container":{"shape":"ContainerProperties"},
         "instanceTypes":{"shape":"StringList"},
-        "ecsProperties":{"shape":"EcsProperties"}
+        "ecsProperties":{"shape":"EcsProperties"},
+        "eksProperties":{"shape":"EksProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "OrchestrationType":{
@@ -1859,7 +2148,8 @@
         "tags":{"shape":"TagrisTagsMap"},
         "platformCapabilities":{"shape":"PlatformCapabilityList"},
         "eksProperties":{"shape":"EksProperties"},
-        "ecsProperties":{"shape":"EcsProperties"}
+        "ecsProperties":{"shape":"EcsProperties"},
+        "consumableResourceProperties":{"shape":"ConsumableResourceProperties"}
       }
     },
     "RegisterJobDefinitionResponse":{
@@ -2018,7 +2308,8 @@
         "timeout":{"shape":"JobTimeout"},
         "tags":{"shape":"TagrisTagsMap"},
         "eksPropertiesOverride":{"shape":"EksPropertiesOverride"},
-        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"}
+        "ecsPropertiesOverride":{"shape":"EcsPropertiesOverride"},
+        "consumableResourcePropertiesOverride":{"shape":"ConsumableResourceProperties"}
       }
     },
     "SubmitJobResponse":{
@@ -2235,7 +2526,8 @@
         "unmanagedvCpus":{"shape":"Integer"},
         "computeResources":{"shape":"ComputeResourceUpdate"},
         "serviceRole":{"shape":"String"},
-        "updatePolicy":{"shape":"UpdatePolicy"}
+        "updatePolicy":{"shape":"UpdatePolicy"},
+        "context":{"shape":"String"}
       }
     },
     "UpdateComputeEnvironmentResponse":{
@@ -2243,6 +2535,31 @@
       "members":{
         "computeEnvironmentName":{"shape":"String"},
         "computeEnvironmentArn":{"shape":"String"}
+      }
+    },
+    "UpdateConsumableResourceRequest":{
+      "type":"structure",
+      "required":["consumableResource"],
+      "members":{
+        "consumableResource":{"shape":"String"},
+        "operation":{"shape":"String"},
+        "quantity":{"shape":"Long"},
+        "clientToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateConsumableResourceResponse":{
+      "type":"structure",
+      "required":[
+        "consumableResourceName",
+        "consumableResourceArn"
+      ],
+      "members":{
+        "consumableResourceName":{"shape":"String"},
+        "consumableResourceArn":{"shape":"String"},
+        "totalQuantity":{"shape":"Long"}
       }
     },
     "UpdateJobQueueRequest":{

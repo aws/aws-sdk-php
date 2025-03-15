@@ -40,7 +40,6 @@
                     ]
                 }
             ],
-            "type": "tree",
             "rules": [
                 {
                     "conditions": [
@@ -83,7 +82,8 @@
                     },
                     "type": "endpoint"
                 }
-            ]
+            ],
+            "type": "tree"
         },
         {
             "conditions": [
@@ -96,7 +96,6 @@
                     ]
                 }
             ],
-            "type": "tree",
             "rules": [
                 {
                     "conditions": [
@@ -110,7 +109,6 @@
                             "assign": "PartitionResult"
                         }
                     ],
-                    "type": "tree",
                     "rules": [
                         {
                             "conditions": [
@@ -133,7 +131,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -168,8 +165,83 @@
                                             ]
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        },
+                                                        "us-east-1"
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://cognito-identity-fips.us-east-1.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        },
+                                                        "us-east-2"
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://cognito-identity-fips.us-east-2.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        },
+                                                        "us-west-1"
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://cognito-identity-fips.us-west-1.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        },
+                                                        "us-west-2"
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://cognito-identity-fips.us-west-2.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
                                         {
                                             "conditions": [],
                                             "endpoint": {
@@ -179,14 +251,16 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 },
                                 {
                                     "conditions": [],
                                     "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
                                     "type": "error"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [
@@ -200,14 +274,12 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
                                         {
                                             "fn": "booleanEquals",
                                             "argv": [
-                                                true,
                                                 {
                                                     "fn": "getAttr",
                                                     "argv": [
@@ -216,11 +288,11 @@
                                                         },
                                                         "supportsFIPS"
                                                     ]
-                                                }
+                                                },
+                                                true
                                             ]
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
                                         {
                                             "conditions": [],
@@ -231,14 +303,16 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 },
                                 {
                                     "conditions": [],
                                     "error": "FIPS is enabled but this partition does not support FIPS",
                                     "type": "error"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [
@@ -252,7 +326,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -272,8 +345,32 @@
                                             ]
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "stringEquals",
+                                                    "argv": [
+                                                        "aws",
+                                                        {
+                                                            "fn": "getAttr",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "PartitionResult"
+                                                                },
+                                                                "name"
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "endpoint": {
+                                                "url": "https://cognito-identity.{Region}.amazonaws.com",
+                                                "properties": {},
+                                                "headers": {}
+                                            },
+                                            "type": "endpoint"
+                                        },
                                         {
                                             "conditions": [],
                                             "endpoint": {
@@ -283,14 +380,16 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 },
                                 {
                                     "conditions": [],
                                     "error": "DualStack is enabled but this partition does not support DualStack",
                                     "type": "error"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [],
@@ -301,9 +400,11 @@
                             },
                             "type": "endpoint"
                         }
-                    ]
+                    ],
+                    "type": "tree"
                 }
-            ]
+            ],
+            "type": "tree"
         },
         {
             "conditions": [],

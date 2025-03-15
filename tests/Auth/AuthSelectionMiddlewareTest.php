@@ -85,7 +85,7 @@ class AuthSelectionMiddlewareTest extends TestCase
             ],
             [
                 ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['smithy.auth#noAuth'],
+                ['smithy.api#noAuth'],
                 'anonymous'
             ],
             [
@@ -152,7 +152,7 @@ class AuthSelectionMiddlewareTest extends TestCase
             ],
             [
                 ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['smithy.auth#noAuth'],
+                ['smithy.api#noAuth'],
                 'anonymous'
             ],
             [
