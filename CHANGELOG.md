@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.7 - 2025-03-17
 
 * `Aws\TaxSettings` - Adjust Vietnam PaymentVoucherNumber regex and minor API change.
 * `Aws\ApplicationSignals` - This release adds support for adding, removing, and listing SLO time exclusion windows with the BatchUpdateExclusionWindows and ListServiceLevelObjectiveExclusionWindows APIs.
