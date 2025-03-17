@@ -3,12 +3,14 @@
   "service": "<p>Use CloudWatch Application Signals for comprehensive observability of your cloud-based applications. It enables real-time service health dashboards and helps you track long-term performance trends against your business goals. The application-centric view provides you with unified visibility across your applications, services, and dependencies, so you can proactively monitor and efficiently triage any issues that may arise, ensuring optimal customer experience.</p> <p>Application Signals provides the following benefits:</p> <ul> <li> <p>Automatically collect metrics and traces from your applications, and display key metrics such as call volume, availability, latency, faults, and errors. </p> </li> <li> <p>Create and monitor service level objectives (SLOs). </p> </li> <li> <p>See a map of your application topology that Application Signals automatically discovers, that gives you a visual representation of your applications, dependencies, and their connectivity.</p> </li> </ul> <p>Application Signals works with CloudWatch RUM, CloudWatch Synthetics canaries, and Amazon Web Services Service Catalog AppRegistry, to display your client pages, Synthetics canaries, and application names within dashboards and maps.</p>",
   "operations": {
     "BatchGetServiceLevelObjectiveBudgetReport": "<p>Use this operation to retrieve one or more <i>service level objective (SLO) budget reports</i>.</p> <p>An <i>error budget</i> is the amount of time or requests in an unhealthy state that your service can accumulate during an interval before your overall SLO budget health is breached and the SLO is considered to be unmet. For example, an SLO with a threshold of 99.95% and a monthly interval translates to an error budget of 21.9 minutes of downtime in a 30-day month.</p> <p>Budget reports include a health indicator, the attainment value, and remaining budget.</p> <p>For more information about SLO error budgets, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html#CloudWatch-ServiceLevelObjectives-concepts\"> SLO concepts</a>.</p>",
+    "BatchUpdateExclusionWindows": "<p>Add or remove time window exclusions for one or more Service Level Objectives (SLOs).</p>",
     "CreateServiceLevelObjective": "<p>Creates a service level objective (SLO), which can help you ensure that your critical business operations are meeting customer expectations. Use SLOs to set and track specific target levels for the reliability and availability of your applications and services. SLOs use service level indicators (SLIs) to calculate whether the application is performing at the level that you want.</p> <p>Create an SLO to set a target for a service or operation’s availability or latency. CloudWatch measures this target frequently you can find whether it has been breached. </p> <p>The target performance quality that is defined for an SLO is the <i>attainment goal</i>.</p> <p>You can set SLO targets for your applications that are discovered by Application Signals, using critical metrics such as latency and availability. You can also set SLOs against any CloudWatch metric or math expression that produces a time series.</p> <note> <p>You can't create an SLO for a service operation that was discovered by Application Signals until after that operation has reported standard metrics to Application Signals.</p> </note> <p>When you create an SLO, you specify whether it is a <i>period-based SLO</i> or a <i>request-based SLO</i>. Each type of SLO has a different way of evaluating your application's performance against its attainment goal.</p> <ul> <li> <p>A <i>period-based SLO</i> uses defined <i>periods</i> of time within a specified total time interval. For each period of time, Application Signals determines whether the application met its goal. The attainment rate is calculated as the <code>number of good periods/number of total periods</code>.</p> <p>For example, for a period-based SLO, meeting an attainment goal of 99.9% means that within your interval, your application must meet its performance goal during at least 99.9% of the time periods.</p> </li> <li> <p>A <i>request-based SLO</i> doesn't use pre-defined periods of time. Instead, the SLO measures <code>number of good requests/number of total requests</code> during the interval. At any time, you can find the ratio of good requests to total requests for the interval up to the time stamp that you specify, and measure that ratio against the goal set in your SLO.</p> </li> </ul> <p>After you have created an SLO, you can retrieve error budget reports for it. An <i>error budget</i> is the amount of time or amount of requests that your application can be non-compliant with the SLO's goal, and still have your application meet the goal.</p> <ul> <li> <p>For a period-based SLO, the error budget starts at a number defined by the highest number of periods that can fail to meet the threshold, while still meeting the overall goal. The <i>remaining error budget</i> decreases with every failed period that is recorded. The error budget within one interval can never increase.</p> <p>For example, an SLO with a threshold that 99.95% of requests must be completed under 2000ms every month translates to an error budget of 21.9 minutes of downtime per month.</p> </li> <li> <p>For a request-based SLO, the remaining error budget is dynamic and can increase or decrease, depending on the ratio of good requests to total requests.</p> </li> </ul> <p>For more information about SLOs, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html\"> Service level objectives (SLOs)</a>. </p> <p>When you perform a <code>CreateServiceLevelObjective</code> operation, Application Signals creates the <i>AWSServiceRoleForCloudWatchApplicationSignals</i> service-linked role, if it doesn't already exist in your account. This service- linked role has the following permissions:</p> <ul> <li> <p> <code>xray:GetServiceGraph</code> </p> </li> <li> <p> <code>logs:StartQuery</code> </p> </li> <li> <p> <code>logs:GetQueryResults</code> </p> </li> <li> <p> <code>cloudwatch:GetMetricData</code> </p> </li> <li> <p> <code>cloudwatch:ListMetrics</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> <li> <p> <code>autoscaling:DescribeAutoScalingGroups</code> </p> </li> </ul>",
     "DeleteServiceLevelObjective": "<p>Deletes the specified service level objective.</p>",
     "GetService": "<p>Returns information about a service discovered by Application Signals.</p>",
     "GetServiceLevelObjective": "<p>Returns information about one SLO created in the account. </p>",
     "ListServiceDependencies": "<p>Returns a list of service dependencies of the service that you specify. A dependency is an infrastructure component that an operation of this service connects with. Dependencies can include Amazon Web Services services, Amazon Web Services resources, and third-party services. </p>",
     "ListServiceDependents": "<p>Returns the list of dependents that invoked the specified service during the provided time range. Dependents include other services, CloudWatch Synthetics canaries, and clients that are instrumented with CloudWatch RUM app monitors.</p>",
+    "ListServiceLevelObjectiveExclusionWindows": "<p>Retrieves all exclusion windows configured for a specific SLO.</p>",
     "ListServiceLevelObjectives": "<p>Returns a list of SLOs created in this account.</p>",
     "ListServiceOperations": "<p>Returns a list of the <i>operations</i> of this service that have been discovered by Application Signals. Only the operations that were invoked during the specified time range are returned.</p>",
     "ListServices": "<p>Returns a list of services that have been discovered by Application Signals. A service represents a minimum logical and transactional unit that completes a business function. Services are discovered through Application Signals instrumentation.</p>",
@@ -97,6 +99,28 @@
       }
     },
     "BatchGetServiceLevelObjectiveBudgetReportOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateExclusionWindowsError": {
+      "base": "<p>An array of structures, where each structure includes an error indicating that one of the requests in the array was not valid.</p>",
+      "refs": {
+        "BatchUpdateExclusionWindowsErrors$member": null
+      }
+    },
+    "BatchUpdateExclusionWindowsErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateExclusionWindowsOutput$Errors": "<p>A list of errors that occurred while processing the request.</p>"
+      }
+    },
+    "BatchUpdateExclusionWindowsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateExclusionWindowsOutput": {
       "base": null,
       "refs": {
       }
@@ -206,7 +230,8 @@
       "base": null,
       "refs": {
         "CalendarInterval$DurationUnit": "<p>Specifies the calendar interval unit.</p>",
-        "RollingInterval$DurationUnit": "<p>Specifies the rolling interval unit.</p>"
+        "RollingInterval$DurationUnit": "<p>Specifies the rolling interval unit.</p>",
+        "Window$DurationUnit": "<p>The unit of time for the exclusion window duration. Valid values: MINUTE, HOUR, DAY, MONTH.</p>"
       }
     },
     "EvaluationType": {
@@ -214,6 +239,50 @@
       "refs": {
         "ServiceLevelObjective$EvaluationType": "<p>Displays whether this is a period-based SLO or a request-based SLO.</p>",
         "ServiceLevelObjectiveBudgetReport$EvaluationType": "<p>Displays whether this budget report is for a period-based SLO or a request-based SLO.</p>"
+      }
+    },
+    "ExclusionDuration": {
+      "base": null,
+      "refs": {
+        "Window$Duration": "<p>The number of time units for the exclusion window length.</p>"
+      }
+    },
+    "ExclusionReason": {
+      "base": null,
+      "refs": {
+        "ExclusionWindow$Reason": "<p>A description explaining why this time period should be excluded from SLO calculations.</p>"
+      }
+    },
+    "ExclusionWindow": {
+      "base": "<p>The core SLO time window exclusion object that includes Window, StartTime, RecurrenceRule, and Reason.</p>",
+      "refs": {
+        "ExclusionWindows$member": null
+      }
+    },
+    "ExclusionWindowErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchUpdateExclusionWindowsError$ErrorCode": "<p>The error code.</p>"
+      }
+    },
+    "ExclusionWindowErrorMessage": {
+      "base": null,
+      "refs": {
+        "BatchUpdateExclusionWindowsError$ErrorMessage": "<p>The error message.</p>"
+      }
+    },
+    "ExclusionWindows": {
+      "base": null,
+      "refs": {
+        "BatchUpdateExclusionWindowsInput$AddExclusionWindows": "<p>A list of exclusion windows to add to the specified SLOs. You can add up to 10 exclusion windows per SLO.</p>",
+        "BatchUpdateExclusionWindowsInput$RemoveExclusionWindows": "<p>A list of exclusion windows to remove from the specified SLOs. The window configuration must match an existing exclusion window.</p>",
+        "ListServiceLevelObjectiveExclusionWindowsOutput$ExclusionWindows": "<p>A list of exclusion windows configured for the SLO.</p>"
+      }
+    },
+    "Expression": {
+      "base": null,
+      "refs": {
+        "RecurrenceRule$Expression": "<p>A cron or rate expression that specifies the schedule for the exclusion window.</p>"
       }
     },
     "FaultDescription": {
@@ -297,6 +366,22 @@
       }
     },
     "ListServiceDependentsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceLevelObjectiveExclusionWindowsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceLevelObjectiveExclusionWindowsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListServiceLevelObjectiveExclusionWindowsInput$MaxResults": "<p>The maximum number of results to return in one operation. If you omit this parameter, the default of 50 is used. <pre><code> &lt;/p&gt; </code></pre>"
+      }
+    },
+    "ListServiceLevelObjectiveExclusionWindowsOutput": {
       "base": null,
       "refs": {
       }
@@ -463,6 +548,8 @@
         "ListServiceDependenciesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service dependencies.</p>",
         "ListServiceDependentsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service dependents.</p>",
         "ListServiceDependentsOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service dependents.</p>",
+        "ListServiceLevelObjectiveExclusionWindowsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. <pre><code> &lt;/p&gt; </code></pre>",
+        "ListServiceLevelObjectiveExclusionWindowsOutput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. <pre><code> &lt;/p&gt; </code></pre>",
         "ListServiceLevelObjectivesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives.</p>",
         "ListServiceLevelObjectivesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service level objectives.</p>",
         "ListServiceOperationsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service operations.</p>",
@@ -492,6 +579,12 @@
       "refs": {
         "MetricDataQuery$Period": "<p>The granularity, in seconds, of the returned data points for this metric. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a <code>PutMetricData</code> call that includes a <code>StorageResolution</code> of 1 second.</p> <p>If the <code>StartTime</code> parameter specifies a time stamp that is greater than 3 hours ago, you must specify the period as follows or no data points in that time range is returned:</p> <ul> <li> <p>Start time between 3 hours and 15 days ago - Use a multiple of 60 seconds (1 minute).</p> </li> <li> <p>Start time between 15 and 63 days ago - Use a multiple of 300 seconds (5 minutes).</p> </li> <li> <p>Start time greater than 63 days ago - Use a multiple of 3600 seconds (1 hour).</p> </li> </ul>",
         "MetricStat$Period": "<p>The granularity, in seconds, to be used for the metric. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a <code>PutMetricData</code> call that includes a <code>StorageResolution</code> of 1 second.</p>"
+      }
+    },
+    "RecurrenceRule": {
+      "base": "<p>The recurrence rule for the SLO time window exclusion .</p>",
+      "refs": {
+        "ExclusionWindow$RecurrenceRule": "<p>The recurrence rule for the SLO time window exclusion. Supports both cron and rate expressions.</p>"
       }
     },
     "RequestBasedServiceLevelIndicator": {
@@ -726,15 +819,19 @@
     "ServiceLevelObjectiveId": {
       "base": null,
       "refs": {
+        "BatchUpdateExclusionWindowsError$SloId": "<p>The SLO ID in the error.</p>",
         "DeleteServiceLevelObjectiveInput$Id": "<p>The ARN or name of the service level objective to delete.</p>",
         "GetServiceLevelObjectiveInput$Id": "<p>The ARN or name of the SLO that you want to retrieve information about. You can find the ARNs of SLOs by using the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_ListServiceLevelObjectives.html\">ListServiceLevelObjectives</a> operation.</p>",
+        "ListServiceLevelObjectiveExclusionWindowsInput$Id": "<p>The ID of the SLO to list exclusion windows for.</p>",
         "UpdateServiceLevelObjectiveInput$Id": "<p>The Amazon Resource Name (ARN) or name of the service level objective that you want to update.</p>"
       }
     },
     "ServiceLevelObjectiveIds": {
       "base": null,
       "refs": {
-        "BatchGetServiceLevelObjectiveBudgetReportInput$SloIds": "<p>An array containing the IDs of the service level objectives that you want to include in the report.</p>"
+        "BatchGetServiceLevelObjectiveBudgetReportInput$SloIds": "<p>An array containing the IDs of the service level objectives that you want to include in the report.</p>",
+        "BatchUpdateExclusionWindowsInput$SloIds": "<p>The list of SLO IDs to add or remove exclusion windows from.</p>",
+        "BatchUpdateExclusionWindowsOutput$SloIds": "<p>The list of SLO IDs that were successfully processed.</p>"
       }
     },
     "ServiceLevelObjectiveName": {
@@ -875,6 +972,7 @@
         "BatchGetServiceLevelObjectiveBudgetReportInput$Timestamp": "<p>The date and time that you want the report to be for. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
         "BatchGetServiceLevelObjectiveBudgetReportOutput$Timestamp": "<p>The date and time that the report is for. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
         "CalendarInterval$StartTime": "<p>The date and time when you want the first interval to start. Be sure to choose a time that configures the intervals the way that you want. For example, if you want weekly intervals starting on Mondays at 6 a.m., be sure to specify a start time that is a Monday at 6 a.m.</p> <p>When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>As soon as one calendar interval ends, another automatically begins.</p>",
+        "ExclusionWindow$StartTime": "<p>The start of the SLO time window exclusion. Defaults to current time if not specified.</p>",
         "GetServiceInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceOutput$StartTime": "<p>The start time of the data included in the response. In a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code>.</p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
@@ -947,6 +1045,12 @@
       "base": null,
       "refs": {
         "Goal$WarningThreshold": "<p>The percentage of remaining budget over total budget that you want to get warnings for. If you omit this parameter, the default of 50.0 is used. </p>"
+      }
+    },
+    "Window": {
+      "base": "<p>The object that defines the time length of an exclusion window.</p>",
+      "refs": {
+        "ExclusionWindow$Window": "<p>The SLO time window exclusion .</p>"
       }
     }
   }

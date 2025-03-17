@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TaxSettings` - Adjust Vietnam PaymentVoucherNumber regex and minor API change.
+* `Aws\ApplicationSignals` - This release adds support for adding, removing, and listing SLO time exclusion windows with the BatchUpdateExclusionWindows and ListServiceLevelObjectiveExclusionWindows APIs.
+* `Aws\GeoMaps` - Provide support for vector map styles in the GetStaticMap operation.
+* `Aws\CloudWatchRUM` - CloudWatch RUM now supports unminification of JS error stack traces.
+* `Aws\WAFV2` - AWS WAF now lets you inspect fragments of request URIs. You can specify the scope of the URI to inspect and narrow the set of URI fragments.
+
 ## 3.342.6 - 2025-03-14
 
 * `Aws\Handler` - Remove code for unsupported version v6 of Guzzle and moved Aws\Handler\GuzzleV6\GuzzleHandler to an unversioned Aws\Handler\Guzzle\GuzzleHandler.

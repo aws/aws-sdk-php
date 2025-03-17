@@ -43,9 +43,13 @@
         "AccountDetails$accountId": "<p>List of unique account identifiers. </p>",
         "AccountIds$member": null,
         "BatchDeleteTaxRegistrationError$accountId": "<p> The unique account identifier for the account whose tax registration couldn't be deleted during the <code>BatchDeleteTaxRegistration</code> operation. </p>",
+        "BatchDeleteTaxRegistrationRequestAccountIdsList$member": null,
+        "BatchGetTaxExemptionsRequestAccountIdsList$member": null,
         "BatchPutTaxRegistrationError$accountId": "<p> The unique account identifier for the account that the tax registration couldn't be added, or updated during the <code>BatchPutTaxRegistration</code> operation. </p>",
+        "BatchPutTaxRegistrationRequestAccountIdsList$member": null,
         "DeleteTaxRegistrationRequest$accountId": "<p>Unique account identifier for the TRN information that needs to be deleted. If this isn't passed, the account ID corresponding to the credentials of the API caller will be used for this parameter.</p>",
         "GetTaxRegistrationRequest$accountId": "<p>Your unique account identifier.</p>",
+        "PutTaxExemptionRequestAccountIdsList$member": null,
         "PutTaxRegistrationRequest$accountId": "<p>Your unique account identifier. </p>",
         "TaxExemptionDetailsMap$key": null,
         "TaxInheritanceDetails$parentEntityId": "<p> Tax inheritance parent account information associated with the account. </p>"
@@ -54,11 +58,7 @@
     "AccountIds": {
       "base": null,
       "refs": {
-        "BatchDeleteTaxRegistrationRequest$accountIds": "<p>List of unique account identifiers. </p>",
-        "BatchGetTaxExemptionsRequest$accountIds": "<p> List of unique account identifiers. </p>",
-        "BatchGetTaxExemptionsResponse$failedAccounts": "<p>The list of accounts that failed to get tax exemptions. </p>",
-        "BatchPutTaxRegistrationRequest$accountIds": "<p> List of unique account identifiers.</p>",
-        "PutTaxExemptionRequest$accountIds": "<p> The list of unique account identifiers. </p>"
+        "BatchGetTaxExemptionsResponse$failedAccounts": "<p>The list of accounts that failed to get tax exemptions. </p>"
       }
     },
     "AccountMetaData": {
@@ -163,6 +163,12 @@
       "refs": {
       }
     },
+    "BatchDeleteTaxRegistrationRequestAccountIdsList": {
+      "base": null,
+      "refs": {
+        "BatchDeleteTaxRegistrationRequest$accountIds": "<p>List of unique account identifiers. </p>"
+      }
+    },
     "BatchDeleteTaxRegistrationResponse": {
       "base": null,
       "refs": {
@@ -171,6 +177,12 @@
     "BatchGetTaxExemptionsRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "BatchGetTaxExemptionsRequestAccountIdsList": {
+      "base": null,
+      "refs": {
+        "BatchGetTaxExemptionsRequest$accountIds": "<p> List of unique account identifiers. </p>"
       }
     },
     "BatchGetTaxExemptionsResponse": {
@@ -193,6 +205,12 @@
     "BatchPutTaxRegistrationRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "BatchPutTaxRegistrationRequestAccountIdsList": {
+      "base": null,
+      "refs": {
+        "BatchPutTaxRegistrationRequest$accountIds": "<p> List of unique account identifiers.</p>"
       }
     },
     "BatchPutTaxRegistrationResponse": {
@@ -317,7 +335,7 @@
       "base": null,
       "refs": {
         "EgyptAdditionalInfo$uniqueIdentificationNumberExpirationDate": "<p>The expiration date of the unique identification number provided by the Egypt Tax Authority.</p>",
-        "VietnamAdditionalInfo$paymentVoucherNumberDate": "<p>The date on the tax return payment document.</p>"
+        "VietnamAdditionalInfo$paymentVoucherNumberDate": "<p>The date on the tax return payment document. This field must be provided for successful API operation.</p>"
       }
     },
     "DeleteSupplementalTaxRegistrationRequest": {
@@ -374,13 +392,13 @@
     "ElectronicTransactionCodeNumber": {
       "base": null,
       "refs": {
-        "VietnamAdditionalInfo$electronicTransactionCodeNumber": "<p>The electronic transaction code number on the tax return document.</p>"
+        "VietnamAdditionalInfo$electronicTransactionCodeNumber": "<p>The electronic transaction code number on the tax return document. This field must be provided for successful API operation.</p>"
       }
     },
     "EnterpriseIdentificationNumber": {
       "base": null,
       "refs": {
-        "VietnamAdditionalInfo$enterpriseIdentificationNumber": "<p>The enterprise identification number for tax registration.</p>"
+        "VietnamAdditionalInfo$enterpriseIdentificationNumber": "<p>The enterprise identification number for tax registration. This field must be provided for successful API operation.</p>"
       }
     },
     "EntityExemptionAccountStatus": {
@@ -455,7 +473,7 @@
       "refs": {
         "DeleteSupplementalTaxRegistrationRequest$authorityId": "<p> The unique authority Id for the supplemental TRN information that needs to be deleted. </p>",
         "PutSupplementalTaxRegistrationResponse$authorityId": "<p> Unique authority ID for the supplemental TRN information that was stored. </p>",
-        "PutTaxExemptionRequest$exemptionType": "<p>The exemption type. </p>",
+        "PutTaxExemptionRequest$exemptionType": "<p>The exemption type. Use the supported tax exemption type description. </p>",
         "PutTaxExemptionResponse$caseId": "<p>The customer support case ID. </p>",
         "SupplementalTaxRegistration$authorityId": "<p> Unique authority ID for the supplemental TRN. </p>",
         "TaxExemptionDetails$heritageObtainedParentEntity": "<p>The consolidated billing family management account the tax exemption inherited from. </p>",
@@ -704,7 +722,7 @@
     "PaymentVoucherNumber": {
       "base": null,
       "refs": {
-        "VietnamAdditionalInfo$paymentVoucherNumber": "<p>The payment voucher number on the tax return payment document.</p>"
+        "VietnamAdditionalInfo$paymentVoucherNumber": "<p>The payment voucher number on the tax return payment document. This field must be provided for successful API operation.</p>"
       }
     },
     "PersonType": {
@@ -740,6 +758,12 @@
     "PutTaxExemptionRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "PutTaxExemptionRequestAccountIdsList": {
+      "base": null,
+      "refs": {
+        "PutTaxExemptionRequest$accountIds": "<p> The list of unique account identifiers. </p>"
       }
     },
     "PutTaxExemptionResponse": {
@@ -1052,7 +1076,7 @@
     "TaxRegistrationType": {
       "base": null,
       "refs": {
-        "TaxRegistration$registrationType": "<p>Type of your tax registration. This can be either <code>VAT</code> or <code>GST</code>. </p>",
+        "TaxRegistration$registrationType": "<p>Type of your tax registration. </p>",
         "TaxRegistrationEntry$registrationType": "<p> Your tax registration type. This can be either <code>VAT</code> or <code>GST</code>. </p>",
         "TaxRegistrationWithJurisdiction$registrationType": "<p> The type of your tax registration. This can be either <code>VAT</code> or <code>GST</code>. </p>"
       }

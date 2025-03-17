@@ -295,9 +295,7 @@
     },
     "AccountIds":{
       "type":"list",
-      "member":{"shape":"AccountId"},
-      "max":5,
-      "min":1
+      "member":{"shape":"AccountId"}
     },
     "AccountMetaData":{
       "type":"structure",
@@ -454,8 +452,14 @@
       "type":"structure",
       "required":["accountIds"],
       "members":{
-        "accountIds":{"shape":"AccountIds"}
+        "accountIds":{"shape":"BatchDeleteTaxRegistrationRequestAccountIdsList"}
       }
+    },
+    "BatchDeleteTaxRegistrationRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":5,
+      "min":1
     },
     "BatchDeleteTaxRegistrationResponse":{
       "type":"structure",
@@ -468,8 +472,14 @@
       "type":"structure",
       "required":["accountIds"],
       "members":{
-        "accountIds":{"shape":"AccountIds"}
+        "accountIds":{"shape":"BatchGetTaxExemptionsRequestAccountIdsList"}
       }
+    },
+    "BatchGetTaxExemptionsRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":5,
+      "min":1
     },
     "BatchGetTaxExemptionsResponse":{
       "type":"structure",
@@ -501,9 +511,15 @@
         "taxRegistrationEntry"
       ],
       "members":{
-        "accountIds":{"shape":"AccountIds"},
+        "accountIds":{"shape":"BatchPutTaxRegistrationRequestAccountIdsList"},
         "taxRegistrationEntry":{"shape":"TaxRegistrationEntry"}
       }
+    },
+    "BatchPutTaxRegistrationRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":550,
+      "min":1
     },
     "BatchPutTaxRegistrationResponse":{
       "type":"structure",
@@ -1027,7 +1043,7 @@
     },
     "PaymentVoucherNumber":{
       "type":"string",
-      "pattern":"^\\d{17}$"
+      "pattern":"^(\\d{17}|[A-Za-z]{3}\\d{13})$"
     },
     "PersonType":{
       "type":"string",
@@ -1077,11 +1093,17 @@
         "exemptionType"
       ],
       "members":{
-        "accountIds":{"shape":"AccountIds"},
+        "accountIds":{"shape":"PutTaxExemptionRequestAccountIdsList"},
         "authority":{"shape":"Authority"},
         "exemptionCertificate":{"shape":"ExemptionCertificate"},
         "exemptionType":{"shape":"GenericString"}
       }
+    },
+    "PutTaxExemptionRequestAccountIdsList":{
+      "type":"list",
+      "member":{"shape":"AccountId"},
+      "max":550,
+      "min":1
     },
     "PutTaxExemptionResponse":{
       "type":"structure",

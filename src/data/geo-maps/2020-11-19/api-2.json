@@ -99,6 +99,10 @@
       "sensitive":true
     },
     "Blob":{"type":"blob"},
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
     "ColorScheme":{
       "type":"string",
       "enum":[
@@ -257,10 +261,20 @@
           "location":"querystring",
           "locationName":"center"
         },
+        "ColorScheme":{
+          "shape":"ColorScheme",
+          "location":"querystring",
+          "locationName":"color-scheme"
+        },
         "CompactOverlay":{
           "shape":"CompactOverlay",
           "location":"querystring",
           "locationName":"compact-overlay"
+        },
+        "CropLabels":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"crop-labels"
         },
         "GeoJsonOverlay":{
           "shape":"GeoJsonOverlay",
@@ -277,10 +291,30 @@
           "location":"querystring",
           "locationName":"key"
         },
+        "LabelSize":{
+          "shape":"LabelSize",
+          "location":"querystring",
+          "locationName":"label-size"
+        },
+        "Language":{
+          "shape":"LanguageTag",
+          "location":"querystring",
+          "locationName":"lang"
+        },
         "Padding":{
           "shape":"Integer",
           "location":"querystring",
           "locationName":"padding"
+        },
+        "PoliticalView":{
+          "shape":"CountryCode",
+          "location":"querystring",
+          "locationName":"political-view"
+        },
+        "PointsOfInterests":{
+          "shape":"MapFeatureMode",
+          "location":"querystring",
+          "locationName":"pois"
         },
         "Radius":{
           "shape":"DistanceMeters",
@@ -507,6 +541,25 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "LabelSize":{
+      "type":"string",
+      "enum":[
+        "Small",
+        "Large"
+      ]
+    },
+    "LanguageTag":{
+      "type":"string",
+      "max":35,
+      "min":2
+    },
+    "MapFeatureMode":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
     "MapStyle":{
       "type":"string",
       "enum":[
@@ -538,7 +591,10 @@
     },
     "StaticMapStyle":{
       "type":"string",
-      "enum":["Satellite"]
+      "enum":[
+        "Satellite",
+        "Standard"
+      ]
     },
     "String":{"type":"string"},
     "ThrottlingException":{

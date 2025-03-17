@@ -59,8 +59,17 @@
       "base": null,
       "refs": {
         "AppMonitor$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>",
+        "AppMonitorDomainList$member": null,
         "CreateAppMonitorRequest$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>",
         "UpdateAppMonitorRequest$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>"
+      }
+    },
+    "AppMonitorDomainList": {
+      "base": null,
+      "refs": {
+        "AppMonitor$DomainList": "<p> List the domain names for which your application has administrative authority. </p>",
+        "CreateAppMonitorRequest$DomainList": "<p> List the domain names for which your application has administrative authority. The <code>CreateAppMonitor</code> requires either the domain or the domain list. </p>",
+        "UpdateAppMonitorRequest$DomainList": "<p> List the domain names for which your application has administrative authority. The <code>UpdateAppMonitor</code> allows either the domain or the domain list. </p>"
       }
     },
     "AppMonitorId": {
@@ -250,6 +259,26 @@
       "refs": {
       }
     },
+    "DeobfuscationConfiguration": {
+      "base": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+      "refs": {
+        "AppMonitor$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+        "CreateAppMonitorRequest$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+        "UpdateAppMonitorRequest$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>"
+      }
+    },
+    "DeobfuscationS3Uri": {
+      "base": null,
+      "refs": {
+        "JavaScriptSourceMaps$S3Uri": "<p> The S3Uri of the bucket or folder that stores the source map files. It is required if status is ENABLED. </p>"
+      }
+    },
+    "DeobfuscationStatus": {
+      "base": null,
+      "refs": {
+        "JavaScriptSourceMaps$Status": "<p> Specifies whether JavaScript error stack traces should be unminified for this app monitor. The default is for JavaScript error stack trace unminification to be <code>DISABLED</code>. </p>"
+      }
+    },
     "DestinationArn": {
       "base": null,
       "refs": {
@@ -373,6 +402,12 @@
     "InvalidPolicyRevisionIdException": {
       "base": "<p>The policy revision ID that you provided doeesn't match the latest policy revision ID.</p>",
       "refs": {
+      }
+    },
+    "JavaScriptSourceMaps": {
+      "base": "<p> A structure that contains the configuration for how an app monitor can unminify JavaScript error stack traces using source maps. </p>",
+      "refs": {
+        "DeobfuscationConfiguration$JavaScriptSourceMaps": "<p> A structure that contains the configuration for how an app monitor can unminify JavaScript error stack traces using source maps. </p>"
       }
     },
     "JsonValue": {

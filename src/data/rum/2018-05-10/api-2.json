@@ -403,7 +403,9 @@
         "Created":{"shape":"ISOTimestampString"},
         "CustomEvents":{"shape":"CustomEvents"},
         "DataStorage":{"shape":"DataStorage"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Id":{"shape":"AppMonitorId"},
         "LastModified":{"shape":"ISOTimestampString"},
         "Name":{"shape":"AppMonitorName"},
@@ -437,7 +439,13 @@
       "type":"string",
       "max":253,
       "min":1,
-      "pattern":"^(localhost)$|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|(?=^[a-zA-Z0-9\\.\\*-]{4,253}$)(?!.*\\.-)(?!.*-\\.)(?!.*\\.\\.)(?!.*[^\\.]{64,})^(\\*\\.)?(?![-\\.\\*])[^\\*]{1,}\\.(?!.*--)(?=.*[a-zA-Z])[^\\*]{1,}[^\\*-]$"
+      "pattern":"^(localhost)$|^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|(?=^[a-zA-Z0-9\\.\\*-]{4,253}$)(?!.*\\.-)(?!.*-\\.)(?!.*\\.\\.)(?!.*[^\\.]{64,})^(\\*\\.)?(?![-\\.\\*])[^\\*]{1,}\\.(\\*|(?!.*--)(?=.*[a-zA-Z])[^\\*]{1,}[^\\*-])$"
+    },
+    "AppMonitorDomainList":{
+      "type":"list",
+      "member":{"shape":"AppMonitorDomain"},
+      "max":5,
+      "min":1
     },
     "AppMonitorId":{
       "type":"string",
@@ -631,15 +639,14 @@
     },
     "CreateAppMonitorRequest":{
       "type":"structure",
-      "required":[
-        "Domain",
-        "Name"
-      ],
+      "required":["Name"],
       "members":{
         "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
         "CustomEvents":{"shape":"CustomEvents"},
         "CwLogEnabled":{"shape":"Boolean"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Name":{"shape":"AppMonitorName"},
         "Tags":{"shape":"TagMap"}
       }
@@ -742,6 +749,25 @@
       "type":"structure",
       "members":{
       }
+    },
+    "DeobfuscationConfiguration":{
+      "type":"structure",
+      "members":{
+        "JavaScriptSourceMaps":{"shape":"JavaScriptSourceMaps"}
+      }
+    },
+    "DeobfuscationS3Uri":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^s3://[a-z0-9][-.a-z0-9]{1,61}(?:/[-!_*'().a-z0-9A-Z]+(?:/[-!_*'().a-z0-9A-Z]+)*)?/?$"
+    },
+    "DeobfuscationStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DestinationArn":{
       "type":"string",
@@ -889,6 +915,14 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "JavaScriptSourceMaps":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "S3Uri":{"shape":"DeobfuscationS3Uri"},
+        "Status":{"shape":"DeobfuscationStatus"}
+      }
     },
     "JsonValue":{"type":"string"},
     "ListAppMonitorsRequest":{
@@ -1393,7 +1427,9 @@
         "AppMonitorConfiguration":{"shape":"AppMonitorConfiguration"},
         "CustomEvents":{"shape":"CustomEvents"},
         "CwLogEnabled":{"shape":"Boolean"},
+        "DeobfuscationConfiguration":{"shape":"DeobfuscationConfiguration"},
         "Domain":{"shape":"AppMonitorDomain"},
+        "DomainList":{"shape":"AppMonitorDomainList"},
         "Name":{
           "shape":"AppMonitorName",
           "location":"uri",
