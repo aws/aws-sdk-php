@@ -85,7 +85,7 @@ class RangeGetMultipartDownloader extends MultipartDownloader
             $this->currentPartNo++;
         }
 
-        $nextRequestArgs = array_slice($this->requestArgs, 0);
+        $nextRequestArgs = [...$this->requestArgs];
         $from = ($this->currentPartNo - 1) * $this->partSize;
         $to = ($this->currentPartNo * $this->partSize) - 1;
         if ($this->objectSizeInBytes !== 0) {

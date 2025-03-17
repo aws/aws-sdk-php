@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer;
 
+use Aws\Arn\ArnParser;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
@@ -68,7 +69,10 @@ class S3TransferManager
         ?S3ClientInterface $s3Client = null,
         array $config = []
     ) {
-        $this->config = $config + self::$defaultConfig;
+        $this->config =  [
+            ...self::$defaultConfig,
+            ...$config,
+        ];
         if ($s3Client === null) {
             $this->s3Client = $this->defaultS3Client();
         } else {
@@ -132,7 +136,8 @@ class S3TransferManager
         // Valid required parameters
         foreach (['Bucket', 'Key'] as $reqParam) {
             $this->requireNonEmpty(
-                $requestArgs[$reqParam] ?? null,
+                $requestArgs,
+                $reqParam,
                 "The `$reqParam` parameter must be provided as part of the request arguments."
             );
         }
@@ -182,9 +187,9 @@ class S3TransferManager
     }
 
     /**
-     * @param string $directory
+     * @param string $sourceDirectory
      * @param string $bucketTo
-     * @param array $requestArgs
+     * @param array $uploadDirectoryRequestArgs
      * @param array $config The config options for this request that are:
      * - follow_symbolic_links: (bool, optional, defaulted to false)
      * - recursive: (bool, optional, defaulted to false)
@@ -219,20 +224,22 @@ class S3TransferManager
      * @return PromiseInterface
      */
     public function uploadDirectory(
-        string $directory,
-        string $bucketTo,
-        array $requestArgs = [],
-        array $config = [],
-        array $listeners = [],
+        string            $sourceDirectory,
+        string            $bucketTo,
+        array             $uploadDirectoryRequestArgs = [],
+        array             $config = [],
+        array             $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
-        if (!is_dir($directory)) {
+        if (!is_dir($sourceDirectory)) {
             throw new InvalidArgumentException(
                 "Please provide a valid directory path. "
-                . "Provided = " . $directory
+                . "Provided = " . $sourceDirectory
             );
         }
+
+        $bucketTo = $this->parseBucket($bucketTo);
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
@@ -268,7 +275,7 @@ class S3TransferManager
             $failurePolicyCallback = $config['failure_policy'];
         }
 
-        $dirIterator = new \RecursiveDirectoryIterator($directory);
+        $dirIterator = new \RecursiveDirectoryIterator($sourceDirectory);
         $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
         if (($config['follow_symbolic_links'] ?? false) === true) {
             $dirIterator->setFlags(FilesystemIterator::FOLLOW_SYMLINKS);
@@ -298,7 +305,7 @@ class S3TransferManager
         $objectsUploaded = 0;
         $objectsFailed = 0;
         foreach ($files as $file) {
-            $baseDir = rtrim($directory, '/') . '/';
+            $baseDir = rtrim($sourceDirectory, '/') . '/';
             $relativePath = substr($file, strlen($baseDir));
             if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
                 throw new S3TransferException(
@@ -312,7 +319,7 @@ class S3TransferManager
                 $objectKey
             );
             $uploadRequestArgs = [
-                ...$requestArgs,
+                ...$uploadDirectoryRequestArgs,
                 'Bucket' => $bucketTo,
                 'Key' => $objectKey,
             ];
@@ -331,9 +338,11 @@ class S3TransferManager
 
                 return $response;
             })->otherwise(function ($reason) use (
+                $bucketTo,
+                $sourceDirectory,
                 $failurePolicyCallback,
                 $uploadRequestArgs,
-                $requestArgs,
+                $uploadDirectoryRequestArgs,
                 &$objectsUploaded,
                 &$objectsFailed
             ) {
@@ -341,8 +350,12 @@ class S3TransferManager
                 if($failurePolicyCallback !== null) {
                     call_user_func(
                         $failurePolicyCallback,
-                        $requestArgs,
                         $uploadRequestArgs,
+                        [
+                            ...$uploadDirectoryRequestArgs,
+                            "source_directory" => $sourceDirectory,
+                            "bucket_to" => $bucketTo,
+                        ],
                         $reason,
                         new UploadDirectoryResponse(
                             $objectsUploaded,
@@ -367,7 +380,7 @@ class S3TransferManager
      * @param string|array $source The object to be downloaded from S3.
      * It can be either a string with a S3 URI or an array with a Bucket and Key
      * properties set.
-     * @param array $downloadArgs The getObject request arguments to be provided as part
+     * @param array $downloadRequestArgs The getObject request arguments to be provided as part
      * of each get object operation, except for the bucket and key, which
      * are already provided as the source.
      * @param array $config The configuration to be used for this operation:
@@ -390,10 +403,10 @@ class S3TransferManager
      * @return PromiseInterface
      */
     public function download(
-        string | array $source,
-        array $downloadArgs = [],
-        array $config = [],
-        array $listeners = [],
+        string | array    $source,
+        array             $downloadRequestArgs = [],
+        array             $config = [],
+        array             $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
@@ -401,19 +414,29 @@ class S3TransferManager
             $sourceArgs = $this->s3UriAsBucketAndKey($source);
         } elseif (is_array($source)) {
             $sourceArgs = [
-                'Bucket' => $this->requireNonEmpty($source['Bucket'], "A valid bucket must be provided."),
-                'Key' => $this->requireNonEmpty($source['Key'], "A valid key must be provided."),
+                'Bucket' => $this->requireNonEmpty(
+                    $source,
+                    'Bucket',
+                    "A valid bucket must be provided."
+                ),
+                'Key' => $this->requireNonEmpty(
+                    $source,
+                    'Key',
+                    "A valid key must be provided."
+                ),
             ];
         } else {
-            throw new InvalidArgumentException('Source must be a string or an array of strings');
+            throw new S3TransferException(
+                "Unsupported source type `" . gettype($source) . "`"
+            );
         }
 
-        if (!isset($requestArgs['ChecksumMode'])) {
+        if (!isset($downloadRequestArgs['ChecksumMode'])) {
             $checksumEnabled = $config['checksum_validation_enabled']
                 ?? $this->config['checksum_validation_enabled']
                 ?? false;
             if ($checksumEnabled) {
-                $requestArgs['ChecksumMode'] = 'enabled';
+                $downloadRequestArgs['ChecksumMode'] = 'enabled';
             }
         }
 
@@ -427,8 +450,11 @@ class S3TransferManager
         }
 
         $listenerNotifier = new TransferListenerNotifier($listeners);
-        $requestArgs = $sourceArgs + $downloadArgs;
-        if (empty($downloadArgs['PartNumber']) && empty($downloadArgs['Range'])) {
+        $requestArgs = [
+            ...$sourceArgs,
+            ...$downloadRequestArgs,
+        ];
+        if (empty($downloadRequestArgs['PartNumber']) && empty($downloadRequestArgs['Range'])) {
             return $this->tryMultipartDownload(
                 $requestArgs,
                 [
@@ -449,7 +475,7 @@ class S3TransferManager
      * downloaded from.
      * @param string $destinationDirectory The destination path where the downloaded
      * files will be placed in.
-     * @param array $downloadArgs The getObject request arguments to be provided
+     * @param array $downloadDirectoryArgs The getObject request arguments to be provided
      * as part of each get object request sent to the service, except for the
      * bucket and key which will be resolved internally.
      * @param array $config The config options for this download directory operation.
@@ -493,19 +519,21 @@ class S3TransferManager
      * @return PromiseInterface
      */
     public function downloadDirectory(
-        string $bucket,
-        string $destinationDirectory,
-        array $downloadArgs,
-        array $config = [],
-        array $listeners = [],
+        string            $bucket,
+        string            $destinationDirectory,
+        array             $downloadDirectoryArgs = [],
+        array             $config = [],
+        array             $listeners = [],
         ?TransferListener $progressTracker = null,
     ): PromiseInterface
     {
         if (!file_exists($destinationDirectory)) {
             throw new InvalidArgumentException(
-                "Destination directory '$destinationDirectory' MUST exists."
+                "Destination directory `$destinationDirectory` MUST exists."
             );
         }
+
+        $bucket = $this->parseBucket($bucket);
 
         if ($progressTracker === null
             && ($config['track_progress'] ?? $this->config['track_progress'])) {
@@ -526,9 +554,6 @@ class S3TransferManager
         $objects = $this->s3Client
             ->getPaginator('ListObjectsV2', $listArgs)
             ->search('Contents[].Key');
-        $objects = map($objects, function (string $key) use ($bucket) {
-            return  "s3://$bucket/$key";
-        });
         if (isset($config['filter'])) {
             if (!is_callable($config['filter'])) {
                 throw new InvalidArgumentException("The parameter \$config['filter'] must be callable.");
@@ -539,6 +564,21 @@ class S3TransferManager
                 return call_user_func($filter, $key);
             });
         }
+
+        $objects = map($objects, function (string $key) use ($bucket) {
+            return  "s3://$bucket/$key";
+        });
+        $getObjectRequestCallback = null;
+        if (isset($config['get_object_request_callback'])) {
+            if (!is_callable($config['get_object_request_callback'])) {
+                throw new InvalidArgumentException(
+                    "The parameter \$config['get_object_request_callback'] must be callable."
+                );
+            }
+
+            $getObjectRequestCallback = $config['get_object_request_callback'];
+        }
+
         $failurePolicyCallback = null;
         if (isset($config['failure_policy']) && !is_callable($config['failure_policy'])) {
             throw new InvalidArgumentException(
@@ -562,15 +602,9 @@ class S3TransferManager
                 );
             }
 
-            $requestArgs = [...$downloadArgs];
-            if (isset($config['get_object_request_callback'])) {
-                if (!is_callable($config['get_object_request_callback'])) {
-                    throw new InvalidArgumentException(
-                        "The parameter \$config['get_object_request_callback'] must be callable."
-                    );
-                }
-
-                call_user_func($config['get_object_request_callback'], $requestArgs);
+            $requestArgs = [...$downloadDirectoryArgs];
+            if ($getObjectRequestCallback !== null) {
+                call_user_func($getObjectRequestCallback, $requestArgs);
             }
 
             $promises[] = $this->download(
@@ -595,10 +629,12 @@ class S3TransferManager
                 $result->getData()->close();
                 $objectsDownloaded++;
             })->otherwise(function ($reason) use (
+                $bucket,
+                $destinationDirectory,
                 $failurePolicyCallback,
                 &$objectsDownloaded,
                 &$objectsFailed,
-                $downloadArgs,
+                $downloadDirectoryArgs,
                 $requestArgs
             ) {
                 $objectsFailed++;
@@ -606,13 +642,19 @@ class S3TransferManager
                     call_user_func(
                         $failurePolicyCallback,
                         $requestArgs,
-                        $downloadArgs,
+                        [
+                            ...$downloadDirectoryArgs,
+                            "destination_directory" => $destinationDirectory,
+                            "bucket" => $bucket,
+                        ],
                         $reason,
                         new DownloadDirectoryResponse(
                             $objectsDownloaded,
                             $objectsFailed
                         )
                     );
+
+                    return;
                 }
 
                 throw $reason;
@@ -888,18 +930,19 @@ class S3TransferManager
     /**
      * Validates a provided value is not empty, and if so then
      * it throws an exception with the provided message.
-     * @param mixed $value
+     * @param array $array
+     * @param string $key
      * @param string $message
      *
      * @return mixed
      */
-    private function requireNonEmpty(mixed $value, string $message): mixed
+    private function requireNonEmpty(array $array, string $key, string $message): mixed
     {
-        if (empty($value)) {
+        if (empty($array[$key])) {
             throw new InvalidArgumentException($message);
         }
 
-        return $value;
+        return $array[$key];
     }
 
     /**
@@ -927,7 +970,7 @@ class S3TransferManager
      */
     private function s3UriAsBucketAndKey(string $uri): array
     {
-        $errorMessage = "Invalid URI: $uri. A valid S3 URI must be s3://bucket/key";
+        $errorMessage = "Invalid URI: `$uri` provided. \nA valid S3 URI looks as `s3://bucket/key`";
         if (!$this->isValidS3URI($uri)) {
             throw new InvalidArgumentException($errorMessage);
         }
@@ -943,6 +986,22 @@ class S3TransferManager
             'Bucket' => $parts[0],
             'Key' => $parts[1],
         ];
+    }
+
+    /**
+     * To parse the bucket name when the bucket is provided as an ARN.
+     *
+     * @param string $bucket
+     *
+     * @return string
+     */
+    private function parseBucket(string $bucket): string
+    {
+        if (ArnParser::isArn($bucket)) {
+            return ArnParser::parse($bucket)->getResource();
+        }
+
+        return $bucket;
     }
 
     /**
@@ -977,5 +1036,13 @@ class S3TransferManager
         }
 
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDefaultConfig(): array
+    {
+        return self::$defaultConfig;
     }
 }
