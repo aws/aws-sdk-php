@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.8 - 2025-03-18
 
 * `Aws\S3` - Added possibility to execute a callback function after a transfer is fulfilled when using the Transfer class. Implemented similarly to the way the 'before' callback works.
 * `Aws\Route53` - Amazon Route 53 now supports the iso-f regions for private DNS Amazon VPCs and cloudwatch healthchecks.
