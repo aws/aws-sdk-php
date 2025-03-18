@@ -2910,7 +2910,8 @@
       "type": "string",
       "enum": [
         "EXACT",
-        "GOP_MULTIPLE"
+        "GOP_MULTIPLE",
+        "MATCH"
       ]
     },
     "CmafStreamInfResolution": {
@@ -3786,7 +3787,8 @@
       "type": "string",
       "enum": [
         "EXACT",
-        "GOP_MULTIPLE"
+        "GOP_MULTIPLE",
+        "MATCH"
       ]
     },
     "DashIsoVideoCompositionOffsets": {
@@ -6520,7 +6522,8 @@
       "type": "string",
       "enum": [
         "EXACT",
-        "GOP_MULTIPLE"
+        "GOP_MULTIPLE",
+        "MATCH"
       ]
     },
     "HlsSettings": {
@@ -8023,6 +8026,10 @@
           "shape": "__listOf__integerMin32Max8182",
           "locationName": "audioPids"
         },
+        "AudioPtsOffsetDelta": {
+          "shape": "__integerMinNegative10000Max10000",
+          "locationName": "audioPtsOffsetDelta"
+        },
         "Bitrate": {
           "shape": "__integerMin0Max2147483647",
           "locationName": "bitrate"
@@ -8226,6 +8233,10 @@
         "AudioPids": {
           "shape": "__listOf__integerMin32Max8182",
           "locationName": "audioPids"
+        },
+        "AudioPtsOffsetDelta": {
+          "shape": "__integerMinNegative10000Max10000",
+          "locationName": "audioPtsOffsetDelta"
         },
         "DataPTSControl": {
           "shape": "M3u8DataPtsControl",
@@ -10658,7 +10669,8 @@
       "type": "string",
       "enum": [
         "AUTO",
-        "SECONDS"
+        "SECONDS",
+        "MILLISECONDS"
       ]
     },
     "TtmlDestinationSettings": {
@@ -12565,6 +12577,11 @@
       "type": "integer",
       "min": 96,
       "max": 600
+    },
+    "__integerMinNegative10000Max10000": {
+      "type": "integer",
+      "min": -10000,
+      "max": 10000
     },
     "__integerMinNegative1000Max1000": {
       "type": "integer",

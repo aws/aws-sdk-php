@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added possibility to execute a callback function after a transfer is fulfilled when using the Transfer class. Implemented similarly to the way the 'before' callback works.
+* `Aws\Route53` - Amazon Route 53 now supports the iso-f regions for private DNS Amazon VPCs and cloudwatch healthchecks.
+* `Aws\AppSync` - Providing Tagging support for DomainName in AppSync
+* `Aws\CleanRooms` - This release adds support for PySpark jobs. Customers can now analyze data by running jobs using approved PySpark analysis templates.
+* `Aws\MediaConvert` - This release adds support for AVC passthrough, the ability to specify PTS offset without padding, and an A/V segment matching feature.
+
 ## 3.342.7 - 2025-03-17
 
 * `Aws\TaxSettings` - Adjust Vietnam PaymentVoucherNumber regex and minor API change.

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Welcome to the <i>Clean Rooms API Reference</i>.</p> <p>Clean Rooms is an Amazon Web Services service that helps multiple parties to join their data together in a secure collaboration workspace. In the collaboration, members who can query and receive results can get insights into the collective datasets without either party getting access to the other party's raw data.</p> <p>To learn more about Clean Rooms concepts, procedures, and best practices, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html\">Clean Rooms User Guide</a>.</p> <p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html\">Clean Rooms SQL Reference</a>.</p>",
+  "service": "<p>Welcome to the <i>Clean Rooms API Reference</i>.</p> <p>Clean Rooms is an Amazon Web Services service that helps multiple parties to join their data together in a secure collaboration workspace. In the collaboration, members who can run queries and jobs and receive results can get insights into the collective datasets without either party getting access to the other party's raw data.</p> <p>To learn more about Clean Rooms concepts, procedures, and best practices, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/what-is.html\">Clean Rooms User Guide</a>.</p> <p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html\">Clean Rooms SQL Reference</a>.</p>",
   "operations": {
     "BatchGetCollaborationAnalysisTemplate": "<p>Retrieves multiple analysis templates within a collaboration by their Amazon Resource Names (ARNs).</p>",
     "BatchGetSchema": "<p>Retrieves multiple schemas by their identifiers.</p>",
@@ -43,6 +43,7 @@
     "GetIdNamespaceAssociation": "<p>Retrieves an ID namespace association.</p>",
     "GetMembership": "<p>Retrieves a specified membership for an identifier.</p>",
     "GetPrivacyBudgetTemplate": "<p>Returns details for a specified privacy budget template.</p>",
+    "GetProtectedJob": "<p>Returns job processing metadata.</p>",
     "GetProtectedQuery": "<p>Returns query processing metadata.</p>",
     "GetSchema": "<p>Retrieves the schema for a relation within a collaboration.</p>",
     "GetSchemaAnalysisRule": "<p>Retrieves a schema analysis rule.</p>",
@@ -62,11 +63,13 @@
     "ListMemberships": "<p>Lists all memberships resources within the caller's account.</p>",
     "ListPrivacyBudgetTemplates": "<p>Returns detailed information about the privacy budget templates in a specified membership.</p>",
     "ListPrivacyBudgets": "<p>Returns detailed information about the privacy budgets in a specified membership.</p>",
+    "ListProtectedJobs": "<p>Lists protected jobs, sorted by most recent job.</p>",
     "ListProtectedQueries": "<p>Lists protected queries, sorted by the most recent query.</p>",
     "ListSchemas": "<p>Lists the schemas for relations within a collaboration.</p>",
     "ListTagsForResource": "<p>Lists all of the tags that have been added to a resource.</p>",
     "PopulateIdMappingTable": "<p>Defines the information that's necessary to populate an ID mapping table.</p>",
     "PreviewPrivacyImpact": "<p>An estimate of the number of aggregation functions that the member who can query can run given epsilon and noise parameters.</p>",
+    "StartProtectedJob": "<p>Creates a protected job that is started by Clean Rooms.</p>",
     "StartProtectedQuery": "<p>Creates a protected query that is started by Clean Rooms.</p>",
     "TagResource": "<p>Tags a resource.</p>",
     "UntagResource": "<p>Removes a tag or list of tags from a resource.</p>",
@@ -81,6 +84,7 @@
     "UpdateIdNamespaceAssociation": "<p>Provides the details that are necessary to update an ID namespace association.</p>",
     "UpdateMembership": "<p>Updates a membership.</p>",
     "UpdatePrivacyBudgetTemplate": "<p>Updates the privacy budget template for the specified membership.</p>",
+    "UpdateProtectedJob": "<p>Updates the processing of a currently running job.</p>",
     "UpdateProtectedQuery": "<p>Updates the processing of a currently running query.</p>"
   },
   "shapes": {
@@ -111,11 +115,16 @@
         "CollaborationPrivacyBudgetTemplate$creatorAccountId": "<p>The unique identifier of the account that created this collaboration privacy budget template.</p>",
         "CollaborationPrivacyBudgetTemplateSummary$creatorAccountId": "<p>The unique identifier of the account that created this collaboration privacy budget template.</p>",
         "CollaborationSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
+        "ConsolidatedPolicyCustomAllowedAnalysisProvidersList$member": null,
         "DeleteMemberInput$accountId": "<p>The account ID of the member to remove.</p>",
         "MemberSpecification$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MemberSummary$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "Membership$collaborationCreatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MembershipSummary$collaborationCreatorAccountId": "<p>The identifier of the Amazon Web Services principal that created the collaboration. Currently only supports Amazon Web Services account ID.</p>",
+        "ProtectedJobMemberOutputConfigurationInput$accountId": "<p> The account ID.</p>",
+        "ProtectedJobMemberOutputConfigurationOutput$accountId": "<p> The account ID.</p>",
+        "ProtectedJobReceiverAccountIds$member": null,
+        "ProtectedJobSingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results from analyses.</p>",
         "ProtectedQueryMemberOutputConfiguration$accountId": "<p>The unique identifier for the account.</p>",
         "ProtectedQuerySingleMemberOutput$accountId": "<p>The Amazon Web Services account ID of the member in the collaboration who can receive results for the query.</p>",
         "ReceiverAccountIds$member": null,
@@ -128,7 +137,10 @@
       "refs": {
         "AnalysisRuleAggregation$additionalAnalyses": "<p> An indicator as to whether additional analyses (such as Clean Rooms ML) can be applied to the output of the direct query. </p> <p>The <code>additionalAnalyses</code> parameter is currently supported for the list analysis rule (<code>AnalysisRuleList</code>) and the custom analysis rule (<code>AnalysisRuleCustom</code>).</p>",
         "AnalysisRuleCustom$additionalAnalyses": "<p> An indicator as to whether additional analyses (such as Clean Rooms ML) can be applied to the output of the direct query.</p>",
-        "AnalysisRuleList$additionalAnalyses": "<p> An indicator as to whether additional analyses (such as Clean Rooms ML) can be applied to the output of the direct query.</p>"
+        "AnalysisRuleList$additionalAnalyses": "<p> An indicator as to whether additional analyses (such as Clean Rooms ML) can be applied to the output of the direct query.</p>",
+        "ConsolidatedPolicyAggregation$additionalAnalyses": "<p> Additional analyses for the consolidated policy aggregation.</p>",
+        "ConsolidatedPolicyCustom$additionalAnalyses": "<p> Additional analyses for the consolidated policy.</p>",
+        "ConsolidatedPolicyList$additionalAnalyses": "<p> Additional analyses for the consolidated policy list.</p>"
       }
     },
     "AdditionalAnalysesResourceArn": {
@@ -140,7 +152,8 @@
     "AggregateColumn": {
       "base": "<p>Column in configured table that can be used in aggregate function in query.</p>",
       "refs": {
-        "AnalysisRuleAggregationAggregateColumnsList$member": null
+        "AnalysisRuleAggregationAggregateColumnsList$member": null,
+        "ConsolidatedPolicyAggregationAggregateColumnsList$member": null
       }
     },
     "AggregateColumnColumnNamesList": {
@@ -170,7 +183,8 @@
     "AggregationConstraints": {
       "base": null,
       "refs": {
-        "AnalysisRuleAggregation$outputConstraints": "<p>Columns that must meet a specific threshold value (after an aggregation function is applied to it) for each output row to be returned.</p>"
+        "AnalysisRuleAggregation$outputConstraints": "<p>Columns that must meet a specific threshold value (after an aggregation function is applied to it) for each output row to be returned.</p>",
+        "ConsolidatedPolicyAggregation$outputConstraints": "<p> The output constraints of the consolidated policy aggregation.</p>"
       }
     },
     "AggregationType": {
@@ -184,7 +198,10 @@
       "refs": {
         "ConfiguredTableAssociationAnalysisRuleAggregation$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p> <p>The <code>allowedAdditionalAnalyses</code> parameter is currently supported for the list analysis rule (<code>AnalysisRuleList</code>) and the custom analysis rule (<code>AnalysisRuleCustom</code>).</p>",
         "ConfiguredTableAssociationAnalysisRuleCustom$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p>",
-        "ConfiguredTableAssociationAnalysisRuleList$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p>"
+        "ConfiguredTableAssociationAnalysisRuleList$allowedAdditionalAnalyses": "<p> The list of resources or wildcards (ARNs) that are allowed to perform additional analysis on query output.</p>",
+        "ConsolidatedPolicyAggregation$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy aggregation.</p>",
+        "ConsolidatedPolicyCustom$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy.</p>",
+        "ConsolidatedPolicyList$allowedAdditionalAnalyses": "<p> The additional analyses allowed by the consolidated policy list.</p>"
       }
     },
     "AllowedColumnList": {
@@ -199,7 +216,10 @@
       "refs": {
         "ConfiguredTableAssociationAnalysisRuleAggregation$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
         "ConfiguredTableAssociationAnalysisRuleCustom$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
-        "ConfiguredTableAssociationAnalysisRuleList$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>"
+        "ConfiguredTableAssociationAnalysisRuleList$allowedResultReceivers": "<p> The list of collaboration members who are allowed to receive results of queries run with this configured table.</p>",
+        "ConsolidatedPolicyAggregation$allowedResultReceivers": "<p> The allowed result receivers.</p>",
+        "ConsolidatedPolicyCustom$allowedResultReceivers": "<p> The allowed result receivers.</p>",
+        "ConsolidatedPolicyList$allowedResultReceivers": "<p> The allowed result receivers.</p>"
       }
     },
     "AnalysisFormat": {
@@ -213,11 +233,12 @@
     "AnalysisMethod": {
       "base": null,
       "refs": {
-        "ConfiguredTable$analysisMethod": "<p>The analysis method for the configured table. The only valid value is currently `DIRECT_QUERY`.</p>",
-        "ConfiguredTableSummary$analysisMethod": "<p>The analysis method for the configured tables. The only valid value is currently `DIRECT_QUERY`.</p>",
-        "CreateConfiguredTableInput$analysisMethod": "<p>The analysis method for the configured tables. The only valid value is currently `DIRECT_QUERY`.</p>",
-        "Schema$analysisMethod": "<p>The analysis method for the schema. The only valid value is currently <code>DIRECT_QUERY</code>.</p>",
-        "SchemaSummary$analysisMethod": "<p>The analysis method for the associated schema. The only valid value is currently `DIRECT_QUERY`.</p>"
+        "ConfiguredTable$analysisMethod": "<p>The analysis method for the configured table.</p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>",
+        "ConfiguredTableSummary$analysisMethod": "<p>The analysis method for the configured tables. </p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>",
+        "CreateConfiguredTableInput$analysisMethod": "<p>The analysis method allowed for the configured tables.</p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>",
+        "Schema$analysisMethod": "<p>The analysis method for the schema. </p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>",
+        "SchemaSummary$analysisMethod": "<p>The analysis method for the associated schema.</p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>",
+        "UpdateConfiguredTableInput$analysisMethod": "<p> The analysis method for the configured table.</p> <p> <code>DIRECT_QUERY</code> allows SQL queries to be run directly on this table.</p> <p> <code>DIRECT_JOB</code> allows PySpark jobs to be run directly on this table.</p> <p> <code>MULTIPLE</code> allows both SQL queries and PySpark jobs to be run directly on this table.</p>"
       }
     },
     "AnalysisParameter": {
@@ -262,6 +283,10 @@
         "AnalysisRuleCustom$disallowedOutputColumns": "<p> A list of columns that aren't allowed to be shown in the query output.</p>",
         "AnalysisRuleIdMappingTable$dimensionColumns": "<p>The columns that query runners are allowed to select, group by, or filter by.</p>",
         "AnalysisRuleList$listColumns": "<p>Columns that can be listed in the output.</p>",
+        "ConsolidatedPolicyAggregation$joinColumns": "<p> The columns to join on.</p>",
+        "ConsolidatedPolicyAggregation$dimensionColumns": "<p> The dimension columns of the consolidated policy aggregation.</p>",
+        "ConsolidatedPolicyCustom$disallowedOutputColumns": "<p> Disallowed output columns</p>",
+        "ConsolidatedPolicyList$listColumns": "<p> The columns in the consolidated policy list.</p>",
         "QueryConstraintRequireOverlap$columns": "<p>The columns that are required to overlap.</p>"
       }
     },
@@ -272,7 +297,8 @@
         "AggregationConstraint$columnName": "<p>Column in aggregation constraint for which there must be a minimum number of distinct values in an output row for it to be in the query output.</p>",
         "AnalysisRuleColumnList$member": null,
         "AnalysisRuleIdMappingTableJoinColumnsList$member": null,
-        "AnalysisRuleListJoinColumnsList$member": null
+        "AnalysisRuleListJoinColumnsList$member": null,
+        "ConsolidatedPolicyListJoinColumnsList$member": null
       }
     },
     "AnalysisRuleCustom": {
@@ -353,7 +379,8 @@
       "base": "<p>A relation within an analysis.</p>",
       "refs": {
         "AnalysisTemplate$schema": "<p>The entire schema object.</p>",
-        "CollaborationAnalysisTemplate$schema": "<p>The entire schema object.</p>"
+        "CollaborationAnalysisTemplate$schema": "<p>The entire schema object.</p>",
+        "CreateAnalysisTemplateInput$schema": null
       }
     },
     "AnalysisSource": {
@@ -362,6 +389,13 @@
         "AnalysisTemplate$source": "<p>The source of the analysis template.</p>",
         "CollaborationAnalysisTemplate$source": "<p>The source of the analysis template within a collaboration.</p>",
         "CreateAnalysisTemplateInput$source": "<p>The information in the analysis template. Currently supports <code>text</code>, the query text for the analysis template.</p>"
+      }
+    },
+    "AnalysisSourceMetadata": {
+      "base": "<p>The analysis source metadata.</p>",
+      "refs": {
+        "AnalysisTemplate$sourceMetadata": "<p> The source metadata for the analysis template.</p>",
+        "CollaborationAnalysisTemplate$sourceMetadata": "<p> The source metadata for the collaboration analysis template.</p>"
       }
     },
     "AnalysisTemplate": {
@@ -382,6 +416,7 @@
         "CollaborationAnalysisTemplate$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "CollaborationAnalysisTemplateSummary$arn": "<p>The Amazon Resource Name (ARN) of the analysis template.</p>",
         "GetCollaborationAnalysisTemplateInput$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>",
+        "ProtectedJobParameters$analysisTemplateArn": "<p> The ARN of the analysis template.</p>",
         "ProtectedQuerySQLParameters$analysisTemplateArn": "<p>The Amazon Resource Name (ARN) associated with the analysis template within a collaboration.</p>"
       }
     },
@@ -394,7 +429,33 @@
     "AnalysisTemplateArnOrQueryWildcard": {
       "base": null,
       "refs": {
-        "AnalysisRuleCustomAllowedAnalysesList$member": null
+        "AnalysisRuleCustomAllowedAnalysesList$member": null,
+        "ConsolidatedPolicyCustomAllowedAnalysesList$member": null
+      }
+    },
+    "AnalysisTemplateArtifact": {
+      "base": "<p>The analysis template artifact.</p>",
+      "refs": {
+        "AnalysisTemplateArtifactList$member": null,
+        "AnalysisTemplateArtifacts$entryPoint": "<p> The entry point for the analysis template artifacts.</p>"
+      }
+    },
+    "AnalysisTemplateArtifactList": {
+      "base": null,
+      "refs": {
+        "AnalysisTemplateArtifacts$additionalArtifacts": "<p> Additional artifacts for the analysis template.</p>"
+      }
+    },
+    "AnalysisTemplateArtifactMetadata": {
+      "base": "<p>The analysis template artifact metadata.</p>",
+      "refs": {
+        "AnalysisSourceMetadata$artifacts": "<p> The artifacts of the analysis source metadata.</p>"
+      }
+    },
+    "AnalysisTemplateArtifacts": {
+      "base": "<p>The analysis template artifacts.</p>",
+      "refs": {
+        "AnalysisSource$artifacts": "<p> The artifacts of the analysis source.</p>"
       }
     },
     "AnalysisTemplateIdentifier": {
@@ -575,6 +636,12 @@
       "refs": {
       }
     },
+    "BilledJobResourceUtilization": {
+      "base": "<p> Information related to the utilization of resources that have been billed or charged for in a given context, such as a protected job.</p>",
+      "refs": {
+        "ProtectedJobStatistics$billedResourceUtilization": "<p> The billed resource utilization for the protected job.</p>"
+      }
+    },
     "BilledResourceUtilization": {
       "base": "<p> Information related to the utilization of resources that have been billed or charged for in a given context, such as a protected query.</p>",
       "refs": {
@@ -593,6 +660,8 @@
         "IdMappingConfig$allowUseAsDimensionColumn": "<p>An indicator as to whether you can use your column as a dimension column in the ID mapping table (<code>TRUE</code>) or not (<code>FALSE</code>).</p> <p>Default is <code>FALSE</code>.</p>",
         "IdMappingTableInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID mapping table resource. </p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID mapping table resource.</p>",
         "IdNamespaceAssociationInputReferenceConfig$manageResourcePolicies": "<p>When <code>TRUE</code>, Clean Rooms manages permissions for the ID namespace association resource.</p> <p>When <code>FALSE</code>, the resource owner manages permissions for the ID namespace association resource.</p>",
+        "JobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query and job compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query and job compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query and job compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can run queries and jobs.</p>",
+        "MembershipJobComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for job compute costs (<code>TRUE</code>) or has not accepted to pay for query and job compute costs (<code>FALSE</code>).</p> <p>There is only one member who pays for queries and jobs. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query and job compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query and job compute costs. </p> </li> </ul>",
         "MembershipModelInferencePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model inference costs (<code>TRUE</code>) or has not accepted to pay for model inference costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model inference costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model inference costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model inference costs. </p> </li> </ul>",
         "MembershipModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for model training costs (<code>TRUE</code>) or has not accepted to pay for model training costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for model training costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for model training costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for model training costs. </p> </li> </ul>",
         "MembershipQueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration member has accepted to pay for query compute costs (<code>TRUE</code>) or has not accepted to pay for query compute costs (<code>FALSE</code>).</p> <p>If the collaboration creator has not specified anyone to pay for query compute costs, then the member who can query is the default payer. </p> <p>An error message is returned for the following reasons: </p> <ul> <li> <p>If you set the value to <code>FALSE</code> but you are responsible to pay for query compute costs. </p> </li> <li> <p>If you set the value to <code>TRUE</code> but you are not responsible to pay for query compute costs. </p> </li> </ul>",
@@ -746,6 +815,13 @@
         "UpdateCollaborationInput$collaborationIdentifier": "<p>The identifier for the collaboration.</p>"
       }
     },
+    "CollaborationJobLogStatus": {
+      "base": null,
+      "refs": {
+        "Collaboration$jobLogStatus": "<p>An indicator as to whether job logging has been enabled or disabled for the collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about jobs run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "CreateCollaborationInput$jobLogStatus": "<p>Specifies whether job logs are enabled for this collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about jobs run within this collaboration; those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>"
+      }
+    },
     "CollaborationName": {
       "base": null,
       "refs": {
@@ -790,8 +866,8 @@
     "CollaborationQueryLogStatus": {
       "base": null,
       "refs": {
-        "Collaboration$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the collaboration.</p>",
-        "CreateCollaborationInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the collaboration.</p>"
+        "Collaboration$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the collaboration.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about queries run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "CreateCollaborationInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the collaboration.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about queries run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>"
       }
     },
     "CollaborationSummary": {
@@ -1002,6 +1078,7 @@
     "ConfiguredTableAssociationAnalysisRulePolicy": {
       "base": "<p> Controls on the query specifications that can be run on an associated configured table.</p>",
       "refs": {
+        "AnalysisRule$collaborationPolicy": null,
         "ConfiguredTableAssociationAnalysisRule$policy": "<p> The policy of the configured table association analysis rule.</p>",
         "CreateConfiguredTableAssociationAnalysisRuleInput$analysisRulePolicy": "<p>The analysis rule policy that was created for the configured table association.</p>",
         "UpdateConfiguredTableAssociationAnalysisRuleInput$analysisRulePolicy": "<p> The updated analysis rule policy for the conﬁgured table association.</p>"
@@ -1027,7 +1104,8 @@
     "ConfiguredTableAssociationAnalysisRuleTypeList": {
       "base": null,
       "refs": {
-        "ConfiguredTableAssociation$analysisRuleTypes": "<p> The analysis rule types for the configured table association.</p>"
+        "ConfiguredTableAssociation$analysisRuleTypes": "<p> The analysis rule types for the configured table association.</p>",
+        "ConfiguredTableAssociationSummary$analysisRuleTypes": "<p>The analysis rule types that are associated with the configured table associations in this summary. </p>"
       }
     },
     "ConfiguredTableAssociationArn": {
@@ -1098,6 +1176,60 @@
       "base": null,
       "refs": {
         "ConflictException$reason": "<p>A reason code for the exception.</p>"
+      }
+    },
+    "ConsolidatedPolicy": {
+      "base": "<p>Controls on the analysis specifications that can be run on a configured table.</p>",
+      "refs": {
+        "AnalysisRule$consolidatedPolicy": "<p> The consolidated policy for the analysis rule.</p>"
+      }
+    },
+    "ConsolidatedPolicyAggregation": {
+      "base": "<p> Controls on the analysis specifications that can be run on a configured table.</p>",
+      "refs": {
+        "ConsolidatedPolicyV1$aggregation": "<p> The aggregation setting for the consolidated policy.</p>"
+      }
+    },
+    "ConsolidatedPolicyAggregationAggregateColumnsList": {
+      "base": null,
+      "refs": {
+        "ConsolidatedPolicyAggregation$aggregateColumns": "<p> Aggregate columns in consolidated policy aggregation.</p>"
+      }
+    },
+    "ConsolidatedPolicyCustom": {
+      "base": "<p>Controls on the analysis specifications that can be run on a configured table.</p>",
+      "refs": {
+        "ConsolidatedPolicyV1$custom": "<p> Custom policy</p>"
+      }
+    },
+    "ConsolidatedPolicyCustomAllowedAnalysesList": {
+      "base": null,
+      "refs": {
+        "ConsolidatedPolicyCustom$allowedAnalyses": "<p> The allowed analyses.</p>"
+      }
+    },
+    "ConsolidatedPolicyCustomAllowedAnalysisProvidersList": {
+      "base": null,
+      "refs": {
+        "ConsolidatedPolicyCustom$allowedAnalysisProviders": "<p> The allowed analysis providers.</p>"
+      }
+    },
+    "ConsolidatedPolicyList": {
+      "base": "<p>Controls on the analysis specifications that can be run on a configured table.</p>",
+      "refs": {
+        "ConsolidatedPolicyV1$list": "<p> The list of consolidated policies.</p>"
+      }
+    },
+    "ConsolidatedPolicyListJoinColumnsList": {
+      "base": null,
+      "refs": {
+        "ConsolidatedPolicyList$joinColumns": "<p> The columns to join on.</p>"
+      }
+    },
+    "ConsolidatedPolicyV1": {
+      "base": "<p>Controls on the analysis specifications that can be run on a configured table.</p>",
+      "refs": {
+        "ConsolidatedPolicy$v1": "<p> The consolidated policy version 1.</p>"
       }
     },
     "CreateAnalysisTemplateInput": {
@@ -1213,7 +1345,7 @@
     "CustomMLMemberAbilities": {
       "base": null,
       "refs": {
-        "MLMemberAbilities$customMLMemberAbilities": "<p>The custom ML member abilities for a collaboration member. The inference feature is not available in the custom ML modeling beta.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>"
+        "MLMemberAbilities$customMLMemberAbilities": "<p>The custom ML member abilities for a collaboration member. </p>"
       }
     },
     "CustomMLMemberAbility": {
@@ -1378,7 +1510,8 @@
     "DifferentialPrivacyConfiguration": {
       "base": "<p>Specifies the unique identifier for your users.</p>",
       "refs": {
-        "AnalysisRuleCustom$differentialPrivacy": "<p>The differential privacy configuration.</p>"
+        "AnalysisRuleCustom$differentialPrivacy": "<p>The differential privacy configuration.</p>",
+        "ConsolidatedPolicyCustom$differentialPrivacy": null
       }
     },
     "DifferentialPrivacyParameters": {
@@ -1514,6 +1647,7 @@
     "Double": {
       "base": null,
       "refs": {
+        "BilledJobResourceUtilization$units": "<p> The number of Clean Rooms Processing Unit (CRPU) hours that have been billed.</p>",
         "BilledResourceUtilization$units": "<p> The number of Clean Rooms Processing Unit (CRPU) hours that have been billed.</p>",
         "ServiceQuotaExceededException$quotaValue": "<p>The value of the quota.</p>"
       }
@@ -1702,6 +1836,16 @@
       "refs": {
       }
     },
+    "GetProtectedJobInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetProtectedJobOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetProtectedQueryInput": {
       "base": null,
       "refs": {
@@ -1748,6 +1892,19 @@
       "base": "<p>A reference to a table within an Glue data catalog.</p>",
       "refs": {
         "TableReference$glue": "<p>If present, a reference to the Glue table referred to by this table reference.</p>"
+      }
+    },
+    "Hash": {
+      "base": "<p> Hash</p>",
+      "refs": {
+        "AnalysisTemplateArtifactMetadata$entryPointHash": "<p> The hash of the entry point for the analysis template artifact metadata.</p>",
+        "HashList$member": null
+      }
+    },
+    "HashList": {
+      "base": null,
+      "refs": {
+        "AnalysisTemplateArtifactMetadata$additionalArtifactHashes": "<p> Additional artifact hashes for the analysis template.</p>"
       }
     },
     "IdMappingConfig": {
@@ -1915,6 +2072,12 @@
       "refs": {
       }
     },
+    "JobComputePaymentConfig": {
+      "base": "<p>An object representing the collaboration member's payment responsibilities set by the collaboration creator for query and job compute costs.</p>",
+      "refs": {
+        "PaymentConfiguration$jobCompute": "<p> The compute configuration for the job.</p>"
+      }
+    },
     "JoinOperator": {
       "base": null,
       "refs": {
@@ -1925,13 +2088,16 @@
       "base": null,
       "refs": {
         "AnalysisRuleAggregation$allowedJoinOperators": "<p>Which logical operators (if any) are to be used in an INNER JOIN match condition. Default is <code>AND</code>.</p>",
-        "AnalysisRuleList$allowedJoinOperators": "<p>The logical operators (if any) that are to be used in an INNER JOIN match condition. Default is <code>AND</code>.</p>"
+        "AnalysisRuleList$allowedJoinOperators": "<p>The logical operators (if any) that are to be used in an INNER JOIN match condition. Default is <code>AND</code>.</p>",
+        "ConsolidatedPolicyAggregation$allowedJoinOperators": "<p> The allowed join operators.</p>",
+        "ConsolidatedPolicyList$allowedJoinOperators": "<p> The allowed join operators in the consolidated policy list.</p>"
       }
     },
     "JoinRequiredOption": {
       "base": null,
       "refs": {
-        "AnalysisRuleAggregation$joinRequired": "<p>Control that requires member who runs query to do a join with their configured table and/or other configured table in query.</p>"
+        "AnalysisRuleAggregation$joinRequired": "<p>Control that requires member who runs query to do a join with their configured table and/or other configured table in query.</p>",
+        "ConsolidatedPolicyAggregation$joinRequired": "<p> Join required</p>"
       }
     },
     "KMSKeyArn": {
@@ -1945,6 +2111,8 @@
     "KeyPrefix": {
       "base": null,
       "refs": {
+        "ProtectedJobS3OutputConfigurationInput$keyPrefix": "<p>The S3 prefix to unload the protected job results.</p>",
+        "ProtectedJobS3OutputConfigurationOutput$keyPrefix": "<p>The S3 prefix to unload the protected job results.</p>",
         "ProtectedQueryS3OutputConfiguration$keyPrefix": "<p>The S3 prefix to unload the protected query results.</p>"
       }
     },
@@ -2108,6 +2276,16 @@
       "refs": {
       }
     },
+    "ListProtectedJobsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListProtectedJobsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListProtectedQueriesInput": {
       "base": null,
       "refs": {
@@ -2141,17 +2319,18 @@
     "Long": {
       "base": null,
       "refs": {
-        "ProtectedQueryStatistics$totalDurationInMillis": "<p>The duration of the protected query, from creation until query completion.</p>"
+        "ProtectedJobStatistics$totalDurationInMillis": "<p>The duration of the protected job, from creation until job completion, in milliseconds.</p>",
+        "ProtectedQueryStatistics$totalDurationInMillis": "<p>The duration of the protected query, from creation until query completion, in milliseconds.</p>"
       }
     },
     "MLMemberAbilities": {
-      "base": "<p>The ML member abilities for a collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
+      "base": "<p>The ML member abilities for a collaboration member.</p>",
       "refs": {
-        "CreateCollaborationInput$creatorMLMemberAbilities": "<p>The ML abilities granted to the collaboration creator.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
-        "MemberSpecification$mlMemberAbilities": "<p>The ML abilities granted to the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
-        "MemberSummary$mlAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
-        "Membership$mlMemberAbilities": "<p>Specifies the ML member abilities that are granted to a collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>",
-        "MembershipSummary$mlMemberAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p> <p>Custom ML modeling is in beta release and is subject to change. For beta terms and conditions, see <i>Betas and Previews</i> in the <a href=\"https://aws.amazon.com/service-terms/\">Amazon Web Services Service Terms</a>.</p>"
+        "CreateCollaborationInput$creatorMLMemberAbilities": "<p>The ML abilities granted to the collaboration creator.</p>",
+        "MemberSpecification$mlMemberAbilities": "<p>The ML abilities granted to the collaboration member.</p>",
+        "MemberSummary$mlAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p>",
+        "Membership$mlMemberAbilities": "<p>Specifies the ML member abilities that are granted to a collaboration member.</p>",
+        "MembershipSummary$mlMemberAbilities": "<p>Provides a summary of the ML abilities for the collaboration member.</p>"
       }
     },
     "MLPaymentConfig": {
@@ -2179,6 +2358,7 @@
         "ListMembershipsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListPrivacyBudgetsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListProtectedJobsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met. </p>",
         "ListProtectedQueriesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met. </p>",
         "ListSchemasInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>"
       }
@@ -2260,6 +2440,8 @@
         "PrivacyBudgetSummary$membershipArn": "<p>The Amazon Resource Name (ARN) of the member who created the privacy budget summary.</p>",
         "PrivacyBudgetTemplate$membershipArn": "<p>The Amazon Resource Name (ARN) of the member who created the privacy budget template.</p>",
         "PrivacyBudgetTemplateSummary$membershipArn": "<p>The Amazon Resource Name (ARN) of the member who created the privacy budget template.</p>",
+        "ProtectedJob$membershipArn": "<p>The ARN of the membership.</p>",
+        "ProtectedJobSummary$membershipArn": "<p>The unique ARN for the membership that initiated the protected job.</p>",
         "ProtectedQuery$membershipArn": "<p>The ARN of the membership.</p>",
         "ProtectedQuerySummary$membershipArn": "<p>The unique ARN for the membership that initiated the protected query.</p>"
       }
@@ -2293,6 +2475,7 @@
         "GetIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to retrieve.</p>",
         "GetMembershipInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "GetPrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
+        "GetProtectedJobInput$membershipIdentifier": "<p> The identifier for a membership in a protected job instance.</p>",
         "GetProtectedQueryInput$membershipIdentifier": "<p>The identifier for a membership in a protected query instance.</p>",
         "IdMappingTableSummary$membershipId": "<p>The unique identifier of the membership resource for this ID mapping table.</p>",
         "IdNamespaceAssociationSummary$membershipId": "<p>The unique identifier of the membership resource for this ID namespace association.</p>",
@@ -2303,10 +2486,14 @@
         "ListIdNamespaceAssociationsInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to view.</p>",
         "ListPrivacyBudgetTemplatesInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget templates are retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
         "ListPrivacyBudgetsInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget is retrieved from the collaboration that this membership belongs to. Accepts a membership ID.</p>",
+        "ListProtectedJobsInput$membershipIdentifier": "<p>The identifier for the membership in the collaboration.</p>",
         "ListProtectedQueriesInput$membershipIdentifier": "<p>The identifier for the membership in the collaboration.</p>",
         "PopulateIdMappingTableInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID mapping table that you want to populate.</p>",
         "PreviewPrivacyImpactInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. Accepts a membership ID.</p>",
         "PrivacyBudgetSummary$membershipId": "<p>The identifier for a membership resource.</p>",
+        "ProtectedJob$membershipId": "<p>he identifier for the membership.</p>",
+        "ProtectedJobSummary$membershipId": "<p>The unique ID for the membership that initiated the protected job.</p>",
+        "StartProtectedJobInput$membershipIdentifier": "<p>A unique identifier for the membership to run this job against. Currently accepts a membership ID.</p>",
         "StartProtectedQueryInput$membershipIdentifier": "<p>A unique identifier for the membership to run this query against. Currently accepts a membership ID.</p>",
         "UpdateAnalysisTemplateInput$membershipIdentifier": "<p>The identifier for a membership resource.</p>",
         "UpdateConfiguredAudienceModelAssociationInput$membershipIdentifier": "<p>A unique identifier of the membership that contains the configured audience model association that you want to update.</p>",
@@ -2316,7 +2503,22 @@
         "UpdateIdNamespaceAssociationInput$membershipIdentifier": "<p>The unique identifier of the membership that contains the ID namespace association that you want to update.</p>",
         "UpdateMembershipInput$membershipIdentifier": "<p>The unique identifier of the membership.</p>",
         "UpdatePrivacyBudgetTemplateInput$membershipIdentifier": "<p>A unique identifier for one of your memberships for a collaboration. The privacy budget template is updated in the collaboration that this membership belongs to. Accepts a membership ID.</p>",
+        "UpdateProtectedJobInput$membershipIdentifier": "<p>The identifier for a member of a protected job instance.</p>",
         "UpdateProtectedQueryInput$membershipIdentifier": "<p>The identifier for a member of a protected query instance.</p>"
+      }
+    },
+    "MembershipJobComputePaymentConfig": {
+      "base": "<p>An object representing the payment responsibilities accepted by the collaboration member for query and job compute costs.</p>",
+      "refs": {
+        "MembershipPaymentConfiguration$jobCompute": "<p>The payment responsibilities accepted by the collaboration member for job compute costs.</p>"
+      }
+    },
+    "MembershipJobLogStatus": {
+      "base": null,
+      "refs": {
+        "CreateMembershipInput$jobLogStatus": "<p>An indicator as to whether job logging has been enabled or disabled for the collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about jobs run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "Membership$jobLogStatus": "<p>An indicator as to whether job logging has been enabled or disabled for the collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about jobs run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "UpdateMembershipInput$jobLogStatus": "<p>An indicator as to whether job logging has been enabled or disabled for the collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about jobs run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>"
       }
     },
     "MembershipMLPaymentConfig": {
@@ -2345,6 +2547,20 @@
         "MembershipSummary$paymentConfiguration": "<p>The payment responsibilities accepted by the collaboration member.</p>"
       }
     },
+    "MembershipProtectedJobOutputConfiguration": {
+      "base": "<p>Contains configurations for protected job results.</p>",
+      "refs": {
+        "MembershipProtectedJobResultConfiguration$outputConfiguration": "<p> The output configuration for a protected job result.</p>"
+      }
+    },
+    "MembershipProtectedJobResultConfiguration": {
+      "base": "<p>Contains configurations for protected job results.</p>",
+      "refs": {
+        "CreateMembershipInput$defaultJobResultConfiguration": "<p>The default job result configuration that determines how job results are protected and managed within this membership. This configuration applies to all jobs.</p>",
+        "Membership$defaultJobResultConfiguration": "<p> The default job result configuration for the membership.</p>",
+        "UpdateMembershipInput$defaultJobResultConfiguration": "<p> The default job result configuration.</p>"
+      }
+    },
     "MembershipProtectedQueryOutputConfiguration": {
       "base": "<p>Contains configurations for protected query results.</p>",
       "refs": {
@@ -2368,9 +2584,9 @@
     "MembershipQueryLogStatus": {
       "base": null,
       "refs": {
-        "CreateMembershipInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p>",
-        "Membership$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p>",
-        "UpdateMembershipInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p>"
+        "CreateMembershipInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about queries run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "Membership$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about queries run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>",
+        "UpdateMembershipInput$queryLogStatus": "<p>An indicator as to whether query logging has been enabled or disabled for the membership.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about queries run within this collaboration and those logs can be viewed in Amazon CloudWatch Logs. The default value is <code>DISABLED</code>.</p>"
       }
     },
     "MembershipStatus": {
@@ -2440,6 +2656,8 @@
         "ListPrivacyBudgetTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListPrivacyBudgetsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListPrivacyBudgetsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListProtectedJobsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListProtectedJobsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListProtectedQueriesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListProtectedQueriesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListSchemasInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
@@ -2617,6 +2835,193 @@
       "base": "<p>Provides an estimate of the number of aggregation functions that the member who can query can run given the epsilon and noise parameters.</p>",
       "refs": {
         "PreviewPrivacyImpactOutput$privacyImpact": "<p>An estimate of the number of aggregation functions that the member who can query can run given the epsilon and noise parameters. This does not change the privacy budget.</p>"
+      }
+    },
+    "ProtectedJob": {
+      "base": "<p>The parameters for an Clean Rooms protected job.</p>",
+      "refs": {
+        "GetProtectedJobOutput$protectedJob": "<p> The protected job metadata.</p>",
+        "StartProtectedJobOutput$protectedJob": "<p> The protected job.</p>",
+        "UpdateProtectedJobOutput$protectedJob": "<p>The protected job output.</p>"
+      }
+    },
+    "ProtectedJobAnalysisType": {
+      "base": null,
+      "refs": {
+        "ProtectedJobReceiverConfiguration$analysisType": "<p> The analysis type for the protected job receiver configuration.</p>"
+      }
+    },
+    "ProtectedJobConfigurationDetails": {
+      "base": "<p>The protected job configuration details.</p>",
+      "refs": {
+        "ProtectedJobReceiverConfiguration$configurationDetails": "<p> The configuration details for the protected job receiver.</p>"
+      }
+    },
+    "ProtectedJobDirectAnalysisConfigurationDetails": {
+      "base": "<p>The protected job direct analysis configuration details.</p>",
+      "refs": {
+        "ProtectedJobConfigurationDetails$directAnalysisConfigurationDetails": "<p>The details needed to configure the direct analysis.</p>"
+      }
+    },
+    "ProtectedJobError": {
+      "base": "<p>The protected job error.</p>",
+      "refs": {
+        "ProtectedJob$error": "<p> The error from the protected job.</p>"
+      }
+    },
+    "ProtectedJobIdentifier": {
+      "base": null,
+      "refs": {
+        "GetProtectedJobInput$protectedJobIdentifier": "<p> The identifier for the protected job instance.</p>",
+        "ProtectedJob$id": "<p>The identifier for a protected job instance.</p>",
+        "UpdateProtectedJobInput$protectedJobIdentifier": "<p> The identifier of the protected job to update.</p>"
+      }
+    },
+    "ProtectedJobMemberOutputConfigurationInput": {
+      "base": "<p> The protected job member output configuration input.</p>",
+      "refs": {
+        "ProtectedJobOutputConfigurationInput$member": "<p> The member of the protected job output configuration input.</p>"
+      }
+    },
+    "ProtectedJobMemberOutputConfigurationOutput": {
+      "base": "<p> The protected job member output configuration output.</p>",
+      "refs": {
+        "ProtectedJobOutputConfigurationOutput$member": "<p> The member output configuration for a protected job.</p>"
+      }
+    },
+    "ProtectedJobMemberOutputList": {
+      "base": null,
+      "refs": {
+        "ProtectedJobOutput$memberList": "<p>The list of member Amazon Web Services account(s) that received the results of the job. </p>"
+      }
+    },
+    "ProtectedJobOutput": {
+      "base": "<p>Contains details about the protected job output.</p>",
+      "refs": {
+        "ProtectedJobResult$output": "<p> The output of the protected job.</p>"
+      }
+    },
+    "ProtectedJobOutputConfigurationInput": {
+      "base": "<p> The protected job output configuration input.</p>",
+      "refs": {
+        "ProtectedJobResultConfigurationInput$outputConfiguration": "<p> The output configuration for a protected job result.</p>"
+      }
+    },
+    "ProtectedJobOutputConfigurationOutput": {
+      "base": "<p> The protected job output configuration output.</p>",
+      "refs": {
+        "ProtectedJobResultConfigurationOutput$outputConfiguration": "<p>The output configuration.</p>"
+      }
+    },
+    "ProtectedJobParameters": {
+      "base": "<p>The parameters for the protected job.</p>",
+      "refs": {
+        "ProtectedJob$jobParameters": "<p> The job parameters for the protected job.</p>",
+        "StartProtectedJobInput$jobParameters": "<p> The job parameters.</p>"
+      }
+    },
+    "ProtectedJobReceiverAccountIds": {
+      "base": null,
+      "refs": {
+        "ProtectedJobDirectAnalysisConfigurationDetails$receiverAccountIds": "<p> The receiver account IDs.</p>"
+      }
+    },
+    "ProtectedJobReceiverConfiguration": {
+      "base": "<p>The protected job receiver configuration.</p>",
+      "refs": {
+        "ProtectedJobReceiverConfigurations$member": null
+      }
+    },
+    "ProtectedJobReceiverConfigurations": {
+      "base": null,
+      "refs": {
+        "ProtectedJobSummary$receiverConfigurations": "<p> The receiver configurations for the protected job.</p>"
+      }
+    },
+    "ProtectedJobResult": {
+      "base": "<p>Details about the job results.</p>",
+      "refs": {
+        "ProtectedJob$result": "<p> The result of the protected job.</p>"
+      }
+    },
+    "ProtectedJobResultConfigurationInput": {
+      "base": "<p>The protected job result configuration input.</p>",
+      "refs": {
+        "StartProtectedJobInput$resultConfiguration": "<p>The details needed to write the job results.</p>"
+      }
+    },
+    "ProtectedJobResultConfigurationOutput": {
+      "base": "<p>The output configuration for a protected job result.</p>",
+      "refs": {
+        "ProtectedJob$resultConfiguration": "<p>Contains any details needed to write the job results.</p>"
+      }
+    },
+    "ProtectedJobS3Output": {
+      "base": "<p>Contains output information for protected jobs with an S3 output type.</p>",
+      "refs": {
+        "ProtectedJobOutput$s3": "<p>If present, the output for a protected job with an `S3` output type.</p>"
+      }
+    },
+    "ProtectedJobS3OutputConfigurationInput": {
+      "base": "<p>Contains input information for protected jobs with an S3 output type.</p>",
+      "refs": {
+        "MembershipProtectedJobOutputConfiguration$s3": "<p>Contains the configuration to write the job results to S3.</p>"
+      }
+    },
+    "ProtectedJobS3OutputConfigurationInputBucketString": {
+      "base": null,
+      "refs": {
+        "ProtectedJobS3OutputConfigurationInput$bucket": "<p> The S3 bucket for job output.</p>"
+      }
+    },
+    "ProtectedJobS3OutputConfigurationOutput": {
+      "base": "<p> The output configuration for a protected job's S3 output.</p>",
+      "refs": {
+        "ProtectedJobOutputConfigurationOutput$s3": "<p>If present, the output for a protected job with an `S3` output type.</p>"
+      }
+    },
+    "ProtectedJobS3OutputConfigurationOutputBucketString": {
+      "base": null,
+      "refs": {
+        "ProtectedJobS3OutputConfigurationOutput$bucket": "<p> The S3 bucket for job output.</p>"
+      }
+    },
+    "ProtectedJobSingleMemberOutput": {
+      "base": "<p>Details about the member who received the job result.</p>",
+      "refs": {
+        "ProtectedJobMemberOutputList$member": null
+      }
+    },
+    "ProtectedJobStatistics": {
+      "base": "<p>Contains statistics about the execution of the protected job.</p>",
+      "refs": {
+        "ProtectedJob$statistics": "<p> The statistics of the protected job.</p>"
+      }
+    },
+    "ProtectedJobStatus": {
+      "base": null,
+      "refs": {
+        "ListProtectedJobsInput$status": "<p>A filter on the status of the protected job.</p>",
+        "ProtectedJob$status": "<p> The status of the protected job.</p>",
+        "ProtectedJobSummary$status": "<p>The status of the protected job.</p>"
+      }
+    },
+    "ProtectedJobSummary": {
+      "base": "<p>The protected job summary for the objects listed by the request.</p>",
+      "refs": {
+        "ProtectedJobSummaryList$member": null
+      }
+    },
+    "ProtectedJobSummaryList": {
+      "base": null,
+      "refs": {
+        "ListProtectedJobsOutput$protectedJobs": "<p>A list of protected job summaries.</p>"
+      }
+    },
+    "ProtectedJobType": {
+      "base": null,
+      "refs": {
+        "StartProtectedJobInput$type": "<p> The type of protected job to start.</p>"
       }
     },
     "ProtectedQuery": {
@@ -2855,10 +3260,30 @@
     "RoleArn": {
       "base": null,
       "refs": {
+        "AnalysisTemplateArtifacts$roleArn": "<p> The role ARN for the analysis template artifacts.</p>",
         "ConfiguredTableAssociation$roleArn": "<p>The service will assume this role to access catalog metadata and query the table.</p>",
         "CreateConfiguredTableAssociationInput$roleArn": "<p>The service will assume this role to access catalog metadata and query the table.</p>",
+        "MembershipProtectedJobResultConfiguration$roleArn": "<p>The unique ARN for an IAM role that is used by Clean Rooms to write protected job results to the result location, given by the member who can receive results.</p>",
         "MembershipProtectedQueryResultConfiguration$roleArn": "<p>The unique ARN for an IAM role that is used by Clean Rooms to write protected query results to the result location, given by the member who can receive results.</p>",
         "UpdateConfiguredTableAssociationInput$roleArn": "<p>The service will assume this role to access catalog metadata and query the table.</p>"
+      }
+    },
+    "S3Location": {
+      "base": "<p>The S3 location.</p>",
+      "refs": {
+        "AnalysisTemplateArtifact$location": "<p> The artifact location.</p>"
+      }
+    },
+    "S3LocationBucketString": {
+      "base": null,
+      "refs": {
+        "S3Location$bucket": "<p> The bucket name.</p>"
+      }
+    },
+    "S3LocationKeyString": {
+      "base": null,
+      "refs": {
+        "S3Location$key": "<p> The object key.</p>"
       }
     },
     "ScalarFunctions": {
@@ -2870,7 +3295,8 @@
     "ScalarFunctionsList": {
       "base": null,
       "refs": {
-        "AnalysisRuleAggregation$scalarFunctions": "<p>Set of scalar functions that are allowed to be used on dimension columns and the output of aggregation of metrics.</p>"
+        "AnalysisRuleAggregation$scalarFunctions": "<p>Set of scalar functions that are allowed to be used on dimension columns and the output of aggregation of metrics.</p>",
+        "ConsolidatedPolicyAggregation$scalarFunctions": "<p> The scalar functions.</p>"
       }
     },
     "Schema": {
@@ -2984,6 +3410,23 @@
         "SnowflakeTableReference$secretArn": "<p> The secret ARN of the Snowflake table reference.</p>"
       }
     },
+    "SelectedAnalysisMethod": {
+      "base": null,
+      "refs": {
+        "SelectedAnalysisMethods$member": null
+      }
+    },
+    "SelectedAnalysisMethods": {
+      "base": null,
+      "refs": {
+        "ConfiguredTable$selectedAnalysisMethods": "<p> The selected analysis methods for the configured table.</p>",
+        "ConfiguredTableSummary$selectedAnalysisMethods": "<p> The selected analysis methods for the configured table summary.</p>",
+        "CreateConfiguredTableInput$selectedAnalysisMethods": "<p> The analysis methods to enable for the configured table. When configured, you must specify at least two analysis methods.</p>",
+        "Schema$selectedAnalysisMethods": "<p> The selected analysis methods for the schema.</p>",
+        "SchemaSummary$selectedAnalysisMethods": "<p> The selected analysis methods for the schema.</p>",
+        "UpdateConfiguredTableInput$selectedAnalysisMethods": "<p> The selected analysis methods for the table configuration update.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>Request denied because service quota has been exceeded.</p>",
       "refs": {
@@ -3037,6 +3480,16 @@
         "SnowflakeTableSchemaList$member": null
       }
     },
+    "StartProtectedJobInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartProtectedJobOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartProtectedQueryInput": {
       "base": null,
       "refs": {
@@ -3061,8 +3514,12 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The ID of the conflicting resource.</p>",
         "DifferentialPrivacyColumn$name": "<p>The name of the column, such as user_id, that contains the unique identifier of your users, whose privacy you want to protect. If you want to turn on differential privacy for two or more tables in a collaboration, you must configure the same column as the user identifier column in both analysis rules.</p>",
+        "Hash$sha256": "<p> The SHA-256 hash value.</p>",
         "IdMappingTableInputSource$idNamespaceAssociationId": "<p>The unique identifier of the ID namespace association.</p>",
         "InternalServerException$message": null,
+        "ProtectedJobError$message": "<p> The message for the protected job error.</p>",
+        "ProtectedJobError$code": "<p> The error code for the protected job.</p>",
+        "ProtectedJobS3Output$location": "<p> The S3 location for the protected job output.</p>",
         "ProtectedQueryError$message": "<p>A description of why the query failed.</p>",
         "ProtectedQueryError$code": "<p>An error code for the error.</p>",
         "ProtectedQueryS3Output$location": "<p>The S3 location of the result.</p>",
@@ -3166,6 +3623,12 @@
         "TagMap$value": null
       }
     },
+    "TargetProtectedJobStatus": {
+      "base": null,
+      "refs": {
+        "UpdateProtectedJobInput$targetStatus": "<p>The target status of a protected job. Used to update the execution status of a currently running job.</p>"
+      }
+    },
     "TargetProtectedQueryStatus": {
       "base": null,
       "refs": {
@@ -3244,6 +3707,8 @@
         "PrivacyBudgetTemplate$updateTime": "<p>The most recent time at which the privacy budget template was updated.</p>",
         "PrivacyBudgetTemplateSummary$createTime": "<p>The time at which the privacy budget template was created.</p>",
         "PrivacyBudgetTemplateSummary$updateTime": "<p>The most recent time at which the privacy budget template was updated.</p>",
+        "ProtectedJob$createTime": "<p> The creation time of the protected job.</p>",
+        "ProtectedJobSummary$createTime": "<p>The time the protected job was created.</p>",
         "ProtectedQuery$createTime": "<p>The time at which the protected query was created.</p>",
         "ProtectedQuerySummary$createTime": "<p>The time the protected query was created.</p>",
         "Schema$createTime": "<p>The time at which the schema was created.</p>",
@@ -3307,6 +3772,7 @@
         "PrivacyBudgetTemplate$collaborationId": "<p>The unique ID of the collaboration that contains this privacy budget template.</p>",
         "PrivacyBudgetTemplateSummary$membershipId": "<p>The identifier for a membership resource.</p>",
         "PrivacyBudgetTemplateSummary$collaborationId": "<p>The unique ID of the collaboration that contains this privacy budget template.</p>",
+        "ProtectedJobSummary$id": "<p> The ID of the protected job.</p>",
         "ProtectedQuery$id": "<p>The identifier for a protected query instance.</p>",
         "ProtectedQuery$membershipId": "<p>The identifier for the membership.</p>",
         "ProtectedQuerySummary$id": "<p>The unique ID of the protected query.</p>",
@@ -3432,6 +3898,16 @@
       }
     },
     "UpdatePrivacyBudgetTemplateOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateProtectedJobInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateProtectedJobOutput": {
       "base": null,
       "refs": {
       }
