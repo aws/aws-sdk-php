@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.9 - 2025-03-19
 
 * `Aws\` - Remove legacy code from the PHP 7 era and earlier.
 * `Aws\Bedrock` - Support custom prompt routers for evaluation jobs
