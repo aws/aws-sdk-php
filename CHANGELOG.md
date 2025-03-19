@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Remove legacy code from the PHP 7 era and earlier.
+* `Aws\Bedrock` - Support custom prompt routers for evaluation jobs
+* `Aws\MediaConnect` - This release adds support for NDI flow outputs in AWS Elemental MediaConnect. You can now send content from your MediaConnect transport streams directly to your NDI environment using the new NDI output type.
+* `Aws\Lambda` - Add Ruby 3.4 (ruby3.4) support to AWS Lambda.
+* `Aws\NeptuneGraph` - Update IAM Role ARN Validation to Support Role Paths
+* `Aws\SageMaker` - Added support for g6, g6e, m6i, c6i instance types in SageMaker Processing Jobs.
+* `Aws\EC2` - Doc-only updates for EC2 for March 2025.
+
 ## 3.342.8 - 2025-03-18
 
 * `Aws\S3` - Added possibility to execute a callback function after a transfer is fulfilled when using the Transfer class. Implemented similarly to the way the 'before' callback works.
