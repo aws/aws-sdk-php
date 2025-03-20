@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.10 - 2025-03-20
 
 * `Aws\ControlCatalog` - Add ExemptAssumeRoot parameter to adapt for new AWS AssumeRoot capability.
 * `Aws\MailManager` - Amazon SES Mail Manager. Extended rule string and boolean expressions to support analysis in condition evaluation. Extended ingress point string expression to support analysis in condition evaluation
