@@ -555,10 +555,31 @@
         "GetEvaluationJobResponse$failureMessages": "<p>A list of strings that specify why the evaluation job failed to create.</p>"
       }
     },
+    "EvaluationBedrockKnowledgeBaseIdentifiers": {
+      "base": null,
+      "refs": {
+        "EvaluationRagConfigSummary$bedrockKnowledgeBaseIdentifiers": "<p>The Amazon Resource Names (ARNs) of the Knowledge Base resources used for a Knowledge Base evaluation job where Amazon Bedrock invokes the Knowledge Base for you.</p>",
+        "EvaluationSummary$ragIdentifiers": "<p>The Amazon Resource Names (ARNs) of the knowledge base resources used for a knowledge base evaluation job.</p>"
+      }
+    },
     "EvaluationBedrockModel": {
       "base": "<p>Contains the ARN of the Amazon Bedrock model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> specified in your evaluation job. Each Amazon Bedrock model supports different <code>inferenceParams</code>. To learn more about supported inference parameters for Amazon Bedrock models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p> <p>The <code>inferenceParams</code> are specified using JSON. To successfully insert JSON as string make sure that all quotations are properly escaped. For example, <code>\"temperature\":\"0.25\"</code> key value pair would need to be formatted as <code>\\\"temperature\\\":\\\"0.25\\\"</code> to successfully accepted in the request.</p>",
       "refs": {
         "EvaluationModelConfig$bedrockModel": "<p>Defines the Amazon Bedrock model or inference profile and inference parameters you want used.</p>"
+      }
+    },
+    "EvaluationBedrockModelIdentifier": {
+      "base": null,
+      "refs": {
+        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model or inference profile specified.</p>",
+        "EvaluationBedrockModelIdentifiers$member": null
+      }
+    },
+    "EvaluationBedrockModelIdentifiers": {
+      "base": null,
+      "refs": {
+        "EvaluationModelConfigSummary$bedrockModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used for the evaluation job.</p>",
+        "EvaluationSummary$modelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the model(s) used for the evaluation job.</p>"
       }
     },
     "EvaluationConfig": {
@@ -604,6 +625,12 @@
       "refs": {
         "CreateEvaluationJobRequest$inferenceConfig": "<p>Contains the configuration details of the inference model for the evaluation job.</p> <p>For model evaluation jobs, automated jobs support a single model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>, and jobs that use human workers support two models or inference profiles.</p>",
         "GetEvaluationJobResponse$inferenceConfig": "<p>Contains the configuration details of the inference model used for the evaluation job. </p>"
+      }
+    },
+    "EvaluationInferenceConfigSummary": {
+      "base": "<p>Identifies the models, Knowledge Bases, or other RAG sources evaluated in a model or Knowledge Base evaluation job.</p>",
+      "refs": {
+        "EvaluationSummary$inferenceConfigSummary": "<p>Identifies the models, Knowledge Bases, or other RAG sources evaluated in a model or Knowledge Base evaluation job.</p>"
       }
     },
     "EvaluationJobArn": {
@@ -687,23 +714,16 @@
         "EvaluationModelConfigs$member": null
       }
     },
+    "EvaluationModelConfigSummary": {
+      "base": "<p>A summary of the models used in an Amazon Bedrock model evaluation job. These resources can be models in Amazon Bedrock or models outside of Amazon Bedrock that you use to generate your own inference response data.</p>",
+      "refs": {
+        "EvaluationInferenceConfigSummary$modelConfigSummary": "<p>A summary of the models used in an Amazon Bedrock model evaluation job. These resources can be models in Amazon Bedrock or models outside of Amazon Bedrock that you use to generate your own inference response data.</p>"
+      }
+    },
     "EvaluationModelConfigs": {
       "base": null,
       "refs": {
         "EvaluationInferenceConfig$models": "<p>Specifies the inference models.</p>"
-      }
-    },
-    "EvaluationModelIdentifier": {
-      "base": null,
-      "refs": {
-        "EvaluationBedrockModel$modelIdentifier": "<p>The ARN of the Amazon Bedrock model or inference profile specified.</p>",
-        "EvaluationModelIdentifiers$member": null
-      }
-    },
-    "EvaluationModelIdentifiers": {
-      "base": null,
-      "refs": {
-        "EvaluationSummary$modelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the model(s) used for the evaluation job.</p>"
       }
     },
     "EvaluationModelInferenceParams": {
@@ -717,6 +737,63 @@
       "refs": {
         "CreateEvaluationJobRequest$outputDataConfig": "<p>Contains the configuration details of the Amazon S3 bucket for storing the results of the evaluation job.</p>",
         "GetEvaluationJobResponse$outputDataConfig": "<p>Contains the configuration details of the Amazon S3 bucket for storing the results of the evaluation job.</p>"
+      }
+    },
+    "EvaluationPrecomputedInferenceSource": {
+      "base": "<p>A summary of a model used for a model evaluation job where you provide your own inference response data.</p>",
+      "refs": {
+        "EvaluationModelConfig$precomputedInferenceSource": "<p>Defines the model used to generate inference response data for a model evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationPrecomputedInferenceSourceIdentifier": {
+      "base": null,
+      "refs": {
+        "EvaluationPrecomputedInferenceSource$inferenceSourceIdentifier": "<p>A label that identifies a model used in a model evaluation job where you provide your own inference response data.</p>",
+        "EvaluationPrecomputedInferenceSourceIdentifiers$member": null
+      }
+    },
+    "EvaluationPrecomputedInferenceSourceIdentifiers": {
+      "base": null,
+      "refs": {
+        "EvaluationModelConfigSummary$precomputedInferenceSourceIdentifiers": "<p>A label that identifies the models used for a model evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationPrecomputedRagSourceConfig": {
+      "base": "<p>A summary of a RAG source used for a Knowledge Base evaluation job where you provide your own inference response data.</p>",
+      "refs": {
+        "RAGConfig$precomputedRagSourceConfig": "<p>Contains configuration details about the RAG source used to generate inference response data for a Knowledge Base evaluation job.</p>"
+      }
+    },
+    "EvaluationPrecomputedRagSourceIdentifier": {
+      "base": null,
+      "refs": {
+        "EvaluationPrecomputedRagSourceIdentifiers$member": null,
+        "EvaluationPrecomputedRetrieveAndGenerateSourceConfig$ragSourceIdentifier": "<p>A label that identifies the RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.</p>",
+        "EvaluationPrecomputedRetrieveSourceConfig$ragSourceIdentifier": "<p>A label that identifies the RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationPrecomputedRagSourceIdentifiers": {
+      "base": null,
+      "refs": {
+        "EvaluationRagConfigSummary$precomputedRagSourceIdentifiers": "<p>A label that identifies the RAG sources used for a Knowledge Base evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationPrecomputedRetrieveAndGenerateSourceConfig": {
+      "base": "<p>A summary of a RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.</p>",
+      "refs": {
+        "EvaluationPrecomputedRagSourceConfig$retrieveAndGenerateSourceConfig": "<p>A summary of a RAG source used for a retrieve-and-generate Knowledge Base evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationPrecomputedRetrieveSourceConfig": {
+      "base": "<p>A summary of a RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data.</p>",
+      "refs": {
+        "EvaluationPrecomputedRagSourceConfig$retrieveSourceConfig": "<p>A summary of a RAG source used for a retrieve-only Knowledge Base evaluation job where you provide your own inference response data.</p>"
+      }
+    },
+    "EvaluationRagConfigSummary": {
+      "base": "<p>A summary of the RAG resources used in an Amazon Bedrock Knowledge Base evaluation job. These resources can be Knowledge Bases in Amazon Bedrock or RAG sources outside of Amazon Bedrock that you use to generate your own inference response data.</p>",
+      "refs": {
+        "EvaluationInferenceConfigSummary$ragConfigSummary": "<p>A summary of the RAG resources used in an Amazon Bedrock Knowledge Base evaluation job. These resources can be Knowledge Bases in Amazon Bedrock or RAG sources outside of Amazon Bedrock that you use to generate your own inference response data.</p>"
       }
     },
     "EvaluationRatingMethod": {
@@ -1855,8 +1932,8 @@
     "KnowledgeBaseId": {
       "base": null,
       "refs": {
+        "EvaluationBedrockKnowledgeBaseIdentifiers$member": null,
         "KnowledgeBaseRetrieveAndGenerateConfiguration$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>",
-        "RAGIdentifiers$member": null,
         "RetrieveConfig$knowledgeBaseId": "<p>The unique identifier of the knowledge base.</p>"
       }
     },
@@ -2628,12 +2705,6 @@
       "base": "<p>Contains configuration details for retrieval of information and response generation.</p>",
       "refs": {
         "RagConfigs$member": null
-      }
-    },
-    "RAGIdentifiers": {
-      "base": null,
-      "refs": {
-        "EvaluationSummary$ragIdentifiers": "<p>The Amazon Resource Names (ARNs) of the knowledge base resources used for a knowledge base evaluation job.</p>"
       }
     },
     "RAGStopSequences": {

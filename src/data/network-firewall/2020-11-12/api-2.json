@@ -229,6 +229,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeFlowOperation":{
+      "name":"DescribeFlowOperation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFlowOperationRequest"},
+      "output":{"shape":"DescribeFlowOperationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DescribeLoggingConfiguration":{
       "name":"DescribeLoggingConfiguration",
       "http":{
@@ -379,6 +394,36 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListFlowOperationResults":{
+      "name":"ListFlowOperationResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFlowOperationResultsRequest"},
+      "output":{"shape":"ListFlowOperationResultsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListFlowOperations":{
+      "name":"ListFlowOperations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListFlowOperationsRequest"},
+      "output":{"shape":"ListFlowOperationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListRuleGroups":{
       "name":"ListRuleGroups",
       "http":{
@@ -446,6 +491,36 @@
       },
       "input":{"shape":"StartAnalysisReportRequest"},
       "output":{"shape":"StartAnalysisReportResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "StartFlowCapture":{
+      "name":"StartFlowCapture",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartFlowCaptureRequest"},
+      "output":{"shape":"StartFlowCaptureResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "StartFlowFlush":{
+      "name":"StartFlowFlush",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartFlowFlushRequest"},
+      "output":{"shape":"StartFlowFlushResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServerError"},
@@ -678,6 +753,7 @@
       "type":"list",
       "member":{"shape":"Address"}
     },
+    "Age":{"type":"integer"},
     "AnalysisReport":{
       "type":"structure",
       "members":{
@@ -799,6 +875,7 @@
       "member":{"shape":"AzSubnet"}
     },
     "Boolean":{"type":"boolean"},
+    "ByteCount":{"type":"long"},
     "CIDRCount":{
       "type":"integer",
       "max":1000000,
@@ -1065,6 +1142,31 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "Firewall":{"shape":"Firewall"},
         "FirewallStatus":{"shape":"FirewallStatus"}
+      }
+    },
+    "DescribeFlowOperationRequest":{
+      "type":"structure",
+      "required":[
+        "FirewallArn",
+        "FlowOperationId"
+      ],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "FlowOperationId":{"shape":"FlowOperationId"}
+      }
+    },
+    "DescribeFlowOperationResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "FlowOperationType":{"shape":"FlowOperationType"},
+        "FlowOperationStatus":{"shape":"FlowOperationStatus"},
+        "StatusMessage":{"shape":"StatusReason"},
+        "FlowRequestTimestamp":{"shape":"FlowRequestTimestamp"},
+        "FlowOperation":{"shape":"FlowOperation"}
       }
     },
     "DescribeLoggingConfigurationRequest":{
@@ -1348,11 +1450,85 @@
       "type":"list",
       "member":{"shape":"TCPFlag"}
     },
+    "Flow":{
+      "type":"structure",
+      "members":{
+        "SourceAddress":{"shape":"Address"},
+        "DestinationAddress":{"shape":"Address"},
+        "SourcePort":{"shape":"Port"},
+        "DestinationPort":{"shape":"Port"},
+        "Protocol":{"shape":"ProtocolString"},
+        "Age":{"shape":"Age"},
+        "PacketCount":{"shape":"PacketCount"},
+        "ByteCount":{"shape":"ByteCount"}
+      }
+    },
+    "FlowFilter":{
+      "type":"structure",
+      "members":{
+        "SourceAddress":{"shape":"Address"},
+        "DestinationAddress":{"shape":"Address"},
+        "SourcePort":{"shape":"Port"},
+        "DestinationPort":{"shape":"Port"},
+        "Protocols":{"shape":"ProtocolStrings"}
+      }
+    },
+    "FlowFilters":{
+      "type":"list",
+      "member":{"shape":"FlowFilter"}
+    },
+    "FlowOperation":{
+      "type":"structure",
+      "members":{
+        "MinimumFlowAgeInSeconds":{"shape":"Age"},
+        "FlowFilters":{"shape":"FlowFilters"}
+      }
+    },
+    "FlowOperationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^([0-9a-f]{8})-([0-9a-f]{4}-){3}([0-9a-f]{12})$"
+    },
+    "FlowOperationMetadata":{
+      "type":"structure",
+      "members":{
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "FlowOperationType":{"shape":"FlowOperationType"},
+        "FlowRequestTimestamp":{"shape":"FlowRequestTimestamp"},
+        "FlowOperationStatus":{"shape":"FlowOperationStatus"}
+      }
+    },
+    "FlowOperationStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED_WITH_ERRORS"
+      ]
+    },
+    "FlowOperationType":{
+      "type":"string",
+      "enum":[
+        "FLOW_FLUSH",
+        "FLOW_CAPTURE"
+      ]
+    },
+    "FlowOperations":{
+      "type":"list",
+      "member":{"shape":"FlowOperationMetadata"}
+    },
+    "FlowRequestTimestamp":{"type":"timestamp"},
     "FlowTimeouts":{
       "type":"structure",
       "members":{
         "TcpIdleTimeoutSeconds":{"shape":"TcpIdleTimeoutRangeBound"}
       }
+    },
+    "Flows":{
+      "type":"list",
+      "member":{"shape":"Flow"}
     },
     "GeneratedRulesType":{
       "type":"string",
@@ -1587,6 +1763,51 @@
         "Firewalls":{"shape":"Firewalls"}
       }
     },
+    "ListFlowOperationResultsRequest":{
+      "type":"structure",
+      "required":[
+        "FirewallArn",
+        "FlowOperationId"
+      ],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"}
+      }
+    },
+    "ListFlowOperationResultsResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "FlowOperationStatus":{"shape":"FlowOperationStatus"},
+        "StatusMessage":{"shape":"StatusReason"},
+        "FlowRequestTimestamp":{"shape":"FlowRequestTimestamp"},
+        "Flows":{"shape":"Flows"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListFlowOperationsRequest":{
+      "type":"structure",
+      "required":["FirewallArn"],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "FlowOperationType":{"shape":"FlowOperationType"},
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"}
+      }
+    },
+    "ListFlowOperationsResponse":{
+      "type":"structure",
+      "members":{
+        "FlowOperations":{"shape":"FlowOperations"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListRuleGroupsRequest":{
       "type":"structure",
       "members":{
@@ -1705,6 +1926,7 @@
       "type":"string",
       "enum":["DROP_TO_ALERT"]
     },
+    "PacketCount":{"type":"integer"},
     "PaginationMaxResults":{
       "type":"integer",
       "max":100,
@@ -1793,6 +2015,16 @@
     "ProtocolNumbers":{
       "type":"list",
       "member":{"shape":"ProtocolNumber"}
+    },
+    "ProtocolString":{
+      "type":"string",
+      "max":12,
+      "min":1,
+      "pattern":"^.*$"
+    },
+    "ProtocolStrings":{
+      "type":"list",
+      "member":{"shape":"ProtocolString"}
     },
     "PublishMetricAction":{
       "type":"structure",
@@ -2092,6 +2324,48 @@
       "required":["AnalysisReportId"],
       "members":{
         "AnalysisReportId":{"shape":"AnalysisReportId"}
+      }
+    },
+    "StartFlowCaptureRequest":{
+      "type":"structure",
+      "required":[
+        "FirewallArn",
+        "FlowFilters"
+      ],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "MinimumFlowAgeInSeconds":{"shape":"Age"},
+        "FlowFilters":{"shape":"FlowFilters"}
+      }
+    },
+    "StartFlowCaptureResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "FlowOperationStatus":{"shape":"FlowOperationStatus"}
+      }
+    },
+    "StartFlowFlushRequest":{
+      "type":"structure",
+      "required":[
+        "FirewallArn",
+        "FlowFilters"
+      ],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "MinimumFlowAgeInSeconds":{"shape":"Age"},
+        "FlowFilters":{"shape":"FlowFilters"}
+      }
+    },
+    "StartFlowFlushResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FlowOperationId":{"shape":"FlowOperationId"},
+        "FlowOperationStatus":{"shape":"FlowOperationStatus"}
       }
     },
     "StartTime":{"type":"timestamp"},

@@ -2214,6 +2214,7 @@
     "IngressStringToEvaluate":{
       "type":"structure",
       "members":{
+        "Analysis":{"shape":"IngressAnalysis"},
         "Attribute":{"shape":"IngressStringEmailAttribute"}
       },
       "union":true
@@ -2694,7 +2695,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[\\sa-zA-Z0-9_]+$"
+      "pattern":"^(addon\\.)?[\\sa-zA-Z0-9_]+$"
     },
     "RetentionPeriod":{
       "type":"string",
@@ -2822,6 +2823,7 @@
     "RuleBooleanToEvaluate":{
       "type":"structure",
       "members":{
+        "Analysis":{"shape":"Analysis"},
         "Attribute":{"shape":"RuleBooleanEmailAttribute"},
         "IsInAddressList":{"shape":"RuleIsInAddressList"}
       },
@@ -3041,6 +3043,7 @@
     "RuleStringToEvaluate":{
       "type":"structure",
       "members":{
+        "Analysis":{"shape":"Analysis"},
         "Attribute":{"shape":"RuleStringEmailAttribute"},
         "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"}
       },

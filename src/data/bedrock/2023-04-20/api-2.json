@@ -1811,14 +1811,32 @@
       "max":20,
       "min":0
     },
+    "EvaluationBedrockKnowledgeBaseIdentifiers":{
+      "type":"list",
+      "member":{"shape":"KnowledgeBaseId"},
+      "max":1,
+      "min":0
+    },
     "EvaluationBedrockModel":{
       "type":"structure",
       "required":["modelIdentifier"],
       "members":{
-        "modelIdentifier":{"shape":"EvaluationModelIdentifier"},
+        "modelIdentifier":{"shape":"EvaluationBedrockModelIdentifier"},
         "inferenceParams":{"shape":"EvaluationModelInferenceParams"},
         "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
+    },
+    "EvaluationBedrockModelIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:application-inference-profile/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z-]{2,8}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([0-9]{12}:(default-prompt-router|prompt-router)/[a-zA-Z0-9-:.]+)))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|arn:aws(-[^:]+)?:sagemaker:[a-z0-9-]{1,20}:[0-9]{12}:endpoint/[a-z0-9-]{1,63}"
+    },
+    "EvaluationBedrockModelIdentifiers":{
+      "type":"list",
+      "member":{"shape":"EvaluationBedrockModelIdentifier"},
+      "max":2,
+      "min":0
     },
     "EvaluationConfig":{
       "type":"structure",
@@ -1876,6 +1894,13 @@
         "ragConfigs":{"shape":"RagConfigs"}
       },
       "union":true
+    },
+    "EvaluationInferenceConfigSummary":{
+      "type":"structure",
+      "members":{
+        "modelConfigSummary":{"shape":"EvaluationModelConfigSummary"},
+        "ragConfigSummary":{"shape":"EvaluationRagConfigSummary"}
+      }
     },
     "EvaluationJobArn":{
       "type":"string",
@@ -1950,27 +1975,23 @@
     "EvaluationModelConfig":{
       "type":"structure",
       "members":{
-        "bedrockModel":{"shape":"EvaluationBedrockModel"}
+        "bedrockModel":{"shape":"EvaluationBedrockModel"},
+        "precomputedInferenceSource":{"shape":"EvaluationPrecomputedInferenceSource"}
       },
       "union":true
+    },
+    "EvaluationModelConfigSummary":{
+      "type":"structure",
+      "members":{
+        "bedrockModelIdentifiers":{"shape":"EvaluationBedrockModelIdentifiers"},
+        "precomputedInferenceSourceIdentifiers":{"shape":"EvaluationPrecomputedInferenceSourceIdentifiers"}
+      }
     },
     "EvaluationModelConfigs":{
       "type":"list",
       "member":{"shape":"EvaluationModelConfig"},
       "max":2,
       "min":1
-    },
-    "EvaluationModelIdentifier":{
-      "type":"string",
-      "max":2048,
-      "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:provisioned-model/[a-z0-9]{12})|([0-9]{12}:imported-model/[a-z0-9]{12})|([0-9]{12}:application-inference-profile/[a-z0-9]{12})|([0-9]{12}:inference-profile/(([a-z-]{2,8}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([0-9]{12}:(default-prompt-router|prompt-router)/[a-zA-Z0-9-:.]+)))|(([a-z]{2}[.]{1})([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|arn:aws(-[^:]+)?:sagemaker:[a-z0-9-]{1,20}:[0-9]{12}:endpoint/[a-z0-9-]{1,63}"
-    },
-    "EvaluationModelIdentifiers":{
-      "type":"list",
-      "member":{"shape":"EvaluationModelIdentifier"},
-      "max":2,
-      "min":0
     },
     "EvaluationModelInferenceParams":{
       "type":"string",
@@ -1983,6 +2004,66 @@
       "required":["s3Uri"],
       "members":{
         "s3Uri":{"shape":"S3Uri"}
+      }
+    },
+    "EvaluationPrecomputedInferenceSource":{
+      "type":"structure",
+      "required":["inferenceSourceIdentifier"],
+      "members":{
+        "inferenceSourceIdentifier":{"shape":"EvaluationPrecomputedInferenceSourceIdentifier"}
+      }
+    },
+    "EvaluationPrecomputedInferenceSourceIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9._-]){0,255}"
+    },
+    "EvaluationPrecomputedInferenceSourceIdentifiers":{
+      "type":"list",
+      "member":{"shape":"EvaluationPrecomputedInferenceSourceIdentifier"},
+      "max":2,
+      "min":0
+    },
+    "EvaluationPrecomputedRagSourceConfig":{
+      "type":"structure",
+      "members":{
+        "retrieveSourceConfig":{"shape":"EvaluationPrecomputedRetrieveSourceConfig"},
+        "retrieveAndGenerateSourceConfig":{"shape":"EvaluationPrecomputedRetrieveAndGenerateSourceConfig"}
+      },
+      "union":true
+    },
+    "EvaluationPrecomputedRagSourceIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9._-]){0,255}"
+    },
+    "EvaluationPrecomputedRagSourceIdentifiers":{
+      "type":"list",
+      "member":{"shape":"EvaluationPrecomputedRagSourceIdentifier"},
+      "max":1,
+      "min":0
+    },
+    "EvaluationPrecomputedRetrieveAndGenerateSourceConfig":{
+      "type":"structure",
+      "required":["ragSourceIdentifier"],
+      "members":{
+        "ragSourceIdentifier":{"shape":"EvaluationPrecomputedRagSourceIdentifier"}
+      }
+    },
+    "EvaluationPrecomputedRetrieveSourceConfig":{
+      "type":"structure",
+      "required":["ragSourceIdentifier"],
+      "members":{
+        "ragSourceIdentifier":{"shape":"EvaluationPrecomputedRagSourceIdentifier"}
+      }
+    },
+    "EvaluationRagConfigSummary":{
+      "type":"structure",
+      "members":{
+        "bedrockKnowledgeBaseIdentifiers":{"shape":"EvaluationBedrockKnowledgeBaseIdentifiers"},
+        "precomputedRagSourceIdentifiers":{"shape":"EvaluationPrecomputedRagSourceIdentifiers"}
       }
     },
     "EvaluationRatingMethod":{
@@ -2014,9 +2095,18 @@
         "creationTime":{"shape":"Timestamp"},
         "jobType":{"shape":"EvaluationJobType"},
         "evaluationTaskTypes":{"shape":"EvaluationTaskTypes"},
-        "modelIdentifiers":{"shape":"EvaluationModelIdentifiers"},
-        "ragIdentifiers":{"shape":"RAGIdentifiers"},
+        "modelIdentifiers":{
+          "shape":"EvaluationBedrockModelIdentifiers",
+          "deprecated":true,
+          "deprecatedMessage":"Inference identifiers should be retrieved from the inferenceConfigSummary"
+        },
+        "ragIdentifiers":{
+          "shape":"EvaluationBedrockKnowledgeBaseIdentifiers",
+          "deprecated":true,
+          "deprecatedMessage":"Inference identifiers should be retrieved from the inferenceConfigSummary"
+        },
         "evaluatorModelIdentifiers":{"shape":"EvaluatorModelIdentifiers"},
+        "inferenceConfigSummary":{"shape":"EvaluationInferenceConfigSummary"},
         "applicationType":{"shape":"ApplicationType"}
       }
     },
@@ -2050,7 +2140,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}$|(^[a-z0-9-]+[.][a-z0-9-]+([.][a-z0-9-]+)*(:[a-z0-9-]+)?$)|^[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}|)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63}))|([0-9]{12}:inference-profile/(([a-z-]{2,8}.)[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.:]?[a-z0-9-]{1,63})))))$|(^[a-z0-9-]+[.][a-z0-9-]+([.][a-z0-9-]+)*(:[a-z0-9-]+)?$)|^[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}|)"
     },
     "EvaluatorModelIdentifiers":{
       "type":"list",
@@ -4386,7 +4476,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-:]{1,63}/[a-z0-9]{12}$)|(:foundation-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}$)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-:]{1,63}/[a-z0-9]{12}$)|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)$)|([0-9]{12}:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+$)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
     },
     "ModelIdentifier":{
       "type":"string",
@@ -4780,15 +4870,10 @@
     "RAGConfig":{
       "type":"structure",
       "members":{
-        "knowledgeBaseConfig":{"shape":"KnowledgeBaseConfig"}
+        "knowledgeBaseConfig":{"shape":"KnowledgeBaseConfig"},
+        "precomputedRagSourceConfig":{"shape":"EvaluationPrecomputedRagSourceConfig"}
       },
       "union":true
-    },
-    "RAGIdentifiers":{
-      "type":"list",
-      "member":{"shape":"KnowledgeBaseId"},
-      "max":1,
-      "min":0
     },
     "RAGStopSequences":{
       "type":"list",

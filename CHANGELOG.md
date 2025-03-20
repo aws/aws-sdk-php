@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ControlCatalog` - Add ExemptAssumeRoot parameter to adapt for new AWS AssumeRoot capability.
+* `Aws\MailManager` - Amazon SES Mail Manager. Extended rule string and boolean expressions to support analysis in condition evaluation. Extended ingress point string expression to support analysis in condition evaluation
+* `Aws\Amplify` - Added appId field to Webhook responses
+* `Aws\NetworkFirewall` - You can now use flow operations to either flush or capture traffic monitored in your firewall's flow table.
+* `Aws\Bedrock` - With this release, Bedrock Evaluation will now support bring your own inference responses.
+
 ## 3.342.9 - 2025-03-19
 
 * `Aws\` - Remove legacy code from the PHP 7 era and earlier.
