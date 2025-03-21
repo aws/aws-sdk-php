@@ -1623,6 +1623,17 @@
       "type":"list",
       "member":{"shape":"CustomModelSummary"}
     },
+    "CustomModelUnits":{
+      "type":"structure",
+      "members":{
+        "customModelUnitsPerModelCopy":{"shape":"Integer"},
+        "customModelUnitsVersion":{"shape":"CustomModelUnitsVersion"}
+      }
+    },
+    "CustomModelUnitsVersion":{
+      "type":"string",
+      "pattern":"v\\d+.\\d+"
+    },
     "CustomizationConfig":{
       "type":"structure",
       "members":{
@@ -2462,7 +2473,8 @@
         "creationTime":{"shape":"Timestamp"},
         "modelArchitecture":{"shape":"String"},
         "modelKmsKeyArn":{"shape":"KmsKeyArn"},
-        "instructSupported":{"shape":"InstructSupported"}
+        "instructSupported":{"shape":"InstructSupported"},
+        "customModelUnits":{"shape":"CustomModelUnits"}
       }
     },
     "GetInferenceProfileRequest":{
