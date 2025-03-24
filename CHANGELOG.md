@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.12 - 2025-03-24
 
 * `Aws\QConnect` - Provides the correct value for supported model ID.
 * `Aws\PCS` - ClusterName/ClusterIdentifier, ComputeNodeGroupName/ComputeNodeGroupIdentifier, and QueueName/QueueIdentifier can now have 10 characters, and a minimum of 3 characters. The TagResource API action can now return ServiceQuotaExceededException.
