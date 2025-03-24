@@ -3077,7 +3077,8 @@
         "RejectedPatches":{"shape":"PatchIdList"},
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "ApprovedPatchesEnableNonSecurity":{"shape":"Boolean"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "BatchErrorMessage":{"type":"string"},
@@ -3779,6 +3780,7 @@
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "Description":{"shape":"BaselineDescription"},
         "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -4695,6 +4697,10 @@
         },
         "InstancesWithOtherNonCompliantPatches":{
           "shape":"InstancesCount",
+          "box":true
+        },
+        "InstancesWithAvailableSecurityUpdates":{
+          "shape":"Integer",
           "box":true
         }
       }
@@ -5836,7 +5842,8 @@
         "CreatedDate":{"shape":"DateTime"},
         "ModifiedDate":{"shape":"DateTime"},
         "Description":{"shape":"BaselineDescription"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "GetResourcePoliciesRequest":{
@@ -6164,6 +6171,10 @@
           "box":true
         },
         "NotApplicableCount":{"shape":"PatchNotApplicableCount"},
+        "AvailableSecurityUpdateCount":{
+          "shape":"PatchAvailableSecurityUpdateCount",
+          "box":true
+        },
         "OperationStartTime":{"shape":"DateTime"},
         "OperationEndTime":{"shape":"DateTime"},
         "Operation":{"shape":"PatchOperationType"},
@@ -9215,6 +9226,7 @@
       "member":{"shape":"PatchAdvisoryId"}
     },
     "PatchArch":{"type":"string"},
+    "PatchAvailableSecurityUpdateCount":{"type":"integer"},
     "PatchBaselineIdentity":{
       "type":"structure",
       "members":{
@@ -9279,7 +9291,8 @@
         "INSTALLED_REJECTED",
         "MISSING",
         "NOT_APPLICABLE",
-        "FAILED"
+        "FAILED",
+        "AVAILABLE_SECURITY_UPDATE"
       ]
     },
     "PatchComplianceLevel":{
@@ -9297,6 +9310,13 @@
       "type":"integer",
       "max":100,
       "min":10
+    },
+    "PatchComplianceStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLIANT",
+        "NON_COMPLIANT"
+      ]
     },
     "PatchContentUrl":{"type":"string"},
     "PatchCriticalNonCompliantCount":{"type":"integer"},
@@ -11540,6 +11560,7 @@
         "RejectedPatchesAction":{"shape":"PatchAction"},
         "Description":{"shape":"BaselineDescription"},
         "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"},
         "Replace":{
           "shape":"Boolean",
           "box":true
@@ -11565,7 +11586,8 @@
         "CreatedDate":{"shape":"DateTime"},
         "ModifiedDate":{"shape":"DateTime"},
         "Description":{"shape":"BaselineDescription"},
-        "Sources":{"shape":"PatchSourceList"}
+        "Sources":{"shape":"PatchSourceList"},
+        "AvailableSecurityUpdatesComplianceStatus":{"shape":"PatchComplianceStatus"}
       }
     },
     "UpdateResourceDataSyncRequest":{

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT.</p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p> <p>To connect to the AWS IoT Wireless Service, use the Service endpoints as described in <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region\">IoT Wireless Service endpoints</a> in the <i>AWS General Reference</i>.</p>",
+  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT. </p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p> <p>To connect to the AWS IoT Wireless Service, use the Service endpoints as described in <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region\">IoT Wireless Service endpoints</a>. You can use both IPv4 and IPv6 protocols to connect to the endpoints and send requests to the AWS IoT Wireless service. For more information, see <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/developerguide/wireless-ipv6-access.html\">Using IPv6 with AWS IoT Wireless</a>.</p>",
   "operations": {
     "AssociateAwsAccountWithPartnerAccount": "<p>Associates a partner account with your AWS account.</p>",
     "AssociateMulticastGroupWithFuotaTask": "<p>Associate a multicast group with a FUOTA task.</p>",
@@ -23,7 +23,7 @@
     "DeleteDestination": "<p>Deletes a destination.</p>",
     "DeleteDeviceProfile": "<p>Deletes a device profile.</p>",
     "DeleteFuotaTask": "<p>Deletes a FUOTA task.</p>",
-    "DeleteMulticastGroup": "<p>Deletes a multicast group if it is not in use by a fuota task.</p>",
+    "DeleteMulticastGroup": "<p>Deletes a multicast group if it is not in use by a FUOTA task.</p>",
     "DeleteNetworkAnalyzerConfiguration": "<p>Deletes a network analyzer configuration.</p>",
     "DeleteQueuedMessages": "<p>Remove queued messages from the downlink queue.</p>",
     "DeleteServiceProfile": "<p>Deletes a service profile.</p>",
@@ -34,7 +34,7 @@
     "DeleteWirelessGatewayTaskDefinition": "<p>Deletes a wireless gateway task definition. Deleting this task definition does not affect tasks that are currently in progress.</p>",
     "DeregisterWirelessDevice": "<p>Deregister a wireless device from AWS IoT Wireless.</p>",
     "DisassociateAwsAccountFromPartnerAccount": "<p>Disassociates your AWS account from a partner account. If <code>PartnerAccountId</code> and <code>PartnerType</code> are <code>null</code>, disassociates your AWS account from all partner accounts.</p>",
-    "DisassociateMulticastGroupFromFuotaTask": "<p>Disassociates a multicast group from a fuota task.</p>",
+    "DisassociateMulticastGroupFromFuotaTask": "<p>Disassociates a multicast group from a FUOTA task.</p>",
     "DisassociateWirelessDeviceFromFuotaTask": "<p>Disassociates a wireless device from a FUOTA task.</p>",
     "DisassociateWirelessDeviceFromMulticastGroup": "<p>Disassociates a wireless device from a multicast group.</p>",
     "DisassociateWirelessDeviceFromThing": "<p>Disassociates a wireless device from its currently associated thing.</p>",
@@ -44,7 +44,7 @@
     "GetDeviceProfile": "<p>Gets information about a device profile.</p>",
     "GetEventConfigurationByResourceTypes": "<p>Get the event configuration based on resource types.</p>",
     "GetFuotaTask": "<p>Gets information about a FUOTA task.</p>",
-    "GetLogLevelsByResourceTypes": "<p>Returns current default log levels or log levels by resource types. Based on resource types, log levels can be for wireless device log options or wireless gateway log options.</p>",
+    "GetLogLevelsByResourceTypes": "<p>Returns current default log levels or log levels by resource types. Based on the resource type, log levels can be returned for wireless device, wireless gateway, or FUOTA task log options.</p>",
     "GetMetricConfiguration": "<p>Get the metric configuration status for this AWS account.</p>",
     "GetMetrics": "<p>Get the summary metrics for this AWS account.</p>",
     "GetMulticastGroup": "<p>Gets information about a multicast group.</p>",
@@ -55,7 +55,7 @@
     "GetPositionConfiguration": "<p>Get position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
     "GetPositionEstimate": "<p>Get estimated position information as a payload in GeoJSON format. The payload measurement data is resolved using solvers that are provided by third-party vendors.</p>",
     "GetResourceEventConfiguration": "<p>Get the event configuration for a particular resource identifier.</p>",
-    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It can be used for a wireless device, wireless gateway or fuota task.</p>",
+    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource ID and resource type..</p>",
     "GetResourcePosition": "<p>Get the position information for a given wireless device or a wireless gateway resource. The position information uses the <a href=\"https://gisgeography.com/wgs84-world-geodetic-system/\"> World Geodetic System (WGS84)</a>.</p>",
     "GetServiceEndpoint": "<p>Gets the account-specific endpoint for Configuration and Update Server (CUPS) protocol or LoRaWAN Network Server (LNS) connections.</p>",
     "GetServiceProfile": "<p>Gets information about a service profile.</p>",
@@ -74,7 +74,7 @@
     "ListEventConfigurations": "<p>List event configurations where at least one event topic has been enabled.</p>",
     "ListFuotaTasks": "<p>Lists the FUOTA tasks registered to your AWS account.</p>",
     "ListMulticastGroups": "<p>Lists the multicast groups registered to your AWS account.</p>",
-    "ListMulticastGroupsByFuotaTask": "<p>List all multicast groups associated with a fuota task.</p>",
+    "ListMulticastGroupsByFuotaTask": "<p>List all multicast groups associated with a FUOTA task.</p>",
     "ListNetworkAnalyzerConfigurations": "<p>Lists the network analyzer configurations.</p>",
     "ListPartnerAccounts": "<p>Lists the partner accounts associated with your AWS account.</p>",
     "ListPositionConfigurations": "<p>List position configurations for a given resource, such as positioning solvers.</p> <important> <p>This action is no longer supported. Calls to retrieve position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
@@ -86,9 +86,9 @@
     "ListWirelessGatewayTaskDefinitions": "<p>List the wireless gateway tasks definitions registered to your AWS account.</p>",
     "ListWirelessGateways": "<p>Lists the wireless gateways registered to your AWS account.</p>",
     "PutPositionConfiguration": "<p>Put position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to update the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
-    "PutResourceLogLevel": "<p>Sets the log-level override for a resource-ID and resource-type. This option can be specified for a wireless gateway or a wireless device. A limit of 200 log level override can be set per account.</p>",
-    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; wireless devices, wireless gateways, and fuota tasks.</p>",
-    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource-ID and resource-type. It can be used for a wireless device, a wireless gateway, or a fuota task.</p>",
+    "PutResourceLogLevel": "<p>Sets the log-level override for a resource ID and resource type. A limit of 200 log level override can be set per account.</p>",
+    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; wireless devices, wireless gateways, and FUOTA tasks.</p>",
+    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource ID and resource type. It can be used for a wireless device, a wireless gateway, or a FUOTA task.</p>",
     "SendDataToMulticastGroup": "<p>Sends the specified data to a multicast group.</p>",
     "SendDataToWirelessDevice": "<p>Sends a decrypted application data frame to a device.</p>",
     "StartBulkAssociateWirelessDeviceWithMulticastGroup": "<p>Starts a bulk association of all qualifying wireless devices with a multicast group.</p>",
@@ -103,7 +103,7 @@
     "UpdateDestination": "<p>Updates properties of a destination.</p>",
     "UpdateEventConfigurationByResourceTypes": "<p>Update the event configuration based on resource types.</p>",
     "UpdateFuotaTask": "<p>Updates properties of a FUOTA task.</p>",
-    "UpdateLogLevelsByResourceTypes": "<p>Set default log level, or log levels by resource types. This can be for wireless device log options or wireless gateways log options and is used to control the log messages that'll be displayed in CloudWatch.</p>",
+    "UpdateLogLevelsByResourceTypes": "<p>Set default log level, or log levels by resource types. This can be for wireless device, wireless gateway, or FUOTA task log options, and is used to control the log messages that'll be displayed in CloudWatch.</p>",
     "UpdateMetricConfiguration": "<p>Update the summary metric configuration.</p>",
     "UpdateMulticastGroup": "<p>Updates properties of a multicast group session.</p>",
     "UpdateNetworkAnalyzerConfiguration": "<p>Update network analyzer configuration.</p>",
@@ -1352,7 +1352,7 @@
       }
     },
     "FileDescriptor": {
-      "base": "<p>The Descriptor specifies some metadata about the File being transferred using FUOTA e.g. the software version. It is sent transparently to the device. It is a binary field encoded in base64</p>",
+      "base": "<p>The descriptor is the metadata about the file that is transferred to the device using FUOTA, such as the software version. It is a binary field encoded in base64.</p>",
       "refs": {
         "CreateFuotaTaskRequest$Descriptor": null,
         "GetFuotaTaskResponse$Descriptor": null,
@@ -1418,13 +1418,13 @@
       }
     },
     "FuotaTaskEvent": {
-      "base": "<p>The event for a log message, if the log message is tied to a fuota task.</p>",
+      "base": "<p>The event for a log message, if the log message is tied to a FUOTA task.</p>",
       "refs": {
         "FuotaTaskEventLogOption$Event": null
       }
     },
     "FuotaTaskEventLogOption": {
-      "base": "<p>The log options for a FUOTA task event and can be used to set log levels for a specific fuota task event.</p> <p>For a LoRaWAN FuotaTask type, possible event for a log message is <code>Fuota</code>.</p>",
+      "base": "<p>The log options for a FUOTA task event and can be used to set log levels for a specific FUOTA task event.</p> <p>For a LoRaWAN FUOTA task, the only possible event for a log message is <code>Fuota</code>.</p>",
       "refs": {
         "FuotaTaskEventLogOptionList$member": null
       }
@@ -1460,13 +1460,13 @@
       }
     },
     "FuotaTaskLogOption": {
-      "base": "<p>The log options for fuota tasks and can be used to set log levels for a specific type of fuota task.</p>",
+      "base": "<p>The log options for FUOTA tasks and can be used to set log levels for a specific type of FUOTA task.</p>",
       "refs": {
         "FuotaTaskLogOptionList$member": null
       }
     },
     "FuotaTaskLogOptionList": {
-      "base": "<p>The list of fuota task log options.</p>",
+      "base": "<p>The list of FUOTA task log options.</p>",
       "refs": {
         "GetLogLevelsByResourceTypesResponse$FuotaTaskLogOptions": null,
         "UpdateLogLevelsByResourceTypesRequest$FuotaTaskLogOptions": null
@@ -1488,9 +1488,9 @@
       }
     },
     "FuotaTaskType": {
-      "base": "<p>The fuota task type.</p>",
+      "base": "<p>The FUOTA task type.</p>",
       "refs": {
-        "FuotaTaskLogOption$Type": "<p>The fuota task type.</p>"
+        "FuotaTaskLogOption$Type": "<p>The FUOTA task type.</p>"
       }
     },
     "GPST": {
@@ -1521,7 +1521,7 @@
     "GatewayListMulticast": {
       "base": null,
       "refs": {
-        "ParticipatingGatewaysMulticast$GatewayList": "<p>The list of gateways that you want to use for sending the multicast downlink. Each downlink will be sent to all the gateways in the list with transmission interval between them. If list is empty the gateway list will be dynamically selected similar to the case of no ParticipatingGateways </p>"
+        "ParticipatingGatewaysMulticast$GatewayList": "<p>The list of gateways that you want to use for sending the multicast downlink message. Each downlink message will be sent to all the gateways in the list in the order that you provided. If the gateway list is empty, then AWS IoT Core for LoRaWAN chooses the gateways that were most recently used by the devices to send an uplink message.</p>"
       }
     },
     "GatewayMaxEirp": {
@@ -2987,7 +2987,7 @@
       }
     },
     "ParticipatingGatewaysMulticast": {
-      "base": "<p>Specify the list of gateways to which you want to send the multicast downlink messages. The multicast message will be sent to each gateway in the sequence provided in the list.</p>",
+      "base": "<p>Specify the list of gateways to which you want to send the multicast downlink messages. The multicast message will be sent to each gateway in the list, with the transmission interval as the time interval between each message.</p>",
       "refs": {
         "LoRaWANMulticast$ParticipatingGateways": null,
         "LoRaWANMulticastGet$ParticipatingGateways": null
@@ -3346,7 +3346,7 @@
       }
     },
     "ResourceIdentifier": {
-      "base": "<p>The identifier of the resource. For a Wireless Device, it is the wireless device ID. For a wireless gateway, it is the wireless gateway ID.</p>",
+      "base": "<p>The unique identifier of the resource, which can be the wireless gateway ID, the wireless device ID, or the FUOTA task ID.</p>",
       "refs": {
         "GetResourceLogLevelRequest$ResourceIdentifier": null,
         "PutResourceLogLevelRequest$ResourceIdentifier": null,
@@ -3362,9 +3362,9 @@
       "base": null,
       "refs": {
         "ConflictException$ResourceType": "<p>Type of the resource in the conflicting operation.</p>",
-        "GetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code> or <code>FuotaTask</code>.</p>",
-        "PutResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
-        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "GetResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "PutResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
         "ResourceNotFoundException$ResourceType": "<p>Type of the font found resource.</p>"
       }
     },
@@ -4006,7 +4006,7 @@
     "TransmissionIntervalMulticast": {
       "base": null,
       "refs": {
-        "ParticipatingGatewaysMulticast$TransmissionInterval": "<p>The duration of time for which AWS IoT Core for LoRaWAN will wait before transmitting the multicast payload to the next gateway in the list.</p>"
+        "ParticipatingGatewaysMulticast$TransmissionInterval": "<p>The duration of time in milliseconds for which AWS IoT Core for LoRaWAN will wait before transmitting the multicast payload to the next gateway in the list.</p>"
       }
     },
     "TransmitMode": {
@@ -4537,7 +4537,7 @@
     "WirelessGatewayServiceType": {
       "base": null,
       "refs": {
-        "GetServiceEndpointRequest$ServiceType": "<p>The service type for which to get endpoint information about. Can be <code>CUPS</code> for the Configuration and Update Server endpoint, or <code>LNS</code> for the LoRaWAN Network Server endpoint or <code>CLAIM</code> for the global endpoint.</p>",
+        "GetServiceEndpointRequest$ServiceType": "<p>The service type for which to get endpoint information about. Can be <code>CUPS</code> for the Configuration and Update Server endpoint, or <code>LNS</code> for the LoRaWAN Network Server endpoint.</p>",
         "GetServiceEndpointResponse$ServiceType": "<p>The endpoint's service type.</p>"
       }
     },

@@ -70,7 +70,7 @@
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
     "PutFeedback": "<p>Provides feedback against the specified assistant for the specified target. This API only supports generative targets.</p>",
     "QueryAssistant": "<important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Performs a manual search against the specified assistant. To retrieve recommendations for an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a>. </p>",
-    "RemoveAssistantAIAgent": "<p>Removes the AI Agent that is set for use by defafult on an Amazon Q in Connect Assistant.</p>",
+    "RemoveAssistantAIAgent": "<p>Removes the AI Agent that is set for use by default on an Amazon Q in Connect Assistant.</p>",
     "RemoveKnowledgeBaseTemplateUri": "<p>Removes a URI template from a knowledge base.</p>",
     "RenderMessageTemplate": "<p>Renders the Amazon Q in Connect message template based on the attribute values provided and generates the message content. For any variable present in the message template, if the attribute value is neither provided in the attribute request parameter nor the default attribute of the message template, the rendered message content will keep the variable placeholder as it is and return the attribute keys that are missing.</p>",
     "SearchContent": "<p>Searches for content in a specified knowledge base. Can be used to get a specific content resource by its name.</p>",
@@ -85,7 +85,7 @@
     "UpdateAIAgent": "<p>Updates an AI Agent.</p>",
     "UpdateAIGuardrail": "<p>Updates an AI Guardrail.</p>",
     "UpdateAIPrompt": "<p>Updates an AI Prompt.</p>",
-    "UpdateAssistantAIAgent": "<p>Updates the AI Agent that is set for use by defafult on an Amazon Q in Connect Assistant.</p>",
+    "UpdateAssistantAIAgent": "<p>Updates the AI Agent that is set for use by default on an Amazon Q in Connect Assistant.</p>",
     "UpdateContent": "<p>Updates information about the content.</p>",
     "UpdateKnowledgeBaseTemplateUri": "<p>Updates the template URI of a knowledge base. This is only supported for knowledge bases of type EXTERNAL. Include a single variable in <code>${variable}</code> format; this interpolated by Amazon Q in Connect using ingested content. For example, if you ingest a Salesforce article, it has an <code>Id</code> value, and you can set the template URI to <code>https://myInstanceName.lightning.force.com/lightning/r/Knowledge__kav/*${Id}*/view</code>. </p>",
     "UpdateMessageTemplate": "<p>Updates the Amazon Q in Connect message template. Partial update is supported. If any field is not supplied, it will remain unchanged for the message template that is referenced by the <code>$LATEST</code> qualifier. Any modification will only apply to the message template that is referenced by the <code>$LATEST</code> qualifier. The fields for all available versions will remain unchanged.</p>",
@@ -286,9 +286,9 @@
     "AIPromptModelIdentifier": {
       "base": null,
       "refs": {
-        "AIPromptData$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>CLAUDE_3_HAIKU_20240307_V1</code>.</p>",
-        "AIPromptSummary$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>CLAUDE_3_HAIKU_20240307_V1</code>.</p>",
-        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>CLAUDE_3_HAIKU_20240307_V1</code> </p>"
+        "AIPromptData$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code>.</p>",
+        "AIPromptSummary$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code>.</p>",
+        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code> </p>"
       }
     },
     "AIPromptSummary": {
@@ -2544,7 +2544,7 @@
     "NonEmptyString": {
       "base": null,
       "refs": {
-        "AnswerRecommendationAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>Changing this locale to anything other than <code>en_US</code> will turn off recommendations triggered by contact transcripts for agent assistance, as this feature is not supported in multiple languages.</p> </note>",
+        "AnswerRecommendationAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>Changing this locale to anything other than <code>en_US</code>, <code>en_GB</code>, or <code>en_AU</code> will turn off recommendations triggered by contact transcripts for agent assistance, as this feature is not supported in multiple languages.</p> </note>",
         "ConnectConfiguration$instanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "ContentData$revisionId": "<p>The identifier of the content revision.</p>",
         "ContentMetadata$key": null,
@@ -3204,7 +3204,7 @@
       }
     },
     "SelfServiceConversationHistory": {
-      "base": "<p>The conversation history data to included in conversation context data before the the Amazon Q in Connect session..</p>",
+      "base": "<p>The conversation history data to included in conversation context data before the Amazon Q in Connect session.</p>",
       "refs": {
         "SelfServiceConversationHistoryList$member": null
       }
