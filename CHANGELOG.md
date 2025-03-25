@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.13 - 2025-03-25
 
 * `Aws\Api` - Fixes bug which caused path duplication in custom configured endpoints
 * `Aws\SageMaker` - This release adds support for customer-managed KMS keys in Amazon SageMaker Partner AI Apps
