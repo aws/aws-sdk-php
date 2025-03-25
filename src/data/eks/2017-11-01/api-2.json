@@ -44,7 +44,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "AssociateIdentityProviderConfig":{
@@ -61,7 +62,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAccessEntry":{
@@ -531,7 +533,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListAccessEntries":{
@@ -817,7 +820,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateClusterVersion":{
@@ -834,7 +838,9 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "UpdateEksAnywhereSubscription":{
@@ -2681,6 +2687,15 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InvalidStateException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "IpFamily":{
       "type":"string",
       "enum":[
@@ -3682,6 +3697,15 @@
         "PREFER_NO_SCHEDULE"
       ]
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":429},
+      "exception":true
+    },
     "Timestamp":{"type":"timestamp"},
     "UnsupportedAvailabilityZoneException":{
       "type":"structure",
@@ -3845,7 +3869,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "force":{"shape":"Boolean"}
       }
     },
     "UpdateClusterVersionResponse":{

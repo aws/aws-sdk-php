@@ -302,6 +302,7 @@
         "CreateEksAnywhereSubscriptionRequest$autoRenew": "<p>A boolean indicating whether the subscription auto renews at the end of the term.</p>",
         "DeleteAddonRequest$preserve": "<p>Specifying this option preserves the add-on software on your cluster but Amazon EKS stops managing any settings for the add-on. If an IAM account is associated with the add-on, it isn't removed.</p>",
         "EksAnywhereSubscription$autoRenew": "<p>A boolean indicating whether or not a subscription will auto renew when it expires.</p>",
+        "UpdateClusterVersionRequest$force": "<p>Set this value to <code>true</code> to override upgrade-blocking readiness checks when updating a cluster.</p>",
         "UpdateEksAnywhereSubscriptionRequest$autoRenew": "<p>A boolean indicating whether or not to automatically renew the subscription.</p>",
         "UpdateNodegroupVersionRequest$force": "<p>Force the update if any <code>Pod</code> on the existing node group can't be drained due to a <code>Pod</code> disruption budget issue. If an update fails because all Pods can't be drained, you can force the update after it fails to terminate the old node whether or not any <code>Pod</code> is running on the node.</p>",
         "VpcConfigResponse$endpointPublicAccess": "<p>Whether the public API server endpoint is enabled.</p>",
@@ -1112,6 +1113,11 @@
       "refs": {
       }
     },
+    "InvalidStateException": {
+      "base": "<p>Amazon EKS detected upgrade readiness issues. Call the <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_ListInsights.html\"> <code>ListInsights</code> </a> API to view detected upgrade blocking issues. Pass the <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_UpdateClusterVersion.html#API_UpdateClusterVersion_RequestBody\"> <code>force</code> </a> flag when updating to override upgrade readiness errors.</p>",
+      "refs": {
+      }
+    },
     "IpFamily": {
       "base": null,
       "refs": {
@@ -1836,6 +1842,8 @@
         "InvalidRequestException$addonName": "<p>The request is invalid given the state of the add-on name. Check the state of the cluster and the associated operations.</p>",
         "InvalidRequestException$subscriptionId": "<p>The Amazon EKS subscription ID with the exception.</p>",
         "InvalidRequestException$message": "<p>The Amazon EKS add-on name associated with the exception.</p>",
+        "InvalidStateException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
+        "InvalidStateException$message": null,
         "Issue$message": "<p>The error message associated with the issue.</p>",
         "KubernetesNetworkConfigRequest$serviceIpv4Cidr": "<p>Don't specify a value if you select <code>ipv6</code> for <b>ipFamily</b>. The CIDR block to assign Kubernetes service IP addresses from. If you don't specify a block, Kubernetes assigns addresses from either the <code>10.100.0.0/16</code> or <code>172.20.0.0/16</code> CIDR blocks. We recommend that you specify a block that does not overlap with resources in other networks that are peered or connected to your VPC. The block must meet the following requirements:</p> <ul> <li> <p>Within one of the following private IP address blocks: <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, or <code>192.168.0.0/16</code>.</p> </li> <li> <p>Doesn't overlap with any CIDR block assigned to the VPC that you selected for VPC.</p> </li> <li> <p>Between <code>/24</code> and <code>/12</code>.</p> </li> </ul> <important> <p>You can only specify a custom CIDR block when you create a cluster. You can't change this value after the cluster is created.</p> </important>",
         "KubernetesNetworkConfigResponse$serviceIpv4Cidr": "<p>The CIDR block that Kubernetes <code>Pod</code> and <code>Service</code> object IP addresses are assigned from. Kubernetes assigns addresses from an <code>IPv4</code> CIDR block assigned to a subnet that the node is in. If you didn't specify a CIDR block when you created the cluster, then Kubernetes assigns addresses from either the <code>10.100.0.0/16</code> or <code>172.20.0.0/16</code> CIDR blocks. If this was specified, then it was specified when the cluster was created and it can't be changed.</p>",
@@ -1954,6 +1962,8 @@
         "ServiceUnavailableException$message": "<p>The request has failed due to a temporary failure of the server.</p>",
         "StringList$member": null,
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to add tags to.</p>",
+        "ThrottlingException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
+        "ThrottlingException$message": null,
         "UnsupportedAvailabilityZoneException$message": "<p>At least one of your specified cluster subnets is in an Availability Zone that does not support Amazon EKS. The exception output specifies the supported Availability Zones for your account, from which you can choose subnets for your cluster.</p>",
         "UnsupportedAvailabilityZoneException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
         "UnsupportedAvailabilityZoneException$nodegroupName": "<p>The Amazon EKS managed node group associated with the exception.</p>",
@@ -2116,6 +2126,11 @@
       "base": null,
       "refs": {
         "Taint$effect": "<p>The effect of the taint.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request or operation couldn't be performed because a service is throttling requests.</p>",
+      "refs": {
       }
     },
     "Timestamp": {

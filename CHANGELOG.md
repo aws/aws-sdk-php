@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixes bug which caused path duplication in custom configured endpoints
+* `Aws\SageMaker` - This release adds support for customer-managed KMS keys in Amazon SageMaker Partner AI Apps
+* `Aws\Keyspaces` - Removing replication region limitation for Amazon Keyspaces Multi-Region Replication APIs.
+* `Aws\BedrockAgent` - Adding support for Amazon OpenSearch Managed clusters as a vector database in Knowledge Bases for Amazon Bedrock
+* `Aws\EKS` - Added support to override upgrade-blocking readiness checks via force flag when updating a cluster.
+* `Aws\WorkSpacesThinClient` - Deprecate tags field in Get API responses
+* `Aws\GameLiftStreams` - Minor updates to improve developer experience.
+* `Aws\MarketplaceMetering` - This release enhances the BatchMeterUsage API to support new field CustomerAWSAccountId in request and response and making CustomerIdentifier optional. CustomerAWSAccountId or CustomerIdentifier must be provided in request but not both.
+* `Aws\MarketplaceEntitlementService` - This release enhances the GetEntitlements API to support new filter CUSTOMER_AWS_ACCOUNT_ID in request and CustomerAWSAccountId field in response.
+
 ## 3.342.12 - 2025-03-24
 
 * `Aws\QConnect` - Provides the correct value for supported model ID.

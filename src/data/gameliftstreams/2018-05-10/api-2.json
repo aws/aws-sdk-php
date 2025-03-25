@@ -80,6 +80,7 @@
       "output":{"shape":"CreateStreamGroupOutput"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
@@ -338,6 +339,7 @@
       "output":{"shape":"StartStreamSessionOutput"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
@@ -508,7 +510,7 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
         "Id":{"shape":"Id"},
@@ -611,7 +613,7 @@
         "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
         "ApplicationLogPaths":{"shape":"FilePaths"},
         "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedStreamGroups":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
@@ -646,7 +648,7 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedApplications":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "DefaultApplication":{"shape":"DefaultApplication"},
@@ -853,7 +855,7 @@
         "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
         "ApplicationLogPaths":{"shape":"FilePaths"},
         "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedStreamGroups":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
@@ -881,7 +883,7 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedApplications":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "DefaultApplication":{"shape":"DefaultApplication"},
@@ -1365,7 +1367,7 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "CreatedAt":{"shape":"Timestamp"},
         "DefaultApplication":{"shape":"DefaultApplication"},
         "Description":{"shape":"Description"},
@@ -1541,7 +1543,7 @@
         "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
         "ApplicationLogPaths":{"shape":"FilePaths"},
         "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedStreamGroups":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
@@ -1571,7 +1573,7 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "Arn":{"shape":"Arn"},
+        "Arn":{"shape":"Identifier"},
         "AssociatedApplications":{"shape":"ArnList"},
         "CreatedAt":{"shape":"Timestamp"},
         "DefaultApplication":{"shape":"DefaultApplication"},

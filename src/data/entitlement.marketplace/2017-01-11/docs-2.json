@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<fullname>AWS Marketplace Entitlement Service</fullname> <p>This reference provides descriptions of the AWS Marketplace Entitlement Service API.</p> <p>AWS Marketplace Entitlement Service is used to determine the entitlement of a customer to a given product. An entitlement represents capacity in a product owned by the customer. For example, a customer might own some number of users or seats in an SaaS application or some amount of data capacity in a multi-tenant database.</p> <p> <b>Getting Entitlement Records</b> </p> <ul> <li> <p> <i>GetEntitlements</i>- Gets the entitlements for a Marketplace product.</p> </li> </ul>",
   "operations": {
-    "GetEntitlements": "<p>GetEntitlements retrieves entitlement values for a given product. The results can be filtered based on customer identifier or product dimensions.</p>"
+    "GetEntitlements": "<p>GetEntitlements retrieves entitlement values for a given product. The results can be filtered based on customer identifier, AWS account ID, or product dimensions.</p> <important> <p> The <code>CustomerIdentifier</code> parameter is on path for deprecation. Use <code>CustomerAWSAccountID</code> instead.</p> <p>These parameters are mutually exclusive. You can't specify both <code>CustomerIdentifier</code> and <code>CustomerAWSAccountID</code> in the same request. </p> </important>"
   },
   "shapes": {
     "Boolean": {
@@ -64,7 +64,7 @@
     "GetEntitlementFilters": {
       "base": null,
       "refs": {
-        "GetEntitlementsRequest$Filter": "<p>Filter is used to return entitlements for a specific customer or for a specific dimension. Filters are described as keys mapped to a lists of values. Filtered requests are <i>unioned</i> for each value in the value list, and then <i>intersected</i> for each filter key.</p>"
+        "GetEntitlementsRequest$Filter": "<p>Filter is used to return entitlements for a specific customer or for a specific dimension. Filters are described as keys mapped to a lists of values. Filtered requests are <i>unioned</i> for each value in the value list, and then <i>intersected</i> for each filter key.</p> <p> <code>CustomerIdentifier</code> and <code>CustomerAWSAccountID</code> are mutually exclusive. You can't specify both in the same request. </p>"
       }
     },
     "GetEntitlementsRequest": {
@@ -98,6 +98,7 @@
       "refs": {
         "Entitlement$Dimension": "<p>The dimension for which the given entitlement applies. Dimensions represent categories of capacity in a product and are specified when the product is listed in AWS Marketplace.</p>",
         "Entitlement$CustomerIdentifier": "<p>The customer identifier is a handle to each unique customer in an application. Customer identifiers are obtained through the ResolveCustomer operation in AWS Marketplace Metering Service.</p>",
+        "Entitlement$CustomerAWSAccountId": "<p> The <code>CustomerAWSAccountID</code> parameter specifies the AWS account ID of the buyer. </p>",
         "GetEntitlementsRequest$NextToken": "<p>For paginated calls to GetEntitlements, pass the NextToken from the previous GetEntitlementsResult.</p>",
         "GetEntitlementsResult$NextToken": "<p>For paginated results, use NextToken in subsequent calls to GetEntitlements. If the result contains an empty set of entitlements, NextToken might still be present and should be used.</p>"
       }

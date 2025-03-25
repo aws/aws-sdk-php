@@ -110,7 +110,7 @@
       "refs": {
         "AgentActionGroup$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
         "CreateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
-        "UpdateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>"
+        "UpdateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>"
       }
     },
     "ActionGroupSignatureParamsKeyString": {
@@ -444,7 +444,7 @@
       "base": null,
       "refs": {
         "BedrockFoundationModelConfiguration$modelArn": "<p>The ARN of the foundation model to use for parsing.</p>",
-        "BedrockFoundationModelContextEnrichmentConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model used for context enrichment.</p>"
+        "BedrockFoundationModelContextEnrichmentConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the model used to create vector embeddings for the knowledge base.</p>"
       }
     },
     "Boolean": {
@@ -1282,6 +1282,9 @@
         "MongoDbAtlasFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
         "NeptuneAnalyticsFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "NeptuneAnalyticsFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
+        "OpenSearchManagedClusterFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
+        "OpenSearchManagedClusterFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
+        "OpenSearchManagedClusterFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
         "OpenSearchServerlessFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "OpenSearchServerlessFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "OpenSearchServerlessFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>",
@@ -2933,6 +2936,36 @@
         "GetAgentVersionRequest$agentVersion": "<p>The version of the agent.</p>",
         "GetFlowVersionRequest$flowVersion": "<p>The version of the flow for which to get information.</p>",
         "GetFlowVersionResponse$version": "<p>The version of the flow for which information was retrieved.</p>"
+      }
+    },
+    "OpenSearchManagedClusterConfiguration": {
+      "base": "<p>Contains details about the Managed Cluster configuration of the knowledge base in Amazon OpenSearch Service. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-osm.html\">Create a vector index in OpenSearch Managed Cluster</a>.</p>",
+      "refs": {
+        "StorageConfiguration$opensearchManagedClusterConfiguration": "<p>Contains details about the storage configuration of the knowledge base in OpenSearch Managed Cluster. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-osm.html\">Create a vector index in Amazon OpenSearch Service</a>.</p>"
+      }
+    },
+    "OpenSearchManagedClusterDomainArn": {
+      "base": null,
+      "refs": {
+        "OpenSearchManagedClusterConfiguration$domainArn": "<p>The Amazon Resource Name (ARN) of the OpenSearch domain.</p>"
+      }
+    },
+    "OpenSearchManagedClusterDomainEndpoint": {
+      "base": null,
+      "refs": {
+        "OpenSearchManagedClusterConfiguration$domainEndpoint": "<p>The endpoint URL the OpenSearch domain.</p>"
+      }
+    },
+    "OpenSearchManagedClusterFieldMapping": {
+      "base": "<p>Contains the names of the fields to which to map information about the vector store.</p>",
+      "refs": {
+        "OpenSearchManagedClusterConfiguration$fieldMapping": "<p>Contains the names of the fields to which to map information about the vector store.</p>"
+      }
+    },
+    "OpenSearchManagedClusterIndexName": {
+      "base": null,
+      "refs": {
+        "OpenSearchManagedClusterConfiguration$vectorIndexName": "<p>The name of the vector store.</p>"
       }
     },
     "OpenSearchServerlessCollectionArn": {

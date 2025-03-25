@@ -482,7 +482,7 @@
       "refs": {
         "GetKeyspaceResponse$replicationRegions": "<p> If the <code>replicationStrategy</code> of the keyspace is <code>MULTI_REGION</code>, a list of replication Regions is returned. </p>",
         "KeyspaceSummary$replicationRegions": "<p> If the <code>replicationStrategy</code> of the keyspace is <code>MULTI_REGION</code>, a list of replication Regions is returned. </p>",
-        "ReplicationSpecification$regionList": "<p> The <code>regionList</code> can contain up to six Amazon Web Services Regions where the keyspace is replicated in. </p>"
+        "ReplicationSpecification$regionList": "<p> The <code>regionList</code> contains the Amazon Web Services Regions where the keyspace is replicated in. </p>"
       }
     },
     "ReplicaAutoScalingSpecification": {
@@ -536,9 +536,9 @@
       }
     },
     "ReplicationSpecification": {
-      "base": "<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>regionList</code> - up to six Amazon Web Services Regions where the keyspace is replicated in.</p> </li> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> </ul>",
+      "base": "<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>regionList</code> - the Amazon Web Services Regions where the keyspace is replicated in.</p> </li> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> </ul>",
       "refs": {
-        "CreateKeyspaceRequest$replicationSpecification": "<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> <li> <p> <code>regionList</code> - if the <code>replicationStrategy</code> is <code>MULTI_REGION</code>, the <code>regionList</code> requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in. The maximum number of supported replication Regions including the current Region is six.</p> </li> </ul>",
+        "CreateKeyspaceRequest$replicationSpecification": "<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> <li> <p> <code>regionList</code> - if the <code>replicationStrategy</code> is <code>MULTI_REGION</code>, the <code>regionList</code> requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in.</p> </li> </ul>",
         "UpdateKeyspaceRequest$replicationSpecification": null
       }
     },

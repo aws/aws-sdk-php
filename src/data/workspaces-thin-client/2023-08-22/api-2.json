@@ -327,7 +327,8 @@
     },
     "ActivationCode":{
       "type":"string",
-      "pattern":"[a-z]{2}[a-z0-9]{6}"
+      "pattern":"[a-z]{2}[a-z0-9]{6}",
+      "sensitive":true
     },
     "ApplyTimeOf":{
       "type":"string",
@@ -507,7 +508,12 @@
         "updatedAt":{"shape":"Timestamp"},
         "arn":{"shape":"Arn"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{
+          "shape":"TagsMap",
+          "deprecated":true,
+          "deprecatedMessage":"This field will be removed in future releases. Use ListTagsForResource API instead.",
+          "deprecatedSince":"2025-03-25"
+        }
       }
     },
     "DeviceCreationTagKey":{
@@ -603,7 +609,12 @@
         "updatedAt":{"shape":"Timestamp"},
         "arn":{"shape":"Arn"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagsMap"},
+        "tags":{
+          "shape":"TagsMap",
+          "deprecated":true,
+          "deprecatedMessage":"This field will be removed in future releases. Use ListTagsForResource API instead.",
+          "deprecatedSince":"2025-03-25"
+        },
         "deviceCreationTags":{"shape":"DeviceCreationTagsMap"}
       }
     },
@@ -910,7 +921,12 @@
         "validationStatus":{"shape":"SoftwareSetValidationStatus"},
         "software":{"shape":"SoftwareList"},
         "arn":{"shape":"Arn"},
-        "tags":{"shape":"TagsMap"}
+        "tags":{
+          "shape":"TagsMap",
+          "deprecated":true,
+          "deprecatedMessage":"This field will be removed in future releases. Use ListTagsForResource API instead.",
+          "deprecatedSince":"2025-03-25"
+        }
       }
     },
     "SoftwareSetId":{

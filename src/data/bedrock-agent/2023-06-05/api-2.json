@@ -4646,7 +4646,8 @@
         "REDIS_ENTERPRISE_CLOUD",
         "RDS",
         "MONGO_DB_ATLAS",
-        "NEPTUNE_ANALYTICS"
+        "NEPTUNE_ANALYTICS",
+        "OPENSEARCH_MANAGED_CLUSTER"
       ]
     },
     "KnowledgeBaseSummaries":{
@@ -5410,6 +5411,53 @@
     "NumericalVersion":{
       "type":"string",
       "pattern":"^[0-9]{1,5}$"
+    },
+    "OpenSearchManagedClusterConfiguration":{
+      "type":"structure",
+      "required":[
+        "domainArn",
+        "domainEndpoint",
+        "fieldMapping",
+        "vectorIndexName"
+      ],
+      "members":{
+        "domainArn":{"shape":"OpenSearchManagedClusterDomainArn"},
+        "domainEndpoint":{"shape":"OpenSearchManagedClusterDomainEndpoint"},
+        "fieldMapping":{"shape":"OpenSearchManagedClusterFieldMapping"},
+        "vectorIndexName":{"shape":"OpenSearchManagedClusterIndexName"}
+      }
+    },
+    "OpenSearchManagedClusterDomainArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(|-cn|-us-gov|-iso):es:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:domain/[a-z][a-z0-9-]{3,28}$"
+    },
+    "OpenSearchManagedClusterDomainEndpoint":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^https://.*$"
+    },
+    "OpenSearchManagedClusterFieldMapping":{
+      "type":"structure",
+      "required":[
+        "metadataField",
+        "textField",
+        "vectorField"
+      ],
+      "members":{
+        "metadataField":{"shape":"FieldName"},
+        "textField":{"shape":"FieldName"},
+        "vectorField":{"shape":"FieldName"}
+      }
+    },
+    "OpenSearchManagedClusterIndexName":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(?![\\-_+.])[a-z0-9][a-z0-9\\-_\\.]*$",
+      "sensitive":true
     },
     "OpenSearchServerlessCollectionArn":{
       "type":"string",
@@ -6574,6 +6622,7 @@
       "members":{
         "mongoDbAtlasConfiguration":{"shape":"MongoDbAtlasConfiguration"},
         "neptuneAnalyticsConfiguration":{"shape":"NeptuneAnalyticsConfiguration"},
+        "opensearchManagedClusterConfiguration":{"shape":"OpenSearchManagedClusterConfiguration"},
         "opensearchServerlessConfiguration":{"shape":"OpenSearchServerlessConfiguration"},
         "pineconeConfiguration":{"shape":"PineconeConfiguration"},
         "rdsConfiguration":{"shape":"RdsConfiguration"},
