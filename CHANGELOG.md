@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.14 - 2025-03-26
 
 * `Aws\DirectConnect` - With this release, AWS Direct Connect allows you to tag your Direct Connect gateways. Tags are metadata that you can create and use to manage your Direct Connect gateways. For more information about tagging, see AWS Tagging Strategies.
 * `Aws\RDS` - Add note about the Availability Zone where RDS restores the DB cluster for the RestoreDBClusterToPointInTime operation.
