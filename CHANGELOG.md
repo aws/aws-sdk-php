@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - With this release, AWS Direct Connect allows you to tag your Direct Connect gateways. Tags are metadata that you can create and use to manage your Direct Connect gateways. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\RDS` - Add note about the Availability Zone where RDS restores the DB cluster for the RestoreDBClusterToPointInTime operation.
+* `Aws\WAFV2` - This release adds the ability to associate an AWS WAF v2 web ACL with an AWS Amplify App.
+* `Aws\ARCZonalShift` - Add new shiftType field for ARC zonal shifts.
+* `Aws\MediaConvert` - This release adds a configurable Quality Level setting for the top rendition of Auto ABR jobs
+* `Aws\MediaTailor` - Add support for log filtering which allow customers to filter out selected event types from logs.
+* `Aws\Polly` - Added support for the new voice - Jihye (ko-KR). Jihye is available as a Neural voice only.
+
 ## 3.342.13 - 2025-03-25
 
 * `Aws\Api` - Fixes bug which caused path duplication in custom configured endpoints

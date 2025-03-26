@@ -110,6 +110,26 @@
         "adMarkupTypes$member": null
       }
     },
+    "AdsInteractionExcludeEventType": {
+      "base": null,
+      "refs": {
+        "__adsInteractionExcludeEventTypesList$member": null
+      }
+    },
+    "AdsInteractionLog": {
+      "base": "<p>Settings for customizing what events are included in logs for interactions with the ad decision server (ADS).</p> <p>For more information about ADS logs, inlcuding descriptions of the event types, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/ads-log-format.html\">MediaTailor ADS logs description and event types</a> in Elemental MediaTailor User Guide.</p>",
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$AdsInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the ADS.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$AdsInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the ADS.</p>",
+        "LogConfiguration$AdsInteractionLog": "<p>Settings for customizing what events are included in logs for interactions with the ad decision server (ADS).</p>"
+      }
+    },
+    "AdsInteractionPublishOptInEventType": {
+      "base": null,
+      "refs": {
+        "__adsInteractionPublishOptInEventTypesList$member": null
+      }
+    },
     "Alert": {
       "base": "<p>Alert configuration parameters.</p>",
       "refs": {
@@ -732,6 +752,20 @@
         "PutPlaybackConfigurationResponse$ManifestProcessingRules": "<p>The configuration for manifest processing rules. Manifest processing rules enable customization of the personalized manifests created by MediaTailor.</p>"
       }
     },
+    "ManifestServiceExcludeEventType": {
+      "base": null,
+      "refs": {
+        "__manifestServiceExcludeEventTypesList$member": null
+      }
+    },
+    "ManifestServiceInteractionLog": {
+      "base": "<p>Settings for customizing what events are included in logs for interactions with the origin server.</p> <p>For more information about manifest service logs, including descriptions of the event types, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/log-types.html\">MediaTailor manifest logs description and event types</a> in Elemental MediaTailor User Guide.</p>",
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$ManifestServiceInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the origin server.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$ManifestServiceInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the origin server.</p>",
+        "LogConfiguration$ManifestServiceInteractionLog": "<p>Settings for customizing what events are included in logs for interactions with the origin server.</p>"
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
@@ -954,7 +988,7 @@
     "StreamingMediaFileConditioning": {
       "base": null,
       "refs": {
-        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery and supported file extensions, indicates what transcoding action MediaTailor takes when it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/precondition-ads.html\">https://docs.aws.amazon.com/precondition-ads.html</a>.</p>"
+        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery and supported file extensions, indicates what transcoding action MediaTailor takes when it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/precondition-ads.html\">Using preconditioned ads</a> in the Elemental MediaTailor user guide.</p>"
       }
     },
     "String": {
@@ -1076,6 +1110,18 @@
       "base": "<p>VOD source configuration parameters.</p>",
       "refs": {
         "__listOfVodSource$member": null
+      }
+    },
+    "__adsInteractionExcludeEventTypesList": {
+      "base": null,
+      "refs": {
+        "AdsInteractionLog$ExcludeEventTypes": "<p>Indicates that MediaTailor won't emit the selected events in the logs for playback sessions that are initialized with this configuration.</p>"
+      }
+    },
+    "__adsInteractionPublishOptInEventTypesList": {
+      "base": null,
+      "refs": {
+        "AdsInteractionLog$PublishOptInEventTypes": "<p>Indicates that MediaTailor emits <code>RAW_ADS_RESPONSE</code> logs for playback sessions that are initialized with this configuration.</p>"
       }
     },
     "__boolean": {
@@ -1248,6 +1294,12 @@
         "UpdateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
         "UpdateProgramTransition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>",
         "UpdateProgramTransition$DurationMillis": "<p>The duration of the live program in seconds.</p>"
+      }
+    },
+    "__manifestServiceExcludeEventTypesList": {
+      "base": null,
+      "refs": {
+        "ManifestServiceInteractionLog$ExcludeEventTypes": "<p>Indicates that MediaTailor won't emit the selected events in the logs for playback sessions that are initialized with this configuration.</p>"
       }
     },
     "__mapOf__string": {

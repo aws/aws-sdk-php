@@ -2336,15 +2336,11 @@
     },
     "GetWebACLRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "Scope",
-        "Id"
-      ],
       "members":{
         "Name":{"shape":"EntityName"},
         "Scope":{"shape":"Scope"},
-        "Id":{"shape":"EntityId"}
+        "Id":{"shape":"EntityId"},
+        "ARN":{"shape":"ResourceArn"}
       }
     },
     "GetWebACLResponse":{
@@ -3585,7 +3581,8 @@
         "APPSYNC",
         "COGNITO_USER_POOL",
         "APP_RUNNER_SERVICE",
-        "VERIFIED_ACCESS_INSTANCE"
+        "VERIFIED_ACCESS_INSTANCE",
+        "AMPLIFY"
       ]
     },
     "ResponseCode":{"type":"integer"},

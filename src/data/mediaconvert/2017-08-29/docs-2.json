@@ -25,7 +25,7 @@
     "ListQueues": "Retrieve a JSON array of up to twenty of your queues. This will return the queues themselves, not just a list of them. To retrieve the next twenty queues, use the nextToken string returned with the array.",
     "ListTagsForResource": "Retrieve the tags for a MediaConvert resource.",
     "ListVersions": "Retrieve a JSON array of all available Job engine versions and the date they expire.",
-    "Probe": "The Probe operation analyzes the provided media file and returns comprehensive metadata about its container format, tracks, and any encountered errors.",
+    "Probe": "Use Probe to obtain detailed information about your input media files. Probe returns a JSON that includes container, codec, frame rate, resolution, track count, audio layout, captions, and more. You can use this information to learn more about your media files, or to help make decisions while automating your transcoding workflow.",
     "PutPolicy": "Create or change your policy. For more information about policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "SearchJobs": "Retrieve a JSON array that includes job details for up to twenty of your most recent jobs. Optionally filter results further according to input file, queue, or status. To retrieve the twenty next most recent jobs, use the nextToken string returned with the array.",
     "TagResource": "Add tags to a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
@@ -318,9 +318,9 @@
       }
     },
     "AudioProperties": {
-      "base": "Properties specific to audio tracks.",
+      "base": "Details about the media file's audio track.",
       "refs": {
-        "Track$AudioProperties": "Properties specific to audio tracks."
+        "Track$AudioProperties": "Details about the media file's audio track."
       }
     },
     "AudioSelector": {
@@ -880,7 +880,7 @@
     "Codec": {
       "base": null,
       "refs": {
-        "Track$Codec": "The codec used for the track."
+        "Track$Codec": "The codec of the audio or video track, or caption format of the data track."
       }
     },
     "ColorConversion3DLUTSetting": {
@@ -902,9 +902,9 @@
       }
     },
     "ColorPrimaries": {
-      "base": "the color primaries.",
+      "base": "The color space color primaries of the video track.",
       "refs": {
-        "VideoProperties$ColorPrimaries": "the color primaries."
+        "VideoProperties$ColorPrimaries": "The color space color primaries of the video track."
       }
     },
     "ColorSpace": {
@@ -940,9 +940,9 @@
       }
     },
     "Container": {
-      "base": "Information about the container format of the media file.",
+      "base": "The container of your media file. This information helps you understand the overall structure and details of your media, including format, duration, and track layout.",
       "refs": {
-        "ProbeResult$Container": "Information about the container format of the media file."
+        "ProbeResult$Container": "The container of your media file. This information helps you understand the overall structure and details of your media, including format, duration, and track layout."
       }
     },
     "ContainerSettings": {
@@ -1108,9 +1108,9 @@
       }
     },
     "DataProperties": {
-      "base": "Properties specific to data tracks.",
+      "base": "Details about the media file's data track.",
       "refs": {
-        "Track$DataProperties": "Properties specific to data tracks."
+        "Track$DataProperties": "Details about the media file's data track."
       }
     },
     "DecryptionMode": {
@@ -1656,7 +1656,7 @@
     "Format": {
       "base": null,
       "refs": {
-        "Container$Format": "The format of the container"
+        "Container$Format": "The format of your media file. For example: MP4, QuickTime (MOV), Matroska (MKV), or WebM. Note that this will be blank if your media file has a format that the MediaConvert Probe operation does not recognize."
       }
     },
     "FrameCaptureSettings": {
@@ -1666,10 +1666,10 @@
       }
     },
     "FrameRate": {
-      "base": "the calculated frame rate of the asset.",
+      "base": "The frame rate of the video or audio track.",
       "refs": {
-        "AudioProperties$FrameRate": "the calculated frame rate of the asset.",
-        "VideoProperties$FrameRate": "the calculated frame rate of the asset."
+        "AudioProperties$FrameRate": "The frame rate of the video or audio track.",
+        "VideoProperties$FrameRate": "The frame rate of the video or audio track."
       }
     },
     "GetJobRequest": {
@@ -2743,15 +2743,15 @@
       }
     },
     "MatrixCoefficients": {
-      "base": "the matrix coefficients.",
+      "base": "The color space matrix coefficients of the video track.",
       "refs": {
-        "VideoProperties$MatrixCoefficients": "the matrix coefficients."
+        "VideoProperties$MatrixCoefficients": "The color space matrix coefficients of the video track."
       }
     },
     "Metadata": {
-      "base": "Metadata about the file.",
+      "base": "Metadata and other file information.",
       "refs": {
-        "ProbeResult$Metadata": "Metadata about the file."
+        "ProbeResult$Metadata": "Metadata and other file information."
       }
     },
     "MinBottomRenditionSize": {
@@ -3350,12 +3350,12 @@
       }
     },
     "ProbeResponse": {
-      "base": "The response from a media file probe operation, providing comprehensive metadata about the file, including its container format, tracks (video, audio, data).",
+      "base": "The response from a MediaConvert Probe operation, in JSON form, with detailed information about your input media.",
       "refs": {
       }
     },
     "ProbeResult": {
-      "base": "The metadata and analysis results for a media file.",
+      "base": "Probe results for your media file.",
       "refs": {
         "__listOfProbeResult$member": null
       }
@@ -3743,13 +3743,13 @@
       }
     },
     "Track": {
-      "base": "The track information such as codec, duration, etc.",
+      "base": "Details about each track (video, audio, or data) in the media file.",
       "refs": {
         "__listOfTrack$member": null
       }
     },
     "TrackMapping": {
-      "base": "Track mapping information.",
+      "base": "An array containing track mapping information.",
       "refs": {
         "__listOfTrackMapping$member": null
       }
@@ -3763,13 +3763,13 @@
     "TrackType": {
       "base": null,
       "refs": {
-        "Track$TrackType": "The type of the track (video, audio, or data)."
+        "Track$TrackType": "The type of track: video, audio, or data."
       }
     },
     "TransferCharacteristics": {
-      "base": "the transfer characteristics.",
+      "base": "The color space transfer characteristics of the video track.",
       "refs": {
-        "VideoProperties$TransferCharacteristics": "the transfer characteristics."
+        "VideoProperties$TransferCharacteristics": "The color space transfer characteristics of the video track."
       }
     },
     "TsPtsOffset": {
@@ -4016,9 +4016,9 @@
       }
     },
     "VideoProperties": {
-      "base": "Properties specific to video tracks.",
+      "base": "Details about the media file's video track.",
       "refs": {
-        "Track$VideoProperties": "Properties specific to video tracks."
+        "Track$VideoProperties": "Details about the media file's video track."
       }
     },
     "VideoSelector": {
@@ -4321,8 +4321,8 @@
     "__double": {
       "base": null,
       "refs": {
-        "Container$Duration": "The duration of the media file in seconds.",
-        "Track$Duration": "The duration of the track in seconds."
+        "Container$Duration": "The total duration of your media file, in seconds.",
+        "Track$Duration": "The duration of the track, in seconds."
       }
     },
     "__doubleMin0": {
@@ -4357,6 +4357,12 @@
         "DashIsoImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
         "HlsGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
         "HlsImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails. If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate. For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails."
+      }
+    },
+    "__doubleMin1Max10": {
+      "base": null,
+      "refs": {
+        "AutomatedAbrSettings$MaxQualityLevel": "Optional. Specify the QVBR quality level to use for all renditions in your automated ABR stack. To have MediaConvert automatically determine the quality level: Leave blank. To manually specify a quality level: Enter an integer from 1 to 10. MediaConvert will use a quality level up to the value that you specify, depending on your source. For more information about QVBR quality levels, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/qvbr-guidelines.html"
       }
     },
     "__doubleMinNegative59Max0": {
@@ -4404,12 +4410,12 @@
       "base": null,
       "refs": {
         "AudioProperties$BitDepth": "The bit depth of the audio track.",
-        "AudioProperties$BitRate": "The bit rate of the audio track in bits per second.",
-        "AudioProperties$Channels": "The number of audio channels.",
+        "AudioProperties$BitRate": "The bit rate of the audio track, in bits per second.",
+        "AudioProperties$Channels": "The number of audio channels in the audio track.",
         "AudioProperties$SampleRate": "The sample rate of the audio track.",
         "DescribeEndpointsRequest$MaxResults": "Optional. Max number of endpoints, up to twenty, that will be returned at one time.",
-        "FrameRate$Denominator": "the denominator of the frame rate of the asset.",
-        "FrameRate$Numerator": "the numerator of the frame rate of the asset.",
+        "FrameRate$Denominator": "The denominator, or bottom number, in the fractional frame rate. For example, if your frame rate is 24000 / 1001 (23.976 frames per second), then the denominator would be 1001.",
+        "FrameRate$Numerator": "The numerator, or top number, in the fractional frame rate. For example, if your frame rate is 24000 / 1001 (23.976 frames per second), then the numerator would be 24000.",
         "HopDestination$WaitMinutes": "Required for setting up a job to use queue hopping. Minimum wait time in minutes until the job can hop to the destination queue. Valid range is 1 to 4320 minutes, inclusive.",
         "Job$ErrorCode": "Error code for the job",
         "Job$JobPercentComplete": "An estimate of how far your job has progressed. This estimate is shown as a percentage of the total time from when your job leaves its queue to when your output files appear in your output Amazon S3 bucket. AWS Elemental MediaConvert provides jobPercentComplete in CloudWatch STATUS_UPDATE events and in the response to GetJob and ListJobs requests. The jobPercentComplete estimate is reliable for the following input containers: Quicktime, Transport Stream, MP4, and MXF. For some jobs, the service can't provide information about job progress. In those cases, jobPercentComplete returns a null value.",
@@ -4417,13 +4423,13 @@
         "OutputDetail$DurationInMs": "Duration in milliseconds",
         "ReservationPlan$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. When you increase this number, you extend your existing commitment with a new 12-month commitment for a larger number of RTS. The new commitment begins when you purchase the additional capacity. You can't decrease the number of RTS in your reserved queue.",
         "ReservationPlanSettings$ReservedSlots": "Specifies the number of reserved transcode slots (RTS) for this queue. The number of RTS determines how many jobs the queue can process in parallel; each RTS can process one job at a time. You can't decrease the number of RTS in your reserved queue. You can increase the number of RTS by extending your existing commitment with a new 12-month commitment for the larger number. The new commitment begins when you purchase the additional capacity. You can't cancel your commitment or revert to your original commitment after you increase the capacity.",
-        "Track$Index": "The index of the track.",
+        "Track$Index": "The unique index number of the track, starting at 1.",
         "VideoDetail$HeightInPx": "Height in pixels for the output",
         "VideoDetail$WidthInPx": "Width in pixels for the output",
         "VideoProperties$BitDepth": "The bit depth of the video track.",
-        "VideoProperties$BitRate": "The bit rate of the video track in bits per second.",
-        "VideoProperties$Height": "The height of the video track in pixels.",
-        "VideoProperties$Width": "The width of the video track in pixels.",
+        "VideoProperties$BitRate": "The bit rate of the video track, in bits per second.",
+        "VideoProperties$Height": "The height of the video track, in pixels.",
+        "VideoProperties$Width": "The width of the video track, in pixels.",
         "WarningGroup$Code": "Warning code that identifies a specific warning in the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/warning_codes.html",
         "WarningGroup$Count": "The number of times this warning occurred in the job.",
         "__listOf__integer$member": null,
@@ -5478,13 +5484,13 @@
     "__listOfProbeInputFile": {
       "base": null,
       "refs": {
-        "ProbeRequest$InputFiles": "The list of input media files to be probed."
+        "ProbeRequest$InputFiles": "Specify a media file to probe."
       }
     },
     "__listOfProbeResult": {
       "base": null,
       "refs": {
-        "ProbeResponse$ProbeResults": "List of probe results for the input media file(s)."
+        "ProbeResponse$ProbeResults": "Probe results for your media file."
       }
     },
     "__listOfQueue": {
@@ -5514,13 +5520,13 @@
     "__listOfTrack": {
       "base": null,
       "refs": {
-        "Container$Tracks": "List of Track objects."
+        "Container$Tracks": "Details about each track (video, audio, or data) in the media file."
       }
     },
     "__listOfTrackMapping": {
       "base": null,
       "refs": {
-        "ProbeResult$TrackMappings": "List of Track mapping objects."
+        "ProbeResult$TrackMappings": "An array containing track mapping information."
       }
     },
     "__listOfVideoOverlay": {
@@ -5557,9 +5563,9 @@
     "__listOf__integer": {
       "base": null,
       "refs": {
-        "TrackMapping$AudioTrackIndexes": "The indexes of the audio tracks.",
-        "TrackMapping$DataTrackIndexes": "The indexes of the data tracks.",
-        "TrackMapping$VideoTrackIndexes": "The indexes of the video tracks."
+        "TrackMapping$AudioTrackIndexes": "The index numbers of the audio tracks in your media file.",
+        "TrackMapping$DataTrackIndexes": "The index numbers of the data tracks in your media file.",
+        "TrackMapping$VideoTrackIndexes": "The index numbers of the video tracks in your media file."
       }
     },
     "__listOf__integerMin1Max2147483647": {
@@ -5623,7 +5629,7 @@
     "__long": {
       "base": null,
       "refs": {
-        "Metadata$FileSize": "The size of the file in bytes."
+        "Metadata$FileSize": "The size of the media file, in bytes."
       }
     },
     "__mapOfAudioSelector": {
@@ -5671,7 +5677,7 @@
       "base": null,
       "refs": {
         "AssociateCertificateRequest$Arn": "The ARN of the ACM certificate that you want to associate with your MediaConvert resource.",
-        "AudioProperties$LanguageCode": "the language code of the track",
+        "AudioProperties$LanguageCode": "The language code of the audio track, in three character ISO 639-3 format.",
         "BurninDestinationSettings$FontFileBoldItalic": "Specify a bold italic TrueType font file to use when rendering your output captions.\nEnter an S3, HTTP, or HTTPS URL.\nWhen you do, you must also separately specify a regular, a bold, and an italic font file.",
         "CancelJobRequest$Id": "The Job ID of the job to be cancelled.",
         "CaptionDescription$LanguageDescription": "Specify a label for this set of output captions. For example, \"English\", \"Director commentary\", or \"track_2\". For streaming outputs, MediaConvert passes this information into destination manifests for display on the end-viewer's player device. For outputs in other output groups, the service ignores this setting.",
@@ -5694,7 +5700,7 @@
         "CreateQueueRequest$Description": "Optional. A description of the queue that you are creating.",
         "CreateQueueRequest$Name": "The name of the queue that you are creating.",
         "DashIsoGroupSettings$BaseUrl": "A partial URI prefix that will be put in the manifest (.mpd) file at the top level BaseURL element. Can be used if streams are delivered from a different URL than the manifest file.",
-        "DataProperties$LanguageCode": "the language code of the track",
+        "DataProperties$LanguageCode": "The language code of the data track, in three character ISO 639-3 format.",
         "DeleteJobTemplateRequest$Name": "The name of the job template to be deleted.",
         "DeletePresetRequest$Name": "The name of the preset to be deleted.",
         "DeleteQueueRequest$Name": "The name of the queue that you want to delete.",
@@ -5744,8 +5750,8 @@
         "ListTagsForResourceRequest$Arn": "The Amazon Resource Name (ARN) of the resource that you want to list tags for. To get the ARN, send a GET request with the resource name.",
         "ListVersionsRequest$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of Job engine versions.",
         "ListVersionsResponse$NextToken": "Optional. Use this string, provided with the response to a previous request, to request the next batch of Job engine versions.",
-        "Metadata$ETag": "The ETag of the file.",
-        "Metadata$MimeType": "The MIME type of the file.",
+        "Metadata$ETag": "The entity tag (ETag) of the file.",
+        "Metadata$MimeType": "The MIME type of the media file.",
         "Mp4Settings$Mp4MajorBrand": "Overrides the \"Major Brand\" field in the output file. Usually not necessary to specify.",
         "NielsenConfiguration$DistributorId": "Use Distributor ID to specify the distributor ID that is assigned to your organization by Nielsen.",
         "OutputGroup$CustomName": "Use Custom Group Name to specify a name for the output group. This value is displayed on the console and can make your job settings JSON more human-readable. It does not affect your outputs. Use up to twelve characters that are either letters, numbers, spaces, or underscores.",
@@ -5753,7 +5759,7 @@
         "Preset$Category": "An optional category you create to organize your presets.",
         "Preset$Description": "An optional description you create for each preset.",
         "Preset$Name": "A name you create for each preset. Each name must be unique within your account.",
-        "ProbeInputFile$FileUrl": "The URI to your input file(s) that is stored in Amazon S3 or on an HTTP(S) server.",
+        "ProbeInputFile$FileUrl": "Specify the S3, HTTP, or HTTPS URL for your media file.",
         "Queue$Arn": "An identifier for this resource that is unique within all of AWS.",
         "Queue$Description": "An optional description that you create for each queue.",
         "Queue$Name": "A name that you create for each queue. Each name must be unique within your account.",
@@ -6172,7 +6178,7 @@
         "JobEngineVersion$ExpirationDate": "The date that this Job engine version expires. Requests to create jobs with an expired version result in a regular job, as if no specific Job engine version was requested.",
         "JobTemplate$CreatedAt": "The timestamp in epoch seconds for Job template creation.",
         "JobTemplate$LastUpdated": "The timestamp in epoch seconds when the Job template was last updated.",
-        "Metadata$LastModified": "The last modification time of the file.",
+        "Metadata$LastModified": "The last modification timestamp of the media file, in Unix time.",
         "Preset$CreatedAt": "The timestamp in epoch seconds for preset creation.",
         "Preset$LastUpdated": "The timestamp in epoch seconds when the preset was last updated.",
         "Queue$CreatedAt": "The timestamp in epoch seconds for when you created the queue.",

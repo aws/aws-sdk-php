@@ -306,7 +306,6 @@
       "type":"structure",
       "required":[
         "awayFrom",
-        "endTime",
         "startTime",
         "status"
       ],
@@ -390,7 +389,8 @@
         "SimultaneousZonalShiftsConflict",
         "PracticeConfigurationAlreadyExists",
         "AutoShiftEnabled",
-        "PracticeConfigurationDoesNotExist"
+        "PracticeConfigurationDoesNotExist",
+        "ZonalAutoshiftActive"
       ]
     },
     "ControlCondition":{
@@ -400,7 +400,7 @@
         "type"
       ],
       "members":{
-        "alarmIdentifier":{"shape":"ResourceArn"},
+        "alarmIdentifier":{"shape":"MetricIdentifier"},
         "type":{"shape":"ControlConditionType"}
       }
     },
@@ -628,6 +628,12 @@
       "max":100,
       "min":1
     },
+    "MetricIdentifier":{
+      "type":"string",
+      "max":1024,
+      "min":8,
+      "pattern":"^.*$"
+    },
     "PracticeRunConfiguration":{
       "type":"structure",
       "required":["outcomeAlarms"],
@@ -674,6 +680,15 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ShiftType":{
+      "type":"string",
+      "enum":[
+        "ZONAL_SHIFT",
+        "PRACTICE_RUN",
+        "FIS_EXPERIMENT",
+        "ZONAL_AUTOSHIFT"
+      ]
     },
     "StartTime":{"type":"timestamp"},
     "StartZonalShiftRequest":{
@@ -814,7 +829,8 @@
         "UnsupportedAz",
         "InvalidAlarmCondition",
         "InvalidConditionType",
-        "InvalidPracticeBlocker"
+        "InvalidPracticeBlocker",
+        "FISExperimentUpdateNotAllowed"
       ]
     },
     "Weight":{
@@ -880,6 +896,7 @@
         "expiryTime":{"shape":"ExpiryTime"},
         "practiceRunOutcome":{"shape":"PracticeRunOutcome"},
         "resourceIdentifier":{"shape":"ResourceIdentifier"},
+        "shiftType":{"shape":"ShiftType"},
         "startTime":{"shape":"StartTime"},
         "zonalShiftId":{"shape":"ZonalShiftId"}
       }
@@ -913,6 +930,7 @@
         "expiryTime":{"shape":"ExpiryTime"},
         "practiceRunOutcome":{"shape":"PracticeRunOutcome"},
         "resourceIdentifier":{"shape":"ResourceIdentifier"},
+        "shiftType":{"shape":"ShiftType"},
         "startTime":{"shape":"StartTime"},
         "status":{"shape":"ZonalShiftStatus"},
         "zonalShiftId":{"shape":"ZonalShiftId"}
