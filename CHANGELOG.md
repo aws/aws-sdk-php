@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Adding support for the new parameter "ScanFilters" in the CloudFormation StartResourceScan API. When this parameter is included, the StartResourceScan API will initiate a scan limited to the resource types specified by the parameter.
+* `Aws\Batch` - This release will enable two features: Firelens log driver, and Execute Command on Batch jobs on ECS. Both features will be passed through to ECS.
+* `Aws\DataZone` - This release adds new action type of Create Listing Changeset for the Metadata Enforcement Rule feature.
+* `Aws\BedrockAgentRuntime` - bedrock flow now support node action trace.
+* `Aws\IAM` - Update IAM dual-stack endpoints for BJS, IAD and PDT partitions
+* `Aws\SSOOIDC` - This release adds AwsAdditionalDetails in the CreateTokenWithIAM API response.
+* `Aws\SageMaker` - add: recovery mode for SageMaker Studio apps
+* `Aws\GameLift` - Amazon GameLift Servers add support for additional instance types.
+* `Aws\EKS` - Added support for BOTTLEROCKET FIPS AMIs to AMI types in US regions.
+* `Aws\BCMPricingCalculator` - Added standaloneAccountRateTypeSelections for GetPreferences and UpdatePreferences APIs. Added STALE enum value to status attribute in GetBillScenario and UpdateBillScenario APIs.
+
 ## 3.342.14 - 2025-03-26
 
 * `Aws\DirectConnect` - With this release, AWS Direct Connect allows you to tag your Direct Connect gateways. Tags are metadata that you can create and use to manage your Direct Connect gateways. For more information about tagging, see AWS Tagging Strategies.

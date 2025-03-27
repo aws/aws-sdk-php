@@ -1403,7 +1403,8 @@
       "enum":[
         "READY",
         "LOCKED",
-        "FAILED"
+        "FAILED",
+        "STALE"
       ]
     },
     "BillScenarioSummaries":{
@@ -1697,7 +1698,8 @@
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "GetWorkloadEstimateRequest":{
@@ -2333,14 +2335,16 @@
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "UpdatePreferencesResponse":{
       "type":"structure",
       "members":{
         "managementAccountRateTypeSelections":{"shape":"RateTypes"},
-        "memberAccountRateTypeSelections":{"shape":"RateTypes"}
+        "memberAccountRateTypeSelections":{"shape":"RateTypes"},
+        "standaloneAccountRateTypeSelections":{"shape":"RateTypes"}
       }
     },
     "UpdateWorkloadEstimateRequest":{

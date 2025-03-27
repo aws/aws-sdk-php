@@ -746,7 +746,8 @@
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "repositoryCredentials":{"shape":"RepositoryCredentials"}
+        "repositoryCredentials":{"shape":"RepositoryCredentials"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "ContainerOverrides":{
@@ -799,6 +800,7 @@
         "secrets":{"shape":"SecretList"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "fargatePlatformConfiguration":{"shape":"FargatePlatformConfiguration"},
+        "enableExecuteCommand":{"shape":"Boolean"},
         "ephemeralStorage":{"shape":"EphemeralStorage"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
         "repositoryCredentials":{"shape":"RepositoryCredentials"}
@@ -1165,7 +1167,8 @@
         "pidMode":{"shape":"String"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "volumes":{"shape":"Volumes"}
+        "volumes":{"shape":"Volumes"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "EcsTaskProperties":{
@@ -1181,7 +1184,8 @@
         "pidMode":{"shape":"String"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "runtimePlatform":{"shape":"RuntimePlatform"},
-        "volumes":{"shape":"Volumes"}
+        "volumes":{"shape":"Volumes"},
+        "enableExecuteCommand":{"shape":"Boolean"}
       }
     },
     "EksAnnotationsMap":{
@@ -1489,6 +1493,26 @@
       "members":{
         "platformVersion":{"shape":"String"}
       }
+    },
+    "FirelensConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"FirelensConfigurationType"},
+        "options":{"shape":"FirelensConfigurationOptionsMap"}
+      }
+    },
+    "FirelensConfigurationOptionsMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
+    "FirelensConfigurationType":{
+      "type":"string",
+      "enum":[
+        "fluentd",
+        "fluentbit"
+      ]
     },
     "Float":{"type":"float"},
     "FrontOfQueueDetail":{
@@ -2000,7 +2024,8 @@
         "gelf",
         "fluentd",
         "awslogs",
-        "splunk"
+        "splunk",
+        "awsfirelens"
       ]
     },
     "Long":{"type":"long"},
@@ -2389,6 +2414,7 @@
         "dependsOn":{"shape":"TaskContainerDependencyList"},
         "environment":{"shape":"EnvironmentVariables"},
         "essential":{"shape":"Boolean"},
+        "firelensConfiguration":{"shape":"FirelensConfiguration"},
         "image":{"shape":"String"},
         "linuxParameters":{"shape":"LinuxParameters"},
         "logConfiguration":{"shape":"LogConfiguration"},
@@ -2424,6 +2450,7 @@
         "dependsOn":{"shape":"TaskContainerDependencyList"},
         "environment":{"shape":"EnvironmentVariables"},
         "essential":{"shape":"Boolean"},
+        "firelensConfiguration":{"shape":"FirelensConfiguration"},
         "image":{"shape":"String"},
         "linuxParameters":{"shape":"LinuxParameters"},
         "logConfiguration":{"shape":"LogConfiguration"},

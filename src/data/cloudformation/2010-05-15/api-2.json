@@ -2158,7 +2158,8 @@
         "PercentageCompleted":{"shape":"PercentageCompleted"},
         "ResourceTypes":{"shape":"ResourceTypes"},
         "ResourcesScanned":{"shape":"ResourcesScanned"},
-        "ResourcesRead":{"shape":"ResourcesRead"}
+        "ResourcesRead":{"shape":"ResourcesRead"},
+        "ScanFilters":{"shape":"ScanFilters"}
       }
     },
     "DescribeStackDriftDetectionStatusInput":{
@@ -3069,7 +3070,8 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"ResourceScannerMaxResults"}
+        "MaxResults":{"shape":"ResourceScannerMaxResults"},
+        "ScanTypeFilter":{"shape":"ScanType"}
       }
     },
     "ListResourceScansOutput":{
@@ -4025,7 +4027,8 @@
         "StatusReason":{"shape":"ResourceScanStatusReason"},
         "StartTime":{"shape":"Timestamp"},
         "EndTime":{"shape":"Timestamp"},
-        "PercentageCompleted":{"shape":"PercentageCompleted"}
+        "PercentageCompleted":{"shape":"PercentageCompleted"},
+        "ScanType":{"shape":"ScanType"}
       }
     },
     "ResourceScannerMaxResults":{
@@ -4111,6 +4114,16 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "ResourceTypeFilter":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "ResourceTypeFilters":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeFilter"},
+      "max":100
     },
     "ResourceTypePrefix":{"type":"string"},
     "ResourceTypes":{
@@ -4212,6 +4225,25 @@
       "type":"string",
       "max":4096,
       "min":1
+    },
+    "ScanFilter":{
+      "type":"structure",
+      "members":{
+        "Types":{"shape":"ResourceTypeFilters"}
+      }
+    },
+    "ScanFilters":{
+      "type":"list",
+      "member":{"shape":"ScanFilter"},
+      "max":1,
+      "min":1
+    },
+    "ScanType":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "PARTIAL"
+      ]
     },
     "ScannedResource":{
       "type":"structure",
@@ -4586,12 +4618,12 @@
     },
     "StackPolicyDuringUpdateURL":{
       "type":"string",
-      "max":1350,
+      "max":5120,
       "min":1
     },
     "StackPolicyURL":{
       "type":"string",
-      "max":1350,
+      "max":5120,
       "min":1
     },
     "StackRefactorAction":{
@@ -5128,7 +5160,8 @@
     "StartResourceScanInput":{
       "type":"structure",
       "members":{
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "ScanFilters":{"shape":"ScanFilters"}
       }
     },
     "StartResourceScanOutput":{
@@ -5270,7 +5303,7 @@
     },
     "TemplateURL":{
       "type":"string",
-      "max":1024,
+      "max":5120,
       "min":1
     },
     "TestTypeInput":{

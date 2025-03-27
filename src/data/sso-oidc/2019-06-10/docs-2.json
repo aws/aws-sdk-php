@@ -44,6 +44,12 @@
       "refs": {
       }
     },
+    "AwsAdditionalDetails": {
+      "base": "<p>This structure contains Amazon Web Services-specific parameter extensions for the token endpoint responses and includes the identity context.</p>",
+      "refs": {
+        "CreateTokenWithIAMResponse$awsAdditionalDetails": "<p>A structure containing information from the <code>idToken</code>. Only the <code>identityContext</code> is in it, which is a value extracted from the <code>idToken</code>. This provides direct access to identity information without requiring JWT parsing.</p>"
+      }
+    },
     "ClientId": {
       "base": null,
       "refs": {
@@ -177,6 +183,12 @@
       "refs": {
         "CreateTokenResponse$idToken": "<p>The <code>idToken</code> is not implemented or supported. For more information about the features and limitations of the current IAM Identity Center OIDC implementation, see <i>Considerations for Using this Guide</i> in the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/Welcome.html\">IAM Identity Center OIDC API Reference</a>.</p> <p>A JSON Web Token (JWT) that identifies who is associated with the issued access token. </p>",
         "CreateTokenWithIAMResponse$idToken": "<p>A JSON Web Token (JWT) that identifies the user associated with the issued access token. </p>"
+      }
+    },
+    "IdentityContext": {
+      "base": null,
+      "refs": {
+        "AwsAdditionalDetails$identityContext": "<p>STS context assertion that carries a user identifier to the Amazon Web Services service that it calls and can be used to obtain an identity-enhanced IAM role session. This value corresponds to the <code>sts:identity_context</code> claim in the ID token.</p>"
       }
     },
     "InternalServerException": {

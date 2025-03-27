@@ -1498,6 +1498,7 @@
       "type":"structure",
       "members":{
         "conditionNodeResultTrace":{"shape":"FlowTraceConditionNodeResultEvent"},
+        "nodeActionTrace":{"shape":"FlowTraceNodeActionEvent"},
         "nodeInputTrace":{"shape":"FlowTraceNodeInputEvent"},
         "nodeOutputTrace":{"shape":"FlowTraceNodeOutputEvent"}
       },
@@ -1539,6 +1540,24 @@
         "trace":{"shape":"FlowTrace"}
       },
       "event":true
+    },
+    "FlowTraceNodeActionEvent":{
+      "type":"structure",
+      "required":[
+        "nodeName",
+        "operationName",
+        "requestId",
+        "serviceName",
+        "timestamp"
+      ],
+      "members":{
+        "nodeName":{"shape":"NodeName"},
+        "operationName":{"shape":"String"},
+        "requestId":{"shape":"String"},
+        "serviceName":{"shape":"String"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
     },
     "FlowTraceNodeInputContent":{
       "type":"structure",
