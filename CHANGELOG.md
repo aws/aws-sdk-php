@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.15 - 2025-03-27
 
 * `Aws\CloudFormation` - Adding support for the new parameter "ScanFilters" in the CloudFormation StartResourceScan API. When this parameter is included, the StartResourceScan API will initiate a scan limited to the resource types specified by the parameter.
 * `Aws\Batch` - This release will enable two features: Firelens log driver, and Execute Command on Batch jobs on ECS. Both features will be passed through to ECS.
