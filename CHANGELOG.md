@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.16 - 2025-03-28
 
 * `Aws\CodeBuild` - This release adds support for cacheNamespace in ProjectCache
 * `Aws\BedrockRuntime` - Launching Multi-modality Content Filter for Amazon Bedrock Guardrails.
