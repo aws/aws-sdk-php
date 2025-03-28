@@ -21813,6 +21813,13 @@
         "Arn":{"shape":"String256"}
       }
     },
+    "Relation":{
+      "type":"string",
+      "enum":[
+        "EqualTo",
+        "GreaterThanOrEqualTo"
+      ]
+    },
     "ReleaseNotes":{
       "type":"string",
       "max":255,
@@ -22541,7 +22548,8 @@
       "type":"structure",
       "members":{
         "Results":{"shape":"SearchResultsList"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "TotalHits":{"shape":"TotalHits"}
       }
     },
     "SearchResultsList":{
@@ -23954,6 +23962,13 @@
       "max":256,
       "min":1
     },
+    "TotalHits":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"Long"},
+        "Relation":{"shape":"Relation"}
+      }
+    },
     "TotalInstanceCount":{
       "type":"integer",
       "min":0
@@ -24561,6 +24576,12 @@
       "type":"integer",
       "min":1
     },
+    "TransformAmiVersion":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"
+    },
     "TransformDataSource":{
       "type":"structure",
       "required":["S3DataSource"],
@@ -24820,7 +24841,8 @@
       "members":{
         "InstanceType":{"shape":"TransformInstanceType"},
         "InstanceCount":{"shape":"TransformInstanceCount"},
-        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "TransformAmiVersion":{"shape":"TransformAmiVersion"}
       }
     },
     "TransformS3DataSource":{

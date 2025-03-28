@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - This release adds support for cacheNamespace in ProjectCache
+* `Aws\BedrockRuntime` - Launching Multi-modality Content Filter for Amazon Bedrock Guardrails.
+* `Aws\ECS` - This is an Amazon ECS documentation only release that addresses tickets.
+* `Aws\SageMaker` - TransformAmiVersion for Batch Transform and SageMaker Search Service Aggregate Search API Extension
+* `Aws\PaymentCryptography` - The service adds support for transferring AES-256 and other keys between the service and other service providers and HSMs. This feature uses ECDH to derive a one-time key transport key to enable these secure key exchanges.
+* `Aws\MarketplaceMetering` - Add support for Marketplace Metering Service dual-stack endpoints.
+* `Aws\NetworkManager` - Add support for NetworkManager Dualstack endpoints.
+* `Aws\QuickSight` - RLS permission dataset with userAs: RLS_RULES flag, Q in QuickSight/Threshold Alerts/Schedules/Snapshots in QS embedding, toggle dataset refresh email alerts via API, transposed table with options: column width, type and index, toggle Q&A on dashboards, Oracle Service Name when creating data source.
+* `Aws\APIGateway` - Adds support for setting the IP address type to allow dual-stack or IPv4 address types to invoke your APIs or domain names.
+* `Aws\ApiGatewayV2` - Adds support for setting the IP address type to allow dual-stack or IPv4 address types to invoke your APIs or domain names.
+
 ## 3.342.15 - 2025-03-27
 
 * `Aws\CloudFormation` - Adding support for the new parameter "ScanFilters" in the CloudFormation StartResourceScan API. When this parameter is included, the StartResourceScan API will initiate a scan limited to the resource types specified by the parameter.

@@ -606,12 +606,12 @@
       }
     },
     "EndpointConfiguration": {
-      "base": "<p>The endpoint configuration to indicate the types of endpoints an API (RestApi) or its custom domain name (DomainName) has. </p>",
+      "base": "<p>The endpoint configuration to indicate the types of endpoints an API (RestApi) or its custom domain name (DomainName) has and the IP address types that can invoke it. </p>",
       "refs": {
-        "CreateDomainNameRequest$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types of the domain name. </p>",
-        "CreateRestApiRequest$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types of the API. </p>",
-        "DomainName$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types of the domain name. </p>",
-        "RestApi$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types of the API. </p>"
+        "CreateDomainNameRequest$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types and IP address types of the domain name. </p>",
+        "CreateRestApiRequest$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types and IP address types of the API. </p>",
+        "DomainName$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types and IP address types of the domain name. </p>",
+        "RestApi$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types and IP address types of the API. </p>"
       }
     },
     "EndpointType": {
@@ -941,6 +941,12 @@
       "refs": {
         "Integration$type": "<p>Specifies an API method integration type. The valid value is one of the following:</p> <p>For the HTTP and HTTP proxy integrations, each integration can specify a protocol (<code>http/https</code>), port and path. Standard 80 and 443 ports are supported as well as custom ports above 1024. An HTTP or HTTP proxy integration with a <code>connectionType</code> of <code>VPC_LINK</code> is referred to as a private integration and uses a VpcLink to connect API Gateway to a network load balancer of a VPC.</p>",
         "PutIntegrationRequest$type": "<p>Specifies a put integration input's type.</p>"
+      }
+    },
+    "IpAddressType": {
+      "base": null,
+      "refs": {
+        "EndpointConfiguration$ipAddressType": "<p>The IP address types that can invoke an API (RestApi) or a DomainName. Use <code>ipv4</code> to allow only IPv4 addresses to invoke an API or DomainName, or use <code>dualstack</code> to allow both IPv4 and IPv6 addresses to invoke an API or a DomainName. For the <code>PRIVATE</code> endpoint type, only <code>dualstack</code> is supported.</p>"
       }
     },
     "LimitExceededException": {

@@ -19,7 +19,7 @@
     "CreateGroupMembership": "<p>Adds an Amazon QuickSight user to an Amazon QuickSight group. </p>",
     "CreateIAMPolicyAssignment": "<p>Creates an assignment with one specified IAM policy, identified by its Amazon Resource Name (ARN). This policy assignment is attached to the specified groups or users of Amazon QuickSight. Assignment names are unique per Amazon Web Services account. To avoid overwriting rules in other namespaces, use assignment names that are unique.</p>",
     "CreateIngestion": "<p>Creates and starts a new SPICE ingestion for a dataset. You can manually refresh datasets in an Enterprise edition account 32 times in a 24-hour period. You can manually refresh datasets in a Standard edition account 8 times in a 24-hour period. Each 24-hour period is measured starting 24 hours before the current date and time.</p> <p>Any ingestions operating on tagged datasets inherit the same tags automatically for use in access control. For an example, see <a href=\"http://aws.amazon.com/premiumsupport/knowledge-center/iam-ec2-resource-tags/\">How do I create an IAM policy to control access to Amazon EC2 resources using tags?</a> in the Amazon Web Services Knowledge Center. Tags are visible on the tagged dataset, but not on the ingestion resource.</p>",
-    "CreateNamespace": "<p>(Enterprise edition only) Creates a new namespace for you to use with Amazon QuickSight.</p> <p>A namespace allows you to isolate the Amazon QuickSight users and groups that are registered for that namespace. Users that access the namespace can share assets only with other users or groups in the same namespace. They can't see users and groups in other namespaces. You can create a namespace after your Amazon Web Services account is subscribed to Amazon QuickSight. The namespace must be unique within the Amazon Web Services account. By default, there is a limit of 100 namespaces per Amazon Web Services account. To increase your limit, create a ticket with Amazon Web Services Support. </p>",
+    "CreateNamespace": "<p>(Enterprise edition only) Creates a new namespace for you to use with Amazon QuickSight.</p> <p>A namespace allows you to isolate the Amazon QuickSight users and groups that are registered for that namespace. Users that access the namespace can share assets only with other users or groups in the same namespace. They can't see users and groups in other namespaces. You can create a namespace after your Amazon Web Services account is subscribed to Amazon QuickSight. The namespace must be unique within the Amazon Web Services account. By default, there is a limit of 100 namespaces per Amazon Web Services account. To increase your limit, create a ticket with Amazon Web ServicesSupport. </p>",
     "CreateRefreshSchedule": "<p>Creates a refresh schedule for a dataset. You can create up to 5 different schedules for a single dataset.</p>",
     "CreateRoleMembership": "<p>Use <code>CreateRoleMembership</code> to add an existing Amazon QuickSight group to an existing role.</p>",
     "CreateTemplate": "<p>Creates a template either from a <code>TemplateDefinition</code> or from an existing Amazon QuickSight analysis or template. You can use the resulting template to create additional dashboards, templates, or analyses.</p> <p>A <i>template</i> is an entity in Amazon QuickSight that encapsulates the metadata required to create an analysis and that you can use to create s dashboard. A template adds a layer of abstraction by using placeholders to replace the dataset associated with the analysis. You can use templates to create dashboards by replacing dataset placeholders with datasets that follow the same schema that was used to create the source analysis and template.</p>",
@@ -150,7 +150,7 @@
     "ListUserGroups": "<p>Lists the Amazon QuickSight groups that an Amazon QuickSight user is a member of.</p>",
     "ListUsers": "<p>Returns a list of all of the Amazon QuickSight users belonging to this account. </p>",
     "ListVPCConnections": "<p>Lists all of the VPC connections in the current set Amazon Web Services Region of an Amazon Web Services account.</p>",
-    "PredictQAResults": "<p>Predicts existing visuals or generates new visuals to answer a given query.</p>",
+    "PredictQAResults": "<p>Predicts existing visuals or generates new visuals to answer a given query.</p> <p>This API uses <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation.html\">trusted identity propagation</a> to ensure that an end user is authenticated and receives the embed URL that is specific to that user. The IAM Identity Center application that the user has logged into needs to have <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-using-customermanagedapps-specify-trusted-apps.html\">trusted Identity Propagation enabled for Amazon QuickSight</a> with the scope value set to <code>quicksight:read</code>. Before you use this action, make sure that you have configured the relevant Amazon QuickSight resource and permissions.</p> <p>We recommend enabling the <code>QSearchStatus</code> API to unlock the full potential of <code>PredictQnA</code>. When <code>QSearchStatus</code> is enabled, it first checks the specified dashboard for any existing visuals that match the question. If no matching visuals are found, <code>PredictQnA</code> uses generative Q&amp;A to provide an answer. To update the <code>QSearchStatus</code>, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/APIReference/API_UpdateQuickSightQSearchConfiguration.html\">UpdateQuickSightQSearchConfiguration</a>.</p>",
     "PutDataSetRefreshProperties": "<p>Creates or updates the dataset refresh properties for the dataset.</p>",
     "RegisterUser": "<p>Creates an Amazon QuickSight user whose identity is associated with the Identity and Access Management (IAM) identity or role specified in the request. When you register a new user from the Amazon QuickSight API, Amazon QuickSight generates a registration URL. The user accesses this registration URL to create their account. Amazon QuickSight doesn't send a registration email to users who are registered from the Amazon QuickSight API. If you want new users to receive a registration email, then add those users in the Amazon QuickSight console. For more information on registering a new user in the Amazon QuickSight console, see <a href=\"https://docs.aws.amazon.com/quicksight/latest/user/managing-users.html#inviting-users\"> Inviting users to access Amazon QuickSight</a>.</p>",
     "RestoreAnalysis": "<p>Restores an analysis.</p>",
@@ -395,6 +395,18 @@
       "base": "<p>The parameters for OpenSearch.</p>",
       "refs": {
         "DataSourceParameters$AmazonOpenSearchParameters": "<p>The parameters for OpenSearch.</p>"
+      }
+    },
+    "AmazonQInQuickSightConsoleConfigurations": {
+      "base": "<p>A collection of Amazon Q feature configurations in an embedded Amazon QuickSight console.</p>",
+      "refs": {
+        "RegisteredUserConsoleFeatureConfigurations$AmazonQInQuickSight": "<p>The Amazon Q configurations of an embedded Amazon QuickSight console.</p>"
+      }
+    },
+    "AmazonQInQuickSightDashboardConfigurations": {
+      "base": "<p>A collection of Amazon Q feature configurations in an embedded Amazon QuickSight dashboard.</p>",
+      "refs": {
+        "RegisteredUserDashboardFeatureConfigurations$AmazonQInQuickSight": "<p>The Amazon Q configurations of an embedded Amazon QuickSight dashboard.</p>"
       }
     },
     "Analysis": {
@@ -2157,10 +2169,12 @@
         "AssetBundleImportJobOverrideValidationStrategy$StrictModeForAllResources": "<p>A Boolean value that indicates whether to import all analyses and dashboards under strict or lenient mode.</p>",
         "BookmarksConfigurations$Enabled": "<p>A Boolean value that determines whether a user can bookmark an embedded dashboard.</p>",
         "BorderStyle$Show": "<p>The option to enable display of borders for visuals.</p>",
+        "DataQnAConfigurations$Enabled": "<p>The generative Q&amp;A settings of an embedded Amazon QuickSight console.</p>",
         "DataSetSummary$RowLevelPermissionTagConfigurationApplied": "<p>Whether or not the row level permission tags are applied.</p>",
         "DataSetSummary$ColumnLevelPermissionRulesApplied": "<p>A value that indicates if the dataset has column level permission configured.</p>",
         "DataSetUsageConfiguration$DisableUseAsDirectQuerySource": "<p>An option that controls whether a child dataset of a direct query can use this dataset as a source.</p>",
         "DataSetUsageConfiguration$DisableUseAsImportedSource": "<p>An option that controls whether a child dataset that's stored in QuickSight can use this dataset as a source.</p>",
+        "DataStoriesConfigurations$Enabled": "<p>The data story settings of an embedded Amazon QuickSight console.</p>",
         "DeleteAnalysisRequest$ForceDeleteWithoutRecovery": "<p>This option defaults to the value <code>NoForceDeleteWithoutRecovery</code>. To immediately delete the analysis, add the <code>ForceDeleteWithoutRecovery</code> option. You can't restore an analysis after it's deleted. </p>",
         "DescribeAssetBundleExportJobResponse$IncludeAllDependencies": "<p>The include dependencies flag.</p>",
         "DescribeAssetBundleExportJobResponse$IncludePermissions": "<p>The include permissions flag.</p>",
@@ -2169,7 +2183,9 @@
         "DescribeKeyRegistrationRequest$DefaultKeyOnly": "<p>Determines whether the request returns the default key only.</p>",
         "DisplayFormatOptions$UseBlankCellFormat": "<p>A Boolean value that indicates whether to use blank cell format.</p>",
         "DisplayFormatOptions$UseGrouping": "<p>A Boolean value that indicates whether to use grouping.</p>",
-        "FailedKeyRegistrationEntry$SenderFault": "<p>A boolean that indicates whether a <code>FailedKeyRegistrationEntry</code> resulted from user error. If the value of this property is <code>True</code>, the error was caused by user error. If the value of this property is <code>False</code>, the error occurred on the backend. If your job continues fail and with a <code>False</code> <code>SenderFault</code> value, contact Amazon Web Services Support.</p>",
+        "ExecutiveSummaryConfigurations$Enabled": "<p>The executive summary settings of an embedded Amazon QuickSight console or dashboard.</p>",
+        "FailedKeyRegistrationEntry$SenderFault": "<p>A boolean that indicates whether a <code>FailedKeyRegistrationEntry</code> resulted from user error. If the value of this property is <code>True</code>, the error was caused by user error. If the value of this property is <code>False</code>, the error occurred on the backend. If your job continues fail and with a <code>False</code> <code>SenderFault</code> value, contact Amazon Web ServicesSupport.</p>",
+        "GenerativeAuthoringConfigurations$Enabled": "<p>The generative BI authoring settings of an embedded Amazon QuickSight console.</p>",
         "GetDashboardEmbedUrlRequest$UndoRedoDisabled": "<p>Remove the undo/redo button on the embedded dashboard. The default is FALSE, which enables the undo/redo button.</p>",
         "GetDashboardEmbedUrlRequest$ResetDisabled": "<p>Remove the reset button on the embedded dashboard. The default is FALSE, which enables the reset button.</p>",
         "GetDashboardEmbedUrlRequest$StatePersistenceEnabled": "<p>Adds persistence of state for the user session in an embedded dashboard. Persistence applies to the sheet and the parameter settings. These are control settings that the dashboard subscriber (Amazon QuickSight reader) chooses while viewing the dashboard. If this is set to <code>TRUE</code>, the settings are the same when the subscriber reopens the same dashboard URL. The state is stored in Amazon QuickSight, not in a browser cookie. If this is set to FALSE, the state of the user session is not persisted. The default is <code>FALSE</code>.</p>",
@@ -2180,9 +2196,12 @@
         "NestedFilter$IncludeInnerSet": "<p>A boolean condition to include or exclude the subset that is defined by the values of the nested inner filter.</p>",
         "NumericRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
         "NumericRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
+        "OracleParameters$UseServiceName": "<p>A Boolean value that indicates whether the <code>Database</code> uses a service name or an SID. If this value is left blank, the default value is <code>SID</code>. If this value is set to <code>false</code>, the value is <code>SID</code>.</p>",
+        "RecentSnapshotsConfigurations$Enabled": "<p>The recent snapshots configuration for an embedded Amazon QuickSight dashboard.</p>",
         "RedshiftIAMParameters$AutoCreateDatabaseUser": "<p>Automatically creates a database user. If your database doesn't have a <code>DatabaseUser</code>, set this parameter to <code>True</code>. If there is no <code>DatabaseUser</code>, Amazon QuickSight can't connect to your cluster. The <code>RoleArn</code> that you use for this operation must grant access to <code>redshift:CreateClusterUser</code> to successfully create the user.</p>",
         "RegisteredCustomerManagedKey$DefaultKey": "<p>Indicates whether a <code>RegisteredCustomerManagedKey</code> is set as the default key for encryption and decryption use.</p>",
         "RestoreAnalysisRequest$RestoreToFolders": "<p>A boolean value that determines if the analysis will be restored to folders that it previously resided in. A <code>True</code> value restores analysis back to all folders that it previously resided in. A <code>False</code> value restores the analysis but does not restore the analysis back to all previously resided folders. Restoring a restricted analysis requires this parameter to be set to <code>True</code>.</p>",
+        "SchedulesConfigurations$Enabled": "<p>The schedules configuration for an embedded Amazon QuickSight dashboard.</p>",
         "SharedViewConfigurations$Enabled": "<p>The shared view settings of an embedded dashboard.</p>",
         "SignupResponse$IAMUser": "<p>A Boolean that is <code>TRUE</code> if the Amazon QuickSight uses IAM as an authentication method.</p>",
         "SslProperties$DisableSsl": "<p>A Boolean option to control whether SSL should be disabled.</p>",
@@ -2191,6 +2210,7 @@
         "StartAssetBundleExportJobRequest$IncludeTags": "<p> A Boolean that determines whether all tags for each resource ARN are exported with the job. If you set <code>IncludeTags</code> to <code>TRUE</code>, any tags associated with each resource are exported.</p>",
         "StartAssetBundleExportJobRequest$IncludeFolderMemberships": "<p>A Boolean that determines if the exported asset carries over information about the folders that the asset is a member of. </p>",
         "StatePersistenceConfigurations$Enabled": "<p>Determines if a Amazon QuickSight dashboard's state persistence settings are turned on or off.</p>",
+        "ThresholdAlertsConfigurations$Enabled": "<p>The threshold alerts configuration for an embedded Amazon QuickSight dashboard.</p>",
         "TimeRangeFilter$IncludeMinimum": "<p>Determines whether the minimum value in the filter value range should be included in the filtered results.</p>",
         "TimeRangeFilter$IncludeMaximum": "<p>Determines whether the maximum value in the filter value range should be included in the filtered results.</p>",
         "TopicCalculatedField$IsIncludedInTopic": "<p>A boolean value that indicates if a calculated field is included in the topic.</p>",
@@ -3637,6 +3657,7 @@
         "DataPointDrillUpDownOption$AvailabilityStatus": "<p>The status of the drill down options of data points.</p>",
         "DataPointMenuLabelOption$AvailabilityStatus": "<p>The status of the data point menu options.</p>",
         "DataPointTooltipOption$AvailabilityStatus": "<p>The status of the data point tool tip options.</p>",
+        "DataQAEnabledOption$AvailabilityStatus": "<p>The status of the Data Q&amp;A option on the dashboard.</p>",
         "ExportHiddenFieldsOption$AvailabilityStatus": "<p>The status of the export hidden fields options of a dashbaord.</p>",
         "ExportToCSVOption$AvailabilityStatus": "<p>Availability status.</p>",
         "ExportWithHiddenFieldsOption$AvailabilityStatus": "<p>The status of the export with hidden fields options.</p>",
@@ -3929,6 +3950,18 @@
         "DashboardPublishOptions$DataPointTooltipOption": "<p>The data point tool tip options of a dashboard.</p>"
       }
     },
+    "DataQAEnabledOption": {
+      "base": "<p>Adds Q&amp;A capabilities to a dashboard. If no topic is linked, Dashboard Q&amp;A uses the data values that are rendered on the dashboard. End users can use Dashboard Q&amp;A to ask for different slices of the data that they see on the dashboard. If a topic is linked, Topic Q&amp;A is enabled.</p>",
+      "refs": {
+        "DashboardPublishOptions$DataQAEnabledOption": "<p>Adds Q&amp;A capabilities to an Amazon QuickSight dashboard. If no topic is linked, Dashboard Q&amp;A uses the data values that are rendered on the dashboard. End users can use Dashboard Q&amp;A to ask for different slices of the data that they see on the dashboard. If a topic is linked, Topic Q&amp;A is used.</p>"
+      }
+    },
+    "DataQnAConfigurations": {
+      "base": "<p>The generative Q&amp;A settings of an embedded Amazon QuickSight console.</p>",
+      "refs": {
+        "AmazonQInQuickSightConsoleConfigurations$DataQnA": "<p>Adds generative Q&amp;A capabilitiees to an embedded Amazon QuickSight console.</p>"
+      }
+    },
     "DataSet": {
       "base": "<p>Dataset.</p>",
       "refs": {
@@ -3939,6 +3972,7 @@
       "base": null,
       "refs": {
         "Analysis$DataSetArns": "<p>The ARNs of the datasets of the analysis.</p>",
+        "AssetOptions$ExcludedDataSetArns": "<p>A list of dataset ARNS to exclude from Dashboard Q&amp;A.</p>",
         "DashboardVersion$DataSetArns": "<p>The Amazon Resource Numbers (ARNs) for the datasets that are associated with this version of the dashboard.</p>"
       }
     },
@@ -4026,6 +4060,7 @@
     "DataSetRefreshProperties": {
       "base": "<p>The refresh properties of a dataset.</p>",
       "refs": {
+        "AssetBundleImportJobDataSetOverrideParameters$DataSetRefreshProperties": null,
         "DescribeDataSetRefreshPropertiesResponse$DataSetRefreshProperties": "<p>The dataset refresh properties.</p>",
         "PutDataSetRefreshPropertiesRequest$DataSetRefreshProperties": "<p>The dataset refresh properties.</p>"
       }
@@ -4073,6 +4108,14 @@
         "CreateDataSetRequest$DataSetUsageConfiguration": null,
         "DataSet$DataSetUsageConfiguration": "<p>The usage configuration to apply to child datasets that reference this dataset as a source.</p>",
         "UpdateDataSetRequest$DataSetUsageConfiguration": null
+      }
+    },
+    "DataSetUseAs": {
+      "base": null,
+      "refs": {
+        "CreateDataSetRequest$UseAs": "<p>The usage of the dataset. <code>RLS_RULES</code> must be specified for RLS permission datasets.</p>",
+        "DataSet$UseAs": "<p>The usage of the dataset.</p>",
+        "DataSetSummary$UseAs": "<p>The usage of the dataset.</p>"
       }
     },
     "DataSource": {
@@ -4160,6 +4203,12 @@
         "CreateDataSourceRequest$Type": "<p>The type of the data source. To return a list of all data sources, use <code>ListDataSources</code>.</p> <p>Use <code>AMAZON_ELASTICSEARCH</code> for Amazon OpenSearch Service.</p>",
         "DataSource$Type": "<p>The type of the data source. This type indicates which database engine the data source connects to.</p>",
         "DataSourceSummary$Type": "<p>The type of the data source.</p>"
+      }
+    },
+    "DataStoriesConfigurations": {
+      "base": "<p>The data story settings of an embedded Amazon QuickSight console.</p>",
+      "refs": {
+        "AmazonQInQuickSightConsoleConfigurations$DataStories": "<p>Adds the data stories feature to an embedded Amazon QuickSight console.</p>"
       }
     },
     "Database": {
@@ -5703,6 +5752,13 @@
         "TimeRangeFilter$ExcludePeriodConfiguration": "<p>The exclude period of the time range filter.</p>"
       }
     },
+    "ExecutiveSummaryConfigurations": {
+      "base": "<p>The executive summary settings of an embedded Amazon QuickSight console or dashboard.</p>",
+      "refs": {
+        "AmazonQInQuickSightConsoleConfigurations$ExecutiveSummary": "<p>Adds the executive summaries feature to an embedded Amazon QuickSight console.</p>",
+        "AmazonQInQuickSightDashboardConfigurations$ExecutiveSummary": "<p>A generated executive summary of an embedded Amazon QuickSight dashboard.</p>"
+      }
+    },
     "ExplicitHierarchy": {
       "base": "<p>The option that determines the hierarchy of the fields that are built within a visual's field wells. These fields can't be duplicated to other visuals.</p>",
       "refs": {
@@ -6545,6 +6601,12 @@
       "base": null,
       "refs": {
         "GeneratedAnswerResult$AnswerStatus": "<p>The answer status of the generated answer.</p>"
+      }
+    },
+    "GenerativeAuthoringConfigurations": {
+      "base": "<p>The generative BI authoring settings of an embedded Amazon QuickSight console.</p>",
+      "refs": {
+        "AmazonQInQuickSightConsoleConfigurations$GenerativeAuthoring": "<p>Adds the generative BI authoring experience to an embedded Amazon QuickSight console.</p>"
       }
     },
     "GeoSpatialColumnGroup": {
@@ -9972,7 +10034,8 @@
         "PivotTableDataPathOption$Width": "<p>The width of the data path option.</p>",
         "PivotTableOptions$DefaultCellWidth": "<p>The default cell width of the pivot table.</p>",
         "SectionStyle$Height": "<p>The height of a section.</p> <p>Heights can only be defined for header and footer sections. The default height margin is 0.5 inches. </p>",
-        "TableFieldOption$Width": "<p>The width for a table field.</p>"
+        "TableFieldOption$Width": "<p>The width for a table field.</p>",
+        "TransposedTableOption$ColumnWidth": "<p>The width of a column in a transposed table.</p>"
       }
     },
     "PluginVisual": {
@@ -10233,6 +10296,12 @@
         "GeneratedAnswerResult$QuestionUrl": "<p>The URL of the question.</p>"
       }
     },
+    "QBusinessInsightsStatus": {
+      "base": null,
+      "refs": {
+        "AssetOptions$QBusinessInsightsStatus": "<p>Determines whether insight summaries from Amazon Q Business are allowed in Dashboard Q&amp;A.</p>"
+      }
+    },
     "QSearchStatus": {
       "base": null,
       "refs": {
@@ -10373,6 +10442,13 @@
         "DataSourceParameters$RdsParameters": "<p>The parameters for Amazon RDS.</p>"
       }
     },
+    "RecentSnapshotsConfigurations": {
+      "base": "<p>The recent snapshots configuration for an embedded Amazon QuickSight dashboard.</p>",
+      "refs": {
+        "RegisteredUserConsoleFeatureConfigurations$RecentSnapshots": "<p>The recent snapshots configuration for an embedded Amazon QuickSight dashboard.</p>",
+        "RegisteredUserDashboardFeatureConfigurations$RecentSnapshots": "<p>The recent snapshots configuration for an Amazon QuickSight embedded dashboard</p>"
+      }
+    },
     "RecoveryWindowInDays": {
       "base": null,
       "refs": {
@@ -10482,6 +10558,24 @@
       "base": "<p>The refresh configuration of a dataset.</p>",
       "refs": {
         "DataSetRefreshProperties$RefreshConfiguration": "<p>The refresh configuration for a dataset.</p>"
+      }
+    },
+    "RefreshFailureAlertStatus": {
+      "base": null,
+      "refs": {
+        "RefreshFailureEmailAlert$AlertStatus": "<p>The status value that determines if email alerts are sent.</p>"
+      }
+    },
+    "RefreshFailureConfiguration": {
+      "base": "<p>The failure configuration of a dataset.</p>",
+      "refs": {
+        "DataSetRefreshProperties$FailureConfiguration": "<p>The failure configuration for a dataset.</p>"
+      }
+    },
+    "RefreshFailureEmailAlert": {
+      "base": "<p>The configuration settings for the email alerts that are sent when a dataset refresh fails.</p>",
+      "refs": {
+        "RefreshFailureConfiguration$EmailAlert": "<p>The email alert configuration for a dataset refresh failure.</p>"
       }
     },
     "RefreshFrequency": {
@@ -11081,6 +11175,13 @@
       "base": "<p>The refresh on entity for weekly or monthly schedules.</p>",
       "refs": {
         "RefreshFrequency$RefreshOnDay": "<p>The day of the week that you want to schedule the refresh on. This value is required for weekly and monthly refresh intervals.</p>"
+      }
+    },
+    "SchedulesConfigurations": {
+      "base": "<p>The schedules configuration for an embedded Amazon QuickSight dashboard.</p>",
+      "refs": {
+        "RegisteredUserConsoleFeatureConfigurations$Schedules": "<p>The schedules configuration for an embedded Amazon QuickSight dashboard.</p>",
+        "RegisteredUserDashboardFeatureConfigurations$Schedules": "<p>The schedules configuration for an embedded Amazon QuickSight dashboard.</p>"
       }
     },
     "ScrollBarOptions": {
@@ -13846,6 +13947,13 @@
         "NumericSeparatorConfiguration$ThousandsSeparator": "<p>The options that determine the thousands separator configuration.</p>"
       }
     },
+    "ThresholdAlertsConfigurations": {
+      "base": "<p>The threshold alerts configuration for an embedded Amazon QuickSight dashboard.</p>",
+      "refs": {
+        "RegisteredUserConsoleFeatureConfigurations$ThresholdAlerts": "<p>The threshold alerts configuration for an embedded Amazon QuickSight dashboard.</p>",
+        "RegisteredUserDashboardFeatureConfigurations$ThresholdAlerts": "<p>The threshold alerts configuration for an Amazon QuickSight embedded dashboard.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>Access is throttled.</p>",
       "refs": {
@@ -14505,6 +14613,30 @@
       "base": null,
       "refs": {
         "LogicalTable$DataTransforms": "<p>Transform operations that act on this logical table. For this structure to be valid, only one of the attributes can be non-null. </p>"
+      }
+    },
+    "TransposedColumnIndex": {
+      "base": "<p>The integer value of a column index in the transposed table.</p>",
+      "refs": {
+        "TransposedTableOption$ColumnIndex": "<p>The index of a columns in a transposed table. The index range is 0-9999.</p>"
+      }
+    },
+    "TransposedColumnType": {
+      "base": null,
+      "refs": {
+        "TransposedTableOption$ColumnType": "<p>The column type of the column in a transposed table. Choose one of the following options:</p> <ul> <li> <p> <code>ROW_HEADER_COLUMN</code>: Refers to the leftmost column of the row header in the transposed table.</p> </li> <li> <p> <code>VALUE_COLUMN</code>: Refers to all value columns in the transposed table.</p> </li> </ul>"
+      }
+    },
+    "TransposedTableOption": {
+      "base": "<p>The column option of the transposed table.</p>",
+      "refs": {
+        "TransposedTableOptionList$member": null
+      }
+    },
+    "TransposedTableOptionList": {
+      "base": "<p>A list of <code>TransposedTableOption</code> configurations.</p>",
+      "refs": {
+        "TableFieldOptions$TransposedTableOptions": "<p>The <code>TableOptions</code> of a transposed table.</p>"
       }
     },
     "TreeMapAggregatedFieldWells": {

@@ -3104,6 +3104,7 @@
       "type":"structure",
       "members":{
         "types":{"shape":"ListOfEndpointType"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "vpcEndpointIds":{"shape":"ListOfString"}
       }
     },
@@ -4313,6 +4314,13 @@
         "MOCK",
         "HTTP_PROXY",
         "AWS_PROXY"
+      ]
+    },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
       ]
     },
     "LimitExceededException":{
