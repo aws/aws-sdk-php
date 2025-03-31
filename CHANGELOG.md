@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.17 - 2025-03-31
 
 * `Aws\Transfer` - Add WebAppEndpointPolicy support for WebApps
 * `Aws\EKS` - Add support for updating RemoteNetworkConfig for hybrid nodes on EKS UpdateClusterConfig API
