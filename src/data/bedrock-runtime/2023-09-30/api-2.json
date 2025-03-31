@@ -316,6 +316,17 @@
       "min":0,
       "sensitive":true
     },
+    "CachePointBlock":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"CachePointType"}
+      }
+    },
+    "CachePointType":{
+      "type":"string",
+      "enum":["default"]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -337,6 +348,7 @@
         "toolUse":{"shape":"ToolUseBlock"},
         "toolResult":{"shape":"ToolResultBlock"},
         "guardContent":{"shape":"GuardrailConverseContentBlock"},
+        "cachePoint":{"shape":"CachePointBlock"},
         "reasoningContent":{"shape":"ReasoningContentBlock"}
       },
       "union":true
@@ -1845,7 +1857,8 @@
       "type":"structure",
       "members":{
         "text":{"shape":"NonEmptyString"},
-        "guardContent":{"shape":"GuardrailConverseContentBlock"}
+        "guardContent":{"shape":"GuardrailConverseContentBlock"},
+        "cachePoint":{"shape":"CachePointBlock"}
       },
       "union":true
     },
@@ -1915,8 +1928,20 @@
       "members":{
         "inputTokens":{"shape":"TokenUsageInputTokensInteger"},
         "outputTokens":{"shape":"TokenUsageOutputTokensInteger"},
-        "totalTokens":{"shape":"TokenUsageTotalTokensInteger"}
+        "totalTokens":{"shape":"TokenUsageTotalTokensInteger"},
+        "cacheReadInputTokens":{"shape":"TokenUsageCacheReadInputTokensInteger"},
+        "cacheWriteInputTokens":{"shape":"TokenUsageCacheWriteInputTokensInteger"}
       }
+    },
+    "TokenUsageCacheReadInputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "TokenUsageCacheWriteInputTokensInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "TokenUsageInputTokensInteger":{
       "type":"integer",
@@ -1936,7 +1961,8 @@
     "Tool":{
       "type":"structure",
       "members":{
-        "toolSpec":{"shape":"ToolSpecification"}
+        "toolSpec":{"shape":"ToolSpecification"},
+        "cachePoint":{"shape":"CachePointBlock"}
       },
       "union":true
     },

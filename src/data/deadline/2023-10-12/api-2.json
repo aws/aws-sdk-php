@@ -2302,7 +2302,6 @@
     "AssignedTaskRunSessionActionDefinition":{
       "type":"structure",
       "required":[
-        "taskId",
         "stepId",
         "parameters"
       ],
@@ -4135,8 +4134,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[0-9A-Za-z ]*",
-      "sensitive":true
+      "pattern":"[0-9A-Za-z ]*"
     },
     "FileSystemLocationType":{
       "type":"string",
@@ -5504,9 +5502,14 @@
     },
     "JobParameters":{
       "type":"map",
-      "key":{"shape":"String"},
+      "key":{"shape":"JobParametersKeyString"},
       "value":{"shape":"JobParameter"},
       "sensitive":true
+    },
+    "JobParametersKeyString":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "JobPriority":{
       "type":"integer",
@@ -7575,8 +7578,16 @@
       "type":"structure",
       "required":["searchTerm"],
       "members":{
-        "searchTerm":{"shape":"SearchTerm"}
+        "searchTerm":{"shape":"SearchTerm"},
+        "matchType":{"shape":"SearchTermMatchingType"}
       }
+    },
+    "SearchTermMatchingType":{
+      "type":"string",
+      "enum":[
+        "FUZZY_MATCH",
+        "CONTAINS"
+      ]
     },
     "SearchWorkersRequest":{
       "type":"structure",
@@ -8319,7 +8330,6 @@
     "TaskRunSessionActionDefinition":{
       "type":"structure",
       "required":[
-        "taskId",
         "stepId",
         "parameters"
       ],
@@ -8331,10 +8341,7 @@
     },
     "TaskRunSessionActionDefinitionSummary":{
       "type":"structure",
-      "required":[
-        "taskId",
-        "stepId"
-      ],
+      "required":["stepId"],
       "members":{
         "taskId":{"shape":"TaskId"},
         "stepId":{"shape":"StepId"}

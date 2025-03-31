@@ -2066,7 +2066,7 @@
     "SshPublicKeys": {
       "base": null,
       "refs": {
-        "DescribedUser$SshPublicKeys": "<p>Specifies the public key portion of the Secure Shell (SSH) keys stored for the described user.</p>"
+        "DescribedUser$SshPublicKeys": "<p>Specifies the public key portion of the Secure Shell (SSH) keys stored for the described user.</p> <note> <p>To delete the public key body, set its value to zero keys, as shown here:</p> <p> <code>SshPublicKeys: []</code> </p> </note>"
       }
     },
     "StartDirectoryListingRequest": {
@@ -2429,7 +2429,7 @@
     "WebAppAccessEndpoint": {
       "base": null,
       "refs": {
-        "CreateWebAppRequest$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>",
+        "CreateWebAppRequest$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p> <p>Before you enter a custom URL for this parameter, follow the steps described in <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/webapp-customize.html\">Update your access endpoint with a custom URL</a>.</p>",
         "DescribedWebApp$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>",
         "ListedWebApp$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>",
         "UpdateWebAppRequest$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>"
@@ -2442,11 +2442,18 @@
         "ListedWebApp$WebAppEndpoint": "<p>The <code>WebAppEndpoint</code> is the unique URL for your Transfer Family web app. This is the value that you use when you configure <b>Origins</b> on CloudFront.</p>"
       }
     },
+    "WebAppEndpointPolicy": {
+      "base": null,
+      "refs": {
+        "CreateWebAppRequest$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If you are creating the web app in an Amazon Web Services GovCloud (US) Region, you can set this parameter to <code>FIPS</code>.</p>",
+        "DescribedWebApp$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If your web app was created in an Amazon Web Services GovCloud (US) Region, the value of this parameter can be <code>FIPS</code>, which indicates the web app endpoint is FIPS-compliant.</p>"
+      }
+    },
     "WebAppFaviconFile": {
       "base": null,
       "refs": {
-        "DescribedWebAppCustomization$FaviconFile": "<p>Returns a icon file data string (in base64 encoding).</p>",
-        "UpdateWebAppCustomizationRequest$FaviconFile": "<p>Specify icon file data string (in base64 encoding).</p>"
+        "DescribedWebAppCustomization$FaviconFile": "<p>Returns an icon file data string (in base64 encoding).</p>",
+        "UpdateWebAppCustomizationRequest$FaviconFile": "<p>Specify an icon file data string (in base64 encoding).</p>"
       }
     },
     "WebAppId": {
@@ -2469,7 +2476,7 @@
     "WebAppIdentityProviderDetails": {
       "base": "<p>A union that contains the <code>IdentityCenterConfig</code> object.</p>",
       "refs": {
-        "CreateWebAppRequest$IdentityProviderDetails": "<p>You can provide a structure that contains the details for the identity provider to use with your web app.</p>"
+        "CreateWebAppRequest$IdentityProviderDetails": "<p>You can provide a structure that contains the details for the identity provider to use with your web app.</p> <p>For more details about this parameter, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/webapp-identity-center.html\">Configure your identity provider for Transfer Family web apps</a>.</p>"
       }
     },
     "WebAppLogoFile": {

@@ -2144,10 +2144,16 @@
         "JobSearchSummary$jobParameters": "<p>The job parameters.</p>"
       }
     },
+    "JobParametersKeyString": {
+      "base": null,
+      "refs": {
+        "JobParameters$key": null
+      }
+    },
     "JobPriority": {
       "base": null,
       "refs": {
-        "CreateJobRequest$priority": "<p>The priority of the job on a scale of 0 to 100. The highest priority (first scheduled) is 100. When two jobs have the same priority, the oldest job is scheduled first.</p>",
+        "CreateJobRequest$priority": "<p>The priority of the job. The highest priority (first scheduled) is 100. When two jobs have the same priority, the oldest job is scheduled first.</p>",
         "GetJobResponse$priority": "<p>The job priority.</p>",
         "JobSearchSummary$priority": "<p>The job priority.</p>",
         "JobSummary$priority": "<p>The job priority.</p>",
@@ -2972,7 +2978,7 @@
     "Priority": {
       "base": null,
       "refs": {
-        "CreateQueueEnvironmentRequest$priority": "<p>Sets the priority of the environments in the queue from 0 to 10,000, where 0 is the highest priority. If two environments share the same priority value, the environment created first takes higher priority.</p>",
+        "CreateQueueEnvironmentRequest$priority": "<p>Sets the priority of the environments in the queue from 0 to 10,000, where 0 is the highest priority (activated first and deactivated last). If two environments share the same priority value, the environment created first takes higher priority.</p>",
         "GetQueueEnvironmentResponse$priority": "<p>The priority of the queue environment.</p>",
         "QueueEnvironmentSummary$priority": "<p>The queue environment's priority.</p>",
         "UpdateQueueEnvironmentRequest$priority": "<p>The priority to update.</p>"
@@ -2981,8 +2987,8 @@
     "ProcessExitCode": {
       "base": null,
       "refs": {
-        "GetSessionActionResponse$processExitCode": "<p>The exit code to exit the session.</p>",
-        "UpdatedSessionActionInfo$processExitCode": "<p>The process exit code.</p>"
+        "GetSessionActionResponse$processExitCode": "<p>The process exit code. The default Deadline Cloud worker agent converts unsigned 32-bit exit codes to signed 32-bit exit codes.</p>",
+        "UpdatedSessionActionInfo$processExitCode": "<p>The process exit code. The default Deadline Cloud worker agent converts unsigned 32-bit exit codes to signed 32-bit exit codes.</p>"
       }
     },
     "PutMeteredProductRequest": {
@@ -3391,6 +3397,12 @@
       "base": "<p>Searches for a particular search term.</p>",
       "refs": {
         "SearchFilterExpression$searchTermFilter": "<p>Filters by a specified search term.</p>"
+      }
+    },
+    "SearchTermMatchingType": {
+      "base": null,
+      "refs": {
+        "SearchTermFilterExpression$matchType": "<p>Specifies how Deadline Cloud matches your search term in the results. If you don't specify a <code>matchType</code> the default is <code>FUZZY_MATCH</code>.</p> <ul> <li> <p> <code>FUZZY_MATCH</code> - Matches if a portion of the search term is found in the result.</p> </li> <li> <p> <code>CONTAINS</code> - Matches if the exact search term is contained in the result.</p> </li> </ul>"
       }
     },
     "SearchWorkersRequest": {
@@ -3918,7 +3930,6 @@
         "JobDetailsEntity$logGroupName": "<p>The log group name.</p>",
         "JobDetailsEntity$schemaVersion": "<p>The schema version.</p>",
         "JobDetailsError$message": "<p>The error message detailing the error's cause.</p>",
-        "JobParameters$key": null,
         "JobSearchSummary$lifecycleStatusMessage": "<p>The life cycle status message.</p>",
         "JobSummary$lifecycleStatusMessage": "<p>The life cycle status message.</p>",
         "ListAvailableMeteredProductsRequest$nextToken": "<p>The token for the next set of results, or <code>null</code> to start from the beginning.</p>",

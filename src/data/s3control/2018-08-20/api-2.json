@@ -324,6 +324,18 @@
         "RequiresAccountId":{"value":true}
       }
     },
+    "DeleteAccessPointScope":{
+      "name":"DeleteAccessPointScope",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v20180820/accesspoint/{name}/scope"
+      },
+      "input":{"shape":"DeleteAccessPointScopeRequest"},
+      "staticContextParams":{
+        "RequiresAccountId":{"value":true},
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
     "DeleteBucket":{
       "name":"DeleteBucket",
       "http":{
@@ -730,6 +742,19 @@
         "RequiresAccountId":{"value":true}
       }
     },
+    "GetAccessPointScope":{
+      "name":"GetAccessPointScope",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20180820/accesspoint/{name}/scope"
+      },
+      "input":{"shape":"GetAccessPointScopeRequest"},
+      "output":{"shape":"GetAccessPointScopeResult"},
+      "staticContextParams":{
+        "RequiresAccountId":{"value":true},
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
     "GetBucket":{
       "name":"GetBucket",
       "http":{
@@ -1046,6 +1071,19 @@
         "RequiresAccountId":{"value":true}
       }
     },
+    "ListAccessPointsForDirectoryBuckets":{
+      "name":"ListAccessPointsForDirectoryBuckets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v20180820/accesspointfordirectory"
+      },
+      "input":{"shape":"ListAccessPointsForDirectoryBucketsRequest"},
+      "output":{"shape":"ListAccessPointsForDirectoryBucketsResult"},
+      "staticContextParams":{
+        "RequiresAccountId":{"value":true},
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
     "ListAccessPointsForObjectLambda":{
       "name":"ListAccessPointsForObjectLambda",
       "http":{
@@ -1245,6 +1283,22 @@
       },
       "staticContextParams":{
         "RequiresAccountId":{"value":true}
+      }
+    },
+    "PutAccessPointScope":{
+      "name":"PutAccessPointScope",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v20180820/accesspoint/{name}/scope"
+      },
+      "input":{
+        "shape":"PutAccessPointScopeRequest",
+        "locationName":"PutAccessPointScopeRequest",
+        "xmlNamespace":{"uri":"http://awss3control.amazonaws.com/doc/2018-08-20/"}
+      },
+      "staticContextParams":{
+        "RequiresAccountId":{"value":true},
+        "UseS3ExpressControlEndpoint":{"value":true}
       }
     },
     "PutBucketLifecycleConfiguration":{
@@ -2038,6 +2092,7 @@
         },
         "Name":{
           "shape":"AccessPointName",
+          "contextParam":{"name":"AccessPointName"},
           "location":"uri",
           "locationName":"name"
         },
@@ -2047,7 +2102,8 @@
         },
         "VpcConfiguration":{"shape":"VpcConfiguration"},
         "PublicAccessBlockConfiguration":{"shape":"PublicAccessBlockConfiguration"},
-        "BucketAccountId":{"shape":"AccountId"}
+        "BucketAccountId":{"shape":"AccountId"},
+        "Scope":{"shape":"Scope"}
       }
     },
     "CreateAccessPointResult":{
@@ -2384,6 +2440,28 @@
       }
     },
     "DeleteAccessPointRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "Name"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "contextParam":{"name":"AccountId"},
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"x-amz-account-id"
+        },
+        "Name":{
+          "shape":"AccessPointName",
+          "contextParam":{"name":"AccessPointName"},
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeleteAccessPointScopeRequest":{
       "type":"structure",
       "required":[
         "AccountId",
@@ -3193,6 +3271,34 @@
         "AccessPointArn":{"shape":"S3AccessPointArn"},
         "Endpoints":{"shape":"Endpoints"},
         "BucketAccountId":{"shape":"AccountId"}
+      }
+    },
+    "GetAccessPointScopeRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "Name"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "contextParam":{"name":"AccountId"},
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"x-amz-account-id"
+        },
+        "Name":{
+          "shape":"AccessPointName",
+          "contextParam":{"name":"AccessPointName"},
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "GetAccessPointScopeResult":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"Scope"}
       }
     },
     "GetBucketLifecycleConfigurationRequest":{
@@ -4341,6 +4447,41 @@
         "AccessGrantsList":{"shape":"AccessGrantsList"}
       }
     },
+    "ListAccessPointsForDirectoryBucketsRequest":{
+      "type":"structure",
+      "required":["AccountId"],
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "contextParam":{"name":"AccountId"},
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"x-amz-account-id"
+        },
+        "DirectoryBucket":{
+          "shape":"BucketName",
+          "location":"querystring",
+          "locationName":"directoryBucket"
+        },
+        "NextToken":{
+          "shape":"NonEmptyMaxLength1024String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAccessPointsForDirectoryBucketsResult":{
+      "type":"structure",
+      "members":{
+        "AccessPointList":{"shape":"AccessPointList"},
+        "NextToken":{"shape":"NonEmptyMaxLength1024String"}
+      }
+    },
     "ListAccessPointsForObjectLambdaRequest":{
       "type":"structure",
       "required":["AccountId"],
@@ -5110,6 +5251,13 @@
         "SelectionCriteria":{"shape":"SelectionCriteria"}
       }
     },
+    "PrefixesList":{
+      "type":"list",
+      "member":{
+        "shape":"Prefix",
+        "locationName":"Prefix"
+      }
+    },
     "Priority":{"type":"integer"},
     "Privilege":{
       "type":"string",
@@ -5240,6 +5388,30 @@
           "locationName":"name"
         },
         "Policy":{"shape":"Policy"}
+      }
+    },
+    "PutAccessPointScopeRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "Name",
+        "Scope"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"AccountId",
+          "contextParam":{"name":"AccountId"},
+          "hostLabel":true,
+          "location":"header",
+          "locationName":"x-amz-account-id"
+        },
+        "Name":{
+          "shape":"AccessPointName",
+          "contextParam":{"name":"AccessPointName"},
+          "location":"uri",
+          "locationName":"name"
+        },
+        "Scope":{"shape":"Scope"}
       }
     },
     "PutBucketLifecycleConfigurationRequest":{
@@ -6171,6 +6343,39 @@
       "members":{
       },
       "locationName":"SSE-S3"
+    },
+    "Scope":{
+      "type":"structure",
+      "members":{
+        "Prefixes":{
+          "shape":"PrefixesList",
+          "locationName":"Prefixes"
+        },
+        "Permissions":{
+          "shape":"ScopePermissionList",
+          "locationName":"Permissions"
+        }
+      }
+    },
+    "ScopePermission":{
+      "type":"string",
+      "enum":[
+        "GetObject",
+        "GetObjectAttributes",
+        "ListMultipartUploadParts",
+        "ListBucket",
+        "ListBucketMultipartUploads",
+        "PutObject",
+        "DeleteObject",
+        "AbortMultipartUpload"
+      ]
+    },
+    "ScopePermissionList":{
+      "type":"list",
+      "member":{
+        "shape":"ScopePermission",
+        "locationName":"Permission"
+      }
     },
     "SecretAccessKey":{
       "type":"string",

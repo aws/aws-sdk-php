@@ -1460,7 +1460,8 @@
         "IdentityProviderDetails":{"shape":"WebAppIdentityProviderDetails"},
         "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
         "WebAppUnits":{"shape":"WebAppUnits"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"}
       }
     },
     "CreateWebAppResponse":{
@@ -2059,7 +2060,8 @@
         "AccessEndpoint":{"shape":"WebAppAccessEndpoint"},
         "WebAppEndpoint":{"shape":"WebAppEndpoint"},
         "WebAppUnits":{"shape":"WebAppUnits"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "WebAppEndpointPolicy":{"shape":"WebAppEndpointPolicy"}
       }
     },
     "DescribedWebAppCustomization":{
@@ -3912,6 +3914,13 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "WebAppEndpointPolicy":{
+      "type":"string",
+      "enum":[
+        "FIPS",
+        "STANDARD"
+      ]
     },
     "WebAppFaviconFile":{
       "type":"blob",

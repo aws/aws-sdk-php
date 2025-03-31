@@ -28,6 +28,7 @@
     "AssociateIpamByoasn": "<p>Associates your Autonomous System Number (ASN) with a BYOIP CIDR that you own in the same Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p> <p>After the association succeeds, the ASN is eligible for advertisement. You can view the association with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeByoipCidrs.html\">DescribeByoipCidrs</a>. You can advertise the CIDR with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AdvertiseByoipCidr.html\">AdvertiseByoipCidr</a>.</p>",
     "AssociateIpamResourceDiscovery": "<p>Associates an IPAM resource discovery with an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
     "AssociateNatGatewayAddress": "<p>Associates Elastic IP addresses (EIPs) and private IPv4 addresses with a public NAT gateway. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html\">Work with NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p> <p>By default, you can associate up to 2 Elastic IP addresses per public NAT gateway. You can increase the limit by requesting a quota adjustment. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html#vpc-limits-eips\">Elastic IP address quotas</a> in the <i>Amazon VPC User Guide</i>.</p> <important> <p>When you associate an EIP or secondary EIPs with a public NAT gateway, the network border group of the EIPs must match the network border group of the Availability Zone (AZ) that the public NAT gateway is in. If it's not the same, the EIP will fail to associate. You can see the network border group for the subnet's AZ by viewing the details of the subnet. Similarly, you can view the network border group of an EIP by viewing the details of the EIP address. For more information about network border groups and EIPs, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithEIPs.html\">Allocate an Elastic IP address</a> in the <i>Amazon VPC User Guide</i>. </p> </important>",
+    "AssociateRouteServer": "<p>Associates a route server with a VPC to enable dynamic route updates.</p> <p>A route server association is the connection established between a route server and a VPC. This is a fundamental configuration step that enables the route server to work with appliances in your VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AssociateRouteTable": "<p>Associates a subnet in your VPC or an internet gateway or virtual private gateway attached to your VPC with a route table in your VPC. This association causes traffic from the subnet or gateway to be routed according to the routes in the route table. The action returns an association ID, which you need in order to disassociate the route table later. A route table can be associated with multiple subnets.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "AssociateSecurityGroupVpc": "<p>Associates a security group with another VPC in the same Region. This enables you to use the same security group with network interfaces and instances in the specified VPC.</p> <note> <ul> <li> <p>The VPC you want to associate the security group with must be in the same Region.</p> </li> <li> <p>You can associate the security group with another VPC if your account owns the VPC or if the VPC was shared with you.</p> </li> <li> <p>You must own the security group and the VPC that it was created in.</p> </li> <li> <p>You cannot use this feature with default security groups.</p> </li> <li> <p>You cannot use this feature with the default VPC.</p> </li> </ul> </note>",
     "AssociateSubnetCidrBlock": "<p>Associates a CIDR block with your subnet. You can only associate a single IPv6 CIDR block with your subnet.</p>",
@@ -108,6 +109,9 @@
     "CreateReservedInstancesListing": "<p>Creates a listing for Amazon EC2 Standard Reserved Instances to be sold in the Reserved Instance Marketplace. You can submit one Standard Reserved Instance listing at a time. To get a list of your Standard Reserved Instances, you can use the <a>DescribeReservedInstances</a> operation.</p> <note> <p>Only Standard Reserved Instances can be sold in the Reserved Instance Marketplace. Convertible Reserved Instances cannot be sold.</p> </note> <p>The Reserved Instance Marketplace matches sellers who want to resell Standard Reserved Instance capacity that they no longer need with buyers who want to purchase additional capacity. Reserved Instances bought and sold through the Reserved Instance Marketplace work like any other Reserved Instances.</p> <p>To sell your Standard Reserved Instances, you must first register as a seller in the Reserved Instance Marketplace. After completing the registration process, you can create a Reserved Instance Marketplace listing of some or all of your Standard Reserved Instances, and specify the upfront price to receive for them. Your Standard Reserved Instance listings then become available for purchase. To view the details of your Standard Reserved Instance listing, you can use the <a>DescribeReservedInstancesListings</a> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html\">Sell in the Reserved Instance Marketplace</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateRestoreImageTask": "<p>Starts a task that restores an AMI from an Amazon S3 object that was previously created by using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateStoreImageTask.html\">CreateStoreImageTask</a>.</p> <p>To use this API, you must have the required permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html#ami-s3-permissions\">Permissions for storing and restoring AMIs using Amazon S3</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-store-restore.html\">Store and restore an AMI using Amazon S3</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateRoute": "<p>Creates a route in a route table within a VPC.</p> <p>You must specify either a destination CIDR block or a prefix list ID. You must also specify exactly one of the resources from the parameter list.</p> <p>When determining how to route traffic, we use the route with the most specific match. For example, traffic is destined for the IPv4 address <code>192.0.2.3</code>, and the route table includes the following two IPv4 routes:</p> <ul> <li> <p> <code>192.0.2.0/24</code> (goes to some target A)</p> </li> <li> <p> <code>192.0.2.0/28</code> (goes to some target B)</p> </li> </ul> <p>Both routes apply to the traffic destined for <code>192.0.2.3</code>. However, the second route in the list covers a smaller number of IP addresses and is therefore more specific, so we use that route to determine where to target the traffic.</p> <p>For more information about route tables, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "CreateRouteServer": "<p>Creates a new route server to manage dynamic routing in a VPC.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "CreateRouteServerEndpoint": "<p>Creates a new endpoint for a route server in a specified subnet.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates BGP (Border Gateway Protocol) connections between your route server and your BGP peers. Create two endpoints per subnet for redundancy.</p>",
+    "CreateRouteServerPeer": "<p>Creates a new BGP peer for a specified route server endpoint.</p> <p>A route server peer is a network appliance or function deployed in Amazon Web Services, such as firewall appliances and other network security functions, that meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul>",
     "CreateRouteTable": "<p>Creates a route table for the specified VPC. After you create a route table, you can add routes and associate the table with a subnet.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateSecurityGroup": "<p>Creates a security group.</p> <p>A security group acts as a virtual firewall for your instance to control inbound and outbound traffic. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html\">Amazon EC2 security groups</a> in the <i>Amazon EC2 User Guide</i> and <a href=\"https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html\">Security groups for your VPC</a> in the <i>Amazon VPC User Guide</i>.</p> <p>When you create a security group, you specify a friendly name of your choice. You can't have two security groups for the same VPC with the same name.</p> <p>You have a default security group for use in your VPC. If you don't specify a security group when you launch an instance, the instance is launched into the appropriate default security group. A default security group includes a default rule that grants instances unrestricted network access to each other.</p> <p>You can add or remove rules from your security groups using <a>AuthorizeSecurityGroupIngress</a>, <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupIngress</a>, and <a>RevokeSecurityGroupEgress</a>.</p> <p>For more information about VPC security group limits, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/amazon-vpc-limits.html\">Amazon VPC Limits</a>.</p>",
     "CreateSnapshot": "<p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p> <p>The location of the source EBS volume determines where you can create the snapshot.</p> <ul> <li> <p>If the source volume is in a Region, you must create the snapshot in the same Region as the volume.</p> </li> <li> <p>If the source volume is in a Local Zone, you can create the snapshot in the same Local Zone or in its parent Amazon Web Services Region.</p> </li> <li> <p>If the source volume is on an Outpost, you can create the snapshot on the same Outpost or in its parent Amazon Web Services Region.</p> </li> </ul> <p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p> <p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p> <p>When you create a snapshot for an EBS volume that serves as a root device, we recommend that you stop the instance before taking the snapshot.</p> <p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html\">Amazon EBS encryption</a> in the <i>Amazon EBS User Guide</i>.</p>",
@@ -186,6 +190,9 @@
     "DeletePublicIpv4Pool": "<p>Delete a public IPv4 pool. A public IPv4 pool is an EC2 IP address pool required for the public IPv4 CIDRs that you own and bring to Amazon Web Services to manage with IPAM. IPv6 addresses you bring to Amazon Web Services, however, use IPAM pools only.</p>",
     "DeleteQueuedReservedInstances": "<p>Deletes the queued purchases for the specified Reserved Instances.</p>",
     "DeleteRoute": "<p>Deletes the specified route from the specified route table.</p>",
+    "DeleteRouteServer": "<p>Deletes the specified route server.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "DeleteRouteServerEndpoint": "<p>Deletes the specified route server endpoint.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates BGP (Border Gateway Protocol) connections between your route server and your BGP peers. Create two endpoints per subnet for redundancy.</p>",
+    "DeleteRouteServerPeer": "<p>Deletes the specified BGP peer from a route server.</p> <p>A route server peer is a network appliance or function deployed in Amazon Web Services, such as firewall appliances and other network security functions, that meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul>",
     "DeleteRouteTable": "<p>Deletes the specified route table. You must disassociate the route table from any subnets before you can delete it. You can't delete the main route table.</p>",
     "DeleteSecurityGroup": "<p>Deletes a security group.</p> <p>If you attempt to delete a security group that is associated with an instance or network interface, is referenced by another security group in the same VPC, or has a VPC association, the operation fails with <code>DependencyViolation</code>.</p>",
     "DeleteSnapshot": "<p>Deletes the specified snapshot.</p> <p>When you make periodic snapshots of a volume, the snapshots are incremental, and only the blocks on the device that have changed since your last snapshot are saved in the new snapshot. When you delete a snapshot, only the data not needed for any other snapshot is removed. So regardless of which prior snapshots have been deleted, all active snapshots will have access to all the information needed to restore the volume.</p> <p>You cannot delete a snapshot of the root device of an EBS volume used by a registered AMI. You must first deregister the AMI before you can delete the snapshot.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-deleting-snapshot.html\">Delete an Amazon EBS snapshot</a> in the <i>Amazon EBS User Guide</i>.</p>",
@@ -331,6 +338,9 @@
     "DescribeReservedInstancesListings": "<p>Describes your account's Reserved Instance listings in the Reserved Instance Marketplace.</p> <p>The Reserved Instance Marketplace matches sellers who want to resell Reserved Instance capacity that they no longer need with buyers who want to purchase additional capacity. Reserved Instances bought and sold through the Reserved Instance Marketplace work like any other Reserved Instances.</p> <p>As a seller, you choose to list some or all of your Reserved Instances, and you specify the upfront price to receive for them. Your Reserved Instances are then listed in the Reserved Instance Marketplace and are available for purchase.</p> <p>As a buyer, you specify the configuration of the Reserved Instance to purchase, and the Marketplace matches what you're searching for with what's available. The Marketplace first sells the lowest priced Reserved Instances to you, and continues to sell available Reserved Instance listings to you until your demand is met. You are charged based on the total price of all of the listings that you purchase.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html\">Sell in the Reserved Instance Marketplace</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeReservedInstancesModifications": "<p>Describes the modifications made to your Reserved Instances. If no parameter is specified, information about all your Reserved Instances modification requests is returned. If a modification ID is specified, only information about the specific modification is returned.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html\">Modify Reserved Instances</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeReservedInstancesOfferings": "<p>Describes Reserved Instance offerings that are available for purchase. With Reserved Instances, you purchase the right to launch instances for a period of time. During that time period, you do not receive insufficient capacity errors, and you pay a lower usage rate than the rate charged for On-Demand instances for the actual time used.</p> <p>If you have listed your own Reserved Instances for sale in the Reserved Instance Marketplace, they will be excluded from these results. This is to ensure that you do not purchase your own Reserved Instances.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html\">Sell in the Reserved Instance Marketplace</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
+    "DescribeRouteServerEndpoints": "<p>Describes one or more route server endpoints.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates BGP (Border Gateway Protocol) connections between your route server and your BGP peers. Create two endpoints per subnet for redundancy.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "DescribeRouteServerPeers": "<p>Describes one or more route server peers.</p> <p>A route server peer is a network appliance or function deployed in Amazon Web Services, such as firewall appliances and other network security functions, that meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "DescribeRouteServers": "<p>Describes one or more route servers.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DescribeRouteTables": "<p>Describes your route tables. The default is to describe all your route tables. Alternatively, you can specify specific route table IDs or filter the results to include only the route tables that match specific criteria.</p> <p>Each subnet in your VPC must be associated with a route table. If a subnet is not explicitly associated with any route table, it is implicitly associated with the main route table. This command does not return the subnet ID for implicit associations.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DescribeScheduledInstanceAvailability": "<p>Finds available schedules that meet the specified criteria.</p> <p>You can search for an available schedule no more than 3 months in advance. You must meet the minimum required duration of 1,200 hours per year. For example, the minimum daily schedule is 4 hours, the minimum weekly schedule is 24 hours, and the minimum monthly schedule is 100 hours.</p> <p>After you find a schedule that meets your needs, call <a>PurchaseScheduledInstances</a> to purchase Scheduled Instances with that schedule.</p>",
     "DescribeScheduledInstances": "<p>Describes the specified Scheduled Instances or all your Scheduled Instances.</p>",
@@ -408,6 +418,7 @@
     "DisableImageDeprecation": "<p>Cancels the deprecation of the specified AMI.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-deprecate.html\">Deprecate an AMI</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableImageDeregistrationProtection": "<p>Disables deregistration protection for an AMI. When deregistration protection is disabled, the AMI can be deregistered.</p> <p>If you chose to include a 24-hour cooldown period when you enabled deregistration protection for the AMI, then, when you disable deregistration protection, you won’t immediately be able to deregister the AMI.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/deregister-ami.html#ami-deregistration-protection\">Protect an AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableIpamOrganizationAdminAccount": "<p>Disable the IPAM account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
+    "DisableRouteServerPropagation": "<p>Disables route propagation from a route server to a specified route table.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisableSerialConsoleAccess": "<p>Disables access to the EC2 serial console of all instances for your account. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DisableSnapshotBlockPublicAccess": "<p>Disables the <i>block public access for snapshots</i> setting at the account level for the specified Amazon Web Services Region. After you disable block public access for snapshots in a Region, users can publicly share snapshots in that Region.</p> <important> <p>Enabling block public access for snapshots in <i>block-all-sharing</i> mode does not change the permissions for snapshots that are already publicly shared. Instead, it prevents these snapshots from be publicly visible and publicly accessible. Therefore, the attributes for these snapshots still indicate that they are publicly shared, even though they are not publicly available.</p> <p>If you disable block public access , these snapshots will become publicly available again.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html\"> Block public access for snapshots</a> in the <i>Amazon EBS User Guide</i> .</p> <p/>",
     "DisableTransitGatewayRouteTablePropagation": "<p>Disables the specified resource attachment from propagating routes to the specified propagation route table.</p>",
@@ -423,6 +434,7 @@
     "DisassociateIpamByoasn": "<p>Remove the association between your Autonomous System Number (ASN) and your BYOIP CIDR. You may want to use this action to disassociate an ASN from a CIDR or if you want to swap ASNs. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/tutorials-byoasn.html\">Tutorial: Bring your ASN to IPAM</a> in the <i>Amazon VPC IPAM guide</i>.</p>",
     "DisassociateIpamResourceDiscovery": "<p>Disassociates a resource discovery from an Amazon VPC IPAM. A resource discovery is an IPAM component that enables IPAM to manage and monitor resources that belong to the owning account.</p>",
     "DisassociateNatGatewayAddress": "<p>Disassociates secondary Elastic IP addresses (EIPs) from a public NAT gateway. You cannot disassociate your primary EIP. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-working-with.html#nat-gateway-edit-secondary\">Edit secondary IP address associations</a> in the <i>Amazon VPC User Guide</i>.</p> <p>While disassociating is in progress, you cannot associate/disassociate additional EIPs while the connections are being drained. You are, however, allowed to delete the NAT gateway.</p> <p>An EIP is released only at the end of MaxDrainDurationSeconds. It stays associated and supports the existing connections but does not support any new connections (new connections are distributed across the remaining associated EIPs). As the existing connections drain out, the EIPs (and the corresponding private IP addresses mapped to them) are released.</p>",
+    "DisassociateRouteServer": "<p>Disassociates a route server from a VPC.</p> <p>A route server association is the connection established between a route server and a VPC. This is a fundamental configuration step that enables the route server to work with appliances in your VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisassociateRouteTable": "<p>Disassociates a subnet or gateway from a route table.</p> <p>After you perform this action, the subnet no longer uses the routes in the route table. Instead, it uses the routes in the VPC's main route table. For more information about route tables, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html\">Route tables</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisassociateSecurityGroupVpc": "<p>Disassociates a security group from a VPC. You cannot disassociate the security group if any Elastic network interfaces in the associated VPC are still associated with the security group. Note that the disassociation is asynchronous and you can check the status of the request with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeSecurityGroupVpcAssociations.html\">DescribeSecurityGroupVpcAssociations</a>.</p>",
     "DisassociateSubnetCidrBlock": "<p>Disassociates a CIDR block from a subnet. Currently, you can disassociate an IPv6 CIDR block only. You must detach or delete all gateways and resources that are associated with the CIDR block before you can disassociate it. </p>",
@@ -443,6 +455,7 @@
     "EnableImageDeregistrationProtection": "<p>Enables deregistration protection for an AMI. When deregistration protection is enabled, the AMI can't be deregistered.</p> <p>To allow the AMI to be deregistered, you must first disable deregistration protection using <a>DisableImageDeregistrationProtection</a>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/deregister-ami.html#ami-deregistration-protection\">Protect an AMI from deregistration</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "EnableIpamOrganizationAdminAccount": "<p>Enable an Organizations member account as the IPAM admin account. You cannot select the Organizations management account as the IPAM admin account. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/ipam/enable-integ-ipam.html\">Enable integration with Organizations</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>",
     "EnableReachabilityAnalyzerOrganizationSharing": "<p>Establishes a trust relationship between Reachability Analyzer and Organizations. This operation must be performed by the management account for the organization.</p> <p>After you establish a trust relationship, a user in the management account or a delegated administrator account can run a cross-account analysis using resources from the member accounts.</p>",
+    "EnableRouteServerPropagation": "<p>Defines which route tables the route server can update with routes.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "EnableSerialConsoleAccess": "<p>Enables access to the EC2 serial console of all instances for your account. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "EnableSnapshotBlockPublicAccess": "<p>Enables or modifies the <i>block public access for snapshots</i> setting at the account level for the specified Amazon Web Services Region. After you enable block public access for snapshots in a Region, users can no longer request public sharing for snapshots in that Region. Snapshots that are already publicly shared are either treated as private or they remain publicly shared, depending on the <b>State</b> that you specify.</p> <important> <p>Enabling block public access for snapshots in <i>block all sharing</i> mode does not change the permissions for snapshots that are already publicly shared. Instead, it prevents these snapshots from be publicly visible and publicly accessible. Therefore, the attributes for these snapshots still indicate that they are publicly shared, even though they are not publicly available.</p> <p>If you later disable block public access or change the mode to <i>block new sharing</i>, these snapshots will become publicly available again.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html\"> Block public access for snapshots</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "EnableTransitGatewayRouteTablePropagation": "<p>Enables the specified attachment to propagate routes to the specified propagation route table.</p>",
@@ -489,6 +502,9 @@
     "GetNetworkInsightsAccessScopeContent": "<p>Gets the content for the specified Network Access Scope.</p>",
     "GetPasswordData": "<p>Retrieves the encrypted administrator password for a running Windows instance.</p> <p>The Windows password is generated at boot by the <code>EC2Config</code> service or <code>EC2Launch</code> scripts (Windows Server 2016 and later). This usually only happens the first time an instance is launched. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingConfig_WinAMI.html\">EC2Config</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2launch.html\">EC2Launch</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>For the <code>EC2Config</code> service, the password is not generated for rebundled AMIs unless <code>Ec2SetPassword</code> is enabled before bundling.</p> <p>The password is encrypted using the key pair that you specified when you launched the instance. You must provide the corresponding key pair file.</p> <p>When you launch an instance, password generation and encryption may take a few minutes. If you try to retrieve the password before it's available, the output returns an empty string. We recommend that you wait up to 15 minutes after launching an instance before trying to retrieve the generated password.</p>",
     "GetReservedInstancesExchangeQuote": "<p>Returns a quote and exchange information for exchanging one or more specified Convertible Reserved Instances for a new Convertible Reserved Instance. If the exchange cannot be performed, the reason is returned in the response. Use <a>AcceptReservedInstancesExchangeQuote</a> to perform the exchange.</p>",
+    "GetRouteServerAssociations": "<p>Gets information about the associations for the specified route server.</p> <p>A route server association is the connection established between a route server and a VPC. This is a fundamental configuration step that enables the route server to work with appliances in your VPC.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
+    "GetRouteServerPropagations": "<p>Gets information about the route propagations for the specified route server.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p>",
+    "GetRouteServerRoutingDatabase": "<p>Gets the routing database for the specified route server. The <a href=\"https://en.wikipedia.org/wiki/Routing_table\">Routing Information Base (RIB)</a> serves as a database that stores all the routing information and network topology data collected by a router or routing system, such as routes learned from BGP peers. The RIB is constantly updated as new routing information is received or existing routes change. This ensures that the route server always has the most current view of the network topology and can make optimal routing decisions.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p>",
     "GetSecurityGroupsForVpc": "<p>Gets security groups that can be associated by the Amazon Web Services account making the request with network interfaces in the specified VPC.</p>",
     "GetSerialConsoleAccessStatus": "<p>Retrieves the access status of your account to the EC2 serial console of all instances. By default, access to the EC2 serial console is disabled for your account. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configure-access-to-serial-console.html#serial-console-account-access\">Manage account access to the EC2 serial console</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "GetSnapshotBlockPublicAccessState": "<p>Gets the current state of <i>block public access for snapshots</i> setting for the account and Region.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/block-public-access-snapshots.html\"> Block public access for snapshots</a> in the <i>Amazon EBS User Guide</i>.</p>",
@@ -551,6 +567,7 @@
     "ModifyNetworkInterfaceAttribute": "<p>Modifies the specified network interface attribute. You can specify only one attribute at a time. You can use this action to attach and detach security groups from an existing EC2 instance.</p>",
     "ModifyPrivateDnsNameOptions": "<p>Modifies the options for instance hostnames for the specified instance.</p>",
     "ModifyReservedInstances": "<p>Modifies the configuration of your Reserved Instances, such as the Availability Zone, instance count, or instance type. The Reserved Instances to be modified must be identical, except for Availability Zone, network platform, and instance type.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html\">Modify Reserved Instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "ModifyRouteServer": "<p>Modifies the configuration of an existing route server.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p> <p>For more information see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Dynamic routing in your VPC with VPC Route Server</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "ModifySecurityGroupRules": "<p>Modifies the rules of a security group.</p>",
     "ModifySnapshotAttribute": "<p>Adds or removes permission settings for the specified snapshot. You may add or remove specified Amazon Web Services account IDs from a snapshot's list of create volume permissions, but you cannot do both in a single operation. If you need to both add and remove account IDs for a snapshot, you must use multiple operations. You can make up to 500 modifications to a snapshot in a single operation.</p> <p>Encrypted snapshots and snapshots with Amazon Web Services Marketplace product codes cannot be made public. Snapshots encrypted with your default KMS key cannot be shared with other accounts.</p> <p>For more information about modifying snapshot permissions, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-modifying-snapshot-permissions.html\">Share a snapshot</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "ModifySnapshotTier": "<p>Archives an Amazon EBS snapshot. When you archive a snapshot, it is converted to a full snapshot that includes all of the blocks of data that were written to the volume at the time the snapshot was created, and moved from the standard tier to the archive tier. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/snapshot-archive.html\">Archive Amazon EBS snapshots</a> in the <i>Amazon EBS User Guide</i>.</p>",
@@ -1350,6 +1367,12 @@
         "StartNetworkInsightsAnalysisRequest$FilterInArns": "<p>The Amazon Resource Names (ARN) of the resources that the path must traverse.</p>"
       }
     },
+    "AsPath": {
+      "base": null,
+      "refs": {
+        "RouteServerRoute$AsPaths": "<p>The AS path attributes of the BGP route.</p>"
+      }
+    },
     "AsnAssociation": {
       "base": "<p>An Autonomous System Number (ASN) and BYOIP CIDR association.</p>",
       "refs": {
@@ -1528,6 +1551,16 @@
       }
     },
     "AssociateNatGatewayAddressResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateRouteServerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateRouteServerResult": {
       "base": null,
       "refs": {
       }
@@ -2155,6 +2188,7 @@
         "AssociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "AssociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateSecurityGroupVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "AssociateTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2276,6 +2310,10 @@
         "CreateRestoreImageTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateRouteResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "CreateRouteServerEndpointRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateRouteServerPeerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateRouteServerRequest$SnsNotificationsEnabled": "<p>Indicates whether SNS notifications should be enabled for route server events. Enabling SNS notifications persists BGP status changes to an SNS topic provisioned by Amazon Web Services.</p>",
         "CreateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateSecurityGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateSnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2373,6 +2411,9 @@
         "DeletePublicIpv4PoolResult$ReturnValue": "<p>Information about the result of deleting the public IPv4 pool.</p>",
         "DeleteQueuedReservedInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteRouteServerEndpointRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteRouteServerPeerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteSecurityGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteSecurityGroupResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
@@ -2518,6 +2559,9 @@
         "DescribeReservedInstancesOfferingsRequest$IncludeMarketplace": "<p>Include Reserved Instance Marketplace offerings in the response.</p>",
         "DescribeReservedInstancesOfferingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeReservedInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeRouteServerEndpointsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeRouteServerPeersRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeRouteServersRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeRouteTablesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeScheduledInstanceAvailabilityRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeScheduledInstancesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2607,6 +2651,7 @@
         "DisableImageResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DisableIpamOrganizationAdminAccountRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableIpamOrganizationAdminAccountResult$Success": "<p>The result of disabling the IPAM account.</p>",
+        "DisableRouteServerPropagationRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableSerialConsoleAccessRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisableSerialConsoleAccessResult$SerialConsoleAccessEnabled": "<p>If <code>true</code>, access to the EC2 serial console of all instances is enabled for your account. If <code>false</code>, access to the EC2 serial console of all instances is disabled for your account.</p>",
         "DisableSnapshotBlockPublicAccessRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2625,6 +2670,7 @@
         "DisassociateIpamByoasnRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateIpamResourceDiscoveryRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateNatGatewayAddressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DisassociateRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateSecurityGroupVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DisassociateTransitGatewayMulticastDomainRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2643,9 +2689,9 @@
         "EbsInstanceBlockDeviceSpecification$DeleteOnTermination": "<p>Indicates whether the volume is deleted on instance termination.</p>",
         "Ec2InstanceConnectEndpoint$PreserveClientIp": "<p>Indicates whether your client's IP address is preserved as the source. The value is <code>true</code> or <code>false</code>.</p> <ul> <li> <p>If <code>true</code>, your client's IP address is used when you connect to a resource.</p> </li> <li> <p>If <code>false</code>, the elastic network interface IP address is used when you connect to a resource.</p> </li> </ul> <p>Default: <code>true</code> </p>",
         "EnaSrdSpecification$EnaSrdEnabled": "<p>Indicates whether ENA Express is enabled for the network interface.</p>",
-        "EnaSrdSpecificationRequest$EnaSrdEnabled": "<p>Specifies whether ENA Express is enabled for the network interface when you launch an instance from your launch template.</p>",
+        "EnaSrdSpecificationRequest$EnaSrdEnabled": "<p>Specifies whether ENA Express is enabled for the network interface when you launch an instance.</p>",
         "EnaSrdUdpSpecification$EnaSrdUdpEnabled": "<p>Indicates whether UDP traffic to and from the instance uses ENA Express. To specify this setting, you must first enable ENA Express.</p>",
-        "EnaSrdUdpSpecificationRequest$EnaSrdUdpEnabled": "<p>Indicates whether UDP traffic uses ENA Express for your instance. To ensure that UDP traffic can use ENA Express when you launch an instance, you must also set <b>EnaSrdEnabled</b> in the <b>EnaSrdSpecificationRequest</b> to <code>true</code> in your launch template.</p>",
+        "EnaSrdUdpSpecificationRequest$EnaSrdUdpEnabled": "<p>Indicates whether UDP traffic uses ENA Express for your instance. To ensure that UDP traffic can use ENA Express when you launch an instance, you must also set <b>EnaSrdEnabled</b> in the <b>EnaSrdSpecificationRequest</b> to <code>true</code>.</p>",
         "EnableAddressTransferRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableAwsNetworkPerformanceMetricSubscriptionRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2665,6 +2711,7 @@
         "EnableIpamOrganizationAdminAccountResult$Success": "<p>The result of enabling the IPAM account.</p>",
         "EnableReachabilityAnalyzerOrganizationSharingRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableReachabilityAnalyzerOrganizationSharingResult$ReturnValue": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
+        "EnableRouteServerPropagationRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableSerialConsoleAccessRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "EnableSerialConsoleAccessResult$SerialConsoleAccessEnabled": "<p>If <code>true</code>, access to the EC2 serial console of all instances is enabled for your account. If <code>false</code>, access to the EC2 serial console of all instances is disabled for your account.</p>",
         "EnableSnapshotBlockPublicAccessRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2725,6 +2772,10 @@
         "GetPasswordDataRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetReservedInstancesExchangeQuoteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetReservedInstancesExchangeQuoteResult$IsValidExchange": "<p>If <code>true</code>, the exchange is valid. If <code>false</code>, the exchange cannot be completed.</p>",
+        "GetRouteServerAssociationsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetRouteServerPropagationsRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetRouteServerRoutingDatabaseRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "GetRouteServerRoutingDatabaseResult$AreRoutesPersisted": "<p>Indicates whether routes are being persisted in the routing database.</p>",
         "GetSecurityGroupsForVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetSerialConsoleAccessStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetSerialConsoleAccessStatusResult$SerialConsoleAccessEnabled": "<p>If <code>true</code>, access to the EC2 serial console of all instances is enabled for your account. If <code>false</code>, access to the EC2 serial console of all instances is disabled for your account.</p>",
@@ -2873,6 +2924,8 @@
         "ModifyPrivateDnsNameOptionsRequest$EnableResourceNameDnsARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS A records.</p>",
         "ModifyPrivateDnsNameOptionsRequest$EnableResourceNameDnsAAAARecord": "<p>Indicates whether to respond to DNS queries for instance hostnames with DNS AAAA records.</p>",
         "ModifyPrivateDnsNameOptionsResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
+        "ModifyRouteServerRequest$SnsNotificationsEnabled": "<p>Specifies whether to enable SNS notifications for route server events. Enabling SNS notifications persists BGP status changes to an SNS topic provisioned by Amazon Web Services.</p>",
+        "ModifyRouteServerRequest$DryRun": "<p>A check for whether you have the required permissions for the action without actually making the request and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifySecurityGroupRulesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifySecurityGroupRulesResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
         "ModifySnapshotAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3037,6 +3090,7 @@
         "RevokeSecurityGroupIngressRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "RevokeSecurityGroupIngressResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>",
         "RevokedSecurityGroupRule$IsEgress": "<p>Defines if a security group rule is an outbound rule.</p>",
+        "RouteServer$SnsNotificationsEnabled": "<p>Indicates whether SNS notifications are enabled for the route server. Enabling SNS notifications persists BGP status changes to an SNS topic provisioned by Amazon Web Services.</p>",
         "RouteTableAssociation$Main": "<p>Indicates whether this is the main route table.</p>",
         "RunInstancesMonitoringEnabled$Enabled": "<p>Indicates whether detailed monitoring is enabled. Otherwise, basic monitoring is enabled.</p>",
         "RunInstancesRequest$DisableApiStop": "<p>Indicates whether an instance is enabled for stop protection. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html#Using_StopProtection\">Stop protection</a>. </p>",
@@ -3174,6 +3228,14 @@
       "refs": {
         "InstanceMetadataDefaultsResponse$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel.</p>",
         "ModifyInstanceMetadataDefaultsRequest$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel. To indicate no preference, specify <code>-1</code>.</p> <p>Possible values: Integers from <code>1</code> to <code>64</code>, and <code>-1</code> to indicate no preference</p>"
+      }
+    },
+    "BoxedLong": {
+      "base": null,
+      "refs": {
+        "CreateRouteServerRequest$PersistRoutesDuration": "<p>The number of minutes a route server will wait after BGP is re-established to unpersist the routes in the FIB and RIB. Value must be in the range of 1-5. Required if PersistRoutes is <code>enabled</code>.</p> <p>If you set the duration to 1 minute, then when your network appliance re-establishes BGP with route server, it has 1 minute to relearn it's adjacent network and advertise those routes to route server before route server resumes normal functionality. In most cases, 1 minute is probably sufficient. If, however, you have concerns that your BGP network may not be capable of fully re-establishing and re-learning everything in 1 minute, you can increase the duration up to 5 minutes.</p>",
+        "ModifyRouteServerRequest$PersistRoutesDuration": "<p>The number of minutes a route server will wait after BGP is re-established to unpersist the routes in the FIB and RIB. Value must be in the range of 1-5. Required if PersistRoutes is <code>enabled</code>.</p> <p>If you set the duration to 1 minute, then when your network appliance re-establishes BGP with route server, it has 1 minute to relearn it's adjacent network and advertise those routes to route server before route server resumes normal functionality. In most cases, 1 minute is probably sufficient. If, however, you have concerns that your BGP network may not be capable of fully re-establishing and re-learning everything in 1 minute, you can increase the duration up to 5 minutes.</p>",
+        "RouteServer$PersistRoutesDuration": "<p>The number of minutes a route server will wait after BGP is re-established to unpersist the routes in the FIB and RIB. Value must be in the range of 1-5. The default value is 1. Only valid if <code>persistRoutesState</code> is 'enabled'.</p> <p>If you set the duration to 1 minute, then when your network appliance re-establishes BGP with route server, it has 1 minute to relearn it's adjacent network and advertise those routes to route server before route server resumes normal functionality. In most cases, 1 minute is probably sufficient. If, however, you have concerns that your BGP network may not be capable of fully re-establishing and re-learning everything in 1 minute, you can increase the duration up to 5 minutes.</p>"
       }
     },
     "BundleId": {
@@ -4913,6 +4975,36 @@
       "refs": {
       }
     },
+    "CreateRouteServerEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRouteServerEndpointResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRouteServerPeerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRouteServerPeerResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRouteServerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateRouteServerResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateRouteTableRequest": {
       "base": null,
       "refs": {
@@ -6122,6 +6214,36 @@
       }
     },
     "DeleteRouteRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerEndpointRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerEndpointResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerPeerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerPeerResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteRouteServerResult": {
       "base": null,
       "refs": {
       }
@@ -7822,6 +7944,36 @@
       "refs": {
       }
     },
+    "DescribeRouteServerEndpointsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeRouteServerEndpointsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeRouteServerPeersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeRouteServerPeersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeRouteServersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeRouteServersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeRouteTablesMaxResults": {
       "base": null,
       "refs": {
@@ -8856,6 +9008,16 @@
       "refs": {
       }
     },
+    "DisableRouteServerPropagationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableRouteServerPropagationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisableSerialConsoleAccessRequest": {
       "base": null,
       "refs": {
@@ -8992,6 +9154,16 @@
       }
     },
     "DisassociateNatGatewayAddressResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateRouteServerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateRouteServerResult": {
       "base": null,
       "refs": {
       }
@@ -9591,7 +9763,7 @@
     "EnaSrdUdpSpecificationRequest": {
       "base": "<p>Configures ENA Express for UDP network traffic from your launch template.</p>",
       "refs": {
-        "EnaSrdSpecificationRequest$EnaSrdUdpSpecification": "<p>Contains ENA Express settings for UDP network traffic in your launch template.</p>"
+        "EnaSrdSpecificationRequest$EnaSrdUdpSpecification": "<p>Contains ENA Express settings for UDP network traffic for the network interface attached to the instance.</p>"
       }
     },
     "EnaSupport": {
@@ -9758,6 +9930,16 @@
       }
     },
     "EnableReachabilityAnalyzerOrganizationSharingResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableRouteServerPropagationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EnableRouteServerPropagationResult": {
       "base": null,
       "refs": {
       }
@@ -10254,6 +10436,9 @@
         "DescribeReservedInstancesModificationsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>client-token</code> - The idempotency token for the modification request.</p> </li> <li> <p> <code>create-date</code> - The time when the modification request was created.</p> </li> <li> <p> <code>effective-date</code> - The time when the modification becomes effective.</p> </li> <li> <p> <code>modification-result.reserved-instances-id</code> - The ID for the Reserved Instances created as part of the modification request. This ID is only available when the status of the modification is <code>fulfilled</code>.</p> </li> <li> <p> <code>modification-result.target-configuration.availability-zone</code> - The Availability Zone for the new Reserved Instances.</p> </li> <li> <p> <code>modification-result.target-configuration.instance-count </code> - The number of new Reserved Instances.</p> </li> <li> <p> <code>modification-result.target-configuration.instance-type</code> - The instance type of the new Reserved Instances.</p> </li> <li> <p> <code>reserved-instances-id</code> - The ID of the Reserved Instances modified.</p> </li> <li> <p> <code>reserved-instances-modification-id</code> - The ID of the modification request.</p> </li> <li> <p> <code>status</code> - The status of the Reserved Instances modification request (<code>processing</code> | <code>fulfilled</code> | <code>failed</code>).</p> </li> <li> <p> <code>status-message</code> - The reason for the status.</p> </li> <li> <p> <code>update-date</code> - The time when the modification request was last updated.</p> </li> </ul>",
         "DescribeReservedInstancesOfferingsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone where the Reserved Instance can be used.</p> </li> <li> <p> <code>duration</code> - The duration of the Reserved Instance (for example, one year or three years), in seconds (<code>31536000</code> | <code>94608000</code>).</p> </li> <li> <p> <code>fixed-price</code> - The purchase price of the Reserved Instance (for example, 9800.0).</p> </li> <li> <p> <code>instance-type</code> - The instance type that is covered by the reservation.</p> </li> <li> <p> <code>marketplace</code> - Set to <code>true</code> to show only Reserved Instance Marketplace offerings. When this filter is not used, which is the default behavior, all offerings from both Amazon Web Services and the Reserved Instance Marketplace are listed.</p> </li> <li> <p> <code>product-description</code> - The Reserved Instance product platform description (<code>Linux/UNIX</code> | <code>Linux with SQL Server Standard</code> | <code>Linux with SQL Server Web</code> | <code>Linux with SQL Server Enterprise</code> | <code>SUSE Linux</code> | <code>Red Hat Enterprise Linux</code> | <code>Red Hat Enterprise Linux with HA</code> | <code>Windows</code> | <code>Windows with SQL Server Standard</code> | <code>Windows with SQL Server Web</code> | <code>Windows with SQL Server Enterprise</code>).</p> </li> <li> <p> <code>reserved-instances-offering-id</code> - The Reserved Instances offering ID.</p> </li> <li> <p> <code>scope</code> - The scope of the Reserved Instance (<code>Availability Zone</code> or <code>Region</code>).</p> </li> <li> <p> <code>usage-price</code> - The usage price of the Reserved Instance, per hour (for example, 0.84).</p> </li> </ul>",
         "DescribeReservedInstancesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone where the Reserved Instance can be used.</p> </li> <li> <p> <code>duration</code> - The duration of the Reserved Instance (one year or three years), in seconds (<code>31536000</code> | <code>94608000</code>).</p> </li> <li> <p> <code>end</code> - The time when the Reserved Instance expires (for example, 2015-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>fixed-price</code> - The purchase price of the Reserved Instance (for example, 9800.0).</p> </li> <li> <p> <code>instance-type</code> - The instance type that is covered by the reservation.</p> </li> <li> <p> <code>scope</code> - The scope of the Reserved Instance (<code>Region</code> or <code>Availability Zone</code>).</p> </li> <li> <p> <code>product-description</code> - The Reserved Instance product platform description (<code>Linux/UNIX</code> | <code>Linux with SQL Server Standard</code> | <code>Linux with SQL Server Web</code> | <code>Linux with SQL Server Enterprise</code> | <code>SUSE Linux</code> | <code>Red Hat Enterprise Linux</code> | <code>Red Hat Enterprise Linux with HA</code> | <code>Windows</code> | <code>Windows with SQL Server Standard</code> | <code>Windows with SQL Server Web</code> | <code>Windows with SQL Server Enterprise</code>).</p> </li> <li> <p> <code>reserved-instances-id</code> - The ID of the Reserved Instance.</p> </li> <li> <p> <code>start</code> - The time at which the Reserved Instance purchase request was placed (for example, 2014-08-07T11:54:42.000Z).</p> </li> <li> <p> <code>state</code> - The state of the Reserved Instance (<code>payment-pending</code> | <code>active</code> | <code>payment-failed</code> | <code>retired</code>).</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>usage-price</code> - The usage price of the Reserved Instance, per hour (for example, 0.84).</p> </li> </ul>",
+        "DescribeRouteServerEndpointsRequest$Filters": "<p>One or more filters to apply to the describe request.</p>",
+        "DescribeRouteServerPeersRequest$Filters": "<p>One or more filters to apply to the describe request.</p>",
+        "DescribeRouteServersRequest$Filters": "<p>One or more filters to apply to the describe request.</p>",
         "DescribeRouteTablesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>association.gateway-id</code> - The ID of the gateway involved in the association.</p> </li> <li> <p> <code>association.route-table-association-id</code> - The ID of an association ID for the route table.</p> </li> <li> <p> <code>association.route-table-id</code> - The ID of the route table involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>association.main</code> - Indicates whether the route table is the main route table for the VPC (<code>true</code> | <code>false</code>). Route tables that do not have an association ID are not returned in the response.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the route table.</p> </li> <li> <p> <code>route-table-id</code> - The ID of the route table.</p> </li> <li> <p> <code>route.destination-cidr-block</code> - The IPv4 CIDR range specified in a route in the table.</p> </li> <li> <p> <code>route.destination-ipv6-cidr-block</code> - The IPv6 CIDR range specified in a route in the route table.</p> </li> <li> <p> <code>route.destination-prefix-list-id</code> - The ID (prefix) of the Amazon Web Services service specified in a route in the table.</p> </li> <li> <p> <code>route.egress-only-internet-gateway-id</code> - The ID of an egress-only Internet gateway specified in a route in the route table.</p> </li> <li> <p> <code>route.gateway-id</code> - The ID of a gateway specified in a route in the table.</p> </li> <li> <p> <code>route.instance-id</code> - The ID of an instance specified in a route in the table.</p> </li> <li> <p> <code>route.nat-gateway-id</code> - The ID of a NAT gateway.</p> </li> <li> <p> <code>route.transit-gateway-id</code> - The ID of a transit gateway.</p> </li> <li> <p> <code>route.origin</code> - Describes how the route was created. <code>CreateRouteTable</code> indicates that the route was automatically created when the route table was created; <code>CreateRoute</code> indicates that the route was manually added to the route table; <code>EnableVgwRoutePropagation</code> indicates that the route was propagated by route propagation.</p> </li> <li> <p> <code>route.state</code> - The state of a route in the route table (<code>active</code> | <code>blackhole</code>). The blackhole state indicates that the route's target isn't available (for example, the specified gateway isn't attached to the VPC, the specified NAT instance has been terminated, and so on).</p> </li> <li> <p> <code>route.vpc-peering-connection-id</code> - The ID of a VPC peering connection specified in a route in the table.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the route table.</p> </li> </ul>",
         "DescribeScheduledInstanceAvailabilityRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone (for example, <code>us-west-2a</code>).</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>c4.large</code>).</p> </li> <li> <p> <code>platform</code> - The platform (<code>Linux/UNIX</code> or <code>Windows</code>).</p> </li> </ul>",
         "DescribeScheduledInstancesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone (for example, <code>us-west-2a</code>).</p> </li> <li> <p> <code>instance-type</code> - The instance type (for example, <code>c4.large</code>).</p> </li> <li> <p> <code>platform</code> - The platform (<code>Linux/UNIX</code> or <code>Windows</code>).</p> </li> </ul>",
@@ -10311,6 +10496,7 @@
         "GetIpamPoolAllocationsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
         "GetIpamPoolCidrsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
         "GetIpamResourceCidrsRequest$Filters": "<p>One or more filters for the request. For more information about filtering, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html\">Filtering CLI output</a>.</p>",
+        "GetRouteServerRoutingDatabaseRequest$Filters": "<p>Filters to apply to the routing database query.</p>",
         "GetSecurityGroupsForVpcRequest$Filters": "<p>The filters. If using multiple filters, the results include security groups which match all filters.</p> <ul> <li> <p> <code>group-id</code>: The security group ID.</p> </li> <li> <p> <code>description</code>: The security group's description.</p> </li> <li> <p> <code>group-name</code>: The security group name.</p> </li> <li> <p> <code>owner-id</code>: The security group owner ID.</p> </li> <li> <p> <code>primary-vpc-id</code>: The VPC ID in which the security group was created.</p> </li> </ul>",
         "GetSubnetCidrReservationsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>reservationType</code> - The type of reservation (<code>prefix</code> | <code>explicit</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "GetTransitGatewayAttachmentPropagationsRequest$Filters": "<p>One or more filters. The possible values are:</p> <ul> <li> <p> <code>transit-gateway-route-table-id</code> - The ID of the transit gateway route table.</p> </li> </ul>",
@@ -11122,6 +11308,36 @@
     },
     "GetReservedInstancesExchangeQuoteResult": {
       "base": "<p>Contains the output of GetReservedInstancesExchangeQuote.</p>",
+      "refs": {
+      }
+    },
+    "GetRouteServerAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRouteServerAssociationsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRouteServerPropagationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRouteServerPropagationsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRouteServerRoutingDatabaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetRouteServerRoutingDatabaseResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -13288,6 +13504,7 @@
         "RevokeSecurityGroupIngressRequest$ToPort": "<p>If the protocol is TCP or UDP, this is the end of the port range. If the protocol is ICMP, this is the ICMP code or -1 (all ICMP codes).</p>",
         "RevokedSecurityGroupRule$FromPort": "<p>The 'from' port number of the security group rule.</p>",
         "RevokedSecurityGroupRule$ToPort": "<p>The 'to' port number of the security group rule.</p>",
+        "RouteServerRoute$Med": "<p>The Multi-Exit Discriminator (MED) value of the BGP route.</p>",
         "RunInstancesRequest$Ipv6AddressCount": "<p>The number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet. You cannot specify this option and the option to assign specific IPv6 addresses in the same request. You can specify this option if you've specified a minimum number of instances to launch.</p> <p>You cannot specify this option and the network interfaces option in the same request.</p>",
         "RunInstancesRequest$MaxCount": "<p>The maximum number of instances to launch. If you specify a value that is more capacity than Amazon EC2 can launch in the target Availability Zone, Amazon EC2 launches the largest possible number of instances above the specified minimum count.</p> <p>Constraints: Between 1 and the quota for the specified instance type for your account for this Region. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-instance-quotas.html\">Amazon EC2 instance type quotas</a>.</p>",
         "RunInstancesRequest$MinCount": "<p>The minimum number of instances to launch. If you specify a value that is more capacity than Amazon EC2 can provide in the target Availability Zone, Amazon EC2 does not launch any instances.</p> <p>Constraints: Between 1 and the quota for the specified instance type for your account for this Region. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-instance-quotas.html\">Amazon EC2 instance type quotas</a>.</p>",
@@ -15377,6 +15594,7 @@
       "refs": {
         "CopyImageRequest$SnapshotCopyCompletionDurationMinutes": "<p>Specify a completion duration, in 15 minute increments, to initiate a time-based AMI copy. The specified completion duration applies to each of the snapshots associated with the AMI. Each snapshot associated with the AMI will be completed within the specified completion duration, regardless of their size.</p> <p>If you do not specify a value, the AMI copy operation is completed on a best-effort basis.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html\"> Time-based copies</a>.</p>",
         "CreateCustomerGatewayRequest$BgpAsnExtended": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Valid values: <code>2,147,483,648</code> to <code>4,294,967,295</code> </p>",
+        "CreateRouteServerRequest$AmazonSideAsn": "<p>The private Autonomous System Number (ASN) for the Amazon side of the BGP session. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
         "CreateVpnGatewayRequest$AmazonSideAsn": "<p>A private Autonomous System Number (ASN) for the Amazon side of a BGP session. If you're using a 16-bit ASN, it must be in the 64512 to 65534 range. If you're using a 32-bit ASN, it must be in the 4200000000 to 4294967294 range.</p> <p>Default: 64512</p>",
         "DeleteLaunchTemplateVersionsResponseErrorItem$VersionNumber": "<p>The version number of the launch template.</p>",
         "DeleteLaunchTemplateVersionsResponseSuccessItem$VersionNumber": "<p>The version number of the launch template.</p>",
@@ -15400,6 +15618,9 @@
         "ReservedInstancesOffering$Duration": "<p>The duration of the Reserved Instance, in seconds.</p>",
         "RestoreManagedPrefixListVersionRequest$PreviousVersion": "<p>The version to restore.</p>",
         "RestoreManagedPrefixListVersionRequest$CurrentVersion": "<p>The current version number for the prefix list.</p>",
+        "RouteServer$AmazonSideAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
+        "RouteServerBgpOptions$PeerAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
+        "RouteServerBgpOptionsRequest$PeerAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
         "Snapshot$FullSnapshotSizeInBytes": "<p>The full size of the snapshot, in bytes.</p> <important> <p>This is <b>not</b> the incremental size of the snapshot. This is the full snapshot size and represents the size of all the blocks that were written to the source volume at the time the snapshot was created.</p> </important>",
         "TransitGatewayAttachmentBgpConfiguration$TransitGatewayAsn": "<p>The transit gateway Autonomous System Number (ASN).</p>",
         "TransitGatewayAttachmentBgpConfiguration$PeerAsn": "<p>The peer Autonomous System Number (ASN).</p>",
@@ -16095,6 +16316,16 @@
     },
     "ModifyReservedInstancesResult": {
       "base": "<p>Contains the output of ModifyReservedInstances.</p>",
+      "refs": {
+      }
+    },
+    "ModifyRouteServerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ModifyRouteServerResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -16986,6 +17217,8 @@
         "NetworkInterfaceIdList$member": null,
         "ReplaceRouteRequest$NetworkInterfaceId": "<p>The ID of a network interface.</p>",
         "ResetNetworkInterfaceAttributeRequest$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
+        "RouteServerEndpoint$EniId": "<p>The ID of the Elastic network interface for the endpoint.</p>",
+        "RouteServerPeer$EndpointEniId": "<p>The ID of the Elastic network interface for the route server endpoint.</p>",
         "ScheduledInstancesNetworkInterface$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "TransitGatewayNetworkInterfaceIdList$member": null,
         "UnassignIpv6AddressesRequest$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
@@ -19468,6 +19701,267 @@
         "Route$Origin": "<p>Describes how the route was created.</p> <ul> <li> <p> <code>CreateRouteTable</code> - The route was automatically created when the route table was created.</p> </li> <li> <p> <code>CreateRoute</code> - The route was manually added to the route table.</p> </li> <li> <p> <code>EnableVgwRoutePropagation</code> - The route was propagated by route propagation.</p> </li> </ul>"
       }
     },
+    "RouteServer": {
+      "base": "<p>Describes a route server and its configuration.</p> <p>Amazon VPC Route Server simplifies routing for traffic between workloads that are deployed within a VPC and its internet gateways. With this feature, VPC Route Server dynamically updates VPC and gateway route tables with your preferred IPv4 or IPv6 routes to achieve routing fault tolerance for those workloads. This enables you to automatically reroute traffic within a VPC, which increases the manageability of VPC routing and interoperability with third-party workloads.</p> <p>Route server supports the follow route table types:</p> <ul> <li> <p>VPC route tables</p> </li> <li> <p>Subnet route tables</p> </li> <li> <p>Internet gateway route tables</p> </li> </ul> <p>Route server does not support route tables associated with virtual private gateways. To propagate routes into a transit gateway route table, use <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-connect.html\">Transit Gateway Connect</a>.</p>",
+      "refs": {
+        "CreateRouteServerResult$RouteServer": "<p>Information about the created route server.</p>",
+        "DeleteRouteServerResult$RouteServer": "<p>Information about the deleted route server.</p>",
+        "ModifyRouteServerResult$RouteServer": "<p>Information about the modified route server.</p>",
+        "RouteServersList$member": null
+      }
+    },
+    "RouteServerAssociation": {
+      "base": "<p>Describes the association between a route server and a VPC.</p> <p>A route server association is the connection established between a route server and a VPC. This is a fundamental configuration step that enables the route server to work with appliances in your VPC.</p>",
+      "refs": {
+        "AssociateRouteServerResult$RouteServerAssociation": "<p>Information about the association between the route server and the VPC.</p>",
+        "DisassociateRouteServerResult$RouteServerAssociation": "<p>Information about the disassociated route server.</p>",
+        "RouteServerAssociationsList$member": null
+      }
+    },
+    "RouteServerAssociationState": {
+      "base": null,
+      "refs": {
+        "RouteServerAssociation$State": "<p>The current state of the association.</p>"
+      }
+    },
+    "RouteServerAssociationsList": {
+      "base": null,
+      "refs": {
+        "GetRouteServerAssociationsResult$RouteServerAssociations": "<p>Information about the associations for the specified route server.</p>"
+      }
+    },
+    "RouteServerBfdState": {
+      "base": null,
+      "refs": {
+        "RouteServerBfdStatus$Status": "<p>The operational status of the BFD session.</p>"
+      }
+    },
+    "RouteServerBfdStatus": {
+      "base": "<p>The current status of Bidirectional Forwarding Detection (BFD) for a BGP session.</p>",
+      "refs": {
+        "RouteServerPeer$BfdStatus": "<p>The current status of the BFD session with this peer.</p>"
+      }
+    },
+    "RouteServerBgpOptions": {
+      "base": "<p>The BGP configuration options for a route server peer.</p>",
+      "refs": {
+        "RouteServerPeer$BgpOptions": "<p>The BGP configuration options for this peer, including ASN (Autonomous System Number) and BFD (Bidrectional Forwarding Detection) settings.</p>"
+      }
+    },
+    "RouteServerBgpOptionsRequest": {
+      "base": "<p>The BGP configuration options requested for a route server peer.</p>",
+      "refs": {
+        "CreateRouteServerPeerRequest$BgpOptions": "<p>The BGP options for the peer, including ASN (Autonomous System Number) and BFD (Bidrectional Forwarding Detection) settings.</p>"
+      }
+    },
+    "RouteServerBgpState": {
+      "base": null,
+      "refs": {
+        "RouteServerBgpStatus$Status": "<p>The operational status of the BGP session. The status enables you to monitor session liveness if you lack monitoring on your router/appliance.</p>"
+      }
+    },
+    "RouteServerBgpStatus": {
+      "base": "<p>The current status of a BGP session.</p>",
+      "refs": {
+        "RouteServerPeer$BgpStatus": "<p>The current status of the BGP session with this peer.</p>"
+      }
+    },
+    "RouteServerEndpoint": {
+      "base": "<p>Describes a route server endpoint and its properties.</p> <p>A route server endpoint is an Amazon Web Services-managed component inside a subnet that facilitates BGP (Border Gateway Protocol) connections between your route server and your BGP peers. Create two endpoints per subnet for redundancy.</p>",
+      "refs": {
+        "CreateRouteServerEndpointResult$RouteServerEndpoint": "<p>Information about the created route server endpoint.</p>",
+        "DeleteRouteServerEndpointResult$RouteServerEndpoint": "<p>Information about the deleted route server endpoint.</p>",
+        "RouteServerEndpointsList$member": null
+      }
+    },
+    "RouteServerEndpointId": {
+      "base": null,
+      "refs": {
+        "CreateRouteServerPeerRequest$RouteServerEndpointId": "<p>The ID of the route server endpoint for which to create a peer.</p>",
+        "DeleteRouteServerEndpointRequest$RouteServerEndpointId": "<p>The ID of the route server endpoint to delete.</p>",
+        "RouteServerEndpoint$RouteServerEndpointId": "<p>The unique identifier of the route server endpoint.</p>",
+        "RouteServerEndpointIdsList$member": null,
+        "RouteServerPeer$RouteServerEndpointId": "<p>The ID of the route server endpoint associated with this peer.</p>",
+        "RouteServerRoute$RouteServerEndpointId": "<p>The ID of the route server endpoint that received this route.</p>"
+      }
+    },
+    "RouteServerEndpointIdsList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServerEndpointsRequest$RouteServerEndpointIds": "<p>The IDs of the route server endpoints to describe.</p>"
+      }
+    },
+    "RouteServerEndpointState": {
+      "base": null,
+      "refs": {
+        "RouteServerEndpoint$State": "<p>The current state of the route server endpoint.</p>"
+      }
+    },
+    "RouteServerEndpointsList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServerEndpointsResult$RouteServerEndpoints": "<p>Information about the described route server endpoints.</p>"
+      }
+    },
+    "RouteServerId": {
+      "base": null,
+      "refs": {
+        "AssociateRouteServerRequest$RouteServerId": "<p>The unique identifier for the route server to be associated.</p>",
+        "CreateRouteServerEndpointRequest$RouteServerId": "<p>The ID of the route server for which to create an endpoint.</p>",
+        "DeleteRouteServerRequest$RouteServerId": "<p>The ID of the route server to delete.</p>",
+        "DisableRouteServerPropagationRequest$RouteServerId": "<p>The ID of the route server for which to disable propagation.</p>",
+        "DisassociateRouteServerRequest$RouteServerId": "<p>The ID of the route server to disassociate.</p>",
+        "EnableRouteServerPropagationRequest$RouteServerId": "<p>The ID of the route server for which to enable propagation.</p>",
+        "GetRouteServerAssociationsRequest$RouteServerId": "<p>The ID of the route server for which to get association information.</p>",
+        "GetRouteServerPropagationsRequest$RouteServerId": "<p>The ID of the route server for which to get propagation information.</p>",
+        "GetRouteServerRoutingDatabaseRequest$RouteServerId": "<p>The ID of the route server for which to get the routing database.</p>",
+        "ModifyRouteServerRequest$RouteServerId": "<p>The ID of the route server to modify.</p>",
+        "RouteServer$RouteServerId": "<p>The unique identifier of the route server.</p>",
+        "RouteServerAssociation$RouteServerId": "<p>The ID of the associated route server.</p>",
+        "RouteServerEndpoint$RouteServerId": "<p>The ID of the route server associated with this endpoint.</p>",
+        "RouteServerIdsList$member": null,
+        "RouteServerPeer$RouteServerId": "<p>The ID of the route server associated with this peer.</p>",
+        "RouteServerPropagation$RouteServerId": "<p>The ID of the route server configured for route propagation.</p>"
+      }
+    },
+    "RouteServerIdsList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServersRequest$RouteServerIds": "<p>The IDs of the route servers to describe.</p>"
+      }
+    },
+    "RouteServerMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServerEndpointsRequest$MaxResults": "<p>The maximum number of results to return with a single call.</p>",
+        "DescribeRouteServerPeersRequest$MaxResults": "<p>The maximum number of results to return with a single call.</p>",
+        "DescribeRouteServersRequest$MaxResults": "<p>The maximum number of results to return with a single call.</p>",
+        "GetRouteServerRoutingDatabaseRequest$MaxResults": "<p>The maximum number of routing database entries to return in a single response.</p>"
+      }
+    },
+    "RouteServerPeer": {
+      "base": "<p>Describes a BGP peer configuration for a route server endpoint.</p> <p>A route server peer is a network appliance or function deployed in Amazon Web Services, such as firewall appliances and other network security functions, that meet these requirements:</p> <ul> <li> <p>Have an elastic network interface in the VPC</p> </li> <li> <p>Support BGP (Border Gateway Protocol)</p> </li> <li> <p>Can initiate BGP sessions</p> </li> </ul>",
+      "refs": {
+        "CreateRouteServerPeerResult$RouteServerPeer": "<p>Information about the created route server peer.</p>",
+        "DeleteRouteServerPeerResult$RouteServerPeer": "<p>Information about the deleted route server peer.</p>",
+        "RouteServerPeersList$member": null
+      }
+    },
+    "RouteServerPeerId": {
+      "base": null,
+      "refs": {
+        "DeleteRouteServerPeerRequest$RouteServerPeerId": "<p>The ID of the route server peer to delete.</p>",
+        "RouteServerPeer$RouteServerPeerId": "<p>The unique identifier of the route server peer.</p>",
+        "RouteServerPeerIdsList$member": null,
+        "RouteServerRoute$RouteServerPeerId": "<p>The ID of the route server peer that advertised this route.</p>"
+      }
+    },
+    "RouteServerPeerIdsList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServerPeersRequest$RouteServerPeerIds": "<p>The IDs of the route server peers to describe.</p>"
+      }
+    },
+    "RouteServerPeerLivenessMode": {
+      "base": null,
+      "refs": {
+        "RouteServerBgpOptions$PeerLivenessDetection": "<p>The liveness detection protocol used for the BGP peer.</p> <p>The requested liveness detection protocol for the BGP peer.</p> <ul> <li> <p> <code>bgp-keepalive</code>: The standard BGP keep alive mechanism (<a href=\"https://www.rfc-editor.org/rfc/rfc4271#page-21\">RFC4271</a>) that is stable but may take longer to fail-over in cases of network impact or router failure.</p> </li> <li> <p> <code>bfd</code>: An additional Bidirectional Forwarding Detection (BFD) protocol (<a href=\"https://www.rfc-editor.org/rfc/rfc5880\">RFC5880</a>) that enables fast failover by using more sensitive liveness detection.</p> </li> </ul> <p>Defaults to <code>bgp-keepalive</code>.</p>",
+        "RouteServerBgpOptionsRequest$PeerLivenessDetection": "<p>The requested liveness detection protocol for the BGP peer.</p> <ul> <li> <p> <code>bgp-keepalive</code>: The standard BGP keep alive mechanism (<a href=\"https://www.rfc-editor.org/rfc/rfc4271#page-21\">RFC4271</a>) that is stable but may take longer to fail-over in cases of network impact or router failure.</p> </li> <li> <p> <code>bfd</code>: An additional Bidirectional Forwarding Detection (BFD) protocol (<a href=\"https://www.rfc-editor.org/rfc/rfc5880\">RFC5880</a>) that enables fast failover by using more sensitive liveness detection.</p> </li> </ul> <p>Defaults to <code>bgp-keepalive</code>.</p>"
+      }
+    },
+    "RouteServerPeerState": {
+      "base": null,
+      "refs": {
+        "RouteServerPeer$State": "<p>The current state of the route server peer.</p>"
+      }
+    },
+    "RouteServerPeersList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServerPeersResult$RouteServerPeers": "<p>Information about the described route server peers.</p>"
+      }
+    },
+    "RouteServerPersistRoutesAction": {
+      "base": null,
+      "refs": {
+        "CreateRouteServerRequest$PersistRoutes": "<p>Indicates whether routes should be persisted after all BGP sessions are terminated.</p>",
+        "ModifyRouteServerRequest$PersistRoutes": "<p>Specifies whether to persist routes after all BGP sessions are terminated.</p> <ul> <li> <p>enable: Routes will be persisted in FIB and RIB after all BGP sessions are terminated.</p> </li> <li> <p>disable: Routes will not be persisted in FIB and RIB after all BGP sessions are terminated.</p> </li> <li> <p>reset: If a route server has persisted routes due to all BGP sessions having ended, reset will withdraw all routes and reset route server to an empty FIB and RIB.</p> </li> </ul>"
+      }
+    },
+    "RouteServerPersistRoutesState": {
+      "base": null,
+      "refs": {
+        "RouteServer$PersistRoutesState": "<p>The current state of route persistence for the route server.</p>"
+      }
+    },
+    "RouteServerPropagation": {
+      "base": "<p>Describes the route propagation configuration between a route server and a route table.</p> <p>When enabled, route server propagation installs the routes in the FIB on the route table you've specified. Route server supports IPv4 and IPv6 route propagation.</p>",
+      "refs": {
+        "DisableRouteServerPropagationResult$RouteServerPropagation": "<p>Information about the disabled route server propagation.</p>",
+        "EnableRouteServerPropagationResult$RouteServerPropagation": "<p>Information about the enabled route server propagation.</p>",
+        "RouteServerPropagationsList$member": null
+      }
+    },
+    "RouteServerPropagationState": {
+      "base": null,
+      "refs": {
+        "RouteServerPropagation$State": "<p>The current state of route propagation.</p>"
+      }
+    },
+    "RouteServerPropagationsList": {
+      "base": null,
+      "refs": {
+        "GetRouteServerPropagationsResult$RouteServerPropagations": "<p>Information about the route propagations for the specified route server.</p>"
+      }
+    },
+    "RouteServerRoute": {
+      "base": "<p>Describes a route in the route server's routing database.</p>",
+      "refs": {
+        "RouteServerRouteList$member": null
+      }
+    },
+    "RouteServerRouteInstallationDetail": {
+      "base": "<p>Describes the installation status of a route in a route table.</p>",
+      "refs": {
+        "RouteServerRouteInstallationDetails$member": null
+      }
+    },
+    "RouteServerRouteInstallationDetails": {
+      "base": null,
+      "refs": {
+        "RouteServerRoute$RouteInstallationDetails": "<p>Details about the installation status of this route in route tables.</p>"
+      }
+    },
+    "RouteServerRouteInstallationStatus": {
+      "base": null,
+      "refs": {
+        "RouteServerRouteInstallationDetail$RouteInstallationStatus": "<p>The current installation status of the route in the route table.</p>"
+      }
+    },
+    "RouteServerRouteList": {
+      "base": null,
+      "refs": {
+        "GetRouteServerRoutingDatabaseResult$Routes": "<p>The collection of routes in the route server's routing database.</p>"
+      }
+    },
+    "RouteServerRouteStatus": {
+      "base": null,
+      "refs": {
+        "RouteServerRoute$RouteStatus": "<p>The current status of the route in the routing database. Values are <code>in-rib</code> or <code>in-fib</code> depending on if the routes are in the RIB or the FIB database.</p> <p>The <a href=\"https://en.wikipedia.org/wiki/Routing_table\">Routing Information Base (RIB)</a> serves as a database that stores all the routing information and network topology data collected by a router or routing system, such as routes learned from BGP peers. The RIB is constantly updated as new routing information is received or existing routes change. This ensures that the route server always has the most current view of the network topology and can make optimal routing decisions.</p> <p>The <a href=\"https://en.wikipedia.org/wiki/Forwarding_information_base\">Forwarding Information Base (FIB)</a> serves as a forwarding table for what route server has determined are the best-path routes in the RIB after evaluating all available routing information and policies. The FIB routes that are installed on the route tables. The FIB is recomputed whenever there are changes to the RIB.</p>"
+      }
+    },
+    "RouteServerState": {
+      "base": null,
+      "refs": {
+        "RouteServer$State": "<p>The current state of the route server.</p>"
+      }
+    },
+    "RouteServersList": {
+      "base": null,
+      "refs": {
+        "DescribeRouteServersResult$RouteServers": "<p>Information about the described route servers.</p>"
+      }
+    },
     "RouteState": {
       "base": null,
       "refs": {
@@ -19521,10 +20015,15 @@
         "CreateRouteRequest$RouteTableId": "<p>The ID of the route table for the route.</p>",
         "DeleteRouteRequest$RouteTableId": "<p>The ID of the route table.</p>",
         "DeleteRouteTableRequest$RouteTableId": "<p>The ID of the route table.</p>",
+        "DisableRouteServerPropagationRequest$RouteTableId": "<p>The ID of the route table for which to disable route server propagation.</p>",
         "DisableVgwRoutePropagationRequest$RouteTableId": "<p>The ID of the route table.</p>",
+        "EnableRouteServerPropagationRequest$RouteTableId": "<p>The ID of the route table to which route server will propagate routes.</p>",
         "EnableVgwRoutePropagationRequest$RouteTableId": "<p>The ID of the route table. The routing table must be associated with the same VPC that the virtual private gateway is attached to. </p>",
+        "GetRouteServerPropagationsRequest$RouteTableId": "<p>The ID of the route table for which to get propagation information.</p>",
         "ReplaceRouteRequest$RouteTableId": "<p>The ID of the route table.</p>",
         "ReplaceRouteTableAssociationRequest$RouteTableId": "<p>The ID of the new route table to associate with the subnet.</p>",
+        "RouteServerPropagation$RouteTableId": "<p>The ID of the route table configured for route server propagation.</p>",
+        "RouteServerRouteInstallationDetail$RouteTableId": "<p>The ID of the route table where the route is being installed.</p>",
         "RouteTableIdStringList$member": null,
         "VpcEndpointRouteTableIdList$member": null
       }
@@ -20775,6 +21274,7 @@
         "AnalysisSecurityGroupRule$SecurityGroupId": "<p>The security group ID.</p>",
         "AnalysisSecurityGroupRule$PrefixListId": "<p>The prefix list ID.</p>",
         "AnalysisSecurityGroupRule$Protocol": "<p>The protocol name.</p>",
+        "AsPath$member": null,
         "AsnAssociation$Asn": "<p>The association's ASN.</p>",
         "AsnAssociation$Cidr": "<p>The association's CIDR.</p>",
         "AsnAssociation$StatusMessage": "<p>The association's status message.</p>",
@@ -21075,6 +21575,9 @@
         "CreateRestoreImageTaskResult$ImageId": "<p>The AMI ID.</p>",
         "CreateRouteRequest$DestinationCidrBlock": "<p>The IPv4 CIDR address block used for the destination match. Routing decisions are based on the most specific match. We modify the specified CIDR block to its canonical form; for example, if you specify <code>100.68.0.18/18</code>, we modify it to <code>100.68.0.0/18</code>.</p>",
         "CreateRouteRequest$DestinationIpv6CidrBlock": "<p>The IPv6 CIDR block used for the destination match. Routing decisions are based on the most specific match.</p>",
+        "CreateRouteServerEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateRouteServerPeerRequest$PeerAddress": "<p>The IPv4 address of the peer.</p>",
+        "CreateRouteServerRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateRouteTableRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateRouteTableResult$ClientToken": "<p>Unique, case-sensitive identifier to ensure the idempotency of the request. Only returned if a client token was provided in the request.</p>",
         "CreateSecurityGroupRequest$Description": "<p>A description for the security group.</p> <p>Constraints: Up to 255 characters in length</p> <p>Valid characters: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>",
@@ -21349,6 +21852,12 @@
         "DescribeReservedInstancesOfferingsRequest$AvailabilityZone": "<p>The Availability Zone in which the Reserved Instance can be used.</p>",
         "DescribeReservedInstancesOfferingsRequest$NextToken": "<p>The token to retrieve the next page of results.</p>",
         "DescribeReservedInstancesOfferingsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeRouteServerEndpointsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeRouteServerEndpointsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeRouteServerPeersRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeRouteServerPeersResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeRouteServersRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeRouteServersResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeRouteTablesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeRouteTablesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeScheduledInstanceAvailabilityRequest$NextToken": "<p>The token for the next set of results.</p>",
@@ -21656,6 +22165,8 @@
         "GetReservedInstancesExchangeQuoteResult$CurrencyCode": "<p>The currency of the transaction.</p>",
         "GetReservedInstancesExchangeQuoteResult$PaymentDue": "<p>The total true upfront charge for the exchange.</p>",
         "GetReservedInstancesExchangeQuoteResult$ValidationFailureReason": "<p>Describes the reason why the exchange cannot be completed.</p>",
+        "GetRouteServerRoutingDatabaseRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "GetRouteServerRoutingDatabaseResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetSecurityGroupsForVpcRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "GetSecurityGroupsForVpcResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "GetSpotPlacementScoresRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -22453,6 +22964,15 @@
         "Route$LocalGatewayId": "<p>The ID of the local gateway.</p>",
         "Route$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "Route$VpcPeeringConnectionId": "<p>The ID of a VPC peering connection.</p>",
+        "RouteServer$SnsTopicArn": "<p>The ARN of the SNS topic where notifications are published.</p>",
+        "RouteServerEndpoint$EniAddress": "<p>The IP address of the Elastic network interface for the endpoint.</p>",
+        "RouteServerEndpoint$FailureReason": "<p>The reason for any failure in endpoint creation or operation.</p>",
+        "RouteServerPeer$FailureReason": "<p>The reason for any failure in peer creation or operation.</p>",
+        "RouteServerPeer$EndpointEniAddress": "<p>The IP address of the Elastic network interface for the route server endpoint.</p>",
+        "RouteServerPeer$PeerAddress": "<p>The IPv4 address of the peer.</p>",
+        "RouteServerRoute$Prefix": "<p>The destination CIDR block of the route.</p>",
+        "RouteServerRoute$NextHopIp": "<p>The IP address for the next hop.</p>",
+        "RouteServerRouteInstallationDetail$RouteInstallationStatusReason": "<p>The reason for the current installation status of the route.</p>",
         "RouteTable$RouteTableId": "<p>The ID of the route table.</p>",
         "RouteTable$VpcId": "<p>The ID of the VPC.</p>",
         "RouteTable$OwnerId": "<p>The ID of the Amazon Web Services account that owns the route table.</p>",
@@ -23083,6 +23603,7 @@
         "CreateInstanceConnectEndpointRequest$SubnetId": "<p>The ID of the subnet in which to create the EC2 Instance Connect Endpoint.</p>",
         "CreateNatGatewayRequest$SubnetId": "<p>The ID of the subnet in which to create the NAT gateway.</p>",
         "CreateNetworkInterfaceRequest$SubnetId": "<p>The ID of the subnet to associate with the network interface.</p>",
+        "CreateRouteServerEndpointRequest$SubnetId": "<p>The ID of the subnet in which to create the route server endpoint.</p>",
         "CreateSubnetCidrReservationRequest$SubnetId": "<p>The ID of the subnet.</p>",
         "CreateVerifiedAccessEndpointSubnetIdList$member": null,
         "CreateVpcBlockPublicAccessExclusionRequest$SubnetId": "<p>A subnet ID.</p>",
@@ -23099,6 +23620,8 @@
         "ModifySubnetAttributeRequest$SubnetId": "<p>The ID of the subnet.</p>",
         "ModifyVerifiedAccessEndpointSubnetIdList$member": null,
         "RequestSpotLaunchSpecification$SubnetId": "<p>The ID of the subnet in which to launch the instance.</p>",
+        "RouteServerEndpoint$SubnetId": "<p>The ID of the subnet to place the route server endpoint into.</p>",
+        "RouteServerPeer$SubnetId": "<p>The ID of the subnet containing the route server peer.</p>",
         "RunInstancesRequest$SubnetId": "<p>The ID of the subnet to launch the instance into.</p> <p>If you specify a network interface, you must specify any subnets as part of the network interface instead of using this parameter.</p>",
         "ScheduledInstancesLaunchSpecification$SubnetId": "<p>The ID of the subnet in which to launch the instances.</p>",
         "ScheduledInstancesNetworkInterface$SubnetId": "<p>The ID of the subnet.</p>",
@@ -23323,6 +23846,9 @@
         "ReplaceRootVolumeTask$Tags": "<p>The tags assigned to the task.</p>",
         "ReservedInstances$Tags": "<p>Any tags assigned to the resource.</p>",
         "ReservedInstancesListing$Tags": "<p>Any tags assigned to the resource.</p>",
+        "RouteServer$Tags": "<p>Any tags assigned to the route server.</p>",
+        "RouteServerEndpoint$Tags": "<p>Any tags assigned to the route server endpoint.</p>",
+        "RouteServerPeer$Tags": "<p>Any tags assigned to the route server peer.</p>",
         "RouteTable$Tags": "<p>Any tags assigned to the route table.</p>",
         "SecurityGroup$Tags": "<p>Any tags assigned to the security group.</p>",
         "SecurityGroupForVpc$Tags": "<p>The security group tags.</p>",
@@ -23424,6 +23950,9 @@
         "CreatePublicIpv4PoolRequest$TagSpecifications": "<p>The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p>",
         "CreateReplaceRootVolumeTaskRequest$TagSpecifications": "<p>The tags to apply to the root volume replacement task.</p>",
         "CreateRestoreImageTaskRequest$TagSpecifications": "<p>The tags to apply to the AMI and snapshots on restoration. You can tag the AMI, the snapshots, or both.</p> <ul> <li> <p>To tag the AMI, the value for <code>ResourceType</code> must be <code>image</code>.</p> </li> <li> <p>To tag the snapshots, the value for <code>ResourceType</code> must be <code>snapshot</code>. The same tag is applied to all of the snapshots that are created.</p> </li> </ul>",
+        "CreateRouteServerEndpointRequest$TagSpecifications": "<p>The tags to apply to the route server endpoint during creation.</p>",
+        "CreateRouteServerPeerRequest$TagSpecifications": "<p>The tags to apply to the route server peer during creation.</p>",
+        "CreateRouteServerRequest$TagSpecifications": "<p>The tags to apply to the route server during creation.</p>",
         "CreateRouteTableRequest$TagSpecifications": "<p>The tags to assign to the route table.</p>",
         "CreateSecurityGroupRequest$TagSpecifications": "<p>The tags to assign to the security group.</p>",
         "CreateSnapshotRequest$TagSpecifications": "<p>The tags to apply to the snapshot during creation.</p>",
@@ -26031,6 +26560,7 @@
       "refs": {
         "ApplySecurityGroupsToClientVpnTargetNetworkRequest$VpcId": "<p>The ID of the VPC in which the associated target network is located.</p>",
         "AssociateDhcpOptionsRequest$VpcId": "<p>The ID of the VPC.</p>",
+        "AssociateRouteServerRequest$VpcId": "<p>The ID of the VPC to associate with the route server.</p>",
         "AssociateSecurityGroupVpcRequest$VpcId": "<p>A VPC ID.</p>",
         "AssociateVpcCidrBlockRequest$VpcId": "<p>The ID of the VPC.</p>",
         "AttachClassicLinkVpcRequest$VpcId": "<p>The ID of the ClassicLink-enabled VPC.</p>",
@@ -26058,6 +26588,7 @@
         "DetachVpnGatewayRequest$VpcId": "<p>The ID of the VPC.</p>",
         "DisableVpcClassicLinkDnsSupportRequest$VpcId": "<p>The ID of the VPC.</p>",
         "DisableVpcClassicLinkRequest$VpcId": "<p>The ID of the VPC.</p>",
+        "DisassociateRouteServerRequest$VpcId": "<p>The ID of the VPC to disassociate from the route server.</p>",
         "Ec2InstanceConnectEndpoint$VpcId": "<p>The ID of the VPC in which the EC2 Instance Connect Endpoint was created.</p>",
         "EnableVpcClassicLinkDnsSupportRequest$VpcId": "<p>The ID of the VPC.</p>",
         "EnableVpcClassicLinkRequest$VpcId": "<p>The ID of the VPC.</p>",
@@ -26065,6 +26596,9 @@
         "ModifyClientVpnEndpointRequest$VpcId": "<p>The ID of the VPC to associate with the Client VPN endpoint.</p>",
         "ModifyVpcAttributeRequest$VpcId": "<p>The ID of the VPC.</p>",
         "ModifyVpcTenancyRequest$VpcId": "<p>The ID of the VPC.</p>",
+        "RouteServerAssociation$VpcId": "<p>The ID of the associated VPC.</p>",
+        "RouteServerEndpoint$VpcId": "<p>The ID of the VPC containing the endpoint.</p>",
+        "RouteServerPeer$VpcId": "<p>The ID of the VPC containing the route server peer.</p>",
         "SecurityGroupVpcAssociation$VpcId": "<p>The association's VPC ID.</p>",
         "VpcClassicLinkIdList$member": null,
         "VpcEncryptionControl$VpcId": null,

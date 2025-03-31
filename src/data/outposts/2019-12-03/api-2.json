@@ -610,6 +610,12 @@
       "min":1,
       "pattern":"^(\\w+)$"
     },
+    "AssetIdInput":{
+      "type":"string",
+      "max":10,
+      "min":10,
+      "pattern":"\\d{10}"
+    },
     "AssetIdList":{
       "type":"list",
       "member":{"shape":"AssetId"}
@@ -815,6 +821,7 @@
         "CapacityTaskId":{"shape":"CapacityTaskId"},
         "OutpostId":{"shape":"OutpostId"},
         "OrderId":{"shape":"OrderId"},
+        "AssetId":{"shape":"AssetId"},
         "CapacityTaskStatus":{"shape":"CapacityTaskStatus"},
         "CreationDate":{"shape":"ISO8601Timestamp"},
         "CompletionDate":{"shape":"ISO8601Timestamp"},
@@ -1106,6 +1113,7 @@
         "CapacityTaskId":{"shape":"CapacityTaskId"},
         "OutpostId":{"shape":"OutpostId"},
         "OrderId":{"shape":"OrderId"},
+        "AssetId":{"shape":"AssetId"},
         "RequestedInstancePools":{"shape":"RequestedInstancePools"},
         "InstancesToExclude":{"shape":"InstancesToExclude"},
         "DryRun":{"shape":"DryRun"},
@@ -1229,6 +1237,11 @@
           "shape":"OrderId",
           "location":"querystring",
           "locationName":"OrderId"
+        },
+        "AssetId":{
+          "shape":"AssetIdInput",
+          "location":"querystring",
+          "locationName":"AssetId"
         },
         "MaxResults":{
           "shape":"MaxResults1000",
@@ -2144,6 +2157,7 @@
           "locationName":"OutpostId"
         },
         "OrderId":{"shape":"OrderId"},
+        "AssetId":{"shape":"AssetIdInput"},
         "InstancePools":{"shape":"RequestedInstancePools"},
         "InstancesToExclude":{"shape":"InstancesToExclude"},
         "DryRun":{"shape":"DryRun"},
@@ -2156,6 +2170,7 @@
         "CapacityTaskId":{"shape":"CapacityTaskId"},
         "OutpostId":{"shape":"OutpostId"},
         "OrderId":{"shape":"OrderId"},
+        "AssetId":{"shape":"AssetId"},
         "RequestedInstancePools":{"shape":"RequestedInstancePools"},
         "InstancesToExclude":{"shape":"InstancesToExclude"},
         "DryRun":{"shape":"DryRun"},

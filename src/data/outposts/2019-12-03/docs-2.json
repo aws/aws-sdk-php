@@ -122,10 +122,20 @@
       "base": null,
       "refs": {
         "AssetIdList$member": null,
-        "AssetInfo$AssetId": "<p> The ID of the asset. </p>",
-        "AssetInstance$AssetId": "<p>The ID of the asset.</p>",
-        "LineItemAssetInformation$AssetId": "<p> The ID of the asset. </p>",
-        "StartConnectionRequest$AssetId": "<p> The ID of the Outpost server. </p>"
+        "AssetInfo$AssetId": "<p> The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "AssetInstance$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "CapacityTaskSummary$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "GetCapacityTaskOutput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "LineItemAssetInformation$AssetId": "<p> The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartCapacityTaskOutput$AssetId": "<p>The ID of the asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartConnectionRequest$AssetId": "<p> The ID of the Outpost server.</p>"
+      }
+    },
+    "AssetIdInput": {
+      "base": null,
+      "refs": {
+        "GetOutpostSupportedInstanceTypesInput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>",
+        "StartCapacityTaskInput$AssetId": "<p>The ID of the Outpost asset. An Outpost asset can be a single server within an Outposts rack or an Outposts server configuration.</p>"
       }
     },
     "AssetIdList": {
@@ -297,7 +307,7 @@
       "refs": {
         "CapacityTaskStatusList$member": null,
         "CapacityTaskSummary$CapacityTaskStatus": "<p>The status of the capacity task.</p>",
-        "GetCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the capacity task.</p> <p>A capacity task can have one of the following statuses:</p> <ul> <li> <p> <code>REQUESTED</code> - The capacity task was created and is awaiting the next step by Amazon Web Services Outposts.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The capacity task is running and cannot be cancelled.</p> </li> <li> <p> <code>WAITING_FOR_EVACUATION</code> - The capacity task requires capacity to run. You must stop the recommended EC2 running instances to free up capacity for the task to run.</p> </li> </ul>",
+        "GetCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the capacity task.</p> <p>A capacity task can have one of the following statuses:</p> <ul> <li> <p> <code>REQUESTED</code> - The capacity task was created and is awaiting the next step by Amazon Web Services Outposts.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The capacity task is running and cannot be cancelled.</p> </li> <li> <p> <code>FAILED</code> - The capacity task could not be completed.</p> </li> <li> <p> <code>COMPLETED</code> - The capacity task has completed successfully.</p> </li> <li> <p> <code>WAITING_FOR_EVACUATION</code> - The capacity task requires capacity to run. You must stop the recommended EC2 running instances to free up capacity for the task to run.</p> </li> <li> <p> <code>CANCELLATION_IN_PROGRESS</code> - The capacity task has been cancelled and is in the process of cleaning up resources.</p> </li> <li> <p> <code>CANCELLED</code> - The capacity task is cancelled.</p> </li> </ul>",
         "StartCapacityTaskOutput$CapacityTaskStatus": "<p>Status of the specified capacity task.</p>"
       }
     },
