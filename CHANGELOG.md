@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.18 - 2025-04-01
 
 * `Aws\CleanRooms` - This release adds support for updating the analytics engine of a collaboration.
 * `Aws\SageMaker` - Added tagging support for SageMaker notebook instance lifecycle configurations
