@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CleanRooms` - This release adds support for updating the analytics engine of a collaboration.
+* `Aws\SageMaker` - Added tagging support for SageMaker notebook instance lifecycle configurations
+
 ## 3.342.17 - 2025-03-31
 
 * `Aws\Transfer` - Add WebAppEndpointPolicy support for WebApps
