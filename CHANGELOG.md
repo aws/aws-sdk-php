@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.19 - 2025-04-02
 
 * `Aws\ECS` - This is an Amazon ECS documentation only update to address various tickets.
 * `Aws\LexModelsV2` - Release feature of errorlogging for lex bot, customer can config this feature in bot version to generate log for error exception which helps debug
