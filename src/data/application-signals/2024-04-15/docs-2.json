@@ -68,6 +68,7 @@
     "Attributes": {
       "base": null,
       "refs": {
+        "DependencyConfig$DependencyKeyAttributes": "<p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "GetServiceInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ListServiceDependenciesInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ListServiceDependentsInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
@@ -201,6 +202,17 @@
       "refs": {
       }
     },
+    "DependencyConfig": {
+      "base": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>.</p> <p>When creating a service dependency SLO, you must specify the <code>KeyAttributes</code> of the service, and the <code>DependencyConfig</code> for the dependency. You can specify the <code>OperationName</code> of the service, from which it calls the dependency. Alternatively, you can exclude <code>OperationName</code> and the SLO will monitor all of the service's operations that call the dependency.</p>",
+      "refs": {
+        "ListServiceLevelObjectivesInput$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
+        "RequestBasedServiceLevelIndicatorMetric$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
+        "RequestBasedServiceLevelIndicatorMetricConfig$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
+        "ServiceLevelIndicatorMetric$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
+        "ServiceLevelIndicatorMetricConfig$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
+        "ServiceLevelObjectiveSummary$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>"
+      }
+    },
     "Dimension": {
       "base": "<p>A dimension is a name/value pair that is part of the identity of a metric. Because dimensions are part of the unique identifier for a metric, whenever you add a unique name/value pair to one of your metrics, you are creating a new variation of that metric. For example, many Amazon EC2 metrics publish <code>InstanceId</code> as a dimension name, and the actual instance ID as the value for that dimension.</p> <p>You can assign up to 30 dimensions to a metric.</p>",
       "refs": {
@@ -238,7 +250,8 @@
       "base": null,
       "refs": {
         "ServiceLevelObjective$EvaluationType": "<p>Displays whether this is a period-based SLO or a request-based SLO.</p>",
-        "ServiceLevelObjectiveBudgetReport$EvaluationType": "<p>Displays whether this budget report is for a period-based SLO or a request-based SLO.</p>"
+        "ServiceLevelObjectiveBudgetReport$EvaluationType": "<p>Displays whether this budget report is for a period-based SLO or a request-based SLO.</p>",
+        "ServiceLevelObjectiveSummary$EvaluationType": "<p>Displays whether this is a period-based SLO or a request-based SLO.</p>"
       }
     },
     "ExclusionDuration": {
@@ -515,6 +528,20 @@
         "ServiceSummary$MetricReferences": "<p>An array of structures that each contain information about one metric associated with this service.</p>"
       }
     },
+    "MetricSourceType": {
+      "base": null,
+      "refs": {
+        "MetricSourceTypes$member": null,
+        "ServiceLevelObjective$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>",
+        "ServiceLevelObjectiveSummary$MetricSourceType": "<p>Displays the SLI metric source type for this SLO. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>"
+      }
+    },
+    "MetricSourceTypes": {
+      "base": null,
+      "refs": {
+        "ListServiceLevelObjectivesInput$MetricSourceTypes": "<p>Use this optional field to only include SLOs with the specified metric source types in the output. Supported types are:</p> <ul> <li> <p>Service operation</p> </li> <li> <p>Service dependency</p> </li> <li> <p>CloudWatch metric</p> </li> </ul>"
+      }
+    },
     "MetricStat": {
       "base": "<p>This structure defines the metric to be used as the service level indicator, along with the statistics, period, and unit.</p>",
       "refs": {
@@ -561,6 +588,7 @@
     "OperationName": {
       "base": null,
       "refs": {
+        "DependencyConfig$DependencyOperationName": "<p>The name of the called operation in the dependency.</p>",
         "ListServiceLevelObjectivesInput$OperationName": "<p>The name of the operation that this SLO is associated with.</p>",
         "RequestBasedServiceLevelIndicatorMetric$OperationName": "<p>If the SLO monitors a specific operation of the service, this field displays that operation name.</p>",
         "RequestBasedServiceLevelIndicatorMetricConfig$OperationName": "<p>If the SLO is to monitor a specific operation of the service, use this field to specify the name of that operation.</p>",

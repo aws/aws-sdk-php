@@ -473,6 +473,17 @@
       "members":{
       }
     },
+    "DependencyConfig":{
+      "type":"structure",
+      "required":[
+        "DependencyKeyAttributes",
+        "DependencyOperationName"
+      ],
+      "members":{
+        "DependencyKeyAttributes":{"shape":"Attributes"},
+        "DependencyOperationName":{"shape":"OperationName"}
+      }
+    },
     "Dimension":{
       "type":"structure",
       "required":[
@@ -775,6 +786,7 @@
           "location":"querystring",
           "locationName":"OperationName"
         },
+        "DependencyConfig":{"shape":"DependencyConfig"},
         "MaxResults":{
           "shape":"ListServiceLevelObjectivesMaxResults",
           "location":"querystring",
@@ -785,6 +797,7 @@
           "location":"querystring",
           "locationName":"NextToken"
         },
+        "MetricSourceTypes":{"shape":"MetricSourceTypes"},
         "IncludeLinkedAccounts":{
           "shape":"Boolean",
           "location":"querystring",
@@ -1001,6 +1014,20 @@
       "type":"list",
       "member":{"shape":"MetricReference"}
     },
+    "MetricSourceType":{
+      "type":"string",
+      "enum":[
+        "ServiceOperation",
+        "CloudWatchMetric",
+        "ServiceDependency"
+      ]
+    },
+    "MetricSourceTypes":{
+      "type":"list",
+      "member":{"shape":"MetricSourceType"},
+      "max":3,
+      "min":1
+    },
     "MetricStat":{
       "type":"structure",
       "required":[
@@ -1080,7 +1107,8 @@
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
-        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"}
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "RequestBasedServiceLevelIndicatorMetricConfig":{
@@ -1090,7 +1118,8 @@
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
-        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"}
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ResourceId":{"type":"string"},
@@ -1235,7 +1264,8 @@
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricConfig":{
@@ -1246,7 +1276,8 @@
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "Statistic":{"shape":"ServiceLevelIndicatorStatistic"},
         "PeriodSeconds":{"shape":"SLIPeriodSeconds"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricThreshold":{
@@ -1285,7 +1316,8 @@
         "RequestBasedSli":{"shape":"RequestBasedServiceLevelIndicator"},
         "EvaluationType":{"shape":"EvaluationType"},
         "Goal":{"shape":"Goal"},
-        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceLevelObjectiveArn":{
@@ -1388,7 +1420,10 @@
         "Name":{"shape":"ServiceLevelObjectiveName"},
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
-        "CreatedTime":{"shape":"Timestamp"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "EvaluationType":{"shape":"EvaluationType"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceOperation":{

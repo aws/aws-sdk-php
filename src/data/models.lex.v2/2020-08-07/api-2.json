@@ -2993,6 +2993,7 @@
         "botName":{"shape":"Name"},
         "roleArn":{"shape":"RoleArn"},
         "dataPrivacy":{"shape":"DataPrivacy"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"},
         "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "botTags":{"shape":"TagMap"},
         "testBotAliasTags":{"shape":"TagMap"}
@@ -3856,7 +3857,8 @@
         "botTags":{"shape":"TagMap"},
         "testBotAliasTags":{"shape":"TagMap"},
         "botType":{"shape":"BotType"},
-        "botMembers":{"shape":"BotMembers"}
+        "botMembers":{"shape":"BotMembers"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"}
       }
     },
     "CreateBotResponse":{
@@ -3873,7 +3875,8 @@
         "botTags":{"shape":"TagMap"},
         "testBotAliasTags":{"shape":"TagMap"},
         "botType":{"shape":"BotType"},
-        "botMembers":{"shape":"BotMembers"}
+        "botMembers":{"shape":"BotMembers"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"}
       }
     },
     "CreateBotVersionRequest":{
@@ -3967,7 +3970,8 @@
           "locationName":"localeId"
         },
         "initialResponseSetting":{"shape":"InitialResponseSetting"},
-        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"}
+        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"},
+        "qInConnectIntentConfiguration":{"shape":"QInConnectIntentConfiguration"}
       }
     },
     "CreateIntentResponse":{
@@ -3990,7 +3994,8 @@
         "localeId":{"shape":"LocaleId"},
         "creationDateTime":{"shape":"Timestamp"},
         "initialResponseSetting":{"shape":"InitialResponseSetting"},
-        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"}
+        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"},
+        "qInConnectIntentConfiguration":{"shape":"QInConnectIntentConfiguration"}
       }
     },
     "CreateResourcePolicyRequest":{
@@ -4969,7 +4974,8 @@
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "botType":{"shape":"BotType"},
         "botMembers":{"shape":"BotMembers"},
-        "failureReasons":{"shape":"FailureReasons"}
+        "failureReasons":{"shape":"FailureReasons"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"}
       }
     },
     "DescribeBotVersionRequest":{
@@ -5147,7 +5153,8 @@
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "initialResponseSetting":{"shape":"InitialResponseSetting"},
-        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"}
+        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"},
+        "qInConnectIntentConfiguration":{"shape":"QInConnectIntentConfiguration"}
       }
     },
     "DescribeResourcePolicyRequest":{
@@ -5485,6 +5492,13 @@
         "RESOURCE_ALREADY_EXISTS",
         "INTERNAL_SERVER_FAILURE"
       ]
+    },
+    "ErrorLogSettings":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
     },
     "ErrorMessage":{"type":"string"},
     "ExactResponseFields":{
@@ -7454,6 +7468,23 @@
         "promptAttemptsSpecification":{"shape":"PromptAttemptsSpecificationMap"}
       }
     },
+    "QInConnectAssistantARN":{
+      "type":"string",
+      "pattern":"^arn:[a-z-]*?:wisdom:[a-z0-9-]*?:[0-9]{12}:[a-z-]*?/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(?:/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}){0,2}$"
+    },
+    "QInConnectAssistantConfiguration":{
+      "type":"structure",
+      "required":["assistantArn"],
+      "members":{
+        "assistantArn":{"shape":"QInConnectAssistantARN"}
+      }
+    },
+    "QInConnectIntentConfiguration":{
+      "type":"structure",
+      "members":{
+        "qInConnectAssistantConfiguration":{"shape":"QInConnectAssistantConfiguration"}
+      }
+    },
     "QnAIntentConfiguration":{
       "type":"structure",
       "members":{
@@ -9107,7 +9138,8 @@
         "dataPrivacy":{"shape":"DataPrivacy"},
         "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "botType":{"shape":"BotType"},
-        "botMembers":{"shape":"BotMembers"}
+        "botMembers":{"shape":"BotMembers"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"}
       }
     },
     "UpdateBotResponse":{
@@ -9123,7 +9155,8 @@
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "botType":{"shape":"BotType"},
-        "botMembers":{"shape":"BotMembers"}
+        "botMembers":{"shape":"BotMembers"},
+        "errorLogSettings":{"shape":"ErrorLogSettings"}
       }
     },
     "UpdateCustomVocabularyItemsList":{
@@ -9198,7 +9231,8 @@
           "locationName":"localeId"
         },
         "initialResponseSetting":{"shape":"InitialResponseSetting"},
-        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"}
+        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"},
+        "qInConnectIntentConfiguration":{"shape":"QInConnectIntentConfiguration"}
       }
     },
     "UpdateIntentResponse":{
@@ -9223,7 +9257,8 @@
         "creationDateTime":{"shape":"Timestamp"},
         "lastUpdatedDateTime":{"shape":"Timestamp"},
         "initialResponseSetting":{"shape":"InitialResponseSetting"},
-        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"}
+        "qnAIntentConfiguration":{"shape":"QnAIntentConfiguration"},
+        "qInConnectIntentConfiguration":{"shape":"QInConnectIntentConfiguration"}
       }
     },
     "UpdateResourcePolicyRequest":{

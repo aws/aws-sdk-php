@@ -1530,6 +1530,7 @@
         "DialogCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
         "DialogCodeHookInvocationSetting$active": "<p>Determines whether a dialog code hook is used when the intent is activated.</p>",
         "ElicitationCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
+        "ErrorLogSettings$enabled": "<p>Settings parameters for the error logs, when it is enabled.</p>",
         "FulfillmentCodeHookSettings$active": "<p>Determines whether the fulfillment code hook is used. When <code>active</code> is false, the code hook doesn't run.</p>",
         "FulfillmentStartResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt the start message while it is playing.</p>",
         "FulfillmentUpdateResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt an update message while it is playing.</p>",
@@ -2640,6 +2641,17 @@
       "base": null,
       "refs": {
         "FailedCustomVocabularyItem$errorCode": "<p>The unique error code for the failed custom vocabulary item from the custom vocabulary list.</p>"
+      }
+    },
+    "ErrorLogSettings": {
+      "base": "<p>Settings parameters for the error logs, whether it is enabled or disabled.</p>",
+      "refs": {
+        "BotImportSpecification$errorLogSettings": "<p>Allows you to configure destinations where error logs will be published during the bot import process.</p>",
+        "CreateBotRequest$errorLogSettings": "<p>Specifies the configuration for error logging during bot creation.</p>",
+        "CreateBotResponse$errorLogSettings": "<p>Specifies configuration settings for delivering error logs to Cloudwatch Logs in an Amazon Lex bot response.</p>",
+        "DescribeBotResponse$errorLogSettings": "<p>Contains the configuration for error logging that specifies where and how bot errors are recorded, including destinations like CloudWatch Logs.</p>",
+        "UpdateBotRequest$errorLogSettings": "<p>Allows you to modify how Amazon Lex logs errors during bot interactions, including destinations for error logs and the types of errors to be captured.</p>",
+        "UpdateBotResponse$errorLogSettings": "<p>Settings for managing error logs within the response of an update bot operation.</p>"
       }
     },
     "ErrorMessage": {
@@ -4475,6 +4487,28 @@
         "SlotSummary$valueElicitationPromptSpecification": "<p>Prompts that are sent to the user to elicit a value for the slot.</p>",
         "SlotValueElicitationSetting$promptSpecification": "<p>The prompt that Amazon Lex uses to elicit the slot value from the user.</p>",
         "SubSlotValueElicitationSetting$promptSpecification": null
+      }
+    },
+    "QInConnectAssistantARN": {
+      "base": null,
+      "refs": {
+        "QInConnectAssistantConfiguration$assistantArn": "<p>The assistant Arn details of the Qinconnect assistant configuration.</p>"
+      }
+    },
+    "QInConnectAssistantConfiguration": {
+      "base": "<p>The configuration details of the Qinconnect assistant.</p>",
+      "refs": {
+        "QInConnectIntentConfiguration$qInConnectAssistantConfiguration": "<p>The Qinconnect assistant configuration details of the Qinconnect intent.</p>"
+      }
+    },
+    "QInConnectIntentConfiguration": {
+      "base": "<p>The configuration details of the Qinconnect intent.</p>",
+      "refs": {
+        "CreateIntentRequest$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the create intent request.</p>",
+        "CreateIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the create intent response.</p>",
+        "DescribeIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the describe intent response.</p>",
+        "UpdateIntentRequest$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the update intent request.</p>",
+        "UpdateIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the update intent response.</p>"
       }
     },
     "QnAIntentConfiguration": {

@@ -3938,7 +3938,8 @@
         "SrtCallerSourceRequest$MinimumLatency": "The preferred latency (in milliseconds) for implementing packet loss and recovery. Packet recovery is a key feature of SRT. Obtain this value from the operator at the upstream system.",
         "MultiplexProgramPacketIdentifiersMap$AribCaptionsPid": null,
         "MultiplexProgramPacketIdentifiersMap$EcmPid": null,
-        "MultiplexProgramPacketIdentifiersMap$Smpte2038Pid": null
+        "MultiplexProgramPacketIdentifiersMap$Smpte2038Pid": null,
+        "InputSdpLocation$MediaIndex": "The index of the media stream in the SDP file for one SMPTE 2110 stream."
       }
     },
     "__integerMin0": {
@@ -5225,7 +5226,8 @@
         "ChannelEngineVersionResponse$Version": "The build identifier for this version of the channel version.",
         "Id3SegmentTaggingScheduleActionSettings$Id3": "Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure",
         "Id3SegmentTaggingScheduleActionSettings$Tag": "Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number.",
-        "TimedMetadataScheduleActionSettings$Id3": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure"
+        "TimedMetadataScheduleActionSettings$Id3": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure",
+        "InputSdpLocation$SdpUrl": "The URL of the SDP file for one SMPTE 2110 stream."
       }
     },
     "__stringMax1000": {
@@ -6949,6 +6951,46 @@
       "base": null,
       "refs": {
         "EbuTtDDestinationSettings$DefaultLineHeight": "Specifies the default line height  as a percentage relative to the font size. Valid only if the defaultFontSize is also set. This field should be > 100 (so the font can fit into a line) If you leave this field empty, the default line height is 120% of the font size."
+      }
+    },
+    "InputSdpLocation": {
+      "base": "The location of the SDP file for one of the SMPTE 2110 streams in a receiver group.",
+      "refs": {
+        "Smpte2110ReceiverGroupSdpSettings$VideoSdp": "The InputSdpLocation that specifies the SDP file and index for the single video SMPTE 2110 stream for this 2110 input.",
+        "__listOfInputSdpLocation$member": null
+      }
+    },
+    "Smpte2110ReceiverGroup": {
+      "base": "A receiver group is a collection of video, audio, and ancillary streams that you want to group together and attach to one input.",
+      "refs": {
+        "__listOfSmpte2110ReceiverGroup$member": null
+      }
+    },
+    "Smpte2110ReceiverGroupSdpSettings": {
+      "base": "Information about the SDP files that describe the SMPTE 2110 streams that go into one SMPTE 2110 receiver group.",
+      "refs": {
+        "Smpte2110ReceiverGroup$SdpSettings": "The single Smpte2110ReceiverGroupSdpSettings that identify the video, audio, and ancillary streams for this receiver group."
+      }
+    },
+    "Smpte2110ReceiverGroupSettings": {
+      "base": "Configures the sources for the SMPTE 2110 Receiver Group input.",
+      "refs": {
+        "CreateInput$Smpte2110ReceiverGroupSettings": "Include this parameter if the input is a SMPTE 2110 input, to identify the stream sources for this input.",
+        "Input$Smpte2110ReceiverGroupSettings": "Include this parameter if the input is a SMPTE 2110 input, to identify the stream sources for this input.",
+        "UpdateInput$Smpte2110ReceiverGroupSettings": "Include this parameter if the input is a SMPTE 2110 input, to identify the stream sources for this input."
+      }
+    },
+    "__listOfInputSdpLocation": {
+      "base": null,
+      "refs": {
+        "Smpte2110ReceiverGroupSdpSettings$AncillarySdps": "A list of InputSdpLocations. Each item in the list specifies the SDP file and index for one ancillary SMPTE 2110 stream.\nEach stream encapsulates one captions stream (out of any number you can include) or the single SCTE 35 stream that you can include.",
+        "Smpte2110ReceiverGroupSdpSettings$AudioSdps": "A list of InputSdpLocations. Each item in the list specifies the SDP file and index for one audio SMPTE 2110 stream."
+      }
+    },
+    "__listOfSmpte2110ReceiverGroup": {
+      "base": null,
+      "refs": {
+        "Smpte2110ReceiverGroupSettings$Smpte2110ReceiverGroups": null
       }
     }
   },

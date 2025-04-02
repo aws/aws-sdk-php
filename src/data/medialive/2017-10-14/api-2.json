@@ -6215,6 +6215,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettingsCreateRequest",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       }
     },
@@ -6277,6 +6281,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettingsCreateRequest",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       }
     },
@@ -7262,6 +7270,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettings",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       }
     },
@@ -10101,6 +10113,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettings",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       }
     },
@@ -11043,7 +11059,8 @@
         "AWS_CDI",
         "TS_FILE",
         "SRT_CALLER",
-        "MULTICAST"
+        "MULTICAST",
+        "SMPTE_2110_RECEIVER_GROUP"
       ]
     },
     "InputVpcRequest": {
@@ -15654,6 +15671,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettingsUpdateRequest",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       }
     },
@@ -15819,6 +15840,10 @@
         "MulticastSettings": {
           "shape": "MulticastSettingsUpdateRequest",
           "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
         }
       },
       "required": [
@@ -23925,6 +23950,66 @@
       "type": "integer",
       "min": 80,
       "max": 800
+    },
+    "InputSdpLocation": {
+      "type": "structure",
+      "members": {
+        "MediaIndex": {
+          "shape": "__integer",
+          "locationName": "mediaIndex"
+        },
+        "SdpUrl": {
+          "shape": "__string",
+          "locationName": "sdpUrl"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroup": {
+      "type": "structure",
+      "members": {
+        "SdpSettings": {
+          "shape": "Smpte2110ReceiverGroupSdpSettings",
+          "locationName": "sdpSettings"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroupSdpSettings": {
+      "type": "structure",
+      "members": {
+        "AncillarySdps": {
+          "shape": "__listOfInputSdpLocation",
+          "locationName": "ancillarySdps"
+        },
+        "AudioSdps": {
+          "shape": "__listOfInputSdpLocation",
+          "locationName": "audioSdps"
+        },
+        "VideoSdp": {
+          "shape": "InputSdpLocation",
+          "locationName": "videoSdp"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroupSettings": {
+      "type": "structure",
+      "members": {
+        "Smpte2110ReceiverGroups": {
+          "shape": "__listOfSmpte2110ReceiverGroup",
+          "locationName": "smpte2110ReceiverGroups"
+        }
+      }
+    },
+    "__listOfInputSdpLocation": {
+      "type": "list",
+      "member": {
+        "shape": "InputSdpLocation"
+      }
+    },
+    "__listOfSmpte2110ReceiverGroup": {
+      "type": "list",
+      "member": {
+        "shape": "Smpte2110ReceiverGroup"
+      }
     }
   }
 }
