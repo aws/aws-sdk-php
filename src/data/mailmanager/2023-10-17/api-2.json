@@ -1316,6 +1316,7 @@
         },
         "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
         "IngressPointName":{"shape":"IngressPointName"},
+        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
         "RuleSetId":{"shape":"RuleSetId"},
         "Tags":{"shape":"TagList"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
@@ -1833,6 +1834,7 @@
         "IngressPointId":{"shape":"IngressPointId"},
         "IngressPointName":{"shape":"IngressPointName"},
         "LastUpdatedTimestamp":{"shape":"Timestamp"},
+        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
         "RuleSetId":{"shape":"RuleSetId"},
         "Status":{"shape":"IngressPointStatus"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
@@ -2092,6 +2094,30 @@
         "Values":{"shape":"Ipv4Cidrs"}
       }
     },
+    "IngressIpv6Attribute":{
+      "type":"string",
+      "enum":["SENDER_IPV6"]
+    },
+    "IngressIpv6Expression":{
+      "type":"structure",
+      "required":[
+        "Evaluate",
+        "Operator",
+        "Values"
+      ],
+      "members":{
+        "Evaluate":{"shape":"IngressIpv6ToEvaluate"},
+        "Operator":{"shape":"IngressIpOperator"},
+        "Values":{"shape":"Ipv6Cidrs"}
+      }
+    },
+    "IngressIpv6ToEvaluate":{
+      "type":"structure",
+      "members":{
+        "Attribute":{"shape":"IngressIpv6Attribute"}
+      },
+      "union":true
+    },
     "IngressIsInAddressList":{
       "type":"structure",
       "required":[
@@ -2261,6 +2287,13 @@
       "type":"integer",
       "box":true
     },
+    "IpType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUAL_STACK"
+      ]
+    },
     "Ipv4Cidr":{
       "type":"string",
       "pattern":"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/([0-9]|[12][0-9]|3[0-2])$"
@@ -2268,6 +2301,16 @@
     "Ipv4Cidrs":{
       "type":"list",
       "member":{"shape":"Ipv4Cidr"}
+    },
+    "Ipv6Cidr":{
+      "type":"string",
+      "max":49,
+      "min":0,
+      "pattern":"^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9])$"
+    },
+    "Ipv6Cidrs":{
+      "type":"list",
+      "member":{"shape":"Ipv6Cidr"}
     },
     "JobId":{
       "type":"string",
@@ -2540,6 +2583,14 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9:_/+=,@.#-]+$"
     },
+    "NetworkConfiguration":{
+      "type":"structure",
+      "members":{
+        "PrivateNetworkConfiguration":{"shape":"PrivateNetworkConfiguration"},
+        "PublicNetworkConfiguration":{"shape":"PublicNetworkConfiguration"}
+      },
+      "union":true
+    },
     "NoAuthentication":{
       "type":"structure",
       "members":{
@@ -2561,6 +2612,7 @@
       "members":{
         "BooleanExpression":{"shape":"IngressBooleanExpression"},
         "IpExpression":{"shape":"IngressIpv4Expression"},
+        "Ipv6Expression":{"shape":"IngressIpv6Expression"},
         "StringExpression":{"shape":"IngressStringExpression"},
         "TlsExpression":{"shape":"IngressTlsProtocolExpression"}
       },
@@ -2589,6 +2641,20 @@
     "PreSignedUrl":{
       "type":"string",
       "sensitive":true
+    },
+    "PrivateNetworkConfiguration":{
+      "type":"structure",
+      "required":["VpcEndpointId"],
+      "members":{
+        "VpcEndpointId":{"shape":"VpcEndpointId"}
+      }
+    },
+    "PublicNetworkConfiguration":{
+      "type":"structure",
+      "required":["IpType"],
+      "members":{
+        "IpType":{"shape":"IpType"}
+      }
     },
     "QBusinessApplicationId":{
       "type":"string",
@@ -2905,9 +2971,9 @@
     },
     "RuleIpStringValue":{
       "type":"string",
-      "max":18,
+      "max":43,
       "min":1,
-      "pattern":"^(([0-9]|.|/)*)$"
+      "pattern":"^(([0-9]|.|:|/)*)$"
     },
     "RuleIpToEvaluate":{
       "type":"structure",
@@ -3536,6 +3602,10 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "pattern":"^vpce-[a-zA-Z0-9]{17}$"
     }
   }
 }

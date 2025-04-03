@@ -169,6 +169,55 @@
         "GetConfigurationSetResponse$ArchivingOptions": "<p>An object that defines the MailManager archive where sent emails are archived that you send using the configuration set.</p>"
       }
     },
+    "Attachment": {
+      "base": "<p> Contains metadata and attachment raw content.</p>",
+      "refs": {
+        "AttachmentList$member": null
+      }
+    },
+    "AttachmentContentDescription": {
+      "base": null,
+      "refs": {
+        "Attachment$ContentDescription": "<p> A brief description of the attachment content.</p>"
+      }
+    },
+    "AttachmentContentDisposition": {
+      "base": null,
+      "refs": {
+        "Attachment$ContentDisposition": "<p> A standard descriptor indicating how the attachment should be rendered in the email. Supported values: <code>ATTACHMENT</code> or <code>INLINE</code>.</p>"
+      }
+    },
+    "AttachmentContentId": {
+      "base": null,
+      "refs": {
+        "Attachment$ContentId": "<p> Unique identifier for the attachment, used for referencing attachments with INLINE disposition in HTML content.</p>"
+      }
+    },
+    "AttachmentContentTransferEncoding": {
+      "base": null,
+      "refs": {
+        "Attachment$ContentTransferEncoding": "<p> Specifies how the attachment is encoded. Supported values: <code>BASE64</code>, <code>QUOTED_PRINTABLE</code>, <code>SEVEN_BIT</code>.</p>"
+      }
+    },
+    "AttachmentContentType": {
+      "base": null,
+      "refs": {
+        "Attachment$ContentType": "<p> The MIME type of the attachment.</p> <note> <p>Example: <code>application/pdf</code>, <code>image/jpeg</code> </p> </note>"
+      }
+    },
+    "AttachmentFileName": {
+      "base": null,
+      "refs": {
+        "Attachment$FileName": "<p>The file name for the attachment as it will appear in the email. Amazon SES restricts certain file extensions. To ensure attachments are accepted, check the <a href=\"https://docs.aws.amazon.com/ses/latest/dg/mime-types.html\">Unsupported attachment types</a> in the Amazon SES Developer Guide.</p>"
+      }
+    },
+    "AttachmentList": {
+      "base": null,
+      "refs": {
+        "Message$Attachments": "<p> The List of attachments to include in your email. All recipients will receive the same attachments.</p>",
+        "Template$Attachments": "<p> The List of attachments to include in your email. All recipients will receive the same attachments.</p>"
+      }
+    },
     "AttributesData": {
       "base": null,
       "refs": {
@@ -1036,7 +1085,7 @@
       }
     },
     "EmailContent": {
-      "base": "<p>An object that defines the entire content of the email, including the message headers and the body content. You can create a simple email message, in which you specify the subject and the text and HTML versions of the message body. You can also create raw messages, in which you specify a complete MIME-formatted message. Raw messages can include attachments and custom headers.</p>",
+      "base": "<p>An object that defines the entire content of the email, including the message headers, body content, and attachments. For a simple email message, you specify the subject and provide both text and HTML versions of the message body. You can also add attachments to simple and templated messages. For a raw message, you provide a complete MIME-formatted message, which can include custom headers and attachments.</p>",
       "refs": {
         "CreateDeliverabilityTestReportRequest$Content": "<p>The HTML body of the message that you sent when you performed the predictive inbox placement test.</p>",
         "SendEmailRequest$Content": "<p>An object that contains the body of the message. You can send either a Simple message, Raw message, or a Templated message.</p>"
@@ -2124,7 +2173,7 @@
     "Message": {
       "base": "<p>Represents the email message that you're sending. The <code>Message</code> object consists of a subject line and a message body.</p>",
       "refs": {
-        "EmailContent$Simple": "<p>The simple email message. The message consists of a subject and a message body.</p>"
+        "EmailContent$Simple": "<p>The simple email message. The message consists of a subject, message body and attachments list.</p>"
       }
     },
     "MessageContent": {
@@ -2700,6 +2749,12 @@
         "BatchGetMetricDataQuery$Id": "<p>The query identifier.</p>",
         "MetricDataError$Id": "<p>The query identifier.</p>",
         "MetricDataResult$Id": "<p>The query identifier.</p>"
+      }
+    },
+    "RawAttachmentData": {
+      "base": null,
+      "refs": {
+        "Attachment$RawContent": "<p> The raw data of the attachment. It needs to be base64-encoded if you are accessing Amazon SES directly through the HTTPS interface. If you are accessing Amazon SES using an Amazon Web Services SDK, the SDK takes care of the base 64-encoding for you.</p>"
       }
     },
     "RawMessage": {

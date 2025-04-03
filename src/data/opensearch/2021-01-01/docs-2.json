@@ -11,12 +11,12 @@
     "AuthorizeVpcEndpointAccess": "<p>Provides access to an Amazon OpenSearch Service domain through the use of an interface VPC endpoint.</p>",
     "CancelDomainConfigChange": "<p>Cancels a pending configuration change on an Amazon OpenSearch Service domain.</p>",
     "CancelServiceSoftwareUpdate": "<p>Cancels a scheduled service software update for an Amazon OpenSearch Service domain. You can only perform this operation before the <code>AutomatedUpdateDate</code> and when the domain's <code>UpdateStatus</code> is <code>PENDING_UPDATE</code>. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
-    "CreateApplication": "<p>Creates an OpenSearch Application.</p>",
+    "CreateApplication": "<p>Creates an OpenSearch UI application. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
     "CreateDomain": "<p>Creates an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html\">Creating and managing Amazon OpenSearch Service domains</a>.</p>",
     "CreateOutboundConnection": "<p>Creates a new cross-cluster search connection from a source Amazon OpenSearch Service domain to a destination domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/cross-cluster-search.html\">Cross-cluster search for Amazon OpenSearch Service</a>.</p>",
     "CreatePackage": "<p>Creates a package for use with Amazon OpenSearch Service domains. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "CreateVpcEndpoint": "<p>Creates an Amazon OpenSearch Service-managed VPC endpoint.</p>",
-    "DeleteApplication": "<p>Deletes an existing OpenSearch Application.</p>",
+    "DeleteApplication": "<p>Deletes a specified OpenSearch application.</p>",
     "DeleteDataSource": "<p>Deletes a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-delete.html\">Deleting an Amazon OpenSearch Service data source with Amazon S3</a>.</p>",
     "DeleteDirectQueryDataSource": "<p> Deletes a previously configured direct query data source from Amazon OpenSearch Service. </p>",
     "DeleteDomain": "<p>Deletes an Amazon OpenSearch Service domain and all of its data. You can't recover a domain after you delete it.</p>",
@@ -41,7 +41,7 @@
     "DescribeVpcEndpoints": "<p>Describes one or more Amazon OpenSearch Service-managed VPC endpoints.</p>",
     "DissociatePackage": "<p>Removes a package from the specified Amazon OpenSearch Service domain. The package can't be in use with any OpenSearch index for the dissociation to succeed. The package is still available in OpenSearch Service for association later. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "DissociatePackages": "<p>Dissociates multiple packages from a domain simulatneously.</p>",
-    "GetApplication": "<p>Check the configuration and status of an existing OpenSearch Application.</p>",
+    "GetApplication": "<p>Retrieves the configuration and status of an existing OpenSearch application.</p>",
     "GetCompatibleVersions": "<p>Returns a map of OpenSearch or Elasticsearch versions and the versions you can upgrade them to.</p>",
     "GetDataSource": "<p>Retrieves information about a direct query data source.</p>",
     "GetDirectQueryDataSource": "<p> Returns detailed configuration information for a specific direct query data source in Amazon OpenSearch Service. </p>",
@@ -49,7 +49,7 @@
     "GetPackageVersionHistory": "<p>Returns a list of Amazon OpenSearch Service package versions, along with their creation time, commit message, and plugin properties (if the package is a zip plugin package). For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/custom-packages.html\">Custom packages for Amazon OpenSearch Service</a>.</p>",
     "GetUpgradeHistory": "<p>Retrieves the complete history of the last 10 upgrades performed on an Amazon OpenSearch Service domain.</p>",
     "GetUpgradeStatus": "<p>Returns the most recent status of the last upgrade or upgrade eligibility check performed on an Amazon OpenSearch Service domain.</p>",
-    "ListApplications": "<p>List all OpenSearch Applications under your account.</p>",
+    "ListApplications": "<p>Lists all OpenSearch applications under your account.</p>",
     "ListDataSources": "<p>Lists direct-query data sources for a specific domain. For more information, see For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html\">Working with Amazon OpenSearch Service direct queries with Amazon S3</a>.</p>",
     "ListDirectQueryDataSources": "<p> Lists an inventory of all the direct query data sources that you have configured within Amazon OpenSearch Service. </p>",
     "ListDomainMaintenances": "<p>A list of maintenance actions for the domain.</p>",
@@ -69,7 +69,7 @@
     "RevokeVpcEndpointAccess": "<p>Revokes access to an Amazon OpenSearch Service domain that was provided through an interface VPC endpoint.</p>",
     "StartDomainMaintenance": "<p>Starts the node maintenance process on the data node. These processes can include a node reboot, an Opensearch or Elasticsearch process restart, or a Dashboard or Kibana restart.</p>",
     "StartServiceSoftwareUpdate": "<p>Schedules a service software update for an Amazon OpenSearch Service domain. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/service-software.html\">Service software updates in Amazon OpenSearch Service</a>.</p>",
-    "UpdateApplication": "<p>Update the OpenSearch Application. </p>",
+    "UpdateApplication": "<p>Updates the configuration and settings of an existing OpenSearch application.</p>",
     "UpdateDataSource": "<p>Updates a direct-query data source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html\">Working with Amazon OpenSearch Service data source integrations with Amazon S3</a>.</p>",
     "UpdateDirectQueryDataSource": "<p> Updates the configuration or properties of an existing direct query data source in Amazon OpenSearch Service. </p>",
     "UpdateDomainConfig": "<p>Modifies the cluster configuration of the specified Amazon OpenSearch Service domain.</p>",
@@ -256,7 +256,7 @@
       }
     },
     "AppConfig": {
-      "base": "<p>Configurations of the OpenSearch Application.</p>",
+      "base": "<p>Configuration settings for an OpenSearch application. For more information, see see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html\">Using the OpenSearch user interface in Amazon OpenSearch Service</a>.</p>",
       "refs": {
         "AppConfigs$member": null
       }
@@ -264,57 +264,57 @@
     "AppConfigType": {
       "base": null,
       "refs": {
-        "AppConfig$key": "<p>Specify the item to configure, such as admin role for the OpenSearch Application.</p>"
+        "AppConfig$key": "<p>The configuration item to set, such as the admin role for the OpenSearch application.</p>"
       }
     },
     "AppConfigValue": {
       "base": null,
       "refs": {
-        "AppConfig$value": "<p>Specifies the value to configure for the key, such as an IAM user ARN.</p>"
+        "AppConfig$value": "<p>The value assigned to the configuration key, such as an IAM user ARN.</p>"
       }
     },
     "AppConfigs": {
       "base": null,
       "refs": {
-        "CreateApplicationRequest$appConfigs": "<p>Configurations of the OpenSearch Application, inlcuding admin configuration.</p>",
-        "CreateApplicationResponse$appConfigs": "<p>Configurations of the OpenSearch Application, inlcuding admin configuration.</p>",
-        "GetApplicationResponse$appConfigs": "<p>App configurations of the checked OpenSearch Application.</p>",
-        "UpdateApplicationRequest$appConfigs": "<p>Configurations to be changed for the OpenSearch Application.</p>",
-        "UpdateApplicationResponse$appConfigs": "<p>Configurations for the updated OpenSearch Application.</p>"
+        "CreateApplicationRequest$appConfigs": "<p>Configuration settings for the OpenSearch application, including administrative options.</p>",
+        "CreateApplicationResponse$appConfigs": "<p>Configuration settings for the OpenSearch application, including administrative options.</p>",
+        "GetApplicationResponse$appConfigs": "<p>The configuration settings of the OpenSearch application.</p>",
+        "UpdateApplicationRequest$appConfigs": "<p>The configuration settings to modify for the OpenSearch application.</p>",
+        "UpdateApplicationResponse$appConfigs": "<p>The configuration settings for the updated OpenSearch application.</p>"
       }
     },
     "ApplicationName": {
       "base": null,
       "refs": {
-        "ApplicationSummary$name": "<p>Name of an OpenSearch Application.</p>",
-        "CreateApplicationRequest$name": "<p>Name of the OpenSearch Appication to create. Application names are unique across the applications owned by an account within an Amazon Web Services Region.</p>",
-        "CreateApplicationResponse$name": "<p>Name of the created OpenSearch Application.</p>",
-        "GetApplicationResponse$name": "<p>Name of the checked OpenSearch Application.</p>",
-        "UpdateApplicationResponse$name": "<p>Name of the updated OpenSearch Application.</p>"
+        "ApplicationSummary$name": "<p>The name of an OpenSearch application.</p>",
+        "CreateApplicationRequest$name": "<p>The unique name of the OpenSearch application. Names must be unique within an Amazon Web Services Region for each account.</p>",
+        "CreateApplicationResponse$name": "<p>The name of the OpenSearch application.</p>",
+        "GetApplicationResponse$name": "<p>The name of the OpenSearch application.</p>",
+        "UpdateApplicationResponse$name": "<p>The name of the updated OpenSearch application.</p>"
       }
     },
     "ApplicationStatus": {
       "base": null,
       "refs": {
         "ApplicationStatuses$member": null,
-        "ApplicationSummary$status": "<p>Status of an OpenSearch Application. Possible values are <code>CREATING</code>, <code>UPDATING</code>,<code> DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>",
-        "GetApplicationResponse$status": "<p>Current status of the checked OpenSearch Application. Possible values are <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>"
+        "ApplicationSummary$status": "<p>The current status of an OpenSearch application. Possible values: <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>",
+        "GetApplicationResponse$status": "<p>The current status of the OpenSearch application. Possible values: <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>"
       }
     },
     "ApplicationStatuses": {
       "base": null,
       "refs": {
-        "ListApplicationsRequest$statuses": "<p>OpenSearch Application Status can be used as filters for the listing request. Possible values are <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>"
+        "ListApplicationsRequest$statuses": "<p>Filters the list of OpenSearch applications by status. Possible values: <code>CREATING</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>FAILED</code>, <code>ACTIVE</code>, and <code>DELETED</code>.</p>"
       }
     },
     "ApplicationSummaries": {
       "base": null,
       "refs": {
-        "ListApplicationsResponse$ApplicationSummaries": "<p>Summary of the OpenSearch Applications, including ID, ARN, name, endpoint, status, create time and last update time.</p>"
+        "ListApplicationsResponse$ApplicationSummaries": "<p>Summarizes OpenSearch applications, including ID, ARN, name, endpoint, status, creation time, and last update time.</p>"
       }
     },
     "ApplicationSummary": {
-      "base": "<p>Basic information of the OpenSearch Application.</p>",
+      "base": "<p>Basic details of an OpenSearch application.</p>",
       "refs": {
         "ApplicationSummaries$member": null
       }
@@ -516,10 +516,10 @@
         "DomainStatus$UpgradeProcessing": "<p>The status of a domain version upgrade to a new version of OpenSearch or Elasticsearch. True if OpenSearch Service is in the process of a version upgrade. False if the configuration is active.</p>",
         "EBSOptions$EBSEnabled": "<p>Indicates whether EBS volumes are attached to data nodes in an OpenSearch Service domain.</p>",
         "EncryptionAtRestOptions$Enabled": "<p>True to enable encryption at rest.</p>",
-        "IamIdentityCenterOptions$enabled": "<p>IAM Identity Center is enabled for the OpenSearch Application.</p>",
-        "IamIdentityCenterOptionsInput$enabled": "<p>Enable/disable settings for IAM Identity Center.</p>",
-        "IdentityCenterOptions$EnabledAPIAccess": "<p>True to enable IAM Identity Center for API access in Amazon OpenSearch Service.</p>",
-        "IdentityCenterOptionsInput$EnabledAPIAccess": "<p>True to enable IAM Identity Center for API access in Amazon OpenSearch Service.</p>",
+        "IamIdentityCenterOptions$enabled": "<p>Indicates whether IAM Identity Center is enabled for the OpenSearch Application.</p>",
+        "IamIdentityCenterOptionsInput$enabled": "<p>Specifies whether IAM Identity Center is enabled or disabled.</p>",
+        "IdentityCenterOptions$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for the application.</p>",
+        "IdentityCenterOptionsInput$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for API access in Amazon OpenSearch Service.</p>",
         "InstanceTypeDetails$EncryptionEnabled": "<p>Whether encryption at rest and node-to-node encryption are supported for the instance type.</p>",
         "InstanceTypeDetails$CognitoEnabled": "<p>Whether Amazon Cognito access is supported for the instance type.</p>",
         "InstanceTypeDetails$AppLogsEnabled": "<p>Whether logging is supported for the instance type.</p>",
@@ -530,13 +530,13 @@
         "KeyStoreAccessOption$KeyStoreAccessEnabled": "<p>This indicates whether Key Store access is enabled </p>",
         "ListInstanceTypeDetailsRequest$RetrieveAZs": "<p>An optional parameter that specifies the Availability Zones for the domain.</p>",
         "LogPublishingOption$Enabled": "<p>Whether the log should be published.</p>",
-        "NodeConfig$Enabled": "<p>A boolean that indicates whether a particular node type is enabled or not.</p>",
+        "NodeConfig$Enabled": "<p>A boolean value indicating whether a specific node type is active or inactive.</p>",
         "NodeToNodeEncryptionOptions$Enabled": "<p>True to enable node-to-node encryption.</p>",
         "OffPeakWindowOptions$Enabled": "<p>Whether to enable an off-peak window.</p> <p>This option is only available when modifying a domain created prior to February 16, 2023, not when creating a new domain. All domains created after this date have the off-peak window enabled by default. You can't disable the off-peak window after it's enabled for a domain.</p>",
         "OptionStatus$PendingDeletion": "<p>Indicates whether the entity is being deleted.</p>",
         "PackageConfiguration$RequiresRestartForConfigurationUpdate": "<p>This indicates whether a B/G deployment is required for updating the configuration that the plugin is prerequisite for.</p>",
-        "PackageEncryptionOptions$EncryptionEnabled": "<p>This indicates whether encryption is enabled for the package.</p>",
-        "PackageVendingOptions$VendingEnabled": "<p>This indicates whether vending is enabled for the package to determine if package can be used by other users. </p>",
+        "PackageEncryptionOptions$EncryptionEnabled": "<p>Whether encryption is enabled for the package.</p>",
+        "PackageVendingOptions$VendingEnabled": "<p>Indicates whether the package vending feature is enabled, allowing the package to be used by other users.</p>",
         "SAMLOptionsInput$Enabled": "<p>True to enable SAML authentication for a domain.</p>",
         "SAMLOptionsOutput$Enabled": "<p>True if SAML is enabled.</p>",
         "ScheduledAction$Mandatory": "<p>Whether the action is required or optional.</p>",
@@ -622,7 +622,7 @@
     "ClientToken": {
       "base": null,
       "refs": {
-        "CreateApplicationRequest$clientToken": "<p>A unique client idempotency token. It will be auto generated if not provided.</p>",
+        "CreateApplicationRequest$clientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateVpcEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>"
       }
     },
@@ -871,11 +871,11 @@
     "DataSources": {
       "base": null,
       "refs": {
-        "CreateApplicationRequest$dataSources": "<p>Data sources to be associated with the OpenSearch Application.</p>",
-        "CreateApplicationResponse$dataSources": "<p>Data sources associated with the created OpenSearch Application.</p>",
-        "GetApplicationResponse$dataSources": "<p>Associated data sources to the checked OpenSearch Application.</p>",
-        "UpdateApplicationRequest$dataSources": "<p>Data sources to be associated with the OpenSearch Application.</p>",
-        "UpdateApplicationResponse$dataSources": "<p>Data sources associated with the updated OpenSearch Application.</p>"
+        "CreateApplicationRequest$dataSources": "<p>The data sources to link to the OpenSearch application.</p>",
+        "CreateApplicationResponse$dataSources": "<p>The data sources linked to the OpenSearch application.</p>",
+        "GetApplicationResponse$dataSources": "<p>The data sources associated with the OpenSearch application.</p>",
+        "UpdateApplicationRequest$dataSources": "<p>The data sources to associate with the OpenSearch application.</p>",
+        "UpdateApplicationResponse$dataSources": "<p>The data sources associated with the updated OpenSearch application.</p>"
       }
     },
     "DeleteApplicationRequest": {
@@ -1732,62 +1732,62 @@
       }
     },
     "IamIdentityCenterOptions": {
-      "base": "<p>Settings for IAM Identity Center for an OpenSearch Application.</p>",
+      "base": "<p>Configuration settings for IAM Identity Center in an OpenSearch Application.</p>",
       "refs": {
-        "CreateApplicationResponse$iamIdentityCenterOptions": "<p>Settings of IAM Identity Center for the created OpenSearch Application.</p>",
-        "GetApplicationResponse$iamIdentityCenterOptions": "<p>IAM Identity Center settings for the checked OpenSearch Application.</p>",
-        "UpdateApplicationResponse$iamIdentityCenterOptions": "<p>IAM Identity Center settings for the updated OpenSearch Application.</p>"
+        "CreateApplicationResponse$iamIdentityCenterOptions": "<p>The IAM Identity Center settings configured for the OpenSearch application.</p>",
+        "GetApplicationResponse$iamIdentityCenterOptions": "<p>The IAM Identity Center settings configured for the OpenSearch application.</p>",
+        "UpdateApplicationResponse$iamIdentityCenterOptions": "<p>The IAM Identity Center configuration for the updated OpenSearch application.</p>"
       }
     },
     "IamIdentityCenterOptionsInput": {
-      "base": "<p>Settings for IAM Identity Center.</p>",
+      "base": "<p>Configuration settings for enabling and managing IAM Identity Center.</p>",
       "refs": {
-        "CreateApplicationRequest$iamIdentityCenterOptions": "<p>Settings of IAM Identity Center for the OpenSearch Application.</p>"
+        "CreateApplicationRequest$iamIdentityCenterOptions": "<p>Configuration settings for integrating Amazon Web Services IAM Identity Center with the OpenSearch application.</p>"
       }
     },
     "Id": {
       "base": null,
       "refs": {
-        "ApplicationSummary$id": "<p>Unique identifier for an OpenSearch application.</p>",
-        "CreateApplicationResponse$id": "<p>Unique identifier for the created OpenSearch Application.</p>",
-        "DeleteApplicationRequest$id": "<p>Unique identifier for the OpenSearch Application that you want to delete.</p>",
-        "GetApplicationRequest$id": "<p>Unique identifier of the checked OpenSearch Application.</p>",
-        "GetApplicationResponse$id": "<p>Unique identifier of the checked OpenSearch Application.</p>",
-        "UpdateApplicationRequest$id": "<p>Unique identifier of the OpenSearch Application to be updated.</p>",
-        "UpdateApplicationResponse$id": "<p>Unique identifier of the updated OpenSearch Application.</p>"
+        "ApplicationSummary$id": "<p>The unique identifier of an OpenSearch application.</p>",
+        "CreateApplicationResponse$id": "<p>The unique identifier assigned to the OpenSearch application.</p>",
+        "DeleteApplicationRequest$id": "<p>The unique identifier of the OpenSearch application to delete.</p>",
+        "GetApplicationRequest$id": "<p>The unique identifier of the OpenSearch application to retrieve.</p>",
+        "GetApplicationResponse$id": "<p>The unique identifier of the OpenSearch application.</p>",
+        "UpdateApplicationRequest$id": "<p>The unique identifier for the OpenSearch application to be updated.</p>",
+        "UpdateApplicationResponse$id": "<p>The unique identifier of the updated OpenSearch application.</p>"
       }
     },
     "IdentityCenterApplicationARN": {
       "base": null,
       "refs": {
-        "IdentityCenterOptions$IdentityCenterApplicationARN": "<p>The ARN for IAM Identity Center Application which will integrate with Amazon OpenSearch Service.</p>"
+        "IdentityCenterOptions$IdentityCenterApplicationARN": "<p>The ARN of the IAM Identity Center application that integrates with Amazon OpenSearch Service.</p>"
       }
     },
     "IdentityCenterInstanceARN": {
       "base": null,
       "refs": {
-        "IdentityCenterOptions$IdentityCenterInstanceARN": "<p>The ARN for IAM Identity Center Instance.</p>",
-        "IdentityCenterOptionsInput$IdentityCenterInstanceARN": "<p>The ARN for IAM Identity Center Instance which will be used for IAM Identity Center Application creation.</p>"
+        "IdentityCenterOptions$IdentityCenterInstanceARN": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center instance.</p>",
+        "IdentityCenterOptionsInput$IdentityCenterInstanceARN": "<p>The ARN of the IAM Identity Center instance used to create an OpenSearch UI application that uses IAM Identity Center for authentication.</p>"
       }
     },
     "IdentityCenterOptions": {
-      "base": "<p>Container for IAM Identity Center Options settings.</p>",
+      "base": "<p>Settings container for integrating IAM Identity Center with OpenSearch UI applications, which enables enabling secure user authentication and access control across multiple data sources. This setup supports single sign-on (SSO) through IAM Identity Center, allowing centralized user management.</p>",
       "refs": {
-        "DomainStatus$IdentityCenterOptions": "<p>Container for IAM Identity Center Option control for the domain.</p>",
-        "IdentityCenterOptionsStatus$Options": "<p>Container for IAM Identity Center Options settings.</p>"
+        "DomainStatus$IdentityCenterOptions": "<p>Configuration options for controlling IAM Identity Center integration within a domain.</p>",
+        "IdentityCenterOptionsStatus$Options": "<p>Configuration settings for IAM Identity Center integration.</p>"
       }
     },
     "IdentityCenterOptionsInput": {
-      "base": "<p>Container for IAM Identity Center Options settings.</p>",
+      "base": "<p>Configuration settings for enabling and managing IAM Identity Center.</p>",
       "refs": {
-        "CreateDomainRequest$IdentityCenterOptions": "<p>Options for IAM Identity Center Option control for the domain.</p>",
+        "CreateDomainRequest$IdentityCenterOptions": "<p>Configuration options for enabling and managing IAM Identity Center integration within a domain.</p>",
         "UpdateDomainConfigRequest$IdentityCenterOptions": null
       }
     },
     "IdentityCenterOptionsStatus": {
-      "base": "<p>The status of IAM Identity Center Options settings for a domain.</p>",
+      "base": "<p>The status of IAM Identity Center configuration settings for a domain.</p>",
       "refs": {
-        "DomainConfig$IdentityCenterOptions": "<p>Container for IAM Identity Center Option control for the domain.</p>"
+        "DomainConfig$IdentityCenterOptions": "<p>Configuration options for enabling and managing IAM Identity Center integration within a domain.</p>"
       }
     },
     "IdentityPoolId": {
@@ -1799,7 +1799,7 @@
     "IdentityStoreId": {
       "base": null,
       "refs": {
-        "IdentityCenterOptions$IdentityStoreId": "<p>The ID of IAM Identity Store.</p>"
+        "IdentityCenterOptions$IdentityStoreId": "<p>The identifier of the IAM Identity Store.</p>"
       }
     },
     "InboundConnection": {
@@ -1902,7 +1902,7 @@
         "EBSOptions$VolumeSize": "<p>Specifies the size (in GiB) of EBS volumes attached to data nodes.</p>",
         "EBSOptions$Iops": "<p>Specifies the baseline input/output (I/O) performance of EBS volumes attached to data nodes. Applicable only for the <code>gp3</code> and provisioned IOPS EBS volume types.</p>",
         "EBSOptions$Throughput": "<p>Specifies the throughput (in MiB/s) of the EBS volumes attached to data nodes. Applicable only for the <code>gp3</code> volume type.</p>",
-        "NodeConfig$Count": "<p>The number of nodes of a particular node type in the cluster.</p>",
+        "NodeConfig$Count": "<p>The number of nodes of a specific type within the cluster.</p>",
         "SAMLOptionsInput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive. Acceptable values are between 1 and 1440, and the default value is 60.</p>",
         "SAMLOptionsOutput$SessionTimeoutMinutes": "<p>The duration, in minutes, after which a user session becomes inactive.</p>",
         "SnapshotOptions$AutomatedSnapshotStartHour": "<p>The time, in UTC format, when OpenSearch Service takes a daily automated snapshot of the specified domain. Default is <code>0</code> hours.</p>",
@@ -1958,7 +1958,7 @@
       "base": null,
       "refs": {
         "EncryptionAtRestOptions$KmsKeyId": "<p>The KMS key ID. Takes the form <code>1a2a3a4-1a2a-3a4a-5a6a-1a2a3a4a5a6a</code>.</p>",
-        "PackageEncryptionOptions$KmsKeyIdentifier": "<p> KMS key ID for encrypting the package.</p>"
+        "PackageEncryptionOptions$KmsKeyIdentifier": "<p>KMS key ID for encrypting the package.</p>"
       }
     },
     "LastUpdated": {
@@ -2340,9 +2340,9 @@
       }
     },
     "NodeConfig": {
-      "base": "<p>Container for specifying configuration of any node type.</p>",
+      "base": "<p>Configuration options for defining the setup of any node type within the cluster.</p>",
       "refs": {
-        "NodeOption$NodeConfig": "<p>Container for specifying configuration of any node type.</p>"
+        "NodeOption$NodeConfig": "<p>Configuration options for defining the setup of any node type.</p>"
       }
     },
     "NodeId": {
@@ -2355,7 +2355,7 @@
       }
     },
     "NodeOption": {
-      "base": "<p>Container for specifying node type.</p>",
+      "base": "<p>Configuration settings for defining the node type within a cluster.</p>",
       "refs": {
         "NodeOptionsList$member": null
       }
@@ -2369,7 +2369,7 @@
     "NodeOptionsNodeType": {
       "base": null,
       "refs": {
-        "NodeOption$NodeType": "<p>Container for node type like coordinating.</p>"
+        "NodeOption$NodeType": "<p>Defines the type of node, such as coordinating nodes.</p>"
       }
     },
     "NodeStatus": {
@@ -2396,7 +2396,7 @@
     "NodeType": {
       "base": null,
       "refs": {
-        "DomainNodesStatus$NodeType": "<p>Indicates whether the nodes is a data, master, or ultrawarm node.</p>"
+        "DomainNodesStatus$NodeType": "<p>Indicates whether the nodes is a data, master, or UltraWarm node.</p>"
       }
     },
     "NonEmptyString": {
@@ -2462,7 +2462,7 @@
         "DescribeInstanceTypeLimitsRequest$InstanceType": "<p>The OpenSearch Service instance type for which you need limit information.</p>",
         "DomainNodesStatus$InstanceType": "<p>The instance type information of the node.</p>",
         "InstanceTypeDetails$InstanceType": "<p>The instance type.</p>",
-        "NodeConfig$Type": "<p>The instance type of a particular node type in the cluster.</p>",
+        "NodeConfig$Type": "<p>The instance type of a particular node within the cluster.</p>",
         "ReservedInstance$InstanceType": "<p>The OpenSearch instance type offered by theReserved Instance offering.</p>",
         "ReservedInstanceOffering$InstanceType": "<p>The OpenSearch instance type offered by the Reserved Instance offering.</p>"
       }
@@ -2492,7 +2492,7 @@
         "EBSOptionsStatus$Status": "<p>The status of the EBS options for the specified domain.</p>",
         "EncryptionAtRestOptionsStatus$Status": "<p>The status of the encryption at rest options for the specified domain.</p>",
         "IPAddressTypeStatus$Status": null,
-        "IdentityCenterOptionsStatus$Status": "<p>The status of IAM Identity Center Options settings for a domain.</p>",
+        "IdentityCenterOptionsStatus$Status": "<p>The status of IAM Identity Center configuration settings for a domain.</p>",
         "LogPublishingOptionsStatus$Status": "<p>The status of the log publishing options for the domain.</p>",
         "NodeToNodeEncryptionOptionsStatus$Status": "<p>The status of the node-to-node encryption options for the specified domain.</p>",
         "OffPeakWindowOptionsStatus$Status": "<p>The current status of off-peak window options.</p>",
@@ -2596,7 +2596,7 @@
       "base": "<p>Encryption options for a package.</p>",
       "refs": {
         "CreatePackageRequest$PackageEncryptionOptions": "<p>The encryption parameters for the package being created.</p>",
-        "PackageDetails$PackageEncryptionOptions": "<p>Package Encryption Options for a package.</p>",
+        "PackageDetails$PackageEncryptionOptions": "<p>Encryption options for a package.</p>",
         "UpdatePackageRequest$PackageEncryptionOptions": "<p>Encryption options for a package.</p>"
       }
     },
@@ -2624,7 +2624,7 @@
         "AssociatePackageRequest$PrerequisitePackageIDList": "<p>A list of package IDs that must be associated with the domain before the package specified in the request can be associated.</p>",
         "DissociatePackagesRequest$PackageList": "<p>A list of package IDs to be dissociated from a domain.</p>",
         "DomainPackageDetails$PrerequisitePackageIDList": "<p>A list of package IDs that must be associated with the domain before or with the package can be associated.</p>",
-        "PackageDetailsForAssociation$PrerequisitePackageIDList": "<p>List of package IDs that must be associated with the domain with or before the package can be associated.</p>"
+        "PackageDetailsForAssociation$PrerequisitePackageIDList": "<p>List of package IDs that must be linked to the domain before or simultaneously with the package association.</p>"
       }
     },
     "PackageName": {
@@ -2638,7 +2638,7 @@
     "PackageOwner": {
       "base": null,
       "refs": {
-        "PackageDetails$PackageOwner": "<p>The owner of the package who is allowed to create/update a package and add users to the package scope.</p>"
+        "PackageDetails$PackageOwner": "<p>The owner of the package who is allowed to create and update a package and add users to the package scope.</p>"
       }
     },
     "PackageScopeOperationEnum": {
@@ -2684,7 +2684,7 @@
       }
     },
     "PackageVendingOptions": {
-      "base": "<p>The vending options for a package to determine if the package can be used by other users. </p>",
+      "base": "<p>Configuration options for determining whether a package can be made available for use by other users.</p>",
       "refs": {
         "CreatePackageRequest$PackageVendingOptions": "<p> The vending options for the package being created. They determine if the package can be vended to other users.</p>",
         "PackageDetails$PackageVendingOptions": "<p>Package Vending Options for a package.</p>"
@@ -2896,8 +2896,8 @@
       "base": null,
       "refs": {
         "CognitoOptions$RoleArn": "<p>The <code>AmazonOpenSearchServiceCognitoAccess</code> role that allows OpenSearch Service to configure your user pool and identity pool.</p>",
-        "IamIdentityCenterOptions$iamRoleForIdentityCenterApplicationArn": "<p>Amazon Resource Name of the IAM Identity Center's Application created for the OpenSearch Application after enabling IAM Identity Center.</p>",
-        "IamIdentityCenterOptionsInput$iamRoleForIdentityCenterApplicationArn": "<p>Amazon Resource Name of IAM Identity Center's application.</p>",
+        "IamIdentityCenterOptions$iamRoleForIdentityCenterApplicationArn": "<p>The Amazon Resource Name (ARN) of the IAM role assigned to the IAM Identity Center application for the OpenSearch Application.</p>",
+        "IamIdentityCenterOptionsInput$iamRoleForIdentityCenterApplicationArn": "<p>The ARN of the IAM role associated with the IAM Identity Center application.</p>",
         "KeyStoreAccessOption$KeyAccessRoleArn": "<p>Role ARN to access the KeyStore Key</p>",
         "S3GlueDataCatalog$RoleArn": "<p>&gt;The Amazon Resource Name (ARN) for the S3 Glue Data Catalog.</p>"
       }
@@ -2911,8 +2911,8 @@
     "RolesKeyIdCOption": {
       "base": null,
       "refs": {
-        "IdentityCenterOptions$RolesKey": "<p>Specify the attribute that contains the backend role (groupName, groupID) of IAM Identity Center</p>",
-        "IdentityCenterOptionsInput$RolesKey": "<p>Specify the attribute that contains the backend role (groupName, groupID) of IAM Identity Center</p>"
+        "IdentityCenterOptions$RolesKey": "<p>Specifies the attribute that contains the backend role identifier (such as group name or group ID) in IAM Identity Center.</p>",
+        "IdentityCenterOptionsInput$RolesKey": "<p>Specifies the attribute that contains the backend role identifier (such as group name or group ID) in IAM Identity Center.</p>"
       }
     },
     "RollbackOnDisable": {
@@ -3177,7 +3177,7 @@
         "AddDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "AdvancedOptions$key": null,
         "AdvancedOptions$value": null,
-        "ApplicationSummary$endpoint": "<p>Endpoint URL of an OpenSearch Application.</p>",
+        "ApplicationSummary$endpoint": "<p>The endpoint URL of an OpenSearch application.</p>",
         "AuthorizedPrincipal$Principal": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html\">IAM principal</a> that is allowed access to the domain.</p>",
         "AutoTuneMaintenanceSchedule$CronExpressionForRecurrence": "<p>A cron expression for a recurring maintenance schedule during which Auto-Tune can deploy changes.</p>",
         "AutoTuneOptionsOutput$ErrorMessage": "<p>Any errors that occurred while enabling or disabling Auto-Tune.</p>",
@@ -3193,7 +3193,7 @@
         "DryRunProgressStatus$CreationDate": "<p>The timestamp when the dry run was initiated.</p>",
         "DryRunProgressStatus$UpdateDate": "<p>The timestamp when the dry run was last updated.</p>",
         "EndpointsMap$key": null,
-        "GetApplicationResponse$endpoint": "<p>Endpoint URL of the checked OpenSearch Application.</p>",
+        "GetApplicationResponse$endpoint": "<p>The endpoint URL of the OpenSearch application.</p>",
         "GetDirectQueryDataSourceResponse$DataSourceArn": "<p> The unique, system-generated identifier that represents the data source. </p>",
         "GetPackageVersionHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
         "GetUpgradeHistoryResponse$NextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Send the request again using the returned token to retrieve the next page.</p>",
@@ -3254,8 +3254,8 @@
     "SubjectKeyIdCOption": {
       "base": null,
       "refs": {
-        "IdentityCenterOptions$SubjectKey": "<p>Specify the attribute that contains the subject (username, userID, email) of IAM Identity Center.</p>",
-        "IdentityCenterOptionsInput$SubjectKey": "<p>Specify the attribute that contains the subject (username, userID, email) of IAM Identity Center.</p>"
+        "IdentityCenterOptions$SubjectKey": "<p>Specifies the attribute that contains the subject identifier (such as username, user ID, or email) in IAM Identity Center.</p>",
+        "IdentityCenterOptionsInput$SubjectKey": "<p>Specifies the attribute that contains the subject identifier (such as username, user ID, or email) in IAM Identity Center.</p>"
       }
     },
     "TLSSecurityPolicy": {
@@ -3303,13 +3303,13 @@
     "Timestamp": {
       "base": null,
       "refs": {
-        "ApplicationSummary$createdAt": "<p>Timestamp at which an OpenSearch Application was created.</p>",
-        "ApplicationSummary$lastUpdatedAt": "<p>Timestamp at which an OpenSearch Application was last updated.</p>",
-        "CreateApplicationResponse$createdAt": "<p>Timestamp when the OpenSearch Application was created.</p>",
-        "GetApplicationResponse$createdAt": "<p>Timestamp at which the checked OpenSearch Application was created.</p>",
-        "GetApplicationResponse$lastUpdatedAt": "<p>Timestamp at which the checked OpenSearch Application was last updated.</p>",
-        "UpdateApplicationResponse$createdAt": "<p>Timestamp at which the OpenSearch Application was created.</p>",
-        "UpdateApplicationResponse$lastUpdatedAt": "<p>Timestamp at which the OpenSearch Application was last updated.</p>"
+        "ApplicationSummary$createdAt": "<p>The timestamp when an OpenSearch application was created.</p>",
+        "ApplicationSummary$lastUpdatedAt": "<p>The timestamp of the last update to an OpenSearch application.</p>",
+        "CreateApplicationResponse$createdAt": "<p>The timestamp indicating when the OpenSearch application was created.</p>",
+        "GetApplicationResponse$createdAt": "<p>The timestamp when the OpenSearch application was created.</p>",
+        "GetApplicationResponse$lastUpdatedAt": "<p>The timestamp of the last update to the OpenSearch application.</p>",
+        "UpdateApplicationResponse$createdAt": "<p>The timestamp when the OpenSearch application was originally created.</p>",
+        "UpdateApplicationResponse$lastUpdatedAt": "<p>The timestamp when the OpenSearch application was last updated.</p>"
       }
     },
     "TotalNumberOfStages": {
@@ -3580,7 +3580,7 @@
     "VolumeType": {
       "base": "<p>The type of EBS volume that a domain uses. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/opensearch-createupdatedomains.html#opensearch-createdomain-configure-ebs\">Configuring EBS-based storage</a>.</p>",
       "refs": {
-        "DomainNodesStatus$StorageVolumeType": "<p>If the nodes has EBS storage, indicates if the volume type is GP2 or GP3. Only applicable for data nodes. </p>",
+        "DomainNodesStatus$StorageVolumeType": "<p>If the nodes has EBS storage, indicates if the volume type is gp2 or gp3. Only applicable for data nodes. </p>",
         "EBSOptions$VolumeType": "<p>Specifies the type of EBS volumes attached to data nodes.</p>"
       }
     },

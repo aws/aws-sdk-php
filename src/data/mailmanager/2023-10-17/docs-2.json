@@ -966,7 +966,8 @@
     "IngressIpOperator": {
       "base": null,
       "refs": {
-        "IngressIpv4Expression$Operator": "<p>The matching operator for an IP condition expression.</p>"
+        "IngressIpv4Expression$Operator": "<p>The matching operator for an IP condition expression.</p>",
+        "IngressIpv6Expression$Operator": "<p>The matching operator for an IPv6 condition expression.</p>"
       }
     },
     "IngressIpToEvaluate": {
@@ -985,6 +986,24 @@
       "base": "<p>The union type representing the allowed types for the left hand side of an IP condition.</p>",
       "refs": {
         "PolicyCondition$IpExpression": "<p>This represents an IP based condition matching on the incoming mail. It performs the operation configured in 'Operator' and evaluates the 'Protocol' object against the 'Value'.</p>"
+      }
+    },
+    "IngressIpv6Attribute": {
+      "base": null,
+      "refs": {
+        "IngressIpv6ToEvaluate$Attribute": "<p>An enum type representing the allowed attribute types for an IPv6 condition.</p>"
+      }
+    },
+    "IngressIpv6Expression": {
+      "base": "<p>The union type representing the allowed types for the left hand side of an IPv6 condition.</p>",
+      "refs": {
+        "PolicyCondition$Ipv6Expression": "<p>This represents an IPv6 based condition matching on the incoming mail. It performs the operation configured in 'Operator' and evaluates the 'Protocol' object against the 'Value'.</p>"
+      }
+    },
+    "IngressIpv6ToEvaluate": {
+      "base": "<p>The structure for an IPv6 based condition matching on the incoming mail.</p>",
+      "refs": {
+        "IngressIpv6Expression$Evaluate": "<p>The left hand side argument of an IPv6 condition expression.</p>"
       }
     },
     "IngressIsInAddressList": {
@@ -1140,6 +1159,12 @@
         "ListRelaysRequest$PageSize": "<p>The number of relays to be returned in one request.</p>"
       }
     },
+    "IpType": {
+      "base": null,
+      "refs": {
+        "PublicNetworkConfiguration$IpType": "<p>The IP address type for the public ingress point. Valid values are IPV4 and DUAL_STACK.</p>"
+      }
+    },
     "Ipv4Cidr": {
       "base": null,
       "refs": {
@@ -1150,6 +1175,18 @@
       "base": null,
       "refs": {
         "IngressIpv4Expression$Values": "<p>The right hand side argument of an IP condition expression.</p>"
+      }
+    },
+    "Ipv6Cidr": {
+      "base": null,
+      "refs": {
+        "Ipv6Cidrs$member": null
+      }
+    },
+    "Ipv6Cidrs": {
+      "base": null,
+      "refs": {
+        "IngressIpv6Expression$Values": "<p>The right hand side argument of an IPv6 condition expression.</p>"
       }
     },
     "JobId": {
@@ -1362,6 +1399,13 @@
         "DeliverToMailboxAction$MailboxArn": "<p>The Amazon Resource Name (ARN) of a WorkMail organization to deliver the email to.</p>"
       }
     },
+    "NetworkConfiguration": {
+      "base": "<p>The network type (IPv4-only, Dual-Stack, PrivateLink) of the ingress endpoint resource.</p>",
+      "refs": {
+        "CreateIngressPointRequest$NetworkConfiguration": "<p>Specifies the network configuration for the ingress point. This allows you to create an IPv4-only, Dual-Stack, or PrivateLink type of ingress point. If not specified, the default network type is IPv4-only. </p>",
+        "GetIngressPointResponse$NetworkConfiguration": "<p>The network configuration for the ingress point.</p>"
+      }
+    },
     "NoAuthentication": {
       "base": "<p>Explicitly indicate that the relay destination server does not require SMTP credential authentication.</p>",
       "refs": {
@@ -1444,6 +1488,18 @@
         "CreateAddressListImportJobResponse$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>",
         "GetAddressListImportJobResponse$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>",
         "ImportJob$PreSignedUrl": "<p>The pre-signed URL target for uploading the input file.</p>"
+      }
+    },
+    "PrivateNetworkConfiguration": {
+      "base": "<p>Specifies the network configuration for the private ingress point.</p>",
+      "refs": {
+        "NetworkConfiguration$PrivateNetworkConfiguration": "<p>Specifies the network configuration for the private ingress point.</p>"
+      }
+    },
+    "PublicNetworkConfiguration": {
+      "base": "<p>Specifies the network configuration for the public ingress point.</p>",
+      "refs": {
+        "NetworkConfiguration$PublicNetworkConfiguration": "<p>Specifies the network configuration for the public ingress point.</p>"
       }
     },
     "QBusinessApplicationId": {
@@ -2314,6 +2370,12 @@
     "ValidationException": {
       "base": "<p>The request validation has failed. For details, see the accompanying error message.</p>",
       "refs": {
+      }
+    },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "PrivateNetworkConfiguration$VpcEndpointId": "<p>The identifier of the VPC endpoint to associate with this private ingress point.</p>"
       }
     }
   }
