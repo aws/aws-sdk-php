@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.20 - 2025-04-03
 
 * `Aws\BedrockAgent` - Added optional "customMetadataField" for Amazon Aurora knowledge bases, allowing single-column metadata. Also added optional "textIndexName" for MongoDB Atlas knowledge bases, enabling hybrid search support.
 * `Aws\SESv2` - This release enables customers to provide attachments in the SESv2 SendEmail and SendBulkEmail APIs.
