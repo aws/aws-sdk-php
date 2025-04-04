@@ -911,7 +911,7 @@
       "type":"structure",
       "members":{
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "State":{"shape":"ArchiveState"},
         "StateReason":{"shape":"ArchiveStateReason"},
         "RetentionDays":{"shape":"RetentionDays"},
@@ -1284,10 +1284,11 @@
       ],
       "members":{
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
-        "RetentionDays":{"shape":"RetentionDays"}
+        "RetentionDays":{"shape":"RetentionDays"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "CreateArchiveResponse":{
@@ -1605,11 +1606,12 @@
       "members":{
         "ArchiveArn":{"shape":"ArchiveArn"},
         "ArchiveName":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
         "State":{"shape":"ArchiveState"},
         "StateReason":{"shape":"ArchiveStateReason"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "RetentionDays":{"shape":"RetentionDays"},
         "SizeBytes":{"shape":"Long"},
         "EventCount":{"shape":"Long"},
@@ -1750,7 +1752,7 @@
         "Description":{"shape":"ReplayDescription"},
         "State":{"shape":"ReplayState"},
         "StateReason":{"shape":"ReplayStateReason"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "Destination":{"shape":"ReplayDestination"},
         "EventStartTime":{"shape":"Timestamp"},
         "EventEndTime":{"shape":"Timestamp"},
@@ -1912,6 +1914,12 @@
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
+    },
+    "EventBusArn":{
+      "type":"string",
+      "max":1600,
+      "min":1,
+      "pattern":"^arn:aws([a-z]|\\-)*:events:([a-z]|\\d|\\-)*:([0-9]{12})?:.+\\/.+$"
     },
     "EventBusDescription":{
       "type":"string",
@@ -2104,7 +2112,8 @@
     },
     "KmsKeyIdentifier":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":"^[a-zA-Z0-9_\\-/:]*$"
     },
     "LaunchType":{
       "type":"string",
@@ -2149,7 +2158,7 @@
       "type":"structure",
       "members":{
         "NamePrefix":{"shape":"ArchiveName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"EventBusArn"},
         "State":{"shape":"ArchiveState"},
         "NextToken":{"shape":"NextToken"},
         "Limit":{"shape":"LimitMax100"}
@@ -2261,7 +2270,7 @@
       "members":{
         "NamePrefix":{"shape":"ReplayName"},
         "State":{"shape":"ReplayState"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "NextToken":{"shape":"NextToken"},
         "Limit":{"shape":"LimitMax100"}
       }
@@ -2745,7 +2754,7 @@
       "type":"structure",
       "members":{
         "ReplayName":{"shape":"ReplayName"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "State":{"shape":"ReplayState"},
         "StateReason":{"shape":"ReplayStateReason"},
         "EventStartTime":{"shape":"Timestamp"},
@@ -3046,7 +3055,7 @@
       "members":{
         "ReplayName":{"shape":"ReplayName"},
         "Description":{"shape":"ReplayDescription"},
-        "EventSourceArn":{"shape":"Arn"},
+        "EventSourceArn":{"shape":"ArchiveArn"},
         "EventStartTime":{"shape":"Timestamp"},
         "EventEndTime":{"shape":"Timestamp"},
         "Destination":{"shape":"ReplayDestination"}
@@ -3267,7 +3276,8 @@
         "ArchiveName":{"shape":"ArchiveName"},
         "Description":{"shape":"ArchiveDescription"},
         "EventPattern":{"shape":"EventPattern"},
-        "RetentionDays":{"shape":"RetentionDays"}
+        "RetentionDays":{"shape":"RetentionDays"},
+        "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"}
       }
     },
     "UpdateArchiveResponse":{

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Doc-only updates for Amazon EC2
+* `Aws\S3Control` - Updated max size of Prefixes parameter of Scope data type.
+* `Aws\DirectoryServiceData` - Doc only update - fixed broken links.
+* `Aws\EventBridge` - Amazon EventBridge adds support for customer-managed keys on Archives and validations for two fields: eventSourceArn and kmsKeyIdentifier.
+
 ## 3.342.20 - 2025-04-03
 
 * `Aws\BedrockAgent` - Added optional "customMetadataField" for Amazon Aurora knowledge bases, allowing single-column metadata. Also added optional "textIndexName" for MongoDB Atlas knowledge bases, enabling hybrid search support.
