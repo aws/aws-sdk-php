@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.21 - 2025-04-04
 
 * `Aws\EC2` - Doc-only updates for Amazon EC2
 * `Aws\S3Control` - Updated max size of Prefixes parameter of Scope data type.
