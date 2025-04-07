@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.22 - 2025-04-07
 
 * `Aws\Personalize` - Add support for eventsConfig for CreateSolution, UpdateSolution, DescribeSolution, DescribeSolutionVersion. Add support for GetSolutionMetrics to return weighted NDCG metrics when eventsConfig is enabled for the solution.
 * `Aws\Glue` - Add input validations for multiple Glue APIs
