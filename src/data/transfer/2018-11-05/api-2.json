@@ -847,6 +847,38 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "StartRemoteDelete":{
+      "name":"StartRemoteDelete",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartRemoteDeleteRequest"},
+      "output":{"shape":"StartRemoteDeleteResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "StartRemoteMove":{
+      "name":"StartRemoteMove",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartRemoteMoveRequest"},
+      "output":{"shape":"StartRemoteMoveResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceError"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "StartServer":{
       "name":"StartServer",
       "http":{
@@ -1594,6 +1626,12 @@
         "ServerId":{"shape":"ServerId"},
         "HostKeyId":{"shape":"HostKeyId"}
       }
+    },
+    "DeleteId":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[0-9a-zA-Z./-]+"
     },
     "DeleteProfileRequest":{
       "type":"structure",
@@ -2956,6 +2994,12 @@
       "min":1,
       "pattern":"[\\p{Print}\\p{Blank}]+"
     },
+    "MoveId":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[0-9a-zA-Z./-]+"
+    },
     "NextToken":{
       "type":"string",
       "max":6144,
@@ -3451,6 +3495,44 @@
       "required":["TransferId"],
       "members":{
         "TransferId":{"shape":"TransferId"}
+      }
+    },
+    "StartRemoteDeleteRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "DeletePath"
+      ],
+      "members":{
+        "ConnectorId":{"shape":"ConnectorId"},
+        "DeletePath":{"shape":"FilePath"}
+      }
+    },
+    "StartRemoteDeleteResponse":{
+      "type":"structure",
+      "required":["DeleteId"],
+      "members":{
+        "DeleteId":{"shape":"DeleteId"}
+      }
+    },
+    "StartRemoteMoveRequest":{
+      "type":"structure",
+      "required":[
+        "ConnectorId",
+        "SourcePath",
+        "TargetPath"
+      ],
+      "members":{
+        "ConnectorId":{"shape":"ConnectorId"},
+        "SourcePath":{"shape":"FilePath"},
+        "TargetPath":{"shape":"FilePath"}
+      }
+    },
+    "StartRemoteMoveResponse":{
+      "type":"structure",
+      "required":["MoveId"],
+      "members":{
+        "MoveId":{"shape":"MoveId"}
       }
     },
     "StartServerRequest":{

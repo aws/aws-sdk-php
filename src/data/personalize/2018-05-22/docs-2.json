@@ -18,7 +18,7 @@
     "CreateSolution": "<important> <p>By default, all new solutions use automatic training. With automatic training, you incur training costs while your solution is active. To avoid unnecessary costs, when you are finished you can <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_UpdateSolution.html\">update the solution</a> to turn off automatic training. For information about training costs, see <a href=\"https://aws.amazon.com/personalize/pricing/\">Amazon Personalize pricing</a>.</p> </important> <p>Creates the configuration for training a model (creating a solution version). This configuration includes the recipe to use for model training and optional training configuration, such as columns to use in training and feature transformation parameters. For more information about configuring a solution, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/customizing-solution-config.html\">Creating and configuring a solution</a>. </p> <p> By default, new solutions use automatic training to create solution versions every 7 days. You can change the training frequency. Automatic solution version creation starts within one hour after the solution is ACTIVE. If you manually create a solution version within the hour, the solution skips the first automatic training. For more information, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/solution-config-auto-training.html\">Configuring automatic training</a>.</p> <p> To turn off automatic training, set <code>performAutoTraining</code> to false. If you turn off automatic training, you must manually create a solution version by calling the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolutionVersion.html\">CreateSolutionVersion</a> operation.</p> <p>After training starts, you can get the solution version's Amazon Resource Name (ARN) with the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutionVersions.html\">ListSolutionVersions</a> API operation. To get its status, use the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html\">DescribeSolutionVersion</a>. </p> <p>After training completes you can evaluate model accuracy by calling <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_GetSolutionMetrics.html\">GetSolutionMetrics</a>. When you are satisfied with the solution version, you deploy it using <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateCampaign.html\">CreateCampaign</a>. The campaign provides recommendations to a client through the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetRecommendations.html\">GetRecommendations</a> API.</p> <note> <p>Amazon Personalize doesn't support configuring the <code>hpoObjective</code> for solution hyperparameter optimization at this time.</p> </note> <p> <b>Status</b> </p> <p>A solution can be in one of the following states:</p> <ul> <li> <p>CREATE PENDING &gt; CREATE IN_PROGRESS &gt; ACTIVE -or- CREATE FAILED</p> </li> <li> <p>DELETE PENDING &gt; DELETE IN_PROGRESS</p> </li> </ul> <p>To get the status of the solution, call <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolution.html\">DescribeSolution</a>. If you use manual training, the status must be ACTIVE before you call <code>CreateSolutionVersion</code>.</p> <p class=\"title\"> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_UpdateSolution.html\">UpdateSolution</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutions.html\">ListSolutions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolutionVersion.html\">CreateSolutionVersion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolution.html\">DescribeSolution</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DeleteSolution.html\">DeleteSolution</a> </p> </li> </ul> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutionVersions.html\">ListSolutionVersions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html\">DescribeSolutionVersion</a> </p> </li> </ul>",
     "CreateSolutionVersion": "<p>Trains or retrains an active solution in a Custom dataset group. A solution is created using the <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolution.html\">CreateSolution</a> operation and must be in the ACTIVE state before calling <code>CreateSolutionVersion</code>. A new version of the solution is created every time you call this operation.</p> <p> <b>Status</b> </p> <p>A solution version can be in one of the following states:</p> <ul> <li> <p>CREATE PENDING</p> </li> <li> <p>CREATE IN_PROGRESS</p> </li> <li> <p>ACTIVE</p> </li> <li> <p>CREATE FAILED</p> </li> <li> <p>CREATE STOPPING</p> </li> <li> <p>CREATE STOPPED</p> </li> </ul> <p>To get the status of the version, call <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html\">DescribeSolutionVersion</a>. Wait until the status shows as ACTIVE before calling <code>CreateCampaign</code>.</p> <p>If the status shows as CREATE FAILED, the response includes a <code>failureReason</code> key, which describes why the job failed.</p> <p class=\"title\"> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutionVersions.html\">ListSolutionVersions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html\">DescribeSolutionVersion</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutions.html\">ListSolutions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolution.html\">CreateSolution</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolution.html\">DescribeSolution</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_DeleteSolution.html\">DeleteSolution</a> </p> </li> </ul>",
     "DeleteCampaign": "<p>Removes a campaign by deleting the solution deployment. The solution that the campaign is based on is not deleted and can be redeployed when needed. A deleted campaign can no longer be specified in a <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetRecommendations.html\">GetRecommendations</a> request. For information on creating campaigns, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateCampaign.html\">CreateCampaign</a>.</p>",
-    "DeleteDataset": "<p>Deletes a dataset. You can't delete a dataset if an associated <code>DatasetImportJob</code> or <code>SolutionVersion</code> is in the CREATE PENDING or IN PROGRESS state. For more information on datasets, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateDataset.html\">CreateDataset</a>.</p>",
+    "DeleteDataset": "<p>Deletes a dataset. You can't delete a dataset if an associated <code>DatasetImportJob</code> or <code>SolutionVersion</code> is in the CREATE PENDING or IN PROGRESS state. For more information about deleting datasets, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/delete-dataset.html\">Deleting a dataset</a>. </p>",
     "DeleteDatasetGroup": "<p>Deletes a dataset group. Before you delete a dataset group, you must delete the following:</p> <ul> <li> <p>All associated event trackers.</p> </li> <li> <p>All associated solutions.</p> </li> <li> <p>All datasets in the dataset group.</p> </li> </ul>",
     "DeleteEventTracker": "<p>Deletes the event tracker. Does not delete the dataset from the dataset group. For more information on event trackers, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/API_CreateEventTracker.html\">CreateEventTracker</a>.</p>",
     "DeleteFilter": "<p>Deletes a filter.</p>",
@@ -1153,6 +1153,18 @@
         "TooManyTagsException$message": null
       }
     },
+    "EventParameters": {
+      "base": "<p>Describes the parameters of events, which are used in solution creation.</p>",
+      "refs": {
+        "EventParametersList$member": null
+      }
+    },
+    "EventParametersList": {
+      "base": null,
+      "refs": {
+        "EventsConfig$eventParametersList": "<p>A list of event parameters, which includes event types and their event value thresholds and weights.</p>"
+      }
+    },
     "EventTracker": {
       "base": "<p>Provides information about an event tracker.</p>",
       "refs": {
@@ -1175,15 +1187,35 @@
       "base": null,
       "refs": {
         "CreateSolutionRequest$eventType": "<p>When your have multiple event types (using an <code>EVENT_TYPE</code> schema field), this parameter specifies which event type (for example, 'click' or 'like') is used for training the model.</p> <p>If you do not provide an <code>eventType</code>, Amazon Personalize will use all interactions for training with equal weight regardless of type.</p>",
+        "EventParameters$eventType": "<p>The name of the event type to be considered for solution creation.</p>",
         "MetricAttribute$eventType": "<p>The metric's event type.</p>",
         "Solution$eventType": "<p>The event type (for example, 'click' or 'like') that is used for training the model. If no <code>eventType</code> is provided, Amazon Personalize uses all interactions for training with equal weight regardless of type.</p>",
         "SolutionVersion$eventType": "<p>The event type (for example, 'click' or 'like') that is used for training the model.</p>"
+      }
+    },
+    "EventTypeThresholdValue": {
+      "base": null,
+      "refs": {
+        "EventParameters$eventValueThreshold": "<p>The threshold of the event type. Only events with a value greater or equal to this threshold will be considered for solution creation.</p>"
+      }
+    },
+    "EventTypeWeight": {
+      "base": null,
+      "refs": {
+        "EventParameters$weight": "<p>The weight of the event type. A higher weight means higher importance of the event type for the created solution.</p>"
       }
     },
     "EventValueThreshold": {
       "base": null,
       "refs": {
         "SolutionConfig$eventValueThreshold": "<p>Only events with a value greater than or equal to this threshold are used for training a model.</p>"
+      }
+    },
+    "EventsConfig": {
+      "base": "<p>Describes the configuration of events, which are used in solution creation.</p>",
+      "refs": {
+        "SolutionConfig$eventsConfig": "<p>Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation.</p>",
+        "SolutionUpdateConfig$eventsConfig": "<p>Describes the configuration of an event, which includes a list of event parameters. You can specify up to 10 event parameters. Events are used in solution creation.</p>"
       }
     },
     "ExcludedDatasetColumns": {

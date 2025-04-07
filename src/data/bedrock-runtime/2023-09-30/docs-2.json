@@ -123,6 +123,18 @@
         "InvokeModelWithResponseStreamRequest$body": "<p>The prompt and inference parameters in the format specified in the <code>contentType</code> in the header. You must provide the body in JSON format. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html\">Run inference</a> in the Bedrock User Guide.</p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "GuardrailContentFilter$detected": "<p>Indicates whether content that breaches the guardrail configuration is detected.</p>",
+        "GuardrailContextualGroundingFilter$detected": "<p>Indicates whether content that fails the contextual grounding evaluation (grounding or relevance score less than the corresponding threshold) was detected.</p>",
+        "GuardrailCustomWord$detected": "<p>Indicates whether custom word content that breaches the guardrail configuration is detected.</p>",
+        "GuardrailManagedWord$detected": "<p>Indicates whether managed word content that breaches the guardrail configuration is detected.</p>",
+        "GuardrailPiiEntityFilter$detected": "<p>Indicates whether personally identifiable information (PII) that breaches the guardrail configuration is detected.</p>",
+        "GuardrailRegexFilter$detected": "<p>Indicates whether custom regex entities that breach the guardrail configuration are detected.</p>",
+        "GuardrailTopic$detected": "<p>Indicates whether topic content that breaches the guardrail configuration is detected.</p>"
+      }
+    },
     "CachePointBlock": {
       "base": "<p>Defines a section of content to be cached for reuse in subsequent API calls.</p>",
       "refs": {
@@ -649,6 +661,12 @@
       "base": null,
       "refs": {
         "ApplyGuardrailResponse$outputs": "<p>The output details in the response from the guardrail.</p>"
+      }
+    },
+    "GuardrailOutputScope": {
+      "base": null,
+      "refs": {
+        "ApplyGuardrailRequest$outputScope": "<p>Specifies the scope of the output that you get in the response. Set to <code>FULL</code> to return the entire output, including any detected and non-detected entries in the response for enhanced debugging.</p> <p>Note that the full output scope doesn't apply to word filters or regex in sensitive information filters. It does apply to all other filtering policies, including sensitive information with filters that can detect personally identifiable information (PII).</p>"
       }
     },
     "GuardrailOutputText": {
@@ -1258,6 +1276,7 @@
     "String": {
       "base": null,
       "refs": {
+        "ApplyGuardrailResponse$actionReason": "<p>The reason for the action taken when harmful content is detected.</p>",
         "ContentBlock$text": "<p>Text to include in the message.</p>",
         "ContentBlockDelta$text": "<p>The content text.</p>",
         "GuardrailAssessmentListMap$key": null,
@@ -1271,6 +1290,7 @@
         "GuardrailRegexFilter$regex": "<p>The regex query.</p>",
         "GuardrailTextBlock$text": "<p>The input text details to be evaluated by the guardrail.</p>",
         "GuardrailTopic$name": "<p>The name for the guardrail.</p>",
+        "GuardrailTraceAssessment$actionReason": "<p>Provides the reason for the action taken when harmful content is detected.</p>",
         "PromptVariableMap$key": null,
         "PromptVariableValues$text": "<p>The text value that the variable maps to.</p>",
         "ReasoningContentBlockDelta$text": "<p>The reasoning that the model used to return the output.</p>",

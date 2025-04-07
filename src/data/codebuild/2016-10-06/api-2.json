@@ -50,6 +50,18 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "BatchGetCommandExecutions":{
+      "name":"BatchGetCommandExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetCommandExecutionsInput"},
+      "output":{"shape":"BatchGetCommandExecutionsOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
     "BatchGetFleets":{
       "name":"BatchGetFleets",
       "http":{
@@ -94,6 +106,18 @@
       },
       "input":{"shape":"BatchGetReportsInput"},
       "output":{"shape":"BatchGetReportsOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "BatchGetSandboxes":{
+      "name":"BatchGetSandboxes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetSandboxesInput"},
+      "output":{"shape":"BatchGetSandboxesOutput"},
       "errors":[
         {"shape":"InvalidInputException"}
       ]
@@ -382,6 +406,19 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListCommandExecutionsForSandbox":{
+      "name":"ListCommandExecutionsForSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListCommandExecutionsForSandboxInput"},
+      "output":{"shape":"ListCommandExecutionsForSandboxOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListCuratedEnvironmentImages":{
       "name":"ListCuratedEnvironmentImages",
       "http":{
@@ -447,6 +484,31 @@
       },
       "input":{"shape":"ListReportsForReportGroupInput"},
       "output":{"shape":"ListReportsForReportGroupOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListSandboxes":{
+      "name":"ListSandboxes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSandboxesInput"},
+      "output":{"shape":"ListSandboxesOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"}
+      ]
+    },
+    "ListSandboxesForProject":{
+      "name":"ListSandboxesForProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSandboxesForProjectInput"},
+      "output":{"shape":"ListSandboxesForProjectOutput"},
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
@@ -555,6 +617,46 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "StartCommandExecution":{
+      "name":"StartCommandExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartCommandExecutionInput"},
+      "output":{"shape":"StartCommandExecutionOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StartSandbox":{
+      "name":"StartSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSandboxInput"},
+      "output":{"shape":"StartSandboxOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccountSuspendedException"}
+      ]
+    },
+    "StartSandboxConnection":{
+      "name":"StartSandboxConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSandboxConnectionInput"},
+      "output":{"shape":"StartSandboxConnectionOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "StopBuild":{
       "name":"StopBuild",
       "http":{
@@ -576,6 +678,19 @@
       },
       "input":{"shape":"StopBuildBatchInput"},
       "output":{"shape":"StopBuildBatchOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "StopSandbox":{
+      "name":"StopSandbox",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopSandboxInput"},
+      "output":{"shape":"StopSandboxOutput"},
       "errors":[
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"}
@@ -651,6 +766,12 @@
   },
   "shapes":{
     "AccountLimitExceededException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "AccountSuspendedException":{
       "type":"structure",
       "members":{
       },
@@ -739,6 +860,24 @@
         "buildsNotFound":{"shape":"BuildIds"}
       }
     },
+    "BatchGetCommandExecutionsInput":{
+      "type":"structure",
+      "required":[
+        "sandboxId",
+        "commandExecutionIds"
+      ],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "commandExecutionIds":{"shape":"CommandExecutionIds"}
+      }
+    },
+    "BatchGetCommandExecutionsOutput":{
+      "type":"structure",
+      "members":{
+        "commandExecutions":{"shape":"CommandExecutions"},
+        "commandExecutionsNotFound":{"shape":"CommandExecutionIds"}
+      }
+    },
     "BatchGetFleetsInput":{
       "type":"structure",
       "required":["names"],
@@ -793,6 +932,20 @@
       "members":{
         "reports":{"shape":"Reports"},
         "reportsNotFound":{"shape":"ReportArns"}
+      }
+    },
+    "BatchGetSandboxesInput":{
+      "type":"structure",
+      "required":["ids"],
+      "members":{
+        "ids":{"shape":"SandboxIds"}
+      }
+    },
+    "BatchGetSandboxesOutput":{
+      "type":"structure",
+      "members":{
+        "sandboxes":{"shape":"Sandboxes"},
+        "sandboxesNotFound":{"shape":"SandboxIds"}
       }
     },
     "BatchReportModeType":{
@@ -1106,6 +1259,38 @@
     "CodeCoverages":{
       "type":"list",
       "member":{"shape":"CodeCoverage"}
+    },
+    "CommandExecution":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "sandboxId":{"shape":"NonEmptyString"},
+        "submitTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "status":{"shape":"NonEmptyString"},
+        "command":{"shape":"SensitiveNonEmptyString"},
+        "type":{"shape":"CommandType"},
+        "exitCode":{"shape":"NonEmptyString"},
+        "standardOutputContent":{"shape":"SensitiveNonEmptyString"},
+        "standardErrContent":{"shape":"SensitiveNonEmptyString"},
+        "logs":{"shape":"LogsLocation"},
+        "sandboxArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "CommandExecutionIds":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"},
+      "max":100,
+      "min":1
+    },
+    "CommandExecutions":{
+      "type":"list",
+      "member":{"shape":"CommandExecution"}
+    },
+    "CommandType":{
+      "type":"string",
+      "enum":["SHELL"]
     },
     "ComputeConfiguration":{
       "type":"structure",
@@ -1824,6 +2009,23 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListCommandExecutionsForSandboxInput":{
+      "type":"structure",
+      "required":["sandboxId"],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"SensitiveString"}
+      }
+    },
+    "ListCommandExecutionsForSandboxOutput":{
+      "type":"structure",
+      "members":{
+        "commandExecutions":{"shape":"CommandExecutions"},
+        "nextToken":{"shape":"String"}
+      }
+    },
     "ListCuratedEnvironmentImagesInput":{
       "type":"structure",
       "members":{
@@ -1914,6 +2116,38 @@
       "members":{
         "nextToken":{"shape":"String"},
         "reports":{"shape":"ReportArns"}
+      }
+    },
+    "ListSandboxesForProjectInput":{
+      "type":"structure",
+      "required":["projectName"],
+      "members":{
+        "projectName":{"shape":"NonEmptyString"},
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"SensitiveString"}
+      }
+    },
+    "ListSandboxesForProjectOutput":{
+      "type":"structure",
+      "members":{
+        "ids":{"shape":"SandboxIds"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListSandboxesInput":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"PageSize"},
+        "sortOrder":{"shape":"SortOrderType"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListSandboxesOutput":{
+      "type":"structure",
+      "members":{
+        "ids":{"shape":"SandboxIds"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListSharedProjectsInput":{
@@ -2529,6 +2763,76 @@
         "encryptionDisabled":{"shape":"WrapperBoolean"}
       }
     },
+    "SSMSession":{
+      "type":"structure",
+      "members":{
+        "sessionId":{"shape":"String"},
+        "tokenValue":{"shape":"String"},
+        "streamUrl":{"shape":"String"}
+      }
+    },
+    "Sandbox":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "arn":{"shape":"NonEmptyString"},
+        "projectName":{"shape":"NonEmptyString"},
+        "requestTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "status":{"shape":"String"},
+        "source":{"shape":"ProjectSource"},
+        "sourceVersion":{"shape":"NonEmptyString"},
+        "secondarySources":{"shape":"ProjectSources"},
+        "secondarySourceVersions":{"shape":"ProjectSecondarySourceVersions"},
+        "environment":{"shape":"ProjectEnvironment"},
+        "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
+        "timeoutInMinutes":{"shape":"WrapperInt"},
+        "queuedTimeoutInMinutes":{"shape":"WrapperInt"},
+        "vpcConfig":{"shape":"VpcConfig"},
+        "logConfig":{"shape":"LogsConfig"},
+        "encryptionKey":{"shape":"NonEmptyString"},
+        "serviceRole":{"shape":"NonEmptyString"},
+        "currentSession":{"shape":"SandboxSession"}
+      }
+    },
+    "SandboxIds":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"}
+    },
+    "SandboxSession":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"NonEmptyString"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "currentPhase":{"shape":"String"},
+        "phases":{"shape":"SandboxSessionPhases"},
+        "resolvedSourceVersion":{"shape":"NonEmptyString"},
+        "logs":{"shape":"LogsLocation"},
+        "networkInterface":{"shape":"NetworkInterface"}
+      }
+    },
+    "SandboxSessionPhase":{
+      "type":"structure",
+      "members":{
+        "phaseType":{"shape":"String"},
+        "phaseStatus":{"shape":"StatusType"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "durationInSeconds":{"shape":"WrapperLong"},
+        "contexts":{"shape":"PhaseContexts"}
+      }
+    },
+    "SandboxSessionPhases":{
+      "type":"list",
+      "member":{"shape":"SandboxSessionPhase"}
+    },
+    "Sandboxes":{
+      "type":"list",
+      "member":{"shape":"Sandbox"}
+    },
     "ScalingConfigurationInput":{
       "type":"structure",
       "members":{
@@ -2727,6 +3031,50 @@
         "build":{"shape":"Build"}
       }
     },
+    "StartCommandExecutionInput":{
+      "type":"structure",
+      "required":[
+        "sandboxId",
+        "command"
+      ],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"},
+        "command":{"shape":"SensitiveNonEmptyString"},
+        "type":{"shape":"CommandType"}
+      }
+    },
+    "StartCommandExecutionOutput":{
+      "type":"structure",
+      "members":{
+        "commandExecution":{"shape":"CommandExecution"}
+      }
+    },
+    "StartSandboxConnectionInput":{
+      "type":"structure",
+      "required":["sandboxId"],
+      "members":{
+        "sandboxId":{"shape":"NonEmptyString"}
+      }
+    },
+    "StartSandboxConnectionOutput":{
+      "type":"structure",
+      "members":{
+        "ssmSession":{"shape":"SSMSession"}
+      }
+    },
+    "StartSandboxInput":{
+      "type":"structure",
+      "members":{
+        "projectName":{"shape":"NonEmptyString"},
+        "idempotencyToken":{"shape":"SensitiveString"}
+      }
+    },
+    "StartSandboxOutput":{
+      "type":"structure",
+      "members":{
+        "sandbox":{"shape":"Sandbox"}
+      }
+    },
     "StatusType":{
       "type":"string",
       "enum":[
@@ -2762,6 +3110,19 @@
       "type":"structure",
       "members":{
         "build":{"shape":"Build"}
+      }
+    },
+    "StopSandboxInput":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"NonEmptyString"}
+      }
+    },
+    "StopSandboxOutput":{
+      "type":"structure",
+      "members":{
+        "sandbox":{"shape":"Sandbox"}
       }
     },
     "String":{"type":"string"},

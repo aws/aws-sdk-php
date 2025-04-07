@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Personalize` - Add support for eventsConfig for CreateSolution, UpdateSolution, DescribeSolution, DescribeSolutionVersion. Add support for GetSolutionMetrics to return weighted NDCG metrics when eventsConfig is enabled for the solution.
+* `Aws\Glue` - Add input validations for multiple Glue APIs
+* `Aws\Transfer` - This launch enables customers to manage contents of their remote directories, by deleting old files or moving files to archive folders in remote servers once they have been retrieved. Customers will be able to automate the process using event-driven architecture.
+* `Aws\Bedrock` - New options for how to handle harmful content detected by Amazon Bedrock Guardrails.
+* `Aws\CodeBuild` - AWS CodeBuild now offers an enhanced debugging experience.
+* `Aws\BedrockRuntime` - New options for how to handle harmful content detected by Amazon Bedrock Guardrails.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports SDI inputs to MediaLive Anywhere Channels in workflows that use AWS SDKs.
+
 ## 3.342.21 - 2025-04-04
 
 * `Aws\EC2` - Doc-only updates for Amazon EC2

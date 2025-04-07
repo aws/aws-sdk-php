@@ -5,10 +5,12 @@
     "BatchDeleteBuilds": "<p>Deletes one or more builds.</p>",
     "BatchGetBuildBatches": "<p>Retrieves information about one or more batch builds.</p>",
     "BatchGetBuilds": "<p>Gets information about one or more builds.</p>",
+    "BatchGetCommandExecutions": "<p>Gets information about the command executions.</p>",
     "BatchGetFleets": "<p>Gets information about one or more compute fleets.</p>",
     "BatchGetProjects": "<p>Gets information about one or more build projects.</p>",
     "BatchGetReportGroups": "<p> Returns an array of report groups. </p>",
     "BatchGetReports": "<p> Returns an array of reports. </p>",
+    "BatchGetSandboxes": "<p>Gets information about the sandbox status.</p>",
     "CreateFleet": "<p>Creates a compute fleet.</p>",
     "CreateProject": "<p>Creates a build project.</p>",
     "CreateReportGroup": "<p> Creates a report group. A report group contains a collection of reports. </p>",
@@ -31,12 +33,15 @@
     "ListBuildBatchesForProject": "<p>Retrieves the identifiers of the build batches for a specific project.</p>",
     "ListBuilds": "<p>Gets a list of build IDs, with each build ID representing a single build.</p>",
     "ListBuildsForProject": "<p>Gets a list of build identifiers for the specified build project, with each build identifier representing a single build.</p>",
+    "ListCommandExecutionsForSandbox": "<p>Gets a list of command executions for a sandbox.</p>",
     "ListCuratedEnvironmentImages": "<p>Gets information about Docker images that are managed by CodeBuild.</p>",
     "ListFleets": "<p>Gets a list of compute fleet names with each compute fleet name representing a single compute fleet.</p>",
     "ListProjects": "<p>Gets a list of build project names, with each build project name representing a single build project.</p>",
     "ListReportGroups": "<p> Gets a list ARNs for the report groups in the current Amazon Web Services account. </p>",
     "ListReports": "<p> Returns a list of ARNs for the reports in the current Amazon Web Services account. </p>",
     "ListReportsForReportGroup": "<p> Returns a list of ARNs for the reports that belong to a <code>ReportGroup</code>. </p>",
+    "ListSandboxes": "<p>Gets a list of sandboxes.</p>",
+    "ListSandboxesForProject": "<p>Gets a list of sandboxes for a given project.</p>",
     "ListSharedProjects": "<p> Gets a list of projects that are shared with other Amazon Web Services accounts or users. </p>",
     "ListSharedReportGroups": "<p> Gets a list of report groups that are shared with other Amazon Web Services accounts or users. </p>",
     "ListSourceCredentials": "<p> Returns a list of <code>SourceCredentialsInfo</code> objects. </p>",
@@ -45,8 +50,12 @@
     "RetryBuildBatch": "<p>Restarts a failed batch build. Only batch builds that have failed can be retried.</p>",
     "StartBuild": "<p>Starts running a build with the settings defined in the project. These setting include: how to run a build, where to get the source code, which build environment to use, which build commands to run, and where to store the build output.</p> <p>You can also start a build run by overriding some of the build settings in the project. The overrides only apply for that specific start build request. The settings in the project are unaltered.</p>",
     "StartBuildBatch": "<p>Starts a batch build for a project.</p>",
+    "StartCommandExecution": "<p>Starts a command execution.</p>",
+    "StartSandbox": "<p>Starts a sandbox.</p>",
+    "StartSandboxConnection": "<p>Starts a sandbox connection.</p>",
     "StopBuild": "<p>Attempts to stop running a build.</p>",
     "StopBuildBatch": "<p>Stops a running batch build.</p>",
+    "StopSandbox": "<p>Stops a sandbox.</p>",
     "UpdateFleet": "<p>Updates a compute fleet.</p>",
     "UpdateProject": "<p>Changes the settings of a build project.</p>",
     "UpdateProjectVisibility": "<p>Changes the public visibility for a project. The project's build results, logs, and artifacts are available to the general public. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/public-builds.html\">Public build projects</a> in the <i>CodeBuild User Guide</i>.</p> <important> <p>The following should be kept in mind when making your projects public:</p> <ul> <li> <p>All of a project's build results, logs, and artifacts, including builds that were run when the project was private, are available to the general public.</p> </li> <li> <p>All build logs and artifacts are available to the public. Environment variables, source code, and other sensitive information may have been output to the build logs and artifacts. You must be careful about what information is output to the build logs. Some best practice are:</p> <ul> <li> <p>Do not store sensitive values in environment variables. We recommend that you use an Amazon EC2 Systems Manager Parameter Store or Secrets Manager to store sensitive values.</p> </li> <li> <p>Follow <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/webhooks.html#webhook-best-practices\">Best practices for using webhooks</a> in the <i>CodeBuild User Guide</i> to limit which entities can trigger a build, and do not store the buildspec in the project itself, to ensure that your webhooks are as secure as possible.</p> </li> </ul> </li> <li> <p>A malicious user can use public builds to distribute malicious artifacts. We recommend that you review all pull requests to verify that the pull request is a legitimate change. We also recommend that you validate any artifacts with their checksums to make sure that the correct artifacts are being downloaded.</p> </li> </ul> </important>",
@@ -56,6 +65,11 @@
   "shapes": {
     "AccountLimitExceededException": {
       "base": "<p>An Amazon Web Services service limit was exceeded for the calling Amazon Web Services account.</p>",
+      "refs": {
+      }
+    },
+    "AccountSuspendedException": {
+      "base": "<p>The CodeBuild access has been suspended for the calling Amazon Web Services account.</p>",
       "refs": {
       }
     },
@@ -121,6 +135,16 @@
       "refs": {
       }
     },
+    "BatchGetCommandExecutionsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetCommandExecutionsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "BatchGetFleetsInput": {
       "base": null,
       "refs": {
@@ -157,6 +181,16 @@
       }
     },
     "BatchGetReportsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetSandboxesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetSandboxesOutput": {
       "base": null,
       "refs": {
       }
@@ -398,6 +432,34 @@
       "base": null,
       "refs": {
         "DescribeCodeCoveragesOutput$codeCoverages": "<p>An array of <code>CodeCoverage</code> objects that contain the results.</p>"
+      }
+    },
+    "CommandExecution": {
+      "base": "<p>Contains command execution information.</p>",
+      "refs": {
+        "CommandExecutions$member": null,
+        "StartCommandExecutionOutput$commandExecution": "<p>Information about the requested command executions.</p>"
+      }
+    },
+    "CommandExecutionIds": {
+      "base": null,
+      "refs": {
+        "BatchGetCommandExecutionsInput$commandExecutionIds": "<p>A comma separated list of <code>commandExecutionIds</code>.</p>",
+        "BatchGetCommandExecutionsOutput$commandExecutionsNotFound": "<p>The IDs of command executions for which information could not be found.</p>"
+      }
+    },
+    "CommandExecutions": {
+      "base": null,
+      "refs": {
+        "BatchGetCommandExecutionsOutput$commandExecutions": "<p>Information about the requested command executions.</p>",
+        "ListCommandExecutionsForSandboxOutput$commandExecutions": "<p>Information about the requested command executions.</p>"
+      }
+    },
+    "CommandType": {
+      "base": null,
+      "refs": {
+        "CommandExecution$type": "<p>The command type.</p>",
+        "StartCommandExecutionInput$type": "<p>The command type.</p>"
       }
     },
     "ComputeConfiguration": {
@@ -942,6 +1004,16 @@
       "refs": {
       }
     },
+    "ListCommandExecutionsForSandboxInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCommandExecutionsForSandboxOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListCuratedEnvironmentImagesInput": {
       "base": null,
       "refs": {
@@ -1002,6 +1074,26 @@
       "refs": {
       }
     },
+    "ListSandboxesForProjectInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSandboxesForProjectOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSandboxesInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSandboxesOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListSharedProjectsInput": {
       "base": null,
       "refs": {
@@ -1038,6 +1130,7 @@
         "BuildBatch$logConfig": null,
         "CreateProjectInput$logsConfig": "<p>Information about logs for the build project. These can be logs in CloudWatch Logs, logs uploaded to a specified S3 bucket, or both. </p>",
         "Project$logsConfig": "<p>Information about logs for the build project. A project can create logs in CloudWatch Logs, an S3 bucket, or both. </p>",
+        "Sandbox$logConfig": null,
         "StartBuildBatchInput$logsConfigOverride": "<p>A <code>LogsConfig</code> object that override the log settings defined in the batch build project.</p>",
         "StartBuildInput$logsConfigOverride": "<p> Log settings for this build that override the log settings defined in the build project. </p>",
         "UpdateProjectInput$logsConfig": "<p> Information about logs for the build project. A project can create logs in CloudWatch Logs, logs in an S3 bucket, or both. </p>"
@@ -1053,7 +1146,9 @@
     "LogsLocation": {
       "base": "<p>Information about build logs in CloudWatch Logs.</p>",
       "refs": {
-        "Build$logs": "<p>Information about the build's logs in CloudWatch Logs.</p>"
+        "Build$logs": "<p>Information about the build's logs in CloudWatch Logs.</p>",
+        "CommandExecution$logs": null,
+        "SandboxSession$logs": null
       }
     },
     "MachineType": {
@@ -1065,12 +1160,14 @@
     "NetworkInterface": {
       "base": "<p>Describes a network interface.</p>",
       "refs": {
-        "Build$networkInterface": "<p>Describes a network interface.</p>"
+        "Build$networkInterface": "<p>Describes a network interface.</p>",
+        "SandboxSession$networkInterface": null
       }
     },
     "NonEmptyString": {
       "base": null,
       "refs": {
+        "BatchGetCommandExecutionsInput$sandboxId": "<p>A <code>sandboxId</code> or <code>sandboxArn</code>.</p>",
         "Build$id": "<p>The unique ID for the build.</p>",
         "Build$arn": "<p>The Amazon Resource Name (ARN) of the build.</p>",
         "Build$sourceVersion": "<p>Any version identifier for the version of the source code to be built. If <code>sourceVersion</code> is specified at the project level, then this <code>sourceVersion</code> (at the build level) takes precedence. </p> <p> For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/sample-source-version.html\">Source Version Sample with CodeBuild</a> in the <i>CodeBuild User Guide</i>. </p>",
@@ -1091,6 +1188,12 @@
         "CodeCoverage$id": "<p>The identifier of the code coverage report.</p>",
         "CodeCoverage$reportARN": "<p>The ARN of the report.</p>",
         "CodeCoverage$filePath": "<p>The path of the test report file.</p>",
+        "CommandExecution$id": "<p>The ID of the command execution.</p>",
+        "CommandExecution$sandboxId": "<p>A <code>sandboxId</code>.</p>",
+        "CommandExecution$status": "<p>The status of the command execution.</p>",
+        "CommandExecution$exitCode": "<p>The exit code to return upon completion.</p>",
+        "CommandExecution$sandboxArn": "<p>A <code>sandboxArn</code>.</p>",
+        "CommandExecutionIds$member": null,
         "ComputeTypesAllowed$member": null,
         "CreateFleetInput$imageId": "<p>The Amazon Machine Image (AMI) of the compute fleet.</p>",
         "CreateFleetInput$fleetServiceRole": "<p>The service role associated with the compute fleet. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html\"> Allow a user to add a permission policy for a fleet service role</a> in the <i>CodeBuild User Guide</i>.</p>",
@@ -1124,7 +1227,9 @@
         "InvalidateProjectCacheInput$projectName": "<p>The name of the CodeBuild build project that the cache is reset for.</p>",
         "ListBuildBatchesForProjectInput$projectName": "<p>The name of the project.</p>",
         "ListBuildsForProjectInput$projectName": "<p>The name of the CodeBuild project.</p>",
+        "ListCommandExecutionsForSandboxInput$sandboxId": "<p>A <code>sandboxId</code> or <code>sandboxArn</code>.</p>",
         "ListProjectsInput$nextToken": "<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>",
+        "ListSandboxesForProjectInput$projectName": "<p>The CodeBuild project name.</p>",
         "ListSharedProjectsInput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
         "NetworkInterface$subnetId": "<p>The ID of the subnet.</p>",
         "NetworkInterface$networkInterfaceId": "<p>The ID of the network interface.</p>",
@@ -1150,6 +1255,15 @@
         "RetryBuildInput$id": "<p>Specifies the identifier of the build to restart.</p>",
         "S3ReportExportConfig$bucket": "<p> The name of the S3 bucket where the raw data of a report are exported. </p>",
         "S3ReportExportConfig$encryptionKey": "<p> The encryption key for the report's encrypted raw data. </p>",
+        "Sandbox$id": "<p>The ID of the sandbox.</p>",
+        "Sandbox$arn": "<p>The ARN of the sandbox.</p>",
+        "Sandbox$projectName": "<p>The CodeBuild project name.</p>",
+        "Sandbox$sourceVersion": "<p>Any version identifier for the version of the sandbox to be built.</p>",
+        "Sandbox$encryptionKey": "<p>The Key Management Service customer master key (CMK) to be used for encrypting the sandbox output artifacts.</p>",
+        "Sandbox$serviceRole": "<p>The name of a service role used for this sandbox.</p>",
+        "SandboxIds$member": null,
+        "SandboxSession$id": "<p>The ID of the sandbox session.</p>",
+        "SandboxSession$resolvedSourceVersion": "<p>An identifier for the version of this sandbox's source code.</p>",
         "SecurityGroupIds$member": null,
         "SourceCredentialsInfo$arn": "<p> The Amazon Resource Name (ARN) of the token. </p>",
         "StartBuildBatchInput$projectName": "<p>The name of the project.</p>",
@@ -1160,8 +1274,12 @@
         "StartBuildInput$imageOverride": "<p>The name of an image for this build that overrides the one specified in the build project.</p>",
         "StartBuildInput$serviceRoleOverride": "<p>The name of a service role for this build that overrides the one specified in the build project.</p>",
         "StartBuildInput$encryptionKeyOverride": "<p>The Key Management Service customer master key (CMK) that overrides the one specified in the build project. The CMK key encrypts the build output artifacts.</p> <note> <p> You can use a cross-account KMS key to encrypt the build output artifacts if your service role has permission to that key. </p> </note> <p>You can specify either the Amazon Resource Name (ARN) of the CMK or, if available, the CMK's alias (using the format <code>alias/&lt;alias-name&gt;</code>).</p>",
+        "StartCommandExecutionInput$sandboxId": "<p>A <code>sandboxId</code> or <code>sandboxArn</code>.</p>",
+        "StartSandboxConnectionInput$sandboxId": "<p>A <code>sandboxId</code> or <code>sandboxArn</code>.</p>",
+        "StartSandboxInput$projectName": "<p>The CodeBuild project name.</p>",
         "StopBuildBatchInput$id": "<p>The identifier of the batch build to stop.</p>",
         "StopBuildInput$id": "<p>The ID of the build.</p>",
+        "StopSandboxInput$id": "<p>Information about the requested sandbox ID.</p>",
         "Subnets$member": null,
         "TestCase$reportArn": "<p> The ARN of the report to which the test case belongs. </p>",
         "UpdateFleetInput$arn": "<p>The ARN of the compute fleet.</p>",
@@ -1207,10 +1325,13 @@
         "GetReportGroupTrendInput$numOfReports": "<p>The number of reports to analyze. This operation always retrieves the most recent reports.</p> <p>If this parameter is omitted, the most recent 100 reports are analyzed.</p>",
         "ListBuildBatchesForProjectInput$maxResults": "<p>The maximum number of results to return.</p>",
         "ListBuildBatchesInput$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListCommandExecutionsForSandboxInput$maxResults": "<p>The maximum number of sandbox records to be retrieved.</p>",
         "ListFleetsInput$maxResults": "<p>The maximum number of paginated compute fleets returned per response. Use <code>nextToken</code> to iterate pages in the list of returned compute fleets.</p>",
         "ListReportGroupsInput$maxResults": "<p> The maximum number of paginated report groups returned per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>ReportGroup</code> objects. The default value is 100. </p>",
         "ListReportsForReportGroupInput$maxResults": "<p> The maximum number of paginated reports in this report group returned per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>Report</code> objects. The default value is 100. </p>",
         "ListReportsInput$maxResults": "<p> The maximum number of paginated reports returned per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>Report</code> objects. The default value is 100. </p>",
+        "ListSandboxesForProjectInput$maxResults": "<p>The maximum number of sandbox records to be retrieved.</p>",
+        "ListSandboxesInput$maxResults": "<p>The maximum number of sandbox records to be retrieved.</p>",
         "ListSharedProjectsInput$maxResults": "<p> The maximum number of paginated shared build projects returned per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>Project</code> objects. The default value is 100. </p>",
         "ListSharedReportGroupsInput$maxResults": "<p> The maximum number of paginated shared report groups per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>ReportGroup</code> objects. The default value is 100. </p>"
       }
@@ -1236,7 +1357,8 @@
       "base": null,
       "refs": {
         "BuildBatchPhase$contexts": "<p>Additional information about the batch build phase. Especially to help troubleshoot a failed batch build.</p>",
-        "BuildPhase$contexts": "<p>Additional information about a build phase, especially to help troubleshoot a failed build.</p>"
+        "BuildPhase$contexts": "<p>Additional information about a build phase, especially to help troubleshoot a failed build.</p>",
+        "SandboxSessionPhase$contexts": "<p> An array of <code>PhaseContext</code> objects. </p>"
       }
     },
     "PlatformType": {
@@ -1329,6 +1451,7 @@
         "BuildBatch$environment": null,
         "CreateProjectInput$environment": "<p>Information about the build environment for the build project.</p>",
         "Project$environment": "<p>Information about the build environment for this build project.</p>",
+        "Sandbox$environment": null,
         "UpdateProjectInput$environment": "<p>Information to be changed about the build environment for the build project.</p>"
       }
     },
@@ -1345,6 +1468,7 @@
         "BuildBatch$fileSystemLocations": "<p>An array of <code>ProjectFileSystemLocation</code> objects for the batch build project. A <code>ProjectFileSystemLocation</code> object specifies the <code>identifier</code>, <code>location</code>, <code>mountOptions</code>, <code>mountPoint</code>, and <code>type</code> of a file system created using Amazon Elastic File System. </p>",
         "CreateProjectInput$fileSystemLocations": "<p> An array of <code>ProjectFileSystemLocation</code> objects for a CodeBuild build project. A <code>ProjectFileSystemLocation</code> object specifies the <code>identifier</code>, <code>location</code>, <code>mountOptions</code>, <code>mountPoint</code>, and <code>type</code> of a file system created using Amazon Elastic File System. </p>",
         "Project$fileSystemLocations": "<p> An array of <code>ProjectFileSystemLocation</code> objects for a CodeBuild build project. A <code>ProjectFileSystemLocation</code> object specifies the <code>identifier</code>, <code>location</code>, <code>mountOptions</code>, <code>mountPoint</code>, and <code>type</code> of a file system created using Amazon Elastic File System. </p>",
+        "Sandbox$fileSystemLocations": "<p> An array of <code>ProjectFileSystemLocation</code> objects for a CodeBuild build project. A <code>ProjectFileSystemLocation</code> object specifies the <code>identifier</code>, <code>location</code>, <code>mountOptions</code>, <code>mountPoint</code>, and <code>type</code> of a file system created using Amazon Elastic File System. </p>",
         "UpdateProjectInput$fileSystemLocations": "<p> An array of <code>ProjectFileSystemLocation</code> objects for a CodeBuild build project. A <code>ProjectFileSystemLocation</code> object specifies the <code>identifier</code>, <code>location</code>, <code>mountOptions</code>, <code>mountPoint</code>, and <code>type</code> of a file system created using Amazon Elastic File System. </p>"
       }
     },
@@ -1380,6 +1504,7 @@
         "BuildBatch$secondarySourceVersions": "<p>An array of <code>ProjectSourceVersion</code> objects. Each <code>ProjectSourceVersion</code> must be one of: </p> <ul> <li> <p>For CodeCommit: the commit ID, branch, or Git tag to use.</p> </li> <li> <p>For GitHub: the commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format <code>pr/pull-request-ID</code> (for example, <code>pr/25</code>). If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.</p> </li> <li> <p>For Bitbucket: the commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a branch name is specified, the branch's HEAD commit ID is used. If not specified, the default branch's HEAD commit ID is used.</p> </li> <li> <p>For Amazon S3: the version ID of the object that represents the build input ZIP file to use.</p> </li> </ul>",
         "CreateProjectInput$secondarySourceVersions": "<p>An array of <code>ProjectSourceVersion</code> objects. If <code>secondarySourceVersions</code> is specified at the build level, then they take precedence over these <code>secondarySourceVersions</code> (at the project level). </p>",
         "Project$secondarySourceVersions": "<p>An array of <code>ProjectSourceVersion</code> objects. If <code>secondarySourceVersions</code> is specified at the build level, then they take over these <code>secondarySourceVersions</code> (at the project level). </p>",
+        "Sandbox$secondarySourceVersions": "<p> An array of <code>ProjectSourceVersion</code> objects.</p>",
         "StartBuildBatchInput$secondarySourcesVersionOverride": "<p>An array of <code>ProjectSourceVersion</code> objects that override the secondary source versions in the batch build project.</p>",
         "StartBuildInput$secondarySourcesVersionOverride": "<p> An array of <code>ProjectSourceVersion</code> objects that specify one or more versions of the project's secondary sources to be used for this build only. </p>",
         "UpdateProjectInput$secondarySourceVersions": "<p> An array of <code>ProjectSourceVersion</code> objects. If <code>secondarySourceVersions</code> is specified at the build level, then they take over these <code>secondarySourceVersions</code> (at the project level). </p>"
@@ -1399,6 +1524,7 @@
         "CreateProjectInput$source": "<p>Information about the build input source code for the build project.</p>",
         "Project$source": "<p>Information about the build input source code for this build project.</p>",
         "ProjectSources$member": null,
+        "Sandbox$source": null,
         "UpdateProjectInput$source": "<p>Information to be changed about the build input source code for the build project.</p>"
       }
     },
@@ -1415,6 +1541,7 @@
         "BuildBatch$secondarySources": "<p>An array of <code>ProjectSource</code> objects that define the sources for the batch build.</p>",
         "CreateProjectInput$secondarySources": "<p>An array of <code>ProjectSource</code> objects. </p>",
         "Project$secondarySources": "<p>An array of <code>ProjectSource</code> objects. </p>",
+        "Sandbox$secondarySources": "<p> An array of <code>ProjectSource</code> objects. </p>",
         "StartBuildBatchInput$secondarySourcesOverride": "<p>An array of <code>ProjectSource</code> objects that override the secondary sources defined in the batch build project.</p>",
         "StartBuildInput$secondarySourcesOverride": "<p> An array of <code>ProjectSource</code> objects. </p>",
         "UpdateProjectInput$secondarySources": "<p> An array of <code>ProjectSource</code> objects. </p>"
@@ -1664,6 +1791,53 @@
         "ReportExportConfig$s3Destination": "<p> A <code>S3ReportExportConfig</code> object that contains information about the S3 bucket where the run of a report is exported. </p>"
       }
     },
+    "SSMSession": {
+      "base": "<p>Contains information about the Session Manager session.</p>",
+      "refs": {
+        "StartSandboxConnectionOutput$ssmSession": "<p>Information about the Session Manager session.</p>"
+      }
+    },
+    "Sandbox": {
+      "base": "<p>Contains sandbox information.</p>",
+      "refs": {
+        "Sandboxes$member": null,
+        "StartSandboxOutput$sandbox": "<p>Information about the requested sandbox.</p>",
+        "StopSandboxOutput$sandbox": "<p>Information about the requested sandbox.</p>"
+      }
+    },
+    "SandboxIds": {
+      "base": null,
+      "refs": {
+        "BatchGetSandboxesInput$ids": "<p>A comma separated list of <code>sandboxIds</code> or <code>sandboxArns</code>.</p>",
+        "BatchGetSandboxesOutput$sandboxesNotFound": "<p>The IDs of sandboxes for which information could not be found.</p>",
+        "ListSandboxesForProjectOutput$ids": "<p>Information about the requested sandbox IDs.</p>",
+        "ListSandboxesOutput$ids": "<p>Information about the requested sandbox IDs.</p>"
+      }
+    },
+    "SandboxSession": {
+      "base": "<p>Contains information about the sandbox session.</p>",
+      "refs": {
+        "Sandbox$currentSession": "<p>The current session for the sandbox.</p>"
+      }
+    },
+    "SandboxSessionPhase": {
+      "base": "<p>Contains information about the sandbox phase.</p>",
+      "refs": {
+        "SandboxSessionPhases$member": null
+      }
+    },
+    "SandboxSessionPhases": {
+      "base": null,
+      "refs": {
+        "SandboxSession$phases": "<p> An array of <code>SandboxSessionPhase</code> objects. </p>"
+      }
+    },
+    "Sandboxes": {
+      "base": null,
+      "refs": {
+        "BatchGetSandboxesOutput$sandboxes": "<p>Information about the requested sandboxes.</p>"
+      }
+    },
     "ScalingConfigurationInput": {
       "base": "<p>The scaling configuration input of a compute fleet.</p>",
       "refs": {
@@ -1693,13 +1867,20 @@
     "SensitiveNonEmptyString": {
       "base": null,
       "refs": {
-        "ImportSourceCredentialsInput$token": "<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>. For the <code>authType</code> SECRETS_MANAGER, this is the <code>secretArn</code>.</p>"
+        "CommandExecution$command": "<p>The command that needs to be executed.</p>",
+        "CommandExecution$standardOutputContent": "<p>The text written by the command to stdout.</p>",
+        "CommandExecution$standardErrContent": "<p>The text written by the command to stderr.</p>",
+        "ImportSourceCredentialsInput$token": "<p> For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket, this is either the access token or the app password. For the <code>authType</code> CODECONNECTIONS, this is the <code>connectionArn</code>. For the <code>authType</code> SECRETS_MANAGER, this is the <code>secretArn</code>.</p>",
+        "StartCommandExecutionInput$command": "<p>The command that needs to be executed.</p>"
       }
     },
     "SensitiveString": {
       "base": null,
       "refs": {
-        "ListFleetsInput$nextToken": "<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>"
+        "ListCommandExecutionsForSandboxInput$nextToken": "<p>The next token, if any, to get paginated results. You will get this value from previous execution of list sandboxes.</p>",
+        "ListFleetsInput$nextToken": "<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>",
+        "ListSandboxesForProjectInput$nextToken": "<p>The next token, if any, to get paginated results. You will get this value from previous execution of list sandboxes.</p>",
+        "StartSandboxInput$idempotencyToken": "<p>A unique client token.</p>"
       }
     },
     "ServerType": {
@@ -1724,11 +1905,14 @@
         "ListBuildBatchesInput$sortOrder": "<p>Specifies the sort order of the returned items. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List the batch build identifiers in ascending order by identifier.</p> </li> <li> <p> <code>DESCENDING</code>: List the batch build identifiers in descending order by identifier.</p> </li> </ul>",
         "ListBuildsForProjectInput$sortOrder": "<p>The order to sort the results in. The results are sorted by build number, not the build identifier. If this is not specified, the results are sorted in descending order.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List the build identifiers in ascending order, by build number.</p> </li> <li> <p> <code>DESCENDING</code>: List the build identifiers in descending order, by build number.</p> </li> </ul> <p>If the project has more than 100 builds, setting the sort order will result in an error. </p>",
         "ListBuildsInput$sortOrder": "<p>The order to list build IDs. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List the build IDs in ascending order by build ID.</p> </li> <li> <p> <code>DESCENDING</code>: List the build IDs in descending order by build ID.</p> </li> </ul>",
+        "ListCommandExecutionsForSandboxInput$sortOrder": "<p>The order in which sandbox records should be retrieved.</p>",
         "ListFleetsInput$sortOrder": "<p>The order in which to list compute fleets. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List in ascending order.</p> </li> <li> <p> <code>DESCENDING</code>: List in descending order.</p> </li> </ul> <p>Use <code>sortBy</code> to specify the criterion to be used to list compute fleet names.</p>",
         "ListProjectsInput$sortOrder": "<p>The order in which to list build projects. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List in ascending order.</p> </li> <li> <p> <code>DESCENDING</code>: List in descending order.</p> </li> </ul> <p>Use <code>sortBy</code> to specify the criterion to be used to list build project names.</p>",
         "ListReportGroupsInput$sortOrder": "<p> Used to specify the order to sort the list of returned report groups. Valid values are <code>ASCENDING</code> and <code>DESCENDING</code>. </p>",
         "ListReportsForReportGroupInput$sortOrder": "<p> Use to specify whether the results are returned in ascending or descending order. </p>",
         "ListReportsInput$sortOrder": "<p> Specifies the sort order for the list of returned reports. Valid values are: </p> <ul> <li> <p> <code>ASCENDING</code>: return reports in chronological order based on their creation date. </p> </li> <li> <p> <code>DESCENDING</code>: return reports in the reverse chronological order based on their creation date. </p> </li> </ul>",
+        "ListSandboxesForProjectInput$sortOrder": "<p>The order in which sandbox records should be retrieved.</p>",
+        "ListSandboxesInput$sortOrder": "<p>The order in which sandbox records should be retrieved.</p>",
         "ListSharedProjectsInput$sortOrder": "<p>The order in which to list shared build projects. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List in ascending order.</p> </li> <li> <p> <code>DESCENDING</code>: List in descending order.</p> </li> </ul>",
         "ListSharedReportGroupsInput$sortOrder": "<p>The order in which to list shared report groups. Valid values include:</p> <ul> <li> <p> <code>ASCENDING</code>: List in ascending order.</p> </li> <li> <p> <code>DESCENDING</code>: List in descending order.</p> </li> </ul>"
       }
@@ -1787,6 +1971,36 @@
       "refs": {
       }
     },
+    "StartCommandExecutionInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartCommandExecutionOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartSandboxConnectionInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartSandboxConnectionOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartSandboxInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartSandboxOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StatusType": {
       "base": null,
       "refs": {
@@ -1795,7 +2009,8 @@
         "BuildBatchFilter$status": "<p>The status of the batch builds to retrieve. Only batch builds that have this status will be retrieved.</p>",
         "BuildBatchPhase$phaseStatus": "<p>The current status of the batch build phase. Valid values include:</p> <dl> <dt>FAILED</dt> <dd> <p>The build phase failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build phase faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build phase is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build phase stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build phase succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build phase timed out.</p> </dd> </dl>",
         "BuildPhase$phaseStatus": "<p>The current status of the build phase. Valid values include:</p> <dl> <dt>FAILED</dt> <dd> <p>The build phase failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build phase faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build phase is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build phase stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build phase succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build phase timed out.</p> </dd> </dl>",
-        "BuildSummary$buildStatus": "<p>The status of the build group.</p> <dl> <dt>FAILED</dt> <dd> <p>The build group failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build group faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build group is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build group stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build group succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build group timed out.</p> </dd> </dl>"
+        "BuildSummary$buildStatus": "<p>The status of the build group.</p> <dl> <dt>FAILED</dt> <dd> <p>The build group failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build group faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build group is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build group stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build group succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build group timed out.</p> </dd> </dl>",
+        "SandboxSessionPhase$phaseStatus": "<p>The current status of the sandbox phase. Valid values include:</p> <dl> <dt>FAILED</dt> <dd> <p>The sandbox phase failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The sandbox phase faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The sandbox phase is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The sandbox phase stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The sandbox phase succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The sandbox phase timed out.</p> </dd> </dl>"
       }
     },
     "StopBuildBatchInput": {
@@ -1814,6 +2029,16 @@
       }
     },
     "StopBuildOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopSandboxInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopSandboxOutput": {
       "base": null,
       "refs": {
       }
@@ -1863,6 +2088,7 @@
         "ListBuildsForProjectOutput$nextToken": "<p>If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.</p>",
         "ListBuildsInput$nextToken": "<p>During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.</p>",
         "ListBuildsOutput$nextToken": "<p>If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.</p>",
+        "ListCommandExecutionsForSandboxOutput$nextToken": "<p>Information about the next token to get paginated results.</p>",
         "ListFleetsOutput$nextToken": "<p>If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.</p>",
         "ListProjectsOutput$nextToken": "<p>If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.</p>",
         "ListReportGroupsInput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
@@ -1872,6 +2098,9 @@
         "ListReportsForReportGroupOutput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
         "ListReportsInput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
         "ListReportsOutput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
+        "ListSandboxesForProjectOutput$nextToken": "<p>Information about the next token to get paginated results.</p>",
+        "ListSandboxesInput$nextToken": "<p>The next token, if any, to get paginated results. You will get this value from previous execution of list sandboxes.</p>",
+        "ListSandboxesOutput$nextToken": "<p>Information about the next token to get paginated results.</p>",
         "ListSharedProjectsOutput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
         "ListSharedReportGroupsInput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
         "ListSharedReportGroupsOutput$nextToken": "<p> During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. </p>",
@@ -1917,6 +2146,13 @@
         "S3LogsConfig$location": "<p> The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is <code>my-bucket</code>, and your path prefix is <code>build-log</code>, then acceptable formats are <code>my-bucket/build-log</code> or <code>arn:aws:s3:::my-bucket/build-log</code>. </p>",
         "S3ReportExportConfig$bucketOwner": "<p>The Amazon Web Services account identifier of the owner of the Amazon S3 bucket. This allows report data to be exported to an Amazon S3 bucket that is owned by an account other than the account running the build.</p>",
         "S3ReportExportConfig$path": "<p> The path to the exported report's raw data results. </p>",
+        "SSMSession$sessionId": "<p>The ID of the session.</p>",
+        "SSMSession$tokenValue": "<p>An encrypted token value containing session and caller information.</p>",
+        "SSMSession$streamUrl": "<p>A URL back to SSM Agent on the managed node that the Session Manager client uses to send commands and receive output from the node.</p>",
+        "Sandbox$status": "<p>The status of the sandbox.</p>",
+        "SandboxSession$status": "<p>The status of the sandbox session.</p>",
+        "SandboxSession$currentPhase": "<p>The current phase for the sandbox.</p>",
+        "SandboxSessionPhase$phaseType": "<p>The name of the sandbox phase.</p>",
         "ScopeConfiguration$name": "<p>The name of either the group, enterprise, or organization that will send webhook events to CodeBuild, depending on the type of webhook.</p>",
         "ScopeConfiguration$domain": "<p>The domain of the GitHub Enterprise organization or the GitLab Self Managed group. Note that this parameter is only required if your project's source type is GITHUB_ENTERPRISE or GITLAB_SELF_MANAGED.</p>",
         "SourceAuth$resource": "<p>The resource value that applies to the specified authorization type.</p>",
@@ -2032,6 +2268,9 @@
         "BuildPhase$endTime": "<p>When the build phase ended, expressed in Unix time format.</p>",
         "BuildSummary$requestedOn": "<p>When the build was started, expressed in Unix time format.</p>",
         "CodeCoverage$expired": "<p>The date and time that the tests were run.</p>",
+        "CommandExecution$submitTime": "<p>When the command execution process was initially submitted, expressed in Unix time format.</p>",
+        "CommandExecution$startTime": "<p>When the command execution process started, expressed in Unix time format.</p>",
+        "CommandExecution$endTime": "<p>When the command execution process ended, expressed in Unix time format.</p>",
         "Fleet$created": "<p>The time at which the compute fleet was created.</p>",
         "Fleet$lastModified": "<p>The time at which the compute fleet was last modified.</p>",
         "Project$created": "<p>When the build project was created, expressed in Unix time format.</p>",
@@ -2040,6 +2279,13 @@
         "Report$expired": "<p> The date and time a report expires. A report expires 30 days after it is created. An expired report is not available to view in CodeBuild. </p>",
         "ReportGroup$created": "<p>The date and time this <code>ReportGroup</code> was created. </p>",
         "ReportGroup$lastModified": "<p>The date and time this <code>ReportGroup</code> was last modified. </p>",
+        "Sandbox$requestTime": "<p>When the sandbox process was initially requested, expressed in Unix time format.</p>",
+        "Sandbox$startTime": "<p>When the sandbox process started, expressed in Unix time format.</p>",
+        "Sandbox$endTime": "<p>When the sandbox process ended, expressed in Unix time format.</p>",
+        "SandboxSession$startTime": "<p>When the sandbox session started, expressed in Unix time format.</p>",
+        "SandboxSession$endTime": "<p>When the sandbox session ended, expressed in Unix time format.</p>",
+        "SandboxSessionPhase$startTime": "<p>When the sandbox phase started, expressed in Unix time format.</p>",
+        "SandboxSessionPhase$endTime": "<p>When the sandbox phase ended, expressed in Unix time format.</p>",
         "TestCase$expired": "<p> The date and time a test case expires. A test case expires 30 days after it is created. An expired test case is not available to view in CodeBuild. </p>",
         "Webhook$lastModifiedSecret": "<p>A timestamp that indicates the last time a repository's secret token was modified. </p>"
       }
@@ -2109,6 +2355,7 @@
         "CreateProjectInput$vpcConfig": "<p>VpcConfig enables CodeBuild to access resources in an Amazon VPC.</p> <note> <p>If you're using compute fleets during project creation, do not provide vpcConfig.</p> </note>",
         "Fleet$vpcConfig": null,
         "Project$vpcConfig": "<p>Information about the VPC configuration that CodeBuild accesses.</p>",
+        "Sandbox$vpcConfig": null,
         "UpdateFleetInput$vpcConfig": null,
         "UpdateProjectInput$vpcConfig": "<p>VpcConfig enables CodeBuild to access resources in an Amazon VPC.</p>"
       }
@@ -2208,6 +2455,8 @@
         "Project$autoRetryLimit": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
         "ProjectBuildBatchConfig$timeoutInMins": "<p>Specifies the maximum amount of time, in minutes, that the batch build must be completed in.</p>",
         "ReportStatusCounts$value": null,
+        "Sandbox$timeoutInMinutes": "<p>How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before timing out this sandbox if it does not get marked as completed.</p>",
+        "Sandbox$queuedTimeoutInMinutes": "<p>The number of minutes a sandbox is allowed to be queued before it times out. </p>",
         "StartBuildInput$autoRetryLimitOverride": "<p>The maximum number of additional automatic retries after a failed build. For example, if the auto-retry limit is set to 2, CodeBuild will call the <code>RetryBuild</code> API to automatically retry your build for up to 2 additional times.</p>",
         "TestReportSummary$total": "<p> The number of test cases in this <code>TestReportSummary</code>. The total includes truncated test cases. </p>",
         "UpdateProjectInput$concurrentBuildLimit": "<p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p> <p>To remove this limit, set this value to -1.</p>",
@@ -2224,6 +2473,7 @@
         "ComputeConfiguration$vCpu": "<p>The number of vCPUs of the instance type included in your fleet.</p>",
         "ComputeConfiguration$memory": "<p>The amount of memory of the instance type included in your fleet.</p>",
         "ComputeConfiguration$disk": "<p>The amount of disk space of the instance type included in your fleet.</p>",
+        "SandboxSessionPhase$durationInSeconds": "<p>How long, in seconds, between the starting and ending times of the sandbox's phase.</p>",
         "TestCase$durationInNanoSeconds": "<p> The number of nanoseconds it took to run this test case. </p>",
         "TestReportSummary$durationInNanoSeconds": "<p> The number of nanoseconds it took to run all of the test cases in this report. </p>"
       }

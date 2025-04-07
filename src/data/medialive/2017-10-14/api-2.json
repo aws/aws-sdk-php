@@ -4200,6 +4200,191 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "CreateSdiSource": {
+      "name": "CreateSdiSource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/sdiSources",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "CreateSdiSourceRequest"
+      },
+      "output": {
+        "shape": "CreateSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteSdiSource": {
+      "name": "DeleteSdiSource",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "DeleteSdiSourceRequest"
+      },
+      "output": {
+        "shape": "DeleteSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DescribeSdiSource": {
+      "name": "DescribeSdiSource",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeSdiSourceRequest"
+      },
+      "output": {
+        "shape": "DescribeSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListSdiSources": {
+      "name": "ListSdiSources",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/sdiSources",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListSdiSourcesRequest"
+      },
+      "output": {
+        "shape": "ListSdiSourcesResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "UpdateSdiSource": {
+      "name": "UpdateSdiSource",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateSdiSourceRequest"
+      },
+      "output": {
+        "shape": "UpdateSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -6219,6 +6404,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -6285,6 +6474,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -7274,6 +7467,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -10117,6 +10314,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -11060,7 +11261,8 @@
         "TS_FILE",
         "SRT_CALLER",
         "MULTICAST",
-        "SMPTE_2110_RECEIVER_GROUP"
+        "SMPTE_2110_RECEIVER_GROUP",
+        "SDI"
       ]
     },
     "InputVpcRequest": {
@@ -15675,6 +15877,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -15844,6 +16050,10 @@
         "Smpte2110ReceiverGroupSettings": {
           "shape": "Smpte2110ReceiverGroupSettings",
           "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       },
       "required": [
@@ -21911,6 +22121,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -22123,6 +22337,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -22554,6 +22772,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -22599,6 +22821,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -22648,6 +22874,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -23473,6 +23703,10 @@
         "Role": {
           "shape": "NodeRole",
           "locationName": "role"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappingsUpdateRequest",
+          "locationName": "sdiSourceMappings"
         }
       },
       "required": [
@@ -23522,6 +23756,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -23597,6 +23835,10 @@
         "State": {
           "shape": "NodeState",
           "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
         }
       }
     },
@@ -24009,6 +24251,293 @@
       "type": "list",
       "member": {
         "shape": "Smpte2110ReceiverGroup"
+      }
+    },
+    "CreateSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "CreateSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "DeleteSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "DeleteSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "DescribeSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "DescribeSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "InputSdiSources": {
+      "type": "list",
+      "member": {
+        "shape": "__string"
+      }
+    },
+    "ListSdiSourcesRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListSdiSourcesResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "SdiSources": {
+          "shape": "__listOfSdiSourceSummary",
+          "locationName": "sdiSources"
+        }
+      }
+    },
+    "SdiSource": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Inputs": {
+          "shape": "__listOf__string",
+          "locationName": "inputs"
+        },
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "State": {
+          "shape": "SdiSourceState",
+          "locationName": "state"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "SdiSourceMapping": {
+      "type": "structure",
+      "members": {
+        "CardNumber": {
+          "shape": "__integer",
+          "locationName": "cardNumber"
+        },
+        "ChannelNumber": {
+          "shape": "__integer",
+          "locationName": "channelNumber"
+        },
+        "SdiSource": {
+          "shape": "__string",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "SdiSourceMappingUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "CardNumber": {
+          "shape": "__integer",
+          "locationName": "cardNumber"
+        },
+        "ChannelNumber": {
+          "shape": "__integer",
+          "locationName": "channelNumber"
+        },
+        "SdiSource": {
+          "shape": "__string",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "SdiSourceMappings": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceMapping"
+      }
+    },
+    "SdiSourceMappingsUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceMappingUpdateRequest"
+      }
+    },
+    "SdiSourceMode": {
+      "type": "string",
+      "enum": [
+        "QUADRANT",
+        "INTERLEAVE"
+      ]
+    },
+    "SdiSourceState": {
+      "type": "string",
+      "enum": [
+        "IDLE",
+        "IN_USE",
+        "DELETED"
+      ]
+    },
+    "SdiSourceSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Inputs": {
+          "shape": "__listOf__string",
+          "locationName": "inputs"
+        },
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "State": {
+          "shape": "SdiSourceState",
+          "locationName": "state"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "SdiSourceType": {
+      "type": "string",
+      "enum": [
+        "SINGLE",
+        "QUAD"
+      ]
+    },
+    "UpdateSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "UpdateSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "__listOfSdiSourceSummary": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceSummary"
       }
     }
   }

@@ -1311,7 +1311,8 @@
     },
     "ColumnName":{
       "type":"string",
-      "max":150
+      "max":150,
+      "pattern":"[A-Za-z_][A-Za-z\\d_]*"
     },
     "ColumnNamesList":{
       "type":"list",
@@ -2228,6 +2229,19 @@
       ]
     },
     "ErrorMessage":{"type":"string"},
+    "EventParameters":{
+      "type":"structure",
+      "members":{
+        "eventType":{"shape":"EventType"},
+        "eventValueThreshold":{"shape":"EventTypeThresholdValue"},
+        "weight":{"shape":"EventTypeWeight"}
+      }
+    },
+    "EventParametersList":{
+      "type":"list",
+      "member":{"shape":"EventParameters"},
+      "max":10
+    },
     "EventTracker":{
       "type":"structure",
       "members":{
@@ -2260,9 +2274,21 @@
       "type":"string",
       "max":256
     },
+    "EventTypeThresholdValue":{"type":"double"},
+    "EventTypeWeight":{
+      "type":"double",
+      "max":1,
+      "min":0
+    },
     "EventValueThreshold":{
       "type":"string",
       "max":256
+    },
+    "EventsConfig":{
+      "type":"structure",
+      "members":{
+        "eventParametersList":{"shape":"EventParametersList"}
+      }
     },
     "ExcludedDatasetColumns":{
       "type":"map",
@@ -3032,6 +3058,7 @@
         "algorithmHyperParameters":{"shape":"HyperParameters"},
         "featureTransformationParameters":{"shape":"FeatureTransformationParameters"},
         "autoMLConfig":{"shape":"AutoMLConfig"},
+        "eventsConfig":{"shape":"EventsConfig"},
         "optimizationObjective":{"shape":"OptimizationObjective"},
         "trainingDataConfig":{"shape":"TrainingDataConfig"},
         "autoTrainingConfig":{"shape":"AutoTrainingConfig"}
@@ -3051,7 +3078,8 @@
     "SolutionUpdateConfig":{
       "type":"structure",
       "members":{
-        "autoTrainingConfig":{"shape":"AutoTrainingConfig"}
+        "autoTrainingConfig":{"shape":"AutoTrainingConfig"},
+        "eventsConfig":{"shape":"EventsConfig"}
       }
     },
     "SolutionUpdateSummary":{
@@ -3161,7 +3189,8 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$",
+      "sensitive":true
     },
     "TagKeys":{
       "type":"list",
@@ -3189,7 +3218,8 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$",
+      "sensitive":true
     },
     "Tags":{
       "type":"list",

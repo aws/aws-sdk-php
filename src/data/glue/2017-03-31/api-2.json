@@ -5867,7 +5867,8 @@
     },
     "ConditionList":{
       "type":"list",
-      "member":{"shape":"Condition"}
+      "member":{"shape":"Condition"},
+      "max":500
     },
     "ConfigValueString":{
       "type":"string",
@@ -6045,6 +6046,15 @@
         "FAILED"
       ]
     },
+    "ConnectionString":{
+      "type":"string",
+      "max":255
+    },
+    "ConnectionStringList":{
+      "type":"list",
+      "member":{"shape":"ConnectionString"},
+      "max":1000
+    },
     "ConnectionType":{
       "type":"string",
       "enum":[
@@ -6094,7 +6104,7 @@
     "ConnectionsList":{
       "type":"structure",
       "members":{
-        "Connections":{"shape":"OrchestrationStringList"}
+        "Connections":{"shape":"ConnectionStringList"}
       }
     },
     "ConnectorDataSource":{
@@ -7007,7 +7017,7 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"NameString"},
-        "Description":{"shape":"GenericString"},
+        "Description":{"shape":"WorkflowDescriptionString"},
         "DefaultRunProperties":{"shape":"WorkflowRunProperties"},
         "Tags":{"shape":"TagsMap"},
         "MaxConcurrentRuns":{"shape":"NullableInteger"}
@@ -16225,7 +16235,7 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"NameString"},
-        "Description":{"shape":"GenericString"},
+        "Description":{"shape":"WorkflowDescriptionString"},
         "DefaultRunProperties":{"shape":"WorkflowRunProperties"},
         "MaxConcurrentRuns":{"shape":"NullableInteger"}
       }
@@ -16475,6 +16485,10 @@
         "MaxConcurrentRuns":{"shape":"NullableInteger"},
         "BlueprintDetails":{"shape":"BlueprintDetails"}
       }
+    },
+    "WorkflowDescriptionString":{
+      "type":"string",
+      "max":120000
     },
     "WorkflowGraph":{
       "type":"structure",

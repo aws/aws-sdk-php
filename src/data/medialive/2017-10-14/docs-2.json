@@ -116,7 +116,12 @@
     "UpdateNetwork": "Change the settings for a Network.",
     "UpdateNode": "Change the settings for a Node.",
     "UpdateNodeState": "Update the state of a node.",
-    "ListVersions": "Retrieves an array of all the encoder engine versions that are available in this AWS account."
+    "ListVersions": "Retrieves an array of all the encoder engine versions that are available in this AWS account.",
+    "CreateSdiSource": "Create an SdiSource for each video source that uses the SDI protocol. You will reference the SdiSource when you create an SDI input in MediaLive. You will also reference it in an SdiSourceMapping, in order to create a connection between the logical SdiSource and the physical SDI card and port that the physical SDI source uses.",
+    "DeleteSdiSource": "Delete an SdiSource. The SdiSource must not be part of any SidSourceMapping and must not be attached to any input.",
+    "DescribeSdiSource": "Gets details about a SdiSource.",
+    "ListSdiSources": "List all the SdiSources in the AWS account.",
+    "UpdateSdiSource": "Change some of the settings in an SdiSource."
   },
   "shapes": {
     "AacCodingMode": {
@@ -3415,7 +3420,8 @@
         "CreateChannelPlacementGroupRequest$Tags": "A collection of key-value pairs.",
         "CreateClusterRequest$Tags": "A collection of key-value pairs.",
         "CreateNetworkRequest$Tags": "A collection of key-value pairs.",
-        "CreateNodeRequest$Tags": "A collection of key-value pairs."
+        "CreateNodeRequest$Tags": "A collection of key-value pairs.",
+        "CreateSdiSourceRequest$Tags": "A collection of key-value pairs."
       }
     },
     "TagsModel": {
@@ -3939,7 +3945,11 @@
         "MultiplexProgramPacketIdentifiersMap$AribCaptionsPid": null,
         "MultiplexProgramPacketIdentifiersMap$EcmPid": null,
         "MultiplexProgramPacketIdentifiersMap$Smpte2038Pid": null,
-        "InputSdpLocation$MediaIndex": "The index of the media stream in the SDP file for one SMPTE 2110 stream."
+        "InputSdpLocation$MediaIndex": "The index of the media stream in the SDP file for one SMPTE 2110 stream.",
+        "SdiSourceMapping$CardNumber": "A number that uniquely identifies the SDI card on the node hardware.",
+        "SdiSourceMapping$ChannelNumber": "A number that uniquely identifies a port on the SDI card.",
+        "SdiSourceMappingUpdateRequest$CardNumber": "A number that uniquely identifies the SDI card on the node hardware. For information about how physical cards are identified on your node hardware, see the documentation for your node hardware. The numbering always starts at 1.",
+        "SdiSourceMappingUpdateRequest$ChannelNumber": "A number that uniquely identifies a port on the card. This must be an SDI port (not a timecode port, for example). For information about how ports are identified on physical cards, see the documentation for your node hardware."
       }
     },
     "__integerMin0": {
@@ -4796,7 +4806,9 @@
         "OutputDestination$LogicalInterfaceNames": "Optional assignment of an output to a logical interface on the Node. Only applies to on premises channels.",
         "UpdateChannelPlacementGroupRequest$Nodes": "Include this parameter only if you want to change the list of Nodes that are associated with the ChannelPlacementGroup.",
         "UpdateClusterResult$ChannelIds": "An array of the IDs of the Channels that are associated with this Cluster. One Channel is associated with the Cluster as follows: A Channel belongs to a ChannelPlacementGroup. A ChannelPlacementGroup is attached to a Node. A Node belongs to a Cluster.",
-        "UpdateNetworkResult$AssociatedClusterIds": null
+        "UpdateNetworkResult$AssociatedClusterIds": null,
+        "SdiSource$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted.",
+        "SdiSourceSummary$Inputs": "The list of inputs that are currently using this SDI source. This list will be empty if the SdiSource has just been deleted."
       }
     },
     "__longMin0Max1099511627775": {
@@ -5227,7 +5239,20 @@
         "Id3SegmentTaggingScheduleActionSettings$Id3": "Complete this parameter if you want to specify the entire ID3 metadata. Enter a base64 string that contains one or more fully formed ID3 tags, according to the ID3 specification: http://id3.org/id3v2.4.0-structure",
         "Id3SegmentTaggingScheduleActionSettings$Tag": "Complete this parameter if you want to specify only the metadata, not the entire frame. MediaLive will insert the metadata in a TXXX frame. Enter the value as plain text. You can include standard MediaLive variable data such as the current segment number.",
         "TimedMetadataScheduleActionSettings$Id3": "Enter a base64 string that contains one or more fully formed ID3 tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure",
-        "InputSdpLocation$SdpUrl": "The URL of the SDP file for one SMPTE 2110 stream."
+        "InputSdpLocation$SdpUrl": "The URL of the SDP file for one SMPTE 2110 stream.",
+        "CreateSdiSourceRequest$Name": "Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive.",
+        "CreateSdiSourceRequest$RequestId": "An ID that you assign to a create request. This ID ensures idempotency when creating resources.",
+        "InputSdiSources$member": null,
+        "ListSdiSourcesResponse$NextToken": null,
+        "SdiSource$Arn": "The ARN of this SdiSource. It is automatically assigned when the SdiSource is created.",
+        "SdiSource$Id": "The ID of the SdiSource. Unique in the AWS account.The ID is the resource-id portion of the ARN.",
+        "SdiSource$Name": "The name of the SdiSource.",
+        "SdiSourceMapping$SdiSource": "The ID of the SdiSource to associate with this port on this card. You can use the ListSdiSources operation to discover all the IDs.",
+        "SdiSourceMappingUpdateRequest$SdiSource": "The ID of a SDI source streaming on the given SDI capture card port.",
+        "SdiSourceSummary$Arn": "The ARN of this SdiSource. It is automatically assigned when the SdiSource is created.",
+        "SdiSourceSummary$Id": "The ID of the SdiSource. Unique in the AWS account.The ID is the resource-id portion of the ARN.",
+        "SdiSourceSummary$Name": "The name of the SdiSource.",
+        "UpdateSdiSourceRequest$Name": "Include this parameter only if you want to change the name of the SdiSource. Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive."
       }
     },
     "__stringMax1000": {
@@ -6991,6 +7016,120 @@
       "base": null,
       "refs": {
         "Smpte2110ReceiverGroupSettings$Smpte2110ReceiverGroups": null
+      }
+    },
+    "CreateSdiSourceRequest": {
+      "base": "Used in the CreateSdiSource operation.",
+      "refs": {
+      }
+    },
+    "CreateSdiSourceResponse": {
+      "base": "Used in CreateSdiSourceResponse.",
+      "refs": {
+      }
+    },
+    "DeleteSdiSourceResponse": {
+      "base": "Used in DeleteSdiSourceResponse.",
+      "refs": {
+      }
+    },
+    "DescribeSdiSourceResponse": {
+      "base": "Used in DescribeSdiSourceResponse.",
+      "refs": {
+      }
+    },
+    "InputSdiSources": {
+      "base": "SDI Sources for this Input.",
+      "refs": {
+        "CreateInput$SdiSources": null,
+        "Input$SdiSources": null,
+        "UpdateInput$SdiSources": null
+      }
+    },
+    "ListSdiSourcesResponse": {
+      "base": "Response for the ListSdiSources operation.",
+      "refs": {
+      }
+    },
+    "SdiSource": {
+      "base": "Used in CreateSdiSourceResponse, DeleteSdiSourceResponse, DescribeSdiSourceResponse, ListSdiSourcesResponse, UpdateSdiSourceResponse",
+      "refs": {
+        "CreateSdiSourceResponse$SdiSource": "Settings for the SDI source.",
+        "DeleteSdiSourceResponse$SdiSource": "Settings for the SDI source.",
+        "DescribeSdiSourceResponse$SdiSource": "Settings for the SDI source.",
+        "UpdateSdiSourceResponse$SdiSource": "Settings for the SDI source."
+      }
+    },
+    "SdiSourceMapping": {
+      "base": "Used in DescribeNodeSummary, DescribeNodeResult.",
+      "refs": {
+        "SdiSourceMappings$member": null
+      }
+    },
+    "SdiSourceMappingUpdateRequest": {
+      "base": "Used in SdiSourceMappingsUpdateRequest. One SDI source mapping. It connects one logical SdiSource to the physical SDI card and port that the physical SDI source uses. You must specify all three parameters in this object.",
+      "refs": {
+        "SdiSourceMappingsUpdateRequest$member": null
+      }
+    },
+    "SdiSourceMappings": {
+      "base": "Used in SdiSourceMappings.",
+      "refs": {
+        "DescribeNodeResult$SdiSourceMappings": "An array of SDI source mappings. Each mapping connects one logical SdiSource to the physical SDI card and port that the physical SDI source uses.",
+        "DescribeNodeSummary$SdiSourceMappings": "An array of SDI source mappings. Each mapping connects one logical SdiSource to the physical SDI card and port that the physical SDI source uses."
+      }
+    },
+    "SdiSourceMappingsUpdateRequest": {
+      "base": "Used in the SdiSourceMappingsUpdateRequest, which is a parameter of the UpdateNodeRequest, which is used in the UpdateNodeRequest operation. This means that you create a mapping for an SDI source by updating a Node. You can't create the mapping when you first create the Node.",
+      "refs": {
+        "UpdateNodeRequest$SdiSourceMappings": "The mappings of a SDI capture card port to a logical SDI data stream"
+      }
+    },
+    "SdiSourceMode": {
+      "base": "Used in SdiSource, CreateSdiSourceRequest, UpdateSdiSourceRequest.",
+      "refs": {
+        "CreateSdiSourceRequest$Mode": "Applies only if the type is QUAD. Specify the mode for handling the quad-link signal: QUADRANT or INTERLEAVE.",
+        "SdiSource$Mode": "Applies only if the type is QUAD. The mode for handling the quad-link signal QUADRANT or INTERLEAVE.",
+        "SdiSourceSummary$Mode": "Applies only if the type is QUAD. The mode for handling the quad-link signal QUADRANT or INTERLEAVE.",
+        "UpdateSdiSourceRequest$Mode": "Include this parameter only if you want to change the name of the SdiSource. Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive."
+      }
+    },
+    "SdiSourceState": {
+      "base": "Used in SdiSource, DescribeNodeRequest, DescribeNodeResult",
+      "refs": {
+        "SdiSource$State": "Specifies whether the SDI source is attached to an SDI input (IN_USE) or not (IDLE).",
+        "SdiSourceSummary$State": "Specifies whether the SDI source is attached to an SDI input (IN_USE) or not (IDLE)."
+      }
+    },
+    "SdiSourceSummary": {
+      "base": "Used in CreateSdiSourceResponse, DeleteSdiSourceResponse, DescribeSdiSourceResponse, ListSdiSourcesResponse, UpdateSdiSourceResponse",
+      "refs": {
+        "__listOfSdiSourceSummary$member": null
+      }
+    },
+    "SdiSourceType": {
+      "base": "Used in SdiSource, CreateSdiSourceRequest, UpdateSdiSourceRequest.",
+      "refs": {
+        "CreateSdiSourceRequest$Type": "Specify the  type of the SDI source: SINGLE: The source  is a single-link source. QUAD: The source  is one part of a quad-link source.",
+        "SdiSource$Type": null,
+        "SdiSourceSummary$Type": null,
+        "UpdateSdiSourceRequest$Type": "Include this parameter only if you want to change the mode. Specify the type of the SDI source: SINGLE: The source is a single-link source. QUAD: The source is one part of a quad-link source."
+      }
+    },
+    "UpdateSdiSourceRequest": {
+      "base": "Used in UpdateSdiSourceRequest.",
+      "refs": {
+      }
+    },
+    "UpdateSdiSourceResponse": {
+      "base": "Used in UpdateSdiSourceResponse.",
+      "refs": {
+      }
+    },
+    "__listOfSdiSourceSummary": {
+      "base": null,
+      "refs": {
+        "ListSdiSourcesResponse$SdiSources": null
       }
     }
   },
