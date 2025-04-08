@@ -1127,6 +1127,19 @@
         "GetTaxRegistrationDocumentResponse$presignedS3Url": "<p>The Amazon S3 presigned URL of the tax registration document. </p>"
       }
     },
+    "UzbekistanAdditionalInfo": {
+      "base": "<p> Additional tax information to specify for a TRN in Uzbekistan. </p>",
+      "refs": {
+        "AdditionalInfoRequest$uzbekistanAdditionalInfo": "<p> Additional tax information to specify for a TRN in Uzbekistan. </p>",
+        "AdditionalInfoResponse$uzbekistanAdditionalInfo": "<p> Additional tax information associated with your TRN in Uzbekistan. </p>"
+      }
+    },
+    "UzbekistanTaxRegistrationNumberType": {
+      "base": null,
+      "refs": {
+        "UzbekistanAdditionalInfo$taxRegistrationNumberType": "<p> The tax registration number type. The tax registration number type valid values are <code>Business</code> and <code>Individual</code>. </p>"
+      }
+    },
     "ValidationException": {
       "base": "<p>The exception when the input doesn't pass validation for at least one of the input parameters. </p>",
       "refs": {
@@ -1148,6 +1161,12 @@
       "base": null,
       "refs": {
         "ValidationException$fieldList": "<p>400</p>"
+      }
+    },
+    "VatRegistrationNumber": {
+      "base": null,
+      "refs": {
+        "UzbekistanAdditionalInfo$vatRegistrationNumber": "<p> The unique 12-digit number issued to identify VAT-registered identities in Uzbekistan. </p>"
       }
     },
     "VerificationDetails": {

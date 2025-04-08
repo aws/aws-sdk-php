@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - This release supports Pagination traits on Cost Anomaly Detection APIs.
+* `Aws\CostOptimizationHub` - This release adds resource type "MemoryDbReservedInstances" and resource type "DynamoDbReservedCapacity" to the GetRecommendation, ListRecommendations, and ListRecommendationSummaries APIs to support new MemoryDB and DynamoDB RI recommendations.
+* `Aws\StorageGateway` - Added new ActiveDirectoryStatus value, ListCacheReports paginator, and support for longer pagination tokens.
+* `Aws\IoTFleetWise` - This release adds the option to update the strategy of state templates already associated to a vehicle, without the need to remove and re-add them.
+* `Aws\BedrockRuntime` - This release introduces our latest bedrock runtime API, InvokeModelWithBidirectionalStream. The API supports both input and output streams and is supported by only HTTP2.0.
+* `Aws\TaxSettings` - Uzbekistan Launch on TaxSettings Page
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub.
+
 ## 3.342.22 - 2025-04-07
 
 * `Aws\Personalize` - Add support for eventsConfig for CreateSolution, UpdateSolution, DescribeSolution, DescribeSolutionVersion. Add support for GetSolutionMetrics to return weighted NDCG metrics when eventsConfig is enabled for the solution.

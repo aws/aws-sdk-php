@@ -331,6 +331,7 @@
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
         "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
         "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
@@ -355,6 +356,7 @@
         "spainAdditionalInfo":{"shape":"SpainAdditionalInfo"},
         "turkeyAdditionalInfo":{"shape":"TurkeyAdditionalInfo"},
         "ukraineAdditionalInfo":{"shape":"UkraineAdditionalInfo"},
+        "uzbekistanAdditionalInfo":{"shape":"UzbekistanAdditionalInfo"},
         "vietnamAdditionalInfo":{"shape":"VietnamAdditionalInfo"}
       }
     },
@@ -1548,6 +1550,20 @@
       "min":1,
       "pattern":"^https.*\\S.*$"
     },
+    "UzbekistanAdditionalInfo":{
+      "type":"structure",
+      "members":{
+        "taxRegistrationNumberType":{"shape":"UzbekistanTaxRegistrationNumberType"},
+        "vatRegistrationNumber":{"shape":"VatRegistrationNumber"}
+      }
+    },
+    "UzbekistanTaxRegistrationNumberType":{
+      "type":"string",
+      "enum":[
+        "Business",
+        "Individual"
+      ]
+    },
     "ValidationException":{
       "type":"structure",
       "required":[
@@ -1585,6 +1601,10 @@
     "ValidationExceptionFieldList":{
       "type":"list",
       "member":{"shape":"ValidationExceptionField"}
+    },
+    "VatRegistrationNumber":{
+      "type":"string",
+      "pattern":"^[0-9]{12}$"
     },
     "VerificationDetails":{
       "type":"structure",

@@ -58,7 +58,7 @@
     "UpdateModelManifest": "<p> Updates a vehicle model (model manifest). If created vehicles are associated with a vehicle model, it can't be updated.</p>",
     "UpdateSignalCatalog": "<p> Updates a signal catalog. </p>",
     "UpdateStateTemplate": "<p>Updates a state template.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
-    "UpdateVehicle": "<p> Updates a vehicle. </p>"
+    "UpdateVehicle": "<p> Updates a vehicle.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -1378,7 +1378,9 @@
         "CreateVehicleRequestItem$stateTemplates": "<p>Associate state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>",
         "GetVehicleResponse$stateTemplates": "<p>State templates associated with the vehicle.</p>",
         "UpdateVehicleRequest$stateTemplatesToAdd": "<p>Associate state templates with the vehicle.</p>",
-        "UpdateVehicleRequestItem$stateTemplatesToAdd": "<p>Associate additional state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>"
+        "UpdateVehicleRequest$stateTemplatesToUpdate": "<p>Change the <code>stateTemplateUpdateStrategy</code> of state templates already associated with the vehicle.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToAdd": "<p>Associate additional state templates to track the state of the vehicle. State templates determine which signal updates the vehicle sends to the cloud.</p>",
+        "UpdateVehicleRequestItem$stateTemplatesToUpdate": "<p>Change the <code>stateTemplateUpdateStrategy</code> of state templates already associated with the vehicle.</p>"
       }
     },
     "StateTemplateDataExtraDimensionNodePathList": {
@@ -1748,7 +1750,7 @@
       }
     },
     "UpdateVehicleRequestItem": {
-      "base": "<p>Information about the vehicle to update.</p>",
+      "base": "<p>Information about the vehicle to update.</p> <important> <p>Access to certain Amazon Web Services IoT FleetWise features is currently gated. For more information, see <a href=\"https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html\">Amazon Web Services Region and feature availability</a> in the <i>Amazon Web Services IoT FleetWise Developer Guide</i>.</p> </important>",
       "refs": {
         "updateVehicleRequestItems$member": null
       }
