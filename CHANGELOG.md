@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.23 - 2025-04-08
 
 * `Aws\CostExplorer` - This release supports Pagination traits on Cost Anomaly Detection APIs.
 * `Aws\CostOptimizationHub` - This release adds resource type "MemoryDbReservedInstances" and resource type "DynamoDbReservedCapacity" to the GetRecommendation, ListRecommendations, and ListRecommendationSummaries APIs to support new MemoryDB and DynamoDB RI recommendations.
