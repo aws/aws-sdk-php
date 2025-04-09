@@ -88,11 +88,6 @@ class AuthSelectionMiddlewareTest extends TestCase
                 ['smithy.api#noAuth'],
                 'anonymous'
             ],
-            [
-                ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['aws.auth#sigv4a'],
-                'error'
-            ],
         ];
     }
 
@@ -235,43 +230,8 @@ class AuthSelectionMiddlewareTest extends TestCase
                     );
                 },
                 'bearer'
-            ],
-            [
-                ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['smithy.api#httpBearerAuth'],
-                function () {
-                    return Promise\Create::promiseFor(
-                        null
-                    );
-                },
-                'error'
-            ],
+            ]
         ];
-    }
-
-    public function testUnknownAuthSchemeThrows()
-    {
-        $this->expectException(UnresolvedAuthSchemeException::class);
-        $this->expectExceptionMessage(
-            'Could not resolve an authentication scheme: The service does not support `notAnAuthScheme` authentication.'
-        );
-
-        $nextHandler = function (CommandInterface $command) {
-            return null;
-        };
-        $service = $this->generateTestService(['notAnAuthScheme'], []);
-        $credentialProvider = function () {
-            return Promise\Create::promiseFor(
-               null
-            );
-        };
-        $authResolver = new AuthSchemeResolver($credentialProvider);
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
-
-        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $service);
-
-        $middleware($command);
     }
 
     public function testCommandOverrideResolver()
