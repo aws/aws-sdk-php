@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.24 - 2025-04-09
 
 * `Aws\Auth` - Updates auth selection behavior to treat credential retrieval errors as non-terminal.
 * `Aws\DynamoDB` - Documentation update for secondary indexes and Create_Table.
