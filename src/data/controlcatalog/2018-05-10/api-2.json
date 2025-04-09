@@ -190,6 +190,15 @@
         "REGIONAL"
       ]
     },
+    "ControlSeverity":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
     "ControlSummary":{
       "type":"structure",
       "required":[
@@ -200,7 +209,11 @@
       "members":{
         "Arn":{"shape":"ControlArn"},
         "Name":{"shape":"String"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "Behavior":{"shape":"ControlBehavior"},
+        "Severity":{"shape":"ControlSeverity"},
+        "Implementation":{"shape":"ImplementationSummary"},
+        "CreateTime":{"shape":"Timestamp"}
       }
     },
     "Controls":{
@@ -269,16 +282,33 @@
         "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Behavior":{"shape":"ControlBehavior"},
+        "Severity":{"shape":"ControlSeverity"},
         "RegionConfiguration":{"shape":"RegionConfiguration"},
         "Implementation":{"shape":"ImplementationDetails"},
-        "Parameters":{"shape":"ControlParameters"}
+        "Parameters":{"shape":"ControlParameters"},
+        "CreateTime":{"shape":"Timestamp"}
       }
     },
     "ImplementationDetails":{
       "type":"structure",
       "required":["Type"],
       "members":{
-        "Type":{"shape":"ImplementationType"}
+        "Type":{"shape":"ImplementationType"},
+        "Identifier":{"shape":"ImplementationIdentifier"}
+      }
+    },
+    "ImplementationIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-z0-9-]+"
+    },
+    "ImplementationSummary":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ImplementationType"},
+        "Identifier":{"shape":"ImplementationIdentifier"}
       }
     },
     "ImplementationType":{

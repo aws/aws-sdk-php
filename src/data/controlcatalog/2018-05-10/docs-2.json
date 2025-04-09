@@ -62,6 +62,7 @@
     "ControlBehavior": {
       "base": null,
       "refs": {
+        "ControlSummary$Behavior": "<p>An enumerated type, with the following possible values:</p>",
         "GetControlResponse$Behavior": "<p>A term that identifies the control's functional behavior. One of <code>Preventive</code>, <code>Detective</code>, <code>Proactive</code> </p>"
       }
     },
@@ -81,6 +82,13 @@
       "base": null,
       "refs": {
         "RegionConfiguration$Scope": "<p>The coverage of the control, if deployed. Scope is an enumerated type, with value <code>Regional</code>, or <code>Global</code>. A control with Global scope is effective in all Amazon Web Services Regions, regardless of the Region from which it is enabled, or to which it is deployed. A control implemented by an SCP is usually Global in scope. A control with Regional scope has operations that are restricted specifically to the Region from which it is enabled and to which it is deployed. Controls implemented by Config rules and CloudFormation hooks usually are Regional in scope. Security Hub controls usually are Regional in scope.</p>"
+      }
+    },
+    "ControlSeverity": {
+      "base": null,
+      "refs": {
+        "ControlSummary$Severity": "<p>An enumerated type, with the following possible values:</p>",
+        "GetControlResponse$Severity": "<p>An enumerated type, with the following possible values:</p>"
       }
     },
     "ControlSummary": {
@@ -149,10 +157,24 @@
         "GetControlResponse$Implementation": "<p>Returns information about the control, as an <code>ImplementationDetails</code> object that shows the underlying implementation type for a control.</p>"
       }
     },
+    "ImplementationIdentifier": {
+      "base": null,
+      "refs": {
+        "ImplementationDetails$Identifier": "<p>A service-specific identifier for the control, assigned by the service that implemented the control. For example, this identifier could be an Amazon Web Services Config Rule ID or a Security Hub Control ID.</p>",
+        "ImplementationSummary$Identifier": "<p>The identifier originally assigned by the Amazon Web Services service that implements the control. For example, <code>CODEPIPELINE_DEPLOYMENT_COUNT_CHECK</code>.</p>"
+      }
+    },
+    "ImplementationSummary": {
+      "base": "<p>A summary of how the control is implemented, including the Amazon Web Services service that enforces the control and its service-specific identifier. For example, the value of this field could indicate that the control is implemented as an Amazon Web Services Config Rule or an Amazon Web Services Security Hub control.</p>",
+      "refs": {
+        "ControlSummary$Implementation": "<p>An object of type <code>ImplementationSummary</code> that describes how the control is implemented.</p>"
+      }
+    },
     "ImplementationType": {
       "base": null,
       "refs": {
-        "ImplementationDetails$Type": "<p>A string that describes a control's implementation type.</p>"
+        "ImplementationDetails$Type": "<p>A string that describes a control's implementation type.</p>",
+        "ImplementationSummary$Type": "<p>A string that represents the Amazon Web Services service that implements this control. For example, a value of <code>AWS::Config::ConfigRule</code> indicates that the control is implemented by Amazon Web Services Config, and <code>AWS::SecurityHub::SecurityControl</code> indicates implementation by Amazon Web Services Security Hub.</p>"
       }
     },
     "InternalServerException": {
@@ -325,8 +347,10 @@
       "refs": {
         "CommonControlSummary$CreateTime": "<p>The time when the common control was created.</p>",
         "CommonControlSummary$LastUpdateTime": "<p>The time when the common control was most recently updated.</p>",
+        "ControlSummary$CreateTime": "<p>A timestamp that notes the time when the control was released (start of its life) as a governance capability in Amazon Web Services.</p>",
         "DomainSummary$CreateTime": "<p>The time when the domain was created.</p>",
         "DomainSummary$LastUpdateTime": "<p>The time when the domain was most recently updated.</p>",
+        "GetControlResponse$CreateTime": "<p>A timestamp that notes the time when the control was released (start of its life) as a governance capability in Amazon Web Services.</p>",
         "ObjectiveSummary$CreateTime": "<p>The time when the objective was created.</p>",
         "ObjectiveSummary$LastUpdateTime": "<p>The time when the objective was most recently updated.</p>"
       }

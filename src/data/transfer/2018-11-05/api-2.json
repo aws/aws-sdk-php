@@ -2957,6 +2957,11 @@
         "DIRECTORY"
       ]
     },
+    "MaxConcurrentConnections":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "MaxItems":{
       "type":"integer",
       "box":true,
@@ -3383,8 +3388,20 @@
       "type":"structure",
       "members":{
         "UserSecretId":{"shape":"SecretId"},
-        "TrustedHostKeys":{"shape":"SftpConnectorTrustedHostKeyList"}
+        "TrustedHostKeys":{"shape":"SftpConnectorTrustedHostKeyList"},
+        "MaxConcurrentConnections":{"shape":"MaxConcurrentConnections"}
       }
+    },
+    "SftpConnectorConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "HostKey":{"shape":"SftpConnectorHostKey"}
+      }
+    },
+    "SftpConnectorHostKey":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "SftpConnectorTrustedHostKey":{
       "type":"string",
@@ -3395,7 +3412,7 @@
       "type":"list",
       "member":{"shape":"SftpConnectorTrustedHostKey"},
       "max":10,
-      "min":1
+      "min":0
     },
     "SigningAlg":{
       "type":"string",
@@ -3642,7 +3659,8 @@
       "members":{
         "ConnectorId":{"shape":"ConnectorId"},
         "Status":{"shape":"Status"},
-        "StatusMessage":{"shape":"Message"}
+        "StatusMessage":{"shape":"Message"},
+        "SftpConnectionDetails":{"shape":"SftpConnectorConnectionDetails"}
       }
     },
     "TestIdentityProviderRequest":{

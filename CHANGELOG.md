@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Auth` - Updates auth selection behavior to treat credential retrieval errors as non-terminal.
+* `Aws\DynamoDB` - Documentation update for secondary indexes and Create_Table.
+* `Aws\GroundStation` - Support tagging Agents and adjust input field validations
+* `Aws\Transfer` - This launch includes 2 enhancements to SFTP connectors user-experience: 1) Customers can self-serve concurrent connections setting for their connectors, and 2) Customers can discover the public host key of remote servers using their SFTP connectors.
+* `Aws\ControlCatalog` - The GetControl API now surfaces a control's Severity, CreateTime, and Identifier for a control's Implementation. The ListControls API now surfaces a control's Behavior, Severity, CreateTime, and Identifier for a control's Implementation.
+* `Aws\Glue` - The TableOptimizer APIs in AWS Glue now return the DpuHours field in each TableOptimizerRun, providing clients visibility to the DPU-hours used for billing in managed Apache Iceberg table compaction optimization.
+
 ## 3.342.23 - 2025-04-08
 
 * `Aws\CostExplorer` - This release supports Pagination traits on Cost Anomaly Detection APIs.

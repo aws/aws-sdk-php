@@ -6800,7 +6800,7 @@
         "ResourceNumberLimitExceededException$Message": "<p>A message describing the problem.</p>",
         "RunMetrics$NumberOfBytesCompacted": "<p>The number of bytes removed by the compaction job run.</p>",
         "RunMetrics$NumberOfFilesCompacted": "<p>The number of files removed by the compaction job run.</p>",
-        "RunMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>",
+        "RunMetrics$NumberOfDpus": "<p>The number of DPUs consumed by the job, rounded up to the nearest whole number.</p>",
         "RunMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
         "SchedulerNotRunningException$Message": "<p>A message describing the problem.</p>",
         "SchedulerRunningException$Message": "<p>A message describing the problem.</p>",
@@ -11507,9 +11507,9 @@
     "dpuCounts": {
       "base": null,
       "refs": {
-        "IcebergCompactionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>",
-        "IcebergOrphanFileDeletionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>",
-        "IcebergRetentionMetrics$NumberOfDpus": "<p>The number of DPU hours consumed by the job.</p>"
+        "IcebergCompactionMetrics$NumberOfDpus": "<p>The number of DPUs consumed by the job, rounded up to the nearest whole number.</p>",
+        "IcebergOrphanFileDeletionMetrics$NumberOfDpus": "<p>The number of DPUs consumed by the job, rounded up to the nearest whole number.</p>",
+        "IcebergRetentionMetrics$NumberOfDpus": "<p>The number of DPUs consumed by the job, rounded up to the nearest whole number.</p>"
       }
     },
     "dpuDurationInHour": {
@@ -11518,6 +11518,14 @@
         "IcebergCompactionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
         "IcebergOrphanFileDeletionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>",
         "IcebergRetentionMetrics$JobDurationInHour": "<p>The duration of the job in hours.</p>"
+      }
+    },
+    "dpuHours": {
+      "base": null,
+      "refs": {
+        "IcebergCompactionMetrics$DpuHours": "<p>The number of DPU hours consumed by the job.</p>",
+        "IcebergOrphanFileDeletionMetrics$DpuHours": "<p>The number of DPU hours consumed by the job.</p>",
+        "IcebergRetentionMetrics$DpuHours": "<p>The number of DPU hours consumed by the job.</p>"
       }
     },
     "glueConnectionNameString": {

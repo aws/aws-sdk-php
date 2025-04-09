@@ -675,8 +675,8 @@
     "CapabilityHealth":{
       "type":"string",
       "enum":[
-        "UNHEALTHY",
-        "HEALTHY"
+        "HEALTHY",
+        "UNHEALTHY"
       ]
     },
     "CapabilityHealthReason":{
@@ -742,15 +742,20 @@
       "max":20,
       "min":1
     },
-    "ConfigArn":{"type":"string"},
+    "ConfigArn":{
+      "type":"string",
+      "max":424,
+      "min":82,
+      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:config/[a-z0-9]+(-[a-z0-9]+){0,4}/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}(/.{1,256})?$"
+    },
     "ConfigCapabilityType":{
       "type":"string",
       "enum":[
         "antenna-downlink",
         "antenna-downlink-demod-decode",
-        "antenna-uplink",
-        "dataflow-endpoint",
         "tracking",
+        "dataflow-endpoint",
+        "antenna-uplink",
         "uplink-echo",
         "s3-recording"
       ]
@@ -839,19 +844,19 @@
     "ContactStatus":{
       "type":"string",
       "enum":[
-        "AVAILABLE",
-        "AWS_CANCELLED",
-        "AWS_FAILED",
-        "CANCELLED",
-        "CANCELLING",
-        "COMPLETED",
-        "FAILED",
+        "SCHEDULING",
         "FAILED_TO_SCHEDULE",
+        "SCHEDULED",
+        "CANCELLED",
+        "AWS_CANCELLED",
+        "PREPASS",
         "PASS",
         "POSTPASS",
-        "PREPASS",
-        "SCHEDULED",
-        "SCHEDULING"
+        "COMPLETED",
+        "FAILED",
+        "AVAILABLE",
+        "CANCELLING",
+        "AWS_FAILED"
       ]
     },
     "CreateConfigRequest":{
@@ -916,9 +921,9 @@
     "Criticality":{
       "type":"string",
       "enum":[
+        "REQUIRED",
         "PREFERRED",
-        "REMOVED",
-        "REQUIRED"
+        "REMOVED"
       ]
     },
     "CustomerEphemerisPriority":{
@@ -964,7 +969,12 @@
         "dataflowEndpointRegion":{"shape":"String"}
       }
     },
-    "DataflowEndpointGroupArn":{"type":"string"},
+    "DataflowEndpointGroupArn":{
+      "type":"string",
+      "max":146,
+      "min":97,
+      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:dataflow-endpoint-group/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
     "DataflowEndpointGroupDurationInSeconds":{
       "type":"integer",
       "box":true,
@@ -1568,13 +1578,13 @@
       "type":"string",
       "max":8192,
       "min":2,
-      "pattern":"^[{}\\[\\]:.,\"0-9A-z\\-_\\s]{2,8192}$"
+      "pattern":"^[{}\\[\\]:.,\"0-9A-Za-z\\-_\\s]{2,8192}$"
     },
     "KeyAliasArn":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^arn:aws[a-zA-Z-]{0,16}:kms:[a-z]{2}(-[a-z]{1,16}){1,3}-\\d{1}:\\d{12}:((alias/[a-zA-Z0-9:/_-]{1,256}))$"
+      "pattern":"^arn:aws[a-zA-Z-]{0,16}:kms:[-a-z0-9]{1,50}:[0-9]{12}:((alias/[a-zA-Z0-9:/_-]{1,256}))$"
     },
     "KeyAliasName":{
       "type":"string",
@@ -1784,7 +1794,12 @@
       "type":"long",
       "box":true
     },
-    "MissionProfileArn":{"type":"string"},
+    "MissionProfileArn":{
+      "type":"string",
+      "max":138,
+      "min":89,
+      "pattern":"^arn:aws:groundstation:[-a-z0-9]{1,50}:[0-9]{12}:mission-profile/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
     "MissionProfileIdResponse":{
       "type":"structure",
       "members":{
@@ -1821,7 +1836,7 @@
       "type":"integer",
       "box":true,
       "max":100,
-      "min":0
+      "min":1
     },
     "PaginationToken":{
       "type":"string",
@@ -1832,9 +1847,9 @@
     "Polarization":{
       "type":"string",
       "enum":[
+        "RIGHT_HAND",
         "LEFT_HAND",
-        "NONE",
-        "RIGHT_HAND"
+        "NONE"
       ]
     },
     "PositiveDurationInSeconds":{
@@ -1876,7 +1891,8 @@
       ],
       "members":{
         "agentDetails":{"shape":"AgentDetails"},
-        "discoveryData":{"shape":"DiscoveryData"}
+        "discoveryData":{"shape":"DiscoveryData"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "RegisterAgentResponse":{
@@ -2286,8 +2302,8 @@
     },
     "Uuid":{
       "type":"string",
-      "max":128,
-      "min":1,
+      "max":36,
+      "min":36,
       "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
     },
     "VersionString":{
@@ -2313,6 +2329,11 @@
       "max":99999,
       "min":0
     },
-    "satelliteArn":{"type":"string"}
+    "satelliteArn":{
+      "type":"string",
+      "max":132,
+      "min":82,
+      "pattern":"^arn:aws:groundstation:([-a-z0-9]{1,50})?:[0-9]{12}:satellite/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    }
   }
 }
