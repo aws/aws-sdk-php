@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.25 - 2025-04-10
 
 * `Aws\MediaLive` - AWS Elemental MediaLive / Features : Add support for CMAF Ingest CaptionLanguageMappings, TimedMetadataId3 settings, and Link InputResolution.
 * `Aws\QuickSight` - Add support to analysis and sheet level highlighting in QuickSight.
