@@ -134,8 +134,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"LimitExceededException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -592,8 +592,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -611,8 +611,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -1219,8 +1219,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1237,8 +1237,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1255,8 +1255,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -3037,8 +3037,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -3056,8 +3056,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -3075,8 +3075,8 @@
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -5092,7 +5092,8 @@
         "Timezone":{"shape":"String"},
         "WeekStart":{"shape":"DayOfTheWeek"},
         "QBusinessInsightsStatus":{"shape":"QBusinessInsightsStatus"},
-        "ExcludedDataSetArns":{"shape":"DataSetArnsList"}
+        "ExcludedDataSetArns":{"shape":"DataSetArnsList"},
+        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"}
       }
     },
     "AssignmentStatus":{
@@ -19995,7 +19996,8 @@
         "Images":{"shape":"SheetImageList"},
         "Layouts":{"shape":"LayoutList"},
         "SheetControlLayouts":{"shape":"SheetControlLayoutList"},
-        "ContentType":{"shape":"SheetContentType"}
+        "ContentType":{"shape":"SheetContentType"},
+        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"}
       }
     },
     "SheetDefinitionList":{
@@ -24467,6 +24469,12 @@
         "ActionOperations":{"shape":"VisualCustomActionOperationList"}
       }
     },
+    "VisualCustomActionDefaults":{
+      "type":"structure",
+      "members":{
+        "highlightOperation":{"shape":"VisualHighlightOperation"}
+      }
+    },
     "VisualCustomActionList":{
       "type":"list",
       "member":{"shape":"VisualCustomAction"},
@@ -24497,6 +24505,21 @@
       "enum":[
         "DATA_POINT_CLICK",
         "DATA_POINT_MENU"
+      ]
+    },
+    "VisualHighlightOperation":{
+      "type":"structure",
+      "required":["Trigger"],
+      "members":{
+        "Trigger":{"shape":"VisualHighlightTrigger"}
+      }
+    },
+    "VisualHighlightTrigger":{
+      "type":"string",
+      "enum":[
+        "DATA_POINT_CLICK",
+        "DATA_POINT_HOVER",
+        "NONE"
       ]
     },
     "VisualInteractionOptions":{

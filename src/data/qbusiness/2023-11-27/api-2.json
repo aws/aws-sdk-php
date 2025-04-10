@@ -2490,6 +2490,9 @@
                     "shape": "InternalServerException"
                 },
                 {
+                    "shape": "ConflictException"
+                },
+                {
                     "shape": "ThrottlingException"
                 },
                 {
@@ -5482,6 +5485,9 @@
                 },
                 "nextToken": {
                     "shape": "NextToken"
+                },
+                "hallucinationReductionConfiguration": {
+                    "shape": "HallucinationReductionConfiguration"
                 }
             }
         },
@@ -6074,6 +6080,21 @@
             "member": {
                 "shape": "GroupSummary"
             }
+        },
+        "HallucinationReductionConfiguration": {
+            "type": "structure",
+            "members": {
+                "hallucinationReductionControl": {
+                    "shape": "HallucinationReductionControl"
+                }
+            }
+        },
+        "HallucinationReductionControl": {
+            "type": "string",
+            "enum": [
+                "ENABLED",
+                "DISABLED"
+            ]
         },
         "HookConfiguration": {
             "type": "structure",
@@ -8501,6 +8522,13 @@
             "min": 0,
             "pattern": "\\P{C}*"
         },
+        "SystemMessageType": {
+            "type": "string",
+            "enum": [
+                "RESPONSE",
+                "GROUNDED_RESPONSE"
+            ]
+        },
         "Tag": {
             "type": "structure",
             "required": [
@@ -8589,6 +8617,9 @@
         "TextOutputEvent": {
             "type": "structure",
             "members": {
+                "systemMessageType": {
+                    "shape": "SystemMessageType"
+                },
                 "conversationId": {
                     "shape": "ConversationId"
                 },
@@ -8800,6 +8831,9 @@
                 },
                 "creatorModeConfiguration": {
                     "shape": "CreatorModeConfiguration"
+                },
+                "hallucinationReductionConfiguration": {
+                    "shape": "HallucinationReductionConfiguration"
                 }
             }
         },

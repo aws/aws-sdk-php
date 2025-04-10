@@ -10584,6 +10584,10 @@
         "AudioChannelPairs": {
           "shape": "__listOfInputDeviceConfigurableAudioChannelPairConfig",
           "locationName": "audioChannelPairs"
+        },
+        "InputResolution": {
+          "shape": "__string",
+          "locationName": "inputResolution"
         }
       }
     },
@@ -10903,6 +10907,10 @@
         "AudioChannelPairs": {
           "shape": "__listOfInputDeviceUhdAudioChannelPairConfig",
           "locationName": "audioChannelPairs"
+        },
+        "InputResolution": {
+          "shape": "__string",
+          "locationName": "inputResolution"
         }
       }
     },
@@ -17551,6 +17559,22 @@
         "Id3NameModifier": {
           "shape": "__stringMax100",
           "locationName": "id3NameModifier"
+        },
+        "CaptionLanguageMappings": {
+          "shape": "__listOfCmafIngestCaptionLanguageMapping",
+          "locationName": "captionLanguageMappings"
+        },
+        "TimedMetadataId3Frame": {
+          "shape": "CmafTimedMetadataId3Frame",
+          "locationName": "timedMetadataId3Frame"
+        },
+        "TimedMetadataId3Period": {
+          "shape": "__integerMin0Max10000",
+          "locationName": "timedMetadataId3Period"
+        },
+        "TimedMetadataPassthrough": {
+          "shape": "CmafTimedMetadataPassthrough",
+          "locationName": "timedMetadataPassthrough"
         }
       },
       "required": [
@@ -24538,6 +24562,44 @@
       "type": "list",
       "member": {
         "shape": "SdiSourceSummary"
+      }
+    },
+    "CmafIngestCaptionLanguageMapping": {
+      "type": "structure",
+      "members": {
+        "CaptionChannel": {
+          "shape": "__integerMin1Max4",
+          "locationName": "captionChannel"
+        },
+        "LanguageCode": {
+          "shape": "__stringMin3Max3",
+          "locationName": "languageCode"
+        }
+      },
+      "required": [
+        "LanguageCode",
+        "CaptionChannel"
+      ]
+    },
+    "CmafTimedMetadataId3Frame": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PRIV",
+        "TDRL"
+      ]
+    },
+    "CmafTimedMetadataPassthrough": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "__listOfCmafIngestCaptionLanguageMapping": {
+      "type": "list",
+      "member": {
+        "shape": "CmafIngestCaptionLanguageMapping"
       }
     }
   }

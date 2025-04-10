@@ -1317,6 +1317,8 @@
         "PendingModifiedValues$NumCacheNodes": "<p>The new number of cache nodes for the cluster.</p> <p>For clusters running Valkey or Redis OSS, this value must be 1. For clusters running Memcached, this value must be between 1 and 40.</p>",
         "PurchaseReservedCacheNodesOfferingMessage$CacheNodeCount": "<p>The number of cache node instances to reserve.</p> <p>Default: <code>1</code> </p>",
         "ReplicationGroup$SnapshotRetentionLimit": "<p>The number of days for which ElastiCache retains automatic cluster snapshots before deleting them. For example, if you set <code>SnapshotRetentionLimit</code> to 5, a snapshot that was taken today is retained for 5 days before being deleted.</p> <important> <p> If the value of <code>SnapshotRetentionLimit</code> is set to zero (0), backups are turned off.</p> </important>",
+        "ScaleConfig$ScalePercentage": "<p>The percentage by which to scale the Memcached cluster, either horizontally by adding nodes or vertically by increasing resources.</p>",
+        "ScaleConfig$ScaleIntervalMinutes": "<p>The time interval in seconds between scaling operations when performing gradual scaling for a Memcached cluster.</p>",
         "ServerlessCache$SnapshotRetentionLimit": "<p>The current setting for the number of serverless cache snapshots the system will retain. Available for Valkey, Redis OSS and Serverless Memcached only.</p>",
         "Snapshot$NumCacheNodes": "<p>The number of cache nodes in the source cluster.</p> <p>For clusters running Valkey or Redis OSS, this value must be 1. For clusters running Memcached, this value must be between 1 and 40.</p>",
         "Snapshot$Port": "<p>The port number used by each cache nodes in the source cluster.</p>",
@@ -2054,6 +2056,13 @@
       "refs": {
       }
     },
+    "ScaleConfig": {
+      "base": "<p>Configuration settings for horizontal or vertical scaling operations on Memcached clusters.</p>",
+      "refs": {
+        "ModifyCacheClusterMessage$ScaleConfig": "<p>Configures horizontal or vertical scaling for Memcached clusters, specifying the scaling percentage and interval.</p>",
+        "PendingModifiedValues$ScaleConfig": "<p>The scaling configuration changes that are pending for the Memcached cluster.</p>"
+      }
+    },
     "SecurityGroupIdsList": {
       "base": null,
       "refs": {
@@ -2531,7 +2540,7 @@
         "ModifyCacheClusterMessage$NotificationTopicArn": "<p>The Amazon Resource Name (ARN) of the Amazon SNS topic to which notifications are sent.</p> <note> <p>The Amazon SNS topic owner must be same as the cluster owner.</p> </note>",
         "ModifyCacheClusterMessage$CacheParameterGroupName": "<p>The name of the cache parameter group to apply to this cluster. This change is asynchronously applied as soon as possible for parameters when the <code>ApplyImmediately</code> parameter is specified as <code>true</code> for this request.</p>",
         "ModifyCacheClusterMessage$NotificationTopicStatus": "<p>The status of the Amazon SNS notification topic. Notifications are sent only if the status is <code>active</code>.</p> <p>Valid values: <code>active</code> | <code>inactive</code> </p>",
-        "ModifyCacheClusterMessage$Engine": "<p>Modifies the engine listed in a cluster message. The options are redis, memcached or valkey.</p>",
+        "ModifyCacheClusterMessage$Engine": "<p>The engine type used by the cache cluster. The options are valkey, memcached or redis.</p>",
         "ModifyCacheClusterMessage$EngineVersion": "<p>The upgraded version of the cache engine to be run on the cache nodes.</p> <p> <b>Important:</b> You can upgrade to a newer engine version (see <a href=\"https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement\">Selecting a Cache Engine and Version</a>), but you cannot downgrade to an earlier engine version. If you want to use an earlier engine version, you must delete the existing cluster and create it anew with the earlier engine version. </p>",
         "ModifyCacheClusterMessage$SnapshotWindow": "<p>The daily time range (in UTC) during which ElastiCache begins taking a daily snapshot of your cluster. </p>",
         "ModifyCacheClusterMessage$CacheNodeType": "<p>A valid cache node type that you want to scale this cluster up to.</p>",

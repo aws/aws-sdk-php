@@ -3544,7 +3544,8 @@
         "AuthToken":{"shape":"String"},
         "AuthTokenUpdateStrategy":{"shape":"AuthTokenUpdateStrategyType"},
         "LogDeliveryConfigurations":{"shape":"LogDeliveryConfigurationRequestList"},
-        "IpDiscovery":{"shape":"IpDiscovery"}
+        "IpDiscovery":{"shape":"IpDiscovery"},
+        "ScaleConfig":{"shape":"ScaleConfig"}
       }
     },
     "ModifyCacheClusterResult":{
@@ -4026,7 +4027,8 @@
         "AuthTokenStatus":{"shape":"AuthTokenUpdateStatus"},
         "LogDeliveryConfigurations":{"shape":"PendingLogDeliveryConfigurationList"},
         "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
-        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"}
+        "TransitEncryptionMode":{"shape":"TransitEncryptionMode"},
+        "ScaleConfig":{"shape":"ScaleConfig"}
       }
     },
     "PreferredAvailabilityZoneList":{
@@ -4439,6 +4441,13 @@
       "type":"structure",
       "members":{
         "CacheSecurityGroup":{"shape":"CacheSecurityGroup"}
+      }
+    },
+    "ScaleConfig":{
+      "type":"structure",
+      "members":{
+        "ScalePercentage":{"shape":"IntegerOptional"},
+        "ScaleIntervalMinutes":{"shape":"IntegerOptional"}
       }
     },
     "SecurityGroupIdsList":{

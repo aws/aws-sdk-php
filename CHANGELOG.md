@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - AWS Elemental MediaLive / Features : Add support for CMAF Ingest CaptionLanguageMappings, TimedMetadataId3 settings, and Link InputResolution.
+* `Aws\QuickSight` - Add support to analysis and sheet level highlighting in QuickSight.
+* `Aws\MainframeModernization` - Introduce three new APIs: CreateDataSetExportTask, GetDataSetExportTask and ListDataSetExportHistory. Add support for batch restart for Blu Age applications.
+* `Aws\ElastiCache` - AWS ElastiCache SDK now supports using MemcachedUpgradeConfig parameter with ModifyCacheCluster API to enable updating Memcached cache node types. Please refer to updated AWS ElastiCache public documentation for detailed information on API usage and implementation.
+* `Aws\QBusiness` - Adds functionality to enable/disable a new Q Business Hallucination Reduction feature. If enabled, Q Business will detect and attempt to remove Hallucinations from certain Chat requests.
+* `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports horizontal scaling for Elasticache Memcached self-designed clusters using target tracking scaling policies and scheduled scaling.
+
 ## 3.342.24 - 2025-04-09
 
 * `Aws\Auth` - Updates auth selection behavior to treat credential retrieval errors as non-terminal.

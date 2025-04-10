@@ -1773,6 +1773,19 @@
         "ListGroupsResponse$items": "<p>Summary information for list of groups that are mapped to users.</p>"
       }
     },
+    "HallucinationReductionConfiguration": {
+      "base": "<p>Configuration information required to setup hallucination reduction. For more information, see <a href=\"amazonq/latest/qbusiness-ug/hallucination-reduction.html\">hallucination reduction</a>.</p> <note> <p>The hallucination reduction feature won't work if chat orchestration controls are enabled for your application.</p> </note>",
+      "refs": {
+        "GetChatControlsConfigurationResponse$hallucinationReductionConfiguration": "<p> The hallucination reduction settings for your application.</p>",
+        "UpdateChatControlsConfigurationRequest$hallucinationReductionConfiguration": "<p> The hallucination reduction settings for your application.</p>"
+      }
+    },
+    "HallucinationReductionControl": {
+      "base": null,
+      "refs": {
+        "HallucinationReductionConfiguration$hallucinationReductionControl": "<p>Controls whether hallucination reduction has been enabled or disabled for your application. The default status is <code>DISABLED</code>. </p>"
+      }
+    },
     "HookConfiguration": {
       "base": "<p>Provides the configuration information for invoking a Lambda function in Lambda to alter document metadata and content when ingesting documents into Amazon Q Business.</p> <p>You can configure your Lambda function using the <code>PreExtractionHookConfiguration</code> parameter if you want to apply advanced alterations on the original or raw documents.</p> <p>If you want to apply advanced alterations on the Amazon Q Business structured documents, you must configure your Lambda function using <code>PostExtractionHookConfiguration</code>.</p> <p>You can only invoke one Lambda function. However, this function can invoke other functions it requires.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html\">Custom document enrichment</a>. </p>",
       "refs": {
@@ -3266,6 +3279,12 @@
         "BlockedPhrasesConfiguration$systemMessageOverride": "<p>The configured custom message displayed to an end user informing them that they've used a blocked phrase during chat.</p>",
         "BlockedPhrasesConfigurationUpdate$systemMessageOverride": "<p>The configured custom message displayed to your end user when they use blocked phrase during chat.</p>",
         "ContentBlockerRule$systemMessageOverride": "<p>The configured custom message displayed to an end user informing them that they've used a blocked phrase during chat.</p>"
+      }
+    },
+    "SystemMessageType": {
+      "base": null,
+      "refs": {
+        "TextOutputEvent$systemMessageType": "<p>The type of AI-generated message in a <code>TextOutputEvent</code>. Amazon Q Business currently supports two types of messages:</p> <ul> <li> <p> <code>RESPONSE</code> - The Amazon Q Business system response.</p> </li> <li> <p> <code>GROUNDED_RESPONSE</code> - The corrected, hallucination-reduced, response returned by Amazon Q Business. Available only if hallucination reduction is supported and configured for the application and detected in the end user chat query by Amazon Q Business.</p> </li> </ul>"
       }
     },
     "Tag": {
