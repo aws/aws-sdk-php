@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.26 - 2025-04-11
 
 * `Aws\ConnectContactLens` - Making sentiment optional for ListRealtimeContactAnalysisSegments Response depending on conversational analytics configuration
 * `Aws\MarketplaceMetering` - Add support for Marketplace Metering Service dual-stack endpoints for CN regions
