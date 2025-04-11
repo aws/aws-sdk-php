@@ -183,6 +183,7 @@
       "output":{"shape":"DeletePolicyStoreOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"InvalidStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -941,7 +942,8 @@
           "idempotencyToken":true
         },
         "validationSettings":{"shape":"ValidationSettings"},
-        "description":{"shape":"PolicyStoreDescription"}
+        "description":{"shape":"PolicyStoreDescription"},
+        "deletionProtection":{"shape":"DeletionProtection"}
       }
     },
     "CreatePolicyStoreOutput":{
@@ -1063,6 +1065,13 @@
       "type":"structure",
       "members":{
       }
+    },
+    "DeletionProtection":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DeterminingPolicyItem":{
       "type":"structure",
@@ -1248,7 +1257,8 @@
         "validationSettings":{"shape":"ValidationSettings"},
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
-        "description":{"shape":"PolicyStoreDescription"}
+        "description":{"shape":"PolicyStoreDescription"},
+        "deletionProtection":{"shape":"DeletionProtection"}
       }
     },
     "GetPolicyTemplateInput":{
@@ -1424,6 +1434,14 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "InvalidStateException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
     },
     "IpAddr":{
       "type":"string",
@@ -2230,6 +2248,7 @@
       "members":{
         "policyStoreId":{"shape":"PolicyStoreId"},
         "validationSettings":{"shape":"ValidationSettings"},
+        "deletionProtection":{"shape":"DeletionProtection"},
         "description":{"shape":"PolicyStoreDescription"}
       }
     },

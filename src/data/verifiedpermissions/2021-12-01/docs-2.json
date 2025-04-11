@@ -439,6 +439,14 @@
       "refs": {
       }
     },
+    "DeletionProtection": {
+      "base": null,
+      "refs": {
+        "CreatePolicyStoreInput$deletionProtection": "<p>Specifies whether the policy store can be deleted. If enabled, the policy store can't be deleted.</p> <p>The default state is <code>DISABLED</code>.</p>",
+        "GetPolicyStoreOutput$deletionProtection": "<p>Specifies whether the policy store can be deleted. If enabled, the policy store can't be deleted.</p> <p>The default state is <code>DISABLED</code>.</p>",
+        "UpdatePolicyStoreInput$deletionProtection": "<p>Specifies whether the policy store can be deleted. If enabled, the policy store can't be deleted.</p> <p>When you call <code>UpdatePolicyStore</code>, this parameter is unchanged unless explicitly included in the call.</p>"
+      }
+    },
     "DeterminingPolicyItem": {
       "base": "<p>Contains information about one of the policies that determined an authorization decision.</p> <p>This data type is used as an element in a response parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p> <p>Example: <code>\"determiningPolicies\":[{\"policyId\":\"SPEXAMPLEabcdefg111111\"}]</code> </p>",
       "refs": {
@@ -684,6 +692,11 @@
     },
     "InternalServerException": {
       "base": "<p>The request failed because of an internal error. Try your request again later</p>",
+      "refs": {
+      }
+    },
+    "InvalidStateException": {
+      "base": "<p>The policy store can't be deleted because deletion protection is enabled. To delete this policy store, disable deletion protection.</p>",
       "refs": {
       }
     },
@@ -1226,6 +1239,7 @@
         "EntityAttributes$key": null,
         "EvaluationErrorItem$errorDescription": "<p>The error description.</p>",
         "InternalServerException$message": null,
+        "InvalidStateException$message": null,
         "RecordAttribute$key": null,
         "ResourceConflict$resourceId": "<p>The unique identifier of the resource involved in a conflict.</p>",
         "ResourceNotFoundException$message": null,

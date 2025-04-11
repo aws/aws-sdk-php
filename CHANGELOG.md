@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectContactLens` - Making sentiment optional for ListRealtimeContactAnalysisSegments Response depending on conversational analytics configuration
+* `Aws\MarketplaceMetering` - Add support for Marketplace Metering Service dual-stack endpoints for CN regions
+* `Aws\DataZone` - Raise hard limit of authorized principals per SubscriptionTarget from 10 to 20.
+* `Aws\Detective` - Add support for Detective DualStack endpoints
+* `Aws\MarketplaceEntitlementService` - Add support for Marketplace Entitlement Service dual-stack endpoints for CN and GOV regions
+* `Aws\VerifiedPermissions` - Adds deletion protection support to policy stores. Deletion protection is disabled by default, can be enabled via the CreatePolicyStore or UpdatePolicyStore APIs, and is visible in GetPolicyStore.
+* `Aws\DynamoDB` - Doc only update for API descriptions.
+* `Aws\PCS` - Changed the minimum length of clusterIdentifier, computeNodeGroupIdentifier, and queueIdentifier to 3.
+
 ## 3.342.25 - 2025-04-10
 
 * `Aws\MediaLive` - AWS Elemental MediaLive / Features : Add support for CMAF Ingest CaptionLanguageMappings, TimedMetadataId3 settings, and Link InputResolution.
