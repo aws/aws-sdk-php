@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.27 - 2025-04-14
 
 * `Aws\TaxSettings` - Indonesia SOR Tax Registration Launch
 * `Aws\EntityResolution` - This is to add new metrics to our GetIdMappingJob API and also update uniqueId naming for batchDeleteUniqueIds API to be more accurate
