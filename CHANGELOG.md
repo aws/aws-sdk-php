@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TaxSettings` - Indonesia SOR Tax Registration Launch
+* `Aws\EntityResolution` - This is to add new metrics to our GetIdMappingJob API and also update uniqueId naming for batchDeleteUniqueIds API to be more accurate
+
 ## 3.342.26 - 2025-04-11
 
 * `Aws\ConnectContactLens` - Making sentiment optional for ListRealtimeContactAnalysisSegments Response depending on conversational analytics configuration
