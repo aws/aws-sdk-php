@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteMultiRegionClustersAsync(array $args = [])
  * @method \Aws\Result getCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getClusterAsync(array $args = [])
+ * @method \Aws\Result getVpcEndpointServiceName(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVpcEndpointServiceNameAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClustersAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

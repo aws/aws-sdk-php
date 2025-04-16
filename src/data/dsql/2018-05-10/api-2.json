@@ -103,6 +103,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetVpcEndpointServiceName":{
+      "name":"GetVpcEndpointServiceName",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{identifier}/vpc-endpoint-service-name",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVpcEndpointServiceNameInput"},
+      "output":{"shape":"GetVpcEndpointServiceNameOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListClusters":{
       "name":"ListClusters",
       "http":{
@@ -222,7 +239,10 @@
       "member":{"shape":"ClusterArn"}
     },
     "ClusterCreationTime":{"type":"timestamp"},
-    "ClusterId":{"type":"string"},
+    "ClusterId":{
+      "type":"string",
+      "pattern":"[a-z0-9]{26}"
+    },
     "ClusterList":{
       "type":"list",
       "member":{"shape":"ClusterSummary"}
@@ -404,6 +424,24 @@
         "linkedClusterArns":{"shape":"ClusterArnList"}
       }
     },
+    "GetVpcEndpointServiceNameInput":{
+      "type":"structure",
+      "required":["identifier"],
+      "members":{
+        "identifier":{
+          "shape":"ClusterId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetVpcEndpointServiceNameOutput":{
+      "type":"structure",
+      "required":["serviceName"],
+      "members":{
+        "serviceName":{"shape":"ServiceName"}
+      }
+    },
     "Integer":{
       "type":"integer",
       "box":true
@@ -504,6 +542,12 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServiceName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"com\\.amazonaws\\.[a-z0-9-]+\\.dsql-[a-f0-9]{6}"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",

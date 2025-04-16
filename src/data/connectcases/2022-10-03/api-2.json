@@ -5,12 +5,14 @@
     "endpointPrefix":"cases",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"ConnectCases",
     "serviceFullName":"Amazon Connect Cases",
     "serviceId":"ConnectCases",
     "signatureVersion":"v4",
     "signingName":"cases",
-    "uid":"connectcases-2022-10-03"
+    "uid":"connectcases-2022-10-03",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchGetCaseRule":{
@@ -549,7 +551,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "SearchCases":{
@@ -1767,7 +1770,7 @@
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
-      "max":1500,
+      "max":3000,
       "min":0
     },
     "FileArn":{
@@ -2460,7 +2463,8 @@
       "members":{
         "comment":{"shape":"CommentContent"},
         "contact":{"shape":"ContactContent"},
-        "file":{"shape":"FileContent"}
+        "file":{"shape":"FileContent"},
+        "sla":{"shape":"SlaContent"}
       },
       "union":true
     },
@@ -2481,7 +2485,8 @@
       "members":{
         "comment":{"shape":"CommentContent"},
         "contact":{"shape":"Contact"},
-        "file":{"shape":"FileContent"}
+        "file":{"shape":"FileContent"},
+        "sla":{"shape":"SlaInputContent"}
       },
       "union":true
     },
@@ -2490,7 +2495,8 @@
       "enum":[
         "Contact",
         "Comment",
-        "File"
+        "File",
+        "Sla"
       ]
     },
     "RelatedItemTypeFilter":{
@@ -2498,7 +2504,8 @@
       "members":{
         "comment":{"shape":"CommentFilter"},
         "contact":{"shape":"ContactFilter"},
-        "file":{"shape":"FileFilter"}
+        "file":{"shape":"FileFilter"},
+        "sla":{"shape":"SlaFilter"}
       },
       "union":true
     },
@@ -2712,6 +2719,94 @@
       },
       "exception":true
     },
+    "SlaCompletionTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "SlaConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "status",
+        "targetTime",
+        "type"
+      ],
+      "members":{
+        "completionTime":{"shape":"SlaCompletionTime"},
+        "fieldId":{"shape":"FieldId"},
+        "name":{"shape":"SlaName"},
+        "status":{"shape":"SlaStatus"},
+        "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "targetTime":{"shape":"SlaTargetTime"},
+        "type":{"shape":"SlaType"}
+      }
+    },
+    "SlaContent":{
+      "type":"structure",
+      "required":["slaConfiguration"],
+      "members":{
+        "slaConfiguration":{"shape":"SlaConfiguration"}
+      }
+    },
+    "SlaFieldValueUnionList":{
+      "type":"list",
+      "member":{"shape":"FieldValueUnion"},
+      "max":1,
+      "min":1
+    },
+    "SlaFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"SlaName"},
+        "status":{"shape":"SlaStatus"}
+      }
+    },
+    "SlaInputConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "targetSlaMinutes",
+        "type"
+      ],
+      "members":{
+        "fieldId":{"shape":"FieldId"},
+        "name":{"shape":"SlaName"},
+        "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "targetSlaMinutes":{"shape":"TargetSlaMinutes"},
+        "type":{"shape":"SlaType"}
+      }
+    },
+    "SlaInputContent":{
+      "type":"structure",
+      "members":{
+        "slaInputConfiguration":{"shape":"SlaInputConfiguration"}
+      },
+      "union":true
+    },
+    "SlaName":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^.*[\\S]$",
+      "sensitive":true
+    },
+    "SlaStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Overdue",
+        "Met",
+        "NotMet"
+      ]
+    },
+    "SlaTargetTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "SlaType":{
+      "type":"string",
+      "enum":["CaseField"]
+    },
     "Sort":{
       "type":"structure",
       "required":[
@@ -2755,6 +2850,12 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "TargetSlaMinutes":{
+      "type":"long",
+      "box":true,
+      "max":129600,
+      "min":1
     },
     "TemplateArn":{
       "type":"string",

@@ -7,6 +7,7 @@
     "DeleteCluster": "<p>Deletes a cluster in Amazon Aurora DSQL.</p>",
     "DeleteMultiRegionClusters": "<p>Deletes a multi-Region cluster in Amazon Aurora DSQL.</p>",
     "GetCluster": "<p>Retrieves information about a cluster.</p>",
+    "GetVpcEndpointServiceName": "<p>Retrieves the VPC endpoint service name.</p>",
     "ListClusters": "<p>Retrieves information about a list of clusters.</p>",
     "ListTagsForResource": "<p>Lists all of the tags for a resource.</p>",
     "TagResource": "<p>Tags a resource with a map of key and value pairs.</p>",
@@ -75,6 +76,7 @@
         "DeleteClusterOutput$identifier": "<p>The ID of the deleted cluster.</p>",
         "GetClusterInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
         "GetClusterOutput$identifier": "<p>The ID of the retrieved cluster.</p>",
+        "GetVpcEndpointServiceNameInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
         "UpdateClusterInput$identifier": "<p>The ID of the cluster you want to update.</p>",
         "UpdateClusterOutput$identifier": "<p>The ID of the cluster to update.</p>"
       }
@@ -168,6 +170,16 @@
       "refs": {
       }
     },
+    "GetVpcEndpointServiceNameInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetVpcEndpointServiceNameOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
@@ -238,6 +250,12 @@
     "ResourceNotFoundException": {
       "base": "<p>The resource could not be found.</p>",
       "refs": {
+      }
+    },
+    "ServiceName": {
+      "base": "<p>VPC Endpoint Service name for a Cluster</p>",
+      "refs": {
+        "GetVpcEndpointServiceNameOutput$serviceName": "<p>The VPC endpoint service name.</p>"
       }
     },
     "ServiceQuotaExceededException": {
