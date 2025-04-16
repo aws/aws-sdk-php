@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.28 - 2025-04-16
 
 * `Aws\ServiceCatalog` - Updated default value for the access-level-filter in SearchProvisionedProducts API to Account. For access to userLevel or roleLevel, the user must provide access-level-filter parameter.
 * `Aws\S3Tables` - S3 Tables now supports setting encryption configurations on table buckets and tables. Encryption configurations can use server side encryption using AES256 or KMS customer-managed keys.
