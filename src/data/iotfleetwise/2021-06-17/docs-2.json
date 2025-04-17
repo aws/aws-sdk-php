@@ -72,6 +72,12 @@
         "Node$actuator": "<p>Information about a node specified as an actuator.</p> <note> <p>An actuator is a digital representation of a vehicle device.</p> </note>"
       }
     },
+    "ActuatorFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Actuator$fullyQualifiedName": "<p>The fully qualified name of the actuator. For example, the fully qualified name of an actuator might be <code>Vehicle.Front.Left.Door.Lock</code>.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -94,6 +100,12 @@
       "base": "<p>A signal that represents static information about the vehicle, such as engine type or manufacturing date.</p>",
       "refs": {
         "Node$attribute": "<p>Information about a node specified as an attribute.</p> <note> <p>An attribute represents static information about a vehicle.</p> </note>"
+      }
+    },
+    "AttributeFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Attribute$fullyQualifiedName": "<p>The fully qualified name of the attribute. For example, the fully qualified name of an attribute might be <code>Vehicle.Body.Engine.Type</code>.</p>"
       }
     },
     "BatchCreateVehicleRequest": {
@@ -120,6 +132,12 @@
       "base": "<p>A group of signals that are defined in a hierarchical structure.</p>",
       "refs": {
         "Node$branch": "<p>Information about a node specified as a branch.</p> <note> <p>A group of signals that are defined in a hierarchical structure.</p> </note>"
+      }
+    },
+    "BranchFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Branch$fullyQualifiedName": "<p>The fully qualified name of the branch. For example, the fully qualified name of a branch might be <code>Vehicle.Body.Engine</code>.</p>"
       }
     },
     "CampaignStatus": {
@@ -225,6 +243,12 @@
       "refs": {
       }
     },
+    "CreateDecoderManifestRequestModelManifestArnString": {
+      "base": null,
+      "refs": {
+        "CreateDecoderManifestRequest$modelManifestArn": "<p> The Amazon Resource Name (ARN) of the vehicle model (model manifest). </p>"
+      }
+    },
     "CreateDecoderManifestResponse": {
       "base": null,
       "refs": {
@@ -243,6 +267,12 @@
     "CreateModelManifestRequest": {
       "base": null,
       "refs": {
+      }
+    },
+    "CreateModelManifestRequestNodesList": {
+      "base": null,
+      "refs": {
+        "CreateModelManifestRequest$nodes": "<p> A list of nodes, which are a general abstraction of signals. </p>"
       }
     },
     "CreateModelManifestResponse": {
@@ -328,10 +358,22 @@
         "Node$property": "<p>Represents a member of the complex data structure. The <code>datatype</code> of the property can be either primitive or another <code>struct</code>.</p>"
       }
     },
+    "CustomPropertyFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "CustomProperty$fullyQualifiedName": "<p>The fully qualified name of the custom property. For example, the fully qualified name of a custom property might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera.FPS</code>.</p>"
+      }
+    },
     "CustomStruct": {
       "base": "<p>The custom structure represents a complex or higher-order data structure.</p>",
       "refs": {
         "Node$struct": "<p>Represents a complex or higher-order data structure.</p>"
+      }
+    },
+    "CustomStructFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "CustomStruct$fullyQualifiedName": "<p>The fully qualified name of the custom structure. For example, the fully qualified name of a custom structure might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera</code>.</p>"
       }
     },
     "DataDestinationConfig": {
@@ -1273,6 +1315,12 @@
         "Node$sensor": null
       }
     },
+    "SensorFullyQualifiedNameString": {
+      "base": null,
+      "refs": {
+        "Sensor$fullyQualifiedName": "<p>The fully qualified name of the sensor. For example, the fully qualified name of a sensor might be <code>Vehicle.Body.Engine.Battery</code>.</p>"
+      }
+    },
     "SignalCatalogSummary": {
       "base": "<p>Information about a collection of standardized signals, which can be attributes, branches, sensors, or actuators.</p>",
       "refs": {
@@ -1851,7 +1899,6 @@
         "CampaignSummary$targetArn": "<p>The ARN of a vehicle or fleet to which the campaign is deployed.</p>",
         "CreateCampaignRequest$signalCatalogArn": "<p>The Amazon Resource Name (ARN) of the signal catalog to associate with the campaign. </p>",
         "CreateCampaignRequest$targetArn": "<p> The ARN of the vehicle or fleet to deploy a campaign to. </p>",
-        "CreateDecoderManifestRequest$modelManifestArn": "<p> The Amazon Resource Name (ARN) of the vehicle model (model manifest). </p>",
         "CreateDecoderManifestResponse$arn": "<p> The ARN of the created decoder manifest. </p>",
         "CreateFleetRequest$signalCatalogArn": "<p> The Amazon Resource Name (ARN) of a signal catalog. </p>",
         "CreateFleetResponse$arn": "<p> The ARN of the created fleet. </p>",
@@ -2141,7 +2188,6 @@
       "refs": {
         "Actuator$allowedValues": "<p>A list of possible values an actuator can take.</p>",
         "Attribute$allowedValues": "<p>A list of possible values an attribute can be assigned.</p>",
-        "CreateModelManifestRequest$nodes": "<p> A list of nodes, which are a general abstraction of signals. </p>",
         "Sensor$allowedValues": "<p>A list of possible values a sensor can take.</p>"
       }
     },
@@ -2341,21 +2387,17 @@
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "Actuator$fullyQualifiedName": "<p>The fully qualified name of the actuator. For example, the fully qualified name of an actuator might be <code>Vehicle.Front.Left.Door.Lock</code>.</p>",
         "Actuator$unit": "<p>The scientific unit for the actuator.</p>",
         "Actuator$assignedValue": "<p>A specified value for the actuator.</p>",
-        "Attribute$fullyQualifiedName": "<p>The fully qualified name of the attribute. For example, the fully qualified name of an attribute might be <code>Vehicle.Body.Engine.Type</code>.</p>",
         "Attribute$unit": "<p>The scientific unit for the attribute.</p>",
         "Attribute$assignedValue": "<p>A specified value for the attribute.</p>",
         "Attribute$defaultValue": "<p>The default value of the attribute.</p>",
-        "Branch$fullyQualifiedName": "<p>The fully qualified name of the branch. For example, the fully qualified name of a branch might be <code>Vehicle.Body.Engine</code>.</p>",
         "ConflictException$message": null,
         "ConflictException$resource": "<p>The resource on which there are conflicting operations.</p>",
         "ConflictException$resourceType": "<p>The type of resource on which there are conflicting operations..</p>",
+        "CreateModelManifestRequestNodesList$member": null,
         "CreateVehicleError$code": "<p>An HTTP error code.</p>",
         "CreateVehicleError$message": "<p>A description of the HTTP error.</p>",
-        "CustomProperty$fullyQualifiedName": "<p>The fully qualified name of the custom property. For example, the fully qualified name of a custom property might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera.FPS</code>.</p>",
-        "CustomStruct$fullyQualifiedName": "<p>The fully qualified name of the custom structure. For example, the fully qualified name of a custom structure might be <code>ComplexDataTypes.VehicleDataTypes.SVMCamera</code>.</p>",
         "DecoderManifestSummary$name": "<p>The name of the decoder manifest.</p>",
         "DecoderManifestValidationException$message": null,
         "GetDecoderManifestResponse$name": "<p> The name of the decoder manifest. </p>",
@@ -2373,7 +2415,6 @@
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that wasn't found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of resource that wasn't found.</p>",
-        "Sensor$fullyQualifiedName": "<p>The fully qualified name of the sensor. For example, the fully qualified name of a sensor might be <code>Vehicle.Body.Engine.Battery</code>.</p>",
         "Sensor$unit": "<p>The scientific unit of measurement for data collected by the sensor.</p>",
         "SignalCatalogSummary$name": "<p>The name of the signal catalog.</p>",
         "ThrottlingException$message": null,

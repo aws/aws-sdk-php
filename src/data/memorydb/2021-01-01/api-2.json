@@ -890,7 +890,9 @@
         "SnapshotWindow":{"shape":"String"},
         "ACLName":{"shape":"ACLName"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
-        "DataTiering":{"shape":"DataTieringStatus"}
+        "DataTiering":{"shape":"DataTieringStatus"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "ClusterAlreadyExistsFault":{
@@ -1016,7 +1018,9 @@
         "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
-        "DataTiering":{"shape":"BooleanOptional"}
+        "DataTiering":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "CreateClusterResponse":{
@@ -1638,6 +1642,13 @@
       },
       "exception":true
     },
+    "IpDiscovery":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
+    },
     "KeyList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1724,6 +1735,18 @@
       "members":{
       },
       "exception":true
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual_stack"
+      ]
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"NetworkType"}
     },
     "NoOperationFault":{
       "type":"structure",
@@ -2146,7 +2169,8 @@
       "type":"structure",
       "members":{
         "Identifier":{"shape":"String"},
-        "AvailabilityZone":{"shape":"AvailabilityZone"}
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroup":{
@@ -2156,7 +2180,8 @@
         "Description":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "ARN":{"shape":"String"}
+        "ARN":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroupAlreadyExistsFault":{
@@ -2328,7 +2353,8 @@
         "EngineVersion":{"shape":"String"},
         "ReplicaConfiguration":{"shape":"ReplicaConfigurationRequest"},
         "ShardConfiguration":{"shape":"ShardConfigurationRequest"},
-        "ACLName":{"shape":"ACLName"}
+        "ACLName":{"shape":"ACLName"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "UpdateClusterResponse":{

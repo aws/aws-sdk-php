@@ -89,7 +89,8 @@
     "AccessPointPolicy": {
       "base": null,
       "refs": {
-        "S3AccessPointConfiguration$accessPointPolicy": "<p>The access point or multi-region access point policy.</p>"
+        "S3AccessPointConfiguration$accessPointPolicy": "<p>The access point or multi-region access point policy.</p>",
+        "S3ExpressDirectoryAccessPointConfiguration$accessPointPolicy": "<p>The proposed access point policy for an Amazon S3 directory bucket access point.</p>"
       }
     },
     "AccessPreview": {
@@ -1224,9 +1225,10 @@
       }
     },
     "NetworkOriginConfiguration": {
-      "base": "<p>The proposed <code>InternetConfiguration</code> or <code>VpcConfiguration</code> to apply to the Amazon S3 access point. <code>VpcConfiguration</code> does not apply to multi-region access points. You can make the access point accessible from the internet, or you can specify that all requests made through that access point must originate from a specific virtual private cloud (VPC). You can specify only one type of network configuration. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/creating-access-points.html\">Creating access points</a>.</p>",
+      "base": "<p>The proposed <code>InternetConfiguration</code> or <code>VpcConfiguration</code> to apply to the Amazon S3 access point. You can make the access point accessible from the internet, or you can specify that all requests made through that access point must originate from a specific virtual private cloud (VPC). You can specify only one type of network configuration. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/creating-access-points.html\">Creating access points</a>.</p>",
       "refs": {
-        "S3AccessPointConfiguration$networkOrigin": "<p>The proposed <code>Internet</code> and <code>VpcConfiguration</code> to apply to this Amazon S3 access point. <code>VpcConfiguration</code> does not apply to multi-region access points. If the access preview is for a new resource and neither is specified, the access preview uses <code>Internet</code> for the network origin. If the access preview is for an existing resource and neither is specified, the access preview uses the exiting network origin.</p>"
+        "S3AccessPointConfiguration$networkOrigin": "<p>The proposed <code>Internet</code> and <code>VpcConfiguration</code> to apply to this Amazon S3 access point. <code>VpcConfiguration</code> does not apply to multi-region access points. If the access preview is for a new resource and neither is specified, the access preview uses <code>Internet</code> for the network origin. If the access preview is for an existing resource and neither is specified, the access preview uses the existing network origin.</p>",
+        "S3ExpressDirectoryAccessPointConfiguration$networkOrigin": null
       }
     },
     "OrderBy": {
@@ -1554,8 +1556,26 @@
         "S3BucketConfiguration$bucketPolicy": "<p>The proposed bucket policy for the Amazon S3 bucket.</p>"
       }
     },
+    "S3ExpressDirectoryAccessPointArn": {
+      "base": null,
+      "refs": {
+        "S3ExpressDirectoryAccessPointConfigurationsMap$key": null
+      }
+    },
+    "S3ExpressDirectoryAccessPointConfiguration": {
+      "base": "<p>Proposed configuration for an access point attached to an Amazon S3 directory bucket. You can propose up to 10 access points per bucket. If the proposed access point configuration is for an existing Amazon S3 directory bucket, the access preview uses the proposed access point configuration in place of the existing access points. To propose an access point without a policy, you can provide an empty string as the access point policy. For more information about access points for Amazon S3 directory buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-directory-buckets.html\">Managing access to directory buckets with access points</a> in the Amazon Simple Storage Service User Guide.</p>",
+      "refs": {
+        "S3ExpressDirectoryAccessPointConfigurationsMap$value": null
+      }
+    },
+    "S3ExpressDirectoryAccessPointConfigurationsMap": {
+      "base": null,
+      "refs": {
+        "S3ExpressDirectoryBucketConfiguration$accessPoints": "<p>The proposed access points for the Amazon S3 directory bucket.</p>"
+      }
+    },
     "S3ExpressDirectoryBucketConfiguration": {
-      "base": "<p>Proposed access control configuration for an Amazon S3 directory bucket. You can propose a configuration for a new Amazon S3 directory bucket or an existing Amazon S3 directory bucket that you own by specifying the Amazon S3 bucket policy. If the configuration is for an existing Amazon S3 directory bucket and you do not specify the Amazon S3 bucket policy, the access preview uses the existing policy attached to the directory bucket. If the access preview is for a new resource and you do not specify the Amazon S3 bucket policy, the access preview assumes an directory bucket without a policy. To propose deletion of an existing bucket policy, you can specify an empty string. For more information about Amazon S3 directory bucket policies, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html\">Example directory bucket policies for S3 Express One Zone</a>.</p>",
+      "base": "<p>Proposed access control configuration for an Amazon S3 directory bucket. You can propose a configuration for a new Amazon S3 directory bucket or an existing Amazon S3 directory bucket that you own by specifying the Amazon S3 bucket policy. If the configuration is for an existing Amazon S3 directory bucket and you do not specify the Amazon S3 bucket policy, the access preview uses the existing policy attached to the directory bucket. If the access preview is for a new resource and you do not specify the Amazon S3 bucket policy, the access preview assumes an directory bucket without a policy. To propose deletion of an existing bucket policy, you can specify an empty string. For more information about Amazon S3 directory bucket policies, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html\">Example bucket policies for directory buckets</a> in the Amazon Simple Storage Service User Guide.</p>",
       "refs": {
         "Configuration$s3ExpressDirectoryBucket": "<p>The access control configuration is for an Amazon S3 directory bucket.</p>"
       }

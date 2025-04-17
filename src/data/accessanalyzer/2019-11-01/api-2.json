@@ -40,8 +40,8 @@
       "input":{"shape":"CancelPolicyGenerationRequest"},
       "output":{"shape":"CancelPolicyGenerationResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -57,8 +57,8 @@
       "input":{"shape":"CheckAccessNotGrantedRequest"},
       "output":{"shape":"CheckAccessNotGrantedResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -75,8 +75,8 @@
       "input":{"shape":"CheckNoNewAccessRequest"},
       "output":{"shape":"CheckNoNewAccessResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -93,8 +93,8 @@
       "input":{"shape":"CheckNoPublicAccessRequest"},
       "output":{"shape":"CheckNoPublicAccessResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"InvalidParameterException"},
         {"shape":"UnprocessableEntityException"},
         {"shape":"ThrottlingException"},
@@ -111,10 +111,10 @@
       "input":{"shape":"CreateAccessPreviewRequest"},
       "output":{"shape":"CreateAccessPreviewResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -149,8 +149,8 @@
       },
       "input":{"shape":"CreateArchiveRuleRequest"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -202,8 +202,8 @@
       },
       "input":{"shape":"GenerateFindingRecommendationRequest"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -219,8 +219,8 @@
       "output":{"shape":"GetAccessPreviewResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -354,8 +354,8 @@
       "input":{"shape":"GetGeneratedPolicyRequest"},
       "output":{"shape":"GetGeneratedPolicyResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -370,10 +370,10 @@
       "input":{"shape":"ListAccessPreviewFindingsRequest"},
       "output":{"shape":"ListAccessPreviewFindingsResponse"},
       "errors":[
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -389,8 +389,8 @@
       "output":{"shape":"ListAccessPreviewsResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -488,8 +488,8 @@
       "input":{"shape":"ListPolicyGenerationsRequest"},
       "output":{"shape":"ListPolicyGenerationsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -505,8 +505,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -522,8 +522,8 @@
       "output":{"shape":"StartPolicyGenerationResponse"},
       "errors":[
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -557,8 +557,8 @@
       "output":{"shape":"TagResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -575,8 +575,8 @@
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ],
@@ -645,8 +645,8 @@
       "input":{"shape":"ValidatePolicyRequest"},
       "output":{"shape":"ValidatePolicyResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
@@ -697,7 +697,15 @@
         "AWS::SecretsManager::Secret",
         "AWS::SNS::Topic",
         "AWS::SQS::Queue",
-        "AWS::IAM::AssumeRolePolicyDocument"
+        "AWS::IAM::AssumeRolePolicyDocument",
+        "AWS::S3Tables::TableBucket",
+        "AWS::ApiGateway::RestApi",
+        "AWS::CodeArtifact::Domain",
+        "AWS::Backup::BackupVault",
+        "AWS::CloudTrail::Dashboard",
+        "AWS::CloudTrail::EventDataStore",
+        "AWS::S3Tables::Table",
+        "AWS::S3Express::AccessPoint"
       ]
     },
     "AccessDeniedException":{
@@ -2647,10 +2655,27 @@
       }
     },
     "S3BucketPolicy":{"type":"string"},
+    "S3ExpressDirectoryAccessPointArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:s3express:[^:]*:[^:]*:accesspoint/.*"
+    },
+    "S3ExpressDirectoryAccessPointConfiguration":{
+      "type":"structure",
+      "members":{
+        "accessPointPolicy":{"shape":"AccessPointPolicy"},
+        "networkOrigin":{"shape":"NetworkOriginConfiguration"}
+      }
+    },
+    "S3ExpressDirectoryAccessPointConfigurationsMap":{
+      "type":"map",
+      "key":{"shape":"S3ExpressDirectoryAccessPointArn"},
+      "value":{"shape":"S3ExpressDirectoryAccessPointConfiguration"}
+    },
     "S3ExpressDirectoryBucketConfiguration":{
       "type":"structure",
       "members":{
-        "bucketPolicy":{"shape":"S3ExpressDirectoryBucketPolicy"}
+        "bucketPolicy":{"shape":"S3ExpressDirectoryBucketPolicy"},
+        "accessPoints":{"shape":"S3ExpressDirectoryAccessPointConfigurationsMap"}
       }
     },
     "S3ExpressDirectoryBucketPolicy":{"type":"string"},

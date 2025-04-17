@@ -284,6 +284,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DescribeWorkspaceConfiguration":{
+      "name":"DescribeWorkspaceConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceId}/configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeWorkspaceConfigurationRequest"},
+      "output":{"shape":"DescribeWorkspaceConfigurationResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetDefaultScraperConfiguration":{
       "name":"GetDefaultScraperConfiguration",
       "http":{
@@ -486,6 +503,26 @@
         "responseCode":204
       },
       "input":{"shape":"UpdateWorkspaceAliasRequest"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateWorkspaceConfiguration":{
+      "name":"UpdateWorkspaceConfiguration",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/workspaces/{workspaceId}/configuration",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateWorkspaceConfigurationRequest"},
+      "output":{"shape":"UpdateWorkspaceConfigurationResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -909,6 +946,24 @@
         "scraper":{"shape":"ScraperDescription"}
       }
     },
+    "DescribeWorkspaceConfigurationRequest":{
+      "type":"structure",
+      "required":["workspaceId"],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        }
+      }
+    },
+    "DescribeWorkspaceConfigurationResponse":{
+      "type":"structure",
+      "required":["workspaceConfiguration"],
+      "members":{
+        "workspaceConfiguration":{"shape":"WorkspaceConfigurationDescription"}
+      }
+    },
     "DescribeWorkspaceRequest":{
       "type":"structure",
       "required":["workspaceId"],
@@ -1009,6 +1064,46 @@
       "max":2048,
       "min":20,
       "pattern":"^arn:aws[-a-z]*:kms:[-a-z0-9]+:[0-9]{12}:key/[-a-f0-9]+$"
+    },
+    "LabelName":{
+      "type":"string",
+      "min":1,
+      "pattern":"^[a-zA-Z_][a-zA-Z0-9_]*$"
+    },
+    "LabelSet":{
+      "type":"map",
+      "key":{"shape":"LabelName"},
+      "value":{"shape":"LabelValue"}
+    },
+    "LabelValue":{
+      "type":"string",
+      "min":1
+    },
+    "LimitsPerLabelSet":{
+      "type":"structure",
+      "required":[
+        "labelSet",
+        "limits"
+      ],
+      "members":{
+        "labelSet":{"shape":"LabelSet"},
+        "limits":{"shape":"LimitsPerLabelSetEntry"}
+      }
+    },
+    "LimitsPerLabelSetEntry":{
+      "type":"structure",
+      "members":{
+        "maxSeries":{"shape":"LimitsPerLabelSetEntryMaxSeriesLong"}
+      }
+    },
+    "LimitsPerLabelSetEntryMaxSeriesLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
+    "LimitsPerLabelSetList":{
+      "type":"list",
+      "member":{"shape":"LimitsPerLabelSet"}
     },
     "ListRuleGroupsNamespacesRequest":{
       "type":"structure",
@@ -1666,6 +1761,35 @@
         }
       }
     },
+    "UpdateWorkspaceConfigurationRequest":{
+      "type":"structure",
+      "required":["workspaceId"],
+      "members":{
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
+        "retentionPeriodInDays":{"shape":"UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger"},
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        }
+      }
+    },
+    "UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "UpdateWorkspaceConfigurationResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"WorkspaceConfigurationStatus"}
+      }
+    },
     "Uri":{
       "type":"string",
       "max":1024,
@@ -1720,6 +1844,36 @@
     "WorkspaceArn":{
       "type":"string",
       "pattern":"^arn:aws[-a-z]*:aps:[-a-z0-9]+:[0-9]{12}:workspace/.+$"
+    },
+    "WorkspaceConfigurationDescription":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
+        "retentionPeriodInDays":{"shape":"WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger"},
+        "status":{"shape":"WorkspaceConfigurationStatus"}
+      }
+    },
+    "WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "WorkspaceConfigurationStatus":{
+      "type":"structure",
+      "required":["statusCode"],
+      "members":{
+        "statusCode":{"shape":"WorkspaceConfigurationStatusCode"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "WorkspaceConfigurationStatusCode":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "UPDATING",
+        "UPDATE_FAILED"
+      ]
     },
     "WorkspaceDescription":{
       "type":"structure",

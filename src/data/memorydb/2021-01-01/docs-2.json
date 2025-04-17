@@ -34,11 +34,11 @@
     "FailoverShard": "<p>Used to failover a shard. This API is designed for testing the behavior of your application in case of MemoryDB failover. It is not designed to be used as a production-level tool for initiating a failover to overcome a problem you may have with the cluster. Moreover, in certain conditions such as large scale operational events, Amazon may block this API. </p>",
     "ListAllowedMultiRegionClusterUpdates": "<p>Lists the allowed updates for a multi-Region cluster.</p>",
     "ListAllowedNodeTypeUpdates": "<p>Lists all available node types that you can scale to from your cluster's current node type. When you use the UpdateCluster operation to scale your cluster, the value of the NodeType parameter must be one of the node types returned by this operation.</p>",
-    "ListTags": "<p>Lists all tags currently on a named resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track your MemoryDB resources. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p>",
+    "ListTags": "<p>Lists all tags currently on a named resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track your MemoryDB resources. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p>When you add or remove tags from multi region clusters, you might not immediately see the latest effective tags in the ListTags API response due to it being eventually consistent specifically for multi region clusters. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p/>",
     "PurchaseReservedNodesOffering": "<p>Allows you to purchase a reserved node offering. Reserved nodes are not eligible for cancellation and are non-refundable.</p>",
     "ResetParameterGroup": "<p>Modifies the parameters of a parameter group to the engine or system default value. You can reset specific parameters by submitting a list of parameter names. To reset the entire parameter group, specify the AllParameters and ParameterGroupName parameters.</p>",
-    "TagResource": "<p>A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track all your MemoryDB resources. When you add or remove tags on clusters, those actions will be replicated to all nodes in the cluster. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/iam.resourcelevelpermissions.html\">Resource-level permissions</a>.</p> <p>For example, you can use cost-allocation tags to your MemoryDB resources, Amazon generates a cost allocation report as a comma-separated value (CSV) file with your usage and costs aggregated by your tags. You can apply tags that represent business categories (such as cost centers, application names, or owners) to organize your costs across multiple services. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/tagging.html\">Using Cost Allocation Tags</a>.</p>",
-    "UntagResource": "<p>Use this operation to remove tags on a resource.</p>",
+    "TagResource": "<p> Use this operation to add tags to a resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track all your MemoryDB resources. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p>When you add tags to multi region clusters, you might not immediately see the latest effective tags in the ListTags API response due to it being eventually consistent specifically for multi region clusters. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p>You can specify cost-allocation tags for your MemoryDB resources, Amazon generates a cost allocation report as a comma-separated value (CSV) file with your usage and costs aggregated by your tags. You can apply tags that represent business categories (such as cost centers, application names, or owners) to organize your costs across multiple services. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/tagging.html\">Using Cost Allocation Tags</a>.</p>",
+    "UntagResource": "<p>Use this operation to remove tags on a resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track all your MemoryDB resources. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p>When you remove tags from multi region clusters, you might not immediately see the latest effective tags in the ListTags API response due to it being eventually consistent specifically for multi region clusters. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/Tagging-Resources.html\">Tagging your MemoryDB resources</a>.</p> <p>You can specify cost-allocation tags for your MemoryDB resources, Amazon generates a cost allocation report as a comma-separated value (CSV) file with your usage and costs aggregated by your tags. You can apply tags that represent business categories (such as cost centers, application names, or owners) to organize your costs across multiple services. For more information, see <a href=\"https://docs.aws.amazon.com/MemoryDB/latest/devguide/tagging.html\">Using Cost Allocation Tags</a>.</p>",
     "UpdateACL": "<p>Changes the list of users that belong to the Access Control List.</p>",
     "UpdateCluster": "<p>Modifies the settings for a cluster. You can use this operation to change one or more cluster configuration settings by specifying the settings and the new values.</p>",
     "UpdateMultiRegionCluster": "<p>Updates the configuration of an existing multi-Region cluster.</p>",
@@ -748,6 +748,14 @@
       "refs": {
       }
     },
+    "IpDiscovery": {
+      "base": null,
+      "refs": {
+        "Cluster$IpDiscovery": "<p>The mechanism that the cluster uses to discover IP addresses. Returns 'ipv4' when DNS endpoints resolve to IPv4 addresses, or 'ipv6' when DNS endpoints resolve to IPv6 addresses.</p>",
+        "CreateClusterRequest$IpDiscovery": "<p>The mechanism for discovering IP addresses for the cluster discovery protocol. Valid values are 'ipv4' or 'ipv6'. When set to 'ipv4', cluster discovery functions such as cluster slots, cluster shards, and cluster nodes return IPv4 addresses for cluster nodes. When set to 'ipv6', the cluster discovery functions return IPv6 addresses for cluster nodes. The value must be compatible with the NetworkType parameter. If not specified, the default is 'ipv4'.</p>",
+        "UpdateClusterRequest$IpDiscovery": "<p>The mechanism for discovering IP addresses for the cluster discovery protocol. Valid values are 'ipv4' or 'ipv6'. When set to 'ipv4', cluster discovery functions such as cluster slots, cluster shards, and cluster nodes will return IPv4 addresses for cluster nodes. When set to 'ipv6', the cluster discovery functions return IPv6 addresses for cluster nodes. The value must be compatible with the NetworkType parameter. If not specified, the default is 'ipv4'.</p>"
+      }
+    },
     "KeyList": {
       "base": null,
       "refs": {
@@ -818,6 +826,21 @@
     "MultiRegionParameterGroupNotFoundFault": {
       "base": "<p>The specified multi-Region parameter group does not exist.</p>",
       "refs": {
+      }
+    },
+    "NetworkType": {
+      "base": null,
+      "refs": {
+        "Cluster$NetworkType": "<p>The IP address type for the cluster. Returns 'ipv4' for IPv4 only, 'ipv6' for IPv6 only, or 'dual-stack' if the cluster supports both IPv4 and IPv6 addressing.</p>",
+        "CreateClusterRequest$NetworkType": "<p>Specifies the IP address type for the cluster. Valid values are 'ipv4', 'ipv6', or 'dual_stack'. When set to 'ipv4', the cluster will only be accessible via IPv4 addresses. When set to 'ipv6', the cluster will only be accessible via IPv6 addresses. When set to 'dual_stack', the cluster will be accessible via both IPv4 and IPv6 addresses. If not specified, the default is 'ipv4'.</p>",
+        "NetworkTypeList$member": null
+      }
+    },
+    "NetworkTypeList": {
+      "base": null,
+      "refs": {
+        "Subnet$SupportedNetworkTypes": "<p>The network types supported by this subnet. Returns an array of strings that can include 'ipv4', 'ipv6', or both, indicating whether the subnet supports IPv4 only, IPv6 only, or dual-stack deployments.</p>",
+        "SubnetGroup$SupportedNetworkTypes": "<p>The network types supported by this subnet group. Returns an array of strings that can include 'ipv4', 'ipv6', or both, indicating the IP address types that can be used for clusters deployed in this subnet group.</p>"
       }
     },
     "NoOperationFault": {
@@ -1256,7 +1279,7 @@
         "CreateClusterRequest$SnapshotWindow": "<p>The daily time range (in UTC) during which MemoryDB begins taking a daily snapshot of your shard.</p> <p> Example: 05:00-09:00</p> <p> If you do not specify this parameter, MemoryDB automatically chooses an appropriate time range.</p>",
         "CreateClusterRequest$Engine": "<p>The name of the engine to be used for the cluster.</p>",
         "CreateClusterRequest$EngineVersion": "<p>The version number of the Redis OSS engine to be used for the cluster.</p>",
-        "CreateMultiRegionClusterRequest$MultiRegionClusterNameSuffix": "<p>A suffix to be added to the multi-Region cluster name.</p>",
+        "CreateMultiRegionClusterRequest$MultiRegionClusterNameSuffix": "<p>A suffix to be added to the Multi-Region cluster name. Amazon MemoryDB automatically applies a prefix to the Multi-Region cluster Name when it is created. Each Amazon Region has its own prefix. For instance, a Multi-Region cluster Name created in the US-West-1 region will begin with \"virxk\", along with the suffix name you provide. The suffix guarantees uniqueness of the Multi-Region cluster name across multiple regions.</p>",
         "CreateMultiRegionClusterRequest$Description": "<p>A description for the multi-Region cluster.</p>",
         "CreateMultiRegionClusterRequest$Engine": "<p>The name of the engine to be used for the multi-Region cluster.</p>",
         "CreateMultiRegionClusterRequest$EngineVersion": "<p>The version of the engine to be used for the multi-Region cluster.</p>",
@@ -1646,7 +1669,7 @@
     "UpdateStrategy": {
       "base": null,
       "refs": {
-        "UpdateMultiRegionClusterRequest$UpdateStrategy": "<p>Whether to force the update even if it may cause data loss.</p>"
+        "UpdateMultiRegionClusterRequest$UpdateStrategy": "<p>The strategy to use for the update operation. Supported values are \"coordinated\" or \"uncoordinated\".</p>"
       }
     },
     "UpdateSubnetGroupRequest": {

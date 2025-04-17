@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeScraperAsync(array $args = [])
  * @method \Aws\Result describeWorkspace(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceAsync(array $args = [])
+ * @method \Aws\Result describeWorkspaceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeWorkspaceConfigurationAsync(array $args = [])
  * @method \Aws\Result getDefaultScraperConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDefaultScraperConfigurationAsync(array $args = [])
  * @method \Aws\Result listRuleGroupsNamespaces(array $args = [])
@@ -59,5 +61,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateScraperAsync(array $args = [])
  * @method \Aws\Result updateWorkspaceAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkspaceAliasAsync(array $args = [])
+ * @method \Aws\Result updateWorkspaceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWorkspaceConfigurationAsync(array $args = [])
  */
 class PrometheusServiceClient extends AwsClient {}

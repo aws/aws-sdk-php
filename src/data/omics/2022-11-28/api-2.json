@@ -355,6 +355,28 @@
       ],
       "endpoint":{"hostPrefix":"workflows-"}
     },
+    "CreateWorkflowVersion":{
+      "name":"CreateWorkflowVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workflow/{workflowId}/version",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateWorkflowVersionRequest"},
+      "output":{"shape":"CreateWorkflowVersionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "idempotent":true
+    },
     "DeleteAnnotationStore":{
       "name":"DeleteAnnotationStore",
       "http":{
@@ -510,8 +532,8 @@
       "input":{"shape":"DeleteS3AccessPolicyRequest"},
       "output":{"shape":"DeleteS3AccessPolicyResponse"},
       "errors":[
-        {"shape":"InternalServerException"},
         {"shape":"NotSupportedOperationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -591,6 +613,27 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteWorkflowRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"},
+      "idempotent":true
+    },
+    "DeleteWorkflowVersion":{
+      "name":"DeleteWorkflowVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workflow/{workflowId}/version/{versionName}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteWorkflowVersionRequest"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -926,8 +969,8 @@
       "input":{"shape":"GetS3AccessPolicyRequest"},
       "output":{"shape":"GetS3AccessPolicyResponse"},
       "errors":[
-        {"shape":"InternalServerException"},
         {"shape":"NotSupportedOperationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1021,6 +1064,27 @@
       },
       "input":{"shape":"GetWorkflowRequest"},
       "output":{"shape":"GetWorkflowResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
+    "GetWorkflowVersion":{
+      "name":"GetWorkflowVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workflow/{workflowId}/version/{versionName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetWorkflowVersionRequest"},
+      "output":{"shape":"GetWorkflowVersionResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -1440,6 +1504,27 @@
       ],
       "endpoint":{"hostPrefix":"analytics-"}
     },
+    "ListWorkflowVersions":{
+      "name":"ListWorkflowVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workflow/{workflowId}/version",
+        "responseCode":200
+      },
+      "input":{"shape":"ListWorkflowVersionsRequest"},
+      "output":{"shape":"ListWorkflowVersionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
     "ListWorkflows":{
       "name":"ListWorkflows",
       "http":{
@@ -1471,8 +1556,8 @@
       "input":{"shape":"PutS3AccessPolicyRequest"},
       "output":{"shape":"PutS3AccessPolicyResponse"},
       "errors":[
-        {"shape":"InternalServerException"},
         {"shape":"NotSupportedOperationException"},
+        {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
@@ -1785,6 +1870,26 @@
         "responseCode":202
       },
       "input":{"shape":"UpdateWorkflowRequest"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"RequestTimeoutException"}
+      ],
+      "endpoint":{"hostPrefix":"workflows-"}
+    },
+    "UpdateWorkflowVersion":{
+      "name":"UpdateWorkflowVersion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/workflow/{workflowId}/version/{versionName}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateWorkflowVersionRequest"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -2505,7 +2610,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
         "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
         "s3AccessConfig":{"shape":"S3AccessConfig"}
@@ -2525,7 +2630,7 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
         "status":{"shape":"SequenceStoreStatus"},
         "statusMessage":{"shape":"SequenceStoreStatusMessage"},
@@ -2597,7 +2702,8 @@
           "shape":"WorkflowRequestId",
           "idempotencyToken":true
         },
-        "accelerators":{"shape":"Accelerators"}
+        "accelerators":{"shape":"Accelerators"},
+        "storageType":{"shape":"StorageType"}
       }
     },
     "CreateWorkflowRequestStorageCapacityInteger":{
@@ -2612,7 +2718,56 @@
         "arn":{"shape":"WorkflowArn"},
         "id":{"shape":"WorkflowId"},
         "status":{"shape":"WorkflowStatus"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "uuid":{"shape":"WorkflowUuid"}
+      }
+    },
+    "CreateWorkflowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "workflowId",
+        "versionName",
+        "requestId"
+      ],
+      "members":{
+        "workflowId":{
+          "shape":"WorkflowId",
+          "location":"uri",
+          "locationName":"workflowId"
+        },
+        "versionName":{"shape":"WorkflowVersionName"},
+        "definitionZip":{"shape":"Blob"},
+        "definitionUri":{"shape":"WorkflowDefinition"},
+        "accelerators":{"shape":"Accelerators"},
+        "description":{"shape":"WorkflowVersionDescription"},
+        "engine":{"shape":"WorkflowEngine"},
+        "main":{"shape":"WorkflowMain"},
+        "parameterTemplate":{"shape":"WorkflowParameterTemplate"},
+        "requestId":{
+          "shape":"WorkflowRequestId",
+          "idempotencyToken":true
+        },
+        "storageType":{"shape":"StorageType"},
+        "storageCapacity":{"shape":"CreateWorkflowVersionRequestStorageCapacityInteger"},
+        "tags":{"shape":"TagMap"},
+        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"}
+      }
+    },
+    "CreateWorkflowVersionRequestStorageCapacityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":0
+    },
+    "CreateWorkflowVersionResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"WorkflowVersionArn"},
+        "workflowId":{"shape":"WorkflowId"},
+        "versionName":{"shape":"WorkflowVersionName"},
+        "status":{"shape":"WorkflowStatus"},
+        "tags":{"shape":"TagMap"},
+        "uuid":{"shape":"WorkflowUuid"}
       }
     },
     "CreationJobId":{
@@ -2837,6 +2992,25 @@
         }
       }
     },
+    "DeleteWorkflowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "workflowId",
+        "versionName"
+      ],
+      "members":{
+        "workflowId":{
+          "shape":"WorkflowId",
+          "location":"uri",
+          "locationName":"workflowId"
+        },
+        "versionName":{
+          "shape":"WorkflowVersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        }
+      }
+    },
     "Description":{
       "type":"string",
       "max":500,
@@ -2953,6 +3127,10 @@
     "ExportReadSetJobDetailList":{
       "type":"list",
       "member":{"shape":"ExportReadSetJobDetail"}
+    },
+    "FallbackLocation":{
+      "type":"string",
+      "pattern":"$|^s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,1024})/)?"
     },
     "FileInformation":{
       "type":"structure",
@@ -3667,7 +3845,9 @@
         "uuid":{"shape":"RunUuid"},
         "runOutputUri":{"shape":"RunOutputUri"},
         "storageType":{"shape":"StorageType"},
-        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"},
+        "workflowVersionName":{"shape":"WorkflowVersionName"},
+        "workflowUuid":{"shape":"WorkflowUuid"}
       }
     },
     "GetRunResponsePriorityInteger":{
@@ -3786,7 +3966,7 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "s3Access":{"shape":"SequenceStoreS3Access"},
         "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
         "status":{"shape":"SequenceStoreStatus"},
@@ -3937,10 +4117,77 @@
         "statusMessage":{"shape":"WorkflowStatusMessage"},
         "tags":{"shape":"TagMap"},
         "metadata":{"shape":"WorkflowMetadata"},
-        "accelerators":{"shape":"Accelerators"}
+        "accelerators":{"shape":"Accelerators"},
+        "storageType":{"shape":"StorageType"},
+        "uuid":{"shape":"WorkflowUuid"}
       }
     },
     "GetWorkflowResponseStorageCapacityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":0
+    },
+    "GetWorkflowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "workflowId",
+        "versionName"
+      ],
+      "members":{
+        "workflowId":{
+          "shape":"WorkflowId",
+          "location":"uri",
+          "locationName":"workflowId"
+        },
+        "versionName":{
+          "shape":"WorkflowVersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "type":{
+          "shape":"WorkflowType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "export":{
+          "shape":"WorkflowExportList",
+          "location":"querystring",
+          "locationName":"export"
+        },
+        "workflowOwnerId":{
+          "shape":"WorkflowOwnerId",
+          "location":"querystring",
+          "locationName":"workflowOwnerId"
+        }
+      }
+    },
+    "GetWorkflowVersionResponse":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"WorkflowVersionArn"},
+        "workflowId":{"shape":"WorkflowId"},
+        "versionName":{"shape":"WorkflowVersionName"},
+        "accelerators":{"shape":"Accelerators"},
+        "creationTime":{"shape":"WorkflowTimestamp"},
+        "description":{"shape":"WorkflowVersionDescription"},
+        "definition":{"shape":"WorkflowDefinition"},
+        "digest":{"shape":"WorkflowDigest"},
+        "engine":{"shape":"WorkflowEngine"},
+        "main":{"shape":"WorkflowMain"},
+        "metadata":{"shape":"WorkflowMetadata"},
+        "parameterTemplate":{"shape":"WorkflowParameterTemplate"},
+        "status":{"shape":"WorkflowStatus"},
+        "statusMessage":{"shape":"WorkflowStatusMessage"},
+        "storageType":{"shape":"StorageType"},
+        "storageCapacity":{"shape":"GetWorkflowVersionResponseStorageCapacityInteger"},
+        "type":{"shape":"WorkflowType"},
+        "tags":{"shape":"TagMap"},
+        "uuid":{"shape":"WorkflowUuid"},
+        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"}
+      }
+    },
+    "GetWorkflowVersionResponseStorageCapacityInteger":{
       "type":"integer",
       "box":true,
       "max":100000,
@@ -4876,6 +5123,50 @@
         "nextToken":{"shape":"String"}
       }
     },
+    "ListWorkflowVersionsRequest":{
+      "type":"structure",
+      "required":["workflowId"],
+      "members":{
+        "workflowId":{
+          "shape":"WorkflowId",
+          "location":"uri",
+          "locationName":"workflowId"
+        },
+        "type":{
+          "shape":"WorkflowType",
+          "location":"querystring",
+          "locationName":"type"
+        },
+        "workflowOwnerId":{
+          "shape":"WorkflowOwnerId",
+          "location":"querystring",
+          "locationName":"workflowOwnerId"
+        },
+        "startingToken":{
+          "shape":"WorkflowVersionListToken",
+          "location":"querystring",
+          "locationName":"startingToken"
+        },
+        "maxResults":{
+          "shape":"ListWorkflowVersionsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListWorkflowVersionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListWorkflowVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"WorkflowVersionList"},
+        "nextToken":{"shape":"WorkflowVersionListToken"}
+      }
+    },
     "ListWorkflowsRequest":{
       "type":"structure",
       "members":{
@@ -5694,7 +5985,8 @@
         "creationTime":{"shape":"RunTimestamp"},
         "startTime":{"shape":"RunTimestamp"},
         "stopTime":{"shape":"RunTimestamp"},
-        "storageType":{"shape":"StorageType"}
+        "storageType":{"shape":"StorageType"},
+        "workflowVersionName":{"shape":"WorkflowVersionName"}
       }
     },
     "RunListItemPriorityInteger":{
@@ -5924,7 +6216,7 @@
         "description":{"shape":"SequenceStoreDescription"},
         "sseConfig":{"shape":"SseConfig"},
         "creationTime":{"shape":"SyntheticTimestamp_date_time"},
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"},
         "status":{"shape":"SequenceStoreStatus"},
         "statusMessage":{"shape":"SequenceStoreStatusMessage"},
@@ -6313,7 +6605,8 @@
         },
         "retentionMode":{"shape":"RunRetentionMode"},
         "storageType":{"shape":"StorageType"},
-        "workflowOwnerId":{"shape":"WorkflowOwnerId"}
+        "workflowOwnerId":{"shape":"WorkflowOwnerId"},
+        "workflowVersionName":{"shape":"WorkflowVersionName"}
       }
     },
     "StartRunRequestPriorityInteger":{
@@ -6803,7 +7096,7 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
         "s3AccessConfig":{"shape":"S3AccessConfig"}
       }
@@ -6826,7 +7119,7 @@
         "propagatedSetLevelTags":{"shape":"PropagatedSetLevelTags"},
         "status":{"shape":"SequenceStoreStatus"},
         "statusMessage":{"shape":"SequenceStoreStatusMessage"},
-        "fallbackLocation":{"shape":"S3Destination"},
+        "fallbackLocation":{"shape":"FallbackLocation"},
         "s3Access":{"shape":"SequenceStoreS3Access"},
         "eTagAlgorithmFamily":{"shape":"ETagAlgorithmFamily"}
       }
@@ -6878,8 +7171,44 @@
           "locationName":"id"
         },
         "name":{"shape":"WorkflowName"},
-        "description":{"shape":"WorkflowDescription"}
+        "description":{"shape":"WorkflowDescription"},
+        "storageType":{"shape":"StorageType"},
+        "storageCapacity":{"shape":"UpdateWorkflowRequestStorageCapacityInteger"}
       }
+    },
+    "UpdateWorkflowRequestStorageCapacityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":0
+    },
+    "UpdateWorkflowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "workflowId",
+        "versionName"
+      ],
+      "members":{
+        "workflowId":{
+          "shape":"WorkflowId",
+          "location":"uri",
+          "locationName":"workflowId"
+        },
+        "versionName":{
+          "shape":"WorkflowVersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "description":{"shape":"WorkflowVersionDescription"},
+        "storageType":{"shape":"StorageType"},
+        "storageCapacity":{"shape":"UpdateWorkflowVersionRequestStorageCapacityInteger"}
+      }
+    },
+    "UpdateWorkflowVersionRequestStorageCapacityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100000,
+      "min":0
     },
     "UploadId":{
       "type":"string",
@@ -7103,6 +7432,10 @@
       "min":1,
       "pattern":"arn:.+"
     },
+    "WorkflowBucketOwnerId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
+    },
     "WorkflowDefinition":{
       "type":"string",
       "max":256,
@@ -7263,6 +7596,52 @@
       ],
       "max":64,
       "min":1
+    },
+    "WorkflowUuid":{
+      "type":"string",
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+    },
+    "WorkflowVersionArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:.+"
+    },
+    "WorkflowVersionDescription":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "WorkflowVersionList":{
+      "type":"list",
+      "member":{"shape":"WorkflowVersionListItem"}
+    },
+    "WorkflowVersionListItem":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"WorkflowVersionArn"},
+        "workflowId":{"shape":"WorkflowId"},
+        "versionName":{"shape":"WorkflowVersionName"},
+        "description":{"shape":"WorkflowVersionDescription"},
+        "status":{"shape":"WorkflowStatus"},
+        "type":{"shape":"WorkflowType"},
+        "digest":{"shape":"WorkflowDigest"},
+        "creationTime":{"shape":"WorkflowTimestamp"},
+        "metadata":{"shape":"WorkflowMetadata"}
+      }
+    },
+    "WorkflowVersionListToken":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "WorkflowVersionName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z0-9][A-Za-z0-9\\-\\._]*"
     }
   }
 }

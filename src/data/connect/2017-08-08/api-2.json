@@ -4652,6 +4652,7 @@
         "SEND_NOTIFICATION",
         "CREATE_CASE",
         "UPDATE_CASE",
+        "ASSIGN_SLA",
         "END_ASSOCIATED_TASKS",
         "SUBMIT_AUTO_EVALUATION"
       ]
@@ -5021,6 +5022,14 @@
     "AssignContactCategoryActionDefinition":{
       "type":"structure",
       "members":{
+      }
+    },
+    "AssignSlaActionDefinition":{
+      "type":"structure",
+      "required":["SlaAssignmentType"],
+      "members":{
+        "SlaAssignmentType":{"shape":"SlaAssignmentType"},
+        "CaseSlaConfiguration":{"shape":"CaseSlaConfiguration"}
       }
     },
     "AssociateAnalyticsDataSetRequest":{
@@ -5735,6 +5744,21 @@
       "type":"string",
       "max":100,
       "min":1
+    },
+    "CaseSlaConfiguration":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type",
+        "TargetSlaMinutes"
+      ],
+      "members":{
+        "Name":{"shape":"SlaName"},
+        "Type":{"shape":"SlaType"},
+        "FieldId":{"shape":"FieldValueId"},
+        "TargetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "TargetSlaMinutes":{"shape":"TargetSlaMinutes"}
+      }
     },
     "Channel":{
       "type":"string",
@@ -10019,7 +10043,8 @@
         "OnContactEvaluationSubmit",
         "OnMetricDataUpdate",
         "OnCaseCreate",
-        "OnCaseUpdate"
+        "OnCaseUpdate",
+        "OnSlaBreach"
       ]
     },
     "Expiry":{
@@ -15361,6 +15386,7 @@
         "SendNotificationAction":{"shape":"SendNotificationActionDefinition"},
         "CreateCaseAction":{"shape":"CreateCaseActionDefinition"},
         "UpdateCaseAction":{"shape":"UpdateCaseActionDefinition"},
+        "AssignSlaAction":{"shape":"AssignSlaActionDefinition"},
         "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"},
         "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"}
       }
@@ -16262,6 +16288,25 @@
       "max":50,
       "min":1
     },
+    "SlaAssignmentType":{
+      "type":"string",
+      "enum":["CASES"]
+    },
+    "SlaFieldValueUnionList":{
+      "type":"list",
+      "member":{"shape":"FieldValueUnion"},
+      "max":1
+    },
+    "SlaName":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^.*[\\S]$"
+    },
+    "SlaType":{
+      "type":"string",
+      "enum":["CaseField"]
+    },
     "SnapshotVersion":{"type":"string"},
     "Sort":{
       "type":"structure",
@@ -16996,6 +17041,11 @@
     "TargetListType":{
       "type":"string",
       "enum":["PROFICIENCIES"]
+    },
+    "TargetSlaMinutes":{
+      "type":"long",
+      "max":129600,
+      "min":1
     },
     "TaskActionDefinition":{
       "type":"structure",

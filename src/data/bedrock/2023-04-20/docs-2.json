@@ -131,6 +131,24 @@
         "EvaluationConfig$automated": "<p>Contains the configuration details of an automated evaluation job that computes metrics.</p>"
       }
     },
+    "AutomatedEvaluationCustomMetricConfig": {
+      "base": "<p>Defines the configuration of custom metrics to be used in an evaluation job. To learn more about using custom metrics in Amazon Bedrock evaluation jobs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html\">Create a prompt for a custom metrics (LLM-as-a-judge model evaluations)</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-evaluation-custom-metrics-prompt-formats.html\">Create a prompt for a custom metrics (RAG evaluations)</a>.</p>",
+      "refs": {
+        "AutomatedEvaluationConfig$customMetricConfig": "<p>Defines the configuration of custom metrics to be used in an evaluation job.</p>"
+      }
+    },
+    "AutomatedEvaluationCustomMetricSource": {
+      "base": "<p>An array item definining a single custom metric for use in an Amazon Bedrock evaluation job.</p>",
+      "refs": {
+        "AutomatedEvaluationCustomMetrics$member": null
+      }
+    },
+    "AutomatedEvaluationCustomMetrics": {
+      "base": null,
+      "refs": {
+        "AutomatedEvaluationCustomMetricConfig$customMetrics": "<p>Defines a list of custom metrics to be used in an Amazon Bedrock evaluation job.</p>"
+      }
+    },
     "BaseModelIdentifier": {
       "base": null,
       "refs": {
@@ -395,6 +413,36 @@
     "CreateProvisionedModelThroughputResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CustomMetricBedrockEvaluatorModel": {
+      "base": "<p>Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job.</p>",
+      "refs": {
+        "CustomMetricBedrockEvaluatorModels$member": null
+      }
+    },
+    "CustomMetricBedrockEvaluatorModels": {
+      "base": null,
+      "refs": {
+        "CustomMetricEvaluatorModelConfig$bedrockEvaluatorModels": "<p>Defines the model you want to evaluate custom metrics in an Amazon Bedrock evaluation job.</p>"
+      }
+    },
+    "CustomMetricDefinition": {
+      "base": "<p>The definition of a custom metric for use in an Amazon Bedrock evaluation job. A custom metric definition includes a metric name, prompt (instructions) and optionally, a rating scale. Your prompt must include a task description and input variables. The required input variables are different for model-as-a-judge and RAG evaluations.</p> <p>For more information about how to define a custom metric in Amazon Bedrock, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html\">Create a prompt for a custom metrics (LLM-as-a-judge model evaluations)</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/kb-evaluation-custom-metrics-prompt-formats.html\">Create a prompt for a custom metrics (RAG evaluations)</a>.</p>",
+      "refs": {
+        "AutomatedEvaluationCustomMetricSource$customMetricDefinition": "<p>The definition of a custom metric for use in an Amazon Bedrock evaluation job.</p>"
+      }
+    },
+    "CustomMetricEvaluatorModelConfig": {
+      "base": "<p>Configuration of the evaluator model you want to use to evaluate custom metrics in an Amazon Bedrock evaluation job.</p>",
+      "refs": {
+        "AutomatedEvaluationCustomMetricConfig$evaluatorModelConfig": "<p>Configuration of the evaluator model you want to use to evaluate custom metrics in an Amazon Bedrock evaluation job.</p>"
+      }
+    },
+    "CustomMetricInstructions": {
+      "base": null,
+      "refs": {
+        "CustomMetricDefinition$instructions": "<p>The prompt for a custom metric that instructs the evaluator model how to rate the model or RAG source under evaluation.</p>"
       }
     },
     "CustomModelArn": {
@@ -743,7 +791,7 @@
     "EvaluationMetricNames": {
       "base": null,
       "refs": {
-        "EvaluationDatasetMetricConfig$metricNames": "<p>The names of the metrics you want to use for your evaluation job.</p> <p>For knowledge base evaluation jobs that evaluate retrieval only, valid values are \"<code>Builtin.ContextRelevance</code>\", \"<code>Builtin.ContextConverage</code>\".</p> <p>For knowledge base evaluation jobs that evaluate retrieval with response generation, valid values are \"<code>Builtin.Correctness</code>\", \"<code>Builtin.Completeness</code>\", \"<code>Builtin.Helpfulness</code>\", \"<code>Builtin.LogicalCoherence</code>\", \"<code>Builtin.Faithfulness</code>\", \"<code>Builtin.Harmfulness</code>\", \"<code>Builtin.Stereotyping</code>\", \"<code>Builtin.Refusal</code>\".</p> <p>For automated model evaluation jobs, valid values are \"<code>Builtin.Accuracy</code>\", \"<code>Builtin.Robustness</code>\", and \"<code>Builtin.Toxicity</code>\". In model evaluation jobs that use a LLM as judge you can specify \"<code>Builtin.Correctness</code>\", \"<code>Builtin.Completeness\"</code>, \"<code>Builtin.Faithfulness\"</code>, \"<code>Builtin.Helpfulness</code>\", \"<code>Builtin.Coherence</code>\", \"<code>Builtin.Relevance</code>\", \"<code>Builtin.FollowingInstructions</code>\", \"<code>Builtin.ProfessionalStyleAndTone</code>\", You can also specify the following responsible AI related metrics only for model evaluation job that use a LLM as judge \"<code>Builtin.Harmfulness</code>\", \"<code>Builtin.Stereotyping</code>\", and \"<code>Builtin.Refusal</code>\".</p> <p>For human-based model evaluation jobs, the list of strings must match the <code>name</code> parameter specified in <code>HumanEvaluationCustomMetric</code>.</p>"
+        "EvaluationDatasetMetricConfig$metricNames": "<p>The names of the metrics you want to use for your evaluation job.</p> <p>For knowledge base evaluation jobs that evaluate retrieval only, valid values are \"<code>Builtin.ContextRelevance</code>\", \"<code>Builtin.ContextCoverage</code>\".</p> <p>For knowledge base evaluation jobs that evaluate retrieval with response generation, valid values are \"<code>Builtin.Correctness</code>\", \"<code>Builtin.Completeness</code>\", \"<code>Builtin.Helpfulness</code>\", \"<code>Builtin.LogicalCoherence</code>\", \"<code>Builtin.Faithfulness</code>\", \"<code>Builtin.Harmfulness</code>\", \"<code>Builtin.Stereotyping</code>\", \"<code>Builtin.Refusal</code>\".</p> <p>For automated model evaluation jobs, valid values are \"<code>Builtin.Accuracy</code>\", \"<code>Builtin.Robustness</code>\", and \"<code>Builtin.Toxicity</code>\". In model evaluation jobs that use a LLM as judge you can specify \"<code>Builtin.Correctness</code>\", \"<code>Builtin.Completeness\"</code>, \"<code>Builtin.Faithfulness\"</code>, \"<code>Builtin.Helpfulness</code>\", \"<code>Builtin.Coherence</code>\", \"<code>Builtin.Relevance</code>\", \"<code>Builtin.FollowingInstructions</code>\", \"<code>Builtin.ProfessionalStyleAndTone</code>\", You can also specify the following responsible AI related metrics only for model evaluation job that use a LLM as judge \"<code>Builtin.Harmfulness</code>\", \"<code>Builtin.Stereotyping</code>\", and \"<code>Builtin.Refusal</code>\".</p> <p>For human-based model evaluation jobs, the list of strings must match the <code>name</code> parameter specified in <code>HumanEvaluationCustomMetric</code>.</p>"
       }
     },
     "EvaluationModelConfig": {
@@ -875,13 +923,15 @@
       "base": null,
       "refs": {
         "BedrockEvaluatorModel$modelIdentifier": "<p>The Amazon Resource Name (ARN) of the evaluator model used used in knowledge base evaluation job or in model evaluation job that use a model as judge.</p>",
+        "CustomMetricBedrockEvaluatorModel$modelIdentifier": "<p>The Amazon Resource Name (ARN) of the evaluator model for custom metrics. For a list of supported evaluator models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-judge.html\">Evaluate model performance using another LLM as a judge</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-kb.html\">Evaluate the performance of RAG sources using Amazon Bedrock evaluations</a>.</p>",
         "EvaluatorModelIdentifiers$member": null
       }
     },
     "EvaluatorModelIdentifiers": {
       "base": null,
       "refs": {
-        "EvaluationSummary$evaluatorModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used to compute the metrics for a knowledge base evaluation job.</p>"
+        "EvaluationSummary$evaluatorModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used to compute the metrics for a knowledge base evaluation job.</p>",
+        "EvaluationSummary$customMetricsEvaluatorModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used to compute custom metrics in an Amazon Bedrock evaluation job.</p>"
       }
     },
     "ExternalSource": {
@@ -946,6 +996,12 @@
       "base": null,
       "refs": {
         "ListModelCustomizationJobsRequest$statusEquals": "<p>Return customization jobs with the specified status. </p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "RatingScaleItemValue$floatValue": "<p>A floating point number representing the value for a rating in a custom metric rating scale.</p>"
       }
     },
     "FoundationModelArn": {
@@ -2258,6 +2314,12 @@
         "ValidatorMetric$validationLoss": "<p>The validation loss associated with this validator.</p>"
       }
     },
+    "MetricName": {
+      "base": null,
+      "refs": {
+        "CustomMetricDefinition$name": "<p>The name for a custom metric. Names must be unique in your Amazon Web Services region.</p>"
+      }
+    },
     "ModelArchitecture": {
       "base": null,
       "refs": {
@@ -2493,9 +2555,9 @@
     "ModelInvocationJobStatus": {
       "base": null,
       "refs": {
-        "GetModelInvocationJobResponse$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
-        "ListModelInvocationJobsRequest$statusEquals": "<p>Specify a status to filter for batch inference jobs whose statuses match the string you specify.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
-        "ModelInvocationJobSummary$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web Services Support Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>"
+        "GetModelInvocationJobResponse$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
+        "ListModelInvocationJobsRequest$statusEquals": "<p>Specify a status to filter for batch inference jobs whose statuses match the string you specify.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>",
+        "ModelInvocationJobSummary$status": "<p>The status of the batch inference job.</p> <p>The following statuses are possible:</p> <ul> <li> <p>Submitted – This job has been submitted to a queue for validation.</p> </li> <li> <p>Validating – This job is being validated for the requirements described in <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html\">Format and upload your batch inference data</a>. The criteria include the following:</p> <ul> <li> <p>Your IAM service role has access to the Amazon S3 buckets containing your files.</p> </li> <li> <p>Your files are .jsonl files and each individual record is a JSON object in the correct format. Note that validation doesn't check if the <code>modelInput</code> value matches the request body for the model.</p> </li> <li> <p>Your files fulfill the requirements for file size and number of records. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html\">Quotas for Amazon Bedrock</a>.</p> </li> </ul> </li> <li> <p>Scheduled – This job has been validated and is now in a queue. The job will automatically start when it reaches its turn.</p> </li> <li> <p>Expired – This job timed out because it was scheduled but didn't begin before the set timeout duration. Submit a new job request.</p> </li> <li> <p>InProgress – This job has begun. You can start viewing the results in the output S3 location.</p> </li> <li> <p>Completed – This job has successfully completed. View the output files in the output S3 location.</p> </li> <li> <p>PartiallyCompleted – This job has partially completed. Not all of your records could be processed in time. View the output files in the output S3 location.</p> </li> <li> <p>Failed – This job has failed. Check the failure message for any further details. For further assistance, reach out to the <a href=\"https://console.aws.amazon.com/support/home/\">Amazon Web ServicesSupport Center</a>.</p> </li> <li> <p>Stopped – This job was stopped by a user.</p> </li> <li> <p>Stopping – This job is being stopped by a user.</p> </li> </ul>"
       }
     },
     "ModelInvocationJobSummaries": {
@@ -2808,6 +2870,36 @@
       "base": null,
       "refs": {
         "EvaluationInferenceConfig$ragConfigs": "<p>Contains the configuration details of the inference for a knowledge base evaluation job, including either the retrieval only configuration or the retrieval with response generation configuration.</p>"
+      }
+    },
+    "RatingScale": {
+      "base": null,
+      "refs": {
+        "CustomMetricDefinition$ratingScale": "<p>Defines the rating scale to be used for a custom metric. We recommend that you always define a ratings scale when creating a custom metric. If you don't define a scale, Amazon Bedrock won't be able to visually display the results of the evaluation in the console or calculate average values of numerical scores. For more information on specifying a rating scale, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-custom-metrics-prompt-formats.html#model-evaluation-custom-metrics-prompt-formats-schema\">Specifying an output schema (rating scale)</a>.</p>"
+      }
+    },
+    "RatingScaleItem": {
+      "base": "<p>Defines the value and corresponding definition for one rating in a custom metric rating scale.</p>",
+      "refs": {
+        "RatingScale$member": null
+      }
+    },
+    "RatingScaleItemDefinition": {
+      "base": null,
+      "refs": {
+        "RatingScaleItem$definition": "<p>Defines the definition for one rating in a custom metric rating scale.</p>"
+      }
+    },
+    "RatingScaleItemValue": {
+      "base": "<p>Defines the value for one rating in a custom metric rating scale.</p>",
+      "refs": {
+        "RatingScaleItem$value": "<p>Defines the value for one rating in a custom metric rating scale.</p>"
+      }
+    },
+    "RatingScaleItemValueStringValueString": {
+      "base": null,
+      "refs": {
+        "RatingScaleItemValue$stringValue": "<p>A string representing the value for a rating in a custom metric rating scale.</p>"
       }
     },
     "RegisterMarketplaceModelEndpointRequest": {
