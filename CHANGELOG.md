@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.29 - 2025-04-17
 
 * `Aws\IoTFleetWise` - We've added stricter parameter validations to AWS IoT FleetWise signal catalog, model manifest, and decoder manifest APIs.
 * `Aws\Bedrock` - With this release, Bedrock Evaluation will now support custom metrics for evaluation.
