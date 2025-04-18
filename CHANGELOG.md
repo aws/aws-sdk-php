@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.30 - 2025-04-18
 
 * `Aws\QConnect` - This release adds support for the following capabilities: Chunking generative answer replies from Amazon Q in Connect. Integration support for the use of additional LLM models with Amazon Q in Connect.
 * `Aws\ServiceQuotas` - Add new optional SupportCaseAllowed query parameter to the RequestServiceQuotaIncrease API
