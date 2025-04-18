@@ -271,7 +271,7 @@
       "refs": {
         "AIPromptData$apiFormat": "<p>The API format used for this AI Prompt.</p>",
         "AIPromptSummary$apiFormat": "<p>The API format used for this AI Prompt.</p>",
-        "CreateAIPromptRequest$apiFormat": "<p>The API Format of the AI Prompt.</p>"
+        "CreateAIPromptRequest$apiFormat": "<p>The API Format of the AI Prompt.</p> <p>Recommended values: <code>MESSAGES | TEXT_COMPLETIONS</code> </p> <note> <p>The values <code>ANTHROPIC_CLAUDE_MESSAGES | ANTHROPIC_CLAUDE_TEXT_COMPLETIONS</code> will be deprecated.</p> </note>"
       }
     },
     "AIPromptData": {
@@ -286,9 +286,9 @@
     "AIPromptModelIdentifier": {
       "base": null,
       "refs": {
-        "AIPromptData$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code>.</p>",
+        "AIPromptData$modelId": "<p>The identifier of the model used for this AI Prompt. The following model Ids are supported:</p> <ul> <li> <p> <code>anthropic.claude-3-haiku--v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>apac.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>apac.anthropic.claude-3-5-sonnet--v2:0</code> </p> </li> <li> <p> <code>apac.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>eu.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>eu.anthropic.claude-3-7-sonnet-20250219-v1:0</code> </p> </li> <li> <p> <code>eu.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-lite-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-micro-v1:0</code> </p> </li> <li> <p> <code>us.amazon.nova-pro-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-5-haiku-20241022-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-7-sonnet-20250219-v1:0</code> </p> </li> <li> <p> <code>us.anthropic.claude-3-haiku-20240307-v1:0</code> </p> </li> </ul>",
         "AIPromptSummary$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code>.</p>",
-        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt. Model Ids supported are: <code>anthropic.claude-3-haiku-20240307-v1:0</code> </p>"
+        "CreateAIPromptRequest$modelId": "<p>The identifier of the model used for this AI Prompt.</p>"
       }
     },
     "AIPromptSummary": {
@@ -389,34 +389,34 @@
     "Arn": {
       "base": null,
       "refs": {
-        "AIAgentData$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
         "AIAgentData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AIAgentSummary$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
+        "AIAgentData$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
         "AIAgentSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AIGuardrailData$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
+        "AIAgentSummary$aiAgentArn": "<p>The Amazon Resource Name (ARN) of the AI agent.</p>",
         "AIGuardrailData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AIGuardrailSummary$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
+        "AIGuardrailData$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
         "AIGuardrailSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AIPromptData$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
+        "AIGuardrailSummary$aiGuardrailArn": "<p>The Amazon Resource Name (ARN) of the AI Guardrail.</p>",
         "AIPromptData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AIPromptSummary$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
+        "AIPromptData$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
         "AIPromptSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
-        "AssistantAssociationData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "AIPromptSummary$aiPromptArn": "<p>The Amazon Resource Name (ARN) of the AI Prompt.</p>",
         "AssistantAssociationData$assistantAssociationArn": "<p>The Amazon Resource Name (ARN) of the assistant association.</p>",
-        "AssistantAssociationSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "AssistantAssociationData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AssistantAssociationSummary$assistantAssociationArn": "<p>The Amazon Resource Name (ARN) of the assistant association.</p>",
+        "AssistantAssociationSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AssistantData$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "AssistantSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
+        "ContentAssociationData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "ContentAssociationData$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentAssociationData$contentAssociationArn": "<p>The Amazon Resource Name (ARN) of the content association.</p>",
-        "ContentAssociationData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "ContentAssociationSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "ContentAssociationSummary$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentAssociationSummary$contentAssociationArn": "<p>The Amazon Resource Name (ARN) of the content association.</p>",
-        "ContentAssociationSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "ContentData$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
-        "ContentReference$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentReference$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "ContentReference$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentSummary$contentArn": "<p>The Amazon Resource Name (ARN) of the content.</p>",
         "ContentSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "ExtendedMessageTemplateData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
@@ -430,15 +430,15 @@
         "MessageTemplateSearchResultData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "MessageTemplateSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "MessageTemplateVersionSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
-        "QuickResponseData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "QuickResponseData$quickResponseArn": "<p>The Amazon Resource Name (ARN) of the quick response.</p>",
-        "QuickResponseSearchResultData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "QuickResponseData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "QuickResponseSearchResultData$quickResponseArn": "<p>The Amazon Resource Name (ARN) of the quick response.</p>",
-        "QuickResponseSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
+        "QuickResponseSearchResultData$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "QuickResponseSummary$quickResponseArn": "<p>The Amazon Resource Name (ARN) of the quick response.</p>",
+        "QuickResponseSummary$knowledgeBaseArn": "<p>The Amazon Resource Name (ARN) of the knowledge base.</p>",
         "SessionData$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
-        "SessionSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "SessionSummary$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>",
+        "SessionSummary$assistantArn": "<p>The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateSessionDataResponse$sessionArn": "<p>The Amazon Resource Name (ARN) of the session.</p>"
@@ -595,6 +595,7 @@
       "refs": {
         "CreateQuickResponseRequest$isActive": "<p>Whether the quick response is active.</p>",
         "ExtendedMessageTemplateData$isActive": "<p>Whether the version of the message template is activated.</p>",
+        "MessageConfiguration$generateFillerMessage": "<p>Generates a filler response when tool selection is <code>QUESTION</code>.</p>",
         "MessageTemplateFilterField$includeNoExistence": "<p>Whether to treat null value as a match for the attribute field.</p>",
         "MessageTemplateQueryField$allowFuzziness": "<p>Whether the query expects only exact matches on the attribute field values. The results of the query will only include exact matches if this parameter is set to false.</p>",
         "MessageTemplateSearchResultData$isActive": "<p>Whether the version of the message template is activated.</p>",
@@ -605,10 +606,10 @@
         "QuickResponseSearchResultData$isActive": "<p>Whether the quick response is active.</p>",
         "QuickResponseSummary$isActive": "<p>Whether the quick response is active.</p>",
         "UpdateContentRequest$removeOverrideLinkOutUri": "<p>Unset the existing <code>overrideLinkOutUri</code> if it exists.</p>",
-        "UpdateQuickResponseRequest$isActive": "<p>Whether the quick response is active. </p>",
-        "UpdateQuickResponseRequest$removeDescription": "<p>Whether to remove the description from the quick response.</p>",
         "UpdateQuickResponseRequest$removeGroupingConfiguration": "<p>Whether to remove the grouping configuration of the quick response.</p>",
-        "UpdateQuickResponseRequest$removeShortcutKey": "<p>Whether to remove the shortcut key of the quick response.</p>"
+        "UpdateQuickResponseRequest$removeDescription": "<p>Whether to remove the description from the quick response.</p>",
+        "UpdateQuickResponseRequest$removeShortcutKey": "<p>Whether to remove the shortcut key of the quick response.</p>",
+        "UpdateQuickResponseRequest$isActive": "<p>Whether the quick response is active. </p>"
       }
     },
     "Channel": {
@@ -711,8 +712,8 @@
     "ContactAttributeKeys": {
       "base": null,
       "refs": {
-        "QuickResponseSearchResultData$attributesInterpolated": "<p>The user defined contact attributes that are resolved when the search result is returned.</p>",
-        "QuickResponseSearchResultData$attributesNotInterpolated": "<p>The user defined contact attributes that are not resolved when the search result is returned.</p>"
+        "QuickResponseSearchResultData$attributesNotInterpolated": "<p>The user defined contact attributes that are not resolved when the search result is returned.</p>",
+        "QuickResponseSearchResultData$attributesInterpolated": "<p>The user defined contact attributes that are resolved when the search result is returned.</p>"
       }
     },
     "ContactAttributeValue": {
@@ -1067,6 +1068,7 @@
     "DataSummaryList": {
       "base": null,
       "refs": {
+        "GenerativeChunkDataDetails$references": "<p>The references used to generate the LLM response.</p>",
         "GenerativeDataDetails$references": "<p>The references used to generative the LLM response.</p>"
       }
     },
@@ -1268,10 +1270,10 @@
     "DocumentText": {
       "base": "<p>The text of the document.</p>",
       "refs": {
-        "Document$excerpt": "<p>The excerpt from the document.</p>",
         "Document$title": "<p>The title of the document.</p>",
-        "TextData$excerpt": null,
-        "TextData$title": null
+        "Document$excerpt": "<p>The excerpt from the document.</p>",
+        "TextData$title": null,
+        "TextData$excerpt": null
       }
     },
     "EmailHeader": {
@@ -1377,6 +1379,12 @@
       "base": null,
       "refs": {
         "FixedSizeChunkingConfiguration$overlapPercentage": "<p>The percentage of overlap between adjacent chunks of a data source.</p>"
+      }
+    },
+    "GenerativeChunkDataDetails": {
+      "base": "<p>Details about the generative chunk data.</p>",
+      "refs": {
+        "DataDetails$generativeChunkData": "<p>Details about the generative chunk data.</p>"
       }
     },
     "GenerativeContentFeedbackData": {
@@ -2168,6 +2176,13 @@
         "SearchSessionsRequest$maxResults": "<p>The maximum number of results to return per page.</p>"
       }
     },
+    "MessageConfiguration": {
+      "base": "<p>The configuration for a <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_SendMessage.html\">SendMessage</a> request.</p>",
+      "refs": {
+        "SendMessageRequest$configuration": "<p>The configuration of the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_SendMessage.html\">SendMessage</a> request.</p>",
+        "SendMessageResponse$configuration": "<p>The configuration of the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_SendMessage.html\">SendMessage</a> request.</p>"
+      }
+    },
     "MessageData": {
       "base": "<p>The message data.</p>",
       "refs": {
@@ -2240,63 +2255,63 @@
         "AgentAttributes$firstName": "<p>The agent’s first name as entered in their Amazon Connect user account.</p>",
         "AgentAttributes$lastName": "<p>The agent’s last name as entered in their Amazon Connect user account.</p>",
         "CustomAttributes$value": null,
+        "CustomerProfileAttributes$profileId": "<p>The unique identifier of a customer profile.</p>",
+        "CustomerProfileAttributes$profileARN": "<p>The ARN of a customer profile.</p>",
+        "CustomerProfileAttributes$firstName": "<p>The customer's first name.</p>",
+        "CustomerProfileAttributes$middleName": "<p>The customer's middle name.</p>",
+        "CustomerProfileAttributes$lastName": "<p>The customer's last name.</p>",
         "CustomerProfileAttributes$accountNumber": "<p>A unique account number that you have given to the customer.</p>",
+        "CustomerProfileAttributes$emailAddress": "<p>The customer's email address, which has not been specified as a personal or business address.</p>",
+        "CustomerProfileAttributes$phoneNumber": "<p>The customer's phone number, which has not been specified as a mobile, home, or business number.</p>",
         "CustomerProfileAttributes$additionalInformation": "<p>Any additional information relevant to the customer's profile.</p>",
+        "CustomerProfileAttributes$partyType": "<p>The customer's party type.</p>",
+        "CustomerProfileAttributes$businessName": "<p>The name of the customer's business.</p>",
+        "CustomerProfileAttributes$birthDate": "<p>The customer's birth date.</p>",
+        "CustomerProfileAttributes$gender": "<p>The customer's gender.</p>",
+        "CustomerProfileAttributes$mobilePhoneNumber": "<p>The customer's mobile phone number.</p>",
+        "CustomerProfileAttributes$homePhoneNumber": "<p>The customer's mobile phone number.</p>",
+        "CustomerProfileAttributes$businessPhoneNumber": "<p>The customer's business phone number.</p>",
+        "CustomerProfileAttributes$businessEmailAddress": "<p>The customer's business email address.</p>",
         "CustomerProfileAttributes$address1": "<p>The first line of a customer address.</p>",
         "CustomerProfileAttributes$address2": "<p>The second line of a customer address.</p>",
         "CustomerProfileAttributes$address3": "<p>The third line of a customer address.</p>",
         "CustomerProfileAttributes$address4": "<p>The fourth line of a customer address.</p>",
-        "CustomerProfileAttributes$billingAddress1": "<p>The first line of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingAddress2": "<p>The second line of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingAddress3": "<p>The third line of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingAddress4": "<p>The fourth line of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingCity": "<p>The city of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingCountry": "<p>The country of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingCounty": "<p>The county of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingPostalCode": "<p>The postal code of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingProvince": "<p>The province of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$billingState": "<p>The state of a customer’s billing address.</p>",
-        "CustomerProfileAttributes$birthDate": "<p>The customer's birth date.</p>",
-        "CustomerProfileAttributes$businessEmailAddress": "<p>The customer's business email address.</p>",
-        "CustomerProfileAttributes$businessName": "<p>The name of the customer's business.</p>",
-        "CustomerProfileAttributes$businessPhoneNumber": "<p>The customer's business phone number.</p>",
         "CustomerProfileAttributes$city": "<p>The city in which a customer lives.</p>",
-        "CustomerProfileAttributes$country": "<p>The country in which a customer lives.</p>",
         "CustomerProfileAttributes$county": "<p>The county in which a customer lives.</p>",
-        "CustomerProfileAttributes$emailAddress": "<p>The customer's email address, which has not been specified as a personal or business address.</p>",
-        "CustomerProfileAttributes$firstName": "<p>The customer's first name.</p>",
-        "CustomerProfileAttributes$gender": "<p>The customer's gender.</p>",
-        "CustomerProfileAttributes$homePhoneNumber": "<p>The customer's mobile phone number.</p>",
-        "CustomerProfileAttributes$lastName": "<p>The customer's last name.</p>",
-        "CustomerProfileAttributes$mailingAddress1": "<p>The first line of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingAddress2": "<p>The second line of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingAddress3": "<p>The third line of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingAddress4": "<p>The fourth line of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingCity": "<p>The city of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingCountry": "<p>The country of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingCounty": "<p>The county of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingPostalCode": "<p>The postal code of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingProvince": "<p>The province of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$mailingState": "<p>The state of a customer’s mailing address.</p>",
-        "CustomerProfileAttributes$middleName": "<p>The customer's middle name.</p>",
-        "CustomerProfileAttributes$mobilePhoneNumber": "<p>The customer's mobile phone number.</p>",
-        "CustomerProfileAttributes$partyType": "<p>The customer's party type.</p>",
-        "CustomerProfileAttributes$phoneNumber": "<p>The customer's phone number, which has not been specified as a mobile, home, or business number.</p>",
+        "CustomerProfileAttributes$country": "<p>The country in which a customer lives.</p>",
         "CustomerProfileAttributes$postalCode": "<p>The postal code of a customer address.</p>",
-        "CustomerProfileAttributes$profileARN": "<p>The ARN of a customer profile.</p>",
-        "CustomerProfileAttributes$profileId": "<p>The unique identifier of a customer profile.</p>",
         "CustomerProfileAttributes$province": "<p>The province in which a customer lives.</p>",
+        "CustomerProfileAttributes$state": "<p>The state in which a customer lives.</p>",
         "CustomerProfileAttributes$shippingAddress1": "<p>The first line of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingAddress2": "<p>The second line of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingAddress3": "<p>The third line of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingAddress4": "<p>The fourth line of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingCity": "<p>The city of a customer’s shipping address.</p>",
-        "CustomerProfileAttributes$shippingCountry": "<p>The country of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingCounty": "<p>The county of a customer’s shipping address.</p>",
+        "CustomerProfileAttributes$shippingCountry": "<p>The country of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingPostalCode": "<p>The postal code of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingProvince": "<p>The province of a customer’s shipping address.</p>",
         "CustomerProfileAttributes$shippingState": "<p>The state of a customer’s shipping address.</p>",
-        "CustomerProfileAttributes$state": "<p>The state in which a customer lives.</p>",
+        "CustomerProfileAttributes$mailingAddress1": "<p>The first line of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingAddress2": "<p>The second line of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingAddress3": "<p>The third line of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingAddress4": "<p>The fourth line of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingCity": "<p>The city of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingCounty": "<p>The county of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingCountry": "<p>The country of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingPostalCode": "<p>The postal code of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingProvince": "<p>The province of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$mailingState": "<p>The state of a customer’s mailing address.</p>",
+        "CustomerProfileAttributes$billingAddress1": "<p>The first line of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingAddress2": "<p>The second line of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingAddress3": "<p>The third line of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingAddress4": "<p>The fourth line of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingCity": "<p>The city of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingCounty": "<p>The county of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingCountry": "<p>The country of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingPostalCode": "<p>The postal code of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingProvince": "<p>The province of a customer’s billing address.</p>",
+        "CustomerProfileAttributes$billingState": "<p>The state of a customer’s billing address.</p>",
         "SystemAttributes$name": "<p>The name of the task.</p>",
         "SystemEndpointAttributes$address": "<p>The customer's phone number if used with <code>customerEndpoint</code>, or the number the customer dialed to call your contact center if used with <code>systemEndpoint</code>.</p>"
       }
@@ -2314,8 +2329,8 @@
     "MessageTemplateBodyContentProvider": {
       "base": "<p>The container of the message template body.</p>",
       "refs": {
-        "EmailMessageTemplateContentBody$html": "<p>The message body, in HTML format, to use in email messages that are based on the message template. We recommend using HTML format for email clients that render HTML content. You can include links, formatted text, and more in an HTML message.</p>",
         "EmailMessageTemplateContentBody$plainText": "<p>The message body, in plain text format, to use in email messages that are based on the message template. We recommend using plain text format for email clients that don't render HTML content and clients that are connected to high-latency networks, such as mobile devices.</p>",
+        "EmailMessageTemplateContentBody$html": "<p>The message body, in HTML format, to use in email messages that are based on the message template. We recommend using HTML format for email clients that render HTML content. You can include links, formatted text, and more in an HTML message.</p>",
         "SMSMessageTemplateContentBody$plainText": "<p>The message body to use in SMS messages.</p>"
       }
     },
@@ -2495,8 +2510,10 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "GenerativeChunkDataDetails$nextChunkToken": "<p>The token for the next set of chunks. Use the value returned in the previous response in the next request to retrieve the next set of chunks.</p>",
         "GetNextMessageRequest$nextMessageToken": "<p>The token for the next message. Use the value returned in the SendMessage or previous response in the next request to retrieve the next message.</p>",
         "GetNextMessageResponse$nextMessageToken": "<p>The token for the next message.</p>",
+        "GetRecommendationsRequest$nextChunkToken": "<p>The token for the next set of chunks. Use the value returned in the previous response in the next request to retrieve the next set of chunks.</p>",
         "ListAIAgentVersionsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIAgentVersionsResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListAIAgentsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2650,7 +2667,8 @@
         "ListAIAgentVersionsRequest$origin": "<p>The origin of the AI Agent versions to be listed. <code>SYSTEM</code> for a default AI Agent created by Q in Connect or <code>CUSTOMER</code> for an AI Agent created by calling AI Agent creation APIs. </p>",
         "ListAIAgentsRequest$origin": "<p>The origin of the AI Agents to be listed. <code>SYSTEM</code> for a default AI Agent created by Q in Connect or <code>CUSTOMER</code> for an AI Agent created by calling AI Agent creation APIs. </p>",
         "ListAIPromptVersionsRequest$origin": "<p>The origin of the AI Prompt versions to be listed. <code>SYSTEM</code> for a default AI Agent created by Q in Connect or <code>CUSTOMER</code> for an AI Agent created by calling AI Agent creation APIs. </p>",
-        "ListAIPromptsRequest$origin": "<p>The origin of the AI Prompts to be listed. <code>SYSTEM</code> for a default AI Agent created by Q in Connect or <code>CUSTOMER</code> for an AI Agent created by calling AI Agent creation APIs. </p>"
+        "ListAIPromptsRequest$origin": "<p>The origin of the AI Prompts to be listed. <code>SYSTEM</code> for a default AI Agent created by Q in Connect or <code>CUSTOMER</code> for an AI Agent created by calling AI Agent creation APIs. </p>",
+        "SessionData$origin": "<p>The origin of the Session to be listed. <code>SYSTEM</code> for a default Session created by Amazon Q in Connect or <code>CUSTOMER</code> for a Session created by calling <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_CreateSession.html\">CreateSession</a> API.</p>"
       }
     },
     "ParsingConfiguration": {
@@ -2793,8 +2811,8 @@
     "QuickResponseContentProvider": {
       "base": "<p>The container quick response content.</p>",
       "refs": {
-        "QuickResponseContents$markdown": null,
-        "QuickResponseContents$plainText": null
+        "QuickResponseContents$plainText": null,
+        "QuickResponseContents$markdown": null
       }
     },
     "QuickResponseContents": {
@@ -3253,10 +3271,11 @@
       "base": null,
       "refs": {
         "DocumentText$text": "<p>Text in the document.</p>",
+        "GenerativeChunkDataDetails$completion": "<p>A chunk of the LLM response.</p>",
         "GenerativeDataDetails$completion": "<p>The LLM response.</p>",
         "IntentDetectedDataDetails$intent": "<p>The detected intent.</p>",
-        "SelfServiceConversationHistory$botResponse": "<p>The bot response of the conversation history data.</p>",
-        "SelfServiceConversationHistory$inputTranscript": "<p>The input transcript of the conversation history data.</p>"
+        "SelfServiceConversationHistory$inputTranscript": "<p>The input transcript of the conversation history data.</p>",
+        "SelfServiceConversationHistory$botResponse": "<p>The bot response of the conversation history data.</p>"
       }
     },
     "ServerSideEncryptionConfiguration": {
@@ -3410,9 +3429,9 @@
       "base": null,
       "refs": {
         "ContentData$urlExpiry": "<p>The expiration time of the URL as an epoch timestamp.</p>",
+        "ImportJobData$urlExpiry": "<p>The expiration time of the URL as an epoch timestamp.</p>",
         "ImportJobData$createdTime": "<p>The timestamp when the import job was created.</p>",
         "ImportJobData$lastModifiedTime": "<p>The timestamp when the import job data was last modified.</p>",
-        "ImportJobData$urlExpiry": "<p>The expiration time of the URL as an epoch timestamp.</p>",
         "ImportJobSummary$createdTime": "<p>The timestamp when the import job was created.</p>",
         "ImportJobSummary$lastModifiedTime": "<p>The timestamp when the import job was last modified.</p>",
         "KnowledgeBaseData$lastContentModificationTime": "<p>An epoch timestamp indicating the most recent content modification inside the knowledge base. If no content exists in a knowledge base, this value is unset.</p>",
@@ -3742,8 +3761,8 @@
       "base": null,
       "refs": {
         "ContentData$url": "<p>The URL of the content.</p>",
-        "ImportJobData$failedRecordReport": "<p>The link to download the information of resource data that failed to be imported.</p>",
         "ImportJobData$url": "<p>The download link to the resource file that is uploaded to the import job.</p>",
+        "ImportJobData$failedRecordReport": "<p>The link to download the information of resource data that failed to be imported.</p>",
         "MessageTemplateAttachment$url": "<p>A pre-signed Amazon S3 URL that can be used to download the attachment file.</p>",
         "StartContentUploadResponse$url": "<p>The URL of the upload.</p>"
       }
@@ -3757,8 +3776,8 @@
     "UrlFilterList": {
       "base": null,
       "refs": {
-        "WebCrawlerConfiguration$exclusionFilters": "<p>A list of one or more exclusion regular expression patterns to exclude certain URLs. If you specify an inclusion and exclusion filter/pattern and both match a URL, the exclusion filter takes precedence and the web content of the URL isn’t crawled.</p>",
-        "WebCrawlerConfiguration$inclusionFilters": "<p>A list of one or more inclusion regular expression patterns to include certain URLs. If you specify an inclusion and exclusion filter/pattern and both match a URL, the exclusion filter takes precedence and the web content of the URL isn’t crawled.</p>"
+        "WebCrawlerConfiguration$inclusionFilters": "<p>A list of one or more inclusion regular expression patterns to include certain URLs. If you specify an inclusion and exclusion filter/pattern and both match a URL, the exclusion filter takes precedence and the web content of the URL isn’t crawled.</p>",
+        "WebCrawlerConfiguration$exclusionFilters": "<p>A list of one or more exclusion regular expression patterns to exclude certain URLs. If you specify an inclusion and exclusion filter/pattern and both match a URL, the exclusion filter takes precedence and the web content of the URL isn’t crawled.</p>"
       }
     },
     "UrlFilterPattern": {
@@ -3770,18 +3789,18 @@
     "Uuid": {
       "base": null,
       "refs": {
-        "AIAgentData$aiAgentId": "<p>The identifier of the AI Agent.</p>",
         "AIAgentData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "AIAgentSummary$aiAgentId": "<p>The identifier of the AI Agent.</p>",
+        "AIAgentData$aiAgentId": "<p>The identifier of the AI Agent.</p>",
         "AIAgentSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "AIGuardrailData$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
+        "AIAgentSummary$aiAgentId": "<p>The identifier of the AI Agent.</p>",
         "AIGuardrailData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "AIGuardrailSummary$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
+        "AIGuardrailData$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "AIGuardrailSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "AIPromptData$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
+        "AIGuardrailSummary$aiGuardrailId": "<p>The identifier of the Amazon Q in Connect AI Guardrail.</p>",
         "AIPromptData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "AIPromptSummary$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
+        "AIPromptData$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "AIPromptSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "AIPromptSummary$aiPromptId": "<p>The identifier of the Amazon Q in Connect AI prompt.</p>",
         "ActivateMessageTemplateResponse$messageTemplateId": "<p>The identifier of the message template.</p>",
         "AssistantAssociationData$assistantAssociationId": "<p>The identifier of the assistant association.</p>",
         "AssistantAssociationData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
@@ -3791,23 +3810,23 @@
         "AssistantData$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "AssistantSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "AssociationConfiguration$associationId": "<p>The identifier of the association for this Association Configuration.</p>",
-        "ContentAssociationData$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "ContentAssociationData$contentId": "<p>The identifier of the content.</p>",
         "ContentAssociationData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
-        "ContentAssociationSummary$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "ContentAssociationSummary$contentId": "<p>The identifier of the content.</p>",
+        "ContentAssociationData$contentId": "<p>The identifier of the content.</p>",
+        "ContentAssociationData$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ContentAssociationSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "ContentAssociationSummary$contentId": "<p>The identifier of the content.</p>",
+        "ContentAssociationSummary$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ContentData$contentId": "<p>The identifier of the content.</p>",
         "ContentData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
-        "ContentReference$contentId": "<p>The identifier of the content.</p>",
         "ContentReference$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base.</p>",
+        "ContentReference$contentId": "<p>The identifier of the content.</p>",
         "ContentSummary$contentId": "<p>The identifier of the content.</p>",
         "ContentSummary$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base.</p>",
         "DeactivateMessageTemplateResponse$messageTemplateId": "<p>The identifier of the message template.</p>",
         "DeleteImportJobRequest$importJobId": "<p>The identifier of the import job to be deleted.</p>",
         "DeleteMessageTemplateAttachmentRequest$attachmentId": "<p>The identifier of the attachment file.</p>",
-        "ExtendedMessageTemplateData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "ExtendedMessageTemplateData$messageTemplateId": "<p>The identifier of the message template.</p>",
+        "ExtendedMessageTemplateData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "GenerativeReference$generationId": "<p> The identifier of the LLM model. </p>",
         "GetImportJobRequest$importJobId": "<p>The identifier of the import job to retrieve.</p>",
         "GetNextMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
@@ -3822,29 +3841,29 @@
         "KnowledgeBaseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageOutput$messageId": "<p>The identifier of a message.</p>",
         "MessageTemplateAttachment$attachmentId": "<p>The identifier of the attachment file.</p>",
-        "MessageTemplateData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageTemplateData$messageTemplateId": "<p>The identifier of the message template.</p>",
-        "MessageTemplateSearchResultData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "MessageTemplateData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageTemplateSearchResultData$messageTemplateId": "<p>The identifier of the message template.</p>",
-        "MessageTemplateSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "MessageTemplateSearchResultData$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageTemplateSummary$messageTemplateId": "<p>The identifier of the message template.</p>",
-        "MessageTemplateVersionSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "MessageTemplateSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "MessageTemplateVersionSummary$messageTemplateId": "<p>The identifier of the message template.</p>",
+        "MessageTemplateVersionSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "PutFeedbackRequest$targetId": "<p>The identifier of the feedback target.</p>",
         "PutFeedbackResponse$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "PutFeedbackResponse$targetId": "<p>The identifier of the feedback target.</p>",
-        "QuickResponseData$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "QuickResponseData$quickResponseId": "<p>The identifier of the quick response.</p>",
-        "QuickResponseSearchResultData$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "QuickResponseData$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "QuickResponseSearchResultData$quickResponseId": "<p>The identifier of the quick response.</p>",
-        "QuickResponseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "QuickResponseSearchResultData$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "QuickResponseSummary$quickResponseId": "<p>The identifier of the quick response.</p>",
+        "QuickResponseSummary$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "RecommendationTrigger$id": "<p>The identifier of the recommendation trigger.</p>",
         "ResultData$resultId": "<p>The identifier of the result data.</p>",
         "SendMessageResponse$requestMessageId": "<p>The identifier of the submitted message.</p>",
         "SessionData$sessionId": "<p>The identifier of the session.</p>",
-        "SessionSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "SessionSummary$sessionId": "<p>The identifier of the session.</p>",
+        "SessionSummary$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "SourceContentDataDetails$id": "<p>The identifier of the source content.</p>",
         "UpdateSessionDataResponse$sessionId": "<p>The identifier of the session.</p>"
       }
@@ -3860,8 +3879,8 @@
         "CreateAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAIPromptVersionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateAssistantAssociationRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "CreateContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
         "CreateContentAssociationRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "CreateContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
         "CreateContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateMessageTemplateAttachmentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "CreateMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3878,11 +3897,11 @@
         "DeleteAssistantAssociationRequest$assistantAssociationId": "<p>The identifier of the assistant association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAssistantAssociationRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteAssistantRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "DeleteContentAssociationRequest$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "DeleteContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
         "DeleteContentAssociationRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
-        "DeleteContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
+        "DeleteContentAssociationRequest$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
+        "DeleteContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteImportJobRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
         "DeleteKnowledgeBaseRequest$knowledgeBaseId": "<p>The knowledge base to delete content from. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "DeleteMessageTemplateAttachmentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3895,9 +3914,9 @@
         "GetAssistantAssociationRequest$assistantAssociationId": "<p>The identifier of the assistant association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetAssistantAssociationRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetAssistantRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "GetContentAssociationRequest$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "GetContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
         "GetContentAssociationRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "GetContentAssociationRequest$contentId": "<p>The identifier of the content.</p>",
+        "GetContentAssociationRequest$contentAssociationId": "<p>The identifier of the content association. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetContentSummaryRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3907,8 +3926,8 @@
         "GetMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetNextMessageRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant.</p>",
         "GetNextMessageRequest$sessionId": "<p>The identifier of the Amazon Q in Connect session.</p>",
-        "GetQuickResponseRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should be a QUICK_RESPONSES type knowledge base.</p>",
         "GetQuickResponseRequest$quickResponseId": "<p>The identifier of the quick response.</p>",
+        "GetQuickResponseRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should be a QUICK_RESPONSES type knowledge base.</p>",
         "GetRecommendationsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetRecommendationsRequest$sessionId": "<p>The identifier of the session. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "GetSessionRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3920,8 +3939,8 @@
         "ListAIPromptVersionsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAIPromptsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListAssistantAssociationsRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "ListContentAssociationsRequest$contentId": "<p>The identifier of the content.</p>",
         "ListContentAssociationsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base.</p>",
+        "ListContentAssociationsRequest$contentId": "<p>The identifier of the content.</p>",
         "ListContentsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListImportJobsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "ListMessageTemplateVersionsRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -3950,8 +3969,8 @@
         "UpdateAIGuardrailRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateAIPromptRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateAssistantAIAgentRequest$assistantId": "<p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
-        "UpdateContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateContentRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN</p>",
+        "UpdateContentRequest$contentId": "<p>The identifier of the content. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateKnowledgeBaseTemplateUriRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. This should not be a QUICK_RESPONSES type knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateMessageTemplateMetadataRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
         "UpdateMessageTemplateRequest$knowledgeBaseId": "<p>The identifier of the knowledge base. Can be either the ID or the ARN. URLs cannot contain the ARN.</p>",
@@ -4001,15 +4020,15 @@
       "base": null,
       "refs": {
         "AIAgentConfigurationData$aiAgentId": "<p>The ID of the AI Agent to be configured.</p>",
-        "AnswerRecommendationAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation Guardrail used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
-        "AnswerRecommendationAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$intentLabelingGenerationAIPromptId": "<p>The AI Prompt identifier for the Intent Labeling prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "AnswerRecommendationAIAgentConfiguration$queryReformulationAIPromptId": "<p>The AI Prompt identifier for the Query Reformulation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
-        "ManualSearchAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation guardrail used by the MANUAL_SEARCH AI Agent.</p>",
+        "AnswerRecommendationAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
+        "AnswerRecommendationAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation Guardrail used by the <code>ANSWER_RECOMMENDATION</code> AI Agent.</p>",
         "ManualSearchAIAgentConfiguration$answerGenerationAIPromptId": "<p>The AI Prompt identifier for the Answer Generation prompt used by the MANUAL_SEARCH AI Agent.</p>",
-        "SelfServiceAIAgentConfiguration$selfServiceAIGuardrailId": "<p>The AI Guardrail identifier used by the SELF_SERVICE AI Agent.</p>",
+        "ManualSearchAIAgentConfiguration$answerGenerationAIGuardrailId": "<p>The AI Guardrail identifier for the Answer Generation guardrail used by the MANUAL_SEARCH AI Agent.</p>",
+        "SelfServiceAIAgentConfiguration$selfServicePreProcessingAIPromptId": "<p>The AI Prompt identifier for the Self Service Pre-Processing prompt used by the SELF_SERVICE AI Agent</p>",
         "SelfServiceAIAgentConfiguration$selfServiceAnswerGenerationAIPromptId": "<p>The AI Prompt identifier for the Self Service Answer Generation prompt used by the SELF_SERVICE AI Agent</p>",
-        "SelfServiceAIAgentConfiguration$selfServicePreProcessingAIPromptId": "<p>The AI Prompt identifier for the Self Service Pre-Processing prompt used by the SELF_SERVICE AI Agent</p>"
+        "SelfServiceAIAgentConfiguration$selfServiceAIGuardrailId": "<p>The AI Guardrail identifier used by the SELF_SERVICE AI Agent.</p>"
       }
     },
     "ValidationException": {

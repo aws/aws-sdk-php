@@ -5,11 +5,13 @@
     "endpointPrefix":"servicequotas",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Service Quotas",
     "serviceId":"Service Quotas",
     "signatureVersion":"v4",
     "targetPrefix":"ServiceQuotasV20190624",
-    "uid":"service-quotas-2019-06-24"
+    "uid":"service-quotas-2019-06-24",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateServiceQuotaTemplate":{
@@ -789,6 +791,12 @@
       ]
     },
     "QuotaContextScopeType":{"type":"string"},
+    "QuotaDescription":{
+      "type":"string",
+      "max":350,
+      "min":0,
+      "pattern":"^.{0,350}$"
+    },
     "QuotaExceededException":{
       "type":"structure",
       "members":{
@@ -829,7 +837,8 @@
         "ServiceCode":{"shape":"ServiceCode"},
         "QuotaCode":{"shape":"QuotaCode"},
         "DesiredValue":{"shape":"QuotaValue"},
-        "ContextId":{"shape":"QuotaContextId"}
+        "ContextId":{"shape":"QuotaContextId"},
+        "SupportCaseAllowed":{"shape":"SupportCaseAllowed"}
       }
     },
     "RequestServiceQuotaIncreaseResponse":{
@@ -925,7 +934,8 @@
         "Period":{"shape":"QuotaPeriod"},
         "ErrorReason":{"shape":"ErrorReason"},
         "QuotaAppliedAtLevel":{"shape":"AppliedLevelEnum"},
-        "QuotaContext":{"shape":"QuotaContextInfo"}
+        "QuotaContext":{"shape":"QuotaContextInfo"},
+        "Description":{"shape":"QuotaDescription"}
       }
     },
     "ServiceQuotaIncreaseRequestInTemplate":{
@@ -969,6 +979,7 @@
       "min":1,
       "pattern":"(Sum|Maximum)"
     },
+    "SupportCaseAllowed":{"type":"boolean"},
     "Tag":{
       "type":"structure",
       "required":[

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QConnect` - This release adds support for the following capabilities: Chunking generative answer replies from Amazon Q in Connect. Integration support for the use of additional LLM models with Amazon Q in Connect.
+* `Aws\ServiceQuotas` - Add new optional SupportCaseAllowed query parameter to the RequestServiceQuotaIncrease API
+* `Aws\SageMaker` - This release adds a new Neuron driver option in InferenceAmiVersion parameter for ProductionVariant. Additionally, it adds support for fetching model lifecycle status in the ListModelPackages API. Users can now use this API to view the lifecycle stage of models that have been shared with them.
+
 ## 3.342.29 - 2025-04-17
 
 * `Aws\IoTFleetWise` - We've added stricter parameter validations to AWS IoT FleetWise signal catalog, model manifest, and decoder manifest APIs.
