@@ -630,14 +630,26 @@
         "BudgetName":{"shape":"BudgetName"},
         "BudgetLimit":{"shape":"Spend"},
         "PlannedBudgetLimits":{"shape":"PlannedBudgetLimits"},
-        "CostFilters":{"shape":"CostFilters"},
-        "CostTypes":{"shape":"CostTypes"},
+        "CostFilters":{
+          "shape":"CostFilters",
+          "deprecated":true,
+          "deprecatedMessage":"CostFilters lack support for newer dimensions and filtering options. Please consider using the new 'FilterExpression' field.",
+          "deprecatedSince":"2025-04-18"
+        },
+        "CostTypes":{
+          "shape":"CostTypes",
+          "deprecated":true,
+          "deprecatedMessage":"CostTypes lack support for newer record type dimensions and filtering options. Please consider using the new 'Metrics' field.",
+          "deprecatedSince":"2025-04-18"
+        },
         "TimeUnit":{"shape":"TimeUnit"},
         "TimePeriod":{"shape":"TimePeriod"},
         "CalculatedSpend":{"shape":"CalculatedSpend"},
         "BudgetType":{"shape":"BudgetType"},
         "LastUpdatedTime":{"shape":"GenericTimestamp"},
-        "AutoAdjustData":{"shape":"AutoAdjustData"}
+        "AutoAdjustData":{"shape":"AutoAdjustData"},
+        "FilterExpression":{"shape":"Expression"},
+        "Metrics":{"shape":"Metrics"}
       }
     },
     "BudgetName":{
@@ -711,6 +723,15 @@
         "LESS_THAN",
         "EQUAL_TO"
       ]
+    },
+    "CostCategoryName":{"type":"string"},
+    "CostCategoryValues":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"CostCategoryName"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
     },
     "CostFilters":{
       "type":"map",
@@ -1058,7 +1079,8 @@
       ],
       "members":{
         "AccountId":{"shape":"AccountId"},
-        "BudgetName":{"shape":"BudgetName"}
+        "BudgetName":{"shape":"BudgetName"},
+        "ShowFilterExpression":{"shape":"NullableBoolean"}
       }
     },
     "DescribeBudgetResponse":{
@@ -1073,7 +1095,8 @@
       "members":{
         "AccountId":{"shape":"AccountId"},
         "MaxResults":{"shape":"MaxResultsDescribeBudgets"},
-        "NextToken":{"shape":"GenericString"}
+        "NextToken":{"shape":"GenericString"},
+        "ShowFilterExpression":{"shape":"NullableBoolean"}
       }
     },
     "DescribeBudgetsResponse":{
@@ -1124,6 +1147,44 @@
         "Subscribers":{"shape":"Subscribers"},
         "NextToken":{"shape":"GenericString"}
       }
+    },
+    "Dimension":{
+      "type":"string",
+      "enum":[
+        "AZ",
+        "INSTANCE_TYPE",
+        "LINKED_ACCOUNT",
+        "LINKED_ACCOUNT_NAME",
+        "OPERATION",
+        "PURCHASE_TYPE",
+        "REGION",
+        "SERVICE",
+        "SERVICE_CODE",
+        "USAGE_TYPE",
+        "USAGE_TYPE_GROUP",
+        "RECORD_TYPE",
+        "OPERATING_SYSTEM",
+        "TENANCY",
+        "SCOPE",
+        "PLATFORM",
+        "SUBSCRIPTION_ID",
+        "LEGAL_ENTITY_NAME",
+        "INVOICING_ENTITY",
+        "DEPLOYMENT_OPTION",
+        "DATABASE_ENGINE",
+        "CACHE_ENGINE",
+        "INSTANCE_TYPE_FAMILY",
+        "BILLING_ENTITY",
+        "RESERVATION_ID",
+        "RESOURCE_ID",
+        "RIGHTSIZING_TYPE",
+        "SAVINGS_PLANS_TYPE",
+        "SAVINGS_PLAN_ARN",
+        "PAYMENT_OPTION",
+        "RESERVATION_MODIFIED",
+        "TAG_KEY",
+        "COST_CATEGORY_NAME"
+      ]
     },
     "DimensionValue":{
       "type":"string",
@@ -1197,6 +1258,33 @@
         "Message":{"shape":"errorMessage"}
       },
       "exception":true
+    },
+    "Expression":{
+      "type":"structure",
+      "members":{
+        "Or":{"shape":"Expressions"},
+        "And":{"shape":"Expressions"},
+        "Not":{"shape":"Expression"},
+        "Dimensions":{"shape":"ExpressionDimensionValues"},
+        "Tags":{"shape":"TagValues"},
+        "CostCategories":{"shape":"CostCategoryValues"}
+      }
+    },
+    "ExpressionDimensionValues":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"Dimension"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
+    },
+    "Expressions":{
+      "type":"list",
+      "member":{"shape":"Expression"}
     },
     "GenericString":{
       "type":"string",
@@ -1281,6 +1369,23 @@
         "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
+    "MatchOption":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "ABSENT",
+        "STARTS_WITH",
+        "ENDS_WITH",
+        "CONTAINS",
+        "GREATER_THAN_OR_EQUAL",
+        "CASE_SENSITIVE",
+        "CASE_INSENSITIVE"
+      ]
+    },
+    "MatchOptions":{
+      "type":"list",
+      "member":{"shape":"MatchOption"}
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1298,6 +1403,24 @@
       "box":true,
       "max":1000,
       "min":1
+    },
+    "Metric":{
+      "type":"string",
+      "enum":[
+        "BlendedCost",
+        "UnblendedCost",
+        "AmortizedCost",
+        "NetUnblendedCost",
+        "NetAmortizedCost",
+        "UsageQuantity",
+        "NormalizedUsageAmount",
+        "Hours"
+      ]
+    },
+    "Metrics":{
+      "type":"list",
+      "member":{"shape":"Metric"},
+      "max":1
     },
     "NotFoundException":{
       "type":"structure",
@@ -1524,6 +1647,12 @@
         "EMAIL"
       ]
     },
+    "TagKey":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
     "TagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1538,6 +1667,14 @@
     "TagResourceResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "TagValues":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"TagKey"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
       }
     },
     "TargetId":{
@@ -1706,6 +1843,17 @@
       "type":"list",
       "member":{"shape":"User"},
       "max":100,
+      "min":1
+    },
+    "Value":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
+    "Values":{
+      "type":"list",
+      "member":{"shape":"Value"},
       "min":1
     },
     "errorMessage":{"type":"string"}

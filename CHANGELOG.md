@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\QBusiness` - The CheckDocumentAccess API for Amazon Q Business is a self-service debugging API that allows administrators to verify document access permissions and review Access Control List (ACL) configurations.
+* `Aws\MediaTailor` - Added support for Recurring Prefetch and Traffic Shaping on both Single and Recurring Prefetch. ListPrefetchSchedules now return single prefetchs by default and can be provided scheduleType of SINGLE, RECURRING, AND ALL.
+* `Aws\Firehose` - Documentation update regarding the number of streams you can create using the CreateDeliveryStream API.
+* `Aws\SecurityHub` - Minor documentation update for the GetConfigurationPolicyAssociation example
+* `Aws\Budgets` - Releasing the new Budget FilterExpression and Metrics fields to support more granular filtering options. These new fields are intended to replace CostFilters and CostTypes, which are deprecated as of 2025/18/04.
+* `Aws\ARCZonalShift` - Updates to documentation and exception types for Zonal Autoshift
+
 ## 3.342.30 - 2025-04-18
 
 * `Aws\QConnect` - This release adds support for the following capabilities: Chunking generative answer replies from Amazon Q in Connect. Integration support for the use of additional LLM models with Amazon Q in Connect.

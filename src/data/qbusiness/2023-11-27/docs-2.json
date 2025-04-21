@@ -8,6 +8,7 @@
     "CancelSubscription": "<p>Unsubscribes a user or a group from their pricing tier in an Amazon Q Business application. An unsubscribed user or group loses all Amazon Q Business feature access at the start of next month. </p>",
     "Chat": "<p>Starts or continues a streaming Amazon Q Business conversation.</p>",
     "ChatSync": "<p>Starts or continues a non-streaming Amazon Q Business conversation.</p>",
+    "CheckDocumentAccess": "<p>Verifies if a user has access permissions for a specified document and returns the actual ACL attached to the document. Resolves user access on the document via user aliases and groups when verifying user access.</p>",
     "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users. </p> <p>An Amazon Q Apps service linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps</a>.</p> <p>When you create an application, Amazon Q Business may securely transmit data for processing from your selected Amazon Web Services region, but within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
     "CreateDataAccessor": "<p>Creates a new data accessor for an ISV to access data from a Amazon Q Business application. The data accessor is an entity that represents the ISV's access to the Amazon Q Business application's data. It includes the IAM role ARN for the ISV, a friendly name, and a set of action configurations that define the specific actions the ISV is allowed to perform and any associated data filters. When the data accessor is created, an IAM Identity Center application is also created to manage the ISV's identity and authentication for accessing the Amazon Q Business application.</p>",
     "CreateDataSource": "<p>Creates a data source connector for an Amazon Q Business application.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p>",
@@ -279,6 +280,7 @@
         "CancelSubscriptionRequest$applicationId": "<p>The identifier of the Amazon Q Business application for which the subscription is being cancelled.</p>",
         "ChatInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to a streaming Amazon Q Business conversation.</p>",
         "ChatSyncInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to the Amazon Q Business conversation.</p>",
+        "CheckDocumentAccessRequest$applicationId": "<p>The unique identifier of the application. This is required to identify the specific Amazon Q Business application context for the document access check.</p>",
         "CreateApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "CreateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "CreateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source will be attached to.</p>",
@@ -401,6 +403,30 @@
     "AssociatePermissionResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "AssociatedGroup": {
+      "base": "<p>Represents a group associated with a given user in the access control system.</p>",
+      "refs": {
+        "AssociatedGroups$member": null
+      }
+    },
+    "AssociatedGroups": {
+      "base": null,
+      "refs": {
+        "CheckDocumentAccessResponse$userGroups": "<p>An array of groups the user is part of for the specified data source. Each group has a name and type.</p>"
+      }
+    },
+    "AssociatedUser": {
+      "base": "<p>Represents an associated user in the access control system.</p>",
+      "refs": {
+        "AssociatedUsers$member": null
+      }
+    },
+    "AssociatedUsers": {
+      "base": null,
+      "refs": {
+        "CheckDocumentAccessResponse$userAliases": "<p>An array of aliases associated with the user. This includes both global and local aliases, each with a name and type.</p>"
       }
     },
     "Attachment": {
@@ -659,7 +685,8 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "ActionReviewPayloadField$required": "<p>Information about whether the field is required.</p>"
+        "ActionReviewPayloadField$required": "<p>Information about whether the field is required.</p>",
+        "CheckDocumentAccessResponse$hasAccess": "<p>A boolean value indicating whether the specified user has access to the document, either direct access or transitive access via groups and aliases attached to the document.</p>"
       }
     },
     "BoostingDurationInSeconds": {
@@ -740,6 +767,16 @@
       }
     },
     "ChatSyncOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CheckDocumentAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CheckDocumentAccessResponse": {
       "base": null,
       "refs": {
       }
@@ -1063,6 +1100,7 @@
     "DataSourceId": {
       "base": null,
       "refs": {
+        "CheckDocumentAccessRequest$dataSourceId": "<p>The unique identifier of the data source. Identifies the specific data source from which the document originates. Should not be used when a document is uploaded directly with BatchPutDocument, as no dataSourceId is available or necessary. </p>",
         "CreateDataSourceResponse$dataSourceId": "<p>The identifier of the data source connector.</p>",
         "DataSource$dataSourceId": "<p>The identifier of the Amazon Q Business data source.</p>",
         "DataSourceIds$member": null,
@@ -1317,6 +1355,55 @@
         "Documents$member": null
       }
     },
+    "DocumentAcl": {
+      "base": "<p>Represents the Access Control List (ACL) for a document, containing both allowlist and denylist conditions.</p>",
+      "refs": {
+        "CheckDocumentAccessResponse$documentAcl": "<p>The Access Control List (ACL) associated with the document. Includes allowlist and denylist conditions that determine user access.</p>"
+      }
+    },
+    "DocumentAclCondition": {
+      "base": "<p>Represents a condition in the document's ACL, specifying access rules for users and groups.</p>",
+      "refs": {
+        "DocumentAclConditions$member": null
+      }
+    },
+    "DocumentAclConditions": {
+      "base": null,
+      "refs": {
+        "DocumentAclMembership$conditions": "<p>An array of conditions that define the membership rules. Each condition specifies criteria for users or groups to be included in this membership.</p>"
+      }
+    },
+    "DocumentAclGroup": {
+      "base": "<p>Represents a group in the document's ACL, used to define access permissions for multiple users collectively.</p>",
+      "refs": {
+        "DocumentAclGroups$member": null
+      }
+    },
+    "DocumentAclGroups": {
+      "base": null,
+      "refs": {
+        "DocumentAclCondition$groups": "<p>An array of group identifiers that this condition applies to. Groups listed here are subject to the access rule defined by this condition.</p>"
+      }
+    },
+    "DocumentAclMembership": {
+      "base": "<p>Represents membership rules in the document's ACL, defining how users or groups are associated with access permissions.</p>",
+      "refs": {
+        "DocumentAcl$allowlist": "<p>The allowlist conditions for the document. Users or groups matching these conditions are granted access to the document.</p>",
+        "DocumentAcl$denyList": "<p>The denylist conditions for the document. Users or groups matching these conditions are denied access to the document, overriding allowlist permissions.</p>"
+      }
+    },
+    "DocumentAclUser": {
+      "base": "<p>Represents a user in the document's ACL, used to define access permissions for individual users.</p>",
+      "refs": {
+        "DocumentAclUsers$member": null
+      }
+    },
+    "DocumentAclUsers": {
+      "base": null,
+      "refs": {
+        "DocumentAclCondition$users": "<p>An array of user identifiers that this condition applies to. Users listed here are subject to the access rule defined by this condition.</p>"
+      }
+    },
     "DocumentAttribute": {
       "base": "<p>A document attribute or metadata field.</p>",
       "refs": {
@@ -1455,6 +1542,7 @@
     "DocumentId": {
       "base": null,
       "refs": {
+        "CheckDocumentAccessRequest$documentId": "<p>The unique identifier of the document. Specifies which document's access permissions are being checked.</p>",
         "DeleteDocument$documentId": "<p>The identifier of the deleted document.</p>",
         "Document$id": "<p>The identifier of the document.</p>",
         "DocumentDetails$documentId": "<p>The identifier of the document.</p>",
@@ -1734,7 +1822,9 @@
     "GroupName": {
       "base": null,
       "refs": {
+        "AssociatedGroup$name": "<p>The name of the group associated with the user. This is used to identify the group in access control decisions.</p>",
         "DeleteGroupRequest$groupName": "<p>The name of the group you want to delete.</p>",
+        "DocumentAclGroup$name": "<p>The name of the group in the document's ACL. This is used to identify the group when applying access rules.</p>",
         "GetGroupRequest$groupName": "<p>The name of the group.</p>",
         "GroupSummary$groupName": "<p>The name of the group the summary information is for.</p>",
         "MemberGroup$groupName": "<p>The name of the sub group.</p>",
@@ -1882,6 +1972,7 @@
       "refs": {
         "BatchDeleteDocumentRequest$indexId": "<p>The identifier of the Amazon Q Business index that contains the documents to delete.</p>",
         "BatchPutDocumentRequest$indexId": "<p>The identifier of the Amazon Q Business index to add the documents to. </p>",
+        "CheckDocumentAccessRequest$indexId": "<p>The unique identifier of the index. Used to locate the correct index within the application where the document is stored.</p>",
         "CreateDataSourceRequest$indexId": "<p>The identifier of the index that you want to use with the data source connector.</p>",
         "CreateIndexResponse$indexId": "<p>The identifier for the Amazon Q Business index.</p>",
         "DeleteDataSourceRequest$indexId": "<p>The identifier of the index used with the data source connector.</p>",
@@ -2008,7 +2099,7 @@
     "LambdaArn": {
       "base": null,
       "refs": {
-        "HookConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of a role with permission to run a Lambda function during ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/iam-roles.html#cde-iam-role\">IAM roles for Custom Document Enrichment (CDE)</a>.</p>"
+        "HookConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function sduring ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cde-lambda-operations.html\">Using Lambda functions for Amazon Q Business document enrichment</a>.</p>"
       }
     },
     "LicenseNotFoundException": {
@@ -2371,7 +2462,9 @@
       "base": null,
       "refs": {
         "AccessConfiguration$memberRelation": "<p>Describes the member relation within the <code>AccessControlList</code> object.</p>",
-        "AccessControl$memberRelation": "<p>Describes the member relation within a principal list.</p>"
+        "AccessControl$memberRelation": "<p>Describes the member relation within a principal list.</p>",
+        "DocumentAclCondition$memberRelation": "<p>The logical relation between members in the condition, determining how multiple user or group conditions are combined.</p>",
+        "DocumentAclMembership$memberRelation": "<p>The logical relation between members in the membership rule, determining how multiple conditions are combined.</p>"
       }
     },
     "MemberUser": {
@@ -2389,6 +2482,10 @@
     "MembershipType": {
       "base": null,
       "refs": {
+        "AssociatedGroup$type": "<p>The type of the associated group. This indicates the scope of the group's applicability.</p>",
+        "AssociatedUser$type": "<p>The type of the associated user. This indicates the scope of the user's association.</p>",
+        "DocumentAclGroup$type": "<p>The type of the group. This indicates the scope of the group's applicability in access control.</p>",
+        "DocumentAclUser$type": "<p>The type of the user. This indicates the scope of the user's applicability in access control.</p>",
         "MemberGroup$type": "<p>The type of the sub group.</p>",
         "MemberUser$type": "<p>The type of the user.</p>",
         "PrincipalGroup$membershipType": "<p>The type of group.</p>",
@@ -3124,10 +3221,12 @@
         "ActionSummary$instructionExample": "<p>An Amazon Q Business suggested prompt and end user can use to invoke a plugin action. This value can be modified and sent as input to initiate an action. For example:</p> <ul> <li> <p>Create a Jira task</p> </li> <li> <p>Create a chat assistant task to find the root cause of a specific incident</p> </li> </ul>",
         "ActionSummary$description": "<p>The description of an Amazon Q Business plugin action.</p>",
         "AssociatePermissionResponse$statement": "<p>The JSON representation of the added permission statement.</p>",
+        "AssociatedUser$id": "<p>The unique identifier of the associated user. This is used to identify the user in access control decisions.</p>",
         "Attachment$fileType": "<p>Filetype of the Amazon Q Business attachment.</p>",
         "Attachment$md5chksum": "<p>MD5 checksum of the Amazon Q Business attachment contents.</p>",
         "AudioSourceDetails$mediaMimeType": "<p>The MIME type of the audio file (e.g., audio/mp3, audio/wav).</p>",
         "ChatSyncOutput$systemMessage": "<p>An AI-generated message in a conversation.</p>",
+        "CheckDocumentAccessRequest$userId": "<p>The unique identifier of the user. Used to check the access permissions for this specific user against the document's ACL.</p>",
         "ConflictException$resourceId": "<p>The identifier of the resource affected.</p>",
         "ConflictException$resourceType": "<p>The type of the resource affected.</p>",
         "CreateUserRequest$userId": "<p>The user emails attached to a user mapping.</p>",
@@ -3135,6 +3234,7 @@
         "DataSourceSyncJob$dataSourceErrorCode": "<p>If the reason that the synchronization failed is due to an error with the underlying data source, this field contains a code that identifies the error.</p>",
         "DeleteUserRequest$userId": "<p>The user email being deleted.</p>",
         "DisassociatePermissionRequest$statementId": "<p>The statement ID of the permission to remove.</p>",
+        "DocumentAclUser$id": "<p>The unique identifier of the user in the document's ACL. This is used to identify the user when applying access rules.</p>",
         "DocumentAttributeStringListValue$member": null,
         "GetDataSourceResponse$type": "<p>The type of the data source connector. For example, <code>S3</code>.</p>",
         "GetMediaResponse$mediaMimeType": "<p>The MIME type of the media object (image/png).</p>",
@@ -3723,9 +3823,9 @@
     "WebExperienceOrigins": {
       "base": null,
       "refs": {
-        "CreateWebExperienceRequest$origins": "<p>Sets the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the base URL for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified). &lt;/p&gt; &lt;note&gt; &lt;p&gt;You must only submit a &lt;i&gt;base URL&lt;/i&gt; and not a full path. For example, &lt;code&gt;https://docs.aws.amazon.com&lt;/code&gt;.&lt;/p&gt; &lt;/note&gt; </code></pre>",
-        "GetWebExperienceResponse$origins": "<p>Gets the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the base URL for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified). &lt;/p&gt; </code></pre>",
-        "UpdateWebExperienceRequest$origins": "<p>Updates the website domain origins that are allowed to embed the Amazon Q Business web experience. <pre><code> The &lt;i&gt;domain origin&lt;/i&gt; refers to the &lt;i&gt;base URL&lt;/i&gt; for accessing a website including the protocol (&lt;code&gt;http/https&lt;/code&gt;), the domain name, and the port number (if specified).&lt;/p&gt; &lt;note&gt; &lt;ul&gt; &lt;li&gt; &lt;p&gt;Any values except &lt;code&gt;null&lt;/code&gt; submitted as part of this update will replace all previous values.&lt;/p&gt; &lt;/li&gt; &lt;li&gt; &lt;p&gt;You must only submit a &lt;i&gt;base URL&lt;/i&gt; and not a full path. For example, &lt;code&gt;https://docs.aws.amazon.com&lt;/code&gt;.&lt;/p&gt; &lt;/li&gt; &lt;/ul&gt; &lt;/note&gt; </code></pre>"
+        "CreateWebExperienceRequest$origins": "<p>Sets the website domain origins that are allowed to embed the Amazon Q Business web experience. The <i>domain origin</i> refers to the base URL for accessing a website including the protocol (<code>http/https</code>), the domain name, and the port number (if specified). </p> <note> <p>You must only submit a <i>base URL</i> and not a full path. For example, <code>https://docs.aws.amazon.com</code>.</p> </note>",
+        "GetWebExperienceResponse$origins": "<p>Gets the website domain origins that are allowed to embed the Amazon Q Business web experience. The <i>domain origin</i> refers to the base URL for accessing a website including the protocol (<code>http/https</code>), the domain name, and the port number (if specified). </p>",
+        "UpdateWebExperienceRequest$origins": "<p>Updates the website domain origins that are allowed to embed the Amazon Q Business web experience. The <i>domain origin</i> refers to the <i>base URL</i> for accessing a website including the protocol (<code>http/https</code>), the domain name, and the port number (if specified).</p> <note> <ul> <li> <p>Any values except <code>null</code> submitted as part of this update will replace all previous values.</p> </li> <li> <p>You must only submit a <i>base URL</i> and not a full path. For example, <code>https://docs.aws.amazon.com</code>.</p> </li> </ul> </note>"
       }
     },
     "WebExperienceSamplePromptsControlMode": {

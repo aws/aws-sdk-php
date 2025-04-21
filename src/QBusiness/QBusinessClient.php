@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise cancelSubscriptionAsync(array $args = [])
  * @method \Aws\Result chatSync(array $args = [])
  * @method \GuzzleHttp\Promise\Promise chatSyncAsync(array $args = [])
+ * @method \Aws\Result checkDocumentAccess(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise checkDocumentAccessAsync(array $args = [])
  * @method \Aws\Result createApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApplicationAsync(array $args = [])
  * @method \Aws\Result createDataAccessor(array $args = [])

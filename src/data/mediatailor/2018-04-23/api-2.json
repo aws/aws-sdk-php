@@ -887,10 +887,8 @@
     "CreatePrefetchScheduleRequest":{
       "type":"structure",
       "required":[
-        "Consumption",
         "Name",
-        "PlaybackConfigurationName",
-        "Retrieval"
+        "PlaybackConfigurationName"
       ],
       "members":{
         "Consumption":{"shape":"PrefetchConsumption"},
@@ -905,6 +903,8 @@
           "locationName":"PlaybackConfigurationName"
         },
         "Retrieval":{"shape":"PrefetchRetrieval"},
+        "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
+        "ScheduleType":{"shape":"PrefetchScheduleType"},
         "StreamId":{"shape":"__string"}
       }
     },
@@ -916,6 +916,8 @@
         "Name":{"shape":"__string"},
         "PlaybackConfigurationName":{"shape":"__string"},
         "Retrieval":{"shape":"PrefetchRetrieval"},
+        "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
+        "ScheduleType":{"shape":"PrefetchScheduleType"},
         "StreamId":{"shape":"__string"}
       }
     },
@@ -1527,6 +1529,8 @@
         "Name":{"shape":"__string"},
         "PlaybackConfigurationName":{"shape":"__string"},
         "Retrieval":{"shape":"PrefetchRetrieval"},
+        "ScheduleType":{"shape":"PrefetchScheduleType"},
+        "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
         "StreamId":{"shape":"__string"}
       }
     },
@@ -1689,6 +1693,14 @@
         "NextToken":{"shape":"__string"}
       }
     },
+    "ListPrefetchScheduleType":{
+      "type":"string",
+      "enum":[
+        "SINGLE",
+        "RECURRING",
+        "ALL"
+      ]
+    },
     "ListPrefetchSchedulesRequest":{
       "type":"structure",
       "required":["PlaybackConfigurationName"],
@@ -1700,6 +1712,7 @@
           "location":"uri",
           "locationName":"PlaybackConfigurationName"
         },
+        "ScheduleType":{"shape":"ListPrefetchScheduleType"},
         "StreamId":{"shape":"__string"}
       }
     },
@@ -1975,17 +1988,17 @@
       "members":{
         "DynamicVariables":{"shape":"__mapOf__string"},
         "EndTime":{"shape":"__timestampUnix"},
-        "StartTime":{"shape":"__timestampUnix"}
+        "StartTime":{"shape":"__timestampUnix"},
+        "TrafficShapingType":{"shape":"TrafficShapingType"},
+        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"}
       }
     },
     "PrefetchSchedule":{
       "type":"structure",
       "required":[
         "Arn",
-        "Consumption",
         "Name",
-        "PlaybackConfigurationName",
-        "Retrieval"
+        "PlaybackConfigurationName"
       ],
       "members":{
         "Arn":{"shape":"__string"},
@@ -1993,8 +2006,17 @@
         "Name":{"shape":"__string"},
         "PlaybackConfigurationName":{"shape":"__string"},
         "Retrieval":{"shape":"PrefetchRetrieval"},
+        "ScheduleType":{"shape":"PrefetchScheduleType"},
+        "RecurringPrefetchConfiguration":{"shape":"RecurringPrefetchConfiguration"},
         "StreamId":{"shape":"__string"}
       }
+    },
+    "PrefetchScheduleType":{
+      "type":"string",
+      "enum":[
+        "SINGLE",
+        "RECURRING"
+      ]
     },
     "PutChannelPolicyRequest":{
       "type":"structure",
@@ -2068,6 +2090,36 @@
         "TranscodeProfileName":{"shape":"__string"},
         "VideoContentSourceUrl":{"shape":"__string"},
         "AdConditioningConfiguration":{"shape":"AdConditioningConfiguration"}
+      }
+    },
+    "RecurringConsumption":{
+      "type":"structure",
+      "members":{
+        "RetrievedAdExpirationSeconds":{"shape":"__integer"},
+        "AvailMatchingCriteria":{"shape":"__listOfAvailMatchingCriteria"}
+      }
+    },
+    "RecurringPrefetchConfiguration":{
+      "type":"structure",
+      "required":[
+        "EndTime",
+        "RecurringConsumption",
+        "RecurringRetrieval"
+      ],
+      "members":{
+        "StartTime":{"shape":"__timestampUnix"},
+        "EndTime":{"shape":"__timestampUnix"},
+        "RecurringConsumption":{"shape":"RecurringConsumption"},
+        "RecurringRetrieval":{"shape":"RecurringRetrieval"}
+      }
+    },
+    "RecurringRetrieval":{
+      "type":"structure",
+      "members":{
+        "DynamicVariables":{"shape":"__mapOf__string"},
+        "DelayAfterAvailEndSeconds":{"shape":"__integer"},
+        "TrafficShapingType":{"shape":"TrafficShapingType"},
+        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"}
       }
     },
     "RelativePosition":{
@@ -2307,6 +2359,16 @@
       "members":{
         "SegmentationDescriptors":{"shape":"SegmentationDescriptorList"}
       }
+    },
+    "TrafficShapingRetrievalWindow":{
+      "type":"structure",
+      "members":{
+        "RetrievalWindowDurationSeconds":{"shape":"__integer"}
+      }
+    },
+    "TrafficShapingType":{
+      "type":"string",
+      "enum":["RETRIEVAL_WINDOW"]
     },
     "Transition":{
       "type":"structure",

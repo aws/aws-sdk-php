@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<p>Use the Amazon Web Services Budgets API to plan your service usage, service costs, and instance reservations. This API reference provides descriptions, syntax, and usage examples for each of the actions and data types for the Amazon Web Services Budgets feature. </p> <p>Budgets provide you with a way to see the following information:</p> <ul> <li> <p>How close your plan is to your budgeted amount or to the free tier limits</p> </li> <li> <p>Your usage-to-date, including how much you've used of your Reserved Instances (RIs)</p> </li> <li> <p>Your current estimated charges from Amazon Web Services, and how much your predicted usage will accrue in charges by the end of the month</p> </li> <li> <p>How much of your budget has been used</p> </li> </ul> <p>Amazon Web Services updates your budget status several times a day. Budgets track your unblended costs, subscriptions, refunds, and RIs. You can create the following types of budgets:</p> <ul> <li> <p> <b>Cost budgets</b> - Plan how much you want to spend on a service.</p> </li> <li> <p> <b>Usage budgets</b> - Plan how much you want to use one or more services.</p> </li> <li> <p> <b>RI utilization budgets</b> - Define a utilization threshold, and receive alerts when your RI usage falls below that threshold. This lets you see if your RIs are unused or under-utilized.</p> </li> <li> <p> <b>RI coverage budgets</b> - Define a coverage threshold, and receive alerts when the number of your instance hours that are covered by RIs fall below that threshold. This lets you see how much of your instance usage is covered by a reservation.</p> </li> </ul> <p>Service Endpoint</p> <p>The Amazon Web Services Budgets API provides the following endpoint:</p> <ul> <li> <p>https://budgets.amazonaws.com</p> </li> </ul> <p>For information about costs that are associated with the Amazon Web Services Budgets API, see <a href=\"https://aws.amazon.com/aws-cost-management/pricing/\">Amazon Web Services Cost Management Pricing</a>.</p>",
   "operations": {
-    "CreateBudget": "<p>Creates a budget and, if included, notifications and subscribers. </p> <important> <p>Only one of <code>BudgetLimit</code> or <code>PlannedBudgetLimits</code> can be present in the syntax at one time. Use the syntax that matches your case. The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_CreateBudget.html#API_CreateBudget_Examples\">Examples</a> section. </p> </important>",
+    "CreateBudget": "<p>Creates a budget and, if included, notifications and subscribers. </p> <important> <p>Only one of <code>BudgetLimit</code> or <code>PlannedBudgetLimits</code> can be present in the syntax at one time. Use the syntax that matches your use case. The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_CreateBudget.html#API_CreateBudget_Examples\">Examples</a> section.</p> <p>Similarly, only one set of filter and metric selections can be present in the syntax at one time. Either <code>FilterExpression</code> and <code>Metrics</code> or <code>CostFilters</code> and <code>CostTypes</code>, not both or a different combination. We recommend using <code>FilterExpression</code> and <code>Metrics</code> as they provide more flexible and powerful filtering capabilities. The Request Syntax section shows the <code>FilterExpression</code>/<code>Metrics</code> syntax.</p> </important>",
     "CreateBudgetAction": "<p> Creates a budget action. </p>",
     "CreateNotification": "<p>Creates a notification. You must create the budget before you create the associated notification.</p>",
     "CreateSubscriber": "<p>Creates a subscriber. You must create the associated budget and notification before you create the subscriber.</p>",
@@ -10,21 +10,21 @@
     "DeleteBudgetAction": "<p> Deletes a budget action. </p>",
     "DeleteNotification": "<p>Deletes a notification.</p> <important> <p>Deleting a notification also deletes the subscribers that are associated with the notification.</p> </important>",
     "DeleteSubscriber": "<p>Deletes a subscriber.</p> <important> <p>Deleting the last subscriber to a notification also deletes the notification.</p> </important>",
-    "DescribeBudget": "<p>Describes a budget.</p> <important> <p>The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_DescribeBudget.html#API_DescribeBudget_Examples\">Examples</a> section. </p> </important>",
+    "DescribeBudget": "<p>Describes a budget.</p> <important> <p>The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_DescribeBudget.html#API_DescribeBudget_Examples\">Examples</a> section.</p> </important>",
     "DescribeBudgetAction": "<p> Describes a budget action detail. </p>",
     "DescribeBudgetActionHistories": "<p> Describes a budget action history detail. </p>",
     "DescribeBudgetActionsForAccount": "<p> Describes all of the budget actions for an account. </p>",
     "DescribeBudgetActionsForBudget": "<p> Describes all of the budget actions for a budget. </p>",
     "DescribeBudgetNotificationsForAccount": "<p> Lists the budget names and notifications that are associated with an account. </p>",
     "DescribeBudgetPerformanceHistory": "<p>Describes the history for <code>DAILY</code>, <code>MONTHLY</code>, and <code>QUARTERLY</code> budgets. Budget history isn't available for <code>ANNUAL</code> budgets.</p>",
-    "DescribeBudgets": "<p>Lists the budgets that are associated with an account.</p> <important> <p>The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_DescribeBudgets.html#API_DescribeBudgets_Examples\">Examples</a> section. </p> </important>",
+    "DescribeBudgets": "<p>Lists the budgets that are associated with an account.</p> <important> <p>The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_DescribeBudgets.html#API_DescribeBudgets_Examples\">Examples</a> section.</p> </important>",
     "DescribeNotificationsForBudget": "<p>Lists the notifications that are associated with a budget.</p>",
     "DescribeSubscribersForNotification": "<p>Lists the subscribers that are associated with a notification.</p>",
     "ExecuteBudgetAction": "<p> Executes a budget action. </p>",
     "ListTagsForResource": "<p>Lists tags associated with a budget or budget action resource.</p>",
     "TagResource": "<p>Creates tags for a budget or budget action resource.</p>",
     "UntagResource": "<p>Deletes tags associated with a budget or budget action resource.</p>",
-    "UpdateBudget": "<p>Updates a budget. You can change every part of a budget except for the <code>budgetName</code> and the <code>calculatedSpend</code>. When you modify a budget, the <code>calculatedSpend</code> drops to zero until Amazon Web Services has new usage data to use for forecasting.</p> <important> <p>Only one of <code>BudgetLimit</code> or <code>PlannedBudgetLimits</code> can be present in the syntax at one time. Use the syntax that matches your case. The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_UpdateBudget.html#API_UpdateBudget_Examples\">Examples</a> section. </p> </important>",
+    "UpdateBudget": "<p>Updates a budget. You can change every part of a budget except for the <code>budgetName</code> and the <code>calculatedSpend</code>. When you modify a budget, the <code>calculatedSpend</code> drops to zero until Amazon Web Services has new usage data to use for forecasting.</p> <important> <p>Only one of <code>BudgetLimit</code> or <code>PlannedBudgetLimits</code> can be present in the syntax at one time. Use the syntax that matches your case. The Request Syntax section shows the <code>BudgetLimit</code> syntax. For <code>PlannedBudgetLimits</code>, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_budgets_UpdateBudget.html#API_UpdateBudget_Examples\">Examples</a> section.</p> <p>Similarly, only one set of filter and metric selections can be present in the syntax at one time. Either <code>FilterExpression</code> and <code>Metrics</code> or <code>CostFilters</code> and <code>CostTypes</code>, not both or a different combination. We recommend using <code>FilterExpression</code> and <code>Metrics</code> as they provide more flexible and powerful filtering capabilities. The Request Syntax section shows the <code>FilterExpression</code>/<code>Metrics</code> syntax.</p> </important>",
     "UpdateBudgetAction": "<p> Updates a budget action. </p>",
     "UpdateNotification": "<p>Updates a notification.</p>",
     "UpdateSubscriber": "<p>Updates a subscriber.</p>"
@@ -276,6 +276,18 @@
         "Notification$ComparisonOperator": "<p>The comparison that's used for this notification.</p>"
       }
     },
+    "CostCategoryName": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$Key": "<p>The unique name of the cost category.</p>"
+      }
+    },
+    "CostCategoryValues": {
+      "base": "<p>The cost category values used for filtering the costs.</p>",
+      "refs": {
+        "Expression$CostCategories": "<p>The filter that's based on CostCategoryValues.</p>"
+      }
+    },
     "CostFilters": {
       "base": "<p> A map that represents the cost filters that are applied to the budget.</p>",
       "refs": {
@@ -483,6 +495,12 @@
       "refs": {
       }
     },
+    "Dimension": {
+      "base": null,
+      "refs": {
+        "ExpressionDimensionValues$Key": "<p>The name of the dimension that you want to filter on.</p>"
+      }
+    },
     "DimensionValue": {
       "base": null,
       "refs": {
@@ -526,6 +544,27 @@
     "ExpiredNextTokenException": {
       "base": "<p>The pagination token expired.</p>",
       "refs": {
+      }
+    },
+    "Expression": {
+      "base": "<p>Use Expression to filter in various Budgets APIs.</p>",
+      "refs": {
+        "Budget$FilterExpression": "<p>The filtering dimensions for the budget and their corresponding values.</p>",
+        "Expression$Not": "<p>Return results that don't match a Dimension object.</p>",
+        "Expressions$member": null
+      }
+    },
+    "ExpressionDimensionValues": {
+      "base": "<p>Contains the specifications for the filters to use for your request.</p>",
+      "refs": {
+        "Expression$Dimensions": "<p>The specific Dimension to use for Expression.</p>"
+      }
+    },
+    "Expressions": {
+      "base": null,
+      "refs": {
+        "Expression$Or": "<p>Return results that match either Dimension object.</p>",
+        "Expression$And": "<p>Return results that match both Dimension objects.</p>"
       }
     },
     "GenericString": {
@@ -623,6 +662,20 @@
       "refs": {
       }
     },
+    "MatchOption": {
+      "base": null,
+      "refs": {
+        "MatchOptions$member": null
+      }
+    },
+    "MatchOptions": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$MatchOptions": "<p>The match options that you can use to filter your results. </p>",
+        "ExpressionDimensionValues$MatchOptions": "<p>The match options that you can use to filter your results. You can specify only one of these values in the array.</p>",
+        "TagValues$MatchOptions": "<p>The match options that you can use to filter your results.</p>"
+      }
+    },
     "MaxResults": {
       "base": "<p> An integer that represents how many entries a paginated response contains. The maximum is 100.</p>",
       "refs": {
@@ -644,6 +697,18 @@
       "base": null,
       "refs": {
         "DescribeBudgetsRequest$MaxResults": "<p>An integer that represents how many budgets a paginated response contains. The default is 100.</p>"
+      }
+    },
+    "Metric": {
+      "base": null,
+      "refs": {
+        "Metrics$member": null
+      }
+    },
+    "Metrics": {
+      "base": null,
+      "refs": {
+        "Budget$Metrics": "<p>The definition for how the budget data is aggregated.</p>"
       }
     },
     "NotFoundException": {
@@ -720,7 +785,9 @@
         "CostTypes$IncludeOtherSubscription": "<p>Specifies whether a budget includes non-RI subscription costs.</p> <p>The default value is <code>true</code>.</p>",
         "CostTypes$IncludeSupport": "<p>Specifies whether a budget includes support subscription fees.</p> <p>The default value is <code>true</code>.</p>",
         "CostTypes$IncludeDiscount": "<p>Specifies whether a budget includes discounts.</p> <p>The default value is <code>true</code>.</p>",
-        "CostTypes$UseAmortized": "<p>Specifies whether a budget uses the amortized rate.</p> <p>The default value is <code>false</code>.</p>"
+        "CostTypes$UseAmortized": "<p>Specifies whether a budget uses the amortized rate.</p> <p>The default value is <code>false</code>.</p>",
+        "DescribeBudgetRequest$ShowFilterExpression": "<p>Specifies whether the response includes the filter expression associated with the budget. By showing the filter expression, you can see detailed filtering logic applied to the budget, such as Amazon Web Services services or tags that are being tracked.</p>",
+        "DescribeBudgetsRequest$ShowFilterExpression": "<p>Specifies whether the response includes the filter expression associated with the budgets. By showing the filter expression, you can see detailed filtering logic applied to the budgets, such as Amazon Web Services services or tags that are being tracked.</p>"
       }
     },
     "NumericValue": {
@@ -873,6 +940,12 @@
         "Subscriber$SubscriptionType": "<p>The type of notification that Amazon Web Services sends to a subscriber.</p>"
       }
     },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagValues$Key": "<p>The key for the tag.</p>"
+      }
+    },
     "TagResourceRequest": {
       "base": null,
       "refs": {
@@ -881,6 +954,12 @@
     "TagResourceResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "TagValues": {
+      "base": "<p>The values that are available for a tag.</p>",
+      "refs": {
+        "Expression$Tags": "<p>The specific Tag to use for Expression.</p>"
       }
     },
     "TargetId": {
@@ -910,7 +989,7 @@
     "TimePeriod": {
       "base": "<p>The period of time that's covered by a budget. The period has a start date and an end date. The start date must come before the end date. There are no restrictions on the end date. </p>",
       "refs": {
-        "Budget$TimePeriod": "<p>The period of time that's covered by a budget. You setthe start date and end date. The start date must come before the end date. The end date must come before <code>06/15/87 00:00 UTC</code>. </p> <p>If you create your budget and don't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). For example, if you created your budget on January 24, 2018, chose <code>DAILY</code>, and didn't set a start date, Amazon Web Services set your start date to <code>01/24/18 00:00 UTC</code>. If you chose <code>MONTHLY</code>, Amazon Web Services set your start date to <code>01/01/18 00:00 UTC</code>. If you didn't specify an end date, Amazon Web Services set your end date to <code>06/15/87 00:00 UTC</code>. The defaults are the same for the Billing and Cost Management console and the API. </p> <p>You can change either date with the <code>UpdateBudget</code> operation.</p> <p>After the end date, Amazon Web Services deletes the budget and all the associated notifications and subscribers.</p>",
+        "Budget$TimePeriod": "<p>The period of time that's covered by a budget. You set the start date and end date. The start date must come before the end date. The end date must come before <code>06/15/87 00:00 UTC</code>. </p> <p>If you create your budget and don't specify a start date, Amazon Web Services defaults to the start of your chosen time period (DAILY, MONTHLY, QUARTERLY, or ANNUALLY). For example, if you created your budget on January 24, 2018, chose <code>DAILY</code>, and didn't set a start date, Amazon Web Services set your start date to <code>01/24/18 00:00 UTC</code>. If you chose <code>MONTHLY</code>, Amazon Web Services set your start date to <code>01/01/18 00:00 UTC</code>. If you didn't specify an end date, Amazon Web Services set your end date to <code>06/15/87 00:00 UTC</code>. The defaults are the same for the Billing and Cost Management console and the API. </p> <p>You can change either date with the <code>UpdateBudget</code> operation.</p> <p>After the end date, Amazon Web Services deletes the budget and all the associated notifications and subscribers.</p>",
         "BudgetedAndActualAmounts$TimePeriod": "<p>The time period that's covered by this budget comparison.</p>",
         "DescribeBudgetActionHistoriesRequest$TimePeriod": null,
         "DescribeBudgetPerformanceHistoryRequest$TimePeriod": "<p>Retrieves how often the budget went into an <code>ALARM</code> state for the specified time period.</p>"
@@ -989,6 +1068,20 @@
       "base": null,
       "refs": {
         "IamActionDefinition$Users": "<p>A list of users to be attached. There must be at least one user. </p>"
+      }
+    },
+    "Value": {
+      "base": null,
+      "refs": {
+        "Values$member": null
+      }
+    },
+    "Values": {
+      "base": null,
+      "refs": {
+        "CostCategoryValues$Values": "<p>The specific value of the cost category.</p>",
+        "ExpressionDimensionValues$Values": "<p>The metadata values you can specify to filter upon, so that the results all match at least one of the specified values.</p>",
+        "TagValues$Values": "<p>The specific value of the tag.</p>"
       }
     },
     "errorMessage": {
