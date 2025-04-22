@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.32 - 2025-04-22
 
 * `Aws\EntityResolution` - To expand support for matching records using digital identifiers with TransUnion
 * `Aws\EC2` - Added support for ClientRouteEnforcementOptions flag in CreateClientVpnEndpoint and ModifyClientVpnEndpoint requests and DescribeClientVpnEndpoints responses
