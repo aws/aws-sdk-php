@@ -157,6 +157,37 @@
         }
       ]
     },
+    "DeleteConfiguration": {
+      "name": "DeleteConfiguration",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/configurations/{configuration-id}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DeleteConfigurationRequest"
+      },
+      "output": {
+        "shape": "DeleteConfigurationResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
     "DeleteTags": {
       "name": "DeleteTags",
       "http": {
@@ -1504,6 +1535,37 @@
         "BrokerId": {
           "shape": "__string",
           "locationName": "brokerId"
+        }
+      }
+    },
+    "DeleteConfigurationOutput": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
+        }
+      }
+    },
+    "DeleteConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-id"
+        }
+      },
+      "required": [
+        "ConfigurationId"
+      ]
+    },
+    "DeleteConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
         }
       }
     },

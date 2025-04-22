@@ -83,6 +83,25 @@
       ],
       "idempotent":true
     },
+    "CreateReservation":{
+      "name":"CreateReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateReservationRequest"},
+      "output":{"shape":"CreateReservationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "idempotent":true
+    },
     "CreateScheduledAction":{
       "name":"CreateScheduledAction",
       "http":{
@@ -389,6 +408,36 @@
         {"shape":"ValidationException"}
       ]
     },
+    "GetReservation":{
+      "name":"GetReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetReservationRequest"},
+      "output":{"shape":"GetReservationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "GetReservationOffering":{
+      "name":"GetReservationOffering",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetReservationOfferingRequest"},
+      "output":{"shape":"GetReservationOfferingResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
       "http":{
@@ -558,6 +607,34 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "ListReservationOfferings":{
+      "name":"ListReservationOfferings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReservationOfferingsRequest"},
+      "output":{"shape":"ListReservationOfferingsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListReservations":{
+      "name":"ListReservations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReservationsRequest"},
+      "output":{"shape":"ListReservationsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListScheduledActions":{
@@ -951,6 +1028,8 @@
       "type":"boolean",
       "box":true
     },
+    "Capacity":{"type":"integer"},
+    "Charge":{"type":"double"},
     "ConfigParameter":{
       "type":"structure",
       "members":{
@@ -1054,6 +1133,32 @@
       "type":"structure",
       "members":{
         "namespace":{"shape":"Namespace"}
+      }
+    },
+    "CreateReservationRequest":{
+      "type":"structure",
+      "required":[
+        "capacity",
+        "offeringId"
+      ],
+      "members":{
+        "capacity":{"shape":"Capacity"},
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "offeringId":{"shape":"CreateReservationRequestOfferingIdString"}
+      }
+    },
+    "CreateReservationRequestOfferingIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "CreateReservationResponse":{
+      "type":"structure",
+      "members":{
+        "reservation":{"shape":"Reservation"}
       }
     },
     "CreateScheduledActionRequest":{
@@ -1185,6 +1290,7 @@
         "workgroup":{"shape":"Workgroup"}
       }
     },
+    "CurrencyCode":{"type":"string"},
     "CustomDomainCertificateArnString":{
       "type":"string",
       "max":2048,
@@ -1334,6 +1440,7 @@
       "type":"double",
       "box":true
     },
+    "Duration":{"type":"integer"},
     "Endpoint":{
       "type":"structure",
       "members":{
@@ -1437,6 +1544,44 @@
       "type":"structure",
       "members":{
         "recoveryPoint":{"shape":"RecoveryPoint"}
+      }
+    },
+    "GetReservationOfferingRequest":{
+      "type":"structure",
+      "required":["offeringId"],
+      "members":{
+        "offeringId":{"shape":"GetReservationOfferingRequestOfferingIdString"}
+      }
+    },
+    "GetReservationOfferingRequestOfferingIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "GetReservationOfferingResponse":{
+      "type":"structure",
+      "required":["reservationOffering"],
+      "members":{
+        "reservationOffering":{"shape":"ReservationOffering"}
+      }
+    },
+    "GetReservationRequest":{
+      "type":"structure",
+      "required":["reservationId"],
+      "members":{
+        "reservationId":{"shape":"GetReservationRequestReservationIdString"}
+      }
+    },
+    "GetReservationRequestReservationIdString":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "GetReservationResponse":{
+      "type":"structure",
+      "required":["reservation"],
+      "members":{
+        "reservation":{"shape":"Reservation"}
       }
     },
     "GetResourcePolicyRequest":{
@@ -1691,6 +1836,48 @@
       "members":{
         "nextToken":{"shape":"String"},
         "recoveryPoints":{"shape":"RecoveryPointList"}
+      }
+    },
+    "ListReservationOfferingsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListReservationOfferingsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListReservationOfferingsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListReservationOfferingsResponse":{
+      "type":"structure",
+      "required":["reservationOfferingsList"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "reservationOfferingsList":{"shape":"ReservationOfferingsList"}
+      }
+    },
+    "ListReservationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{"shape":"ListReservationsRequestMaxResultsInteger"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListReservationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListReservationsResponse":{
+      "type":"structure",
+      "required":["reservationsList"],
+      "members":{
+        "nextToken":{"shape":"PaginationToken"},
+        "reservationsList":{"shape":"ReservationsList"}
       }
     },
     "ListScheduledActionsRequest":{
@@ -1962,6 +2149,18 @@
       "type":"list",
       "member":{"shape":"Timestamp"}
     },
+    "OfferingId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "OfferingType":{
+      "type":"string",
+      "enum":[
+        "ALL_UPFRONT",
+        "NO_UPFRONT"
+      ]
+    },
     "OwnerAccount":{
       "type":"string",
       "max":12,
@@ -2031,6 +2230,47 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "Reservation":{
+      "type":"structure",
+      "members":{
+        "capacity":{"shape":"Capacity"},
+        "endDate":{"shape":"SyntheticTimestamp_date_time"},
+        "offering":{"shape":"ReservationOffering"},
+        "reservationArn":{"shape":"ReservationArn"},
+        "reservationId":{"shape":"ReservationId"},
+        "startDate":{"shape":"SyntheticTimestamp_date_time"},
+        "status":{"shape":"Status"}
+      }
+    },
+    "ReservationArn":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ReservationId":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ReservationOffering":{
+      "type":"structure",
+      "members":{
+        "currencyCode":{"shape":"CurrencyCode"},
+        "duration":{"shape":"Duration"},
+        "hourlyCharge":{"shape":"Charge"},
+        "offeringId":{"shape":"OfferingId"},
+        "offeringType":{"shape":"OfferingType"},
+        "upfrontCharge":{"shape":"Charge"}
+      }
+    },
+    "ReservationOfferingsList":{
+      "type":"list",
+      "member":{"shape":"ReservationOffering"}
+    },
+    "ReservationsList":{
+      "type":"list",
+      "member":{"shape":"Reservation"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2286,6 +2526,11 @@
         "ACTIVE",
         "DISABLED"
       ]
+    },
+    "Status":{
+      "type":"string",
+      "max":16,
+      "min":1
     },
     "String":{"type":"string"},
     "SubnetId":{"type":"string"},

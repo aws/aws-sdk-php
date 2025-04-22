@@ -142,6 +142,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLogDeliveryConfigurationAsync(array $args = [])
  * @method \Aws\Result getSigningCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSigningCertificateAsync(array $args = [])
+ * @method \Aws\Result getTokensFromRefreshToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTokensFromRefreshTokenAsync(array $args = [])
  * @method \Aws\Result getUICustomization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUICustomizationAsync(array $args = [])
  * @method \Aws\Result getUser(array $args = [])

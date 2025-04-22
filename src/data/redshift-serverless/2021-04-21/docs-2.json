@@ -2,12 +2,13 @@
   "version": "2.0",
   "service": "<p>This is an interface reference for Amazon Redshift Serverless. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Redshift Serverless. </p> <p>Amazon Redshift Serverless automatically provisions data warehouse capacity and intelligently scales the underlying resources based on workload demands. Amazon Redshift Serverless adjusts capacity in seconds to deliver consistently high performance and simplified operations for even the most demanding and volatile workloads. Amazon Redshift Serverless lets you focus on using your data to acquire new insights for your business and customers. </p> <p> To learn more about Amazon Redshift Serverless, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html\">What is Amazon Redshift Serverless?</a>.</p>",
   "operations": {
-    "ConvertRecoveryPointToSnapshot": "<p>Converts a recovery point to a snapshot. For more information about recovery points and snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html\">Working with snapshots and recovery points</a>.</p>",
+    "ConvertRecoveryPointToSnapshot": "<p>Converts a recovery point to a snapshot. For more information about recovery points and snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery-points.html\">Working with snapshots and recovery points</a>.</p>",
     "CreateCustomDomainAssociation": "<p>Creates a custom domain association for Amazon Redshift Serverless.</p>",
     "CreateEndpointAccess": "<p>Creates an Amazon Redshift Serverless managed VPC endpoint.</p>",
     "CreateNamespace": "<p>Creates a namespace in Amazon Redshift Serverless.</p>",
+    "CreateReservation": "<p>Creates an Amazon Redshift Serverless reservation, which gives you the option to commit to a specified number of Redshift Processing Units (RPUs) for a year at a discount from Serverless on-demand (OD) rates.</p>",
     "CreateScheduledAction": "<p>Creates a scheduled action. A scheduled action contains a schedule and an Amazon Redshift API action. For example, you can create a schedule of when to run the <code>CreateSnapshot</code> API operation.</p>",
-    "CreateSnapshot": "<p>Creates a snapshot of all databases in a namespace. For more information about snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery.html\"> Working with snapshots and recovery points</a>.</p>",
+    "CreateSnapshot": "<p>Creates a snapshot of all databases in a namespace. For more information about snapshots, see <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-snapshots-recovery-points.html\"> Working with snapshots and recovery points</a>.</p>",
     "CreateSnapshotCopyConfiguration": "<p>Creates a snapshot copy configuration that lets you copy snapshots to another Amazon Web Services Region.</p>",
     "CreateUsageLimit": "<p>Creates a usage limit for a specified Amazon Redshift Serverless usage type. The usage limit is identified by the returned usage limit identifier. </p>",
     "CreateWorkgroup": "<p>Creates an workgroup in Amazon Redshift Serverless.</p> <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways. If a workgroup is in an account with VPC BPA turned on, the following capabilities are blocked: </p> <ul> <li> <p>Creating a public access workgroup</p> </li> <li> <p>Modifying a private workgroup to public</p> </li> <li> <p>Adding a subnet with VPC BPA turned on to the workgroup when the workgroup is public</p> </li> </ul> <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and subnets</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -25,6 +26,8 @@
     "GetEndpointAccess": "<p>Returns information, such as the name, about a VPC endpoint.</p>",
     "GetNamespace": "<p>Returns information about a namespace in Amazon Redshift Serverless.</p>",
     "GetRecoveryPoint": "<p>Returns information about a recovery point.</p>",
+    "GetReservation": "<p>Gets an Amazon Redshift Serverless reservation. A reservation gives you the option to commit to a specified number of Redshift Processing Units (RPUs) for a year at a discount from Serverless on-demand (OD) rates.</p>",
+    "GetReservationOffering": "<p>Returns the reservation offering. The offering determines the payment schedule for the reservation.</p>",
     "GetResourcePolicy": "<p>Returns a resource policy.</p>",
     "GetScheduledAction": "<p>Returns information about a scheduled action.</p>",
     "GetSnapshot": "<p>Returns information about a specific snapshot.</p>",
@@ -37,6 +40,8 @@
     "ListManagedWorkgroups": "<p>Returns information about a list of specified managed workgroups in your account.</p>",
     "ListNamespaces": "<p>Returns information about a list of specified namespaces.</p>",
     "ListRecoveryPoints": "<p>Returns an array of recovery points.</p>",
+    "ListReservationOfferings": "<p>Returns the current reservation offerings in your account.</p>",
+    "ListReservations": "<p>Returns a list of Reservation objects.</p>",
     "ListScheduledActions": "<p>Returns a list of scheduled actions. You can use the flags to filter the list of returned scheduled actions.</p>",
     "ListSnapshotCopyConfigurations": "<p>Returns a list of snapshot copy configurations.</p>",
     "ListSnapshots": "<p>Returns a list of snapshots.</p>",
@@ -114,6 +119,20 @@
         "Workgroup$publiclyAccessible": "<p>A value that specifies whether the workgroup can be accessible from a public network.</p>"
       }
     },
+    "Capacity": {
+      "base": null,
+      "refs": {
+        "CreateReservationRequest$capacity": "<p>The number of Redshift Processing Units (RPUs) to reserve.</p>",
+        "Reservation$capacity": "<p>The number of Redshift Processing Units (RPUs) to reserve.</p>"
+      }
+    },
+    "Charge": {
+      "base": null,
+      "refs": {
+        "ReservationOffering$hourlyCharge": "<p>The rate you are charged for each hour the reservation is active.</p>",
+        "ReservationOffering$upfrontCharge": "<p>The up-front price you are charged for the reservation.</p>"
+      }
+    },
     "ConfigParameter": {
       "base": "<p>An array of key-value pairs to set for advanced control over Amazon Redshift Serverless.</p>",
       "refs": {
@@ -173,6 +192,22 @@
       "refs": {
       }
     },
+    "CreateReservationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateReservationRequestOfferingIdString": {
+      "base": null,
+      "refs": {
+        "CreateReservationRequest$offeringId": "<p>The ID of the offering associated with the reservation. The offering determines the payment schedule for the reservation.</p>"
+      }
+    },
+    "CreateReservationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateScheduledActionRequest": {
       "base": null,
       "refs": {
@@ -227,6 +262,12 @@
     "CreateWorkgroupResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "ReservationOffering$currencyCode": "<p>The currency code for the offering.</p>"
       }
     },
     "CustomDomainCertificateArnString": {
@@ -381,6 +422,12 @@
         "Snapshot$totalBackupSizeInMegaBytes": "<p>The total size, in megabytes, of how big the snapshot is.</p>"
       }
     },
+    "Duration": {
+      "base": null,
+      "refs": {
+        "ReservationOffering$duration": "<p>The duration, in seconds, for which the reservation reserves the RPUs.</p>"
+      }
+    },
     "Endpoint": {
       "base": "<p>The VPC endpoint object.</p>",
       "refs": {
@@ -449,6 +496,38 @@
       }
     },
     "GetRecoveryPointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetReservationOfferingRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetReservationOfferingRequestOfferingIdString": {
+      "base": null,
+      "refs": {
+        "GetReservationOfferingRequest$offeringId": "<p>The identifier for the offering..</p>"
+      }
+    },
+    "GetReservationOfferingResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetReservationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetReservationRequestReservationIdString": {
+      "base": null,
+      "refs": {
+        "GetReservationRequest$reservationId": "<p>The ID of the reservation to retrieve.</p>"
+      }
+    },
+    "GetReservationResponse": {
       "base": null,
       "refs": {
       }
@@ -684,6 +763,38 @@
       }
     },
     "ListRecoveryPointsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListReservationOfferingsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListReservationOfferingsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListReservationOfferingsRequest$maxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"
+      }
+    },
+    "ListReservationOfferingsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListReservationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListReservationsRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListReservationsRequest$maxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>"
+      }
+    },
+    "ListReservationsResponse": {
       "base": null,
       "refs": {
       }
@@ -925,6 +1036,18 @@
         "ScheduledActionResponse$nextInvocations": "<p>An array of timestamps of when the next scheduled actions will trigger.</p>"
       }
     },
+    "OfferingId": {
+      "base": null,
+      "refs": {
+        "ReservationOffering$offeringId": "<p>The offering identifier.</p>"
+      }
+    },
+    "OfferingType": {
+      "base": null,
+      "refs": {
+        "ReservationOffering$offeringType": "<p>Determines the payment schedule for the reservation.</p>"
+      }
+    },
     "OwnerAccount": {
       "base": null,
       "refs": {
@@ -940,6 +1063,10 @@
         "ListCustomDomainAssociationsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListManagedWorkgroupsRequest$nextToken": "<p>If your initial ListManagedWorkgroups operation returns a nextToken, you can include the returned nextToken in following ListManagedWorkgroups operations, which returns results in the next page.</p>",
         "ListManagedWorkgroupsResponse$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>",
+        "ListReservationOfferingsRequest$nextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
+        "ListReservationOfferingsResponse$nextToken": "<p>The token to use when requesting the next set of items.</p>",
+        "ListReservationsRequest$nextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
+        "ListReservationsResponse$nextToken": "<p>The token to use when requesting the next set of items.</p>",
         "ListScheduledActionsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListScheduledActionsResponse$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListSnapshotCopyConfigurationsRequest$nextToken": "<p>If <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
@@ -1011,6 +1138,46 @@
       "base": null,
       "refs": {
         "CreateNamespaceRequest$redshiftIdcApplicationArn": "<p>The ARN for the Redshift application that integrates with IAM Identity Center.</p>"
+      }
+    },
+    "Reservation": {
+      "base": "<p>Represents an Amazon Redshift Serverless reservation, which gives you the option to commit to a specified number of Redshift Processing Units (RPUs) for a year at a discount from Serverless on-demand (OD) rates.</p>",
+      "refs": {
+        "CreateReservationResponse$reservation": "<p>The reservation object that the <code>CreateReservation</code> action created.</p>",
+        "GetReservationResponse$reservation": "<p>The returned reservation object.</p>",
+        "ReservationsList$member": null
+      }
+    },
+    "ReservationArn": {
+      "base": null,
+      "refs": {
+        "Reservation$reservationArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the serverless reservation.</p>"
+      }
+    },
+    "ReservationId": {
+      "base": null,
+      "refs": {
+        "Reservation$reservationId": "<p>The identifier that uniquely identifies the serverless reservation.</p>"
+      }
+    },
+    "ReservationOffering": {
+      "base": "<p>The class of offering for the reservation. The offering class determines the payment schedule for the reservation.</p>",
+      "refs": {
+        "GetReservationOfferingResponse$reservationOffering": "<p>The returned reservation offering. The offering determines the payment schedule for the reservation.</p>",
+        "Reservation$offering": "<p>The type of offering for the reservation. The offering class determines the payment schedule for the reservation.</p>",
+        "ReservationOfferingsList$member": null
+      }
+    },
+    "ReservationOfferingsList": {
+      "base": null,
+      "refs": {
+        "ListReservationOfferingsResponse$reservationOfferingsList": "<p>The returned list of reservation offerings.</p>"
+      }
+    },
+    "ReservationsList": {
+      "base": null,
+      "refs": {
+        "ListReservationsResponse$reservationsList": "<p>The serverless reservations returned by the request.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1188,6 +1355,12 @@
         "ScheduledActionResponse$state": "<p>The state of the scheduled action.</p>"
       }
     },
+    "Status": {
+      "base": null,
+      "refs": {
+        "Reservation$status": "<p>The status of the reservation. Possible values include the following:</p> <ul> <li> <p> <code>payment-pending</code> </p> </li> <li> <p> <code>active</code> </p> </li> <li> <p> <code>payment-failed</code> </p> </li> <li> <p> <code>retired</code> </p> </li> </ul>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1202,6 +1375,7 @@
         "CreateNamespaceRequest$dbName": "<p>The name of the first database created in the namespace.</p>",
         "CreateNamespaceRequest$defaultIamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role to set as a default in the namespace.</p>",
         "CreateNamespaceRequest$kmsKeyId": "<p>The ID of the Amazon Web Services Key Management Service key used to encrypt your data.</p>",
+        "CreateReservationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. This token must be a valid UUIDv4 value. For more information about idempotency, see <a href=\"https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/\"> Making retries safe with idempotent APIs </a>.</p>",
         "CreateScheduledActionRequest$scheduledActionDescription": "<p>The description of the scheduled action.</p>",
         "CreateSnapshotCopyConfigurationRequest$destinationRegion": "<p>The destination Amazon Web Services Region that you want to copy snapshots to.</p>",
         "CreateSnapshotRequest$namespaceName": "<p>The namespace to create a snapshot for.</p>",
@@ -1272,7 +1446,7 @@
         "RestoreFromRecoveryPointRequest$recoveryPointId": "<p>The unique identifier of the recovery point to restore from.</p>",
         "RestoreFromRecoveryPointResponse$recoveryPointId": "<p>The unique identifier of the recovery point used for the restore.</p>",
         "RestoreFromSnapshotRequest$ownerAccount": "<p>The Amazon Web Services account that owns the snapshot.</p>",
-        "RestoreFromSnapshotRequest$snapshotArn": "<p>The Amazon Resource Name (ARN) of the snapshot to restore from. Required if restoring from Amazon Redshift Serverless to a provisioned cluster. Must not be specified at the same time as <code>snapshotName</code>.</p> <p>The format of the ARN is arn:aws:redshift:&lt;region&gt;:&lt;account_id&gt;:snapshot:&lt;cluster_identifier&gt;/&lt;snapshot_identifier&gt;.</p>",
+        "RestoreFromSnapshotRequest$snapshotArn": "<p>The Amazon Resource Name (ARN) of the snapshot to restore from. Required if restoring from a provisioned cluster to Amazon Redshift Serverless. Must not be specified at the same time as <code>snapshotName</code>.</p> <p>The format of the ARN is arn:aws:redshift:&lt;region&gt;:&lt;account_id&gt;:snapshot:&lt;cluster_identifier&gt;/&lt;snapshot_identifier&gt;.</p>",
         "RestoreFromSnapshotRequest$snapshotName": "<p>The name of the snapshot to restore from. Must not be specified at the same time as <code>snapshotArn</code>.</p>",
         "RestoreFromSnapshotResponse$ownerAccount": "<p>The owner Amazon Web Services; account of the snapshot that was restored.</p>",
         "RestoreFromSnapshotResponse$snapshotName": "<p>The name of the snapshot used to restore the namespace.</p>",
@@ -1374,6 +1548,8 @@
         "ManagedWorkgroupListItem$creationDate": "<p>The creation date of the managed workgroup.</p>",
         "Namespace$creationDate": "<p>The date of when the namespace was created.</p>",
         "RecoveryPoint$recoveryPointCreateTime": "<p>The time the recovery point is created.</p>",
+        "Reservation$endDate": "<p>The end date for the serverless reservation. This date is one year after the start date that you specify.</p>",
+        "Reservation$startDate": "<p>The start date for the serverless reservation. This is the date you specified for the reservation to start when you created the reservation.</p>",
         "Snapshot$snapshotCreateTime": "<p>The timestamp of when the snapshot was created.</p>",
         "Snapshot$snapshotRetentionStartTime": "<p>The timestamp of when data within the snapshot started getting retained.</p>",
         "UpdateCustomDomainAssociationResponse$customDomainCertificateExpiryTime": "<p>The expiration time for the certificate.</p>",

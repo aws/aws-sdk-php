@@ -10301,6 +10301,21 @@
         }
       }
     },
+    "ClientRouteEnforcementOptions":{
+      "type":"structure",
+      "members":{
+        "Enforced":{"shape":"Boolean"}
+      }
+    },
+    "ClientRouteEnforcementResponseOptions":{
+      "type":"structure",
+      "members":{
+        "Enforced":{
+          "shape":"Boolean",
+          "locationName":"enforced"
+        }
+      }
+    },
     "ClientSecretType":{
       "type":"string",
       "sensitive":true
@@ -10562,6 +10577,10 @@
         "ClientLoginBannerOptions":{
           "shape":"ClientLoginBannerResponseOptions",
           "locationName":"clientLoginBannerOptions"
+        },
+        "ClientRouteEnforcementOptions":{
+          "shape":"ClientRouteEnforcementResponseOptions",
+          "locationName":"clientRouteEnforcementOptions"
         },
         "DisconnectOnSessionTimeout":{
           "shape":"Boolean",
@@ -11458,6 +11477,7 @@
         "ClientConnectOptions":{"shape":"ClientConnectOptions"},
         "SessionTimeoutHours":{"shape":"Integer"},
         "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"},
+        "ClientRouteEnforcementOptions":{"shape":"ClientRouteEnforcementOptions"},
         "DisconnectOnSessionTimeout":{"shape":"Boolean"}
       }
     },
@@ -35485,6 +35505,7 @@
         "ClientConnectOptions":{"shape":"ClientConnectOptions"},
         "SessionTimeoutHours":{"shape":"Integer"},
         "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"},
+        "ClientRouteEnforcementOptions":{"shape":"ClientRouteEnforcementOptions"},
         "DisconnectOnSessionTimeout":{"shape":"Boolean"}
       }
     },
@@ -44762,7 +44783,8 @@
       "type":"string",
       "enum":[
         "alb",
-        "nlb"
+        "nlb",
+        "rnat"
       ]
     },
     "ServiceNetworkArn":{"type":"string"},

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EntityResolution` - To expand support for matching records using digital identifiers with TransUnion
+* `Aws\EC2` - Added support for ClientRouteEnforcementOptions flag in CreateClientVpnEndpoint and ModifyClientVpnEndpoint requests and DescribeClientVpnEndpoints responses
+* `Aws\CognitoIdentityProvider` - This release adds refresh token rotation.
+* `Aws\S3Control` - Fix endpoint resolution test cases
+* `Aws\MQ` - You can now delete Amazon MQ broker configurations using the DeleteConfiguration API. For more information, see Configurations in the Amazon MQ API Reference.
+* `Aws\RedshiftServerless` - Provides new and updated API members to support the Redshift Serverless reservations feature.
+* `Aws\Account` - AWS Account Management now supports account name update via IAM principals.
+
 ## 3.342.31 - 2025-04-21
 
 * `Aws\QBusiness` - The CheckDocumentAccess API for Amazon Q Business is a self-service debugging API that allows administrators to verify document access permissions and review Access Control List (ACL) configurations.
