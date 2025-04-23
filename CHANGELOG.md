@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment
+* `Aws\CodeBuild` - Add support for custom instance type for reserved capacity fleets
+* `Aws\ResourceExplorer2` - Documentation-only update for CreateView option correction
+
 ## 3.342.32 - 2025-04-22
 
 * `Aws\EntityResolution` - To expand support for matching records using digital identifiers with TransUnion

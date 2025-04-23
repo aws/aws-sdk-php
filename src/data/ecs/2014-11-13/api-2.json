@@ -706,6 +706,24 @@
         {"shape":"UnsupportedFeatureException"}
       ]
     },
+    "StopServiceDeployment":{
+      "name":"StopServiceDeployment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopServiceDeploymentRequest"},
+      "output":{"shape":"StopServiceDeploymentResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceDeploymentNotFoundException"},
+        {"shape":"UnsupportedFeatureException"}
+      ]
+    },
     "StopTask":{
       "name":"StopTask",
       "http":{
@@ -3383,6 +3401,12 @@
         "threshold":{"shape":"Integer"}
       }
     },
+    "ServiceDeploymentNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
     "ServiceDeploymentRollbackMonitorsStatus":{
       "type":"string",
       "enum":[
@@ -3400,6 +3424,7 @@
         "STOPPED",
         "STOP_REQUESTED",
         "IN_PROGRESS",
+        "ROLLBACK_REQUESTED",
         "ROLLBACK_IN_PROGRESS",
         "ROLLBACK_SUCCESSFUL",
         "ROLLBACK_FAILED"
@@ -3623,6 +3648,27 @@
     "Statistics":{
       "type":"list",
       "member":{"shape":"KeyValuePair"}
+    },
+    "StopServiceDeploymentRequest":{
+      "type":"structure",
+      "required":["serviceDeploymentArn"],
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"},
+        "stopType":{"shape":"StopServiceDeploymentStopType"}
+      }
+    },
+    "StopServiceDeploymentResponse":{
+      "type":"structure",
+      "members":{
+        "serviceDeploymentArn":{"shape":"String"}
+      }
+    },
+    "StopServiceDeploymentStopType":{
+      "type":"string",
+      "enum":[
+        "ABORT",
+        "ROLLBACK"
+      ]
     },
     "StopTaskRequest":{
       "type":"structure",

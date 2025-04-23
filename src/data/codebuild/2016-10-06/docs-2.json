@@ -463,7 +463,7 @@
       }
     },
     "ComputeConfiguration": {
-      "base": "<p>Contains compute attributes. These attributes only need be specified when your project's or fleet's <code>computeType</code> is set to <code>ATTRIBUTE_BASED_COMPUTE</code>.</p>",
+      "base": "<p>Contains compute attributes. These attributes only need be specified when your project's or fleet's <code>computeType</code> is set to <code>ATTRIBUTE_BASED_COMPUTE</code> or <code>CUSTOM_INSTANCE_TYPE</code>.</p>",
       "refs": {
         "CreateFleetInput$computeConfiguration": "<p>The compute configuration of the compute fleet. This is only required if <code>computeType</code> is set to <code>ATTRIBUTE_BASED_COMPUTE</code>.</p>",
         "Fleet$computeConfiguration": "<p>The compute configuration of the compute fleet. This is only required if <code>computeType</code> is set to <code>ATTRIBUTE_BASED_COMPUTE</code>.</p>",
@@ -1194,6 +1194,7 @@
         "CommandExecution$exitCode": "<p>The exit code to return upon completion.</p>",
         "CommandExecution$sandboxArn": "<p>A <code>sandboxArn</code>.</p>",
         "CommandExecutionIds$member": null,
+        "ComputeConfiguration$instanceType": "<p>The EC2 instance type to be launched in your fleet.</p>",
         "ComputeTypesAllowed$member": null,
         "CreateFleetInput$imageId": "<p>The Amazon Machine Image (AMI) of the compute fleet.</p>",
         "CreateFleetInput$fleetServiceRole": "<p>The service role associated with the compute fleet. For more information, see <a href=\"https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html\"> Allow a user to add a permission policy for a fleet service role</a> in the <i>CodeBuild User Guide</i>.</p>",
@@ -2391,7 +2392,7 @@
     "WebhookScopeType": {
       "base": null,
       "refs": {
-        "ScopeConfiguration$scope": "<p>The type of scope for a GitHub or GitLab webhook.</p>"
+        "ScopeConfiguration$scope": "<p>The type of scope for a GitHub or GitLab webhook. The scope default is GITHUB_ORGANIZATION.</p>"
       }
     },
     "WebhookStatus": {
