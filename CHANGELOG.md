@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.33 - 2025-04-23
 
 * `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment
 * `Aws\CodeBuild` - Add support for custom instance type for reserved capacity fleets
