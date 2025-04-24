@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.34 - 2025-04-24
 
 * `Aws\RDS` - This Amazon RDS release adds support for managed master user passwords for Oracle CDBs.
 * `Aws\AppRunner` - AWS App Runner adds Node.js 22 runtime.
