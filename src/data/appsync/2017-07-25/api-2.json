@@ -1530,7 +1530,8 @@
         "tags":{"shape":"TagMap"},
         "channelNamespaceArn":{"shape":"String"},
         "created":{"shape":"Timestamp"},
-        "lastModified":{"shape":"Timestamp"}
+        "lastModified":{"shape":"Timestamp"},
+        "handlerConfigs":{"shape":"HandlerConfigs"}
       }
     },
     "ChannelNamespaces":{
@@ -1706,7 +1707,8 @@
         "subscribeAuthModes":{"shape":"AuthModes"},
         "publishAuthModes":{"shape":"AuthModes"},
         "codeHandlers":{"shape":"Code"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "handlerConfigs":{"shape":"HandlerConfigs"}
       }
     },
     "CreateChannelNamespaceResponse":{
@@ -2959,11 +2961,44 @@
       "type":"list",
       "member":{"shape":"GraphqlApi"}
     },
+    "HandlerBehavior":{
+      "type":"string",
+      "enum":[
+        "CODE",
+        "DIRECT"
+      ]
+    },
+    "HandlerConfig":{
+      "type":"structure",
+      "required":[
+        "behavior",
+        "integration"
+      ],
+      "members":{
+        "behavior":{"shape":"HandlerBehavior"},
+        "integration":{"shape":"Integration"}
+      }
+    },
+    "HandlerConfigs":{
+      "type":"structure",
+      "members":{
+        "onPublish":{"shape":"HandlerConfig"},
+        "onSubscribe":{"shape":"HandlerConfig"}
+      }
+    },
     "HttpDataSourceConfig":{
       "type":"structure",
       "members":{
         "endpoint":{"shape":"String"},
         "authorizationConfig":{"shape":"AuthorizationConfig"}
+      }
+    },
+    "Integration":{
+      "type":"structure",
+      "required":["dataSourceName"],
+      "members":{
+        "dataSourceName":{"shape":"String"},
+        "lambdaConfig":{"shape":"LambdaConfig"}
       }
     },
     "InternalFailureException":{
@@ -2975,6 +3010,13 @@
       "exception":true,
       "fault":true
     },
+    "InvokeType":{
+      "type":"string",
+      "enum":[
+        "REQUEST_RESPONSE",
+        "EVENT"
+      ]
+    },
     "LambdaAuthorizerConfig":{
       "type":"structure",
       "required":["authorizerUri"],
@@ -2982,6 +3024,12 @@
         "authorizerResultTtlInSeconds":{"shape":"TTL"},
         "authorizerUri":{"shape":"String"},
         "identityValidationExpression":{"shape":"String"}
+      }
+    },
+    "LambdaConfig":{
+      "type":"structure",
+      "members":{
+        "invokeType":{"shape":"InvokeType"}
       }
     },
     "LambdaConflictHandlerConfig":{
@@ -4000,7 +4048,8 @@
         },
         "subscribeAuthModes":{"shape":"AuthModes"},
         "publishAuthModes":{"shape":"AuthModes"},
-        "codeHandlers":{"shape":"Code"}
+        "codeHandlers":{"shape":"Code"},
+        "handlerConfigs":{"shape":"HandlerConfigs"}
       }
     },
     "UpdateChannelNamespaceResponse":{

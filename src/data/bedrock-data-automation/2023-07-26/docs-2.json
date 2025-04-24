@@ -41,6 +41,12 @@
         "AudioExtractionCategory$types": null
       }
     },
+    "AudioOverrideConfiguration": {
+      "base": "<p>Override Configuration of Audio</p>",
+      "refs": {
+        "OverrideConfiguration$audio": null
+      }
+    },
     "AudioStandardExtraction": {
       "base": "<p>Standard Extraction Configuration of Audio</p>",
       "refs": {
@@ -334,6 +340,15 @@
       "refs": {
       }
     },
+    "DesiredModality": {
+      "base": "<p>Desired Modality types</p>",
+      "refs": {
+        "ModalityRoutingConfiguration$jpeg": null,
+        "ModalityRoutingConfiguration$png": null,
+        "ModalityRoutingConfiguration$mp4": null,
+        "ModalityRoutingConfiguration$mov": null
+      }
+    },
     "DocumentBoundingBox": {
       "base": "<p>Bounding Box Configuration of Document Extraction</p>",
       "refs": {
@@ -477,6 +492,12 @@
         "ImageExtractionCategory$types": null
       }
     },
+    "ImageOverrideConfiguration": {
+      "base": "<p>Override Configuration of Image</p>",
+      "refs": {
+        "OverrideConfiguration$image": null
+      }
+    },
     "ImageStandardExtraction": {
       "base": "<p>Standard Extraction Configuration of Image</p>",
       "refs": {
@@ -565,6 +586,21 @@
         "ListDataAutomationProjectsRequest$maxResults": null
       }
     },
+    "ModalityProcessingConfiguration": {
+      "base": "<p>Configuration to enable/disable processing of modality</p>",
+      "refs": {
+        "AudioOverrideConfiguration$modalityProcessing": null,
+        "DocumentOverrideConfiguration$modalityProcessing": null,
+        "ImageOverrideConfiguration$modalityProcessing": null,
+        "VideoOverrideConfiguration$modalityProcessing": null
+      }
+    },
+    "ModalityRoutingConfiguration": {
+      "base": "<p>Configuration for routing file type to desired modality</p>",
+      "refs": {
+        "OverrideConfiguration$modalityRouting": null
+      }
+    },
     "NextToken": {
       "base": "<p>Pagination token</p>",
       "refs": {
@@ -638,6 +674,7 @@
         "ImageBoundingBox$state": null,
         "ImageExtractionCategory$state": null,
         "ImageStandardGenerativeField$state": null,
+        "ModalityProcessingConfiguration$state": null,
         "SplitterConfiguration$state": null,
         "VideoBoundingBox$state": null,
         "VideoExtractionCategory$state": null,
@@ -777,6 +814,12 @@
       "base": "<p>List of Video Extraction Category Type</p>",
       "refs": {
         "VideoExtractionCategory$types": null
+      }
+    },
+    "VideoOverrideConfiguration": {
+      "base": "<p>Override Configuration of Video</p>",
+      "refs": {
+        "OverrideConfiguration$video": null
       }
     },
     "VideoStandardExtraction": {

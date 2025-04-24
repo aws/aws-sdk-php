@@ -298,6 +298,12 @@
       "type":"list",
       "member":{"shape":"AudioExtractionCategoryType"}
     },
+    "AudioOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
+    },
     "AudioStandardExtraction":{
       "type":"structure",
       "required":["category"],
@@ -673,6 +679,15 @@
         "status":{"shape":"DataAutomationProjectStatus"}
       }
     },
+    "DesiredModality":{
+      "type":"string",
+      "enum":[
+        "IMAGE",
+        "DOCUMENT",
+        "AUDIO",
+        "VIDEO"
+      ]
+    },
     "DocumentBoundingBox":{
       "type":"structure",
       "required":["state"],
@@ -740,7 +755,8 @@
     "DocumentOverrideConfiguration":{
       "type":"structure",
       "members":{
-        "splitter":{"shape":"SplitterConfiguration"}
+        "splitter":{"shape":"SplitterConfiguration"},
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
       }
     },
     "DocumentStandardExtraction":{
@@ -854,6 +870,12 @@
     "ImageExtractionCategoryTypes":{
       "type":"list",
       "member":{"shape":"ImageExtractionCategoryType"}
+    },
+    "ImageOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
     },
     "ImageStandardExtraction":{
       "type":"structure",
@@ -969,6 +991,21 @@
       "max":1000,
       "min":1
     },
+    "ModalityProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "state":{"shape":"State"}
+      }
+    },
+    "ModalityRoutingConfiguration":{
+      "type":"structure",
+      "members":{
+        "jpeg":{"shape":"DesiredModality"},
+        "png":{"shape":"DesiredModality"},
+        "mp4":{"shape":"DesiredModality"},
+        "mov":{"shape":"DesiredModality"}
+      }
+    },
     "NextToken":{
       "type":"string",
       "max":2048,
@@ -982,7 +1019,11 @@
     "OverrideConfiguration":{
       "type":"structure",
       "members":{
-        "document":{"shape":"DocumentOverrideConfiguration"}
+        "document":{"shape":"DocumentOverrideConfiguration"},
+        "image":{"shape":"ImageOverrideConfiguration"},
+        "video":{"shape":"VideoOverrideConfiguration"},
+        "audio":{"shape":"AudioOverrideConfiguration"},
+        "modalityRouting":{"shape":"ModalityRoutingConfiguration"}
       }
     },
     "ResourceNotFoundException":{
@@ -1232,6 +1273,12 @@
     "VideoExtractionCategoryTypes":{
       "type":"list",
       "member":{"shape":"VideoExtractionCategoryType"}
+    },
+    "VideoOverrideConfiguration":{
+      "type":"structure",
+      "members":{
+        "modalityProcessing":{"shape":"ModalityProcessingConfiguration"}
+      }
     },
     "VideoStandardExtraction":{
       "type":"structure",

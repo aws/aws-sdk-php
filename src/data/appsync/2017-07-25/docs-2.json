@@ -1221,6 +1221,27 @@
         "ListGraphqlApisResponse$graphqlApis": "<p>The <code>GraphqlApi</code> objects.</p>"
       }
     },
+    "HandlerBehavior": {
+      "base": null,
+      "refs": {
+        "HandlerConfig$behavior": "<p>The behavior for the handler.</p>"
+      }
+    },
+    "HandlerConfig": {
+      "base": "<p>The configuration for a handler.</p>",
+      "refs": {
+        "HandlerConfigs$onPublish": "<p>The configuration for the <code>OnPublish</code> handler.</p>",
+        "HandlerConfigs$onSubscribe": "<p>The configuration for the <code>OnSubscribe</code> handler.</p>"
+      }
+    },
+    "HandlerConfigs": {
+      "base": "<p>The configuration for the <code>OnPublish</code> and <code>OnSubscribe</code> handlers.</p>",
+      "refs": {
+        "ChannelNamespace$handlerConfigs": "<p>The configuration for the <code>OnPublish</code> and <code>OnSubscribe</code> handlers.</p>",
+        "CreateChannelNamespaceRequest$handlerConfigs": "<p>The configuration for the <code>OnPublish</code> and <code>OnSubscribe</code> handlers.</p>",
+        "UpdateChannelNamespaceRequest$handlerConfigs": "<p>The configuration for the <code>OnPublish</code> and <code>OnSubscribe</code> handlers.</p>"
+      }
+    },
     "HttpDataSourceConfig": {
       "base": "<p>Describes an HTTP data source configuration.</p>",
       "refs": {
@@ -1229,9 +1250,21 @@
         "UpdateDataSourceRequest$httpConfig": "<p>The new HTTP endpoint configuration.</p>"
       }
     },
+    "Integration": {
+      "base": "<p>The integration data source configuration for the handler.</p>",
+      "refs": {
+        "HandlerConfig$integration": "<p>The integration data source configuration for the handler.</p>"
+      }
+    },
     "InternalFailureException": {
       "base": "<p>An internal AppSync error occurred. Try your request again.</p>",
       "refs": {
+      }
+    },
+    "InvokeType": {
+      "base": null,
+      "refs": {
+        "LambdaConfig$invokeType": "<p>The invocation type for a Lambda data source.</p>"
       }
     },
     "LambdaAuthorizerConfig": {
@@ -1242,6 +1275,12 @@
         "CreateGraphqlApiRequest$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>",
         "GraphqlApi$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>",
         "UpdateGraphqlApiRequest$lambdaAuthorizerConfig": "<p>Configuration for Lambda function authorization.</p>"
+      }
+    },
+    "LambdaConfig": {
+      "base": "<p>The configuration for a Lambda data source.</p>",
+      "refs": {
+        "Integration$lambdaConfig": "<p>The configuration for a Lambda data source.</p>"
       }
     },
     "LambdaConflictHandlerConfig": {
@@ -1955,6 +1994,7 @@
         "GraphqlApi$owner": "<p>The account owner of the GraphQL API.</p>",
         "GraphqlApi$ownerContact": "<p>The owner contact information for an API resource.</p> <p>This field accepts any string input with a length of 0 - 256 characters.</p>",
         "HttpDataSourceConfig$endpoint": "<p>The HTTP URL endpoint. You can specify either the domain name or IP, and port combination, and the URL scheme must be HTTP or HTTPS. If you don't specify the port, AppSync uses the default port 80 for the HTTP endpoint and port 443 for HTTPS endpoints.</p>",
+        "Integration$dataSourceName": "<p>The unique name of the data source that has been configured on the API.</p>",
         "InternalFailureException$message": null,
         "LambdaAuthorizerConfig$authorizerUri": "<p>The Amazon Resource Name (ARN) of the Lambda function to be called for authorization. This can be a standard Lambda ARN, a version ARN (<code>.../v3</code>), or an alias ARN. </p> <p> <b>Note</b>: This Lambda function must have the following resource-based policy assigned to it. When configuring Lambda authorizers in the console, this is done for you. To use the Command Line Interface (CLI), run the following:</p> <p> <code>aws lambda add-permission --function-name \"arn:aws:lambda:us-east-2:111122223333:function:my-function\" --statement-id \"appsync\" --principal appsync.amazonaws.com --action lambda:InvokeFunction</code> </p>",
         "LambdaAuthorizerConfig$identityValidationExpression": "<p>A regular expression for validation of tokens before the Lambda function is called.</p>",

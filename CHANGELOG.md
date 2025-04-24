@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - This Amazon RDS release adds support for managed master user passwords for Oracle CDBs.
+* `Aws\AppRunner` - AWS App Runner adds Node.js 22 runtime.
+* `Aws\AppSync` - Add data source support to Event APIs
+* `Aws\PCS` - Documentation-only update: added valid values for the version property of the Scheduler and SchedulerRequest data types.
+* `Aws\CodeBuild` - Remove redundant validation check.
+* `Aws\DynamoDB` - Add support for ARN-sourced account endpoint generation for TransactWriteItems. This will generate account endpoints for DynamoDB TransactWriteItems requests using ARN-sourced account ID when available.
+* `Aws\BedrockDataAutomation` - Added support for modality routing and modality enablement on CreateDataAutomationProject and UpdateDataAutomationProject APIs
+* `Aws\ECS` - Documentation only release for Amazon ECS
+
 ## 3.342.33 - 2025-04-23
 
 * `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment
