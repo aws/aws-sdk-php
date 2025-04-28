@@ -2279,7 +2279,8 @@
         "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"},
         "launchTemplateConfigurations":{"shape":"LaunchTemplateConfigurationList"},
         "s3ExportConfiguration":{"shape":"S3ExportConfiguration"},
-        "fastLaunchConfigurations":{"shape":"FastLaunchConfigurationList"}
+        "fastLaunchConfigurations":{"shape":"FastLaunchConfigurationList"},
+        "ssmParameterConfigurations":{"shape":"SsmParameterConfigurationList"}
       }
     },
     "DistributionConfiguration":{
@@ -4596,6 +4597,32 @@
       "pattern":"^arn:aws[^:]*:sns:[^:]+:[0-9]{12}:[a-zA-Z0-9-_]{1,256}$"
     },
     "SourceLayerHash":{"type":"string"},
+    "SsmParameterConfiguration":{
+      "type":"structure",
+      "required":["parameterName"],
+      "members":{
+        "amiAccountId":{"shape":"AccountId"},
+        "parameterName":{"shape":"SsmParameterName"},
+        "dataType":{"shape":"SsmParameterDataType"}
+      }
+    },
+    "SsmParameterConfigurationList":{
+      "type":"list",
+      "member":{"shape":"SsmParameterConfiguration"}
+    },
+    "SsmParameterDataType":{
+      "type":"string",
+      "enum":[
+        "text",
+        "aws:ec2:image"
+      ]
+    },
+    "SsmParameterName":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.\\-\\/]+$"
+    },
     "StartImagePipelineExecutionRequest":{
       "type":"structure",
       "required":[
@@ -4726,7 +4753,7 @@
       "type":"string",
       "max":100,
       "min":3,
-      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-z0-9-_+]+)*"
+      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-Z0-9-_+]+)*"
     },
     "UntagResourceRequest":{
       "type":"structure",

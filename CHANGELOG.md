@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - This release adds native h2 support for the bedrock runtime API, the support is only limited to SDKs that support h2 requests natively.
+* `Aws\imagebuilder` - Add integration with SSM Parameter Store to Image Builder.
+* `Aws\DynamoDB` - Doc only update for GSI descriptions.
+* `Aws\ACM` - Add support for file-based HTTP domain control validation, available through Amazon CloudFront.
+* `Aws\CloudFront` - Add distribution tenant, connection group, and multi-tenant distribution APIs to the CloudFront SDK.
+
 ## 3.342.35 - 2025-04-25
 
 * `Aws\MarketplaceDeployment` - Doc only update for the AWS Marketplace Deployment Service that fixes several customer-reported issues.

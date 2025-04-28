@@ -90,7 +90,8 @@
       "refs": {
         "AccountList$member": null,
         "FastLaunchConfiguration$accountId": "<p>The owner account ID for the fast-launch enabled Windows AMI.</p>",
-        "LaunchTemplateConfiguration$accountId": "<p>The account ID that this configuration applies to.</p>"
+        "LaunchTemplateConfiguration$accountId": "<p>The account ID that this configuration applies to.</p>",
+        "SsmParameterConfiguration$amiAccountId": "<p>Specify the account that will own the Parameter in a given Region. During distribution, this account must be specified in distribution settings as a target account for the Region.</p>"
       }
     },
     "AccountList": {
@@ -2168,7 +2169,7 @@
         "ContainerRecipe$description": "<p>The description of the container recipe.</p>",
         "ContainerRecipe$owner": "<p>The owner of the container recipe.</p>",
         "ContainerRecipe$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the container image for distribution to the target Region.</p>",
-        "ContainerRecipe$parentImage": "<p>The base image for the container recipe.</p>",
+        "ContainerRecipe$parentImage": "<p>The base image for customizations specified in the container recipe. This can contain an Image Builder image resource ARN or a container image URI, for example <code>amazonlinux:latest</code>.</p>",
         "ContainerRecipe$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
         "ContainerRecipeSummary$owner": "<p>The owner of the container recipe.</p>",
         "ContainerRecipeSummary$parentImage": "<p>The base image for the container recipe.</p>",
@@ -2244,7 +2245,7 @@
         "ImagePipeline$description": "<p>The description of the image pipeline.</p>",
         "ImageRecipe$description": "<p>The description of the image recipe.</p>",
         "ImageRecipe$owner": "<p>The owner of the image recipe.</p>",
-        "ImageRecipe$parentImage": "<p>The base image of the image recipe.</p>",
+        "ImageRecipe$parentImage": "<p>The base image for customizations specified in the image recipe. You can specify the parent image using one of the following options:</p> <ul> <li> <p>AMI ID</p> </li> <li> <p>Image Builder image Amazon Resource Name (ARN)</p> </li> <li> <p>Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> </li> <li> <p>Amazon Web Services Marketplace product ID</p> </li> </ul>",
         "ImageRecipe$workingDirectory": "<p>The working directory to be used during build and test workflows.</p>",
         "ImageRecipeSummary$owner": "<p>The owner of the image recipe.</p>",
         "ImageRecipeSummary$parentImage": "<p>The base image of the image recipe.</p>",
@@ -2277,7 +2278,7 @@
         "InfrastructureConfigurationSummary$description": "<p>The description of the infrastructure configuration.</p>",
         "InstanceBlockDeviceMapping$deviceName": "<p>The device to which these mappings apply.</p>",
         "InstanceBlockDeviceMapping$virtualName": "<p>Use to manage instance ephemeral devices.</p>",
-        "InstanceConfiguration$image": "<p>The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.</p>",
+        "InstanceConfiguration$image": "<p>The base image for a container build and test instance. This can contain an AMI ID or it can specify an Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> <p>If not specified, Image Builder uses the appropriate ECS-optimized AMI as a base image.</p>",
         "LifecycleExecutionResource$accountId": "<p>The account that owns the impacted resource.</p>",
         "LifecycleExecutionResource$resourceId": "<p>Identifies the impacted resource. The resource ID depends on the type of resource, as follows.</p> <ul> <li> <p>Image Builder image resources: Amazon Resource Name (ARN)</p> </li> <li> <p>Distributed AMIs: AMI ID</p> </li> <li> <p>Container images distributed to an ECR repository: image URI or SHA Digest</p> </li> </ul>",
         "LifecycleExecutionResource$region": "<p>The Amazon Web Services Region where the lifecycle execution resource is stored.</p>",
@@ -2884,6 +2885,30 @@
       "base": null,
       "refs": {
         "VulnerablePackage$sourceLayerHash": "<p>The source layer hash of the vulnerable package.</p>"
+      }
+    },
+    "SsmParameterConfiguration": {
+      "base": "<p>Configuration for a single Parameter in the Amazon Web Services Systems Manager (SSM) Parameter Store in a given Region.</p>",
+      "refs": {
+        "SsmParameterConfigurationList$member": null
+      }
+    },
+    "SsmParameterConfigurationList": {
+      "base": null,
+      "refs": {
+        "Distribution$ssmParameterConfigurations": "<p>Contains settings to update Amazon Web Services Systems Manager (SSM) Parameter Store Parameters with output AMI IDs from the build by target Region.</p>"
+      }
+    },
+    "SsmParameterDataType": {
+      "base": null,
+      "refs": {
+        "SsmParameterConfiguration$dataType": "<p>The data type specifies what type of value the Parameter contains. We recommend that you use data type <code>aws:ec2:image</code>.</p>"
+      }
+    },
+    "SsmParameterName": {
+      "base": null,
+      "refs": {
+        "SsmParameterConfiguration$parameterName": "<p>This is the name of the Parameter in the target Region or account. The image distribution creates the Parameter if it doesn't already exist. Otherwise, it updates the parameter.</p>"
       }
     },
     "StartImagePipelineExecutionRequest": {

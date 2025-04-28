@@ -31,6 +31,48 @@
         {"shape":"IllegalUpdate"}
       ]
     },
+    "AssociateDistributionTenantWebACL":{
+      "name":"AssociateDistributionTenantWebACL2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}/associate-web-acl",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"AssociateDistributionTenantWebACLRequest",
+        "locationName":"AssociateDistributionTenantWebACLRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"AssociateDistributionTenantWebACLResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
+    "AssociateDistributionWebACL":{
+      "name":"AssociateDistributionWebACL2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution/{Id}/associate-web-acl",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"AssociateDistributionWebACLRequest",
+        "locationName":"AssociateDistributionWebACLRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"AssociateDistributionWebACLResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "CopyDistribution":{
       "name":"CopyDistribution2020_05_31",
       "http":{
@@ -170,6 +212,28 @@
         {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"}
       ]
     },
+    "CreateConnectionGroup":{
+      "name":"CreateConnectionGroup2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-group",
+        "responseCode":201
+      },
+      "input":{
+        "shape":"CreateConnectionGroupRequest",
+        "locationName":"CreateConnectionGroupRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateConnectionGroupResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"}
+      ]
+    },
     "CreateContinuousDeploymentPolicy":{
       "name":"CreateContinuousDeploymentPolicy2020_05_31",
       "http":{
@@ -261,9 +325,34 @@
         {"shape":"InvalidFunctionAssociation"},
         {"shape":"TooManyDistributionsWithLambdaAssociations"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
+        {"shape":"EntityLimitExceeded"},
         {"shape":"DistributionAlreadyExists"},
         {"shape":"NoSuchOrigin"},
         {"shape":"TooManyCacheBehaviors"}
+      ]
+    },
+    "CreateDistributionTenant":{
+      "name":"CreateDistributionTenant2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/distribution-tenant",
+        "responseCode":201
+      },
+      "input":{
+        "shape":"CreateDistributionTenantRequest",
+        "locationName":"CreateDistributionTenantRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"CreateDistributionTenantResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"InvalidAssociation"},
+        {"shape":"InvalidTagging"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"}
       ]
     },
     "CreateDistributionWithTags":{
@@ -417,6 +506,25 @@
       "output":{"shape":"CreateInvalidationResult"},
       "errors":[
         {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"},
+        {"shape":"TooManyInvalidationsInProgress"},
+        {"shape":"MissingBody"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"BatchTooLarge"}
+      ]
+    },
+    "CreateInvalidationForDistributionTenant":{
+      "name":"CreateInvalidationForDistributionTenant2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}/invalidation",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateInvalidationForDistributionTenantRequest"},
+      "output":{"shape":"CreateInvalidationForDistributionTenantResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
         {"shape":"TooManyInvalidationsInProgress"},
         {"shape":"MissingBody"},
@@ -695,6 +803,23 @@
         {"shape":"CloudFrontOriginAccessIdentityInUse"}
       ]
     },
+    "DeleteConnectionGroup":{
+      "name":"DeleteConnectionGroup2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/connection-group/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteConnectionGroupRequest"},
+      "errors":[
+        {"shape":"CannotDeleteEntityWhileInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"ResourceNotDisabled"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "DeleteContinuousDeploymentPolicy":{
       "name":"DeleteContinuousDeploymentPolicy2020_05_31",
       "http":{
@@ -721,10 +846,27 @@
       },
       "input":{"shape":"DeleteDistributionRequest"},
       "errors":[
+        {"shape":"ResourceInUse"},
         {"shape":"NoSuchDistribution"},
         {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
         {"shape":"DistributionNotDisabled"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
+    "DeleteDistributionTenant":{
+      "name":"DeleteDistributionTenant2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteDistributionTenantRequest"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"ResourceNotDisabled"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -976,6 +1118,40 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "DisassociateDistributionTenantWebACL":{
+      "name":"DisassociateDistributionTenantWebACL2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}/disassociate-web-acl",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateDistributionTenantWebACLRequest"},
+      "output":{"shape":"DisassociateDistributionTenantWebACLResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
+    "DisassociateDistributionWebACL":{
+      "name":"DisassociateDistributionWebACL2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution/{Id}/disassociate-web-acl",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateDistributionWebACLRequest"},
+      "output":{"shape":"DisassociateDistributionWebACLResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "GetAnycastIpList":{
       "name":"GetAnycastIpList2020_05_31",
       "http":{
@@ -1048,6 +1224,34 @@
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
+    "GetConnectionGroup":{
+      "name":"GetConnectionGroup2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/connection-group/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectionGroupRequest"},
+      "output":{"shape":"GetConnectionGroupResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"}
+      ]
+    },
+    "GetConnectionGroupByRoutingEndpoint":{
+      "name":"GetConnectionGroupByRoutingEndpoint2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/connection-group",
+        "responseCode":200
+      },
+      "input":{"shape":"GetConnectionGroupByRoutingEndpointRequest"},
+      "output":{"shape":"GetConnectionGroupByRoutingEndpointResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"}
+      ]
+    },
     "GetContinuousDeploymentPolicy":{
       "name":"GetContinuousDeploymentPolicy2020_05_31",
       "http":{
@@ -1101,6 +1305,34 @@
       "output":{"shape":"GetDistributionConfigResult"},
       "errors":[
         {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"}
+      ]
+    },
+    "GetDistributionTenant":{
+      "name":"GetDistributionTenant2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distribution-tenant/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDistributionTenantRequest"},
+      "output":{"shape":"GetDistributionTenantResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"}
+      ]
+    },
+    "GetDistributionTenantByDomain":{
+      "name":"GetDistributionTenantByDomain2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distribution-tenant",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDistributionTenantByDomainRequest"},
+      "output":{"shape":"GetDistributionTenantByDomainResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"}
       ]
     },
@@ -1189,6 +1421,21 @@
         {"shape":"NoSuchInvalidation"}
       ]
     },
+    "GetInvalidationForDistributionTenant":{
+      "name":"GetInvalidationForDistributionTenant2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distribution-tenant/{DistributionTenantId}/invalidation/{Id}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetInvalidationForDistributionTenantRequest"},
+      "output":{"shape":"GetInvalidationForDistributionTenantResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchInvalidation"}
+      ]
+    },
     "GetKeyGroup":{
       "name":"GetKeyGroup2020_05_31",
       "http":{
@@ -1213,6 +1460,20 @@
       "output":{"shape":"GetKeyGroupConfigResult"},
       "errors":[
         {"shape":"NoSuchResource"}
+      ]
+    },
+    "GetManagedCertificateDetails":{
+      "name":"GetManagedCertificateDetails2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/managed-certificate/{Identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetManagedCertificateDetailsRequest"},
+      "output":{"shape":"GetManagedCertificateDetailsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"}
       ]
     },
     "GetMonitoringSubscription":{
@@ -1464,6 +1725,25 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "ListConnectionGroups":{
+      "name":"ListConnectionGroups2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/connection-groups",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListConnectionGroupsRequest",
+        "locationName":"ListConnectionGroupsRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListConnectionGroupsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListContinuousDeploymentPolicies":{
       "name":"ListContinuousDeploymentPolicies2020_05_31",
       "http":{
@@ -1477,6 +1757,44 @@
         {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"},
         {"shape":"NoSuchContinuousDeploymentPolicy"}
+      ]
+    },
+    "ListDistributionTenants":{
+      "name":"ListDistributionTenants2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/distribution-tenants",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListDistributionTenantsRequest",
+        "locationName":"ListDistributionTenantsRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListDistributionTenantsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListDistributionTenantsByCustomization":{
+      "name":"ListDistributionTenantsByCustomization2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/distribution-tenants-by-customization",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListDistributionTenantsByCustomizationRequest",
+        "locationName":"ListDistributionTenantsByCustomizationRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListDistributionTenantsByCustomizationResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "ListDistributions":{
@@ -1519,6 +1837,20 @@
       "output":{"shape":"ListDistributionsByCachePolicyIdResult"},
       "errors":[
         {"shape":"NoSuchCachePolicy"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListDistributionsByConnectionMode":{
+      "name":"ListDistributionsByConnectionMode2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByConnectionMode/{ConnectionMode}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDistributionsByConnectionModeRequest"},
+      "output":{"shape":"ListDistributionsByConnectionModeResult"},
+      "errors":[
         {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"}
       ]
@@ -1614,6 +1946,25 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "ListDomainConflicts":{
+      "name":"ListDomainConflicts2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/domain-conflicts",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"ListDomainConflictsRequest",
+        "locationName":"ListDomainConflictsRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"ListDomainConflictsResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListFieldLevelEncryptionConfigs":{
       "name":"ListFieldLevelEncryptionConfigs2020_05_31",
       "http":{
@@ -1665,6 +2016,21 @@
       "output":{"shape":"ListInvalidationsResult"},
       "errors":[
         {"shape":"NoSuchDistribution"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListInvalidationsForDistributionTenant":{
+      "name":"ListInvalidationsForDistributionTenant2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}/invalidation",
+        "responseCode":200
+      },
+      "input":{"shape":"ListInvalidationsForDistributionTenantRequest"},
+      "output":{"shape":"ListInvalidationsForDistributionTenantResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"}
       ]
@@ -1924,6 +2290,30 @@
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
+    "UpdateConnectionGroup":{
+      "name":"UpdateConnectionGroup2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/connection-group/{Id}",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"UpdateConnectionGroupRequest",
+        "locationName":"UpdateConnectionGroupRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"UpdateConnectionGroupResult"},
+      "errors":[
+        {"shape":"ResourceInUse"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "UpdateContinuousDeploymentPolicy":{
       "name":"UpdateContinuousDeploymentPolicy2020_05_31",
       "http":{
@@ -2022,6 +2412,31 @@
         {"shape":"TooManyCacheBehaviors"}
       ]
     },
+    "UpdateDistributionTenant":{
+      "name":"UpdateDistributionTenant2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution-tenant/{Id}",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"UpdateDistributionTenantRequest",
+        "locationName":"UpdateDistributionTenantRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"UpdateDistributionTenantResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"EntityAlreadyExists"},
+        {"shape":"CNAMEAlreadyExists"},
+        {"shape":"InvalidAssociation"},
+        {"shape":"InvalidArgument"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidIfMatchVersion"}
+      ]
+    },
     "UpdateDistributionWithStagingConfig":{
       "name":"UpdateDistributionWithStagingConfig2020_05_31",
       "http":{
@@ -2094,6 +2509,28 @@
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
         {"shape":"NoSuchOrigin"},
         {"shape":"TooManyCacheBehaviors"}
+      ]
+    },
+    "UpdateDomainAssociation":{
+      "name":"UpdateDomainAssociation2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/domain-association",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"UpdateDomainAssociationRequest",
+        "locationName":"UpdateDomainAssociationRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"UpdateDomainAssociationResult"},
+      "errors":[
+        {"shape":"PreconditionFailed"},
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InvalidIfMatchVersion"}
       ]
     },
     "UpdateFieldLevelEncryptionConfig":{
@@ -2357,6 +2794,25 @@
         {"shape":"IllegalUpdate"},
         {"shape":"InvalidIfMatchVersion"}
       ]
+    },
+    "VerifyDnsConfiguration":{
+      "name":"VerifyDnsConfiguration2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/verify-dns-configuration",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"VerifyDnsConfigurationRequest",
+        "locationName":"VerifyDnsConfigurationRequest",
+        "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+      },
+      "output":{"shape":"VerifyDnsConfigurationResult"},
+      "errors":[
+        {"shape":"EntityNotFound"},
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidArgument"}
+      ]
     }
   },
   "shapes":{
@@ -2557,6 +3013,70 @@
           "shape":"string",
           "location":"querystring",
           "locationName":"Alias"
+        }
+      }
+    },
+    "AssociateDistributionTenantWebACLRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "WebACLArn"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "WebACLArn":{"shape":"string"},
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "AssociateDistributionTenantWebACLResult":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "WebACLArn":{"shape":"string"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      }
+    },
+    "AssociateDistributionWebACLRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "WebACLArn"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "WebACLArn":{"shape":"string"},
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "AssociateDistributionWebACLResult":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "WebACLArn":{"shape":"string"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
         }
       }
     },
@@ -2827,12 +3347,26 @@
       },
       "exception":true
     },
+    "Certificate":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"string"}
+      }
+    },
     "CertificateSource":{
       "type":"string",
       "enum":[
         "cloudfront",
         "iam",
         "acm"
+      ]
+    },
+    "CertificateTransparencyLoggingPreference":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
       ]
     },
     "CloudFrontOriginAccessIdentity":{
@@ -2944,6 +3478,68 @@
         "Quantity":{"shape":"integer"},
         "Items":{"shape":"ConflictingAliases"}
       }
+    },
+    "ConnectionGroup":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "Tags":{"shape":"Tags"},
+        "Ipv6Enabled":{"shape":"boolean"},
+        "RoutingEndpoint":{"shape":"string"},
+        "AnycastIpListId":{"shape":"string"},
+        "Status":{"shape":"string"},
+        "Enabled":{"shape":"boolean"},
+        "IsDefault":{"shape":"boolean"}
+      }
+    },
+    "ConnectionGroupAssociationFilter":{
+      "type":"structure",
+      "members":{
+        "AnycastIpListId":{"shape":"string"}
+      }
+    },
+    "ConnectionGroupSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name",
+        "Arn",
+        "RoutingEndpoint",
+        "CreatedTime",
+        "LastModifiedTime",
+        "ETag"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "RoutingEndpoint":{"shape":"string"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "ETag":{"shape":"string"},
+        "AnycastIpListId":{"shape":"string"},
+        "Enabled":{"shape":"boolean"},
+        "Status":{"shape":"string"},
+        "IsDefault":{"shape":"boolean"}
+      }
+    },
+    "ConnectionGroupSummaryList":{
+      "type":"list",
+      "member":{
+        "shape":"ConnectionGroupSummary",
+        "locationName":"ConnectionGroupSummary"
+      }
+    },
+    "ConnectionMode":{
+      "type":"string",
+      "enum":[
+        "direct",
+        "tenant-only"
+      ]
     },
     "ContentTypeProfile":{
       "type":"structure",
@@ -3228,6 +3824,29 @@
       },
       "payload":"CloudFrontOriginAccessIdentity"
     },
+    "CreateConnectionGroupRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"string"},
+        "Ipv6Enabled":{"shape":"boolean"},
+        "Tags":{"shape":"Tags"},
+        "AnycastIpListId":{"shape":"string"},
+        "Enabled":{"shape":"boolean"}
+      }
+    },
+    "CreateConnectionGroupResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionGroup":{"shape":"ConnectionGroup"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionGroup"
+    },
     "CreateContinuousDeploymentPolicyRequest":{
       "type":"structure",
       "required":["ContinuousDeploymentPolicyConfig"],
@@ -3285,6 +3904,41 @@
         }
       },
       "payload":"Distribution"
+    },
+    "CreateDistributionTenantRequest":{
+      "type":"structure",
+      "required":[
+        "DistributionId",
+        "Name",
+        "Domains"
+      ],
+      "members":{
+        "DistributionId":{"shape":"string"},
+        "Name":{"shape":"CreateDistributionTenantRequestNameString"},
+        "Domains":{"shape":"DomainList"},
+        "Tags":{"shape":"Tags"},
+        "Customizations":{"shape":"Customizations"},
+        "Parameters":{"shape":"Parameters"},
+        "ConnectionGroupId":{"shape":"string"},
+        "ManagedCertificateRequest":{"shape":"ManagedCertificateRequest"},
+        "Enabled":{"shape":"boolean"}
+      }
+    },
+    "CreateDistributionTenantRequestNameString":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9-.]{1,126}[a-zA-Z0-9]"
+    },
+    "CreateDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "DistributionTenant":{"shape":"DistributionTenant"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"DistributionTenant"
     },
     "CreateDistributionWithTagsRequest":{
       "type":"structure",
@@ -3402,6 +4056,38 @@
         }
       },
       "payload":"FunctionSummary"
+    },
+    "CreateInvalidationForDistributionTenantRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "InvalidationBatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "InvalidationBatch":{
+          "shape":"InvalidationBatch",
+          "locationName":"InvalidationBatch",
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        }
+      },
+      "payload":"InvalidationBatch"
+    },
+    "CreateInvalidationForDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "Location":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"Location"
+        },
+        "Invalidation":{"shape":"Invalidation"}
+      },
+      "payload":"Invalidation"
     },
     "CreateInvalidationRequest":{
       "type":"structure",
@@ -3786,6 +4472,21 @@
         "OriginKeepaliveTimeout":{"shape":"integer"}
       }
     },
+    "CustomizationActionType":{
+      "type":"string",
+      "enum":[
+        "override",
+        "disable"
+      ]
+    },
+    "Customizations":{
+      "type":"structure",
+      "members":{
+        "WebAcl":{"shape":"WebAclCustomization"},
+        "Certificate":{"shape":"Certificate"},
+        "GeoRestrictions":{"shape":"GeoRestrictionCustomization"}
+      }
+    },
     "DefaultCacheBehavior":{
       "type":"structure",
       "required":[
@@ -3877,6 +4578,25 @@
         }
       }
     },
+    "DeleteConnectionGroupRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
     "DeleteContinuousDeploymentPolicyRequest":{
       "type":"structure",
       "required":["Id"],
@@ -3896,6 +4616,25 @@
     "DeleteDistributionRequest":{
       "type":"structure",
       "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "DeleteDistributionTenantRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
       "members":{
         "Id":{
           "shape":"string",
@@ -4180,6 +4919,60 @@
       },
       "payload":"KeyValueStore"
     },
+    "DisassociateDistributionTenantWebACLRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "DisassociateDistributionTenantWebACLResult":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      }
+    },
+    "DisassociateDistributionWebACLRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "DisassociateDistributionWebACLResult":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      }
+    },
     "Distribution":{
       "type":"structure",
       "required":[
@@ -4244,7 +5037,9 @@
         "IsIPV6Enabled":{"shape":"boolean"},
         "ContinuousDeploymentPolicyId":{"shape":"string"},
         "Staging":{"shape":"boolean"},
-        "AnycastIpListId":{"shape":"string"}
+        "AnycastIpListId":{"shape":"string"},
+        "TenantConfig":{"shape":"TenantConfig"},
+        "ConnectionMode":{"shape":"ConnectionMode"}
       }
     },
     "DistributionConfigWithTags":{
@@ -4310,6 +5105,20 @@
       },
       "exception":true
     },
+    "DistributionResourceId":{
+      "type":"structure",
+      "members":{
+        "DistributionId":{"shape":"string"},
+        "DistributionTenantId":{"shape":"string"}
+      }
+    },
+    "DistributionResourceType":{
+      "type":"string",
+      "enum":[
+        "distribution",
+        "distribution-tenant"
+      ]
+    },
     "DistributionSummary":{
       "type":"structure",
       "required":[
@@ -4336,6 +5145,7 @@
       "members":{
         "Id":{"shape":"string"},
         "ARN":{"shape":"string"},
+        "ETag":{"shape":"string"},
         "Status":{"shape":"string"},
         "LastModifiedTime":{"shape":"timestamp"},
         "DomainName":{"shape":"string"},
@@ -4355,6 +5165,7 @@
         "IsIPV6Enabled":{"shape":"boolean"},
         "AliasICPRecordals":{"shape":"AliasICPRecordals"},
         "Staging":{"shape":"boolean"},
+        "ConnectionMode":{"shape":"ConnectionMode"},
         "AnycastIpListId":{"shape":"string"}
       }
     },
@@ -4364,6 +5175,144 @@
         "shape":"DistributionSummary",
         "locationName":"DistributionSummary"
       }
+    },
+    "DistributionTenant":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"string"},
+        "DistributionId":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "Domains":{"shape":"DomainResultList"},
+        "Tags":{"shape":"Tags"},
+        "Customizations":{"shape":"Customizations"},
+        "Parameters":{"shape":"Parameters"},
+        "ConnectionGroupId":{"shape":"string"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "Enabled":{"shape":"boolean"},
+        "Status":{"shape":"string"}
+      }
+    },
+    "DistributionTenantAssociationFilter":{
+      "type":"structure",
+      "members":{
+        "DistributionId":{"shape":"string"},
+        "ConnectionGroupId":{"shape":"string"}
+      }
+    },
+    "DistributionTenantList":{
+      "type":"list",
+      "member":{
+        "shape":"DistributionTenantSummary",
+        "locationName":"DistributionTenantSummary"
+      }
+    },
+    "DistributionTenantSummary":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "DistributionId",
+        "Name",
+        "Arn",
+        "Domains",
+        "CreatedTime",
+        "LastModifiedTime",
+        "ETag"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "DistributionId":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "Arn":{"shape":"string"},
+        "Domains":{"shape":"DomainResultList"},
+        "ConnectionGroupId":{"shape":"string"},
+        "Customizations":{"shape":"Customizations"},
+        "CreatedTime":{"shape":"timestamp"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "ETag":{"shape":"string"},
+        "Enabled":{"shape":"boolean"},
+        "Status":{"shape":"string"}
+      }
+    },
+    "DnsConfiguration":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "Status"
+      ],
+      "members":{
+        "Domain":{"shape":"string"},
+        "Status":{"shape":"DnsConfigurationStatus"},
+        "Reason":{"shape":"string"}
+      }
+    },
+    "DnsConfigurationList":{
+      "type":"list",
+      "member":{
+        "shape":"DnsConfiguration",
+        "locationName":"DnsConfiguration"
+      }
+    },
+    "DnsConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "valid-configuration",
+        "invalid-configuration",
+        "unknown-configuration"
+      ]
+    },
+    "DomainConflict":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "ResourceType",
+        "ResourceId",
+        "AccountId"
+      ],
+      "members":{
+        "Domain":{"shape":"string"},
+        "ResourceType":{"shape":"DistributionResourceType"},
+        "ResourceId":{"shape":"string"},
+        "AccountId":{"shape":"string"}
+      }
+    },
+    "DomainConflictsList":{
+      "type":"list",
+      "member":{
+        "shape":"DomainConflict",
+        "locationName":"DomainConflicts"
+      }
+    },
+    "DomainItem":{
+      "type":"structure",
+      "required":["Domain"],
+      "members":{
+        "Domain":{"shape":"string"}
+      }
+    },
+    "DomainList":{
+      "type":"list",
+      "member":{"shape":"DomainItem"}
+    },
+    "DomainResult":{
+      "type":"structure",
+      "required":["Domain"],
+      "members":{
+        "Domain":{"shape":"string"},
+        "Status":{"shape":"DomainStatus"}
+      }
+    },
+    "DomainResultList":{
+      "type":"list",
+      "member":{"shape":"DomainResult"}
+    },
+    "DomainStatus":{
+      "type":"string",
+      "enum":[
+        "active",
+        "inactive"
+      ]
     },
     "EncryptionEntities":{
       "type":"structure",
@@ -4852,6 +5801,14 @@
         "Items":{"shape":"LocationList"}
       }
     },
+    "GeoRestrictionCustomization":{
+      "type":"structure",
+      "required":["RestrictionType"],
+      "members":{
+        "RestrictionType":{"shape":"GeoRestrictionType"},
+        "Locations":{"shape":"LocationList"}
+      }
+    },
     "GeoRestrictionType":{
       "type":"string",
       "enum":[
@@ -4975,6 +5932,52 @@
       },
       "payload":"CloudFrontOriginAccessIdentity"
     },
+    "GetConnectionGroupByRoutingEndpointRequest":{
+      "type":"structure",
+      "required":["RoutingEndpoint"],
+      "members":{
+        "RoutingEndpoint":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"RoutingEndpoint"
+        }
+      }
+    },
+    "GetConnectionGroupByRoutingEndpointResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionGroup":{"shape":"ConnectionGroup"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionGroup"
+    },
+    "GetConnectionGroupRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "GetConnectionGroupResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionGroup":{"shape":"ConnectionGroup"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionGroup"
+    },
     "GetContinuousDeploymentPolicyConfigRequest":{
       "type":"structure",
       "required":["Id"],
@@ -5066,6 +6069,52 @@
         }
       },
       "payload":"Distribution"
+    },
+    "GetDistributionTenantByDomainRequest":{
+      "type":"structure",
+      "required":["Domain"],
+      "members":{
+        "Domain":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"domain"
+        }
+      }
+    },
+    "GetDistributionTenantByDomainResult":{
+      "type":"structure",
+      "members":{
+        "DistributionTenant":{"shape":"DistributionTenant"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"DistributionTenant"
+    },
+    "GetDistributionTenantRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "GetDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "DistributionTenant":{"shape":"DistributionTenant"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"DistributionTenant"
     },
     "GetFieldLevelEncryptionConfigRequest":{
       "type":"structure",
@@ -5192,6 +6241,32 @@
       },
       "payload":"FunctionCode"
     },
+    "GetInvalidationForDistributionTenantRequest":{
+      "type":"structure",
+      "required":[
+        "DistributionTenantId",
+        "Id"
+      ],
+      "members":{
+        "DistributionTenantId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"DistributionTenantId"
+        },
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetInvalidationForDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "Invalidation":{"shape":"Invalidation"}
+      },
+      "payload":"Invalidation"
+    },
     "GetInvalidationRequest":{
       "type":"structure",
       "required":[
@@ -5263,6 +6338,24 @@
         }
       },
       "payload":"KeyGroup"
+    },
+    "GetManagedCertificateDetailsRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Identifier":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Identifier"
+        }
+      }
+    },
+    "GetManagedCertificateDetailsResult":{
+      "type":"structure",
+      "members":{
+        "ManagedCertificateDetails":{"shape":"ManagedCertificateDetails"}
+      },
+      "payload":"ManagedCertificateDetails"
     },
     "GetMonitoringSubscriptionRequest":{
       "type":"structure",
@@ -5664,6 +6757,17 @@
       },
       "error":{
         "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidAssociation":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":409,
         "senderFault":true
       },
       "exception":true
@@ -6332,6 +7436,21 @@
       },
       "payload":"ConflictingAliasesList"
     },
+    "ListConnectionGroupsRequest":{
+      "type":"structure",
+      "members":{
+        "AssociationFilter":{"shape":"ConnectionGroupAssociationFilter"},
+        "Marker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"}
+      }
+    },
+    "ListConnectionGroupsResult":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "ConnectionGroups":{"shape":"ConnectionGroupSummaryList"}
+      }
+    },
     "ListContinuousDeploymentPoliciesRequest":{
       "type":"structure",
       "members":{
@@ -6353,6 +7472,37 @@
         "ContinuousDeploymentPolicyList":{"shape":"ContinuousDeploymentPolicyList"}
       },
       "payload":"ContinuousDeploymentPolicyList"
+    },
+    "ListDistributionTenantsByCustomizationRequest":{
+      "type":"structure",
+      "members":{
+        "WebACLArn":{"shape":"string"},
+        "CertificateArn":{"shape":"string"},
+        "Marker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"}
+      }
+    },
+    "ListDistributionTenantsByCustomizationResult":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "DistributionTenantList":{"shape":"DistributionTenantList"}
+      }
+    },
+    "ListDistributionTenantsRequest":{
+      "type":"structure",
+      "members":{
+        "AssociationFilter":{"shape":"DistributionTenantAssociationFilter"},
+        "Marker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"}
+      }
+    },
+    "ListDistributionTenantsResult":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "DistributionTenantList":{"shape":"DistributionTenantList"}
+      }
     },
     "ListDistributionsByAnycastIpListIdRequest":{
       "type":"structure",
@@ -6409,6 +7559,34 @@
         "DistributionIdList":{"shape":"DistributionIdList"}
       },
       "payload":"DistributionIdList"
+    },
+    "ListDistributionsByConnectionModeRequest":{
+      "type":"structure",
+      "required":["ConnectionMode"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"integer",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "ConnectionMode":{
+          "shape":"ConnectionMode",
+          "location":"uri",
+          "locationName":"ConnectionMode"
+        }
+      }
+    },
+    "ListDistributionsByConnectionModeResult":{
+      "type":"structure",
+      "members":{
+        "DistributionList":{"shape":"DistributionList"}
+      },
+      "payload":"DistributionList"
     },
     "ListDistributionsByKeyGroupRequest":{
       "type":"structure",
@@ -6588,6 +7766,26 @@
       },
       "payload":"DistributionList"
     },
+    "ListDomainConflictsRequest":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "DomainControlValidationResource"
+      ],
+      "members":{
+        "Domain":{"shape":"string"},
+        "DomainControlValidationResource":{"shape":"DistributionResourceId"},
+        "MaxItems":{"shape":"integer"},
+        "Marker":{"shape":"string"}
+      }
+    },
+    "ListDomainConflictsResult":{
+      "type":"structure",
+      "members":{
+        "DomainConflicts":{"shape":"DomainConflictsList"},
+        "NextMarker":{"shape":"string"}
+      }
+    },
     "ListFieldLevelEncryptionConfigsRequest":{
       "type":"structure",
       "members":{
@@ -6658,6 +7856,34 @@
         "FunctionList":{"shape":"FunctionList"}
       },
       "payload":"FunctionList"
+    },
+    "ListInvalidationsForDistributionTenantRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"integer",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListInvalidationsForDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "InvalidationList":{"shape":"InvalidationList"}
+      },
+      "payload":"InvalidationList"
     },
     "ListInvalidationsRequest":{
       "type":"structure",
@@ -6940,6 +8166,36 @@
         "Bucket":{"shape":"string"},
         "Prefix":{"shape":"string"}
       }
+    },
+    "ManagedCertificateDetails":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"string"},
+        "CertificateStatus":{"shape":"ManagedCertificateStatus"},
+        "ValidationTokenHost":{"shape":"ValidationTokenHost"},
+        "ValidationTokenDetails":{"shape":"ValidationTokenDetailList"}
+      }
+    },
+    "ManagedCertificateRequest":{
+      "type":"structure",
+      "required":["ValidationTokenHost"],
+      "members":{
+        "ValidationTokenHost":{"shape":"ValidationTokenHost"},
+        "PrimaryDomainName":{"shape":"string"},
+        "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"}
+      }
+    },
+    "ManagedCertificateStatus":{
+      "type":"string",
+      "enum":[
+        "pending-validation",
+        "issued",
+        "inactive",
+        "expired",
+        "validation-timed-out",
+        "revoked",
+        "failed"
+      ]
     },
     "Method":{
       "type":"string",
@@ -7598,6 +8854,53 @@
         "Items":{"shape":"OriginList"}
       }
     },
+    "Parameter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"ParameterName"},
+        "Value":{"shape":"ParameterValue"}
+      }
+    },
+    "ParameterDefinition":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Definition"
+      ],
+      "members":{
+        "Name":{"shape":"ParameterName"},
+        "Definition":{"shape":"ParameterDefinitionSchema"}
+      }
+    },
+    "ParameterDefinitionSchema":{
+      "type":"structure",
+      "members":{
+        "StringSchema":{"shape":"StringSchemaConfig"}
+      }
+    },
+    "ParameterDefinitions":{
+      "type":"list",
+      "member":{"shape":"ParameterDefinition"}
+    },
+    "ParameterName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-_]+"
+    },
+    "ParameterValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "Parameters":{
+      "type":"list",
+      "member":{"shape":"Parameter"}
+    },
     "ParametersInCacheKeyAndForwardedToOrigin":{
       "type":"structure",
       "required":[
@@ -7645,7 +8948,8 @@
       "enum":[
         "PriceClass_100",
         "PriceClass_200",
-        "PriceClass_All"
+        "PriceClass_All",
+        "None"
       ]
     },
     "PublicKey":{
@@ -7942,6 +9246,17 @@
       "pattern":"arn:aws(-cn)?:cloudfront::[0-9]+:.*"
     },
     "ResourceInUse":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ResourceNotDisabled":{
       "type":"structure",
       "members":{
         "Message":{"shape":"string"}
@@ -8510,6 +9825,15 @@
         "Prefix":{"shape":"string"}
       }
     },
+    "StringSchemaConfig":{
+      "type":"structure",
+      "required":["Required"],
+      "members":{
+        "Comment":{"shape":"string"},
+        "DefaultValue":{"shape":"ParameterValue"},
+        "Required":{"shape":"boolean"}
+      }
+    },
     "Tag":{
       "type":"structure",
       "required":["Key"],
@@ -8574,6 +9898,12 @@
       "type":"structure",
       "members":{
         "Items":{"shape":"TagList"}
+      }
+    },
+    "TenantConfig":{
+      "type":"structure",
+      "members":{
+        "ParameterDefinitions":{"shape":"ParameterDefinitions"}
       }
     },
     "TestFunctionFailed":{
@@ -9363,6 +10693,40 @@
       },
       "payload":"CloudFrontOriginAccessIdentity"
     },
+    "UpdateConnectionGroupRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "Ipv6Enabled":{"shape":"boolean"},
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "AnycastIpListId":{"shape":"string"},
+        "Enabled":{"shape":"boolean"}
+      }
+    },
+    "UpdateConnectionGroupResult":{
+      "type":"structure",
+      "members":{
+        "ConnectionGroup":{"shape":"ConnectionGroup"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ConnectionGroup"
+    },
     "UpdateContinuousDeploymentPolicyRequest":{
       "type":"structure",
       "required":[
@@ -9437,6 +10801,44 @@
       },
       "payload":"Distribution"
     },
+    "UpdateDistributionTenantRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "IfMatch"
+      ],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "DistributionId":{"shape":"string"},
+        "Domains":{"shape":"DomainList"},
+        "Customizations":{"shape":"Customizations"},
+        "Parameters":{"shape":"Parameters"},
+        "ConnectionGroupId":{"shape":"string"},
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "ManagedCertificateRequest":{"shape":"ManagedCertificateRequest"},
+        "Enabled":{"shape":"boolean"}
+      }
+    },
+    "UpdateDistributionTenantResult":{
+      "type":"structure",
+      "members":{
+        "DistributionTenant":{"shape":"DistributionTenant"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"DistributionTenant"
+    },
     "UpdateDistributionWithStagingConfigRequest":{
       "type":"structure",
       "required":["Id"],
@@ -9469,6 +10871,34 @@
         }
       },
       "payload":"Distribution"
+    },
+    "UpdateDomainAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "TargetResource"
+      ],
+      "members":{
+        "Domain":{"shape":"string"},
+        "TargetResource":{"shape":"DistributionResourceId"},
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      }
+    },
+    "UpdateDomainAssociationResult":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"string"},
+        "ResourceId":{"shape":"string"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      }
     },
     "UpdateFieldLevelEncryptionConfigRequest":{
       "type":"structure",
@@ -9888,6 +11318,40 @@
       },
       "payload":"VpcOrigin"
     },
+    "ValidationTokenDetail":{
+      "type":"structure",
+      "required":["Domain"],
+      "members":{
+        "Domain":{"shape":"string"},
+        "RedirectTo":{"shape":"string"},
+        "RedirectFrom":{"shape":"string"}
+      }
+    },
+    "ValidationTokenDetailList":{
+      "type":"list",
+      "member":{"shape":"ValidationTokenDetail"}
+    },
+    "ValidationTokenHost":{
+      "type":"string",
+      "enum":[
+        "cloudfront",
+        "self-hosted"
+      ]
+    },
+    "VerifyDnsConfigurationRequest":{
+      "type":"structure",
+      "required":["Identifier"],
+      "members":{
+        "Domain":{"shape":"string"},
+        "Identifier":{"shape":"string"}
+      }
+    },
+    "VerifyDnsConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "DnsConfigurationList":{"shape":"DnsConfigurationList"}
+      }
+    },
     "ViewerCertificate":{
       "type":"structure",
       "members":{
@@ -10003,6 +11467,14 @@
       "member":{
         "shape":"VpcOriginSummary",
         "locationName":"VpcOriginSummary"
+      }
+    },
+    "WebAclCustomization":{
+      "type":"structure",
+      "required":["Action"],
+      "members":{
+        "Action":{"shape":"CustomizationActionType"},
+        "Arn":{"shape":"string"}
       }
     },
     "aliasString":{
