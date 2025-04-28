@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.342.36 - 2025-04-28
 
 * `Aws\BedrockRuntime` - This release adds native h2 support for the bedrock runtime API, the support is only limited to SDKs that support h2 requests natively.
 * `Aws\imagebuilder` - Add integration with SSM Parameter Store to Image Builder.
