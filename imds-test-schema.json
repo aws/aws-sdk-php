@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aws.amazon.com/sdks-and-tools/seps/schemas/imds-v21-tests.schema.json",
+  "title": "IMDS SEP v2.1 test cases",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "properties": {
+      "summary": {
+        "description": "A human-readable description of the test case",
+        "type": "string"
+      },
+      "config": {
+        "description": "Client configuration values required for the test case",
+        "type": "object",
+        "properties": {
+          "ec2InstanceProfileName": {
+            "description": "The IMDS instance profile name to use or null for unspecified",
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "envVars": {
+            "description": "The environment variables which should be set or mocked for this test",
+            "type": "object"
+          }
+        },
+        "required": [
+          "ec2InstanceProfileName"
+        ]
+      },
+      "expectations": {
+        "description": "An ordered sequence of expected inputs and outputs to/from IMDS",
+        "type": "array",
+        "items": {
+          "description": "An expected input and output to/from IMDS",
+          "type": "object",
+          "properties": {
+            "get": {
+              "description": "A URL path that should be GET-requested from the IMDS endpoint",
+              "type": "string"
+            },
+            "response": {
+              "description": "The IMDS response to the GET request",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "description": "The HTTP status code",
+                  "enum": [
+                    200,
+                    404
+                  ]
+                },
+                "body": {
+                  "description": "The response body as either a string or JSON object",
+                  "type": [
+                    "string",
+                    "object"
+                  ]
+                }
+              },
+              "required": [
+                "status"
+              ]
+            }
+          },
+          "required": [
+            "get",
+            "response"
+          ]
+        }
+      },
+      "outcomes": {
+        "description": "An ordered sequence of expected outcomes from IMDS credential resolution",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "description": "An expected outcome from IMDS credential resolution",
+          "type": "object",
+          "properties": {
+            "result": {
+              "description": "The output from the credentials provider",
+              "enum": [
+                "credentials",
+                "no credentials",
+                "invalid profile"
+              ]
+            },
+            "accountId": {
+              "description": "The account ID returned with the credentials. If this field is not specified, then there should be no account ID.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "result"
+          ]
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "config",
+      "expectations",
+      "outcomes"
+    ]
+  }
+}

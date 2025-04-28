@@ -16,18 +16,19 @@ use Psr\Http\Message\ResponseInterface;
  */
 class InstanceProfileProvider
 {
-    const CRED_PATH = 'meta-data/iam/security-credentials/';
+    const LEGACY_PATH = 'meta-data/iam/security-credentials/';
+    const EXTENDED_PATH = 'meta-data/iam/security-credentials-extended/';
+    const API_VERSION_EXTENDED = 'extended';
+    const API_VERSION_LEGACY = 'legacy';
     const TOKEN_PATH = 'api/token';
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
-    const CFG_EC2_METADATA_V1_DISABLED = 'ec2_metadata_v1_disabled';
     const CFG_EC2_METADATA_SERVICE_ENDPOINT = 'ec2_metadata_service_endpoint';
     const CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE = 'ec2_metadata_service_endpoint_mode';
     const DEFAULT_TIMEOUT = 1.0;
     const DEFAULT_RETRIES = 3;
     const DEFAULT_TOKEN_TTL_SECONDS = 21600;
-    const DEFAULT_AWS_EC2_METADATA_V1_DISABLED = false;
     const ENDPOINT_MODE_IPv4 = 'IPv4';
     const ENDPOINT_MODE_IPv6 = 'IPv6';
     const DEFAULT_METADATA_SERVICE_IPv4_ENDPOINT = 'http://169.254.169.254';
@@ -39,6 +40,9 @@ class InstanceProfileProvider
     /** @var callable */
     private $client;
 
+    /** @var string */
+    private $apiVersion;
+
     /** @var int */
     private $retries;
 
@@ -47,12 +51,6 @@ class InstanceProfileProvider
 
     /** @var float|mixed */
     private $timeout;
-
-    /** @var bool */
-    private $secureMode = true;
-
-    /** @var bool|null */
-    private $ec2MetadataV1Disabled;
 
     /** @var string */
     private $endpoint;
@@ -82,17 +80,22 @@ class InstanceProfileProvider
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: ($config['timeout'] ?? self::DEFAULT_TIMEOUT);
-        $this->profile = $config['profile'] ?? null;
-        $this->retries = (int) getenv(self::ENV_RETRIES) ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
+        $this->timeout = (float) getenv(self::ENV_TIMEOUT)
+            ?: ($config['timeout'] ?? self::DEFAULT_TIMEOUT);
+        $this->profile = $config['profile'] ?? $config['ec2_instance_profile_name'] ?? null;
+        $this->retries = (int) getenv(self::ENV_RETRIES)
+            ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
         $this->client = $config['client'] ?? \Aws\default_http_handler();
-        $this->ec2MetadataV1Disabled = $config[self::CFG_EC2_METADATA_V1_DISABLED] ?? null;
         $this->endpoint = $config[self::CFG_EC2_METADATA_SERVICE_ENDPOINT] ?? null;
         if (!empty($this->endpoint) && !$this->isValidEndpoint($this->endpoint)) {
-            throw new \InvalidArgumentException('The provided URI "' . $this->endpoint . '" is invalid, or contains an unsupported host');
+            throw new \InvalidArgumentException(
+                'The provided URI "'
+                . $this->endpoint . '" is invalid, or contains an unsupported host'
+            );
         }
 
         $this->endpointMode = $config[self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE] ?? null;
+        $this->apiVersion = self::API_VERSION_EXTENDED;
         $this->config = $config;
     }
 
@@ -103,125 +106,25 @@ class InstanceProfileProvider
      */
     public function __invoke($previousCredentials = null)
     {
-        $this->attempts = 0;
         return Promise\Coroutine::of(function () use ($previousCredentials) {
+            $token = $this->getToken($previousCredentials);
 
-            // Retrieve token or switch out of secure mode
-            $token = null;
-            while ($this->secureMode && is_null($token)) {
-                try {
-                    $token = (yield $this->request(
-                        self::TOKEN_PATH,
-                        'PUT',
-                        [
-                            'x-aws-ec2-metadata-token-ttl-seconds' => self::DEFAULT_TOKEN_TTL_SECONDS
-                        ]
-                    ));
-                } catch (TransferException $e) {
-                    if ($this->getExceptionStatusCode($e) === 500
-                        && $previousCredentials instanceof Credentials
-                    ) {
-                        goto generateCredentials;
-                    } elseif ($this->shouldFallbackToIMDSv1()
-                        && (!method_exists($e, 'getResponse')
-                        || empty($e->getResponse())
-                        || !in_array(
-                            $e->getResponse()->getStatusCode(),
-                            [400, 500, 502, 503, 504]
-                        ))
-                    ) {
-                        $this->secureMode = false;
-                    } else {
-                        $this->handleRetryableException(
-                            $e,
-                            [],
-                            $this->createErrorMessage(
-                                'Error retrieving metadata token'
-                            )
-                        );
-                    }
-                }
-                $this->attempts++;
+            if ($token === false) {
+                goto generateCredentials;
             }
 
-            // Set token header only for secure mode
-            $headers = [];
-            if ($this->secureMode) {
-                $headers = [
-                    'x-aws-ec2-metadata-token' => $token
-                ];
+            $headers = [
+                'x-aws-ec2-metadata-token' => $token
+            ];
+
+            if (!$this->profile) {
+                $this->profile = $this->getProfile($headers);
             }
 
-            // Retrieve profile
-            while (!$this->profile) {
-                try {
-                    $this->profile = (yield $this->request(
-                        self::CRED_PATH,
-                        'GET',
-                        $headers
-                    ));
-                } catch (TransferException $e) {
-                    // 401 indicates insecure flow not supported, switch to
-                    // attempting secure mode for subsequent calls
-                    if (!empty($this->getExceptionStatusCode($e))
-                        && $this->getExceptionStatusCode($e) === 401
-                    ) {
-                        $this->secureMode = true;
-                    }
-                    $this->handleRetryableException(
-                        $e,
-                        [ 'blacklist' => [401, 403] ],
-                        $this->createErrorMessage($e->getMessage())
-                    );
-                }
+            $result = $this->getCredentials($headers, $previousCredentials);
 
-                $this->attempts++;
-            }
-
-            // Retrieve credentials
-            $result = null;
-            while ($result == null) {
-                try {
-                    $json = (yield $this->request(
-                        self::CRED_PATH . $this->profile,
-                        'GET',
-                        $headers
-                    ));
-                    $result = $this->decodeResult($json);
-                } catch (InvalidJsonException $e) {
-                    $this->handleRetryableException(
-                        $e,
-                        [ 'blacklist' => [401, 403] ],
-                        $this->createErrorMessage(
-                            'Invalid JSON response, retries exhausted'
-                        )
-                    );
-                } catch (TransferException $e) {
-                    // 401 indicates insecure flow not supported, switch to
-                    // attempting secure mode for subsequent calls
-                    if (($this->getExceptionStatusCode($e) === 500
-                            || strpos($e->getMessage(), "cURL error 28") !== false)
-                        && $previousCredentials instanceof Credentials
-                    ) {
-                        goto generateCredentials;
-                    } elseif (!empty($this->getExceptionStatusCode($e))
-                        && $this->getExceptionStatusCode($e) === 401
-                    ) {
-                        $this->secureMode = true;
-                    }
-                    $this->handleRetryableException(
-                        $e,
-                        [ 'blacklist' => [401, 403] ],
-                        $this->createErrorMessage($e->getMessage())
-                    );
-                }
-                $this->attempts++;
-            }
             generateCredentials:
-
-            if (!isset($result)) {
-                $credentials = $previousCredentials;
-            } else {
+            if (isset($result)) {
                 $credentials = new Credentials(
                     $result['AccessKeyId'],
                     $result['SecretAccessKey'],
@@ -230,6 +133,8 @@ class InstanceProfileProvider
                     $result['AccountId'] ?? null,
                     CredentialSources::IMDS
                 );
+            } else {
+                $credentials = $previousCredentials;
             }
 
             if ($credentials->isExpired()) {
@@ -241,13 +146,123 @@ class InstanceProfileProvider
     }
 
     /**
-     * @param string $url
+     * @param $previousCredentials
+     *
+     * @return string|bool
+     */
+    private function getToken($previousCredentials): string | bool
+    {
+        $token = null;
+        while (is_null($token)) {
+            try {
+                $token = $this->request(self::TOKEN_PATH, 'PUT', [
+                    'x-aws-ec2-metadata-token-ttl-seconds' => self::DEFAULT_TOKEN_TTL_SECONDS
+                ])->wait();
+            } catch (TransferException $e) {
+                if ($previousCredentials instanceof Credentials
+                    && $this->getExceptionStatusCode($e) === 500
+                ) {
+                    return false;
+                }
+
+                $this->handleRetryableException(
+                    $e,
+                    [],
+                    $this->createErrorMessage('Error retrieving metadata token')
+                );
+            }
+
+            $this->attempts++;
+        }
+
+        return $token;
+    }
+
+    /**
+     * @param array $headers
+     *
+     * @return PromiseInterface
+     */
+    private function getProfile(array $headers): string
+    {
+        while (true) {
+            $path = $this->getMetadataPath();
+
+            try {
+                return $this->request($path, 'GET', $headers)->wait();
+            } catch (TransferException $e) {
+                if ($this->apiVersion === self::API_VERSION_EXTENDED
+                    && $this->getExceptionStatusCode($e) === 404
+                ) {
+                    $this->apiVersion = self::API_VERSION_LEGACY;
+                }
+
+                $this->handleRetryableException(
+                    $e,
+                    ['blacklist' => [401, 403]],
+                    $this->createErrorMessage($e->getMessage())
+                );
+            }
+
+            $this->attempts++;
+        }
+    }
+
+    /**
+     * @param array $headers
+     * @param $previousCredentials
+     *
+     * @return mixed|null
+     */
+    private function getCredentials(array $headers, $previousCredentials): array | null
+    {
+        while (true) {
+            $path = $this->getMetadataPath() . $this->profile;
+
+            try {
+                $json = $this->request($path, 'GET', $headers)->wait();
+                return $this->decodeResult($json);
+            } catch (InvalidJsonException $e) {
+                $this->handleRetryableException(
+                    $e,
+                    ['blacklist' => [401, 403]],
+                    $this->createErrorMessage(
+                        'Invalid JSON response, retries exhausted'
+                    )
+                );
+            } catch (TransferException $e) {
+                if ($this->apiVersion === self::API_VERSION_EXTENDED
+                    && $this->getExceptionStatusCode($e) === 404
+                ) {
+                    $this->apiVersion = self::API_VERSION_LEGACY;
+                }
+
+                if ($previousCredentials instanceof Credentials
+                    && ($this->getExceptionStatusCode($e) === 500
+                        || str_contains($e->getMessage(), "cURL error 28"))
+                ) {
+                    return null;
+                }
+
+                $this->handleRetryableException(
+                    $e,
+                    ['blacklist' => [401, 403]],
+                    $this->createErrorMessage($e->getMessage())
+                );
+            }
+
+            $this->attempts++;
+        }
+    }
+
+    /**
+     * @param string $path
      * @param string $method
      * @param array $headers
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url, $method = 'GET', $headers = [])
+    private function request($path, $method = 'GET', $headers = [])
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
@@ -257,7 +272,7 @@ class InstanceProfileProvider
         }
 
         $fn = $this->client;
-        $request = new Request($method, $this->resolveEndpoint() . $url);
+        $request = new Request($method, $this->resolveEndpoint() . $path);
         $userAgent = 'aws-sdk-php/' . Sdk::VERSION;
         if (defined('HHVM_VERSION')) {
             $userAgent .= ' HHVM/' . HHVM_VERSION;
@@ -285,8 +300,8 @@ class InstanceProfileProvider
 
     private function handleRetryableException(
         \Exception $e,
-        $retryOptions,
-        $message
+                   $retryOptions,
+                   $message
     ) {
         $isRetryable = true;
         if (!empty($status = $this->getExceptionStatusCode($e))
@@ -295,6 +310,7 @@ class InstanceProfileProvider
         ) {
             $isRetryable = false;
         }
+
         if ($isRetryable && $this->attempts < $this->retries) {
             sleep((int) pow(1.2, $this->attempts));
         } else {
@@ -334,30 +350,11 @@ class InstanceProfileProvider
         return $result;
     }
 
-    /**
-     * This functions checks for whether we should fall back to IMDSv1 or not.
-     * If $ec2MetadataV1Disabled is null then we will try to resolve this value from
-     * the following sources:
-     * - From environment: "AWS_EC2_METADATA_V1_DISABLED".
-     * - From config file: aws_ec2_metadata_v1_disabled
-     * - Defaulted to false
-     *
-     * @return bool
-     */
-    private function shouldFallbackToIMDSv1(): bool
+    private function getMetadataPath(): string
     {
-        $isImdsV1Disabled = \Aws\boolean_value($this->ec2MetadataV1Disabled)
-            ?? \Aws\boolean_value(
-                ConfigurationResolver::resolve(
-                    self::CFG_EC2_METADATA_V1_DISABLED,
-                    self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED,
-                    'bool',
-                    $this->config
-                )
-            )
-            ?? self::DEFAULT_AWS_EC2_METADATA_V1_DISABLED;
-
-        return !$isImdsV1Disabled;
+        return $this->apiVersion === self::API_VERSION_EXTENDED
+            ? self::EXTENDED_PATH
+            : self::LEGACY_PATH;
     }
 
     /**
@@ -385,8 +382,8 @@ class InstanceProfileProvider
             throw new CredentialsException('The provided URI "' . $endpoint . '" is invalid, or contains an unsupported host');
         }
 
-        if (substr($endpoint, strlen($endpoint) - 1) !== '/') {
-            $endpoint = $endpoint . '/';
+        if (!str_ends_with($endpoint, '/')) {
+            $endpoint .= '/';
         }
 
         return $endpoint . 'latest/';
@@ -426,7 +423,7 @@ class InstanceProfileProvider
         if (is_null($endpointMode)) {
             $endpointMode = ConfigurationResolver::resolve(
                 self::CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE,
-                    self::ENDPOINT_MODE_IPv4,
+                self::ENDPOINT_MODE_IPv4,
                 'string',
                 $this->config
             );
