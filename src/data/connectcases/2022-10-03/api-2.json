@@ -1407,6 +1407,13 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "CustomEntity":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_\\-\\.@:/ ]*[a-zA-Z0-9_\\-\\.@:/]$",
+      "sensitive":true
+    },
     "DeleteCaseRuleRequest":{
       "type":"structure",
       "required":[
@@ -2581,7 +2588,7 @@
     "SearchCasesRequestMaxResultsInteger":{
       "type":"integer",
       "box":true,
-      "max":25,
+      "max":100,
       "min":1
     },
     "SearchCasesRequestSearchTermString":{
@@ -2606,7 +2613,7 @@
     "SearchCasesResponseCasesList":{
       "type":"list",
       "member":{"shape":"SearchCasesResponseItem"},
-      "max":25,
+      "max":100,
       "min":0
     },
     "SearchCasesResponseItem":{
@@ -3105,6 +3112,7 @@
     "UserUnion":{
       "type":"structure",
       "members":{
+        "customEntity":{"shape":"CustomEntity"},
         "userArn":{"shape":"UserArn"}
       },
       "union":true

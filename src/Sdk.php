@@ -664,6 +664,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionS3Tables(array $args = [])
  * @method \Aws\SSMContacts\SSMContactsClient createSSMContacts(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSMContacts(array $args = [])
+ * @method \Aws\SSMGuiConnect\SSMGuiConnectClient createSSMGuiConnect(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSSMGuiConnect(array $args = [])
  * @method \Aws\SSMIncidents\SSMIncidentsClient createSSMIncidents(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSMIncidents(array $args = [])
  * @method \Aws\SSMQuickSetup\SSMQuickSetupClient createSSMQuickSetup(array $args = [])

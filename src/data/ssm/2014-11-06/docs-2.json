@@ -65,6 +65,7 @@
     "DescribePatchProperties": "<p>Lists the properties of available patches organized by product, product family, classification, severity, and other properties of available patches. You can use the reported properties in the filters you specify in requests for operations such as <a>CreatePatchBaseline</a>, <a>UpdatePatchBaseline</a>, <a>DescribeAvailablePatches</a>, and <a>DescribePatchBaselines</a>.</p> <p>The following section lists the properties that can be used in filters for each major operating system type:</p> <dl> <dt>AMAZON_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>AMAZON_LINUX_2</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>AMAZON_LINUX_2023</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>CENTOS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>DEBIAN</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRIORITY</code> </p> </dd> <dt>MACOS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> </p> </dd> <dt>ORACLE_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>REDHAT_ENTERPRISE_LINUX</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>SUSE</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>CLASSIFICATION</code> | <code>SEVERITY</code> </p> </dd> <dt>UBUNTU</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRIORITY</code> </p> </dd> <dt>WINDOWS</dt> <dd> <p>Valid properties: <code>PRODUCT</code> | <code>PRODUCT_FAMILY</code> | <code>CLASSIFICATION</code> | <code>MSRC_SEVERITY</code> </p> </dd> </dl>",
     "DescribeSessions": "<p>Retrieves a list of all active sessions (both connected and disconnected) or terminated sessions from the past 30 days.</p>",
     "DisassociateOpsItemRelatedItem": "<p>Deletes the association between an OpsItem and a related item. For example, this API operation can delete an Incident Manager incident from an OpsItem. Incident Manager is a tool in Amazon Web Services Systems Manager.</p>",
+    "GetAccessToken": "<p>Returns a credentials set to be used with just-in-time node access.</p>",
     "GetAutomationExecution": "<p>Get detailed information about a particular Automation execution.</p>",
     "GetCalendarState": "<p>Gets the state of a Amazon Web Services Systems Manager change calendar at the current time or a specified time. If you specify a time, <code>GetCalendarState</code> returns the state of the calendar at that specific time, and returns the next time that the change calendar state will transition. If you don't specify a time, <code>GetCalendarState</code> uses the current time. Change Calendar entries have two possible states: <code>OPEN</code> or <code>CLOSED</code>.</p> <p>If you specify more than one calendar in a request, the command returns the status of <code>OPEN</code> only if all calendars in the request are open. If one or more calendars in the request are closed, the status returned is <code>CLOSED</code>.</p> <p>For more information about Change Calendar, a tool in Amazon Web Services Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-change-calendar.html\">Amazon Web Services Systems Manager Change Calendar</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
     "GetCommandInvocation": "<p>Returns detailed information about command execution for an invocation or plugin. The Run Command API follows an eventual consistency model, due to the distributed nature of the system supporting the API. This means that the result of an API command you run that affects your resources might not be immediately visible to all subsequent commands you run. You should keep this in mind when you carry out an API command that immediately follows a previous API command.</p> <p> <code>GetCommandInvocation</code> only gives the execution status of a plugin in a document. To get the command execution status on a specific managed node, use <a>ListCommandInvocations</a>. To get the command execution status across managed nodes, use <a>ListCommands</a>.</p>",
@@ -124,6 +125,7 @@
     "ResumeSession": "<p>Reconnects a session to a managed node after it has been disconnected. Connections can be resumed for disconnected sessions, but not terminated sessions.</p> <note> <p>This command is primarily for use by client machines to automatically reconnect during intermittent network issues. It isn't intended for any other use.</p> </note>",
     "SendAutomationSignal": "<p>Sends a signal to an Automation execution to change the current behavior or status of the execution. </p>",
     "SendCommand": "<p>Runs commands on one or more managed nodes.</p>",
+    "StartAccessRequest": "<p>Starts the workflow for just-in-time node access sessions.</p>",
     "StartAssociationsOnce": "<p>Runs an association immediately and only one time. This operation can be helpful when troubleshooting associations.</p>",
     "StartAutomationExecution": "<p>Initiates execution of an Automation runbook.</p>",
     "StartChangeRequestExecution": "<p>Creates a change request for Change Manager. The Automation runbooks specified in the change request run only after all required approvals for the change request have been received.</p>",
@@ -148,6 +150,36 @@
     "UpdateServiceSetting": "<p> <code>ServiceSetting</code> is an account-level setting for an Amazon Web Services service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an Amazon Web Services service charges money to the account based on feature or service usage, then the Amazon Web Services service team might create a default setting of \"false\". This means the user can't use this feature unless they change the setting to \"true\" and intentionally opt in for a paid feature.</p> <p>Services map a <code>SettingId</code> object to a setting value. Amazon Web Services services teams define the default value for a <code>SettingId</code>. You can't create a new <code>SettingId</code>, but you can overwrite the default value if you have the <code>ssm:UpdateServiceSetting</code> permission for the setting. Use the <a>GetServiceSetting</a> API operation to view the current value. Or, use the <a>ResetServiceSetting</a> to change the value back to the original value defined by the Amazon Web Services service team.</p> <p>Update the service setting for the account. </p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>The requester doesn't have permissions to perform the requested operation.</p>",
+      "refs": {
+      }
+    },
+    "AccessKeyIdType": {
+      "base": null,
+      "refs": {
+        "Credentials$AccessKeyId": "<p>The access key ID that identifies the temporary security credentials.</p>"
+      }
+    },
+    "AccessKeySecretType": {
+      "base": null,
+      "refs": {
+        "Credentials$SecretAccessKey": "<p>The secret access key that can be used to sign requests.</p>"
+      }
+    },
+    "AccessRequestId": {
+      "base": null,
+      "refs": {
+        "GetAccessTokenRequest$AccessRequestId": "<p>The ID of a just-in-time node access request.</p>",
+        "StartAccessRequestResponse$AccessRequestId": "<p>The ID of the access request.</p>"
+      }
+    },
+    "AccessRequestStatus": {
+      "base": null,
+      "refs": {
+        "GetAccessTokenResponse$AccessRequestStatus": "<p>The status of the access request.</p>"
+      }
+    },
     "Account": {
       "base": null,
       "refs": {
@@ -1606,6 +1638,12 @@
         "Activation$CreatedDate": "<p>The date the activation was created.</p>"
       }
     },
+    "Credentials": {
+      "base": "<p>The temporary security credentials, which include an access key ID, a secret access key, and a security (or session) token.</p>",
+      "refs": {
+        "GetAccessTokenResponse$Credentials": "<p>The temporary security credentials which can be used to start just-in-time node access sessions.</p>"
+      }
+    },
     "CustomSchemaCountLimitExceededException": {
       "base": "<p>You have exceeded the limit for custom schemas. Delete one or more custom schemas and try again.</p>",
       "refs": {
@@ -1640,6 +1678,7 @@
         "CreateOpsItemRequest$ActualEndTime": "<p>The time a runbook workflow ended. Currently reported only for the OpsItem type <code>/aws/changerequest</code>.</p>",
         "CreateOpsItemRequest$PlannedStartTime": "<p>The time specified in a change request for a runbook workflow to start. Currently supported only for the OpsItem type <code>/aws/changerequest</code>.</p>",
         "CreateOpsItemRequest$PlannedEndTime": "<p>The time specified in a change request for a runbook workflow to end. Currently supported only for the OpsItem type <code>/aws/changerequest</code>.</p>",
+        "Credentials$ExpirationTime": "<p>The datetime on which the current credentials expire.</p>",
         "DocumentDescription$CreatedDate": "<p>The date when the document was created.</p>",
         "DocumentIdentifier$CreatedDate": "<p>The date the SSM document was created.</p>",
         "DocumentReviewerResponseSource$CreateTime": "<p>The date and time that a reviewer entered a response to a document review request.</p>",
@@ -2867,6 +2906,16 @@
     },
     "FeatureNotAvailableException": {
       "base": "<p>You attempted to register a <code>LAMBDA</code> or <code>STEP_FUNCTIONS</code> task in a region where the corresponding service isn't available. </p>",
+      "refs": {
+      }
+    },
+    "GetAccessTokenRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccessTokenResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -7757,6 +7806,11 @@
       "refs": {
       }
     },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request exceeds the service quota. Service quotas, also referred to as limits, are the maximum number of service resources or operations for your Amazon Web Services account.</p>",
+      "refs": {
+      }
+    },
     "ServiceRole": {
       "base": null,
       "refs": {
@@ -7935,6 +7989,12 @@
         "StartSessionRequest$Target": "<p>The managed node to connect to for the session.</p>"
       }
     },
+    "SessionTokenType": {
+      "base": null,
+      "refs": {
+        "Credentials$SessionToken": "<p>The token that users must pass to the service API to use the temporary credentials.</p>"
+      }
+    },
     "SeveritySummary": {
       "base": "<p>The number of managed nodes found for each patch severity level defined in the request filter.</p>",
       "refs": {
@@ -7993,6 +8053,16 @@
       "base": null,
       "refs": {
         "GetCommandInvocationResult$StandardOutputContent": "<p>The first 24,000 characters written by the plugin to <code>stdout</code>. If the command hasn't finished running, if <code>ExecutionStatus</code> is neither Succeeded nor Failed, then this string is empty.</p>"
+      }
+    },
+    "StartAccessRequestRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAccessRequestResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "StartAssociationsOnceRequest": {
@@ -8164,6 +8234,7 @@
     "String": {
       "base": null,
       "refs": {
+        "AccessDeniedException$Message": null,
         "AlreadyExistsException$Message": null,
         "AssociationDoesNotExist$Message": null,
         "AssociationExecutionDoesNotExist$Message": null,
@@ -8333,6 +8404,11 @@
         "ResourcePolicyLimitExceededException$Message": null,
         "ResourcePolicyNotFoundException$Message": null,
         "ResourcePolicyParameterNamesList$member": null,
+        "ServiceQuotaExceededException$Message": null,
+        "ServiceQuotaExceededException$ResourceId": "<p>The unique ID of the resource referenced in the failed request.</p>",
+        "ServiceQuotaExceededException$ResourceType": "<p>The resource type of the resource referenced in the failed request.</p>",
+        "ServiceQuotaExceededException$QuotaCode": "<p>The quota code recognized by the Amazon Web Services Service Quotas service.</p>",
+        "ServiceQuotaExceededException$ServiceCode": "<p>The code for the Amazon Web Services service that owns the quota.</p>",
         "ServiceSetting$LastModifiedUser": "<p>The ARN of the last modified user. This field is populated only if the setting value was overwritten.</p>",
         "ServiceSetting$ARN": "<p>The ARN of the service setting.</p>",
         "ServiceSetting$Status": "<p>The status of the service setting. The value can be Default, Customized or PendingUpdate.</p> <ul> <li> <p>Default: The current setting uses a default value provisioned by the Amazon Web Services service team.</p> </li> <li> <p>Customized: The current setting use a custom value specified by the customer.</p> </li> <li> <p>PendingUpdate: The current setting uses a default or custom value, but a setting change request is pending approval.</p> </li> </ul>",
@@ -8349,6 +8425,9 @@
         "TargetInUseException$Message": null,
         "TargetNotConnected$Message": null,
         "TargetPreview$TargetType": "<p>A type of resource that was included in the execution preview.</p>",
+        "ThrottlingException$Message": null,
+        "ThrottlingException$QuotaCode": "<p>The quota code recognized by the Amazon Web Services Service Quotas service.</p>",
+        "ThrottlingException$ServiceCode": "<p>The code for the Amazon Web Services service that owns the quota.</p>",
         "TooManyUpdates$Message": null,
         "TotalSizeLimitExceededException$Message": null,
         "UnsupportedCalendarException$Message": null,
@@ -8361,6 +8440,12 @@
         "UnsupportedPlatformType$Message": null,
         "ValidationException$Message": null,
         "ValidationException$ReasonCode": "<p>The reason code for the invalid request.</p>"
+      }
+    },
+    "String1to256": {
+      "base": null,
+      "refs": {
+        "StartAccessRequestRequest$Reason": "<p>A brief description explaining why you are requesting access to the node.</p>"
       }
     },
     "StringDateTime": {
@@ -8411,6 +8496,7 @@
         "DocumentIdentifier$Tags": "<p>The tags, or metadata, that have been applied to the document.</p>",
         "ListTagsForResourceResult$TagList": "<p>A list of tags.</p>",
         "PutParameterRequest$Tags": "<p>Optional metadata that you assign to a resource. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a Systems Manager parameter to identify the type of resource to which it applies, the environment, or the type of configuration data referenced by the parameter. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=Resource,Value=S3bucket</code> </p> </li> <li> <p> <code>Key=OS,Value=Windows</code> </p> </li> <li> <p> <code>Key=ParameterType,Value=LicenseKey</code> </p> </li> </ul> <note> <p>To add tags to an existing Systems Manager parameter, use the <a>AddTagsToResource</a> operation.</p> </note>",
+        "StartAccessRequestRequest$Tags": "<p>Key-value pairs of metadata you want to assign to the access request.</p>",
         "StartAutomationExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for an automation. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag an automation to identify an environment or operating system. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=environment,Value=test</code> </p> </li> <li> <p> <code>Key=OS,Value=Windows</code> </p> </li> </ul> <note> <p>The <code>Array Members</code> maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the <code>StartAutomationExecution</code> action, you can specify a maximum of 5 tags. You can, however, use the <a>AddTagsToResource</a> action to add up to a total of 50 tags to an existing automation configuration.</p> </note>",
         "StartChangeRequestExecutionRequest$Tags": "<p>Optional metadata that you assign to a resource. You can specify a maximum of five tags for a change request. Tags enable you to categorize a resource in different ways, such as by purpose, owner, or environment. For example, you might want to tag a change request to identify an environment or target Amazon Web Services Region. In this case, you could specify the following key-value pairs:</p> <ul> <li> <p> <code>Key=Environment,Value=Production</code> </p> </li> <li> <p> <code>Key=Region,Value=us-east-2</code> </p> </li> </ul> <note> <p>The <code>Array Members</code> maximum value is reported as 1000. This number includes capacity reserved for internal operations. When calling the <code>StartChangeRequestExecution</code> action, you can specify a maximum of 5 tags. You can, however, use the <a>AddTagsToResource</a> action to add up to a total of 50 tags to an existing change request configuration.</p> </note>"
       }
@@ -8579,6 +8665,7 @@
         "RegisterTaskWithMaintenanceWindowRequest$Targets": "<p>The targets (either managed nodes or maintenance window targets).</p> <note> <p>One or more targets must be specified for maintenance window Run Command-type tasks. Depending on the task, targets are optional for other maintenance window task types (Automation, Lambda, and Step Functions). For more information about running tasks that don't specify targets, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/maintenance-windows-targetless-tasks.html\">Registering maintenance window tasks without targets</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </note> <p>Specify managed nodes using the following format: </p> <p> <code>Key=InstanceIds,Values=&lt;instance-id-1&gt;,&lt;instance-id-2&gt;</code> </p> <p>Specify maintenance window targets using the following format:</p> <p> <code>Key=WindowTargetIds,Values=&lt;window-target-id-1&gt;,&lt;window-target-id-2&gt;</code> </p>",
         "Runbook$Targets": "<p>A key-value mapping to target resources that the runbook operation performs tasks on. Required if you specify <code>TargetParameterName</code>.</p>",
         "SendCommandRequest$Targets": "<p>An array of search criteria that targets managed nodes using a <code>Key,Value</code> combination that you specify. Specifying targets is most useful when you want to send a command to a large number of managed nodes at once. Using <code>Targets</code>, which accepts tag key-value pairs to identify managed nodes, you can send a command to tens, hundreds, or thousands of nodes at once.</p> <p>To send a command to a smaller number of managed nodes, you can use the <code>InstanceIds</code> option instead.</p> <p>For more information about how to use targets, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html\">Run commands at scale</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
+        "StartAccessRequestRequest$Targets": "<p>The node you are requesting access to.</p>",
         "StartAutomationExecutionRequest$Targets": "<p>A key-value mapping to target resources. Required if you specify TargetParameterName.</p> <p>If both this parameter and the <code>TargetLocation:Targets</code> parameter are supplied, <code>TargetLocation:Targets</code> takes precedence.</p>",
         "StepExecution$Targets": "<p>The targets for the step execution.</p>",
         "TargetLocation$Targets": "<p>A list of key-value mappings to target resources. If you specify values for this data type, you must also specify a value for <code>TargetParameterName</code>.</p> <p>This <code>Targets</code> parameter takes precedence over the <code>StartAutomationExecution:Targets</code> parameter if both are supplied.</p>",
@@ -8596,6 +8683,11 @@
     },
     "TerminateSessionResponse": {
       "base": null,
+      "refs": {
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request or operation couldn't be performed because the service is throttling requests.</p>",
       "refs": {
       }
     },

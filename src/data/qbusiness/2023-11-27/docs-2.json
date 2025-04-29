@@ -9,6 +9,7 @@
     "Chat": "<p>Starts or continues a streaming Amazon Q Business conversation.</p>",
     "ChatSync": "<p>Starts or continues a non-streaming Amazon Q Business conversation.</p>",
     "CheckDocumentAccess": "<p>Verifies if a user has access permissions for a specified document and returns the actual ACL attached to the document. Resolves user access on the document via user aliases and groups when verifying user access.</p>",
+    "CreateAnonymousWebExperienceUrl": "<p>Creates a unique URL for anonymous Amazon Q Business web experience. This URL can only be used once and must be used within 5 minutes after it's generated.</p>",
     "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users. </p> <p>An Amazon Q Apps service linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps</a>.</p> <p>When you create an application, Amazon Q Business may securely transmit data for processing from your selected Amazon Web Services region, but within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
     "CreateDataAccessor": "<p>Creates a new data accessor for an ISV to access data from a Amazon Q Business application. The data accessor is an entity that represents the ISV's access to the Amazon Q Business application's data. It includes the IAM role ARN for the ISV, a friendly name, and a set of action configurations that define the specific actions the ISV is allowed to perform and any associated data filters. When the data accessor is created, an IAM Identity Center application is also created to manage the ISV's identity and authentication for accessing the Amazon Q Business application.</p>",
     "CreateDataSource": "<p>Creates a data source connector for an Amazon Q Business application.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p>",
@@ -281,6 +282,7 @@
         "ChatInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to a streaming Amazon Q Business conversation.</p>",
         "ChatSyncInput$applicationId": "<p>The identifier of the Amazon Q Business application linked to the Amazon Q Business conversation.</p>",
         "CheckDocumentAccessRequest$applicationId": "<p>The unique identifier of the application. This is required to identify the specific Amazon Q Business application context for the document access check.</p>",
+        "CreateAnonymousWebExperienceUrlRequest$applicationId": "<p>The identifier of the Amazon Q Business application environment attached to the web experience.</p>",
         "CreateApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "CreateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "CreateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source will be attached to.</p>",
@@ -903,6 +905,16 @@
       "refs": {
         "Attachment$copyFrom": "<p>A CopyFromSource containing a reference to the original source of the Amazon Q Business attachment.</p>",
         "AttachmentInput$copyFrom": "<p>A reference to an existing attachment.</p>"
+      }
+    },
+    "CreateAnonymousWebExperienceUrlRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAnonymousWebExperienceUrlResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateApplicationRequest": {
@@ -1864,7 +1876,7 @@
       }
     },
     "HallucinationReductionConfiguration": {
-      "base": "<p>Configuration information required to setup hallucination reduction. For more information, see <a href=\"amazonq/latest/qbusiness-ug/hallucination-reduction.html\">hallucination reduction</a>.</p> <note> <p>The hallucination reduction feature won't work if chat orchestration controls are enabled for your application.</p> </note>",
+      "base": "<p>Configuration information required to setup hallucination reduction. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/hallucination-reduction.html\"> hallucination reduction</a>.</p> <note> <p>The hallucination reduction feature won't work if chat orchestration controls are enabled for your application.</p> </note>",
       "refs": {
         "GetChatControlsConfigurationResponse$hallucinationReductionConfiguration": "<p> The hallucination reduction settings for your application.</p>",
         "UpdateChatControlsConfigurationRequest$hallucinationReductionConfiguration": "<p> The hallucination reduction settings for your application.</p>"
@@ -3140,6 +3152,12 @@
       "refs": {
       }
     },
+    "SessionDurationInMinutes": {
+      "base": null,
+      "refs": {
+        "CreateAnonymousWebExperienceUrlRequest$sessionDurationInMinutes": "<p>The duration of the session associated with the unique URL for the web experience.</p>"
+      }
+    },
     "SnippetExcerpt": {
       "base": "<p>Contains the relevant text excerpt from a source that was used to generate a citation text segment in an Amazon Q Business chat response.</p>",
       "refs": {
@@ -3665,6 +3683,7 @@
       "refs": {
         "AuthChallengeRequest$authorizationUrl": "<p>The URL sent by Amazon Q Business to the third party authentication server to authenticate a custom plugin user through an OAuth protocol.</p>",
         "AuthChallengeRequestEvent$authorizationUrl": "<p>The URL sent by Amazon Q Business to a third party authentication server in response to an authentication verification event activated by an end user request to use a custom plugin. </p>",
+        "CreateAnonymousWebExperienceUrlResponse$anonymousUrl": "<p>The unique URL for accessing the web experience.</p> <important> <p>This URL can only be used once and must be used within 5 minutes after it's generated.</p> </important>",
         "CreatePluginRequest$serverUrl": "<p>The source URL used for plugin configuration.</p>",
         "GetPluginResponse$serverUrl": "<p>The source URL used for plugin configuration.</p>",
         "GetWebExperienceResponse$defaultEndpoint": "<p>The endpoint of your Amazon Q Business web experience.</p>",
@@ -3812,6 +3831,7 @@
     "WebExperienceId": {
       "base": null,
       "refs": {
+        "CreateAnonymousWebExperienceUrlRequest$webExperienceId": "<p>The identifier of the web experience.</p>",
         "CreateWebExperienceResponse$webExperienceId": "<p>The identifier of the Amazon Q Business web experience.</p>",
         "DeleteWebExperienceRequest$webExperienceId": "<p>The identifier of the Amazon Q Business web experience being deleted.</p>",
         "GetWebExperienceRequest$webExperienceId": "<p>The identifier of the Amazon Q Business web experience. </p>",

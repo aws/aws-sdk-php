@@ -924,6 +924,22 @@
         {"shape":"OpsItemConflictException"}
       ]
     },
+    "GetAccessToken":{
+      "name":"GetAccessToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAccessTokenRequest"},
+      "output":{"shape":"GetAccessTokenResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetAutomationExecution":{
       "name":"GetAutomationExecution",
       "http":{
@@ -1809,6 +1825,23 @@
         {"shape":"InvalidNotificationConfig"}
       ]
     },
+    "StartAccessRequest":{
+      "name":"StartAccessRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartAccessRequestRequest"},
+      "output":{"shape":"StartAccessRequestResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "StartAssociationsOnce":{
       "name":"StartAssociationsOnce",
       "http":{
@@ -2148,6 +2181,36 @@
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "AccessKeyIdType":{
+      "type":"string",
+      "pattern":"\\w{16,128}"
+    },
+    "AccessKeySecretType":{
+      "type":"string",
+      "sensitive":true
+    },
+    "AccessRequestId":{
+      "type":"string",
+      "pattern":"^(oi)-[0-9a-f]{12}$"
+    },
+    "AccessRequestStatus":{
+      "type":"string",
+      "enum":[
+        "Approved",
+        "Rejected",
+        "Revoked",
+        "Expired",
+        "Pending"
+      ]
+    },
     "Account":{"type":"string"},
     "AccountId":{
       "type":"string",
@@ -3035,7 +3098,10 @@
     },
     "AutomationSubtype":{
       "type":"string",
-      "enum":["ChangeRequest"]
+      "enum":[
+        "ChangeRequest",
+        "AccessRequest"
+      ]
     },
     "AutomationTargetParameterName":{
       "type":"string",
@@ -3810,6 +3876,21 @@
       }
     },
     "CreatedDate":{"type":"timestamp"},
+    "Credentials":{
+      "type":"structure",
+      "required":[
+        "AccessKeyId",
+        "SecretAccessKey",
+        "SessionToken",
+        "ExpirationTime"
+      ],
+      "members":{
+        "AccessKeyId":{"shape":"AccessKeyIdType"},
+        "SecretAccessKey":{"shape":"AccessKeySecretType"},
+        "SessionToken":{"shape":"SessionTokenType"},
+        "ExpirationTime":{"shape":"DateTime"}
+      }
+    },
     "CustomSchemaCountLimitExceededException":{
       "type":"structure",
       "members":{
@@ -5110,7 +5191,9 @@
         "ProblemAnalysisTemplate",
         "CloudFormation",
         "ConformancePackTemplate",
-        "QuickSetup"
+        "QuickSetup",
+        "ManualApprovalPolicy",
+        "AutoApprovalPolicy"
       ]
     },
     "DocumentVersion":{
@@ -5299,6 +5382,20 @@
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "GetAccessTokenRequest":{
+      "type":"structure",
+      "required":["AccessRequestId"],
+      "members":{
+        "AccessRequestId":{"shape":"AccessRequestId"}
+      }
+    },
+    "GetAccessTokenResponse":{
+      "type":"structure",
+      "members":{
+        "Credentials":{"shape":"Credentials"},
+        "AccessRequestStatus":{"shape":"AccessRequestStatus"}
+      }
     },
     "GetAutomationExecutionRequest":{
       "type":"structure",
@@ -8523,6 +8620,15 @@
         "Category",
         "Severity",
         "OpsItemType",
+        "AccessRequestByRequesterArn",
+        "AccessRequestByRequesterId",
+        "AccessRequestByApproverArn",
+        "AccessRequestByApproverId",
+        "AccessRequestBySourceAccountId",
+        "AccessRequestBySourceOpsItemId",
+        "AccessRequestBySourceRegion",
+        "AccessRequestByIsReplica",
+        "AccessRequestByTargetResourceId",
         "ChangeRequestByRequesterArn",
         "ChangeRequestByRequesterName",
         "ChangeRequestByApproverArn",
@@ -8728,6 +8834,7 @@
         "ChangeCalendarOverrideRejected",
         "PendingApproval",
         "Approved",
+        "Revoked",
         "Rejected",
         "Closed"
       ]
@@ -10449,6 +10556,22 @@
         "Command":{"shape":"Command"}
       }
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":[
+        "Message",
+        "QuotaCode",
+        "ServiceCode"
+      ],
+      "members":{
+        "Message":{"shape":"String"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"String"},
+        "QuotaCode":{"shape":"String"},
+        "ServiceCode":{"shape":"String"}
+      },
+      "exception":true
+    },
     "ServiceRole":{"type":"string"},
     "ServiceSetting":{
       "type":"structure",
@@ -10616,6 +10739,10 @@
       "max":400,
       "min":1
     },
+    "SessionTokenType":{
+      "type":"string",
+      "sensitive":true
+    },
     "SeveritySummary":{
       "type":"structure",
       "members":{
@@ -10639,7 +10766,8 @@
         "Reject",
         "StartStep",
         "StopStep",
-        "Resume"
+        "Resume",
+        "Revoke"
       ]
     },
     "SnapshotDownloadUrl":{"type":"string"},
@@ -10670,6 +10798,24 @@
     "StandardOutputContent":{
       "type":"string",
       "max":24000
+    },
+    "StartAccessRequestRequest":{
+      "type":"structure",
+      "required":[
+        "Reason",
+        "Targets"
+      ],
+      "members":{
+        "Reason":{"shape":"String1to256"},
+        "Targets":{"shape":"Targets"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "StartAccessRequestResponse":{
+      "type":"structure",
+      "members":{
+        "AccessRequestId":{"shape":"AccessRequestId"}
+      }
     },
     "StartAssociationsOnceRequest":{
       "type":"structure",
@@ -10921,6 +11067,11 @@
     },
     "StreamUrl":{"type":"string"},
     "String":{"type":"string"},
+    "String1to256":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "StringDateTime":{
       "type":"string",
       "pattern":"^([\\-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d(?!:))?)?(\\17[0-5]\\d([\\.,]\\d)?)?([zZ]|([\\-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$"
@@ -11106,6 +11257,16 @@
       "members":{
         "SessionId":{"shape":"SessionId"}
       }
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"},
+        "QuotaCode":{"shape":"String"},
+        "ServiceCode":{"shape":"String"}
+      },
+      "exception":true
     },
     "TimeoutSeconds":{
       "type":"integer",
