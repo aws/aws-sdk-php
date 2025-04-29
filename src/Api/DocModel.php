@@ -90,8 +90,10 @@ class DocModel
 
         $result = '';
         $d = $this->docs['shapes'][$shapeName];
-        if (isset($d['refs']["{$parentName}\${$ref}"])) {
-            $result = $d['refs']["{$parentName}\${$ref}"];
+        $refs = $d['refs'] ?? [];
+        $key = $parentName . '$' . $ref;
+        if (isset($refs[$key])) {
+            $result = $refs[$key];
         } elseif (isset($d['base'])) {
             $result = $d['base'];
         }
