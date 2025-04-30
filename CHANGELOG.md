@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.1 - 2025-04-30
 
 * `Aws\ECRPublic` - Adds dualstack support for Amazon Elastic Container Registry Public (Amazon ECR Public).
 * `Aws\CloudWatchLogs` - CloudWatch Logs supports "DELIVERY" log class. This log class is used only for delivering AWS Lambda logs to Amazon S3 or Amazon Data Firehose.
