@@ -2830,6 +2830,7 @@
         "DeliverToMailbox":{"shape":"DeliverToMailboxAction"},
         "DeliverToQBusiness":{"shape":"DeliverToQBusinessAction"},
         "Drop":{"shape":"DropAction"},
+        "PublishToSns":{"shape":"SnsAction"},
         "Relay":{"shape":"RelayAction"},
         "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},
         "Send":{"shape":"SendAction"},
@@ -3298,6 +3299,40 @@
       "min":8,
       "pattern":"^[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{}|.,?]+$",
       "sensitive":true
+    },
+    "SnsAction":{
+      "type":"structure",
+      "required":[
+        "RoleArn",
+        "TopicArn"
+      ],
+      "members":{
+        "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
+        "Encoding":{"shape":"SnsNotificationEncoding"},
+        "PayloadType":{"shape":"SnsNotificationPayloadType"},
+        "RoleArn":{"shape":"IamRoleArn"},
+        "TopicArn":{"shape":"SnsTopicArn"}
+      }
+    },
+    "SnsNotificationEncoding":{
+      "type":"string",
+      "enum":[
+        "UTF-8",
+        "BASE64"
+      ]
+    },
+    "SnsNotificationPayloadType":{
+      "type":"string",
+      "enum":[
+        "HEADERS",
+        "CONTENT"
+      ]
+    },
+    "SnsTopicArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:(aws|aws-cn|aws-us-gov):sns:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:[\\w\\-]{1,256}$"
     },
     "StartAddressListImportJobRequest":{
       "type":"structure",

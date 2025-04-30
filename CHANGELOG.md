@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECRPublic` - Adds dualstack support for Amazon Elastic Container Registry Public (Amazon ECR Public).
+* `Aws\CloudWatchLogs` - CloudWatch Logs supports "DELIVERY" log class. This log class is used only for delivering AWS Lambda logs to Amazon S3 or Amazon Data Firehose.
+* `Aws\CleanRooms` - This release adds support for ProtectedQuery results to be delivered to more than one collaboration member via the new distribute output configuration in StartProtectedQuery.
+* `Aws\ECR` - Adds dualstack support for Amazon Elastic Container Registry (Amazon ECR).
+* `Aws\Deadline` - Adds support for tag management on workers and tag inheritance from fleets to their associated workers.
+* `Aws\EC2` - Launch of cost distribution feature for IPAM owners to distribute costs to internal teams.
+* `Aws\Bedrock` - You can now specify a cross region inference profile as a teacher model for the CreateModelCustomizationJob API. Additionally, the GetModelCustomizationJob API has been enhanced to return the sub-task statuses of a customization job within the StatusDetails response field.
+* `Aws\BedrockAgentRuntime` - Support for Custom Orchestration within InlineAgents
+* `Aws\MailManager` - Introducing new RuleSet rule PublishToSns action, which allows customers to publish email notifications to an Amazon SNS topic. New PublishToSns action enables customers to easily integrate their email workflows via Amazon SNS, allowing them to notify other systems about important email events.
+* `Aws\BedrockAgent` - Features: Add inline code node to prompt flow
+
 ## 3.343.0 - 2025-04-29
 
 * `Aws\SSM` - This release adds support for just-In-time node access in AWS Systems Manager. Just-in-time node access enables customers to move towards zero standing privileges by requiring operators to request access and obtain approval before remotely connecting to nodes managed by the SSM Agent.

@@ -514,6 +514,12 @@
         "ModelCustomizationJobSummary$customizationType": "<p>Specifies whether to carry out continued pre-training of a model or whether to fine-tune it. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a>.</p>"
       }
     },
+    "DataProcessingDetails": {
+      "base": "<p>For a Distillation job, the status details for the data processing sub-task of the job.</p>",
+      "refs": {
+        "StatusDetails$dataProcessingDetails": "<p>The status details for the data processing sub-task of the job.</p>"
+      }
+    },
     "DeleteCustomModelRequest": {
       "base": null,
       "refs": {
@@ -607,7 +613,7 @@
     "DistillationConfig": {
       "base": "<p>Settings for distilling a foundation model into a smaller and more efficient model.</p>",
       "refs": {
-        "CustomizationConfig$distillationConfig": "<p>The distillation configuration for the custom model.</p>"
+        "CustomizationConfig$distillationConfig": "<p>The Distillation configuration for the custom model.</p>"
       }
     },
     "EndpointConfig": {
@@ -2025,6 +2031,14 @@
         "ModelImportJobSummary$jobName": "<p>The name of the import job.</p>"
       }
     },
+    "JobStatusDetails": {
+      "base": null,
+      "refs": {
+        "DataProcessingDetails$status": "<p>The status of the data processing sub-task of the job.</p>",
+        "TrainingDetails$status": "<p>The status of the training sub-task of the job.</p>",
+        "ValidationDetails$status": "<p>The status of the validation sub-task of the job.</p>"
+      }
+    },
     "KbInferenceConfig": {
       "base": "<p>Contains configuration details of the inference for knowledge base retrieval and response generation.</p>",
       "refs": {
@@ -3141,6 +3155,13 @@
         "MarketplaceModelEndpointSummary$status": "<p>The overall status of the endpoint in Amazon Bedrock Marketplace.</p>"
       }
     },
+    "StatusDetails": {
+      "base": "<p>For a Distillation job, the status details for sub-tasks of the job. Possible statuses for each sub-task include the following:</p> <ul> <li> <p>NotStarted</p> </li> <li> <p>InProgress</p> </li> <li> <p>Completed</p> </li> <li> <p>Stopping</p> </li> <li> <p>Stopped</p> </li> <li> <p>Failed</p> </li> </ul>",
+      "refs": {
+        "GetModelCustomizationJobResponse$statusDetails": "<p>For a Distillation job, the details about the statuses of the sub-tasks of the customization job. </p>",
+        "ModelCustomizationJobSummary$statusDetails": "<p>Details about the status of the data processing sub-task of the job.</p>"
+      }
+    },
     "StopEvaluationJobRequest": {
       "base": null,
       "refs": {
@@ -3302,6 +3323,8 @@
       "refs": {
         "CreateGuardrailResponse$createdAt": "<p>The time at which the guardrail was created.</p>",
         "CustomModelSummary$creationTime": "<p>Creation time of the model.</p>",
+        "DataProcessingDetails$creationTime": "<p>The start time of the data processing sub-task of the job.</p>",
+        "DataProcessingDetails$lastModifiedTime": "<p>The latest update to the data processing sub-task of the job.</p>",
         "EvaluationSummary$creationTime": "<p>The time the evaluation job was created.</p>",
         "GetCustomModelResponse$creationTime": "<p>Creation time of the model.</p>",
         "GetEvaluationJobResponse$creationTime": "<p>The time the evaluation job was created.</p>",
@@ -3368,7 +3391,11 @@
         "ProvisionedModelSummary$commitmentExpirationTime": "<p>The timestamp for when the commitment term of the Provisioned Throughput expires.</p>",
         "ProvisionedModelSummary$creationTime": "<p>The time that the Provisioned Throughput was created. </p>",
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
-        "UpdateGuardrailResponse$updatedAt": "<p>The date and time at which the guardrail was updated.</p>"
+        "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
+        "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",
+        "UpdateGuardrailResponse$updatedAt": "<p>The date and time at which the guardrail was updated.</p>",
+        "ValidationDetails$creationTime": "<p>The start time of the validation sub-task of the job.</p>",
+        "ValidationDetails$lastModifiedTime": "<p>The latest update to the validation sub-task of the job.</p>"
       }
     },
     "TooManyTagsException": {
@@ -3388,6 +3415,12 @@
         "CreateModelCustomizationJobRequest$trainingDataConfig": "<p>Information about the training dataset.</p>",
         "GetCustomModelResponse$trainingDataConfig": "<p>Contains information about the training dataset.</p>",
         "GetModelCustomizationJobResponse$trainingDataConfig": "<p>Contains information about the training dataset.</p>"
+      }
+    },
+    "TrainingDetails": {
+      "base": "<p>For a Distillation job, the status details for the training sub-task of the job.</p>",
+      "refs": {
+        "StatusDetails$trainingDetails": "<p>The status details for the training sub-task of the job.</p>"
       }
     },
     "TrainingMetrics": {
@@ -3449,6 +3482,12 @@
         "CreateModelCustomizationJobRequest$validationDataConfig": "<p>Information about the validation dataset. </p>",
         "GetCustomModelResponse$validationDataConfig": "<p>Contains information about the validation dataset.</p>",
         "GetModelCustomizationJobResponse$validationDataConfig": "<p>Contains information about the validation dataset.</p>"
+      }
+    },
+    "ValidationDetails": {
+      "base": "<p>For a Distillation job, the status details for the validation sub-task of the job.</p>",
+      "refs": {
+        "StatusDetails$validationDetails": "<p>The status details for the validation sub-task of the job.</p>"
       }
     },
     "ValidationException": {

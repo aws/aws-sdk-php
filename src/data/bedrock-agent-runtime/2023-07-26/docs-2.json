@@ -11,7 +11,7 @@
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
     "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GetSession": "<p>Retrieves details about a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
-    "InvokeAgent": "<note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul>",
+    "InvokeAgent": "<p><note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul></p>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> </note>",
     "ListInvocationSteps": "<p>Lists all invocation steps associated with a session and optionally, an invocation within the session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
@@ -367,7 +367,7 @@
         "InvokeAgentRequest$enableTrace": "<p>Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p>",
         "InvokeAgentRequest$endSession": "<p>Specifies whether to end the session with the agent or not.</p>",
         "InvokeFlowRequest$enableTrace": "<p>Specifies whether to return the trace for the flow or not. Traces track inputs and outputs for nodes in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-trace.html\">Track each step in your prompt flow by viewing its trace in Amazon Bedrock</a>.</p>",
-        "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. <pre><code> &lt;/p&gt; </code></pre>",
+        "InvokeInlineAgentRequest$enableTrace": "<p> Specifies whether to turn on the trace or not to track the agent's reasoning process. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html\">Using trace</a>. </p>",
         "InvokeInlineAgentRequest$endSession": "<p> Specifies whether to end the session with the inline agent or not. </p>",
         "ParameterDetail$required": "<p> Whether the parameter is required for the agent to complete the function for action group invocation. </p>",
         "PreProcessingParsedResponse$isValid": "<p>Whether the user input is valid or not. If <code>false</code>, the agent doesn't proceed to orchestration.</p>",
@@ -402,6 +402,7 @@
     "CallerChain": {
       "base": null,
       "refs": {
+        "InlineAgentTracePart$callerChain": "<p>The caller chain for the trace part.</p>",
         "TracePart$callerChain": "<p>The part's caller chain.</p>"
       }
     },
@@ -560,6 +561,12 @@
       "base": null,
       "refs": {
         "ActionGroupExecutor$customControl": "<p> To return the action group invocation results directly in the <code>InvokeInlineAgent</code> response, specify <code>RETURN_CONTROL</code>. </p>"
+      }
+    },
+    "CustomOrchestration": {
+      "base": "<p>Contains details of the custom orchestration configured for the agent. </p>",
+      "refs": {
+        "InvokeInlineAgentRequest$customOrchestration": "<p>Contains details of the custom orchestration configured for the agent. </p>"
       }
     },
     "CustomOrchestrationTrace": {
@@ -1419,7 +1426,7 @@
     "InlineAgentResponseStream": {
       "base": "<p>The response from invoking the agent and associated citations and trace information.</p>",
       "refs": {
-        "InvokeInlineAgentResponse$completion": "<p> <pre><code> &lt;/p&gt; </code></pre>"
+        "InvokeInlineAgentResponse$completion": "<p>The inline agent's response to the user prompt. </p>"
       }
     },
     "InlineAgentReturnControlPayload": {
@@ -1738,7 +1745,8 @@
     "LambdaArn": {
       "base": null,
       "refs": {
-        "ModelInvocationInput$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence.</p>"
+        "ModelInvocationInput$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence.</p>",
+        "OrchestrationExecutor$lambda": "<p>The Amazon Resource Name (ARN) of the Lambda function containing the business logic that is carried out upon invoking the action. </p>"
       }
     },
     "LambdaResourceArn": {
@@ -1940,6 +1948,8 @@
         "Collaborator$agentName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>collaboratorName</code>. </p>",
         "CollaboratorConfiguration$collaboratorName": "<p> Name of the inline collaborator agent which must be the same name as specified for <code>agentName</code>. </p>",
         "FunctionInvocationInput$collaboratorName": "<p>The collaborator's name.</p>",
+        "InlineAgentTracePart$collaboratorName": "<p>The collaborator name for the trace part.</p>",
+        "InvokeInlineAgentRequest$agentName": "<p>The name for the agent.</p>",
         "TracePart$collaboratorName": "<p>The part's collaborator name.</p>"
       }
     },
@@ -2057,6 +2067,12 @@
         "KnowledgeBaseRetrieveAndGenerateConfiguration$orchestrationConfiguration": "<p>Settings for how the model processes the prompt prior to retrieval and generation.</p>"
       }
     },
+    "OrchestrationExecutor": {
+      "base": "<p>The structure of the executor invoking the actions in custom orchestration.</p>",
+      "refs": {
+        "CustomOrchestration$executor": "<p>The structure of the executor invoking the actions in custom orchestration. </p>"
+      }
+    },
     "OrchestrationModelInvocationOutput": {
       "base": "<p>The foundation model output from the orchestration step.</p>",
       "refs": {
@@ -2067,6 +2083,12 @@
       "base": "<p>Details about the orchestration step, in which the agent determines the order in which actions are executed and which knowledge bases are retrieved.</p>",
       "refs": {
         "Trace$orchestrationTrace": "<p>Details about the orchestration step, in which the agent determines the order in which actions are executed and which knowledge bases are retrieved.</p>"
+      }
+    },
+    "OrchestrationType": {
+      "base": null,
+      "refs": {
+        "InvokeInlineAgentRequest$orchestrationType": "<p>Specifies the type of orchestration strategy for the agent. This is set to DEFAULT orchestration type, by default. </p>"
       }
     },
     "OutputFile": {
@@ -3096,6 +3118,7 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "InlineAgentTracePart$eventTime": "<p>The time that trace occurred. </p>",
         "TracePart$eventTime": "<p> The time of the trace. </p>"
       }
     },

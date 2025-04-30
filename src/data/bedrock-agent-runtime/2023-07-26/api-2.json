@@ -63,8 +63,8 @@
       "input":{"shape":"DeleteAgentMemoryRequest"},
       "output":{"shape":"DeleteAgentMemoryResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -85,8 +85,8 @@
       "input":{"shape":"DeleteSessionRequest"},
       "output":{"shape":"DeleteSessionResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
@@ -104,8 +104,8 @@
       "input":{"shape":"EndSessionRequest"},
       "output":{"shape":"EndSessionResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
@@ -123,8 +123,8 @@
       "input":{"shape":"GenerateQueryRequest"},
       "output":{"shape":"GenerateQueryResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -144,8 +144,8 @@
       "input":{"shape":"GetAgentMemoryRequest"},
       "output":{"shape":"GetAgentMemoryResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -200,8 +200,8 @@
       "output":{"shape":"InvokeAgentResponse"},
       "errors":[
         {"shape":"ModelNotReadyException"},
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -221,8 +221,8 @@
       "input":{"shape":"InvokeFlowRequest"},
       "output":{"shape":"InvokeFlowResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -242,8 +242,8 @@
       "input":{"shape":"InvokeInlineAgentRequest"},
       "output":{"shape":"InvokeInlineAgentResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -348,8 +348,8 @@
       "input":{"shape":"PutInvocationStepRequest"},
       "output":{"shape":"PutInvocationStepResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
@@ -368,8 +368,8 @@
       "input":{"shape":"RerankRequest"},
       "output":{"shape":"RerankResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -389,8 +389,8 @@
       "input":{"shape":"RetrieveRequest"},
       "output":{"shape":"RetrieveResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -410,8 +410,8 @@
       "input":{"shape":"RetrieveAndGenerateRequest"},
       "output":{"shape":"RetrieveAndGenerateResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -431,8 +431,8 @@
       "input":{"shape":"RetrieveAndGenerateStreamRequest"},
       "output":{"shape":"RetrieveAndGenerateStreamResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"DependencyFailedException"},
@@ -1096,6 +1096,12 @@
     "CustomControlMethod":{
       "type":"string",
       "enum":["RETURN_CONTROL"]
+    },
+    "CustomOrchestration":{
+      "type":"structure",
+      "members":{
+        "executor":{"shape":"OrchestrationExecutor"}
+      }
     },
     "CustomOrchestrationTrace":{
       "type":"structure",
@@ -2295,6 +2301,9 @@
     "InlineAgentTracePart":{
       "type":"structure",
       "members":{
+        "callerChain":{"shape":"CallerChain"},
+        "collaboratorName":{"shape":"Name"},
+        "eventTime":{"shape":"SyntheticTimestamp_date_time"},
         "sessionId":{"shape":"SessionId"},
         "trace":{"shape":"Trace"}
       },
@@ -2595,9 +2604,11 @@
       "members":{
         "actionGroups":{"shape":"AgentActionGroups"},
         "agentCollaboration":{"shape":"AgentCollaboration"},
+        "agentName":{"shape":"Name"},
         "bedrockModelConfigurations":{"shape":"InlineBedrockModelConfigurations"},
         "collaboratorConfigurations":{"shape":"CollaboratorConfigurations"},
         "collaborators":{"shape":"Collaborators"},
+        "customOrchestration":{"shape":"CustomOrchestration"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "enableTrace":{"shape":"Boolean"},
         "endSession":{"shape":"Boolean"},
@@ -2608,6 +2619,7 @@
         "inputText":{"shape":"InputText"},
         "instruction":{"shape":"Instruction"},
         "knowledgeBases":{"shape":"KnowledgeBases"},
+        "orchestrationType":{"shape":"OrchestrationType"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
         "sessionId":{
           "shape":"SessionId",
@@ -3146,6 +3158,13 @@
         "queryTransformationConfiguration":{"shape":"QueryTransformationConfiguration"}
       }
     },
+    "OrchestrationExecutor":{
+      "type":"structure",
+      "members":{
+        "lambda":{"shape":"LambdaArn"}
+      },
+      "union":true
+    },
     "OrchestrationModelInvocationOutput":{
       "type":"structure",
       "members":{
@@ -3167,6 +3186,13 @@
       },
       "sensitive":true,
       "union":true
+    },
+    "OrchestrationType":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "CUSTOM_ORCHESTRATION"
+      ]
     },
     "OutputFile":{
       "type":"structure",

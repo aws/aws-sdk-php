@@ -84,10 +84,11 @@
       "refs": {
         "ArchiveAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified archive has been deleted.</p>",
         "DeliverToMailboxAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the mailbox ARN is no longer valid.</p>",
-        "DeliverToQBusinessAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified application has been deleted or the role lacks necessary permissions to call the qbusiness:BatchPutDocument API.</p>",
+        "DeliverToQBusinessAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified application has been deleted or the role lacks necessary permissions to call the <code>qbusiness:BatchPutDocument</code> API.</p>",
         "RelayAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified relay has been deleted.</p>",
         "S3Action$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the specified the bucket has been deleted.</p>",
-        "SendAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the caller does not have the permissions to call the sendRawEmail API.</p>"
+        "SendAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, the caller does not have the permissions to call the sendRawEmail API.</p>",
+        "SnsAction$ActionFailurePolicy": "<p>A policy that states what to do in the case of failure. The action will fail if there are configuration errors. For example, specified SNS topic has been deleted or the role lacks necessary permissions to call the <code>sns:Publish</code> API.</p>"
       }
     },
     "AddHeaderAction": {
@@ -868,9 +869,10 @@
       "base": null,
       "refs": {
         "DeliverToMailboxAction$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role to use to execute this action. The role must have access to the workmail:DeliverToMailbox API.</p>",
-        "DeliverToQBusinessAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while delivering to Amazon Q Business. This role must have access to the qbusiness:BatchPutDocument API for the given application and index.</p>",
+        "DeliverToQBusinessAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while delivering to Amazon Q Business. This role must have access to the <code>qbusiness:BatchPutDocument</code> API for the given application and index.</p>",
         "S3Action$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while writing to S3. This role must have access to the s3:PutObject, kms:Encrypt, and kms:GenerateDataKey APIs for the given bucket.</p>",
-        "SendAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the role to use for this action. This role must have access to the ses:SendRawEmail API.</p>"
+        "SendAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the role to use for this action. This role must have access to the ses:SendRawEmail API.</p>",
+        "SnsAction$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM Role to use while writing to Amazon SNS. This role must have access to the <code>sns:Publish</code> API for the given topic.</p>"
       }
     },
     "IdOrArn": {
@@ -2039,6 +2041,30 @@
       "base": null,
       "refs": {
         "IngressPointConfiguration$SmtpPassword": "<p>The password of the ingress endpoint resource.</p>"
+      }
+    },
+    "SnsAction": {
+      "base": "<p>The action to publish the email content to an Amazon SNS topic. When executed, this action will send the email as a notification to the specified SNS topic.</p>",
+      "refs": {
+        "RuleAction$PublishToSns": "<p>This action publishes the email content to an Amazon SNS topic.</p>"
+      }
+    },
+    "SnsNotificationEncoding": {
+      "base": null,
+      "refs": {
+        "SnsAction$Encoding": "<p>The encoding to use for the email within the Amazon SNS notification. The default value is <code>UTF-8</code>. Use <code>BASE64</code> if you need to preserve all special characters, especially when the original message uses a different encoding format.</p>"
+      }
+    },
+    "SnsNotificationPayloadType": {
+      "base": null,
+      "refs": {
+        "SnsAction$PayloadType": "<p>The expected payload type within the Amazon SNS notification. <code>CONTENT</code> attempts to publish the full email content with 20KB of headers content. <code>HEADERS</code> extracts up to 100KB of header content to include in the notification, email content will not be included to the notification. The default value is <code>CONTENT</code>.</p>"
+      }
+    },
+    "SnsTopicArn": {
+      "base": null,
+      "refs": {
+        "SnsAction$TopicArn": "<p>The Amazon Resource Name (ARN) of the Amazon SNS Topic to which notification for the email received will be published.</p>"
       }
     },
     "StartAddressListImportJobRequest": {

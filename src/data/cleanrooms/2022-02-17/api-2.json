@@ -1580,7 +1580,6 @@
     "AllowedColumnList":{
       "type":"list",
       "member":{"shape":"ColumnName"},
-      "max":225,
       "min":1
     },
     "AllowedResultReceivers":{
@@ -6038,6 +6037,33 @@
         "computeConfiguration":{"shape":"ComputeConfiguration"}
       }
     },
+    "ProtectedQueryDistributeOutput":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"ProtectedQueryS3Output"},
+        "memberList":{"shape":"ProtectedQueryMemberOutputList"}
+      }
+    },
+    "ProtectedQueryDistributeOutputConfiguration":{
+      "type":"structure",
+      "required":["locations"],
+      "members":{
+        "locations":{"shape":"ProtectedQueryDistributeOutputConfigurationLocationsList"}
+      }
+    },
+    "ProtectedQueryDistributeOutputConfigurationLocation":{
+      "type":"structure",
+      "members":{
+        "s3":{"shape":"ProtectedQueryS3OutputConfiguration"},
+        "member":{"shape":"ProtectedQueryMemberOutputConfiguration"}
+      },
+      "union":true
+    },
+    "ProtectedQueryDistributeOutputConfigurationLocationsList":{
+      "type":"list",
+      "member":{"shape":"ProtectedQueryDistributeOutputConfigurationLocation"},
+      "min":1
+    },
     "ProtectedQueryError":{
       "type":"structure",
       "required":[
@@ -6070,7 +6096,8 @@
       "type":"structure",
       "members":{
         "s3":{"shape":"ProtectedQueryS3Output"},
-        "memberList":{"shape":"ProtectedQueryMemberOutputList"}
+        "memberList":{"shape":"ProtectedQueryMemberOutputList"},
+        "distribute":{"shape":"ProtectedQueryDistributeOutput"}
       },
       "union":true
     },
@@ -6078,7 +6105,8 @@
       "type":"structure",
       "members":{
         "s3":{"shape":"ProtectedQueryS3OutputConfiguration"},
-        "member":{"shape":"ProtectedQueryMemberOutputConfiguration"}
+        "member":{"shape":"ProtectedQueryMemberOutputConfiguration"},
+        "distribute":{"shape":"ProtectedQueryDistributeOutputConfiguration"}
       },
       "union":true
     },

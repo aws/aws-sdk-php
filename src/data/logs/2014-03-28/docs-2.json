@@ -2,10 +2,10 @@
   "version": "2.0",
   "service": "<p>You can use Amazon CloudWatch Logs to monitor, store, and access your log files from EC2 instances, CloudTrail, and other sources. You can then retrieve the associated log data from CloudWatch Logs using the CloudWatch console. Alternatively, you can use CloudWatch Logs commands in the Amazon Web Services CLI, CloudWatch Logs API, or CloudWatch Logs SDK.</p> <p>You can use CloudWatch Logs to:</p> <ul> <li> <p> <b>Monitor logs from EC2 instances in real time</b>: You can use CloudWatch Logs to monitor applications and systems using log data. For example, CloudWatch Logs can track the number of errors that occur in your application logs. Then, it can send you a notification whenever the rate of errors exceeds a threshold that you specify. CloudWatch Logs uses your log data for monitoring so no code changes are required. For example, you can monitor application logs for specific literal terms (such as \"NullReferenceException\"). You can also count the number of occurrences of a literal term at a particular position in log data (such as \"404\" status codes in an Apache access log). When the term you are searching for is found, CloudWatch Logs reports the data to a CloudWatch metric that you specify.</p> </li> <li> <p> <b>Monitor CloudTrail logged events</b>: You can create alarms in CloudWatch and receive notifications of particular API activity as captured by CloudTrail. You can use the notification to perform troubleshooting.</p> </li> <li> <p> <b>Archive log data</b>: You can use CloudWatch Logs to store your log data in highly durable storage. You can change the log retention setting so that any log events earlier than this setting are automatically deleted. The CloudWatch Logs agent helps to quickly send both rotated and non-rotated log data off of a host and into the log service. You can then access the raw log data when you need it.</p> </li> </ul>",
   "operations": {
-    "AssociateKmsKey": "<p>Associates the specified KMS key with either one log group in the account, or with all stored CloudWatch Logs query insights results in the account.</p> <p>When you use <code>AssociateKmsKey</code>, you specify either the <code>logGroupName</code> parameter or the <code>resourceIdentifier</code> parameter. You can't specify both of those parameters in the same operation.</p> <ul> <li> <p>Specify the <code>logGroupName</code> parameter to cause log events ingested into that log group to be encrypted with that key. Only the log events ingested after the key is associated are encrypted with that key.</p> <p>Associating a KMS key with a log group overrides any existing associations between the log group and a KMS key. After a KMS key is associated with a log group, all newly ingested data for the log group is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p> <p>Associating a key with a log group does not cause the results of queries of that log group to be encrypted with that key. To have query results encrypted with a KMS key, you must use an <code>AssociateKmsKey</code> operation with the <code>resourceIdentifier</code> parameter that specifies a <code>query-result</code> resource. </p> </li> <li> <p>Specify the <code>resourceIdentifier</code> parameter with a <code>query-result</code> resource, to use that key to encrypt the stored results of all future <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html\">StartQuery</a> operations in the account. The response from a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetQueryResults.html\">GetQueryResults</a> operation will still return the query results in plain text.</p> <p>Even if you have not associated a key with your query results, the query results are encrypted when stored, using the default CloudWatch Logs method.</p> <p>If you run a query from a monitoring account that queries logs in a source account, the query results key from the monitoring account, if any, is used.</p> </li> </ul> <important> <p>If you delete the key that is used to encrypt log events or log group query results, then all the associated stored log events or query results that were encrypted with that key will be unencryptable and unusable.</p> </important> <note> <p>CloudWatch Logs supports only symmetric KMS keys. Do not use an associate an asymmetric KMS key with your log group or query results. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Using Symmetric and Asymmetric Keys</a>.</p> </note> <p>It can take up to 5 minutes for this operation to take effect.</p> <p>If you attempt to associate a KMS key with a log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p>",
+    "AssociateKmsKey": "<p>Associates the specified KMS key with either one log group in the account, or with all stored CloudWatch Logs query insights results in the account.</p> <p>When you use <code>AssociateKmsKey</code>, you specify either the <code>logGroupName</code> parameter or the <code>resourceIdentifier</code> parameter. You can't specify both of those parameters in the same operation.</p> <ul> <li> <p>Specify the <code>logGroupName</code> parameter to cause log events ingested into that log group to be encrypted with that key. Only the log events ingested after the key is associated are encrypted with that key.</p> <p>Associating a KMS key with a log group overrides any existing associations between the log group and a KMS key. After a KMS key is associated with a log group, all newly ingested data for the log group is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p> <p>Associating a key with a log group does not cause the results of queries of that log group to be encrypted with that key. To have query results encrypted with a KMS key, you must use an <code>AssociateKmsKey</code> operation with the <code>resourceIdentifier</code> parameter that specifies a <code>query-result</code> resource. </p> </li> <li> <p>Specify the <code>resourceIdentifier</code> parameter with a <code>query-result</code> resource, to use that key to encrypt the stored results of all future <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html\">StartQuery</a> operations in the account. The response from a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetQueryResults.html\">GetQueryResults</a> operation will still return the query results in plain text.</p> <p>Even if you have not associated a key with your query results, the query results are encrypted when stored, using the default CloudWatch Logs method.</p> <p>If you run a query from a monitoring account that queries logs in a source account, the query results key from the monitoring account, if any, is used.</p> </li> </ul> <important> <p>If you delete the key that is used to encrypt log events or log group query results, then all the associated stored log events or query results that were encrypted with that key will be unencryptable and unusable.</p> </important> <note> <p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group or query results. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Using Symmetric and Asymmetric Keys</a>.</p> </note> <p>It can take up to 5 minutes for this operation to take effect.</p> <p>If you attempt to associate a KMS key with a log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p>",
     "CancelExportTask": "<p>Cancels the specified export task.</p> <p>The task must be in the <code>PENDING</code> or <code>RUNNING</code> state.</p>",
     "CreateDelivery": "<p>Creates a <i>delivery</i>. A delivery is a connection between a logical <i>delivery source</i> and a logical <i>delivery destination</i> that you have already created.</p> <p>Only some Amazon Web Services services support being configured as a delivery source using this operation. These services are listed as <b>Supported [V2 Permissions]</b> in the table at <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html\">Enabling logging from Amazon Web Services services.</a> </p> <p>A delivery destination can represent a log group in CloudWatch Logs, an Amazon S3 bucket, or a delivery stream in Firehose.</p> <p>To configure logs delivery between a supported Amazon Web Services service and a destination, you must do the following:</p> <ul> <li> <p>Create a delivery source, which is a logical object that represents the resource that is actually sending the logs. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html\">PutDeliverySource</a>.</p> </li> <li> <p>Create a <i>delivery destination</i>, which is a logical object that represents the actual delivery destination. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html\">PutDeliveryDestination</a>.</p> </li> <li> <p>If you are delivering logs cross-account, you must use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestinationPolicy.html\">PutDeliveryDestinationPolicy</a> in the destination account to assign an IAM policy to the destination. This policy allows delivery to that destination. </p> </li> <li> <p>Use <code>CreateDelivery</code> to create a <i>delivery</i> by pairing exactly one delivery source and one delivery destination. </p> </li> </ul> <p>You can configure a single delivery source to send logs to multiple destinations by creating multiple deliveries. You can also create multiple deliveries to configure multiple delivery sources to send logs to the same delivery destination.</p> <p>To update an existing delivery configuration, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UpdateDeliveryConfiguration.html\">UpdateDeliveryConfiguration</a>.</p>",
-    "CreateExportTask": "<p>Creates an export task so that you can efficiently export data from a log group to an Amazon S3 bucket. When you perform a <code>CreateExportTask</code> operation, you must use credentials that have permission to write to the S3 bucket that you specify as the destination.</p> <p>Exporting log data to S3 buckets that are encrypted by KMS is supported. Exporting log data to Amazon S3 buckets that have S3 Object Lock enabled with a retention period is also supported.</p> <p>Exporting to S3 buckets that are encrypted with AES-256 is supported. </p> <p>This is an asynchronous call. If all the required information is provided, this operation initiates an export task and responds with the ID of the task. After the task has started, you can use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeExportTasks.html\">DescribeExportTasks</a> to get the status of the export task. Each account can only have one active (<code>RUNNING</code> or <code>PENDING</code>) export task at a time. To cancel an export task, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CancelExportTask.html\">CancelExportTask</a>.</p> <p>You can export logs from multiple log groups or multiple time ranges to the same S3 bucket. To separate log data for each export task, specify a prefix to be used as the Amazon S3 key prefix for all exported objects.</p> <note> <p>We recommend that you don't regularly export to Amazon S3 as a way to continuously archive your logs. For that use case, we instaed recommend that you use subscriptions. For more information about subscriptions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Subscriptions.html\">Real-time processing of log data with subscriptions</a>.</p> </note> <note> <p>Time-based sorting on chunks of log data inside an exported file is not guaranteed. You can sort the exported log field data by using Linux utilities.</p> </note>",
+    "CreateExportTask": "<p>Creates an export task so that you can efficiently export data from a log group to an Amazon S3 bucket. When you perform a <code>CreateExportTask</code> operation, you must use credentials that have permission to write to the S3 bucket that you specify as the destination.</p> <p>Exporting log data to S3 buckets that are encrypted by KMS is supported. Exporting log data to Amazon S3 buckets that have S3 Object Lock enabled with a retention period is also supported.</p> <p>Exporting to S3 buckets that are encrypted with AES-256 is supported. </p> <p>This is an asynchronous call. If all the required information is provided, this operation initiates an export task and responds with the ID of the task. After the task has started, you can use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeExportTasks.html\">DescribeExportTasks</a> to get the status of the export task. Each account can only have one active (<code>RUNNING</code> or <code>PENDING</code>) export task at a time. To cancel an export task, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CancelExportTask.html\">CancelExportTask</a>.</p> <p>You can export logs from multiple log groups or multiple time ranges to the same S3 bucket. To separate log data for each export task, specify a prefix to be used as the Amazon S3 key prefix for all exported objects.</p> <note> <p>We recommend that you don't regularly export to Amazon S3 as a way to continuously archive your logs. For that use case, we instead recommend that you use subscriptions. For more information about subscriptions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Subscriptions.html\">Real-time processing of log data with subscriptions</a>.</p> </note> <note> <p>Time-based sorting on chunks of log data inside an exported file is not guaranteed. You can sort the exported log field data by using Linux utilities.</p> </note>",
     "CreateLogAnomalyDetector": "<p>Creates an <i>anomaly detector</i> that regularly scans one or more log groups and look for patterns and anomalies in the logs.</p> <p>An anomaly detector can help surface issues by automatically discovering anomalies in your log event traffic. An anomaly detector uses machine learning algorithms to scan log events and find <i>patterns</i>. A pattern is a shared text structure that recurs among your log fields. Patterns provide a useful tool for analyzing large sets of logs because a large number of log events can often be compressed into a few patterns.</p> <p>The anomaly detector uses pattern recognition to find <code>anomalies</code>, which are unusual log events. It uses the <code>evaluationFrequency</code> to compare current log events and patterns with trained baselines. </p> <p>Fields within a pattern are called <i>tokens</i>. Fields that vary within a pattern, such as a request ID or timestamp, are referred to as <i>dynamic tokens</i> and represented by <code>&lt;*&gt;</code>. </p> <p>The following is an example of a pattern:</p> <p> <code>[INFO] Request time: &lt;*&gt; ms</code> </p> <p>This pattern represents log events like <code>[INFO] Request time: 327 ms</code> and other similar log events that differ only by the number, in this csse 327. When the pattern is displayed, the different numbers are replaced by <code>&lt;*&gt;</code> </p> <note> <p>Any parts of log events that are masked as sensitive data are not scanned for anomalies. For more information about masking sensitive data, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html\">Help protect sensitive log data with masking</a>. </p> </note>",
     "CreateLogGroup": "<p>Creates a log group with the specified name. You can create up to 1,000,000 log groups per Region per account.</p> <p>You must use the following guidelines when naming a log group:</p> <ul> <li> <p>Log group names must be unique within a Region for an Amazon Web Services account.</p> </li> <li> <p>Log group names can be between 1 and 512 characters long.</p> </li> <li> <p>Log group names consist of the following characters: a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), '.' (period), and '#' (number sign)</p> </li> <li> <p>Log group names can't start with the string <code>aws/</code> </p> </li> </ul> <p>When you create a log group, by default the log events in the log group do not expire. To set a retention policy so that events expire and are deleted after a specified time, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutRetentionPolicy.html\">PutRetentionPolicy</a>.</p> <p>If you associate an KMS key with the log group, ingested data is encrypted using the KMS key. This association is stored as long as the data encrypted with the KMS key is still within CloudWatch Logs. This enables CloudWatch Logs to decrypt this data whenever it is requested.</p> <p>If you attempt to associate a KMS key with the log group but the KMS key does not exist or the KMS key is disabled, you receive an <code>InvalidParameterException</code> error. </p> <important> <p>CloudWatch Logs supports only symmetric KMS keys. Do not associate an asymmetric KMS key with your log group. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Using Symmetric and Asymmetric Keys</a>.</p> </important>",
     "CreateLogStream": "<p>Creates a log stream for the specified log group. A log stream is a sequence of log events that originate from a single source, such as an application instance or a resource that is being monitored.</p> <p>There is no limit on the number of log streams that you can create for a log group. There is a limit of 50 TPS on <code>CreateLogStream</code> operations, after which transactions are throttled.</p> <p>You must use the following guidelines when naming a log stream:</p> <ul> <li> <p>Log stream names must be unique within the log group.</p> </li> <li> <p>Log stream names can be between 1 and 512 characters long.</p> </li> <li> <p>Don't use ':' (colon) or '*' (asterisk) characters.</p> </li> </ul>",
@@ -27,7 +27,7 @@
     "DeleteRetentionPolicy": "<p>Deletes the specified retention policy.</p> <p>Log events do not expire if they belong to log groups without a retention policy.</p>",
     "DeleteSubscriptionFilter": "<p>Deletes the specified subscription filter.</p>",
     "DeleteTransformer": "<p>Deletes the log transformer for the specified log group. As soon as you do this, the transformation of incoming log events according to that transformer stops. If this account has an account-level transformer that applies to this log group, the log group begins using that account-level transformer when this log-group level transformer is deleted.</p> <p>After you delete a transformer, be sure to edit any metric filters or subscription filters that relied on the transformed versions of the log events.</p>",
-    "DescribeAccountPolicies": "<p>Returns a list of all CloudWatch Logs account policies in the account.</p> <p>To use this operation, you must be signed on with the correct permissions depending on the type of policy that you are retrieving information for.</p> <ul> <li> <p>To see data protection policies, you must have the <code>logs:GetDataProtectionPolicy</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see subscription filter policies, you must have the <code>logs:DescrubeSubscriptionFilters</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see transformer policies, you must have the <code>logs:GetTransformer</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see field index policies, you must have the <code>logs:DescribeIndexPolicies</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> </ul>",
+    "DescribeAccountPolicies": "<p>Returns a list of all CloudWatch Logs account policies in the account.</p> <p>To use this operation, you must be signed on with the correct permissions depending on the type of policy that you are retrieving information for.</p> <ul> <li> <p>To see data protection policies, you must have the <code>logs:GetDataProtectionPolicy</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see subscription filter policies, you must have the <code>logs:DescribeSubscriptionFilters</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see transformer policies, you must have the <code>logs:GetTransformer</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> <li> <p>To see field index policies, you must have the <code>logs:DescribeIndexPolicies</code> and <code>logs:DescribeAccountPolicies</code> permissions.</p> </li> </ul>",
     "DescribeConfigurationTemplates": "<p>Use this operation to return the valid and default values that are used when creating delivery sources, delivery destinations, and deliveries. For more information about deliveries, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_CreateDelivery.html\">CreateDelivery</a>.</p>",
     "DescribeDeliveries": "<p>Retrieves a list of the deliveries that have been created in the account.</p> <p>A <i>delivery</i> is a connection between a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliverySource.html\"> <i>delivery source</i> </a> and a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDeliveryDestination.html\"> <i>delivery destination</i> </a>.</p> <p>A delivery source represents an Amazon Web Services resource that sends logs to an logs delivery destination. The destination can be CloudWatch Logs, Amazon S3, or Firehose. Only some Amazon Web Services services support being configured as a delivery source. These services are listed in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html\">Enable logging from Amazon Web Services services.</a> </p>",
     "DescribeDeliveryDestinations": "<p>Retrieves a list of the delivery destinations that have been created in the account.</p>",
@@ -72,14 +72,14 @@
     "PutDestinationPolicy": "<p>Creates or updates an access policy associated with an existing destination. An access policy is an <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/policies_overview.html\">IAM policy document</a> that is used to authorize claims to register a subscription filter against a given destination.</p>",
     "PutIndexPolicy": "<p>Creates or updates a <i>field index policy</i> for the specified log group. Only log groups in the Standard log class support field index policies. For more information about log classes, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a>.</p> <p>You can use field index policies to create <i>field indexes</i> on fields found in log events in the log group. Creating field indexes speeds up and lowers the costs for CloudWatch Logs Insights queries that reference those field indexes, because these queries attempt to skip the processing of log events that are known to not match the indexed field. Good fields to index are fields that you often need to query for and fields or values that match only a small fraction of the total log events. Common examples of indexes include request ID, session ID, userID, and instance IDs. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html\">Create field indexes to improve query performance and reduce costs</a>.</p> <p>To find the fields that are in your log group events, use the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogGroupFields.html\">GetLogGroupFields</a> operation.</p> <p>For example, suppose you have created a field index for <code>requestId</code>. Then, any CloudWatch Logs Insights query on that log group that includes <code>requestId = <i>value</i> </code> or <code>requestId IN [<i>value</i>, <i>value</i>, ...]</code> will process fewer log events to reduce costs, and have improved performance.</p> <p>Each index policy has the following quotas and restrictions:</p> <ul> <li> <p>As many as 20 fields can be included in the policy.</p> </li> <li> <p>Each field name can include as many as 100 characters.</p> </li> </ul> <p>Matches of log events to the names of indexed fields are case-sensitive. For example, a field index of <code>RequestId</code> won't match a log event containing <code>requestId</code>.</p> <p>Log group-level field index policies created with <code>PutIndexPolicy</code> override account-level field index policies created with <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutAccountPolicy.html\">PutAccountPolicy</a>. If you use <code>PutIndexPolicy</code> to create a field index policy for a log group, that log group uses only that policy. The log group ignores any account-wide field index policy that you might have created.</p>",
     "PutIntegration": "<p>Creates an integration between CloudWatch Logs and another service in this account. Currently, only integrations with OpenSearch Service are supported, and currently you can have only one integration in your account.</p> <p>Integrating with OpenSearch Service makes it possible for you to create curated vended logs dashboards, powered by OpenSearch Service analytics. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-OpenSearch-Dashboards.html\">Vended log dashboards powered by Amazon OpenSearch Service</a>.</p> <p>You can use this operation only to create a new integration. You can't modify an existing integration.</p>",
-    "PutLogEvents": "<p>Uploads a batch of log events to the specified log stream.</p> <important> <p>The sequence token is now ignored in <code>PutLogEvents</code> actions. <code>PutLogEvents</code> actions are always accepted and never return <code>InvalidSequenceTokenException</code> or <code>DataAlreadyAcceptedException</code> even if the sequence token is not valid. You can use parallel <code>PutLogEvents</code> actions on the same log stream. </p> </important> <p>The batch of events must satisfy the following constraints:</p> <ul> <li> <p>The maximum batch size is 1,048,576 bytes. This size is calculated as the sum of all event messages in UTF-8, plus 26 bytes for each log event.</p> </li> <li> <p>None of the log events in the batch can be more than 2 hours in the future.</p> </li> <li> <p>None of the log events in the batch can be more than 14 days in the past. Also, none of the log events can be from earlier than the retention period of the log group.</p> </li> <li> <p>The log events in the batch must be in chronological order by their timestamp. The timestamp is the time that the event occurred, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. (In Amazon Web Services Tools for PowerShell and the Amazon Web Services SDK for .NET, the timestamp is specified in .NET format: <code>yyyy-mm-ddThh:mm:ss</code>. For example, <code>2017-09-15T13:45:30</code>.) </p> </li> <li> <p>A batch of log events in a single request cannot span more than 24 hours. Otherwise, the operation fails.</p> </li> <li> <p>Each log event can be no larger than 256 KB.</p> </li> <li> <p>The maximum number of log events in a batch is 10,000.</p> </li> <li> <important> <p>The quota of five requests per second per log stream has been removed. Instead, <code>PutLogEvents</code> actions are throttled based on a per-second per-account quota. You can request an increase to the per-second throttling quota by using the Service Quotas service.</p> </important> </li> </ul> <p>If a call to <code>PutLogEvents</code> returns \"UnrecognizedClientException\" the most likely cause is a non-valid Amazon Web Services access key ID or secret key. </p>",
+    "PutLogEvents": "<p>Uploads a batch of log events to the specified log stream.</p> <important> <p>The sequence token is now ignored in <code>PutLogEvents</code> actions. <code>PutLogEvents</code> actions are always accepted and never return <code>InvalidSequenceTokenException</code> or <code>DataAlreadyAcceptedException</code> even if the sequence token is not valid. You can use parallel <code>PutLogEvents</code> actions on the same log stream. </p> </important> <p>The batch of events must satisfy the following constraints:</p> <ul> <li> <p>The maximum batch size is 1,048,576 bytes. This size is calculated as the sum of all event messages in UTF-8, plus 26 bytes for each log event.</p> </li> <li> <p>None of the log events in the batch can be more than 2 hours in the future.</p> </li> <li> <p>None of the log events in the batch can be more than 14 days in the past. Also, none of the log events can be from earlier than the retention period of the log group.</p> </li> <li> <p>The log events in the batch must be in chronological order by their timestamp. The timestamp is the time that the event occurred, expressed as the number of milliseconds after <code>Jan 1, 1970 00:00:00 UTC</code>. (In Amazon Web Services Tools for PowerShell and the Amazon Web Services SDK for .NET, the timestamp is specified in .NET format: <code>yyyy-mm-ddThh:mm:ss</code>. For example, <code>2017-09-15T13:45:30</code>.) </p> </li> <li> <p>A batch of log events in a single request cannot span more than 24 hours. Otherwise, the operation fails.</p> </li> <li> <p>Each log event can be no larger than 1 MB.</p> </li> <li> <p>The maximum number of log events in a batch is 10,000.</p> </li> <li> <important> <p>The quota of five requests per second per log stream has been removed. Instead, <code>PutLogEvents</code> actions are throttled based on a per-second per-account quota. You can request an increase to the per-second throttling quota by using the Service Quotas service.</p> </important> </li> </ul> <p>If a call to <code>PutLogEvents</code> returns \"UnrecognizedClientException\" the most likely cause is a non-valid Amazon Web Services access key ID or secret key. </p>",
     "PutMetricFilter": "<p>Creates or updates a metric filter and associates it with the specified log group. With metric filters, you can configure rules to extract metric data from log events ingested through <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html\">PutLogEvents</a>.</p> <p>The maximum number of metric filters that can be associated with a log group is 100.</p> <p>Using regular expressions in filter patterns is supported. For these filters, there is a quota of two regular expression patterns within a single filter pattern. There is also a quota of five regular expression patterns per log group. For more information about using regular expressions in filter patterns, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html\"> Filter pattern syntax for metric filters, subscription filters, filter log events, and Live Tail</a>.</p> <p>When you create a metric filter, you can also optionally assign a unit and dimensions to the metric that is created.</p> <important> <p>Metrics extracted from log events are charged as custom metrics. To prevent unexpected high charges, do not specify high-cardinality fields such as <code>IPAddress</code> or <code>requestID</code> as dimensions. Each different value found for a dimension is treated as a separate metric and accrues charges as a separate custom metric. </p> <p>CloudWatch Logs might disable a metric filter if it generates 1,000 different name/value pairs for your specified dimensions within one hour.</p> <p>You can also set up a billing alarm to alert you if your charges are higher than expected. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html\"> Creating a Billing Alarm to Monitor Your Estimated Amazon Web Services Charges</a>. </p> </important>",
     "PutQueryDefinition": "<p>Creates or updates a query definition for CloudWatch Logs Insights. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html\">Analyzing Log Data with CloudWatch Logs Insights</a>.</p> <p>To update a query definition, specify its <code>queryDefinitionId</code> in your request. The values of <code>name</code>, <code>queryString</code>, and <code>logGroupNames</code> are changed to the values that you specify in your update operation. No current values are retained from the current query definition. For example, imagine updating a current query definition that includes log groups. If you don't specify the <code>logGroupNames</code> parameter in your update operation, the query definition changes to contain no log groups.</p> <p>You must have the <code>logs:PutQueryDefinition</code> permission to be able to perform this operation.</p>",
     "PutResourcePolicy": "<p>Creates or updates a resource policy allowing other Amazon Web Services services to put log events to this account, such as Amazon Route 53. An account can have up to 10 resource policies per Amazon Web Services Region.</p>",
     "PutRetentionPolicy": "<p>Sets the retention of the specified log group. With a retention policy, you can configure the number of days for which to retain log events in the specified log group.</p> <note> <p>CloudWatch Logs doesn't immediately delete log events when they reach their retention setting. It typically takes up to 72 hours after that before log events are deleted, but in rare situations might take longer.</p> <p>To illustrate, imagine that you change a log group to have a longer retention setting when it contains log events that are past the expiration date, but haven't been deleted. Those log events will take up to 72 hours to be deleted after the new retention date is reached. To make sure that log data is deleted permanently, keep a log group at its lower retention setting until 72 hours after the previous retention period ends. Alternatively, wait to change the retention setting until you confirm that the earlier log events are deleted. </p> <p>When log events reach their retention setting they are marked for deletion. After they are marked for deletion, they do not add to your archival storage costs anymore, even if they are not actually deleted until later. These log events marked for deletion are also not included when you use an API to retrieve the <code>storedBytes</code> value to see how many bytes a log group is storing.</p> </note>",
     "PutSubscriptionFilter": "<p>Creates or updates a subscription filter and associates it with the specified log group. With subscription filters, you can subscribe to a real-time stream of log events ingested through <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutLogEvents.html\">PutLogEvents</a> and have them delivered to a specific destination. When log events are sent to the receiving service, they are Base64 encoded and compressed with the GZIP format.</p> <p>The following destinations are supported for subscription filters:</p> <ul> <li> <p>An Amazon Kinesis data stream belonging to the same account as the subscription filter, for same-account delivery.</p> </li> <li> <p>A logical destination created with <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html\">PutDestination</a> that belongs to a different account, for cross-account delivery. We currently support Kinesis Data Streams and Firehose as logical destinations.</p> </li> <li> <p>An Amazon Kinesis Data Firehose delivery stream that belongs to the same account as the subscription filter, for same-account delivery.</p> </li> <li> <p>An Lambda function that belongs to the same account as the subscription filter, for same-account delivery.</p> </li> </ul> <p>Each log group can have up to two subscription filters associated with it. If you are updating an existing filter, you must specify the correct name in <code>filterName</code>. </p> <p>Using regular expressions in filter patterns is supported. For these filters, there is a quotas of quota of two regular expression patterns within a single filter pattern. There is also a quota of five regular expression patterns per log group. For more information about using regular expressions in filter patterns, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html\"> Filter pattern syntax for metric filters, subscription filters, filter log events, and Live Tail</a>.</p> <p>To perform a <code>PutSubscriptionFilter</code> operation for any destination except a Lambda function, you must also have the <code>iam:PassRole</code> permission.</p>",
     "PutTransformer": "<p>Creates or updates a <i>log transformer</i> for a single log group. You use log transformers to transform log events into a different format, making them easier for you to process and analyze. You can also transform logs from different sources into standardized formats that contains relevant, source-specific information.</p> <p>After you have created a transformer, CloudWatch Logs performs the transformations at the time of log ingestion. You can then refer to the transformed versions of the logs during operations such as querying with CloudWatch Logs Insights or creating metric filters or subscription filers.</p> <p>You can also use a transformer to copy metadata from metadata keys into the log events themselves. This metadata can include log group name, log stream name, account ID and Region.</p> <p>A transformer for a log group is a series of processors, where each processor applies one type of transformation to the log events ingested into this log group. The processors work one after another, in the order that you list them, like a pipeline. For more information about the available processors to use in a transformer, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Processors\"> Processors that you can use</a>.</p> <p>Having log events in standardized format enables visibility across your applications for your log analysis, reporting, and alarming needs. CloudWatch Logs provides transformation for common log types with out-of-the-box transformation templates for major Amazon Web Services log sources such as VPC flow logs, Lambda, and Amazon RDS. You can use pre-built transformation templates or create custom transformation policies.</p> <p>You can create transformers only for the log groups in the Standard log class.</p> <p>You can also set up a transformer at the account level. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutAccountPolicy.html\">PutAccountPolicy</a>. If there is both a log-group level transformer created with <code>PutTransformer</code> and an account-level transformer that could apply to the same log group, the log group uses only the log-group level transformer. It ignores the account-level transformer.</p>",
-    "StartLiveTail": "<p>Starts a Live Tail streaming session for one or more log groups. A Live Tail session returns a stream of log events that have been recently ingested in the log groups. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs_LiveTail.html\">Use Live Tail to view logs in near real time</a>. </p> <p>The response to this operation is a response stream, over which the server sends live log events and the client receives them.</p> <p>The following objects are sent over the stream:</p> <ul> <li> <p>A single <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LiveTailSessionStart.html\">LiveTailSessionStart</a> object is sent at the start of the session.</p> </li> <li> <p>Every second, a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LiveTailSessionUpdate.html\">LiveTailSessionUpdate</a> object is sent. Each of these objects contains an array of the actual log events.</p> <p>If no new log events were ingested in the past second, the <code>LiveTailSessionUpdate</code> object will contain an empty array.</p> <p>The array of log events contained in a <code>LiveTailSessionUpdate</code> can include as many as 500 log events. If the number of log events matching the request exceeds 500 per second, the log events are sampled down to 500 log events to be included in each <code>LiveTailSessionUpdate</code> object.</p> <p>If your client consumes the log events slower than the server produces them, CloudWatch Logs buffers up to 10 <code>LiveTailSessionUpdate</code> events or 5000 log events, after which it starts dropping the oldest events.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTailResponseStream.html#CWL-Type-StartLiveTailResponseStream-SessionStreamingException\">SessionStreamingException</a> object is returned if an unknown error occurs on the server side.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTailResponseStream.html#CWL-Type-StartLiveTailResponseStream-SessionTimeoutException\">SessionTimeoutException</a> object is returned when the session times out, after it has been kept open for three hours.</p> </li> </ul> <important> <p>You can end a session before it times out by closing the session stream or by closing the client that is receiving the stream. The session also ends if the established connection between the client and the server breaks.</p> </important> <p>For examples of using an SDK to start a Live Tail session, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/example_cloudwatch-logs_StartLiveTail_section.html\"> Start a Live Tail session using an Amazon Web Services SDK</a>.</p>",
+    "StartLiveTail": "<p>Starts a Live Tail streaming session for one or more log groups. A Live Tail session returns a stream of log events that have been recently ingested in the log groups. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs_LiveTail.html\">Use Live Tail to view logs in near real time</a>. </p> <p>The response to this operation is a response stream, over which the server sends live log events and the client receives them.</p> <p>The following objects are sent over the stream:</p> <ul> <li> <p>A single <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LiveTailSessionStart.html\">LiveTailSessionStart</a> object is sent at the start of the session.</p> </li> <li> <p>Every second, a <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_LiveTailSessionUpdate.html\">LiveTailSessionUpdate</a> object is sent. Each of these objects contains an array of the actual log events.</p> <p>If no new log events were ingested in the past second, the <code>LiveTailSessionUpdate</code> object will contain an empty array.</p> <p>The array of log events contained in a <code>LiveTailSessionUpdate</code> can include as many as 500 log events. If the number of log events matching the request exceeds 500 per second, the log events are sampled down to 500 log events to be included in each <code>LiveTailSessionUpdate</code> object.</p> <p>If your client consumes the log events slower than the server produces them, CloudWatch Logs buffers up to 10 <code>LiveTailSessionUpdate</code> events or 5000 log events, after which it starts dropping the oldest events.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTailResponseStream.html#CWL-Type-StartLiveTailResponseStream-SessionStreamingException\">SessionStreamingException</a> object is returned if an unknown error occurs on the server side.</p> </li> <li> <p>A <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTailResponseStream.html#CWL-Type-StartLiveTailResponseStream-SessionTimeoutException\">SessionTimeoutException</a> object is returned when the session times out, after it has been kept open for three hours.</p> </li> </ul> <note> <p>The <code>StartLiveTail</code> API routes requests to <code>streaming-logs.<i>Region</i>.amazonaws.com</code> using SDK host prefix injection. VPC endpoint support is not available for this API.</p> </note> <important> <p>You can end a session before it times out by closing the session stream or by closing the client that is receiving the stream. The session also ends if the established connection between the client and the server breaks.</p> </important> <p>For examples of using an SDK to start a Live Tail session, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/example_cloudwatch-logs_StartLiveTail_section.html\"> Start a Live Tail session using an Amazon Web Services SDK</a>.</p>",
     "StartQuery": "<p>Starts a query of one or more log groups using CloudWatch Logs Insights. You specify the log groups and time range to query and the query string to use.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html\">CloudWatch Logs Insights Query Syntax</a>.</p> <p>After you run a query using <code>StartQuery</code>, the query results are stored by CloudWatch Logs. You can use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetQueryResults.html\">GetQueryResults</a> to retrieve the results of a query, using the <code>queryId</code> that <code>StartQuery</code> returns. </p> <note> <p>To specify the log groups to query, a <code>StartQuery</code> operation must include one of the following:</p> <ul> <li> <p>Either exactly one of the following parameters: <code>logGroupName</code>, <code>logGroupNames</code>, or <code>logGroupIdentifiers</code> </p> </li> <li> <p>Or the <code>queryString</code> must include a <code>SOURCE</code> command to select log groups for the query. The <code>SOURCE</code> command can select log groups based on log group name prefix, account ID, and log class. </p> <p>For more information about the <code>SOURCE</code> command, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax-Source.html\">SOURCE</a>.</p> </li> </ul> </note> <p>If you have associated a KMS key with the query results in this account, then <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html\">StartQuery</a> uses that key to encrypt the results when it stores them. If no key is associated with query results, the query results are encrypted with the default CloudWatch Logs encryption method.</p> <p>Queries time out after 60 minutes of runtime. If your queries are timing out, reduce the time range being searched or partition your query into a number of queries.</p> <p>If you are using CloudWatch cross-account observability, you can use this operation in a monitoring account to start a query in a linked source account. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html\">CloudWatch cross-account observability</a>. For a cross-account <code>StartQuery</code> operation, the query definition must be defined in the monitoring account.</p> <p>You can have up to 30 concurrent CloudWatch Logs insights queries, including queries that have been added to dashboards. </p>",
     "StopQuery": "<p>Stops a CloudWatch Logs Insights query that is in progress. If the query has already ended, the operation returns an error indicating that the specified query is not running.</p>",
     "TagLogGroup": "<important> <p>The TagLogGroup operation is on the path to deprecation. We recommend that you use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_TagResource.html\">TagResource</a> instead.</p> </important> <p>Adds or updates the specified tags for the specified log group.</p> <p>To list the tags for a log group, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListTagsForResource.html\">ListTagsForResource</a>. To remove tags, use <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p> <p>For more information about tags, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html#log-group-tagging\">Tag Log Groups in Amazon CloudWatch Logs</a> in the <i>Amazon CloudWatch Logs User Guide</i>.</p> <p>CloudWatch Logs doesn't support IAM policies that prevent users from assigning specified tags to log groups using the <code>aws:Resource/<i>key-name</i> </code> or <code>aws:TagKeys</code> condition keys. For more information about using tags to control access, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Controlling access to Amazon Web Services resources using tags</a>.</p>",
@@ -95,8 +95,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient permissions to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessPolicy": {
       "base": null,
@@ -284,8 +283,7 @@
     },
     "AssociateKmsKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Baseline": {
       "base": null,
@@ -313,8 +311,7 @@
     },
     "CancelExportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientToken": {
       "base": null,
@@ -360,8 +357,7 @@
     },
     "ConflictException": {
       "base": "<p>This operation attempted to create a resource that already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyValue": {
       "base": "<p>This processor copies values within a log event. You can also use this processor to add metadata to log events by copying the values of the following metadata keys into the log events: <code>@logGroupName</code>, <code>@logGroupStream</code>, <code>@accountId</code>, <code>@regionName</code>. </p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-copyValue\"> copyValue</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
@@ -389,43 +385,35 @@
     },
     "CreateDeliveryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeliveryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogAnomalyDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogAnomalyDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DashboardViewerPrincipals": {
       "base": null,
@@ -435,8 +423,7 @@
     },
     "DataAlreadyAcceptedException": {
       "base": "<p>The event was already logged.</p> <important> <p> <code>PutLogEvents</code> actions are now always accepted and never return <code>DataAlreadyAcceptedException</code> regardless of whether a given batch of log events has already been accepted. </p> </important>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DataProtectionPolicyDocument": {
       "base": null,
@@ -473,58 +460,47 @@
     },
     "DeleteAccountPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataProtectionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeliveryDestinationPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeliveryDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeliveryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeliverySourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKeys": {
       "base": "<p>This processor deletes entries from a log event. These entries are key-value pairs. </p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-deleteKeys\"> deleteKeys</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
@@ -534,53 +510,43 @@
     },
     "DeleteLogAnomalyDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLogGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLogStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMetricFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRetentionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSubscriptionFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTransformerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWithKeys": {
       "base": null,
@@ -712,73 +678,59 @@
     },
     "DescribeAccountPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConfigurationTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConfigurationTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliveriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliveriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliveryDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliveryDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliverySourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeliverySourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFieldIndexesLogGroupIdentifiers": {
       "base": null,
@@ -788,13 +740,11 @@
     },
     "DescribeFieldIndexesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFieldIndexesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexPoliciesLogGroupIdentifiers": {
       "base": null,
@@ -804,13 +754,11 @@
     },
     "DescribeIndexPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLimit": {
       "base": null,
@@ -830,33 +778,27 @@
     },
     "DescribeLogGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLogGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLogStreamsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLogStreamsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMetricFiltersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMetricFiltersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueriesMaxResults": {
       "base": null,
@@ -866,43 +808,35 @@
     },
     "DescribeQueriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueryDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueryDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSubscriptionFiltersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSubscriptionFiltersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -981,8 +915,7 @@
     },
     "DisassociateKmsKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Distribution": {
       "base": "<p>The method used to distribute log data to the destination, which can be either random or grouped by log stream.</p>",
@@ -1089,7 +1022,7 @@
       "base": null,
       "refs": {
         "FilteredLogEvent$message": "<p>The data contained in the log event.</p>",
-        "InputLogEvent$message": "<p>The raw event message. Each log event can be no larger than 256 KB.</p>",
+        "InputLogEvent$message": "<p>The raw event message. Each log event can be no larger than 1 MB.</p>",
         "LiveTailSessionLogEvent$message": "<p>The log event message text.</p>",
         "LogEvent$message": "<p>The message content of the log event.</p>",
         "MetricFilterMatchRecord$eventMessage": "<p>The raw event data.</p>",
@@ -1237,13 +1170,11 @@
     },
     "FilterLogEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FilterLogEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FilterName": {
       "base": null,
@@ -1319,123 +1250,99 @@
     },
     "GetDataProtectionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataProtectionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryDestinationPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryDestinationPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliveryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliverySourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeliverySourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogAnomalyDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogAnomalyDetectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogGroupFieldsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogGroupFieldsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogRecordRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogRecordResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryResultsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryResultsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransformerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransformerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Grok": {
       "base": "<p>This processor uses pattern matching to parse and structure unstructured data. This processor can also extract fields from log messages.</p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Grok\"> grok</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
@@ -1593,18 +1500,15 @@
     },
     "InvalidOperationException": {
       "base": "<p>The operation is not valid on the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>A parameter is specified incorrectly.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSequenceTokenException": {
       "base": "<p>The sequence token is not valid. You can get the correct sequence token in the <code>expectedSequenceToken</code> field in the <code>InvalidSequenceTokenException</code> message. </p> <important> <p> <code>PutLogEvents</code> actions are now always accepted and never return <code>InvalidSequenceTokenException</code> regardless of receiving an invalid sequence token. </p> </important>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IsSampled": {
       "base": null,
@@ -1645,8 +1549,7 @@
     },
     "LimitExceededException": {
       "base": "<p>You have reached the maximum number of resources that can be created.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnomaliesLimit": {
       "base": null,
@@ -1656,23 +1559,19 @@
     },
     "ListAnomaliesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnomaliesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntegrationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntegrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogAnomalyDetectorsLimit": {
       "base": null,
@@ -1682,13 +1581,11 @@
     },
     "ListLogAnomalyDetectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogAnomalyDetectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogGroupsForQueryMaxResults": {
       "base": null,
@@ -1698,33 +1595,27 @@
     },
     "ListLogGroupsForQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogGroupsForQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsLogGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsLogGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListToMap": {
       "base": "<p>This processor takes a list of objects that contain key fields, and converts them into a map of target keys.</p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-listToMap\"> listToMap</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
@@ -1807,9 +1698,9 @@
     "LogGroupClass": {
       "base": null,
       "refs": {
-        "CreateLogGroupRequest$logGroupClass": "<p>Use this parameter to specify the log group class for this log group. There are two classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> </ul> <p>If you omit this parameter, the default of <code>STANDARD</code> is used.</p> <important> <p>The value of <code>logGroupClass</code> can't be changed after a log group is created.</p> </important> <p>For details about the features supported by each class, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>",
-        "DescribeLogGroupsRequest$logGroupClass": "<p>Specifies the log group class for this log group. There are two classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> </ul> <p>For details about the features supported by each class, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>",
-        "LogGroup$logGroupClass": "<p>This specifies the log group class for this log group. There are two classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> </ul> <p>For details about the features supported by each class, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>"
+        "CreateLogGroupRequest$logGroupClass": "<p>Use this parameter to specify the log group class for this log group. There are three classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> <li> <p>Use the <code>Delivery</code> log class only for delivering Lambda logs to store in Amazon S3 or Amazon Data Firehose. Log events in log groups in the Delivery class are kept in CloudWatch Logs for only one day. This log class doesn't offer rich CloudWatch Logs capabilities such as CloudWatch Logs Insights queries.</p> </li> </ul> <p>If you omit this parameter, the default of <code>STANDARD</code> is used.</p> <important> <p>The value of <code>logGroupClass</code> can't be changed after a log group is created.</p> </important> <p>For details about the features supported by each class, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>",
+        "DescribeLogGroupsRequest$logGroupClass": "<p>Specifies the log group class for this log group. There are three classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> <li> <p>Use the <code>Delivery</code> log class only for delivering Lambda logs to store in Amazon S3 or Amazon Data Firehose. Log events in log groups in the Delivery class are kept in CloudWatch Logs for only one day. This log class doesn't offer rich CloudWatch Logs capabilities such as CloudWatch Logs Insights queries.</p> </li> </ul> <p>For details about the features supported by each class, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>",
+        "LogGroup$logGroupClass": "<p>This specifies the log group class for this log group. There are three classes:</p> <ul> <li> <p>The <code>Standard</code> log class supports all CloudWatch Logs features.</p> </li> <li> <p>The <code>Infrequent Access</code> log class supports a subset of CloudWatch Logs features and incurs lower costs.</p> </li> <li> <p>Use the <code>Delivery</code> log class only for delivering Lambda logs to store in Amazon S3 or Amazon Data Firehose. Log events in log groups in the Delivery class are kept in CloudWatch Logs for only one day. This log class doesn't offer rich CloudWatch Logs capabilities such as CloudWatch Logs Insights queries.</p> </li> </ul> <p>For details about the features supported by the Standard and Infrequent Access classes, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html\">Log classes</a> </p>"
       }
     },
     "LogGroupField": {
@@ -1997,8 +1888,7 @@
     },
     "MalformedQueryException": {
       "base": "<p>The query string is not valid. Details about this error are displayed in a <code>QueryCompileError</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_QueryCompileError.html\">QueryCompileError</a>.</p> <p>For more information about valid query syntax, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html\">CloudWatch Logs Insights Query Syntax</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MatchPattern": {
       "base": null,
@@ -2270,8 +2160,7 @@
     },
     "OperationAbortedException": {
       "base": "<p>Multiple concurrent requests to update the same resource were in conflict.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OrderBy": {
       "base": null,
@@ -2460,138 +2349,111 @@
     },
     "PutAccountPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutAccountPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDataProtectionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDataProtectionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliveryDestinationPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliveryDestinationPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliveryDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliveryDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliverySourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDeliverySourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDestinationPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIndexPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIndexPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutLogEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutLogEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMetricFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutQueryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutQueryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRetentionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutSubscriptionFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutTransformerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryCharOffset": {
       "base": null,
@@ -2776,8 +2638,7 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The specified resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArns": {
       "base": null,
@@ -2800,8 +2661,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicies": {
       "base": null,
@@ -2905,13 +2765,11 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This request exceeds a service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>The service cannot complete the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionId": {
       "base": null,
@@ -2996,13 +2854,11 @@
     },
     "StartLiveTailRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartLiveTailResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartLiveTailResponseStream": {
       "base": "<p>This object includes the stream returned by your <a href=\"https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartLiveTail.html\">StartLiveTail</a> request.</p>",
@@ -3012,13 +2868,11 @@
     },
     "StartQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "State": {
       "base": null,
@@ -3039,13 +2893,11 @@
     },
     "StopQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StoredBytes": {
       "base": null,
@@ -3137,13 +2989,11 @@
     },
     "TagLogGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3206,28 +3056,23 @@
     },
     "TestMetricFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestMetricFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestTransformerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestTransformerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>The request was throttled because of quota limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Time": {
       "base": null,
@@ -3308,8 +3153,7 @@
     },
     "TooManyTagsException": {
       "base": "<p>A resource can have no more than 50 tags.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransformedEventMessage": {
       "base": null,
@@ -3375,38 +3219,31 @@
     },
     "UnrecognizedClientException": {
       "base": "<p>The most likely cause is an Amazon Web Services access key ID or secret key that's not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagLogGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnomalyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeliveryConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeliveryConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLogAnomalyDetectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpperCaseString": {
       "base": "<p>This processor converts a string field to uppercase.</p> <p>For more information about this processor including examples, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-upperCaseString\"> upperCaseString</a> in the <i>CloudWatch Logs User Guide</i>.</p>",
@@ -3422,8 +3259,7 @@
     },
     "ValidationException": {
       "base": "<p>One of the parameters for the request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,

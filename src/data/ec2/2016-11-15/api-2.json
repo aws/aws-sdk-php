@@ -12118,7 +12118,8 @@
           "idempotencyToken":true
         },
         "Tier":{"shape":"IpamTier"},
-        "EnablePrivateGua":{"shape":"Boolean"}
+        "EnablePrivateGua":{"shape":"Boolean"},
+        "MeteredAccount":{"shape":"IpamMeteredAccount"}
       }
     },
     "CreateIpamResourceDiscoveryRequest":{
@@ -25131,7 +25132,7 @@
           "locationName":"BlockDeviceMapping"
         },
         "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
-        "ImageId":{"shape":"String"}
+        "ImageId":{"shape":"ImageId"}
       }
     },
     "FleetLaunchTemplateSpecification":{
@@ -31866,6 +31867,10 @@
         "EnablePrivateGua":{
           "shape":"Boolean",
           "locationName":"enablePrivateGua"
+        },
+        "MeteredAccount":{
+          "shape":"IpamMeteredAccount",
+          "locationName":"meteredAccount"
         }
       }
     },
@@ -32257,6 +32262,13 @@
       "type":"integer",
       "max":1000,
       "min":5
+    },
+    "IpamMeteredAccount":{
+      "type":"string",
+      "enum":[
+        "ipam-owner",
+        "resource-owner"
+      ]
     },
     "IpamNetmaskLength":{
       "type":"integer",
@@ -36080,7 +36092,8 @@
           "locationName":"RemoveOperatingRegion"
         },
         "Tier":{"shape":"IpamTier"},
-        "EnablePrivateGua":{"shape":"Boolean"}
+        "EnablePrivateGua":{"shape":"Boolean"},
+        "MeteredAccount":{"shape":"IpamMeteredAccount"}
       }
     },
     "ModifyIpamResourceCidrRequest":{

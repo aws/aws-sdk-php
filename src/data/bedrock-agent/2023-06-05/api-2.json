@@ -3490,6 +3490,7 @@
         "agent":{"shape":"AgentFlowNodeConfiguration"},
         "collector":{"shape":"CollectorFlowNodeConfiguration"},
         "condition":{"shape":"ConditionFlowNodeConfiguration"},
+        "inlineCode":{"shape":"InlineCodeFlowNodeConfiguration"},
         "input":{"shape":"InputFlowNodeConfiguration"},
         "iterator":{"shape":"IteratorFlowNodeConfiguration"},
         "knowledgeBase":{"shape":"KnowledgeBaseFlowNodeConfiguration"},
@@ -3580,7 +3581,8 @@
         "Agent",
         "Retrieval",
         "Iterator",
-        "Collector"
+        "Collector",
+        "InlineCode"
       ]
     },
     "FlowNodes":{
@@ -4443,6 +4445,23 @@
         "statistics":{"shape":"IngestionJobStatistics"},
         "status":{"shape":"IngestionJobStatus"},
         "updatedAt":{"shape":"DateTimestamp"}
+      }
+    },
+    "InlineCode":{
+      "type":"string",
+      "max":5000000,
+      "min":1,
+      "sensitive":true
+    },
+    "InlineCodeFlowNodeConfiguration":{
+      "type":"structure",
+      "required":[
+        "code",
+        "language"
+      ],
+      "members":{
+        "code":{"shape":"InlineCode"},
+        "language":{"shape":"SupportedLanguages"}
       }
     },
     "InlineContent":{
@@ -6461,7 +6480,7 @@
     "SessionTTL":{
       "type":"integer",
       "box":true,
-      "max":3600,
+      "max":5400,
       "min":60
     },
     "SharePointAuthType":{
@@ -6690,6 +6709,10 @@
       "member":{"shape":"SupplementalDataStorageLocation"},
       "max":1,
       "min":1
+    },
+    "SupportedLanguages":{
+      "type":"string",
+      "enum":["Python_3"]
     },
     "SystemContentBlock":{
       "type":"structure",

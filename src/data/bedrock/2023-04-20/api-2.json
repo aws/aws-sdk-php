@@ -1712,6 +1712,14 @@
         "DISTILLATION"
       ]
     },
+    "DataProcessingDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"JobStatusDetails"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
     "DeleteCustomModelRequest":{
       "type":"structure",
       "required":["modelIdentifier"],
@@ -2665,6 +2673,7 @@
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ModelCustomizationJobStatus"},
         "failureMessage":{"shape":"ErrorMessage"},
+        "statusDetails":{"shape":"StatusDetails"},
         "creationTime":{"shape":"Timestamp"},
         "lastModifiedTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
@@ -3769,6 +3778,17 @@
       "min":1,
       "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9\\+\\-\\.])*"
     },
+    "JobStatusDetails":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Stopping",
+        "Stopped",
+        "Failed",
+        "NotStarted"
+      ]
+    },
     "KbInferenceConfig":{
       "type":"structure",
       "members":{
@@ -4628,6 +4648,7 @@
         "jobName":{"shape":"JobName"},
         "status":{"shape":"ModelCustomizationJobStatus"},
         "lastModifiedTime":{"shape":"Timestamp"},
+        "statusDetails":{"shape":"StatusDetails"},
         "creationTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "customModelArn":{"shape":"CustomModelArn"},
@@ -5366,6 +5387,14 @@
         "INCOMPATIBLE_ENDPOINT"
       ]
     },
+    "StatusDetails":{
+      "type":"structure",
+      "members":{
+        "validationDetails":{"shape":"ValidationDetails"},
+        "dataProcessingDetails":{"shape":"DataProcessingDetails"},
+        "trainingDetails":{"shape":"TrainingDetails"}
+      }
+    },
     "StopEvaluationJobRequest":{
       "type":"structure",
       "required":["jobIdentifier"],
@@ -5494,7 +5523,7 @@
     },
     "TeacherModelIdentifier":{
       "type":"string",
-      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:((:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})|(([0-9a-zA-Z][_-]?)+)$)|([0-9]{12}:inference-profile/[a-zA-Z0-9-:.]+$)))|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})"
     },
     "Temperature":{
       "type":"float",
@@ -5555,6 +5584,14 @@
       "members":{
         "s3Uri":{"shape":"S3Uri"},
         "invocationLogsConfig":{"shape":"InvocationLogsConfig"}
+      }
+    },
+    "TrainingDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"JobStatusDetails"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "TrainingMetrics":{
@@ -5670,6 +5707,14 @@
       "required":["validators"],
       "members":{
         "validators":{"shape":"Validators"}
+      }
+    },
+    "ValidationDetails":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"JobStatusDetails"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "ValidationException":{

@@ -3355,7 +3355,8 @@
           "idempotencyToken":true,
           "location":"header",
           "locationName":"X-Amz-Client-Token"
-        }
+        },
+        "tags":{"shape":"Tags"}
       }
     },
     "CreateWorkerResponse":{
@@ -3391,7 +3392,8 @@
       "members":{
         "mode":{"shape":"AutoScalingMode"},
         "workerCapabilities":{"shape":"CustomerManagedWorkerCapabilities"},
-        "storageProfileId":{"shape":"StorageProfileId"}
+        "storageProfileId":{"shape":"StorageProfileId"},
+        "tagPropagationMode":{"shape":"TagPropagationMode"}
       }
     },
     "CustomerManagedFleetOperatingSystemFamily":{
@@ -5602,7 +5604,7 @@
     },
     "JobTemplate":{
       "type":"string",
-      "max":300000,
+      "max":1000000,
       "min":1,
       "sensitive":true
     },
@@ -8277,6 +8279,13 @@
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TagPropagationMode":{
+      "type":"string",
+      "enum":[
+        "NO_PROPAGATION",
+        "PROPAGATE_TAGS_TO_WORKERS_AT_LAUNCH"
+      ]
     },
     "TagResourceRequest":{
       "type":"structure",
