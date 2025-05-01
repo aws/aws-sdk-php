@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.2 - 2025-05-01
 
 * `Aws\Connect` - This release adds the following fields to DescribeContact: DisconnectReason, AgentInitiatedHoldDuration, AfterContactWorkStartTimestamp, AfterContactWorkEndTimestamp, AfterContactWorkDuration, StateTransitions, Recordings, ContactDetails, ContactEvaluations, Attributes
 * `Aws\SageMaker` - Feature - Adding support for Scheduled and Rolling Update Software in Sagemaker Hyperpod.
