@@ -4264,6 +4264,13 @@
         "AlarmName":{"shape":"AlarmName"}
       }
     },
+    "AlarmDetails":{
+      "type":"structure",
+      "required":["AlarmName"],
+      "members":{
+        "AlarmName":{"shape":"AlarmName"}
+      }
+    },
     "AlarmList":{
       "type":"list",
       "member":{"shape":"Alarm"},
@@ -5468,6 +5475,12 @@
       "max":100,
       "min":0
     },
+    "AutoRollbackAlarms":{
+      "type":"list",
+      "member":{"shape":"AlarmDetails"},
+      "max":10,
+      "min":1
+    },
     "AutoRollbackConfig":{
       "type":"structure",
       "members":{
@@ -5815,6 +5828,17 @@
       "members":{
         "Type":{"shape":"CapacitySizeType"},
         "Value":{"shape":"CapacitySizeValue"}
+      }
+    },
+    "CapacitySizeConfig":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Value"
+      ],
+      "members":{
+        "Type":{"shape":"NodeUnavailabilityType"},
+        "Value":{"shape":"NodeUnavailabilityValue"}
       }
     },
     "CapacitySizeType":{
@@ -6290,7 +6314,8 @@
         "Status":{"shape":"InstanceGroupStatus"},
         "TrainingPlanArn":{"shape":"TrainingPlanArn"},
         "TrainingPlanStatus":{"shape":"InstanceGroupTrainingPlanStatus"},
-        "OverrideVpcConfig":{"shape":"VpcConfig"}
+        "OverrideVpcConfig":{"shape":"VpcConfig"},
+        "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"}
       }
     },
     "ClusterInstanceGroupDetailsList":{
@@ -6322,7 +6347,8 @@
         "InstanceStorageConfigs":{"shape":"ClusterInstanceStorageConfigs"},
         "OnStartDeepHealthChecks":{"shape":"OnStartDeepHealthChecks"},
         "TrainingPlanArn":{"shape":"TrainingPlanArn"},
-        "OverrideVpcConfig":{"shape":"VpcConfig"}
+        "OverrideVpcConfig":{"shape":"VpcConfig"},
+        "ScheduledUpdateConfig":{"shape":"ScheduledUpdateConfig"}
       }
     },
     "ClusterInstanceGroupSpecifications":{
@@ -6527,6 +6553,7 @@
         "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LaunchTime":{"shape":"Timestamp"},
+        "LastSoftwareUpdateTime":{"shape":"Timestamp"},
         "LifeCycleConfig":{"shape":"ClusterLifeCycleConfig"},
         "OverrideVpcConfig":{"shape":"VpcConfig"},
         "ThreadsPerCore":{"shape":"ClusterThreadsPerCore"},
@@ -6574,6 +6601,7 @@
         "InstanceId":{"shape":"String"},
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LaunchTime":{"shape":"Timestamp"},
+        "LastSoftwareUpdateTime":{"shape":"Timestamp"},
         "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"}
       }
     },
@@ -8768,6 +8796,11 @@
       }
     },
     "CreationTime":{"type":"timestamp"},
+    "CronScheduleExpression":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "CrossAccountFilterOption":{
       "type":"string",
       "enum":[
@@ -9690,6 +9723,14 @@
         "BlueGreenUpdatePolicy":{"shape":"BlueGreenUpdatePolicy"},
         "RollingUpdatePolicy":{"shape":"RollingUpdatePolicy"},
         "AutoRollbackConfiguration":{"shape":"AutoRollbackConfig"}
+      }
+    },
+    "DeploymentConfiguration":{
+      "type":"structure",
+      "members":{
+        "RollingUpdatePolicy":{"shape":"RollingDeploymentPolicy"},
+        "WaitIntervalInSeconds":{"shape":"WaitTimeIntervalInSeconds"},
+        "AutoRollbackConfiguration":{"shape":"AutoRollbackAlarms"}
       }
     },
     "DeploymentRecommendation":{
@@ -19303,6 +19344,17 @@
       "max":8192,
       "pattern":".*"
     },
+    "NodeUnavailabilityType":{
+      "type":"string",
+      "enum":[
+        "INSTANCE_COUNT",
+        "CAPACITY_PERCENTAGE"
+      ]
+    },
+    "NodeUnavailabilityValue":{
+      "type":"integer",
+      "min":1
+    },
     "NonEmptyString256":{
       "type":"string",
       "max":256,
@@ -22242,6 +22294,14 @@
       "min":20,
       "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
     },
+    "RollingDeploymentPolicy":{
+      "type":"structure",
+      "required":["MaximumBatchSize"],
+      "members":{
+        "MaximumBatchSize":{"shape":"CapacitySizeConfig"},
+        "RollbackMaximumBatchSize":{"shape":"CapacitySizeConfig"}
+      }
+    },
     "RollingUpdatePolicy":{
       "type":"structure",
       "required":[
@@ -22475,6 +22535,14 @@
         "Scheduled",
         "Stopped"
       ]
+    },
+    "ScheduledUpdateConfig":{
+      "type":"structure",
+      "required":["ScheduleExpression"],
+      "members":{
+        "ScheduleExpression":{"shape":"CronScheduleExpression"},
+        "DeploymentConfig":{"shape":"DeploymentConfiguration"}
+      }
     },
     "SchedulerConfig":{
       "type":"structure",
@@ -25264,11 +25332,26 @@
         "ClusterSchedulerConfigVersion":{"shape":"Integer"}
       }
     },
+    "UpdateClusterSoftwareInstanceGroupSpecification":{
+      "type":"structure",
+      "required":["InstanceGroupName"],
+      "members":{
+        "InstanceGroupName":{"shape":"ClusterInstanceGroupName"}
+      }
+    },
+    "UpdateClusterSoftwareInstanceGroups":{
+      "type":"list",
+      "member":{"shape":"UpdateClusterSoftwareInstanceGroupSpecification"},
+      "max":100,
+      "min":1
+    },
     "UpdateClusterSoftwareRequest":{
       "type":"structure",
       "required":["ClusterName"],
       "members":{
-        "ClusterName":{"shape":"ClusterNameOrArn"}
+        "ClusterName":{"shape":"ClusterNameOrArn"},
+        "InstanceGroups":{"shape":"UpdateClusterSoftwareInstanceGroups"},
+        "DeploymentConfig":{"shape":"DeploymentConfiguration"}
       }
     },
     "UpdateClusterSoftwareResponse":{
@@ -26218,6 +26301,11 @@
       "min":1
     },
     "WaitIntervalInSeconds":{
+      "type":"integer",
+      "max":3600,
+      "min":0
+    },
+    "WaitTimeIntervalInSeconds":{
       "type":"integer",
       "max":3600,
       "min":0

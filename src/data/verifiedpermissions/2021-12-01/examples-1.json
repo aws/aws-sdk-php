@@ -1022,6 +1022,22 @@
         "title": "ListPolicyTemplates"
       }
     ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a"
+        },
+        "output": {
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "description": "The following example lists all the tags for the resource named in the API call.",
+        "id": "example-1",
+        "title": "ListTagsForResource"
+      }
+    ],
     "PutSchema": [
       {
         "input": {
@@ -1041,6 +1057,38 @@
         "description": "The following example creates a new schema, or updates an existing schema, in the specified policy store. Note that the schema text is shown line wrapped for readability. You should submit the entire schema text as a single line of text.\n\nNote\nThe JSON in the parameters of this operation are strings that can contain embedded quotation marks (\") within the outermost quotation mark pair. This requires that you stringify the JSON object by preceding all embedded quotation marks with a backslash character ( \\\" ) and combining all lines into a single text line with no line breaks.\n\nExample strings might be displayed wrapped across multiple lines here for readability, but the operation requires the parameters be submitted as single line strings.",
         "id": "example-1",
         "title": "PutSchema"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a",
+          "tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "output": {
+        },
+        "description": "The following example tags the resource.",
+        "id": "example-1",
+        "title": "TagResource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "C7v5xMplfFH3i3e4Jrzb1a",
+          "tagKeys": [
+            "key1",
+            "key2"
+          ]
+        },
+        "output": {
+        },
+        "description": "The following example removes the listed tags from the resource.",
+        "id": "example-1",
+        "title": "UntagResource"
       }
     ],
     "UpdateIdentitySource": [

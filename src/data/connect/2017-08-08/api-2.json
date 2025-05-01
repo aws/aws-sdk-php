@@ -4770,7 +4770,12 @@
         "AgentPauseDurationInSeconds":{"shape":"AgentPauseDurationInSeconds"},
         "HierarchyGroups":{"shape":"HierarchyGroups"},
         "DeviceInfo":{"shape":"DeviceInfo"},
-        "Capabilities":{"shape":"ParticipantCapabilities"}
+        "Capabilities":{"shape":"ParticipantCapabilities"},
+        "AfterContactWorkDuration":{"shape":"Duration"},
+        "AfterContactWorkStartTimestamp":{"shape":"timestamp"},
+        "AfterContactWorkEndTimestamp":{"shape":"timestamp"},
+        "AgentInitiatedHoldDuration":{"shape":"Duration"},
+        "StateTransitions":{"shape":"StateTransitions"}
       }
     },
     "AgentLastName":{
@@ -5021,8 +5026,7 @@
     },
     "AssignContactCategoryActionDefinition":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssignSlaActionDefinition":{
       "type":"structure",
@@ -5115,8 +5119,7 @@
     },
     "AssociateDefaultVocabularyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateFlowRequest":{
       "type":"structure",
@@ -5139,8 +5142,7 @@
     },
     "AssociateFlowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateInstanceStorageConfigRequest":{
       "type":"structure",
@@ -5310,8 +5312,7 @@
     },
     "AssociateTrafficDistributionGroupUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateUserProficienciesRequest":{
       "type":"structure",
@@ -5946,8 +5947,7 @@
     },
     "CompleteAttachedFileUploadResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Concurrency":{
       "type":"integer",
@@ -6027,7 +6027,12 @@
         "QualityMetrics":{"shape":"QualityMetrics"},
         "DisconnectDetails":{"shape":"DisconnectDetails"},
         "AdditionalEmailRecipients":{"shape":"AdditionalEmailRecipients"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Recordings":{"shape":"Recordings"},
+        "DisconnectReason":{"shape":"String"},
+        "ContactEvaluations":{"shape":"ContactEvaluations"},
+        "ContactDetails":{"shape":"ContactDetails"},
+        "Attributes":{"shape":"Attributes"}
       }
     },
     "ContactAnalysis":{
@@ -6061,6 +6066,40 @@
       "member":{"shape":"ContactDataRequest"},
       "max":25,
       "min":1
+    },
+    "ContactDetailDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ContactDetailName":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ContactDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ContactDetailName"},
+        "Description":{"shape":"ContactDetailDescription"}
+      }
+    },
+    "ContactEvaluation":{
+      "type":"structure",
+      "members":{
+        "FormId":{"shape":"FormId"},
+        "EvaluationArn":{"shape":"EvaluationArn"},
+        "Status":{"shape":"Status"},
+        "StartTimestamp":{"shape":"timestamp"},
+        "EndTimestamp":{"shape":"timestamp"},
+        "DeleteTimestamp":{"shape":"timestamp"},
+        "ExportLocation":{"shape":"ExportLocation"}
+      }
+    },
+    "ContactEvaluations":{
+      "type":"map",
+      "key":{"shape":"EvaluationId"},
+      "value":{"shape":"ContactEvaluation"}
     },
     "ContactFilter":{
       "type":"structure",
@@ -7566,8 +7605,7 @@
     },
     "DeleteAttachedFileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactEvaluationRequest":{
       "type":"structure",
@@ -7609,8 +7647,7 @@
     },
     "DeleteContactFlowModuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactFlowRequest":{
       "type":"structure",
@@ -7633,8 +7670,7 @@
     },
     "DeleteContactFlowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactFlowVersionRequest":{
       "type":"structure",
@@ -7663,8 +7699,7 @@
     },
     "DeleteContactFlowVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailAddressRequest":{
       "type":"structure",
@@ -7687,8 +7722,7 @@
     },
     "DeleteEmailAddressResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEvaluationFormRequest":{
       "type":"structure",
@@ -7860,8 +7894,7 @@
     },
     "DeletePushNotificationRegistrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteQueueRequest":{
       "type":"structure",
@@ -7979,8 +8012,7 @@
     },
     "DeleteTaskTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrafficDistributionGroupRequest":{
       "type":"structure",
@@ -7995,8 +8027,7 @@
     },
     "DeleteTrafficDistributionGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUseCaseRequest":{
       "type":"structure",
@@ -8082,8 +8113,7 @@
     },
     "DeleteViewResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteViewVersionRequest":{
       "type":"structure",
@@ -8112,8 +8142,7 @@
     },
     "DeleteViewVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVocabularyRequest":{
       "type":"structure",
@@ -8993,8 +9022,7 @@
     },
     "DisassociateFlowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateInstanceStorageConfigRequest":{
       "type":"structure",
@@ -9196,8 +9224,7 @@
     },
     "DisassociateTrafficDistributionGroupUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateUserProficienciesRequest":{
       "type":"structure",
@@ -9256,8 +9283,7 @@
     },
     "DismissUserContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisplayName":{
       "type":"string",
@@ -9294,6 +9320,10 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "Duration":{
+      "type":"integer",
+      "min":0
     },
     "DurationInSeconds":{"type":"integer"},
     "EffectiveHoursOfOperationList":{
@@ -9450,8 +9480,7 @@
     },
     "EmptyFieldValue":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EncryptionConfig":{
       "type":"structure",
@@ -9470,8 +9499,7 @@
     },
     "EndAssociatedTasksActionDefinition":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Endpoint":{
       "type":"structure",
@@ -9586,6 +9614,7 @@
       "value":{"shape":"EvaluationAnswerOutput"},
       "max":100
     },
+    "EvaluationArn":{"type":"string"},
     "EvaluationForm":{
       "type":"structure",
       "required":[
@@ -9934,6 +9963,7 @@
       "type":"list",
       "member":{"shape":"EvaluationFormVersionSummary"}
     },
+    "EvaluationId":{"type":"string"},
     "EvaluationMetadata":{
       "type":"structure",
       "required":[
@@ -10055,6 +10085,7 @@
       }
     },
     "ExpiryDurationInMinutes":{"type":"integer"},
+    "ExportLocation":{"type":"string"},
     "Expression":{
       "type":"structure",
       "members":{
@@ -10222,6 +10253,12 @@
       "max":64,
       "min":1,
       "pattern":"^[a-zA-Z0-9]{64}$"
+    },
+    "FormId":{"type":"string"},
+    "FragmentNumber":{
+      "type":"string",
+      "max":128,
+      "min":0
     },
     "FunctionArn":{
       "type":"string",
@@ -13188,6 +13225,13 @@
       }
     },
     "MediaRegion":{"type":"string"},
+    "MediaStreamType":{
+      "type":"string",
+      "enum":[
+        "AUDIO",
+        "VIDEO"
+      ]
+    },
     "Meeting":{
       "type":"structure",
       "members":{
@@ -13608,6 +13652,15 @@
         "SUPERVISOR"
       ]
     },
+    "ParticipantState":{
+      "type":"string",
+      "enum":[
+        "INITIAL",
+        "CONNECTED",
+        "DISCONNECTED",
+        "MISSED"
+      ]
+    },
     "ParticipantTimerAction":{
       "type":"string",
       "enum":["Unset"]
@@ -13663,6 +13716,16 @@
         "Expiry":{"shape":"ISO8601Datetime"}
       }
     },
+    "ParticipantType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "MANAGER",
+        "AGENT",
+        "CUSTOMER",
+        "THIRDPARTY"
+      ]
+    },
     "Password":{
       "type":"string",
       "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{8,64}$/",
@@ -13682,8 +13745,7 @@
     },
     "PauseContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Percentage":{
       "type":"integer",
@@ -14293,8 +14355,7 @@
     },
     "PutUserStatusResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QualityMetrics":{
       "type":"structure",
@@ -14856,6 +14917,38 @@
       "type":"list",
       "member":{"shape":"RealtimeContactAnalysisSegment"}
     },
+    "RecordingDeletionReason":{"type":"string"},
+    "RecordingInfo":{
+      "type":"structure",
+      "members":{
+        "StorageType":{"shape":"StorageType"},
+        "Location":{"shape":"RecordingLocation"},
+        "MediaStreamType":{"shape":"MediaStreamType"},
+        "ParticipantType":{"shape":"ParticipantType"},
+        "FragmentStartNumber":{"shape":"FragmentNumber"},
+        "FragmentStopNumber":{"shape":"FragmentNumber"},
+        "StartTimestamp":{"shape":"timestamp"},
+        "StopTimestamp":{"shape":"timestamp"},
+        "Status":{"shape":"RecordingStatus"},
+        "DeletionReason":{"shape":"RecordingDeletionReason"}
+      }
+    },
+    "RecordingLocation":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RecordingStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "DELETED"
+      ]
+    },
+    "Recordings":{
+      "type":"list",
+      "member":{"shape":"RecordingInfo"}
+    },
     "Reference":{
       "type":"structure",
       "required":["Type"],
@@ -15134,8 +15227,7 @@
     },
     "ResumeContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ResumeContactRequest":{
       "type":"structure",
@@ -15151,8 +15243,7 @@
     },
     "ResumeContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RoutingCriteria":{
       "type":"structure",
@@ -16218,8 +16309,7 @@
     },
     "SendOutboundEmailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -16492,8 +16582,7 @@
     },
     "StartContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartContactStreamingRequest":{
       "type":"structure",
@@ -16664,8 +16753,7 @@
     },
     "StartScreenSharingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartTaskContactRequest":{
       "type":"structure",
@@ -16729,12 +16817,32 @@
         "ParticipantToken":{"shape":"ParticipantToken"}
       }
     },
+    "StateTransition":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"ParticipantState"},
+        "StateStartTimestamp":{"shape":"timestamp"},
+        "StateEndTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "StateTransitions":{
+      "type":"list",
+      "member":{"shape":"StateTransition"}
+    },
     "Statistic":{
       "type":"string",
       "enum":[
         "SUM",
         "MAX",
         "AVG"
+      ]
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "IN_PROGRESS",
+        "DELETED"
       ]
     },
     "Step":{
@@ -16765,8 +16873,7 @@
     },
     "StopContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopContactRequest":{
       "type":"structure",
@@ -16782,8 +16889,7 @@
     },
     "StopContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopContactStreamingRequest":{
       "type":"structure",
@@ -16800,8 +16906,7 @@
     },
     "StopContactStreamingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StorageType":{
       "type":"string",
@@ -16926,8 +17031,7 @@
     },
     "SuspendContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagAndConditionList":{
       "type":"list",
@@ -16955,8 +17059,7 @@
     },
     "TagContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagKey":{
       "type":"string",
@@ -17460,8 +17563,7 @@
     },
     "UntagContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -17563,8 +17665,7 @@
     },
     "UpdateContactAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactEvaluationRequest":{
       "type":"structure",
@@ -17621,8 +17722,7 @@
     },
     "UpdateContactFlowContentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowMetadataRequest":{
       "type":"structure",
@@ -17648,8 +17748,7 @@
     },
     "UpdateContactFlowMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowModuleContentRequest":{
       "type":"structure",
@@ -17674,8 +17773,7 @@
     },
     "UpdateContactFlowModuleContentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowModuleMetadataRequest":{
       "type":"structure",
@@ -17701,8 +17799,7 @@
     },
     "UpdateContactFlowModuleMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowNameRequest":{
       "type":"structure",
@@ -17727,8 +17824,7 @@
     },
     "UpdateContactFlowNameResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactRequest":{
       "type":"structure",
@@ -17759,8 +17855,7 @@
     },
     "UpdateContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactRoutingDataRequest":{
       "type":"structure",
@@ -17786,8 +17881,7 @@
     },
     "UpdateContactRoutingDataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactScheduleRequest":{
       "type":"structure",
@@ -17804,8 +17898,7 @@
     },
     "UpdateContactScheduleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEmailAddressMetadataRequest":{
       "type":"structure",
@@ -18014,8 +18107,7 @@
     },
     "UpdateParticipantAuthenticationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateParticipantRoleConfigChannelInfo":{
       "type":"structure",
@@ -18047,8 +18139,7 @@
     },
     "UpdateParticipantRoleConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePhoneNumberMetadataRequest":{
       "type":"structure",
@@ -18533,8 +18624,7 @@
     },
     "UpdateTrafficDistributionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateUserHierarchyGroupNameRequest":{
       "type":"structure",
@@ -18749,8 +18839,7 @@
     },
     "UpdateViewMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UploadUrlMetadata":{
       "type":"structure",

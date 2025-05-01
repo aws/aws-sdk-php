@@ -34,7 +34,7 @@
     "CreateHub": "<p>Create a hub.</p>",
     "CreateHubContentReference": "<p>Create a hub content reference in order to add a model in the JumpStart public hub to a private hub.</p>",
     "CreateHumanTaskUi": "<p>Defines the settings you will use for the human review workflow user interface. Reviewers will see a three-panel interface with an instruction area, the item to review, and an input area.</p>",
-    "CreateHyperParameterTuningJob": "<p>Starts a hyperparameter tuning job. A hyperparameter tuning job finds the best version of a model by running many training jobs on your dataset using the algorithm you choose and values for hyperparameters within ranges that you specify. It then chooses the hyperparameter values that result in a model that performs the best, as measured by an objective metric that you choose.</p> <p>A hyperparameter tuning job automatically creates Amazon SageMaker experiments, trials, and trial components for each training job that it runs. You can view these entities in Amazon SageMaker Studio. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/experiments-view-compare.html#experiments-view\">View Experiments, Trials, and Trial Components</a>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets or tokens in any hyperparameter field. If the use of security-sensitive credentials are detected, SageMaker will reject your training job request and return an exception error.</p> </important>",
+    "CreateHyperParameterTuningJob": "<p>Starts a hyperparameter tuning job. A hyperparameter tuning job finds the best version of a model by running many training jobs on your dataset using the algorithm you choose and values for hyperparameters within ranges that you specify. It then chooses the hyperparameter values that result in a model that performs the best, as measured by an objective metric that you choose.</p> <p>A hyperparameter tuning job automatically creates Amazon SageMaker experiments, trials, and trial components for each training job that it runs. You can view these entities in Amazon SageMaker Studio. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/experiments-view-compare.html#experiments-view\">View Experiments, Trials, and Trial Components</a>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by any security-sensitive information included in the request hyperparameter variable or plain text fields..</p> </important>",
     "CreateImage": "<p>Creates a custom SageMaker AI image. A SageMaker AI image is a set of image versions. Each image version represents a container image stored in Amazon ECR. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/studio-byoi.html\">Bring your own SageMaker AI image</a>.</p>",
     "CreateImageVersion": "<p>Creates a version of the SageMaker AI image specified by <code>ImageName</code>. The version represents the Amazon ECR container image specified by <code>BaseImage</code>.</p>",
     "CreateInferenceComponent": "<p>Creates an inference component, which is a SageMaker AI hosting object that you can use to deploy a model to an endpoint. In the inference component settings, you specify the model, the endpoint, and how the model utilizes the resources that the endpoint hosts. You can optimize resource utilization by tailoring how the required CPU cores, accelerators, and memory are allocated. You can deploy multiple inference components to an endpoint, where each inference component contains one model and the resource utilization needs for that individual model. After you deploy an inference component, you can directly invoke the associated model when you use the InvokeEndpoint API action.</p>",
@@ -64,7 +64,7 @@
     "CreateProject": "<p>Creates a machine learning (ML) project that can contain one or more templates that set up an ML pipeline from training to deploying an approved model.</p>",
     "CreateSpace": "<p>Creates a private space or a space used for real time collaboration in a domain.</p>",
     "CreateStudioLifecycleConfig": "<p>Creates a new Amazon SageMaker AI Studio Lifecycle Configuration.</p>",
-    "CreateTrainingJob": "<p>Starts a model training job. After training completes, SageMaker saves the resulting model artifacts to an Amazon S3 location that you specify. </p> <p>If you choose to host your model using SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts in a machine learning service other than SageMaker, provided that you know how to use them for inference. </p> <p>In the request body, you provide the following: </p> <ul> <li> <p> <code>AlgorithmSpecification</code> - Identifies the training algorithm to use. </p> </li> <li> <p> <code>HyperParameters</code> - Specify these algorithm-specific parameters to enable the estimation of model parameters during training. Hyperparameters can be tuned to optimize this learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets or tokens in any hyperparameter field. If the use of security-sensitive credentials are detected, SageMaker will reject your training job request and return an exception error.</p> </important> </li> <li> <p> <code>InputDataConfig</code> - Describes the input required by the training job and the Amazon S3, EFS, or FSx location where it is stored.</p> </li> <li> <p> <code>OutputDataConfig</code> - Identifies the Amazon S3 bucket where you want SageMaker to save the results of model training. </p> </li> <li> <p> <code>ResourceConfig</code> - Identifies the resources, ML compute instances, and ML storage volumes to deploy for model training. In distributed training, you specify more than one instance. </p> </li> <li> <p> <code>EnableManagedSpotTraining</code> - Optimize the cost of training machine learning models by up to 80% by using Amazon EC2 Spot instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>. </p> </li> <li> <p> <code>RoleArn</code> - The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during model training. You must grant this role the necessary permissions so that SageMaker can successfully complete model training. </p> </li> <li> <p> <code>StoppingCondition</code> - To help cap training costs, use <code>MaxRuntimeInSeconds</code> to set a time limit for training. Use <code>MaxWaitTimeInSeconds</code> to specify how long a managed spot training job has to complete. </p> </li> <li> <p> <code>Environment</code> - The environment variables to set in the Docker container.</p> </li> <li> <p> <code>RetryStrategy</code> - The number of times to retry the job when the job fails due to an <code>InternalServerError</code>.</p> </li> </ul> <p> For more information about SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works.html\">How It Works</a>. </p>",
+    "CreateTrainingJob": "<p>Starts a model training job. After training completes, SageMaker saves the resulting model artifacts to an Amazon S3 location that you specify. </p> <p>If you choose to host your model using SageMaker hosting services, you can use the resulting model artifacts as part of the model. You can also use the artifacts in a machine learning service other than SageMaker, provided that you know how to use them for inference. </p> <p>In the request body, you provide the following: </p> <ul> <li> <p> <code>AlgorithmSpecification</code> - Identifies the training algorithm to use. </p> </li> <li> <p> <code>HyperParameters</code> - Specify these algorithm-specific parameters to enable the estimation of model parameters during training. Hyperparameters can be tuned to optimize this learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request hyperparameter variable or plain text fields.</p> </important> </li> <li> <p> <code>InputDataConfig</code> - Describes the input required by the training job and the Amazon S3, EFS, or FSx location where it is stored.</p> </li> <li> <p> <code>OutputDataConfig</code> - Identifies the Amazon S3 bucket where you want SageMaker to save the results of model training. </p> </li> <li> <p> <code>ResourceConfig</code> - Identifies the resources, ML compute instances, and ML storage volumes to deploy for model training. In distributed training, you specify more than one instance. </p> </li> <li> <p> <code>EnableManagedSpotTraining</code> - Optimize the cost of training machine learning models by up to 80% by using Amazon EC2 Spot instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>. </p> </li> <li> <p> <code>RoleArn</code> - The Amazon Resource Name (ARN) that SageMaker assumes to perform tasks on your behalf during model training. You must grant this role the necessary permissions so that SageMaker can successfully complete model training. </p> </li> <li> <p> <code>StoppingCondition</code> - To help cap training costs, use <code>MaxRuntimeInSeconds</code> to set a time limit for training. Use <code>MaxWaitTimeInSeconds</code> to specify how long a managed spot training job has to complete. </p> </li> <li> <p> <code>Environment</code> - The environment variables to set in the Docker container.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any environment fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request environment variable or plain text fields.</p> </important> </li> <li> <p> <code>RetryStrategy</code> - The number of times to retry the job when the job fails due to an <code>InternalServerError</code>.</p> </li> </ul> <p> For more information about SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works.html\">How It Works</a>. </p>",
     "CreateTrainingPlan": "<p>Creates a new training plan in SageMaker to reserve compute capacity.</p> <p>Amazon SageMaker Training Plan is a capability within SageMaker that allows customers to reserve and manage GPU capacity for large-scale AI model training. It provides a way to secure predictable access to computational resources within specific timelines and budgets, without the need to manage underlying infrastructure. </p> <p> <b>How it works</b> </p> <p>Plans can be created for specific resources such as SageMaker Training Jobs or SageMaker HyperPod clusters, automatically provisioning resources, setting up infrastructure, executing workloads, and handling infrastructure failures.</p> <p> <b>Plan creation workflow</b> </p> <ul> <li> <p>Users search for available plan offerings based on their requirements (e.g., instance type, count, start time, duration) using the <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_SearchTrainingPlanOfferings.html\">SearchTrainingPlanOfferings</a> </code> API operation.</p> </li> <li> <p>They create a plan that best matches their needs using the ID of the plan offering they want to use. </p> </li> <li> <p>After successful upfront payment, the plan's status becomes <code>Scheduled</code>. </p> </li> <li> <p>The plan can be used to:</p> <ul> <li> <p>Queue training jobs.</p> </li> <li> <p>Allocate to an instance group of a SageMaker HyperPod cluster. </p> </li> </ul> </li> <li> <p>When the plan start date arrives, it becomes <code>Active</code>. Based on available reserved capacity:</p> <ul> <li> <p>Training jobs are launched.</p> </li> <li> <p>Instance groups are provisioned.</p> </li> </ul> </li> </ul> <p> <b>Plan composition</b> </p> <p>A plan can consist of one or more Reserved Capacities, each defined by a specific instance type, quantity, Availability Zone, duration, and start and end times. For more information about Reserved Capacity, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ReservedCapacitySummary.html\">ReservedCapacitySummary</a> </code>.</p>",
     "CreateTransformJob": "<p>Starts a transform job. A transform job uses a trained model to get inferences on a dataset and saves these results to an Amazon S3 location that you specify.</p> <p>To perform batch transformations, you create a transform job and use the data that you have readily available.</p> <p>In the request body, you provide the following:</p> <ul> <li> <p> <code>TransformJobName</code> - Identifies the transform job. The name must be unique within an Amazon Web Services Region in an Amazon Web Services account.</p> </li> <li> <p> <code>ModelName</code> - Identifies the model to use. <code>ModelName</code> must be the name of an existing Amazon SageMaker model in the same Amazon Web Services Region and Amazon Web Services account. For information on creating a model, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateModel.html\">CreateModel</a>.</p> </li> <li> <p> <code>TransformInput</code> - Describes the dataset to be transformed and the Amazon S3 location where it is stored.</p> </li> <li> <p> <code>TransformOutput</code> - Identifies the Amazon S3 location where you want Amazon SageMaker to save the results from the transform job.</p> </li> <li> <p> <code>TransformResources</code> - Identifies the ML compute instances and AMI image versions for the transform job.</p> </li> </ul> <p>For more information about how batch transformation works, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform.html\">Batch Transform</a>.</p>",
     "CreateTrial": "<p>Creates an SageMaker <i>trial</i>. A trial is a set of steps called <i>trial components</i> that produce a machine learning model. A trial is part of a single SageMaker <i>experiment</i>.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to a trial and then use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search for the tags.</p> <p>To get a list of all your trials, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_ListTrials.html\">ListTrials</a> API. To view a trial's properties, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeTrial.html\">DescribeTrial</a> API. To create a trial component, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrialComponent.html\">CreateTrialComponent</a> API.</p>",
@@ -530,6 +530,12 @@
         "AlarmList$member": null
       }
     },
+    "AlarmDetails": {
+      "base": "<p>The details of the alarm to monitor during the AMI update.</p>",
+      "refs": {
+        "AutoRollbackAlarms$member": null
+      }
+    },
     "AlarmList": {
       "base": null,
       "refs": {
@@ -539,7 +545,8 @@
     "AlarmName": {
       "base": null,
       "refs": {
-        "Alarm$AlarmName": "<p>The name of a CloudWatch alarm in your account.</p>"
+        "Alarm$AlarmName": "<p>The name of a CloudWatch alarm in your account.</p>",
+        "AlarmDetails$AlarmName": "<p>The name of the alarm.</p>"
       }
     },
     "AlgorithmArn": {
@@ -1451,6 +1458,12 @@
         "ParameterRanges$AutoParameters": "<p>A list containing hyperparameter names and example values to be used by Autotune to determine optimal ranges for your tuning job.</p>"
       }
     },
+    "AutoRollbackAlarms": {
+      "base": null,
+      "refs": {
+        "DeploymentConfiguration$AutoRollbackConfiguration": "<p>An array that contains the alarms that SageMaker monitors to know whether to roll back the AMI update.</p>"
+      }
+    },
     "AutoRollbackConfig": {
       "base": "<p>Automatic rollback configuration for handling endpoint deployment failures and recovery.</p>",
       "refs": {
@@ -1795,6 +1808,13 @@
         "RollingUpdatePolicy$RollbackMaximumBatchSize": "<p>Batch size for rollback to the old endpoint fleet. Each rolling step to provision capacity and turn on traffic on the old endpoint fleet, and terminate capacity on the new endpoint fleet. If this field is absent, the default value will be set to 100% of total capacity which means to bring up the whole capacity of the old fleet at once during rollback.</p>",
         "TrafficRoutingConfig$CanarySize": "<p>Batch size for the first step to turn on traffic on the new endpoint fleet. <code>Value</code> must be less than or equal to 50% of the variant's total instance count.</p>",
         "TrafficRoutingConfig$LinearStepSize": "<p>Batch size for each step to turn on traffic on the new endpoint fleet. <code>Value</code> must be 10-50% of the variant's total instance count.</p>"
+      }
+    },
+    "CapacitySizeConfig": {
+      "base": "<p>The configuration of the size measurements of the AMI update. Using this configuration, you can specify whether SageMaker should update your instance group by an amount or percentage of instances.</p>",
+      "refs": {
+        "RollingDeploymentPolicy$MaximumBatchSize": "<p>The maximum amount of instances in the cluster that SageMaker can update at a time.</p>",
+        "RollingDeploymentPolicy$RollbackMaximumBatchSize": "<p>The maximum amount of instances in the cluster that SageMaker can roll back at a time.</p>"
       }
     },
     "CapacitySizeType": {
@@ -2215,7 +2235,8 @@
         "ClusterInstanceGroupsToDelete$member": null,
         "ClusterNodeDetails$InstanceGroupName": "<p>The instance group name in which the instance is.</p>",
         "ClusterNodeSummary$InstanceGroupName": "<p>The name of the instance group in which the instance is.</p>",
-        "ListClusterNodesRequest$InstanceGroupNameContains": "<p>A filter that returns the instance groups whose name contain a specified string.</p>"
+        "ListClusterNodesRequest$InstanceGroupNameContains": "<p>A filter that returns the instance groups whose name contain a specified string.</p>",
+        "UpdateClusterSoftwareInstanceGroupSpecification$InstanceGroupName": "<p>The name of the instance group to update.</p>"
       }
     },
     "ClusterInstanceGroupSpecification": {
@@ -3533,6 +3554,12 @@
         "UserProfileDetails$CreationTime": "<p>The creation time.</p>"
       }
     },
+    "CronScheduleExpression": {
+      "base": null,
+      "refs": {
+        "ScheduledUpdateConfig$ScheduleExpression": "<p>A cron expression that specifies the schedule that SageMaker follows when updating the AMI.</p>"
+      }
+    },
     "CrossAccountFilterOption": {
       "base": null,
       "refs": {
@@ -4154,6 +4181,13 @@
         "CreateEndpointInput$DeploymentConfig": null,
         "DescribeEndpointOutput$LastDeploymentConfig": "<p>The most recent deployment configuration for the endpoint.</p>",
         "UpdateEndpointInput$DeploymentConfig": "<p>The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations.</p>"
+      }
+    },
+    "DeploymentConfiguration": {
+      "base": "<p>The configuration to use when updating the AMI versions.</p>",
+      "refs": {
+        "ScheduledUpdateConfig$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>",
+        "UpdateClusterSoftwareRequest$DeploymentConfig": "<p>The configuration to use when updating the AMI versions.</p>"
       }
     },
     "DeploymentRecommendation": {
@@ -7370,7 +7404,7 @@
     "HyperParameters": {
       "base": null,
       "refs": {
-        "CreateTrainingJobRequest$HyperParameters": "<p>Algorithm-specific parameters that influence the quality of the model. You set hyperparameters before you start the learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <p>You can specify a maximum of 100 hyperparameters. Each hyperparameter is a key-value pair. Each key and value is limited to 256 characters, as specified by the <code>Length Constraint</code>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets or tokens in any hyperparameter field. If the use of security-sensitive credentials are detected, SageMaker will reject your training job request and return an exception error.</p> </important>",
+        "CreateTrainingJobRequest$HyperParameters": "<p>Algorithm-specific parameters that influence the quality of the model. You set hyperparameters before you start the learning process. For a list of hyperparameters for each training algorithm provided by SageMaker, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p> <p>You can specify a maximum of 100 hyperparameters. Each hyperparameter is a key-value pair. Each key and value is limited to 256 characters, as specified by the <code>Length Constraint</code>. </p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by any security-sensitive information included in the request hyperparameter variable or plain text fields.</p> </important>",
         "DescribeTrainingJobResponse$HyperParameters": "<p>Algorithm-specific parameters. </p>",
         "HyperParameterTrainingJobDefinition$StaticHyperParameters": "<p>Specifies the values of hyperparameters that do not change for the tuning job.</p>",
         "HyperParameterTrainingJobSummary$TunedHyperParameters": "<p>A list of the hyperparameters for which you specified ranges to search.</p>",
@@ -11377,6 +11411,18 @@
         "SearchResponse$NextToken": "<p>If the result of the previous <code>Search</code> request was truncated, the response includes a NextToken. To retrieve the next set of results, use the token in the next request.</p>"
       }
     },
+    "NodeUnavailabilityType": {
+      "base": null,
+      "refs": {
+        "CapacitySizeConfig$Type": "<p>Specifies whether SageMaker should process the update by amount or percentage of instances.</p>"
+      }
+    },
+    "NodeUnavailabilityValue": {
+      "base": null,
+      "refs": {
+        "CapacitySizeConfig$Value": "<p>Specifies the amount or percentage of instances SageMaker updates at a time.</p>"
+      }
+    },
     "NonEmptyString256": {
       "base": null,
       "refs": {
@@ -12491,7 +12537,7 @@
     "ProcessingEnvironmentMap": {
       "base": null,
       "refs": {
-        "CreateProcessingJobRequest$Environment": "<p>The environment variables to set in the Docker container. Up to 100 key and values entries in the map are supported.</p>",
+        "CreateProcessingJobRequest$Environment": "<p>The environment variables to set in the Docker container. Up to 100 key and values entries in the map are supported.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any environment fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request environment variable or plain text fields.</p> </important>",
         "DescribeProcessingJobResponse$Environment": "<p>The environment variables set in the Docker container.</p>",
         "ProcessingJob$Environment": "<p>Sets the environment variables in the Docker container.</p>"
       }
@@ -13896,6 +13942,12 @@
         "UserSettings$ExecutionRole": "<p>The execution role for the user.</p> <p>SageMaker applies this setting only to private spaces that the user creates in the domain. SageMaker doesn't apply this setting to shared spaces.</p>"
       }
     },
+    "RollingDeploymentPolicy": {
+      "base": "<p>The configurations that SageMaker uses when updating the AMI versions.</p>",
+      "refs": {
+        "DeploymentConfiguration$RollingUpdatePolicy": "<p>The policy that SageMaker uses when updating the AMI versions of the cluster. </p>"
+      }
+    },
     "RollingUpdatePolicy": {
       "base": "<p>Specifies a rolling deployment strategy for updating a SageMaker endpoint.</p>",
       "refs": {
@@ -14176,6 +14228,13 @@
         "ModelDashboardMonitoringSchedule$MonitoringScheduleStatus": "<p>The status of the monitoring schedule.</p>",
         "MonitoringSchedule$MonitoringScheduleStatus": "<p>The status of the monitoring schedule. This can be one of the following values.</p> <ul> <li> <p> <code>PENDING</code> - The schedule is pending being created.</p> </li> <li> <p> <code>FAILED</code> - The schedule failed.</p> </li> <li> <p> <code>SCHEDULED</code> - The schedule was successfully created.</p> </li> <li> <p> <code>STOPPED</code> - The schedule was stopped.</p> </li> </ul>",
         "MonitoringScheduleSummary$MonitoringScheduleStatus": "<p>The status of the monitoring schedule.</p>"
+      }
+    },
+    "ScheduledUpdateConfig": {
+      "base": "<p>The configuration object of the schedule that SageMaker follows when updating the AMI.</p>",
+      "refs": {
+        "ClusterInstanceGroupDetails$ScheduledUpdateConfig": "<p>The configuration object of the schedule that SageMaker follows when updating the AMI.</p>",
+        "ClusterInstanceGroupSpecification$ScheduledUpdateConfig": "<p>The configuration object of the schedule that SageMaker uses to update the AMI.</p>"
       }
     },
     "SchedulerConfig": {
@@ -15437,11 +15496,11 @@
         "CreateOptimizationJobRequest$Tags": "<p>A list of key-value pairs associated with the optimization job. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
         "CreatePartnerAppRequest$Tags": "<p>Each tag consists of a key and an optional value. Tag keys must be unique per resource.</p>",
         "CreatePipelineRequest$Tags": "<p>A list of tags to apply to the created pipeline.</p>",
-        "CreateProcessingJobRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
+        "CreateProcessingJobRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-whatURL\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any tags. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request tag variable or plain text fields.</p> </important>",
         "CreateProjectInput$Tags": "<p>An array of key-value pairs that you want to use to organize and track your Amazon Web Services resource costs. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a> in the <i>Amazon Web Services General Reference Guide</i>.</p>",
         "CreateSpaceRequest$Tags": "<p>Tags to associated with the space. Each tag consists of a key and an optional value. Tag keys must be unique for each resource. Tags are searchable using the <code>Search</code> API.</p>",
         "CreateStudioLifecycleConfigRequest$Tags": "<p>Tags to be associated with the Lifecycle Configuration. Each tag consists of a key and an optional value. Tag keys must be unique per resource. Tags are searchable using the Search API. </p>",
-        "CreateTrainingJobRequest$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
+        "CreateTrainingJobRequest$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any tags. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by any security-sensitive information included in the request tag variable or plain text fields.</p> </important>",
         "CreateTrainingPlanRequest$Tags": "<p>An array of key-value pairs to apply to this training plan.</p>",
         "CreateTransformJobRequest$Tags": "<p>(Optional) An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html#allocation-what\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>.</p>",
         "CreateTrialComponentRequest$Tags": "<p>A list of tags to associate with the component. You can use <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API to search on the tags.</p>",
@@ -15756,7 +15815,9 @@
         "AutoMLJobSummary$EndTime": "<p>The end time of an AutoML job.</p>",
         "AutoMLJobSummary$LastModifiedTime": "<p>When the AutoML job was last modified.</p>",
         "ClusterNodeDetails$LaunchTime": "<p>The time when the instance is launched.</p>",
+        "ClusterNodeDetails$LastSoftwareUpdateTime": "<p>The time of when the cluster was last updated.</p>",
         "ClusterNodeSummary$LaunchTime": "<p>The time when the instance is launched.</p>",
+        "ClusterNodeSummary$LastSoftwareUpdateTime": "<p>The time of when SageMaker last updated the software of the instances in the cluster.</p>",
         "ClusterSchedulerConfigSummary$CreationTime": "<p>Creation time of the cluster policy.</p>",
         "ClusterSchedulerConfigSummary$LastModifiedTime": "<p>Last modified time of the cluster policy.</p>",
         "ClusterSummary$CreationTime": "<p>The time when the SageMaker HyperPod cluster is created.</p>",
@@ -16337,8 +16398,8 @@
     "TrainingEnvironmentMap": {
       "base": null,
       "refs": {
-        "CreateTrainingJobRequest$Environment": "<p>The environment variables to set in the Docker container.</p>",
-        "DescribeTrainingJobResponse$Environment": "<p>The environment variables to set in the Docker container.</p>",
+        "CreateTrainingJobRequest$Environment": "<p>The environment variables to set in the Docker container.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any environment fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request environment variable or plain text fields.</p> </important>",
+        "DescribeTrainingJobResponse$Environment": "<p>The environment variables to set in the Docker container.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any environment fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request environment variable or plain text fields.</p> </important>",
         "TrainingJob$Environment": "<p>The environment variables to set in the Docker container.</p>"
       }
     },
@@ -17117,6 +17178,18 @@
       "base": null,
       "refs": {}
     },
+    "UpdateClusterSoftwareInstanceGroupSpecification": {
+      "base": "<p>The configuration that describes specifications of the instance groups to update.</p>",
+      "refs": {
+        "UpdateClusterSoftwareInstanceGroups$member": null
+      }
+    },
+    "UpdateClusterSoftwareInstanceGroups": {
+      "base": null,
+      "refs": {
+        "UpdateClusterSoftwareRequest$InstanceGroups": "<p>The array of instance groups for which to update AMI versions.</p>"
+      }
+    },
     "UpdateClusterSoftwareRequest": {
       "base": null,
       "refs": {}
@@ -17750,6 +17823,12 @@
         "InferenceComponentRollingUpdatePolicy$WaitIntervalInSeconds": "<p>The length of the baking period, during which SageMaker AI monitors alarms for each batch on the new fleet.</p>",
         "RollingUpdatePolicy$WaitIntervalInSeconds": "<p>The length of the baking period, during which SageMaker monitors alarms for each batch on the new fleet.</p>",
         "TrafficRoutingConfig$WaitIntervalInSeconds": "<p>The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet.</p>"
+      }
+    },
+    "WaitTimeIntervalInSeconds": {
+      "base": null,
+      "refs": {
+        "DeploymentConfiguration$WaitIntervalInSeconds": "<p>The duration in seconds that SageMaker waits before updating more instances in the cluster.</p>"
       }
     },
     "WarmPoolResourceStatus": {

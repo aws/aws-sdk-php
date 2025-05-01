@@ -781,7 +781,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z]+:([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:[a-zA-Z0-9-_/:.]+"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:[a-z]+:((eusc-)?[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1})?:(\\d{12})?:[a-zA-Z0-9-_/:.]+"
     },
     "BadRequestDetails":{
       "type":"structure",
@@ -1319,7 +1319,8 @@
       "key":{"shape":"DynamicParameterKey"},
       "value":{"shape":"StringWithLengthBetween1And2048"},
       "max":10,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "Environment":{
       "type":"structure",
@@ -2038,7 +2039,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov):(iam)::\\d{12}:role[/].*)$"
+      "pattern":"^((arn):(aws|aws-cn|aws-iso|aws-iso-[a-z]{1}|aws-us-gov|aws-eusc):(iam)::\\d{12}:role[/].*)$"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",

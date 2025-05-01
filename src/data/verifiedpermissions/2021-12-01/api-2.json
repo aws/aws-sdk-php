@@ -383,6 +383,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTagsForResourceInput"},
+      "output":{"shape":"ListTagsForResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "PutSchema":{
       "name":"PutSchema",
       "http":{
@@ -401,6 +417,39 @@
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TagResourceInput"},
+      "output":{"shape":"TagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UntagResourceInput"},
+      "output":{"shape":"UntagResourceOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "UpdateIdentitySource":{
       "name":"UpdateIdentitySource",
@@ -513,6 +562,11 @@
       "min":1,
       "pattern":"Action$|^.+::Action",
       "sensitive":true
+    },
+    "AmazonResourceName":{
+      "type":"string",
+      "max":2048,
+      "min":1
     },
     "AttributeValue":{
       "type":"structure",
@@ -742,6 +796,13 @@
       "type":"string",
       "sensitive":true
     },
+    "CedarVersion":{
+      "type":"string",
+      "enum":[
+        "CEDAR_2",
+        "CEDAR_4"
+      ]
+    },
     "Claim":{
       "type":"string",
       "min":1,
@@ -943,7 +1004,8 @@
         },
         "validationSettings":{"shape":"ValidationSettings"},
         "description":{"shape":"PolicyStoreDescription"},
-        "deletionProtection":{"shape":"DeletionProtection"}
+        "deletionProtection":{"shape":"DeletionProtection"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreatePolicyStoreOutput":{
@@ -1239,7 +1301,8 @@
       "type":"structure",
       "required":["policyStoreId"],
       "members":{
-        "policyStoreId":{"shape":"PolicyStoreId"}
+        "policyStoreId":{"shape":"PolicyStoreId"},
+        "tags":{"shape":"Boolean"}
       }
     },
     "GetPolicyStoreOutput":{
@@ -1258,7 +1321,9 @@
         "createdDate":{"shape":"TimestampFormat"},
         "lastUpdatedDate":{"shape":"TimestampFormat"},
         "description":{"shape":"PolicyStoreDescription"},
-        "deletionProtection":{"shape":"DeletionProtection"}
+        "deletionProtection":{"shape":"DeletionProtection"},
+        "cedarVersion":{"shape":"CedarVersion"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "GetPolicyTemplateInput":{
@@ -1581,6 +1646,19 @@
         "policyTemplates":{"shape":"PolicyTemplatesList"}
       }
     },
+    "ListTagsForResourceInput":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "ListTagsForResourceOutput":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "LongAttribute":{
       "type":"long",
       "box":true,
@@ -1843,7 +1921,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyStoreItem":{
       "type":"structure",
@@ -1874,7 +1952,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[a-zA-Z0-9-]*"
+      "pattern":"[a-zA-Z0-9-/_]*"
     },
     "PolicyTemplateItem":{
       "type":"structure",
@@ -2050,6 +2128,45 @@
       "type":"string",
       "sensitive":true
     },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":1
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "TagResourceOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "TemplateLinkedPolicyDefinition":{
       "type":"structure",
       "required":["policyTemplateId"],
@@ -2098,6 +2215,30 @@
       "min":1,
       "pattern":"[A-Za-z0-9-_=]+.[A-Za-z0-9-_=]+.[A-Za-z0-9-_=]+",
       "sensitive":true
+    },
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "resourceName":{"shape":"AmazonResourceName"}
+      },
+      "exception":true
+    },
+    "UntagResourceInput":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "tagKeys":{"shape":"TagKeyList"}
+      }
+    },
+    "UntagResourceOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateCognitoGroupConfiguration":{
       "type":"structure",
