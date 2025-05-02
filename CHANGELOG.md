@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.3 - 2025-05-02
 
 * `Aws\BedrockDataAutomation` - Added support for Custom output and blueprints for AUDIO data types.
 * `Aws\DirectoryService` - Doc only update - fixed typos.
