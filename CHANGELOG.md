@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.4 - 2025-05-05
 
 * `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment
 * `Aws\MediaConvert` - This release adds an optional sidecar per-frame video quality metrics report and an ALL_PCM option for audio selectors. It also changes the data type for Probe API response fields related to video and audio bitrate from integer to double.
