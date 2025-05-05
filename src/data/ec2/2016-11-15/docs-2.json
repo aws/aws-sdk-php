@@ -95,6 +95,8 @@
     "CreateLocalGatewayRouteTable": "<p> Creates a local gateway route table. </p>",
     "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociation": "<p> Creates a local gateway route table virtual interface group association. </p>",
     "CreateLocalGatewayRouteTableVpcAssociation": "<p>Associates the specified VPC with the specified local gateway route table.</p>",
+    "CreateLocalGatewayVirtualInterface": "<p>Create a virtual interface for a local gateway. </p>",
+    "CreateLocalGatewayVirtualInterfaceGroup": "<p>Create a local gateway virtual interface group.</p>",
     "CreateManagedPrefixList": "<p>Creates a managed prefix list. You can specify entries for the prefix list. Each entry consists of a CIDR block and an optional description.</p>",
     "CreateNatGateway": "<p>Creates a NAT gateway in the specified subnet. This action creates a network interface in the specified subnet with a private IP address from the IP address range of the subnet. You can create either a public NAT gateway or a private NAT gateway.</p> <p>With a public NAT gateway, internet-bound traffic from a private subnet can be routed to the NAT gateway, so that instances in a private subnet can connect to the internet.</p> <p>With a private NAT gateway, private communication is routed across VPCs and on-premises networks through a transit gateway or virtual private gateway. Common use cases include running large workloads behind a small pool of allowlisted IPv4 addresses, preserving private IPv4 addresses, and communicating between overlapping networks.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html\">NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p> <important> <p>When you create a public NAT gateway and assign it an EIP or secondary EIPs, the network border group of the EIPs must match the network border group of the Availability Zone (AZ) that the public NAT gateway is in. If it's not the same, the NAT gateway will fail to launch. You can see the network border group for the subnet's AZ by viewing the details of the subnet. Similarly, you can view the network border group of an EIP by viewing the details of the EIP address. For more information about network border groups and EIPs, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithEIPs.html\">Allocate an Elastic IP address</a> in the <i>Amazon VPC User Guide</i>. </p> </important>",
     "CreateNetworkAcl": "<p>Creates a network ACL in a VPC. Network ACLs provide an optional layer of security (in addition to security groups) for the instances in your VPC.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html\">Network ACLs</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -176,6 +178,8 @@
     "DeleteLocalGatewayRouteTable": "<p> Deletes a local gateway route table. </p>",
     "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociation": "<p> Deletes a local gateway route table virtual interface group association. </p>",
     "DeleteLocalGatewayRouteTableVpcAssociation": "<p>Deletes the specified association between a VPC and local gateway route table.</p>",
+    "DeleteLocalGatewayVirtualInterface": "<p>Deletes the specified local gateway virtual interface.</p>",
+    "DeleteLocalGatewayVirtualInterfaceGroup": "<p>Delete the specified local gateway interface group.</p>",
     "DeleteManagedPrefixList": "<p>Deletes the specified managed prefix list. You must first remove all references to the prefix list in your resources.</p>",
     "DeleteNatGateway": "<p>Deletes the specified NAT gateway. Deleting a public NAT gateway disassociates its Elastic IP address, but does not release the address from your account. Deleting a NAT gateway does not delete any NAT gateway routes in your route tables.</p>",
     "DeleteNetworkAcl": "<p>Deletes the specified network ACL. You can't delete the ACL if it's associated with any subnets. You can't delete the default network ACL.</p>",
@@ -328,6 +332,7 @@
     "DescribeNetworkInterfaceAttribute": "<p>Describes a network interface attribute. You can specify only one attribute at a time.</p>",
     "DescribeNetworkInterfacePermissions": "<p>Describes the permissions for your network interfaces. </p>",
     "DescribeNetworkInterfaces": "<p>Describes the specified network interfaces or all your network interfaces.</p> <p>If you have a large number of network interfaces, the operation fails unless you use pagination or one of the following filters: <code>group-id</code>, <code>mac-address</code>, <code>private-dns-name</code>, <code>private-ip-address</code>, <code>subnet-id</code>, or <code>vpc-id</code>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important>",
+    "DescribeOutpostLags": "<p>Describes the Outposts link aggregation groups (LAGs).</p>",
     "DescribePlacementGroups": "<p>Describes the specified placement groups or all of your placement groups.</p> <note> <p>To describe a specific placement group that is <i>shared</i> with your account, you must specify the ID of the placement group using the <code>GroupId</code> parameter. Specifying the name of a <i>shared</i> placement group using the <code>GroupNames</code> parameter will result in an error.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribePrefixLists": "<p>Describes available Amazon Web Services services in a prefix list format, which includes the prefix list name and prefix list ID of the service and the IP address range for the service.</p> <p>We recommend that you use <a>DescribeManagedPrefixLists</a> instead.</p>",
     "DescribePrincipalIdFormat": "<p>Describes the ID format settings for the root user and all IAM roles and IAM users that have explicitly specified a longer ID (17-character ID) preference. </p> <p>By default, all IAM roles and IAM users default to the same ID settings as the root user, unless they explicitly override the settings. This request is useful for identifying those IAM users and IAM roles that have overridden the default ID settings.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p>",
@@ -348,6 +353,7 @@
     "DescribeSecurityGroupRules": "<p>Describes one or more of your security group rules.</p>",
     "DescribeSecurityGroupVpcAssociations": "<p>Describes security group VPC associations made with <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AssociateSecurityGroupVpc.html\">AssociateSecurityGroupVpc</a>.</p>",
     "DescribeSecurityGroups": "<p>Describes the specified security groups or all of your security groups.</p>",
+    "DescribeServiceLinkVirtualInterfaces": "<p>Describes the Outpost service link virtual interfaces.</p>",
     "DescribeSnapshotAttribute": "<p>Describes the specified attribute of the specified snapshot. You can specify only one attribute at a time.</p> <p>For more information about EBS snapshots, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html\">Amazon EBS snapshots</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "DescribeSnapshotTierStatus": "<p>Describes the storage tier status of one or more Amazon EBS snapshots.</p>",
     "DescribeSnapshots": "<p>Describes the specified EBS snapshots available to you or all of the EBS snapshots available to you.</p> <p>The snapshots available to you include public snapshots, private snapshots that you own, and private snapshots owned by other Amazon Web Services accounts for which you have explicit create volume permissions.</p> <p>The create volume permissions fall into the following categories:</p> <ul> <li> <p> <i>public</i>: The owner of the snapshot granted create volume permissions for the snapshot to the <code>all</code> group. All Amazon Web Services accounts have create volume permissions for these snapshots.</p> </li> <li> <p> <i>explicit</i>: The owner of the snapshot granted create volume permissions to a specific Amazon Web Services account.</p> </li> <li> <p> <i>implicit</i>: An Amazon Web Services account has implicit create volume permissions for all snapshots it owns.</p> </li> </ul> <p>The list of snapshots returned can be filtered by specifying snapshot IDs, snapshot owners, or Amazon Web Services accounts with create volume permissions. If no options are specified, Amazon EC2 returns all snapshots for which you have create volume permissions.</p> <p>If you specify one or more snapshot IDs, only snapshots that have the specified IDs are returned. If you specify an invalid snapshot ID, an error is returned. If you specify a snapshot ID for which you do not have access, it is not included in the returned results.</p> <p>If you specify one or more snapshot owners using the <code>OwnerIds</code> option, only snapshots from the specified owners and for which you have access are returned. The results can include the Amazon Web Services account IDs of the specified owners, <code>amazon</code> for snapshots owned by Amazon, or <code>self</code> for snapshots that you own.</p> <p>If you specify a list of restorable users, only snapshots with create snapshot permissions for those users are returned. You can specify Amazon Web Services account IDs (if you own the snapshots), <code>self</code> for snapshots for which you own or have explicit permissions, or <code>all</code> for public snapshots.</p> <p>If you are describing a long list of snapshots, we recommend that you paginate the output to make the list more manageable. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p> <p>To get the state of fast snapshot restores for a snapshot, use <a>DescribeFastSnapshotRestores</a>.</p> <p>For more information about EBS snapshots, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-snapshots.html\">Amazon EBS snapshots</a> in the <i>Amazon EBS User Guide</i>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important>",
@@ -2237,7 +2243,7 @@
         "ClientRouteEnforcementOptions$Enforced": "<p>Enable or disable Client Route Enforcement. The state can either be <code>true</code> (enabled) or <code>false</code> (disabled). The default is <code>false</code>.</p> <p>Valid values: <code>true | false</code> </p> <p>Default value: <code>false</code> </p>",
         "ClientRouteEnforcementResponseOptions$Enforced": "<p>Status of the client route enforcement feature, indicating whether Client Route Enforcement is <code>true</code> (enabled) or <code>false</code> (disabled).</p> <p>Valid values: <code>true | false</code> </p> <p>Default value: <code>false</code> </p>",
         "ClientVpnEndpoint$SplitTunnel": "<p>Indicates whether split-tunnel is enabled in the Client VPN endpoint.</p> <p>For information about split-tunnel VPN endpoints, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html\">Split-Tunnel Client VPN endpoint</a> in the <i>Client VPN Administrator Guide</i>.</p>",
-        "ClientVpnEndpoint$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>true</code>.</p>",
+        "ClientVpnEndpoint$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>false</code>.</p>",
         "CloudWatchLogOptions$LogEnabled": "<p>Status of VPN tunnel logging feature. Default value is <code>False</code>.</p> <p>Valid values: <code>True</code> | <code>False</code> </p>",
         "CloudWatchLogOptionsSpecification$LogEnabled": "<p>Enable or disable VPN tunnel logging feature. Default value is <code>False</code>.</p> <p>Valid values: <code>True</code> | <code>False</code> </p>",
         "ConfirmProductInstanceRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2258,7 +2264,7 @@
         "CreateCarrierGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateClientVpnEndpointRequest$SplitTunnel": "<p>Indicates whether split-tunnel is enabled on the Client VPN endpoint.</p> <p>By default, split-tunnel on a VPN endpoint is disabled.</p> <p>For information about split-tunnel VPN endpoints, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html\">Split-tunnel Client VPN endpoint</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "CreateClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
-        "CreateClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>SessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>true</code>.</p>",
+        "CreateClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>SessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>false</code>.</p>",
         "CreateClientVpnRouteRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCoipCidrRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCoipPoolRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2295,6 +2301,8 @@
         "CreateLocalGatewayRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateLocalGatewayRouteTableVpcAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateLocalGatewayVirtualInterfaceGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateManagedPrefixListRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNatGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNetworkAclEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2395,6 +2403,8 @@
         "DeleteLocalGatewayRouteTableRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteLocalGatewayRouteTableVpcAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteLocalGatewayVirtualInterfaceGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteLocalGatewayVirtualInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteManagedPrefixListRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteNatGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteNetworkAclEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2552,6 +2562,7 @@
         "DescribeNetworkInterfaceAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeNetworkInterfaceAttributeResult$AssociatePublicIpAddress": "<p>Indicates whether to assign a public IPv4 address to a network interface. This option can be enabled for any network interface but will only apply to the primary network interface (eth0).</p>",
         "DescribeNetworkInterfacesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeOutpostLagsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribePlacementGroupsRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribePrefixListsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribePrincipalIdFormatRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2571,6 +2582,7 @@
         "DescribeSecurityGroupRulesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSecurityGroupVpcAssociationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSecurityGroupsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeServiceLinkVirtualInterfacesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSnapshotAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSnapshotTierStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeSnapshotsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2884,7 +2896,7 @@
         "ModifyCapacityReservationResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "ModifyClientVpnEndpointRequest$SplitTunnel": "<p>Indicates whether the VPN is split-tunnel.</p> <p>For information about split-tunnel VPN endpoints, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html\">Split-tunnel Client VPN endpoint</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "ModifyClientVpnEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
-        "ModifyClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>true</code>.</p>",
+        "ModifyClientVpnEndpointRequest$DisconnectOnSessionTimeout": "<p>Indicates whether the client VPN session is disconnected after the maximum timeout specified in <code>sessionTimeoutHours</code> is reached. If <code>true</code>, users are prompted to reconnect client VPN. If <code>false</code>, client VPN attempts to reconnect automatically. The default value is <code>false</code>.</p>",
         "ModifyClientVpnEndpointResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "ModifyDefaultCreditSpecificationRequest$DryRun": "<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "ModifyEbsDefaultKmsKeyIdRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -4855,6 +4867,26 @@
       "refs": {
       }
     },
+    "CreateLocalGatewayVirtualInterfaceGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateManagedPrefixListRequest": {
       "base": null,
       "refs": {
@@ -6096,6 +6128,26 @@
       }
     },
     "DeleteLocalGatewayRouteTableVpcAssociationResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceResult": {
       "base": null,
       "refs": {
       }
@@ -7847,6 +7899,16 @@
       "refs": {
       }
     },
+    "DescribeOutpostLagsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeOutpostLagsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribePlacementGroupsRequest": {
       "base": null,
       "refs": {
@@ -8085,6 +8147,16 @@
       }
     },
     "DescribeSecurityGroupsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeServiceLinkVirtualInterfacesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeServiceLinkVirtualInterfacesResult": {
       "base": null,
       "refs": {
       }
@@ -10442,6 +10514,7 @@
         "DescribeNetworkInsightsPathsRequest$Filters": "<p>The filters. The following are the possible values:</p> <ul> <li> <p>destination - The ID of the resource.</p> </li> <li> <p>filter-at-source.source-address - The source IPv4 address at the source.</p> </li> <li> <p>filter-at-source.source-port-range - The source port range at the source.</p> </li> <li> <p>filter-at-source.destination-address - The destination IPv4 address at the source.</p> </li> <li> <p>filter-at-source.destination-port-range - The destination port range at the source.</p> </li> <li> <p>filter-at-destination.source-address - The source IPv4 address at the destination.</p> </li> <li> <p>filter-at-destination.source-port-range - The source port range at the destination.</p> </li> <li> <p>filter-at-destination.destination-address - The destination IPv4 address at the destination.</p> </li> <li> <p>filter-at-destination.destination-port-range - The destination port range at the destination.</p> </li> <li> <p>protocol - The protocol.</p> </li> <li> <p>source - The ID of the resource.</p> </li> </ul>",
         "DescribeNetworkInterfacePermissionsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>network-interface-permission.network-interface-permission-id</code> - The ID of the permission.</p> </li> <li> <p> <code>network-interface-permission.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface-permission.aws-account-id</code> - The Amazon Web Services account ID.</p> </li> <li> <p> <code>network-interface-permission.aws-service</code> - The Amazon Web Services service.</p> </li> <li> <p> <code>network-interface-permission.permission</code> - The type of permission (<code>INSTANCE-ATTACH</code> | <code>EIP-ASSOCIATE</code>).</p> </li> </ul>",
         "DescribeNetworkInterfacesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>association.allocation-id</code> - The allocation ID returned when you allocated the Elastic IP address (IPv4) for your network interface.</p> </li> <li> <p> <code>association.association-id</code> - The association ID returned when the network interface was associated with an IPv4 address.</p> </li> <li> <p> <code>addresses.association.owner-id</code> - The owner ID of the addresses associated with the network interface.</p> </li> <li> <p> <code>addresses.association.public-ip</code> - The association ID returned when the network interface was associated with the Elastic IP address (IPv4).</p> </li> <li> <p> <code>addresses.primary</code> - Whether the private IPv4 address is the primary IP address associated with the network interface. </p> </li> <li> <p> <code>addresses.private-ip-address</code> - The private IPv4 addresses associated with the network interface.</p> </li> <li> <p> <code>association.ip-owner-id</code> - The owner of the Elastic IP address (IPv4) associated with the network interface.</p> </li> <li> <p> <code>association.public-ip</code> - The address of the Elastic IP address (IPv4) bound to the network interface.</p> </li> <li> <p> <code>association.public-dns-name</code> - The public DNS name for the network interface (IPv4).</p> </li> <li> <p> <code>attachment.attach-time</code> - The time that the network interface was attached to an instance.</p> </li> <li> <p> <code>attachment.attachment-id</code> - The ID of the interface attachment.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Indicates whether the attachment is deleted when an instance is terminated.</p> </li> <li> <p> <code>attachment.device-index</code> - The device index to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.instance-owner-id</code> - The owner ID of the instance to which the network interface is attached.</p> </li> <li> <p> <code>attachment.status</code> - The status of the attachment (<code>attaching</code> | <code>attached</code> | <code>detaching</code> | <code>detached</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the network interface.</p> </li> <li> <p> <code>description</code> - The description of the network interface.</p> </li> <li> <p> <code>group-id</code> - The ID of a security group associated with the network interface.</p> </li> <li> <p> <code>ipv6-addresses.ipv6-address</code> - An IPv6 address associated with the network interface.</p> </li> <li> <p> <code>interface-type</code> - The type of network interface (<code>api_gateway_managed</code> | <code>aws_codestar_connections_managed</code> | <code>branch</code> | <code>ec2_instance_connect_endpoint</code> | <code>efa</code> | <code>efa-only</code> | <code>efs</code> | <code>gateway_load_balancer</code> | <code>gateway_load_balancer_endpoint</code> | <code>global_accelerator_managed</code> | <code>interface</code> | <code>iot_rules_managed</code> | <code>lambda</code> | <code>load_balancer</code> | <code>nat_gateway</code> | <code>network_load_balancer</code> | <code>quicksight</code> | <code>transit_gateway</code> | <code>trunk</code> | <code>vpc_endpoint</code>).</p> </li> <li> <p> <code>mac-address</code> - The MAC address of the network interface.</p> </li> <li> <p> <code>network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed network interface.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the network interface. Only valid for managed network interfaces, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the network interface owner.</p> </li> <li> <p> <code>private-dns-name</code> - The private DNS name of the network interface (IPv4).</p> </li> <li> <p> <code>private-ip-address</code> - The private IPv4 address or addresses of the network interface.</p> </li> <li> <p> <code>requester-id</code> - The alias or Amazon Web Services account ID of the principal or service that created the network interface.</p> </li> <li> <p> <code>requester-managed</code> - Indicates whether the network interface is being managed by an Amazon Web Services service (for example, Amazon Web Services Management Console, Auto Scaling, and so on).</p> </li> <li> <p> <code>source-dest-check</code> - Indicates whether the network interface performs source/destination checking. A value of <code>true</code> means checking is enabled, and <code>false</code> means checking is disabled. The value must be <code>false</code> for the network interface to perform network address translation (NAT) in your VPC. </p> </li> <li> <p> <code>status</code> - The status of the network interface. If the network interface is not attached to an instance, the status is <code>available</code>; if a network interface is attached to an instance the status is <code>in-use</code>.</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet for the network interface.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network interface.</p> </li> </ul>",
+        "DescribeOutpostLagsRequest$Filters": "<p>The filters to use for narrowing down the request. The following filters are supported:</p> <ul> <li> <p> <code>service-link-virtual-interface-id</code> - The ID of the service link virtual interface.</p> </li> <li> <p> <code>service-link-virtual-interface-arn</code> - The ARN of the service link virtual interface.</p> </li> <li> <p> <code>outpost-id</code> - The Outpost ID.</p> </li> <li> <p> <code>outpost-arn</code> - The Outpost ARN.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the service link virtual interface.</p> </li> <li> <p> <code>vlan</code> - The ID of the address pool.</p> </li> <li> <p> <code>local-address</code> - The local address.</p> </li> <li> <p> <code>peer-address</code> - The peer address.</p> </li> <li> <p> <code>peer-bgp-asn</code> - The peer BGP ASN.</p> </li> <li> <p> <code>outpost-lag-id</code> - The Outpost LAG ID.</p> </li> <li> <p> <code>configuration-state</code> - The configuration state of the service link virtual interface.</p> </li> </ul>",
         "DescribePlacementGroupsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>group-name</code> - The name of the placement group.</p> </li> <li> <p> <code>group-arn</code> - The Amazon Resource Name (ARN) of the placement group.</p> </li> <li> <p> <code>spread-level</code> - The spread level for the placement group (<code>host</code> | <code>rack</code>). </p> </li> <li> <p> <code>state</code> - The state of the placement group (<code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>strategy</code> - The strategy of the placement group (<code>cluster</code> | <code>spread</code> | <code>partition</code>).</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources that have a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribePrefixListsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>prefix-list-id</code>: The ID of a prefix list.</p> </li> <li> <p> <code>prefix-list-name</code>: The name of a prefix list.</p> </li> </ul>",
         "DescribePublicIpv4PoolsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
@@ -10460,6 +10533,7 @@
         "DescribeSecurityGroupRulesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>group-id</code> - The ID of the security group.</p> </li> <li> <p> <code>security-group-rule-id</code> - The ID of the security group rule.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> </ul>",
         "DescribeSecurityGroupVpcAssociationsRequest$Filters": "<p>Security group VPC association filters.</p> <ul> <li> <p> <code>group-id</code>: The security group ID.</p> </li> <li> <p> <code>vpc-id</code>: The ID of the associated VPC.</p> </li> <li> <p> <code>vpc-owner-id</code>: The account ID of the VPC owner.</p> </li> <li> <p> <code>state</code>: The state of the association.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code>: The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code>: The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeSecurityGroupsRequest$Filters": "<p>The filters. If using multiple filters for rules, the results include security groups for which any combination of rules - not necessarily a single rule - match all filters.</p> <ul> <li> <p> <code>description</code> - The description of the security group.</p> </li> <li> <p> <code>egress.ip-permission.cidr</code> - An IPv4 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.from-port</code> - For an outbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>egress.ip-permission.group-id</code> - The ID of a security group that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.group-name</code> - The name of a security group that is referenced in an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an outbound security group rule.</p> </li> <li> <p> <code>egress.ip-permission.prefix-list-id</code> - The ID of a prefix list to which a security group rule allows outbound access.</p> </li> <li> <p> <code>egress.ip-permission.protocol</code> - The IP protocol for an outbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code>, a protocol number, or -1 for all protocols).</p> </li> <li> <p> <code>egress.ip-permission.to-port</code> - For an outbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>egress.ip-permission.user-id</code> - The ID of an Amazon Web Services account that has been referenced in an outbound security group rule.</p> </li> <li> <p> <code>group-id</code> - The ID of the security group. </p> </li> <li> <p> <code>group-name</code> - The name of the security group.</p> </li> <li> <p> <code>ip-permission.cidr</code> - An IPv4 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.from-port</code> - For an inbound rule, the start of port range for the TCP and UDP protocols, or an ICMP type number.</p> </li> <li> <p> <code>ip-permission.group-id</code> - The ID of a security group that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.group-name</code> - The name of a security group that is referenced in an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.ipv6-cidr</code> - An IPv6 CIDR block for an inbound security group rule.</p> </li> <li> <p> <code>ip-permission.prefix-list-id</code> - The ID of a prefix list from which a security group rule allows inbound access.</p> </li> <li> <p> <code>ip-permission.protocol</code> - The IP protocol for an inbound security group rule (<code>tcp</code> | <code>udp</code> | <code>icmp</code>, a protocol number, or -1 for all protocols).</p> </li> <li> <p> <code>ip-permission.to-port</code> - For an inbound rule, the end of port range for the TCP and UDP protocols, or an ICMP code.</p> </li> <li> <p> <code>ip-permission.user-id</code> - The ID of an Amazon Web Services account that has been referenced in an inbound security group rule.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner of the security group.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC specified when the security group was created.</p> </li> </ul>",
+        "DescribeServiceLinkVirtualInterfacesRequest$Filters": "<p>The filters to use for narrowing down the request. The following filters are supported:</p> <ul> <li> <p> <code>outpost-lag-id</code> - The ID of the Outpost LAG.</p> </li> <li> <p> <code>outpost-arn</code> - The Outpost ARN.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the service link virtual interface.</p> </li> <li> <p> <code>state</code> - The state of the Outpost LAG.</p> </li> <li> <p> <code>vlan</code> - The ID of the address pool.</p> </li> <li> <p> <code>service-link-virtual-interface-id</code> - The ID of the service link virtual interface.</p> </li> <li> <p> <code>local-gateway-virtual-interface-id</code> - The ID of the local gateway virtual interface.</p> </li> </ul>",
         "DescribeSnapshotTierStatusRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>snapshot-id</code> - The snapshot ID.</p> </li> <li> <p> <code>volume-id</code> - The ID of the volume the snapshot is for.</p> </li> <li> <p> <code>last-tiering-operation</code> - The state of the last archive or restore action. (<code>archival-in-progress</code> | <code>archival-completed</code> | <code>archival-failed</code> | <code>permanent-restore-in-progress</code> | <code>permanent-restore-completed</code> | <code>permanent-restore-failed</code> | <code>temporary-restore-in-progress</code> | <code>temporary-restore-completed</code> | <code>temporary-restore-failed</code>)</p> </li> </ul>",
         "DescribeSnapshotsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>description</code> - A description of the snapshot.</p> </li> <li> <p> <code>encrypted</code> - Indicates whether the snapshot is encrypted (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>owner-alias</code> - The owner alias, from an Amazon-maintained list (<code>amazon</code>). This is not the user-configured Amazon Web Services account alias set using the IAM console. We recommend that you use the related parameter instead of this filter.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner. We recommend that you use the related parameter instead of this filter.</p> </li> <li> <p> <code>progress</code> - The progress of the snapshot, as a percentage (for example, 80%).</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot ID.</p> </li> <li> <p> <code>start-time</code> - The time stamp when the snapshot was initiated.</p> </li> <li> <p> <code>status</code> - The status of the snapshot (<code>pending</code> | <code>completed</code> | <code>error</code>).</p> </li> <li> <p> <code>storage-tier</code> - The storage tier of the snapshot (<code>archive</code> | <code>standard</code>).</p> </li> <li> <p> <code>transfer-type</code> - The type of operation used to create the snapshot (<code>time-based</code> | <code>standard</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>volume-id</code> - The ID of the volume the snapshot is for.</p> </li> <li> <p> <code>volume-size</code> - The size of the volume, in GiB.</p> </li> </ul>",
         "DescribeSpotInstanceRequestsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone-group</code> - The Availability Zone group.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the Spot Instance request was created.</p> </li> <li> <p> <code>fault-code</code> - The fault code related to the request.</p> </li> <li> <p> <code>fault-message</code> - The fault message related to the request.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance that fulfilled the request.</p> </li> <li> <p> <code>launch-group</code> - The Spot Instance launch group.</p> </li> <li> <p> <code>launch.block-device-mapping.delete-on-termination</code> - Indicates whether the EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>launch.block-device-mapping.device-name</code> - The device name for the volume in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>launch.block-device-mapping.snapshot-id</code> - The ID of the snapshot for the EBS volume.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-size</code> - The size of the EBS volume, in GiB.</p> </li> <li> <p> <code>launch.block-device-mapping.volume-type</code> - The type of EBS volume: <code>gp2</code> or <code>gp3</code> for General Purpose SSD, <code>io1</code> or <code>io2</code> for Provisioned IOPS SSD, <code>st1</code> for Throughput Optimized HDD, <code>sc1</code> for Cold HDD, or <code>standard</code> for Magnetic.</p> </li> <li> <p> <code>launch.group-id</code> - The ID of the security group for the instance.</p> </li> <li> <p> <code>launch.group-name</code> - The name of the security group for the instance.</p> </li> <li> <p> <code>launch.image-id</code> - The ID of the AMI.</p> </li> <li> <p> <code>launch.instance-type</code> - The type of instance (for example, <code>m3.medium</code>).</p> </li> <li> <p> <code>launch.kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>launch.key-name</code> - The name of the key pair the instance launched with.</p> </li> <li> <p> <code>launch.monitoring-enabled</code> - Whether detailed monitoring is enabled for the Spot Instance.</p> </li> <li> <p> <code>launch.ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>launched-availability-zone</code> - The Availability Zone in which the request is launched.</p> </li> <li> <p> <code>network-interface.addresses.primary</code> - Indicates whether the IP address is the primary private IP address.</p> </li> <li> <p> <code>network-interface.delete-on-termination</code> - Indicates whether the network interface is deleted when the instance is terminated.</p> </li> <li> <p> <code>network-interface.description</code> - A description of the network interface.</p> </li> <li> <p> <code>network-interface.device-index</code> - The index of the device for the network interface attachment on the instance.</p> </li> <li> <p> <code>network-interface.group-id</code> - The ID of the security group associated with the network interface.</p> </li> <li> <p> <code>network-interface.network-interface-id</code> - The ID of the network interface.</p> </li> <li> <p> <code>network-interface.private-ip-address</code> - The primary private IP address of the network interface.</p> </li> <li> <p> <code>network-interface.subnet-id</code> - The ID of the subnet for the instance.</p> </li> <li> <p> <code>product-description</code> - The product description associated with the instance (<code>Linux/UNIX</code> | <code>Windows</code>).</p> </li> <li> <p> <code>spot-instance-request-id</code> - The Spot Instance request ID.</p> </li> <li> <p> <code>spot-price</code> - The maximum hourly price for any Spot Instance launched to fulfill the request.</p> </li> <li> <p> <code>state</code> - The state of the Spot Instance request (<code>open</code> | <code>active</code> | <code>closed</code> | <code>cancelled</code> | <code>failed</code>). Spot request status information can help you track your Amazon EC2 Spot Instance requests. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-request-status.html\">Spot request status</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <code>status-code</code> - The short code describing the most recent evaluation of your Spot Instance request.</p> </li> <li> <p> <code>status-message</code> - The message explaining the status of the Spot Instance request.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>type</code> - The type of Spot Instance request (<code>one-time</code> | <code>persistent</code>).</p> </li> <li> <p> <code>valid-from</code> - The start date of the request.</p> </li> <li> <p> <code>valid-until</code> - The end date of the request.</p> </li> </ul>",
@@ -13289,6 +13363,9 @@
         "CreateClientVpnEndpointRequest$SessionTimeoutHours": "<p>The maximum VPN session duration time in hours.</p> <p>Valid values: <code>8 | 10 | 12 | 24</code> </p> <p>Default value: <code>24</code> </p>",
         "CreateCustomerGatewayRequest$BgpAsn": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Default: 65000</p> <p>Valid values: <code>1</code> to <code>2,147,483,647</code> </p>",
         "CreateFlowLogsRequest$MaxAggregationInterval": "<p>The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. The possible values are 60 seconds (1 minute) or 600 seconds (10 minutes). This parameter must be 60 seconds for transit gateway resource types.</p> <p>When a network interface is attached to a <a href=\"https://docs.aws.amazon.com/ec2/latest/instancetypes/ec2-nitro-instances.html\">Nitro-based instance</a>, the aggregation interval is always 60 seconds or less, regardless of the value that you specify.</p> <p>Default: 600</p>",
+        "CreateLocalGatewayVirtualInterfaceGroupRequest$LocalBgpAsn": "<p>The Autonomous System Number(ASN) for the local Border Gateway Protocol (BGP).</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$Vlan": "<p>The virtual local area network (VLAN) used for the local gateway virtual interface.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$PeerBgpAsn": "<p>The Autonomous System Number (ASN) of the Border Gateway Protocol (BGP) peer.</p>",
         "CreateManagedPrefixListRequest$MaxEntries": "<p>The maximum number of entries for the prefix list.</p>",
         "CreateNetworkAclEntryRequest$RuleNumber": "<p>The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number.</p> <p>Constraints: Positive integer from 1 to 32766. The range 32767 to 65535 is reserved for internal use.</p>",
         "CreateNetworkInterfaceRequest$Ipv4PrefixCount": "<p>The number of IPv4 prefixes that Amazon Web Services automatically assigns to the network interface.</p> <p>You can't specify a count of IPv4 prefixes if you've specified one of the following: specific IPv4 prefixes, specific private IPv4 addresses, or a count of private IPv4 addresses.</p>",
@@ -13438,6 +13515,7 @@
         "LocalGatewayVirtualInterface$Vlan": "<p>The ID of the VLAN.</p>",
         "LocalGatewayVirtualInterface$LocalBgpAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) of the local gateway.</p>",
         "LocalGatewayVirtualInterface$PeerBgpAsn": "<p>The peer BGP ASN.</p>",
+        "LocalGatewayVirtualInterfaceGroup$LocalBgpAsn": "<p>The Autonomous System Number(ASN) for the local Border Gateway Protocol (BGP).</p>",
         "ManagedPrefixList$MaxEntries": "<p>The maximum number of entries for the prefix list.</p>",
         "MemoryMiB$Min": "<p>The minimum amount of memory, in MiB. If this parameter is not specified, there is no minimum limit.</p>",
         "MemoryMiB$Max": "<p>The maximum amount of memory, in MiB. If this parameter is not specified, there is no maximum limit.</p>",
@@ -13544,6 +13622,7 @@
         "SecurityGroupRule$ToPort": "<p>If the protocol is TCP or UDP, this is the end of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP code or -1 (all ICMP codes). If the start port is -1 (all ICMP types), then the end port must be -1 (all ICMP codes).</p>",
         "SecurityGroupRuleRequest$FromPort": "<p>If the protocol is TCP or UDP, this is the start of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP type or -1 (all ICMP types).</p>",
         "SecurityGroupRuleRequest$ToPort": "<p>If the protocol is TCP or UDP, this is the end of the port range. If the protocol is ICMP or ICMPv6, this is the ICMP code or -1 (all ICMP codes). If the start port is -1 (all ICMP types), then the end port must be -1 (all ICMP codes).</p>",
+        "ServiceLinkVirtualInterface$Vlan": "<p>The virtual local area network for the service link virtual interface.</p>",
         "Snapshot$VolumeSize": "<p>The size of the volume, in GiB.</p>",
         "SnapshotInfo$VolumeSize": "<p>Size of the volume from which this snapshot was created.</p>",
         "SnapshotTierStatus$LastTieringProgress": "<p>The progress of the last archive or restore process, as a percentage.</p>",
@@ -15325,6 +15404,7 @@
       "base": null,
       "refs": {
         "CreateLocalGatewayRouteTableRequest$LocalGatewayId": "<p> The ID of the local gateway. </p>",
+        "CreateLocalGatewayVirtualInterfaceGroupRequest$LocalGatewayId": "<p>The ID of the local gateway.</p>",
         "CreateRouteRequest$LocalGatewayId": "<p>The ID of the local gateway.</p>",
         "LocalGateway$LocalGatewayId": "<p>The ID of the local gateway.</p>",
         "LocalGatewayIdSet$member": null,
@@ -15485,13 +15565,29 @@
     "LocalGatewayVirtualInterface": {
       "base": "<p>Describes a local gateway virtual interface.</p>",
       "refs": {
+        "CreateLocalGatewayVirtualInterfaceResult$LocalGatewayVirtualInterface": "<p>Information about the local gateway virtual interface.</p>",
+        "DeleteLocalGatewayVirtualInterfaceResult$LocalGatewayVirtualInterface": "<p>Information about the deleted local gateway virtual interface.</p>",
         "LocalGatewayVirtualInterfaceSet$member": null
+      }
+    },
+    "LocalGatewayVirtualInterfaceConfigurationState": {
+      "base": null,
+      "refs": {
+        "LocalGatewayVirtualInterface$ConfigurationState": "<p>The current state of the local gateway virtual interface.</p>"
       }
     },
     "LocalGatewayVirtualInterfaceGroup": {
       "base": "<p>Describes a local gateway virtual interface group.</p>",
       "refs": {
+        "CreateLocalGatewayVirtualInterfaceGroupResult$LocalGatewayVirtualInterfaceGroup": "<p>Information about the created local gateway virtual interface group.</p>",
+        "DeleteLocalGatewayVirtualInterfaceGroupResult$LocalGatewayVirtualInterfaceGroup": "<p>Information about the deleted local gateway virtual interface group.</p>",
         "LocalGatewayVirtualInterfaceGroupSet$member": null
+      }
+    },
+    "LocalGatewayVirtualInterfaceGroupConfigurationState": {
+      "base": null,
+      "refs": {
+        "LocalGatewayVirtualInterfaceGroup$ConfigurationState": "<p>The current state of the local gateway virtual interface group.</p>"
       }
     },
     "LocalGatewayVirtualInterfaceGroupId": {
@@ -15499,8 +15595,11 @@
       "refs": {
         "CreateLocalGatewayRouteRequest$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the virtual interface group.</p>",
         "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest$LocalGatewayVirtualInterfaceGroupId": "<p> The ID of the local gateway route table virtual interface group association. </p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the local gateway virtual interface group.</p>",
+        "DeleteLocalGatewayVirtualInterfaceGroupRequest$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the local gateway virtual interface group to delete.</p>",
         "LocalGatewayRoute$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the virtual interface group.</p>",
         "LocalGatewayRouteTableVirtualInterfaceGroupAssociation$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the virtual interface group.</p>",
+        "LocalGatewayVirtualInterface$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the local gateway virtual interface group.</p>",
         "LocalGatewayVirtualInterfaceGroup$LocalGatewayVirtualInterfaceGroupId": "<p>The ID of the virtual interface group.</p>",
         "LocalGatewayVirtualInterfaceGroupIdSet$member": null,
         "ModifyLocalGatewayRouteRequest$LocalGatewayVirtualInterfaceGroupId": "<p> The ID of the virtual interface group. </p>"
@@ -15521,6 +15620,7 @@
     "LocalGatewayVirtualInterfaceId": {
       "base": null,
       "refs": {
+        "DeleteLocalGatewayVirtualInterfaceRequest$LocalGatewayVirtualInterfaceId": "<p>The ID of the local virtual interface to delete.</p>",
         "LocalGatewayVirtualInterface$LocalGatewayVirtualInterfaceId": "<p>The ID of the virtual interface.</p>",
         "LocalGatewayVirtualInterfaceIdSet$member": null
       }
@@ -15529,7 +15629,8 @@
       "base": null,
       "refs": {
         "DescribeLocalGatewayVirtualInterfacesRequest$LocalGatewayVirtualInterfaceIds": "<p>The IDs of the virtual interfaces.</p>",
-        "LocalGatewayVirtualInterfaceGroup$LocalGatewayVirtualInterfaceIds": "<p>The IDs of the virtual interfaces.</p>"
+        "LocalGatewayVirtualInterfaceGroup$LocalGatewayVirtualInterfaceIds": "<p>The IDs of the virtual interfaces.</p>",
+        "OutpostLag$LocalGatewayVirtualInterfaceIds": "<p>The IDs of the local gateway virtual interfaces associated with the Outpost LAG.</p>"
       }
     },
     "LocalGatewayVirtualInterfaceSet": {
@@ -15618,6 +15719,8 @@
       "refs": {
         "CopyImageRequest$SnapshotCopyCompletionDurationMinutes": "<p>Specify a completion duration, in 15 minute increments, to initiate a time-based AMI copy. The specified completion duration applies to each of the snapshots associated with the AMI. Each snapshot associated with the AMI will be completed within the specified completion duration, regardless of their size.</p> <p>If you do not specify a value, the AMI copy operation is completed on a best-effort basis.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html\"> Time-based copies</a>.</p>",
         "CreateCustomerGatewayRequest$BgpAsnExtended": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Valid values: <code>2,147,483,648</code> to <code>4,294,967,295</code> </p>",
+        "CreateLocalGatewayVirtualInterfaceGroupRequest$LocalBgpAsnExtended": "<p>The extended 32-bit ASN for the local BGP configuration.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$PeerBgpAsnExtended": "<p>The extended 32-bit ASN of the BGP peer for use with larger ASN values.</p>",
         "CreateRouteServerRequest$AmazonSideAsn": "<p>The private Autonomous System Number (ASN) for the Amazon side of the BGP session. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
         "CreateVpnGatewayRequest$AmazonSideAsn": "<p>A private Autonomous System Number (ASN) for the Amazon side of a BGP session. If you're using a 16-bit ASN, it must be in the 64512 to 65534 range. If you're using a 32-bit ASN, it must be in the 4200000000 to 4294967294 range.</p> <p>Default: 64512</p>",
         "DeleteLaunchTemplateVersionsResponseErrorItem$VersionNumber": "<p>The version number of the launch template.</p>",
@@ -15633,6 +15736,8 @@
         "LaunchTemplate$DefaultVersionNumber": "<p>The version number of the default version of the launch template.</p>",
         "LaunchTemplate$LatestVersionNumber": "<p>The version number of the latest version of the launch template.</p>",
         "LaunchTemplateVersion$VersionNumber": "<p>The version number.</p>",
+        "LocalGatewayVirtualInterface$PeerBgpAsnExtended": "<p>The extended 32-bit ASN of the BGP peer for use with larger ASN values.</p>",
+        "LocalGatewayVirtualInterfaceGroup$LocalBgpAsnExtended": "<p>The extended 32-bit ASN for the local BGP configuration.</p>",
         "ManagedPrefixList$Version": "<p>The version of the prefix list.</p>",
         "ModifyManagedPrefixListRequest$CurrentVersion": "<p>The current version of the prefix list.</p>",
         "ModifyTransitGatewayOptions$AmazonSideAsn": "<p>A private Autonomous System Number (ASN) for the Amazon side of a BGP session. The range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASNs.</p> <p>The modify ASN operation is not allowed on a transit gateway if it has the following attachments:</p> <ul> <li> <p>Dynamic VPN</p> </li> <li> <p>Static VPN</p> </li> <li> <p>Direct Connect Gateway</p> </li> <li> <p>Connect</p> </li> </ul> <p>You must first delete all transit gateway attachments configured prior to modifying the ASN on the transit gateway.</p>",
@@ -15645,6 +15750,7 @@
         "RouteServer$AmazonSideAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
         "RouteServerBgpOptions$PeerAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
         "RouteServerBgpOptionsRequest$PeerAsn": "<p>The Border Gateway Protocol (BGP) Autonomous System Number (ASN) for the appliance. Valid values are from 1 to 4294967295. We recommend using a private ASN in the 64512–65534 (16-bit ASN) or 4200000000–4294967294 (32-bit ASN) range.</p>",
+        "ServiceLinkVirtualInterface$PeerBgpAsn": "<p>The ASN for the Border Gateway Protocol (BGP) associated with the service link virtual interface.</p>",
         "Snapshot$FullSnapshotSizeInBytes": "<p>The full size of the snapshot, in bytes.</p> <important> <p>This is <b>not</b> the incremental size of the snapshot. This is the full snapshot size and represents the size of all the blocks that were written to the source volume at the time the snapshot was created.</p> </important>",
         "TransitGatewayAttachmentBgpConfiguration$TransitGatewayAsn": "<p>The transit gateway Autonomous System Number (ASN).</p>",
         "TransitGatewayAttachmentBgpConfiguration$PeerAsn": "<p>The peer Autonomous System Number (ASN).</p>",
@@ -17673,6 +17779,39 @@
         "CreateCapacityReservationRequest$OutpostArn": "<note> <p>Not supported for future-dated Capacity Reservations.</p> </note> <p>The Amazon Resource Name (ARN) of the Outpost on which to create the Capacity Reservation.</p>"
       }
     },
+    "OutpostLag": {
+      "base": "<p>Describes an Outpost link aggregation group (LAG).</p>",
+      "refs": {
+        "OutpostLagSet$member": null
+      }
+    },
+    "OutpostLagId": {
+      "base": null,
+      "refs": {
+        "CreateLocalGatewayVirtualInterfaceRequest$OutpostLagId": "<p>References the Link Aggregation Group (LAG) that connects the Outpost to on-premises network devices.</p>",
+        "OutpostLag$OutpostLagId": "<p>The ID of the Outpost LAG.</p>",
+        "OutpostLagIdSet$member": null,
+        "ServiceLinkVirtualInterface$OutpostLagId": "<p>The link aggregation group (LAG) ID for the service link virtual interface.</p>"
+      }
+    },
+    "OutpostLagIdSet": {
+      "base": null,
+      "refs": {
+        "DescribeOutpostLagsRequest$OutpostLagIds": "<p>The IDs of the Outpost LAGs.</p>"
+      }
+    },
+    "OutpostLagMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeOutpostLagsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "OutpostLagSet": {
+      "base": null,
+      "refs": {
+        "DescribeOutpostLagsResult$OutpostLags": "<p>The Outpost LAGs.</p>"
+      }
+    },
     "OwnerStringList": {
       "base": null,
       "refs": {
@@ -19472,6 +19611,8 @@
         "LocalGatewayRouteTable$LocalGatewayRouteTableArn": "<p>The Amazon Resource Name (ARN) of the local gateway route table.</p>",
         "LocalGatewayRouteTableVirtualInterfaceGroupAssociation$LocalGatewayRouteTableArn": "<p>The Amazon Resource Name (ARN) of the local gateway route table for the virtual interface group.</p>",
         "LocalGatewayRouteTableVpcAssociation$LocalGatewayRouteTableArn": "<p>The Amazon Resource Name (ARN) of the local gateway route table for the association.</p>",
+        "LocalGatewayVirtualInterface$LocalGatewayVirtualInterfaceArn": "<p>The Amazon Resource Number (ARN) of the local gateway virtual interface.</p>",
+        "LocalGatewayVirtualInterfaceGroup$LocalGatewayVirtualInterfaceGroupArn": "<p>The Amazon Resource Number (ARN) of the local gateway virtual interface group.</p>",
         "ManagedPrefixList$PrefixListArn": "<p>The Amazon Resource Name (ARN) for the prefix list.</p>",
         "NetworkInsightsAccessScope$NetworkInsightsAccessScopeArn": "<p>The Amazon Resource Name (ARN) of the Network Access Scope.</p>",
         "NetworkInsightsAccessScopeAnalysis$NetworkInsightsAccessScopeAnalysisArn": "<p>The Amazon Resource Name (ARN) of the Network Access Scope analysis.</p>",
@@ -19481,6 +19622,7 @@
         "NetworkInsightsPath$DestinationArn": "<p>The Amazon Resource Name (ARN) of the destination.</p>",
         "RuleGroupRuleOptionsPair$RuleGroupArn": "<p>The ARN of the rule group.</p>",
         "RuleGroupTypePair$RuleGroupArn": "<p>The ARN of the rule group.</p>",
+        "ServiceLinkVirtualInterface$ServiceLinkVirtualInterfaceArn": "<p>The Amazon Resource Number (ARN) for the service link virtual interface. </p>",
         "VpcBlockPublicAccessExclusion$ResourceArn": "<p>The ARN of the exclusion.</p>"
       }
     },
@@ -20615,6 +20757,44 @@
         "DescribeVpcEndpointServicesResult$ServiceDetails": "<p>Information about the service.</p>"
       }
     },
+    "ServiceLinkMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeServiceLinkVirtualInterfacesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "ServiceLinkVirtualInterface": {
+      "base": "<p>Describes the service link virtual interfaces that establish connectivity between Amazon Web Services Outpost and on-premises networks.</p>",
+      "refs": {
+        "ServiceLinkVirtualInterfaceSet$member": null
+      }
+    },
+    "ServiceLinkVirtualInterfaceConfigurationState": {
+      "base": null,
+      "refs": {
+        "ServiceLinkVirtualInterface$ConfigurationState": "<p>The current state of the service link virtual interface.</p>"
+      }
+    },
+    "ServiceLinkVirtualInterfaceId": {
+      "base": null,
+      "refs": {
+        "ServiceLinkVirtualInterface$ServiceLinkVirtualInterfaceId": "<p>The ID of the service link virtual interface.</p>",
+        "ServiceLinkVirtualInterfaceIdSet$member": null
+      }
+    },
+    "ServiceLinkVirtualInterfaceIdSet": {
+      "base": null,
+      "refs": {
+        "DescribeServiceLinkVirtualInterfacesRequest$ServiceLinkVirtualInterfaceIds": "<p>The IDs of the service link virtual interfaces.</p>",
+        "OutpostLag$ServiceLinkVirtualInterfaceIds": "<p>The service link virtual interface IDs associated with the Outpost LAG.</p>"
+      }
+    },
+    "ServiceLinkVirtualInterfaceSet": {
+      "base": null,
+      "refs": {
+        "DescribeServiceLinkVirtualInterfacesResult$ServiceLinkVirtualInterfaces": "<p>Describes the service link virtual interfaces.</p>"
+      }
+    },
     "ServiceManaged": {
       "base": null,
       "refs": {
@@ -21570,6 +21750,8 @@
         "CreateLaunchTemplateVersionRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. If a client token isn't specified, a randomly generated token is used in the request to ensure idempotency.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p> <p>Constraint: Maximum 128 ASCII characters.</p>",
         "CreateLaunchTemplateVersionRequest$SourceVersion": "<p>The version of the launch template on which to base the new version. Snapshots applied to the block device mapping are ignored when creating a new version unless they are explicitly included.</p> <p>If you specify this parameter, the new version inherits the launch parameters from the source version. If you specify additional launch parameters for the new version, they overwrite any corresponding launch parameters inherited from the source version.</p> <p>If you omit this parameter, the new version contains only the launch parameters that you specify for the new version.</p>",
         "CreateLocalGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR range used for destination matches. Routing decisions are based on the most specific match.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$LocalAddress": "<p>The IP address assigned to the local gateway virtual interface on the Outpost side. Only IPv4 is supported.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$PeerAddress": "<p>The peer IP address for the local gateway virtual interface. Only IPv4 is supported.</p>",
         "CreateManagedPrefixListRequest$PrefixListName": "<p>A name for the prefix list.</p> <p>Constraints: Up to 255 characters in length. The name cannot start with <code>com.amazonaws</code>.</p>",
         "CreateManagedPrefixListRequest$AddressFamily": "<p>The IP address type.</p> <p>Valid Values: <code>IPv4</code> | <code>IPv6</code> </p>",
         "CreateManagedPrefixListRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p> <p>Constraints: Up to 255 UTF-8 characters in length.</p>",
@@ -21865,6 +22047,8 @@
         "DescribeNetworkInterfacePermissionsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeNetworkInterfacesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeNetworkInterfacesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DescribeOutpostLagsRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeOutpostLagsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribePrefixListsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribePrefixListsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribePrincipalIdFormatRequest$NextToken": "<p>The token to request the next page of results.</p>",
@@ -21894,6 +22078,8 @@
         "DescribeSecurityGroupVpcAssociationsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeSecurityGroupsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeSecurityGroupsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DescribeServiceLinkVirtualInterfacesRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeServiceLinkVirtualInterfacesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeSnapshotAttributeResult$SnapshotId": "<p>The ID of the EBS snapshot.</p>",
         "DescribeSnapshotTierStatusRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeSnapshotTierStatusResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
@@ -22601,6 +22787,7 @@
         "LocalGatewayRouteTableVpcAssociation$OwnerId": "<p>The ID of the Amazon Web Services account that owns the local gateway route table for the association.</p>",
         "LocalGatewayRouteTableVpcAssociation$State": "<p>The state of the association.</p>",
         "LocalGatewayVirtualInterface$LocalGatewayId": "<p>The ID of the local gateway.</p>",
+        "LocalGatewayVirtualInterface$OutpostLagId": "<p>The Outpost LAG ID.</p>",
         "LocalGatewayVirtualInterface$LocalAddress": "<p>The local address.</p>",
         "LocalGatewayVirtualInterface$PeerAddress": "<p>The peer address.</p>",
         "LocalGatewayVirtualInterface$OwnerId": "<p>The ID of the Amazon Web Services account that owns the local gateway virtual interface.</p>",
@@ -22788,6 +22975,9 @@
         "OperatorResponse$Principal": "<p>If <code>managed</code> is <code>true</code>, then the principal is returned. The principal is the service provider that manages the resource.</p>",
         "OrganizationArnStringList$member": null,
         "OrganizationalUnitArnStringList$member": null,
+        "OutpostLag$OutpostArn": "<p>The Amazon Resource Number (ARN) of the Outpost LAG.</p>",
+        "OutpostLag$OwnerId": "<p>The ID of the Outpost LAG owner.</p>",
+        "OutpostLag$State": "<p>The current state of the Outpost LAG.</p>",
         "OwnerStringList$member": null,
         "PathComponent$ServiceName": "<p>The name of the VPC endpoint service.</p>",
         "PciId$DeviceId": "<p>The ID of the device.</p>",
@@ -23087,6 +23277,11 @@
         "ServiceDetail$ServiceRegion": "<p>The Region where the service is hosted.</p>",
         "ServiceDetail$Owner": "<p>The Amazon Web Services account ID of the service owner.</p>",
         "ServiceDetail$PrivateDnsName": "<p>The private DNS name for the service.</p>",
+        "ServiceLinkVirtualInterface$OutpostId": "<p>The Outpost ID for the service link virtual interface.</p>",
+        "ServiceLinkVirtualInterface$OutpostArn": "<p>The Outpost Amazon Resource Number (ARN) for the service link virtual interface.</p>",
+        "ServiceLinkVirtualInterface$OwnerId": "<p>The ID of the Amazon Web Services account that owns the service link virtual interface..</p>",
+        "ServiceLinkVirtualInterface$LocalAddress": "<p>The IPv4 address assigned to the local gateway virtual interface on the Outpost side.</p>",
+        "ServiceLinkVirtualInterface$PeerAddress": "<p>The IPv4 peer address for the service link virtual interface.</p>",
         "Snapshot$OwnerAlias": "<p>The Amazon Web Services owner alias, from an Amazon-maintained list (<code>amazon</code>). This is not the user-configured Amazon Web Services account alias set using the IAM console.</p>",
         "Snapshot$OutpostArn": "<p>The ARN of the Outpost on which the snapshot is stored. For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html\">Amazon EBS local snapshots on Outposts</a> in the <i>Amazon EBS User Guide</i>.</p>",
         "Snapshot$AvailabilityZone": "<p>The Availability Zone or Local Zone of the snapshot. For example, <code>us-west-1a</code> (Availability Zone) or <code>us-west-2-lax-1a</code> (Local Zone).</p>",
@@ -23864,6 +24059,7 @@
         "NetworkInsightsAnalysis$Tags": "<p>The tags.</p>",
         "NetworkInsightsPath$Tags": "<p>The tags associated with the path.</p>",
         "NetworkInterface$TagSet": "<p>Any tags assigned to the network interface.</p>",
+        "OutpostLag$Tags": "<p>The tags associated with the Outpost LAG.</p>",
         "PlacementGroup$Tags": "<p>Any tags applied to the placement group.</p>",
         "PublicIpv4Pool$Tags": "<p>Any tags for the address pool.</p>",
         "ReplaceRootVolumeTask$Tags": "<p>The tags assigned to the task.</p>",
@@ -23878,6 +24074,7 @@
         "SecurityGroupRule$Tags": "<p>The tags applied to the security group rule.</p>",
         "ServiceConfiguration$Tags": "<p>The tags assigned to the service.</p>",
         "ServiceDetail$Tags": "<p>The tags assigned to the service.</p>",
+        "ServiceLinkVirtualInterface$Tags": "<p>The tags associated with the service link virtual interface.</p>",
         "Snapshot$Tags": "<p>Any tags assigned to the snapshot.</p>",
         "SnapshotInfo$Tags": "<p>Tags associated with this snapshot.</p>",
         "SnapshotTierStatus$Tags": "<p>The tags that are assigned to the snapshot.</p>",
@@ -23963,6 +24160,8 @@
         "CreateLocalGatewayRouteTableRequest$TagSpecifications": "<p> The tags assigned to the local gateway route table. </p>",
         "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociationRequest$TagSpecifications": "<p> The tags assigned to the local gateway route table virtual interface group association. </p>",
         "CreateLocalGatewayRouteTableVpcAssociationRequest$TagSpecifications": "<p>The tags to assign to the local gateway route table VPC association.</p>",
+        "CreateLocalGatewayVirtualInterfaceGroupRequest$TagSpecifications": "<p>The tags to apply to the local gateway virtual interface group when the resource is being created.</p>",
+        "CreateLocalGatewayVirtualInterfaceRequest$TagSpecifications": "<p>The tags to apply to a resource when the local gateway virtual interface is being created. </p>",
         "CreateManagedPrefixListRequest$TagSpecifications": "<p>The tags to apply to the prefix list during creation.</p>",
         "CreateNatGatewayRequest$TagSpecifications": "<p>The tags to assign to the NAT gateway.</p>",
         "CreateNetworkAclRequest$TagSpecifications": "<p>The tags to assign to the network ACL.</p>",

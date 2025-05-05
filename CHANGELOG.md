@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment
+* `Aws\MediaConvert` - This release adds an optional sidecar per-frame video quality metrics report and an ALL_PCM option for audio selectors. It also changes the data type for Probe API response fields related to video and audio bitrate from integer to double.
+* `Aws\DataZone` - This release adds a new authorization policy to control the usage of custom AssetType when creating an Asset. Customer can now add new grant(s) of policyType USE_ASSET_TYPE for custom AssetTypes to apply authorization policy to projects members and domain unit owners.
+* `Aws\EC2` - This update introduces API operations to manage and create local gateway VIF and VIF groups. It also includes API operations to describe Outpost LAGs and service link VIFs.
+* `Aws\DeviceFarm` - Add an optional parameter to the GetDevicePoolCompatibility API to pass in project information to check device pool compatibility.
+
 ## 3.343.3 - 2025-05-02
 
 * `Aws\BedrockDataAutomation` - Added support for Custom output and blueprints for AUDIO data types.

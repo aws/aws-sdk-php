@@ -11075,7 +11075,8 @@
         "DELEGATE_CREATE_ENVIRONMENT_PROFILE",
         "CREATE_ENVIRONMENT",
         "CREATE_ENVIRONMENT_FROM_BLUEPRINT",
-        "CREATE_PROJECT_FROM_PROJECT_PROFILE"
+        "CREATE_PROJECT_FROM_PROJECT_PROFILE",
+        "USE_ASSET_TYPE"
       ]
     },
     "MatchCriteria":{
@@ -11540,7 +11541,8 @@
         "createProjectFromProjectProfile":{"shape":"CreateProjectFromProjectProfilePolicyGrantDetail"},
         "delegateCreateEnvironmentProfile":{"shape":"Unit"},
         "overrideDomainUnitOwners":{"shape":"OverrideDomainUnitOwnersPolicyGrantDetail"},
-        "overrideProjectOwners":{"shape":"OverrideProjectOwnersPolicyGrantDetail"}
+        "overrideProjectOwners":{"shape":"OverrideProjectOwnersPolicyGrantDetail"},
+        "useAssetType":{"shape":"UseAssetTypePolicyGrantDetail"}
       },
       "union":true
     },
@@ -13643,7 +13645,8 @@
       "enum":[
         "DOMAIN_UNIT",
         "ENVIRONMENT_BLUEPRINT_CONFIGURATION",
-        "ENVIRONMENT_PROFILE"
+        "ENVIRONMENT_PROFILE",
+        "ASSET_TYPE"
       ]
     },
     "TaskId":{
@@ -14835,6 +14838,12 @@
     },
     "UpdatedAt":{"type":"timestamp"},
     "UpdatedBy":{"type":"string"},
+    "UseAssetTypePolicyGrantDetail":{
+      "type":"structure",
+      "members":{
+        "domainUnitId":{"shape":"DomainUnitId"}
+      }
+    },
     "UserAssignment":{
       "type":"string",
       "enum":[

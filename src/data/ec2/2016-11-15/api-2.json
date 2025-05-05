@@ -847,6 +847,24 @@
       "input":{"shape":"CreateLocalGatewayRouteTableVpcAssociationRequest"},
       "output":{"shape":"CreateLocalGatewayRouteTableVpcAssociationResult"}
     },
+    "CreateLocalGatewayVirtualInterface":{
+      "name":"CreateLocalGatewayVirtualInterface",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocalGatewayVirtualInterfaceRequest"},
+      "output":{"shape":"CreateLocalGatewayVirtualInterfaceResult"}
+    },
+    "CreateLocalGatewayVirtualInterfaceGroup":{
+      "name":"CreateLocalGatewayVirtualInterfaceGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateLocalGatewayVirtualInterfaceGroupRequest"},
+      "output":{"shape":"CreateLocalGatewayVirtualInterfaceGroupResult"}
+    },
     "CreateManagedPrefixList":{
       "name":"CreateManagedPrefixList",
       "http":{
@@ -1569,6 +1587,24 @@
       },
       "input":{"shape":"DeleteLocalGatewayRouteTableVpcAssociationRequest"},
       "output":{"shape":"DeleteLocalGatewayRouteTableVpcAssociationResult"}
+    },
+    "DeleteLocalGatewayVirtualInterface":{
+      "name":"DeleteLocalGatewayVirtualInterface",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLocalGatewayVirtualInterfaceRequest"},
+      "output":{"shape":"DeleteLocalGatewayVirtualInterfaceResult"}
+    },
+    "DeleteLocalGatewayVirtualInterfaceGroup":{
+      "name":"DeleteLocalGatewayVirtualInterfaceGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteLocalGatewayVirtualInterfaceGroupRequest"},
+      "output":{"shape":"DeleteLocalGatewayVirtualInterfaceGroupResult"}
     },
     "DeleteManagedPrefixList":{
       "name":"DeleteManagedPrefixList",
@@ -2923,6 +2959,15 @@
       "input":{"shape":"DescribeNetworkInterfacesRequest"},
       "output":{"shape":"DescribeNetworkInterfacesResult"}
     },
+    "DescribeOutpostLags":{
+      "name":"DescribeOutpostLags",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeOutpostLagsRequest"},
+      "output":{"shape":"DescribeOutpostLagsResult"}
+    },
     "DescribePlacementGroups":{
       "name":"DescribePlacementGroups",
       "http":{
@@ -3102,6 +3147,15 @@
       },
       "input":{"shape":"DescribeSecurityGroupsRequest"},
       "output":{"shape":"DescribeSecurityGroupsResult"}
+    },
+    "DescribeServiceLinkVirtualInterfaces":{
+      "name":"DescribeServiceLinkVirtualInterfaces",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeServiceLinkVirtualInterfacesRequest"},
+      "output":{"shape":"DescribeServiceLinkVirtualInterfacesResult"}
     },
     "DescribeSnapshotAttribute":{
       "name":"DescribeSnapshotAttribute",
@@ -12360,6 +12414,62 @@
         }
       }
     },
+    "CreateLocalGatewayVirtualInterfaceGroupRequest":{
+      "type":"structure",
+      "required":["LocalGatewayId"],
+      "members":{
+        "LocalGatewayId":{"shape":"LocalGatewayId"},
+        "LocalBgpAsn":{"shape":"Integer"},
+        "LocalBgpAsnExtended":{"shape":"Long"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceGroupResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayVirtualInterfaceGroup":{
+          "shape":"LocalGatewayVirtualInterfaceGroup",
+          "locationName":"localGatewayVirtualInterfaceGroup"
+        }
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceRequest":{
+      "type":"structure",
+      "required":[
+        "LocalGatewayVirtualInterfaceGroupId",
+        "OutpostLagId",
+        "Vlan",
+        "LocalAddress",
+        "PeerAddress"
+      ],
+      "members":{
+        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
+        "OutpostLagId":{"shape":"OutpostLagId"},
+        "Vlan":{"shape":"Integer"},
+        "LocalAddress":{"shape":"String"},
+        "PeerAddress":{"shape":"String"},
+        "PeerBgpAsn":{"shape":"Integer"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "PeerBgpAsnExtended":{"shape":"Long"}
+      }
+    },
+    "CreateLocalGatewayVirtualInterfaceResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayVirtualInterface":{
+          "shape":"LocalGatewayVirtualInterface",
+          "locationName":"localGatewayVirtualInterface"
+        }
+      }
+    },
     "CreateManagedPrefixListRequest":{
       "type":"structure",
       "required":[
@@ -15097,6 +15207,40 @@
         "LocalGatewayRouteTableVpcAssociation":{
           "shape":"LocalGatewayRouteTableVpcAssociation",
           "locationName":"localGatewayRouteTableVpcAssociation"
+        }
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceGroupRequest":{
+      "type":"structure",
+      "required":["LocalGatewayVirtualInterfaceGroupId"],
+      "members":{
+        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceGroupResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayVirtualInterfaceGroup":{
+          "shape":"LocalGatewayVirtualInterfaceGroup",
+          "locationName":"localGatewayVirtualInterfaceGroup"
+        }
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceRequest":{
+      "type":"structure",
+      "required":["LocalGatewayVirtualInterfaceId"],
+      "members":{
+        "LocalGatewayVirtualInterfaceId":{"shape":"LocalGatewayVirtualInterfaceId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteLocalGatewayVirtualInterfaceResult":{
+      "type":"structure",
+      "members":{
+        "LocalGatewayVirtualInterface":{
+          "shape":"LocalGatewayVirtualInterface",
+          "locationName":"localGatewayVirtualInterface"
         }
       }
     },
@@ -19158,6 +19302,35 @@
         }
       }
     },
+    "DescribeOutpostLagsRequest":{
+      "type":"structure",
+      "members":{
+        "OutpostLagIds":{
+          "shape":"OutpostLagIdSet",
+          "locationName":"OutpostLagId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"OutpostLagMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeOutpostLagsResult":{
+      "type":"structure",
+      "members":{
+        "OutpostLags":{
+          "shape":"OutpostLagSet",
+          "locationName":"outpostLagSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "DescribePlacementGroupsRequest":{
       "type":"structure",
       "members":{
@@ -19788,6 +19961,35 @@
         "SecurityGroups":{
           "shape":"SecurityGroupList",
           "locationName":"securityGroupInfo"
+        }
+      }
+    },
+    "DescribeServiceLinkVirtualInterfacesRequest":{
+      "type":"structure",
+      "members":{
+        "ServiceLinkVirtualInterfaceIds":{
+          "shape":"ServiceLinkVirtualInterfaceIdSet",
+          "locationName":"ServiceLinkVirtualInterfaceId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"ServiceLinkMaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeServiceLinkVirtualInterfacesResult":{
+      "type":"structure",
+      "members":{
+        "ServiceLinkVirtualInterfaces":{
+          "shape":"ServiceLinkVirtualInterfaceSet",
+          "locationName":"serviceLinkVirtualInterfaceSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -34888,6 +35090,18 @@
           "shape":"String",
           "locationName":"localGatewayId"
         },
+        "LocalGatewayVirtualInterfaceGroupId":{
+          "shape":"LocalGatewayVirtualInterfaceGroupId",
+          "locationName":"localGatewayVirtualInterfaceGroupId"
+        },
+        "LocalGatewayVirtualInterfaceArn":{
+          "shape":"ResourceArn",
+          "locationName":"localGatewayVirtualInterfaceArn"
+        },
+        "OutpostLagId":{
+          "shape":"String",
+          "locationName":"outpostLagId"
+        },
         "Vlan":{
           "shape":"Integer",
           "locationName":"vlan"
@@ -34908,6 +35122,10 @@
           "shape":"Integer",
           "locationName":"peerBgpAsn"
         },
+        "PeerBgpAsnExtended":{
+          "shape":"Long",
+          "locationName":"peerBgpAsnExtended"
+        },
         "OwnerId":{
           "shape":"String",
           "locationName":"ownerId"
@@ -34915,8 +35133,21 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "ConfigurationState":{
+          "shape":"LocalGatewayVirtualInterfaceConfigurationState",
+          "locationName":"configurationState"
         }
       }
+    },
+    "LocalGatewayVirtualInterfaceConfigurationState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "available",
+        "deleting",
+        "deleted"
+      ]
     },
     "LocalGatewayVirtualInterfaceGroup":{
       "type":"structure",
@@ -34937,11 +35168,37 @@
           "shape":"String",
           "locationName":"ownerId"
         },
+        "LocalBgpAsn":{
+          "shape":"Integer",
+          "locationName":"localBgpAsn"
+        },
+        "LocalBgpAsnExtended":{
+          "shape":"Long",
+          "locationName":"localBgpAsnExtended"
+        },
+        "LocalGatewayVirtualInterfaceGroupArn":{
+          "shape":"ResourceArn",
+          "locationName":"localGatewayVirtualInterfaceGroupArn"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "ConfigurationState":{
+          "shape":"LocalGatewayVirtualInterfaceGroupConfigurationState",
+          "locationName":"configurationState"
         }
       }
+    },
+    "LocalGatewayVirtualInterfaceGroupConfigurationState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "incomplete",
+        "available",
+        "deleting",
+        "deleted"
+      ]
     },
     "LocalGatewayVirtualInterfaceGroupId":{"type":"string"},
     "LocalGatewayVirtualInterfaceGroupIdSet":{
@@ -38903,6 +39160,59 @@
       "type":"string",
       "pattern":"^arn:aws([a-z-]+)?:outposts:[a-z\\d-]+:\\d{12}:outpost/op-[a-f0-9]{17}$"
     },
+    "OutpostLag":{
+      "type":"structure",
+      "members":{
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "State":{
+          "shape":"String",
+          "locationName":"state"
+        },
+        "OutpostLagId":{
+          "shape":"OutpostLagId",
+          "locationName":"outpostLagId"
+        },
+        "LocalGatewayVirtualInterfaceIds":{
+          "shape":"LocalGatewayVirtualInterfaceIdSet",
+          "locationName":"localGatewayVirtualInterfaceIdSet"
+        },
+        "ServiceLinkVirtualInterfaceIds":{
+          "shape":"ServiceLinkVirtualInterfaceIdSet",
+          "locationName":"serviceLinkVirtualInterfaceIdSet"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "OutpostLagId":{"type":"string"},
+    "OutpostLagIdSet":{
+      "type":"list",
+      "member":{
+        "shape":"OutpostLagId",
+        "locationName":"item"
+      }
+    },
+    "OutpostLagMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "OutpostLagSet":{
+      "type":"list",
+      "member":{
+        "shape":"OutpostLag",
+        "locationName":"item"
+      }
+    },
     "OwnerStringList":{
       "type":"list",
       "member":{
@@ -42391,6 +42701,7 @@
         "network-insights-path",
         "network-insights-access-scope",
         "network-insights-access-scope-analysis",
+        "outpost-lag",
         "placement-group",
         "prefix-list",
         "replace-root-volume-task",
@@ -42398,6 +42709,7 @@
         "route-table",
         "security-group",
         "security-group-rule",
+        "service-link-virtual-interface",
         "snapshot",
         "spot-fleet-request",
         "spot-instances-request",
@@ -44789,6 +45101,88 @@
       "type":"list",
       "member":{
         "shape":"ServiceDetail",
+        "locationName":"item"
+      }
+    },
+    "ServiceLinkMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "ServiceLinkVirtualInterface":{
+      "type":"structure",
+      "members":{
+        "ServiceLinkVirtualInterfaceId":{
+          "shape":"ServiceLinkVirtualInterfaceId",
+          "locationName":"serviceLinkVirtualInterfaceId"
+        },
+        "ServiceLinkVirtualInterfaceArn":{
+          "shape":"ResourceArn",
+          "locationName":"serviceLinkVirtualInterfaceArn"
+        },
+        "OutpostId":{
+          "shape":"String",
+          "locationName":"outpostId"
+        },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "LocalAddress":{
+          "shape":"String",
+          "locationName":"localAddress"
+        },
+        "PeerAddress":{
+          "shape":"String",
+          "locationName":"peerAddress"
+        },
+        "PeerBgpAsn":{
+          "shape":"Long",
+          "locationName":"peerBgpAsn"
+        },
+        "Vlan":{
+          "shape":"Integer",
+          "locationName":"vlan"
+        },
+        "OutpostLagId":{
+          "shape":"OutpostLagId",
+          "locationName":"outpostLagId"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "ConfigurationState":{
+          "shape":"ServiceLinkVirtualInterfaceConfigurationState",
+          "locationName":"configurationState"
+        }
+      }
+    },
+    "ServiceLinkVirtualInterfaceConfigurationState":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "available",
+        "deleting",
+        "deleted"
+      ]
+    },
+    "ServiceLinkVirtualInterfaceId":{"type":"string"},
+    "ServiceLinkVirtualInterfaceIdSet":{
+      "type":"list",
+      "member":{
+        "shape":"ServiceLinkVirtualInterfaceId",
+        "locationName":"item"
+      }
+    },
+    "ServiceLinkVirtualInterfaceSet":{
+      "type":"list",
+      "member":{
+        "shape":"ServiceLinkVirtualInterface",
         "locationName":"item"
       }
     },
