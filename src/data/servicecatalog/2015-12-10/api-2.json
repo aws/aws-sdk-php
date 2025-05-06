@@ -349,7 +349,8 @@
       "output":{"shape":"DeleteServiceActionOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceInUseException"}
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidParametersException"}
       ]
     },
     "DeleteTagOption":{
@@ -632,7 +633,8 @@
       "input":{"shape":"DisassociateServiceActionFromProvisioningArtifactInput"},
       "output":{"shape":"DisassociateServiceActionFromProvisioningArtifactOutput"},
       "errors":[
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParametersException"}
       ]
     },
     "DisassociateTagOptionFromResource":{
@@ -1232,8 +1234,7 @@
     },
     "AcceptPortfolioShareOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AccessLevelFilter":{
       "type":"structure",
@@ -1290,8 +1291,7 @@
     },
     "AssociateBudgetWithResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociatePrincipalWithPortfolioInput":{
       "type":"structure",
@@ -1309,8 +1309,7 @@
     },
     "AssociatePrincipalWithPortfolioOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateProductWithPortfolioInput":{
       "type":"structure",
@@ -1327,8 +1326,7 @@
     },
     "AssociateProductWithPortfolioOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateServiceActionWithProvisioningArtifactInput":{
       "type":"structure",
@@ -1350,8 +1348,7 @@
     },
     "AssociateServiceActionWithProvisioningArtifactOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateTagOptionWithResourceInput":{
       "type":"structure",
@@ -1366,8 +1363,7 @@
     },
     "AssociateTagOptionWithResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AttributeValue":{"type":"string"},
     "BatchAssociateServiceActionWithProvisioningArtifactInput":{
@@ -1759,8 +1755,7 @@
     },
     "DeleteConstraintOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePortfolioInput":{
       "type":"structure",
@@ -1772,8 +1767,7 @@
     },
     "DeletePortfolioOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePortfolioShareInput":{
       "type":"structure",
@@ -1801,8 +1795,7 @@
     },
     "DeleteProductOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProvisionedProductPlanInput":{
       "type":"structure",
@@ -1815,8 +1808,7 @@
     },
     "DeleteProvisionedProductPlanOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProvisioningArtifactInput":{
       "type":"structure",
@@ -1832,8 +1824,7 @@
     },
     "DeleteProvisioningArtifactOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteServiceActionInput":{
       "type":"structure",
@@ -1849,8 +1840,7 @@
     },
     "DeleteServiceActionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTagOptionInput":{
       "type":"structure",
@@ -1861,8 +1851,7 @@
     },
     "DeleteTagOptionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeConstraintInput":{
       "type":"structure",
@@ -2158,13 +2147,11 @@
     "Description":{"type":"string"},
     "DisableAWSOrganizationsAccessInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisableAWSOrganizationsAccessOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisableTemplateValidation":{"type":"boolean"},
     "DisassociateBudgetFromResourceInput":{
@@ -2180,8 +2167,7 @@
     },
     "DisassociateBudgetFromResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociatePrincipalFromPortfolioInput":{
       "type":"structure",
@@ -2198,8 +2184,7 @@
     },
     "DisassociatePrincipalFromPortfolioOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateProductFromPortfolioInput":{
       "type":"structure",
@@ -2215,8 +2200,7 @@
     },
     "DisassociateProductFromPortfolioOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateServiceActionFromProvisioningArtifactInput":{
       "type":"structure",
@@ -2238,8 +2222,7 @@
     },
     "DisassociateServiceActionFromProvisioningArtifactOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateTagOptionFromResourceInput":{
       "type":"structure",
@@ -2254,24 +2237,20 @@
     },
     "DisassociateTagOptionFromResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DuplicateResourceException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EnableAWSOrganizationsAccessInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EnableAWSOrganizationsAccessOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EngineWorkflowFailureReason":{
       "type":"string",
@@ -2410,8 +2389,7 @@
     },
     "GetAWSOrganizationsAccessStatusInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAWSOrganizationsAccessStatusOutput":{
       "type":"structure",
@@ -2482,14 +2460,12 @@
     "InstructionValue":{"type":"string"},
     "InvalidParametersException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidStateException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "LastRequestId":{"type":"string"},
@@ -2539,8 +2515,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ListAcceptedPortfolioSharesInput":{
@@ -2906,8 +2881,7 @@
     },
     "NotifyProvisionProductEngineWorkflowResultOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NotifyTerminateProvisionedProductEngineWorkflowResultInput":{
       "type":"structure",
@@ -2930,8 +2904,7 @@
     },
     "NotifyTerminateProvisionedProductEngineWorkflowResultOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NotifyUpdateProvisionedProductEngineWorkflowResultInput":{
       "type":"structure",
@@ -2955,8 +2928,7 @@
     },
     "NotifyUpdateProvisionedProductEngineWorkflowResultOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NullableBoolean":{
       "type":"boolean",
@@ -2964,8 +2936,7 @@
     },
     "OperationNotSupportedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "OrganizationNode":{
@@ -3691,8 +3662,7 @@
     },
     "RejectPortfolioShareOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Replacement":{
       "type":"string",
@@ -3791,14 +3761,12 @@
     "ResourceId":{"type":"string"},
     "ResourceInUseException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceTargetDefinition":{
@@ -4203,8 +4171,7 @@
     },
     "TagOptionNotMigratedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagOptionSummaries":{

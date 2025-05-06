@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TimestreamQuery` - Add dualstack endpoints support and correct us-gov-west-1 FIPS endpoint.
+* `Aws\EC2` - This release adds support for Amazon EBS Provisioned Rate for Volume Initialization, which lets you specify a volume initialization rate to ensure that your EBS volumes are initialized in a predictable amount of time.
+* `Aws\ServiceCatalog` - ServiceCatalog's APIs (DeleteServiceAction, DisassociateServiceActionFromProvisioningArtifact, AssociateServiceActionWithProvisioningArtifact) now throw InvalidParametersException when IdempotencyToken is invalid.
+* `Aws\TimestreamWrite` - Add dualstack endpoints support.
+
 ## 3.343.4 - 2025-05-05
 
 * `Aws\ECS` - Add support to roll back an In_Progress ECS Service Deployment

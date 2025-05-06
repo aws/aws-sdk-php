@@ -12873,7 +12873,8 @@
           "locationName":"TagSpecification"
         },
         "ImageId":{"shape":"ImageId"},
-        "DeleteReplacedRootVolume":{"shape":"Boolean"}
+        "DeleteReplacedRootVolume":{"shape":"Boolean"},
+        "VolumeInitializationRate":{"shape":"Long"}
       }
     },
     "CreateReplaceRootVolumeTaskResult":{
@@ -14076,6 +14077,7 @@
           "shape":"String",
           "idempotencyToken":true
         },
+        "VolumeInitializationRate":{"shape":"Integer"},
         "Operator":{"shape":"OperatorRequest"},
         "DryRun":{
           "shape":"Boolean",
@@ -23018,7 +23020,8 @@
         "Encrypted":{
           "shape":"Boolean",
           "locationName":"encrypted"
-        }
+        },
+        "VolumeInitializationRate":{"shape":"Integer"}
       }
     },
     "EbsBlockDeviceResponse":{
@@ -25334,7 +25337,7 @@
           "locationName":"BlockDeviceMapping"
         },
         "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
-        "ImageId":{"shape":"ImageId"}
+        "ImageId":{"shape":"String"}
       }
     },
     "FleetLaunchTemplateSpecification":{
@@ -33907,6 +33910,10 @@
         "Throughput":{
           "shape":"Integer",
           "locationName":"throughput"
+        },
+        "VolumeInitializationRate":{
+          "shape":"Integer",
+          "locationName":"volumeInitializationRate"
         }
       }
     },
@@ -33920,7 +33927,8 @@
         "SnapshotId":{"shape":"SnapshotId"},
         "VolumeSize":{"shape":"Integer"},
         "VolumeType":{"shape":"VolumeType"},
-        "Throughput":{"shape":"Integer"}
+        "Throughput":{"shape":"Integer"},
+        "VolumeInitializationRate":{"shape":"Integer"}
       }
     },
     "LaunchTemplateElasticInferenceAccelerator":{
@@ -50723,6 +50731,10 @@
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
+        },
+        "VolumeInitializationRate":{
+          "shape":"Integer",
+          "locationName":"volumeInitializationRate"
         },
         "VolumeId":{
           "shape":"String",
