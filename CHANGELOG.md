@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.5 - 2025-05-06
 
 * `Aws\TimestreamQuery` - Add dualstack endpoints support and correct us-gov-west-1 FIPS endpoint.
 * `Aws\EC2` - This release adds support for Amazon EBS Provisioned Rate for Volume Initialization, which lets you specify a volume initialization rate to ensure that your EBS volumes are initialized in a predictable amount of time.
