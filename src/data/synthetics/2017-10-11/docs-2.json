@@ -19,16 +19,22 @@
     "ListGroups": "<p>Returns a list of all groups in the account, displaying their names, unique IDs, and ARNs. The groups from all Regions are returned.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with a canary or group.</p>",
     "StartCanary": "<p>Use this operation to run a canary that has already been created. The frequency of the canary runs is determined by the value of the canary's <code>Schedule</code>. To see a canary's schedule, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanary.html\">GetCanary</a>.</p>",
+    "StartCanaryDryRun": "<p>Use this operation to start a dry run for a canary that has already been created</p>",
     "StopCanary": "<p>Stops the canary to prevent all future runs. If the canary is currently running,the run that is in progress completes on its own, publishes metrics, and uploads artifacts, but it is not recorded in Synthetics as a completed run.</p> <p>You can use <code>StartCanary</code> to start it running again with the canary’s current schedule at any point in the future. </p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified canary or group. </p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions, by granting a user permission to access or change only resources with certain tag values.</p> <p>Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.</p> <p>You can use the <code>TagResource</code> action with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a canary or group.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified resource.</p>",
-    "UpdateCanary": "<p>Updates the configuration of a canary that has already been created.</p> <p>You can't use this operation to update the tags of an existing canary. To change the tags of an existing canary, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_TagResource.html\">TagResource</a>.</p>"
+    "UpdateCanary": "<p>Updates the configuration of a canary that has already been created.</p> <p>You can't use this operation to update the tags of an existing canary. To change the tags of an existing canary, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_TagResource.html\">TagResource</a>.</p> <note> <p>When you use the <code>dryRunId</code> field when updating a canary, the only other field you can provide is the <code>Schedule</code>. Adding any other field will thrown an exception.</p> </note>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have permission to perform this operation on this resource.</p>",
+      "refs": {}
+    },
     "ArtifactConfigInput": {
       "base": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
       "refs": {
         "CreateCanaryRequest$ArtifactConfig": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
+        "StartCanaryDryRunRequest$ArtifactConfig": null,
         "UpdateCanaryRequest$ArtifactConfig": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>"
       }
     },
@@ -40,18 +46,15 @@
     },
     "AssociateResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BadRequestException": {
       "base": "<p>The request was not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BaseScreenshot": {
       "base": "<p>A structure representing a screenshot that is used as a baseline during visual monitoring comparisons made by the canary.</p>",
@@ -113,9 +116,10 @@
       }
     },
     "CanaryCodeInput": {
-      "base": "<p>Use this structure to input your script code for the canary. This structure contains the Lambda handler with the location where the canary should start running the script. If the script is stored in an S3 bucket, the bucket name, key, and version are also included. If the script was passed into the canary directly, the script code is contained in the value of <code>Zipfile</code>. </p> <p>If you are uploading your canary scripts with an Amazon S3 bucket, your zip file should include your script in a certain folder structure.</p> <ul> <li> <p>For Node.js canaries, the folder structure must be <code>nodejs/node_modules/<i>myCanaryFilename.js</i> </code> For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Nodejs.html#CloudWatch_Synthetics_Canaries_package\">Packaging your Node.js canary files</a> </p> </li> <li> <p>For Python canaries, the folder structure must be <code>python/<i>myCanaryFilename.p</i> </code> or <code>python/<i>myFolder/myCanaryFilename.py</i> </code> For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Python.html#CloudWatch_Synthetics_Canaries_WritingCanary_Python_package\">Packaging your Python canary files</a> </p> </li> </ul>",
+      "base": "<p>Use this structure to input your script code for the canary. This structure contains the Lambda handler with the location where the canary should start running the script. If the script is stored in an S3 bucket, the bucket name, key, and version are also included. If the script was passed into the canary directly, the script code is contained in the value of <code>Zipfile</code>. </p> <p>If you are uploading your canary scripts with an Amazon S3 bucket, your zip file should include your script in a certain folder structure.</p> <ul> <li> <p>For Node.js canaries, the folder structure must be <code>nodejs/node_modules/<i>myCanaryFilename.js</i> </code> For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Nodejs.html#CloudWatch_Synthetics_Canaries_package\">Packaging your Node.js canary files</a> </p> </li> <li> <p>For Python canaries, the folder structure must be <code>python/<i>myCanaryFilename.py</i> </code> or <code>python/<i>myFolder/myCanaryFilename.py</i> </code> For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_WritingCanary_Python.html#CloudWatch_Synthetics_Canaries_WritingCanary_Python_package\">Packaging your Python canary files</a> </p> </li> </ul>",
       "refs": {
         "CreateCanaryRequest$Code": "<p>A structure that includes the entry point from which the canary should start running your script. If the script is stored in an S3 bucket, the bucket name, key, and version are also included. </p>",
+        "StartCanaryDryRunRequest$Code": null,
         "UpdateCanaryRequest$Code": "<p>A structure that includes the entry point from which the canary should start running your script. If the script is stored in an S3 bucket, the bucket name, key, and version are also included. </p>"
       }
     },
@@ -123,6 +127,12 @@
       "base": "<p>This structure contains information about the canary's Lambda handler and where its code is stored by CloudWatch Synthetics.</p>",
       "refs": {
         "Canary$Code": null
+      }
+    },
+    "CanaryDryRunConfigOutput": {
+      "base": "<p>Returns the dry run configurations set for a canary.</p>",
+      "refs": {
+        "CanaryRun$DryRunConfig": "<p>Returns the dry run configurations for a canary.</p>"
       }
     },
     "CanaryLastRun": {
@@ -143,6 +153,7 @@
         "DescribeCanariesNameFilter$member": null,
         "GetCanaryRequest$Name": "<p>The name of the canary that you want details for.</p>",
         "GetCanaryRunsRequest$Name": "<p>The name of the canary that you want to see runs for.</p>",
+        "StartCanaryDryRunRequest$Name": "<p>The name of the canary that you want to dry run. To find canary names, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p>",
         "StartCanaryRequest$Name": "<p>The name of the canary that you want to run. To find canary names, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p>",
         "StopCanaryRequest$Name": "<p>The name of the canary that you want to stop. To find the names of your canaries, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">ListCanaries</a>.</p>",
         "UpdateCanaryRequest$Name": "<p>The name of the canary that you want to update. To find the names of your canaries, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p> <p>You cannot change the name of a canary that has already been created.</p>"
@@ -158,8 +169,9 @@
     "CanaryRunConfigInput": {
       "base": "<p>A structure that contains input information for a canary run.</p>",
       "refs": {
-        "CreateCanaryRequest$RunConfig": "<p>A structure that contains the configuration for individual canary runs, such as timeout value and environment variables.</p> <important> <p>The environment variables keys and values are not encrypted. Do not store sensitive information in this field.</p> </important>",
-        "UpdateCanaryRequest$RunConfig": "<p>A structure that contains the timeout value that is used for each individual run of the canary.</p> <important> <p>The environment variables keys and values are not encrypted. Do not store sensitive information in this field.</p> </important>"
+        "CreateCanaryRequest$RunConfig": "<p>A structure that contains the configuration for individual canary runs, such as timeout value and environment variables.</p> <important> <p>Environment variable keys and values are encrypted at rest using Amazon Web Services owned KMS keys. However, the environment variables are not encrypted on the client side. Do not store sensitive information in them.</p> </important>",
+        "StartCanaryDryRunRequest$RunConfig": null,
+        "UpdateCanaryRequest$RunConfig": "<p>A structure that contains the timeout value that is used for each individual run of the canary.</p> <important> <p>Environment variable keys and values are encrypted at rest using Amazon Web Services owned KMS keys. However, the environment variables are not encrypted on the client side. Do not store sensitive information in them.</p> </important>"
       }
     },
     "CanaryRunConfigOutput": {
@@ -243,48 +255,39 @@
     },
     "ConflictException": {
       "base": "<p>A conflicting operation is already in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCanariesLastRunNameFilter": {
       "base": null,
@@ -294,13 +297,11 @@
     },
     "DescribeCanariesLastRunRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCanariesLastRunResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCanariesNameFilter": {
       "base": null,
@@ -310,32 +311,33 @@
     },
     "DescribeCanariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCanariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuntimeVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuntimeVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateResourceResponse": {
       "base": null,
+      "refs": {}
+    },
+    "DryRunConfigOutput": {
+      "base": "<p>Returns the dry run configurations set for a canary.</p>",
       "refs": {
+        "Canary$DryRunConfig": "<p>Returns the dry run configurations for a canary.</p>",
+        "StartCanaryDryRunResponse$DryRunConfig": "<p>Returns the dry run configurations for a canary.</p>"
       }
     },
     "EncryptionMode": {
@@ -359,12 +361,13 @@
     "EnvironmentVariablesMap": {
       "base": null,
       "refs": {
-        "CanaryRunConfigInput$EnvironmentVariables": "<p>Specifies the keys and values to use for any environment variables used in the canary script. Use the following format:</p> <p>{ \"key1\" : \"value1\", \"key2\" : \"value2\", ...}</p> <p>Keys must start with a letter and be at least two characters. The total size of your environment variables cannot exceed 4 KB. You can't specify any Lambda reserved environment variables as the keys for your environment variables. For more information about reserved keys, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-runtime\"> Runtime environment variables</a>.</p> <important> <p>The environment variables keys and values are not encrypted. Do not store sensitive information in this field.</p> </important>"
+        "CanaryRunConfigInput$EnvironmentVariables": "<p>Specifies the keys and values to use for any environment variables used in the canary script. Use the following format:</p> <p>{ \"key1\" : \"value1\", \"key2\" : \"value2\", ...}</p> <p>Keys must start with a letter and be at least two characters. The total size of your environment variables cannot exceed 4 KB. You can't specify any Lambda reserved environment variables as the keys for your environment variables. For more information about reserved keys, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-runtime\"> Runtime environment variables</a>.</p> <important> <p>Environment variable keys and values are encrypted at rest using Amazon Web Services owned KMS keys. However, the environment variables are not encrypted on the client side. Do not store sensitive information in them.</p> </important>"
       }
     },
     "ErrorMessage": {
       "base": null,
       "refs": {
+        "AccessDeniedException$Message": null,
         "BadRequestException$Message": null,
         "ConflictException$Message": null,
         "InternalFailureException$Message": null,
@@ -385,33 +388,27 @@
     },
     "GetCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCanaryRunsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCanaryRunsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Group": {
       "base": "<p>This structure contains information about one group.</p>",
@@ -460,13 +457,11 @@
     },
     "InternalFailureException": {
       "base": "<p>An internal failure occurred. Try the operation again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>An unknown internal error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": null,
@@ -476,43 +471,35 @@
     },
     "ListAssociatedGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxCanaryResults": {
       "base": null,
@@ -553,12 +540,14 @@
     "MaxSize1024": {
       "base": null,
       "refs": {
-        "Canary$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary.</p>",
-        "Canary$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary.</p>",
-        "CreateCanaryRequest$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.</p>",
-        "CreateCanaryRequest$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.</p>",
-        "UpdateCanaryRequest$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary.</p>",
-        "UpdateCanaryRequest$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary.</p>"
+        "Canary$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "Canary$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "CreateCanaryRequest$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "CreateCanaryRequest$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary. If you omit this field, the default of 31 days is used. The valid range is 1 to 455 days.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "StartCanaryDryRunRequest$SuccessRetentionPeriodInDays": "<p>The number of days to retain data on the failed runs for this canary. The valid range is 1 to 455 days.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "StartCanaryDryRunRequest$FailureRetentionPeriodInDays": "<p>The number of days to retain data on the failed runs for this canary. The valid range is 1 to 455 days.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "UpdateCanaryRequest$SuccessRetentionPeriodInDays": "<p>The number of days to retain data about successful runs of this canary.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>",
+        "UpdateCanaryRequest$FailureRetentionPeriodInDays": "<p>The number of days to retain data about failed runs of this canary.</p> <p>This setting affects the range of information returned by <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_GetCanaryRuns.html\">GetCanaryRuns</a>, as well as the range of information displayed in the Synthetics console. </p>"
       }
     },
     "MaxSize3008": {
@@ -570,8 +559,7 @@
     },
     "NotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NullableBoolean": {
       "base": null,
@@ -597,13 +585,13 @@
       "refs": {
         "Canary$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted. If it is <code>AUTOMATIC</code>, the Lambda functions and layers will be deleted when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>",
         "CreateCanaryRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted. If you omit this parameter, the default of <code>AUTOMATIC</code> is used, which means that the Lambda functions and layers will be deleted when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>",
+        "StartCanaryDryRunRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted. If the value of this parameter is <code>AUTOMATIC</code>, it means that the Lambda functions and layers will be deleted when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>",
         "UpdateCanaryRequest$ProvisionedResourceCleanup": "<p>Specifies whether to also delete the Lambda functions and layers used by this canary when the canary is deleted.</p> <p>If the value of this parameter is <code>OFF</code>, then the value of the <code>DeleteLambda</code> parameter of the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DeleteCanary.html\">DeleteCanary</a> operation determines whether the Lambda functions and layers will be deleted.</p>"
       }
     },
     "RequestEntityTooLargeException": {
       "base": "<p>One of the input resources is larger than is allowed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -621,8 +609,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>One of the specified resources was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceToTag": {
       "base": null,
@@ -635,7 +622,14 @@
       "refs": {
         "Canary$ExecutionRoleArn": "<p>The ARN of the IAM role used to run the canary. This role must include <code>lambda.amazonaws.com</code> as a principal in the trust policy.</p>",
         "CreateCanaryRequest$ExecutionRoleArn": "<p>The ARN of the IAM role to be used to run the canary. This role must already exist, and must include <code>lambda.amazonaws.com</code> as a principal in the trust policy. The role must also have the following permissions:</p> <ul> <li> <p> <code>s3:PutObject</code> </p> </li> <li> <p> <code>s3:GetBucketLocation</code> </p> </li> <li> <p> <code>s3:ListAllMyBuckets</code> </p> </li> <li> <p> <code>cloudwatch:PutMetricData</code> </p> </li> <li> <p> <code>logs:CreateLogGroup</code> </p> </li> <li> <p> <code>logs:CreateLogStream</code> </p> </li> <li> <p> <code>logs:PutLogEvents</code> </p> </li> </ul>",
+        "StartCanaryDryRunRequest$ExecutionRoleArn": "<p>The ARN of the IAM role to be used to run the canary. This role must already exist, and must include <code>lambda.amazonaws.com</code> as a principal in the trust policy. The role must also have the following permissions:</p>",
         "UpdateCanaryRequest$ExecutionRoleArn": "<p>The ARN of the IAM role to be used to run the canary. This role must already exist, and must include <code>lambda.amazonaws.com</code> as a principal in the trust policy. The role must also have the following permissions:</p> <ul> <li> <p> <code>s3:PutObject</code> </p> </li> <li> <p> <code>s3:GetBucketLocation</code> </p> </li> <li> <p> <code>s3:ListAllMyBuckets</code> </p> </li> <li> <p> <code>cloudwatch:PutMetricData</code> </p> </li> <li> <p> <code>logs:CreateLogGroup</code> </p> </li> <li> <p> <code>logs:CreateLogStream</code> </p> </li> <li> <p> <code>logs:CreateLogStream</code> </p> </li> </ul>"
+      }
+    },
+    "RunType": {
+      "base": null,
+      "refs": {
+        "GetCanaryRunsRequest$RunType": "<ul> <li> <p>When you provide <code>RunType=CANARY_RUN</code> and <code>dryRunId</code>, you will get an exception </p> </li> <li> <p>When a value is not provided for <code>RunType</code>, the default value is <code>CANARY_RUN</code> </p> </li> <li> <p>When <code>CANARY_RUN</code> is provided, all canary runs excluding dry runs are returned</p> </li> <li> <p>When <code>DRY_RUN</code> is provided, all dry runs excluding canary runs are returned</p> </li> </ul>"
       }
     },
     "RuntimeVersion": {
@@ -672,28 +666,31 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request exceeded a service quota value.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "StartCanaryDryRunRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartCanaryDryRunResponse": {
+      "base": null,
+      "refs": {}
     },
     "StartCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -713,10 +710,13 @@
         "CanaryStatus$StateReason": "<p>If the canary has insufficient permissions to run, this field provides more details.</p>",
         "CreateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the S3 bucket can't include a period (.).</p>",
         "CreateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
+        "DryRunConfigOutput$LastDryRunExecutionStatus": "<p>Returns the last execution status for a canary's dry run.</p>",
         "Group$Id": "<p>The unique ID of the group.</p>",
         "GroupSummary$Id": "<p>The unique ID of the group.</p>",
         "RuntimeVersion$VersionName": "<p>The name of the runtime version. For a list of valid runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "RuntimeVersion$Description": "<p>A description of the runtime version, created by Amazon.</p>",
+        "StartCanaryDryRunRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and for more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
+        "StartCanaryDryRunRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the Amazon S3 bucket can't include a period (.).</p>",
         "StringList$member": null,
         "UpdateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and for more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "UpdateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the S3 bucket can't include a period (.).</p>",
@@ -769,13 +769,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -814,44 +812,44 @@
     },
     "TooManyRequestsException": {
       "base": "<p>There were too many simultaneous requests. Try the operation again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UUID": {
       "base": null,
       "refs": {
         "Canary$Id": "<p>The unique ID of this canary.</p>",
-        "CanaryRun$Id": "<p>A unique ID that identifies this canary run.</p>"
+        "CanaryDryRunConfigOutput$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
+        "CanaryRun$Id": "<p>A unique ID that identifies this canary run.</p>",
+        "DryRunConfigOutput$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
+        "GetCanaryRequest$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
+        "GetCanaryRunsRequest$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
+        "UpdateCanaryRequest$DryRunId": "<p>Update the existing canary using the updated configurations from the DryRun associated with the DryRunId.</p> <note> <p>When you use the <code>dryRunId</code> field when updating a canary, the only other field you can provide is the <code>Schedule</code>. Adding any other field will thrown an exception.</p> </note>"
       }
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCanaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCanaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>A parameter could not be validated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VisualReferenceInput": {
       "base": "<p>An object that specifies what screenshots to use as a baseline for visual monitoring by this canary. It can optionally also specify parts of the screenshots to ignore during the visual monitoring comparison.</p> <p>Visual monitoring is supported only on canaries running the <b>syn-puppeteer-node-3.2</b> runtime or later. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Library_SyntheticsLogger_VisualTesting.html\"> Visual monitoring</a> and <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Blueprints_VisualTesting.html\"> Visual monitoring blueprint</a> </p>",
       "refs": {
+        "StartCanaryDryRunRequest$VisualReference": null,
         "UpdateCanaryRequest$VisualReference": "<p>Defines the screenshots to use as the baseline for comparisons during visual monitoring comparisons during future runs of this canary. If you omit this parameter, no changes are made to any baseline screenshots that the canary might be using already.</p> <p>Visual monitoring is supported only on canaries running the <b>syn-puppeteer-node-3.2</b> runtime or later. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Library_SyntheticsLogger_VisualTesting.html\"> Visual monitoring</a> and <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Blueprints_VisualTesting.html\"> Visual monitoring blueprint</a> </p>"
       }
     },
@@ -865,6 +863,7 @@
       "base": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnets and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>",
       "refs": {
         "CreateCanaryRequest$VpcConfig": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnet and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>",
+        "StartCanaryDryRunRequest$VpcConfig": null,
         "UpdateCanaryRequest$VpcConfig": "<p>If this canary is to test an endpoint in a VPC, this structure contains information about the subnet and security groups of the VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_VPC.html\"> Running a Canary in a VPC</a>.</p>"
       }
     },

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - Enables Updating Anywhere Settings on a MediaLive Anywhere Channel.
+* `Aws\imagebuilder` - Updated the CreateImageRecipeRequest ParentImage description to include all valid values as updated with the SSM Parameters project.
+* `Aws\Synthetics` - Add support to test a canary update by invoking a dry run of a canary. This behavior can be used via the new StartCanaryDryRun API along with new fields in UpdateCanary to apply dry run changes. Also includes changes in GetCanary and GetCanaryRuns to support retrieving dry run configurations.
+* `Aws\SageMaker` - SageMaker AI Studio users can now migrate to SageMaker Unified Studio, which offers a unified web-based development experience that integrates AWS data, analytics, artificial intelligence (AI), and machine learning (ML) services, as well as additional tools and resource
+* `Aws\EC2` - This release adds API support for Path Component Exclusion (Filter Out ARN) for Reachability Analyzer
+
 ## 3.343.5 - 2025-05-06
 
 * `Aws\TimestreamQuery` - Add dualstack endpoints support and correct us-gov-west-1 FIPS endpoint.

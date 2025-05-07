@@ -378,6 +378,7 @@
       "base": null,
       "refs": {
         "LabelingJobForWorkteamSummary$WorkRequesterAccountId": "<p>The Amazon Web Services account ID of the account used to start the labeling job.</p>",
+        "UnifiedStudioSettings$DomainAccountId": "<p>The ID of the Amazon Web Services account that has the Amazon SageMaker Unified Studio domain. The default value, if you don't specify an ID, is the ID of the account that has the Amazon SageMaker AI domain.</p>",
         "VpcOnlyTrustedAccounts$member": null
       }
     },
@@ -6379,7 +6380,9 @@
         "IdentityProviderOAuthSetting$Status": "<p>Describes whether OAuth for a data source is enabled or disabled in the Canvas application.</p>",
         "KendraSettings$Status": "<p>Describes whether the document querying feature is enabled or disabled in the Canvas application.</p>",
         "ModelRegisterSettings$Status": "<p>Describes whether the integration to the model registry is enabled or disabled in the Canvas application.</p>",
-        "TimeSeriesForecastingSettings$Status": "<p>Describes whether time series forecasting is enabled or disabled in the Canvas application.</p>"
+        "SpaceSettings$SpaceManagedResources": "<p>If you enable this option, SageMaker AI creates the following resources on your behalf when you create the space:</p> <ul> <li> <p>The user profile that possesses the space.</p> </li> <li> <p>The app that the space contains.</p> </li> </ul>",
+        "TimeSeriesForecastingSettings$Status": "<p>Describes whether time series forecasting is enabled or disabled in the Canvas application.</p>",
+        "UnifiedStudioSettings$StudioWebPortalAccess": "<p>Sets whether you can access the domain in Amazon SageMaker Studio:</p> <dl> <dt>ENABLED</dt> <dd> <p>You can access the domain in Amazon SageMaker Studio. If you migrate the domain to Amazon SageMaker Unified Studio, you can access it in both studio interfaces.</p> </dd> <dt>DISABLED</dt> <dd> <p>You can't access the domain in Amazon SageMaker Studio. If you migrate the domain to Amazon SageMaker Unified Studio, you can access it only in that studio interface.</p> </dd> </dl> <p>To migrate a domain to Amazon SageMaker Unified Studio, you specify the UnifiedStudioSettings data type when you use the UpdateDomain action.</p>"
       }
     },
     "FeatureType": {
@@ -13507,6 +13510,12 @@
         "DescribeHubContentResponse$ReferenceMinVersion": "<p>The minimum version of the hub content.</p>"
       }
     },
+    "RegionName": {
+      "base": null,
+      "refs": {
+        "UnifiedStudioSettings$DomainRegion": "<p>The Amazon Web Services Region where the domain is located in Amazon SageMaker Unified Studio. The default value, if you don't specify a Region, is the Region where the Amazon SageMaker AI domain is located.</p>"
+      }
+    },
     "RegisterDevicesRequest": {
       "base": null,
       "refs": {}
@@ -14111,6 +14120,7 @@
         "TransformOutput$S3OutputPath": "<p>The Amazon S3 path where you want Amazon SageMaker to store the results of the transform job. For example, <code>s3://bucket-name/key-name-prefix</code>.</p> <p>For every S3 object used as input for the transform job, batch transform stores the transformed data with an .<code>out</code> suffix in a corresponding subfolder in the location in the output prefix. For example, for the input data stored at <code>s3://bucket-name/input-name-prefix/dataset01/data.csv</code>, batch transform stores the transformed data at <code>s3://bucket-name/output-name-prefix/input-name-prefix/data.csv.out</code>. Batch transform doesn't upload partially processed objects. For an input S3 object that contains multiple records, it creates an .<code>out</code> file only if the transform job succeeds on the entire file. When the input contains multiple S3 objects, the batch transform job processes the listed S3 objects and uploads only the output for successfully processed objects. If any object fails in the transform job batch transform marks the job as failed to prompt investigation.</p>",
         "TransformS3DataSource$S3Uri": "<p>Depending on the value specified for the <code>S3DataType</code>, identifies either a key name prefix or a manifest. For example:</p> <ul> <li> <p> A key name prefix might look like this: <code>s3://bucketname/exampleprefix/</code>. </p> </li> <li> <p> A manifest might look like this: <code>s3://bucketname/example.manifest</code> </p> <p> The manifest is an S3 object which is a JSON file with the following format: </p> <p> <code>[ {\"prefix\": \"s3://customer_bucket/some/prefix/\"},</code> </p> <p> <code>\"relative/path/to/custdata-1\",</code> </p> <p> <code>\"relative/path/custdata-2\",</code> </p> <p> <code>...</code> </p> <p> <code>\"relative/path/custdata-N\"</code> </p> <p> <code>]</code> </p> <p> The preceding JSON matches the following <code>S3Uris</code>: </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/to/custdata-1</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-2</code> </p> <p> <code>...</code> </p> <p> <code>s3://customer_bucket/some/prefix/relative/path/custdata-N</code> </p> <p> The complete set of <code>S3Uris</code> in this manifest constitutes the input data for the channel for this datasource. The object that each <code>S3Uris</code> points to must be readable by the IAM role that Amazon SageMaker uses to perform tasks on your behalf.</p> </li> </ul>",
         "UiConfig$UiTemplateS3Uri": "<p>The Amazon S3 bucket location of the UI template, or worker task template. This is the template used to render the worker UI and tools for labeling job tasks. For more information about the contents of a UI template, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-custom-templates-step2.html\"> Creating Your Custom Labeling Task Template</a>.</p>",
+        "UnifiedStudioSettings$ProjectS3Path": "<p>The location where Amazon S3 stores temporary execution data and other artifacts for the project that corresponds to the domain.</p>",
         "UpdateMlflowTrackingServerRequest$ArtifactStoreUri": "<p>The new S3 URI for the general purpose bucket to use as the artifact store for the MLflow Tracking Server.</p>",
         "WorkspaceSettings$S3ArtifactPath": "<p>The Amazon S3 bucket used to store artifacts generated by Canvas. Updating the Amazon S3 location impacts existing configuration settings, and Canvas users no longer have access to their artifacts. Canvas users must log out and log back in to apply the new location.</p>"
       }
@@ -15815,9 +15825,9 @@
         "AutoMLJobSummary$EndTime": "<p>The end time of an AutoML job.</p>",
         "AutoMLJobSummary$LastModifiedTime": "<p>When the AutoML job was last modified.</p>",
         "ClusterNodeDetails$LaunchTime": "<p>The time when the instance is launched.</p>",
-        "ClusterNodeDetails$LastSoftwareUpdateTime": "<p>The time of when the cluster was last updated.</p>",
+        "ClusterNodeDetails$LastSoftwareUpdateTime": "<p>The time when the cluster was last updated.</p>",
         "ClusterNodeSummary$LaunchTime": "<p>The time when the instance is launched.</p>",
-        "ClusterNodeSummary$LastSoftwareUpdateTime": "<p>The time of when SageMaker last updated the software of the instances in the cluster.</p>",
+        "ClusterNodeSummary$LastSoftwareUpdateTime": "<p>The time when SageMaker last updated the software of the instances in the cluster.</p>",
         "ClusterSchedulerConfigSummary$CreationTime": "<p>Creation time of the cluster policy.</p>",
         "ClusterSchedulerConfigSummary$LastModifiedTime": "<p>Last modified time of the cluster policy.</p>",
         "ClusterSummary$CreationTime": "<p>The time when the SageMaker HyperPod cluster is created.</p>",
@@ -17136,6 +17146,31 @@
       "base": null,
       "refs": {
         "CustomPosixUserConfig$Uid": "<p>The POSIX user ID.</p>"
+      }
+    },
+    "UnifiedStudioDomainId": {
+      "base": null,
+      "refs": {
+        "UnifiedStudioSettings$DomainId": "<p>The ID of the Amazon SageMaker Unified Studio domain associated with this domain.</p>"
+      }
+    },
+    "UnifiedStudioEnvironmentId": {
+      "base": null,
+      "refs": {
+        "UnifiedStudioSettings$EnvironmentId": "<p>The ID of the environment that Amazon SageMaker Unified Studio associates with the domain.</p>"
+      }
+    },
+    "UnifiedStudioProjectId": {
+      "base": null,
+      "refs": {
+        "UnifiedStudioSettings$ProjectId": "<p>The ID of the Amazon SageMaker Unified Studio project that corresponds to the domain.</p>"
+      }
+    },
+    "UnifiedStudioSettings": {
+      "base": "<p>The settings that apply to an Amazon SageMaker AI domain when you use it in Amazon SageMaker Unified Studio.</p>",
+      "refs": {
+        "DomainSettings$UnifiedStudioSettings": "<p>The settings that apply to an SageMaker AI domain when you use it in Amazon SageMaker Unified Studio.</p>",
+        "DomainSettingsForUpdate$UnifiedStudioSettings": "<p>The settings that apply to an SageMaker AI domain when you use it in Amazon SageMaker Unified Studio.</p>"
       }
     },
     "UpdateActionRequest": {

@@ -259,6 +259,22 @@
         {"shape":"ConflictException"}
       ]
     },
+    "StartCanaryDryRun":{
+      "name":"StartCanaryDryRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/canary/{name}/dry-run/start"
+      },
+      "input":{"shape":"StartCanaryDryRunRequest"},
+      "output":{"shape":"StartCanaryDryRunResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "StopCanary":{
       "name":"StopCanary",
       "http":{
@@ -319,11 +335,20 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
-        {"shape":"RequestEntityTooLargeException"}
+        {"shape":"RequestEntityTooLargeException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
   "shapes":{
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
+    },
     "ArtifactConfigInput":{
       "type":"structure",
       "members":{
@@ -353,8 +378,7 @@
     },
     "AssociateResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "BadRequestException":{
       "type":"structure",
@@ -419,7 +443,8 @@
         "VisualReference":{"shape":"VisualReferenceOutput"},
         "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
         "Tags":{"shape":"TagMap"},
-        "ArtifactConfig":{"shape":"ArtifactConfigOutput"}
+        "ArtifactConfig":{"shape":"ArtifactConfigOutput"},
+        "DryRunConfig":{"shape":"DryRunConfigOutput"}
       }
     },
     "CanaryArn":{
@@ -446,6 +471,12 @@
         "Handler":{"shape":"String"}
       }
     },
+    "CanaryDryRunConfigOutput":{
+      "type":"structure",
+      "members":{
+        "DryRunId":{"shape":"UUID"}
+      }
+    },
     "CanaryLastRun":{
       "type":"structure",
       "members":{
@@ -466,7 +497,8 @@
         "Name":{"shape":"CanaryName"},
         "Status":{"shape":"CanaryRunStatus"},
         "Timeline":{"shape":"CanaryRunTimeline"},
-        "ArtifactS3Location":{"shape":"String"}
+        "ArtifactS3Location":{"shape":"String"},
+        "DryRunConfig":{"shape":"CanaryDryRunConfigOutput"}
       }
     },
     "CanaryRunConfigInput":{
@@ -662,8 +694,7 @@
     },
     "DeleteCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGroupRequest":{
       "type":"structure",
@@ -678,8 +709,7 @@
     },
     "DeleteGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeCanariesLastRunNameFilter":{
       "type":"list",
@@ -754,7 +784,13 @@
     },
     "DisassociateResourceResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DryRunConfigOutput":{
+      "type":"structure",
       "members":{
+        "DryRunId":{"shape":"UUID"},
+        "LastDryRunExecutionStatus":{"shape":"String"}
       }
     },
     "EncryptionMode":{
@@ -789,6 +825,11 @@
           "shape":"CanaryName",
           "location":"uri",
           "locationName":"name"
+        },
+        "DryRunId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"dryRunId"
         }
       }
     },
@@ -808,7 +849,9 @@
           "locationName":"name"
         },
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"MaxSize100"}
+        "MaxResults":{"shape":"MaxSize100"},
+        "DryRunId":{"shape":"UUID"},
+        "RunType":{"shape":"RunType"}
       }
     },
     "GetCanaryRunsResponse":{
@@ -1062,6 +1105,13 @@
       "min":1,
       "pattern":"arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
+    "RunType":{
+      "type":"string",
+      "enum":[
+        "CANARY_RUN",
+        "DRY_RUN"
+      ]
+    },
     "RuntimeVersion":{
       "type":"structure",
       "members":{
@@ -1097,6 +1147,34 @@
       "error":{"httpStatusCode":402},
       "exception":true
     },
+    "StartCanaryDryRunRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{
+          "shape":"CanaryName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "Code":{"shape":"CanaryCodeInput"},
+        "RuntimeVersion":{"shape":"String"},
+        "RunConfig":{"shape":"CanaryRunConfigInput"},
+        "VpcConfig":{"shape":"VpcConfigInput"},
+        "ExecutionRoleArn":{"shape":"RoleArn"},
+        "SuccessRetentionPeriodInDays":{"shape":"MaxSize1024"},
+        "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
+        "VisualReference":{"shape":"VisualReferenceInput"},
+        "ArtifactS3Location":{"shape":"String"},
+        "ArtifactConfig":{"shape":"ArtifactConfigInput"},
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"}
+      }
+    },
+    "StartCanaryDryRunResponse":{
+      "type":"structure",
+      "members":{
+        "DryRunConfig":{"shape":"DryRunConfigOutput"}
+      }
+    },
     "StartCanaryRequest":{
       "type":"structure",
       "required":["Name"],
@@ -1110,8 +1188,7 @@
     },
     "StartCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopCanaryRequest":{
       "type":"structure",
@@ -1126,8 +1203,7 @@
     },
     "StopCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{
       "type":"string",
@@ -1181,8 +1257,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1227,8 +1302,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCanaryRequest":{
       "type":"structure",
@@ -1250,13 +1324,13 @@
         "VisualReference":{"shape":"VisualReferenceInput"},
         "ArtifactS3Location":{"shape":"String"},
         "ArtifactConfig":{"shape":"ArtifactConfigInput"},
-        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"}
+        "ProvisionedResourceCleanup":{"shape":"ProvisionedResourceCleanupSetting"},
+        "DryRunId":{"shape":"UUID"}
       }
     },
     "UpdateCanaryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",

@@ -12168,7 +12168,8 @@
         "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"},
         "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"},
         "DockerSettings":{"shape":"DockerSettings"},
-        "AmazonQSettings":{"shape":"AmazonQSettings"}
+        "AmazonQSettings":{"shape":"AmazonQSettings"},
+        "UnifiedStudioSettings":{"shape":"UnifiedStudioSettings"}
       }
     },
     "DomainSettingsForUpdate":{
@@ -12178,7 +12179,8 @@
         "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"},
         "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
         "DockerSettings":{"shape":"DockerSettings"},
-        "AmazonQSettings":{"shape":"AmazonQSettings"}
+        "AmazonQSettings":{"shape":"AmazonQSettings"},
+        "UnifiedStudioSettings":{"shape":"UnifiedStudioSettings"}
       }
     },
     "DomainStatus":{
@@ -21860,6 +21862,11 @@
       "min":5,
       "pattern":"^\\d{1,4}.\\d{1,4}.\\d{1,4}$"
     },
+    "RegionName":{
+      "type":"string",
+      "max":24,
+      "min":1
+    },
     "RegisterDevicesRequest":{
       "type":"structure",
       "required":[
@@ -22647,8 +22654,6 @@
     "SearchTrainingPlanOfferingsRequest":{
       "type":"structure",
       "required":[
-        "InstanceType",
-        "InstanceCount",
         "DurationHours",
         "TargetResources"
       ],
@@ -23140,6 +23145,7 @@
         "JupyterLabAppSettings":{"shape":"SpaceJupyterLabAppSettings"},
         "AppType":{"shape":"AppType"},
         "SpaceStorageSettings":{"shape":"SpaceStorageSettings"},
+        "SpaceManagedResources":{"shape":"FeatureStatus"},
         "CustomFileSystems":{"shape":"CustomFileSystems"}
       }
     },
@@ -25238,6 +25244,30 @@
       "type":"long",
       "max":4000000,
       "min":10000
+    },
+    "UnifiedStudioDomainId":{
+      "type":"string",
+      "pattern":"^dzd[-_][a-zA-Z0-9_-]{1,36}$"
+    },
+    "UnifiedStudioEnvironmentId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "UnifiedStudioProjectId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "UnifiedStudioSettings":{
+      "type":"structure",
+      "members":{
+        "StudioWebPortalAccess":{"shape":"FeatureStatus"},
+        "DomainAccountId":{"shape":"AccountId"},
+        "DomainRegion":{"shape":"RegionName"},
+        "DomainId":{"shape":"UnifiedStudioDomainId"},
+        "ProjectId":{"shape":"UnifiedStudioProjectId"},
+        "EnvironmentId":{"shape":"UnifiedStudioEnvironmentId"},
+        "ProjectS3Path":{"shape":"S3Uri"}
+      }
     },
     "UpdateActionRequest":{
       "type":"structure",
