@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.6 - 2025-05-07
 
 * `Aws\MediaLive` - Enables Updating Anywhere Settings on a MediaLive Anywhere Channel.
 * `Aws\imagebuilder` - Updated the CreateImageRecipeRequest ParentImage description to include all valid values as updated with the SSM Parameters project.
