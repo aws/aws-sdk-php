@@ -1215,7 +1215,7 @@ EOF;
         }
     }
 
-    public function resolutionWithLegacyAndExtendedPathsProvider()
+    public function resolutionWithLegacyAndExtendedPathsProvider(): \Generator
     {
         $serialized = json_decode(
             file_get_contents(__DIR__ . '/fixtures/instance/imds-test-cases.json'),
@@ -1275,9 +1275,7 @@ EOF;
             }
 
             unset($case['expectations']);
+            yield $case;
         }
-        unset($case); //break reference
-
-        return $serialized;
     }
 }
