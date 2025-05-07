@@ -26,6 +26,8 @@ class InstanceProfileProvider
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
     const CFG_EC2_METADATA_SERVICE_ENDPOINT = 'ec2_metadata_service_endpoint';
     const CFG_EC2_METADATA_SERVICE_ENDPOINT_MODE = 'ec2_metadata_service_endpoint_mode';
+    const CFG_DISABLE_EC2_METADATA = 'disable_ec2_metadata';
+    const CFG_EC2_INSTANCE_PROFILE_NAME = 'ec2_instance_profile_name';
     const DEFAULT_TIMEOUT = 1.0;
     const DEFAULT_RETRIES = 3;
     const DEFAULT_TOKEN_TTL_SECONDS = 21600;
@@ -82,7 +84,14 @@ class InstanceProfileProvider
     {
         $this->timeout = (float) getenv(self::ENV_TIMEOUT)
             ?: ($config['timeout'] ?? self::DEFAULT_TIMEOUT);
-        $this->profile = $config['profile'] ?? $config['ec2_instance_profile_name'] ?? null;
+        $this->profile = $config['profile']
+            ?? $config[self::CFG_EC2_INSTANCE_PROFILE_NAME]
+            ?? ConfigurationResolver::resolve(
+                self::CFG_EC2_INSTANCE_PROFILE_NAME,
+                null,
+                'string',
+                $this->config
+            );
         $this->retries = (int) getenv(self::ENV_RETRIES)
             ?: ($config['retries'] ?? self::DEFAULT_RETRIES);
         $this->client = $config['client'] ?? \Aws\default_http_handler();
@@ -264,8 +273,11 @@ class InstanceProfileProvider
      */
     private function request($path, $method = 'GET', $headers = [])
     {
-        $disabled = getenv(self::ENV_DISABLE) ?: false;
-        if (strcasecmp($disabled, 'true') === 0) {
+        $disabled = ConfigurationResolver::ini(self::CFG_DISABLE_EC2_METADATA, 'bool')
+            ?? ConfigurationResolver::env(substr(self::ENV_DISABLE, 4), 'bool')
+            ?? false;
+
+        if ($disabled) {
             throw new CredentialsException(
                 $this->createErrorMessage('EC2 metadata service access disabled')
             );
@@ -300,8 +312,8 @@ class InstanceProfileProvider
 
     private function handleRetryableException(
         \Exception $e,
-                   $retryOptions,
-                   $message
+       $retryOptions,
+       $message
     ) {
         $isRetryable = true;
         if (!empty($status = $this->getExceptionStatusCode($e))

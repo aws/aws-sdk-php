@@ -24,7 +24,7 @@ use Psr\Http\Message\RequestInterface;
 class InstanceProfileProviderTest extends TestCase
 {
     public const GET_REQUEST_PATTERN = '#^/latest/meta-data/iam/security-credentials(?:-extended)?(?:/([^/]+))?$#';
-    static $originalFlag;
+    private static array $originalEnv;
 
     protected function tearDown(): void
     {
@@ -34,13 +34,28 @@ class InstanceProfileProviderTest extends TestCase
 
     public static function set_up_before_class()
     {
-        self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
+        self::$originalEnv = [
+            'home' => getenv('HOME') ?: '',
+            'config_file' => getenv(ConfigurationResolver::ENV_CONFIG_FILE) ?: '',
+            'disable_flag' => getenv(InstanceProfileProvider::ENV_DISABLE) ?: '',
+            'profile_name' => getenv(
+                'AWS_'
+                . strtoupper(InstanceProfileProvider::CFG_EC2_INSTANCE_PROFILE_NAME)
+            ) ?: '',
+        ];
+
         putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
     }
 
     public static function tear_down_after_class()
     {
-        putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
+        putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalEnv['disable_flag']);
+        putenv('HOME' . '=' . self::$originalEnv['home']);
+        putenv(ConfigurationResolver::ENV_CONFIG_FILE . '=' . self::$originalEnv['config_file']);
+        putenv(
+            'AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_INSTANCE_PROFILE_NAME)
+            . '=' . self::$originalEnv['profile_name']
+        );
     }
 
     private function getCredentialArray(
@@ -142,10 +157,13 @@ class InstanceProfileProviderTest extends TestCase
 
                     return Promise\Create::rejectionFor(['exception' => $exception]);
                 }
-                switch ($request->getUri()->getPath()) {
-                    case '/latest/meta-data/iam/security-credentials':
+
+                if (!str_ends_with(($path = $request->getUri()->getPath()), '/')) {
+                    $path .= "/";
+                }
+
+                switch ($path) {
                     case '/latest/meta-data/iam/security-credentials/':
-                    case '/latest/meta-data/iam/security-credentials-extended':
                     case '/latest/meta-data/iam/security-credentials-extended/':
                         if (isset($responses['get_profile'])) {
                             return $responses['get_profile'][$getProfileRequests++];
@@ -155,9 +173,7 @@ class InstanceProfileProviderTest extends TestCase
                         );
                         break;
 
-                    case "/latest/meta-data/iam/security-credentials/{$profile}":
                     case "/latest/meta-data/iam/security-credentials/{$profile}/":
-                    case "/latest/meta-data/iam/security-credentials-extended/{$profile}":
                     case "/latest/meta-data/iam/security-credentials-extended/{$profile}/":
                         if (isset($responses['get_creds'])) {
                             return $responses['get_creds'][$getCredsRequests++];
@@ -596,26 +612,54 @@ class InstanceProfileProviderTest extends TestCase
         new InstanceProfileProvider();
     }
 
-    /** @doesNotPerformAssertions */
-    public function testEnvDisableFlag()
+    /**
+     * @param $ini
+     * @param $env
+     *
+     * @return void
+     * @dataProvider disableFlagProvider
+     */
+    public function testDisableFlag($ini, $env)
     {
-        $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
+        $this->expectException(CredentialsException::class);
+        $this->expectExceptionMessage('EC2 metadata service access disabled');
+
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        file_put_contents($dir . '/config', $ini);
+        putenv('HOME=' . dirname($dir));
 
         try {
-            putenv(InstanceProfileProvider::ENV_DISABLE . '=true');
+            putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $env);
             $t = time() + 1000;
             $this->getTestCreds(
                 json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"))
             )->wait();
-            $this->fail('Did not throw expected CredentialException.');
-        } catch (CredentialsException $e) {
-            if (strstr($e->getMessage(), 'EC2 metadata service access disabled') === false) {
-                $this->fail('Did not throw expected CredentialException when '
-                    . 'provider is disabled.');
-            }
         } finally {
-            putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
+            putenv(InstanceProfileProvider::ENV_DISABLE . '=false');
         }
+    }
+
+    public function disableFlagProvider()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+disable_ec2_metadata = true
+EOT,
+                false
+            ],
+            [
+                <<<EOT
+[default]
+disable_ec2_metadata = 
+EOT,
+                true
+            ]
+        ];
     }
 
     public function testRetriesEnvVarIsUsed()
@@ -1215,7 +1259,7 @@ EOF;
         }
     }
 
-    public function resolutionWithLegacyAndExtendedPathsProvider()
+    public function resolutionWithLegacyAndExtendedPathsProvider(): \Generator
     {
         $serialized = json_decode(
             file_get_contents(__DIR__ . '/fixtures/instance/imds-test-cases.json'),
@@ -1275,9 +1319,87 @@ EOF;
             }
 
             unset($case['expectations']);
+            yield $case;
         }
-        unset($case); //break reference
+    }
 
-        return $serialized;
+    /**
+     * @param string $profileKey
+     * @param string $ec2InstanceProfileNameKey
+     * @param string $sharedConfig
+     * @param string $env
+     * @param string $expected
+     *
+     * @return void
+     * @dataProvider resolvesProfileConfigInExpectedOrderProvider
+     */
+    public function testResolvesProfileConfigInExpectedOrder(
+        string|null $profileKey,
+        string|null $ec2InstanceProfileNameKey,
+        string|null $sharedConfig,
+        string $env,
+        string $expected
+    )
+    {
+        if ($sharedConfig) {
+            $dir = sys_get_temp_dir() . '/.aws';
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            file_put_contents($dir . '/config', $sharedConfig);
+            putenv('HOME=' . dirname($dir));
+        }
+
+        try {
+            putenv('AWS_' . strtoupper(InstanceProfileProvider::CFG_EC2_INSTANCE_PROFILE_NAME) . '=' . $env);
+            $provider = new InstanceProfileProvider([
+                'profile' => $profileKey,
+                'ec2_instance_profile_name' => $ec2InstanceProfileNameKey]
+            );
+            $reflection = new \ReflectionClass($provider);
+            $property = $reflection->getProperty('profile');
+            $property->setAccessible(true);
+
+            $this->assertEquals($expected, (string) $property->getValue($provider));
+        } finally {
+            putenv(InstanceProfileProvider::ENV_DISABLE . '=false');
+        }
+    }
+
+    public function resolvesProfileConfigInExpectedOrderProvider()
+    {
+        return [
+            [
+                'Profile_Key',
+                'foo',
+                null,
+                '',
+                'Profile_Key'
+            ],
+            [
+                null,
+                'Profile_Name_Key',
+                null,
+                '',
+                'Profile_Name_Key'
+            ],
+            [
+                null,
+                null,
+                <<<EOT
+[default]
+ec2_instance_profile_name = SHARED_CONFIG
+EOT,
+                '',
+                'SHARED_CONFIG'
+            ],
+            [
+                null,
+                null,
+                null,
+                'ENV_VAR',
+                'ENV_VAR',
+            ],
+        ];
     }
 }
