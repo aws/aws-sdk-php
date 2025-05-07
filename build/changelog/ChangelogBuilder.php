@@ -104,6 +104,10 @@ class ChangelogBuilder
 
     private function createChangelogJson($changelog, $tag)
     {
+        if (!preg_match('/^\d+\.\d+\.\d+$/', $tag)) {
+            throw new \InvalidArgumentException('Invalid tag value.');
+        }
+
         $fp = fopen($this->releaseNotesOutputDir . ".changes/" . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT) . PHP_EOL);
         fclose($fp);
