@@ -9,7 +9,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class ChangelogBuilderTest extends TestCase
 {
-    private $RESOURCE_DIR = "tests/Build/Changelog/resources/";
+    private static $resourceDir = 'tests/Build/Changelog/resources/';
+    private static $invalidResourceDir = 'tests/Build/Changelog/resources/invalid/';
 
     public function testBuildChangelogNoDirectory()
     {
@@ -39,7 +40,23 @@ class ChangelogBuilderTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $params = [];
-        $params['base_dir'] = $this->RESOURCE_DIR;
+        $params['base_dir'] = self::$resourceDir;
+        $params['release_notes_output_dir'] = sys_get_temp_dir() . "/";
+        $obj = new ChangelogBuilder($params);
+        $obj->buildChangelog();
+    }
+
+    public function testBuildChangelogInvalidPathChangelog()
+    {
+        if (PHP_VERSION_ID >= 80300) {
+            $this->expectException(\PHPUnit\Framework\Error\Deprecated::class);
+        } else {
+            $this->expectException(\InvalidArgumentException::class);
+            $this->expectExceptionMessage('Invalid tag value');
+        }
+
+        $params = [];
+        $params['base_dir'] = self::$invalidResourceDir;
         $params['release_notes_output_dir'] = sys_get_temp_dir() . "/";
         $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
@@ -50,7 +67,7 @@ class ChangelogBuilderTest extends TestCase
         $tempDir = sys_get_temp_dir() . "/";
         file_put_contents($tempDir . "CHANGELOG.md", "# CHANGELOG \n\n\n\n ");
         $params = [];
-        $params['base_dir'] = $this->RESOURCE_DIR;
+        $params['base_dir'] = self::$resourceDir;
         $params['release_notes_output_dir'] = $tempDir;
         $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
@@ -62,7 +79,7 @@ class ChangelogBuilderTest extends TestCase
         $this->assertSame("* `Aws\s3` - Test string placeholder for new service\n", $lines[6]);
         $this->assertSame("* `Aws\util` - Parse ini files containing comments using #\n", $lines[7]);
         unlink($tempDir . '/CHANGELOG.md');
-        $expected = file_get_contents($this->RESOURCE_DIR . "/release-json-valid");
+        $expected = file_get_contents(self::$resourceDir . "/release-json-valid");
         $output = file_get_contents($tempDir . "/.changes/3.22.0");
         $this->assertEquals(
             json_decode($expected, true),
