@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.7 - 2025-05-08
 
 * `Aws\` - Validates tag input for `ChangelogBuilder`
 * `Aws\CodePipeline` - Add support for Secrets Manager and Plaintext environment variable types in Commands action
