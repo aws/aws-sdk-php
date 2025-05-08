@@ -8222,6 +8222,7 @@
       "members":{
         "NetworkCardIndex":{"shape":"Integer"},
         "EnaSrdSpecification":{"shape":"EnaSrdSpecification"},
+        "EnaQueueCount":{"shape":"Integer"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -14583,6 +14584,7 @@
         "locationName":"item"
       }
     },
+    "DefaultEnaQueueCountPerInterface":{"type":"integer"},
     "DefaultInstanceMetadataEndpointState":{
       "type":"string",
       "enum":[
@@ -25441,6 +25443,13 @@
         "instant"
       ]
     },
+    "FlexibleEnaQueuesSupport":{
+      "type":"string",
+      "enum":[
+        "unsupported",
+        "supported"
+      ]
+    },
     "Float":{"type":"float"},
     "FlowLog":{
       "type":"structure",
@@ -30108,6 +30117,10 @@
         "EnaSrdSpecification":{
           "shape":"InstanceAttachmentEnaSrdSpecification",
           "locationName":"enaSrdSpecification"
+        },
+        "EnaQueueCount":{
+          "shape":"Integer",
+          "locationName":"enaQueueCount"
         }
       }
     },
@@ -30186,7 +30199,8 @@
         "Ipv6PrefixCount":{"shape":"Integer"},
         "PrimaryIpv6":{"shape":"Boolean"},
         "EnaSrdSpecification":{"shape":"EnaSrdSpecificationRequest"},
-        "ConnectionTrackingSpecification":{"shape":"ConnectionTrackingSpecificationRequest"}
+        "ConnectionTrackingSpecification":{"shape":"ConnectionTrackingSpecificationRequest"},
+        "EnaQueueCount":{"shape":"Integer"}
       }
     },
     "InstanceNetworkInterfaceSpecificationList":{
@@ -34260,6 +34274,10 @@
         "ConnectionTrackingSpecification":{
           "shape":"ConnectionTrackingSpecification",
           "locationName":"connectionTrackingSpecification"
+        },
+        "EnaQueueCount":{
+          "shape":"Integer",
+          "locationName":"enaQueueCount"
         }
       }
     },
@@ -34303,7 +34321,8 @@
         "Ipv6PrefixCount":{"shape":"Integer"},
         "PrimaryIpv6":{"shape":"Boolean"},
         "EnaSrdSpecification":{"shape":"EnaSrdSpecificationRequest"},
-        "ConnectionTrackingSpecification":{"shape":"ConnectionTrackingSpecificationRequest"}
+        "ConnectionTrackingSpecification":{"shape":"ConnectionTrackingSpecificationRequest"},
+        "EnaQueueCount":{"shape":"Integer"}
       }
     },
     "LaunchTemplateInstanceNetworkInterfaceSpecificationRequestList":{
@@ -35516,6 +35535,8 @@
     },
     "MaximumBandwidthInMbps":{"type":"integer"},
     "MaximumEfaInterfaces":{"type":"integer"},
+    "MaximumEnaQueueCount":{"type":"integer"},
+    "MaximumEnaQueueCountPerInterface":{"type":"integer"},
     "MaximumIops":{"type":"integer"},
     "MaximumNetworkCards":{"type":"integer"},
     "MaximumThroughputInMBps":{"type":"double"},
@@ -38118,6 +38139,18 @@
         "PeakBandwidthInGbps":{
           "shape":"PeakBandwidthInGbps",
           "locationName":"peakBandwidthInGbps"
+        },
+        "DefaultEnaQueueCountPerInterface":{
+          "shape":"DefaultEnaQueueCountPerInterface",
+          "locationName":"defaultEnaQueueCountPerInterface"
+        },
+        "MaximumEnaQueueCount":{
+          "shape":"MaximumEnaQueueCount",
+          "locationName":"maximumEnaQueueCount"
+        },
+        "MaximumEnaQueueCountPerInterface":{
+          "shape":"MaximumEnaQueueCountPerInterface",
+          "locationName":"maximumEnaQueueCountPerInterface"
         }
       }
     },
@@ -38186,6 +38219,10 @@
         "BandwidthWeightings":{
           "shape":"BandwidthWeightingTypeList",
           "locationName":"bandwidthWeightings"
+        },
+        "FlexibleEnaQueuesSupport":{
+          "shape":"FlexibleEnaQueuesSupport",
+          "locationName":"flexibleEnaQueuesSupport"
         }
       }
     },
@@ -38668,12 +38705,18 @@
         "EnaSrdSpecification":{
           "shape":"AttachmentEnaSrdSpecification",
           "locationName":"enaSrdSpecification"
+        },
+        "EnaQueueCount":{
+          "shape":"Integer",
+          "locationName":"enaQueueCount"
         }
       }
     },
     "NetworkInterfaceAttachmentChanges":{
       "type":"structure",
       "members":{
+        "DefaultEnaQueueCount":{"shape":"Boolean"},
+        "EnaQueueCount":{"shape":"Integer"},
         "AttachmentId":{
           "shape":"NetworkInterfaceAttachmentId",
           "locationName":"attachmentId"

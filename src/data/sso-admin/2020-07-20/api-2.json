@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-20",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"sso",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"SSO Admin",
     "serviceFullName":"AWS Single Sign-On Admin",
     "serviceId":"SSO Admin",
@@ -1239,7 +1241,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]+$"
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]+"
     },
     "AccessControlAttributeList":{
       "type":"list",
@@ -1258,7 +1260,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@\\[\\]\\{\\}\\$\\\\\"]*$"
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@\\[\\]\\{\\}\\$\\\\\"]*"
     },
     "AccessControlAttributeValueSourceList":{
       "type":"list",
@@ -1279,8 +1281,8 @@
       "members":{
         "AccountId":{"shape":"AccountId"},
         "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"}
+        "PrincipalType":{"shape":"PrincipalType"},
+        "PrincipalId":{"shape":"PrincipalId"}
       }
     },
     "AccountAssignmentForPrincipal":{
@@ -1303,15 +1305,15 @@
     "AccountAssignmentOperationStatus":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
-        "FailureReason":{"shape":"Reason"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"},
-        "RequestId":{"shape":"UUId"},
         "Status":{"shape":"StatusValues"},
+        "RequestId":{"shape":"UUId"},
+        "FailureReason":{"shape":"Reason"},
         "TargetId":{"shape":"TargetId"},
-        "TargetType":{"shape":"TargetType"}
+        "TargetType":{"shape":"TargetType"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "PrincipalType":{"shape":"PrincipalType"},
+        "PrincipalId":{"shape":"PrincipalId"},
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "AccountAssignmentOperationStatusList":{
@@ -1321,16 +1323,16 @@
     "AccountAssignmentOperationStatusMetadata":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
+        "Status":{"shape":"StatusValues"},
         "RequestId":{"shape":"UUId"},
-        "Status":{"shape":"StatusValues"}
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "AccountId":{
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d{12}$"
+      "pattern":"\\d{12}"
     },
     "AccountList":{
       "type":"list",
@@ -1345,22 +1347,22 @@
     "Application":{
       "type":"structure",
       "members":{
-        "ApplicationAccount":{"shape":"AccountId"},
         "ApplicationArn":{"shape":"ApplicationArn"},
         "ApplicationProviderArn":{"shape":"ApplicationProviderArn"},
-        "CreatedDate":{"shape":"Date"},
-        "Description":{"shape":"Description"},
-        "InstanceArn":{"shape":"InstanceArn"},
         "Name":{"shape":"NameType"},
+        "ApplicationAccount":{"shape":"AccountId"},
+        "InstanceArn":{"shape":"InstanceArn"},
+        "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
-        "Status":{"shape":"ApplicationStatus"}
+        "Description":{"shape":"Description"},
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "ApplicationArn":{
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
     },
     "ApplicationAssignment":{
       "type":"structure",
@@ -1397,13 +1399,19 @@
       "max":50,
       "min":0
     },
+    "ApplicationNameType":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[\\S\\s]*"
+    },
     "ApplicationProvider":{
       "type":"structure",
       "required":["ApplicationProviderArn"],
       "members":{
         "ApplicationProviderArn":{"shape":"ApplicationProviderArn"},
-        "DisplayData":{"shape":"DisplayData"},
         "FederationProtocol":{"shape":"FederationProtocol"},
+        "DisplayData":{"shape":"DisplayData"},
         "ResourceServerConfig":{"shape":"ResourceServerConfig"}
       }
     },
@@ -1411,7 +1419,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::aws:applicationProvider/[a-zA-Z0-9-/]+$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::aws:applicationProvider/[a-zA-Z0-9-/]+"
     },
     "ApplicationProviderList":{
       "type":"list",
@@ -1428,7 +1436,7 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^http(s)?:\\/\\/[-a-zA-Z0-9+&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&bb@#\\/%?=~_|]$"
+      "pattern":"http(s)?:\\/\\/[-a-zA-Z0-9+&@#\\/%?=~_|!:,.;]*[-a-zA-Z0-9+&bb@#\\/%?=~_|]"
     },
     "ApplicationVisibility":{
       "type":"string",
@@ -1444,14 +1452,14 @@
     "AttachCustomerManagedPolicyReferenceToPermissionSetRequest":{
       "type":"structure",
       "required":[
-        "CustomerManagedPolicyReference",
         "InstanceArn",
-        "PermissionSetArn"
+        "PermissionSetArn",
+        "CustomerManagedPolicyReference"
       ],
       "members":{
-        "CustomerManagedPolicyReference":{"shape":"CustomerManagedPolicyReference"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "CustomerManagedPolicyReference":{"shape":"CustomerManagedPolicyReference"}
       }
     },
     "AttachCustomerManagedPolicyReferenceToPermissionSetResponse":{
@@ -1463,13 +1471,13 @@
       "type":"structure",
       "required":[
         "InstanceArn",
-        "ManagedPolicyArn",
-        "PermissionSetArn"
+        "PermissionSetArn",
+        "ManagedPolicyArn"
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "ManagedPolicyArn":{"shape":"ManagedPolicyArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "ManagedPolicyArn":{"shape":"ManagedPolicyArn"}
       }
     },
     "AttachManagedPolicyToPermissionSetResponse":{
@@ -1480,8 +1488,8 @@
     "AttachedManagedPolicy":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"ManagedPolicyArn"},
-        "Name":{"shape":"Name"}
+        "Name":{"shape":"Name"},
+        "Arn":{"shape":"ManagedPolicyArn"}
       }
     },
     "AttachedManagedPolicyList":{
@@ -1498,8 +1506,8 @@
     "AuthenticationMethodItem":{
       "type":"structure",
       "members":{
-        "AuthenticationMethod":{"shape":"AuthenticationMethod"},
-        "AuthenticationMethodType":{"shape":"AuthenticationMethodType"}
+        "AuthenticationMethodType":{"shape":"AuthenticationMethodType"},
+        "AuthenticationMethod":{"shape":"AuthenticationMethod"}
       }
     },
     "AuthenticationMethodType":{
@@ -1519,8 +1527,8 @@
     "AuthorizedTokenIssuer":{
       "type":"structure",
       "members":{
-        "AuthorizedAudiences":{"shape":"TokenIssuerAudiences"},
-        "TrustedTokenIssuerArn":{"shape":"TrustedTokenIssuerArn"}
+        "TrustedTokenIssuerArn":{"shape":"TrustedTokenIssuerArn"},
+        "AuthorizedAudiences":{"shape":"TokenIssuerAudiences"}
       }
     },
     "AuthorizedTokenIssuers":{
@@ -1533,13 +1541,13 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^\\p{L}+(?:(\\.|\\_)\\p{L}+){0,2}$"
+      "pattern":"\\p{L}+(?:(\\.|\\_)\\p{L}+){0,2}"
     },
     "ClientToken":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[!-~]+$"
+      "pattern":"[!-~]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -1553,19 +1561,19 @@
       "type":"structure",
       "required":[
         "InstanceArn",
-        "PermissionSetArn",
-        "PrincipalId",
-        "PrincipalType",
         "TargetId",
-        "TargetType"
+        "TargetType",
+        "PermissionSetArn",
+        "PrincipalType",
+        "PrincipalId"
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"},
         "TargetId":{"shape":"TargetId"},
-        "TargetType":{"shape":"TargetType"}
+        "TargetType":{"shape":"TargetType"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "PrincipalType":{"shape":"PrincipalType"},
+        "PrincipalId":{"shape":"PrincipalId"}
       }
     },
     "CreateAccountAssignmentResponse":{
@@ -1595,22 +1603,22 @@
     "CreateApplicationRequest":{
       "type":"structure",
       "required":[
-        "ApplicationProviderArn",
         "InstanceArn",
+        "ApplicationProviderArn",
         "Name"
       ],
       "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
         "ApplicationProviderArn":{"shape":"ApplicationProviderArn"},
+        "Name":{"shape":"ApplicationNameType"},
+        "Description":{"shape":"Description"},
+        "PortalOptions":{"shape":"PortalOptions"},
+        "Tags":{"shape":"TagList"},
+        "Status":{"shape":"ApplicationStatus"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "Description":{"shape":"Description"},
-        "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"NameType"},
-        "PortalOptions":{"shape":"PortalOptions"},
-        "Status":{"shape":"ApplicationStatus"},
-        "Tags":{"shape":"TagList"}
+        }
       }
     },
     "CreateApplicationResponse":{
@@ -1622,12 +1630,12 @@
     "CreateInstanceAccessControlAttributeConfigurationRequest":{
       "type":"structure",
       "required":[
-        "InstanceAccessControlAttributeConfiguration",
-        "InstanceArn"
+        "InstanceArn",
+        "InstanceAccessControlAttributeConfiguration"
       ],
       "members":{
-        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"},
-        "InstanceArn":{"shape":"InstanceArn"}
+        "InstanceArn":{"shape":"InstanceArn"},
+        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"}
       }
     },
     "CreateInstanceAccessControlAttributeConfigurationResponse":{
@@ -1638,11 +1646,11 @@
     "CreateInstanceRequest":{
       "type":"structure",
       "members":{
+        "Name":{"shape":"NameType"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "Name":{"shape":"NameType"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1655,15 +1663,15 @@
     "CreatePermissionSetRequest":{
       "type":"structure",
       "required":[
-        "InstanceArn",
-        "Name"
+        "Name",
+        "InstanceArn"
       ],
       "members":{
+        "Name":{"shape":"PermissionSetName"},
         "Description":{"shape":"PermissionSetDescription"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"PermissionSetName"},
-        "RelayState":{"shape":"RelayState"},
         "SessionDuration":{"shape":"Duration"},
+        "RelayState":{"shape":"RelayState"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1678,19 +1686,19 @@
       "required":[
         "InstanceArn",
         "Name",
-        "TrustedTokenIssuerConfiguration",
-        "TrustedTokenIssuerType"
+        "TrustedTokenIssuerType",
+        "TrustedTokenIssuerConfiguration"
       ],
       "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "Name":{"shape":"TrustedTokenIssuerName"},
+        "TrustedTokenIssuerType":{"shape":"TrustedTokenIssuerType"},
+        "TrustedTokenIssuerConfiguration":{"shape":"TrustedTokenIssuerConfiguration"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"TrustedTokenIssuerName"},
-        "Tags":{"shape":"TagList"},
-        "TrustedTokenIssuerConfiguration":{"shape":"TrustedTokenIssuerConfiguration"},
-        "TrustedTokenIssuerType":{"shape":"TrustedTokenIssuerType"}
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateTrustedTokenIssuerResponse":{
@@ -1716,19 +1724,19 @@
       "type":"structure",
       "required":[
         "InstanceArn",
-        "PermissionSetArn",
-        "PrincipalId",
-        "PrincipalType",
         "TargetId",
-        "TargetType"
+        "TargetType",
+        "PermissionSetArn",
+        "PrincipalType",
+        "PrincipalId"
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"},
         "TargetId":{"shape":"TargetId"},
-        "TargetType":{"shape":"TargetType"}
+        "TargetType":{"shape":"TargetType"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "PrincipalType":{"shape":"PrincipalType"},
+        "PrincipalId":{"shape":"PrincipalId"}
       }
     },
     "DeleteAccountAssignmentResponse":{
@@ -1887,12 +1895,12 @@
     "DescribeAccountAssignmentCreationStatusRequest":{
       "type":"structure",
       "required":[
-        "AccountAssignmentCreationRequestId",
-        "InstanceArn"
+        "InstanceArn",
+        "AccountAssignmentCreationRequestId"
       ],
       "members":{
-        "AccountAssignmentCreationRequestId":{"shape":"UUId"},
-        "InstanceArn":{"shape":"InstanceArn"}
+        "InstanceArn":{"shape":"InstanceArn"},
+        "AccountAssignmentCreationRequestId":{"shape":"UUId"}
       }
     },
     "DescribeAccountAssignmentCreationStatusResponse":{
@@ -1904,12 +1912,12 @@
     "DescribeAccountAssignmentDeletionStatusRequest":{
       "type":"structure",
       "required":[
-        "AccountAssignmentDeletionRequestId",
-        "InstanceArn"
+        "InstanceArn",
+        "AccountAssignmentDeletionRequestId"
       ],
       "members":{
-        "AccountAssignmentDeletionRequestId":{"shape":"UUId"},
-        "InstanceArn":{"shape":"InstanceArn"}
+        "InstanceArn":{"shape":"InstanceArn"},
+        "AccountAssignmentDeletionRequestId":{"shape":"UUId"}
       }
     },
     "DescribeAccountAssignmentDeletionStatusResponse":{
@@ -1934,9 +1942,9 @@
     "DescribeApplicationAssignmentResponse":{
       "type":"structure",
       "members":{
-        "ApplicationArn":{"shape":"ApplicationArn"},
+        "PrincipalType":{"shape":"PrincipalType"},
         "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"}
+        "ApplicationArn":{"shape":"ApplicationArn"}
       }
     },
     "DescribeApplicationProviderRequest":{
@@ -1951,8 +1959,8 @@
       "required":["ApplicationProviderArn"],
       "members":{
         "ApplicationProviderArn":{"shape":"ApplicationProviderArn"},
-        "DisplayData":{"shape":"DisplayData"},
         "FederationProtocol":{"shape":"FederationProtocol"},
+        "DisplayData":{"shape":"DisplayData"},
         "ResourceServerConfig":{"shape":"ResourceServerConfig"}
       }
     },
@@ -1966,15 +1974,15 @@
     "DescribeApplicationResponse":{
       "type":"structure",
       "members":{
-        "ApplicationAccount":{"shape":"AccountId"},
         "ApplicationArn":{"shape":"ApplicationArn"},
         "ApplicationProviderArn":{"shape":"ApplicationProviderArn"},
-        "CreatedDate":{"shape":"Date"},
-        "Description":{"shape":"Description"},
-        "InstanceArn":{"shape":"InstanceArn"},
         "Name":{"shape":"NameType"},
+        "ApplicationAccount":{"shape":"AccountId"},
+        "InstanceArn":{"shape":"InstanceArn"},
+        "Status":{"shape":"ApplicationStatus"},
         "PortalOptions":{"shape":"PortalOptions"},
-        "Status":{"shape":"ApplicationStatus"}
+        "Description":{"shape":"Description"},
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "DescribeInstanceAccessControlAttributeConfigurationRequest":{
@@ -1987,9 +1995,9 @@
     "DescribeInstanceAccessControlAttributeConfigurationResponse":{
       "type":"structure",
       "members":{
-        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"},
         "Status":{"shape":"InstanceAccessControlAttributeConfigurationStatus"},
-        "StatusReason":{"shape":"InstanceAccessControlAttributeConfigurationStatusReason"}
+        "StatusReason":{"shape":"InstanceAccessControlAttributeConfigurationStatusReason"},
+        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"}
       }
     },
     "DescribeInstanceRequest":{
@@ -2002,11 +2010,11 @@
     "DescribeInstanceResponse":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
-        "IdentityStoreId":{"shape":"Id"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"NameType"},
+        "IdentityStoreId":{"shape":"Id"},
         "OwnerAccountId":{"shape":"AccountId"},
+        "Name":{"shape":"NameType"},
+        "CreatedDate":{"shape":"Date"},
         "Status":{"shape":"InstanceStatus"}
       }
     },
@@ -2054,10 +2062,10 @@
     "DescribeTrustedTokenIssuerResponse":{
       "type":"structure",
       "members":{
-        "Name":{"shape":"TrustedTokenIssuerName"},
         "TrustedTokenIssuerArn":{"shape":"TrustedTokenIssuerArn"},
-        "TrustedTokenIssuerConfiguration":{"shape":"TrustedTokenIssuerConfiguration"},
-        "TrustedTokenIssuerType":{"shape":"TrustedTokenIssuerType"}
+        "Name":{"shape":"TrustedTokenIssuerName"},
+        "TrustedTokenIssuerType":{"shape":"TrustedTokenIssuerType"},
+        "TrustedTokenIssuerConfiguration":{"shape":"TrustedTokenIssuerConfiguration"}
       }
     },
     "Description":{
@@ -2068,14 +2076,14 @@
     "DetachCustomerManagedPolicyReferenceFromPermissionSetRequest":{
       "type":"structure",
       "required":[
-        "CustomerManagedPolicyReference",
         "InstanceArn",
-        "PermissionSetArn"
+        "PermissionSetArn",
+        "CustomerManagedPolicyReference"
       ],
       "members":{
-        "CustomerManagedPolicyReference":{"shape":"CustomerManagedPolicyReference"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "CustomerManagedPolicyReference":{"shape":"CustomerManagedPolicyReference"}
       }
     },
     "DetachCustomerManagedPolicyReferenceFromPermissionSetResponse":{
@@ -2087,13 +2095,13 @@
       "type":"structure",
       "required":[
         "InstanceArn",
-        "ManagedPolicyArn",
-        "PermissionSetArn"
+        "PermissionSetArn",
+        "ManagedPolicyArn"
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "ManagedPolicyArn":{"shape":"ManagedPolicyArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "ManagedPolicyArn":{"shape":"ManagedPolicyArn"}
       }
     },
     "DetachManagedPolicyFromPermissionSetResponse":{
@@ -2104,16 +2112,16 @@
     "DisplayData":{
       "type":"structure",
       "members":{
-        "Description":{"shape":"Description"},
         "DisplayName":{"shape":"Name"},
-        "IconUrl":{"shape":"IconUrl"}
+        "IconUrl":{"shape":"IconUrl"},
+        "Description":{"shape":"Description"}
       }
     },
     "Duration":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^(-?)P(?=\\d|T\\d)(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)([DW]))?(?:T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:\\.\\d+)?)S)?)?$"
+      "pattern":"(-?)P(?=\\d|T\\d)(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)([DW]))?(?:T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:\\.\\d+)?)S)?)?"
     },
     "FederationProtocol":{
       "type":"string",
@@ -2137,8 +2145,8 @@
       "type":"structure",
       "required":["Scope"],
       "members":{
-        "AuthorizedTargets":{"shape":"ScopeTargets"},
-        "Scope":{"shape":"Scope"}
+        "Scope":{"shape":"Scope"},
+        "AuthorizedTargets":{"shape":"ScopeTargets"}
       }
     },
     "GetApplicationAssignmentConfigurationRequest":{
@@ -2237,12 +2245,12 @@
     "GrantItem":{
       "type":"structure",
       "required":[
-        "Grant",
-        "GrantType"
+        "GrantType",
+        "Grant"
       ],
       "members":{
-        "Grant":{"shape":"Grant"},
-        "GrantType":{"shape":"GrantType"}
+        "GrantType":{"shape":"GrantType"},
+        "Grant":{"shape":"Grant"}
       }
     },
     "GrantType":{
@@ -2269,13 +2277,13 @@
       "type":"string",
       "max":768,
       "min":1,
-      "pattern":"^(http|https):\\/\\/.*$"
+      "pattern":"(http|https):\\/\\/.*"
     },
     "Id":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]*$"
+      "pattern":"[a-zA-Z0-9-]*"
     },
     "InstanceAccessControlAttributeConfiguration":{
       "type":"structure",
@@ -2297,7 +2305,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
     },
     "InstanceList":{
       "type":"list",
@@ -2308,11 +2316,11 @@
     "InstanceMetadata":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
-        "IdentityStoreId":{"shape":"Id"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"NameType"},
+        "IdentityStoreId":{"shape":"Id"},
         "OwnerAccountId":{"shape":"AccountId"},
+        "Name":{"shape":"NameType"},
+        "CreatedDate":{"shape":"Date"},
         "Status":{"shape":"InstanceStatus"}
       }
     },
@@ -2337,7 +2345,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^\\p{L}+(?:\\.\\p{L}+){0,2}$"
+      "pattern":"\\p{L}+(?:\\.\\p{L}+){0,2}"
     },
     "JwksRetrievalOption":{
       "type":"string",
@@ -2353,10 +2361,10 @@
       "type":"structure",
       "required":["InstanceArn"],
       "members":{
-        "Filter":{"shape":"OperationStatusFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "Filter":{"shape":"OperationStatusFilter"}
       }
     },
     "ListAccountAssignmentCreationStatusResponse":{
@@ -2370,10 +2378,10 @@
       "type":"structure",
       "required":["InstanceArn"],
       "members":{
-        "Filter":{"shape":"OperationStatusFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "Filter":{"shape":"OperationStatusFilter"}
       }
     },
     "ListAccountAssignmentDeletionStatusResponse":{
@@ -2397,12 +2405,12 @@
         "PrincipalType"
       ],
       "members":{
-        "Filter":{"shape":"ListAccountAssignmentsFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
         "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"}
+        "PrincipalType":{"shape":"PrincipalType"},
+        "Filter":{"shape":"ListAccountAssignmentsFilter"},
+        "NextToken":{"shape":"Token"},
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListAccountAssignmentsForPrincipalResponse":{
@@ -2415,16 +2423,16 @@
     "ListAccountAssignmentsRequest":{
       "type":"structure",
       "required":[
-        "AccountId",
         "InstanceArn",
+        "AccountId",
         "PermissionSetArn"
       ],
       "members":{
-        "AccountId":{"shape":"TargetId"},
         "InstanceArn":{"shape":"InstanceArn"},
+        "AccountId":{"shape":"TargetId"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListAccountAssignmentsResponse":{
@@ -2442,10 +2450,10 @@
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
         "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "ProvisioningStatus":{"shape":"ProvisioningStatus"}
+        "ProvisioningStatus":{"shape":"ProvisioningStatus"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListAccountsForProvisionedPermissionSetResponse":{
@@ -2474,8 +2482,8 @@
       "type":"structure",
       "required":["Scopes"],
       "members":{
-        "NextToken":{"shape":"Token"},
-        "Scopes":{"shape":"Scopes"}
+        "Scopes":{"shape":"Scopes"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListApplicationAssignmentsFilter":{
@@ -2492,12 +2500,12 @@
         "PrincipalType"
       ],
       "members":{
-        "Filter":{"shape":"ListApplicationAssignmentsFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
         "PrincipalId":{"shape":"PrincipalId"},
-        "PrincipalType":{"shape":"PrincipalType"}
+        "PrincipalType":{"shape":"PrincipalType"},
+        "Filter":{"shape":"ListApplicationAssignmentsFilter"},
+        "NextToken":{"shape":"Token"},
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListApplicationAssignmentsForPrincipalResponse":{
@@ -2579,10 +2587,10 @@
       "type":"structure",
       "required":["InstanceArn"],
       "members":{
-        "Filter":{"shape":"ListApplicationsFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "Filter":{"shape":"ListApplicationsFilter"}
       }
     },
     "ListApplicationsResponse":{
@@ -2600,9 +2608,9 @@
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListCustomerManagedPolicyReferencesInPermissionSetResponse":{
@@ -2634,9 +2642,9 @@
       ],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListManagedPoliciesInPermissionSetResponse":{
@@ -2650,31 +2658,31 @@
       "type":"structure",
       "required":["InstanceArn"],
       "members":{
-        "Filter":{"shape":"OperationStatusFilter"},
         "InstanceArn":{"shape":"InstanceArn"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "Filter":{"shape":"OperationStatusFilter"}
       }
     },
     "ListPermissionSetProvisioningStatusResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"Token"},
-        "PermissionSetsProvisioningStatus":{"shape":"PermissionSetProvisioningStatusList"}
+        "PermissionSetsProvisioningStatus":{"shape":"PermissionSetProvisioningStatusList"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListPermissionSetsProvisionedToAccountRequest":{
       "type":"structure",
       "required":[
-        "AccountId",
-        "InstanceArn"
+        "InstanceArn",
+        "AccountId"
       ],
       "members":{
-        "AccountId":{"shape":"AccountId"},
         "InstanceArn":{"shape":"InstanceArn"},
+        "AccountId":{"shape":"AccountId"},
+        "ProvisioningStatus":{"shape":"ProvisioningStatus"},
         "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"},
-        "ProvisioningStatus":{"shape":"ProvisioningStatus"}
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListPermissionSetsProvisionedToAccountResponse":{
@@ -2689,15 +2697,15 @@
       "required":["InstanceArn"],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"Token"},
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListPermissionSetsResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"Token"},
-        "PermissionSets":{"shape":"PermissionSetList"}
+        "PermissionSets":{"shape":"PermissionSetList"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -2705,15 +2713,15 @@
       "required":["ResourceArn"],
       "members":{
         "InstanceArn":{"shape":"InstanceArn"},
-        "NextToken":{"shape":"Token"},
-        "ResourceArn":{"shape":"TaggableResourceArn"}
+        "ResourceArn":{"shape":"TaggableResourceArn"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListTagsForResourceResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"Token"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListTrustedTokenIssuersRequest":{
@@ -2728,27 +2736,27 @@
     "ListTrustedTokenIssuersResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"Token"},
-        "TrustedTokenIssuers":{"shape":"TrustedTokenIssuerList"}
+        "TrustedTokenIssuers":{"shape":"TrustedTokenIssuerList"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ManagedPolicyArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):iam::aws:policy/[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}]+$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):iam::aws:policy((/[A-Za-z0-9\\.,\\+@=_-]+)*)/([A-Za-z0-9\\.,\\+=@_-]+)"
     },
     "ManagedPolicyName":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\w+=,.@-]+$"
+      "pattern":"[\\w+=,.@-]+"
     },
     "ManagedPolicyPath":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^((/[A-Za-z0-9\\.,\\+@=_-]+)*)/$"
+      "pattern":"((/[A-Za-z0-9\\.,\\+@=_-]+)*)/"
     },
     "MaxResults":{
       "type":"integer",
@@ -2765,20 +2773,20 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^[\\w+=,.@-]+$"
+      "pattern":"[\\w+=,.@-]+"
     },
     "OidcJwtConfiguration":{
       "type":"structure",
       "required":[
+        "IssuerUrl",
         "ClaimAttributePath",
         "IdentityStoreAttributePath",
-        "IssuerUrl",
         "JwksRetrievalOption"
       ],
       "members":{
+        "IssuerUrl":{"shape":"TrustedTokenIssuerUrl"},
         "ClaimAttributePath":{"shape":"ClaimAttributePath"},
         "IdentityStoreAttributePath":{"shape":"JMESPath"},
-        "IssuerUrl":{"shape":"TrustedTokenIssuerUrl"},
         "JwksRetrievalOption":{"shape":"JwksRetrievalOption"}
       }
     },
@@ -2799,25 +2807,25 @@
     "PermissionSet":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
-        "Description":{"shape":"PermissionSetDescription"},
         "Name":{"shape":"PermissionSetName"},
         "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "RelayState":{"shape":"RelayState"},
-        "SessionDuration":{"shape":"Duration"}
+        "Description":{"shape":"PermissionSetDescription"},
+        "CreatedDate":{"shape":"Date"},
+        "SessionDuration":{"shape":"Duration"},
+        "RelayState":{"shape":"RelayState"}
       }
     },
     "PermissionSetArn":{
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16}"
     },
     "PermissionSetDescription":{
       "type":"string",
       "max":700,
       "min":1,
-      "pattern":"^[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*$"
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]*"
     },
     "PermissionSetList":{
       "type":"list",
@@ -2827,23 +2835,23 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[\\w+=,.@-]+$"
+      "pattern":"[\\w+=,.@-]+"
     },
     "PermissionSetPolicyDocument":{
       "type":"string",
       "max":32768,
       "min":1,
-      "pattern":"^[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+$"
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
     "PermissionSetProvisioningStatus":{
       "type":"structure",
       "members":{
-        "AccountId":{"shape":"AccountId"},
-        "CreatedDate":{"shape":"Date"},
-        "FailureReason":{"shape":"Reason"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "Status":{"shape":"StatusValues"},
         "RequestId":{"shape":"UUId"},
-        "Status":{"shape":"StatusValues"}
+        "AccountId":{"shape":"AccountId"},
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "FailureReason":{"shape":"Reason"},
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "PermissionSetProvisioningStatusList":{
@@ -2853,9 +2861,9 @@
     "PermissionSetProvisioningStatusMetadata":{
       "type":"structure",
       "members":{
-        "CreatedDate":{"shape":"Date"},
+        "Status":{"shape":"StatusValues"},
         "RequestId":{"shape":"UUId"},
-        "Status":{"shape":"StatusValues"}
+        "CreatedDate":{"shape":"Date"}
       }
     },
     "PermissionsBoundary":{
@@ -2876,7 +2884,7 @@
       "type":"string",
       "max":47,
       "min":1,
-      "pattern":"^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$"
+      "pattern":"([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"
     },
     "PrincipalType":{
       "type":"string",
@@ -2922,13 +2930,13 @@
     "PutApplicationAccessScopeRequest":{
       "type":"structure",
       "required":[
-        "ApplicationArn",
-        "Scope"
+        "Scope",
+        "ApplicationArn"
       ],
       "members":{
-        "ApplicationArn":{"shape":"ApplicationArn"},
+        "Scope":{"shape":"Scope"},
         "AuthorizedTargets":{"shape":"ScopeTargets"},
-        "Scope":{"shape":"Scope"}
+        "ApplicationArn":{"shape":"ApplicationArn"}
       }
     },
     "PutApplicationAssignmentConfigurationRequest":{
@@ -2951,39 +2959,39 @@
       "type":"structure",
       "required":[
         "ApplicationArn",
-        "AuthenticationMethod",
-        "AuthenticationMethodType"
+        "AuthenticationMethodType",
+        "AuthenticationMethod"
       ],
       "members":{
         "ApplicationArn":{"shape":"ApplicationArn"},
-        "AuthenticationMethod":{"shape":"AuthenticationMethod"},
-        "AuthenticationMethodType":{"shape":"AuthenticationMethodType"}
+        "AuthenticationMethodType":{"shape":"AuthenticationMethodType"},
+        "AuthenticationMethod":{"shape":"AuthenticationMethod"}
       }
     },
     "PutApplicationGrantRequest":{
       "type":"structure",
       "required":[
         "ApplicationArn",
-        "Grant",
-        "GrantType"
+        "GrantType",
+        "Grant"
       ],
       "members":{
         "ApplicationArn":{"shape":"ApplicationArn"},
-        "Grant":{"shape":"Grant"},
-        "GrantType":{"shape":"GrantType"}
+        "GrantType":{"shape":"GrantType"},
+        "Grant":{"shape":"Grant"}
       }
     },
     "PutInlinePolicyToPermissionSetRequest":{
       "type":"structure",
       "required":[
-        "InlinePolicy",
         "InstanceArn",
-        "PermissionSetArn"
+        "PermissionSetArn",
+        "InlinePolicy"
       ],
       "members":{
-        "InlinePolicy":{"shape":"PermissionSetPolicyDocument"},
         "InstanceArn":{"shape":"InstanceArn"},
-        "PermissionSetArn":{"shape":"PermissionSetArn"}
+        "PermissionSetArn":{"shape":"PermissionSetArn"},
+        "InlinePolicy":{"shape":"PermissionSetPolicyDocument"}
       }
     },
     "PutInlinePolicyToPermissionSetResponse":{
@@ -3011,7 +3019,7 @@
     },
     "Reason":{
       "type":"string",
-      "pattern":"^[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}]*$"
+      "pattern":"[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}]*"
     },
     "RedirectUris":{
       "type":"list",
@@ -3028,7 +3036,7 @@
       "type":"string",
       "max":240,
       "min":1,
-      "pattern":"^[a-zA-Z0-9&$@#\\\\\\/%?=~\\-_'\"|!:,.;*+\\[\\]\\ \\(\\)\\{\\}]+$"
+      "pattern":"[a-zA-Z0-9&$@#\\\\\\/%?=~\\-_'\"|!:,.;*+\\[\\]\\ \\(\\)\\{\\}]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -3048,13 +3056,13 @@
       "type":"string",
       "max":80,
       "min":1,
-      "pattern":"^[^:=\\-\\.\\s][0-9a-zA-Z_:\\-\\.]+$"
+      "pattern":"[^:=\\-\\.\\s][0-9a-zA-Z_:\\-\\.]+"
     },
     "ResourceServerScopeDetails":{
       "type":"structure",
       "members":{
-        "DetailedTitle":{"shape":"Description"},
-        "LongDescription":{"shape":"Description"}
+        "LongDescription":{"shape":"Description"},
+        "DetailedTitle":{"shape":"Description"}
       }
     },
     "ResourceServerScopes":{
@@ -3064,21 +3072,21 @@
     },
     "Scope":{
       "type":"string",
-      "pattern":"^([A-Za-z0-9_]{1,50})(:[A-Za-z0-9_]{1,50}){0,1}(:[A-Za-z0-9_]{1,50}){0,1}$"
+      "pattern":"([A-Za-z0-9_]{1,50})(:[A-Za-z0-9_]{1,50}){0,1}(:[A-Za-z0-9_]{1,50}){0,1}"
     },
     "ScopeDetails":{
       "type":"structure",
       "required":["Scope"],
       "members":{
-        "AuthorizedTargets":{"shape":"ScopeTargets"},
-        "Scope":{"shape":"Scope"}
+        "Scope":{"shape":"Scope"},
+        "AuthorizedTargets":{"shape":"ScopeTargets"}
       }
     },
     "ScopeTarget":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}|:instance/(sso)?ins-[a-zA-Z0-9-.]{16})$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}|:instance/(sso)?ins-[a-zA-Z0-9-.]{16})"
     },
     "ScopeTargets":{
       "type":"list",
@@ -3104,8 +3112,8 @@
       "type":"structure",
       "required":["Origin"],
       "members":{
-        "ApplicationUrl":{"shape":"ApplicationUrl"},
-        "Origin":{"shape":"SignInOrigin"}
+        "Origin":{"shape":"SignInOrigin"},
+        "ApplicationUrl":{"shape":"ApplicationUrl"}
       }
     },
     "SignInOrigin":{
@@ -3138,7 +3146,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeyList":{
       "type":"list",
@@ -3173,19 +3181,19 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TaggableResourceArn":{
       "type":"string",
       "max":2048,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::((:instance/(sso)?ins-[a-zA-Z0-9-.]{16})|(:permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16})|(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16})|(\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}))$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::((:instance/(sso)?ins-[a-zA-Z0-9-.]{16})|(:permissionSet/(sso)?ins-[a-zA-Z0-9-.]{16}/ps-[a-zA-Z0-9-./]{16})|(\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16})|(\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}))"
     },
     "TargetId":{
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d{12}$"
+      "pattern":"\\d{12}"
     },
     "TargetType":{
       "type":"string",
@@ -3203,7 +3211,7 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^[-a-zA-Z0-9+=/_]*$"
+      "pattern":"[-a-zA-Z0-9+=/_]*"
     },
     "TokenExchangeGrant":{
       "type":"structure",
@@ -3225,7 +3233,7 @@
       "type":"string",
       "max":1224,
       "min":10,
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:trustedTokenIssuer/(sso)?ins-[a-zA-Z0-9-.]{16}/tti-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "TrustedTokenIssuerConfiguration":{
       "type":"structure",
@@ -3241,8 +3249,8 @@
     "TrustedTokenIssuerMetadata":{
       "type":"structure",
       "members":{
-        "Name":{"shape":"TrustedTokenIssuerName"},
         "TrustedTokenIssuerArn":{"shape":"TrustedTokenIssuerArn"},
+        "Name":{"shape":"TrustedTokenIssuerName"},
         "TrustedTokenIssuerType":{"shape":"TrustedTokenIssuerType"}
       }
     },
@@ -3250,7 +3258,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[\\w+=,.@-]+$"
+      "pattern":"[\\w+=,.@-]+"
     },
     "TrustedTokenIssuerType":{
       "type":"string",
@@ -3267,14 +3275,14 @@
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^https?:\\/\\/[-a-zA-Z0-9+&@\\/%=~_|!:,.;]*[-a-zA-Z0-9+&@\\/%=~_|]$"
+      "pattern":"https?:\\/\\/[-a-zA-Z0-9+&@\\/%=~_|!:,.;]*[-a-zA-Z0-9+&@\\/%=~_|]"
     },
     "URI":{"type":"string"},
     "UUId":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b$"
+      "pattern":"\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3304,10 +3312,10 @@
       "required":["ApplicationArn"],
       "members":{
         "ApplicationArn":{"shape":"ApplicationArn"},
+        "Name":{"shape":"ApplicationNameType"},
         "Description":{"shape":"Description"},
-        "Name":{"shape":"NameType"},
-        "PortalOptions":{"shape":"UpdateApplicationPortalOptions"},
-        "Status":{"shape":"ApplicationStatus"}
+        "Status":{"shape":"ApplicationStatus"},
+        "PortalOptions":{"shape":"UpdateApplicationPortalOptions"}
       }
     },
     "UpdateApplicationResponse":{
@@ -3318,12 +3326,12 @@
     "UpdateInstanceAccessControlAttributeConfigurationRequest":{
       "type":"structure",
       "required":[
-        "InstanceAccessControlAttributeConfiguration",
-        "InstanceArn"
+        "InstanceArn",
+        "InstanceAccessControlAttributeConfiguration"
       ],
       "members":{
-        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"},
-        "InstanceArn":{"shape":"InstanceArn"}
+        "InstanceArn":{"shape":"InstanceArn"},
+        "InstanceAccessControlAttributeConfiguration":{"shape":"InstanceAccessControlAttributeConfiguration"}
       }
     },
     "UpdateInstanceAccessControlAttributeConfigurationResponse":{
@@ -3334,12 +3342,12 @@
     "UpdateInstanceRequest":{
       "type":"structure",
       "required":[
-        "InstanceArn",
-        "Name"
+        "Name",
+        "InstanceArn"
       ],
       "members":{
-        "InstanceArn":{"shape":"InstanceArn"},
-        "Name":{"shape":"NameType"}
+        "Name":{"shape":"NameType"},
+        "InstanceArn":{"shape":"InstanceArn"}
       }
     },
     "UpdateInstanceResponse":{
@@ -3354,11 +3362,11 @@
         "PermissionSetArn"
       ],
       "members":{
-        "Description":{"shape":"PermissionSetDescription"},
         "InstanceArn":{"shape":"InstanceArn"},
         "PermissionSetArn":{"shape":"PermissionSetArn"},
-        "RelayState":{"shape":"RelayState"},
-        "SessionDuration":{"shape":"Duration"}
+        "Description":{"shape":"PermissionSetDescription"},
+        "SessionDuration":{"shape":"Duration"},
+        "RelayState":{"shape":"RelayState"}
       }
     },
     "UpdatePermissionSetResponse":{
@@ -3370,8 +3378,8 @@
       "type":"structure",
       "required":["TrustedTokenIssuerArn"],
       "members":{
-        "Name":{"shape":"TrustedTokenIssuerName"},
         "TrustedTokenIssuerArn":{"shape":"TrustedTokenIssuerArn"},
+        "Name":{"shape":"TrustedTokenIssuerName"},
         "TrustedTokenIssuerConfiguration":{"shape":"TrustedTokenIssuerUpdateConfiguration"}
       }
     },

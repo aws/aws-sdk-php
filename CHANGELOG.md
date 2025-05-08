@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Validates tag input for `ChangelogBuilder`
+* `Aws\CodePipeline` - Add support for Secrets Manager and Plaintext environment variable types in Commands action
+* `Aws\Glue` - This new release supports customizable RefreshInterval for all Saas ZETL integrations from 15 minutes to 6 days.
+* `Aws\CloudFront` - Doc-only update for CloudFront. These changes include customer-reported issues.
+* `Aws\GuardDuty` - Updated description of a data structure.
+* `Aws\EC2` - Launching the feature to support ENA queues offering flexibility to support multiple queues per Enhanced Network Interface (ENI)
+* `Aws\SSOAdmin` - Update PutPermissionBoundaryToPermissionSet API's managedPolicyArn pattern to allow valid ARN only. Update ApplicationName to allow white spaces.
+
 ## 3.343.6 - 2025-05-07
 
 * `Aws\MediaLive` - Enables Updating Anywhere Settings on a MediaLive Anywhere Channel.

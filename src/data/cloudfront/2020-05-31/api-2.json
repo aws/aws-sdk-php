@@ -26,9 +26,9 @@
       "errors":[
         {"shape":"NoSuchDistribution"},
         {"shape":"AccessDenied"},
+        {"shape":"IllegalUpdate"},
         {"shape":"InvalidArgument"},
-        {"shape":"TooManyDistributionCNAMEs"},
-        {"shape":"IllegalUpdate"}
+        {"shape":"TooManyDistributionCNAMEs"}
       ]
     },
     "AssociateDistributionTenantWebACL":{
@@ -46,8 +46,8 @@
       "output":{"shape":"AssociateDistributionTenantWebACLResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -67,8 +67,8 @@
       "output":{"shape":"AssociateDistributionWebACLResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -171,8 +171,8 @@
         {"shape":"UnsupportedOperation"},
         {"shape":"EntityAlreadyExists"},
         {"shape":"InvalidTagging"},
-        {"shape":"InvalidArgument"},
-        {"shape":"EntityLimitExceeded"}
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateCachePolicy":{
@@ -208,8 +208,8 @@
         {"shape":"MissingBody"},
         {"shape":"TooManyCloudFrontOriginAccessIdentities"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"}
+        {"shape":"CloudFrontOriginAccessIdentityAlreadyExists"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateConnectionGroup":{
@@ -226,12 +226,12 @@
       },
       "output":{"shape":"CreateConnectionGroupResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"EntityAlreadyExists"},
         {"shape":"InvalidTagging"},
-        {"shape":"InvalidArgument"},
-        {"shape":"EntityLimitExceeded"}
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateContinuousDeploymentPolicy":{
@@ -345,14 +345,14 @@
       },
       "output":{"shape":"CreateDistributionTenantResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"EntityAlreadyExists"},
         {"shape":"CNAMEAlreadyExists"},
-        {"shape":"InvalidAssociation"},
         {"shape":"InvalidTagging"},
-        {"shape":"InvalidArgument"},
-        {"shape":"EntityLimitExceeded"}
+        {"shape":"InvalidAssociation"},
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateDistributionWithTags":{
@@ -445,8 +445,8 @@
       "output":{"shape":"CreateFieldLevelEncryptionConfigResult"},
       "errors":[
         {"shape":"QueryArgProfileEmpty"},
-        {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
         {"shape":"TooManyFieldLevelEncryptionContentTypeProfiles"},
+        {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
         {"shape":"FieldLevelEncryptionConfigAlreadyExists"},
         {"shape":"InconsistentQuantities"},
         {"shape":"TooManyFieldLevelEncryptionConfigs"},
@@ -510,8 +510,8 @@
         {"shape":"TooManyInvalidationsInProgress"},
         {"shape":"MissingBody"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"BatchTooLarge"}
+        {"shape":"BatchTooLarge"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateInvalidationForDistributionTenant":{
@@ -524,13 +524,13 @@
       "input":{"shape":"CreateInvalidationForDistributionTenantRequest"},
       "output":{"shape":"CreateInvalidationForDistributionTenantResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"TooManyInvalidationsInProgress"},
         {"shape":"MissingBody"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
-        {"shape":"BatchTooLarge"}
+        {"shape":"BatchTooLarge"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "CreateKeyGroup":{
@@ -566,8 +566,8 @@
         {"shape":"AccessDenied"},
         {"shape":"UnsupportedOperation"},
         {"shape":"EntityAlreadyExists"},
-        {"shape":"InvalidArgument"},
         {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"},
         {"shape":"EntitySizeLimitExceeded"}
       ]
     },
@@ -744,11 +744,11 @@
       "errors":[
         {"shape":"AccessDenied"},
         {"shape":"UnsupportedOperation"},
-        {"shape":"InconsistentQuantities"},
         {"shape":"EntityAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"InvalidTagging"},
-        {"shape":"InvalidArgument"},
-        {"shape":"EntityLimitExceeded"}
+        {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"}
       ]
     },
     "DeleteAnycastIpList":{
@@ -762,8 +762,8 @@
       "errors":[
         {"shape":"CannotDeleteEntityWhileInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"IllegalDelete"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"},
@@ -798,9 +798,9 @@
       "errors":[
         {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
+        {"shape":"CloudFrontOriginAccessIdentityInUse"},
         {"shape":"InvalidIfMatchVersion"},
-        {"shape":"NoSuchCloudFrontOriginAccessIdentity"},
-        {"shape":"CloudFrontOriginAccessIdentityInUse"}
+        {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
     },
     "DeleteConnectionGroup":{
@@ -814,8 +814,8 @@
       "errors":[
         {"shape":"CannotDeleteEntityWhileInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"ResourceNotDisabled"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -864,8 +864,8 @@
       "input":{"shape":"DeleteDistributionTenantRequest"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"ResourceNotDisabled"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -927,8 +927,8 @@
       },
       "input":{"shape":"DeleteKeyGroupRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
         {"shape":"PreconditionFailed"},
+        {"shape":"ResourceInUse"},
         {"shape":"NoSuchResource"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -944,8 +944,8 @@
       "errors":[
         {"shape":"CannotDeleteEntityWhileInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidIfMatchVersion"}
       ],
@@ -1031,8 +1031,8 @@
       "errors":[
         {"shape":"AccessDenied"},
         {"shape":"InvalidArgument"},
-        {"shape":"RealtimeLogConfigInUse"},
-        {"shape":"NoSuchRealtimeLogConfig"}
+        {"shape":"NoSuchRealtimeLogConfig"},
+        {"shape":"RealtimeLogConfigInUse"}
       ]
     },
     "DeleteResponseHeadersPolicy":{
@@ -1044,8 +1044,8 @@
       },
       "input":{"shape":"DeleteResponseHeadersPolicyRequest"},
       "errors":[
-        {"shape":"ResponseHeadersPolicyInUse"},
         {"shape":"PreconditionFailed"},
+        {"shape":"ResponseHeadersPolicyInUse"},
         {"shape":"AccessDenied"},
         {"shape":"IllegalDelete"},
         {"shape":"NoSuchResponseHeadersPolicy"},
@@ -1063,8 +1063,8 @@
       "errors":[
         {"shape":"PreconditionFailed"},
         {"shape":"AccessDenied"},
-        {"shape":"StreamingDistributionNotDisabled"},
         {"shape":"NoSuchStreamingDistribution"},
+        {"shape":"StreamingDistributionNotDisabled"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -1080,8 +1080,8 @@
       "errors":[
         {"shape":"CannotDeleteEntityWhileInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"IllegalDelete"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"},
@@ -1112,8 +1112,8 @@
       "input":{"shape":"DescribeKeyValueStoreRequest"},
       "output":{"shape":"DescribeKeyValueStoreResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1129,8 +1129,8 @@
       "output":{"shape":"DisassociateDistributionTenantWebACLResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -1146,8 +1146,8 @@
       "output":{"shape":"DisassociateDistributionWebACLResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -1162,8 +1162,8 @@
       "input":{"shape":"GetAnycastIpListRequest"},
       "output":{"shape":"GetAnycastIpListResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1234,8 +1234,8 @@
       "input":{"shape":"GetConnectionGroupRequest"},
       "output":{"shape":"GetConnectionGroupResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"}
       ]
     },
     "GetConnectionGroupByRoutingEndpoint":{
@@ -1248,8 +1248,8 @@
       "input":{"shape":"GetConnectionGroupByRoutingEndpointRequest"},
       "output":{"shape":"GetConnectionGroupByRoutingEndpointResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"}
       ]
     },
     "GetContinuousDeploymentPolicy":{
@@ -1318,8 +1318,8 @@
       "input":{"shape":"GetDistributionTenantRequest"},
       "output":{"shape":"GetDistributionTenantResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"}
       ]
     },
     "GetDistributionTenantByDomain":{
@@ -1332,8 +1332,8 @@
       "input":{"shape":"GetDistributionTenantByDomainRequest"},
       "output":{"shape":"GetDistributionTenantByDomainResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"}
       ]
     },
     "GetFieldLevelEncryption":{
@@ -1431,8 +1431,8 @@
       "input":{"shape":"GetInvalidationForDistributionTenantRequest"},
       "output":{"shape":"GetInvalidationForDistributionTenantResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"NoSuchInvalidation"}
       ]
     },
@@ -1472,8 +1472,8 @@
       "input":{"shape":"GetManagedCertificateDetailsRequest"},
       "output":{"shape":"GetManagedCertificateDetailsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
-        {"shape":"AccessDenied"}
+        {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"}
       ]
     },
     "GetMonitoringSubscription":{
@@ -1661,8 +1661,8 @@
       "input":{"shape":"GetVpcOriginRequest"},
       "output":{"shape":"GetVpcOriginResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1677,8 +1677,8 @@
       "input":{"shape":"ListAnycastIpListsRequest"},
       "output":{"shape":"ListAnycastIpListsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1739,8 +1739,8 @@
       },
       "output":{"shape":"ListConnectionGroupsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1773,8 +1773,8 @@
       },
       "output":{"shape":"ListDistributionTenantsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1792,8 +1792,8 @@
       },
       "output":{"shape":"ListDistributionTenantsByCustomizationResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -1820,8 +1820,8 @@
       "input":{"shape":"ListDistributionsByAnycastIpListIdRequest"},
       "output":{"shape":"ListDistributionsByAnycastIpListIdResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1926,8 +1926,8 @@
       "input":{"shape":"ListDistributionsByVpcOriginIdRequest"},
       "output":{"shape":"ListDistributionsByVpcOriginIdResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -1960,8 +1960,8 @@
       },
       "output":{"shape":"ListDomainConflictsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -2030,8 +2030,8 @@
       "input":{"shape":"ListInvalidationsForDistributionTenantRequest"},
       "output":{"shape":"ListInvalidationsForDistributionTenantResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     },
@@ -2173,8 +2173,8 @@
       "input":{"shape":"ListVpcOriginsRequest"},
       "output":{"shape":"ListVpcOriginsResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"}
       ]
@@ -2264,8 +2264,8 @@
         {"shape":"CachePolicyAlreadyExists"},
         {"shape":"TooManyCookiesInCachePolicy"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"TooManyQueryStringsInCachePolicy"},
         {"shape":"InvalidIfMatchVersion"}
       ]
@@ -2284,8 +2284,8 @@
         {"shape":"AccessDenied"},
         {"shape":"MissingBody"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchCloudFrontOriginAccessIdentity"}
       ]
@@ -2304,13 +2304,13 @@
       },
       "output":{"shape":"UpdateConnectionGroupResult"},
       "errors":[
-        {"shape":"ResourceInUse"},
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
+        {"shape":"ResourceInUse"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"EntityAlreadyExists"},
-        {"shape":"InvalidArgument"},
         {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2427,13 +2427,13 @@
       "output":{"shape":"UpdateDistributionTenantResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"EntityAlreadyExists"},
         {"shape":"CNAMEAlreadyExists"},
         {"shape":"InvalidAssociation"},
-        {"shape":"InvalidArgument"},
         {"shape":"EntityLimitExceeded"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2468,9 +2468,9 @@
         {"shape":"InvalidTTLOrder"},
         {"shape":"IllegalFieldLevelEncryptionConfigAssociationWithCacheBehavior"},
         {"shape":"InvalidOriginKeepaliveTimeout"},
+        {"shape":"IllegalUpdate"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidOriginReadTimeout"},
-        {"shape":"IllegalUpdate"},
         {"shape":"InvalidOriginAccessControl"},
         {"shape":"EntityNotFound"},
         {"shape":"InvalidHeadersForS3Origin"},
@@ -2489,21 +2489,21 @@
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
         {"shape":"TooManyQueryStringParameters"},
-        {"shape":"RealtimeLogConfigOwnerMismatch"},
         {"shape":"PreconditionFailed"},
+        {"shape":"RealtimeLogConfigOwnerMismatch"},
         {"shape":"MissingBody"},
         {"shape":"TooManyHeadersInForwardedValues"},
         {"shape":"InvalidLambdaFunctionAssociation"},
         {"shape":"CNAMEAlreadyExists"},
         {"shape":"TooManyCertificates"},
-        {"shape":"TrustedKeyGroupDoesNotExist"},
         {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
+        {"shape":"TrustedKeyGroupDoesNotExist"},
         {"shape":"NoSuchResponseHeadersPolicy"},
-        {"shape":"NoSuchRealtimeLogConfig"},
         {"shape":"InvalidResponseCode"},
+        {"shape":"NoSuchRealtimeLogConfig"},
         {"shape":"InvalidGeoRestrictionParameter"},
-        {"shape":"TooManyOrigins"},
         {"shape":"InvalidViewerCertificate"},
+        {"shape":"TooManyOrigins"},
         {"shape":"InvalidFunctionAssociation"},
         {"shape":"TooManyDistributionsWithLambdaAssociations"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
@@ -2526,10 +2526,10 @@
       "output":{"shape":"UpdateDomainAssociationResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
-        {"shape":"InvalidArgument"},
+        {"shape":"EntityNotFound"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2543,16 +2543,16 @@
       "input":{"shape":"UpdateFieldLevelEncryptionConfigRequest"},
       "output":{"shape":"UpdateFieldLevelEncryptionConfigResult"},
       "errors":[
-        {"shape":"QueryArgProfileEmpty"},
         {"shape":"PreconditionFailed"},
+        {"shape":"QueryArgProfileEmpty"},
         {"shape":"AccessDenied"},
-        {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
         {"shape":"NoSuchFieldLevelEncryptionConfig"},
         {"shape":"TooManyFieldLevelEncryptionContentTypeProfiles"},
+        {"shape":"TooManyFieldLevelEncryptionQueryArgProfiles"},
         {"shape":"InconsistentQuantities"},
         {"shape":"NoSuchFieldLevelEncryptionProfile"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2575,8 +2575,8 @@
         {"shape":"InconsistentQuantities"},
         {"shape":"NoSuchFieldLevelEncryptionProfile"},
         {"shape":"TooManyFieldLevelEncryptionEncryptionEntities"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2635,8 +2635,8 @@
       "output":{"shape":"UpdateKeyValueStoreResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
@@ -2654,11 +2654,11 @@
       "output":{"shape":"UpdateOriginAccessControlResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"OriginAccessControlAlreadyExists"},
         {"shape":"AccessDenied"},
+        {"shape":"OriginAccessControlAlreadyExists"},
         {"shape":"NoSuchOriginAccessControl"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2680,8 +2680,8 @@
         {"shape":"InconsistentQuantities"},
         {"shape":"OriginRequestPolicyAlreadyExists"},
         {"shape":"TooManyQueryStringsInOriginRequestPolicy"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2699,8 +2699,8 @@
         {"shape":"AccessDenied"},
         {"shape":"NoSuchPublicKey"},
         {"shape":"CannotChangeImmutablePublicKeyFields"},
-        {"shape":"InvalidArgument"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2738,11 +2738,11 @@
         {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"},
         {"shape":"ResponseHeadersPolicyAlreadyExists"},
         {"shape":"InconsistentQuantities"},
-        {"shape":"TooLongCSPInResponseHeadersPolicy"},
         {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"TooLongCSPInResponseHeadersPolicy"},
+        {"shape":"IllegalUpdate"},
         {"shape":"InvalidArgument"},
         {"shape":"TooManyRemoveHeadersInResponseHeadersPolicy"},
-        {"shape":"IllegalUpdate"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2783,15 +2783,15 @@
       "output":{"shape":"UpdateVpcOriginResult"},
       "errors":[
         {"shape":"PreconditionFailed"},
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"UnsupportedOperation"},
-        {"shape":"InconsistentQuantities"},
         {"shape":"EntityAlreadyExists"},
+        {"shape":"InconsistentQuantities"},
         {"shape":"CannotUpdateEntityWhileInUse"},
-        {"shape":"InvalidArgument"},
         {"shape":"EntityLimitExceeded"},
         {"shape":"IllegalUpdate"},
+        {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"}
       ]
     },
@@ -2809,8 +2809,8 @@
       },
       "output":{"shape":"VerifyDnsConfigurationResult"},
       "errors":[
-        {"shape":"EntityNotFound"},
         {"shape":"AccessDenied"},
+        {"shape":"EntityNotFound"},
         {"shape":"InvalidArgument"}
       ]
     }

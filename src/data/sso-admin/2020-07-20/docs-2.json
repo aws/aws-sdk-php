@@ -1,11 +1,11 @@
 {
   "version": "2.0",
-  "service": "<p>IAM Identity Center (successor to Single Sign-On) helps you securely create, or connect, your workforce identities and manage their access centrally across Amazon Web Services accounts and applications. IAM Identity Center is the recommended approach for workforce authentication and authorization in Amazon Web Services, for organizations of any size and type.</p> <note> <p>IAM Identity Center uses the <code>sso</code> and <code>identitystore</code> API namespaces.</p> </note> <p>This reference guide provides information on single sign-on operations which could be used for access management of Amazon Web Services accounts. For information about IAM Identity Center features, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">IAM Identity Center User Guide</a>.</p> <p>Many operations in the IAM Identity Center APIs rely on identifiers for users and groups, known as principals. For more information about how to work with principals and principal IDs in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">Identity Store API Reference</a>.</p> <note> <p>Amazon Web Services provides SDKs that consist of libraries and sample code for various programming languages and platforms (Java, Ruby, .Net, iOS, Android, and more). The SDKs provide a convenient way to create programmatic access to IAM Identity Center and other Amazon Web Services services. For more information about the Amazon Web Services SDKs, including how to download and install them, see <a href=\"http://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>.</p> </note>",
+  "service": "<p>IAM Identity Center is the Amazon Web Services solution for connecting your workforce users to Amazon Web Services managed applications and other Amazon Web Services resources. You can connect your existing identity provider and synchronize users and groups from your directory, or create and manage your users directly in IAM Identity Center. You can then use IAM Identity Center for either or both of the following:</p> <ul> <li> <p>User access to applications</p> </li> <li> <p>User access to Amazon Web Services accounts</p> </li> </ul> <p>This guide provides information about single sign-on operations that you can use for access to applications and Amazon Web Services accounts. For information about IAM Identity Center features, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html\">IAM Identity Center User Guide</a>.</p> <note> <p>IAM Identity Center uses the <code>sso</code> and <code>identitystore</code> API namespaces.</p> </note> <p>Many API operations for IAM Identity Center rely on identifiers for users and groups, known as principals. For more information about how to work with principals and principal IDs in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">Identity Store API Reference</a>.</p> <note> <p>Amazon Web Services provides SDKs that consist of libraries and sample code for various programming languages and platforms (Java, Ruby, .Net, iOS, Android, and more). The SDKs provide a convenient way to create programmatic access to IAM Identity Center and other Amazon Web Services services. For more information about the Amazon Web Services SDKs, including how to download and install them, see <a href=\"http://aws.amazon.com/tools/\">Tools for Amazon Web Services</a>.</p> </note>",
   "operations": {
     "AttachCustomerManagedPolicyReferenceToPermissionSet": "<p>Attaches the specified customer managed policy to the specified <a>PermissionSet</a>.</p>",
     "AttachManagedPolicyToPermissionSet": "<p>Attaches an Amazon Web Services managed policy ARN to a permission set.</p> <note> <p>If the permission set is already referenced by one or more account assignments, you will need to call <code> <a>ProvisionPermissionSet</a> </code> after this operation. Calling <code>ProvisionPermissionSet</code> applies the corresponding IAM policy updates to all assigned accounts.</p> </note>",
     "CreateAccountAssignment": "<p>Assigns access to a principal for a specified Amazon Web Services account using a specified permission set.</p> <note> <p>The term <i>principal</i> here refers to a user or group that is defined in IAM Identity Center.</p> </note> <note> <p>As part of a successful <code>CreateAccountAssignment</code> call, the specified permission set will automatically be provisioned to the account in the form of an IAM policy. That policy is attached to the IAM role created in IAM Identity Center. If the permission set is subsequently updated, the corresponding IAM policies attached to roles in your accounts will not be updated automatically. In this case, you must call <code> <a>ProvisionPermissionSet</a> </code> to make these updates.</p> </note> <note> <p> After a successful response, call <code>DescribeAccountAssignmentCreationStatus</code> to describe the status of an assignment creation request. </p> </note>",
-    "CreateApplication": "<p>Creates an application in IAM Identity Center for the given application provider.</p>",
+    "CreateApplication": "<p>Creates an OAuth 2.0 customer managed application in IAM Identity Center for the given application provider.</p> <note> <p>This API does not support creating SAML 2.0 customer managed applications or Amazon Web Services managed applications. To learn how to create an Amazon Web Services managed application, see the application user guide. You can create a SAML 2.0 customer managed application in the Amazon Web Services Management Console only. See <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/customermanagedapps-saml2-setup.html\">Setting up customer managed SAML 2.0 applications</a>. For more information on these application types, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/awsapps.html\">Amazon Web Services managed applications</a>.</p> </note>",
     "CreateApplicationAssignment": "<p>Grant application access to a user or group.</p>",
     "CreateInstance": "<p>Creates an instance of IAM Identity Center for a standalone Amazon Web Services account that is not managed by Organizations or a member Amazon Web Services account in an organization. You can create only one instance per account and across all Amazon Web Services Regions.</p> <p>The CreateInstance request is rejected if the following apply: </p> <ul> <li> <p>The instance is created within the organization management account.</p> </li> <li> <p>An instance already exists in the same account.</p> </li> </ul>",
     "CreateInstanceAccessControlAttributeConfiguration": "<p>Enables the attributes-based access control (ABAC) feature for the specified IAM Identity Center instance. You can also specify new attributes to add to your ABAC configuration during the enabling process. For more information about ABAC, see <a href=\"/singlesignon/latest/userguide/abac.html\">Attribute-Based Access Control</a> in the <i>IAM Identity Center User Guide</i>.</p> <note> <p>After a successful response, call <code>DescribeInstanceAccessControlAttributeConfiguration</code> to validate that <code>InstanceAccessControlAttributeConfiguration</code> was created.</p> </note>",
@@ -44,15 +44,15 @@
     "ListAccountAssignmentCreationStatus": "<p>Lists the status of the Amazon Web Services account assignment creation requests for a specified IAM Identity Center instance.</p>",
     "ListAccountAssignmentDeletionStatus": "<p>Lists the status of the Amazon Web Services account assignment deletion requests for a specified IAM Identity Center instance.</p>",
     "ListAccountAssignments": "<p>Lists the assignee of the specified Amazon Web Services account with the specified permission set.</p>",
-    "ListAccountAssignmentsForPrincipal": "<p>Retrieves a list of the IAM Identity Center associated Amazon Web Services accounts that the principal has access to.</p>",
+    "ListAccountAssignmentsForPrincipal": "<p>Retrieves a list of the IAM Identity Center associated Amazon Web Services accounts that the principal has access to. This action must be called from the management account containing your organization instance of IAM Identity Center. This action is not valid for account instances of IAM Identity Center.</p>",
     "ListAccountsForProvisionedPermissionSet": "<p>Lists all the Amazon Web Services accounts where the specified permission set is provisioned.</p>",
     "ListApplicationAccessScopes": "<p>Lists the access scopes and authorized targets associated with an application.</p>",
     "ListApplicationAssignments": "<p>Lists Amazon Web Services account users that are assigned to an application.</p>",
-    "ListApplicationAssignmentsForPrincipal": "<p>Lists the applications to which a specified principal is assigned.</p>",
+    "ListApplicationAssignmentsForPrincipal": "<p>Lists the applications to which a specified principal is assigned. You must provide a filter when calling this action from a member account against your organization instance of IAM Identity Center. A filter is not required when called from the management account against an organization instance of IAM Identity Center, or from a member account against an account instance of IAM Identity Center in the same account.</p>",
     "ListApplicationAuthenticationMethods": "<p>Lists all of the authentication methods supported by the specified application.</p>",
     "ListApplicationGrants": "<p>List the grants associated with an application.</p>",
     "ListApplicationProviders": "<p>Lists the application providers configured in the IAM Identity Center identity store.</p>",
-    "ListApplications": "<p>Lists all applications associated with the instance of IAM Identity Center. When listing applications for an instance in the management account, member accounts must use the <code>applicationAccount</code> parameter to filter the list to only applications created from that account.</p>",
+    "ListApplications": "<p>Lists all applications associated with the instance of IAM Identity Center. When listing applications for an organization instance in the management account, member accounts must use the <code>applicationAccount</code> parameter to filter the list to only applications created from that account. When listing applications for an account instance in the same member account, a filter is not required.</p>",
     "ListCustomerManagedPolicyReferencesInPermissionSet": "<p>Lists all customer managed policies attached to a specified <a>PermissionSet</a>.</p>",
     "ListInstances": "<p>Lists the details of the organization and account instances of IAM Identity Center that were created in or visible to the account calling this API. </p>",
     "ListManagedPoliciesInPermissionSet": "<p>Lists the Amazon Web Services managed policy that is attached to a specified permission set.</p>",
@@ -65,7 +65,7 @@
     "PutApplicationAccessScope": "<p>Adds or updates the list of authorized targets for an IAM Identity Center access scope for an application.</p>",
     "PutApplicationAssignmentConfiguration": "<p>Configure how users gain access to an application. If <code>AssignmentsRequired</code> is <code>true</code> (default value), users don’t have access to the application unless an assignment is created using the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_CreateApplicationAssignment.html\">CreateApplicationAssignment API</a>. If <code>false</code>, all users have access to the application. If an assignment is created using <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_CreateApplicationAssignment.html\">CreateApplicationAssignment</a>., the user retains access if <code>AssignmentsRequired</code> is set to <code>true</code>. </p>",
     "PutApplicationAuthenticationMethod": "<p>Adds or updates an authentication method for an application.</p>",
-    "PutApplicationGrant": "<p>Adds a grant to an application.</p>",
+    "PutApplicationGrant": "<p>Creates a configuration for an application to use grants. Conceptually grants are authorization to request actions related to tokens. This configuration will be used when parties are requesting and receiving tokens during the trusted identity propagation process. For more information on the IAM Identity Center supported grant workflows, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/customermanagedapps-saml2-oauth2.html\">SAML 2.0 and OAuth 2.0</a>.</p> <p>A grant is created between your applications and Identity Center instance which enables an application to use specified mechanisms to obtain tokens. These tokens are used by your applications to gain access to Amazon Web Services resources on behalf of users. The following elements are within these exchanges:</p> <ul> <li> <p> <b>Requester</b> - The application requesting access to Amazon Web Services resources.</p> </li> <li> <p> <b>Subject</b> - Typically the user that is requesting access to Amazon Web Services resources.</p> </li> <li> <p> <b>Grant</b> - Conceptually, a grant is authorization to access Amazon Web Services resources. These grants authorize token generation for authenticating access to the requester and for the request to make requests on behalf of the subjects. There are four types of grants:</p> <ul> <li> <p> <b>AuthorizationCode</b> - Allows an application to request authorization through a series of user-agent redirects.</p> </li> <li> <p> <b>JWT bearer </b> - Authorizes an application to exchange a JSON Web Token that came from an external identity provider. To learn more, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749\">RFC 6479</a>.</p> </li> <li> <p> <b>Refresh token</b> - Enables application to request new access tokens to replace expiring or expired access tokens.</p> </li> <li> <p> <b>Exchange token</b> - A grant that requests tokens from the authorization server by providing a ‘subject’ token with access scope authorizing trusted identity propagation to this application. To learn more, see <a href=\"https://datatracker.ietf.org/doc/html/rfc8693\">RFC 8693</a>.</p> </li> </ul> </li> <li> <p> <b>Authorization server</b> - IAM Identity Center requests tokens.</p> </li> </ul> <p>User credentials are never shared directly within these exchanges. Instead, applications use grants to request access tokens from IAM Identity Center. For more information, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749\">RFC 6479</a>.</p> <p class=\"title\"> <b>Use cases</b> </p> <ul> <li> <p>Connecting to custom applications.</p> </li> <li> <p>Configuring an Amazon Web Services service to make calls to another Amazon Web Services services using JWT tokens.</p> </li> </ul>",
     "PutInlinePolicyToPermissionSet": "<p>Attaches an inline policy to a permission set.</p> <note> <p>If the permission set is already referenced by one or more account assignments, you will need to call <code> <a>ProvisionPermissionSet</a> </code> after this action to apply the corresponding IAM policy updates to all assigned accounts.</p> </note>",
     "PutPermissionsBoundaryToPermissionSet": "<p>Attaches an Amazon Web Services managed or customer managed policy to the specified <a>PermissionSet</a> as a permissions boundary.</p>",
     "TagResource": "<p>Associates a set of tags with a specified resource.</p>",
@@ -210,7 +210,7 @@
         "Application$ApplicationArn": "<p>The ARN of the application.</p>",
         "ApplicationAssignment$ApplicationArn": "<p>The ARN of the application that has principals assigned.</p>",
         "ApplicationAssignmentForPrincipal$ApplicationArn": "<p>The ARN of the application to which the specified principal is assigned.</p>",
-        "CreateApplicationAssignmentRequest$ApplicationArn": "<p>The ARN of the application provider under which the operation will run.</p>",
+        "CreateApplicationAssignmentRequest$ApplicationArn": "<p>The ARN of the application for which the assignment is created.</p>",
         "CreateApplicationResponse$ApplicationArn": "<p>Specifies the ARN of the application.</p>",
         "DeleteApplicationAccessScopeRequest$ApplicationArn": "<p>Specifies the ARN of the application with the access scope to delete.</p>",
         "DeleteApplicationAssignmentRequest$ApplicationArn": "<p>Specifies the ARN of the application.</p>",
@@ -265,6 +265,13 @@
       "base": null,
       "refs": {
         "ListApplicationsResponse$Applications": "<p>Retrieves all applications associated with the instance.</p>"
+      }
+    },
+    "ApplicationNameType": {
+      "base": null,
+      "refs": {
+        "CreateApplicationRequest$Name": "<p>The name of the .</p>",
+        "UpdateApplicationRequest$Name": "<p>Specifies the updated name for the application.</p>"
       }
     },
     "ApplicationProvider": {
@@ -340,7 +347,7 @@
       }
     },
     "AttachedManagedPolicy": {
-      "base": "<p>A structure that stores the details of the Amazon Web Services managed policy.</p>",
+      "base": "<p>A structure that stores a list of managed policy ARNs that describe the associated Amazon Web Services managed policy.</p>",
       "refs": {
         "AttachedManagedPolicyList$member": null
       }
@@ -395,7 +402,7 @@
     "AuthorizedTokenIssuers": {
       "base": null,
       "refs": {
-        "JwtBearerGrant$AuthorizedTokenIssuers": "<p>A list of allowed token issuers trusted by the Identity Center instances for this application.</p>"
+        "JwtBearerGrant$AuthorizedTokenIssuers": "<p>A list of allowed token issuers trusted by the Identity Center instances for this application.</p> <note> <p> <code>AuthorizedTokenIssuers</code> is required when the grant type is <code>JwtBearerGrant</code>.</p> </note>"
       }
     },
     "ClaimAttributePath": {
@@ -735,8 +742,8 @@
         "CreateApplicationRequest$Description": "<p>The description of the .</p>",
         "DescribeApplicationResponse$Description": "<p>The description of the .</p>",
         "DisplayData$Description": "<p>The description of the application provider that appears in the portal.</p>",
-        "ResourceServerScopeDetails$DetailedTitle": "<p>The title of an access scope for a resource server.</p>",
         "ResourceServerScopeDetails$LongDescription": "<p>The description of an access scope for a resource server.</p>",
+        "ResourceServerScopeDetails$DetailedTitle": "<p>The title of an access scope for a resource server.</p>",
         "UpdateApplicationRequest$Description": "<p>The description of the .</p>"
       }
     },
@@ -1010,7 +1017,7 @@
       }
     },
     "JwtBearerGrant": {
-      "base": "<p>A structure that defines configuration settings for an application that supports the JWT Bearer Token Authorization Grant.</p>",
+      "base": "<p>A structure that defines configuration settings for an application that supports the JWT Bearer Token Authorization Grant. The <code>AuthorizedAudience</code> field is the aud claim. For more information, see <a href=\"https://datatracker.ietf.org/doc/html/rfc7523\">RFC 7523</a>.</p>",
       "refs": {
         "Grant$JwtBearer": "<p>Configuration options for the <code>urn:ietf:params:oauth:grant-type:jwt-bearer</code> grant type.</p>"
       }
@@ -1292,12 +1299,10 @@
       "base": null,
       "refs": {
         "Application$Name": "<p>The name of the application.</p>",
-        "CreateApplicationRequest$Name": "<p>The name of the .</p>",
         "CreateInstanceRequest$Name": "<p>The name of the instance of IAM Identity Center.</p>",
         "DescribeApplicationResponse$Name": "<p>The application name.</p>",
         "DescribeInstanceResponse$Name": "<p>Specifies the instance name.</p>",
         "InstanceMetadata$Name": "<p>The name of the Identity Center instance.</p>",
-        "UpdateApplicationRequest$Name": "<p>Specifies the updated name for the application.</p>",
         "UpdateInstanceRequest$Name": "<p>Updates the instance name.</p>"
       }
     },
@@ -1431,11 +1436,11 @@
         "ApplicationAssignment$PrincipalId": "<p>The unique identifier of the principal assigned to the application.</p>",
         "ApplicationAssignmentForPrincipal$PrincipalId": "<p>The unique identifier of the principal assigned to the application.</p>",
         "CreateAccountAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
-        "CreateApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
+        "CreateApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
         "DeleteAccountAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
-        "DeleteApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
-        "DescribeApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
-        "DescribeApplicationAssignmentResponse$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
+        "DeleteApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
+        "DescribeApplicationAssignmentRequest$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
+        "DescribeApplicationAssignmentResponse$PrincipalId": "<p>An identifier for an object in IAM Identity Center, such as a user or group. PrincipalIds are GUIDs (For example, f81d4fae-7dec-11d0-a765-00a0c91e6bf6). For more information about PrincipalIds in IAM Identity Center, see the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/welcome.html\">IAM Identity Center Identity Store API Reference</a>.</p>",
         "ListAccountAssignmentsForPrincipalRequest$PrincipalId": "<p>Specifies the principal for which you want to retrieve the list of account assignments.</p>",
         "ListApplicationAssignmentsForPrincipalRequest$PrincipalId": "<p>Specifies the unique identifier of the principal for which you want to retrieve its assignments.</p>"
       }
@@ -1536,11 +1541,11 @@
     "RedirectUris": {
       "base": null,
       "refs": {
-        "AuthorizationCodeGrant$RedirectUris": "<p>A list of URIs that are valid locations to redirect a user's browser after the user is authorized.</p>"
+        "AuthorizationCodeGrant$RedirectUris": "<p>A list of URIs that are valid locations to redirect a user's browser after the user is authorized.</p> <note> <p>RedirectUris is required when the grant type is <code>authorization_code</code>.</p> </note>"
       }
     },
     "RefreshTokenGrant": {
-      "base": "<p>A structure that defines configuration settings for an application that supports the OAuth 2.0 Refresh Token Grant.</p>",
+      "base": "<p>A structure that defines configuration settings for an application that supports the OAuth 2.0 Refresh Token Grant. For more, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749#section-1.5\">RFC 6749</a>.</p>",
       "refs": {
         "Grant$RefreshToken": "<p>Configuration options for the <code>refresh_token</code> grant type.</p>"
       }
@@ -1788,7 +1793,7 @@
       }
     },
     "TokenExchangeGrant": {
-      "base": "<p>A structure that defines configuration settings for an application that supports the OAuth 2.0 Token Exchange Grant.</p>",
+      "base": "<p>A structure that defines configuration settings for an application that supports the OAuth 2.0 Token Exchange Grant. For more information, see <a href=\"https://datatracker.ietf.org/doc/html/rfc8693\">RFC 8693</a>.</p>",
       "refs": {
         "Grant$TokenExchange": "<p>Configuration options for the <code>urn:ietf:params:oauth:grant-type:token-exchange</code> grant type.</p>"
       }
