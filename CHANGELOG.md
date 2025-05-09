@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.8 - 2025-05-09
 
 * `Aws\Synthetics` - Add support to retry a canary automatically after schedule run failures. Users can enable this feature by configuring the RetryConfig field when calling the CreateCanary or UpdateCanary API. Also includes changes in GetCanary and GetCanaryRuns to support retrieving retry configurations.
 * `Aws\CloudWatchLogs` - We are pleased to announce limit increases to our grok processor logs transformation feature. Now you can define 20 Grok patterns in their configurations, with an expanded total pattern matching limit of 512 characters.
