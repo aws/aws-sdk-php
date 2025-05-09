@@ -1277,8 +1277,10 @@ EOF;
             } elseif ($request->getMethod() === 'GET') {
                 switch ($request->getUri()->getPath()) {
                     case '/latest/meta-data/iam/security-credentials/':
+                    case '/latest/meta-data/iam/security-credentials-extended/':
                         return Create::promiseFor(new Response(200, [], Utils::streamFor('MockProfile')));
                     case '/latest/meta-data/iam/security-credentials/MockProfile':
+                    case '/latest/meta-data/iam/security-credentials-extended/MockProfile':
                         $jsonResponse = <<<EOF
 {
     "Code": "Success",
