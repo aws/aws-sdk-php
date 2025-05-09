@@ -1901,7 +1901,7 @@
     },
     "Delimiter":{
       "type":"string",
-      "max":1,
+      "max":2,
       "min":1
     },
     "Deliveries":{
@@ -2804,7 +2804,7 @@
     },
     "GrokMatch":{
       "type":"string",
-      "max":128,
+      "max":512,
       "min":1
     },
     "Histogram":{
@@ -4309,6 +4309,11 @@
         "entries":{"shape":"SplitStringEntries"}
       }
     },
+    "SplitStringDelimiter":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "SplitStringEntries":{
       "type":"list",
       "member":{"shape":"SplitStringEntry"},
@@ -4323,7 +4328,7 @@
       ],
       "members":{
         "source":{"shape":"Source"},
-        "delimiter":{"shape":"Delimiter"}
+        "delimiter":{"shape":"SplitStringDelimiter"}
       }
     },
     "StandardUnit":{

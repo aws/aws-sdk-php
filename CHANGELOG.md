@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Synthetics` - Add support to retry a canary automatically after schedule run failures. Users can enable this feature by configuring the RetryConfig field when calling the CreateCanary or UpdateCanary API. Also includes changes in GetCanary and GetCanaryRuns to support retrieving retry configurations.
+* `Aws\CloudWatchLogs` - We are pleased to announce limit increases to our grok processor logs transformation feature. Now you can define 20 Grok patterns in their configurations, with an expanded total pattern matching limit of 512 characters.
+* `Aws\WorkSpaces` - Remove parameter EnableWorkDocs from WorkSpacesServiceModel due to end of support of Amazon WorkDocs service.
+* `Aws\Athena` - Minor API documentation updates
+
 ## 3.343.7 - 2025-05-08
 
 * `Aws\` - Validates tag input for `ChangelogBuilder`
