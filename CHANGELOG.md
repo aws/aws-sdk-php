@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.9 - 2025-05-12
 
 * `Aws\SupplyChain` - Launch new AWS Supply Chain public APIs for DataIntegrationEvent, DataIntegrationFlowExecution and DatasetNamespace. Also add more capabilities to existing public APIs to support direct dataset event publish, data deduplication in DataIntegrationFlow, partition specification of custom datasets.
 * `Aws\SageMaker` - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
