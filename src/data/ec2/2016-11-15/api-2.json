@@ -6866,7 +6866,6 @@
     },
     "AllocateHostsRequest":{
       "type":"structure",
-      "required":["AvailabilityZone"],
       "members":{
         "InstanceFamily":{"shape":"String"},
         "TagSpecifications":{
@@ -6880,6 +6879,7 @@
           "shape":"AssetIdList",
           "locationName":"AssetId"
         },
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "AutoPlacement":{
           "shape":"AutoPlacement",
           "locationName":"autoPlacement"
@@ -7155,6 +7155,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         },
         "Instance":{
           "shape":"AnalysisComponent",
@@ -9987,6 +9991,10 @@
         "Tenancy":{
           "shape":"CapacityReservationTenancy",
           "locationName":"tenancy"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
         }
       }
     },
@@ -19584,6 +19592,7 @@
           "shape":"ReservedInstancesOfferingIdStringList",
           "locationName":"ReservedInstancesOfferingId"
         },
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -24221,6 +24230,10 @@
         "AvailabilityZones":{
           "shape":"ValueStringList",
           "locationName":"availabilityZoneSet"
+        },
+        "AvailabilityZoneIds":{
+          "shape":"ValueStringList",
+          "locationName":"availabilityZoneIdSet"
         },
         "Cidrs":{
           "shape":"ValueStringList",
@@ -42223,6 +42236,10 @@
           "shape":"TagList",
           "locationName":"tagSet"
         },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "ReservedInstancesId":{
           "shape":"String",
           "locationName":"reservedInstancesId"
@@ -42291,6 +42308,10 @@
         "Scope":{
           "shape":"scope",
           "locationName":"scope"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         }
       }
     },
@@ -42487,6 +42508,10 @@
         "Scope":{
           "shape":"scope",
           "locationName":"scope"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
         },
         "ReservedInstancesOfferingId":{
           "shape":"String",
@@ -51163,6 +51188,10 @@
         "AttachmentStatuses":{
           "shape":"VolumeStatusAttachmentStatusList",
           "locationName":"attachmentStatuses"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         }
       }
     },

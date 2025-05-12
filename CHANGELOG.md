@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SupplyChain` - Launch new AWS Supply Chain public APIs for DataIntegrationEvent, DataIntegrationFlowExecution and DatasetNamespace. Also add more capabilities to existing public APIs to support direct dataset event publish, data deduplication in DataIntegrationFlow, partition specification of custom datasets.
+* `Aws\SageMaker` - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
+* `Aws\S3Control` - Updates to support S3 Express zonal endpoints for directory buckets in AWS CLI
+* `Aws\Deadline` - AWS Deadline Cloud service-managed fleets now support configuration scripts. Configuration scripts make it easy to install additional software, like plugins and packages, onto a worker.
+* `Aws\MediaLive` - Add support to the AV1 rate control mode
+* `Aws\IAM` - Updating the endpoint list for the Identity and access management (IAM) service
+* `Aws\MediaTailor` - Documenting that EnabledLoggingStrategies is always present in responses of PlaybackConfiguration read operations.
+* `Aws\EC2` - EC2 - Adding support for AvailabilityZoneId
+
 ## 3.343.8 - 2025-05-09
 
 * `Aws\Synthetics` - Add support to retry a canary automatically after schedule run failures. Users can enable this feature by configuring the RetryConfig field when calling the CreateCanary or UpdateCanary API. Also includes changes in GetCanary and GetCanaryRuns to support retrieving retry configurations.

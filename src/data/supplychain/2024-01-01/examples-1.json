@@ -78,7 +78,22 @@
           },
           "target": {
             "datasetTarget": {
-              "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner"
+              "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner",
+              "options": {
+                "dedupeRecords": true,
+                "dedupeStrategy": {
+                  "type": "FIELD_PRIORITY",
+                  "fieldPriority": {
+                    "fields": [
+                      {
+                        "name": "eff_start_date",
+                        "sortOrder": "DESC"
+                      }
+                    ]
+                  }
+                },
+                "loadType": "REPLACE"
+              }
             },
             "targetType": "DATASET"
           },
@@ -284,6 +299,22 @@
           "description": "This is a custom dataset",
           "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
           "namespace": "default",
+          "partitionSpec": {
+            "fields": [
+              {
+                "name": "creation_time",
+                "transform": {
+                  "type": "DAY"
+                }
+              },
+              {
+                "name": "description",
+                "transform": {
+                  "type": "IDENTITY"
+                }
+              }
+            ]
+          },
           "schema": {
             "name": "MyDataset",
             "fields": [
@@ -306,6 +337,16 @@
                 "name": "creation_time",
                 "type": "TIMESTAMP",
                 "isRequired": false
+              },
+              {
+                "name": "quantity",
+                "type": "LONG",
+                "isRequired": false
+              }
+            ],
+            "primaryKeys": [
+              {
+                "name": "id"
               }
             ]
           },
@@ -323,6 +364,22 @@
             "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
             "lastModifiedTime": 1727116807.751,
             "namespace": "default",
+            "partitionSpec": {
+              "fields": [
+                {
+                  "name": "creation_time",
+                  "transform": {
+                    "type": "DAY"
+                  }
+                },
+                {
+                  "name": "description",
+                  "transform": {
+                    "type": "IDENTITY"
+                  }
+                }
+              ]
+            },
             "schema": {
               "name": "MyDataset",
               "fields": [
@@ -345,6 +402,16 @@
                   "name": "creation_time",
                   "type": "TIMESTAMP",
                   "isRequired": false
+                },
+                {
+                  "name": "quantity",
+                  "type": "LONG",
+                  "isRequired": false
+                }
+              ],
+              "primaryKeys": [
+                {
+                  "name": "id"
                 }
               ]
             }
@@ -352,6 +419,31 @@
         },
         "id": "example-2",
         "title": "Create a custom dataset"
+      }
+    ],
+    "CreateDataLakeNamespace": [
+      {
+        "input": {
+          "name": "my_namespace",
+          "description": "This is my AWS Supply Chain namespace",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+          "tags": {
+            "tagKey1": "tagValue1",
+            "tagKey2": "tagValue2"
+          }
+        },
+        "output": {
+          "namespace": {
+            "name": "my_namespace",
+            "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/my_namespace",
+            "createdTime": 1736892560.751,
+            "description": "This is my AWS Supply Chain namespace",
+            "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+            "lastModifiedTime": 1736892560.751
+          }
+        },
+        "id": "example-1",
+        "title": "Create a data lake namespace"
       }
     ],
     "CreateInstance": [
@@ -443,6 +535,20 @@
         "title": "Delete a custom dataset"
       }
     ],
+    "DeleteDataLakeNamespace": [
+      {
+        "input": {
+          "name": "my_namespace",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "output": {
+          "name": "my_namespace",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "id": "example-1",
+        "title": "Delete an AWS Supply Chain namespace"
+      }
+    ],
     "DeleteInstance": [
       {
         "input": {
@@ -500,6 +606,32 @@
         "title": "Invoke GetBillOfMaterialsImportJob for an in-progress job"
       }
     ],
+    "GetDataIntegrationEvent": [
+      {
+        "input": {
+          "eventId": "19739c8e-cd2e-4cbc-a2f7-0dc43239f042",
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "event": {
+            "datasetTargetDetails": {
+              "datasetIdentifier": "arn:aws:scn:us-west-2:135808960812:instance/8928ae12-15e5-4441-825d-ec2184f0a43a/namespaces/asc/datasets/product",
+              "datasetLoadExecution": {
+                "status": "SUCCEEDED"
+              },
+              "operationType": "APPEND"
+            },
+            "eventGroupId": "datasetId",
+            "eventId": "19739c8e-cd2e-4cbc-a2f7-0dc43239f042",
+            "eventTimestamp": 1515531081.123,
+            "eventType": "scn.data.dataset",
+            "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+          }
+        },
+        "id": "example-1",
+        "title": "Successful GetDataIntegrationEvent"
+      }
+    ],
     "GetDataIntegrationFlow": [
       {
         "input": {
@@ -538,6 +670,59 @@
         },
         "id": "example-1",
         "title": "Successful GetDataIntegrationFlow"
+      }
+    ],
+    "GetDataIntegrationFlowExecution": [
+      {
+        "input": {
+          "executionId": "edbbdd3f-c0f9-49d9-ab01-f64542f803b7",
+          "flowName": "source-product",
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "flowExecution": {
+            "endTime": 1515531090.123,
+            "executionId": "edbbdd3f-c0f9-49d9-ab01-f64542f803b7",
+            "flowName": "source-product",
+            "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a",
+            "sourceInfo": {
+              "s3Source": {
+                "key": "sources/product-sources.csv",
+                "bucketName": "galaxy-raw-input-test-data-prod-pdx-1"
+              },
+              "sourceType": "S3"
+            },
+            "startTime": 1515531081.123,
+            "status": "SUCCEEDED"
+          }
+        },
+        "id": "example-1",
+        "title": "Successful GetDataIntegrationFlowExecution for S3 source"
+      },
+      {
+        "input": {
+          "executionId": "9daf6071-d12c-4eef-864c-73cea2557825",
+          "flowName": "target-product",
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "flowExecution": {
+            "endTime": 1515531090.123,
+            "executionId": "9daf6071-d12c-4eef-864c-73cea2557825",
+            "flowName": "target-product",
+            "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a",
+            "sourceInfo": {
+              "datasetSource": {
+                "datasetIdentifier": "arn:aws:scn:us-west-2:135808960812:instance/8928ae12-15e5-4441-825d-ec2184f0a43a/namespaces/default/datasets/product"
+              },
+              "sourceType": "DATASET"
+            },
+            "startTime": 1515531081.123,
+            "status": "SUCCEEDED"
+          }
+        },
+        "id": "example-2",
+        "title": "Successful GetDataIntegrationFlowExecution for DATASET source"
       }
     ],
     "GetDataLakeDataset": [
@@ -731,6 +916,22 @@
             "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
             "lastModifiedTime": 1727116807.751,
             "namespace": "default",
+            "partitionSpec": {
+              "fields": [
+                {
+                  "name": "creation_time",
+                  "transform": {
+                    "type": "DAY"
+                  }
+                },
+                {
+                  "name": "description",
+                  "transform": {
+                    "type": "IDENTITY"
+                  }
+                }
+              ]
+            },
             "schema": {
               "name": "MyDataset",
               "fields": [
@@ -753,6 +954,16 @@
                   "name": "creation_time",
                   "type": "TIMESTAMP",
                   "isRequired": false
+                },
+                {
+                  "name": "quantity",
+                  "type": "LONG",
+                  "isRequired": false
+                }
+              ],
+              "primaryKeys": [
+                {
+                  "name": "id"
                 }
               ]
             }
@@ -760,6 +971,43 @@
         },
         "id": "example-2",
         "title": "Get proporties of an existing custom dataset"
+      }
+    ],
+    "GetDataLakeNamespace": [
+      {
+        "input": {
+          "name": "my_namespace",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "output": {
+          "namespace": {
+            "name": "my_namespace",
+            "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/my_namespace",
+            "createdTime": 1736892560.751,
+            "description": "This is my AWS Supply Chain namespace",
+            "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+            "lastModifiedTime": 1736892560.751
+          }
+        },
+        "id": "example-1",
+        "title": "Get properties of an existing AWS Supply Chain namespace"
+      },
+      {
+        "input": {
+          "name": "asc",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "output": {
+          "namespace": {
+            "name": "asc",
+            "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/asc",
+            "createdTime": 1736892430.234,
+            "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+            "lastModifiedTime": 1736892430.234
+          }
+        },
+        "id": "example-2",
+        "title": "Get proporties of an existing pre-defined AWS Supply Chain namespace"
       }
     ],
     "GetInstance": [
@@ -803,6 +1051,62 @@
         },
         "id": "example-2",
         "title": "Successful GetInstance request with error message"
+      }
+    ],
+    "ListDataIntegrationEvents": [
+      {
+        "input": {
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "events": [
+            {
+              "datasetTargetDetails": {
+                "datasetIdentifier": "arn:aws:scn:us-west-2:135808960812:instance/8928ae12-15e5-4441-825d-ec2184f0a43a/namespaces/asc/datasets/product",
+                "datasetLoadExecution": {
+                  "status": "SUCCEEDED"
+                },
+                "operationType": "APPEND"
+              },
+              "eventGroupId": "datasetId",
+              "eventId": "19739c8e-cd2e-4cbc-a2f7-0dc43239f042",
+              "eventTimestamp": 1515531081.123,
+              "eventType": "scn.data.dataset",
+              "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Successful ListDataIntegrationEvents"
+      }
+    ],
+    "ListDataIntegrationFlowExecutions": [
+      {
+        "input": {
+          "flowName": "source-product",
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "flowExecutions": [
+            {
+              "endTime": 1515531090.123,
+              "executionId": "edbbdd3f-c0f9-49d9-ab01-f64542f803b7",
+              "flowName": "source-product",
+              "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a",
+              "sourceInfo": {
+                "s3Source": {
+                  "key": "sources/product-sources.csv",
+                  "bucketName": "galaxy-raw-input-test-data-prod-pdx-1"
+                },
+                "sourceType": "S3"
+              },
+              "startTime": 1515531081.123,
+              "status": "SUCCEEDED"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Successful ListDataIntegrationFlowExecutions"
       }
     ],
     "ListDataIntegrationFlows": [
@@ -863,7 +1167,22 @@
               ],
               "target": {
                 "datasetTarget": {
-                  "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner"
+                  "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner",
+                  "options": {
+                    "dedupeRecords": true,
+                    "dedupeStrategy": {
+                      "type": "FIELD_PRIORITY",
+                      "fieldPriority": {
+                        "fields": [
+                          {
+                            "name": "eff_start_date",
+                            "sortOrder": "DESC"
+                          }
+                        ]
+                      }
+                    },
+                    "loadType": "REPLACE"
+                  }
                 },
                 "targetType": "DATASET"
               },
@@ -1074,6 +1393,22 @@
               "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
               "lastModifiedTime": 1727116807.751,
               "namespace": "default",
+              "partitionSpec": {
+                "fields": [
+                  {
+                    "name": "creation_time",
+                    "transform": {
+                      "type": "DAY"
+                    }
+                  },
+                  {
+                    "name": "description",
+                    "transform": {
+                      "type": "IDENTITY"
+                    }
+                  }
+                ]
+              },
               "schema": {
                 "name": "MyDataset",
                 "fields": [
@@ -1096,6 +1431,16 @@
                     "name": "creation_time",
                     "type": "TIMESTAMP",
                     "isRequired": false
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "LONG",
+                    "isRequired": false
+                  }
+                ],
+                "primaryKeys": [
+                  {
+                    "name": "id"
                   }
                 ]
               }
@@ -1129,6 +1474,54 @@
         },
         "id": "example-2",
         "title": "List custom datasets using pagination"
+      }
+    ],
+    "ListDataLakeNamespaces": [
+      {
+        "input": {
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "output": {
+          "namespaces": [
+            {
+              "name": "custom_namespace",
+              "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/custom_namespace",
+              "createdTime": 1736892060.751,
+              "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+              "lastModifiedTime": 1736892060.751
+            },
+            {
+              "name": "my_namespace",
+              "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/my_namespace",
+              "createdTime": 1736892560.751,
+              "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+              "lastModifiedTime": 1736892586.156
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List AWS Supply Chain namespaces"
+      },
+      {
+        "input": {
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+          "maxResults": 1,
+          "nextToken": "next_token_returned_from_previous_list_request"
+        },
+        "output": {
+          "namespaces": [
+            {
+              "name": "my_namespace",
+              "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/my_namespace",
+              "createdTime": 1736892560.751,
+              "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+              "lastModifiedTime": 1736892586.156
+            }
+          ],
+          "nextToken": "next_token_for_next_list_request"
+        },
+        "id": "example-2",
+        "title": "List AWS Supply Chain namespaces using pagination"
       }
     ],
     "ListInstances": [
@@ -1460,6 +1853,24 @@
         },
         "id": "example-15",
         "title": "Successful SendDataIntegrationEvent for supplyplan event type"
+      },
+      {
+        "input": {
+          "data": "{\"dataset_id\": \"datset-id-test-123\" }",
+          "datasetTarget": {
+            "datasetIdentifier": "arn:aws:scn:us-west-2:135808960812:instance/8928ae12-15e5-4441-825d-ec2184f0a43a/namespaces/asc/datasets/product",
+            "operationType": "APPEND"
+          },
+          "eventGroupId": "datasetId",
+          "eventTimestamp": 1515531081.123,
+          "eventType": "scn.data.dataset",
+          "instanceId": "8928ae12-15e5-4441-825d-ec2184f0a43a"
+        },
+        "output": {
+          "eventId": "19739c8e-cd2e-4cbc-a2f7-0dc43239f042"
+        },
+        "id": "example-16",
+        "title": "Successful SendDataIntegrationEvent for dataset event type"
       }
     ],
     "TagResource": [
@@ -1573,7 +1984,22 @@
           ],
           "target": {
             "datasetTarget": {
-              "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner"
+              "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner",
+              "options": {
+                "dedupeRecords": true,
+                "dedupeStrategy": {
+                  "type": "FIELD_PRIORITY",
+                  "fieldPriority": {
+                    "fields": [
+                      {
+                        "name": "eff_start_date",
+                        "sortOrder": "ASC"
+                      }
+                    ]
+                  }
+                },
+                "loadType": "REPLACE"
+              }
             },
             "targetType": "DATASET"
           },
@@ -1608,7 +2034,22 @@
             ],
             "target": {
               "datasetTarget": {
-                "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner"
+                "datasetIdentifier": "arn:aws:scn:us-east-1:123456789012:instance/8850c54e-e187-4fa7-89d4-6370f165174d/namespaces/asc/datasets/trading_partner",
+                "options": {
+                  "dedupeRecords": true,
+                  "dedupeStrategy": {
+                    "type": "FIELD_PRIORITY",
+                    "fieldPriority": {
+                      "fields": [
+                        {
+                          "name": "eff_start_date",
+                          "sortOrder": "ASC"
+                        }
+                      ]
+                    }
+                  },
+                  "loadType": "REPLACE"
+                }
               },
               "targetType": "DATASET"
             },
@@ -1817,6 +2258,22 @@
             "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
             "lastModifiedTime": 1727117453.568,
             "namespace": "default",
+            "partitionSpec": {
+              "fields": [
+                {
+                  "name": "creation_time",
+                  "transform": {
+                    "type": "DAY"
+                  }
+                },
+                {
+                  "name": "description",
+                  "transform": {
+                    "type": "IDENTITY"
+                  }
+                }
+              ]
+            },
             "schema": {
               "name": "MyDataset",
               "fields": [
@@ -1839,6 +2296,16 @@
                   "name": "creation_time",
                   "type": "TIMESTAMP",
                   "isRequired": false
+                },
+                {
+                  "name": "quantity",
+                  "type": "LONG",
+                  "isRequired": false
+                }
+              ],
+              "primaryKeys": [
+                {
+                  "name": "id"
                 }
               ]
             }
@@ -1846,6 +2313,27 @@
         },
         "id": "example-2",
         "title": "Update description of an existing custom dataset"
+      }
+    ],
+    "UpdateDataLakeNamespace": [
+      {
+        "input": {
+          "name": "my_namespace",
+          "description": "This is an updated AWS Supply Chain namespace",
+          "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5"
+        },
+        "output": {
+          "namespace": {
+            "name": "my_namespace",
+            "arn": "arn:aws:scn:us-east-1:012345678910:instance/1877dd20-dee9-4639-8e99-cb67acf21fe5/namespaces/my_namespace",
+            "createdTime": 1736892560.751,
+            "description": "This is an updated AWS Supply Chain namespace",
+            "instanceId": "1877dd20-dee9-4639-8e99-cb67acf21fe5",
+            "lastModifiedTime": 1736892586.156
+          }
+        },
+        "id": "example-1",
+        "title": "Update description of an existing AWS Supply Chain namespace"
       }
     ],
     "UpdateInstance": [

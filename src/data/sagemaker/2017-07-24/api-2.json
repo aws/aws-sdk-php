@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2017-07-24",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"api.sagemaker",
     "jsonVersion":"1.1",
     "protocol":"json",
@@ -12,8 +13,7 @@
     "signatureVersion":"v4",
     "signingName":"sagemaker",
     "targetPrefix":"SageMaker",
-    "uid":"sagemaker-2017-07-24",
-    "auth":["aws.auth#sigv4"]
+    "uid":"sagemaker-2017-07-24"
   },
   "operations":{
     "AddAssociation":{
@@ -102,8 +102,8 @@
       "input":{"shape":"CreateAppRequest"},
       "output":{"shape":"CreateAppResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateAppImageConfig":{
@@ -165,8 +165,8 @@
       "input":{"shape":"CreateClusterRequest"},
       "output":{"shape":"CreateClusterResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateClusterSchedulerConfig":{
@@ -178,8 +178,8 @@
       "input":{"shape":"CreateClusterSchedulerConfigRequest"},
       "output":{"shape":"CreateClusterSchedulerConfigResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateCodeRepository":{
@@ -213,8 +213,8 @@
       "input":{"shape":"CreateComputeQuotaRequest"},
       "output":{"shape":"CreateComputeQuotaResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateContext":{
@@ -238,8 +238,8 @@
       "input":{"shape":"CreateDataQualityJobDefinitionRequest"},
       "output":{"shape":"CreateDataQualityJobDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateDeviceFleet":{
@@ -263,8 +263,8 @@
       "input":{"shape":"CreateDomainRequest"},
       "output":{"shape":"CreateDomainResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateEdgeDeploymentPlan":{
@@ -359,8 +359,8 @@
       "input":{"shape":"CreateFlowDefinitionRequest"},
       "output":{"shape":"CreateFlowDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateHub":{
@@ -399,8 +399,8 @@
       "input":{"shape":"CreateHumanTaskUiRequest"},
       "output":{"shape":"CreateHumanTaskUiResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateHyperParameterTuningJob":{
@@ -438,9 +438,9 @@
       "input":{"shape":"CreateImageVersionRequest"},
       "output":{"shape":"CreateImageVersionResponse"},
       "errors":[
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateInferenceComponent":{
@@ -527,8 +527,8 @@
       "input":{"shape":"CreateModelBiasJobDefinitionRequest"},
       "output":{"shape":"CreateModelBiasJobDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateModelCard":{
@@ -540,8 +540,8 @@
       "input":{"shape":"CreateModelCardRequest"},
       "output":{"shape":"CreateModelCardResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateModelCardExportJob":{
@@ -553,9 +553,9 @@
       "input":{"shape":"CreateModelCardExportJobRequest"},
       "output":{"shape":"CreateModelCardExportJobResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateModelExplainabilityJobDefinition":{
@@ -567,8 +567,8 @@
       "input":{"shape":"CreateModelExplainabilityJobDefinitionRequest"},
       "output":{"shape":"CreateModelExplainabilityJobDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateModelPackage":{
@@ -605,8 +605,8 @@
       "input":{"shape":"CreateModelQualityJobDefinitionRequest"},
       "output":{"shape":"CreateModelQualityJobDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateMonitoringSchedule":{
@@ -618,8 +618,8 @@
       "input":{"shape":"CreateMonitoringScheduleRequest"},
       "output":{"shape":"CreateMonitoringScheduleResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateNotebookInstance":{
@@ -668,8 +668,8 @@
       "input":{"shape":"CreatePartnerAppRequest"},
       "output":{"shape":"CreatePartnerAppResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreatePartnerAppPresignedUrl":{
@@ -693,9 +693,9 @@
       "input":{"shape":"CreatePipelineRequest"},
       "output":{"shape":"CreatePipelineResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreatePresignedDomainUrl":{
@@ -740,9 +740,9 @@
       "input":{"shape":"CreateProcessingJobRequest"},
       "output":{"shape":"CreateProcessingJobResponse"},
       "errors":[
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateProject":{
@@ -766,8 +766,8 @@
       "input":{"shape":"CreateSpaceRequest"},
       "output":{"shape":"CreateSpaceResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateStudioLifecycleConfig":{
@@ -791,9 +791,9 @@
       "input":{"shape":"CreateTrainingJobRequest"},
       "output":{"shape":"CreateTrainingJobResponse"},
       "errors":[
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateTrainingPlan":{
@@ -805,9 +805,9 @@
       "input":{"shape":"CreateTrainingPlanRequest"},
       "output":{"shape":"CreateTrainingPlanResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateTransformJob":{
@@ -819,9 +819,9 @@
       "input":{"shape":"CreateTransformJobRequest"},
       "output":{"shape":"CreateTransformJobResponse"},
       "errors":[
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateTrial":{
@@ -858,8 +858,8 @@
       "input":{"shape":"CreateUserProfileRequest"},
       "output":{"shape":"CreateUserProfileResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceInUse"}
+        {"shape":"ResourceInUse"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "CreateWorkforce":{
@@ -915,8 +915,8 @@
       },
       "input":{"shape":"DeleteAppRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteAppImageConfig":{
@@ -963,8 +963,8 @@
       "input":{"shape":"DeleteClusterRequest"},
       "output":{"shape":"DeleteClusterResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "DeleteClusterSchedulerConfig":{
@@ -1050,8 +1050,8 @@
       },
       "input":{"shape":"DeleteDomainRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteEdgeDeploymentPlan":{
@@ -1124,8 +1124,8 @@
       "input":{"shape":"DeleteFlowDefinitionRequest"},
       "output":{"shape":"DeleteFlowDefinitionResponse"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteHub":{
@@ -1136,8 +1136,8 @@
       },
       "input":{"shape":"DeleteHubRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteHubContent":{
@@ -1148,8 +1148,8 @@
       },
       "input":{"shape":"DeleteHubContentRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteHubContentReference":{
@@ -1192,8 +1192,8 @@
       "input":{"shape":"DeleteImageRequest"},
       "output":{"shape":"DeleteImageResponse"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteImageVersion":{
@@ -1205,8 +1205,8 @@
       "input":{"shape":"DeleteImageVersionRequest"},
       "output":{"shape":"DeleteImageVersionResponse"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteInferenceComponent":{
@@ -1269,8 +1269,8 @@
       },
       "input":{"shape":"DeleteModelCardRequest"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "DeleteModelExplainabilityJobDefinition":{
@@ -1372,8 +1372,8 @@
       "input":{"shape":"DeletePartnerAppRequest"},
       "output":{"shape":"DeletePartnerAppResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "DeletePipeline":{
@@ -1385,8 +1385,8 @@
       "input":{"shape":"DeletePipelineRequest"},
       "output":{"shape":"DeletePipelineResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "DeleteProject":{
@@ -1408,8 +1408,8 @@
       },
       "input":{"shape":"DeleteSpaceRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteStudioLifecycleConfig":{
@@ -1465,8 +1465,8 @@
       },
       "input":{"shape":"DeleteUserProfileRequest"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "DeleteWorkforce":{
@@ -2360,9 +2360,9 @@
       "input":{"shape":"ImportHubContentRequest"},
       "output":{"shape":"ImportHubContentResponse"},
       "errors":[
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "ListActions":{
@@ -3216,9 +3216,9 @@
       "input":{"shape":"RetryPipelineExecutionRequest"},
       "output":{"shape":"RetryPipelineExecutionResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "Search":{
@@ -3251,9 +3251,9 @@
       "input":{"shape":"SendPipelineExecutionStepFailureRequest"},
       "output":{"shape":"SendPipelineExecutionStepFailureResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "SendPipelineExecutionStepSuccess":{
@@ -3265,9 +3265,9 @@
       "input":{"shape":"SendPipelineExecutionStepSuccessRequest"},
       "output":{"shape":"SendPipelineExecutionStepSuccessResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "StartEdgeDeploymentStage":{
@@ -3300,8 +3300,8 @@
       "input":{"shape":"StartMlflowTrackingServerRequest"},
       "output":{"shape":"StartMlflowTrackingServerResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "StartMonitoringSchedule":{
@@ -3335,9 +3335,9 @@
       "input":{"shape":"StartPipelineExecutionRequest"},
       "output":{"shape":"StartPipelineExecutionResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "StopAutoMLJob":{
@@ -3433,8 +3433,8 @@
       "input":{"shape":"StopMlflowTrackingServerRequest"},
       "output":{"shape":"StopMlflowTrackingServerResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "StopMonitoringSchedule":{
@@ -3476,8 +3476,8 @@
       "input":{"shape":"StopPipelineExecutionRequest"},
       "output":{"shape":"StopPipelineExecutionResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "StopProcessingJob":{
@@ -3560,9 +3560,9 @@
       "input":{"shape":"UpdateClusterRequest"},
       "output":{"shape":"UpdateClusterResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateClusterSchedulerConfig":{
@@ -3574,9 +3574,9 @@
       "input":{"shape":"UpdateClusterSchedulerConfigRequest"},
       "output":{"shape":"UpdateClusterSchedulerConfigResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateClusterSoftware":{
@@ -3588,8 +3588,8 @@
       "input":{"shape":"UpdateClusterSoftwareRequest"},
       "output":{"shape":"UpdateClusterSoftwareResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "UpdateCodeRepository":{
@@ -3613,9 +3613,9 @@
       "input":{"shape":"UpdateComputeQuotaRequest"},
       "output":{"shape":"UpdateComputeQuotaResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateContext":{
@@ -3659,9 +3659,9 @@
       "input":{"shape":"UpdateDomainRequest"},
       "output":{"shape":"UpdateDomainResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateEndpoint":{
@@ -3772,8 +3772,8 @@
       "input":{"shape":"UpdateImageRequest"},
       "output":{"shape":"UpdateImageResponse"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "UpdateImageVersion":{
@@ -3785,8 +3785,8 @@
       "input":{"shape":"UpdateImageVersionRequest"},
       "output":{"shape":"UpdateImageVersionResponse"},
       "errors":[
-        {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
       ]
     },
     "UpdateInferenceComponent":{
@@ -3835,9 +3835,9 @@
       "input":{"shape":"UpdateMlflowTrackingServerRequest"},
       "output":{"shape":"UpdateMlflowTrackingServerResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateModelCard":{
@@ -3849,9 +3849,9 @@
       "input":{"shape":"UpdateModelCardRequest"},
       "output":{"shape":"UpdateModelCardResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFound"},
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ConflictException"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateModelPackage":{
@@ -3875,8 +3875,8 @@
       "input":{"shape":"UpdateMonitoringAlertRequest"},
       "output":{"shape":"UpdateMonitoringAlertResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateMonitoringSchedule":{
@@ -3888,8 +3888,8 @@
       "input":{"shape":"UpdateMonitoringScheduleRequest"},
       "output":{"shape":"UpdateMonitoringScheduleResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateNotebookInstance":{
@@ -3925,8 +3925,8 @@
       "input":{"shape":"UpdatePartnerAppRequest"},
       "output":{"shape":"UpdatePartnerAppResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "UpdatePipeline":{
@@ -3938,8 +3938,8 @@
       "input":{"shape":"UpdatePipelineRequest"},
       "output":{"shape":"UpdatePipelineResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "UpdatePipelineExecution":{
@@ -3951,8 +3951,8 @@
       "input":{"shape":"UpdatePipelineExecutionRequest"},
       "output":{"shape":"UpdatePipelineExecutionResponse"},
       "errors":[
-        {"shape":"ResourceNotFound"},
-        {"shape":"ConflictException"}
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFound"}
       ]
     },
     "UpdateProject":{
@@ -3976,9 +3976,9 @@
       "input":{"shape":"UpdateSpaceRequest"},
       "output":{"shape":"UpdateSpaceResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateTrainingJob":{
@@ -4029,9 +4029,9 @@
       "input":{"shape":"UpdateUserProfileRequest"},
       "output":{"shape":"UpdateUserProfileResponse"},
       "errors":[
-        {"shape":"ResourceLimitExceeded"},
+        {"shape":"ResourceNotFound"},
         {"shape":"ResourceInUse"},
-        {"shape":"ResourceNotFound"}
+        {"shape":"ResourceLimitExceeded"}
       ]
     },
     "UpdateWorkforce":{
@@ -4063,6 +4063,7 @@
     "Accept":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "AcceptEula":{"type":"boolean"},
@@ -4070,11 +4071,12 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d+$"
+      "pattern":"\\d+"
     },
     "ActionArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:action/.*"
     },
     "ActionSource":{
@@ -4159,7 +4161,8 @@
     "AdditionalCodeRepositoryNamesOrUrls":{
       "type":"list",
       "member":{"shape":"CodeRepositoryNameOrUrl"},
-      "max":3
+      "max":3,
+      "min":0
     },
     "AdditionalInferenceSpecificationDefinition":{
       "type":"structure",
@@ -4234,7 +4237,10 @@
       ],
       "members":{
         "Version":{"shape":"EdgeVersion"},
-        "AgentCount":{"shape":"Long"}
+        "AgentCount":{
+          "shape":"Long",
+          "box":true
+        }
       }
     },
     "AgentVersions":{
@@ -4281,17 +4287,18 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(?!\\s*$).+"
+      "pattern":"(?!\\s*$).+"
     },
     "AlgorithmArn":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}$"
+      "pattern":"arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:algorithm/[\\S]{1,2048}"
     },
     "AlgorithmImage":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "AlgorithmSortBy":{
@@ -4309,7 +4316,10 @@
         "AlgorithmName":{"shape":"ArnOrName"},
         "TrainingInputMode":{"shape":"TrainingInputMode"},
         "MetricDefinitions":{"shape":"MetricDefinitionList"},
-        "EnableSageMakerMetricsTimeSeries":{"shape":"Boolean"},
+        "EnableSageMakerMetricsTimeSeries":{
+          "shape":"Boolean",
+          "box":true
+        },
         "ContainerEntrypoint":{"shape":"TrainingContainerEntrypoint"},
         "ContainerArguments":{"shape":"TrainingContainerArguments"},
         "TrainingImageConfig":{"shape":"TrainingImageConfig"}
@@ -4414,6 +4424,7 @@
     "AppArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:app/.*"
     },
     "AppDetails":{
@@ -4432,6 +4443,7 @@
     "AppImageConfigArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:app-image-config/.*"
     },
     "AppImageConfigDetails":{
@@ -4453,7 +4465,8 @@
     "AppImageConfigName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "AppImageConfigSortKey":{
       "type":"string",
@@ -4644,7 +4657,8 @@
     "AppName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "AppNetworkAccessType":{
       "type":"string",
@@ -4700,32 +4714,36 @@
     "ApprovalDescription":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "ArnOrName":{
       "type":"string",
       "max":170,
       "min":1,
-      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)$"
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)"
     },
     "ArtifactArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:artifact/.*"
     },
     "ArtifactDigest":{
       "type":"string",
-      "pattern":"^[\\w:]+$"
+      "pattern":"[\\w:]+"
     },
     "ArtifactProperties":{
       "type":"map",
       "key":{"shape":"StringParameterValue"},
       "value":{"shape":"ArtifactPropertyValue"},
-      "max":30
+      "max":30,
+      "min":0
     },
     "ArtifactPropertyValue":{
       "type":"string",
       "max":4096,
+      "min":0,
       "pattern":".*"
     },
     "ArtifactSource":{
@@ -4813,6 +4831,7 @@
     "AssociationEntityArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:(experiment|experiment-trial-component|artifact|action|context)/.*"
     },
     "AssociationSummaries":{
@@ -4836,7 +4855,8 @@
     "AssumableRoleArns":{
       "type":"list",
       "member":{"shape":"RoleArn"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "AsyncInferenceClientConfig":{
       "type":"structure",
@@ -4953,7 +4973,8 @@
     "AttributeNames":{
       "type":"list",
       "member":{"shape":"AttributeName"},
-      "max":16
+      "max":16,
+      "min":0
     },
     "AuthMode":{
       "type":"string",
@@ -4966,16 +4987,19 @@
       "type":"map",
       "key":{"shape":"AuthenticationRequestExtraParamsKey"},
       "value":{"shape":"AuthenticationRequestExtraParamsValue"},
-      "max":10
+      "max":10,
+      "min":0
     },
     "AuthenticationRequestExtraParamsKey":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":".*"
     },
     "AuthenticationRequestExtraParamsValue":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":".*"
     },
     "AutoGenerateEndpointName":{"type":"boolean"},
@@ -5009,12 +5033,14 @@
     "AutoMLAlgorithms":{
       "type":"list",
       "member":{"shape":"AutoMLAlgorithm"},
-      "max":11
+      "max":11,
+      "min":0
     },
     "AutoMLAlgorithmsConfig":{
       "type":"list",
       "member":{"shape":"AutoMLAlgorithmConfig"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "AutoMLCandidate":{
       "type":"structure",
@@ -5105,7 +5131,8 @@
     "AutoMLContainerDefinitions":{
       "type":"list",
       "member":{"shape":"AutoMLContainerDefinition"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "AutoMLDataSource":{
       "type":"structure",
@@ -5122,13 +5149,15 @@
     },
     "AutoMLFailureReason":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "AutoMLInferenceContainerDefinitions":{
       "type":"map",
       "key":{"shape":"AutoMLProcessingUnit"},
       "value":{"shape":"AutoMLContainerDefinitions"},
-      "max":2
+      "max":2,
+      "min":0
     },
     "AutoMLInputDataConfig":{
       "type":"list",
@@ -5186,7 +5215,7 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
     },
     "AutoMLJobObjective":{
       "type":"structure",
@@ -5342,6 +5371,7 @@
     "AutoMLNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9\\-]+"
     },
     "AutoMLOutputDataConfig":{
@@ -5431,7 +5461,10 @@
       "type":"structure",
       "members":{
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
         "VpcConfig":{"shape":"VpcConfig"}
       }
     },
@@ -5506,6 +5539,7 @@
     },
     "AvailableInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "AwsManagedHumanLoopRequestSource":{
@@ -5523,7 +5557,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "BatchDataCaptureConfig":{
       "type":"structure",
@@ -5531,7 +5565,10 @@
       "members":{
         "DestinationS3Uri":{"shape":"S3Uri"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "GenerateInferenceId":{"shape":"Boolean"}
+        "GenerateInferenceId":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "BatchDeleteClusterNodesError":{
@@ -5674,11 +5711,13 @@
     },
     "BillableTimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "BlockedReason":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "BlueGreenUpdatePolicy":{
       "type":"structure",
@@ -5699,6 +5738,7 @@
     },
     "BorrowLimit":{
       "type":"integer",
+      "box":true,
       "max":500,
       "min":1
     },
@@ -5732,7 +5772,7 @@
       "type":"string",
       "max":10,
       "min":10,
-      "pattern":"^[a-zA-Z0-9]+$"
+      "pattern":"[a-zA-Z0-9]+"
     },
     "CandidateArtifactLocations":{
       "type":"structure",
@@ -5850,10 +5890,12 @@
     },
     "CapacitySizeValue":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "CapacityUnit":{
       "type":"integer",
+      "box":true,
       "max":10000000,
       "min":0
     },
@@ -5983,7 +6025,10 @@
       "members":{
         "Name":{"shape":"ChannelName"},
         "Description":{"shape":"EntityDescription"},
-        "IsRequired":{"shape":"Boolean"},
+        "IsRequired":{
+          "shape":"Boolean",
+          "box":true
+        },
         "SupportedContentTypes":{"shape":"ContentTypes"},
         "SupportedCompressionTypes":{"shape":"CompressionTypes"},
         "SupportedInputModes":{"shape":"InputModes"}
@@ -6022,8 +6067,14 @@
         "ModelPackageGroupName":{"shape":"String256"},
         "ViolationReport":{"shape":"String1024"},
         "CheckJobArn":{"shape":"String256"},
-        "SkipCheck":{"shape":"Boolean"},
-        "RegisterNewBaseline":{"shape":"Boolean"}
+        "SkipCheck":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "RegisterNewBaseline":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "ClarifyContentTemplate":{
@@ -6109,21 +6160,25 @@
     },
     "ClarifyLabelIndex":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ClarifyMaxPayloadInMB":{
       "type":"integer",
+      "box":true,
       "max":25,
       "min":1
     },
     "ClarifyMaxRecordCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "ClarifyMimeType":{
       "type":"string",
       "max":255,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9+.])*"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9+.])*"
     },
     "ClarifyProbabilityAttribute":{
       "type":"string",
@@ -6133,6 +6188,7 @@
     },
     "ClarifyProbabilityIndex":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ClarifyShapBaseline":{
@@ -6162,10 +6218,17 @@
     },
     "ClarifyShapNumberOfSamples":{
       "type":"integer",
+      "box":true,
       "min":1
     },
-    "ClarifyShapSeed":{"type":"integer"},
-    "ClarifyShapUseLogit":{"type":"boolean"},
+    "ClarifyShapSeed":{
+      "type":"integer",
+      "box":true
+    },
+    "ClarifyShapUseLogit":{
+      "type":"boolean",
+      "box":true
+    },
     "ClarifyTextConfig":{
       "type":"structure",
       "required":[
@@ -6267,20 +6330,21 @@
       "type":"string",
       "max":36,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "ClusterArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12}$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12}"
     },
     "ClusterAvailabilityZone":{
       "type":"string",
-      "pattern":"^[a-z]{2}-[a-z]+-\\d[a-z]$"
+      "pattern":"[a-z]{2}-[a-z]+-\\d[a-z]"
     },
     "ClusterAvailabilityZoneId":{
       "type":"string",
-      "pattern":"^[a-z]{3}\\d-az\\d$"
+      "pattern":"[a-z]{3}\\d-az\\d"
     },
     "ClusterEbsVolumeConfig":{
       "type":"structure",
@@ -6291,11 +6355,13 @@
     },
     "ClusterEbsVolumeSizeInGB":{
       "type":"integer",
+      "box":true,
       "max":16384,
       "min":1
     },
     "ClusterInstanceCount":{
       "type":"integer",
+      "box":true,
       "max":6758,
       "min":0
     },
@@ -6326,7 +6392,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "ClusterInstanceGroupSpecification":{
       "type":"structure",
@@ -6399,7 +6465,8 @@
     "ClusterInstanceStorageConfigs":{
       "type":"list",
       "member":{"shape":"ClusterInstanceStorageConfig"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "ClusterInstanceType":{
       "type":"string",
@@ -6532,18 +6599,19 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\S\\s]+$"
+      "pattern":"[\\S\\s]+"
     },
     "ClusterName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "ClusterNameOrArn":{
       "type":"string",
       "max":256,
-      "pattern":"^(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12})|([a-zA-Z0-9](-*[a-zA-Z0-9]){0,62})$"
+      "min":0,
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12})|([a-zA-Z0-9](-*[a-zA-Z0-9]){0,62})"
     },
     "ClusterNodeDetails":{
       "type":"structure",
@@ -6568,7 +6636,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^i-[a-f0-9]{8}(?:[a-f0-9]{9})?$"
+      "pattern":"i-[a-f0-9]{8}(?:[a-f0-9]{9})?"
     },
     "ClusterNodeIds":{
       "type":"list",
@@ -6607,6 +6675,7 @@
     },
     "ClusterNonNegativeInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ClusterOrchestrator":{
@@ -6625,22 +6694,24 @@
     },
     "ClusterPrivateDnsHostname":{
       "type":"string",
-      "pattern":"^ip-((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)-?\\b){4}\\..*$"
+      "pattern":"ip-((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)-?\\b){4}\\..*"
     },
     "ClusterPrivatePrimaryIp":{
       "type":"string",
-      "pattern":"^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$"
+      "pattern":"((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}"
     },
     "ClusterPrivatePrimaryIpv6":{"type":"string"},
     "ClusterSchedulerConfigArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:cluster-scheduler-config/[a-z0-9]{12}$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:cluster-scheduler-config/[a-z0-9]{12}"
     },
     "ClusterSchedulerConfigId":{
       "type":"string",
       "max":12,
-      "pattern":"^[a-z0-9]{12}$"
+      "min":0,
+      "pattern":"[a-z0-9]{12}"
     },
     "ClusterSchedulerConfigSummary":{
       "type":"structure",
@@ -6654,7 +6725,10 @@
       "members":{
         "ClusterSchedulerConfigArn":{"shape":"ClusterSchedulerConfigArn"},
         "ClusterSchedulerConfigId":{"shape":"ClusterSchedulerConfigId"},
-        "ClusterSchedulerConfigVersion":{"shape":"Integer"},
+        "ClusterSchedulerConfigVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Name":{"shape":"EntityName"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
@@ -6670,7 +6744,7 @@
     },
     "ClusterSchedulerPriorityClassName":{
       "type":"string",
-      "pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?$"
+      "pattern":"[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?"
     },
     "ClusterSortBy":{
       "type":"string",
@@ -6713,6 +6787,7 @@
     },
     "ClusterThreadsPerCore":{
       "type":"integer",
+      "box":true,
       "max":2,
       "min":1
     },
@@ -6736,7 +6811,8 @@
     "CodeRepositories":{
       "type":"list",
       "member":{"shape":"CodeRepository"},
-      "max":10
+      "max":10,
+      "min":0
     },
     "CodeRepository":{
       "type":"structure",
@@ -6749,23 +6825,25 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}$"
+      "pattern":"arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:code-repository/[\\S]{1,2048}"
     },
     "CodeRepositoryContains":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "CodeRepositoryNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "CodeRepositoryNameOrUrl":{
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^https://([^/]+)/?(.*)$|^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "pattern":"https://([^/]+)/?(.*)$|^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "CodeRepositorySortBy":{
       "type":"string",
@@ -6882,6 +6960,7 @@
     "CompilationJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:compilation-job/.*"
     },
     "CompilationJobStatus":{
@@ -6948,7 +7027,8 @@
     "ComputeQuotaArn":{
       "type":"string",
       "max":2048,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:compute-quota/[a-z0-9]{12}$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:compute-quota/[a-z0-9]{12}"
     },
     "ComputeQuotaConfig":{
       "type":"structure",
@@ -6960,7 +7040,7 @@
     },
     "ComputeQuotaId":{
       "type":"string",
-      "pattern":"^[a-z0-9]{12}$"
+      "pattern":"[a-z0-9]{12}"
     },
     "ComputeQuotaResourceConfig":{
       "type":"structure",
@@ -6993,7 +7073,10 @@
         "ComputeQuotaArn":{"shape":"ComputeQuotaArn"},
         "ComputeQuotaId":{"shape":"ComputeQuotaId"},
         "Name":{"shape":"EntityName"},
-        "ComputeQuotaVersion":{"shape":"Integer"},
+        "ComputeQuotaVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Status":{"shape":"SchedulerResourceStatus"},
         "ClusterArn":{"shape":"ClusterArn"},
         "ComputeQuotaConfig":{"shape":"ComputeQuotaConfig"},
@@ -7019,7 +7102,7 @@
     },
     "ComputeQuotaTargetTeamName":{
       "type":"string",
-      "pattern":"^[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?$"
+      "pattern":"[a-z0-9]([-a-z0-9]*[a-z0-9]){0,39}?"
     },
     "ConditionOutcome":{
       "type":"string",
@@ -7043,6 +7126,7 @@
     "ConfigValue":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ConflictException":{
@@ -7055,6 +7139,7 @@
     "ContainerArgument":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ContainerArguments":{
@@ -7090,7 +7175,8 @@
     "ContainerDefinitionList":{
       "type":"list",
       "member":{"shape":"ContainerDefinition"},
-      "max":15
+      "max":15,
+      "min":0
     },
     "ContainerEntrypoint":{
       "type":"list",
@@ -7101,16 +7187,19 @@
     "ContainerEntrypointString":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ContainerHostname":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "ContainerImage":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":"[\\S]+"
     },
     "ContainerMode":{
@@ -7130,7 +7219,8 @@
     "ContentClassifiers":{
       "type":"list",
       "member":{"shape":"ContentClassifier"},
-      "max":256
+      "max":256,
+      "min":0
     },
     "ContentColumn":{
       "type":"string",
@@ -7140,11 +7230,13 @@
     "ContentDigest":{
       "type":"string",
       "max":72,
-      "pattern":"^[Ss][Hh][Aa]256:[0-9a-fA-F]{64}$"
+      "min":0,
+      "pattern":"[Ss][Hh][Aa]256:[0-9a-fA-F]{64}"
     },
     "ContentType":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ContentTypes":{
@@ -7154,13 +7246,14 @@
     "ContextArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:context/.*"
     },
     "ContextName":{
       "type":"string",
       "max":120,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]([-_]*[a-zA-Z0-9]){0,119}"
+      "pattern":"[a-zA-Z0-9]([-_]*[a-zA-Z0-9]){0,119}"
     },
     "ContextNameOrArn":{
       "type":"string",
@@ -7271,7 +7364,10 @@
         "TrainingSpecification":{"shape":"TrainingSpecification"},
         "InferenceSpecification":{"shape":"InferenceSpecification"},
         "ValidationSpecification":{"shape":"AlgorithmValidationSpecification"},
-        "CertifyForMarketplace":{"shape":"CertifyForMarketplace"},
+        "CertifyForMarketplace":{
+          "shape":"CertifyForMarketplace",
+          "box":true
+        },
         "Tags":{"shape":"TagList"}
       }
     },
@@ -7314,7 +7410,10 @@
         "AppName":{"shape":"AppName"},
         "Tags":{"shape":"TagList"},
         "ResourceSpec":{"shape":"ResourceSpec"},
-        "RecoveryMode":{"shape":"Boolean"}
+        "RecoveryMode":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "CreateAppResponse":{
@@ -7360,7 +7459,10 @@
         "AutoMLJobObjective":{"shape":"AutoMLJobObjective"},
         "AutoMLJobConfig":{"shape":"AutoMLJobConfig"},
         "RoleArn":{"shape":"RoleArn"},
-        "GenerateCandidateDefinitionsOnly":{"shape":"GenerateCandidateDefinitionsOnly"},
+        "GenerateCandidateDefinitionsOnly":{
+          "shape":"GenerateCandidateDefinitionsOnly",
+          "box":true
+        },
         "Tags":{"shape":"TagList"},
         "ModelDeployConfig":{"shape":"ModelDeployConfig"}
       }
@@ -7699,7 +7801,10 @@
         "ShadowProductionVariants":{"shape":"ProductionVariantList"},
         "ExecutionRoleArn":{"shape":"RoleArn"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "EnableNetworkIsolation":{"shape":"Boolean"}
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "CreateEndpointConfigOutput":{
@@ -7926,7 +8031,10 @@
         "MLFramework":{"shape":"MLFramework"},
         "ProgrammingLang":{"shape":"ProgrammingLang"},
         "Processor":{"shape":"Processor"},
-        "Horovod":{"shape":"Horovod"},
+        "Horovod":{
+          "shape":"Horovod",
+          "box":true
+        },
         "ReleaseNotes":{"shape":"ReleaseNotes"}
       }
     },
@@ -8059,7 +8167,10 @@
         "TrackingServerSize":{"shape":"TrackingServerSize"},
         "MlflowVersion":{"shape":"MlflowVersion"},
         "RoleArn":{"shape":"RoleArn"},
-        "AutomaticModelRegistration":{"shape":"Boolean"},
+        "AutomaticModelRegistration":{
+          "shape":"Boolean",
+          "box":true
+        },
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
         "Tags":{"shape":"TagList"}
       }
@@ -8109,7 +8220,10 @@
       ],
       "members":{
         "ModelCardName":{"shape":"ModelCardNameOrArn"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "ModelCardExportJobName":{"shape":"EntityName"},
         "OutputConfig":{"shape":"ModelCardExportOutputConfig"}
       }
@@ -8184,7 +8298,10 @@
         "ExecutionRoleArn":{"shape":"RoleArn"},
         "Tags":{"shape":"TagList"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "EnableNetworkIsolation":{"shape":"Boolean"}
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "CreateModelOutput":{
@@ -8219,7 +8336,10 @@
         "InferenceSpecification":{"shape":"InferenceSpecification"},
         "ValidationSpecification":{"shape":"ModelPackageValidationSpecification"},
         "SourceAlgorithmSpecification":{"shape":"SourceAlgorithmSpecification"},
-        "CertifyForMarketplace":{"shape":"CertifyForMarketplace"},
+        "CertifyForMarketplace":{
+          "shape":"CertifyForMarketplace",
+          "box":true
+        },
         "Tags":{"shape":"TagList"},
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"},
         "MetadataProperties":{"shape":"MetadataProperties"},
@@ -8409,7 +8529,10 @@
         "Tier":{"shape":"NonEmptyString64"},
         "ApplicationConfig":{"shape":"PartnerAppConfig"},
         "AuthType":{"shape":"PartnerAppAuthType"},
-        "EnableIamSessionBasedIdentity":{"shape":"Boolean"},
+        "EnableIamSessionBasedIdentity":{
+          "shape":"Boolean",
+          "box":true
+        },
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -8614,9 +8737,18 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "StoppingCondition":{"shape":"StoppingCondition"},
         "Tags":{"shape":"TagList"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableManagedSpotTraining":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableManagedSpotTraining":{
+          "shape":"Boolean",
+          "box":true
+        },
         "CheckpointConfig":{"shape":"CheckpointConfig"},
         "DebugHookConfig":{"shape":"DebugHookConfig"},
         "DebugRuleConfigurations":{"shape":"DebugRuleConfigurations"},
@@ -8812,7 +8944,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9.])*"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9.])*"
     },
     "CsvContentTypes":{
       "type":"list",
@@ -8840,12 +8972,14 @@
     "CustomFileSystemConfigs":{
       "type":"list",
       "member":{"shape":"CustomFileSystemConfig"},
-      "max":10
+      "max":10,
+      "min":0
     },
     "CustomFileSystems":{
       "type":"list",
       "member":{"shape":"CustomFileSystem"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "CustomImage":{
       "type":"structure",
@@ -8855,33 +8989,34 @@
       ],
       "members":{
         "ImageName":{"shape":"ImageName"},
-        "ImageVersionNumber":{
-          "shape":"ImageVersionNumber",
-          "box":true
-        },
+        "ImageVersionNumber":{"shape":"ImageVersionNumber"},
         "AppImageConfigName":{"shape":"AppImageConfigName"}
       }
     },
     "CustomImageContainerArguments":{
       "type":"list",
       "member":{"shape":"NonEmptyString64"},
-      "max":50
+      "max":50,
+      "min":0
     },
     "CustomImageContainerEntrypoint":{
       "type":"list",
       "member":{"shape":"NonEmptyString256"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "CustomImageContainerEnvironmentVariables":{
       "type":"map",
       "key":{"shape":"NonEmptyString256"},
       "value":{"shape":"String256"},
-      "max":25
+      "max":25,
+      "min":0
     },
     "CustomImages":{
       "type":"list",
       "member":{"shape":"CustomImage"},
-      "max":200
+      "max":200,
+      "min":0
     },
     "CustomPosixUserConfig":{
       "type":"structure",
@@ -8898,7 +9033,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,128}"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,128}"
     },
     "CustomerMetadataKeyList":{
       "type":"list",
@@ -8915,7 +9050,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,256}"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,256}"
     },
     "CustomizedMetricSpecification":{
       "type":"structure",
@@ -8933,7 +9068,10 @@
         "CaptureOptions"
       ],
       "members":{
-        "EnableCapture":{"shape":"EnableCapture"},
+        "EnableCapture":{
+          "shape":"EnableCapture",
+          "box":true
+        },
         "InitialSamplingPercentage":{"shape":"SamplingPercentage"},
         "DestinationS3Uri":{"shape":"DestinationS3Uri"},
         "KmsKeyId":{"shape":"KmsKeyId"},
@@ -8951,7 +9089,10 @@
         "KmsKeyId"
       ],
       "members":{
-        "EnableCapture":{"shape":"EnableCapture"},
+        "EnableCapture":{
+          "shape":"EnableCapture",
+          "box":true
+        },
         "CaptureStatus":{"shape":"CaptureStatus"},
         "CurrentSamplingPercentage":{"shape":"SamplingPercentage"},
         "DestinationS3Uri":{"shape":"DestinationS3Uri"},
@@ -9075,7 +9216,10 @@
         "S3OutputPath":{"shape":"S3Uri"},
         "RuleEvaluatorImage":{"shape":"AlgorithmImage"},
         "InstanceType":{"shape":"ProcessingInstanceType"},
-        "VolumeSizeInGB":{"shape":"OptionalVolumeSizeInGB"},
+        "VolumeSizeInGB":{
+          "shape":"OptionalVolumeSizeInGB",
+          "box":true
+        },
         "RuleParameters":{"shape":"RuleParameters"}
       }
     },
@@ -9359,7 +9503,8 @@
     },
     "DeleteFlowDefinitionResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteHubContentReferenceRequest":{
       "type":"structure",
@@ -9405,7 +9550,8 @@
     },
     "DeleteHumanTaskUiResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteHyperParameterTuningJobRequest":{
       "type":"structure",
@@ -9423,7 +9569,8 @@
     },
     "DeleteImageResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteImageVersionRequest":{
       "type":"structure",
@@ -9436,7 +9583,8 @@
     },
     "DeleteImageVersionResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteInferenceComponentInput":{
       "type":"structure",
@@ -9631,7 +9779,8 @@
     },
     "DeleteTagsOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteTrialComponentRequest":{
       "type":"structure",
@@ -9679,7 +9828,8 @@
     },
     "DeleteWorkforceResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteWorkteamRequest":{
       "type":"structure",
@@ -9692,17 +9842,22 @@
       "type":"structure",
       "required":["Success"],
       "members":{
-        "Success":{"shape":"Success"}
+        "Success":{
+          "shape":"Success",
+          "box":true
+        }
       }
     },
     "DependencyCopyPath":{
       "type":"string",
       "max":1023,
+      "min":0,
       "pattern":".*"
     },
     "DependencyOriginPath":{
       "type":"string",
       "max":1023,
+      "min":0,
       "pattern":".*"
     },
     "DeployedImage":{
@@ -9850,7 +10005,10 @@
         "AlgorithmStatus":{"shape":"AlgorithmStatus"},
         "AlgorithmStatusDetails":{"shape":"AlgorithmStatusDetails"},
         "ProductId":{"shape":"ProductId"},
-        "CertifyForMarketplace":{"shape":"CertifyForMarketplace"}
+        "CertifyForMarketplace":{
+          "shape":"CertifyForMarketplace",
+          "box":true
+        }
       }
     },
     "DescribeAppImageConfigRequest":{
@@ -9897,7 +10055,10 @@
         "UserProfileName":{"shape":"UserProfileName"},
         "SpaceName":{"shape":"SpaceName"},
         "Status":{"shape":"AppStatus"},
-        "RecoveryMode":{"shape":"Boolean"},
+        "RecoveryMode":{
+          "shape":"Boolean",
+          "box":true
+        },
         "LastHealthCheckTimestamp":{"shape":"Timestamp"},
         "LastUserActivityTimestamp":{"shape":"Timestamp"},
         "CreationTime":{"shape":"Timestamp"},
@@ -9966,7 +10127,10 @@
         "BestCandidate":{"shape":"AutoMLCandidate"},
         "AutoMLJobStatus":{"shape":"AutoMLJobStatus"},
         "AutoMLJobSecondaryStatus":{"shape":"AutoMLJobSecondaryStatus"},
-        "GenerateCandidateDefinitionsOnly":{"shape":"GenerateCandidateDefinitionsOnly"},
+        "GenerateCandidateDefinitionsOnly":{
+          "shape":"GenerateCandidateDefinitionsOnly",
+          "box":true
+        },
         "AutoMLJobArtifacts":{"shape":"AutoMLJobArtifacts"},
         "ResolvedAttributes":{"shape":"ResolvedAttributes"},
         "ModelDeployConfig":{"shape":"ModelDeployConfig"},
@@ -10068,7 +10232,10 @@
       "required":["ClusterSchedulerConfigId"],
       "members":{
         "ClusterSchedulerConfigId":{"shape":"ClusterSchedulerConfigId"},
-        "ClusterSchedulerConfigVersion":{"shape":"Integer"}
+        "ClusterSchedulerConfigVersion":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "DescribeClusterSchedulerConfigResponse":{
@@ -10085,7 +10252,10 @@
         "ClusterSchedulerConfigArn":{"shape":"ClusterSchedulerConfigArn"},
         "ClusterSchedulerConfigId":{"shape":"ClusterSchedulerConfigId"},
         "Name":{"shape":"EntityName"},
-        "ClusterSchedulerConfigVersion":{"shape":"Integer"},
+        "ClusterSchedulerConfigVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Status":{"shape":"SchedulerResourceStatus"},
         "FailureReason":{"shape":"FailureReason"},
         "ClusterArn":{"shape":"ClusterArn"},
@@ -10168,7 +10338,10 @@
       "required":["ComputeQuotaId"],
       "members":{
         "ComputeQuotaId":{"shape":"ComputeQuotaId"},
-        "ComputeQuotaVersion":{"shape":"Integer"}
+        "ComputeQuotaVersion":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "DescribeComputeQuotaResponse":{
@@ -10187,7 +10360,10 @@
         "ComputeQuotaId":{"shape":"ComputeQuotaId"},
         "Name":{"shape":"EntityName"},
         "Description":{"shape":"EntityDescription"},
-        "ComputeQuotaVersion":{"shape":"Integer"},
+        "ComputeQuotaVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Status":{"shape":"SchedulerResourceStatus"},
         "FailureReason":{"shape":"FailureReason"},
         "ClusterArn":{"shape":"ClusterArn"},
@@ -10311,7 +10487,10 @@
         "RegistrationTime":{"shape":"Timestamp"},
         "LatestHeartbeat":{"shape":"Timestamp"},
         "Models":{"shape":"EdgeModels"},
-        "MaxModels":{"shape":"Integer"},
+        "MaxModels":{
+          "shape":"Integer",
+          "box":true
+        },
         "NextToken":{"shape":"NextToken"},
         "AgentVersion":{"shape":"EdgeVersion"}
       }
@@ -10361,7 +10540,10 @@
       "members":{
         "EdgeDeploymentPlanName":{"shape":"EntityName"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"DeploymentStageMaxResults"}
+        "MaxResults":{
+          "shape":"DeploymentStageMaxResults",
+          "box":true
+        }
       }
     },
     "DescribeEdgeDeploymentPlanResponse":{
@@ -10378,9 +10560,18 @@
         "EdgeDeploymentPlanName":{"shape":"EntityName"},
         "ModelConfigs":{"shape":"EdgeDeploymentModelConfigs"},
         "DeviceFleetName":{"shape":"EntityName"},
-        "EdgeDeploymentSuccess":{"shape":"Integer"},
-        "EdgeDeploymentPending":{"shape":"Integer"},
-        "EdgeDeploymentFailed":{"shape":"Integer"},
+        "EdgeDeploymentSuccess":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentPending":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentFailed":{
+          "shape":"Integer",
+          "box":true
+        },
         "Stages":{"shape":"DeploymentStageStatusSummaries"},
         "NextToken":{"shape":"NextToken"},
         "CreationTime":{"shape":"Timestamp"},
@@ -10446,7 +10637,10 @@
         "ShadowProductionVariants":{"shape":"ProductionVariantList"},
         "ExecutionRoleArn":{"shape":"RoleArn"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "EnableNetworkIsolation":{"shape":"Boolean"}
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "DescribeEndpointInput":{
@@ -10794,7 +10988,10 @@
         "MLFramework":{"shape":"MLFramework"},
         "ProgrammingLang":{"shape":"ProgrammingLang"},
         "Processor":{"shape":"Processor"},
-        "Horovod":{"shape":"Horovod"},
+        "Horovod":{
+          "shape":"Horovod",
+          "box":true
+        },
         "ReleaseNotes":{"shape":"ReleaseNotes"}
       }
     },
@@ -10985,7 +11182,10 @@
         "IsActive":{"shape":"IsTrackingServerActive"},
         "TrackingServerUrl":{"shape":"TrackingServerUrl"},
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
-        "AutomaticModelRegistration":{"shape":"Boolean"},
+        "AutomaticModelRegistration":{
+          "shape":"Boolean",
+          "box":true
+        },
         "CreationTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"UserContext"},
         "LastModifiedTime":{"shape":"Timestamp"},
@@ -11049,7 +11249,10 @@
         "ModelCardExportJobArn":{"shape":"ModelCardExportJobArn"},
         "Status":{"shape":"ModelCardExportJobStatus"},
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "OutputConfig":{"shape":"ModelCardExportOutputConfig"},
         "CreatedAt":{"shape":"Timestamp"},
         "LastModifiedAt":{"shape":"Timestamp"},
@@ -11062,7 +11265,10 @@
       "required":["ModelCardName"],
       "members":{
         "ModelCardName":{"shape":"ModelCardNameOrArn"},
-        "ModelCardVersion":{"shape":"Integer"}
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "DescribeModelCardResponse":{
@@ -11079,7 +11285,10 @@
       "members":{
         "ModelCardArn":{"shape":"ModelCardArn"},
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Content":{"shape":"ModelCardContent"},
         "ModelCardStatus":{"shape":"ModelCardStatus"},
         "SecurityConfig":{"shape":"ModelCardSecurityConfig"},
@@ -11146,7 +11355,10 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "CreationTime":{"shape":"Timestamp"},
         "ModelArn":{"shape":"ModelArn"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
         "DeploymentRecommendation":{"shape":"DeploymentRecommendation"}
       }
     },
@@ -11203,7 +11415,10 @@
         "ValidationSpecification":{"shape":"ModelPackageValidationSpecification"},
         "ModelPackageStatus":{"shape":"ModelPackageStatus"},
         "ModelPackageStatusDetails":{"shape":"ModelPackageStatusDetails"},
-        "CertifyForMarketplace":{"shape":"CertifyForMarketplace"},
+        "CertifyForMarketplace":{
+          "shape":"CertifyForMarketplace",
+          "box":true
+        },
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"},
         "CreatedBy":{"shape":"UserContext"},
         "MetadataProperties":{"shape":"MetadataProperties"},
@@ -11405,7 +11620,10 @@
         "Version":{"shape":"NonEmptyString64"},
         "ApplicationConfig":{"shape":"PartnerAppConfig"},
         "AuthType":{"shape":"PartnerAppAuthType"},
-        "EnableIamSessionBasedIdentity":{"shape":"Boolean"},
+        "EnableIamSessionBasedIdentity":{
+          "shape":"Boolean",
+          "box":true
+        },
         "Error":{"shape":"ErrorInfo"}
       }
     },
@@ -11650,9 +11868,18 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "SecondaryStatusTransitions":{"shape":"SecondaryStatusTransitions"},
         "FinalMetricDataList":{"shape":"FinalMetricDataList"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableManagedSpotTraining":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableManagedSpotTraining":{
+          "shape":"Boolean",
+          "box":true
+        },
         "CheckpointConfig":{"shape":"CheckpointConfig"},
         "TrainingTimeInSeconds":{"shape":"TrainingTimeInSeconds"},
         "BillableTimeInSeconds":{"shape":"BillableTimeInSeconds"},
@@ -11854,7 +12081,8 @@
     },
     "Description":{
       "type":"string",
-      "max":128
+      "max":128,
+      "min":0
     },
     "DesiredWeightAndCapacity":{
       "type":"structure",
@@ -11874,7 +12102,8 @@
     "DestinationS3Uri":{
       "type":"string",
       "max":512,
-      "pattern":"^(https|s3)://([^/])/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/])/?(.*)"
     },
     "DetailedAlgorithmStatus":{
       "type":"string",
@@ -11907,7 +12136,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:[a-z\\-]*:[a-z\\-]*:\\d{12}:[a-z\\-]*/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:[a-z\\-]*:[a-z\\-]*:\\d{12}:[a-z\\-]*/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "DeviceDeploymentStatus":{
       "type":"string",
@@ -11951,17 +12180,17 @@
       "type":"string",
       "max":40,
       "min":1,
-      "pattern":"^[-a-zA-Z0-9_.,;:! ]*$"
+      "pattern":"[-a-zA-Z0-9_.,;:! ]*"
     },
     "DeviceFleetArn":{
       "type":"string",
-      "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:device-fleet/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:iam::\\d{12}:device-fleet/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "DeviceFleetDescription":{
       "type":"string",
       "max":800,
       "min":1,
-      "pattern":"^[-a-zA-Z0-9_.,;:! ]*$"
+      "pattern":"[-a-zA-Z0-9_.,;:! ]*"
     },
     "DeviceFleetSummaries":{
       "type":"list",
@@ -11984,7 +12213,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "DeviceNames":{
       "type":"list",
@@ -11995,7 +12224,10 @@
       "required":["DeviceSubsetType"],
       "members":{
         "DeviceSubsetType":{"shape":"DeviceSubsetType"},
-        "Percentage":{"shape":"Percentage"},
+        "Percentage":{
+          "shape":"Percentage",
+          "box":true
+        },
         "DeviceNames":{"shape":"DeviceNames"},
         "DeviceNameContains":{"shape":"DeviceName"}
       }
@@ -12007,8 +12239,14 @@
         "RegisteredDeviceCount"
       ],
       "members":{
-        "ConnectedDeviceCount":{"shape":"Long"},
-        "RegisteredDeviceCount":{"shape":"Long"}
+        "ConnectedDeviceCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "RegisteredDeviceCount":{
+          "shape":"Long",
+          "box":true
+        }
       }
     },
     "DeviceSubsetType":{
@@ -12047,6 +12285,7 @@
     },
     "Dimension":{
       "type":"integer",
+      "box":true,
       "max":8192,
       "min":1
     },
@@ -12074,16 +12313,19 @@
     "DirectoryPath":{
       "type":"string",
       "max":4096,
+      "min":0,
       "pattern":".*"
     },
     "DisableProfiler":{"type":"boolean"},
     "DisableSagemakerServicecatalogPortfolioInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DisableSagemakerServicecatalogPortfolioOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DisassociateAdditionalCodeRepositories":{"type":"boolean"},
     "DisassociateDefaultCodeRepository":{"type":"boolean"},
@@ -12118,7 +12360,7 @@
       "type":"string",
       "max":14,
       "min":5,
-      "pattern":"^\\d{1,4}.\\d{1,4}.\\d{1,4}$"
+      "pattern":"\\d{1,4}.\\d{1,4}.\\d{1,4}"
     },
     "Dollars":{
       "type":"integer",
@@ -12128,6 +12370,7 @@
     "DomainArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:domain/.*"
     },
     "DomainDetails":{
@@ -12145,7 +12388,8 @@
     "DomainId":{
       "type":"string",
       "max":63,
-      "pattern":"^d-(-*[a-z0-9]){1,61}"
+      "min":0,
+      "pattern":"d-(-*[a-z0-9]){1,61}"
     },
     "DomainList":{
       "type":"list",
@@ -12154,12 +12398,14 @@
     "DomainName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "DomainSecurityGroupIds":{
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
-      "max":3
+      "max":3,
+      "min":0
     },
     "DomainSettings":{
       "type":"structure",
@@ -12196,7 +12442,10 @@
       ]
     },
     "Double":{"type":"double"},
-    "DoubleParameterValue":{"type":"double"},
+    "DoubleParameterValue":{
+      "type":"double",
+      "box":true
+    },
     "DriftCheckBaselines":{
       "type":"structure",
       "members":{
@@ -12238,10 +12487,22 @@
     "DynamicScalingConfiguration":{
       "type":"structure",
       "members":{
-        "MinCapacity":{"shape":"Integer"},
-        "MaxCapacity":{"shape":"Integer"},
-        "ScaleInCooldown":{"shape":"Integer"},
-        "ScaleOutCooldown":{"shape":"Integer"},
+        "MinCapacity":{
+          "shape":"Integer",
+          "box":true
+        },
+        "MaxCapacity":{
+          "shape":"Integer",
+          "box":true
+        },
+        "ScaleInCooldown":{
+          "shape":"Integer",
+          "box":true
+        },
+        "ScaleOutCooldown":{
+          "shape":"Integer",
+          "box":true
+        },
         "ScalingPolicies":{"shape":"ScalingPolicies"}
       }
     },
@@ -12310,7 +12571,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z\\-]*:\\d{12}:edge-deployment/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z\\-]*:\\d{12}:edge-deployment/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "EdgeDeploymentPlanSummaries":{
       "type":"list",
@@ -12330,9 +12591,18 @@
         "EdgeDeploymentPlanArn":{"shape":"EdgeDeploymentPlanArn"},
         "EdgeDeploymentPlanName":{"shape":"EntityName"},
         "DeviceFleetName":{"shape":"EntityName"},
-        "EdgeDeploymentSuccess":{"shape":"Integer"},
-        "EdgeDeploymentPending":{"shape":"Integer"},
-        "EdgeDeploymentFailed":{"shape":"Integer"},
+        "EdgeDeploymentSuccess":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentPending":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentFailed":{
+          "shape":"Integer",
+          "box":true
+        },
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
@@ -12347,9 +12617,18 @@
       ],
       "members":{
         "StageStatus":{"shape":"StageStatus"},
-        "EdgeDeploymentSuccessInStage":{"shape":"Integer"},
-        "EdgeDeploymentPendingInStage":{"shape":"Integer"},
-        "EdgeDeploymentFailedInStage":{"shape":"Integer"},
+        "EdgeDeploymentSuccessInStage":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentPendingInStage":{
+          "shape":"Integer",
+          "box":true
+        },
+        "EdgeDeploymentFailedInStage":{
+          "shape":"Integer",
+          "box":true
+        },
         "EdgeDeploymentStatusMessage":{"shape":"String"},
         "EdgeDeploymentStageStartTime":{"shape":"Timestamp"}
       }
@@ -12380,10 +12659,22 @@
       "members":{
         "ModelName":{"shape":"EntityName"},
         "ModelVersion":{"shape":"EdgeVersion"},
-        "OfflineDeviceCount":{"shape":"Long"},
-        "ConnectedDeviceCount":{"shape":"Long"},
-        "ActiveDeviceCount":{"shape":"Long"},
-        "SamplingDeviceCount":{"shape":"Long"}
+        "OfflineDeviceCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "ConnectedDeviceCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "ActiveDeviceCount":{
+          "shape":"Long",
+          "box":true
+        },
+        "SamplingDeviceCount":{
+          "shape":"Long",
+          "box":true
+        }
       }
     },
     "EdgeModelStats":{
@@ -12423,7 +12714,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z\\-]*:\\d{12}:edge-packaging-job/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z\\-]*:\\d{12}:edge-packaging-job/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "EdgePackagingJobStatus":{
       "type":"string",
@@ -12497,13 +12788,14 @@
     "EfsUid":{
       "type":"string",
       "max":10,
+      "min":0,
       "pattern":"\\d+"
     },
     "EksClusterArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:eks:[a-z0-9\\-]*:[0-9]{12}:cluster\\/[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}$"
+      "pattern":"arn:aws[a-z\\-]*:eks:[a-z0-9\\-]*:[0-9]{12}:cluster\\/[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}"
     },
     "EmrServerlessComputeConfig":{
       "type":"structure",
@@ -12527,18 +12819,32 @@
       }
     },
     "EnableCapture":{"type":"boolean"},
-    "EnableInfraCheck":{"type":"boolean"},
-    "EnableIotRoleAlias":{"type":"boolean"},
-    "EnableRemoteDebug":{"type":"boolean"},
+    "EnableInfraCheck":{
+      "type":"boolean",
+      "box":true
+    },
+    "EnableIotRoleAlias":{
+      "type":"boolean",
+      "box":true
+    },
+    "EnableRemoteDebug":{
+      "type":"boolean",
+      "box":true
+    },
     "EnableSagemakerServicecatalogPortfolioInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "EnableSagemakerServicecatalogPortfolioOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
-    "EnableSessionTagChaining":{"type":"boolean"},
+    "EnableSessionTagChaining":{
+      "type":"boolean",
+      "box":true
+    },
     "EnabledOrDisabled":{
       "type":"string",
       "enum":[
@@ -12586,11 +12892,13 @@
     "EndpointConfigName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "EndpointConfigNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "EndpointConfigSortKey":{
@@ -12677,11 +12985,13 @@
     "EndpointName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "EndpointNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "EndpointOutputConfiguration":{
@@ -12712,7 +13022,8 @@
     "EndpointPerformances":{
       "type":"list",
       "member":{"shape":"EndpointPerformance"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "EndpointSortKey":{
       "type":"string",
@@ -12766,29 +13077,33 @@
     "Endpoints":{
       "type":"list",
       "member":{"shape":"EndpointInfo"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "EntityDescription":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}]*"
     },
     "EntityName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "EnvironmentKey":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "EnvironmentMap":{
       "type":"map",
       "key":{"shape":"EnvironmentKey"},
       "value":{"shape":"EnvironmentValue"},
-      "max":100
+      "max":100,
+      "min":0
     },
     "EnvironmentParameter":{
       "type":"structure",
@@ -12818,6 +13133,7 @@
     "EnvironmentValue":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "ErrorInfo":{
@@ -12829,12 +13145,14 @@
     },
     "ExcludeFeaturesAttribute":{
       "type":"string",
-      "max":100
+      "max":100,
+      "min":0
     },
     "ExecutionRoleArns":{
       "type":"list",
       "member":{"shape":"RoleArn"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "ExecutionRoleIdentityConfig":{
       "type":"string",
@@ -12858,6 +13176,7 @@
     "ExitMessage":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "Experiment":{
@@ -12878,6 +13197,7 @@
     "ExperimentArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:experiment/.*"
     },
     "ExperimentConfig":{
@@ -12892,13 +13212,14 @@
     "ExperimentDescription":{
       "type":"string",
       "max":3072,
+      "min":0,
       "pattern":".*"
     },
     "ExperimentEntityName":{
       "type":"string",
       "max":120,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,119}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,119}"
     },
     "ExperimentEntityNameOrArn":{
       "type":"string",
@@ -12917,6 +13238,7 @@
     "ExperimentSourceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:.*"
     },
     "ExperimentSummaries":{
@@ -12936,6 +13258,7 @@
     },
     "ExpiresInSeconds":{
       "type":"integer",
+      "box":true,
       "max":300,
       "min":5
     },
@@ -12985,7 +13308,8 @@
     },
     "FailureReason":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "FairShare":{
       "type":"string",
@@ -12996,6 +13320,7 @@
     },
     "FairShareWeight":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":0
     },
@@ -13054,10 +13379,12 @@
     "FeatureGroupArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:feature-group/.*"
     },
     "FeatureGroupMaxResults":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -13065,7 +13392,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]([_-]*[a-zA-Z0-9]){0,63}"
+      "pattern":"[a-zA-Z0-9]([_-]*[a-zA-Z0-9]){0,63}"
     },
     "FeatureGroupNameContains":{
       "type":"string",
@@ -13140,7 +13467,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]([-_]*[a-zA-Z0-9]){0,63}"
+      "pattern":"[a-zA-Z0-9]([-_]*[a-zA-Z0-9]){0,63}"
     },
     "FeatureParameter":{
       "type":"structure",
@@ -13152,24 +13479,26 @@
     "FeatureParameterAdditions":{
       "type":"list",
       "member":{"shape":"FeatureParameter"},
-      "max":25
+      "max":25,
+      "min":0
     },
     "FeatureParameterKey":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)"
     },
     "FeatureParameterRemovals":{
       "type":"list",
       "member":{"shape":"FeatureParameterKey"},
-      "max":25
+      "max":25,
+      "min":0
     },
     "FeatureParameterValue":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)"
     },
     "FeatureParameters":{
       "type":"list",
@@ -13241,13 +13570,13 @@
       "type":"string",
       "max":21,
       "min":11,
-      "pattern":"^(fs-[0-9a-f]{8,})$"
+      "pattern":"(fs-[0-9a-f]{8,})"
     },
     "FileSystemPath":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^\\/\\S*$"
+      "pattern":"\\/\\S*"
     },
     "FileSystemType":{
       "type":"string",
@@ -13267,7 +13596,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\_\\-]+$"
+      "pattern":"[a-zA-Z0-9\\_\\-]+"
     },
     "FillingTransformations":{
       "type":"map",
@@ -13319,7 +13648,10 @@
       "members":{
         "Type":{"shape":"AutoMLJobObjectiveType"},
         "MetricName":{"shape":"AutoMLMetricEnum"},
-        "Value":{"shape":"MetricValue"},
+        "Value":{
+          "shape":"MetricValue",
+          "box":true
+        },
         "StandardMetricName":{"shape":"AutoMLMetricEnum"}
       }
     },
@@ -13332,7 +13664,10 @@
       "members":{
         "Type":{"shape":"HyperParameterTuningJobObjectiveType"},
         "MetricName":{"shape":"MetricName"},
-        "Value":{"shape":"MetricValue"}
+        "Value":{
+          "shape":"MetricValue",
+          "box":true
+        }
       }
     },
     "FinalMetricDataList":{
@@ -13352,13 +13687,14 @@
     "FlowDefinitionArn":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]+:[0-9]{12}:flow-definition/.*"
     },
     "FlowDefinitionName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-z0-9](-*[a-z0-9]){0,62}"
+      "pattern":"[a-z0-9](-*[a-z0-9]){0,62}"
     },
     "FlowDefinitionOutputConfig":{
       "type":"structure",
@@ -13399,10 +13735,12 @@
     },
     "FlowDefinitionTaskAvailabilityLifetimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "FlowDefinitionTaskCount":{
       "type":"integer",
+      "box":true,
       "max":3,
       "min":1
     },
@@ -13416,7 +13754,7 @@
       "type":"string",
       "max":30,
       "min":1,
-      "pattern":"^[A-Za-z0-9]+( [A-Za-z0-9]+)*$"
+      "pattern":"[A-Za-z0-9]+( [A-Za-z0-9]+)*"
     },
     "FlowDefinitionTaskKeywords":{
       "type":"list",
@@ -13426,22 +13764,24 @@
     },
     "FlowDefinitionTaskTimeLimitInSeconds":{
       "type":"integer",
+      "box":true,
       "min":30
     },
     "FlowDefinitionTaskTitle":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\t\\n\\r -\\uD7FF\\uE000-\\uFFFD]*$"
+      "pattern":"[\\t\\n\\r -\\uD7FF\\uE000-\\uFFFD]*"
     },
     "ForecastFrequency":{
       "type":"string",
       "max":5,
       "min":1,
-      "pattern":"^1Y|Y|([1-9]|1[0-1])M|M|[1-4]W|W|[1-6]D|D|([1-9]|1[0-9]|2[0-3])H|H|([1-9]|[1-5][0-9])min$"
+      "pattern":"1Y|Y|([1-9]|1[0-1])M|M|[1-4]W|W|[1-6]D|D|([1-9]|1[0-9]|2[0-3])H|H|([1-9]|[1-5][0-9])min"
     },
     "ForecastHorizon":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "ForecastQuantile":{
@@ -13537,7 +13877,8 @@
     },
     "GetSagemakerServicecatalogPortfolioStatusInput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "GetSagemakerServicecatalogPortfolioStatusOutput":{
       "type":"structure",
@@ -13584,6 +13925,7 @@
     },
     "Gid":{
       "type":"long",
+      "box":true,
       "max":4000000,
       "min":1001
     },
@@ -13606,7 +13948,7 @@
       "type":"string",
       "max":1024,
       "min":11,
-      "pattern":"^https://([^/]+)/?.{3,1016}$"
+      "pattern":"https://([^/]+)/?.{3,1016}"
     },
     "Group":{
       "type":"string",
@@ -13653,7 +13995,8 @@
     "HiddenSageMakerImageVersionAliasesList":{
       "type":"list",
       "member":{"shape":"HiddenSageMakerImage"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "HolidayConfig":{
       "type":"list",
@@ -13685,11 +14028,13 @@
     "HubArn":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "HubContentArn":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "HubContentDependency":{
@@ -13702,21 +14047,25 @@
     "HubContentDependencyList":{
       "type":"list",
       "member":{"shape":"HubContentDependency"},
-      "max":50
+      "max":50,
+      "min":0
     },
     "HubContentDescription":{
       "type":"string",
       "max":1023,
+      "min":0,
       "pattern":".*"
     },
     "HubContentDisplayName":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "HubContentDocument":{
       "type":"string",
       "max":65535,
+      "min":0,
       "pattern":".*"
     },
     "HubContentInfo":{
@@ -13752,17 +14101,20 @@
     },
     "HubContentMarkdown":{
       "type":"string",
-      "max":65535
+      "max":65535,
+      "min":0
     },
     "HubContentName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "HubContentSearchKeywordList":{
       "type":"list",
       "member":{"shape":"HubSearchKeyword"},
-      "max":50
+      "max":50,
+      "min":0
     },
     "HubContentSortBy":{
       "type":"string",
@@ -13802,16 +14154,18 @@
       "type":"string",
       "max":14,
       "min":5,
-      "pattern":"^\\d{1,4}.\\d{1,4}.\\d{1,4}$"
+      "pattern":"\\d{1,4}.\\d{1,4}.\\d{1,4}"
     },
     "HubDescription":{
       "type":"string",
       "max":1023,
+      "min":0,
       "pattern":".*"
     },
     "HubDisplayName":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "HubInfo":{
@@ -13841,11 +14195,12 @@
     "HubName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "HubNameOrArn":{
       "type":"string",
-      "pattern":"^(arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:(\\d{12}|aws):hub\\/)?[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"(arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:(\\d{12}|aws):hub\\/)?[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "HubS3StorageConfig":{
       "type":"structure",
@@ -13856,12 +14211,14 @@
     "HubSearchKeyword":{
       "type":"string",
       "max":255,
-      "pattern":"^[^A-Z]*$"
+      "min":0,
+      "pattern":"[^A-Z]*"
     },
     "HubSearchKeywordList":{
       "type":"list",
       "member":{"shape":"HubSearchKeyword"},
-      "max":50
+      "max":50,
+      "min":0
     },
     "HubSortBy":{
       "type":"string",
@@ -13886,7 +14243,8 @@
     },
     "HumanLoopActivationConditions":{
       "type":"string",
-      "max":10240
+      "max":10240,
+      "min":0
     },
     "HumanLoopActivationConditionsConfig":{
       "type":"structure",
@@ -13961,13 +14319,14 @@
     "HumanTaskUiArn":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]+:[0-9]{12}:human-task-ui/.*"
     },
     "HumanTaskUiName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-z0-9](-*[a-z0-9])*"
+      "pattern":"[a-z0-9](-*[a-z0-9])*"
     },
     "HumanTaskUiStatus":{
       "type":"string",
@@ -14006,6 +14365,7 @@
     "HyperParameterKey":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "HyperParameterScalingType":{
@@ -14028,8 +14388,14 @@
         "Description":{"shape":"EntityDescription"},
         "Type":{"shape":"ParameterType"},
         "Range":{"shape":"ParameterRange"},
-        "IsTunable":{"shape":"Boolean"},
-        "IsRequired":{"shape":"Boolean"},
+        "IsTunable":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "IsRequired":{
+          "shape":"Boolean",
+          "box":true
+        },
         "DefaultValue":{"shape":"HyperParameterValue"}
       }
     },
@@ -14060,9 +14426,18 @@
         "ResourceConfig":{"shape":"ResourceConfig"},
         "HyperParameterTuningResourceConfig":{"shape":"HyperParameterTuningResourceConfig"},
         "StoppingCondition":{"shape":"StoppingCondition"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableManagedSpotTraining":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableManagedSpotTraining":{
+          "shape":"Boolean",
+          "box":true
+        },
         "CheckpointConfig":{"shape":"CheckpointConfig"},
         "RetryStrategy":{"shape":"RetryStrategy"},
         "Environment":{"shape":"HyperParameterTrainingJobEnvironmentMap"}
@@ -14072,7 +14447,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
     },
     "HyperParameterTrainingJobDefinitions":{
       "type":"list",
@@ -14083,17 +14458,20 @@
     "HyperParameterTrainingJobEnvironmentKey":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "HyperParameterTrainingJobEnvironmentMap":{
       "type":"map",
       "key":{"shape":"HyperParameterTrainingJobEnvironmentKey"},
       "value":{"shape":"HyperParameterTrainingJobEnvironmentValue"},
-      "max":48
+      "max":48,
+      "min":0
     },
     "HyperParameterTrainingJobEnvironmentValue":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "HyperParameterTrainingJobSummaries":{
@@ -14137,8 +14515,14 @@
       ],
       "members":{
         "InstanceType":{"shape":"TrainingInstanceType"},
-        "InstanceCount":{"shape":"TrainingInstanceCount"},
-        "VolumeSizeInGB":{"shape":"VolumeSizeInGB"}
+        "InstanceCount":{
+          "shape":"TrainingInstanceCount",
+          "box":true
+        },
+        "VolumeSizeInGB":{
+          "shape":"VolumeSizeInGB",
+          "box":true
+        }
       }
     },
     "HyperParameterTuningInstanceConfigs":{
@@ -14150,12 +14534,16 @@
     "HyperParameterTuningJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:hyper-parameter-tuning-job/.*"
     },
     "HyperParameterTuningJobCompletionDetails":{
       "type":"structure",
       "members":{
-        "NumberOfTrainingJobsObjectiveNotImproving":{"shape":"Integer"},
+        "NumberOfTrainingJobsObjectiveNotImproving":{
+          "shape":"Integer",
+          "box":true
+        },
         "ConvergenceDetectedTime":{"shape":"Timestamp"}
       }
     },
@@ -14179,14 +14567,17 @@
     "HyperParameterTuningJobConsumedResources":{
       "type":"structure",
       "members":{
-        "RuntimeInSeconds":{"shape":"Integer"}
+        "RuntimeInSeconds":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "HyperParameterTuningJobName":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
     },
     "HyperParameterTuningJobObjective":{
       "type":"structure",
@@ -14316,6 +14707,7 @@
     },
     "HyperParameterTuningMaxRuntimeInSeconds":{
       "type":"integer",
+      "box":true,
       "max":15768000,
       "min":120
     },
@@ -14323,8 +14715,14 @@
       "type":"structure",
       "members":{
         "InstanceType":{"shape":"TrainingInstanceType"},
-        "InstanceCount":{"shape":"TrainingInstanceCount"},
-        "VolumeSizeInGB":{"shape":"OptionalVolumeSizeInGB"},
+        "InstanceCount":{
+          "shape":"TrainingInstanceCount",
+          "box":true
+        },
+        "VolumeSizeInGB":{
+          "shape":"OptionalVolumeSizeInGB",
+          "box":true
+        },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "AllocationStrategy":{"shape":"HyperParameterTuningAllocationStrategy"},
         "InstanceConfigs":{"shape":"HyperParameterTuningInstanceConfigs"}
@@ -14333,6 +14731,7 @@
     "HyperParameterValue":{
       "type":"string",
       "max":2500,
+      "min":0,
       "pattern":".*"
     },
     "HyperParameters":{
@@ -14351,10 +14750,12 @@
     },
     "HyperbandStrategyMaxResource":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "HyperbandStrategyMinResource":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "IamIdentity":{
@@ -14388,7 +14789,8 @@
     "IdentityProviderOAuthSettings":{
       "type":"list",
       "member":{"shape":"IdentityProviderOAuthSetting"},
-      "max":20
+      "max":20,
+      "min":0
     },
     "IdleSettings":{
       "type":"structure",
@@ -14401,6 +14803,7 @@
     },
     "IdleTimeoutInMinutes":{
       "type":"integer",
+      "box":true,
       "max":525600,
       "min":60
     },
@@ -14427,7 +14830,8 @@
     "ImageArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-zA-Z0-9]([-.]?[a-zA-Z0-9])*$"
+      "min":0,
+      "pattern":"arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image/[a-zA-Z0-9]([-.]?[a-zA-Z0-9])*"
     },
     "ImageBaseImage":{
       "type":"string",
@@ -14463,7 +14867,8 @@
     "ImageDeletePropertyList":{
       "type":"list",
       "member":{"shape":"ImageDeleteProperty"},
-      "max":2
+      "max":2,
+      "min":0
     },
     "ImageDescription":{
       "type":"string",
@@ -14474,24 +14879,26 @@
     "ImageDigest":{
       "type":"string",
       "max":72,
-      "pattern":"^[Ss][Hh][Aa]256:[0-9a-fA-F]{64}$"
+      "min":0,
+      "pattern":"[Ss][Hh][Aa]256:[0-9a-fA-F]{64}"
     },
     "ImageDisplayName":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^\\S(.*\\S)?$"
+      "pattern":"\\S(.*\\S)?"
     },
     "ImageName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]([-.]?[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9]([-.]?[a-zA-Z0-9]){0,62}"
     },
     "ImageNameContains":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9\\-.]+$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\-.]+"
     },
     "ImageSortBy":{
       "type":"string",
@@ -14523,6 +14930,7 @@
     "ImageUri":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":".*"
     },
     "ImageVersion":{
@@ -14555,15 +14963,17 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$"
+      "pattern":"(0|[1-9]\\d*)\\.(0|[1-9]\\d*)"
     },
     "ImageVersionArn":{
       "type":"string",
       "max":256,
-      "pattern":"^(arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image-version/[a-z0-9]([-.]?[a-z0-9])*/[0-9]+|None)$"
+      "min":0,
+      "pattern":"(arn:aws(-[\\w]+)*:sagemaker:.+:[0-9]{12}:image-version/[a-z0-9]([-.]?[a-z0-9])*/[0-9]+|None)"
     },
     "ImageVersionNumber":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ImageVersionSortBy":{
@@ -14636,6 +15046,7 @@
     },
     "InUseInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "InferenceComponentArn":{
@@ -14689,6 +15100,7 @@
     },
     "InferenceComponentCopyCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "InferenceComponentDeploymentConfig":{
@@ -14702,11 +15114,13 @@
     "InferenceComponentName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?"
     },
     "InferenceComponentNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "InferenceComponentRollingUpdatePolicy":{
@@ -14824,6 +15238,7 @@
     "InferenceExperimentArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:inference-experiment/.*"
     },
     "InferenceExperimentDataStorageConfig":{
@@ -14838,6 +15253,7 @@
     "InferenceExperimentDescription":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "InferenceExperimentList":{
@@ -14848,7 +15264,7 @@
       "type":"string",
       "max":120,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,119}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,119}"
     },
     "InferenceExperimentSchedule":{
       "type":"structure",
@@ -14873,6 +15289,7 @@
     "InferenceExperimentStatusReason":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "InferenceExperimentStopDesiredState":{
@@ -14917,7 +15334,8 @@
     },
     "InferenceImage":{
       "type":"string",
-      "max":256
+      "max":256,
+      "min":0
     },
     "InferenceMetrics":{
       "type":"structure",
@@ -14926,8 +15344,14 @@
         "ModelLatency"
       ],
       "members":{
-        "MaxInvocations":{"shape":"Integer"},
-        "ModelLatency":{"shape":"Integer"}
+        "MaxInvocations":{
+          "shape":"Integer",
+          "box":true
+        },
+        "ModelLatency":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "InferenceRecommendation":{
@@ -15016,7 +15440,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "InfraCheckConfig":{
       "type":"structure",
@@ -15026,14 +15450,17 @@
     },
     "InitialInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "InitialNumberOfUsers":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "InitialTaskCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "InputConfig":{
@@ -15069,6 +15496,7 @@
     },
     "InstanceCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "InstanceGroup":{
@@ -15080,7 +15508,10 @@
       ],
       "members":{
         "InstanceType":{"shape":"TrainingInstanceType"},
-        "InstanceCount":{"shape":"TrainingInstanceCount"},
+        "InstanceCount":{
+          "shape":"TrainingInstanceCount",
+          "box":true
+        },
         "InstanceGroupName":{"shape":"InstanceGroupName"}
       }
     },
@@ -15093,7 +15524,8 @@
     "InstanceGroupNames":{
       "type":"list",
       "member":{"shape":"InstanceGroupName"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "InstanceGroupStatus":{
       "type":"string",
@@ -15115,7 +15547,8 @@
     "InstanceGroups":{
       "type":"list",
       "member":{"shape":"InstanceGroup"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "InstanceMetadataServiceConfiguration":{
       "type":"structure",
@@ -15337,17 +15770,19 @@
     "InvocationStartTime":{"type":"timestamp"},
     "InvocationsMaxRetries":{
       "type":"integer",
+      "box":true,
       "max":3,
       "min":0
     },
     "InvocationsTimeoutInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":1
     },
     "IotRoleAlias":{
       "type":"string",
-      "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:rolealias/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:iam::\\d{12}:rolealias/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "IsTrackingServerActive":{
       "type":"string",
@@ -15363,6 +15798,7 @@
     },
     "JobDurationInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "JobReferenceCode":{
@@ -15395,7 +15831,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9.])*"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*\\/[a-zA-Z0-9](-*[a-zA-Z0-9.])*"
     },
     "JsonContentTypes":{
       "type":"list",
@@ -15437,6 +15873,7 @@
     },
     "KeepAlivePeriodInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":0
     },
@@ -15448,7 +15885,8 @@
     },
     "KernelDisplayName":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "KernelGatewayAppSettings":{
       "type":"structure",
@@ -15468,7 +15906,8 @@
     },
     "KernelName":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "KernelSpec":{
       "type":"structure",
@@ -15493,13 +15932,14 @@
     "KmsKeyId":{
       "type":"string",
       "max":2048,
-      "pattern":"^[a-zA-Z0-9:/_-]*$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9:/_-]*"
     },
     "LabelAttributeName":{
       "type":"string",
       "max":127,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,126}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,126}"
     },
     "LabelCounter":{
       "type":"integer",
@@ -15508,24 +15948,49 @@
     "LabelCounters":{
       "type":"structure",
       "members":{
-        "TotalLabeled":{"shape":"LabelCounter"},
-        "HumanLabeled":{"shape":"LabelCounter"},
-        "MachineLabeled":{"shape":"LabelCounter"},
-        "FailedNonRetryableError":{"shape":"LabelCounter"},
-        "Unlabeled":{"shape":"LabelCounter"}
+        "TotalLabeled":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "HumanLabeled":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "MachineLabeled":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "FailedNonRetryableError":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "Unlabeled":{
+          "shape":"LabelCounter",
+          "box":true
+        }
       }
     },
     "LabelCountersForWorkteam":{
       "type":"structure",
       "members":{
-        "HumanLabeled":{"shape":"LabelCounter"},
-        "PendingHuman":{"shape":"LabelCounter"},
-        "Total":{"shape":"LabelCounter"}
+        "HumanLabeled":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "PendingHuman":{
+          "shape":"LabelCounter",
+          "box":true
+        },
+        "Total":{
+          "shape":"LabelCounter",
+          "box":true
+        }
       }
     },
     "LabelingJobAlgorithmSpecificationArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:.*"
     },
     "LabelingJobAlgorithmsConfig":{
@@ -15540,6 +16005,7 @@
     "LabelingJobArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:labeling-job/.*"
     },
     "LabelingJobDataAttributes":{
@@ -15587,7 +16053,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "LabelingJobOutput":{
       "type":"structure",
@@ -15678,6 +16144,7 @@
     "LambdaFunctionArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:lambda:[a-z0-9\\-]*:[0-9]{12}:function:.*"
     },
     "LambdaStepMetadata":{
@@ -15689,7 +16156,8 @@
     },
     "LandingUri":{
       "type":"string",
-      "max":1023
+      "max":1023,
+      "min":0
     },
     "LastModifiedTime":{"type":"timestamp"},
     "LastUpdateStatus":{
@@ -15723,11 +16191,13 @@
       "type":"map",
       "key":{"shape":"StringParameterValue"},
       "value":{"shape":"StringParameterValue"},
-      "max":30
+      "max":30,
+      "min":0
     },
     "LineageGroupArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:lineage-group/.*"
     },
     "LineageGroupNameOrArn":{
@@ -16040,10 +16510,7 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "CreationTimeAfter":{"shape":"CreationTime"},
         "CreationTimeBefore":{"shape":"CreationTime"},
         "LastModifiedTimeAfter":{"shape":"LastModifiedTime"},
@@ -16362,10 +16829,7 @@
         "CreationTimeBefore":{"shape":"Timestamp"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListFlowDefinitionsResponse":{
@@ -16461,10 +16925,7 @@
         "CreationTimeBefore":{"shape":"Timestamp"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListHumanTaskUisResponse":{
@@ -16479,10 +16940,7 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "SortBy":{"shape":"HyperParameterTuningJobSortByOptions"},
         "SortOrder":{"shape":"SortOrder"},
         "NameContains":{"shape":"NameContains"},
@@ -16763,7 +17221,10 @@
       "required":["ModelCardName"],
       "members":{
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "CreationTimeAfter":{"shape":"Timestamp"},
         "CreationTimeBefore":{"shape":"Timestamp"},
         "ModelCardExportJobNameContains":{"shape":"EntityName"},
@@ -17088,10 +17549,7 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "CreationTimeAfter":{"shape":"CreationTime"},
         "CreationTimeBefore":{"shape":"CreationTime"},
         "LastModifiedTimeAfter":{"shape":"LastModifiedTime"},
@@ -17216,10 +17674,7 @@
         "SortBy":{"shape":"SortBy"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListProcessingJobsResponse":{
@@ -17300,7 +17755,10 @@
           "box":true
         },
         "EdgeDeploymentPlanName":{"shape":"EntityName"},
-        "ExcludeDevicesDeployedInOtherStage":{"shape":"Boolean"},
+        "ExcludeDevicesDeployedInOtherStage":{
+          "shape":"Boolean",
+          "box":true
+        },
         "StageName":{"shape":"EntityName"}
       }
     },
@@ -17339,10 +17797,7 @@
       "members":{
         "NameContains":{"shape":"WorkteamName"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListSubscribedWorkteamsResponse":{
@@ -17364,6 +17819,7 @@
     },
     "ListTagsMaxResults":{
       "type":"integer",
+      "box":true,
       "min":50
     },
     "ListTagsOutput":{
@@ -17397,10 +17853,7 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "CreationTimeAfter":{"shape":"Timestamp"},
         "CreationTimeBefore":{"shape":"Timestamp"},
         "LastModifiedTimeAfter":{"shape":"Timestamp"},
@@ -17425,10 +17878,7 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "StartTimeAfter":{"shape":"Timestamp"},
         "StartTimeBefore":{"shape":"Timestamp"},
         "SortBy":{"shape":"TrainingPlanSortBy"},
@@ -17456,10 +17906,7 @@
         "SortBy":{"shape":"SortBy"},
         "SortOrder":{"shape":"SortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListTransformJobsResponse":{
@@ -17540,10 +17987,7 @@
         "SortOrder":{"shape":"SortOrder"},
         "NameContains":{"shape":"WorkforceName"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListWorkforcesResponse":{
@@ -17568,10 +18012,7 @@
         "SortOrder":{"shape":"SortOrder"},
         "NameContains":{"shape":"WorkteamName"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        }
+        "MaxResults":{"shape":"MaxResults"}
       }
     },
     "ListWorkteamsResponse":{
@@ -17594,14 +18035,16 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?$"
+      "pattern":"[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?"
     },
     "ManagedInstanceScalingMaxInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "ManagedInstanceScalingMinInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ManagedInstanceScalingStatus":{
@@ -17613,41 +18056,50 @@
     },
     "MaxAutoMLJobRuntimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxCandidates":{
       "type":"integer",
+      "box":true,
       "max":750,
       "min":1
     },
     "MaxConcurrentInvocationsPerInstance":{
       "type":"integer",
+      "box":true,
       "max":1000,
       "min":1
     },
     "MaxConcurrentTaskCount":{
       "type":"integer",
+      "box":true,
       "max":5000,
       "min":1
     },
     "MaxConcurrentTransforms":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "MaxHumanLabeledObjectCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxNumberOfTests":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxNumberOfTrainingJobs":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxNumberOfTrainingJobsNotImproving":{
       "type":"integer",
+      "box":true,
       "min":3
     },
     "MaxParallelExecutionSteps":{
@@ -17656,6 +18108,7 @@
     },
     "MaxParallelOfTests":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxParallelTrainingJobs":{
@@ -17664,20 +18117,24 @@
     },
     "MaxPayloadInMB":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "MaxPendingTimeInSeconds":{
       "type":"integer",
+      "box":true,
       "max":2419200,
       "min":7200
     },
     "MaxPercentageOfInputDatasetLabeled":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
     "MaxResults":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -17687,14 +18144,17 @@
     },
     "MaxRuntimePerTrainingJobInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaxWaitTimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "MaximumExecutionTimeoutInSeconds":{
       "type":"integer",
+      "box":true,
       "max":28800,
       "min":600
     },
@@ -17706,7 +18166,8 @@
     "MediaType":{
       "type":"string",
       "max":64,
-      "pattern":"^[-\\w]+\\/[-\\w+]+$"
+      "min":0,
+      "pattern":"[-\\w]+\\/[-\\w+]+"
     },
     "MemberDefinition":{
       "type":"structure",
@@ -17723,6 +18184,7 @@
     },
     "MemoryInMb":{
       "type":"integer",
+      "box":true,
       "min":128
     },
     "MetadataProperties":{
@@ -17737,13 +18199,17 @@
     "MetadataPropertyValue":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "MetricData":{
       "type":"structure",
       "members":{
         "MetricName":{"shape":"MetricName"},
-        "Value":{"shape":"Float"},
+        "Value":{
+          "shape":"Float",
+          "box":true
+        },
         "Timestamp":{"shape":"Timestamp"}
       }
     },
@@ -17757,9 +18223,12 @@
       "type":"structure",
       "members":{
         "MetricName":{"shape":"AutoMLMetricEnum"},
-        "Value":{"shape":"Float"},
-        "Set":{"shape":"MetricSetSource"},
-        "StandardMetricName":{"shape":"AutoMLMetricExtendedEnum"}
+        "StandardMetricName":{"shape":"AutoMLMetricExtendedEnum"},
+        "Value":{
+          "shape":"Float",
+          "box":true
+        },
+        "Set":{"shape":"MetricSetSource"}
       }
     },
     "MetricDefinition":{
@@ -17823,6 +18292,7 @@
     "MinimumInstanceMetadataServiceVersion":{
       "type":"string",
       "max":1,
+      "min":0,
       "pattern":"1|2"
     },
     "MlTools":{
@@ -17853,7 +18323,8 @@
     "MlflowVersion":{
       "type":"string",
       "max":16,
-      "pattern":"^[0-9]*.[0-9]*.[0-9]*"
+      "min":0,
+      "pattern":"[0-9]*.[0-9]*.[0-9]*"
     },
     "Model":{
       "type":"structure",
@@ -17866,7 +18337,10 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "CreationTime":{"shape":"Timestamp"},
         "ModelArn":{"shape":"ModelArn"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
         "Tags":{"shape":"TagList"},
         "DeploymentRecommendation":{"shape":"DeploymentRecommendation"}
       }
@@ -17875,7 +18349,10 @@
       "type":"structure",
       "required":["AcceptEula"],
       "members":{
-        "AcceptEula":{"shape":"AcceptEula"}
+        "AcceptEula":{
+          "shape":"AcceptEula",
+          "box":true
+        }
       }
     },
     "ModelApprovalStatus":{
@@ -17939,7 +18416,10 @@
       "members":{
         "ModelCardArn":{"shape":"ModelCardArn"},
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "Content":{"shape":"ModelCardContent"},
         "ModelCardStatus":{"shape":"ModelCardStatus"},
         "SecurityConfig":{"shape":"ModelCardSecurityConfig"},
@@ -17956,7 +18436,8 @@
     "ModelCardArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-card/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-card/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "ModelCardContent":{
       "type":"string",
@@ -17975,7 +18456,8 @@
     "ModelCardExportJobArn":{
       "type":"string",
       "max":256,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-card/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}/export-job/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-card/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}/export-job/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "ModelCardExportJobSortBy":{
       "type":"string",
@@ -18016,7 +18498,10 @@
         "ModelCardExportJobArn":{"shape":"ModelCardExportJobArn"},
         "Status":{"shape":"ModelCardExportJobStatus"},
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "CreatedAt":{"shape":"Timestamp"},
         "LastModifiedAt":{"shape":"Timestamp"}
       }
@@ -18115,7 +18600,10 @@
         "ModelCardName":{"shape":"EntityName"},
         "ModelCardArn":{"shape":"ModelCardArn"},
         "ModelCardStatus":{"shape":"ModelCardStatus"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
@@ -18177,7 +18665,10 @@
     "ModelDashboardIndicatorAction":{
       "type":"structure",
       "members":{
-        "Enabled":{"shape":"Boolean"}
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "ModelDashboardModel":{
@@ -18195,7 +18686,10 @@
       "members":{
         "ModelCardArn":{"shape":"ModelCardArn"},
         "ModelCardName":{"shape":"EntityName"},
-        "ModelCardVersion":{"shape":"Integer"},
+        "ModelCardVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "ModelCardStatus":{"shape":"ModelCardStatus"},
         "SecurityConfig":{"shape":"ModelCardSecurityConfig"},
         "CreationTime":{"shape":"Timestamp"},
@@ -18244,7 +18738,10 @@
     "ModelDeployConfig":{
       "type":"structure",
       "members":{
-        "AutoGenerateEndpointName":{"shape":"AutoGenerateEndpointName"},
+        "AutoGenerateEndpointName":{
+          "shape":"AutoGenerateEndpointName",
+          "box":true
+        },
         "EndpointName":{"shape":"EndpointName"}
       }
     },
@@ -18316,7 +18813,10 @@
       "type":"structure",
       "members":{
         "Percentile":{"shape":"String64"},
-        "ValueInMilliseconds":{"shape":"Integer"}
+        "ValueInMilliseconds":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "ModelLatencyThresholds":{
@@ -18402,11 +18902,13 @@
     "ModelName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?"
+      "min":0,
+      "pattern":"[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?"
     },
     "ModelNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "ModelPackage":{
@@ -18423,7 +18925,10 @@
         "ValidationSpecification":{"shape":"ModelPackageValidationSpecification"},
         "ModelPackageStatus":{"shape":"ModelPackageStatus"},
         "ModelPackageStatusDetails":{"shape":"ModelPackageStatusDetails"},
-        "CertifyForMarketplace":{"shape":"CertifyForMarketplace"},
+        "CertifyForMarketplace":{
+          "shape":"CertifyForMarketplace",
+          "box":true
+        },
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"},
         "CreatedBy":{"shape":"UserContext"},
         "MetadataProperties":{"shape":"MetadataProperties"},
@@ -18449,7 +18954,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}$"
+      "pattern":"arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package/[\\S]{1,2048}"
     },
     "ModelPackageArnList":{
       "type":"list",
@@ -18504,7 +19009,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}$"
+      "pattern":"arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:model-package-group/[\\S]{1,2048}"
     },
     "ModelPackageGroupSortBy":{
       "type":"string",
@@ -18671,6 +19176,7 @@
     },
     "ModelPackageVersion":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "ModelQuality":{
@@ -18725,6 +19231,7 @@
     },
     "ModelSetupTime":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ModelShardingConfig":{
@@ -18820,7 +19327,8 @@
     "ModelVariantName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?"
+      "min":0,
+      "pattern":"[a-zA-Z0-9]([\\-a-zA-Z0-9]*[a-zA-Z0-9])?"
     },
     "ModelVariantStatus":{
       "type":"string",
@@ -18868,7 +19376,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "MonitoringAlertStatus":{
       "type":"string",
@@ -18952,11 +19460,15 @@
     "MonitoringCsvDatasetFormat":{
       "type":"structure",
       "members":{
-        "Header":{"shape":"Boolean"}
+        "Header":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "MonitoringDatapointsToAlert":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -18972,10 +19484,12 @@
       "type":"map",
       "key":{"shape":"ProcessingEnvironmentKey"},
       "value":{"shape":"ProcessingEnvironmentValue"},
-      "max":50
+      "max":50,
+      "min":0
     },
     "MonitoringEvaluationPeriod":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -19056,13 +19570,14 @@
     "MonitoringJobDefinitionArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "MonitoringJobDefinitionName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "MonitoringJobDefinitionSortKey":{
       "type":"string",
@@ -19093,7 +19608,10 @@
     "MonitoringJsonDatasetFormat":{
       "type":"structure",
       "members":{
-        "Line":{"shape":"Boolean"}
+        "Line":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "MonitoringMaxRuntimeInSeconds":{
@@ -19104,8 +19622,14 @@
     "MonitoringNetworkConfig":{
       "type":"structure",
       "members":{
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
         "VpcConfig":{"shape":"VpcConfig"}
       }
     },
@@ -19132,7 +19656,8 @@
     },
     "MonitoringParquetDatasetFormat":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "MonitoringProblemType":{
       "type":"string",
@@ -19164,7 +19689,8 @@
     "MonitoringS3Uri":{
       "type":"string",
       "max":512,
-      "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
     "MonitoringSchedule":{
       "type":"structure",
@@ -19185,6 +19711,7 @@
     "MonitoringScheduleArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "MonitoringScheduleConfig":{
@@ -19204,7 +19731,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "MonitoringScheduleSortKey":{
       "type":"string",
@@ -19248,14 +19775,17 @@
       "type":"structure",
       "required":["MaxRuntimeInSeconds"],
       "members":{
-        "MaxRuntimeInSeconds":{"shape":"MonitoringMaxRuntimeInSeconds"}
+        "MaxRuntimeInSeconds":{
+          "shape":"MonitoringMaxRuntimeInSeconds",
+          "box":true
+        }
       }
     },
     "MonitoringTimeOffsetString":{
       "type":"string",
       "max":15,
       "min":1,
-      "pattern":"^.?P.*"
+      "pattern":".?P.*"
     },
     "MonitoringType":{
       "type":"string",
@@ -19269,7 +19799,8 @@
     "MountPath":{
       "type":"string",
       "max":1024,
-      "pattern":"^\\/.*"
+      "min":0,
+      "pattern":"\\/.*"
     },
     "MultiModelConfig":{
       "type":"structure",
@@ -19280,6 +19811,7 @@
     "NameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9\\-]+"
     },
     "NeoVpcConfig":{
@@ -19296,6 +19828,7 @@
     "NeoVpcSecurityGroupId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "NeoVpcSecurityGroupIds":{
@@ -19307,6 +19840,7 @@
     "NeoVpcSubnetId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "NeoVpcSubnets":{
@@ -19335,8 +19869,14 @@
     "NetworkConfig":{
       "type":"structure",
       "members":{
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
         "VpcConfig":{"shape":"VpcConfig"}
       }
     },
@@ -19344,6 +19884,7 @@
     "NextToken":{
       "type":"string",
       "max":8192,
+      "min":0,
       "pattern":".*"
     },
     "NodeUnavailabilityType":{
@@ -19355,17 +19896,20 @@
     },
     "NodeUnavailabilityValue":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "NonEmptyString256":{
       "type":"string",
       "max":256,
-      "pattern":"^(?!\\s*$).+"
+      "min":0,
+      "pattern":"(?!\\s*$).+"
     },
     "NonEmptyString64":{
       "type":"string",
       "max":64,
-      "pattern":"^(?!\\s*$).+"
+      "min":0,
+      "pattern":"(?!\\s*$).+"
     },
     "NotebookInstanceAcceleratorType":{
       "type":"string",
@@ -19384,11 +19928,13 @@
     },
     "NotebookInstanceArn":{
       "type":"string",
-      "max":256
+      "max":256,
+      "min":0
     },
     "NotebookInstanceLifecycleConfigArn":{
       "type":"string",
-      "max":256
+      "max":256,
+      "min":0
     },
     "NotebookInstanceLifecycleConfigContent":{
       "type":"string",
@@ -19399,16 +19945,19 @@
     "NotebookInstanceLifecycleConfigList":{
       "type":"list",
       "member":{"shape":"NotebookInstanceLifecycleHook"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "NotebookInstanceLifecycleConfigName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "NotebookInstanceLifecycleConfigNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "NotebookInstanceLifecycleConfigSortKey":{
@@ -19452,11 +20001,13 @@
     "NotebookInstanceName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "NotebookInstanceNameContains":{
       "type":"string",
       "max":63,
+      "min":0,
       "pattern":"[a-zA-Z0-9-]+"
     },
     "NotebookInstanceSortKey":{
@@ -19512,6 +20063,7 @@
     "NotebookInstanceUrl":{"type":"string"},
     "NotebookInstanceVolumeSizeInGB":{
       "type":"integer",
+      "box":true,
       "max":16384,
       "min":5
     },
@@ -19534,19 +20086,23 @@
     },
     "NumberOfAcceleratorDevices":{
       "type":"float",
+      "box":true,
       "min":1
     },
     "NumberOfCpuCores":{
       "type":"float",
+      "box":true,
       "min":0.25
     },
     "NumberOfHumanWorkersPerDataObject":{
       "type":"integer",
+      "box":true,
       "max":9,
       "min":1
     },
     "NumberOfSteps":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "ObjectiveStatus":{
@@ -19564,9 +20120,18 @@
     "ObjectiveStatusCounters":{
       "type":"structure",
       "members":{
-        "Succeeded":{"shape":"ObjectiveStatusCounter"},
-        "Pending":{"shape":"ObjectiveStatusCounter"},
-        "Failed":{"shape":"ObjectiveStatusCounter"}
+        "Succeeded":{
+          "shape":"ObjectiveStatusCounter",
+          "box":true
+        },
+        "Pending":{
+          "shape":"ObjectiveStatusCounter",
+          "box":true
+        },
+        "Failed":{
+          "shape":"ObjectiveStatusCounter",
+          "box":true
+        }
       }
     },
     "OfflineStoreConfig":{
@@ -19574,7 +20139,10 @@
       "required":["S3StorageConfig"],
       "members":{
         "S3StorageConfig":{"shape":"S3StorageConfig"},
-        "DisableGlueTableCreation":{"shape":"Boolean"},
+        "DisableGlueTableCreation":{
+          "shape":"Boolean",
+          "box":true
+        },
         "DataCatalogConfig":{"shape":"DataCatalogConfig"},
         "TableFormat":{"shape":"TableFormat"}
       }
@@ -19637,6 +20205,7 @@
     "OidcEndpoint":{
       "type":"string",
       "max":500,
+      "min":0,
       "pattern":"https://\\S+"
     },
     "OidcMemberDefinition":{
@@ -19655,7 +20224,10 @@
       "type":"structure",
       "members":{
         "SecurityConfig":{"shape":"OnlineStoreSecurityConfig"},
-        "EnableOnlineStore":{"shape":"Boolean"},
+        "EnableOnlineStore":{
+          "shape":"Boolean",
+          "box":true
+        },
         "TtlDuration":{"shape":"TtlDuration"},
         "StorageType":{"shape":"StorageType"}
       }
@@ -19672,7 +20244,10 @@
         "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
-    "OnlineStoreTotalSizeBytes":{"type":"long"},
+    "OnlineStoreTotalSizeBytes":{
+      "type":"long",
+      "box":true
+    },
     "Operator":{
       "type":"string",
       "enum":[
@@ -19700,16 +20275,19 @@
     "OptimizationConfigs":{
       "type":"list",
       "member":{"shape":"OptimizationConfig"},
-      "max":10
+      "max":10,
+      "min":0
     },
     "OptimizationContainerImage":{
       "type":"string",
       "max":255,
+      "min":0,
       "pattern":"[\\S]+"
     },
     "OptimizationJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:optimization-job/.*"
     },
     "OptimizationJobDeploymentInstanceType":{
@@ -19755,7 +20333,8 @@
       "type":"map",
       "key":{"shape":"NonEmptyString256"},
       "value":{"shape":"String256"},
-      "max":25
+      "max":25,
+      "min":0
     },
     "OptimizationJobModelSource":{
       "type":"structure",
@@ -19820,7 +20399,10 @@
       "type":"structure",
       "required":["AcceptEula"],
       "members":{
-        "AcceptEula":{"shape":"OptimizationModelAcceptEula"}
+        "AcceptEula":{
+          "shape":"OptimizationModelAcceptEula",
+          "box":true
+        }
       }
     },
     "OptimizationOutput":{
@@ -19848,6 +20430,7 @@
     "OptimizationVpcSecurityGroupId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "OptimizationVpcSecurityGroupIds":{
@@ -19859,6 +20442,7 @@
     "OptimizationVpcSubnetId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "OptimizationVpcSubnets":{
@@ -19867,8 +20451,14 @@
       "max":16,
       "min":1
     },
-    "OptionalDouble":{"type":"double"},
-    "OptionalInteger":{"type":"integer"},
+    "OptionalDouble":{
+      "type":"double",
+      "box":true
+    },
+    "OptionalInteger":{
+      "type":"integer",
+      "box":true
+    },
     "OptionalVolumeSizeInGB":{
       "type":"integer",
       "min":0
@@ -19940,13 +20530,17 @@
     "PaginationToken":{
       "type":"string",
       "max":8192,
+      "min":0,
       "pattern":".*"
     },
     "ParallelismConfiguration":{
       "type":"structure",
       "required":["MaxParallelExecutionSteps"],
       "members":{
-        "MaxParallelExecutionSteps":{"shape":"MaxParallelExecutionSteps"}
+        "MaxParallelExecutionSteps":{
+          "shape":"MaxParallelExecutionSteps",
+          "box":true
+        }
       }
     },
     "Parameter":{
@@ -19963,6 +20557,7 @@
     "ParameterKey":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ParameterList":{
@@ -19974,6 +20569,7 @@
     "ParameterName":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"[\\p{L}\\p{M}\\p{Z}\\p{S}\\p{N}\\p{P}]*"
     },
     "ParameterRange":{
@@ -20005,6 +20601,7 @@
     "ParameterValue":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ParameterValues":{
@@ -20053,7 +20650,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:partner-app\\/app-[A-Z0-9]{12}$"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:partner-app\\/app-[A-Z0-9]{12}"
     },
     "PartnerAppAuthType":{
       "type":"string",
@@ -20076,7 +20673,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]+"
+      "pattern":"[a-zA-Z0-9]+"
     },
     "PartnerAppStatus":{
       "type":"string",
@@ -20185,6 +20782,7 @@
     "PipelineArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:pipeline/.*"
     },
     "PipelineDefinition":{
@@ -20233,7 +20831,8 @@
     "PipelineExecutionArn":{
       "type":"string",
       "max":2048,
-      "pattern":"^arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:pipeline\\/.*\\/execution\\/.*$"
+      "min":0,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:pipeline\\/.*\\/execution\\/.*"
     },
     "PipelineExecutionDescription":{
       "type":"string",
@@ -20244,13 +20843,14 @@
     "PipelineExecutionFailureReason":{
       "type":"string",
       "max":1300,
+      "min":0,
       "pattern":".*"
     },
     "PipelineExecutionName":{
       "type":"string",
       "max":82,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,81}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,81}"
     },
     "PipelineExecutionStatus":{
       "type":"string",
@@ -20274,7 +20874,10 @@
         "CacheHitResult":{"shape":"CacheHitResult"},
         "FailureReason":{"shape":"FailureReason"},
         "Metadata":{"shape":"PipelineExecutionStepMetadata"},
-        "AttemptCount":{"shape":"Integer"},
+        "AttemptCount":{
+          "shape":"Integer",
+          "box":true
+        },
         "SelectiveExecutionResult":{"shape":"SelectiveExecutionResult"}
       }
     },
@@ -20333,7 +20936,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}"
     },
     "PipelineNameOrArn":{
       "type":"string",
@@ -20345,7 +20948,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[A-Za-z0-9\\-_]*$"
+      "pattern":"[A-Za-z0-9\\-_]*"
     },
     "PipelineStatus":{
       "type":"string",
@@ -20376,7 +20979,8 @@
     "PlatformIdentifier":{
       "type":"string",
       "max":15,
-      "pattern":"^(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2|notebook-al2-v3)$"
+      "min":0,
+      "pattern":"(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2|notebook-al2-v3)"
     },
     "PolicyString":{
       "type":"string",
@@ -20417,10 +21021,14 @@
     },
     "PriorityWeight":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":0
     },
-    "ProbabilityThresholdAttribute":{"type":"double"},
+    "ProbabilityThresholdAttribute":{
+      "type":"double",
+      "box":true
+    },
     "ProblemType":{
       "type":"string",
       "enum":[
@@ -20446,17 +21054,20 @@
     "ProcessingEnvironmentKey":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "ProcessingEnvironmentMap":{
       "type":"map",
       "key":{"shape":"ProcessingEnvironmentKey"},
       "value":{"shape":"ProcessingEnvironmentValue"},
-      "max":100
+      "max":100,
+      "min":0
     },
     "ProcessingEnvironmentValue":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "ProcessingFeatureStoreOutput":{
@@ -20471,7 +21082,10 @@
       "required":["InputName"],
       "members":{
         "InputName":{"shape":"String"},
-        "AppManaged":{"shape":"AppManaged"},
+        "AppManaged":{
+          "shape":"AppManaged",
+          "box":true
+        },
         "S3Input":{"shape":"ProcessingS3Input"},
         "DatasetDefinition":{"shape":"DatasetDefinition"}
       }
@@ -20484,6 +21098,7 @@
     },
     "ProcessingInstanceCount":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
@@ -20615,13 +21230,14 @@
     "ProcessingJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:processing-job/.*"
     },
     "ProcessingJobName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "ProcessingJobStatus":{
       "type":"string",
@@ -20665,6 +21281,7 @@
     "ProcessingLocalPath":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "ProcessingMaxRuntimeInSeconds":{
@@ -20679,7 +21296,10 @@
         "OutputName":{"shape":"String"},
         "S3Output":{"shape":"ProcessingS3Output"},
         "FeatureStoreOutput":{"shape":"ProcessingFeatureStoreOutput"},
-        "AppManaged":{"shape":"AppManaged"}
+        "AppManaged":{
+          "shape":"AppManaged",
+          "box":true
+        }
       }
     },
     "ProcessingOutputConfig":{
@@ -20769,11 +21389,15 @@
       "type":"structure",
       "required":["MaxRuntimeInSeconds"],
       "members":{
-        "MaxRuntimeInSeconds":{"shape":"ProcessingMaxRuntimeInSeconds"}
+        "MaxRuntimeInSeconds":{
+          "shape":"ProcessingMaxRuntimeInSeconds",
+          "box":true
+        }
       }
     },
     "ProcessingVolumeSizeInGB":{
       "type":"integer",
+      "box":true,
       "max":16384,
       "min":1
     },
@@ -20787,7 +21411,8 @@
     "ProductId":{
       "type":"string",
       "max":256,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "ProductListings":{
       "type":"list",
@@ -20827,6 +21452,7 @@
     },
     "ProductionVariantContainerStartupHealthCheckTimeoutInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":60
     },
@@ -21092,6 +21718,7 @@
     },
     "ProductionVariantModelDataDownloadTimeoutInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":60
     },
@@ -21102,7 +21729,10 @@
         "RoutingStrategy":{"shape":"RoutingStrategy"}
       }
     },
-    "ProductionVariantSSMAccess":{"type":"boolean"},
+    "ProductionVariantSSMAccess":{
+      "type":"boolean",
+      "box":true
+    },
     "ProductionVariantServerlessConfig":{
       "type":"structure",
       "required":[
@@ -21161,6 +21791,7 @@
     },
     "ProductionVariantVolumeSizeInGB":{
       "type":"integer",
+      "box":true,
       "max":512,
       "min":1
     },
@@ -21170,7 +21801,10 @@
         "S3OutputPath":{"shape":"S3Uri"},
         "ProfilingIntervalInMilliseconds":{"shape":"ProfilingIntervalInMilliseconds"},
         "ProfilingParameters":{"shape":"ProfilingParameters"},
-        "DisableProfiler":{"shape":"DisableProfiler"}
+        "DisableProfiler":{
+          "shape":"DisableProfiler",
+          "box":true
+        }
       }
     },
     "ProfilerConfigForUpdate":{
@@ -21179,7 +21813,10 @@
         "S3OutputPath":{"shape":"S3Uri"},
         "ProfilingIntervalInMilliseconds":{"shape":"ProfilingIntervalInMilliseconds"},
         "ProfilingParameters":{"shape":"ProfilingParameters"},
-        "DisableProfiler":{"shape":"DisableProfiler"}
+        "DisableProfiler":{
+          "shape":"DisableProfiler",
+          "box":true
+        }
       }
     },
     "ProfilerRuleConfiguration":{
@@ -21194,7 +21831,10 @@
         "S3OutputPath":{"shape":"S3Uri"},
         "RuleEvaluatorImage":{"shape":"AlgorithmImage"},
         "InstanceType":{"shape":"ProcessingInstanceType"},
-        "VolumeSizeInGB":{"shape":"OptionalVolumeSizeInGB"},
+        "VolumeSizeInGB":{
+          "shape":"OptionalVolumeSizeInGB",
+          "box":true
+        },
         "RuleParameters":{"shape":"RuleParameters"}
       }
     },
@@ -21220,7 +21860,10 @@
       "max":20,
       "min":0
     },
-    "ProfilingIntervalInMilliseconds":{"type":"long"},
+    "ProfilingIntervalInMilliseconds":{
+      "type":"long",
+      "box":true
+    },
     "ProfilingParameters":{
       "type":"map",
       "key":{"shape":"ConfigKey"},
@@ -21239,7 +21882,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?$"
+      "pattern":"[a-zA-Z]+ ?\\d+\\.\\d+(\\.\\d+)?"
     },
     "Project":{
       "type":"structure",
@@ -21262,19 +21905,19 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}$"
+      "pattern":"arn:aws(-cn|-us-gov|-iso-f)?:sagemaker:[a-z0-9\\-]{9,16}:[0-9]{12}:project/[\\S]{1,2048}"
     },
     "ProjectEntityName":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,31}"
     },
     "ProjectId":{
       "type":"string",
       "max":20,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
     "ProjectSortBy":{
       "type":"string",
@@ -21370,6 +22013,7 @@
     "ProvisioningParameterValue":{
       "type":"string",
       "max":4096,
+      "min":0,
       "pattern":".*"
     },
     "ProvisioningParameters":{
@@ -21402,7 +22046,7 @@
     },
     "QProfileArn":{
       "type":"string",
-      "pattern":"^arn:[-.a-z0-9]{1,63}:codewhisperer:([-.a-z0-9]{0,63}:){2}([a-zA-Z0-9-_:/]){1,1023}$"
+      "pattern":"arn:[-.a-z0-9]{1,63}:codewhisperer:([-.a-z0-9]{0,63}:){2}([a-zA-Z0-9-_:/]){1,1023}"
     },
     "QualityCheckStepMetadata":{
       "type":"structure",
@@ -21415,8 +22059,14 @@
         "ModelPackageGroupName":{"shape":"String256"},
         "ViolationReport":{"shape":"String1024"},
         "CheckJobArn":{"shape":"String256"},
-        "SkipCheck":{"shape":"Boolean"},
-        "RegisterNewBaseline":{"shape":"Boolean"}
+        "SkipCheck":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "RegisterNewBaseline":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "QueryFilters":{
@@ -21433,10 +22083,12 @@
     },
     "QueryLineageMaxDepth":{
       "type":"integer",
+      "box":true,
       "max":10
     },
     "QueryLineageMaxResults":{
       "type":"integer",
+      "box":true,
       "max":50
     },
     "QueryLineageRequest":{
@@ -21444,7 +22096,10 @@
       "members":{
         "StartArns":{"shape":"QueryLineageStartArns"},
         "Direction":{"shape":"Direction"},
-        "IncludeEdges":{"shape":"Boolean"},
+        "IncludeEdges":{
+          "shape":"Boolean",
+          "box":true
+        },
         "Filters":{"shape":"QueryFilters"},
         "MaxDepth":{"shape":"QueryLineageMaxDepth"},
         "MaxResults":{"shape":"QueryLineageMaxResults"},
@@ -21468,18 +22123,21 @@
     "QueryLineageTypes":{
       "type":"list",
       "member":{"shape":"LineageType"},
-      "max":4
+      "max":4,
+      "min":0
     },
     "QueryProperties":{
       "type":"map",
       "key":{"shape":"String256"},
       "value":{"shape":"String256"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "QueryTypes":{
       "type":"list",
       "member":{"shape":"String40"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "RSessionAppSettings":{
       "type":"structure",
@@ -21531,6 +22189,7 @@
     },
     "RandomSeed":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "RealTimeInferenceConfig":{
@@ -21570,13 +22229,14 @@
     "RecommendationJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:inference-recommendations-job/.*"
     },
     "RecommendationJobCompilationJobName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "RecommendationJobCompiledOutputConfig":{
       "type":"structure",
@@ -21607,7 +22267,8 @@
     },
     "RecommendationJobDescription":{
       "type":"string",
-      "max":128
+      "max":128,
+      "min":0
     },
     "RecommendationJobFrameworkVersion":{
       "type":"string",
@@ -21647,7 +22308,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
     },
     "RecommendationJobOutputConfig":{
       "type":"structure",
@@ -21686,7 +22347,10 @@
     "RecommendationJobStoppingConditions":{
       "type":"structure",
       "members":{
-        "MaxInvocations":{"shape":"Integer"},
+        "MaxInvocations":{
+          "shape":"Integer",
+          "box":true
+        },
         "ModelLatencyThresholds":{"shape":"ModelLatencyThresholds"},
         "FlatInvocations":{"shape":"FlatInvocations"}
       }
@@ -21694,6 +22358,7 @@
     "RecommendationJobSupportedContentType":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "RecommendationJobSupportedContentTypes":{
@@ -21714,7 +22379,8 @@
     "RecommendationJobSupportedResponseMIMEType":{
       "type":"string",
       "max":1024,
-      "pattern":"^[-\\w]+\\/.+$"
+      "min":0,
+      "pattern":"[-\\w]+\\/.+"
     },
     "RecommendationJobSupportedResponseMIMETypes":{
       "type":"list",
@@ -21741,6 +22407,7 @@
     "RecommendationJobVpcSecurityGroupId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "RecommendationJobVpcSecurityGroupIds":{
@@ -21752,6 +22419,7 @@
     "RecommendationJobVpcSubnetId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "RecommendationJobVpcSubnets":{
@@ -21763,10 +22431,22 @@
     "RecommendationMetrics":{
       "type":"structure",
       "members":{
-        "CostPerHour":{"shape":"Float"},
-        "CostPerInference":{"shape":"Float"},
-        "MaxInvocations":{"shape":"Integer"},
-        "ModelLatency":{"shape":"Integer"},
+        "CostPerHour":{
+          "shape":"Float",
+          "box":true
+        },
+        "CostPerInference":{
+          "shape":"Float",
+          "box":true
+        },
+        "MaxInvocations":{
+          "shape":"Integer",
+          "box":true
+        },
+        "ModelLatency":{
+          "shape":"Integer",
+          "box":true
+        },
         "CpuUtilization":{"shape":"UtilizationMetric"},
         "MemoryUtilization":{"shape":"UtilizationMetric"},
         "ModelSetupTime":{"shape":"ModelSetupTime"}
@@ -21860,7 +22540,7 @@
       "type":"string",
       "max":14,
       "min":5,
-      "pattern":"^\\d{1,4}.\\d{1,4}.\\d{1,4}$"
+      "pattern":"\\d{1,4}.\\d{1,4}.\\d{1,4}"
     },
     "RegionName":{
       "type":"string",
@@ -21979,7 +22659,8 @@
     "RepositoryUrl":{
       "type":"string",
       "max":1024,
-      "pattern":"^https://([.\\-_a-zA-Z0-9]+/?){3,1016}$"
+      "min":0,
+      "pattern":"https://([.\\-_a-zA-Z0-9]+/?){3,1016}"
     },
     "ReservedCapacityArn":{
       "type":"string",
@@ -21989,11 +22670,13 @@
     },
     "ReservedCapacityDurationHours":{
       "type":"long",
+      "box":true,
       "max":87600,
       "min":0
     },
     "ReservedCapacityDurationMinutes":{
       "type":"long",
+      "box":true,
       "max":59,
       "min":0
     },
@@ -22021,7 +22704,10 @@
       ],
       "members":{
         "InstanceType":{"shape":"ReservedCapacityInstanceType"},
-        "InstanceCount":{"shape":"ReservedCapacityInstanceCount"},
+        "InstanceCount":{
+          "shape":"ReservedCapacityInstanceCount",
+          "box":true
+        },
         "AvailabilityZone":{"shape":"AvailabilityZone"},
         "DurationHours":{"shape":"ReservedCapacityDurationHours"},
         "DurationMinutes":{"shape":"ReservedCapacityDurationMinutes"},
@@ -22082,6 +22768,7 @@
     "ResourceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z-]*:sagemaker:[a-z0-9-]*:[0-9]{12}:.+"
     },
     "ResourceCatalog":{
@@ -22102,11 +22789,13 @@
     "ResourceCatalogArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:sagemaker-catalog/.*"
     },
     "ResourceCatalogDescription":{
       "type":"string",
-      "max":256
+      "max":256,
+      "min":0
     },
     "ResourceCatalogList":{
       "type":"list",
@@ -22133,8 +22822,14 @@
       "required":["VolumeSizeInGB"],
       "members":{
         "InstanceType":{"shape":"TrainingInstanceType"},
-        "InstanceCount":{"shape":"TrainingInstanceCount"},
-        "VolumeSizeInGB":{"shape":"VolumeSizeInGB"},
+        "InstanceCount":{
+          "shape":"TrainingInstanceCount",
+          "box":true
+        },
+        "VolumeSizeInGB":{
+          "shape":"VolumeSizeInGB",
+          "box":true
+        },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "KeepAlivePeriodInSeconds":{"shape":"KeepAlivePeriodInSeconds"},
         "InstanceGroups":{"shape":"InstanceGroups"},
@@ -22150,7 +22845,8 @@
     },
     "ResourceId":{
       "type":"string",
-      "max":32
+      "max":32,
+      "min":0
     },
     "ResourceInUse":{
       "type":"structure",
@@ -22171,7 +22867,10 @@
       "required":["MaxParallelTrainingJobs"],
       "members":{
         "MaxNumberOfTrainingJobs":{"shape":"MaxNumberOfTrainingJobs"},
-        "MaxParallelTrainingJobs":{"shape":"MaxParallelTrainingJobs"},
+        "MaxParallelTrainingJobs":{
+          "shape":"MaxParallelTrainingJobs",
+          "box":true
+        },
         "MaxRuntimeInSeconds":{"shape":"HyperParameterTuningMaxRuntimeInSeconds"}
       }
     },
@@ -22185,6 +22884,7 @@
     "ResourcePolicyString":{
       "type":"string",
       "max":20480,
+      "min":0,
       "pattern":".*(?:[ \\r\\n\\t].*)*"
     },
     "ResourcePropertyName":{
@@ -22195,6 +22895,7 @@
     },
     "ResourceRetainedBillableTimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ResourceSharingConfig":{
@@ -22248,7 +22949,8 @@
     "ResponseMIMEType":{
       "type":"string",
       "max":1024,
-      "pattern":"^[-\\w]+\\/.+$"
+      "min":0,
+      "pattern":"[-\\w]+\\/.+"
     },
     "ResponseMIMETypes":{
       "type":"list",
@@ -22292,14 +22994,17 @@
       "type":"structure",
       "required":["MaximumRetryAttempts"],
       "members":{
-        "MaximumRetryAttempts":{"shape":"MaximumRetryAttempts"}
+        "MaximumRetryAttempts":{
+          "shape":"MaximumRetryAttempts",
+          "box":true
+        }
       }
     },
     "RoleArn":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z\\-]*:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:aws[a-z\\-]*:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "RollingDeploymentPolicy":{
       "type":"structure",
@@ -22419,12 +23124,14 @@
     "S3ModelUri":{
       "type":"string",
       "max":1024,
-      "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
     "S3OutputPath":{
       "type":"string",
       "max":1024,
-      "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
     "S3Presign":{
       "type":"structure",
@@ -22444,7 +23151,8 @@
     "S3Uri":{
       "type":"string",
       "max":1024,
-      "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
     "SageMakerImageName":{
       "type":"string",
@@ -22454,7 +23162,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"(?!^[.-])^([a-zA-Z0-9-_.]+)$"
+      "pattern":"(?!^[.-])^([a-zA-Z0-9-_.]+)"
     },
     "SageMakerImageVersionAliases":{
       "type":"list",
@@ -22463,7 +23171,8 @@
     "SageMakerPublicHubContentArn":{
       "type":"string",
       "max":255,
-      "pattern":"^arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:aws:hub-content\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}\\/Model\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}$"
+      "min":0,
+      "pattern":"arn:[a-z0-9-\\.]{1,63}:sagemaker:\\w+(?:-\\w+)+:aws:hub-content\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}\\/Model\\/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
     },
     "SageMakerResourceName":{
       "type":"string",
@@ -22488,10 +23197,11 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_-]+$"
+      "pattern":"[a-zA-Z0-9_-]+"
     },
     "SamplingPercentage":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":0
     },
@@ -22509,15 +23219,27 @@
     "ScalingPolicyMetric":{
       "type":"structure",
       "members":{
-        "InvocationsPerInstance":{"shape":"Integer"},
-        "ModelLatency":{"shape":"Integer"}
+        "InvocationsPerInstance":{
+          "shape":"Integer",
+          "box":true
+        },
+        "ModelLatency":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "ScalingPolicyObjective":{
       "type":"structure",
       "members":{
-        "MinInvocationsPerMinute":{"shape":"Integer"},
-        "MaxInvocationsPerMinute":{"shape":"Integer"}
+        "MinInvocationsPerMinute":{
+          "shape":"Integer",
+          "box":true
+        },
+        "MaxInvocationsPerMinute":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "ScheduleConfig":{
@@ -22578,7 +23300,8 @@
     "Scope":{
       "type":"string",
       "max":1024,
-      "pattern":"^[!#-\\[\\]-~]+( [!#-\\[\\]-~]+)*$"
+      "min":0,
+      "pattern":"[!#-\\[\\]-~]+( [!#-\\[\\]-~]+)*"
     },
     "SearchExpression":{
       "type":"structure",
@@ -22624,10 +23347,7 @@
         "SortBy":{"shape":"ResourcePropertyName"},
         "SortOrder":{"shape":"SearchSortOrder"},
         "NextToken":{"shape":"NextToken"},
-        "MaxResults":{
-          "shape":"MaxResults",
-          "box":true
-        },
+        "MaxResults":{"shape":"MaxResults"},
         "CrossAccountFilterOption":{"shape":"CrossAccountFilterOption"},
         "VisibilityConditions":{"shape":"VisibilityConditionsList"}
       }
@@ -22659,7 +23379,10 @@
       ],
       "members":{
         "InstanceType":{"shape":"ReservedCapacityInstanceType"},
-        "InstanceCount":{"shape":"ReservedCapacityInstanceCount"},
+        "InstanceCount":{
+          "shape":"ReservedCapacityInstanceCount",
+          "box":true
+        },
         "StartTimeAfter":{"shape":"Timestamp"},
         "EndTimeBefore":{"shape":"Timestamp"},
         "DurationHours":{"shape":"TrainingPlanDurationHoursInput"},
@@ -22721,12 +23444,14 @@
     "SecurityGroupId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "SecurityGroupIds":{
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "Seed":{"type":"long"},
     "SelectedStep":{
@@ -22794,16 +23519,19 @@
     },
     "ServerlessMaxConcurrency":{
       "type":"integer",
+      "box":true,
       "max":200,
       "min":1
     },
     "ServerlessMemorySizeInMB":{
       "type":"integer",
+      "box":true,
       "max":6144,
       "min":1024
     },
     "ServerlessProvisionedConcurrency":{
       "type":"integer",
+      "box":true,
       "max":200,
       "min":1
     },
@@ -22811,7 +23539,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_\\-]*"
+      "pattern":"[a-zA-Z0-9_\\-]*"
     },
     "ServiceCatalogProvisionedProductDetails":{
       "type":"structure",
@@ -22845,6 +23573,7 @@
     },
     "SessionExpirationDurationInSeconds":{
       "type":"integer",
+      "box":true,
       "max":43200,
       "min":1800
     },
@@ -22867,7 +23596,10 @@
       ],
       "members":{
         "ShadowModelVariantName":{"shape":"ModelVariantName"},
-        "SamplingPercentage":{"shape":"Percentage"}
+        "SamplingPercentage":{
+          "shape":"Percentage",
+          "box":true
+        }
       }
     },
     "ShadowModelVariantConfigList":{
@@ -22895,12 +23627,15 @@
       "type":"structure",
       "required":["Seed"],
       "members":{
-        "Seed":{"shape":"Seed"}
+        "Seed":{
+          "shape":"Seed",
+          "box":true
+        }
       }
     },
     "SingleSignOnApplicationArn":{
       "type":"string",
-      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::[0-9]+:application\\/[a-zA-Z0-9-_.]+\\/apl-[a-zA-Z0-9]+$"
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::[0-9]+:application\\/[a-zA-Z0-9-_.]+\\/apl-[a-zA-Z0-9]+"
     },
     "SingleSignOnUserIdentifier":{
       "type":"string",
@@ -22916,6 +23651,7 @@
     "SnsTopicArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sns:[a-z0-9\\-]*:[0-9]{12}:[a-zA-Z0-9_.-]+"
     },
     "SortActionsBy":{
@@ -23068,7 +23804,8 @@
     },
     "SourceType":{
       "type":"string",
-      "max":128
+      "max":128,
+      "min":0
     },
     "SourceUri":{
       "type":"string",
@@ -23085,6 +23822,7 @@
     "SpaceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:space/.*"
     },
     "SpaceCodeEditorAppSettings":{
@@ -23110,6 +23848,7 @@
     },
     "SpaceEbsVolumeSizeInGb":{
       "type":"integer",
+      "box":true,
       "max":16384,
       "min":5
     },
@@ -23134,7 +23873,8 @@
     "SpaceName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "SpaceSettings":{
       "type":"structure",
@@ -23196,6 +23936,7 @@
     },
     "SpawnRate":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "SplitType":{
@@ -23211,7 +23952,7 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^.{0,1024}$"
+      "pattern":".{0,1024}"
     },
     "StageStatus":{
       "type":"string",
@@ -23324,6 +24065,7 @@
     "StatusDetails":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "StatusMessage":{"type":"string"},
@@ -23342,7 +24084,8 @@
     "StepName":{
       "type":"string",
       "max":64,
-      "pattern":"^[A-Za-z0-9\\-_]*$"
+      "min":0,
+      "pattern":"[A-Za-z0-9\\-_]*"
     },
     "StepStatus":{
       "type":"string",
@@ -23507,7 +24250,10 @@
     "StoppingCondition":{
       "type":"structure",
       "members":{
-        "MaxRuntimeInSeconds":{"shape":"MaxRuntimeInSeconds"},
+        "MaxRuntimeInSeconds":{
+          "shape":"MaxRuntimeInSeconds",
+          "box":true
+        },
         "MaxWaitTimeInSeconds":{"shape":"MaxWaitTimeInSeconds"},
         "MaxPendingTimeInSeconds":{"shape":"MaxPendingTimeInSeconds"}
       }
@@ -23522,11 +24268,13 @@
     "String":{"type":"string"},
     "String1024":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "String128":{
       "type":"string",
-      "max":128
+      "max":128,
+      "min":0
     },
     "String200":{
       "type":"string",
@@ -23536,31 +24284,38 @@
     },
     "String2048":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "min":0
     },
     "String256":{
       "type":"string",
-      "max":256
+      "max":256,
+      "min":0
     },
     "String3072":{
       "type":"string",
-      "max":3072
+      "max":3072,
+      "min":0
     },
     "String40":{
       "type":"string",
-      "max":40
+      "max":40,
+      "min":0
     },
     "String64":{
       "type":"string",
-      "max":64
+      "max":64,
+      "min":0
     },
     "String8192":{
       "type":"string",
-      "max":8192
+      "max":8192,
+      "min":0
     },
     "StringParameterValue":{
       "type":"string",
       "max":2500,
+      "min":0,
       "pattern":".*"
     },
     "StudioLifecycleConfigAppType":{
@@ -23575,7 +24330,8 @@
     "StudioLifecycleConfigArn":{
       "type":"string",
       "max":256,
-      "pattern":"^(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*|None)$"
+      "min":0,
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*|None)"
     },
     "StudioLifecycleConfigContent":{
       "type":"string",
@@ -23596,7 +24352,8 @@
     "StudioLifecycleConfigName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "StudioLifecycleConfigSortKey":{
       "type":"string",
@@ -23629,6 +24386,7 @@
     "SubnetId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "Subnets":{
@@ -23681,7 +24439,10 @@
         "CompletionCriteria":{"shape":"AutoMLJobCompletionCriteria"},
         "FeatureSpecificationS3Uri":{"shape":"S3Uri"},
         "Mode":{"shape":"AutoMLMode"},
-        "GenerateCandidateDefinitionsOnly":{"shape":"GenerateCandidateDefinitionsOnly"},
+        "GenerateCandidateDefinitionsOnly":{
+          "shape":"GenerateCandidateDefinitionsOnly",
+          "box":true
+        },
         "ProblemType":{"shape":"ProblemType"},
         "TargetAttributeName":{"shape":"TargetAttributeName"},
         "SampleWeightAttributeName":{"shape":"SampleWeightAttributeName"}
@@ -23708,7 +24469,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeyList":{
       "type":"list",
@@ -23733,7 +24494,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TargetAttributeName":{
       "type":"string",
@@ -23786,7 +24547,10 @@
       "max":256,
       "min":1
     },
-    "TargetObjectiveMetricValue":{"type":"float"},
+    "TargetObjectiveMetricValue":{
+      "type":"float",
+      "box":true
+    },
     "TargetPlatform":{
       "type":"structure",
       "required":[
@@ -23829,15 +24593,20 @@
       "type":"structure",
       "members":{
         "MetricSpecification":{"shape":"MetricSpecification"},
-        "TargetValue":{"shape":"Double"}
+        "TargetValue":{
+          "shape":"Double",
+          "box":true
+        }
       }
     },
     "TaskAvailabilityLifetimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":60
     },
     "TaskCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "TaskDescription":{
@@ -23856,7 +24625,7 @@
       "type":"string",
       "max":30,
       "min":1,
-      "pattern":"^[A-Za-z0-9]+( [A-Za-z0-9]+)*$"
+      "pattern":"[A-Za-z0-9]+( [A-Za-z0-9]+)*"
     },
     "TaskKeywords":{
       "type":"list",
@@ -23866,13 +24635,14 @@
     },
     "TaskTimeLimitInSeconds":{
       "type":"integer",
+      "box":true,
       "min":30
     },
     "TaskTitle":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\t\\n\\r -\\uD7FF\\uE000-\\uFFFD]*$"
+      "pattern":"[\\t\\n\\r -\\uD7FF\\uE000-\\uFFFD]*"
     },
     "TemplateContent":{
       "type":"string",
@@ -23911,6 +24681,7 @@
     },
     "TerminationWaitInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":0
     },
@@ -23929,12 +24700,14 @@
     "TextGenerationHyperParameterKey":{
       "type":"string",
       "max":32,
-      "pattern":"^[a-zA-Z0-9._-]+$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9._-]+"
     },
     "TextGenerationHyperParameterValue":{
       "type":"string",
       "max":16,
-      "pattern":"^[a-zA-Z0-9._-]+$"
+      "min":0,
+      "pattern":"[a-zA-Z0-9._-]+"
     },
     "TextGenerationHyperParameters":{
       "type":"map",
@@ -23961,6 +24734,7 @@
     "ThingName":{
       "type":"string",
       "max":128,
+      "min":0,
       "pattern":"[a-zA-Z0-9:_-]+"
     },
     "ThroughputConfig":{
@@ -24052,24 +24826,29 @@
     "TotalHits":{
       "type":"structure",
       "members":{
-        "Value":{"shape":"Long"},
+        "Value":{
+          "shape":"Long",
+          "box":true
+        },
         "Relation":{"shape":"Relation"}
       }
     },
     "TotalInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "TrackingServerArn":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:mlflow-tracking-server/.*"
     },
     "TrackingServerName":{
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,255}"
     },
     "TrackingServerSize":{
       "type":"string",
@@ -24121,10 +24900,12 @@
     },
     "TrackingServerUrl":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "min":0
     },
     "TrafficDurationInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "TrafficPattern":{
@@ -24166,6 +24947,7 @@
     "TrainingContainerArgument":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "TrainingContainerArguments":{
@@ -24183,22 +24965,26 @@
     "TrainingContainerEntrypointString":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "TrainingEnvironmentKey":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "TrainingEnvironmentMap":{
       "type":"map",
       "key":{"shape":"TrainingEnvironmentKey"},
       "value":{"shape":"TrainingEnvironmentValue"},
-      "max":100
+      "max":100,
+      "min":0
     },
     "TrainingEnvironmentValue":{
       "type":"string",
       "max":512,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "TrainingImageConfig":{
@@ -24364,9 +25150,18 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "SecondaryStatusTransitions":{"shape":"SecondaryStatusTransitions"},
         "FinalMetricDataList":{"shape":"FinalMetricDataList"},
-        "EnableNetworkIsolation":{"shape":"Boolean"},
-        "EnableInterContainerTrafficEncryption":{"shape":"Boolean"},
-        "EnableManagedSpotTraining":{"shape":"Boolean"},
+        "EnableNetworkIsolation":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableInterContainerTrafficEncryption":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "EnableManagedSpotTraining":{
+          "shape":"Boolean",
+          "box":true
+        },
         "CheckpointConfig":{"shape":"CheckpointConfig"},
         "TrainingTimeInSeconds":{"shape":"TrainingTimeInSeconds"},
         "BillableTimeInSeconds":{"shape":"BillableTimeInSeconds"},
@@ -24384,6 +25179,7 @@
     "TrainingJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:training-job/.*"
     },
     "TrainingJobDefinition":{
@@ -24415,7 +25211,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "TrainingJobSortByOptions":{
       "type":"string",
@@ -24443,11 +25239,26 @@
     "TrainingJobStatusCounters":{
       "type":"structure",
       "members":{
-        "Completed":{"shape":"TrainingJobStatusCounter"},
-        "InProgress":{"shape":"TrainingJobStatusCounter"},
-        "RetryableError":{"shape":"TrainingJobStatusCounter"},
-        "NonRetryableError":{"shape":"TrainingJobStatusCounter"},
-        "Stopped":{"shape":"TrainingJobStatusCounter"}
+        "Completed":{
+          "shape":"TrainingJobStatusCounter",
+          "box":true
+        },
+        "InProgress":{
+          "shape":"TrainingJobStatusCounter",
+          "box":true
+        },
+        "RetryableError":{
+          "shape":"TrainingJobStatusCounter",
+          "box":true
+        },
+        "NonRetryableError":{
+          "shape":"TrainingJobStatusCounter",
+          "box":true
+        },
+        "Stopped":{
+          "shape":"TrainingJobStatusCounter",
+          "box":true
+        }
       }
     },
     "TrainingJobStepMetadata":{
@@ -24492,16 +25303,19 @@
     },
     "TrainingPlanDurationHours":{
       "type":"long",
+      "box":true,
       "max":87600,
       "min":0
     },
     "TrainingPlanDurationHoursInput":{
       "type":"long",
+      "box":true,
       "max":87600,
       "min":1
     },
     "TrainingPlanDurationMinutes":{
       "type":"long",
+      "box":true,
       "max":59,
       "min":0
     },
@@ -24530,7 +25344,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
     },
     "TrainingPlanOffering":{
       "type":"structure",
@@ -24554,7 +25368,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[a-z0-9\\-]+$"
+      "pattern":"[a-z0-9\\-]+"
     },
     "TrainingPlanOfferings":{
       "type":"list",
@@ -24652,7 +25466,10 @@
         "TrainingImageDigest":{"shape":"ImageDigest"},
         "SupportedHyperParameters":{"shape":"HyperParameterSpecifications"},
         "SupportedTrainingInstanceTypes":{"shape":"TrainingInstanceTypes"},
-        "SupportsDistributedTraining":{"shape":"Boolean"},
+        "SupportsDistributedTraining":{
+          "shape":"Boolean",
+          "box":true
+        },
         "MetricDefinitions":{"shape":"MetricDefinitionList"},
         "TrainingChannels":{"shape":"ChannelSpecifications"},
         "SupportedTuningJobObjectiveMetrics":{"shape":"HyperParameterTuningJobObjectives"},
@@ -24661,13 +25478,14 @@
     },
     "TrainingTimeInSeconds":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "TransformAmiVersion":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$"
+      "pattern":"[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*"
     },
     "TransformDataSource":{
       "type":"structure",
@@ -24679,17 +25497,20 @@
     "TransformEnvironmentKey":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":"[a-zA-Z_][a-zA-Z0-9_]{0,1023}"
     },
     "TransformEnvironmentMap":{
       "type":"map",
       "key":{"shape":"TransformEnvironmentKey"},
       "value":{"shape":"TransformEnvironmentValue"},
-      "max":16
+      "max":16,
+      "min":0
     },
     "TransformEnvironmentValue":{
       "type":"string",
       "max":10240,
+      "min":0,
       "pattern":"[\\S\\s]*"
     },
     "TransformInput":{
@@ -24704,6 +25525,7 @@
     },
     "TransformInstanceCount":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "TransformInstanceType":{
@@ -24846,6 +25668,7 @@
     "TransformJobArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:transform-job/.*"
     },
     "TransformJobDefinition":{
@@ -24869,7 +25692,7 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "TransformJobStatus":{
       "type":"string",
@@ -24968,6 +25791,7 @@
     "TrialArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:experiment-trial/.*"
     },
     "TrialComponent":{
@@ -24999,6 +25823,7 @@
     "TrialComponentArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:experiment-trial-component/.*"
     },
     "TrialComponentArtifact":{
@@ -25012,27 +25837,32 @@
     "TrialComponentArtifactValue":{
       "type":"string",
       "max":2048,
+      "min":0,
       "pattern":".*"
     },
     "TrialComponentArtifacts":{
       "type":"map",
       "key":{"shape":"TrialComponentKey128"},
       "value":{"shape":"TrialComponentArtifact"},
-      "max":60
+      "max":60,
+      "min":0
     },
     "TrialComponentKey128":{
       "type":"string",
       "max":128,
+      "min":0,
       "pattern":".*"
     },
     "TrialComponentKey256":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":".*"
     },
     "TrialComponentKey320":{
       "type":"string",
       "max":320,
+      "min":0,
       "pattern":".*"
     },
     "TrialComponentMetricSummaries":{
@@ -25064,7 +25894,8 @@
       "type":"map",
       "key":{"shape":"TrialComponentKey320"},
       "value":{"shape":"TrialComponentParameterValue"},
-      "max":300
+      "max":300,
+      "min":0
     },
     "TrialComponentPrimaryStatus":{
       "type":"string",
@@ -25101,6 +25932,7 @@
     "TrialComponentSourceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:.*"
     },
     "TrialComponentSourceDetail":{
@@ -25126,6 +25958,7 @@
     "TrialComponentStatusMessage":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "TrialComponentSummaries":{
@@ -25159,6 +25992,7 @@
     "TrialSourceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:.*"
     },
     "TrialSummaries":{
@@ -25195,6 +26029,7 @@
     },
     "TtlDurationValue":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "TuningJobCompletionCriteria":{
@@ -25214,9 +26049,18 @@
     "USD":{
       "type":"structure",
       "members":{
-        "Dollars":{"shape":"Dollars"},
-        "Cents":{"shape":"Cents"},
-        "TenthFractionsOfACent":{"shape":"TenthFractionsOfACent"}
+        "Dollars":{
+          "shape":"Dollars",
+          "box":true
+        },
+        "Cents":{
+          "shape":"Cents",
+          "box":true
+        },
+        "TenthFractionsOfACent":{
+          "shape":"TenthFractionsOfACent",
+          "box":true
+        }
       }
     },
     "UiConfig":{
@@ -25242,20 +26086,21 @@
     },
     "Uid":{
       "type":"long",
+      "box":true,
       "max":4000000,
       "min":10000
     },
     "UnifiedStudioDomainId":{
       "type":"string",
-      "pattern":"^dzd[-_][a-zA-Z0-9_-]{1,36}$"
+      "pattern":"dzd[-_][a-zA-Z0-9_-]{1,36}"
     },
     "UnifiedStudioEnvironmentId":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+      "pattern":"[a-zA-Z0-9_-]{1,36}"
     },
     "UnifiedStudioProjectId":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+      "pattern":"[a-zA-Z0-9_-]{1,36}"
     },
     "UnifiedStudioSettings":{
       "type":"structure",
@@ -25346,7 +26191,10 @@
       ],
       "members":{
         "ClusterSchedulerConfigId":{"shape":"ClusterSchedulerConfigId"},
-        "TargetVersion":{"shape":"Integer"},
+        "TargetVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "SchedulerConfig":{"shape":"SchedulerConfig"},
         "Description":{"shape":"EntityDescription"}
       }
@@ -25359,7 +26207,10 @@
       ],
       "members":{
         "ClusterSchedulerConfigArn":{"shape":"ClusterSchedulerConfigArn"},
-        "ClusterSchedulerConfigVersion":{"shape":"Integer"}
+        "ClusterSchedulerConfigVersion":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "UpdateClusterSoftwareInstanceGroupSpecification":{
@@ -25414,7 +26265,10 @@
       ],
       "members":{
         "ComputeQuotaId":{"shape":"ComputeQuotaId"},
-        "TargetVersion":{"shape":"Integer"},
+        "TargetVersion":{
+          "shape":"Integer",
+          "box":true
+        },
         "ComputeQuotaConfig":{"shape":"ComputeQuotaConfig"},
         "ComputeQuotaTarget":{"shape":"ComputeQuotaTarget"},
         "ActivationState":{"shape":"ActivationState"},
@@ -25429,7 +26283,10 @@
       ],
       "members":{
         "ComputeQuotaArn":{"shape":"ComputeQuotaArn"},
-        "ComputeQuotaVersion":{"shape":"Integer"}
+        "ComputeQuotaVersion":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "UpdateContextRequest":{
@@ -25502,10 +26359,16 @@
       "members":{
         "EndpointName":{"shape":"EndpointName"},
         "EndpointConfigName":{"shape":"EndpointConfigName"},
-        "RetainAllVariantProperties":{"shape":"Boolean"},
+        "RetainAllVariantProperties":{
+          "shape":"Boolean",
+          "box":true
+        },
         "ExcludeRetainedVariantProperties":{"shape":"VariantPropertyList"},
         "DeploymentConfig":{"shape":"DeploymentConfig"},
-        "RetainDeploymentConfig":{"shape":"Boolean"}
+        "RetainDeploymentConfig":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "UpdateEndpointOutput":{
@@ -25683,7 +26546,10 @@
         "MLFramework":{"shape":"MLFramework"},
         "ProgrammingLang":{"shape":"ProgrammingLang"},
         "Processor":{"shape":"Processor"},
-        "Horovod":{"shape":"Horovod"},
+        "Horovod":{
+          "shape":"Horovod",
+          "box":true
+        },
         "ReleaseNotes":{"shape":"ReleaseNotes"}
       }
     },
@@ -25754,7 +26620,10 @@
         "TrackingServerName":{"shape":"TrackingServerName"},
         "ArtifactStoreUri":{"shape":"S3Uri"},
         "TrackingServerSize":{"shape":"TrackingServerSize"},
-        "AutomaticModelRegistration":{"shape":"Boolean"},
+        "AutomaticModelRegistration":{
+          "shape":"Boolean",
+          "box":true
+        },
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"}
       }
     },
@@ -25853,14 +26722,26 @@
         "InstanceType":{"shape":"InstanceType"},
         "RoleArn":{"shape":"RoleArn"},
         "LifecycleConfigName":{"shape":"NotebookInstanceLifecycleConfigName"},
-        "DisassociateLifecycleConfig":{"shape":"DisassociateNotebookInstanceLifecycleConfig"},
+        "DisassociateLifecycleConfig":{
+          "shape":"DisassociateNotebookInstanceLifecycleConfig",
+          "box":true
+        },
         "VolumeSizeInGB":{"shape":"NotebookInstanceVolumeSizeInGB"},
         "DefaultCodeRepository":{"shape":"CodeRepositoryNameOrUrl"},
         "AdditionalCodeRepositories":{"shape":"AdditionalCodeRepositoryNamesOrUrls"},
         "AcceleratorTypes":{"shape":"NotebookInstanceAcceleratorTypes"},
-        "DisassociateAcceleratorTypes":{"shape":"DisassociateNotebookInstanceAcceleratorTypes"},
-        "DisassociateDefaultCodeRepository":{"shape":"DisassociateDefaultCodeRepository"},
-        "DisassociateAdditionalCodeRepositories":{"shape":"DisassociateAdditionalCodeRepositories"},
+        "DisassociateAcceleratorTypes":{
+          "shape":"DisassociateNotebookInstanceAcceleratorTypes",
+          "box":true
+        },
+        "DisassociateDefaultCodeRepository":{
+          "shape":"DisassociateDefaultCodeRepository",
+          "box":true
+        },
+        "DisassociateAdditionalCodeRepositories":{
+          "shape":"DisassociateAdditionalCodeRepositories",
+          "box":true
+        },
         "RootAccess":{"shape":"RootAccess"},
         "InstanceMetadataServiceConfiguration":{"shape":"InstanceMetadataServiceConfiguration"}
       }
@@ -25876,11 +26757,13 @@
     },
     "UpdateNotebookInstanceLifecycleConfigOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateNotebookInstanceOutput":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdatePartnerAppRequest":{
       "type":"structure",
@@ -26089,7 +26972,8 @@
     "Url":{
       "type":"string",
       "max":1024,
-      "pattern":"^(https|s3)://([^/]+)/?(.*)$"
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
     },
     "UserContext":{
       "type":"structure",
@@ -26103,6 +26987,7 @@
     "UserProfileArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:user-profile/.*"
     },
     "UserProfileDetails":{
@@ -26122,7 +27007,8 @@
     "UserProfileName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "UserProfileSortKey":{
       "type":"string",
@@ -26168,27 +27054,32 @@
     },
     "UsersPerStep":{
       "type":"integer",
+      "box":true,
       "max":3,
       "min":1
     },
     "UtilizationMetric":{
       "type":"float",
+      "box":true,
       "min":0.0
     },
     "UtilizationPercentagePerCore":{
       "type":"integer",
+      "box":true,
       "max":100,
       "min":1
     },
     "ValidationFraction":{
       "type":"float",
+      "box":true,
       "max":1,
       "min":0
     },
     "VariantName":{
       "type":"string",
       "max":63,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "min":0,
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "VariantProperty":{
       "type":"structure",
@@ -26223,10 +27114,12 @@
     },
     "VariantStatusMessage":{
       "type":"string",
-      "max":1024
+      "max":1024,
+      "min":0
     },
     "VariantWeight":{
       "type":"float",
+      "box":true,
       "min":0
     },
     "VectorConfig":{
@@ -26248,7 +27141,8 @@
     "VersionAliasesList":{
       "type":"list",
       "member":{"shape":"ImageVersionAliasPattern"},
-      "max":20
+      "max":20,
+      "min":0
     },
     "VersionId":{
       "type":"string",
@@ -26260,7 +27154,7 @@
       "type":"string",
       "max":176,
       "min":1,
-      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)(\\/[0-9]{1,9})?$"
+      "pattern":"(arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:[a-z\\-]*\\/)?([a-zA-Z0-9]([a-zA-Z0-9-]){0,62})(?<!-)(\\/[0-9]{1,9})?"
     },
     "Vertex":{
       "type":"structure",
@@ -26285,7 +27179,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "VisibilityConditionsList":{
       "type":"list",
@@ -26297,7 +27191,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "VolumeSizeInGB":{
       "type":"integer",
@@ -26317,12 +27211,14 @@
     "VpcId":{
       "type":"string",
       "max":32,
+      "min":0,
       "pattern":"[-0-9a-zA-Z]+"
     },
     "VpcOnlyTrustedAccounts":{
       "type":"list",
       "member":{"shape":"AccountId"},
-      "max":20
+      "max":20,
+      "min":0
     },
     "VpcSecurityGroupIds":{
       "type":"list",
@@ -26332,11 +27228,13 @@
     },
     "WaitIntervalInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":0
     },
     "WaitTimeIntervalInSeconds":{
       "type":"integer",
+      "box":true,
       "max":3600,
       "min":0
     },
@@ -26361,11 +27259,13 @@
     "WeeklyMaintenanceWindowStart":{
       "type":"string",
       "max":9,
+      "min":0,
       "pattern":"(Mon|Tue|Wed|Thu|Fri|Sat|Sun):([01]\\d|2[0-3]):([0-5]\\d)"
     },
     "WeeklyScheduleTimeFormat":{
       "type":"string",
       "max":9,
+      "min":0,
       "pattern":"(Mon|Tue|Wed|Thu|Fri|Sat|Sun):([01]\\d|2[0-3]):([0-5]\\d)"
     },
     "WorkerAccessConfiguration":{
@@ -26397,6 +27297,7 @@
     "WorkforceArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:workforce/.*"
     },
     "WorkforceFailureReason":{
@@ -26409,12 +27310,13 @@
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9]([a-zA-Z0-9\\-]){0,62}$"
+      "pattern":"[a-zA-Z0-9]([a-zA-Z0-9\\-]){0,62}"
     },
     "WorkforceSecurityGroupId":{
       "type":"string",
       "max":32,
-      "pattern":"^sg-[0-9a-z]*$"
+      "min":0,
+      "pattern":"sg-[0-9a-z]*"
     },
     "WorkforceSecurityGroupIds":{
       "type":"list",
@@ -26435,7 +27337,8 @@
     "WorkforceSubnetId":{
       "type":"string",
       "max":32,
-      "pattern":"^subnet-[0-9a-z]*$"
+      "min":0,
+      "pattern":"subnet-[0-9a-z]*"
     },
     "WorkforceSubnets":{
       "type":"list",
@@ -26469,12 +27372,13 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^vpce-[0-9a-z]*$"
+      "pattern":"vpce-[0-9a-z]*"
     },
     "WorkforceVpcId":{
       "type":"string",
       "max":32,
-      "pattern":"^vpc-[0-9a-z]*$"
+      "min":0,
+      "pattern":"vpc-[0-9a-z]*"
     },
     "Workforces":{
       "type":"list",
@@ -26512,13 +27416,14 @@
     "WorkteamArn":{
       "type":"string",
       "max":256,
+      "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:workteam/.*"
     },
     "WorkteamName":{
       "type":"string",
       "max":63,
       "min":1,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "Workteams":{
       "type":"list",

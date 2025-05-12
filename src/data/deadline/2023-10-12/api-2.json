@@ -3018,7 +3018,8 @@
         "minWorkerCount":{"shape":"MinZeroMaxInteger"},
         "maxWorkerCount":{"shape":"MinZeroMaxInteger"},
         "configuration":{"shape":"FleetConfiguration"},
-        "tags":{"shape":"Tags"}
+        "tags":{"shape":"Tags"},
+        "hostConfiguration":{"shape":"HostConfiguration"}
       }
     },
     "CreateFleetResponse":{
@@ -4421,6 +4422,7 @@
         "minWorkerCount":{"shape":"MinZeroMaxInteger"},
         "maxWorkerCount":{"shape":"MinZeroMaxInteger"},
         "configuration":{"shape":"FleetConfiguration"},
+        "hostConfiguration":{"shape":"HostConfiguration"},
         "capabilities":{"shape":"FleetCapabilities"},
         "roleArn":{"shape":"IamRoleArn"},
         "createdAt":{"shape":"CreatedAt"},
@@ -5203,6 +5205,26 @@
         "updatedAt":{"shape":"UpdatedAt"},
         "updatedBy":{"shape":"UpdatedBy"}
       }
+    },
+    "HostConfiguration":{
+      "type":"structure",
+      "required":["scriptBody"],
+      "members":{
+        "scriptBody":{"shape":"HostConfigurationScript"},
+        "scriptTimeoutSeconds":{"shape":"HostConfigurationScriptTimeoutSeconds"}
+      }
+    },
+    "HostConfigurationScript":{
+      "type":"string",
+      "max":15000,
+      "min":0,
+      "sensitive":true
+    },
+    "HostConfigurationScriptTimeoutSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":3600,
+      "min":300
     },
     "HostName":{
       "type":"string",
@@ -7723,7 +7745,8 @@
       "type":"string",
       "enum":[
         "SERVICE_QUOTA_EXCEEDED_EXCEPTION",
-        "KMS_KEY_LIMIT_EXCEEDED"
+        "KMS_KEY_LIMIT_EXCEEDED",
+        "DEPENDENCY_LIMIT_EXCEEDED"
       ]
     },
     "SessionActionDefinition":{
@@ -8585,7 +8608,8 @@
         "roleArn":{"shape":"IamRoleArn"},
         "minWorkerCount":{"shape":"MinZeroMaxInteger"},
         "maxWorkerCount":{"shape":"MinZeroMaxInteger"},
-        "configuration":{"shape":"FleetConfiguration"}
+        "configuration":{"shape":"FleetConfiguration"},
+        "hostConfiguration":{"shape":"HostConfiguration"}
       }
     },
     "UpdateFleetResponse":{
@@ -9047,7 +9071,8 @@
     "UpdateWorkerResponse":{
       "type":"structure",
       "members":{
-        "log":{"shape":"LogConfiguration"}
+        "log":{"shape":"LogConfiguration"},
+        "hostConfiguration":{"shape":"HostConfiguration"}
       }
     },
     "UpdateWorkerScheduleInterval":{
