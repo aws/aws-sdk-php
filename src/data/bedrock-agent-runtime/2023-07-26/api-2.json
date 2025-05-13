@@ -548,6 +548,7 @@
     "ActionGroupInvocationOutput":{
       "type":"structure",
       "members":{
+        "metadata":{"shape":"Metadata"},
         "text":{"shape":"ActionGroupOutputString"}
       }
     },
@@ -666,6 +667,7 @@
       "members":{
         "agentCollaboratorAliasArn":{"shape":"AgentAliasArn"},
         "agentCollaboratorName":{"shape":"String"},
+        "metadata":{"shape":"Metadata"},
         "output":{"shape":"AgentCollaboratorOutputPayload"}
       }
     },
@@ -928,7 +930,8 @@
         "executionError":{"shape":"String"},
         "executionOutput":{"shape":"String"},
         "executionTimeout":{"shape":"Boolean"},
-        "files":{"shape":"Files"}
+        "files":{"shape":"Files"},
+        "metadata":{"shape":"Metadata"}
       }
     },
     "CollaborationInstruction":{
@@ -1276,7 +1279,9 @@
     "FailureTrace":{
       "type":"structure",
       "members":{
+        "failureCode":{"shape":"Integer"},
         "failureReason":{"shape":"FailureReasonString"},
+        "metadata":{"shape":"Metadata"},
         "traceId":{"shape":"TraceId"}
       },
       "sensitive":true
@@ -1365,6 +1370,7 @@
     "FinalResponse":{
       "type":"structure",
       "members":{
+        "metadata":{"shape":"Metadata"},
         "text":{"shape":"FinalResponseString"}
       }
     },
@@ -2131,6 +2137,7 @@
       "members":{
         "action":{"shape":"GuardrailAction"},
         "inputAssessments":{"shape":"GuardrailAssessmentList"},
+        "metadata":{"shape":"Metadata"},
         "outputAssessments":{"shape":"GuardrailAssessmentList"},
         "traceId":{"shape":"TraceId"}
       },
@@ -2711,6 +2718,7 @@
     "KnowledgeBaseLookupOutput":{
       "type":"structure",
       "members":{
+        "metadata":{"shape":"Metadata"},
         "retrievedReferences":{"shape":"RetrievedReferences"}
       }
     },
@@ -2892,6 +2900,10 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -2959,6 +2971,11 @@
     "Metadata":{
       "type":"structure",
       "members":{
+        "clientRequestId":{"shape":"String"},
+        "endTime":{"shape":"SyntheticTimestamp_date_time"},
+        "operationTotalTimeMs":{"shape":"Long"},
+        "startTime":{"shape":"SyntheticTimestamp_date_time"},
+        "totalTimeMs":{"shape":"Long"},
         "usage":{"shape":"Usage"}
       },
       "sensitive":true

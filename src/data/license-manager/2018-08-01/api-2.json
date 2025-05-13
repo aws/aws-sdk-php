@@ -5,11 +5,13 @@
     "endpointPrefix":"license-manager",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS License Manager",
     "serviceId":"License Manager",
     "signatureVersion":"v4",
     "targetPrefix":"AWSLicenseManager",
-    "uid":"license-manager-2018-08-01"
+    "uid":"license-manager-2018-08-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptGrant":{
@@ -834,7 +836,8 @@
         {"shape":"AuthorizationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"RateLimitExceededException"},
-        {"shape":"ResourceLimitExceededException"}
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateLicenseManagerReportGenerator":{
@@ -871,7 +874,8 @@
         {"shape":"ServerInternalException"},
         {"shape":"AuthorizationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"RateLimitExceededException"}
+        {"shape":"RateLimitExceededException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateServiceSettings":{
@@ -936,7 +940,7 @@
     "AllowedOperationList":{
       "type":"list",
       "member":{"shape":"AllowedOperation"},
-      "max":7,
+      "max":8,
       "min":1
     },
     "Arn":{
@@ -1110,7 +1114,8 @@
         "LicenseArn":{"shape":"Arn"},
         "Principals":{"shape":"PrincipalArnList"},
         "HomeRegion":{"shape":"String"},
-        "AllowedOperations":{"shape":"AllowedOperationList"}
+        "AllowedOperations":{"shape":"AllowedOperationList"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateGrantResponse":{
@@ -1239,7 +1244,8 @@
         "Beneficiary":{"shape":"String"},
         "ConsumptionConfiguration":{"shape":"ConsumptionConfiguration"},
         "LicenseMetadata":{"shape":"MetadataList"},
-        "ClientToken":{"shape":"ClientToken"}
+        "ClientToken":{"shape":"ClientToken"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateLicenseResponse":{

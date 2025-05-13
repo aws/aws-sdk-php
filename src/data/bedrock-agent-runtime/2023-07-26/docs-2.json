@@ -1496,6 +1496,7 @@
       "base": null,
       "refs": {
         "ApiResult$httpStatusCode": "<p>http status code from API execution response (for example: 200, 400, 500).</p>",
+        "FailureTrace$failureCode": "<p>The failure code for the trace.</p>",
         "Usage$inputTokens": "<p>Contains information about the input tokens from the foundation model usage.</p>",
         "Usage$outputTokens": "<p>Contains information about the output tokens from the foundation model usage.</p>"
       }
@@ -1796,6 +1797,13 @@
       "refs": {
       }
     },
+    "Long": {
+      "base": null,
+      "refs": {
+        "Metadata$operationTotalTimeMs": "<p>The total time it took for the agent to complete execution. This field is only set for the final response.</p>",
+        "Metadata$totalTimeMs": "<p> The total execution time for the specific invocation being processed (model, knowledge base, guardrail, agent collaborator, or code interpreter). It represents how long the individual invocation took.</p>"
+      }
+    },
     "MaxResults": {
       "base": "<p>Max Results.</p>",
       "refs": {
@@ -1864,8 +1872,15 @@
       }
     },
     "Metadata": {
-      "base": "<p>Provides details of the foundation model.</p>",
+      "base": "<p>Provides information about the execution process for different types of invocations, such as model invocation, knowledge base invocation, agent collaborator invocation, guardrail invocation, and code interpreter Invocation.</p>",
       "refs": {
+        "ActionGroupInvocationOutput$metadata": "<p>Contains information about the action group output.</p>",
+        "AgentCollaboratorInvocationOutput$metadata": "<p>Contains information about the output from the agent collaborator.</p>",
+        "CodeInterpreterInvocationOutput$metadata": "<p>Contains information about the output from the code interpreter.</p>",
+        "FailureTrace$metadata": "<p>Information about the failure that occurred.</p>",
+        "FinalResponse$metadata": "<p>Contains information about the invoke agent operation.</p>",
+        "GuardrailTrace$metadata": "<p>Contains information about the Guardrail output.</p>",
+        "KnowledgeBaseLookupOutput$metadata": "<p>Contains information about the knowledge base output.</p>",
         "OrchestrationModelInvocationOutput$metadata": "<p>Contains information about the foundation model output from the orchestration step.</p>",
         "PostProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the post-processing step. </p>",
         "PreProcessingModelInvocationOutput$metadata": "<p> Contains information about the foundation model output from the pre-processing step. </p>",
@@ -3075,6 +3090,7 @@
         "InlineSessionState$invocationId": "<p> The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeInlineAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a>. </p>",
         "InputFile$name": "<p>The name of the source file.</p>",
         "InternalServerException$reason": "<p>The reason for the exception. If the reason is <code>BEDROCK_MODEL_INVOCATION_SERVICE_UNAVAILABLE</code>, the model invocation service is unavailable. Retry your request.</p>",
+        "Metadata$clientRequestId": "<p>A unique identifier associated with the downstream invocation. This ID can be used for tracing, debugging, and identifying specific invocations in customer logs or systems.</p>",
         "OutputFile$name": "<p>The name of the file containing response from code interpreter.</p>",
         "Parameter$name": "<p>The name of the parameter.</p>",
         "Parameter$type": "<p>The type of the parameter.</p>",
@@ -3119,6 +3135,8 @@
       "base": null,
       "refs": {
         "InlineAgentTracePart$eventTime": "<p>The time that trace occurred. </p>",
+        "Metadata$endTime": "<p>In the final response, <code>endTime</code> is the end time time of the agent invocation operation.</p>",
+        "Metadata$startTime": "<p>In the final response, <code>startTime</code> is the start time of the agent invocation operation.</p>",
         "TracePart$eventTime": "<p> The time of the trace. </p>"
       }
     },
@@ -3316,7 +3334,7 @@
     "Usage": {
       "base": "<p>Contains information of the usage of the foundation model.</p>",
       "refs": {
-        "Metadata$usage": "<p>Contains details of the foundation model usage.</p>"
+        "Metadata$usage": "<p>Specific to model invocation and contains details about the usage of a foundation model.</p>"
       }
     },
     "Uuid": {
