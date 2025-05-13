@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.10 - 2025-05-13
 
 * `Aws\LicenseManager` - Add Tagging feature to resources in the Managed Entitlements service. License and Grant resources can now be tagged.
 * `Aws\Bedrock` - Enable cross-Region inference for Amazon Bedrock Guardrails by using the crossRegionConfig parameter when calling the CreateGuardrail or UpdateGuardrail operation.
