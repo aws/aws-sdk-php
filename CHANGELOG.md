@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.11 - 2025-05-14
 
 * `Aws\Firehose` - This release adds catalogARN support for s3 tables multi-catalog catalogARNs.
 * `Aws\MediaConvert` - This update enables cropping for video overlays and adds a new STL to Teletext upconversion toggle to preserve styling.
