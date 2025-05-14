@@ -83,14 +83,14 @@ class EndpointV2MiddlewareTest extends TestCase
                 ['region' => 'us-west-2'],
                 'getCallerIdentity',
                 [],
-                'https://sts.amazonaws.com'
+                'https://sts.us-west-2.amazonaws.com'
             ],
             [
                 'sts',
-                ['region' => 'us-west-2', 'sts_regional_endpoints' => 'regional'],
+                ['region' => 'us-west-2', 'sts_regional_endpoints' => 'legacy'],
                 'getCallerIdentity',
                 [],
-                'https://sts.us-west-2.amazonaws.com'
+                'https://sts.amazonaws.com'
             ],
         ];
     }

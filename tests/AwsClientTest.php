@@ -546,7 +546,7 @@ class AwsClientTest extends TestCase
             'AWS::Region' => 'us-west-2',
             'AWS::UseFIPS' => false,
             'AWS::UseDualStack' => false,
-            'AWS::STS::UseGlobalEndpoint' => true,
+            'AWS::STS::UseGlobalEndpoint' => false,
             'AWS::Auth::AccountIdEndpointMode' => 'preferred',
         ];
         $builtIns = $client->getClientBuiltIns();
@@ -567,7 +567,7 @@ class AwsClientTest extends TestCase
             'Region' => 'us-west-2',
             'UseFIPS' => false,
             'UseDualStack' => false,
-            'UseGlobalEndpoint' => true,
+            'UseGlobalEndpoint' => false,
             'AccountIdEndpointMode' => 'preferred'
         ];
         $providerArgs = $client->getEndpointProviderArgs();
