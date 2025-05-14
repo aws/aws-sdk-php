@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Firehose` - This release adds catalogARN support for s3 tables multi-catalog catalogARNs.
+* `Aws\MediaConvert` - This update enables cropping for video overlays and adds a new STL to Teletext upconversion toggle to preserve styling.
+* `Aws\CognitoIdentityProvider` - Add exceptions to WebAuthn operations.
+* `Aws\CloudWatchLogs` - This release adds a new API "ListLogGroups" and an improvement in API "DescribeLogGroups"
+
 ## 3.343.10 - 2025-05-13
 
 * `Aws\LicenseManager` - Add Tagging feature to resources in the Managed Entitlements service. License and Grant resources can now be tagged.

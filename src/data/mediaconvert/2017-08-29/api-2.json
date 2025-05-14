@@ -1444,8 +1444,7 @@
     },
     "AssociateCertificateResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "AudioChannelTag": {
       "type": "string",
@@ -2389,8 +2388,7 @@
     },
     "CancelJobResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "CaptionDescription": {
       "type": "structure",
@@ -2598,6 +2596,13 @@
         "NULL_SOURCE",
         "IMSC",
         "WEBVTT"
+      ]
+    },
+    "CaptionSourceUpconvertSTLToTeletext": {
+      "type": "string",
+      "enum": [
+        "UPCONVERT",
+        "DISABLED"
       ]
     },
     "ChannelMapping": {
@@ -3900,18 +3905,15 @@
     },
     "DeleteJobTemplateResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeletePolicyRequest": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeletePolicyResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeletePresetRequest": {
       "type": "structure",
@@ -3928,8 +3930,7 @@
     },
     "DeletePresetResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeleteQueueRequest": {
       "type": "structure",
@@ -3946,8 +3947,7 @@
     },
     "DeleteQueueResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DescribeEndpointsMode": {
       "type": "string",
@@ -4016,8 +4016,7 @@
     },
     "DisassociateCertificateResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DolbyVision": {
       "type": "structure",
@@ -4958,6 +4957,10 @@
         "TimeDeltaUnits": {
           "shape": "FileSourceTimeDeltaUnits",
           "locationName": "timeDeltaUnits"
+        },
+        "UpconvertSTLToTeletext": {
+          "shape": "CaptionSourceUpconvertSTLToTeletext",
+          "locationName": "upconvertSTLToTeletext"
         }
       }
     },
@@ -5119,8 +5122,7 @@
     },
     "GetPolicyRequest": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "GetPolicyResponse": {
       "type": "structure",
@@ -10470,8 +10472,7 @@
     },
     "TagResourceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "TeletextDestinationSettings": {
       "type": "structure",
@@ -10852,8 +10853,7 @@
     },
     "UntagResourceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "UpdateJobTemplateRequest": {
       "type": "structure",
@@ -11250,6 +11250,10 @@
     "VideoOverlay": {
       "type": "structure",
       "members": {
+        "Crop": {
+          "shape": "VideoOverlayCrop",
+          "locationName": "crop"
+        },
         "EndTimecode": {
           "shape": "__stringPattern010920405090509092",
           "locationName": "endTimecode"
@@ -11273,6 +11277,31 @@
         "Transitions": {
           "shape": "__listOfVideoOverlayTransition",
           "locationName": "transitions"
+        }
+      }
+    },
+    "VideoOverlayCrop": {
+      "type": "structure",
+      "members": {
+        "Height": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "height"
+        },
+        "Unit": {
+          "shape": "VideoOverlayUnit",
+          "locationName": "unit"
+        },
+        "Width": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "width"
+        },
+        "X": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "x"
+        },
+        "Y": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "y"
         }
       }
     },

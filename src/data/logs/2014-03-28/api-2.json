@@ -861,6 +861,19 @@
         {"shape":"OperationAbortedException"}
       ]
     },
+    "ListLogGroups":{
+      "name":"ListLogGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListLogGroupsRequest"},
+      "output":{"shape":"ListLogGroupsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListLogGroupsForQuery":{
       "name":"ListLogGroupsForQuery",
       "http":{
@@ -2157,6 +2170,12 @@
       "max":50,
       "min":1
     },
+    "DescribeLogGroupsLogGroupIdentifiers":{
+      "type":"list",
+      "member":{"shape":"LogGroupIdentifier"},
+      "max":50,
+      "min":1
+    },
     "DescribeLogGroupsRequest":{
       "type":"structure",
       "members":{
@@ -2166,7 +2185,8 @@
         "nextToken":{"shape":"NextToken"},
         "limit":{"shape":"DescribeLimit"},
         "includeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
-        "logGroupClass":{"shape":"LogGroupClass"}
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "logGroupIdentifiers":{"shape":"DescribeLogGroupsLogGroupIdentifiers"}
       }
     },
     "DescribeLogGroupsResponse":{
@@ -2995,6 +3015,11 @@
         "integrationSummaries":{"shape":"IntegrationSummaries"}
       }
     },
+    "ListLimit":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "ListLogAnomalyDetectorsLimit":{
       "type":"integer",
       "max":50,
@@ -3033,6 +3058,24 @@
       "type":"structure",
       "members":{
         "logGroupIdentifiers":{"shape":"LogGroupIdentifiers"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListLogGroupsRequest":{
+      "type":"structure",
+      "members":{
+        "logGroupNamePattern":{"shape":"LogGroupNameRegexPattern"},
+        "logGroupClass":{"shape":"LogGroupClass"},
+        "includeLinkedAccounts":{"shape":"IncludeLinkedAccounts"},
+        "accountIdentifiers":{"shape":"AccountIds"},
+        "nextToken":{"shape":"NextToken"},
+        "limit":{"shape":"ListLimit"}
+      }
+    },
+    "ListLogGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "logGroups":{"shape":"LogGroupSummaries"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3200,9 +3243,27 @@
       "min":0,
       "pattern":"[\\.\\-_/#A-Za-z0-9]*"
     },
+    "LogGroupNameRegexPattern":{
+      "type":"string",
+      "max":129,
+      "min":3,
+      "pattern":"(\\^?[\\.\\-_\\/#A-Za-z0-9]{3,24})(\\|\\^?[\\.\\-_\\/#A-Za-z0-9]{3,24}){0,4}"
+    },
     "LogGroupNames":{
       "type":"list",
       "member":{"shape":"LogGroupName"}
+    },
+    "LogGroupSummaries":{
+      "type":"list",
+      "member":{"shape":"LogGroupSummary"}
+    },
+    "LogGroupSummary":{
+      "type":"structure",
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"},
+        "logGroupArn":{"shape":"Arn"},
+        "logGroupClass":{"shape":"LogGroupClass"}
+      }
     },
     "LogGroups":{
       "type":"list",
