@@ -325,6 +325,41 @@
       },
       "exception":true
     },
+    "Accounting":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"AccountingMode"},
+        "defaultPurgeTimeInDays":{"shape":"AccountingDefaultPurgeTimeInDaysInteger"}
+      }
+    },
+    "AccountingDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
+    "AccountingMode":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "NONE"
+      ]
+    },
+    "AccountingRequest":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"AccountingMode"},
+        "defaultPurgeTimeInDays":{"shape":"AccountingRequestDefaultPurgeTimeInDaysInteger"}
+      }
+    },
+    "AccountingRequestDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
     "AmiId":{
       "type":"string",
       "pattern":"ami-[a-z0-9]+"
@@ -388,14 +423,16 @@
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationScaleDownIdleTimeInSecondsInteger"},
         "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
-        "authKey":{"shape":"SlurmAuthKey"}
+        "authKey":{"shape":"SlurmAuthKey"},
+        "accounting":{"shape":"Accounting"}
       }
     },
     "ClusterSlurmConfigurationRequest":{
       "type":"structure",
       "members":{
         "scaleDownIdleTimeInSeconds":{"shape":"ClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
-        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "accounting":{"shape":"AccountingRequest"}
       }
     },
     "ClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{

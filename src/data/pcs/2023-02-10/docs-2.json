@@ -15,7 +15,7 @@
     "ListComputeNodeGroups": "<p>Returns a list of all compute node groups associated with a cluster.</p>",
     "ListQueues": "<p>Returns a list of all queues associated with a cluster.</p>",
     "ListTagsForResource": "<p>Returns a list of all tags on an Amazon Web Services PCS resource.</p>",
-    "RegisterComputeNodeGroupInstance": "<important> <p>This API action isn't intended for you to use.</p> </important> <p>Amazon Web Services PCS uses this API action to register the compute nodes it launches in your account.</p>",
+    "RegisterComputeNodeGroupInstance": "<p><important> <p>This API action isn't intended for you to use.</p> </important> <p>Amazon Web Services PCS uses this API action to register the compute nodes it launches in your account.</p></p>",
     "TagResource": "<p>Adds or edits tags on an Amazon Web Services PCS resource. Each tag consists of a tag key and a tag value. The tag key and tag value are case-sensitive strings. The tag value can be an empty (null) string. To add a tag, specify a new tag key and a tag value. To edit a tag, specify an existing tag key and a new tag value.</p>",
     "UntagResource": "<p>Deletes tags from an Amazon Web Services PCS resource. To delete a tag, specify the tag key and the Amazon Resource Name (ARN) of the Amazon Web Services PCS resource.</p>",
     "UpdateComputeNodeGroup": "<p>Updates a compute node group. You can update many of the fields related to your compute node group including the configurations for networking, compute nodes, and settings specific to your scheduler (such as Slurm).</p>",
@@ -25,6 +25,37 @@
     "AccessDeniedException": {
       "base": "<p>You don't have permission to perform the action.</p> <p> <u>Examples</u> </p> <ul> <li> <p>The launch template instance profile doesn't pass <code>iam:PassRole</code> verification.</p> </li> <li> <p>There is a mismatch between the account ID and cluster ID.</p> </li> <li> <p>The cluster ID doesn't exist.</p> </li> <li> <p>The EC2 instance isn't present.</p> </li> </ul>",
       "refs": {
+      }
+    },
+    "Accounting": {
+      "base": "<p>The accounting configuration includes configurable settings for Slurm accounting. It's a property of the <b>ClusterSlurmConfiguration</b> object.</p>",
+      "refs": {
+        "ClusterSlurmConfiguration$accounting": "<p>The accounting configuration includes configurable settings for Slurm accounting.</p>"
+      }
+    },
+    "AccountingDefaultPurgeTimeInDaysInteger": {
+      "base": null,
+      "refs": {
+        "Accounting$defaultPurgeTimeInDays": "<p>The default value for all purge settings for <code>slurmdbd.conf</code>. For more information, see the <a href=\"https://slurm.schedmd.com/slurmdbd.conf.html\">slurmdbd.conf documentation at SchedMD</a>.</p> <p>The default value for <code>defaultPurgeTimeInDays</code> is <code>-1</code>.</p> <p>A value of <code>-1</code> means there is no purge time and records persist as long as the cluster exists.</p> <important> <p> <code>0</code> isn't a valid value.</p> </important>"
+      }
+    },
+    "AccountingMode": {
+      "base": null,
+      "refs": {
+        "Accounting$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>",
+        "AccountingRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>"
+      }
+    },
+    "AccountingRequest": {
+      "base": "<p>The accounting configuration includes configurable settings for Slurm accounting. It's a property of the <b>ClusterSlurmConfiguration</b> object.</p>",
+      "refs": {
+        "ClusterSlurmConfigurationRequest$accounting": "<p>The accounting configuration includes configurable settings for Slurm accounting.</p>"
+      }
+    },
+    "AccountingRequestDefaultPurgeTimeInDaysInteger": {
+      "base": null,
+      "refs": {
+        "AccountingRequest$defaultPurgeTimeInDays": "<p>The default value for all purge settings for <code>slurmdbd.conf</code>. For more information, see the <a href=\"https://slurm.schedmd.com/slurmdbd.conf.html\">slurmdbd.conf documentation at SchedMD</a>.</p> <p>The default value for <code>defaultPurgeTimeInDays</code> is <code>-1</code>.</p> <p>A value of <code>-1</code> means there is no purge time and records persist as long as the cluster exists.</p> <important> <p> <code>0</code> isn't a valid value.</p> </important>"
       }
     },
     "AmiId": {
@@ -682,8 +713,8 @@
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p> The unique identifier of the resource that was not found. </p>",
         "ResourceNotFoundException$resourceType": "<p> The type or category of the resource that was not found. </p>",
-        "Scheduler$version": "<p>The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in Amazon Web Services PCS</a> in the <i>Amazon Web Services PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05</code> </p>",
-        "SchedulerRequest$version": "<p>The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in Amazon Web Services PCS</a> in the <i>Amazon Web Services PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05</code> </p>",
+        "Scheduler$version": "<p>The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in Amazon Web Services PCS</a> in the <i>Amazon Web Services PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11</code> </p>",
+        "SchedulerRequest$version": "<p>The version of the specified scheduling software that Amazon Web Services PCS uses to manage cluster scaling and job scheduling. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-versions.html\">Slurm versions in Amazon Web Services PCS</a> in the <i>Amazon Web Services PCS User Guide</i>.</p> <p>Valid Values: <code>23.11 | 24.05 | 24.11</code> </p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$serviceCode": "<p> The service code associated with the quota that was exceeded. </p>",
         "ServiceQuotaExceededException$resourceId": "<p> The unique identifier of the resource that caused the quota to be exceeded. </p>",

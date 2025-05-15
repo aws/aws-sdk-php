@@ -2170,7 +2170,8 @@
         "Capacity":{"shape":"Capacity"},
         "Tags":{"shape":"TagList"},
         "ApplicationSettings":{"shape":"ApplicationSettingsRequest"},
-        "TimeoutSettings":{"shape":"TimeoutSettings"}
+        "TimeoutSettings":{"shape":"TimeoutSettings"},
+        "RunningMode":{"shape":"PoolsRunningMode"}
       }
     },
     "CreateWorkspacesPoolResult":{
@@ -3618,6 +3619,13 @@
       "type":"list",
       "member":{"shape":"PendingCreateStandbyWorkspacesRequest"}
     },
+    "PoolsRunningMode":{
+      "type":"string",
+      "enum":[
+        "AUTO_STOP",
+        "ALWAYS_ON"
+      ]
+    },
     "Protocol":{
       "type":"string",
       "enum":[
@@ -4301,7 +4309,8 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "Capacity":{"shape":"Capacity"},
         "ApplicationSettings":{"shape":"ApplicationSettingsRequest"},
-        "TimeoutSettings":{"shape":"TimeoutSettings"}
+        "TimeoutSettings":{"shape":"TimeoutSettings"},
+        "RunningMode":{"shape":"PoolsRunningMode"}
       }
     },
     "UpdateWorkspacesPoolResult":{
@@ -4681,7 +4690,10 @@
         "MultipleUserProfiles",
         "StagedAppxPackage",
         "UnsupportedOsUpgrade",
-        "InsufficientRearmCount"
+        "InsufficientRearmCount",
+        "ProtocolOSIncompatibility",
+        "MemoryIntegrityIncompatibility",
+        "RestrictedDriveLetterInUse"
       ]
     },
     "WorkspaceImageId":{
@@ -4853,7 +4865,8 @@
         "State",
         "CreatedAt",
         "BundleId",
-        "DirectoryId"
+        "DirectoryId",
+        "RunningMode"
       ],
       "members":{
         "PoolId":{"shape":"WorkspacesPoolId"},
@@ -4867,7 +4880,8 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "Errors":{"shape":"WorkspacesPoolErrors"},
         "ApplicationSettings":{"shape":"ApplicationSettingsResponse"},
-        "TimeoutSettings":{"shape":"TimeoutSettings"}
+        "TimeoutSettings":{"shape":"TimeoutSettings"},
+        "RunningMode":{"shape":"PoolsRunningMode"}
       }
     },
     "WorkspacesPoolError":{

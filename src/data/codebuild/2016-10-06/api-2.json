@@ -1571,6 +1571,22 @@
         "testCases":{"shape":"TestCases"}
       }
     },
+    "DockerServer":{
+      "type":"structure",
+      "required":["computeType"],
+      "members":{
+        "computeType":{"shape":"ComputeType"},
+        "securityGroupIds":{"shape":"SecurityGroupIds"},
+        "status":{"shape":"DockerServerStatus"}
+      }
+    },
+    "DockerServerStatus":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
     "EnvironmentImage":{
       "type":"structure",
       "members":{
@@ -2379,7 +2395,8 @@
         "privilegedMode":{"shape":"WrapperBoolean"},
         "certificate":{"shape":"String"},
         "registryCredential":{"shape":"RegistryCredential"},
-        "imagePullCredentialsType":{"shape":"ImagePullCredentialsType"}
+        "imagePullCredentialsType":{"shape":"ImagePullCredentialsType"},
+        "dockerServer":{"shape":"DockerServer"}
       }
     },
     "ProjectFileSystemLocation":{
