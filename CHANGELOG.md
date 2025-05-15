@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.12 - 2025-05-15
 
 * `Aws\ControlTower` - Updated the descriptions for the AWS Control Tower Baseline APIs to make them more intuitive.
 * `Aws\DatabaseMigrationService` - Introduces Data Resync feature to describe-table-statistics and IAM database authentication for MariaDB, MySQL, and PostgreSQL.
