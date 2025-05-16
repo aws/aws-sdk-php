@@ -320,6 +320,7 @@
         "S3HudiCatalogTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3HudiDirectTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3HudiSource$AdditionalHudiOptions": "<p>Specifies additional connection options.</p>",
+        "S3IcebergDirectTarget$AdditionalOptions": "<p>Provides additional configuration options for customizing the Iceberg table behavior.</p>",
         "SnowflakeNodeData$AdditionalOptions": "<p>Specifies additional options passed to the Snowflake connector. If options are specified elsewhere in this node, this will take precedence.</p>",
         "SparkConnectorSource$AdditionalOptions": "<p>Additional connection options for the connector.</p>",
         "SparkConnectorTarget$AdditionalOptions": "<p>Additional connection options for the connector.</p>"
@@ -1047,6 +1048,7 @@
         "S3CsvSource$WriteHeader": "<p>A Boolean value that specifies whether to write the header to output. The default value is <code>True</code>. </p>",
         "S3CsvSource$SkipFirst": "<p>A Boolean value that specifies whether to skip the first data line. The default value is <code>False</code>.</p>",
         "S3DirectSourceAdditionalOptions$EnableSamplePath": "<p>Sets option to enable a sample path.</p>",
+        "S3ExcelSource$Recurse": "<p>Indicates whether to recursively process subdirectories.</p>",
         "S3JsonSource$Recurse": "<p>If set to true, recursively reads files in all subdirectories under the specified paths.</p>",
         "S3JsonSource$Multiline": "<p>A Boolean value that specifies whether a single record can span multiple lines. This can occur when a field contains a quoted new-line character. You must set this option to True if any record spans multiple lines. The default value is <code>False</code>, which allows for more aggressive file-splitting during parsing.</p>",
         "S3ParquetSource$Recurse": "<p>If set to true, recursively reads files in all subdirectories under the specified paths.</p>",
@@ -1065,6 +1067,7 @@
       "refs": {
         "S3DirectSourceAdditionalOptions$BoundedSize": "<p>Sets the upper limit for the target size of the dataset in bytes that will be processed.</p>",
         "S3DirectSourceAdditionalOptions$BoundedFiles": "<p>Sets the upper limit for the target number of files that will be processed.</p>",
+        "S3ExcelSource$NumberRows": "<p>The number of rows to process from each Excel file.</p>",
         "S3SourceAdditionalOptions$BoundedSize": "<p>Sets the upper limit for the target size of the dataset in bytes that will be processed.</p>",
         "S3SourceAdditionalOptions$BoundedFiles": "<p>Sets the upper limit for the target number of files that will be processed.</p>"
       }
@@ -1077,6 +1080,9 @@
         "KinesisStreamingSourceOptions$NumRetries": "<p>The maximum number of retries for Kinesis Data Streams API requests. The default value is <code>3</code>.</p>",
         "S3CsvSource$MaxBand": "<p>This option controls the duration in milliseconds after which the s3 listing is likely to be consistent. Files with modification timestamps falling within the last maxBand milliseconds are tracked specially when using JobBookmarks to account for Amazon S3 eventual consistency. Most users don't need to set this option. The default is 900000 milliseconds, or 15 minutes.</p>",
         "S3CsvSource$MaxFilesInBand": "<p>This option specifies the maximum number of files to save from the last maxBand seconds. If this number is exceeded, extra files are skipped and only processed in the next job run.</p>",
+        "S3ExcelSource$MaxBand": "<p>The maximum number of processing bands to use.</p>",
+        "S3ExcelSource$MaxFilesInBand": "<p>The maximum number of files to process in each band.</p>",
+        "S3ExcelSource$SkipFooter": "<p>The number of rows to skip at the end of each Excel file.</p>",
         "S3JsonSource$MaxBand": "<p>This option controls the duration in milliseconds after which the s3 listing is likely to be consistent. Files with modification timestamps falling within the last maxBand milliseconds are tracked specially when using JobBookmarks to account for Amazon S3 eventual consistency. Most users don't need to set this option. The default is 900000 milliseconds, or 15 minutes.</p>",
         "S3JsonSource$MaxFilesInBand": "<p>This option specifies the maximum number of files to save from the last maxBand seconds. If this number is exceeded, extra files are skipped and only processed in the next job run.</p>",
         "S3ParquetSource$MaxBand": "<p>This option controls the duration in milliseconds after which the s3 listing is likely to be consistent. Files with modification timestamps falling within the last maxBand milliseconds are tracked specially when using JobBookmarks to account for Amazon S3 eventual consistency. Most users don't need to set this option. The default is 900000 milliseconds, or 15 minutes.</p>",
@@ -3400,7 +3406,9 @@
         "S3DeltaDirectTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
         "S3DirectTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
         "S3GlueParquetTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
-        "S3HudiDirectTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>"
+        "S3HudiDirectTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
+        "S3HyperDirectTarget$SchemaChangePolicy": "<p>Defines how schema changes are handled during write operations.</p>",
+        "S3IcebergDirectTarget$SchemaChangePolicy": "<p>Defines how schema changes are handled when writing data to the Iceberg table.</p>"
       }
     },
     "Double": {
@@ -3503,6 +3511,8 @@
         "S3CsvSource$Paths": "<p>A list of the Amazon S3 paths to read from.</p>",
         "S3CsvSource$Exclusions": "<p>A string containing a JSON list of Unix-style glob patterns to exclude. For example, \"[\\\"**.pdf\\\"]\" excludes all PDF files. </p>",
         "S3DeltaSource$Paths": "<p>A list of the Amazon S3 paths to read from.</p>",
+        "S3ExcelSource$Paths": "<p>The S3 paths where the Excel files are located.</p>",
+        "S3ExcelSource$Exclusions": "<p>Patterns to exclude specific files or paths from processing.</p>",
         "S3HudiSource$Paths": "<p>A list of the Amazon S3 paths to read from.</p>",
         "S3JsonSource$Paths": "<p>A list of the Amazon S3 paths to read from.</p>",
         "S3JsonSource$Exclusions": "<p>A string containing a JSON list of Unix-style glob patterns to exclude. For example, \"[\\\"**.pdf\\\"]\" excludes all PDF files. </p>",
@@ -3649,10 +3659,14 @@
         "S3DirectSourceAdditionalOptions$SamplePath": "<p>If enabled, specifies the sample path.</p>",
         "S3DirectTarget$Path": "<p>A single Amazon S3 path to write to.</p>",
         "S3DirectTarget$Compression": "<p>Specifies how the data is compressed. This is generally not necessary if the data has a standard file extension. Possible values are <code>\"gzip\"</code> and <code>\"bzip\"</code>).</p>",
+        "S3ExcelSource$GroupSize": "<p>Defines the size of file groups for batch processing.</p>",
+        "S3ExcelSource$GroupFiles": "<p>Specifies how files should be grouped for processing.</p>",
         "S3GlueParquetTarget$Path": "<p>A single Amazon S3 path to write to.</p>",
         "S3HudiCatalogTarget$Table": "<p>The name of the table in the database to write to.</p>",
         "S3HudiCatalogTarget$Database": "<p>The name of the database to write to.</p>",
         "S3HudiDirectTarget$Path": "<p>The Amazon S3 path of your Hudi data source to write to.</p>",
+        "S3HyperDirectTarget$Path": "<p>The S3 location where the output data will be written.</p>",
+        "S3IcebergDirectTarget$Path": "<p>Defines the S3 location where the Iceberg table data will be stored.</p>",
         "S3JsonSource$GroupSize": "<p>The target group size in bytes. The default is computed based on the input data size and the size of your cluster. When there are fewer than 50,000 input files, <code>\"groupFiles\"</code> must be set to <code>\"inPartition\"</code> for this to take effect.</p>",
         "S3JsonSource$GroupFiles": "<p>Grouping files is turned on by default when the input contains more than 50,000 files. To turn on grouping with fewer than 50,000 files, set this parameter to \"inPartition\". To disable grouping when there are more than 50,000 files, set this parameter to <code>\"none\"</code>.</p>",
         "S3JsonSource$JsonPath": "<p>A JsonPath string defining the JSON data.</p>",
@@ -4978,6 +4992,7 @@
         "S3CatalogHudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
         "S3CsvSource$OutputSchemas": "<p>Specifies the data schema for the S3 CSV source.</p>",
         "S3DeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
+        "S3ExcelSource$OutputSchemas": "<p>The AWS Glue schemas to apply to the processed data.</p>",
         "S3HudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
         "S3JsonSource$OutputSchemas": "<p>Specifies the data schema for the S3 JSON source.</p>",
         "S3ParquetSource$OutputSchemas": "<p>Specifies the data schema for the S3 Parquet source.</p>",
@@ -5009,6 +5024,8 @@
         "S3GlueParquetTarget$PartitionKeys": "<p>Specifies native partitioning using a sequence of keys.</p>",
         "S3HudiCatalogTarget$PartitionKeys": "<p>Specifies native partitioning using a sequence of keys.</p>",
         "S3HudiDirectTarget$PartitionKeys": "<p>Specifies native partitioning using a sequence of keys.</p>",
+        "S3HyperDirectTarget$PartitionKeys": "<p>Defines the partitioning strategy for the output data.</p>",
+        "S3IcebergDirectTarget$PartitionKeys": "<p>Specifies the columns used to partition the Iceberg table data in S3.</p>",
         "SelectFields$Paths": "<p>A JSON path to a variable in the data structure.</p>",
         "SplitFields$Paths": "<p>A JSON path to a variable in the data structure.</p>"
       }
@@ -5208,6 +5225,12 @@
         "CrawlerTargets$HudiTargets": "<p>Specifies Apache Hudi data store targets.</p>"
       }
     },
+    "HyperTargetCompressionType": {
+      "base": null,
+      "refs": {
+        "S3HyperDirectTarget$Compression": "<p>The compression type to apply to the output data.</p>"
+      }
+    },
     "IAMRoleArn": {
       "base": null,
       "refs": {
@@ -5256,6 +5279,12 @@
       "base": "<p>Specifies an Apache Iceberg data source where Iceberg tables are stored in Amazon S3.</p>",
       "refs": {
         "IcebergTargetList$member": null
+      }
+    },
+    "IcebergTargetCompressionType": {
+      "base": null,
+      "refs": {
+        "S3IcebergDirectTarget$Compression": "<p>Specifies the compression codec used for Iceberg table files in S3.</p>"
       }
     },
     "IcebergTargetList": {
@@ -7048,10 +7077,13 @@
         "S3DeltaDirectTarget$Name": "<p>The name of the data target.</p>",
         "S3DeltaSource$Name": "<p>The name of the Delta Lake source.</p>",
         "S3DirectTarget$Name": "<p>The name of the data target.</p>",
+        "S3ExcelSource$Name": "<p>The name of the S3 Excel data source.</p>",
         "S3GlueParquetTarget$Name": "<p>The name of the data target.</p>",
         "S3HudiCatalogTarget$Name": "<p>The name of the data target.</p>",
         "S3HudiDirectTarget$Name": "<p>The name of the data target.</p>",
         "S3HudiSource$Name": "<p>The name of the Hudi source.</p>",
+        "S3HyperDirectTarget$Name": "<p>The unique identifier for the HyperDirect target node.</p>",
+        "S3IcebergDirectTarget$Name": "<p>Specifies the unique identifier for the Iceberg target node in your data pipeline.</p>",
         "S3JsonSource$Name": "<p>The name of the data store.</p>",
         "S3ParquetSource$Name": "<p>The name of the data store.</p>",
         "SelectFields$Name": "<p>The name of the transform node.</p>",
@@ -7275,6 +7307,16 @@
         "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>"
       }
     },
+    "NumberTargetPartitionsString": {
+      "base": null,
+      "refs": {
+        "S3DeltaDirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for distributing Delta Lake dataset files across Amazon S3.</p>",
+        "S3DirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions when writing data directly to Amazon S3.</p>",
+        "S3GlueParquetTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for Parquet files when writing to Amazon S3 using AWS Glue.</p>",
+        "S3HudiDirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for distributing Hudi dataset files across Amazon S3.</p>",
+        "S3IcebergDirectTarget$NumberTargetPartitions": "<p>Sets the number of target partitions for distributing Iceberg table files across S3.</p>"
+      }
+    },
     "OAuth2ClientApplication": {
       "base": "<p>The OAuth2 client app used for the connection.</p>",
       "refs": {
@@ -7339,6 +7381,8 @@
         "S3GlueParquetTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3HudiCatalogTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3HudiDirectTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
+        "S3HyperDirectTarget$Inputs": "<p>Specifies the input source for the HyperDirect target.</p>",
+        "S3IcebergDirectTarget$Inputs": "<p>Defines the single input source that provides data to this Iceberg target.</p>",
         "SelectFields$Inputs": "<p>The data inputs identified by their node names.</p>",
         "SelectFromCollection$Inputs": "<p>The data inputs identified by their node names.</p>",
         "SnowflakeTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
@@ -7672,6 +7716,7 @@
     "ParquetCompressionType": {
       "base": null,
       "refs": {
+        "S3ExcelSource$CompressionType": "<p>The compression format used for the Excel files.</p>",
         "S3GlueParquetTarget$Compression": "<p>Specifies how the data is compressed. This is generally not necessary if the data has a standard file extension. Possible values are <code>\"gzip\"</code> and <code>\"bzip\"</code>).</p>",
         "S3ParquetSource$CompressionType": "<p>Specifies how the data is compressed. This is generally not necessary if the data has a standard file extension. Possible values are <code>\"gzip\"</code> and <code>\"bzip\"</code>).</p>"
       }
@@ -8512,6 +8557,7 @@
       "refs": {
         "S3CsvSource$AdditionalOptions": "<p>Specifies additional connection options.</p>",
         "S3DeltaSource$AdditionalOptions": "<p>Specifies additional options for the connector.</p>",
+        "S3ExcelSource$AdditionalOptions": "<p>Additional configuration options for S3 direct source processing.</p>",
         "S3HudiSource$AdditionalOptions": "<p>Specifies additional options for the connector.</p>",
         "S3JsonSource$AdditionalOptions": "<p>Specifies additional connection options.</p>",
         "S3ParquetSource$AdditionalOptions": "<p>Specifies additional connection options.</p>"
@@ -8541,6 +8587,12 @@
         "S3Encryption$S3EncryptionMode": "<p>The encryption mode to use for Amazon S3 data.</p>"
       }
     },
+    "S3ExcelSource": {
+      "base": "<p>Specifies an S3 Excel data source.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$S3ExcelSource": "<p>Defines configuration parameters for reading Excel files from Amazon S3.</p>"
+      }
+    },
     "S3GlueParquetTarget": {
       "base": "<p>Specifies a data target that writes to Amazon S3 in Apache Parquet columnar storage.</p>",
       "refs": {
@@ -8563,6 +8615,18 @@
       "base": "<p>Specifies a Hudi data source stored in Amazon S3.</p>",
       "refs": {
         "CodeGenConfigurationNode$S3HudiSource": "<p>Specifies a Hudi data source stored in Amazon S3.</p>"
+      }
+    },
+    "S3HyperDirectTarget": {
+      "base": "<p>Specifies a HyperDirect data target that writes to Amazon S3.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$S3HyperDirectTarget": "<p>Defines configuration parameters for writing data to Amazon S3 using HyperDirect optimization.</p>"
+      }
+    },
+    "S3IcebergDirectTarget": {
+      "base": "<p>Specifies a target that writes to an Iceberg data source in Amazon S3.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$S3IcebergDirectTarget": "<p>Defines configuration parameters for writing data to Amazon S3 as an Apache Iceberg table.</p>"
       }
     },
     "S3JsonSource": {
@@ -9767,7 +9831,8 @@
       "refs": {
         "S3DeltaDirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
         "S3DirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
-        "S3HudiDirectTarget$Format": "<p>Specifies the data output format for the target.</p>"
+        "S3HudiDirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
+        "S3IcebergDirectTarget$Format": "<p>Specifies the file format used for storing Iceberg table data (e.g., Parquet, ORC).</p>"
       }
     },
     "TargetProcessingProperties": {

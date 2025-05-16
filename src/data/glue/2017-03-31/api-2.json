@@ -5375,6 +5375,7 @@
         "RedshiftSource":{"shape":"RedshiftSource"},
         "S3CatalogSource":{"shape":"S3CatalogSource"},
         "S3CsvSource":{"shape":"S3CsvSource"},
+        "S3ExcelSource":{"shape":"S3ExcelSource"},
         "S3JsonSource":{"shape":"S3JsonSource"},
         "S3ParquetSource":{"shape":"S3ParquetSource"},
         "RelationalCatalogSource":{"shape":"RelationalCatalogSource"},
@@ -5385,7 +5386,9 @@
         "RedshiftTarget":{"shape":"RedshiftTarget"},
         "S3CatalogTarget":{"shape":"S3CatalogTarget"},
         "S3GlueParquetTarget":{"shape":"S3GlueParquetTarget"},
+        "S3HyperDirectTarget":{"shape":"S3HyperDirectTarget"},
         "S3DirectTarget":{"shape":"S3DirectTarget"},
+        "S3IcebergDirectTarget":{"shape":"S3IcebergDirectTarget"},
         "ApplyMapping":{"shape":"ApplyMapping"},
         "SelectFields":{"shape":"SelectFields"},
         "DropFields":{"shape":"DropFields"},
@@ -10575,6 +10578,10 @@
       "type":"list",
       "member":{"shape":"HudiTarget"}
     },
+    "HyperTargetCompressionType":{
+      "type":"string",
+      "enum":["uncompressed"]
+    },
     "IAMRoleArn":{
       "type":"string",
       "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:iam::[0-9]{12}:role/.+"
@@ -10640,6 +10647,15 @@
         "Exclusions":{"shape":"PathList"},
         "MaximumTraversalDepth":{"shape":"NullableInteger"}
       }
+    },
+    "IcebergTargetCompressionType":{
+      "type":"string",
+      "enum":[
+        "gzip",
+        "lzo",
+        "uncompressed",
+        "snappy"
+      ]
     },
     "IcebergTargetList":{
       "type":"list",
@@ -12344,6 +12360,7 @@
       "type":"string",
       "box":true
     },
+    "NumberTargetPartitionsString":{"type":"string"},
     "OAuth2ClientApplication":{
       "type":"structure",
       "members":{
@@ -12644,6 +12661,8 @@
         "snappy",
         "lzo",
         "gzip",
+        "brotli",
+        "lz4",
         "uncompressed",
         "none"
       ]
@@ -13647,6 +13666,7 @@
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"DeltaTargetCompressionType"},
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "Format":{"shape":"TargetFormat"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
         "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
@@ -13689,6 +13709,7 @@
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"EnclosedInStringProperty"},
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "Format":{"shape":"TargetFormat"},
         "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
       }
@@ -13712,6 +13733,28 @@
         "SSE-S3"
       ]
     },
+    "S3ExcelSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Paths"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Paths":{"shape":"EnclosedInStringProperties"},
+        "CompressionType":{"shape":"ParquetCompressionType"},
+        "Exclusions":{"shape":"EnclosedInStringProperties"},
+        "GroupSize":{"shape":"EnclosedInStringProperty"},
+        "GroupFiles":{"shape":"EnclosedInStringProperty"},
+        "Recurse":{"shape":"BoxedBoolean"},
+        "MaxBand":{"shape":"BoxedNonNegativeInt"},
+        "MaxFilesInBand":{"shape":"BoxedNonNegativeInt"},
+        "AdditionalOptions":{"shape":"S3DirectSourceAdditionalOptions"},
+        "NumberRows":{"shape":"BoxedLong"},
+        "SkipFooter":{"shape":"BoxedNonNegativeInt"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "S3GlueParquetTarget":{
       "type":"structure",
       "required":[
@@ -13725,6 +13768,7 @@
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"ParquetCompressionType"},
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
       }
     },
@@ -13762,6 +13806,7 @@
         "Inputs":{"shape":"OneInput"},
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"HudiTargetCompressionType"},
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Format":{"shape":"TargetFormat"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
@@ -13780,6 +13825,43 @@
         "AdditionalHudiOptions":{"shape":"AdditionalOptions"},
         "AdditionalOptions":{"shape":"S3DirectSourceAdditionalOptions"},
         "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "S3HyperDirectTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Path"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Path":{"shape":"EnclosedInStringProperty"},
+        "Compression":{"shape":"HyperTargetCompressionType"},
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+      }
+    },
+    "S3IcebergDirectTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Path",
+        "Format",
+        "Compression"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Path":{"shape":"EnclosedInStringProperty"},
+        "Format":{"shape":"TargetFormat"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "Compression":{"shape":"IcebergTargetCompressionType"},
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"}
       }
     },
     "S3JsonSource":{
@@ -15216,7 +15298,10 @@
         "orc",
         "parquet",
         "hudi",
-        "delta"
+        "delta",
+        "iceberg",
+        "hyper",
+        "xml"
       ]
     },
     "TargetProcessingProperties":{
