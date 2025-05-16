@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.13 - 2025-05-16
 
 * `Aws\ECS` - This is an Amazon ECs documentation only release to support the change of the container exit "reason" field from 255 characters to 1024 characters.
 * `Aws\BedrockDataAutomationRuntime` - Add AssetProcessingConfiguration for video segment to InputConfiguration
