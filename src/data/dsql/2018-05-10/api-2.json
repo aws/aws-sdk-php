@@ -31,27 +31,6 @@
         {"shape":"ConflictException"}
       ]
     },
-    "CreateMultiRegionClusters":{
-      "name":"CreateMultiRegionClusters",
-      "http":{
-        "method":"POST",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"CreateMultiRegionClustersInput"},
-      "output":{"shape":"CreateMultiRegionClustersOutput"},
-      "errors":[
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ConflictException"}
-      ],
-      "deprecated":true,
-      "deprecatedMessage":"The CreateMultiRegionClusters API is deprecated. Use the CreateCluster API with multi-Region properties to create a multi-Region cluster.",
-      "deprecatedSince":"5/13/2025"
-    },
     "DeleteCluster":{
       "name":"DeleteCluster",
       "http":{
@@ -69,27 +48,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
       ],
-      "idempotent":true
-    },
-    "DeleteMultiRegionClusters":{
-      "name":"DeleteMultiRegionClusters",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"DeleteMultiRegionClustersInput"},
-      "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ConflictException"}
-      ],
-      "deprecated":true,
-      "deprecatedMessage":"The DeleteMultiRegionClusters API is deprecated. To delete a multi-Region cluster, use the DeleteCluster API instead.",
-      "deprecatedSince":"5/13/2025",
       "idempotent":true
     },
     "GetCluster":{
@@ -256,14 +214,6 @@
       "type":"list",
       "member":{"shape":"ClusterSummary"}
     },
-    "ClusterPropertyMap":{
-      "type":"map",
-      "key":{"shape":"Region"},
-      "value":{"shape":"LinkedClusterProperties"},
-      "deprecated":true,
-      "deprecatedMessage":"The CreateMultiRegionClusters API is deprecated. To create a multi-Region cluster, use the CreateCluster API with multi-Region properties instead.",
-      "deprecatedSince":"5/13/2025"
-    },
     "ClusterStatus":{
       "type":"string",
       "enum":[
@@ -334,29 +284,6 @@
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
       }
     },
-    "CreateMultiRegionClustersInput":{
-      "type":"structure",
-      "required":[
-        "linkedRegionList",
-        "witnessRegion"
-      ],
-      "members":{
-        "linkedRegionList":{"shape":"RegionList"},
-        "clusterProperties":{"shape":"ClusterPropertyMap"},
-        "witnessRegion":{"shape":"Region"},
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "CreateMultiRegionClustersOutput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{"shape":"ClusterArnList"}
-      }
-    },
     "DeleteClusterInput":{
       "type":"structure",
       "required":["identifier"],
@@ -380,37 +307,13 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "deletionProtectionEnabled":{
-          "shape":"DeletionProtectionEnabled",
-          "deprecated":true,
-          "deprecatedMessage":"The deletionProtectionEnabled field is deprecated in the DeleteCluster API. To check deletion protection status, use the GetCluster API instead.",
-          "deprecatedSince":"5/13/2025"
-        }
-      }
-    },
-    "DeleteMultiRegionClustersInput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{
-          "shape":"ClusterArnList",
-          "location":"querystring",
-          "locationName":"linked-cluster-arns"
-        },
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"client-token"
-        }
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "DeletionProtectionEnabled":{
@@ -442,18 +345,6 @@
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
-        "witnessRegion":{
-          "shape":"Region",
-          "deprecated":true,
-          "deprecatedMessage":"The witnessRegion field is deprecated. To see the witnessRegion, use multiRegionProperties.witnessRegion instead.",
-          "deprecatedSince":"5/13/2025"
-        },
-        "linkedClusterArns":{
-          "shape":"ClusterArnList",
-          "deprecated":true,
-          "deprecatedMessage":"The linkedClusterArns field is deprecated. To see the peered cluster Arns, use multiRegionProperties.cluster instead.",
-          "deprecatedSince":"5/13/2025"
-        },
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "tags":{"shape":"TagMap"}
@@ -496,16 +387,6 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
-    },
-    "LinkedClusterProperties":{
-      "type":"structure",
-      "members":{
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "tags":{"shape":"TagMap"}
-      },
-      "deprecated":true,
-      "deprecatedMessage":"The CreateMultiRegionClusters API is deprecated. To create a multi-Region cluster, use the CreateCluster API with multi-Region properties instead.",
-      "deprecatedSince":"5/13/2025"
     },
     "ListClustersInput":{
       "type":"structure",
@@ -565,13 +446,6 @@
       "type":"string",
       "max":50,
       "min":0
-    },
-    "RegionList":{
-      "type":"list",
-      "member":{"shape":"Region"},
-      "deprecated":true,
-      "deprecatedMessage":"The CreateMultiRegionClusters API is deprecated. Use the CreateCluster API with multi-Region properties to create a multi-Region cluster.",
-      "deprecatedSince":"5/13/2025"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -722,32 +596,13 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "witnessRegion":{
-          "shape":"Region",
-          "deprecated":true,
-          "deprecatedMessage":"The witnessRegion field is deprecated in the UpdateCluster API. To check witnessRegion, use the GetCluster API instead.",
-          "deprecatedSince":"5/13/2025"
-        },
-        "linkedClusterArns":{
-          "shape":"ClusterArnList",
-          "deprecated":true,
-          "deprecatedMessage":"The linkedClusterArns field is deprecated in the UpdateCluster API. To check peer cluster, use the GetCluster API instead.",
-          "deprecatedSince":"5/13/2025"
-        },
-        "deletionProtectionEnabled":{
-          "shape":"DeletionProtectionEnabled",
-          "deprecated":true,
-          "deprecatedMessage":"The deletionProtectionEnabled field is deprecated in the UpdateCluster API. To check deletion protection status, use the GetCluster API instead.",
-          "deprecatedSince":"5/13/2025"
-        }
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "ValidationException":{

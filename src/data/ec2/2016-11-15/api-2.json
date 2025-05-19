@@ -649,6 +649,15 @@
       "input":{"shape":"CreateDefaultVpcRequest"},
       "output":{"shape":"CreateDefaultVpcResult"}
     },
+    "CreateDelegateMacVolumeOwnershipTask":{
+      "name":"CreateDelegateMacVolumeOwnershipTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDelegateMacVolumeOwnershipTaskRequest"},
+      "output":{"shape":"CreateDelegateMacVolumeOwnershipTaskResult"}
+    },
     "CreateDhcpOptions":{
       "name":"CreateDhcpOptions",
       "http":{
@@ -864,6 +873,15 @@
       },
       "input":{"shape":"CreateLocalGatewayVirtualInterfaceGroupRequest"},
       "output":{"shape":"CreateLocalGatewayVirtualInterfaceGroupResult"}
+    },
+    "CreateMacSystemIntegrityProtectionModificationTask":{
+      "name":"CreateMacSystemIntegrityProtectionModificationTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateMacSystemIntegrityProtectionModificationTaskRequest"},
+      "output":{"shape":"CreateMacSystemIntegrityProtectionModificationTaskResult"}
     },
     "CreateManagedPrefixList":{
       "name":"CreateManagedPrefixList",
@@ -2859,6 +2877,15 @@
       },
       "input":{"shape":"DescribeMacHostsRequest"},
       "output":{"shape":"DescribeMacHostsResult"}
+    },
+    "DescribeMacModificationTasks":{
+      "name":"DescribeMacModificationTasks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMacModificationTasksRequest"},
+      "output":{"shape":"DescribeMacModificationTasksResult"}
     },
     "DescribeManagedPrefixLists":{
       "name":"DescribeManagedPrefixLists",
@@ -11694,6 +11721,35 @@
         }
       }
     },
+    "CreateDelegateMacVolumeOwnershipTaskRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MacCredentials"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "InstanceId":{"shape":"InstanceId"},
+        "MacCredentials":{"shape":"SensitiveMacCredentials"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateDelegateMacVolumeOwnershipTaskResult":{
+      "type":"structure",
+      "members":{
+        "MacModificationTask":{
+          "shape":"MacModificationTask",
+          "locationName":"macModificationTask"
+        }
+      }
+    },
     "CreateDhcpOptionsRequest":{
       "type":"structure",
       "required":["DhcpConfigurations"],
@@ -12476,6 +12532,37 @@
         "LocalGatewayVirtualInterface":{
           "shape":"LocalGatewayVirtualInterface",
           "locationName":"localGatewayVirtualInterface"
+        }
+      }
+    },
+    "CreateMacSystemIntegrityProtectionModificationTaskRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "MacSystemIntegrityProtectionStatus"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "DryRun":{"shape":"Boolean"},
+        "InstanceId":{"shape":"InstanceId"},
+        "MacCredentials":{"shape":"SensitiveMacCredentials"},
+        "MacSystemIntegrityProtectionConfiguration":{"shape":"MacSystemIntegrityProtectionConfigurationRequest"},
+        "MacSystemIntegrityProtectionStatus":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateMacSystemIntegrityProtectionModificationTaskResult":{
+      "type":"structure",
+      "members":{
+        "MacModificationTask":{
+          "shape":"MacModificationTask",
+          "locationName":"macModificationTask"
         }
       }
     },
@@ -18928,6 +19015,40 @@
         "MacHosts":{
           "shape":"MacHostList",
           "locationName":"macHostSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeMacModificationTasksMaxResults":{
+      "type":"integer",
+      "max":500,
+      "min":1
+    },
+    "DescribeMacModificationTasksRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MacModificationTaskIds":{
+          "shape":"MacModificationTaskIdList",
+          "locationName":"MacModificationTaskId"
+        },
+        "MaxResults":{"shape":"DescribeMacModificationTasksMaxResults"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeMacModificationTasksResult":{
+      "type":"structure",
+      "members":{
+        "MacModificationTasks":{
+          "shape":"MacModificationTaskList",
+          "locationName":"macModificationTaskSet"
         },
         "NextToken":{
           "shape":"String",
@@ -35447,12 +35568,132 @@
         "locationName":"item"
       }
     },
+    "MacModificationTask":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "locationName":"instanceId"
+        },
+        "MacModificationTaskId":{
+          "shape":"MacModificationTaskId",
+          "locationName":"macModificationTaskId"
+        },
+        "MacSystemIntegrityProtectionConfig":{
+          "shape":"MacSystemIntegrityProtectionConfiguration",
+          "locationName":"macSystemIntegrityProtectionConfig"
+        },
+        "StartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startTime"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "TaskState":{
+          "shape":"MacModificationTaskState",
+          "locationName":"taskState"
+        },
+        "TaskType":{
+          "shape":"MacModificationTaskType",
+          "locationName":"taskType"
+        }
+      }
+    },
+    "MacModificationTaskId":{"type":"string"},
+    "MacModificationTaskIdList":{
+      "type":"list",
+      "member":{
+        "shape":"MacModificationTaskId",
+        "locationName":"item"
+      }
+    },
+    "MacModificationTaskList":{
+      "type":"list",
+      "member":{
+        "shape":"MacModificationTask",
+        "locationName":"item"
+      }
+    },
+    "MacModificationTaskState":{
+      "type":"string",
+      "enum":[
+        "successful",
+        "failed",
+        "in-progress",
+        "pending"
+      ]
+    },
+    "MacModificationTaskType":{
+      "type":"string",
+      "enum":[
+        "sip-modification",
+        "volume-ownership-delegation"
+      ]
+    },
     "MacOSVersionStringList":{
       "type":"list",
       "member":{
         "shape":"String",
         "locationName":"item"
       }
+    },
+    "MacSystemIntegrityProtectionConfiguration":{
+      "type":"structure",
+      "members":{
+        "AppleInternal":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"appleInternal"
+        },
+        "BaseSystem":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"baseSystem"
+        },
+        "DebuggingRestrictions":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"debuggingRestrictions"
+        },
+        "DTraceRestrictions":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"dTraceRestrictions"
+        },
+        "FilesystemProtections":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"filesystemProtections"
+        },
+        "KextSigning":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"kextSigning"
+        },
+        "NvramProtections":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"nvramProtections"
+        },
+        "Status":{
+          "shape":"MacSystemIntegrityProtectionSettingStatus",
+          "locationName":"status"
+        }
+      }
+    },
+    "MacSystemIntegrityProtectionConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "AppleInternal":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "BaseSystem":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "DebuggingRestrictions":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "DTraceRestrictions":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "FilesystemProtections":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "KextSigning":{"shape":"MacSystemIntegrityProtectionSettingStatus"},
+        "NvramProtections":{"shape":"MacSystemIntegrityProtectionSettingStatus"}
+      }
+    },
+    "MacSystemIntegrityProtectionSettingStatus":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "MaintenanceDetails":{
       "type":"structure",
@@ -42832,7 +43073,8 @@
         "ipam-resource-discovery-association",
         "instance-connect-endpoint",
         "verified-access-endpoint-target",
-        "ipam-external-resource-verification-token"
+        "ipam-external-resource-verification-token",
+        "mac-modification-task"
       ]
     },
     "ResponseError":{
@@ -45012,6 +45254,10 @@
         "InstanceId":{"shape":"InstanceId"},
         "DryRun":{"shape":"Boolean"}
       }
+    },
+    "SensitiveMacCredentials":{
+      "type":"string",
+      "sensitive":true
     },
     "SensitiveUrl":{
       "type":"string",

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaPackageV2` - This release adds support for DVB-DASH, EBU-TT-D subtitle format, and non-compacted manifests for DASH in MediaPackage v2 Origin Endpoints.
+* `Aws\EC2` - This release includes new APIs for System Integrity Protection (SIP) configuration and automated root volume ownership delegation for EC2 Mac instances.
+* `Aws\DSQL` - CreateMultiRegionCluster and DeleteMultiRegionCluster APIs removed
+
 ## 3.343.13 - 2025-05-16
 
 * `Aws\ECS` - This is an Amazon ECs documentation only release to support the change of the container exit "reason" field from 255 characters to 1024 characters.

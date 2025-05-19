@@ -73,6 +73,7 @@
     "CreateCustomerGateway": "<p>Provides information to Amazon Web Services about your customer gateway device. The customer gateway device is the appliance at your end of the VPN connection. You must provide the IP address of the customer gateway device’s external interface. The IP address must be static and can be behind a device performing network address translation (NAT).</p> <p>For devices that use Border Gateway Protocol (BGP), you can also provide the device's BGP Autonomous System Number (ASN). You can use an existing ASN assigned to your network. If you don't have an ASN already, you can use a private ASN. For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/s2svpn/cgw-options.html\">Customer gateway options for your Site-to-Site VPN connection</a> in the <i>Amazon Web Services Site-to-Site VPN User Guide</i>.</p> <p>To create more than one customer gateway with the same VPN type, IP address, and BGP ASN, specify a unique device name for each customer gateway. An identical request returns information about the existing customer gateway; it doesn't create a new customer gateway.</p>",
     "CreateDefaultSubnet": "<p>Creates a default subnet with a size <code>/20</code> IPv4 CIDR block in the specified Availability Zone in your default VPC. You can have only one default subnet per Availability Zone. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/work-with-default-vpc.html#create-default-subnet\">Create a default subnet</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateDefaultVpc": "<p>Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html\">Default VPCs</a> in the <i>Amazon VPC User Guide</i>. You cannot specify the components of the default VPC yourself.</p> <p>If you deleted your previous default VPC, you can create a default VPC. You cannot have more than one default VPC per Region.</p>",
+    "CreateDelegateMacVolumeOwnershipTask": "<p>Delegates ownership of the Amazon EBS root volume for an Apple silicon Mac instance to an administrative user.</p>",
     "CreateDhcpOptions": "<p>Creates a custom set of DHCP options. After you create a DHCP option set, you associate it with a VPC. After you associate a DHCP option set with a VPC, all existing and newly launched instances in the VPC use this set of DHCP options.</p> <p>The following are the individual DHCP options you can specify. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html\">DHCP option sets</a> in the <i>Amazon VPC User Guide</i>.</p> <ul> <li> <p> <code>domain-name</code> - If you're using AmazonProvidedDNS in <code>us-east-1</code>, specify <code>ec2.internal</code>. If you're using AmazonProvidedDNS in any other Region, specify <code>region.compute.internal</code>. Otherwise, specify a custom domain name. This value is used to complete unqualified DNS hostnames.</p> <p>Some Linux operating systems accept multiple domain names separated by spaces. However, Windows and other Linux operating systems treat the value as a single domain, which results in unexpected behavior. If your DHCP option set is associated with a VPC that has instances running operating systems that treat the value as a single domain, specify only one domain name.</p> </li> <li> <p> <code>domain-name-servers</code> - The IP addresses of up to four DNS servers, or AmazonProvidedDNS. To specify multiple domain name servers in a single parameter, separate the IP addresses using commas. To have your instances receive custom DNS hostnames as specified in <code>domain-name</code>, you must specify a custom DNS server.</p> </li> <li> <p> <code>ntp-servers</code> - The IP addresses of up to eight Network Time Protocol (NTP) servers (four IPv4 addresses and four IPv6 addresses).</p> </li> <li> <p> <code>netbios-name-servers</code> - The IP addresses of up to four NetBIOS name servers.</p> </li> <li> <p> <code>netbios-node-type</code> - The NetBIOS node type (1, 2, 4, or 8). We recommend that you specify 2. Broadcast and multicast are not supported. For more information about NetBIOS node types, see <a href=\"https://www.ietf.org/rfc/rfc2132.txt\">RFC 2132</a>.</p> </li> <li> <p> <code>ipv6-address-preferred-lease-time</code> - A value (in seconds, minutes, hours, or years) for how frequently a running instance with an IPv6 assigned to it goes through DHCPv6 lease renewal. Acceptable values are between 140 and 2147483647 seconds (approximately 68 years). If no value is entered, the default lease time is 140 seconds. If you use long-term addressing for EC2 instances, you can increase the lease time and avoid frequent lease renewal requests. Lease renewal typically occurs when half of the lease time has elapsed.</p> </li> </ul>",
     "CreateEgressOnlyInternetGateway": "<p>[IPv6 only] Creates an egress-only internet gateway for your VPC. An egress-only internet gateway is used to enable outbound communication over IPv6 from instances in your VPC to the internet, and prevents hosts outside of your VPC from initiating an IPv6 connection with your instance.</p>",
     "CreateFleet": "<p>Creates an EC2 Fleet that contains the configuration information for On-Demand Instances and Spot Instances. Instances are launched immediately if there is available capacity.</p> <p>A single EC2 Fleet can include multiple launch specifications that vary by instance type, AMI, Availability Zone, or subnet.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet.html\">EC2 Fleet</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -97,6 +98,7 @@
     "CreateLocalGatewayRouteTableVpcAssociation": "<p>Associates the specified VPC with the specified local gateway route table.</p>",
     "CreateLocalGatewayVirtualInterface": "<p>Create a virtual interface for a local gateway. </p>",
     "CreateLocalGatewayVirtualInterfaceGroup": "<p>Create a local gateway virtual interface group.</p>",
+    "CreateMacSystemIntegrityProtectionModificationTask": "<p>Creates a System Integrity Protection (SIP) modification task to configure the SIP settings for an x86 Mac instance or Apple silicon Mac instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mac-sip-settings.html#mac-sip-configure\"> Configure SIP for Amazon EC2 instances</a> in the <i>Amazon EC2 User Guide</i>.</p> <p>When you configure the SIP settings for your instance, you can either enable or disable all SIP settings, or you can specify a custom SIP configuration that selectively enables or disables specific SIP settings.</p> <note> <p>If you implement a custom configuration, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mac-sip-settings.html#mac-sip-check-settings\"> connect to the instance and verify the settings</a> to ensure that your requirements are properly implemented and functioning as intended.</p> <p>SIP configurations might change with macOS updates. We recommend that you review custom SIP settings after any macOS version upgrade to ensure continued compatibility and proper functionality of your security configurations.</p> </note> <p>To enable or disable all SIP settings, use the <b>MacSystemIntegrityProtectionStatus</b> parameter only. For example, to enable all SIP settings, specify the following:</p> <ul> <li> <p> <code>MacSystemIntegrityProtectionStatus=enabled</code> </p> </li> </ul> <p>To specify a custom configuration that selectively enables or disables specific SIP settings, use the <b>MacSystemIntegrityProtectionStatus</b> parameter to enable or disable all SIP settings, and then use the <b>MacSystemIntegrityProtectionConfiguration</b> parameter to specify exceptions. In this case, the exceptions you specify for <b>MacSystemIntegrityProtectionConfiguration</b> override the value you specify for <b>MacSystemIntegrityProtectionStatus</b>. For example, to enable all SIP settings, except <code>NvramProtections</code>, specify the following:</p> <ul> <li> <p> <code>MacSystemIntegrityProtectionStatus=enabled</code> </p> </li> <li> <p> <code>MacSystemIntegrityProtectionConfigurationRequest \"NvramProtections=disabled\"</code> </p> </li> </ul>",
     "CreateManagedPrefixList": "<p>Creates a managed prefix list. You can specify entries for the prefix list. Each entry consists of a CIDR block and an optional description.</p>",
     "CreateNatGateway": "<p>Creates a NAT gateway in the specified subnet. This action creates a network interface in the specified subnet with a private IP address from the IP address range of the subnet. You can create either a public NAT gateway or a private NAT gateway.</p> <p>With a public NAT gateway, internet-bound traffic from a private subnet can be routed to the NAT gateway, so that instances in a private subnet can connect to the internet.</p> <p>With a private NAT gateway, private communication is routed across VPCs and on-premises networks through a transit gateway or virtual private gateway. Common use cases include running large workloads behind a small pool of allowlisted IPv4 addresses, preserving private IPv4 addresses, and communicating between overlapping networks.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html\">NAT gateways</a> in the <i>Amazon VPC User Guide</i>.</p> <important> <p>When you create a public NAT gateway and assign it an EIP or secondary EIPs, the network border group of the EIPs must match the network border group of the Availability Zone (AZ) that the public NAT gateway is in. If it's not the same, the NAT gateway will fail to launch. You can see the network border group for the subnet's AZ by viewing the details of the subnet. Similarly, you can view the network border group of an EIP by viewing the details of the EIP address. For more information about network border groups and EIPs, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithEIPs.html\">Allocate an Elastic IP address</a> in the <i>Amazon VPC User Guide</i>. </p> </important>",
     "CreateNetworkAcl": "<p>Creates a network ACL in a VPC. Network ACLs provide an optional layer of security (in addition to security groups) for the instances in your VPC.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html\">Network ACLs</a> in the <i>Amazon VPC User Guide</i>.</p>",
@@ -287,7 +289,7 @@
     "DescribeIdFormat": "<p>Describes the ID format settings for your resources on a per-Region basis, for example, to view which resource types are enabled for longer IDs. This request only returns information about resource types whose ID formats can be modified; it does not return information about other resource types.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p> <p>These settings apply to the IAM user who makes the request; they do not apply to the entire Amazon Web Services account. By default, an IAM user defaults to the same settings as the root user, unless they explicitly override the settings by running the <a>ModifyIdFormat</a> command. Resources created with longer IDs are visible to all IAM users, regardless of these settings and provided that they have permission to use the relevant <code>Describe</code> command for the resource type.</p>",
     "DescribeIdentityIdFormat": "<p>Describes the ID format settings for resources for the specified IAM user, IAM role, or root user. For example, you can view the resource types that are enabled for longer IDs. This request only returns information about resource types whose ID formats can be modified; it does not return information about other resource types. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html\">Resource IDs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p> <p>These settings apply to the principal specified in the request. They do not apply to the principal that makes the request.</p>",
     "DescribeImageAttribute": "<p>Describes the specified attribute of the specified AMI. You can specify only one attribute at a time.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
-    "DescribeImages": "<p>Describes the specified images (AMIs, AKIs, and ARIs) available to you or all of the images available to you.</p> <p>The images available to you include public images, private images that you own, and private images owned by other Amazon Web Services accounts for which you have explicit launch permissions.</p> <p>Recently deregistered images appear in the returned results for a short interval and then return empty results. After all instances that reference a deregistered AMI are terminated, specifying the ID of the image will eventually return an error indicating that the AMI ID cannot be found.</p> <p>When Allowed AMIs is set to <code>enabled</code>, only allowed images are returned in the results, with the <code>imageAllowed</code> field set to <code>true</code> for each image. In <code>audit-mode</code>, the <code>imageAllowed</code> field is set to <code>true</code> for images that meet the account's Allowed AMIs criteria, and <code>false</code> for images that don't meet the criteria. For more information, see <a>EnableAllowedImagesSettings</a>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
+    "DescribeImages": "<p>Describes the specified images (AMIs, AKIs, and ARIs) available to you or all of the images available to you.</p> <p>The images available to you include public images, private images that you own, and private images owned by other Amazon Web Services accounts for which you have explicit launch permissions.</p> <p>Recently deregistered images appear in the returned results for a short interval and then return empty results. After all instances that reference a deregistered AMI are terminated, specifying the ID of the image will eventually return an error indicating that the AMI ID cannot be found.</p> <p>When Allowed AMIs is set to <code>enabled</code>, only allowed images are returned in the results, with the <code>imageAllowed</code> field set to <code>true</code> for each image. In <code>audit-mode</code>, the <code>imageAllowed</code> field is set to <code>true</code> for images that meet the account's Allowed AMIs criteria, and <code>false</code> for images that don't meet the criteria. For more information, see <a>EnableAllowedImagesSettings</a>.</p> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeImportImageTasks": "<p>Displays details about an import virtual machine or import snapshot tasks that are already created.</p>",
     "DescribeImportSnapshotTasks": "<p>Describes your import snapshot tasks.</p>",
     "DescribeInstanceAttribute": "<p>Describes the specified attribute of the specified instance. You can specify only one attribute at a time. </p>",
@@ -321,6 +323,7 @@
     "DescribeLocalGateways": "<p>Describes one or more local gateways. By default, all local gateways are described. Alternatively, you can filter the results.</p>",
     "DescribeLockedSnapshots": "<p>Describes the lock status for a snapshot.</p>",
     "DescribeMacHosts": "<p>Describes the specified EC2 Mac Dedicated Host or all of your EC2 Mac Dedicated Hosts.</p>",
+    "DescribeMacModificationTasks": "<p>Describes a System Integrity Protection (SIP) modification task or volume ownership delegation task for an Amazon EC2 Mac instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mac-sip-settings.html#mac-sip-configure\">Configure SIP for Amazon EC2 instances</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeManagedPrefixLists": "<p>Describes your managed prefix lists and any Amazon Web Services-managed prefix lists.</p> <p>To view the entries for your prefix list, use <a>GetManagedPrefixListEntries</a>.</p>",
     "DescribeMovingAddresses": "<note> <p>This action is deprecated.</p> </note> <p>Describes your Elastic IP addresses that are being moved from or being restored to the EC2-Classic platform. This request does not return information about any other Elastic IP addresses in your account.</p>",
     "DescribeNatGateways": "<p>Describes your NAT gateways. The default is to describe all your NAT gateways. Alternatively, you can specify specific NAT gateway IDs or filter the results to include only the NAT gateways that match specific criteria.</p>",
@@ -332,7 +335,7 @@
     "DescribeNetworkInterfaceAttribute": "<p>Describes a network interface attribute. You can specify only one attribute at a time.</p>",
     "DescribeNetworkInterfacePermissions": "<p>Describes the permissions for your network interfaces. </p>",
     "DescribeNetworkInterfaces": "<p>Describes the specified network interfaces or all your network interfaces.</p> <p>If you have a large number of network interfaces, the operation fails unless you use pagination or one of the following filters: <code>group-id</code>, <code>mac-address</code>, <code>private-dns-name</code>, <code>private-ip-address</code>, <code>subnet-id</code>, or <code>vpc-id</code>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important>",
-    "DescribeOutpostLags": "<p>Describes the Outposts link aggregation groups (LAGs).</p>",
+    "DescribeOutpostLags": "<p>Describes the Outposts link aggregation groups (LAGs).</p> <note> <p>LAGs are only available for second-generation Outposts racks at this time.</p> </note>",
     "DescribePlacementGroups": "<p>Describes the specified placement groups or all of your placement groups.</p> <note> <p>To describe a specific placement group that is <i>shared</i> with your account, you must specify the ID of the placement group using the <code>GroupId</code> parameter. Specifying the name of a <i>shared</i> placement group using the <code>GroupNames</code> parameter will result in an error.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribePrefixLists": "<p>Describes available Amazon Web Services services in a prefix list format, which includes the prefix list name and prefix list ID of the service and the IP address range for the service.</p> <p>We recommend that you use <a>DescribeManagedPrefixLists</a> instead.</p>",
     "DescribePrincipalIdFormat": "<p>Describes the ID format settings for the root user and all IAM roles and IAM users that have explicitly specified a longer ID (17-character ID) preference. </p> <p>By default, all IAM roles and IAM users default to the same ID settings as the root user, unless they explicitly override the settings. This request is useful for identifying those IAM users and IAM roles that have overridden the default ID settings.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p>",
@@ -2278,6 +2281,7 @@
         "CreateDefaultSubnetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateDefaultSubnetRequest$Ipv6Native": "<p>Indicates whether to create an IPv6 only subnet. If you already have a default subnet for this Availability Zone, you must delete it before you can create an IPv6 only subnet.</p>",
         "CreateDefaultVpcRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateDelegateMacVolumeOwnershipTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateDhcpOptionsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateEgressOnlyInternetGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateFleetRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2309,6 +2313,7 @@
         "CreateLocalGatewayRouteTableVpcAssociationRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateLocalGatewayVirtualInterfaceGroupRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateLocalGatewayVirtualInterfaceRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateManagedPrefixListRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNatGatewayRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateNetworkAclEntryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2557,6 +2562,7 @@
         "DescribeLocalGatewayVirtualInterfacesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeLocalGatewaysRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeLockedSnapshotsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeMacModificationTasksRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeManagedPrefixListsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeMovingAddressesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeNatGatewaysRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -4635,6 +4641,16 @@
       "refs": {
       }
     },
+    "CreateDelegateMacVolumeOwnershipTaskRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateDelegateMacVolumeOwnershipTaskResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateDhcpOptionsRequest": {
       "base": null,
       "refs": {
@@ -4890,6 +4906,16 @@
       }
     },
     "CreateLocalGatewayVirtualInterfaceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMacSystemIntegrityProtectionModificationTaskRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateMacSystemIntegrityProtectionModificationTaskResult": {
       "base": null,
       "refs": {
       }
@@ -7772,6 +7798,22 @@
       "refs": {
       }
     },
+    "DescribeMacModificationTasksMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeMacModificationTasksRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500. If <code>maxResults</code> is given a larger value than 500, you receive an error.</p>"
+      }
+    },
+    "DescribeMacModificationTasksRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeMacModificationTasksResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeManagedPrefixListsRequest": {
       "base": null,
       "refs": {
@@ -10517,6 +10559,7 @@
         "DescribeLocalGatewaysRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>local-gateway-id</code> - The ID of a local gateway.</p> </li> <li> <p> <code>outpost-arn</code> - The Amazon Resource Name (ARN) of the Outpost.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the local gateway.</p> </li> <li> <p> <code>state</code> - The state of the association.</p> </li> </ul>",
         "DescribeLockedSnapshotsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>lock-state</code> - The state of the snapshot lock (<code>compliance-cooloff</code> | <code>governance</code> | <code>compliance</code> | <code>expired</code>).</p> </li> </ul>",
         "DescribeMacHostsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the EC2 Mac Dedicated Host.</p> </li> <li> <p> <code>instance-type</code> - The instance type size that the EC2 Mac Dedicated Host is configured to support.</p> </li> </ul>",
+        "DescribeMacModificationTasksRequest$Filters": "<p>Specifies one or more filters for the request:</p> <ul> <li> <p> <code>instance-id</code> - The ID of the instance for which the task was created.</p> </li> <li> <p> <code>task-state</code> - The state of the task (<code>successful</code> | <code>failed</code> | <code>in-progress</code> | <code>pending</code>).</p> </li> <li> <p> <code>mac-system-integrity-protection-configuration.sip-status</code> - The overall SIP state requested in the task (<code>enabled</code> | <code>disabled</code>).</p> </li> <li> <p> <code>start-time</code> - The date and time the task was created.</p> </li> <li> <p> <code>task-type</code> - The type of task (<code>sip-modification</code> | <code>volume-ownership-delegation</code>).</p> </li> </ul>",
         "DescribeManagedPrefixListsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>owner-id</code> - The ID of the prefix list owner.</p> </li> <li> <p> <code>prefix-list-id</code> - The ID of the prefix list.</p> </li> <li> <p> <code>prefix-list-name</code> - The name of the prefix list.</p> </li> </ul>",
         "DescribeMovingAddressesRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>moving-status</code> - The status of the Elastic IP address (<code>MovingToVpc</code> | <code>RestoringToClassic</code>).</p> </li> </ul>",
         "DescribeNatGatewaysRequest$Filter": "<p>The filters.</p> <ul> <li> <p> <code>nat-gateway-id</code> - The ID of the NAT gateway.</p> </li> <li> <p> <code>state</code> - The state of the NAT gateway (<code>pending</code> | <code>failed</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code>).</p> </li> <li> <p> <code>subnet-id</code> - The ID of the subnet in which the NAT gateway resides.</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC in which the NAT gateway resides.</p> </li> </ul>",
@@ -12718,8 +12761,10 @@
         "AttachVolumeRequest$InstanceId": "<p>The ID of the instance.</p>",
         "BundleInstanceRequest$InstanceId": "<p>The ID of the instance to bundle.</p> <p>Default: None</p>",
         "ConfirmProductInstanceRequest$InstanceId": "<p>The ID of the instance.</p>",
+        "CreateDelegateMacVolumeOwnershipTaskRequest$InstanceId": "<p>The ID of the Amazon EC2 Mac instance.</p>",
         "CreateImageRequest$InstanceId": "<p>The ID of the instance.</p>",
         "CreateInstanceExportTaskRequest$InstanceId": "<p>The ID of the instance.</p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$InstanceId": "<p>The ID of the Amazon EC2 Mac instance.</p>",
         "CreateReplaceRootVolumeTaskRequest$InstanceId": "<p>The ID of the instance for which to replace the root volume.</p>",
         "CreateRouteRequest$InstanceId": "<p>The ID of a NAT instance in your VPC. The operation fails if you specify an instance ID unless exactly one network interface is attached.</p>",
         "DescribeInstanceAttributeRequest$InstanceId": "<p>The ID of the instance.</p>",
@@ -12739,6 +12784,7 @@
         "InstanceIdStringList$member": null,
         "InstanceIdsSet$member": null,
         "InstanceImageMetadata$InstanceId": "<p>The ID of the instance.</p>",
+        "MacModificationTask$InstanceId": "<p>The ID of the Amazon EC2 Mac instance.</p>",
         "ModifyInstanceAttributeRequest$InstanceId": "<p>The ID of the instance.</p>",
         "ModifyInstanceCapacityReservationAttributesRequest$InstanceId": "<p>The ID of the instance to be modified.</p>",
         "ModifyInstanceCpuOptionsRequest$InstanceId": "<p>The ID of the instance to update.</p>",
@@ -15747,7 +15793,7 @@
     "Long": {
       "base": null,
       "refs": {
-        "CopyImageRequest$SnapshotCopyCompletionDurationMinutes": "<p>Specify a completion duration, in 15 minute increments, to initiate a time-based AMI copy. The specified completion duration applies to each of the snapshots associated with the AMI. Each snapshot associated with the AMI will be completed within the specified completion duration, regardless of their size.</p> <p>If you do not specify a value, the AMI copy operation is completed on a best-effort basis.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html\"> Time-based copies</a>.</p>",
+        "CopyImageRequest$SnapshotCopyCompletionDurationMinutes": "<p>Specify a completion duration, in 15 minute increments, to initiate a time-based AMI copy. The specified completion duration applies to each of the snapshots associated with the AMI. Each snapshot associated with the AMI will be completed within the specified completion duration, with copy throughput automatically adjusted for each snapshot based on its size to meet the timing target.</p> <p>If you do not specify a value, the AMI copy operation is completed on a best-effort basis.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html\"> Time-based copies</a>.</p>",
         "CreateCustomerGatewayRequest$BgpAsnExtended": "<p>For customer gateway devices that support BGP, specify the device's ASN. You must specify either <code>BgpAsn</code> or <code>BgpAsnExtended</code> when creating the customer gateway. If the ASN is larger than <code>2,147,483,647</code>, you must use <code>BgpAsnExtended</code>.</p> <p>Valid values: <code>2,147,483,648</code> to <code>4,294,967,295</code> </p>",
         "CreateLocalGatewayVirtualInterfaceGroupRequest$LocalBgpAsnExtended": "<p>The extended 32-bit ASN for the local BGP configuration.</p>",
         "CreateLocalGatewayVirtualInterfaceRequest$PeerBgpAsnExtended": "<p>The extended 32-bit ASN of the BGP peer for use with larger ASN values.</p>",
@@ -15805,10 +15851,82 @@
         "DescribeMacHostsResult$MacHosts": "<p> Information about the EC2 Mac Dedicated Hosts. </p>"
       }
     },
+    "MacModificationTask": {
+      "base": "<p>Information about a System Integrity Protection (SIP) modification task or volume ownership delegation task for an Amazon EC2 Mac instance.</p>",
+      "refs": {
+        "CreateDelegateMacVolumeOwnershipTaskResult$MacModificationTask": "<p>Information about the volume ownership delegation task.</p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskResult$MacModificationTask": "<p>Information about the SIP modification task.</p>",
+        "MacModificationTaskList$member": null
+      }
+    },
+    "MacModificationTaskId": {
+      "base": null,
+      "refs": {
+        "MacModificationTask$MacModificationTaskId": "<p>The ID of task.</p>",
+        "MacModificationTaskIdList$member": null
+      }
+    },
+    "MacModificationTaskIdList": {
+      "base": null,
+      "refs": {
+        "DescribeMacModificationTasksRequest$MacModificationTaskIds": "<p>The ID of task.</p>"
+      }
+    },
+    "MacModificationTaskList": {
+      "base": null,
+      "refs": {
+        "DescribeMacModificationTasksResult$MacModificationTasks": "<p>Information about the tasks.</p>"
+      }
+    },
+    "MacModificationTaskState": {
+      "base": null,
+      "refs": {
+        "MacModificationTask$TaskState": "<p>The state of the task.</p>"
+      }
+    },
+    "MacModificationTaskType": {
+      "base": null,
+      "refs": {
+        "MacModificationTask$TaskType": "<p>The type of task.</p>"
+      }
+    },
     "MacOSVersionStringList": {
       "base": null,
       "refs": {
         "MacHost$MacOSLatestSupportedVersions": "<p> The latest macOS versions that the EC2 Mac Dedicated Host can launch without being upgraded. </p>"
+      }
+    },
+    "MacSystemIntegrityProtectionConfiguration": {
+      "base": "<p>Describes the configuration for a System Integrity Protection (SIP) modification task.</p>",
+      "refs": {
+        "MacModificationTask$MacSystemIntegrityProtectionConfig": "<p>[SIP modification tasks only] Information about the SIP configuration.</p>"
+      }
+    },
+    "MacSystemIntegrityProtectionConfigurationRequest": {
+      "base": "<p>Describes a custom configuration for a System Integrity Protection (SIP) modification task.</p>",
+      "refs": {
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$MacSystemIntegrityProtectionConfiguration": "<p>Specifies the overrides to selectively enable or disable individual SIP settings. The individual settings you specify here override the overall SIP status you specify for <b>MacSystemIntegrityProtectionStatus</b>.</p>"
+      }
+    },
+    "MacSystemIntegrityProtectionSettingStatus": {
+      "base": null,
+      "refs": {
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$MacSystemIntegrityProtectionStatus": "<p>Specifies the overall SIP status for the instance. To enable all SIP settings, specify <code>enabled</code>. To disable all SIP settings, specify <code>disabled</code>.</p>",
+        "MacSystemIntegrityProtectionConfiguration$AppleInternal": "<p>Indicates whether Apple Internal was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$BaseSystem": "<p>Indicates whether Base System was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$DebuggingRestrictions": "<p>Indicates whether Debugging Restrictions was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$DTraceRestrictions": "<p>Indicates whether Dtrace Restrictions was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$FilesystemProtections": "<p>Indicates whether Filesystem Protections was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$KextSigning": "<p>Indicates whether Kext Signing was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$NvramProtections": "<p>Indicates whether NVRAM Protections was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfiguration$Status": "<p>Indicates SIP was enabled or disabled by the task.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$AppleInternal": "<p>Enables or disables Apple Internal.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$BaseSystem": "<p>Enables or disables Base System.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$DebuggingRestrictions": "<p>Enables or disables Debugging Restrictions.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$DTraceRestrictions": "<p>Enables or disables Dtrace Restrictions.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$FilesystemProtections": "<p>Enables or disables Filesystem Protections.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$KextSigning": "<p>Enables or disables Kext Signing.</p>",
+        "MacSystemIntegrityProtectionConfigurationRequest$NvramProtections": "<p>Enables or disables Nvram Protections.</p>"
       }
     },
     "MaintenanceDetails": {
@@ -16127,6 +16245,7 @@
         "LockedSnapshotsInfo$LockCreatedOn": "<p>The date and time at which the snapshot was locked, in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "LockedSnapshotsInfo$LockDurationStartTime": "<p>The date and time at which the lock duration started, in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p> <p>If you lock a snapshot that is in the <code>pending</code> state, the lock duration starts only once the snapshot enters the <code>completed</code> state.</p>",
         "LockedSnapshotsInfo$LockExpiresOn": "<p>The date and time at which the lock will expire, in the UTC time zone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
+        "MacModificationTask$StartTime": "<p>The date and time the task was created, in the UTC timezone (<code>YYYY-MM-DDThh:mm:ss.sssZ</code>).</p>",
         "MaintenanceDetails$MaintenanceAutoAppliedAfter": "<p>The timestamp after which Amazon Web Services will automatically apply maintenance.</p>",
         "MaintenanceDetails$LastMaintenanceApplied": "<p>Timestamp of last applied maintenance.</p>",
         "MetricPoint$StartDate": "<p>The start date for the metric point. The starting date for the metric point. The starting time must be formatted as <code>yyyy-mm-ddThh:mm:ss</code>. For example, <code>2022-06-10T12:00:00.000Z</code>.</p>",
@@ -20749,6 +20868,13 @@
       "refs": {
       }
     },
+    "SensitiveMacCredentials": {
+      "base": null,
+      "refs": {
+        "CreateDelegateMacVolumeOwnershipTaskRequest$MacCredentials": "<p>Specifies the following credentials:</p> <ul> <li> <p> <b>Internal disk administrative user</b> </p> <ul> <li> <p> <b>Username</b> - Only the default administrative user (<code>aws-managed-user</code>) is supported and it is used by default. You can't specify a different administrative user.</p> </li> <li> <p> <b>Password</b> - If you did not change the default password for <code>aws-managed-user</code>, specify the default password, which is <i>blank</i>. Otherwise, specify your password.</p> </li> </ul> </li> <li> <p> <b>Amazon EBS root volume administrative user</b> </p> <ul> <li> <p> <b>Username</b> - If you did not change the default administrative user, specify <code>ec2-user</code>. Otherwise, specify the username for your administrative user.</p> </li> <li> <p> <b>Password</b> - Specify the password for the administrative user.</p> </li> </ul> </li> </ul> <p>The credentials must be specified in the following JSON format:</p> <p> <code>{ \"internalDiskPassword\":\"<i>internal-disk-admin_password</i>\", \"rootVolumeUsername\":\"<i>root-volume-admin_username</i>\", \"rootVolumepassword\":\"<i>root-volume-admin_password</i>\" }</code> </p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$MacCredentials": "<p> <b>[Apple silicon Mac instances only]</b> Specifies the following credentials:</p> <ul> <li> <p> <b>Internal disk administrative user</b> </p> <ul> <li> <p> <b>Username</b> - Only the default administrative user (<code>aws-managed-user</code>) is supported and it is used by default. You can't specify a different administrative user.</p> </li> <li> <p> <b>Password</b> - If you did not change the default password for <code>aws-managed-user</code>, specify the default password, which is <i>blank</i>. Otherwise, specify your password.</p> </li> </ul> </li> <li> <p> <b>Amazon EBS root volume administrative user</b> </p> <ul> <li> <p> <b>Username</b> - If you did not change the default administrative user, specify <code>ec2-user</code>. Otherwise, specify the username for your administrative user.</p> </li> <li> <p> <b>Password</b> - Specify the password for the administrative user.</p> </li> </ul> </li> </ul> <p>The credentials must be specified in the following JSON format:</p> <p> <code>{ \"internalDiskPassword\":\"<i>internal-disk-admin_password</i>\", \"rootVolumeUsername\":\"<i>root-volume-admin_username</i>\", \"rootVolumepassword\":\"<i>root-volume-admin_password</i>\" }</code> </p>"
+      }
+    },
     "SensitiveUrl": {
       "base": null,
       "refs": {
@@ -21754,6 +21880,7 @@
         "CreateCustomerGatewayRequest$CertificateArn": "<p>The Amazon Resource Name (ARN) for the customer gateway certificate.</p>",
         "CreateCustomerGatewayRequest$DeviceName": "<p>A name for the customer gateway device.</p> <p>Length Constraints: Up to 255 characters.</p>",
         "CreateCustomerGatewayRequest$IpAddress": "<p>IPv4 address for the customer gateway device's outside interface. The address must be static. If <code>OutsideIpAddressType</code> in your VPN connection options is set to <code>PrivateIpv4</code>, you can use an RFC6598 or RFC1918 private IPv4 address. If <code>OutsideIpAddressType</code> is set to <code>PublicIpv4</code>, you can use a public IPv4 address. </p>",
+        "CreateDelegateMacVolumeOwnershipTaskRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "CreateEgressOnlyInternetGatewayRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEgressOnlyInternetGatewayResult$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateFleetError$ErrorCode": "<p>The error code that indicates why the instance could not be launched. For more information about error codes, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html\">Error codes</a>.</p>",
@@ -21796,6 +21923,7 @@
         "CreateLocalGatewayRouteRequest$DestinationCidrBlock": "<p>The CIDR range used for destination matches. Routing decisions are based on the most specific match.</p>",
         "CreateLocalGatewayVirtualInterfaceRequest$LocalAddress": "<p>The IP address assigned to the local gateway virtual interface on the Outpost side. Only IPv4 is supported.</p>",
         "CreateLocalGatewayVirtualInterfaceRequest$PeerAddress": "<p>The peer IP address for the local gateway virtual interface. Only IPv4 is supported.</p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "CreateManagedPrefixListRequest$PrefixListName": "<p>A name for the prefix list.</p> <p>Constraints: Up to 255 characters in length. The name cannot start with <code>com.amazonaws</code>.</p>",
         "CreateManagedPrefixListRequest$AddressFamily": "<p>The IP address type.</p> <p>Valid Values: <code>IPv4</code> | <code>IPv6</code> </p>",
         "CreateManagedPrefixListRequest$ClientToken": "<p>Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html\">Ensuring idempotency</a>.</p> <p>Constraints: Up to 255 UTF-8 characters in length.</p>",
@@ -22076,6 +22204,8 @@
         "DescribeLockedSnapshotsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeMacHostsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "DescribeMacHostsResult$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeMacModificationTasksRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeMacModificationTasksResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeMovingAddressesRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeMovingAddressesResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeNatGatewaysRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
@@ -24099,6 +24229,7 @@
         "LocalGatewayRouteTableVpcAssociation$Tags": "<p>The tags assigned to the association.</p>",
         "LocalGatewayVirtualInterface$Tags": "<p>The tags assigned to the virtual interface.</p>",
         "LocalGatewayVirtualInterfaceGroup$Tags": "<p>The tags assigned to the virtual interface group.</p>",
+        "MacModificationTask$Tags": "<p>The tags assigned to the task.</p>",
         "ManagedPrefixList$Tags": "<p>The tags for the prefix list.</p>",
         "NatGateway$Tags": "<p>The tags for the NAT gateway.</p>",
         "NetworkAcl$Tags": "<p>Any tags assigned to the network ACL.</p>",
@@ -24188,6 +24319,7 @@
         "CreateClientVpnEndpointRequest$TagSpecifications": "<p>The tags to apply to the Client VPN endpoint during creation.</p>",
         "CreateCoipPoolRequest$TagSpecifications": "<p> The tags to assign to the CoIP address pool. </p>",
         "CreateCustomerGatewayRequest$TagSpecifications": "<p>The tags to apply to the customer gateway.</p>",
+        "CreateDelegateMacVolumeOwnershipTaskRequest$TagSpecifications": "<p>The tags to assign to the volume ownership delegation task.</p>",
         "CreateDhcpOptionsRequest$TagSpecifications": "<p>The tags to assign to the DHCP option.</p>",
         "CreateEgressOnlyInternetGatewayRequest$TagSpecifications": "<p>The tags to assign to the egress-only internet gateway.</p>",
         "CreateFleetRequest$TagSpecifications": "<p>The key-value pair for tagging the EC2 Fleet request on creation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#tag-resources\">Tag your resources</a>.</p> <p>If the fleet type is <code>instant</code>, specify a resource type of <code>fleet</code> to tag the fleet or <code>instance</code> to tag the instances at launch.</p> <p>If the fleet type is <code>maintain</code> or <code>request</code>, specify a resource type of <code>fleet</code> to tag the fleet. You cannot specify a resource type of <code>instance</code>. To tag instances at launch, specify the tags in a <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#create-launch-template\">launch template</a>.</p>",
@@ -24210,6 +24342,7 @@
         "CreateLocalGatewayRouteTableVpcAssociationRequest$TagSpecifications": "<p>The tags to assign to the local gateway route table VPC association.</p>",
         "CreateLocalGatewayVirtualInterfaceGroupRequest$TagSpecifications": "<p>The tags to apply to the local gateway virtual interface group when the resource is being created.</p>",
         "CreateLocalGatewayVirtualInterfaceRequest$TagSpecifications": "<p>The tags to apply to a resource when the local gateway virtual interface is being created. </p>",
+        "CreateMacSystemIntegrityProtectionModificationTaskRequest$TagSpecifications": "<p>Specifies tags to apply to the SIP modification task.</p>",
         "CreateManagedPrefixListRequest$TagSpecifications": "<p>The tags to apply to the prefix list during creation.</p>",
         "CreateNatGatewayRequest$TagSpecifications": "<p>The tags to assign to the NAT gateway.</p>",
         "CreateNetworkAclRequest$TagSpecifications": "<p>The tags to assign to the network ACL.</p>",

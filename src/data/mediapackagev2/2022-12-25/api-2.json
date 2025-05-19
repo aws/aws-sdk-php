@@ -795,7 +795,13 @@
         "PeriodTriggers":{"shape":"DashPeriodTriggers"},
         "ScteDash":{"shape":"ScteDash"},
         "DrmSignaling":{"shape":"DashDrmSignaling"},
-        "UtcTiming":{"shape":"DashUtcTiming"}
+        "UtcTiming":{"shape":"DashUtcTiming"},
+        "Profiles":{"shape":"DashProfiles"},
+        "BaseUrls":{"shape":"DashBaseUrls"},
+        "ProgramInformation":{"shape":"DashProgramInformation"},
+        "DvbSettings":{"shape":"DashDvbSettings"},
+        "Compactness":{"shape":"DashCompactness"},
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
       }
     },
     "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
@@ -1030,12 +1036,113 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "DashBaseUrl":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"DashBaseUrlUrlString"},
+        "ServiceLocation":{"shape":"DashBaseUrlServiceLocationString"},
+        "DvbPriority":{"shape":"DashBaseUrlDvbPriorityInteger"},
+        "DvbWeight":{"shape":"DashBaseUrlDvbWeightInteger"}
+      }
+    },
+    "DashBaseUrlDvbPriorityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
+      "min":1
+    },
+    "DashBaseUrlDvbWeightInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
+      "min":1
+    },
+    "DashBaseUrlServiceLocationString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashBaseUrlUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashBaseUrls":{
+      "type":"list",
+      "member":{"shape":"DashBaseUrl"},
+      "max":20,
+      "min":0
+    },
+    "DashCompactness":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "NONE"
+      ]
+    },
     "DashDrmSignaling":{
       "type":"string",
       "enum":[
         "INDIVIDUAL",
         "REFERENCED"
       ]
+    },
+    "DashDvbErrorMetrics":{
+      "type":"list",
+      "member":{"shape":"DashDvbMetricsReporting"},
+      "max":20,
+      "min":0
+    },
+    "DashDvbFontDownload":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"DashDvbFontDownloadUrlString"},
+        "MimeType":{"shape":"DashDvbFontDownloadMimeTypeString"},
+        "FontFamily":{"shape":"DashDvbFontDownloadFontFamilyString"}
+      }
+    },
+    "DashDvbFontDownloadFontFamilyString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DashDvbFontDownloadMimeTypeString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_/-]*[a-zA-Z0-9]"
+    },
+    "DashDvbFontDownloadUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashDvbMetricsReporting":{
+      "type":"structure",
+      "required":["ReportingUrl"],
+      "members":{
+        "ReportingUrl":{"shape":"DashDvbMetricsReportingReportingUrlString"},
+        "Probability":{"shape":"DashDvbMetricsReportingProbabilityInteger"}
+      }
+    },
+    "DashDvbMetricsReportingProbabilityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "DashDvbMetricsReportingReportingUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashDvbSettings":{
+      "type":"structure",
+      "members":{
+        "FontDownload":{"shape":"DashDvbFontDownload"},
+        "ErrorMetrics":{"shape":"DashDvbErrorMetrics"}
+      }
     },
     "DashPeriodTrigger":{
       "type":"string",
@@ -1053,9 +1160,75 @@
       "max":100,
       "min":0
     },
+    "DashProfile":{
+      "type":"string",
+      "enum":["DVB_DASH"]
+    },
+    "DashProfiles":{
+      "type":"list",
+      "member":{"shape":"DashProfile"},
+      "max":5,
+      "min":0
+    },
+    "DashProgramInformation":{
+      "type":"structure",
+      "members":{
+        "Title":{"shape":"DashProgramInformationTitleString"},
+        "Source":{"shape":"DashProgramInformationSourceString"},
+        "Copyright":{"shape":"DashProgramInformationCopyrightString"},
+        "LanguageCode":{"shape":"DashProgramInformationLanguageCodeString"},
+        "MoreInformationUrl":{"shape":"DashProgramInformationMoreInformationUrlString"}
+      }
+    },
+    "DashProgramInformationCopyrightString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationLanguageCodeString":{
+      "type":"string",
+      "max":5,
+      "min":2,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]"
+    },
+    "DashProgramInformationMoreInformationUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationSourceString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationTitleString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "DashSegmentTemplateFormat":{
       "type":"string",
       "enum":["NUMBER_WITH_TIMELINE"]
+    },
+    "DashSubtitleConfiguration":{
+      "type":"structure",
+      "members":{
+        "TtmlConfiguration":{"shape":"DashTtmlConfiguration"}
+      }
+    },
+    "DashTtmlConfiguration":{
+      "type":"structure",
+      "required":["TtmlProfile"],
+      "members":{
+        "TtmlProfile":{"shape":"DashTtmlProfile"}
+      }
+    },
+    "DashTtmlProfile":{
+      "type":"string",
+      "enum":[
+        "IMSC_1",
+        "EBU_TT_D_101"
+      ]
     },
     "DashUtcTiming":{
       "type":"structure",
@@ -1440,7 +1613,13 @@
         "PeriodTriggers":{"shape":"DashPeriodTriggers"},
         "ScteDash":{"shape":"ScteDash"},
         "DrmSignaling":{"shape":"DashDrmSignaling"},
-        "UtcTiming":{"shape":"DashUtcTiming"}
+        "UtcTiming":{"shape":"DashUtcTiming"},
+        "Profiles":{"shape":"DashProfiles"},
+        "BaseUrls":{"shape":"DashBaseUrls"},
+        "ProgramInformation":{"shape":"DashProgramInformation"},
+        "DvbSettings":{"shape":"DashDvbSettings"},
+        "Compactness":{"shape":"DashCompactness"},
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
       }
     },
     "GetDashManifests":{
@@ -2693,7 +2872,11 @@
         "CLIP_START_TIME_WITH_START_OR_END",
         "START_TAG_TIME_OFFSET_INVALID",
         "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
-        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION"
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION",
+        "INCOMPATIBLE_DASH_PROFILE_DVB_DASH_CONFIGURATION",
+        "DASH_DVB_ATTRIBUTES_WITHOUT_DVB_DASH_PROFILE",
+        "INCOMPATIBLE_DASH_COMPACTNESS_CONFIGURATION",
+        "INCOMPATIBLE_XML_ENCODING"
       ]
     }
   }
