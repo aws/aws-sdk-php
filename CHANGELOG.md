@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.14 - 2025-05-19
 
 * `Aws\MediaPackageV2` - This release adds support for DVB-DASH, EBU-TT-D subtitle format, and non-compacted manifests for DASH in MediaPackage v2 Origin Endpoints.
 * `Aws\EC2` - This release includes new APIs for System Integrity Protection (SIP) configuration and automated root volume ownership delegation for EC2 Mac instances.
