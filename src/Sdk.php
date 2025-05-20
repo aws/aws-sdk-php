@@ -230,8 +230,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDataExchange(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient createDataPipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDataPipeline(array $args = [])
- * @method \Aws\DataSync\DataSyncClient createDataSync(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionDataSync(array $args = [])
  * @method \Aws\DataZone\DataZoneClient createDataZone(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDataZone(array $args = [])
  * @method \Aws\DatabaseMigrationService\DatabaseMigrationServiceClient createDatabaseMigrationService(array $args = [])
