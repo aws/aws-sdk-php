@@ -29,9 +29,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
-use TestsUtility;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
-use function Aws\dir_iterator;
 
 /**
  * @covers \Aws\UserAgentMiddleware

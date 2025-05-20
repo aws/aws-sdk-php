@@ -175,6 +175,7 @@ abstract class MultipartDownloader implements PromisorInterface
             // Transfer completed
             $this->downloadComplete();
 
+            unset($result['Body']);
             yield Create::promiseFor(new DownloadResponse(
                 $this->stream,
                 $result['@metadata'] ?? []

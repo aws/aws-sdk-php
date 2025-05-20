@@ -216,7 +216,6 @@ class MultipartUploader implements PromisorInterface
                 break;
             }
 
-
             $uploadPartCommandArgs = [
                 ...$this->createMultipartArgs,
                 'UploadId' => $this->uploadId,

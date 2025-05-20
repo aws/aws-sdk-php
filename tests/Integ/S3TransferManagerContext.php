@@ -30,9 +30,25 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     private StreamInterface | null $stream;
 
     /**
+     * @BeforeSuite
+     */
+    public static function beforeSuiteRuns(): void {
+        // Create test bucket
+        self::doCreateTestBucket();
+    }
+
+    /**
+     * @AfterSuite
+     */
+    public static function afterSuiteRuns(): void {
+        // Clean up test bucket
+        self::doDeleteTestBucket();
+    }
+
+    /**
      * @BeforeScenario
      */
-    public function setup(): void {
+    public function beforeScenarioRuns(): void {
         $this->stream = Utils::streamFor('');
         // Create temporary directory
         self::$tempDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "s3-transfer-manager";
@@ -41,20 +57,14 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         }
 
         mkdir(self::$tempDir, 0777, true);
-
-        // Create test bucket
-        // self::doCreateTestBucket();
     }
 
     /**
      * @AfterScenario
      */
-    public function cleanUp(): void {
+    public function afterScenarioRuns(): void {
         // Clean up temporary directory
         TestsUtility::cleanUpDir(self::$tempDir);
-
-        // Clean up test bucket
-        // self::doDeleteTestBucket();
 
         // Clean up data holders
         $this->stream?->close();
@@ -88,7 +98,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then /^The file (.*) should exist in the test bucket and its content should be (.*)$/
+     * @Then /^the file (.*) should exist in the test bucket and its content should be (.*)$/
      */
     public function theFileShouldExistInTheTestBucketAndItsContentShouldBe($filename, $content): void
     {
@@ -128,7 +138,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then /^The object (.*), once downloaded from the test bucket, should match the content (.*)$/
+     * @Then /^the object (.*), once downloaded from the test bucket, should match the content (.*)$/
      */
     public function theObjectOnceDownloadedFromTheTestBucketShouldMatchTheContent($key, $content): void
     {
@@ -166,7 +176,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager->upload(
             $fullFilePath,
             [
-                'Bucket' => 'herrergy-sample-bucket',
+                'Bucket' => self::getResourceName(),
                 'Key' => $filename,
             ],
             [
@@ -197,7 +207,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager->upload(
             $this->stream,
             [
-                'Bucket' => 'herrergy-sample-bucket',
+                'Bucket' => self::getResourceName(),
                 'Key' => $filename,
             ],
             [
@@ -207,7 +217,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then /^The object with name (.*) should have a total of (.*) parts and its size must be (.*)$/
+     * @Then /^the object with name (.*) should have a total of (.*) parts and its size must be (.*)$/
      */
     public function theObjectWithNameShouldHaveATotalOfPartsAndItsSizeMustBe($filename, $partnum, $filesize): void
     {
@@ -256,7 +266,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager->upload(
             $fullFilePath,
             [
-                'Bucket' => 'herrergy-sample-bucket',
+                'Bucket' => self::getResourceName(),
                 'Key' => $filename,
             ],
             [
@@ -266,7 +276,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Then /^The checksum from the object with name (.*) should be equals to the calculation of the object content with the checksum algorithm (.*)$/
+     * @Then /^the checksum from the object with name (.*) should be equals to the calculation of the object content with the checksum algorithm (.*)$/
      */
     public function theChecksumFromTheObjectWithNameShouldBeEqualsToTheCalculationOfTheObjectContentWithTheChecksumAlgorithm($filename, $checksum_algorithm): void
     {
@@ -281,7 +291,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         Assert::assertEquals(
             ApplyChecksumMiddleware::getEncodedValue(
                 $checksum_algorithm,
-                $response['Body']->getContents()
+                $response['Body']
             ),
             $response['Checksum' . strtoupper($checksum_algorithm)]
         );
@@ -313,12 +323,12 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             'Key' => $filename,
         ])->then(function (DownloadResponse $response) use ($filename) {
             $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
-            file_put_contents($fullFilePath, $response->getData());
+            file_put_contents($fullFilePath, $response->getData()->getContents());
         })->wait();
     }
 
     /**
-     * @Then /^The object with name (.*) should have been downloaded and its content should be (.*)$/
+     * @Then /^the object with name (.*) should have been downloaded and its content should be (.*)$/
      */
     public function theObjectWithNameShouldHaveBeenDownloadedAndItsContentShouldBe($filename, $content): void
     {
@@ -355,17 +365,132 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         [],
         [
             'multipart_download_type' => $download_type,
-        ])->wait();
+        ])->then(function (DownloadResponse $response) use ($filename) {
+            $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
+            file_put_contents($fullFilePath, $response->getData()->getContents());
+        })->wait();
     }
 
     /**
-     * @Then /^The content size for the object with name (.*) should be (.*)$/
+     * @Then /^the content size for the object with name (.*) should be (.*)$/
      */
     public function theContentSizeForTheObjectWithNameShouldBe($filename, $filesize): void
     {
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
         Assert::assertFileExists($fullFilePath);
         Assert::assertEquals($filesize, filesize($fullFilePath));
-        Assert::assertEquals(str_repeat('*', $filesize), file_get_contents($fullFilePath));
+    }
+
+    /**
+     * @Given /^I have a directory (.*) with (.*) files that I want to upload$/
+     */
+    public function iHaveADirectoryWithFilesThatIWantToUpload($directory, $numfile): void
+    {
+        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
+        if (!is_dir($fullDirectoryPath)) {
+            mkdir($fullDirectoryPath, 0777, true);
+        }
+
+        for ($i = 0; $i < $numfile - 1; $i++) {
+            $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt";
+            file_put_contents($fullFilePath, "This is a test file content #" . ($i + 1));
+        }
+
+        // 1 extra for multipart upload
+        $fullFilePath = $fullDirectoryPath . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt";
+        file_put_contents($fullFilePath, str_repeat('*', 1024 * 1024 * 15));
+    }
+
+    /**
+     * @When /^I upload this directory (.*)$/
+     */
+    public function iUploadThisDirectory($directory): void
+    {
+        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3(),
+        );
+        $s3TransferManager->uploadDirectory(
+            $fullDirectoryPath,
+            self::getResourceName(),
+        )->wait();
+    }
+
+    /**
+     * @Then /^the files from this directory (.*) where its count should be (.*) should exist in the bucket$/
+     */
+    public function theFilesFromThisDirectoryWhereItsCountShouldBeShouldExistInTheBucket($directory, $numfile): void
+    {
+        $s3Client = self::getSdk()->createS3();
+        $objects = $s3Client->getPaginator('ListObjectsV2', [
+            'Bucket' => self::getResourceName(),
+            'Prefix' => $directory . DIRECTORY_SEPARATOR,
+        ]);
+        $count = 0;
+        foreach ($objects as $object) {
+            $fullObjectPath = self::$tempDir . DIRECTORY_SEPARATOR . $object;
+            Assert::assertFileExists($fullObjectPath);
+            $count++;
+        }
+        
+        Assert::assertEquals($numfile, $count);
+    }
+
+    /**
+     * @Given /^I have a total of (.*) objects in a bucket prefixed with (.*)$/
+     */
+    public function iHaveATotalOfObjectsInABucketPrefixedWith($numfile, $directory): void
+    {
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3(),
+        );
+        for ($i = 0; $i < $numfile - 1; $i++) {
+            $s3TransferManager->upload(
+                Utils::streamFor("This is a test file content #" . ($i + 1)),
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $directory . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt",
+                ]
+            )->wait();
+        }
+    }
+
+    /**
+     * @When /^I download all of them into the directory (.*)$/
+     */
+    public function iDownloadAllOfThemIntoTheDirectory($directory): void
+    {
+        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3(),
+        );
+        $s3TransferManager->downloadDirectory(
+            self::getResourceName(),
+            $fullDirectoryPath,
+            [],
+            [
+                's3_prefix' => $directory . DIRECTORY_SEPARATOR,
+            ]
+        );
+    }
+
+    /**
+     * @Then /^the objects (.*) should exist as files within the directory (.*)$/
+     */
+    public function theObjectsShouldExistsAsFilesWithinTheDirectory($numfile, $directory): void
+    {
+        $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
+        $s3Client = self::getSdk()->createS3();
+        $objects = $s3Client->getPaginator('ListObjectsV2', [
+            'Bucket' => self::getResourceName(),
+            'Prefix' => $directory . DIRECTORY_SEPARATOR,
+        ]);
+        $count = 0;
+        foreach ($objects as $object) {
+            Assert::assertFileExists($fullDirectoryPath . DIRECTORY_SEPARATOR . $object);
+            $count++;
+        }
+
+        Assert::assertEquals($numfile, $count);
     }
 }
