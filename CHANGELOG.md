@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.15 - 2025-05-20
 
 * `Aws\` - Removes PrivateNetworks service client and models.
 * `Aws\OAM` - Add IncludeTags field to GetLink, GetSink and UpdateLink API
