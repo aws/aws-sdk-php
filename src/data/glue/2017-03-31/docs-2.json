@@ -1941,6 +1941,18 @@
         "ListConnectionTypesResponse$ConnectionTypes": "<p>A list of <code>ConnectionTypeBrief</code> objects containing brief information about the supported connection types.</p>"
       }
     },
+    "ConnectionTypeVariant": {
+      "base": "<p>Represents a variant of a connection type in Glue Data Catalog. Connection type variants provide specific configurations and behaviors for different implementations of the same general connection type.</p>",
+      "refs": {
+        "ConnectionTypeVariantList$member": null
+      }
+    },
+    "ConnectionTypeVariantList": {
+      "base": null,
+      "refs": {
+        "ConnectionTypeBrief$ConnectionTypeVariants": "<p>A list of variants available for this connection type. Different variants may provide specialized configurations for specific use cases or implementations of the same general connection type.</p>"
+      }
+    },
     "ConnectionsList": {
       "base": "<p>Specifies the connections used by a job.</p>",
       "refs": {
@@ -3283,6 +3295,7 @@
       "base": null,
       "refs": {
         "ConnectionTypeBrief$Description": "<p>A description of the connection type.</p>",
+        "ConnectionTypeVariant$Description": "<p>A detailed description of the connection type variant, including its purpose, use cases, and any specific configuration requirements.</p>",
         "DescribeConnectionTypeResponse$Description": "<p>A description of the connection type.</p>"
       }
     },
@@ -3409,6 +3422,14 @@
         "S3HudiDirectTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
         "S3HyperDirectTarget$SchemaChangePolicy": "<p>Defines how schema changes are handled during write operations.</p>",
         "S3IcebergDirectTarget$SchemaChangePolicy": "<p>Defines how schema changes are handled when writing data to the Iceberg table.</p>"
+      }
+    },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "ConnectionTypeBrief$DisplayName": "<p>The human-readable name for the connection type that is displayed in the Glue console.</p>",
+        "ConnectionTypeVariant$ConnectionTypeVariantName": "<p>The unique identifier for the connection type variant. This name is used internally to identify the specific variant of a connection type. </p>",
+        "ConnectionTypeVariant$DisplayName": "<p>The human-readable name for the connection type variant that is displayed in the Glue console.</p>"
       }
     },
     "Double": {
@@ -6093,6 +6114,7 @@
       "base": null,
       "refs": {
         "ComputeEnvironmentConfiguration$ConnectionPropertiesRequiredOverrides": "<p>The connection properties that are required as overrides for the compute environment.</p>",
+        "ConnectionTypeBrief$Categories": "<p>A list of categories that this connection type belongs to. Categories help users filter and find appropriate connection types based on their use cases.</p>",
         "Field$SupportedValues": "<p>A list of supported values for the field.</p>"
       }
     },
@@ -10689,6 +10711,13 @@
         "StartMLLabelingSetGenerationTaskRunRequest$OutputS3Path": "<p>The Amazon Simple Storage Service (Amazon S3) path where you generate the labeling set.</p>"
       }
     },
+    "UrlString": {
+      "base": null,
+      "refs": {
+        "ConnectionTypeBrief$LogoUrl": "<p>The URL of the logo associated with a connection type.</p>",
+        "ConnectionTypeVariant$LogoUrl": "<p>The URL of the logo associated with a connection type variant.</p>"
+      }
+    },
     "UsageProfileDefinition": {
       "base": "<p>Describes an Glue usage profile.</p>",
       "refs": {
@@ -10771,6 +10800,12 @@
         "PartitionInput$Values": "<p>The values of the partition. Although this parameter is not required by the SDK, you must specify this parameter for a valid input.</p> <p>The values for the keys for the new partition must be passed as an array of String objects that must be ordered in the same order as the partition keys appearing in the Amazon S3 prefix. Otherwise Glue will add the values to the wrong keys.</p>",
         "PartitionValueList$Values": "<p>The list of values.</p>",
         "UpdateColumnStatisticsForPartitionRequest$PartitionValues": "<p>A list of partition values identifying the partition.</p>"
+      }
+    },
+    "Vendor": {
+      "base": null,
+      "refs": {
+        "ConnectionTypeBrief$Vendor": "<p>The name of the vendor or provider that created or maintains this connection type.</p>"
       }
     },
     "VersionId": {

@@ -29972,6 +29972,10 @@
         "AutoRecovery":{
           "shape":"InstanceAutoRecoveryState",
           "locationName":"autoRecovery"
+        },
+        "RebootMigration":{
+          "shape":"InstanceRebootMigrationState",
+          "locationName":"rebootMigration"
         }
       }
     },
@@ -30386,6 +30390,13 @@
         "shape":"InstancePrivateIpAddress",
         "locationName":"item"
       }
+    },
+    "InstanceRebootMigrationState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "default"
+      ]
     },
     "InstanceRequirements":{
       "type":"structure",
@@ -31854,6 +31865,10 @@
         "PhcSupport":{
           "shape":"PhcSupport",
           "locationName":"phcSupport"
+        },
+        "RebootMigrationSupport":{
+          "shape":"RebootMigrationSupport",
+          "locationName":"rebootMigrationSupport"
         }
       }
     },
@@ -36464,6 +36479,7 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "AutoRecovery":{"shape":"InstanceAutoRecoveryState"},
+        "RebootMigration":{"shape":"InstanceRebootMigrationState"},
         "DryRun":{"shape":"Boolean"}
       }
     },
@@ -36477,6 +36493,10 @@
         "AutoRecovery":{
           "shape":"InstanceAutoRecoveryState",
           "locationName":"autoRecovery"
+        },
+        "RebootMigration":{
+          "shape":"InstanceRebootMigrationState",
+          "locationName":"rebootMigration"
         }
       }
     },
@@ -41184,6 +41204,13 @@
           "locationName":"dryRun"
         }
       }
+    },
+    "RebootMigrationSupport":{
+      "type":"string",
+      "enum":[
+        "unsupported",
+        "supported"
+      ]
     },
     "RecurringCharge":{
       "type":"structure",

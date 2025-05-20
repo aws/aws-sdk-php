@@ -345,7 +345,8 @@
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "Identifier":{"shape":"ResourceIdentifier"}
+        "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"}
       }
     },
     "GetLinkOutput":{
@@ -365,7 +366,8 @@
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "Identifier":{"shape":"ResourceIdentifier"}
+        "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"}
       }
     },
     "GetSinkOutput":{
@@ -391,6 +393,10 @@
         "SinkArn":{"shape":"String"},
         "SinkId":{"shape":"String"}
       }
+    },
+    "IncludeTags":{
+      "type":"boolean",
+      "box":true
     },
     "InternalServiceFault":{
       "type":"structure",
@@ -767,6 +773,7 @@
       ],
       "members":{
         "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"},
         "LinkConfiguration":{"shape":"LinkConfiguration"},
         "ResourceTypes":{"shape":"ResourceTypesInput"}
       }

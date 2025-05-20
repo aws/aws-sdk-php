@@ -6093,13 +6093,31 @@
       "type":"structure",
       "members":{
         "ConnectionType":{"shape":"ConnectionType"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Vendor":{"shape":"Vendor"},
         "Description":{"shape":"Description"},
-        "Capabilities":{"shape":"Capabilities"}
+        "Categories":{"shape":"ListOfString"},
+        "Capabilities":{"shape":"Capabilities"},
+        "LogoUrl":{"shape":"UrlString"},
+        "ConnectionTypeVariants":{"shape":"ConnectionTypeVariantList"}
       }
     },
     "ConnectionTypeList":{
       "type":"list",
       "member":{"shape":"ConnectionTypeBrief"}
+    },
+    "ConnectionTypeVariant":{
+      "type":"structure",
+      "members":{
+        "ConnectionTypeVariantName":{"shape":"DisplayName"},
+        "DisplayName":{"shape":"DisplayName"},
+        "Description":{"shape":"Description"},
+        "LogoUrl":{"shape":"UrlString"}
+      }
+    },
+    "ConnectionTypeVariantList":{
+      "type":"list",
+      "member":{"shape":"ConnectionTypeVariant"}
     },
     "ConnectionsList":{
       "type":"structure",
@@ -8349,6 +8367,11 @@
         "Table":{"shape":"EnclosedInStringProperty"},
         "Database":{"shape":"EnclosedInStringProperty"}
       }
+    },
+    "DisplayName":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "Double":{"type":"double"},
     "DoubleColumnStatisticsData":{
@@ -16300,6 +16323,7 @@
       }
     },
     "UriString":{"type":"string"},
+    "UrlString":{"type":"string"},
     "UsageProfileDefinition":{
       "type":"structure",
       "members":{
@@ -16371,6 +16395,11 @@
     "ValueStringList":{
       "type":"list",
       "member":{"shape":"ValueString"}
+    },
+    "Vendor":{
+      "type":"string",
+      "max":128,
+      "min":1
     },
     "VersionId":{"type":"long"},
     "VersionLongNumber":{

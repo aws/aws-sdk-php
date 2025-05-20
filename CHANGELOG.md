@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes PrivateNetworks service client and models.
+* `Aws\OAM` - Add IncludeTags field to GetLink, GetSink and UpdateLink API
+* `Aws\Inspector2` - This release adds GetClustersForImage API and filter updates as part of the mapping of container images to running containers feature.
+* `Aws\DataSync` - Remove Discovery APIs from the DataSync service
+* `Aws\EC2` - This release expands the ModifyInstanceMaintenanceOptions API to enable or disable instance migration during customer-initiated reboots for EC2 Scheduled Reboot Events.
+* `Aws\Glue` - Enhanced AWS Glue ListConnectionTypes API Model with additional metadata fields.
+* `Aws\RDS` - This release introduces the new DescribeDBMajorEngineVersions API for describing the properties of specific major versions of database engines.
+
 ## 3.343.14 - 2025-05-19
 
 * `Aws\MediaPackageV2` - This release adds support for DVB-DASH, EBU-TT-D subtitle format, and non-compacted manifests for DASH in MediaPackage v2 Origin Endpoints.
