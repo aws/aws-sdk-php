@@ -592,8 +592,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPolly(array $args = [])
  * @method \Aws\Pricing\PricingClient createPricing(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPricing(array $args = [])
- * @method \Aws\PrivateNetworks\PrivateNetworksClient createPrivateNetworks(array $args = [])
- * @method \Aws\MultiRegionClient createMultiRegionPrivateNetworks(array $args = [])
  * @method \Aws\PrometheusService\PrometheusServiceClient createPrometheusService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPrometheusService(array $args = [])
  * @method \Aws\Proton\ProtonClient createProton(array $args = [])
