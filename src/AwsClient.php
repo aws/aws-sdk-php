@@ -540,7 +540,7 @@ class AwsClient implements AwsClientInterface
             Middleware::mapRequest(function (RequestInterface $r) {
                 return $r->withHeader(
                     'x-amzn-query-mode',
-                    true
+                    "true"
                 );
             }),
             'x-amzn-query-mode-header'
