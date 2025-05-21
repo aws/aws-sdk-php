@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.16 - 2025-05-21
 
 * `Aws\` - Sets the header `x-amzn-query-mode` to a string value instead of a boolean.
 * `Aws\PartnerCentralSelling` - Modified validation to allow expectedCustomerSpend array with zero elements in Partner Opportunity operations.
