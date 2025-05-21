@@ -20,6 +20,8 @@ class CredentialsContext extends Assert implements
     private static $credentialsFile;
     private static $roleName;
     private static $roleArn;
+    private $credentials;
+    private $client;
 
     /**
      * @BeforeFeature @credentials
