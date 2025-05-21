@@ -155,6 +155,40 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "GetExecutionFlowSnapshot":{
+      "name":"GetExecutionFlowSnapshot",
+      "http":{
+        "method":"GET",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}/executions/{executionIdentifier}/flowsnapshot",
+        "responseCode":200
+      },
+      "input":{"shape":"GetExecutionFlowSnapshotRequest"},
+      "output":{"shape":"GetExecutionFlowSnapshotResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetFlowExecution":{
+      "name":"GetFlowExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}/executions/{executionIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFlowExecutionRequest"},
+      "output":{"shape":"GetFlowExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetInvocationStep":{
       "name":"GetInvocationStep",
       "http":{
@@ -251,6 +285,40 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "ListFlowExecutionEvents":{
+      "name":"ListFlowExecutionEvents",
+      "http":{
+        "method":"GET",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}/executions/{executionIdentifier}/events",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFlowExecutionEventsRequest"},
+      "output":{"shape":"ListFlowExecutionEventsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListFlowExecutions":{
+      "name":"ListFlowExecutions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/flows/{flowIdentifier}/executions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFlowExecutionsRequest"},
+      "output":{"shape":"ListFlowExecutionsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListInvocationSteps":{
@@ -440,6 +508,47 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "StartFlowExecution":{
+      "name":"StartFlowExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}/executions",
+        "responseCode":200
+      },
+      "input":{"shape":"StartFlowExecutionRequest"},
+      "output":{"shape":"StartFlowExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
+    "StopFlowExecution":{
+      "name":"StopFlowExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/flows/{flowIdentifier}/aliases/{flowAliasIdentifier}/executions/{executionIdentifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopFlowExecutionRequest"},
+      "output":{"shape":"StopFlowExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"DependencyFailedException"},
+        {"shape":"BadGatewayException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "TagResource":{
@@ -981,6 +1090,20 @@
       "type":"list",
       "member":{"shape":"Collaborator"}
     },
+    "ConditionResultEvent":{
+      "type":"structure",
+      "required":[
+        "nodeName",
+        "satisfiedConditions",
+        "timestamp"
+      ],
+      "members":{
+        "nodeName":{"shape":"NodeName"},
+        "satisfiedConditions":{"shape":"SatisfiedConditions"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
     "ConfirmationState":{
       "type":"string",
       "enum":[
@@ -1404,11 +1527,165 @@
         "INPUT_REQUIRED"
       ]
     },
+    "FlowErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION",
+        "INTERNAL_SERVER",
+        "NODE_EXECUTION_FAILED"
+      ]
+    },
+    "FlowExecutionContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "FlowExecutionError":{
+      "type":"structure",
+      "members":{
+        "error":{"shape":"FlowExecutionErrorType"},
+        "message":{"shape":"String"},
+        "nodeName":{"shape":"NodeName"}
+      }
+    },
+    "FlowExecutionErrorType":{
+      "type":"string",
+      "enum":["ExecutionTimedOut"]
+    },
+    "FlowExecutionErrors":{
+      "type":"list",
+      "member":{"shape":"FlowExecutionError"}
+    },
+    "FlowExecutionEvent":{
+      "type":"structure",
+      "members":{
+        "conditionResultEvent":{"shape":"ConditionResultEvent"},
+        "flowFailureEvent":{"shape":"FlowFailureEvent"},
+        "flowInputEvent":{"shape":"FlowExecutionInputEvent"},
+        "flowOutputEvent":{"shape":"FlowExecutionOutputEvent"},
+        "nodeFailureEvent":{"shape":"NodeFailureEvent"},
+        "nodeInputEvent":{"shape":"NodeInputEvent"},
+        "nodeOutputEvent":{"shape":"NodeOutputEvent"}
+      },
+      "union":true
+    },
+    "FlowExecutionEventType":{
+      "type":"string",
+      "enum":[
+        "Node",
+        "Flow"
+      ]
+    },
+    "FlowExecutionEvents":{
+      "type":"list",
+      "member":{"shape":"FlowExecutionEvent"},
+      "max":10,
+      "min":0
+    },
     "FlowExecutionId":{
       "type":"string",
       "max":100,
       "min":2,
       "pattern":"^[0-9a-zA-Z._:-]+$"
+    },
+    "FlowExecutionIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9-]{1,36}$|^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/[0-9a-zA-Z]{10}/execution/[a-zA-Z0-9-]{1,36})$"
+    },
+    "FlowExecutionInputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"FlowInputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "FlowExecutionName":{
+      "type":"string",
+      "max":36,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9-]{1,36}$"
+    },
+    "FlowExecutionOutputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"FlowOutputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "FlowExecutionRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/(service-role/)?.+$"
+    },
+    "FlowExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "Running",
+        "Succeeded",
+        "Failed",
+        "TimedOut",
+        "Aborted"
+      ]
+    },
+    "FlowExecutionSummaries":{
+      "type":"list",
+      "member":{"shape":"FlowExecutionSummary"},
+      "max":10,
+      "min":0
+    },
+    "FlowExecutionSummary":{
+      "type":"structure",
+      "required":[
+        "createdAt",
+        "executionArn",
+        "flowAliasIdentifier",
+        "flowIdentifier",
+        "flowVersion",
+        "status"
+      ],
+      "members":{
+        "createdAt":{"shape":"DateTimestamp"},
+        "endedAt":{"shape":"DateTimestamp"},
+        "executionArn":{"shape":"FlowExecutionIdentifier"},
+        "flowAliasIdentifier":{"shape":"FlowAliasIdentifier"},
+        "flowIdentifier":{"shape":"FlowIdentifier"},
+        "flowVersion":{"shape":"Version"},
+        "status":{"shape":"FlowExecutionStatus"}
+      }
+    },
+    "FlowFailureEvent":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage",
+        "timestamp"
+      ],
+      "members":{
+        "errorCode":{"shape":"FlowErrorCode"},
+        "errorMessage":{"shape":"String"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
     },
     "FlowIdentifier":{
       "type":"string",
@@ -1436,6 +1713,24 @@
       },
       "sensitive":true,
       "union":true
+    },
+    "FlowInputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "name"
+      ],
+      "members":{
+        "content":{"shape":"FlowExecutionContent"},
+        "name":{"shape":"NodeInputName"}
+      },
+      "sensitive":true
+    },
+    "FlowInputFields":{
+      "type":"list",
+      "member":{"shape":"FlowInputField"},
+      "max":5,
+      "min":1
     },
     "FlowInputs":{
       "type":"list",
@@ -1486,6 +1781,24 @@
       },
       "event":true,
       "sensitive":true
+    },
+    "FlowOutputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "name"
+      ],
+      "members":{
+        "content":{"shape":"FlowExecutionContent"},
+        "name":{"shape":"NodeOutputName"}
+      },
+      "sensitive":true
+    },
+    "FlowOutputFields":{
+      "type":"list",
+      "member":{"shape":"FlowOutputField"},
+      "max":5,
+      "min":1
     },
     "FlowResponseStream":{
       "type":"structure",
@@ -1812,6 +2125,95 @@
       "members":{
         "memoryContents":{"shape":"Memories"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetExecutionFlowSnapshotRequest":{
+      "type":"structure",
+      "required":[
+        "executionIdentifier",
+        "flowAliasIdentifier",
+        "flowIdentifier"
+      ],
+      "members":{
+        "executionIdentifier":{
+          "shape":"FlowExecutionIdentifier",
+          "location":"uri",
+          "locationName":"executionIdentifier"
+        },
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        }
+      }
+    },
+    "GetExecutionFlowSnapshotResponse":{
+      "type":"structure",
+      "required":[
+        "definition",
+        "executionRoleArn",
+        "flowAliasIdentifier",
+        "flowIdentifier",
+        "flowVersion"
+      ],
+      "members":{
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "definition":{"shape":"String"},
+        "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "flowAliasIdentifier":{"shape":"FlowAliasIdentifier"},
+        "flowIdentifier":{"shape":"FlowIdentifier"},
+        "flowVersion":{"shape":"Version"}
+      }
+    },
+    "GetFlowExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionIdentifier",
+        "flowAliasIdentifier",
+        "flowIdentifier"
+      ],
+      "members":{
+        "executionIdentifier":{
+          "shape":"FlowExecutionIdentifier",
+          "location":"uri",
+          "locationName":"executionIdentifier"
+        },
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        }
+      }
+    },
+    "GetFlowExecutionResponse":{
+      "type":"structure",
+      "required":[
+        "executionArn",
+        "flowAliasIdentifier",
+        "flowIdentifier",
+        "flowVersion",
+        "startedAt",
+        "status"
+      ],
+      "members":{
+        "endedAt":{"shape":"DateTimestamp"},
+        "errors":{"shape":"FlowExecutionErrors"},
+        "executionArn":{"shape":"FlowExecutionIdentifier"},
+        "flowAliasIdentifier":{"shape":"FlowAliasIdentifier"},
+        "flowIdentifier":{"shape":"FlowIdentifier"},
+        "flowVersion":{"shape":"Version"},
+        "startedAt":{"shape":"DateTimestamp"},
+        "status":{"shape":"FlowExecutionStatus"}
       }
     },
     "GetInvocationStepRequest":{
@@ -2801,6 +3203,89 @@
       "min":0,
       "pattern":"^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
     },
+    "ListFlowExecutionEventsRequest":{
+      "type":"structure",
+      "required":[
+        "eventType",
+        "executionIdentifier",
+        "flowAliasIdentifier",
+        "flowIdentifier"
+      ],
+      "members":{
+        "eventType":{
+          "shape":"FlowExecutionEventType",
+          "location":"querystring",
+          "locationName":"eventType"
+        },
+        "executionIdentifier":{
+          "shape":"FlowExecutionIdentifier",
+          "location":"uri",
+          "locationName":"executionIdentifier"
+        },
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListFlowExecutionEventsResponse":{
+      "type":"structure",
+      "required":["flowExecutionEvents"],
+      "members":{
+        "flowExecutionEvents":{"shape":"FlowExecutionEvents"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListFlowExecutionsRequest":{
+      "type":"structure",
+      "required":["flowIdentifier"],
+      "members":{
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"querystring",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListFlowExecutionsResponse":{
+      "type":"structure",
+      "required":["flowExecutionSummaries"],
+      "members":{
+        "flowExecutionSummaries":{"shape":"FlowExecutionSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListInvocationStepsRequest":{
       "type":"structure",
       "required":["sessionIdentifier"],
@@ -3069,6 +3554,71 @@
       "min":1,
       "pattern":"^\\S*$"
     },
+    "NodeErrorCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION",
+        "DEPENDENCY_FAILED",
+        "BAD_GATEWAY",
+        "INTERNAL_SERVER"
+      ]
+    },
+    "NodeExecutionContent":{
+      "type":"structure",
+      "members":{
+        "document":{"shape":"Document"}
+      },
+      "sensitive":true,
+      "union":true
+    },
+    "NodeFailureEvent":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "errorMessage",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "errorCode":{"shape":"NodeErrorCode"},
+        "errorMessage":{"shape":"String"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "NodeInputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"NodeInputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "NodeInputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "name"
+      ],
+      "members":{
+        "content":{"shape":"NodeExecutionContent"},
+        "name":{"shape":"NodeInputName"}
+      },
+      "sensitive":true
+    },
+    "NodeInputFields":{
+      "type":"list",
+      "member":{"shape":"NodeInputField"},
+      "max":5,
+      "min":1
+    },
     "NodeInputName":{
       "type":"string",
       "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){0,99}$"
@@ -3076,6 +3626,38 @@
     "NodeName":{
       "type":"string",
       "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){0,99}$"
+    },
+    "NodeOutputEvent":{
+      "type":"structure",
+      "required":[
+        "fields",
+        "nodeName",
+        "timestamp"
+      ],
+      "members":{
+        "fields":{"shape":"NodeOutputFields"},
+        "nodeName":{"shape":"NodeName"},
+        "timestamp":{"shape":"DateTimestamp"}
+      },
+      "sensitive":true
+    },
+    "NodeOutputField":{
+      "type":"structure",
+      "required":[
+        "content",
+        "name"
+      ],
+      "members":{
+        "content":{"shape":"NodeExecutionContent"},
+        "name":{"shape":"NodeOutputName"}
+      },
+      "sensitive":true
+    },
+    "NodeOutputFields":{
+      "type":"list",
+      "member":{"shape":"NodeOutputField"},
+      "max":2,
+      "min":1
     },
     "NodeOutputName":{
       "type":"string",
@@ -4187,6 +4769,20 @@
       "min":1,
       "pattern":"^s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}$"
     },
+    "SatisfiedCondition":{
+      "type":"structure",
+      "required":["conditionName"],
+      "members":{
+        "conditionName":{"shape":"String"}
+      },
+      "sensitive":true
+    },
+    "SatisfiedConditions":{
+      "type":"list",
+      "member":{"shape":"SatisfiedCondition"},
+      "max":5,
+      "min":1
+    },
     "SearchType":{
       "type":"string",
       "enum":[
@@ -4313,6 +4909,68 @@
       "type":"integer",
       "box":true,
       "min":0
+    },
+    "StartFlowExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "flowAliasIdentifier",
+        "flowIdentifier",
+        "inputs"
+      ],
+      "members":{
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowExecutionName":{"shape":"FlowExecutionName"},
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        },
+        "inputs":{"shape":"FlowInputs"},
+        "modelPerformanceConfiguration":{"shape":"ModelPerformanceConfiguration"}
+      }
+    },
+    "StartFlowExecutionResponse":{
+      "type":"structure",
+      "members":{
+        "executionArn":{"shape":"FlowExecutionIdentifier"}
+      }
+    },
+    "StopFlowExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionIdentifier",
+        "flowAliasIdentifier",
+        "flowIdentifier"
+      ],
+      "members":{
+        "executionIdentifier":{
+          "shape":"FlowExecutionIdentifier",
+          "location":"uri",
+          "locationName":"executionIdentifier"
+        },
+        "flowAliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"flowAliasIdentifier"
+        },
+        "flowIdentifier":{
+          "shape":"FlowIdentifier",
+          "location":"uri",
+          "locationName":"flowIdentifier"
+        }
+      }
+    },
+    "StopFlowExecutionResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "executionArn":{"shape":"FlowExecutionIdentifier"},
+        "status":{"shape":"FlowExecutionStatus"}
+      }
     },
     "StopSequences":{
       "type":"list",
@@ -4648,6 +5306,12 @@
     "Verb":{
       "type":"string",
       "sensitive":true
+    },
+    "Version":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"^(DRAFT|[0-9]{0,4}[1-9][0-9]{0,4})$"
     }
   }
 }

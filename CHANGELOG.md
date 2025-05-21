@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Sets the header `x-amzn-query-mode` to a string value instead of a boolean.
+* `Aws\PartnerCentralSelling` - Modified validation to allow expectedCustomerSpend array with zero elements in Partner Opportunity operations.
+* `Aws\EC2` - Release of Dualstack and Ipv6-only EC2 Public DNS hostnames
+* `Aws\CloudWatch` - Adds support for setting up Contributor Insight rules on logs transformed via Logs Transformation feature.
+* `Aws\ApplicationAutoScaling` - Doc only update that addresses a customer reported issue.
+* `Aws\BedrockAgentRuntime` - Amazon Bedrock introduces asynchronous flows (in preview), which let you run flows for longer durations and yield control so that your application can perform other tasks and you don't have to actively monitor the flow's progress.
+
 ## 3.343.15 - 2025-05-20
 
 * `Aws\` - Removes PrivateNetworks service client and models.

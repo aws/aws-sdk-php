@@ -58,7 +58,8 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"DashboardNotFoundError"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "DeleteInsightRules":{
@@ -443,7 +444,8 @@
       },
       "errors":[
         {"shape":"DashboardInvalidInputError"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "PutInsightRule":{
@@ -585,7 +587,8 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     },
     "UntagResource":{
@@ -603,7 +606,8 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConcurrentModificationException"},
-        {"shape":"InternalServiceFault"}
+        {"shape":"InternalServiceFault"},
+        {"shape":"ConflictException"}
       ]
     }
   },
@@ -836,12 +840,18 @@
     },
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"ConcurrentModificationException",
         "httpStatusCode":429,
         "senderFault":true
+      },
+      "exception":true
+    },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
     },
@@ -985,8 +995,7 @@
     },
     "DeleteAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDashboardsInput":{
       "type":"structure",
@@ -997,8 +1006,7 @@
     },
     "DeleteDashboardsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInsightRulesInput":{
       "type":"structure",
@@ -1022,8 +1030,7 @@
     },
     "DeleteMetricStreamOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAlarmHistoryInput":{
       "type":"structure",
@@ -1456,7 +1463,8 @@
         "State":{"shape":"InsightRuleState"},
         "Schema":{"shape":"InsightRuleSchema"},
         "Definition":{"shape":"InsightRuleDefinition"},
-        "ManagedRule":{"shape":"InsightRuleIsManaged"}
+        "ManagedRule":{"shape":"InsightRuleIsManaged"},
+        "ApplyOnTransformedLogs":{"shape":"InsightRuleOnTransformedLogs"}
       }
     },
     "InsightRuleAggregationStatistic":{"type":"string"},
@@ -1552,6 +1560,7 @@
       "type":"list",
       "member":{"shape":"InsightRuleName"}
     },
+    "InsightRuleOnTransformedLogs":{"type":"boolean"},
     "InsightRuleOrderBy":{
       "type":"string",
       "max":32,
@@ -1643,8 +1652,7 @@
     "LastModified":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"LimitExceededException",
         "httpStatusCode":400,
@@ -2150,8 +2158,7 @@
     },
     "PutAnomalyDetectorOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutCompositeAlarmInput":{
       "type":"structure",
@@ -2200,13 +2207,13 @@
         "RuleName":{"shape":"InsightRuleName"},
         "RuleState":{"shape":"InsightRuleState"},
         "RuleDefinition":{"shape":"InsightRuleDefinition"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ApplyOnTransformedLogs":{"shape":"InsightRuleOnTransformedLogs"}
       }
     },
     "PutInsightRuleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutManagedInsightRulesInput":{
       "type":"structure",
@@ -2422,8 +2429,7 @@
     },
     "StartMetricStreamsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stat":{"type":"string"},
     "StateReason":{
@@ -2493,8 +2499,7 @@
     },
     "StopMetricStreamsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StorageResolution":{
       "type":"integer",
@@ -2539,8 +2544,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2577,8 +2581,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Values":{
       "type":"list",

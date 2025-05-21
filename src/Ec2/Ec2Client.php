@@ -1234,6 +1234,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyManagedPrefixListAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyPrivateDnsNameOptions(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyPrivateDnsNameOptionsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyPublicIpDnsNameOptions(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyPublicIpDnsNameOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyRouteServer(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyRouteServerAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifySecurityGroupRules(array $args = []) (supported in versions 2016-11-15)

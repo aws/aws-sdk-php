@@ -5133,6 +5133,15 @@
       "input":{"shape":"ModifyPrivateDnsNameOptionsRequest"},
       "output":{"shape":"ModifyPrivateDnsNameOptionsResult"}
     },
+    "ModifyPublicIpDnsNameOptions":{
+      "name":"ModifyPublicIpDnsNameOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyPublicIpDnsNameOptionsRequest"},
+      "output":{"shape":"ModifyPublicIpDnsNameOptionsResult"}
+    },
     "ModifyReservedInstances":{
       "name":"ModifyReservedInstances",
       "http":{
@@ -36873,6 +36882,27 @@
         }
       }
     },
+    "ModifyPublicIpDnsNameOptionsRequest":{
+      "type":"structure",
+      "required":[
+        "NetworkInterfaceId",
+        "HostnameType"
+      ],
+      "members":{
+        "NetworkInterfaceId":{"shape":"NetworkInterfaceId"},
+        "HostnameType":{"shape":"PublicIpDnsOption"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifyPublicIpDnsNameOptionsResult":{
+      "type":"structure",
+      "members":{
+        "Successful":{
+          "shape":"Boolean",
+          "locationName":"successful"
+        }
+      }
+    },
     "ModifyReservedInstancesRequest":{
       "type":"structure",
       "required":[
@@ -38846,6 +38876,14 @@
           "shape":"String",
           "locationName":"privateDnsName"
         },
+        "PublicDnsName":{
+          "shape":"String",
+          "locationName":"publicDnsName"
+        },
+        "PublicIpDnsNameOptions":{
+          "shape":"PublicIpDnsNameOptions",
+          "locationName":"publicIpDnsNameOptions"
+        },
         "PrivateIpAddress":{
           "shape":"String",
           "locationName":"privateIpAddress"
@@ -39062,6 +39100,10 @@
         "Ipv6Address":{
           "shape":"String",
           "locationName":"ipv6Address"
+        },
+        "PublicIpv6DnsName":{
+          "shape":"String",
+          "locationName":"publicIpv6DnsName"
         },
         "IsPrimaryIpv6":{
           "shape":"Boolean",
@@ -40877,6 +40919,35 @@
       }
     },
     "PublicIpAddress":{"type":"string"},
+    "PublicIpDnsNameOptions":{
+      "type":"structure",
+      "members":{
+        "DnsHostnameType":{
+          "shape":"String",
+          "locationName":"dnsHostnameType"
+        },
+        "PublicIpv4DnsName":{
+          "shape":"String",
+          "locationName":"publicIpv4DnsName"
+        },
+        "PublicIpv6DnsName":{
+          "shape":"String",
+          "locationName":"publicIpv6DnsName"
+        },
+        "PublicDualStackDnsName":{
+          "shape":"String",
+          "locationName":"publicDualStackDnsName"
+        }
+      }
+    },
+    "PublicIpDnsOption":{
+      "type":"string",
+      "enum":[
+        "public-dual-stack-dns-name",
+        "public-ipv4-dns-name",
+        "public-ipv6-dns-name"
+      ]
+    },
     "PublicIpStringList":{
       "type":"list",
       "member":{

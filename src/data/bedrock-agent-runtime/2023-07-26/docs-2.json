@@ -9,11 +9,15 @@
     "EndSession": "<p>Ends the session. After you end a session, you can still access its content but you can’t add to it. To delete the session and it's content, you use the DeleteSession API operation. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GenerateQuery": "<p>Generates an SQL query from a natural language query. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html\">Generate a query for structured data</a> in the Amazon Bedrock User Guide.</p>",
     "GetAgentMemory": "<p>Gets the sessions stored in the memory of the agent.</p>",
+    "GetExecutionFlowSnapshot": "<p>Retrieves the flow definition snapshot used for an asynchronous execution. The snapshot represents the flow metadata and definition as it existed at the time the asynchronous execution was started. Note that even if the flow is edited after an execution starts, the snapshot connected to the execution remains unchanged.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "GetFlowExecution": "<p>Retrieves details about a specific asynchronous execution of a flow, including its status, start and end times, and any errors that occurred during execution.</p>",
     "GetInvocationStep": "<p>Retrieves the details of a specific invocation step within an invocation in a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "GetSession": "<p>Retrieves details about a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "InvokeAgent": "<p><note> </note> <p>Sends a prompt for the agent to process and respond to. Note the following fields for the request:</p> <ul> <li> <p>To continue the same conversation with an agent, use the same <code>sessionId</code> value in the request.</p> </li> <li> <p>To activate trace enablement, turn <code>enableTrace</code> to <code>true</code>. Trace enablement helps you follow the agent's reasoning process that led it to the information it processed, the actions it took, and the final result it yielded. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events\">Trace enablement</a>.</p> </li> <li> <p>End a conversation by setting <code>endSession</code> to <code>true</code>.</p> </li> <li> <p>In the <code>sessionState</code> object, you can include attributes for the session or prompt or, if you configured an action group to return control, results from invocation of the action group.</p> </li> </ul> <p>The response contains both <b>chunk</b> and <b>trace</b> attributes.</p> <p>The final response is returned in the <code>bytes</code> field of the <code>chunk</code> object. The <code>InvokeAgent</code> returns one chunk for the entire interaction.</p> <ul> <li> <p>The <code>attribution</code> object contains citations for parts of the response.</p> </li> <li> <p>If you set <code>enableTrace</code> to <code>true</code> in the request, you can trace the agent's steps and reasoning process that led it to the response.</p> </li> <li> <p>If the action predicted was configured to return control, the response returns parameters for the action, elicited from the user, in the <code>returnControl</code> field.</p> </li> <li> <p>Errors are also surfaced in the response.</p> </li> </ul></p>",
     "InvokeFlow": "<p>Invokes an alias of a flow to run the inputs that you specify and return the output of each node as a stream. If there's an error, the error is returned. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html\">Test a flow in Amazon Bedrock</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeFlow</code>.</p> </note>",
     "InvokeInlineAgent": "<p> Invokes an inline Amazon Bedrock agent using the configurations you provide with the request. </p> <ul> <li> <p>Specify the following fields for security purposes.</p> <ul> <li> <p>(Optional) <code>customerEncryptionKeyArn</code> – The Amazon Resource Name (ARN) of a KMS key to encrypt the creation of the agent.</p> </li> <li> <p>(Optional) <code>idleSessionTTLinSeconds</code> – Specify the number of seconds for which the agent should maintain session information. After this time expires, the subsequent <code>InvokeInlineAgent</code> request begins a new session.</p> </li> </ul> </li> <li> <p>To override the default prompt behavior for agent orchestration and to use advanced prompts, include a <code>promptOverrideConfiguration</code> object. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html\">Advanced prompts</a>.</p> </li> <li> <p>The agent instructions will not be honored if your agent has only one knowledge base, uses default prompts, has no action group, and user input is disabled.</p> </li> </ul> <note> </note>",
+    "ListFlowExecutionEvents": "<p>Lists events that occurred during an asynchronous execution of a flow. Events provide detailed information about the execution progress, including node inputs and outputs, flow inputs and outputs, condition results, and failure events.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "ListFlowExecutions": "<p>Lists all asynchronous executions for a flow. Results can be paginated and include summary information about each execution, such as status, start and end times, and the execution's Amazon Resource Name (ARN).</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
     "ListInvocationSteps": "<p>Lists all invocation steps associated with a session and optionally, an invocation within the session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "ListInvocations": "<p>Lists all invocations associated with a specific session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
     "ListSessions": "<p>Lists all sessions in your Amazon Web Services account. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>",
@@ -24,6 +28,8 @@
     "Retrieve": "<p>Queries a knowledge base and retrieves information from it.</p>",
     "RetrieveAndGenerate": "<p>Queries a knowledge base and generates responses based on the retrieved results and using the specified foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a>. The response only cites sources that are relevant to the query.</p>",
     "RetrieveAndGenerateStream": "<p>Queries a knowledge base and generates responses based on the retrieved results, with output in streaming format.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>InvokeModelWithResponseStream</code>.</p> </note> <p>This operation requires permission for the <code> bedrock:RetrieveAndGenerate</code> action.</p>",
+    "StartFlowExecution": "<p>Starts an asynchronous execution of an Amazon Bedrock flow. Unlike synchronous flows that run until completion or time out after five minutes, you can run asynchronous flows for longer durations. Asynchronous flows also yield control so that your application can perform other tasks.</p> <p>This operation returns an Amazon Resource Name (ARN) that you can use to track and manage your flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+    "StopFlowExecution": "<p>Stops an Amazon Bedrock flow's asynchronous execution. This operation prevents further processing of the flow and changes the execution status to <code>Aborted</code>.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the Amazon Bedrock User Guide.</p>",
     "UntagResource": "<p>Remove tags from a resource.</p>",
     "UpdateSession": "<p>Updates the metadata or encryption settings of a session. For more information about sessions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/sessions.html\">Store and retrieve conversation history and context with Amazon Bedrock sessions</a>.</p>"
@@ -469,6 +475,12 @@
         "InvokeInlineAgentRequest$collaborators": "<p> List of collaborator inline agents. </p>"
       }
     },
+    "ConditionResultEvent": {
+      "base": "<p>Contains information about a condition evaluation result during an async execution. This event is generated when a condition node in the flow evaluates its conditions.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$conditionResultEvent": "<p>Contains information about a condition evaluation result during the async execution. This event is generated when a condition node in the flow evaluates its conditions.</p>"
+      }
+    },
     "ConfirmationState": {
       "base": null,
       "refs": {
@@ -584,12 +596,20 @@
     "DateTimestamp": {
       "base": "<p>Time Stamp.</p>",
       "refs": {
+        "ConditionResultEvent$timestamp": "<p>The timestamp when the condition evaluation occurred.</p>",
         "CreateInvocationResponse$createdAt": "<p>The timestamp for when the invocation was created.</p>",
         "CreateSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
+        "FlowExecutionInputEvent$timestamp": "<p>The timestamp when the inputs are provided.</p>",
+        "FlowExecutionOutputEvent$timestamp": "<p>The timestamp when the outputs are produced.</p>",
+        "FlowExecutionSummary$createdAt": "<p>The timestamp when the async execution was created.</p>",
+        "FlowExecutionSummary$endedAt": "<p>The timestamp when the async execution ended. This field is only populated when the execution has completed, failed, timed out, or been aborted.</p>",
+        "FlowFailureEvent$timestamp": "<p>The timestamp when the failure occurred.</p>",
         "FlowTraceConditionNodeResultEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeActionEvent$timestamp": "<p>The date and time that the operation was called.</p>",
         "FlowTraceNodeInputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
         "FlowTraceNodeOutputEvent$timestamp": "<p>The date and time that the trace was returned.</p>",
+        "GetFlowExecutionResponse$endedAt": "<p>The timestamp when the async execution ended. This field is only populated when the execution has completed, failed, timed out, or been aborted.</p>",
+        "GetFlowExecutionResponse$startedAt": "<p>The timestamp when the async execution started.</p>",
         "GetSessionResponse$createdAt": "<p>The timestamp for when the session was created.</p>",
         "GetSessionResponse$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
         "InvocationStep$invocationStepTime": "<p>The timestamp for when the invocation step was created.</p>",
@@ -597,6 +617,9 @@
         "InvocationSummary$createdAt": "<p>The timestamp for when the invocation was created.</p>",
         "MemorySessionSummary$sessionExpiryTime": "<p>The time when the memory duration for the session is set to end.</p>",
         "MemorySessionSummary$sessionStartTime": "<p>The start time for this session.</p>",
+        "NodeFailureEvent$timestamp": "<p>The timestamp when the node failure occurred.</p>",
+        "NodeInputEvent$timestamp": "<p>The timestamp when the inputs were provided to the node.</p>",
+        "NodeOutputEvent$timestamp": "<p>The timestamp when the outputs were produced by the node.</p>",
         "PutInvocationStepRequest$invocationStepTime": "<p>The timestamp for when the invocation step occurred.</p>",
         "SessionSummary$createdAt": "<p>The timestamp for when the session was created.</p>",
         "SessionSummary$lastUpdatedAt": "<p>The timestamp for when the session was last modified.</p>",
@@ -637,11 +660,13 @@
     "Document": {
       "base": null,
       "refs": {
+        "FlowExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
         "FlowInputContent$document": "<p>The input to send to the prompt flow input node.</p>",
         "FlowMultiTurnInputContent$document": "<p>The requested additional input to send back to the multi-turn flow node.</p>",
         "FlowOutputContent$document": "<p>The content in the output.</p>",
         "FlowTraceNodeInputContent$document": "<p>The content of the node input.</p>",
         "FlowTraceNodeOutputContent$document": "<p>The content of the node output.</p>",
+        "NodeExecutionContent$document": "<p>The document content of the field, which can contain text or structured data.</p>",
         "PromptConfiguration$additionalModelRequestFields": "<p>If the Converse or ConverseStream operations support the model, <code>additionalModelRequestFields</code> contains additional inference parameters, beyond the base set of inference parameters in the <code>inferenceConfiguration</code> field. </p> <p>For more information, see <i>Inference request parameters and response fields for foundation models</i> in the Amazon Bedrock user guide.</p>",
         "RerankDocument$jsonDocument": "<p>Contains a JSON document to rerank.</p>"
       }
@@ -815,7 +840,16 @@
     "FlowAliasIdentifier": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias.</p>"
+        "FlowExecutionSummary$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "GetExecutionFlowSnapshotRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the async execution.</p>",
+        "GetExecutionFlowSnapshotResponse$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the async execution.</p>",
+        "GetFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "GetFlowExecutionResponse$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "InvokeFlowRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias.</p>",
+        "ListFlowExecutionEventsRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>",
+        "ListFlowExecutionsRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias to list executions for.</p>",
+        "StartFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias to use for the async execution.</p>",
+        "StopFlowExecutionRequest$flowAliasIdentifier": "<p>The unique identifier of the flow alias used for the execution.</p>"
       }
     },
     "FlowCompletionEvent": {
@@ -830,6 +864,55 @@
         "FlowCompletionEvent$completionReason": "<p>The reason that the flow completed.</p>"
       }
     },
+    "FlowErrorCode": {
+      "base": null,
+      "refs": {
+        "FlowFailureEvent$errorCode": "<p>The error code that identifies the type of failure that occurred.</p>"
+      }
+    },
+    "FlowExecutionContent": {
+      "base": "<p>Contains the content of an async execution input or output field.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowInputField$content": "<p>The content of the input field, which can contain text or structured data.</p>",
+        "FlowOutputField$content": "<p>The content of the output field, which can contain text or structured data.</p>"
+      }
+    },
+    "FlowExecutionError": {
+      "base": "<p>Contains information about an error that occurred during an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionErrors$member": null
+      }
+    },
+    "FlowExecutionErrorType": {
+      "base": null,
+      "refs": {
+        "FlowExecutionError$error": "<p>The error code for the type of error that occurred.</p>"
+      }
+    },
+    "FlowExecutionErrors": {
+      "base": null,
+      "refs": {
+        "GetFlowExecutionResponse$errors": "<p>A list of errors that occurred during the async execution. Each error includes an error code, message, and the node where the error occurred, if applicable.</p>"
+      }
+    },
+    "FlowExecutionEvent": {
+      "base": "<p>Represents an event that occurred during an async execution. This is a union type that can contain one of several event types, such as node input and output events; flow input and output events; condition node result events, or failure events.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvents$member": null
+      }
+    },
+    "FlowExecutionEventType": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionEventsRequest$eventType": "<p>The type of events to retrieve. Specify <code>Node</code> for node-level events or <code>Flow</code> for flow-level events.</p>"
+      }
+    },
+    "FlowExecutionEvents": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionEventsResponse$flowExecutionEvents": "<p>A list of events that occurred during the async execution. Events can include node inputs and outputs, flow inputs and outputs, condition results, and failure events.</p>"
+      }
+    },
     "FlowExecutionId": {
       "base": null,
       "refs": {
@@ -837,10 +920,82 @@
         "InvokeFlowResponse$executionId": "<p>The unique identifier for the current flow execution.</p>"
       }
     },
+    "FlowExecutionIdentifier": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the async execution.</p>",
+        "GetExecutionFlowSnapshotRequest$executionIdentifier": "<p>The unique identifier of the async execution.</p>",
+        "GetFlowExecutionRequest$executionIdentifier": "<p>The unique identifier of the async execution to retrieve.</p>",
+        "GetFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the async execution.</p>",
+        "ListFlowExecutionEventsRequest$executionIdentifier": "<p>The unique identifier of the async execution.</p>",
+        "StartFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the async execution.</p>",
+        "StopFlowExecutionRequest$executionIdentifier": "<p>The unique identifier of the async execution to stop.</p>",
+        "StopFlowExecutionResponse$executionArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the async execution that was stopped.</p>"
+      }
+    },
+    "FlowExecutionInputEvent": {
+      "base": "<p>Contains information about the inputs provided to the flow at the start of async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowInputEvent": "<p>Contains information about the inputs provided to the flow at the start of execution.</p>"
+      }
+    },
+    "FlowExecutionName": {
+      "base": null,
+      "refs": {
+        "StartFlowExecutionRequest$flowExecutionName": "<p>The unique name for the async execution. If you don't provide one, a system-generated name is used.</p>"
+      }
+    },
+    "FlowExecutionOutputEvent": {
+      "base": "<p>Contains information about the outputs produced by the flow during an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowOutputEvent": "<p>Contains information about the outputs produced by the flow at the end of execution.</p>"
+      }
+    },
+    "FlowExecutionRoleArn": {
+      "base": null,
+      "refs": {
+        "GetExecutionFlowSnapshotResponse$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM service role that's used by the async execution.</p>"
+      }
+    },
+    "FlowExecutionStatus": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$status": "<p>The current status of the async execution.</p> <p>Async executions time out after 24 hours.</p>",
+        "GetFlowExecutionResponse$status": "<p>The current status of the async execution.</p> <p>Async executions time out after 24 hours.</p>",
+        "StopFlowExecutionResponse$status": "<p>The updated status of the async execution after the stop request. This will typically be ABORTED if the execution was successfully stopped.</p>"
+      }
+    },
+    "FlowExecutionSummaries": {
+      "base": null,
+      "refs": {
+        "ListFlowExecutionsResponse$flowExecutionSummaries": "<p>A list of async execution summaries. Each summary includes the execution ARN, flow identifier, flow alias identifier, flow version, status, and timestamps.</p>"
+      }
+    },
+    "FlowExecutionSummary": {
+      "base": "<p>Contains summary information about a flow's async execution, including its status, timestamps, and identifiers.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionSummaries$member": null
+      }
+    },
+    "FlowFailureEvent": {
+      "base": "<p>Contains information about a failure that occurred at the flow level during an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$flowFailureEvent": "<p>Contains information about a failure that occurred at the flow level during execution.</p>"
+      }
+    },
     "FlowIdentifier": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>"
+        "FlowExecutionSummary$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetExecutionFlowSnapshotRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetExecutionFlowSnapshotResponse$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "GetFlowExecutionResponse$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "InvokeFlowRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "ListFlowExecutionEventsRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>",
+        "ListFlowExecutionsRequest$flowIdentifier": "<p>The unique identifier of the flow to list executions for.</p>",
+        "StartFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow to execute.</p>",
+        "StopFlowExecutionRequest$flowIdentifier": "<p>The unique identifier of the flow.</p>"
       }
     },
     "FlowInput": {
@@ -855,10 +1010,23 @@
         "FlowInput$content": "<p>Contains information about an input into the prompt flow.</p>"
       }
     },
+    "FlowInputField": {
+      "base": "<p>Represents an input field provided to a flow during an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowInputFields$member": null
+      }
+    },
+    "FlowInputFields": {
+      "base": null,
+      "refs": {
+        "FlowExecutionInputEvent$fields": "<p>A list of input fields provided to the flow.</p>"
+      }
+    },
     "FlowInputs": {
       "base": null,
       "refs": {
-        "InvokeFlowRequest$inputs": "<p>A list of objects, each containing information about an input into the flow.</p>"
+        "InvokeFlowRequest$inputs": "<p>A list of objects, each containing information about an input into the flow.</p>",
+        "StartFlowExecutionRequest$inputs": "<p>The input data required for the async execution. This must match the input schema defined in the flow.</p>"
       }
     },
     "FlowMultiTurnInputContent": {
@@ -883,6 +1051,18 @@
       "base": "<p>Contains information about an output from prompt flow invoction.</p>",
       "refs": {
         "FlowResponseStream$flowOutputEvent": "<p>Contains information about an output from flow invocation.</p>"
+      }
+    },
+    "FlowOutputField": {
+      "base": "<p>Represents an output field produced by a flow during an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowOutputFields$member": null
+      }
+    },
+    "FlowOutputFields": {
+      "base": null,
+      "refs": {
+        "FlowExecutionOutputEvent$fields": "<p>A list of output fields produced by the flow.</p>"
       }
     },
     "FlowResponseStream": {
@@ -1076,6 +1256,26 @@
       }
     },
     "GetAgentMemoryResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetExecutionFlowSnapshotRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetExecutionFlowSnapshotResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetFlowExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetFlowExecutionResponse": {
       "base": null,
       "refs": {
       }
@@ -1629,6 +1829,7 @@
       "refs": {
         "Collaborator$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the AWS KMS key that encrypts the inline collaborator. </p>",
         "CreateSessionRequest$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key to use to encrypt the session data. The user or role creating the session must have permission to use the key. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>. </p>",
+        "GetExecutionFlowSnapshotResponse$customerEncryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key that's used to encrypt the flow snapshot.</p>",
         "GetSessionResponse$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the Key Management Service key used to encrypt the session data. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/session-encryption.html\">Amazon Bedrock session encryption</a>.</p>",
         "InvokeInlineAgentRequest$customerEncryptionKeyArn": "<p> The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to use to encrypt your inline agent. </p>",
         "RetrieveAndGenerateSessionConfiguration$kmsKeyArn": "<p>The ARN of the KMS key encrypting the session.</p>"
@@ -1757,6 +1958,26 @@
         "PromptOverrideConfiguration$overrideLambda": "<p>The ARN of the Lambda function to use when parsing the raw foundation model output in parts of the agent sequence. If you specify this field, at least one of the <code>promptConfigurations</code> must contain a <code>parserMode</code> value that is set to <code>OVERRIDDEN</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html\">Parser Lambda function in Amazon Bedrock Agents</a>. </p>"
       }
     },
+    "ListFlowExecutionEventsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFlowExecutionEventsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFlowExecutionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFlowExecutionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListInvocationStepsRequest": {
       "base": null,
       "refs": {
@@ -1808,6 +2029,8 @@
       "base": "<p>Max Results.</p>",
       "refs": {
         "GetAgentMemoryRequest$maxItems": "<p>The maximum number of items to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
+        "ListFlowExecutionEventsRequest$maxResults": "<p>The maximum number of events to return in a single response. If more events exist than the specified maxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
+        "ListFlowExecutionsRequest$maxResults": "<p>The maximum number of async executions to return in a single response. If more executions exist than the specified maxResults value, a token is included in the response so that the remaining results can be retrieved.</p>",
         "ListInvocationStepsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListInvocationsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListSessionsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
@@ -1953,7 +2176,8 @@
     "ModelPerformanceConfiguration": {
       "base": "<p>The performance configuration for a model called with <a>InvokeFlow</a>.</p>",
       "refs": {
-        "InvokeFlowRequest$modelPerformanceConfiguration": "<p>Model performance settings for the request.</p>"
+        "InvokeFlowRequest$modelPerformanceConfiguration": "<p>Model performance settings for the request.</p>",
+        "StartFlowExecutionRequest$modelPerformanceConfiguration": "<p>The performance settings for the foundation model used in the async execution.</p>"
       }
     },
     "Name": {
@@ -1973,6 +2197,10 @@
       "refs": {
         "GetAgentMemoryRequest$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "GetAgentMemoryResponse$nextToken": "<p>If the total number of results is greater than the maxItems value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
+        "ListFlowExecutionEventsRequest$nextToken": "<p>A token to retrieve the next set of results. This value is returned in the response if more results are available.</p>",
+        "ListFlowExecutionEventsResponse$nextToken": "<p>A token to retrieve the next set of results. This value is returned if more results are available.</p>",
+        "ListFlowExecutionsRequest$nextToken": "<p>A token to retrieve the next set of results. This value is returned in the response if more results are available.</p>",
+        "ListFlowExecutionsResponse$nextToken": "<p>A token to retrieve the next set of results. This value is returned if more results are available.</p>",
         "ListInvocationStepsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
         "ListInvocationStepsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListInvocationsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results. </p>",
@@ -1985,30 +2213,96 @@
         "RetrieveResponse$nextToken": "<p>If there are more results than can fit in the response, the response returns a <code>nextToken</code>. Use this token in the <code>nextToken</code> field of another request to retrieve the next batch of results.</p>"
       }
     },
+    "NodeErrorCode": {
+      "base": null,
+      "refs": {
+        "NodeFailureEvent$errorCode": "<p>The error code that identifies the type of failure that occurred at the node.</p>"
+      }
+    },
+    "NodeExecutionContent": {
+      "base": "<p>Contains the content of a flow node's input or output field for an async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "NodeInputField$content": "<p>The content of the input field, which can contain text or structured data.</p>",
+        "NodeOutputField$content": "<p>The content of the output field, which can contain text or structured data.</p>"
+      }
+    },
+    "NodeFailureEvent": {
+      "base": "<p>Contains information about a failure that occurred at a specific node during a flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeFailureEvent": "<p>Contains information about a failure that occurred at a specific node during execution.</p>"
+      }
+    },
+    "NodeInputEvent": {
+      "base": "<p>Contains information about the inputs provided to a specific node during a flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeInputEvent": "<p>Contains information about the inputs provided to a specific node during execution.</p>"
+      }
+    },
+    "NodeInputField": {
+      "base": "<p>Represents an input field provided to a node during a flow's async execution.</p>",
+      "refs": {
+        "NodeInputFields$member": null
+      }
+    },
+    "NodeInputFields": {
+      "base": null,
+      "refs": {
+        "NodeInputEvent$fields": "<p>A list of input fields provided to the node.</p>"
+      }
+    },
     "NodeInputName": {
       "base": null,
       "refs": {
         "FlowInput$nodeInputName": "<p>The name of the input from the flow input node.</p>",
-        "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>"
+        "FlowInputField$name": "<p>The name of the input field as defined in the flow's input schema.</p>",
+        "FlowTraceNodeInputField$nodeInputName": "<p>The name of the node input.</p>",
+        "NodeInputField$name": "<p>The name of the input field as defined in the node's input schema.</p>"
       }
     },
     "NodeName": {
       "base": null,
       "refs": {
+        "ConditionResultEvent$nodeName": "<p>The name of the condition node that evaluated the conditions.</p>",
+        "FlowExecutionError$nodeName": "<p>The name of the node in the flow where the error occurred (if applicable).</p>",
+        "FlowExecutionInputEvent$nodeName": "<p>The name of the node that receives the inputs.</p>",
+        "FlowExecutionOutputEvent$nodeName": "<p>The name of the node that produces the outputs.</p>",
         "FlowInput$nodeName": "<p>The name of the flow input node that begins the prompt flow.</p>",
         "FlowMultiTurnInputRequestEvent$nodeName": "<p>The name of the node in the flow that is requesting the input.</p>",
         "FlowOutputEvent$nodeName": "<p>The name of the flow output node that the output is from.</p>",
         "FlowTraceConditionNodeResultEvent$nodeName": "<p>The name of the condition node.</p>",
         "FlowTraceNodeActionEvent$nodeName": "<p>The name of the node that called the operation.</p>",
         "FlowTraceNodeInputEvent$nodeName": "<p>The name of the node that received the input.</p>",
-        "FlowTraceNodeOutputEvent$nodeName": "<p>The name of the node that yielded the output.</p>"
+        "FlowTraceNodeOutputEvent$nodeName": "<p>The name of the node that yielded the output.</p>",
+        "NodeFailureEvent$nodeName": "<p>The name of the node where the failure occurred.</p>",
+        "NodeInputEvent$nodeName": "<p>The name of the node that received the inputs.</p>",
+        "NodeOutputEvent$nodeName": "<p>The name of the node that produced the outputs.</p>"
+      }
+    },
+    "NodeOutputEvent": {
+      "base": "<p>Contains information about the outputs produced by a specific node during a flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "FlowExecutionEvent$nodeOutputEvent": "<p>Contains information about the outputs produced by a specific node during execution.</p>"
+      }
+    },
+    "NodeOutputField": {
+      "base": "<p>Represents an output field produced by a node during a flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "NodeOutputFields$member": null
+      }
+    },
+    "NodeOutputFields": {
+      "base": null,
+      "refs": {
+        "NodeOutputEvent$fields": "<p>A list of output fields produced by the node.</p>"
       }
     },
     "NodeOutputName": {
       "base": null,
       "refs": {
         "FlowInput$nodeOutputName": "<p>The name of the output from the flow input node that begins the prompt flow.</p>",
-        "FlowTraceNodeOutputField$nodeOutputName": "<p>The name of the node output.</p>"
+        "FlowOutputField$name": "<p>The name of the output field as defined in the flow's output schema.</p>",
+        "FlowTraceNodeOutputField$nodeOutputName": "<p>The name of the node output.</p>",
+        "NodeOutputField$name": "<p>The name of the output field as defined in the node's output schema.</p>"
       }
     },
     "NodeType": {
@@ -2879,6 +3173,18 @@
         "S3ObjectFile$uri": "<p>The uri of the s3 object.</p>"
       }
     },
+    "SatisfiedCondition": {
+      "base": "<p>Represents a condition that was satisfied during a condition node evaluation in a flow's async execution.</p> <note> <p>Asynchronous flows is in preview release for Amazon Bedrock and is subject to change.</p> </note>",
+      "refs": {
+        "SatisfiedConditions$member": null
+      }
+    },
+    "SatisfiedConditions": {
+      "base": null,
+      "refs": {
+        "ConditionResultEvent$satisfiedConditions": "<p>A list of conditions that were satisfied during the evaluation.</p>"
+      }
+    },
     "SearchType": {
       "base": null,
       "refs": {
@@ -3021,6 +3327,26 @@
         "Span$start": "<p>Where the text with a citation starts in the generated output.</p>"
       }
     },
+    "StartFlowExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartFlowExecutionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopFlowExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopFlowExecutionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StopSequences": {
       "base": null,
       "refs": {
@@ -3065,6 +3391,8 @@
         "ContentMap$key": null,
         "CustomOrchestrationTraceEvent$text": "<p> The text that prompted the event at this step. </p>",
         "Files$member": null,
+        "FlowExecutionError$message": "<p>A descriptive message that provides details about the error.</p>",
+        "FlowFailureEvent$errorMessage": "<p>A descriptive message that provides details about the failure.</p>",
         "FlowTraceCondition$conditionName": "<p>The name of the condition.</p>",
         "FlowTraceNodeActionEvent$operationName": "<p>The name of the operation that the node called.</p>",
         "FlowTraceNodeActionEvent$requestId": "<p>The ID of the request that the node made to the operation.</p>",
@@ -3079,6 +3407,7 @@
         "FunctionResult$agentId": "<p>The agent's ID.</p>",
         "FunctionResult$function": "<p>The name of the function that was called.</p>",
         "GeneratedQuery$sql": "<p>An SQL query that corresponds to the natural language query.</p>",
+        "GetExecutionFlowSnapshotResponse$definition": "<p>The flow definition used for the async execution, including the nodes, connections, and configuration at the time when the execution started.</p> <p>The definition returns as a string that follows the structure of a <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_FlowDefinition.html\">FlowDefinition</a> object.</p>",
         "GuardrailCustomWord$match": "<p>The match details for the custom word filter in the Guardrail.</p>",
         "GuardrailManagedWord$match": "<p>The match details for the managed word filter in the Guardrail.</p>",
         "GuardrailPiiEntityFilter$match": "<p>The match to settings in the Guardrail filter to identify and remove PII.</p>",
@@ -3091,6 +3420,7 @@
         "InputFile$name": "<p>The name of the source file.</p>",
         "InternalServerException$reason": "<p>The reason for the exception. If the reason is <code>BEDROCK_MODEL_INVOCATION_SERVICE_UNAVAILABLE</code>, the model invocation service is unavailable. Retry your request.</p>",
         "Metadata$clientRequestId": "<p>A unique identifier associated with the downstream invocation. This ID can be used for tracing, debugging, and identifying specific invocations in customer logs or systems.</p>",
+        "NodeFailureEvent$errorMessage": "<p>A descriptive message that provides details about the node failure.</p>",
         "OutputFile$name": "<p>The name of the file containing response from code interpreter.</p>",
         "Parameter$name": "<p>The name of the parameter.</p>",
         "Parameter$type": "<p>The type of the parameter.</p>",
@@ -3118,6 +3448,7 @@
         "RetrieveAndGenerateOutputEvent$text": "<p>A text response.</p>",
         "ReturnControlPayload$invocationId": "<p>The identifier of the action group invocation.</p>",
         "ReturnControlResults$invocationId": "<p>The action's invocation ID.</p>",
+        "SatisfiedCondition$conditionName": "<p>The name of the condition that was satisfied.</p>",
         "SessionAttributesMap$key": null,
         "SessionAttributesMap$value": null,
         "SessionState$invocationId": "<p>The identifier of the invocation of an action. This value must match the <code>invocationId</code> returned in the <code>InvokeAgent</code> response for the action whose results are provided in the <code>returnControlInvocationResults</code> field. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html\">Return control to the agent developer</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html\">Control session context</a>.</p>",
@@ -3135,7 +3466,7 @@
       "base": null,
       "refs": {
         "InlineAgentTracePart$eventTime": "<p>The time that trace occurred. </p>",
-        "Metadata$endTime": "<p>In the final response, <code>endTime</code> is the end time time of the agent invocation operation.</p>",
+        "Metadata$endTime": "<p>In the final response, <code>endTime</code> is the end time of the agent invocation operation.</p>",
         "Metadata$startTime": "<p>In the final response, <code>startTime</code> is the start time of the agent invocation operation.</p>",
         "TracePart$eventTime": "<p> The time of the trace. </p>"
       }
@@ -3405,6 +3736,14 @@
       "base": null,
       "refs": {
         "ActionGroupInvocationInput$verb": "<p>The API method being used, based off the action group.</p>"
+      }
+    },
+    "Version": {
+      "base": null,
+      "refs": {
+        "FlowExecutionSummary$flowVersion": "<p>The version of the flow used for the execution.</p>",
+        "GetExecutionFlowSnapshotResponse$flowVersion": "<p>The version of the flow used for the async execution.</p>",
+        "GetFlowExecutionResponse$flowVersion": "<p>The version of the flow used for the execution.</p>"
       }
     }
   }
