@@ -402,6 +402,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetClustersForImage":{
+      "name":"GetClustersForImage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cluster/get",
+        "responseCode":200
+      },
+      "input":{"shape":"GetClustersForImageRequest"},
+      "output":{"shape":"GetClustersForImageResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetConfiguration":{
       "name":"GetConfiguration",
       "http":{
@@ -1266,6 +1282,8 @@
         "architectures":{"shape":"StringFilterList"},
         "imageShas":{"shape":"StringFilterList"},
         "imageTags":{"shape":"StringFilterList"},
+        "inUseCount":{"shape":"NumberFilterList"},
+        "lastInUseAt":{"shape":"DateFilterList"},
         "repositories":{"shape":"StringFilterList"},
         "resourceIds":{"shape":"StringFilterList"},
         "sortBy":{"shape":"AwsEcrContainerSortBy"},
@@ -1280,6 +1298,8 @@
         "architecture":{"shape":"String"},
         "imageSha":{"shape":"String"},
         "imageTags":{"shape":"StringList"},
+        "inUseCount":{"shape":"Long"},
+        "lastInUseAt":{"shape":"DateTimeTimestamp"},
         "repository":{"shape":"String"},
         "resourceId":{"shape":"NonEmptyString"},
         "severityCounts":{"shape":"SeverityCounts"}
@@ -1297,6 +1317,8 @@
         "author":{"shape":"String"},
         "imageHash":{"shape":"ImageHash"},
         "imageTags":{"shape":"ImageTagList"},
+        "inUseCount":{"shape":"Long"},
+        "lastInUseAt":{"shape":"DateTimeTimestamp"},
         "platform":{"shape":"Platform"},
         "pushedAt":{"shape":"DateTimeTimestamp"},
         "registry":{"shape":"NonEmptyString"},
@@ -1310,6 +1332,66 @@
         "HIGH",
         "ALL"
       ]
+    },
+    "AwsEcsMetadataDetails":{
+      "type":"structure",
+      "required":[
+        "detailsGroup",
+        "taskDefinitionArn"
+      ],
+      "members":{
+        "detailsGroup":{"shape":"AwsEcsMetadataDetailsDetailsGroupString"},
+        "taskDefinitionArn":{"shape":"AwsEcsMetadataDetailsTaskDefinitionArnString"}
+      }
+    },
+    "AwsEcsMetadataDetailsDetailsGroupString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AwsEcsMetadataDetailsTaskDefinitionArnString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "AwsEksMetadataDetails":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"AwsEksMetadataDetailsNamespaceString"},
+        "workloadInfoList":{"shape":"AwsEksWorkloadInfoList"}
+      }
+    },
+    "AwsEksMetadataDetailsNamespaceString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AwsEksWorkloadInfo":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"AwsEksWorkloadInfoNameString"},
+        "type":{"shape":"AwsEksWorkloadInfoTypeString"}
+      }
+    },
+    "AwsEksWorkloadInfoList":{
+      "type":"list",
+      "member":{"shape":"AwsEksWorkloadInfo"},
+      "max":100,
+      "min":0
+    },
+    "AwsEksWorkloadInfoNameString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AwsEksWorkloadInfoTypeString":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "AwsLambdaFunctionDetails":{
       "type":"structure",
@@ -2029,6 +2111,64 @@
       "max":64,
       "min":1
     },
+    "ClusterDetails":{
+      "type":"structure",
+      "required":[
+        "clusterMetadata",
+        "lastInUse"
+      ],
+      "members":{
+        "clusterMetadata":{"shape":"ClusterMetadata"},
+        "lastInUse":{"shape":"Timestamp"},
+        "runningUnitCount":{"shape":"Long"},
+        "stoppedUnitCount":{"shape":"Long"}
+      }
+    },
+    "ClusterForImageFilterCriteria":{
+      "type":"structure",
+      "required":["resourceId"],
+      "members":{
+        "resourceId":{"shape":"ClusterForImageFilterCriteriaResourceIdString"}
+      }
+    },
+    "ClusterForImageFilterCriteriaResourceIdString":{
+      "type":"string",
+      "pattern":"^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$"
+    },
+    "ClusterInformation":{
+      "type":"structure",
+      "required":["clusterArn"],
+      "members":{
+        "clusterArn":{"shape":"ClusterInformationClusterArnString"},
+        "clusterDetails":{"shape":"ClusterInformationClusterDetailsList"}
+      }
+    },
+    "ClusterInformationClusterArnString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^arn:aws(?:-[a-z0-9-]+)?:(?:ecs|eks):[a-z0-9-]+:[0-9]{12}:cluster/[a-zA-Z0-9_-]+$"
+    },
+    "ClusterInformationClusterDetailsList":{
+      "type":"list",
+      "member":{"shape":"ClusterDetails"},
+      "max":100,
+      "min":1
+    },
+    "ClusterInformationList":{
+      "type":"list",
+      "member":{"shape":"ClusterInformation"},
+      "max":100,
+      "min":1
+    },
+    "ClusterMetadata":{
+      "type":"structure",
+      "members":{
+        "awsEcsMetadataDetails":{"shape":"AwsEcsMetadataDetails"},
+        "awsEksMetadataDetails":{"shape":"AwsEksMetadataDetails"}
+      },
+      "union":true
+    },
     "CodeFilePath":{
       "type":"structure",
       "required":[
@@ -2185,6 +2325,8 @@
       "members":{
         "accountId":{"shape":"CoverageStringFilterList"},
         "ec2InstanceTags":{"shape":"CoverageMapFilterList"},
+        "ecrImageInUseCount":{"shape":"CoverageNumberFilterList"},
+        "ecrImageLastInUseAt":{"shape":"CoverageDateFilterList"},
         "ecrImageTags":{"shape":"CoverageStringFilterList"},
         "ecrRepositoryName":{"shape":"CoverageStringFilterList"},
         "imagePulledAt":{"shape":"CoverageDateFilterList"},
@@ -2219,6 +2361,19 @@
     "CoverageMapFilterList":{
       "type":"list",
       "member":{"shape":"CoverageMapFilter"},
+      "max":10,
+      "min":1
+    },
+    "CoverageNumberFilter":{
+      "type":"structure",
+      "members":{
+        "lowerInclusive":{"shape":"Long"},
+        "upperInclusive":{"shape":"Long"}
+      }
+    },
+    "CoverageNumberFilterList":{
+      "type":"list",
+      "member":{"shape":"CoverageNumberFilter"},
       "max":10,
       "min":1
     },
@@ -2750,6 +2905,7 @@
       "required":["rescanDuration"],
       "members":{
         "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
+        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"},
         "rescanDuration":{"shape":"EcrRescanDuration"}
       }
     },
@@ -2763,6 +2919,8 @@
       "type":"structure",
       "members":{
         "imagePulledAt":{"shape":"DateTimeTimestamp"},
+        "inUseCount":{"shape":"Long"},
+        "lastInUseAt":{"shape":"DateTimeTimestamp"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -2774,6 +2932,13 @@
         "DAYS_60",
         "DAYS_90",
         "DAYS_180"
+      ]
+    },
+    "EcrPullDateRescanMode":{
+      "type":"string",
+      "enum":[
+        "LAST_PULL_DATE",
+        "LAST_IN_USE_AT"
       ]
     },
     "EcrRepositoryMetadata":{
@@ -2798,6 +2963,7 @@
       "type":"structure",
       "members":{
         "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
+        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"},
         "rescanDuration":{"shape":"EcrRescanDuration"},
         "status":{"shape":"EcrRescanDurationStatus"},
         "updatedAt":{"shape":"DateTimeTimestamp"}
@@ -3055,6 +3221,8 @@
         "ec2InstanceVpcId":{"shape":"StringFilterList"},
         "ecrImageArchitecture":{"shape":"StringFilterList"},
         "ecrImageHash":{"shape":"StringFilterList"},
+        "ecrImageInUseCount":{"shape":"NumberFilterList"},
+        "ecrImageLastInUseAt":{"shape":"DateFilterList"},
         "ecrImagePushedAt":{"shape":"DateFilterList"},
         "ecrImageRegistry":{"shape":"StringFilterList"},
         "ecrImageRepositoryName":{"shape":"StringFilterList"},
@@ -3393,6 +3561,34 @@
       "members":{
         "nextToken":{"shape":"NextToken"},
         "scanResultDetails":{"shape":"CisScanResultDetailsList"}
+      }
+    },
+    "GetClustersForImageNextToken":{
+      "type":"string",
+      "max":3000,
+      "min":1
+    },
+    "GetClustersForImageRequest":{
+      "type":"structure",
+      "required":["filter"],
+      "members":{
+        "filter":{"shape":"ClusterForImageFilterCriteria"},
+        "maxResults":{"shape":"GetClustersForImageRequestMaxResultsInteger"},
+        "nextToken":{"shape":"GetClustersForImageNextToken"}
+      }
+    },
+    "GetClustersForImageRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "GetClustersForImageResponse":{
+      "type":"structure",
+      "required":["cluster"],
+      "members":{
+        "cluster":{"shape":"ClusterInformationList"},
+        "nextToken":{"shape":"GetClustersForImageNextToken"}
       }
     },
     "GetConfigurationRequest":{
@@ -4815,7 +5011,8 @@
         "DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED",
         "DEEP_INSPECTION_NO_INVENTORY",
         "AGENTLESS_INSTANCE_STORAGE_LIMIT_EXCEEDED",
-        "AGENTLESS_INSTANCE_COLLECTION_TIME_LIMIT_EXCEEDED"
+        "AGENTLESS_INSTANCE_COLLECTION_TIME_LIMIT_EXCEEDED",
+        "PENDING_REVIVAL_SCAN"
       ]
     },
     "ScanType":{

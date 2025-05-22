@@ -124,6 +124,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise listIntegrationsAsync(array $args = [])
  * @method \Aws\Result listLogAnomalyDetectors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listLogAnomalyDetectorsAsync(array $args = [])
+ * @method \Aws\Result listLogGroups(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listLogGroupsAsync(array $args = [])
  * @method \Aws\Result listLogGroupsForQuery(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listLogGroupsForQueryAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

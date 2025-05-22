@@ -24,8 +24,8 @@
       "input":{"shape":"GetDataAutomationStatusRequest"},
       "output":{"shape":"GetDataAutomationStatusResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
@@ -41,8 +41,8 @@
       "output":{"shape":"InvokeDataAutomationAsyncResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"}
       ],
@@ -57,11 +57,11 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "TagResource":{
@@ -74,11 +74,11 @@
       "output":{"shape":"TagResourceResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UntagResource":{
@@ -90,11 +90,11 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     }
   },
@@ -105,6 +105,12 @@
         "message":{"shape":"NonBlankString"}
       },
       "exception":true
+    },
+    "AssetProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "video":{"shape":"VideoAssetProcessingConfiguration"}
+      }
     },
     "AutomationJobStatus":{
       "type":"string",
@@ -241,7 +247,8 @@
       "type":"structure",
       "required":["s3Uri"],
       "members":{
-        "s3Uri":{"shape":"S3Uri"}
+        "s3Uri":{"shape":"S3Uri"},
+        "assetProcessingConfiguration":{"shape":"AssetProcessingConfiguration"}
       }
     },
     "InternalServerException":{
@@ -409,6 +416,27 @@
       },
       "exception":true
     },
+    "TimestampSegment":{
+      "type":"structure",
+      "required":[
+        "startTimeMillis",
+        "endTimeMillis"
+      ],
+      "members":{
+        "startTimeMillis":{"shape":"TimestampSegmentStartTimeMillisLong"},
+        "endTimeMillis":{"shape":"TimestampSegmentEndTimeMillisLong"}
+      }
+    },
+    "TimestampSegmentEndTimeMillisLong":{
+      "type":"long",
+      "box":true,
+      "min":300000
+    },
+    "TimestampSegmentStartTimeMillisLong":{
+      "type":"long",
+      "box":true,
+      "min":0
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -431,6 +459,19 @@
         "message":{"shape":"NonBlankString"}
       },
       "exception":true
+    },
+    "VideoAssetProcessingConfiguration":{
+      "type":"structure",
+      "members":{
+        "segmentConfiguration":{"shape":"VideoSegmentConfiguration"}
+      }
+    },
+    "VideoSegmentConfiguration":{
+      "type":"structure",
+      "members":{
+        "timestampSegment":{"shape":"TimestampSegment"}
+      },
+      "union":true
     }
   }
 }

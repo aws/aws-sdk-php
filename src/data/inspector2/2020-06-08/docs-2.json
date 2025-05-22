@@ -25,6 +25,7 @@
     "EnableDelegatedAdminAccount": "<p>Enables the Amazon Inspector delegated administrator for your Organizations organization.</p>",
     "GetCisScanReport": "<p>Retrieves a CIS scan report.</p>",
     "GetCisScanResultDetails": "<p>Retrieves CIS scan result details.</p>",
+    "GetClustersForImage": "<p>Returns a list of clusters and metadata associated with an image.</p>",
     "GetConfiguration": "<p>Retrieves setting configurations for Inspector scans.</p>",
     "GetDelegatedAdminAccount": "<p>Retrieves information about the Amazon Inspector delegated administrator for your organization.</p>",
     "GetEc2DeepInspectionConfiguration": "<p>Retrieves the activation status of Amazon Inspector deep inspection and custom paths associated with your account. </p>",
@@ -315,6 +316,60 @@
       "base": null,
       "refs": {
         "AwsEcrContainerAggregation$sortBy": "<p>The value to sort by.</p>"
+      }
+    },
+    "AwsEcsMetadataDetails": {
+      "base": "<p>Metadata about tasks where an image was in use.</p>",
+      "refs": {
+        "ClusterMetadata$awsEcsMetadataDetails": "<p>The details for an Amazon ECS cluster in the cluster metadata.</p>"
+      }
+    },
+    "AwsEcsMetadataDetailsDetailsGroupString": {
+      "base": null,
+      "refs": {
+        "AwsEcsMetadataDetails$detailsGroup": "<p>The details group information for a task in a cluster.</p>"
+      }
+    },
+    "AwsEcsMetadataDetailsTaskDefinitionArnString": {
+      "base": null,
+      "refs": {
+        "AwsEcsMetadataDetails$taskDefinitionArn": "<p>The task definition ARN.</p>"
+      }
+    },
+    "AwsEksMetadataDetails": {
+      "base": "<p>The metadata for an Amazon EKS pod where an Amazon ECR image is in use.</p>",
+      "refs": {
+        "ClusterMetadata$awsEksMetadataDetails": "<p>The details for an Amazon EKS cluster in the cluster metadata.</p>"
+      }
+    },
+    "AwsEksMetadataDetailsNamespaceString": {
+      "base": null,
+      "refs": {
+        "AwsEksMetadataDetails$namespace": "<p>The namespace for an Amazon EKS cluster.</p>"
+      }
+    },
+    "AwsEksWorkloadInfo": {
+      "base": "<p>Information about the workload.</p>",
+      "refs": {
+        "AwsEksWorkloadInfoList$member": null
+      }
+    },
+    "AwsEksWorkloadInfoList": {
+      "base": null,
+      "refs": {
+        "AwsEksMetadataDetails$workloadInfoList": "<p>The list of workloads.</p>"
+      }
+    },
+    "AwsEksWorkloadInfoNameString": {
+      "base": null,
+      "refs": {
+        "AwsEksWorkloadInfo$name": "<p>The name of the workload.</p>"
+      }
+    },
+    "AwsEksWorkloadInfoTypeString": {
+      "base": null,
+      "refs": {
+        "AwsEksWorkloadInfo$type": "<p>The workload type.</p>"
       }
     },
     "AwsLambdaFunctionDetails": {
@@ -937,6 +992,54 @@
         "EnableRequest$clientToken": "<p>The idempotency token for the request.</p>"
       }
     },
+    "ClusterDetails": {
+      "base": "<p>Details about the task or pod in the cluster.</p>",
+      "refs": {
+        "ClusterInformationClusterDetailsList$member": null
+      }
+    },
+    "ClusterForImageFilterCriteria": {
+      "base": "<p>The filter criteria to be used.</p>",
+      "refs": {
+        "GetClustersForImageRequest$filter": "<p>The resource Id for the Amazon ECR image.</p>"
+      }
+    },
+    "ClusterForImageFilterCriteriaResourceIdString": {
+      "base": null,
+      "refs": {
+        "ClusterForImageFilterCriteria$resourceId": "<p>The resource Id to be used in the filter criteria.</p>"
+      }
+    },
+    "ClusterInformation": {
+      "base": "<p>Information about the cluster.</p>",
+      "refs": {
+        "ClusterInformationList$member": null
+      }
+    },
+    "ClusterInformationClusterArnString": {
+      "base": null,
+      "refs": {
+        "ClusterInformation$clusterArn": "<p>The cluster ARN.</p>"
+      }
+    },
+    "ClusterInformationClusterDetailsList": {
+      "base": null,
+      "refs": {
+        "ClusterInformation$clusterDetails": "<p>Details about the cluster.</p>"
+      }
+    },
+    "ClusterInformationList": {
+      "base": null,
+      "refs": {
+        "GetClustersForImageResponse$cluster": "<p>A unit of work inside of a cluster, which can include metadata about the cluster.</p>"
+      }
+    },
+    "ClusterMetadata": {
+      "base": "<p>The metadata for a cluster.</p>",
+      "refs": {
+        "ClusterDetails$clusterMetadata": null
+      }
+    },
     "CodeFilePath": {
       "base": "<p>Contains information on where a code vulnerability is located in your Lambda function.</p>",
       "refs": {
@@ -1047,6 +1150,7 @@
     "CoverageDateFilterList": {
       "base": null,
       "refs": {
+        "CoverageFilterCriteria$ecrImageLastInUseAt": "<p>The Amazon ECR image that was last in use.</p>",
         "CoverageFilterCriteria$imagePulledAt": "<p>The date an image was last pulled at.</p>",
         "CoverageFilterCriteria$lastScannedAt": "<p>Filters Amazon Web Services resources based on whether Amazon Inspector has checked them for vulnerabilities within the specified time range.</p>"
       }
@@ -1075,6 +1179,18 @@
       "refs": {
         "CoverageFilterCriteria$ec2InstanceTags": "<p>The Amazon EC2 instance tags to filter on.</p>",
         "CoverageFilterCriteria$lambdaFunctionTags": "<p>Returns coverage statistics for Amazon Web Services Lambda functions filtered by tag.</p>"
+      }
+    },
+    "CoverageNumberFilter": {
+      "base": "<p>The coverage number to be used in the filter.</p>",
+      "refs": {
+        "CoverageNumberFilterList$member": null
+      }
+    },
+    "CoverageNumberFilterList": {
+      "base": null,
+      "refs": {
+        "CoverageFilterCriteria$ecrImageInUseCount": "<p>The number of Amazon ECR images in use.</p>"
       }
     },
     "CoverageResourceType": {
@@ -1281,6 +1397,8 @@
     "DateFilterList": {
       "base": null,
       "refs": {
+        "AwsEcrContainerAggregation$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
+        "FilterCriteria$ecrImageLastInUseAt": "<p>Filter criteria indicating when an Amazon ECR image was last used in an Amazon ECS cluster task or Amazon EKS cluster pod.</p>",
         "FilterCriteria$ecrImagePushedAt": "<p>Details on the Amazon ECR image push date and time used to filter findings.</p>",
         "FilterCriteria$firstObservedAt": "<p>Details on the date and time a finding was first seen used to filter findings.</p>",
         "FilterCriteria$lambdaFunctionLastModifiedAt": "<p>Filters the list of Amazon Web Services Lambda functions by the date and time that a user last updated the configuration, in <a href=\"https://www.iso.org/iso-8601-date-and-time-format.html\">ISO 8601 format</a> </p>",
@@ -1292,11 +1410,14 @@
       "base": null,
       "refs": {
         "AwsEc2InstanceDetails$launchedAt": "<p>The date and time the Amazon EC2 instance was launched at.</p>",
+        "AwsEcrContainerAggregationResponse$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
+        "AwsEcrContainerImageDetails$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "AwsEcrContainerImageDetails$pushedAt": "<p>The date and time the Amazon ECR container image was pushed.</p>",
         "CoverageDateFilter$endInclusive": "<p>A timestamp representing the end of the time period to filter results by.</p>",
         "CoverageDateFilter$startInclusive": "<p>A timestamp representing the start of the time period to filter results by.</p>",
         "CoveredResource$lastScannedAt": "<p>The date and time the resource was last checked for vulnerabilities.</p>",
         "EcrContainerImageMetadata$imagePulledAt": "<p>The date an image was last pulled at.</p>",
+        "EcrContainerImageMetadata$lastInUseAt": "<p>The last time an Amazon ECR image was used in an Amazon ECS task or Amazon EKS pod.</p>",
         "EcrRescanDurationState$updatedAt": "<p>A timestamp representing when the last time the ECR scan duration setting was changed.</p>",
         "ExploitabilityDetails$lastKnownExploitAt": "<p>The date and time of the last exploit associated with a finding discovered in your environment.</p>",
         "Filter$createdAt": "<p>The date and time this filter was created at.</p>",
@@ -1537,6 +1658,13 @@
       "refs": {
         "EcrConfiguration$pullDateRescanDuration": "<p>The rescan duration configured for image pull date.</p>",
         "EcrRescanDurationState$pullDateRescanDuration": "<p>The rescan duration configured for image pull date.</p>"
+      }
+    },
+    "EcrPullDateRescanMode": {
+      "base": null,
+      "refs": {
+        "EcrConfiguration$pullDateRescanMode": "<p>The pull date for the re-scan mode.</p>",
+        "EcrRescanDurationState$pullDateRescanMode": "<p>The pull date for the re-scan mode.</p>"
       }
     },
     "EcrRepositoryMetadata": {
@@ -1999,6 +2127,29 @@
       }
     },
     "GetCisScanResultDetailsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClustersForImageNextToken": {
+      "base": null,
+      "refs": {
+        "GetClustersForImageRequest$nextToken": "<p>The pagination token from a previous request used to retrieve the next page of results.</p>",
+        "GetClustersForImageResponse$nextToken": "<p>The pagination token from a previous request used to retrieve the next page of results.</p>"
+      }
+    },
+    "GetClustersForImageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClustersForImageRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "GetClustersForImageRequest$maxResults": "<p>The maximum number of results to be returned in a single page of results.</p>"
+      }
+    },
+    "GetClustersForImageResponse": {
       "base": null,
       "refs": {
       }
@@ -2483,7 +2634,14 @@
         "AccountAggregationResponse$exploitAvailableCount": "<p> The number of findings that have an exploit available. </p>",
         "AccountAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "AmiAggregationResponse$affectedInstances": "<p>The IDs of Amazon EC2 instances using this AMI.</p>",
+        "AwsEcrContainerAggregationResponse$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "AwsEcrContainerImageDetails$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "ClusterDetails$runningUnitCount": "<p>The number of tasks or pods where an image was running on the cluster.</p>",
+        "ClusterDetails$stoppedUnitCount": "<p>The number of tasks or pods where an image was stopped on the cluster in the last 24 hours.</p>",
+        "CoverageNumberFilter$lowerInclusive": "<p>The lower inclusive for the coverage number.</p>",
+        "CoverageNumberFilter$upperInclusive": "<p>The upper inclusive for the coverage number.&gt;</p>",
         "Ec2InstanceAggregationResponse$networkFindings": "<p>The number of network findings for the Amazon EC2 instance.</p>",
+        "EcrContainerImageMetadata$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
         "FindingTypeAggregationResponse$exploitAvailableCount": "<p>The number of findings that have an exploit available.</p>",
         "FindingTypeAggregationResponse$fixAvailableCount": "<p> Details about the number of fixes. </p>",
         "ListCoverageStatisticsResponse$totalCounts": "<p>The total number for all groups.</p>",
@@ -2728,6 +2886,8 @@
     "NumberFilterList": {
       "base": null,
       "refs": {
+        "AwsEcrContainerAggregation$inUseCount": "<p>The number of Amazon ECS tasks or Amazon EKS pods where the Amazon ECR container image is in use.</p>",
+        "FilterCriteria$ecrImageInUseCount": "<p>Filter criteria indicating when details for an Amazon ECR image include when an Amazon ECR image is in use.</p>",
         "FilterCriteria$epssScore": "<p>The EPSS score used to filter findings.</p>",
         "FilterCriteria$inspectorScore": "<p>The Amazon Inspector score to filter on.</p>"
       }
@@ -3749,6 +3909,7 @@
         "CisDateFilter$earliestScanStartTime": "<p>The CIS date filter's earliest scan start time.</p>",
         "CisDateFilter$latestScanStartTime": "<p>The CIS date filter's latest scan start time.</p>",
         "CisScan$scanDate": "<p>The CIS scan's date.</p>",
+        "ClusterDetails$lastInUse": "<p>The last timestamp when Amazon Inspector recorded the image in use in the task or pod in the cluster.</p>",
         "DateFilter$endInclusive": "<p>A timestamp representing the end of the time period filtered on.</p>",
         "DateFilter$startInclusive": "<p>A timestamp representing the start of the time period filtered on.</p>",
         "FreeTrialInfo$end": "<p>The date and time that the Amazon Inspector free trail ends for a given account.</p>",

@@ -13402,6 +13402,10 @@
         "SrtSettings": {
           "shape": "__listOfSrtOutputDestinationSettings",
           "locationName": "srtSettings"
+        },
+        "LogicalInterfaceNames": {
+          "shape": "__listOf__string",
+          "locationName": "logicalInterfaceNames"
         }
       }
     },
@@ -21723,6 +21727,14 @@
         "TimecodeBurninSettings": {
           "shape": "TimecodeBurninSettings",
           "locationName": "timecodeBurninSettings"
+        },
+        "Bitrate": {
+          "shape": "__integerMin50000Max8000000",
+          "locationName": "bitrate"
+        },
+        "RateControlMode": {
+          "shape": "Av1RateControlMode",
+          "locationName": "rateControlMode"
         }
       },
       "required": [
@@ -24570,6 +24582,13 @@
       "member": {
         "shape": "CmafIngestCaptionLanguageMapping"
       }
+    },
+    "Av1RateControlMode": {
+      "type": "string",
+      "enum": [
+        "CBR",
+        "QVBR"
+      ]
     }
   }
 }

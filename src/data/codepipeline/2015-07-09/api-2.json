@@ -267,6 +267,21 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "ListDeployActionExecutionTargets":{
+      "name":"ListDeployActionExecutionTargets",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDeployActionExecutionTargetsInput"},
+      "output":{"shape":"ListDeployActionExecutionTargetsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"PipelineNotFoundException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"ActionExecutionNotFoundException"}
+      ]
+    },
     "ListPipelineExecutions":{
       "name":"ListPipelineExecutions",
       "http":{
@@ -862,6 +877,13 @@
         "inputArtifacts":{"shape":"ArtifactDetailList"},
         "namespace":{"shape":"ActionNamespace"}
       }
+    },
+    "ActionExecutionNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"}
+      },
+      "exception":true
     },
     "ActionExecutionOutput":{
       "type":"structure",
@@ -1478,6 +1500,42 @@
     "DeleteWebhookOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeployActionExecutionTarget":{
+      "type":"structure",
+      "members":{
+        "targetId":{"shape":"String"},
+        "targetType":{"shape":"String"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "events":{"shape":"DeployTargetEventList"}
+      }
+    },
+    "DeployActionExecutionTargetList":{
+      "type":"list",
+      "member":{"shape":"DeployActionExecutionTarget"}
+    },
+    "DeployTargetEvent":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "status":{"shape":"String"},
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "context":{"shape":"DeployTargetEventContext"}
+      }
+    },
+    "DeployTargetEventContext":{
+      "type":"structure",
+      "members":{
+        "ssmCommandId":{"shape":"String"},
+        "message":{"shape":"String"}
+      }
+    },
+    "DeployTargetEventList":{
+      "type":"list",
+      "member":{"shape":"DeployTargetEvent"}
     },
     "DeregisterWebhookWithThirdPartyInput":{
       "type":"structure",
@@ -2124,6 +2182,24 @@
       "required":["actionTypes"],
       "members":{
         "actionTypes":{"shape":"ActionTypeList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDeployActionExecutionTargetsInput":{
+      "type":"structure",
+      "required":["actionExecutionId"],
+      "members":{
+        "pipelineName":{"shape":"PipelineName"},
+        "actionExecutionId":{"shape":"ActionExecutionId"},
+        "filters":{"shape":"TargetFilterList"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListDeployActionExecutionTargetsOutput":{
+      "type":"structure",
+      "members":{
+        "targets":{"shape":"DeployActionExecutionTargetList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -3481,6 +3557,29 @@
       "type":"string",
       "max":256,
       "min":0
+    },
+    "TargetFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"TargetFilterName"},
+        "values":{"shape":"TargetFilterValueList"}
+      }
+    },
+    "TargetFilterList":{
+      "type":"list",
+      "member":{"shape":"TargetFilter"}
+    },
+    "TargetFilterName":{
+      "type":"string",
+      "enum":["TARGET_STATUS"]
+    },
+    "TargetFilterValue":{
+      "type":"string",
+      "min":1
+    },
+    "TargetFilterValueList":{
+      "type":"list",
+      "member":{"shape":"TargetFilterValue"}
     },
     "ThirdPartyJob":{
       "type":"structure",

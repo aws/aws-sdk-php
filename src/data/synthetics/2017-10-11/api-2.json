@@ -494,6 +494,8 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"UUID"},
+        "ScheduledRunId":{"shape":"UUID"},
+        "RetryAttempt":{"shape":"RetryAttempt"},
         "Name":{"shape":"CanaryName"},
         "Status":{"shape":"CanaryRunStatus"},
         "Timeline":{"shape":"CanaryRunTimeline"},
@@ -545,7 +547,8 @@
       "type":"structure",
       "members":{
         "Started":{"shape":"Timestamp"},
-        "Completed":{"shape":"Timestamp"}
+        "Completed":{"shape":"Timestamp"},
+        "MetricTimestampForRunAndRetries":{"shape":"Timestamp"}
       }
     },
     "CanaryRuns":{
@@ -557,14 +560,16 @@
       "required":["Expression"],
       "members":{
         "Expression":{"shape":"String"},
-        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"}
+        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"},
+        "RetryConfig":{"shape":"RetryConfigInput"}
       }
     },
     "CanaryScheduleOutput":{
       "type":"structure",
       "members":{
         "Expression":{"shape":"String"},
-        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"}
+        "DurationInSeconds":{"shape":"MaxOneYearInSeconds"},
+        "RetryConfig":{"shape":"RetryConfigOutput"}
       }
     },
     "CanaryState":{
@@ -1030,6 +1035,11 @@
       "max":31622400,
       "min":0
     },
+    "MaxRetries":{
+      "type":"integer",
+      "max":2,
+      "min":0
+    },
     "MaxSize100":{
       "type":"integer",
       "max":100,
@@ -1098,6 +1108,24 @@
     "ResourceToTag":{
       "type":"string",
       "enum":["lambda-function"]
+    },
+    "RetryAttempt":{
+      "type":"integer",
+      "max":2,
+      "min":1
+    },
+    "RetryConfigInput":{
+      "type":"structure",
+      "required":["MaxRetries"],
+      "members":{
+        "MaxRetries":{"shape":"MaxRetries"}
+      }
+    },
+    "RetryConfigOutput":{
+      "type":"structure",
+      "members":{
+        "MaxRetries":{"shape":"MaxRetries"}
+      }
     },
     "RoleArn":{
       "type":"string",

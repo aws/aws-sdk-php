@@ -7,6 +7,7 @@
     "AddJobFlowSteps": "<p>AddJobFlowSteps adds new steps to a running cluster. A maximum of 256 steps are allowed in each job flow.</p> <p>If your cluster is long-running (such as a Hive data warehouse) or complex, you may require more than 256 steps to process your data. You can bypass the 256-step limitation in various ways, including using SSH to connect to the master node and submitting queries directly to the software running on the master node, such as Hive and Hadoop.</p> <p>A step specifies the location of a JAR file stored either on the master node of the cluster or in Amazon S3. Each step is performed by the main function of the main class of the JAR file. The main class can be specified either in the manifest of the JAR or by using the MainFunction parameter of the step.</p> <p>Amazon EMR executes each step in the order listed. For a step to be considered complete, the main function must exit with a zero exit code and all Hadoop jobs started while the step was running must have completed and run successfully.</p> <p>You can only add steps to a cluster that is in one of the following states: STARTING, BOOTSTRAPPING, RUNNING, or WAITING.</p> <note> <p>The string values passed into <code>HadoopJarStep</code> object cannot exceed a total of 10240 characters.</p> </note>",
     "AddTags": "<p>Adds tags to an Amazon EMR resource, such as a cluster or an Amazon EMR Studio. Tags make it easier to associate resources in various ways, such as grouping clusters to track your Amazon EMR resource allocation costs. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html\">Tag Clusters</a>. </p>",
     "CancelSteps": "<p>Cancels a pending step or steps in a running cluster. Available only in Amazon EMR versions 4.8.0 and later, excluding version 5.0.0. A maximum of 256 steps are allowed in each CancelSteps request. CancelSteps is idempotent but asynchronous; it does not guarantee that a step will be canceled, even if the request is successfully submitted. When you use Amazon EMR releases 5.28.0 and later, you can cancel steps that are in a <code>PENDING</code> or <code>RUNNING</code> state. In earlier versions of Amazon EMR, you can only cancel steps that are in a <code>PENDING</code> state. </p>",
+    "CreatePersistentAppUI": "<p>Creates a persistent application user interface.</p>",
     "CreateSecurityConfiguration": "<p>Creates a security configuration, which is stored in the service and can be specified when a cluster is created.</p>",
     "CreateStudio": "<p>Creates a new Amazon EMR Studio.</p>",
     "CreateStudioSessionMapping": "<p>Maps a user or group to the Amazon EMR Studio specified by <code>StudioId</code>, and applies a session policy to refine Studio permissions for that user or group. Use <code>CreateStudioSessionMapping</code> to assign users to a Studio when you use IAM Identity Center authentication. For instructions on how to assign users to a Studio when you use IAM authentication, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-studio-manage-users.html#emr-studio-assign-users-groups\">Assign a user or group to your EMR Studio</a>.</p>",
@@ -16,6 +17,7 @@
     "DescribeCluster": "<p>Provides cluster-level details including status, hardware and software configuration, VPC settings, and so on.</p>",
     "DescribeJobFlows": "<p>This API is no longer supported and will eventually be removed. We recommend you use <a>ListClusters</a>, <a>DescribeCluster</a>, <a>ListSteps</a>, <a>ListInstanceGroups</a> and <a>ListBootstrapActions</a> instead.</p> <p>DescribeJobFlows returns a list of job flows that match all of the supplied parameters. The parameters can include a list of job flow IDs, job flow states, and restrictions on job flow creation date and time.</p> <p>Regardless of supplied parameters, only job flows created within the last two months are returned.</p> <p>If no parameters are supplied, then job flows matching either of the following criteria are returned:</p> <ul> <li> <p>Job flows created and completed in the last two weeks</p> </li> <li> <p> Job flows created within the last two months that are in one of the following states: <code>RUNNING</code>, <code>WAITING</code>, <code>SHUTTING_DOWN</code>, <code>STARTING</code> </p> </li> </ul> <p>Amazon EMR can return a maximum of 512 job flow descriptions.</p>",
     "DescribeNotebookExecution": "<p>Provides details of a notebook execution.</p>",
+    "DescribePersistentAppUI": "<p>Describes a persistent application user interface.</p>",
     "DescribeReleaseLabel": "<p>Provides Amazon EMR release label details, such as the releases available the Region where the API request is run, and the available applications for a specific Amazon EMR release label. Can also list Amazon EMR releases that support a specified version of Spark.</p>",
     "DescribeSecurityConfiguration": "<p>Provides the details of a security configuration by returning the configuration JSON.</p>",
     "DescribeStep": "<p>Provides more detail about the cluster step.</p>",
@@ -24,6 +26,8 @@
     "GetBlockPublicAccessConfiguration": "<p>Returns the Amazon EMR block public access configuration for your Amazon Web Services account in the current Region. For more information see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/configure-block-public-access.html\">Configure Block Public Access for Amazon EMR</a> in the <i>Amazon EMR Management Guide</i>.</p>",
     "GetClusterSessionCredentials": "<p>Provides temporary, HTTP basic credentials that are associated with a given runtime IAM role and used by a cluster with fine-grained access control activated. You can use these credentials to connect to cluster endpoints that support username and password authentication.</p>",
     "GetManagedScalingPolicy": "<p>Fetches the attached managed scaling policy for an Amazon EMR cluster. </p>",
+    "GetOnClusterAppUIPresignedURL": "<p>The presigned URL properties for the cluster's application user interface.</p>",
+    "GetPersistentAppUIPresignedURL": "<p>The presigned URL properties for the cluster's application user interface.</p>",
     "GetStudioSessionMapping": "<p>Fetches mapping details for the specified Amazon EMR Studio and identity (user or group).</p>",
     "ListBootstrapActions": "<p>Provides information about the bootstrap actions associated with a cluster.</p>",
     "ListClusters": "<p>Provides the status of all clusters visible to this Amazon Web Services account. Allows you to filter the list of clusters based on certain criteria; for example, filtering by cluster creation date and time or by status. This call returns a maximum of 50 clusters in unsorted order per call, but returns a marker to track the paging of the cluster list across multiple ListClusters calls.</p>",
@@ -136,8 +140,11 @@
         "BlockPublicAccessConfigurationMetadata$CreatedByArn": "<p>The Amazon Resource Name that created or last modified the configuration.</p>",
         "Cluster$ClusterArn": "<p>The Amazon Resource Name of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name of the cluster.</p>",
+        "CreatePersistentAppUIInput$TargetResourceArn": "<p>The unique Amazon Resource Name (ARN) of the target resource.</p>",
         "CreateStudioInput$IdcInstanceArn": "<p> The ARN of the IAM Identity Center instance to create the Studio application. </p>",
         "GetClusterSessionCredentialsInput$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the runtime role for interactive workload submission on the cluster. The runtime role can be a cross-account IAM role. The runtime role ARN is a combination of account ID, role name, and role type using the following format: <code>arn:partition:service:region:account:resource</code>.</p>",
+        "GetOnClusterAppUIPresignedURLInput$ExecutionRoleArn": "<p>The execution role ARN associated with the cluster's application user interface presigned URL.</p>",
+        "GetPersistentAppUIPresignedURLInput$ExecutionRoleArn": "<p>The execution role ARN associated with the presigned URL.</p>",
         "PutAutoScalingPolicyOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "RunJobFlowOutput$ClusterArn": "<p>The Amazon Resource Name (ARN) of the cluster.</p>",
         "Studio$IdcInstanceArn": "<p> The ARN of the IAM Identity Center instance the Studio application belongs to. </p>"
@@ -217,6 +224,9 @@
         "Cluster$AutoTerminate": "<p>Specifies whether the cluster should terminate after completing all steps.</p>",
         "Cluster$TerminationProtected": "<p>Indicates whether Amazon EMR will lock the cluster to prevent the Amazon EC2 instances from being terminated by an API call or user intervention, or in the event of a cluster error.</p>",
         "Cluster$VisibleToAllUsers": "<p>Indicates whether the cluster is visible to IAM principals in the Amazon Web Services account associated with the cluster. When <code>true</code>, IAM principals in the Amazon Web Services account can perform Amazon EMR cluster actions on the cluster that their IAM policies allow. When <code>false</code>, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions, regardless of IAM permissions policies attached to other IAM principals.</p> <p>The default value is <code>true</code> if a value is not provided when creating a cluster using the Amazon EMR API <a>RunJobFlow</a> command, the CLI <a href=\"https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html\">create-cluster</a> command, or the Amazon Web Services Management Console.</p>",
+        "CreatePersistentAppUIOutput$RuntimeRoleEnabledCluster": "<p>Represents if the EMR on EC2 cluster that the persisent application user interface is created for is a runtime role enabled cluster or not.</p>",
+        "GetOnClusterAppUIPresignedURLOutput$PresignedURLReady": "<p>Used to determine if the presigned URL is ready.</p>",
+        "GetPersistentAppUIPresignedURLOutput$PresignedURLReady": "<p>Used to determine if the presigned URL is ready.</p>",
         "JobFlowDetail$VisibleToAllUsers": "<p>Indicates whether the cluster is visible to IAM principals in the Amazon Web Services account associated with the cluster. When <code>true</code>, IAM principals in the Amazon Web Services account can perform Amazon EMR cluster actions that their IAM policies allow. When <code>false</code>, only the IAM principal that created the cluster and the Amazon Web Services account root user can perform Amazon EMR actions, regardless of IAM permissions policies attached to other IAM principals.</p> <p>The default value is <code>true</code> if a value is not provided when creating a cluster using the Amazon EMR API <a>RunJobFlow</a> command, the CLI <a href=\"https://docs.aws.amazon.com/cli/latest/reference/emr/create-cluster.html\">create-cluster</a> command, or the Amazon Web Services Management Console.</p>",
         "JobFlowInstancesConfig$KeepJobFlowAliveWhenNoSteps": "<p>Specifies whether the cluster should remain available after completing all steps. Defaults to <code>false</code>. For more information about configuring cluster termination, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-termination.html\">Control Cluster Termination</a> in the <i>EMR Management Guide</i>.</p>",
         "JobFlowInstancesConfig$TerminationProtected": "<p>Specifies whether to lock the cluster to prevent the Amazon EC2 instances from being terminated by API call, user intervention, or in the event of a job-flow error.</p>",
@@ -238,6 +248,8 @@
         "Cluster$UnhealthyNodeReplacement": "<p>Indicates whether Amazon EMR should gracefully replace Amazon EC2 core instances that have degraded within the cluster.</p>",
         "CreateStudioInput$TrustedIdentityPropagationEnabled": "<p> A Boolean indicating whether to enable Trusted identity propagation for the Studio. The default value is <code>false</code>. </p>",
         "EbsConfiguration$EbsOptimized": "<p>Indicates whether an Amazon EBS volume is EBS-optimized. The default is false. You should explicitly set this value to true to enable the Amazon EBS-optimized setting for an EC2 instance.</p>",
+        "GetOnClusterAppUIPresignedURLInput$DryRun": "<p>Determines if the user interface presigned URL is for a dry run.</p>",
+        "GetPersistentAppUIPresignedURLInput$AuthProxyCall": "<p>A boolean that represents if the caller is an authentication proxy call.</p>",
         "InstanceGroup$EbsOptimized": "<p>If the instance group is EBS-optimized. An Amazon EBS-optimized instance uses an optimized configuration stack and provides additional, dedicated capacity for Amazon EBS I/O.</p>",
         "InstanceTypeSpecification$EbsOptimized": "<p>Evaluates to <code>TRUE</code> when the specified <code>InstanceType</code> is EBS-optimized.</p>",
         "JobFlowInstancesConfig$UnhealthyNodeReplacement": "<p>Indicates whether Amazon EMR should gracefully replace core nodes that have degraded within the cluster.</p>",
@@ -436,6 +448,16 @@
         "RunJobFlowInput$Configurations": "<p>For Amazon EMR releases 4.0 and later. The list of configurations supplied for the Amazon EMR cluster that you are creating.</p>"
       }
     },
+    "CreatePersistentAppUIInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePersistentAppUIOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateSecurityConfigurationInput": {
       "base": null,
       "refs": {
@@ -504,6 +526,8 @@
         "NotebookExecution$EndTime": "<p>The timestamp when notebook execution ended.</p>",
         "NotebookExecutionSummary$StartTime": "<p>The timestamp when notebook execution started.</p>",
         "NotebookExecutionSummary$EndTime": "<p>The timestamp when notebook execution started.</p>",
+        "PersistentAppUI$CreationTime": "<p>The creation date and time for the persistent application user interface object.</p>",
+        "PersistentAppUI$LastModifiedTime": "<p>The date and time the persistent application user interface object was last changed.</p>",
         "SecurityConfigurationSummary$CreationDateTime": "<p>The date and time the security configuration was created.</p>",
         "SessionMappingDetail$CreationTime": "<p>The time the session mapping was created.</p>",
         "SessionMappingDetail$LastModifiedTime": "<p>The time the session mapping was last modified.</p>",
@@ -568,6 +592,16 @@
       "refs": {
       }
     },
+    "DescribePersistentAppUIInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribePersistentAppUIOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeReleaseLabelInput": {
       "base": null,
       "refs": {
@@ -619,6 +653,12 @@
       "base": null,
       "refs": {
         "InstanceGroupModifyConfig$EC2InstanceIdsToTerminate": "<p>The Amazon EC2 InstanceIds to terminate. After you terminate the instances, the instance group will not return to its original requested size.</p>"
+      }
+    },
+    "EMRContainersConfig": {
+      "base": "<p>The EMR container configuration.</p>",
+      "refs": {
+        "CreatePersistentAppUIInput$EMRContainersConfig": "<p>The EMR containers configuration.</p>"
       }
     },
     "EbsBlockDevice": {
@@ -770,6 +810,26 @@
       }
     },
     "GetManagedScalingPolicyOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetOnClusterAppUIPresignedURLInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetOnClusterAppUIPresignedURLOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPersistentAppUIPresignedURLInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPersistentAppUIPresignedURLOutput": {
       "base": null,
       "refs": {
       }
@@ -1541,6 +1601,12 @@
         "DescribeReleaseLabelOutput$AvailableOSReleases": "<p>The list of available Amazon Linux release versions for an Amazon EMR release. Contains a Label field that is formatted as shown in <a href=\"https://docs.aws.amazon.com/AL2/latest/relnotes/relnotes-al2.html\"> <i>Amazon Linux 2 Release Notes</i> </a>. For example, <a href=\"https://docs.aws.amazon.com/AL2/latest/relnotes/relnotes-20220218.html\">2.0.20220218.1</a>.</p>"
       }
     },
+    "OnClusterAppUIType": {
+      "base": null,
+      "refs": {
+        "GetOnClusterAppUIPresignedURLInput$OnClusterAppUIType": "<p>The application UI type associated with the cluster's application user interface presigned URL.</p>"
+      }
+    },
     "OnDemandCapacityReservationOptions": {
       "base": "<p>Describes the strategy for using unused Capacity Reservations for fulfilling On-Demand capacity.</p>",
       "refs": {
@@ -1606,6 +1672,25 @@
         "StartNotebookExecutionInput$OutputNotebookS3Location": "<p>The Amazon S3 location for the notebook execution output.</p>"
       }
     },
+    "PersistentAppUI": {
+      "base": "<p>Holds persistent application user interface information. Applications installed on the Amazon EMR cluster publish user interfaces as web sites to monitor cluster activity.</p>",
+      "refs": {
+        "DescribePersistentAppUIOutput$PersistentAppUI": "<p>The persistent application user interface.</p>"
+      }
+    },
+    "PersistentAppUIType": {
+      "base": null,
+      "refs": {
+        "GetPersistentAppUIPresignedURLInput$PersistentAppUIType": "<p>The persistent application user interface type associated with the presigned URL.</p>",
+        "PersistentAppUITypeList$member": null
+      }
+    },
+    "PersistentAppUITypeList": {
+      "base": null,
+      "refs": {
+        "PersistentAppUI$PersistentAppUITypeList": "<p>The type list for the persistent application user interface object. Valid values include SHS, YTS, or TEZ.</p>"
+      }
+    },
     "PlacementGroupConfig": {
       "base": "<p>Placement group configuration for an Amazon EMR cluster. The configuration specifies the placement strategy that can be applied to instance roles during cluster creation.</p> <p>To use this configuration, consider attaching managed policy AmazonElasticMapReducePlacementGroupPolicy to the Amazon EMR role.</p>",
       "refs": {
@@ -1649,6 +1734,12 @@
       "base": null,
       "refs": {
         "BlockPublicAccessConfiguration$PermittedPublicSecurityGroupRuleRanges": "<p>Specifies ports and port ranges that are permitted to have security group rules that allow inbound traffic from all public sources. For example, if Port 23 (Telnet) is specified for <code>PermittedPublicSecurityGroupRuleRanges</code>, Amazon EMR allows cluster creation if a security group associated with the cluster has a rule that allows inbound traffic on Port 23 from IPv4 0.0.0.0/0 or IPv6 port ::/0 as the source.</p> <p>By default, Port 22, which is used for SSH access to the cluster Amazon EC2 instances, is in the list of <code>PermittedPublicSecurityGroupRuleRanges</code>.</p>"
+      }
+    },
+    "ProfilerType": {
+      "base": null,
+      "refs": {
+        "CreatePersistentAppUIInput$ProfilerType": "<p>The profiler type for the persistent application user interface. Valid values are SHS, TEZUI, or YTS.</p>"
       }
     },
     "PutAutoScalingPolicyInput": {
@@ -2086,6 +2177,7 @@
         "Command$Name": "<p>The name of the command.</p>",
         "Command$ScriptPath": "<p>The Amazon S3 location of the command script.</p>",
         "Configuration$Classification": "<p>The classification within a configuration.</p>",
+        "CreatePersistentAppUIInput$XReferer": "<p>The cross reference for the persistent application user interface.</p>",
         "CreateSecurityConfigurationInput$SecurityConfiguration": "<p>The security configuration details in JSON format. For JSON parameters and examples, see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-security-configurations.html\">Use Security Configurations to Set Up Cluster Security</a> in the <i>Amazon EMR Management Guide</i>.</p>",
         "DescribeReleaseLabelInput$ReleaseLabel": "<p>The target release label to be described.</p>",
         "DescribeReleaseLabelInput$NextToken": "<p>The pagination token. Reserved for future use. Currently set to null.</p>",
@@ -2232,8 +2324,10 @@
       "refs": {
         "AddTagsInput$Tags": "<p>A list of tags to associate with a resource. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters, and an optional value string with a maximum of 256 characters.</p>",
         "Cluster$Tags": "<p>A list of tags associated with a cluster.</p>",
+        "CreatePersistentAppUIInput$Tags": "<p>Tags for the persistent application user interface.</p>",
         "CreateStudioInput$Tags": "<p>A list of tags to associate with the Amazon EMR Studio. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters, and an optional value string with a maximum of 256 characters.</p>",
         "NotebookExecution$Tags": "<p>A list of tags associated with a notebook execution. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters and an optional value string with a maximum of 256 characters.</p>",
+        "PersistentAppUI$Tags": "<p>A collection of tags for the persistent application user interface object.</p>",
         "RunJobFlowInput$Tags": "<p>A list of tags to associate with a cluster and propagate to Amazon EC2 instances.</p>",
         "StartNotebookExecutionInput$Tags": "<p>A list of tags associated with a notebook execution. Tags are user-defined key-value pairs that consist of a required key string with a maximum of 128 characters and an optional value string with a maximum of 256 characters.</p>",
         "Studio$Tags": "<p>A list of tags associated with the Amazon EMR Studio.</p>"
@@ -2330,6 +2424,8 @@
         "DescribeSecurityConfigurationInput$Name": "<p>The name of the security configuration.</p>",
         "DescribeSecurityConfigurationOutput$Name": "<p>The name of the security configuration.</p>",
         "EnvironmentVariablesMap$value": null,
+        "GetOnClusterAppUIPresignedURLOutput$PresignedURL": "<p>The cluster's generated presigned URL.</p>",
+        "GetPersistentAppUIPresignedURLOutput$PresignedURL": "<p>The returned presigned URL.</p>",
         "HadoopJarStepConfig$Jar": "<p>A path to a JAR file run during the step.</p>",
         "HadoopJarStepConfig$MainClass": "<p>The name of the main class in the specified Java file. If not specified, the JAR file should specify a Main-Class in its manifest file.</p>",
         "InstanceGroupDetail$LastStateChangeReason": "<p>Details regarding the state of the instance group.</p>",
@@ -2348,6 +2444,7 @@
         "NotebookExecution$OutputNotebookURI": "<p>The location of the notebook execution's output file in Amazon S3.</p>",
         "NotebookExecution$LastStateChangeReason": "<p>The reason for the latest status change of the notebook execution.</p>",
         "NotebookExecutionSummary$ExecutionEngineId": "<p>The unique ID of the execution engine for the notebook execution.</p>",
+        "PersistentAppUI$LastStateChangeReason": "<p>The reason the persistent application user interface object was last changed.</p>",
         "PlacementType$AvailabilityZone": "<p>The Amazon EC2 Availability Zone for the cluster. <code>AvailabilityZone</code> is used for uniform instance groups, while <code>AvailabilityZones</code> (plural) is used for instance fleets.</p>",
         "RunJobFlowInput$LogUri": "<p>The location in Amazon S3 to write the log files of the job flow. If a value is not provided, logs are not created.</p>",
         "RunJobFlowInput$LogEncryptionKmsKeyId": "<p>The KMS key used for encrypting log files. If a value is not provided, the logs remain encrypted by AES-256. This attribute is only available with Amazon EMR releases 5.30.0 and later, excluding Amazon EMR 6.0.0.</p>",
@@ -2399,6 +2496,7 @@
         "BootstrapActionConfig$Name": "<p>The name of the bootstrap action.</p>",
         "CancelStepsInput$ClusterId": "<p>The <code>ClusterID</code> for the specified steps that will be canceled. Use <a>RunJobFlow</a> and <a>ListClusters</a> to get ClusterIDs. </p>",
         "Cluster$CustomAmiId": "<p>Available only in Amazon EMR releases 5.7.0 and later. The ID of a custom Amazon EBS-backed Linux AMI if the cluster uses a custom AMI.</p>",
+        "CreatePersistentAppUIOutput$PersistentAppUIId": "<p>The persistent application user interface identifier.</p>",
         "CreateStudioInput$Name": "<p>A descriptive name for the Amazon EMR Studio.</p>",
         "CreateStudioInput$Description": "<p>A detailed description of the Amazon EMR Studio.</p>",
         "CreateStudioInput$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (Amazon VPC) to associate with the Studio.</p>",
@@ -2415,11 +2513,17 @@
         "DeleteStudioSessionMappingInput$IdentityId": "<p>The globally unique identifier (GUID) of the user or group to remove from the Amazon EMR Studio. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId\">UserId</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId\">GroupId</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "DeleteStudioSessionMappingInput$IdentityName": "<p>The name of the user name or group to remove from the Amazon EMR Studio. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName\">UserName</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName\">DisplayName</a> in the <i>IAM Identity Center Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "DescribeNotebookExecutionInput$NotebookExecutionId": "<p>The unique identifier of the notebook execution.</p>",
+        "DescribePersistentAppUIInput$PersistentAppUIId": "<p>The identifier for the persistent application user interface.</p>",
         "DescribeStudioInput$StudioId": "<p>The Amazon EMR Studio ID.</p>",
+        "EMRContainersConfig$JobRunId": "<p>The Job run ID for the container configuration.</p>",
         "EnvironmentVariablesMap$key": null,
         "ExecutionEngineConfig$Id": "<p>The unique identifier of the execution engine. For an Amazon EMR cluster, this is the cluster ID.</p>",
         "ExecutionEngineConfig$MasterInstanceSecurityGroupId": "<p>An optional unique ID of an Amazon EC2 security group to associate with the master instance of the Amazon EMR cluster for this notebook execution. For more information see <a href=\"https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-managed-notebooks-security-groups.html\">Specifying Amazon EC2 Security Groups for Amazon EMR Notebooks</a> in the <i>EMR Management Guide</i>.</p>",
         "GetClusterSessionCredentialsInput$ClusterId": "<p>The unique identifier of the cluster.</p>",
+        "GetOnClusterAppUIPresignedURLInput$ClusterId": "<p>The cluster ID associated with the cluster's application user interface presigned URL.</p>",
+        "GetOnClusterAppUIPresignedURLInput$ApplicationId": "<p>The application ID associated with the cluster's application user interface presigned URL.</p>",
+        "GetPersistentAppUIPresignedURLInput$PersistentAppUIId": "<p>The persistent application user interface ID associated with the presigned URL.</p>",
+        "GetPersistentAppUIPresignedURLInput$ApplicationId": "<p>The application ID associated with the presigned URL.</p>",
         "GetStudioSessionMappingInput$StudioId": "<p>The ID of the Amazon EMR Studio.</p>",
         "GetStudioSessionMappingInput$IdentityId": "<p>The globally unique identifier (GUID) of the user or group. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserId\">UserId</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-GroupId\">GroupId</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
         "GetStudioSessionMappingInput$IdentityName": "<p>The name of the user or group to fetch. For more information, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_User.html#singlesignon-Type-User-UserName\">UserName</a> and <a href=\"https://docs.aws.amazon.com/singlesignon/latest/IdentityStoreAPIReference/API_Group.html#singlesignon-Type-Group-DisplayName\">DisplayName</a> in the <i>IAM Identity Center Identity Store API Reference</i>. Either <code>IdentityName</code> or <code>IdentityId</code> must be specified.</p>",
@@ -2474,6 +2578,9 @@
         "OnDemandCapacityReservationOptions$CapacityReservationResourceGroupArn": "<p>The ARN of the Capacity Reservation resource group in which to run the instance.</p>",
         "OutputNotebookS3LocationForOutput$Bucket": "<p>The Amazon S3 bucket that stores the notebook execution output.</p>",
         "OutputNotebookS3LocationFromInput$Bucket": "<p>The Amazon S3 bucket that stores the notebook execution output.</p>",
+        "PersistentAppUI$PersistentAppUIId": "<p>The identifier for the persistent application user interface object.</p>",
+        "PersistentAppUI$PersistentAppUIStatus": "<p>The status for the persistent application user interface object.</p>",
+        "PersistentAppUI$AuthorId": "<p>The author ID for the persistent application user interface object.</p>",
         "RunJobFlowInput$Name": "<p>The name of the job flow.</p>",
         "RunJobFlowInput$AmiVersion": "<p>Applies only to Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and later, <code>ReleaseLabel</code> is used. To specify a custom AMI, use <code>CustomAmiID</code>.</p>",
         "RunJobFlowInput$ReleaseLabel": "<p>The Amazon EMR release label, which determines the version of open-source application packages installed on the cluster. Release labels are in the form <code>emr-x.x.x</code>, where x.x.x is an Amazon EMR release version such as <code>emr-5.14.0</code>. For more information about Amazon EMR release versions and included application versions and features, see <a href=\"https://docs.aws.amazon.com/emr/latest/ReleaseGuide/\">https://docs.aws.amazon.com/emr/latest/ReleaseGuide/</a>. The release label applies only to Amazon EMR releases version 4.0 and later. Earlier versions use <code>AmiVersion</code>.</p>",

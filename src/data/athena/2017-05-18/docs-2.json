@@ -7,7 +7,7 @@
     "BatchGetQueryExecution": "<p>Returns the details of a single query execution or a list of up to 50 query executions, which you provide as an array of query execution ID strings. Requires you to have access to the workgroup in which the queries ran. To get a list of query execution IDs, use <a>ListQueryExecutionsInput$WorkGroup</a>. Query executions differ from named (saved) queries. Use <a>BatchGetNamedQueryInput</a> to get details about named queries.</p>",
     "CancelCapacityReservation": "<p>Cancels the capacity reservation with the specified name. Cancelled reservations remain in your account and will be deleted 45 days after cancellation. During the 45 days, you cannot re-purpose or reuse a reservation that has been cancelled, but you can refer to its tags and view it for historical reference. </p>",
     "CreateCapacityReservation": "<p>Creates a capacity reservation with the specified name and number of requested data processing units.</p>",
-    "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p> <p>This API operation creates the following resources.</p> <ul> <li> <p>CFN Stack Name with a maximum length of 128 characters and prefix <code>athenafederatedcatalog-CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Lambda Function Name with a maximum length of 64 characters and prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Glue Connection Name with a maximum length of 255 characters and a prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters. </p> </li> </ul>",
+    "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p> <p>For a <code>FEDERATED</code> catalog, this API operation creates the following resources.</p> <ul> <li> <p>CFN Stack Name with a maximum length of 128 characters and prefix <code>athenafederatedcatalog-CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Lambda Function Name with a maximum length of 64 characters and prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters.</p> </li> <li> <p>Glue Connection Name with a maximum length of 255 characters and a prefix <code>athenafederatedcatalog_CATALOG_NAME_SANITIZED</code> with length 23 characters. </p> </li> </ul>",
     "CreateNamedQuery": "<p>Creates a named query in the specified workgroup. Requires that you have access to the workgroup.</p>",
     "CreateNotebook": "<p>Creates an empty <code>ipynb</code> file in the specified Apache Spark enabled workgroup. Throws an error if a file in the workgroup with the same name already exists.</p>",
     "CreatePreparedStatement": "<p>Creates a prepared statement for use with SQL queries in Athena.</p>",
@@ -139,33 +139,27 @@
     },
     "BatchGetNamedQueryInput": {
       "base": "<p>Contains an array of named query IDs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetNamedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetPreparedStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetPreparedStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetQueryExecutionInput": {
       "base": "<p>Contains an array of query execution IDs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetQueryExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -275,13 +269,11 @@
     },
     "CancelCapacityReservationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCapacityReservationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CapacityAllocation": {
       "base": "<p>Contains the submission time of a single allocation request for a capacity reservation and the most recent status of the attempted allocation.</p>",
@@ -432,73 +424,59 @@
     },
     "CreateCapacityReservationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCapacityReservationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataCatalogInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataCatalogOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNamedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNamedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotebookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNotebookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePreparedStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePreparedStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresignedNotebookUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePresignedNotebookUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerContentEncryptionConfiguration": {
       "base": "<p>Specifies the customer managed KMS key that is used to encrypt the user's data stores in Athena. When an Amazon Web Services managed key is used, this value is null. This setting does not apply to Athena SQL workgroups.</p>",
@@ -537,7 +515,7 @@
     "DataCatalogType": {
       "base": null,
       "refs": {
-        "CreateDataCatalogInput$Type": "<p>The type of data catalog to create: <code>LAMBDA</code> for a federated catalog, <code>GLUE</code> for an Glue Data Catalog, and <code>HIVE</code> for an external Apache Hive metastore. <code>FEDERATED</code> is a federated catalog for which Athena creates the connection and the Lambda function for you based on the parameters that you pass.</p>",
+        "CreateDataCatalogInput$Type": "<p>The type of data catalog to create: <code>LAMBDA</code> for a federated catalog, <code>GLUE</code> for an Glue Data Catalog, and <code>HIVE</code> for an external Apache Hive metastore. <code>FEDERATED</code> is a federated catalog for which Athena creates the connection and the Lambda function for you based on the parameters that you pass.</p> <p>For <code>FEDERATED</code> type, we do not support IAM identity center.</p>",
         "DataCatalog$Type": "<p>The type of data catalog to create: <code>LAMBDA</code> for a federated catalog, <code>GLUE</code> for an Glue Data Catalog, and <code>HIVE</code> for an external Apache Hive metastore. <code>FEDERATED</code> is a federated catalog for which Athena creates the connection and the Lambda function for you based on the parameters that you pass.</p>",
         "DataCatalogSummary$Type": "<p>The data catalog type.</p>",
         "UpdateDataCatalogInput$Type": "<p>Specifies the type of data catalog to update. Specify <code>LAMBDA</code> for a federated catalog, <code>HIVE</code> for an external hive metastore, or <code>GLUE</code> for an Glue Data Catalog.</p>"
@@ -598,63 +576,51 @@
     },
     "DeleteCapacityReservationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCapacityReservationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataCatalogInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataCatalogOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNamedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNamedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNotebookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNotebookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePreparedStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePreparedStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescriptionString": {
       "base": null,
@@ -800,13 +766,11 @@
     },
     "ExportNotebookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportNotebookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExpressionString": {
       "base": null,
@@ -822,173 +786,139 @@
     },
     "GetCalculationExecutionCodeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculationExecutionCodeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculationExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculationExecutionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculationExecutionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCapacityAssignmentConfigurationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCapacityAssignmentConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCapacityReservationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCapacityReservationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataCatalogInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataCatalogOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDatabaseInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDatabaseOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNamedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotebookMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNotebookMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPreparedStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPreparedStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryResultsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryResultsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryRuntimeStatisticsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryRuntimeStatisticsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSessionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTableMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IdempotencyToken": {
       "base": null,
@@ -1020,13 +950,11 @@
     },
     "ImportNotebookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportNotebookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -1038,13 +966,11 @@
     },
     "InternalServerException": {
       "base": "<p>Indicates a platform issue, which may be due to a transient condition or outage.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>Indicates that something is wrong with the input to the request. For example, a required parameter may be missing or out of range.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyString": {
       "base": null,
@@ -1060,163 +986,131 @@
     },
     "ListApplicationDPUSizesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationDPUSizesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculationExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculationExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCapacityReservationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCapacityReservationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataCatalogsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataCatalogsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatabasesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatabasesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEngineVersionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEngineVersionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamedQueriesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamedQueriesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotebookMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotebookMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotebookSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotebookSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPreparedStatementsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPreparedStatementsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueryExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueryExecutionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTableMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkGroupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkGroupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -1359,8 +1253,7 @@
     },
     "MetadataException": {
       "base": "<p>An exception that Athena received when it called a custom metastore. Occurs if the error is not caused by user input (<code>InvalidRequestException</code>) or from the Athena platform (<code>InternalServerException</code>). For example, if a user-created Lambda function is missing permissions, the Lambda <code>4XX</code> exception is returned in a <code>MetadataException</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NameString": {
       "base": null,
@@ -1541,13 +1434,11 @@
     },
     "PutCapacityAssignmentConfigurationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutCapacityAssignmentConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryExecution": {
       "base": "<p>Information about a single instance of a query execution.</p>",
@@ -1674,8 +1565,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>A resource, such as a workgroup, was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResultConfiguration": {
       "base": "<p>The location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query and calculation results. These are known as \"client-side settings\". If workgroup settings override client-side settings, then the query uses the workgroup settings.</p>",
@@ -1768,8 +1658,7 @@
     },
     "SessionAlreadyExistsException": {
       "base": "<p>The specified session already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionConfiguration": {
       "base": "<p>Contains session configuration information.</p>",
@@ -1851,33 +1740,27 @@
     },
     "StartCalculationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCalculationExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartQueryExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartQueryExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatementName": {
       "base": null,
@@ -1895,28 +1778,24 @@
     "StatementType": {
       "base": null,
       "refs": {
-        "QueryExecution$StatementType": "<p>The type of query statement that was run. <code>DDL</code> indicates DDL query statements. <code>DML</code> indicates DML (Data Manipulation Language) query statements, such as <code>CREATE TABLE AS SELECT</code>. <code>UTILITY</code> indicates query statements other than DDL and DML, such as <code>SHOW CREATE TABLE</code>, or <code>DESCRIBE TABLE</code>.</p>"
+        "QueryExecution$StatementType": "<p>The type of query statement that was run. <code>DDL</code> indicates DDL query statements. <code>DML</code> indicates DML (Data Manipulation Language) query statements, such as <code>CREATE TABLE AS SELECT</code>. <code>UTILITY</code> indicates query statements other than DDL and DML, such as <code>SHOW CREATE TABLE</code>, <code>EXPLAIN</code>, <code>DESCRIBE</code>, or <code>SHOW TABLES</code>.</p>"
       }
     },
     "StopCalculationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopCalculationExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopQueryExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopQueryExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -2002,13 +1881,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2026,13 +1903,11 @@
     },
     "TerminateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TerminateSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottleReason": {
       "base": "<p>The reason for the query throttling, for example, when it exceeds the concurrent query limit.</p>",
@@ -2086,8 +1961,7 @@
     },
     "TooManyRequestsException": {
       "base": "<p>Indicates that the request was throttled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TypeString": {
       "base": null,
@@ -2133,83 +2007,67 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCapacityReservationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCapacityReservationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataCatalogInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataCatalogOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNamedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNamedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotebookInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotebookMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotebookMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNotebookOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreparedStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreparedStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkGroupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkGroupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkGroup": {
       "base": "<p>A workgroup, which contains a name, description, creation time, state, and other configuration, listed under <a>WorkGroup$Configuration</a>. Each workgroup enables you to isolate queries for you or your group of users from other queries in the same account, to configure the query results location and the encryption configuration (known as workgroup settings), to enable sending query metrics to Amazon CloudWatch, and to establish per-query data usage control limits for all queries in a workgroup. The workgroup settings override is specified in <code>EnforceWorkGroupConfiguration</code> (true/false) in the <code>WorkGroupConfiguration</code>. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",

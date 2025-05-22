@@ -994,7 +994,7 @@ EOT
         $list->setHandler(new MockHandler([new Result()]));
         $list->appendSign(Middleware::tap(function ($cmd, $req) {
             $this->assertTrue($req->hasHeader('x-amzn-query-mode'));
-            $this->assertEquals(true, $req->getHeaderLine('x-amzn-query-mode'));
+            $this->assertEquals("true", $req->getHeaderLine('x-amzn-query-mode'));
         }));
         $client->TestOperation();
     }

@@ -25,26 +25,8 @@
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ConflictException"}
-      ]
-    },
-    "CreateMultiRegionClusters":{
-      "name":"CreateMultiRegionClusters",
-      "http":{
-        "method":"POST",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"CreateMultiRegionClustersInput"},
-      "output":{"shape":"CreateMultiRegionClustersOutput"},
-      "errors":[
-        {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"}
       ]
@@ -58,24 +40,6 @@
       },
       "input":{"shape":"DeleteClusterInput"},
       "output":{"shape":"DeleteClusterOutput"},
-      "errors":[
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"ValidationException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ConflictException"}
-      ],
-      "idempotent":true
-    },
-    "DeleteMultiRegionClusters":{
-      "name":"DeleteMultiRegionClusters",
-      "http":{
-        "method":"DELETE",
-        "requestUri":"/multi-region-clusters",
-        "responseCode":200
-      },
-      "input":{"shape":"DeleteMultiRegionClustersInput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -200,8 +164,8 @@
       "output":{"shape":"UpdateClusterOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
@@ -233,7 +197,10 @@
       "min":1,
       "pattern":"[!-~]+"
     },
-    "ClusterArn":{"type":"string"},
+    "ClusterArn":{
+      "type":"string",
+      "pattern":"arn:aws(-[^:]+)?:dsql:[a-z0-9-]{1,20}:[0-9]{12}:cluster/[a-z0-9]{26}"
+    },
     "ClusterArnList":{
       "type":"list",
       "member":{"shape":"ClusterArn"}
@@ -247,20 +214,19 @@
       "type":"list",
       "member":{"shape":"ClusterSummary"}
     },
-    "ClusterPropertyMap":{
-      "type":"map",
-      "key":{"shape":"Region"},
-      "value":{"shape":"LinkedClusterProperties"}
-    },
     "ClusterStatus":{
       "type":"string",
       "enum":[
         "CREATING",
         "ACTIVE",
+        "IDLE",
+        "INACTIVE",
         "UPDATING",
         "DELETING",
         "DELETED",
-        "FAILED"
+        "FAILED",
+        "PENDING_SETUP",
+        "PENDING_DELETE"
       ]
     },
     "ClusterSummary":{
@@ -296,7 +262,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "multiRegionProperties":{"shape":"MultiRegionProperties"}
       }
     },
     "CreateClusterOutput":{
@@ -313,30 +280,8 @@
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
-      }
-    },
-    "CreateMultiRegionClustersInput":{
-      "type":"structure",
-      "required":[
-        "linkedRegionList",
-        "witnessRegion"
-      ],
-      "members":{
-        "linkedRegionList":{"shape":"RegionList"},
-        "clusterProperties":{"shape":"ClusterPropertyMap"},
-        "witnessRegion":{"shape":"Region"},
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "CreateMultiRegionClustersOutput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{"shape":"ClusterArnList"}
       }
     },
     "DeleteClusterInput":{
@@ -362,32 +307,13 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
-      }
-    },
-    "DeleteMultiRegionClustersInput":{
-      "type":"structure",
-      "required":["linkedClusterArns"],
-      "members":{
-        "linkedClusterArns":{
-          "shape":"ClusterArnList",
-          "location":"querystring",
-          "locationName":"linked-cluster-arns"
-        },
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"client-token"
-        }
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "DeletionProtectionEnabled":{
@@ -420,8 +346,8 @@
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "witnessRegion":{"shape":"Region"},
-        "linkedClusterArns":{"shape":"ClusterArnList"}
+        "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "GetVpcEndpointServiceNameInput":{
@@ -461,13 +387,6 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
-    },
-    "LinkedClusterProperties":{
-      "type":"structure",
-      "members":{
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "tags":{"shape":"TagMap"}
-      }
     },
     "ListClustersInput":{
       "type":"structure",
@@ -515,15 +434,18 @@
       "max":100,
       "min":1
     },
+    "MultiRegionProperties":{
+      "type":"structure",
+      "members":{
+        "witnessRegion":{"shape":"Region"},
+        "clusters":{"shape":"ClusterArnList"}
+      }
+    },
     "NextToken":{"type":"string"},
     "Region":{
       "type":"string",
-      "max":20,
+      "max":50,
       "min":0
-    },
-    "RegionList":{
-      "type":"list",
-      "member":{"shape":"Region"}
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -664,7 +586,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "multiRegionProperties":{"shape":"MultiRegionProperties"}
       }
     },
     "UpdateClusterOutput":{
@@ -673,17 +596,13 @@
         "identifier",
         "arn",
         "status",
-        "creationTime",
-        "deletionProtectionEnabled"
+        "creationTime"
       ],
       "members":{
         "identifier":{"shape":"ClusterId"},
         "arn":{"shape":"ClusterArn"},
         "status":{"shape":"ClusterStatus"},
-        "creationTime":{"shape":"ClusterCreationTime"},
-        "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
-        "witnessRegion":{"shape":"Region"},
-        "linkedClusterArns":{"shape":"ClusterArnList"}
+        "creationTime":{"shape":"ClusterCreationTime"}
       }
     },
     "ValidationException":{

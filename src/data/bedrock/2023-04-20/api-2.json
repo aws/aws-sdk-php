@@ -1337,6 +1337,7 @@
         "wordPolicyConfig":{"shape":"GuardrailWordPolicyConfig"},
         "sensitiveInformationPolicyConfig":{"shape":"GuardrailSensitiveInformationPolicyConfig"},
         "contextualGroundingPolicyConfig":{"shape":"GuardrailContextualGroundingPolicyConfig"},
+        "crossRegionConfig":{"shape":"GuardrailCrossRegionConfig"},
         "blockedInputMessaging":{"shape":"GuardrailBlockedMessaging"},
         "blockedOutputsMessaging":{"shape":"GuardrailBlockedMessaging"},
         "kmsKeyId":{"shape":"KmsKeyId"},
@@ -2520,6 +2521,7 @@
         "wordPolicy":{"shape":"GuardrailWordPolicy"},
         "sensitiveInformationPolicy":{"shape":"GuardrailSensitiveInformationPolicy"},
         "contextualGroundingPolicy":{"shape":"GuardrailContextualGroundingPolicy"},
+        "crossRegionDetails":{"shape":"GuardrailCrossRegionDetails"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "statusReasons":{"shape":"GuardrailStatusReasons"},
@@ -3037,6 +3039,38 @@
         "filtersConfig":{"shape":"GuardrailContextualGroundingFiltersConfig"}
       }
     },
+    "GuardrailCrossRegionConfig":{
+      "type":"structure",
+      "required":["guardrailProfileIdentifier"],
+      "members":{
+        "guardrailProfileIdentifier":{"shape":"GuardrailCrossRegionGuardrailProfileIdentifier"}
+      }
+    },
+    "GuardrailCrossRegionDetails":{
+      "type":"structure",
+      "members":{
+        "guardrailProfileId":{"shape":"GuardrailCrossRegionGuardrailProfileId"},
+        "guardrailProfileArn":{"shape":"GuardrailCrossRegionGuardrailProfileArn"}
+      }
+    },
+    "GuardrailCrossRegionGuardrailProfileArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail-profile/[a-z0-9-]+[.]{1}guardrail[.]{1}v[0-9:]+"
+    },
+    "GuardrailCrossRegionGuardrailProfileId":{
+      "type":"string",
+      "max":30,
+      "min":15,
+      "pattern":"[a-z0-9-]+[.]{1}guardrail[.]{1}v[0-9:]+"
+    },
+    "GuardrailCrossRegionGuardrailProfileIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":15,
+      "pattern":"[a-z0-9-]+[.]{1}guardrail[.]{1}v[0-9:]+|arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail-profile/[a-z0-9-]+[.]{1}guardrail[.]{1}v[0-9:]+"
+    },
     "GuardrailDescription":{
       "type":"string",
       "max":200,
@@ -3363,7 +3397,8 @@
         "description":{"shape":"GuardrailDescription"},
         "version":{"shape":"GuardrailVersion"},
         "createdAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "crossRegionDetails":{"shape":"GuardrailCrossRegionDetails"}
       }
     },
     "GuardrailTopic":{
@@ -5637,6 +5672,7 @@
         "wordPolicyConfig":{"shape":"GuardrailWordPolicyConfig"},
         "sensitiveInformationPolicyConfig":{"shape":"GuardrailSensitiveInformationPolicyConfig"},
         "contextualGroundingPolicyConfig":{"shape":"GuardrailContextualGroundingPolicyConfig"},
+        "crossRegionConfig":{"shape":"GuardrailCrossRegionConfig"},
         "blockedInputMessaging":{"shape":"GuardrailBlockedMessaging"},
         "blockedOutputsMessaging":{"shape":"GuardrailBlockedMessaging"},
         "kmsKeyId":{"shape":"KmsKeyId"}
