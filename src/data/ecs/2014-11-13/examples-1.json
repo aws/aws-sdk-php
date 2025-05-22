@@ -409,7 +409,7 @@
                   ],
                   "environment": [],
                   "essential": true,
-                  "image": "ubuntu",
+                  "image": "public.ecr.aws/docker/library/ubuntu:latest",
                   "memory": 100,
                   "mountPoints": [],
                   "portMappings": [],
@@ -503,31 +503,29 @@
     "DeregisterTaskDefinition": [
       {
         "input": {
-          "taskDefinition": "curler:1"
+          "taskDefinition": "fargate-task:1"
         },
         "output": {
           "taskDefinition": {
             "containerDefinitions": [
               {
-                "name": "curler",
-                "command": [
-                  "curl -v http://example.com/"
-                ],
-                "cpu": 100,
-                "entryPoint": [],
-                "environment": [],
+                "name": "nginx",
+                "cpu": 256,
                 "essential": true,
-                "image": "curl:latest",
-                "memory": 256,
-                "mountPoints": [],
-                "portMappings": [],
-                "volumesFrom": []
+                "image": "public.ecr.aws/docker/library/nginx:latest",
+                "memory": 128,
+                "portMappings": [
+                  {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                  }
+                ]
               }
             ],
-            "family": "curler",
-            "revision": 1,
+            "family": "fargate-task",
             "status": "INACTIVE",
-            "taskDefinitionArn": "arn:aws:ecs:us-west-2:123456789012:task-definition/curler:1",
+            "taskDefinitionArn": "arn:aws:ecs:us-west-2:123456789012:task-definition/fargate-task:1",
             "volumes": []
           }
         },
@@ -535,7 +533,7 @@
           "input": {},
           "output": {}
         },
-        "description": "This example deregisters the first revision of the curler task definition",
+        "description": "This example deregisters the first revision of the fargate-task task definition",
         "id": "to-deregister-a-revision-of-a-task-definition-1733950214421",
         "title": "To deregister a revision of a task definition"
       }
@@ -1775,7 +1773,7 @@
               ],
               "cpu": 10,
               "essential": true,
-              "image": "busybox",
+              "image": "public.ecr.aws/docker/library/busybox:latest",
               "memory": 10
             }
           ],
@@ -1795,7 +1793,7 @@
                 "cpu": 10,
                 "environment": [],
                 "essential": true,
-                "image": "busybox",
+                "image": "public.ecr.aws/docker/library/busybox:latest",
                 "memory": 10,
                 "mountPoints": [],
                 "portMappings": [],

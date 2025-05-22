@@ -33,6 +33,25 @@
         {"shape":"NoAvailableOrganizationException"}
       ]
     },
+    "CreateSupportCase":{
+      "name":"CreateSupportCase",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSupportCaseRequest"},
+      "output":{"shape":"CreateSupportCaseResponse"},
+      "errors":[
+        {"shape":"DependencyAccessDeniedException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"NoSuchResourceException"},
+        {"shape":"IllegalArgumentException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "DeleteServiceQuotaIncreaseRequestFromTemplate":{
       "name":"DeleteServiceQuotaIncreaseRequestFromTemplate",
       "http":{
@@ -385,19 +404,28 @@
     },
     "AssociateServiceQuotaTemplateRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateServiceQuotaTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AwsRegion":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"[a-zA-Z][a-zA-Z0-9-]{1,128}"
+    },
+    "CreateSupportCaseRequest":{
+      "type":"structure",
+      "required":["RequestId"],
+      "members":{
+        "RequestId":{"shape":"RequestId"}
+      }
+    },
+    "CreateSupportCaseResponse":{
+      "type":"structure",
+      "members":{}
     },
     "CustomerServiceEngagementId":{"type":"string"},
     "DateTime":{"type":"timestamp"},
@@ -416,8 +444,7 @@
     },
     "DeleteServiceQuotaIncreaseRequestFromTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DependencyAccessDeniedException":{
       "type":"structure",
@@ -428,13 +455,11 @@
     },
     "DisassociateServiceQuotaTemplateRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateServiceQuotaTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ErrorCode":{
       "type":"string",
@@ -473,8 +498,7 @@
     },
     "GetAssociationForServiceQuotaTemplateRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAssociationForServiceQuotaTemplateResponse":{
       "type":"structure",
@@ -1017,8 +1041,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1060,8 +1083,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     }
   }
 }

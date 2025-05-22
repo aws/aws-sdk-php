@@ -232,7 +232,7 @@
     "CanaryStateReasonCode": {
       "base": null,
       "refs": {
-        "CanaryStatus$StateReasonCode": "<p>If the canary cannot run or has failed, this field displays the reason.</p>"
+        "CanaryStatus$StateReasonCode": "<p>If the canary creation or update failed, this field displays the reason code.</p>"
       }
     },
     "CanaryStatus": {
@@ -529,6 +529,13 @@
         "CanaryScheduleOutput$DurationInSeconds": "<p>How long, in seconds, for the canary to continue making regular runs after it was created. The runs are performed according to the schedule in the <code>Expression</code> value.</p>"
       }
     },
+    "MaxRetries": {
+      "base": null,
+      "refs": {
+        "RetryConfigInput$MaxRetries": "<p>The maximum number of retries. The value must be less than or equal to 2.</p>",
+        "RetryConfigOutput$MaxRetries": "<p>The maximum number of retries. The value must be less than or equal to 2.</p>"
+      }
+    },
     "MaxSize100": {
       "base": null,
       "refs": {
@@ -615,6 +622,24 @@
       "base": null,
       "refs": {
         "ResourceList$member": null
+      }
+    },
+    "RetryAttempt": {
+      "base": null,
+      "refs": {
+        "CanaryRun$RetryAttempt": "<p>The count in number of the retry attempt.</p>"
+      }
+    },
+    "RetryConfigInput": {
+      "base": "<p>This structure contains information about the canary's retry configuration.</p> <note> <p>The default account level concurrent execution limit from Lambda is 1000. When you have more than 1000 canaries, it's possible there are more than 1000 Lambda invocations due to retries and the console might hang. For more information on the Lambda execution limit, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html#:~:text=As%20your%20functions%20receive%20more,functions%20in%20an%20AWS%20Region\">Understanding Lambda function scaling</a>.</p> </note> <note> <p>For canary with <code>MaxRetries = 2</code>, you need to set the <code>CanaryRunConfigInput.TimeoutInSeconds</code> to less than 600 seconds to avoid validation errors.</p> </note>",
+      "refs": {
+        "CanaryScheduleInput$RetryConfig": "<p>A structure that contains the retry configuration for a canary</p>"
+      }
+    },
+    "RetryConfigOutput": {
+      "base": "<p>This structure contains information about the canary's retry configuration.</p>",
+      "refs": {
+        "CanaryScheduleOutput$RetryConfig": "<p>A structure that contains the retry configuration for a canary</p>"
       }
     },
     "RoleArn": {
@@ -707,7 +732,7 @@
         "CanaryRunStatus$StateReason": "<p>If run of the canary failed, this field contains the reason for the error.</p>",
         "CanaryScheduleInput$Expression": "<p>A <code>rate</code> expression or a <code>cron</code> expression that defines how often the canary is to run.</p> <p>For a rate expression, The syntax is <code>rate(<i>number unit</i>)</code>. <i>unit</i> can be <code>minute</code>, <code>minutes</code>, or <code>hour</code>. </p> <p>For example, <code>rate(1 minute)</code> runs the canary once a minute, <code>rate(10 minutes)</code> runs it once every 10 minutes, and <code>rate(1 hour)</code> runs it once every hour. You can specify a frequency between <code>rate(1 minute)</code> and <code>rate(1 hour)</code>.</p> <p>Specifying <code>rate(0 minute)</code> or <code>rate(0 hour)</code> is a special value that causes the canary to run only once when it is started.</p> <p>Use <code>cron(<i>expression</i>)</code> to specify a cron expression. You can't schedule a canary to wait for more than a year before running. For information about the syntax for cron expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_cron.html\"> Scheduling canary runs using cron</a>.</p>",
         "CanaryScheduleOutput$Expression": "<p>A <code>rate</code> expression or a <code>cron</code> expression that defines how often the canary is to run.</p> <p>For a rate expression, The syntax is <code>rate(<i>number unit</i>)</code>. <i>unit</i> can be <code>minute</code>, <code>minutes</code>, or <code>hour</code>. </p> <p>For example, <code>rate(1 minute)</code> runs the canary once a minute, <code>rate(10 minutes)</code> runs it once every 10 minutes, and <code>rate(1 hour)</code> runs it once every hour. You can specify a frequency between <code>rate(1 minute)</code> and <code>rate(1 hour)</code>.</p> <p>Specifying <code>rate(0 minute)</code> or <code>rate(0 hour)</code> is a special value that causes the canary to run only once when it is started.</p> <p>Use <code>cron(<i>expression</i>)</code> to specify a cron expression. For information about the syntax for cron expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_cron.html\"> Scheduling canary runs using cron</a>.</p>",
-        "CanaryStatus$StateReason": "<p>If the canary has insufficient permissions to run, this field provides more details.</p>",
+        "CanaryStatus$StateReason": "<p>If the canary creation or update failed, this field provides details on the failure.</p>",
         "CreateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the S3 bucket can't include a period (.).</p>",
         "CreateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "DryRunConfigOutput$LastDryRunExecutionStatus": "<p>Returns the last execution status for a canary's dry run.</p>",
@@ -786,6 +811,7 @@
       "refs": {
         "CanaryRunTimeline$Started": "<p>The start time of the run.</p>",
         "CanaryRunTimeline$Completed": "<p>The end time of the run.</p>",
+        "CanaryRunTimeline$MetricTimestampForRunAndRetries": "<p>The time at which the metrics will be generated for this run or retries.</p>",
         "CanaryTimeline$Created": "<p>The date and time the canary was created.</p>",
         "CanaryTimeline$LastModified": "<p>The date and time the canary was most recently modified.</p>",
         "CanaryTimeline$LastStarted": "<p>The date and time that the canary's most recent run started.</p>",
@@ -805,7 +831,7 @@
         "DescribeCanariesResponse$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>DescribeCanaries</code> operation to retrieve the next set of results.</p>",
         "DescribeRuntimeVersionsRequest$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>DescribeRuntimeVersions</code> operation to retrieve the next set of results.</p>",
         "DescribeRuntimeVersionsResponse$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>DescribeRuntimeVersions</code> operation to retrieve the next set of results.</p>",
-        "GetCanaryRunsRequest$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>GetCanaryRuns</code> operation to retrieve the next set of results.</p>",
+        "GetCanaryRunsRequest$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>GetCanaryRuns</code> operation to retrieve the next set of results.</p> <note> <p>When auto retry is enabled for the canary, the first subsequent retry is suffixed with *1 indicating its the first retry and the next subsequent try is suffixed with *2.</p> </note>",
         "GetCanaryRunsResponse$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>GetCanaryRuns</code> operation to retrieve the next set of results.</p>",
         "ListGroupsResponse$NextToken": "<p>A token that indicates that there is more data available. You can use this token in a subsequent <code>ListGroups</code> operation to retrieve the next set of results.</p>"
       }
@@ -820,6 +846,7 @@
         "Canary$Id": "<p>The unique ID of this canary.</p>",
         "CanaryDryRunConfigOutput$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
         "CanaryRun$Id": "<p>A unique ID that identifies this canary run.</p>",
+        "CanaryRun$ScheduledRunId": "<p>The ID of the scheduled canary run.</p>",
         "DryRunConfigOutput$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
         "GetCanaryRequest$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",
         "GetCanaryRunsRequest$DryRunId": "<p>The DryRunId associated with an existing canary’s dry run. You can use this DryRunId to retrieve information about the dry run.</p>",

@@ -23,8 +23,8 @@
       },
       "input":{"shape":"AcceptEngagementInvitationRequest"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -70,8 +70,8 @@
       "input":{"shape":"CreateEngagementRequest"},
       "output":{"shape":"CreateEngagementResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -88,8 +88,8 @@
       "input":{"shape":"CreateEngagementInvitationRequest"},
       "output":{"shape":"CreateEngagementInvitationResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -106,8 +106,8 @@
       "input":{"shape":"CreateOpportunityRequest"},
       "output":{"shape":"CreateOpportunityResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -124,8 +124,8 @@
       "input":{"shape":"CreateResourceSnapshotRequest"},
       "output":{"shape":"CreateResourceSnapshotResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -142,8 +142,8 @@
       "input":{"shape":"CreateResourceSnapshotJobRequest"},
       "output":{"shape":"CreateResourceSnapshotJobResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -159,8 +159,8 @@
       },
       "input":{"shape":"DeleteResourceSnapshotJobRequest"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
@@ -482,8 +482,8 @@
       },
       "input":{"shape":"RejectEngagementInvitationRequest"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -499,8 +499,8 @@
       "input":{"shape":"StartEngagementByAcceptingInvitationTaskRequest"},
       "output":{"shape":"StartEngagementByAcceptingInvitationTaskResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -517,8 +517,8 @@
       "input":{"shape":"StartEngagementFromOpportunityTaskRequest"},
       "output":{"shape":"StartEngagementFromOpportunityTaskResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -580,8 +580,8 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -598,8 +598,8 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -616,8 +616,8 @@
       "input":{"shape":"UpdateOpportunityRequest"},
       "output":{"shape":"UpdateOpportunityResponse"},
       "errors":[
-        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -755,7 +755,7 @@
       "type":"string",
       "max":80,
       "min":0,
-      "pattern":"^[\\p{L}\\p{N}\\p{P}\\p{Z}]+$"
+      "sensitive":true
     },
     "ApnPrograms":{
       "type":"list",
@@ -1090,7 +1090,7 @@
       "type":"string",
       "max":120,
       "min":1,
-      "pattern":"^[\\p{L}\\p{N}\\p{P}\\p{Z}]+$"
+      "sensitive":true
     },
     "CompanyWebsiteUrl":{
       "type":"string",
@@ -2265,7 +2265,8 @@
     "ExpectedCustomerSpendList":{
       "type":"list",
       "member":{"shape":"ExpectedCustomerSpend"},
-      "min":1
+      "max":10,
+      "min":0
     },
     "ExpectedCustomerSpendTargetCompanyString":{
       "type":"string",
@@ -2550,7 +2551,8 @@
     "InvitationMessage":{
       "type":"string",
       "max":255,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "InvitationStatus":{
       "type":"string",
@@ -3035,7 +3037,8 @@
     "MemberCompanyName":{
       "type":"string",
       "max":120,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "MemberPageSize":{
       "type":"integer",

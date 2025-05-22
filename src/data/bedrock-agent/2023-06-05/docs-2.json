@@ -101,16 +101,16 @@
       "base": null,
       "refs": {
         "AgentActionGroup$parentActionSignature": "<p>If this field is set as <code>AMAZON.UserInput</code>, the agent can request the user for additional information when trying to complete a task. The <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields must be blank for this action group.</p> <p>During orchestration, if the agent determines that it needs to invoke an API in an action group, but doesn't have enough information to complete the API request, it will invoke this action group instead and return an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html\">Observation</a> reprompting the user for more information.</p>",
-        "CreateAgentActionGroupRequest$parentActionGroupSignature": "<p>Specify a built-in or computer use action for this action group. If you specify a value, you must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields empty for this action group. </p> <ul> <li> <p>To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. </p> </li> <li> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>.</p> </li> <li> <p>To allow your agent to use an Anthropic computer use tool, specify one of the following values. </p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. When operating computer use functionality, we recommend taking additional security precautions, such as executing computer actions in virtual environments with restricted data access and limited internet connectivity. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important> <ul> <li> <p> <code>ANTHROPIC.Computer</code> - Gives the agent permission to use the mouse and keyboard and take screenshots.</p> </li> <li> <p> <code>ANTHROPIC.TextEditor</code> - Gives the agent permission to view, create and edit files.</p> </li> <li> <p> <code>ANTHROPIC.Bash</code> - Gives the agent permission to run commands in a bash shell.</p> </li> </ul> </li> </ul>",
-        "UpdateAgentActionGroupRequest$parentActionGroupSignature": "<p>Update the built-in or computer use action for this action group. If you specify a value, you must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields empty for this action group. </p> <ul> <li> <p>To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. </p> </li> <li> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>.</p> </li> <li> <p>To allow your agent to use an Anthropic computer use tool, specify one of the following values. </p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. When operating computer use functionality, we recommend taking additional security precautions, such as executing computer actions in virtual environments with restricted data access and limited internet connectivity. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important> <ul> <li> <p> <code>ANTHROPIC.Computer</code> - Gives the agent permission to use the mouse and keyboard and take screenshots.</p> </li> <li> <p> <code>ANTHROPIC.TextEditor</code> - Gives the agent permission to view, create and edit files.</p> </li> <li> <p> <code>ANTHROPIC.Bash</code> - Gives the agent permission to run commands in a bash shell.</p> </li> </ul> </li> </ul> <p>During orchestration, if your agent determines that it needs to invoke an API in an action group, but doesn't have enough information to complete the API request, it will invoke this action group instead and return an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html\">Observation</a> reprompting the user for more information.</p>"
+        "CreateAgentActionGroupRequest$parentActionGroupSignature": "<p>Specify a built-in or computer use action for this action group. If you specify a value, you must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields empty for this action group. </p> <ul> <li> <p>To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. </p> </li> <li> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>.</p> </li> <li> <p>To allow your agent to use an Anthropic computer use tool, specify one of the following values. </p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. When operating computer use functionality, we recommend taking additional security precautions, such as executing computer actions in virtual environments with restricted data access and limited internet connectivity. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important> <ul> <li> <p> <code>ANTHROPIC.Computer</code> - Gives the agent permission to use the mouse and keyboard and take screenshots.</p> </li> <li> <p> <code>ANTHROPIC.TextEditor</code> - Gives the agent permission to view, create and edit files.</p> </li> <li> <p> <code>ANTHROPIC.Bash</code> - Gives the agent permission to run commands in a bash shell.</p> </li> </ul> </li> </ul>",
+        "UpdateAgentActionGroupRequest$parentActionGroupSignature": "<p>Update the built-in or computer use action for this action group. If you specify a value, you must leave the <code>description</code>, <code>apiSchema</code>, and <code>actionGroupExecutor</code> fields empty for this action group. </p> <ul> <li> <p>To allow your agent to request the user for additional information when trying to complete a task, set this field to <code>AMAZON.UserInput</code>. </p> </li> <li> <p>To allow your agent to generate, run, and troubleshoot code when trying to complete a task, set this field to <code>AMAZON.CodeInterpreter</code>.</p> </li> <li> <p>To allow your agent to use an Anthropic computer use tool, specify one of the following values. </p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. When operating computer use functionality, we recommend taking additional security precautions, such as executing computer actions in virtual environments with restricted data access and limited internet connectivity. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important> <ul> <li> <p> <code>ANTHROPIC.Computer</code> - Gives the agent permission to use the mouse and keyboard and take screenshots.</p> </li> <li> <p> <code>ANTHROPIC.TextEditor</code> - Gives the agent permission to view, create and edit files.</p> </li> <li> <p> <code>ANTHROPIC.Bash</code> - Gives the agent permission to run commands in a bash shell.</p> </li> </ul> </li> </ul> <p>During orchestration, if your agent determines that it needs to invoke an API in an action group, but doesn't have enough information to complete the API request, it will invoke this action group instead and return an <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html\">Observation</a> reprompting the user for more information.</p>"
       }
     },
     "ActionGroupSignatureParams": {
       "base": null,
       "refs": {
-        "AgentActionGroup$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
-        "CreateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
-        "UpdateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>"
+        "AgentActionGroup$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
+        "CreateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Anthropic Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>",
+        "UpdateAgentActionGroupRequest$parentActionGroupSignatureParams": "<p>The configuration settings for a computer use action.</p> <important> <p> Computer use is a new Anthropic Claude model capability (in beta) available with Claude 3.7 Sonnet and Claude 3.5 Sonnet v2 only. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agent-computer-use.html\">Configure an Amazon Bedrock Agent to complete tasks with computer use tools</a>. </p> </important>"
       }
     },
     "ActionGroupSignatureParamsKeyString": {
@@ -144,6 +144,25 @@
       "base": "<p>Contains details about an action group.</p>",
       "refs": {
         "ActionGroupSummaries$member": null
+      }
+    },
+    "AdditionalModelRequestFields": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseOrchestrationConfiguration$additionalModelRequestFields": "<p>The additional model-specific request parameters as key-value pairs to be included in the request to the foundation model.</p>",
+        "VectorSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>Specifies additional model-specific request parameters as key-value pairs that are included in the request to the Amazon Bedrock reranker model.</p>"
+      }
+    },
+    "AdditionalModelRequestFieldsKey": {
+      "base": null,
+      "refs": {
+        "AdditionalModelRequestFields$key": null
+      }
+    },
+    "AdditionalModelRequestFieldsValue": {
+      "base": null,
+      "refs": {
+        "AdditionalModelRequestFields$value": null
       }
     },
     "Agent": {
@@ -284,7 +303,7 @@
       }
     },
     "AgentFlowNodeConfiguration": {
-      "base": "<p>Defines an agent node in your flow. You specify the agent to invoke at this point in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Defines an agent node in your flow. You specify the agent to invoke at this point in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$agent": "<p>Contains configurations for an agent node in your flow. Invokes an alias of an agent and returns the response.</p>"
       }
@@ -447,6 +466,12 @@
         "BedrockFoundationModelContextEnrichmentConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the model used to create vector embeddings for the knowledge base.</p>"
       }
     },
+    "BedrockRerankingModelArn": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingModelConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the Amazon Bedrock reranker model.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -550,7 +575,7 @@
       }
     },
     "CollectorFlowNodeConfiguration": {
-      "base": "<p>Defines a collector node in your flow. This node takes an iteration of inputs and consolidates them into an array in the output. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Defines a collector node in your flow. This node takes an iteration of inputs and consolidates them into an array in the output. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$collector": "<p>Contains configurations for a collector node in your flow. Collects an iteration of inputs and consolidates them into an array of outputs.</p>"
       }
@@ -565,8 +590,14 @@
         "RdsFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>"
       }
     },
+    "ConcurrencyType": {
+      "base": null,
+      "refs": {
+        "FlowAliasConcurrencyConfiguration$type": "<p>The type of concurrency to use for parallel node execution. Specify one of the following options:</p> <ul> <li> <p> <code>Automatic</code> - Amazon Bedrock determines which nodes can be executed in parallel based on the flow definition and its dependencies.</p> </li> <li> <p> <code>Manual</code> - You specify which nodes can be executed in parallel.</p> </li> </ul>"
+      }
+    },
     "ConditionFlowNodeConfiguration": {
-      "base": "<p>Defines a condition node in your flow. You can specify conditions that determine which node comes next in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Defines a condition node in your flow. You can specify conditions that determine which node comes next in the flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$condition": "<p>Contains configurations for a condition node in your flow. Defines conditions that lead to different branches of the flow.</p>"
       }
@@ -1275,6 +1306,18 @@
         "KnowledgeBase$failureReasons": "<p>A list of reasons that the API operation on the knowledge base failed.</p>"
       }
     },
+    "FieldForReranking": {
+      "base": "<p>Specifies a metadata field to include or exclude during the reranking process.</p>",
+      "refs": {
+        "FieldsForReranking$member": null
+      }
+    },
+    "FieldForRerankingFieldNameString": {
+      "base": null,
+      "refs": {
+        "FieldForReranking$fieldName": "<p>The name of the metadata field to include or exclude during reranking.</p>"
+      }
+    },
     "FieldName": {
       "base": null,
       "refs": {
@@ -1294,6 +1337,13 @@
         "RedisEnterpriseCloudFieldMapping$metadataField": "<p>The name of the field in which Amazon Bedrock stores metadata about the vector store.</p>",
         "RedisEnterpriseCloudFieldMapping$textField": "<p>The name of the field in which Amazon Bedrock stores the raw text from your data. The text is split according to the chunking strategy you choose.</p>",
         "RedisEnterpriseCloudFieldMapping$vectorField": "<p>The name of the field in which Amazon Bedrock stores the vector embeddings for your data sources.</p>"
+      }
+    },
+    "FieldsForReranking": {
+      "base": null,
+      "refs": {
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>Specifies the metadata fields to exclude from the reranking process.</p>",
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>Specifies the metadata fields to include in the reranking process.</p>"
       }
     },
     "FilterList": {
@@ -1342,6 +1392,23 @@
         "FlowAliasSummary$arn": "<p>The Amazon Resource Name (ARN) of the alias.</p>",
         "GetFlowAliasResponse$arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>",
         "UpdateFlowAliasResponse$arn": "<p>The Amazon Resource Name (ARN) of the flow.</p>"
+      }
+    },
+    "FlowAliasConcurrencyConfiguration": {
+      "base": "<p>Determines how multiple nodes in a flow can run in parallel. Running nodes concurrently can improve your flow's performance.</p>",
+      "refs": {
+        "CreateFlowAliasRequest$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed in parallel.</p>",
+        "CreateFlowAliasResponse$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed in parallel.</p>",
+        "FlowAliasSummary$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed concurrently.</p>",
+        "GetFlowAliasResponse$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed in parallel.</p>",
+        "UpdateFlowAliasRequest$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed in parallel.</p>",
+        "UpdateFlowAliasResponse$concurrencyConfiguration": "<p>The configuration that specifies how nodes in the flow are executed in parallel.</p>"
+      }
+    },
+    "FlowAliasConcurrencyConfigurationMaxConcurrencyInteger": {
+      "base": null,
+      "refs": {
+        "FlowAliasConcurrencyConfiguration$maxConcurrency": "<p>The maximum number of nodes that can be executed concurrently in the flow.</p>"
       }
     },
     "FlowAliasId": {
@@ -1406,7 +1473,8 @@
     "FlowCondition": {
       "base": "<p>Defines a condition in the condition node.</p>",
       "refs": {
-        "FlowConditions$member": null
+        "FlowConditions$member": null,
+        "LoopControllerFlowNodeConfiguration$continueCondition": "<p>Specifies the condition that determines when the flow exits the DoWhile loop. The loop executes until this condition evaluates to true.</p>"
       }
     },
     "FlowConditionExpression": {
@@ -1454,6 +1522,7 @@
         "CyclicConnectionFlowValidationDetails$connection": "<p>The name of the connection that causes the cycle in the flow.</p>",
         "FlowConnection$name": "<p>A name for the connection that you can reference.</p>",
         "IncompatibleConnectionDataTypeFlowValidationDetails$connection": "<p>The name of the connection with incompatible data types.</p>",
+        "InvalidLoopBoundaryFlowValidationDetails$connection": "<p>The name of the connection that violates loop boundary rules.</p>",
         "MissingConnectionConfigurationFlowValidationDetails$connection": "<p>The name of the connection missing configuration.</p>",
         "UnknownConnectionConditionFlowValidationDetails$connection": "<p>The name of the connection with the unknown condition.</p>",
         "UnknownConnectionSourceFlowValidationDetails$connection": "<p>The name of the connection with the unknown source.</p>",
@@ -1489,6 +1558,7 @@
         "CreateFlowVersionResponse$definition": "<p>A definition of the nodes and connections in the flow.</p>",
         "GetFlowResponse$definition": "<p>The definition of the nodes and connections between the nodes in the flow.</p>",
         "GetFlowVersionResponse$definition": "<p>The definition of the nodes and connections between nodes in the flow.</p>",
+        "LoopFlowNodeConfiguration$definition": "<p>The definition of the DoWhile loop nodes and connections between nodes in the flow.</p>",
         "UpdateFlowRequest$definition": "<p>A definition of the nodes and the connections between the nodes in the flow.</p>",
         "UpdateFlowResponse$definition": "<p>A definition of the nodes and the connections between nodes in the flow.</p>",
         "ValidateFlowDefinitionRequest$definition": "<p>The definition of a flow to validate.</p>"
@@ -1577,7 +1647,7 @@
       }
     },
     "FlowNodeConfiguration": {
-      "base": "<p>Contains configurations for a node in your flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains configurations for a node in your flow. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNode$configuration": "<p>Contains configurations for the node.</p>"
       }
@@ -1585,16 +1655,22 @@
     "FlowNodeIODataType": {
       "base": null,
       "refs": {
-        "FlowNodeInput$type": "<p>The data type of the input. If the input doesn't match this type at runtime, a validation error will be thrown.</p>",
+        "FlowNodeInput$type": "<p>Specifies the data type of the input. If the input doesn't match this type at runtime, a validation error will be thrown.</p>",
         "FlowNodeOutput$type": "<p>The data type of the output. If the output doesn't match this type at runtime, a validation error will be thrown.</p>",
         "MismatchedNodeInputTypeFlowValidationDetails$expectedType": "<p>The expected data type for the node input.</p>",
         "MismatchedNodeOutputTypeFlowValidationDetails$expectedType": "<p>The expected data type for the node output.</p>"
       }
     },
     "FlowNodeInput": {
-      "base": "<p>Contains configurations for an input to a node.</p>",
+      "base": "<p>Contains configurations for an input in an Amazon Bedrock Flows node.</p>",
       "refs": {
         "FlowNodeInputs$member": null
+      }
+    },
+    "FlowNodeInputCategory": {
+      "base": null,
+      "refs": {
+        "FlowNodeInput$category": "<p>Specifies how input data flows between iterations in a DoWhile loop.</p> <ul> <li> <p> <code>LoopCondition</code> - Controls whether the loop continues by evaluating condition expressions against the input data. Use this category to define the condition that determines if the loop should continue. </p> </li> <li> <p> <code>ReturnValueToLoopStart</code> - Defines data to pass back to the start of the loop's next iteration. Use this category for variables that you want to update for each loop iteration.</p> </li> <li> <p> <code>ExitLoop</code> - Defines the value that's available once the loop ends. Use this category to expose loop results to nodes outside the loop.</p> </li> </ul>"
       }
     },
     "FlowNodeInputExpression": {
@@ -1607,7 +1683,7 @@
       "base": null,
       "refs": {
         "FlowDataConnectionConfiguration$targetInput": "<p>The name of the input in the target node that the connection ends at.</p>",
-        "FlowNodeInput$name": "<p>A name for the input that you can reference.</p>",
+        "FlowNodeInput$name": "<p>Specifies a name for the input that you can reference.</p>",
         "MalformedNodeInputExpressionFlowValidationDetails$input": "<p>The name of the input with the malformed expression.</p>",
         "MismatchedNodeInputTypeFlowValidationDetails$input": "<p>The name of the input with the mismatched data type.</p>",
         "MissingNodeInputFlowValidationDetails$input": "<p>The name of the missing input.</p>",
@@ -1631,14 +1707,22 @@
         "FlowConnection$source": "<p>The node that the connection starts at.</p>",
         "FlowConnection$target": "<p>The node that the connection ends at.</p>",
         "FlowNode$name": "<p>A name for the node.</p>",
+        "InvalidLoopBoundaryFlowValidationDetails$source": "<p>The source node of the connection that violates DoWhile loop boundary rules.</p>",
+        "InvalidLoopBoundaryFlowValidationDetails$target": "<p>The target node of the connection that violates DoWhile loop boundary rules.</p>",
+        "LoopIncompatibleNodeTypeFlowValidationDetails$incompatibleNodeName": "<p>The node that's incompatible in the DoWhile loop.</p>",
+        "LoopIncompatibleNodeTypeFlowValidationDetails$node": "<p>The <code>Loop</code> container node that contains an incompatible node.</p>",
         "MalformedConditionExpressionFlowValidationDetails$node": "<p>The name of the node containing the malformed condition expression.</p>",
         "MalformedNodeInputExpressionFlowValidationDetails$node": "<p>The name of the node containing the malformed input expression.</p>",
         "MismatchedNodeInputTypeFlowValidationDetails$node": "<p>The name of the node containing the input with the mismatched data type.</p>",
         "MismatchedNodeOutputTypeFlowValidationDetails$node": "<p>The name of the node containing the output with the mismatched data type.</p>",
         "MissingDefaultConditionFlowValidationDetails$node": "<p>The name of the node missing the default condition.</p>",
-        "MissingNodeConfigurationFlowValidationDetails$node": "<p>The name of the node missing configuration.</p>",
+        "MissingLoopControllerNodeFlowValidationDetails$loopNode": "<p>The DoWhile loop in a flow that's missing a required <code>LoopController</code> node.</p>",
+        "MissingLoopInputNodeFlowValidationDetails$loopNode": "<p>The DoWhile loop in a flow that's missing a required <code>LoopInput</code> node.</p>",
+        "MissingNodeConfigurationFlowValidationDetails$node": "<p>The name of the node missing a required configuration.</p>",
         "MissingNodeInputFlowValidationDetails$node": "<p>The name of the node missing the required input.</p>",
         "MissingNodeOutputFlowValidationDetails$node": "<p>The name of the node missing the required output.</p>",
+        "MultipleLoopControllerNodesFlowValidationDetails$loopNode": "<p>The DoWhile loop in a flow that contains multiple <code>LoopController</code> nodes.</p>",
+        "MultipleLoopInputNodesFlowValidationDetails$loopNode": "<p>The DoWhile loop in a flow that contains multiple <code>LoopInput</code> nodes.</p>",
         "MultipleNodeInputConnectionsFlowValidationDetails$node": "<p>The name of the node containing the input with multiple connections.</p>",
         "UnfulfilledNodeInputFlowValidationDetails$node": "<p>The name of the node containing the unfulfilled input.</p>",
         "UnknownNodeInputFlowValidationDetails$node": "<p>The name of the unknown input.</p>",
@@ -2103,6 +2187,12 @@
         "FlowValidationDetails$incompatibleConnectionDataType": "<p>Details about incompatible data types in a connection.</p>"
       }
     },
+    "IncompatibleLoopNodeType": {
+      "base": null,
+      "refs": {
+        "LoopIncompatibleNodeTypeFlowValidationDetails$incompatibleNodeType": "<p>The node type of the incompatible node in the DoWhile loop. Some node types, like a condition node, aren't allowed in a DoWhile loop.</p>"
+      }
+    },
     "InferenceConfiguration": {
       "base": "<p>Contains inference parameters to use when the agent invokes a foundation model in the part of the agent sequence defined by the <code>promptType</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p>",
       "refs": {
@@ -2251,6 +2341,12 @@
       "refs": {
       }
     },
+    "InvalidLoopBoundaryFlowValidationDetails": {
+      "base": "<p>Details about a flow that contains connections that violate loop boundary rules.</p>",
+      "refs": {
+        "FlowValidationDetails$invalidLoopBoundary": "<p>Details about a flow that includes connections that violate loop boundary rules.</p>"
+      }
+    },
     "IteratorFlowNodeConfiguration": {
       "base": "<p>Contains configurations for an iterator node in a flow. Takes an input that is an array and iteratively sends each item of the array as an output to the following node. The size of the array is also returned in the output.</p> <p>The output flow node at the end of the flow iteration will return a response for each member of the array. To return only one response, you can include a collector node downstream from the iterator node.</p>",
       "refs": {
@@ -2348,9 +2444,15 @@
       }
     },
     "KnowledgeBaseFlowNodeConfiguration": {
-      "base": "<p>Contains configurations for a knowledge base node in a flow. This node takes a query as the input and returns, as the output, the retrieved responses directly (as an array) or a response generated based on the retrieved responses. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains configurations for a knowledge base node in a flow. This node takes a query as the input and returns, as the output, the retrieved responses directly (as an array) or a response generated based on the retrieved responses. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$knowledgeBase": "<p>Contains configurations for a knowledge base node in your flow. Queries a knowledge base and returns the retrieved results or generated response.</p>"
+      }
+    },
+    "KnowledgeBaseFlowNodeConfigurationNumberOfResultsInteger": {
+      "base": null,
+      "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$numberOfResults": "<p>The number of results to retrieve from the knowledge base.</p>"
       }
     },
     "KnowledgeBaseId": {
@@ -2363,6 +2465,19 @@
       "base": null,
       "refs": {
         "KnowledgeBaseFlowNodeConfiguration$modelId": "<p>The unique identifier of the model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> to use to generate a response from the query results. Omit this field if you want to return the retrieved results as an array.</p>"
+      }
+    },
+    "KnowledgeBaseOrchestrationConfiguration": {
+      "base": "<p>Configures how the knowledge base orchestrates the retrieval and generation process, allowing for customization of prompts, inference parameters, and performance settings.</p>",
+      "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$orchestrationConfiguration": "<p>The configuration for orchestrating the retrieval and generation process in the knowledge base node.</p>"
+      }
+    },
+    "KnowledgeBasePromptTemplate": {
+      "base": "<p>Defines a custom prompt template for orchestrating the retrieval and generation process.</p>",
+      "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$promptTemplate": "<p>A custom prompt template to use with the knowledge base for generating responses.</p>",
+        "KnowledgeBaseOrchestrationConfiguration$promptTemplate": "<p>A custom prompt template for orchestrating the retrieval and generation process.</p>"
       }
     },
     "KnowledgeBaseRoleArn": {
@@ -2408,6 +2523,12 @@
         "KnowledgeBaseSummaries$member": null
       }
     },
+    "KnowledgeBaseTextPrompt": {
+      "base": null,
+      "refs": {
+        "KnowledgeBasePromptTemplate$textPromptTemplate": "<p>The text of the prompt template.</p>"
+      }
+    },
     "KnowledgeBaseType": {
       "base": null,
       "refs": {
@@ -2425,7 +2546,7 @@
       }
     },
     "LambdaFunctionFlowNodeConfiguration": {
-      "base": "<p>Contains configurations for a Lambda function node in the flow. You specify the Lambda function to invoke and the inputs into the function. The output is the response that is defined in the Lambda function. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains configurations for a Lambda function node in the flow. You specify the Lambda function to invoke and the inputs into the function. The output is the response that is defined in the Lambda function. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$lambdaFunction": "<p>Contains configurations for a Lambda function node in your flow. Invokes an Lambda function.</p>"
       }
@@ -2443,7 +2564,7 @@
       }
     },
     "LexFlowNodeConfiguration": {
-      "base": "<p>Contains configurations for a Lex node in the flow. You specify a Amazon Lex bot to invoke. This node takes an utterance as the input and returns as the output the intent identified by the Amazon Lex bot. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains configurations for a Lex node in the flow. You specify a Amazon Lex bot to invoke. This node takes an utterance as the input and returns as the output the intent identified by the Amazon Lex bot. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$lex": "<p>Contains configurations for a Lex node in your flow. Invokes an Amazon Lex bot to identify the intent of the input and return the intent as the output.</p>"
       }
@@ -2598,6 +2719,36 @@
       "refs": {
       }
     },
+    "LoopControllerFlowNodeConfiguration": {
+      "base": "<p>Contains configurations for the controller node of a DoWhile loop in the flow.</p>",
+      "refs": {
+        "FlowNodeConfiguration$loopController": "<p>Contains controller node configurations for a DoWhile loop in your flow.</p>"
+      }
+    },
+    "LoopControllerFlowNodeConfigurationMaxIterationsInteger": {
+      "base": null,
+      "refs": {
+        "LoopControllerFlowNodeConfiguration$maxIterations": "<p>Specifies the maximum number of times the DoWhile loop can iterate before the flow exits the loop.</p>"
+      }
+    },
+    "LoopFlowNodeConfiguration": {
+      "base": "<p>Contains configurations for the nodes of a DoWhile loop in your flow.</p> <p>A DoWhile loop is made up of the following nodes:</p> <ul> <li> <p> <code>Loop</code> - The container node that holds the loop's flow definition. This node encompasses the entire loop structure.</p> </li> <li> <p> <code>LoopInput</code> - The entry point node for the loop. This node receives inputs from nodes outside the loop and from previous loop iterations.</p> </li> <li> <p>Body nodes - These can be </p> </li> <li> <p> <code>LoopController</code> - The node that evaluates whether the loop should continue or exit based on a condition.</p> </li> </ul> <p>These nodes work together to create a loop that runs at least once and continues until a specified condition is met or a maximum number of iterations is reached.</p>",
+      "refs": {
+        "FlowNodeConfiguration$loop": "<p>Contains configurations for a DoWhile loop in your flow.</p>"
+      }
+    },
+    "LoopIncompatibleNodeTypeFlowValidationDetails": {
+      "base": "<p>Details about a flow that contains an incompatible node in a DoWhile loop.</p>",
+      "refs": {
+        "FlowValidationDetails$loopIncompatibleNodeType": "<p>Details about a flow that includes incompatible node types in a DoWhile loop.</p>"
+      }
+    },
+    "LoopInputFlowNodeConfiguration": {
+      "base": "<p>Contains configurations for the input node of a DoWhile loop in the flow.</p>",
+      "refs": {
+        "FlowNodeConfiguration$loopInput": "<p>Contains input node configurations for a DoWhile loop in your flow.</p>"
+      }
+    },
     "MalformedConditionExpressionFlowValidationDetails": {
       "base": "<p>Details about a malformed condition expression in a node.</p>",
       "refs": {
@@ -2687,6 +2838,12 @@
         "MetadataAttributeValue$stringListValue": "<p>An array of strings that define the value of the metadata attribute.</p>"
       }
     },
+    "MetadataConfigurationForReranking": {
+      "base": "<p>Specifies how metadata fields should be handled during the reranking process.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>Specifies how metadata fields should be handled during the reranking process.</p>"
+      }
+    },
     "MetadataSourceType": {
       "base": null,
       "refs": {
@@ -2735,8 +2892,20 @@
         "FlowValidationDetails$missingEndingNodes": "<p>Details about missing ending nodes in the flow.</p>"
       }
     },
+    "MissingLoopControllerNodeFlowValidationDetails": {
+      "base": "<p>Details about a flow that's missing a required <code>LoopController</code> node in a DoWhile loop.</p>",
+      "refs": {
+        "FlowValidationDetails$missingLoopControllerNode": "<p>Details about a flow that's missing a required <code>LoopController</code> node in a DoWhile loop.</p>"
+      }
+    },
+    "MissingLoopInputNodeFlowValidationDetails": {
+      "base": "<p>Details about a flow that's missing a required <code>LoopInput</code> node in a DoWhile loop.</p>",
+      "refs": {
+        "FlowValidationDetails$missingLoopInputNode": "<p>Details about a flow that's missing a required <code>LoopInput</code> node in a DoWhile loop.</p>"
+      }
+    },
     "MissingNodeConfigurationFlowValidationDetails": {
-      "base": "<p>Details about a node missing required configuration.</p>",
+      "base": "<p>Details about a node missing a required configuration.</p>",
       "refs": {
         "FlowValidationDetails$missingNodeConfiguration": "<p>Details about missing configuration for a node.</p>"
       }
@@ -2810,6 +2979,18 @@
       "refs": {
         "MongoDbAtlasConfiguration$textIndexName": "<p>The name of the text search index in the MongoDB collection. This is required for using the hybrid search feature.</p>",
         "MongoDbAtlasConfiguration$vectorIndexName": "<p>The name of the MongoDB Atlas vector search index.</p>"
+      }
+    },
+    "MultipleLoopControllerNodesFlowValidationDetails": {
+      "base": "<p>Details about a flow that contains multiple <code>LoopController</code> nodes in a DoWhile loop.</p>",
+      "refs": {
+        "FlowValidationDetails$multipleLoopControllerNodes": "<p>Details about a flow that contains multiple <code>LoopController</code> nodes in a DoWhile loop.</p>"
+      }
+    },
+    "MultipleLoopInputNodesFlowValidationDetails": {
+      "base": "<p>Details about a flow that contains multiple <code>LoopInput</code> nodes in a DoWhile loop.</p>",
+      "refs": {
+        "FlowValidationDetails$multipleLoopInputNodes": "<p>Details about a flow that contains multiple <code>LoopInput</code> nodes in a DoWhile loop.</p>"
       }
     },
     "MultipleNodeInputConnectionsFlowValidationDetails": {
@@ -3099,6 +3280,18 @@
         "APISchema$payload": "<p>The JSON or YAML-formatted payload defining the OpenAPI schema for the action group. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html\">Action group OpenAPI schemas</a>.</p>"
       }
     },
+    "PerformanceConfigLatency": {
+      "base": null,
+      "refs": {
+        "PerformanceConfiguration$latency": "<p>The latency optimization setting.</p>"
+      }
+    },
+    "PerformanceConfiguration": {
+      "base": "<p>The performance-related configuration options for the knowledge base retrieval and generation process.</p>",
+      "refs": {
+        "KnowledgeBaseOrchestrationConfiguration$performanceConfig": "<p>The performance configuration options for the knowledge base retrieval and generation process.</p>"
+      }
+    },
     "PineconeConfiguration": {
       "base": "<p>Contains details about the storage configuration of the knowledge base in Pinecone. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-setup-pinecone.html\">Create a vector index in Pinecone</a>.</p>",
       "refs": {
@@ -3198,7 +3391,7 @@
       }
     },
     "PromptFlowNodeConfiguration": {
-      "base": "<p>Contains configurations for a prompt node in the flow. You can use a prompt from Prompt management or you can define one in this node. If the prompt contains variables, the inputs into this node will fill in the variables. The output from this node is the response generated by the model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in Amazon Bedrock works</a> in the Amazon Bedrock User Guide.</p>",
+      "base": "<p>Contains configurations for a prompt node in the flow. You can use a prompt from Prompt management or you can define one in this node. If the prompt contains variables, the inputs into this node will fill in the variables. The output from this node is the response generated by the model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/flows-nodes.html\">Node types in a flow</a> in the Amazon Bedrock User Guide.</p>",
       "refs": {
         "FlowNodeConfiguration$prompt": "<p>Contains configurations for a prompt node in your flow. Runs a prompt and generates the model response as the output. You can use a prompt from Prompt management or you can configure one in this node.</p>"
       }
@@ -3251,6 +3444,8 @@
     "PromptInferenceConfiguration": {
       "base": "<p>Contains inference configurations for the prompt.</p>",
       "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$inferenceConfiguration": "<p>Contains inference configurations for the prompt.</p>",
+        "KnowledgeBaseOrchestrationConfiguration$inferenceConfig": "<p>Contains inference configurations for the prompt.</p>",
         "PromptFlowNodeInlineConfiguration$inferenceConfiguration": "<p>Contains inference configurations for the prompt.</p>",
         "PromptVariant$inferenceConfiguration": "<p>Contains inference configurations for the prompt variant.</p>"
       }
@@ -3335,7 +3530,7 @@
     "PromptState": {
       "base": null,
       "refs": {
-        "PromptConfiguration$promptState": "<p>Specifies whether to allow the agent to carry out the step specified in the <code>promptType</code>. If you set this value to <code>DISABLED</code>, the agent skips that step. The default state for each <code>promptType</code> is as follows.</p> <ul> <li> <p> <code>PRE_PROCESSING</code> – <code>DISABLED</code> </p> </li> <li> <p> <code>ORCHESTRATION</code> – <code>ENABLED</code> </p> </li> <li> <p> <code>KNOWLEDGE_BASE_RESPONSE_GENERATION</code> – <code>ENABLED</code> </p> </li> <li> <p> <code>POST_PROCESSING</code> – <code>DISABLED</code> </p> </li> </ul>"
+        "PromptConfiguration$promptState": "<p>Specifies whether to allow the agent to carry out the step specified in the <code>promptType</code>. If you set this value to <code>DISABLED</code>, the agent skips that step. The default state for each <code>promptType</code> is as follows.</p> <ul> <li> <p> <code>PRE_PROCESSING</code> – <code>ENABLED</code> </p> </li> <li> <p> <code>ORCHESTRATION</code> – <code>ENABLED</code> </p> </li> <li> <p> <code>KNOWLEDGE_BASE_RESPONSE_GENERATION</code> – <code>ENABLED</code> </p> </li> <li> <p> <code>POST_PROCESSING</code> – <code>DISABLED</code> </p> </li> </ul>"
       }
     },
     "PromptSummaries": {
@@ -3641,6 +3836,18 @@
       "base": "<p>Whether the action requires user confirmation.</p>",
       "refs": {
         "Function$requireConfirmation": "<p>Contains information if user confirmation is required to invoke the function.</p>"
+      }
+    },
+    "RerankingMetadataSelectionMode": {
+      "base": null,
+      "refs": {
+        "MetadataConfigurationForReranking$selectionMode": "<p>The mode for selecting metadata fields for reranking.</p>"
+      }
+    },
+    "RerankingMetadataSelectiveModeConfiguration": {
+      "base": "<p>Configures the metadata fields to include or exclude during the reranking process when using selective mode.</p>",
+      "refs": {
+        "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>The configuration for selective metadata field inclusion or exclusion during reranking.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -4435,6 +4642,36 @@
       "base": "<p>Contains details about the model used to create vector embeddings for the knowledge base.</p>",
       "refs": {
         "KnowledgeBaseConfiguration$vectorKnowledgeBaseConfiguration": "<p>Contains details about the model that's used to convert the data source into vector embeddings.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfiguration": {
+      "base": "<p>Configures the Amazon Bedrock reranker model to improve the relevance of retrieved results.</p>",
+      "refs": {
+        "VectorSearchRerankingConfiguration$bedrockRerankingConfiguration": "<p>Specifies the configuration for using an Amazon Bedrock reranker model to rerank retrieved results.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$numberOfRerankedResults": "<p>Specifies the number of results to return after reranking.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingModelConfiguration": {
+      "base": "<p>Configures the Amazon Bedrock model used for reranking retrieved results.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$modelConfiguration": "<p>Specifies the configuration for the Amazon Bedrock reranker model.</p>"
+      }
+    },
+    "VectorSearchRerankingConfiguration": {
+      "base": "<p>Specifies how retrieved results from a knowledge base are reranked to improve relevance.</p>",
+      "refs": {
+        "KnowledgeBaseFlowNodeConfiguration$rerankingConfiguration": "<p>The configuration for reranking the retrieved results from the knowledge base to improve relevance.</p>"
+      }
+    },
+    "VectorSearchRerankingConfigurationType": {
+      "base": null,
+      "refs": {
+        "VectorSearchRerankingConfiguration$type": "<p>Specifies the type of reranking model to use. Currently, the only supported value is <code>BEDROCK_RERANKING_MODEL</code>.</p>"
       }
     },
     "Version": {

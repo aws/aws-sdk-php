@@ -6727,7 +6727,8 @@
     "__integerMin50000Max8000000": {
       "base": null,
       "refs": {
-        "Av1Settings$MaxBitrate": "The maximum bitrate to assign.\nFor recommendations, see the description for qvbrQualityLevel."
+        "Av1Settings$MaxBitrate": "The maximum bitrate to assign.\nFor recommendations, see the description for qvbrQualityLevel.",
+        "Av1Settings$Bitrate": "Average bitrate in bits/second. Required when the rate control mode is CBR. Not used for QVBR."
       }
     },
     "__listOfDescribeChannelPlacementGroupSummary": {
@@ -7158,6 +7159,12 @@
       "base": null,
       "refs": {
         "CmafIngestGroupSettings$CaptionLanguageMappings": "An array that identifies the languages in the four caption channels in the embedded captions."
+      }
+    },
+    "Av1RateControlMode": {
+      "base": "Av1 Rate Control Mode",
+      "refs": {
+        "Av1Settings$RateControlMode": "Rate control mode.\n\nQVBR: Quality will match the specified quality level except when it is constrained by the\nmaximum bitrate.  Recommended if you or your viewers pay for bandwidth.\n\nCBR: Quality varies, depending on the video complexity. Recommended only if you distribute\nyour assets to devices that cannot handle variable bitrates."
       }
     }
   },

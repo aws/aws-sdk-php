@@ -1,5 +1,84 @@
 # CHANGELOG
 
+## 3.343.16 - 2025-05-21
+
+* `Aws\` - Sets the header `x-amzn-query-mode` to a string value instead of a boolean.
+* `Aws\PartnerCentralSelling` - Modified validation to allow expectedCustomerSpend array with zero elements in Partner Opportunity operations.
+* `Aws\EC2` - Release of Dualstack and Ipv6-only EC2 Public DNS hostnames
+* `Aws\CloudWatch` - Adds support for setting up Contributor Insight rules on logs transformed via Logs Transformation feature.
+* `Aws\ApplicationAutoScaling` - Doc only update that addresses a customer reported issue.
+* `Aws\BedrockAgentRuntime` - Amazon Bedrock introduces asynchronous flows (in preview), which let you run flows for longer durations and yield control so that your application can perform other tasks and you don't have to actively monitor the flow's progress.
+
+## 3.343.15 - 2025-05-20
+
+* `Aws\` - Removes PrivateNetworks service client and models.
+* `Aws\OAM` - Add IncludeTags field to GetLink, GetSink and UpdateLink API
+* `Aws\Inspector2` - This release adds GetClustersForImage API and filter updates as part of the mapping of container images to running containers feature.
+* `Aws\DataSync` - Remove Discovery APIs from the DataSync service
+* `Aws\EC2` - This release expands the ModifyInstanceMaintenanceOptions API to enable or disable instance migration during customer-initiated reboots for EC2 Scheduled Reboot Events.
+* `Aws\Glue` - Enhanced AWS Glue ListConnectionTypes API Model with additional metadata fields.
+* `Aws\RDS` - This release introduces the new DescribeDBMajorEngineVersions API for describing the properties of specific major versions of database engines.
+
+## 3.343.14 - 2025-05-19
+
+* `Aws\MediaPackageV2` - This release adds support for DVB-DASH, EBU-TT-D subtitle format, and non-compacted manifests for DASH in MediaPackage v2 Origin Endpoints.
+* `Aws\EC2` - This release includes new APIs for System Integrity Protection (SIP) configuration and automated root volume ownership delegation for EC2 Mac instances.
+* `Aws\DSQL` - CreateMultiRegionCluster and DeleteMultiRegionCluster APIs removed
+
+## 3.343.13 - 2025-05-16
+
+* `Aws\ECS` - This is an Amazon ECs documentation only release to support the change of the container exit "reason" field from 255 characters to 1024 characters.
+* `Aws\BedrockDataAutomationRuntime` - Add AssetProcessingConfiguration for video segment to InputConfiguration
+* `Aws\ServiceQuotas` - This release introduces CreateSupportCase operation to SDK.
+* `Aws\Glue` - Changes include (1) Excel as S3 Source type and XML and Tableau's Hyper as S3 Sink types, (2) targeted number of partitions parameter in S3 sinks and (3) new compression types in CSV/JSON and Parquet S3 sinks.
+* `Aws\Neptune` - This release adds Global Cluster Switchover capability which enables you to change your global cluster's primary AWS Region, the region that serves writes, while preserving the replication between all regions in the global cluster.
+* `Aws\EMR` - Added APIs for managing Application UIs: Access Persistent (serverless) UIs via CreatePersistentAppUI DescribePersistentAppUI & GetPersistentAppUIPresignedURL, and Cluster-based UIs through GetOnClusterAppUIPresignedURL. Supports Yarn, Spark History, and TEZ interfaces.
+* `Aws\CodePipeline` - CodePipeline now supports new API ListDeployActionExecutionTargets that lists the deployment target details for deploy action executions.
+* `Aws\BedrockDataAutomation` - Add support for VIDEO modality to BlueprintType enum.
+
+## 3.343.12 - 2025-05-15
+
+* `Aws\ControlTower` - Updated the descriptions for the AWS Control Tower Baseline APIs to make them more intuitive.
+* `Aws\DatabaseMigrationService` - Introduces Data Resync feature to describe-table-statistics and IAM database authentication for MariaDB, MySQL, and PostgreSQL.
+* `Aws\PCS` - This release adds support for Slurm accounting. For more information, see the Slurm accounting topic in the AWS PCS User Guide. Slurm accounting is supported for Slurm 24.11 and later. This release also adds 24.11 as a valid value for the version parameter of the Scheduler data type.
+* `Aws\WorkSpaces` - Added the new AlwaysOn running mode for WorkSpaces Pools. Customers can now choose between AlwaysOn (for instant access, with hourly usage billing regardless of connection status), or AutoStop (to optimize cost, with a brief startup delay) for their pools.
+* `Aws\BedrockAgent` - Amazon Bedrock Flows introduces DoWhile loops nodes, parallel node executions, and enhancements to knowledge base nodes.
+* `Aws\CodeBuild` - AWS CodeBuild now supports Docker Server capability
+
+## 3.343.11 - 2025-05-14
+
+* `Aws\Firehose` - This release adds catalogARN support for s3 tables multi-catalog catalogARNs.
+* `Aws\MediaConvert` - This update enables cropping for video overlays and adds a new STL to Teletext upconversion toggle to preserve styling.
+* `Aws\CognitoIdentityProvider` - Add exceptions to WebAuthn operations.
+* `Aws\CloudWatchLogs` - This release adds a new API "ListLogGroups" and an improvement in API "DescribeLogGroups"
+
+## 3.343.10 - 2025-05-13
+
+* `Aws\LicenseManager` - Add Tagging feature to resources in the Managed Entitlements service. License and Grant resources can now be tagged.
+* `Aws\Bedrock` - Enable cross-Region inference for Amazon Bedrock Guardrails by using the crossRegionConfig parameter when calling the CreateGuardrail or UpdateGuardrail operation.
+* `Aws\DSQL` - CreateMultiRegionClusters and DeleteMultiRegionClusters APIs marked as deprecated. Introduced new multi-Region clusters creation experience through multiRegionProperties parameter in CreateCluster API.
+* `Aws\ECS` - This release extends functionality for Amazon EBS volumes attached to Amazon ECS tasks by adding support for the new EBS volumeInitializationRate parameter in ECS RunTask/StartTask/CreateService/UpdateService APIs.
+* `Aws\BedrockAgentRuntime` - Changes for enhanced metadata in trace
+* `Aws\ControlTower` - AWS Control Tower now reports the inheritance drift status for EnabledBaselines through the GetEnabledBaseline and ListEnabledBaselines APIs. You can now filter EnabledBaselines by their enablement and drift status using the ListEnabledBaselines API to view accounts and OUs that require attention.
+
+## 3.343.9 - 2025-05-12
+
+* `Aws\SupplyChain` - Launch new AWS Supply Chain public APIs for DataIntegrationEvent, DataIntegrationFlowExecution and DatasetNamespace. Also add more capabilities to existing public APIs to support direct dataset event publish, data deduplication in DataIntegrationFlow, partition specification of custom datasets.
+* `Aws\SageMaker` - No API changes from previous release. This release migrated the model to Smithy keeping all features unchanged.
+* `Aws\S3Control` - Updates to support S3 Express zonal endpoints for directory buckets in AWS CLI
+* `Aws\Deadline` - AWS Deadline Cloud service-managed fleets now support configuration scripts. Configuration scripts make it easy to install additional software, like plugins and packages, onto a worker.
+* `Aws\MediaLive` - Add support to the AV1 rate control mode
+* `Aws\IAM` - Updating the endpoint list for the Identity and access management (IAM) service
+* `Aws\MediaTailor` - Documenting that EnabledLoggingStrategies is always present in responses of PlaybackConfiguration read operations.
+* `Aws\EC2` - EC2 - Adding support for AvailabilityZoneId
+
+## 3.343.8 - 2025-05-09
+
+* `Aws\Synthetics` - Add support to retry a canary automatically after schedule run failures. Users can enable this feature by configuring the RetryConfig field when calling the CreateCanary or UpdateCanary API. Also includes changes in GetCanary and GetCanaryRuns to support retrieving retry configurations.
+* `Aws\CloudWatchLogs` - We are pleased to announce limit increases to our grok processor logs transformation feature. Now you can define 20 Grok patterns in their configurations, with an expanded total pattern matching limit of 512 characters.
+* `Aws\WorkSpaces` - Remove parameter EnableWorkDocs from WorkSpacesServiceModel due to end of support of Amazon WorkDocs service.
+* `Aws\Athena` - Minor API documentation updates
+
 ## 3.343.7 - 2025-05-08
 
 * `Aws\` - Validates tag input for `ChangelogBuilder`

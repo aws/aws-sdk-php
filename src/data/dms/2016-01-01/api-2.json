@@ -1622,8 +1622,7 @@
     },
     "AddTagsToResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ApplyPendingMaintenanceActionMessage":{
       "type":"structure",
@@ -2509,8 +2508,7 @@
     },
     "DeleteReplicationSubnetGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteReplicationTaskAssessmentRunMessage":{
       "type":"structure",
@@ -2540,8 +2538,7 @@
     },
     "DescribeAccountAttributesMessage":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAccountAttributesResponse":{
       "type":"structure",
@@ -2604,7 +2601,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"}
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"}
       }
     },
     "DescribeConversionConfigurationResponse":{
@@ -2760,7 +2757,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -2866,7 +2863,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -2883,7 +2880,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -2900,7 +2897,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -2917,7 +2914,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -2934,7 +2931,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "Filters":{"shape":"FilterList"},
         "Marker":{"shape":"String"},
         "MaxRecords":{"shape":"IntegerOptional"}
@@ -3466,7 +3463,7 @@
         "SelectionRules"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"},
         "FileName":{"shape":"String"},
         "AssessmentReportTypes":{"shape":"AssessmentReportTypesList"}
@@ -3933,6 +3930,10 @@
         "SchemaConversionApplicationAttributes":{"shape":"SCApplicationAttributes"}
       }
     },
+    "MigrationProjectIdentifier":{
+      "type":"string",
+      "max":255
+    },
     "MigrationProjectList":{
       "type":"list",
       "member":{"shape":"MigrationProject"}
@@ -3952,7 +3953,7 @@
         "ConversionConfiguration"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "ConversionConfiguration":{"shape":"String"}
       }
     },
@@ -4241,6 +4242,13 @@
         "ReplicationTask":{"shape":"ReplicationTask"}
       }
     },
+    "MySQLAuthenticationMethod":{
+      "type":"string",
+      "enum":[
+        "password",
+        "iam"
+      ]
+    },
     "MySQLSettings":{
       "type":"structure",
       "members":{
@@ -4258,7 +4266,9 @@
         "Username":{"shape":"String"},
         "SecretsManagerAccessRoleArn":{"shape":"String"},
         "SecretsManagerSecretId":{"shape":"String"},
-        "ExecuteTimeout":{"shape":"IntegerOptional"}
+        "ExecuteTimeout":{"shape":"IntegerOptional"},
+        "ServiceAccessRoleArn":{"shape":"String"},
+        "AuthenticationMethod":{"shape":"MySQLAuthenticationMethod"}
       }
     },
     "MySqlDataProviderSettings":{
@@ -4423,6 +4433,13 @@
         "pglogical"
       ]
     },
+    "PostgreSQLAuthenticationMethod":{
+      "type":"string",
+      "enum":[
+        "password",
+        "iam"
+      ]
+    },
     "PostgreSQLSettings":{
       "type":"structure",
       "members":{
@@ -4450,7 +4467,9 @@
         "MapLongVarcharAs":{"shape":"LongVarcharMappingType"},
         "DatabaseMode":{"shape":"DatabaseMode"},
         "BabelfishDatabaseName":{"shape":"String"},
-        "DisableUnicodeSourceFilter":{"shape":"BooleanOptional"}
+        "DisableUnicodeSourceFilter":{"shape":"BooleanOptional"},
+        "ServiceAccessRoleArn":{"shape":"String"},
+        "AuthenticationMethod":{"shape":"PostgreSQLAuthenticationMethod"}
       }
     },
     "PostgreSqlDataProviderSettings":{
@@ -4746,8 +4765,7 @@
     },
     "RemoveTagsFromResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Replication":{
       "type":"structure",
@@ -5277,7 +5295,7 @@
       "type":"structure",
       "required":["MigrationProjectIdentifier"],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"}
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"}
       }
     },
     "StartExtensionPackAssociationResponse":{
@@ -5293,7 +5311,7 @@
         "SelectionRules"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"}
       }
     },
@@ -5310,7 +5328,7 @@
         "SelectionRules"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"}
       }
     },
@@ -5328,7 +5346,7 @@
         "Origin"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"},
         "Origin":{"shape":"OriginTypeValue"},
         "FileName":{"shape":"String"}
@@ -5347,7 +5365,7 @@
         "SelectionRules"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"},
         "OverwriteExtensionPack":{"shape":"BooleanOptional"}
       }
@@ -5366,7 +5384,7 @@
         "Origin"
       ],
       "members":{
-        "MigrationProjectIdentifier":{"shape":"String"},
+        "MigrationProjectIdentifier":{"shape":"MigrationProjectIdentifier"},
         "SelectionRules":{"shape":"String"},
         "Origin":{"shape":"OriginTypeValue"},
         "Refresh":{"shape":"Boolean"}
@@ -5639,7 +5657,12 @@
         "ValidationFailedRecords":{"shape":"Long"},
         "ValidationSuspendedRecords":{"shape":"Long"},
         "ValidationState":{"shape":"String"},
-        "ValidationStateDetails":{"shape":"String"}
+        "ValidationStateDetails":{"shape":"String"},
+        "ResyncState":{"shape":"String"},
+        "ResyncRowsAttempted":{"shape":"LongOptional"},
+        "ResyncRowsSucceeded":{"shape":"LongOptional"},
+        "ResyncRowsFailed":{"shape":"LongOptional"},
+        "ResyncProgress":{"shape":"DoubleOptional"}
       }
     },
     "TableStatisticsList":{

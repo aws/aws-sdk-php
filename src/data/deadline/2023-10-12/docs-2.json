@@ -25,7 +25,7 @@
     "CreateQueueFleetAssociation": "<p>Creates an association between a queue and a fleet.</p>",
     "CreateQueueLimitAssociation": "<p>Associates a limit with a particular queue. After the limit is associated, all workers for jobs that specify the limit associated with the queue are subject to the limit. You can't associate two limits with the same <code>amountRequirementName</code> to the same queue.</p>",
     "CreateStorageProfile": "<p>Creates a storage profile that specifies the operating system, file type, and file location of resources used on a farm.</p>",
-    "CreateWorker": "<p>Creates a worker. A worker tells your instance how much processing power (vCPU), and memory (GiB) you’ll need to assemble the digital assets held within a particular instance. You can specify certain instance types to use, or let the worker know which instances types to exclude.</p>",
+    "CreateWorker": "<p>Creates a worker. A worker tells your instance how much processing power (vCPU), and memory (GiB) you’ll need to assemble the digital assets held within a particular instance. You can specify certain instance types to use, or let the worker know which instances types to exclude.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>",
     "DeleteBudget": "<p>Deletes a budget.</p>",
     "DeleteFarm": "<p>Deletes a farm.</p>",
     "DeleteFleet": "<p>Deletes a fleet.</p>",
@@ -1786,6 +1786,27 @@
       "refs": {
       }
     },
+    "HostConfiguration": {
+      "base": "<p>Provides a script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet. </p> <p>To remove a script from a fleet, use the <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/APIReference/API_UpdateFleet.html\">UpdateFleet</a> operation with the <code>hostConfiguration</code> <code>scriptBody</code> parameter set to an empty string (\"\").</p>",
+      "refs": {
+        "CreateFleetRequest$hostConfiguration": "<p>Provides a script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet.</p>",
+        "GetFleetResponse$hostConfiguration": "<p>The script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet.</p>",
+        "UpdateFleetRequest$hostConfiguration": "<p>Provides a script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet.</p>",
+        "UpdateWorkerResponse$hostConfiguration": "<p>The script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet.</p>"
+      }
+    },
+    "HostConfigurationScript": {
+      "base": null,
+      "refs": {
+        "HostConfiguration$scriptBody": "<p>The text of the script that runs as a worker is starting up that you can use to provide additional configuration for workers in your fleet. The script runs after a worker enters the <code>STARTING</code> state and before the worker processes tasks.</p> <p>For more information about using the script, see <a href=\"https://docs.aws.amazon.com/deadline-cloud/latest/developerguide/smf-admin.html\">Run scripts as an administrator to configure workers</a> in the <i>Deadline Cloud Developer Guide</i>. </p> <important> <p>The script runs as an administrative user (<code>sudo root</code> on Linux, as an Administrator on Windows). </p> </important>"
+      }
+    },
+    "HostConfigurationScriptTimeoutSeconds": {
+      "base": null,
+      "refs": {
+        "HostConfiguration$scriptTimeoutSeconds": "<p>The maximum time that the host configuration can run. If the timeout expires, the worker enters the <code>NOT RESPONDING</code> state and shuts down. You are charged for the time that the worker is running the host configuration script.</p> <note> <p>You should configure your fleet for a maximum of one worker while testing your host configuration script to avoid starting additional workers.</p> </note> <p>The default is 300 seconds (5 minutes).</p>"
+      }
+    },
     "HostName": {
       "base": null,
       "refs": {
@@ -2818,7 +2839,7 @@
         "AcceleratorTotalMemoryMiBRange$min": "<p>The minimum amount of memory to use for the accelerator, measured in MiB.</p>",
         "AcceleratorTotalMemoryMiBRange$max": "<p>The maximum amount of memory to use for the accelerator, measured in MiB.</p>",
         "CreateFleetRequest$minWorkerCount": "<p>The minimum number of workers for the fleet.</p>",
-        "CreateFleetRequest$maxWorkerCount": "<p>The maximum number of workers for the fleet.</p>",
+        "CreateFleetRequest$maxWorkerCount": "<p>The maximum number of workers for the fleet.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>",
         "FleetSummary$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
         "FleetSummary$maxWorkerCount": "<p>The maximum number of workers specified in the fleet.</p>",
         "GetFleetResponse$minWorkerCount": "<p>The minimum number of workers specified in the fleet.</p>",
@@ -2826,7 +2847,7 @@
         "GetLimitResponse$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
         "LimitSummary$currentCount": "<p>The number of resources from the limit that are being used by jobs. The result is delayed and may not be the count at the time that you called the operation.</p>",
         "UpdateFleetRequest$minWorkerCount": "<p>The minimum number of workers in the fleet.</p>",
-        "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p>"
+        "UpdateFleetRequest$maxWorkerCount": "<p>The maximum number of workers in the fleet.</p> <p>Deadline Cloud limits the number of workers to less than or equal to the fleet's maximum worker count. The service maintains eventual consistency for the worker count. If you make multiple rapid calls to <code>CreateWorker</code> before the field updates, you might exceed your fleet's maximum worker count. For example, if your <code>maxWorkerCount</code> is 10 and you currently have 9 workers, making two quick <code>CreateWorker</code> calls might successfully create 2 workers instead of 1, resulting in 11 total workers.</p>"
       }
     },
     "MonitorId": {
@@ -3279,13 +3300,13 @@
       }
     },
     "SearchGroupedFilterExpressions": {
-      "base": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
+      "base": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. You can use two groupings per search each within parenthesis <code>()</code>.</p>",
       "refs": {
         "SearchFilterExpression$groupFilter": "<p>Filters by group.</p>",
-        "SearchJobsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchStepsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchTasksRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>",
-        "SearchWorkersRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. <p>You can use two groupings per search each within parenthesis <code>()</code>.</p></p>"
+        "SearchJobsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. You can use two groupings per search each within parenthesis <code>()</code>.</p>",
+        "SearchStepsRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. You can use two groupings per search each within parenthesis <code>()</code>.</p>",
+        "SearchTasksRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. You can use two groupings per search each within parenthesis <code>()</code>.</p>",
+        "SearchWorkersRequest$filterExpressions": "<p>The filter expression, <code>AND</code> or <code>OR</code>, to use when searching among a group of search strings in a resource. You can use two groupings per search each within parenthesis <code>()</code>.</p>"
       }
     },
     "SearchJobsRequest": {

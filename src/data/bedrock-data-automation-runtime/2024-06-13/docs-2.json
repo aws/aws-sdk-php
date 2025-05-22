@@ -14,6 +14,12 @@
       "refs": {
       }
     },
+    "AssetProcessingConfiguration": {
+      "base": "<p>Config containing asset processing related knobs for all modalities</p>",
+      "refs": {
+        "InputConfiguration$assetProcessingConfiguration": "<p>Asset processing configuration</p>"
+      }
+    },
     "AutomationJobStatus": {
       "base": "<p>List of status supported by automation jobs</p>",
       "refs": {
@@ -274,6 +280,24 @@
       "refs": {
       }
     },
+    "TimestampSegment": {
+      "base": "<p>Timestamp segment</p>",
+      "refs": {
+        "VideoSegmentConfiguration$timestampSegment": "<p>Timestamp segment</p>"
+      }
+    },
+    "TimestampSegmentEndTimeMillisLong": {
+      "base": null,
+      "refs": {
+        "TimestampSegment$endTimeMillis": "<p>End timestamp in milliseconds</p>"
+      }
+    },
+    "TimestampSegmentStartTimeMillisLong": {
+      "base": null,
+      "refs": {
+        "TimestampSegment$startTimeMillis": "<p>Start timestamp in milliseconds</p>"
+      }
+    },
     "UntagResourceRequest": {
       "base": null,
       "refs": {
@@ -287,6 +311,18 @@
     "ValidationException": {
       "base": "<p>This exception will be thrown when customer provided invalid parameters.</p>",
       "refs": {
+      }
+    },
+    "VideoAssetProcessingConfiguration": {
+      "base": "<p>Video asset processing configuration</p>",
+      "refs": {
+        "AssetProcessingConfiguration$video": "<p>Video asset processing configuration</p>"
+      }
+    },
+    "VideoSegmentConfiguration": {
+      "base": "<p>Delimits the segment of the input that will be processed</p>",
+      "refs": {
+        "VideoAssetProcessingConfiguration$segmentConfiguration": "<p>Delimits the segment of the input that will be processed</p>"
       }
     }
   }

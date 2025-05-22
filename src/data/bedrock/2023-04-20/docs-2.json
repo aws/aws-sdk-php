@@ -1354,6 +1354,38 @@
         "UpdateGuardrailRequest$contextualGroundingPolicyConfig": "<p>The contextual grounding policy configuration used to update a guardrail.</p>"
       }
     },
+    "GuardrailCrossRegionConfig": {
+      "base": "<p>The system-defined guardrail profile that you're using with your guardrail. Guardrail profiles define the destination Amazon Web Services Regions where guardrail inference requests can be automatically routed. Using guardrail profiles helps maintain guardrail performance and reliability when demand increases.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">Amazon Bedrock User Guide</a>.</p>",
+      "refs": {
+        "CreateGuardrailRequest$crossRegionConfig": "<p>The system-defined guardrail profile that you're using with your guardrail. Guardrail profiles define the destination Amazon Web Services Regions where guardrail inference requests can be automatically routed.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">Amazon Bedrock User Guide</a>.</p>",
+        "UpdateGuardrailRequest$crossRegionConfig": "<p>The system-defined guardrail profile that you're using with your guardrail. Guardrail profiles define the destination Amazon Web Services Regions where guardrail inference requests can be automatically routed.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">Amazon Bedrock User Guide</a>.</p>"
+      }
+    },
+    "GuardrailCrossRegionDetails": {
+      "base": "<p>Contains details about the system-defined guardrail profile that you're using with your guardrail for cross-Region inference.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">Amazon Bedrock User Guide</a>.</p>",
+      "refs": {
+        "GetGuardrailResponse$crossRegionDetails": "<p>Details about the system-defined guardrail profile that you're using with your guardrail, including the guardrail profile ID and Amazon Resource Name (ARN).</p>",
+        "GuardrailSummary$crossRegionDetails": "<p>Details about the system-defined guardrail profile that you're using with your guardrail, including the guardrail profile ID and Amazon Resource Name (ARN).</p>"
+      }
+    },
+    "GuardrailCrossRegionGuardrailProfileArn": {
+      "base": null,
+      "refs": {
+        "GuardrailCrossRegionDetails$guardrailProfileArn": "<p>The Amazon Resource Name (ARN) of the guardrail profile that you're using with your guardrail.</p>"
+      }
+    },
+    "GuardrailCrossRegionGuardrailProfileId": {
+      "base": null,
+      "refs": {
+        "GuardrailCrossRegionDetails$guardrailProfileId": "<p>The ID of the guardrail profile that your guardrail is using. Profile availability depends on your current Amazon Web Services Region. For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region-support.html\">Amazon Bedrock User Guide</a>.</p>"
+      }
+    },
+    "GuardrailCrossRegionGuardrailProfileIdentifier": {
+      "base": null,
+      "refs": {
+        "GuardrailCrossRegionConfig$guardrailProfileIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the guardrail profile that your guardrail is using. Guardrail profile availability depends on your current Amazon Web Services Region. For more information, see the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region-support.html\">Amazon Bedrock User Guide</a>.</p>"
+      }
+    },
     "GuardrailDescription": {
       "base": null,
       "refs": {

@@ -78,6 +78,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "CreatePersistentAppUI":{
+      "name":"CreatePersistentAppUI",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreatePersistentAppUIInput"},
+      "output":{"shape":"CreatePersistentAppUIOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "CreateSecurityConfiguration":{
       "name":"CreateSecurityConfiguration",
       "http":{
@@ -192,6 +205,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DescribePersistentAppUI":{
+      "name":"DescribePersistentAppUI",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribePersistentAppUIInput"},
+      "output":{"shape":"DescribePersistentAppUIOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "DescribeReleaseLabel":{
       "name":"DescribeReleaseLabel",
       "http":{
@@ -287,6 +313,32 @@
       },
       "input":{"shape":"GetManagedScalingPolicyInput"},
       "output":{"shape":"GetManagedScalingPolicyOutput"}
+    },
+    "GetOnClusterAppUIPresignedURL":{
+      "name":"GetOnClusterAppUIPresignedURL",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetOnClusterAppUIPresignedURLInput"},
+      "output":{"shape":"GetOnClusterAppUIPresignedURLOutput"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
+    "GetPersistentAppUIPresignedURL":{
+      "name":"GetPersistentAppUIPresignedURL",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetPersistentAppUIPresignedURLInput"},
+      "output":{"shape":"GetPersistentAppUIPresignedURLOutput"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidRequestException"}
+      ]
     },
     "GetStudioSessionMapping":{
       "name":"GetStudioSessionMapping",
@@ -1130,6 +1182,24 @@
       "type":"list",
       "member":{"shape":"Configuration"}
     },
+    "CreatePersistentAppUIInput":{
+      "type":"structure",
+      "required":["TargetResourceArn"],
+      "members":{
+        "TargetResourceArn":{"shape":"ArnType"},
+        "EMRContainersConfig":{"shape":"EMRContainersConfig"},
+        "Tags":{"shape":"TagList"},
+        "XReferer":{"shape":"String"},
+        "ProfilerType":{"shape":"ProfilerType"}
+      }
+    },
+    "CreatePersistentAppUIOutput":{
+      "type":"structure",
+      "members":{
+        "PersistentAppUIId":{"shape":"XmlStringMaxLen256"},
+        "RuntimeRoleEnabledCluster":{"shape":"Boolean"}
+      }
+    },
     "CreateSecurityConfigurationInput":{
       "type":"structure",
       "required":[
@@ -1287,6 +1357,19 @@
         "NotebookExecution":{"shape":"NotebookExecution"}
       }
     },
+    "DescribePersistentAppUIInput":{
+      "type":"structure",
+      "required":["PersistentAppUIId"],
+      "members":{
+        "PersistentAppUIId":{"shape":"XmlStringMaxLen256"}
+      }
+    },
+    "DescribePersistentAppUIOutput":{
+      "type":"structure",
+      "members":{
+        "PersistentAppUI":{"shape":"PersistentAppUI"}
+      }
+    },
     "DescribeReleaseLabelInput":{
       "type":"structure",
       "members":{
@@ -1356,6 +1439,12 @@
     "EC2InstanceIdsToTerminateList":{
       "type":"list",
       "member":{"shape":"InstanceId"}
+    },
+    "EMRContainersConfig":{
+      "type":"structure",
+      "members":{
+        "JobRunId":{"shape":"XmlStringMaxLen256"}
+      }
     },
     "EbsBlockDevice":{
       "type":"structure",
@@ -1519,6 +1608,42 @@
       "type":"structure",
       "members":{
         "ManagedScalingPolicy":{"shape":"ManagedScalingPolicy"}
+      }
+    },
+    "GetOnClusterAppUIPresignedURLInput":{
+      "type":"structure",
+      "required":["ClusterId"],
+      "members":{
+        "ClusterId":{"shape":"XmlStringMaxLen256"},
+        "OnClusterAppUIType":{"shape":"OnClusterAppUIType"},
+        "ApplicationId":{"shape":"XmlStringMaxLen256"},
+        "DryRun":{"shape":"BooleanObject"},
+        "ExecutionRoleArn":{"shape":"ArnType"}
+      }
+    },
+    "GetOnClusterAppUIPresignedURLOutput":{
+      "type":"structure",
+      "members":{
+        "PresignedURLReady":{"shape":"Boolean"},
+        "PresignedURL":{"shape":"XmlString"}
+      }
+    },
+    "GetPersistentAppUIPresignedURLInput":{
+      "type":"structure",
+      "required":["PersistentAppUIId"],
+      "members":{
+        "PersistentAppUIId":{"shape":"XmlStringMaxLen256"},
+        "PersistentAppUIType":{"shape":"PersistentAppUIType"},
+        "ApplicationId":{"shape":"XmlStringMaxLen256"},
+        "AuthProxyCall":{"shape":"BooleanObject"},
+        "ExecutionRoleArn":{"shape":"ArnType"}
+      }
+    },
+    "GetPersistentAppUIPresignedURLOutput":{
+      "type":"structure",
+      "members":{
+        "PresignedURLReady":{"shape":"Boolean"},
+        "PresignedURL":{"shape":"XmlString"}
       }
     },
     "GetStudioSessionMappingInput":{
@@ -2491,6 +2616,17 @@
       "type":"list",
       "member":{"shape":"OSRelease"}
     },
+    "OnClusterAppUIType":{
+      "type":"string",
+      "enum":[
+        "SparkHistoryServer",
+        "YarnTimelineService",
+        "TezUI",
+        "ApplicationMaster",
+        "JobHistoryServer",
+        "ResourceManager"
+      ]
+    },
     "OnDemandCapacityReservationOptions":{
       "type":"structure",
       "members":{
@@ -2556,6 +2692,31 @@
         "Key":{"shape":"UriString"}
       }
     },
+    "PersistentAppUI":{
+      "type":"structure",
+      "members":{
+        "PersistentAppUIId":{"shape":"XmlStringMaxLen256"},
+        "PersistentAppUITypeList":{"shape":"PersistentAppUITypeList"},
+        "PersistentAppUIStatus":{"shape":"XmlStringMaxLen256"},
+        "AuthorId":{"shape":"XmlStringMaxLen256"},
+        "CreationTime":{"shape":"Date"},
+        "LastModifiedTime":{"shape":"Date"},
+        "LastStateChangeReason":{"shape":"XmlString"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "PersistentAppUIType":{
+      "type":"string",
+      "enum":[
+        "SHS",
+        "TEZ",
+        "YTS"
+      ]
+    },
+    "PersistentAppUITypeList":{
+      "type":"list",
+      "member":{"shape":"PersistentAppUIType"}
+    },
     "PlacementGroupConfig":{
       "type":"structure",
       "required":["InstanceRole"],
@@ -2600,6 +2761,14 @@
     "PortRanges":{
       "type":"list",
       "member":{"shape":"PortRange"}
+    },
+    "ProfilerType":{
+      "type":"string",
+      "enum":[
+        "SHS",
+        "TEZUI",
+        "YTS"
+      ]
     },
     "PutAutoScalingPolicyInput":{
       "type":"structure",

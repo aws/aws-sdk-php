@@ -3,6 +3,7 @@
   "service": "<p>With Service Quotas, you can view and manage your quotas easily as your Amazon Web Services workloads grow. Quotas, also referred to as limits, are the maximum number of resources that you can create in your Amazon Web Services account. For more information, see the <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/\">Service Quotas User Guide</a>.</p> <p>You need Amazon Web Services CLI version 2.13.20 or higher to view and manage resource-level quotas such as <code>Instances per domain</code> for Amazon OpenSearch Service.</p>",
   "operations": {
     "AssociateServiceQuotaTemplate": "<p>Associates your quota request template with your organization. When a new Amazon Web Services account is created in your organization, the quota increase requests in the template are automatically applied to the account. You can add a quota increase request for any adjustable quota to your template.</p>",
+    "CreateSupportCase": "<p>Creates a Support case for an existing quota increase request. This call only creates a Support case if the request has a <code>Pending</code> status. </p>",
     "DeleteServiceQuotaIncreaseRequestFromTemplate": "<p>Deletes the quota increase request for the specified quota from your quota request template.</p>",
     "DisassociateServiceQuotaTemplate": "<p>Disables your quota request template. After a template is disabled, the quota increase requests in the template are not applied to new Amazon Web Services accounts in your organization. Disabling a quota request template does not apply its quota increase requests.</p>",
     "GetAWSDefaultServiceQuota": "<p>Retrieves the default value for the specified quota. The default value does not reflect any quota increases.</p>",
@@ -25,13 +26,11 @@
   "shapes": {
     "AWSServiceAccessNotEnabledException": {
       "base": "<p>The action you attempted is not allowed unless Service Access with Service Quotas is enabled in your organization.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient permission to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AmazonResourceName": {
       "base": null,
@@ -53,13 +52,11 @@
     },
     "AssociateServiceQuotaTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateServiceQuotaTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AwsRegion": {
       "base": null,
@@ -70,6 +67,14 @@
         "PutServiceQuotaIncreaseRequestIntoTemplateRequest$AwsRegion": "<p>Specifies the Amazon Web Services Region to which the template applies.</p>",
         "ServiceQuotaIncreaseRequestInTemplate$AwsRegion": "<p>The Amazon Web Services Region.</p>"
       }
+    },
+    "CreateSupportCaseRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateSupportCaseResponse": {
+      "base": null,
+      "refs": {}
     },
     "CustomerServiceEngagementId": {
       "base": null,
@@ -86,28 +91,23 @@
     },
     "DeleteServiceQuotaIncreaseRequestFromTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceQuotaIncreaseRequestFromTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependencyAccessDeniedException": {
       "base": "<p>You can't perform this action because a dependency does not have access.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateServiceQuotaTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateServiceQuotaTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorCode": {
       "base": null,
@@ -151,53 +151,43 @@
     },
     "GetAWSDefaultServiceQuotaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAWSDefaultServiceQuotaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssociationForServiceQuotaTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssociationForServiceQuotaTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRequestedServiceQuotaChangeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRequestedServiceQuotaChangeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceQuotaIncreaseRequestFromTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceQuotaIncreaseRequestFromTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceQuotaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceQuotaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalQuota": {
       "base": null,
@@ -209,8 +199,7 @@
     },
     "IllegalArgumentException": {
       "base": "<p>Invalid input was provided.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InputTagKeys": {
       "base": null,
@@ -226,83 +215,67 @@
     },
     "InvalidPaginationTokenException": {
       "base": "<p>Invalid input was provided.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceStateException": {
       "base": "<p>The resource is in an invalid state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAWSDefaultServiceQuotasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAWSDefaultServiceQuotasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRequestedServiceQuotaChangeHistoryByQuotaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRequestedServiceQuotaChangeHistoryByQuotaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRequestedServiceQuotaChangeHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRequestedServiceQuotaChangeHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceQuotaIncreaseRequestsInTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceQuotaIncreaseRequestsInTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceQuotasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceQuotasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -358,18 +331,15 @@
     },
     "NoAvailableOrganizationException": {
       "base": "<p>The Amazon Web Services account making this call is not a member of an organization.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NoSuchResourceException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OrganizationNotInAllFeaturesModeException": {
       "base": "<p>The organization that your Amazon Web Services account belongs to is not in All Features mode.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OutputTags": {
       "base": null,
@@ -391,13 +361,11 @@
     },
     "PutServiceQuotaIncreaseRequestIntoTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutServiceQuotaIncreaseRequestIntoTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QuotaAdjustable": {
       "base": null,
@@ -463,8 +431,7 @@
     },
     "QuotaExceededException": {
       "base": "<p>You have exceeded your service quota. To perform the requested action, remove some of the relevant resources, or use Service Quotas to request a service quota increase.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "QuotaMetricName": {
       "base": null,
@@ -513,19 +480,18 @@
     "RequestId": {
       "base": null,
       "refs": {
+        "CreateSupportCaseRequest$RequestId": "<p>The ID of the pending quota increase request for which you want to open a Support case. </p>",
         "GetRequestedServiceQuotaChangeRequest$RequestId": "<p>Specifies the ID of the quota increase request.</p>",
         "RequestedServiceQuotaChange$Id": "<p>The unique identifier.</p>"
       }
     },
     "RequestServiceQuotaIncreaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestServiceQuotaIncreaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestStatus": {
       "base": null,
@@ -558,8 +524,7 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The specified resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceCode": {
       "base": null,
@@ -583,8 +548,7 @@
     },
     "ServiceException": {
       "base": "<p>Something went wrong.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceInfo": {
       "base": "<p>Information about an Amazon Web Services service.</p>",
@@ -644,8 +608,7 @@
     },
     "ServiceQuotaTemplateNotInUseException": {
       "base": "<p>The quota request template is not associated with your organization.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Statistic": {
       "base": null,
@@ -675,18 +638,15 @@
     },
     "TagPolicyViolationException": {
       "base": "<p>The specified tag is a reserved word and cannot be used.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -696,28 +656,23 @@
     },
     "TemplatesNotAvailableInRegionException": {
       "base": "<p>The Service Quotas template is not available in this Amazon Web Services Region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TooManyRequestsException": {
       "base": "<p>Due to throttling, the request was denied. Slow down the rate of request calls, or request an increase for this quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TooManyTagsException": {
       "base": "<p>You've exceeded the number of tags allowed for a resource. For more information, see <a href=\"https://docs.aws.amazon.com/servicequotas/latest/userguide/sq-tagging.html#sq-tagging-restrictions\">Tag restrictions</a> in the <i>Service Quotas User Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }
