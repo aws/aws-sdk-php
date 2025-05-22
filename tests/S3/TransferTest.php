@@ -253,6 +253,40 @@ class TransferTest extends TestCase
         `rm -rf $dir`;
     }
 
+    public function testMultipartForLargeFilesDoesUsePartSize()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new Result(['UploadId' => '123']),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = new SplFileInfo($dir . '/large.txt');
+        $f = fopen($filename, 'w+');
+        $line = str_repeat('.', 1024);
+        for ($i = 0; $i < 20000; $i++) {
+            fwrite($f, $line);
+        }
+        fclose($f);
+
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'part_size' => 1024 * 1024 * 10,
+            'debug' => $res
+        ]);
+
+        $t->transfer();
+        rewind($res);
+        $output = stream_get_contents($res);
+        $this->assertStringNotContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=3", $output);
+        `rm -rf $dir`;
+    }
+
     public function testDownloadsObjects()
     {
         $s3 = $this->getTestClient('s3');
