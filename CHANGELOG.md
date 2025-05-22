@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DSQL` - Features: support for customer managed encryption keys
+* `Aws\Glue` - This release supports additional ConversionSpec parameter as part of IntegrationPartition Structure in CreateIntegrationTableProperty API. This parameter is referred to apply appropriate column transformation for columns that are used for timestamp based partitioning
+* `Aws\AuditManager` - With this release, the AssessmentControl description field has been deprecated, as of May 19, 2025. Additionally, the UpdateAssessment API can now return a ServiceQuotaExceededException when applicable service quotas are exceeded.
+* `Aws\PrometheusService` - Add QueryLoggingConfiguration APIs for Amazon Managed Prometheus
+
 ## 3.343.16 - 2025-05-21
 
 * `Aws\` - Sets the header `x-amzn-query-mode` to a string value instead of a boolean.

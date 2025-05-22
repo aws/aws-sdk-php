@@ -3,17 +3,20 @@
   "service": "<p>Amazon Managed Service for Prometheus is a serverless, Prometheus-compatible monitoring service for container metrics that makes it easier to securely monitor container environments at scale. With Amazon Managed Service for Prometheus, you can use the same open-source Prometheus data model and query language that you use today to monitor the performance of your containerized workloads, and also enjoy improved scalability, availability, and security without having to manage the underlying infrastructure.</p> <p>For more information about Amazon Managed Service for Prometheus, see the <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/what-is-Amazon-Managed-Service-Prometheus.html\">Amazon Managed Service for Prometheus</a> User Guide.</p> <p>Amazon Managed Service for Prometheus includes two APIs.</p> <ul> <li> <p>Use the Amazon Web Services API described in this guide to manage Amazon Managed Service for Prometheus resources, such as workspaces, rule groups, and alert managers.</p> </li> <li> <p>Use the <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-APIReference.html#AMP-APIReference-Prometheus-Compatible-Apis\">Prometheus-compatible API</a> to work within your Prometheus workspace.</p> </li> </ul>",
   "operations": {
     "CreateAlertManagerDefinition": "<p>The <code>CreateAlertManagerDefinition</code> operation creates the alert manager definition in a workspace. If a workspace already has an alert manager definition, don't use this operation to update it. Instead, use <code>PutAlertManagerDefinition</code>.</p>",
-    "CreateLoggingConfiguration": "<p>The <code>CreateLoggingConfiguration</code> operation creates a logging configuration for the workspace. Use this operation to set the CloudWatch log group to which the logs will be published to.</p>",
+    "CreateLoggingConfiguration": "<p>The <code>CreateLoggingConfiguration</code> operation creates rules and alerting logging configuration for the workspace. Use this operation to set the CloudWatch log group to which the logs will be published to.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
+    "CreateQueryLoggingConfiguration": "<p>Creates a query logging configuration for the specified workspace. This operation enables logging of queries that exceed the specified QSP threshold.</p>",
     "CreateRuleGroupsNamespace": "<p>The <code>CreateRuleGroupsNamespace</code> operation creates a rule groups namespace within a workspace. A rule groups namespace is associated with exactly one rules file. A workspace can have multiple rule groups namespaces.</p> <p>Use this operation only to create new rule groups namespaces. To update an existing rule groups namespace, use <code>PutRuleGroupsNamespace</code>.</p>",
-    "CreateScraper": "<p>The <code>CreateScraper</code> operation creates a scraper to collect metrics. A scraper pulls metrics from Prometheus-compatible sources within an Amazon EKS cluster, and sends them to your Amazon Managed Service for Prometheus workspace. Scrapers are flexible, and can be configured to control what metrics are collected, the frequency of collection, what transformations are applied to the metrics, and more.</p> <p>An IAM role will be created for you that Amazon Managed Service for Prometheus uses to access the metrics in your cluster. You must configure this role with a policy that allows it to scrape metrics from your cluster. For more information, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#AMP-collector-eks-setup\">Configuring your Amazon EKS cluster</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> <p>The <code>scrapeConfiguration</code> parameter contains the base-64 encoded YAML configuration for the scraper.</p> <note> <p>For more information about collectors, including what metrics are collected, and how to configure the scraper, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html\">Using an Amazon Web Services managed collector</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> </note>",
+    "CreateScraper": "<p>The <code>CreateScraper</code> operation creates a scraper to collect metrics. A scraper pulls metrics from Prometheus-compatible sources within an Amazon EKS cluster, and sends them to your Amazon Managed Service for Prometheus workspace. Scrapers are flexible, and can be configured to control what metrics are collected, the frequency of collection, what transformations are applied to the metrics, and more.</p> <p>An IAM role will be created for you that Amazon Managed Service for Prometheus uses to access the metrics in your cluster. You must configure this role with a policy that allows it to scrape metrics from your cluster. For more information, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html#AMP-collector-eks-setup\">Configuring your Amazon EKS cluster</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> <p>The <code>scrapeConfiguration</code> parameter contains the base-64 encoded YAML configuration for the scraper.</p> <p>When creating a scraper, the service creates a <code>Network Interface</code> in each <b>Availability Zone</b> that are passed into <code>CreateScraper</code> through subnets. These network interfaces are used to connect to the Amazon EKS cluster within the VPC for scraping metrics.</p> <note> <p>For more information about collectors, including what metrics are collected, and how to configure the scraper, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-collector-how-to.html\">Using an Amazon Web Services managed collector</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> </note>",
     "CreateWorkspace": "<p>Creates a Prometheus workspace. A workspace is a logical space dedicated to the storage and querying of Prometheus metrics. You can have one or more workspaces in each Region in your account.</p>",
     "DeleteAlertManagerDefinition": "<p>Deletes the alert manager definition from a workspace.</p>",
-    "DeleteLoggingConfiguration": "<p>Deletes the logging configuration for a workspace.</p>",
+    "DeleteLoggingConfiguration": "<p>Deletes the rules and alerting logging configuration for a workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
+    "DeleteQueryLoggingConfiguration": "<p>Deletes the query logging configuration for the specified workspace.</p>",
     "DeleteRuleGroupsNamespace": "<p>Deletes one rule groups namespace and its associated rule groups definition.</p>",
     "DeleteScraper": "<p>The <code>DeleteScraper</code> operation deletes one scraper, and stops any metrics collection that the scraper performs.</p>",
     "DeleteWorkspace": "<p>Deletes an existing workspace. </p> <note> <p>When you delete a workspace, the data that has been ingested into it is not immediately deleted. It will be permanently deleted within one month.</p> </note>",
     "DescribeAlertManagerDefinition": "<p>Retrieves the full information about the alert manager definition for a workspace.</p>",
-    "DescribeLoggingConfiguration": "<p>Returns complete information about the current logging configuration of the workspace.</p>",
+    "DescribeLoggingConfiguration": "<p>Returns complete information about the current rules and alerting logging configuration of the workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
+    "DescribeQueryLoggingConfiguration": "<p>Retrieves the details of the query logging configuration for the specified workspace.</p>",
     "DescribeRuleGroupsNamespace": "<p>Returns complete information about one rule groups namespace. To retrieve a list of rule groups namespaces, use <code>ListRuleGroupsNamespaces</code>.</p>",
     "DescribeScraper": "<p>The <code>DescribeScraper</code> operation displays information about an existing scraper.</p>",
     "DescribeWorkspace": "<p>Returns information about an existing workspace. </p>",
@@ -27,7 +30,8 @@
     "PutRuleGroupsNamespace": "<p>Updates an existing rule groups namespace within a workspace. A rule groups namespace is associated with exactly one rules file. A workspace can have multiple rule groups namespaces.</p> <p>Use this operation only to update existing rule groups namespaces. To create a new rule groups namespace, use <code>CreateRuleGroupsNamespace</code>.</p> <p>You can't use this operation to add tags to an existing rule groups namespace. Instead, use <code>TagResource</code>.</p>",
     "TagResource": "<p>The <code>TagResource</code> operation associates tags with an Amazon Managed Service for Prometheus resource. The only resources that can be tagged are rule groups namespaces, scrapers, and workspaces.</p> <p>If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag. To remove a tag, use <code>UntagResource</code>.</p>",
     "UntagResource": "<p>Removes the specified tags from an Amazon Managed Service for Prometheus resource. The only resources that can be tagged are rule groups namespaces, scrapers, and workspaces. </p>",
-    "UpdateLoggingConfiguration": "<p>Updates the log group ARN or the workspace ID of the current logging configuration.</p>",
+    "UpdateLoggingConfiguration": "<p>Updates the log group ARN or the workspace ID of the current rules and alerting logging configuration.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
+    "UpdateQueryLoggingConfiguration": "<p>Updates the query logging configuration for the specified workspace.</p>",
     "UpdateScraper": "<p>Updates an existing scraper.</p> <p>You can't use this function to update the source from which the scraper is collecting metrics. To change the source, delete the scraper and create a new one.</p>",
     "UpdateWorkspaceAlias": "<p>Updates the alias of an existing workspace. </p>",
     "UpdateWorkspaceConfiguration": "<p>Use this operation to create or update the label sets, label set limits, and retention period of a workspace.</p> <p>You must specify at least one of <code>limitsPerLabelSet</code> or <code>retentionPeriodInDays</code> for the request to be valid.</p>"
@@ -79,6 +83,12 @@
         "ScrapeConfiguration$configurationBlob": "<p>The base 64 encoded scrape configuration file.</p>"
       }
     },
+    "CloudWatchLogDestination": {
+      "base": "<p>Configuration details for logging to CloudWatch Logs.</p>",
+      "refs": {
+        "LoggingDestination$cloudWatchLogs": "<p>Configuration details for logging to CloudWatch Logs.</p>"
+      }
+    },
     "ClusterArn": {
       "base": "<p>The ARN of an EKS cluster.</p>",
       "refs": {
@@ -107,6 +117,16 @@
     },
     "CreateLoggingConfigurationResponse": {
       "base": "<p>Represents the output of a <code>CreateLoggingConfiguration</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "CreateQueryLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateQueryLoggingConfigurationResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -150,6 +170,11 @@
       "refs": {
       }
     },
+    "DeleteQueryLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>DeleteRuleGroupsNamespace</code> operation.</p>",
       "refs": {
@@ -187,6 +212,16 @@
     },
     "DescribeLoggingConfigurationResponse": {
       "base": "<p>Represents the output of a <code>DescribeLoggingConfiguration</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "DescribeQueryLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeQueryLoggingConfigurationResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -287,17 +322,20 @@
       "refs": {
         "CreateAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "CreateLoggingConfigurationRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
+        "CreateQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "CreateRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "CreateScraperRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "CreateWorkspaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteLoggingConfigurationRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
+        "DeleteQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "DeleteRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteScraperRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "DeleteWorkspaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "PutAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "PutRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "UpdateLoggingConfigurationRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
+        "UpdateQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "UpdateScraperRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "UpdateWorkspaceAliasRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "UpdateWorkspaceConfigurationRequest$clientToken": "<p>You can include a token in your operation to make it an idempotent opeartion. </p>"
@@ -333,7 +371,7 @@
     "LabelSet": {
       "base": null,
       "refs": {
-        "LimitsPerLabelSet$labelSet": "<p>This defines one label set that will have an enforced ingestion limit. </p> <p>Label values accept ASCII characters and must contain at least one character that isn't whitespace. ASCII control characters are not accepted. If the label name is metric name label <code>__<i>name</i>__</code>, then the <i>metric</i> part of the name must conform to the following pattern: <code>[a-zA-Z_:][a-zA-Z0-9_:]*</code> </p>"
+        "LimitsPerLabelSet$labelSet": "<p>This defines one label set that will have an enforced active time series limit. </p> <p>Label values accept ASCII characters and must contain at least one character that isn't whitespace. ASCII control characters are not accepted. If the label name is metric name label <code>__<i>name</i>__</code>, then the <i>metric</i> part of the name must conform to the following pattern: <code>[a-zA-Z_:][a-zA-Z0-9_:]*</code> </p>"
       }
     },
     "LabelValue": {
@@ -343,7 +381,7 @@
       }
     },
     "LimitsPerLabelSet": {
-      "base": "<p>This structure defines one label set used to enforce ingestion limits for the workspace, and defines the limit for that label set.</p> <p>A label set is a unique combination of label-value pairs. Use them to control time series ingestion limits and to monitor usage by specific label groups. Example label sets might be <code>team:finance</code> or <code>env:prod</code> </p>",
+      "base": "<p>This structure defines one label set used to enforce active time series limits for the workspace, and defines the limit for that label set.</p> <p>A label set is a unique combination of label-value pairs. Use them to control time series limits and to monitor usage by specific label groups. Example label sets might be <code>team:finance</code> or <code>env:prod</code> </p>",
       "refs": {
         "LimitsPerLabelSetList$member": null
       }
@@ -363,7 +401,7 @@
     "LimitsPerLabelSetList": {
       "base": null,
       "refs": {
-        "UpdateWorkspaceConfigurationRequest$limitsPerLabelSet": "<p>This is an array of structures, where each structure defines a label set for the workspace, and defines the ingestion limit for active time series for each of those label sets. Each label name in a label set must be unique.</p>",
+        "UpdateWorkspaceConfigurationRequest$limitsPerLabelSet": "<p>This is an array of structures, where each structure defines a label set for the workspace, and defines the active time series limit for each of those label sets. Each label name in a label set must be unique.</p>",
         "WorkspaceConfigurationDescription$limitsPerLabelSet": "<p>This is an array of structures, where each structure displays one label sets for the workspace and the limits for that label set.</p>"
       }
     },
@@ -428,13 +466,14 @@
     "LogGroupArn": {
       "base": null,
       "refs": {
+        "CloudWatchLogDestination$logGroupArn": "<p>The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist prior to calling this operation.</p>",
         "CreateLoggingConfigurationRequest$logGroupArn": "<p>The ARN of the CloudWatch log group to which the vended log data will be published. This log group must exist prior to calling this operation.</p>",
         "LoggingConfigurationMetadata$logGroupArn": "<p>The ARN of the CloudWatch log group to which the vended log data will be published.</p>",
         "UpdateLoggingConfigurationRequest$logGroupArn": "<p>The ARN of the CloudWatch log group to which the vended log data will be published.</p>"
       }
     },
     "LoggingConfigurationMetadata": {
-      "base": "<p>Contains information about the logging configuration for the workspace.</p>",
+      "base": "<p>Contains information about the current rules and alerting logging configuration for the workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
       "refs": {
         "DescribeLoggingConfigurationResponse$loggingConfiguration": "<p>A structure that displays the information about the logging configuration.</p>"
       }
@@ -450,7 +489,33 @@
     "LoggingConfigurationStatusCode": {
       "base": "<p>State of a logging configuration.</p>",
       "refs": {
-        "LoggingConfigurationStatus$statusCode": "<p>The current status of the logging configuration.</p>"
+        "LoggingConfigurationStatus$statusCode": "<p>The current status of the current rules and alerting logging configuration.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>"
+      }
+    },
+    "LoggingDestination": {
+      "base": "<p>Defines a destination and its associated filtering criteria for query logging.</p>",
+      "refs": {
+        "LoggingDestinations$member": null
+      }
+    },
+    "LoggingDestinations": {
+      "base": "<p>A list structure that contains a single CloudWatch Logs destination.</p>",
+      "refs": {
+        "CreateQueryLoggingConfigurationRequest$destinations": "<p>The destinations where query logs will be sent. Only CloudWatch Logs destination is supported. The list must contain exactly one element.</p>",
+        "QueryLoggingConfigurationMetadata$destinations": "<p>The configured destinations for the query logging configuration.</p>",
+        "UpdateQueryLoggingConfigurationRequest$destinations": "<p>The destinations where query logs will be sent. Only CloudWatch Logs destination is supported. The list must contain exactly one element.</p>"
+      }
+    },
+    "LoggingFilter": {
+      "base": "<p>Filtering criteria that determine which queries are logged.</p>",
+      "refs": {
+        "LoggingDestination$filters": "<p>Filtering criteria that determine which queries are logged.</p>"
+      }
+    },
+    "LoggingFilterQspThresholdLong": {
+      "base": null,
+      "refs": {
+        "LoggingFilter$qspThreshold": "<p>The Query Samples Processed (QSP) threshold above which queries will be logged. Queries processing more samples than this threshold will be captured in logs.</p>"
       }
     },
     "PaginationToken": {
@@ -482,6 +547,26 @@
     "PutRuleGroupsNamespaceResponse": {
       "base": "<p>Represents the output of a <code>PutRuleGroupsNamespace</code> operation.</p>",
       "refs": {
+      }
+    },
+    "QueryLoggingConfigurationMetadata": {
+      "base": "<p>The metadata for a query logging configuration.</p>",
+      "refs": {
+        "DescribeQueryLoggingConfigurationResponse$queryLoggingConfiguration": "<p>The detailed information about the query logging configuration for the specified workspace.</p>"
+      }
+    },
+    "QueryLoggingConfigurationStatus": {
+      "base": "<p>The status information for a query logging configuration.</p>",
+      "refs": {
+        "CreateQueryLoggingConfigurationResponse$status": "<p>The current status of the query logging configuration.</p>",
+        "QueryLoggingConfigurationMetadata$status": "<p>The current status of the query logging configuration.</p>",
+        "UpdateQueryLoggingConfigurationResponse$status": "<p>The current status of the query logging configuration.</p>"
+      }
+    },
+    "QueryLoggingConfigurationStatusCode": {
+      "base": null,
+      "refs": {
+        "QueryLoggingConfigurationStatus$statusCode": "<p>The current status of the query logging configuration.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -684,6 +769,7 @@
         "InternalServerException$message": "<p>Description of the error.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource to list tages for. Must be a workspace, scraper, or rule groups namespace resource.</p>",
         "LoggingConfigurationStatus$statusReason": "<p>If failed, the reason for the failure.</p>",
+        "QueryLoggingConfigurationStatus$statusReason": "<p>If there is a failure, the reason for the failure.</p>",
         "ResourceNotFoundException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ResourceNotFoundException$resourceType": "<p>Type of the resource affected.</p>",
@@ -778,6 +864,8 @@
         "AlertManagerDefinitionDescription$modifiedAt": "<p>The date and time that the alert manager definition was most recently changed.</p>",
         "LoggingConfigurationMetadata$createdAt": "<p>The date and time that the logging configuration was created.</p>",
         "LoggingConfigurationMetadata$modifiedAt": "<p>The date and time that the logging configuration was most recently changed.</p>",
+        "QueryLoggingConfigurationMetadata$createdAt": "<p>The date and time when the query logging configuration was created.</p>",
+        "QueryLoggingConfigurationMetadata$modifiedAt": "<p>The date and time when the query logging configuration was last modified.</p>",
         "RuleGroupsNamespaceDescription$createdAt": "<p>The date and time that the rule groups namespace was created.</p>",
         "RuleGroupsNamespaceDescription$modifiedAt": "<p>The date and time that the rule groups namespace was most recently changed.</p>",
         "RuleGroupsNamespaceSummary$createdAt": "<p>The date and time that the rule groups namespace was created.</p>",
@@ -807,6 +895,16 @@
     },
     "UpdateLoggingConfigurationResponse": {
       "base": "<p>Represents the output of an <code>UpdateLoggingConfiguration</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "UpdateQueryLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateQueryLoggingConfigurationResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -925,14 +1023,17 @@
       "refs": {
         "CreateAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to add the alert manager definition to.</p>",
         "CreateLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace to create the logging configuration for.</p>",
+        "CreateQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace for which to create the query logging configuration.</p>",
         "CreateRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace to add the rule groups namespace.</p>",
         "CreateWorkspaceResponse$workspaceId": "<p>The unique ID for the new workspace.</p>",
         "DeleteAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to delete the alert manager definition from.</p>",
         "DeleteLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace containing the logging configuration to delete.</p>",
+        "DeleteQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace from which to delete the query logging configuration.</p>",
         "DeleteRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace containing the rule groups namespace and definition to delete.</p>",
         "DeleteWorkspaceRequest$workspaceId": "<p>The ID of the workspace to delete.</p>",
         "DescribeAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to retrieve the alert manager definition from.</p>",
         "DescribeLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace to describe the logging configuration for.</p>",
+        "DescribeQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace for which to retrieve the query logging configuration.</p>",
         "DescribeRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace containing the rule groups namespace.</p>",
         "DescribeWorkspaceConfigurationRequest$workspaceId": "<p>The ID of the workspace that you want to retrieve information for. To find the IDs of your workspaces, use the <a href=\"https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm\">ListWorkspaces</a> operation.</p>",
         "DescribeWorkspaceRequest$workspaceId": "<p>The ID of the workspace to describe.</p>",
@@ -940,7 +1041,9 @@
         "LoggingConfigurationMetadata$workspace": "<p>The ID of the workspace the logging configuration is for.</p>",
         "PutAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to update the alert manager definition in.</p>",
         "PutRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace where you are updating the rule groups namespace.</p>",
+        "QueryLoggingConfigurationMetadata$workspace": "<p>The ID of the workspace associated with this query logging configuration.</p>",
         "UpdateLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace to update the logging configuration for.</p>",
+        "UpdateQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace for which to update the query logging configuration.</p>",
         "UpdateWorkspaceAliasRequest$workspaceId": "<p>The ID of the workspace to update.</p>",
         "UpdateWorkspaceConfigurationRequest$workspaceId": "<p>The ID of the workspace that you want to update. To find the IDs of your workspaces, use the <a href=\"https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm\">ListWorkspaces</a> operation.</p>",
         "WorkspaceDescription$workspaceId": "<p>The unique ID for the workspace. For example, <code>ws-example1-1234-abcd-5678-ef90abcd1234</code>.</p>",

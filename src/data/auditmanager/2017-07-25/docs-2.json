@@ -36,7 +36,7 @@
     "GetInsights": "<p>Gets the latest analytics data for all your current active assessments. </p>",
     "GetInsightsByAssessment": "<p>Gets the latest analytics data for a specific active assessment. </p>",
     "GetOrganizationAdminAccount": "<p> Gets the name of the delegated Amazon Web Services administrator account for a specified organization. </p>",
-    "GetServicesInScope": "<p>Gets a list of the Amazon Web Services from which Audit Manager can collect evidence. </p> <p>Audit Manager defines which Amazon Web Services are in scope for an assessment. Audit Manager infers this scope by examining the assessment’s controls and their data sources, and then mapping this information to one or more of the corresponding Amazon Web Services that are in this list.</p> <note> <p>For information about why it's no longer possible to specify services in scope manually, see <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/evidence-collection-issues.html#unable-to-edit-services\">I can't edit the services in scope for my assessment</a> in the <i>Troubleshooting</i> section of the Audit Manager user guide.</p> </note>",
+    "GetServicesInScope": "<p>Gets a list of the Amazon Web Services services from which Audit Manager can collect evidence. </p> <p>Audit Manager defines which Amazon Web Services services are in scope for an assessment. Audit Manager infers this scope by examining the assessment’s controls and their data sources, and then mapping this information to one or more of the corresponding Amazon Web Services services that are in this list.</p> <note> <p>For information about why it's no longer possible to specify services in scope manually, see <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/evidence-collection-issues.html#unable-to-edit-services\">I can't edit the services in scope for my assessment</a> in the <i>Troubleshooting</i> section of the Audit Manager user guide.</p> </note>",
     "GetSettings": "<p> Gets the settings for a specified Amazon Web Services account. </p>",
     "ListAssessmentControlInsightsByControlDomain": "<p>Lists the latest analytics data for controls within a specific control domain and a specific active assessment.</p> <note> <p>Control insights are listed only if the control belongs to the control domain and assessment that was specified. Moreover, the control must have collected evidence on the <code>lastUpdated</code> date of <code>controlInsightsByAssessment</code>. If neither of these conditions are met, no data is listed for that control. </p> </note>",
     "ListAssessmentFrameworkShareRequests": "<p> Returns a list of sent or received share requests for custom frameworks in Audit Manager. </p>",
@@ -80,7 +80,7 @@
       }
     },
     "AWSService": {
-      "base": "<p> An Amazon Web Service such as Amazon S3 or CloudTrail. </p> <p>For an example of how to find an Amazon Web Service name and how to define it in your assessment scope, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_2\">Finding an Amazon Web Service name to use in your assessment scope</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_3\">Defining an Amazon Web Service name in your assessment scope</a> </p> </li> </ul>",
+      "base": "<p> An Amazon Web Services service such as Amazon S3 or CloudTrail. </p> <p>For an example of how to find an Amazon Web Services service name and how to define it in your assessment scope, see the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_2\">Finding an Amazon Web Services service name to use in your assessment scope</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_3\">Defining an Amazon Web Services service name in your assessment scope</a> </p> </li> </ul>",
       "refs": {
         "AWSServices$member": null
       }
@@ -88,21 +88,20 @@
     "AWSServiceName": {
       "base": null,
       "refs": {
-        "AWSService$serviceName": "<p> The name of the Amazon Web Service. </p>",
-        "Evidence$eventSource": "<p> The Amazon Web Service that the evidence is collected from. </p>",
-        "ServiceMetadata$name": "<p> The name of the Amazon Web Service. </p>"
+        "AWSService$serviceName": "<p> The name of the Amazon Web Services service. </p>",
+        "Evidence$eventSource": "<p> The Amazon Web Services service that the evidence is collected from. </p>",
+        "ServiceMetadata$name": "<p> The name of the Amazon Web Services service. </p>"
       }
     },
     "AWSServices": {
       "base": null,
       "refs": {
-        "Scope$awsServices": "<p> The Amazon Web Services services that are included in the scope of the assessment. </p> <important> <p>This API parameter is no longer supported. If you use this parameter to specify one or more Amazon Web Services, Audit Manager ignores this input. Instead, the value for <code>awsServices</code> will show as empty.</p> </important>"
+        "Scope$awsServices": "<p> The Amazon Web Services services that are included in the scope of the assessment. </p> <important> <p>This API parameter is no longer supported. If you use this parameter to specify one or more Amazon Web Services services, Audit Manager ignores this input. Instead, the value for <code>awsServices</code> will show as empty.</p> </important>"
       }
     },
     "AccessDeniedException": {
       "base": "<p> Your account isn't registered with Audit Manager. Check the delegated administrator setup on the Audit Manager settings page, and try again. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -360,13 +359,11 @@
     },
     "AssociateAssessmentReportEvidenceFolderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAssessmentReportEvidenceFolderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AuditManagerArn": {
       "base": null,
@@ -384,13 +381,11 @@
     },
     "BatchAssociateAssessmentReportEvidenceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchAssociateAssessmentReportEvidenceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchCreateDelegationByAssessmentError": {
       "base": "<p> An error entity for the <code>BatchCreateDelegationByAssessment</code> API. This is used to provide more meaningful errors than a simple string message. </p>",
@@ -406,13 +401,11 @@
     },
     "BatchCreateDelegationByAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchCreateDelegationByAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteDelegationByAssessmentError": {
       "base": "<p> An error entity for the <code>BatchDeleteDelegationByAssessment</code> API. This is used to provide more meaningful errors than a simple string message. </p>",
@@ -428,23 +421,19 @@
     },
     "BatchDeleteDelegationByAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteDelegationByAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateAssessmentReportEvidenceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateAssessmentReportEvidenceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchImportEvidenceToAssessmentControlError": {
       "base": "<p> An error entity for the <code>BatchImportEvidenceToAssessmentControl</code> API. This is used to provide more meaningful errors than a simple string message. </p>",
@@ -460,13 +449,11 @@
     },
     "BatchImportEvidenceToAssessmentControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchImportEvidenceToAssessmentControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -757,33 +744,27 @@
     },
     "CreateAssessmentFrameworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssessmentFrameworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssessmentReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssessmentReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateControlMappingSource": {
       "base": "<p>The mapping attributes that determine the evidence source for a given control, along with related parameters and metadata. This doesn't contain <code>mappingID</code>. </p>",
@@ -799,13 +780,11 @@
     },
     "CreateControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDelegationRequest": {
       "base": "<p> A collection of attributes that's used to create a delegation for an assessment in Audit Manager. </p>",
@@ -891,53 +870,43 @@
     },
     "DeleteAssessmentFrameworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentFrameworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentFrameworkShareRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentFrameworkShareResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResources": {
       "base": null,
@@ -947,23 +916,19 @@
     },
     "DeregisterAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterOrganizationAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregistrationPolicy": {
       "base": "<p>The deregistration policy for the data that's stored in Audit Manager. You can use this attribute to determine how your data is handled when you <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeregisterAccount.html\">deregister Audit Manager</a>.</p> <p>By default, Audit Manager retains evidence data for two years from the time of its creation. Other Audit Manager resources (including assessments, custom controls, and custom frameworks) remain in Audit Manager indefinitely, and are available if you <a href=\"https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_RegisterAccount.html\">re-register Audit Manager</a> in the future. For more information about data retention, see <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/data-protection.html\">Data Protection</a> in the <i>Audit Manager User Guide</i>.</p> <important> <p>If you choose to delete all data, this action permanently deletes all evidence data in your account within seven days. It also deletes all of the Audit Manager resources that you created, including assessments, custom controls, and custom frameworks. Your data will not be available if you re-register Audit Manager in the future.</p> </important>",
@@ -974,13 +939,11 @@
     },
     "DisassociateAssessmentReportEvidenceFolderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAssessmentReportEvidenceFolderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EmailAddress": {
       "base": null,
@@ -1155,183 +1118,147 @@
     },
     "GetAccountStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentFrameworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentFrameworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentReportUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentReportUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChangeLogsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChangeLogsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDelegationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDelegationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceByEvidenceFolderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceByEvidenceFolderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFileUploadUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFileUploadUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFolderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFolderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFoldersByAssessmentControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFoldersByAssessmentControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFoldersByAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceFoldersByAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEvidenceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInsightsByAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInsightsByAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInsightsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInsightsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOrganizationAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServicesInScopeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServicesInScopeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HyperlinkName": {
       "base": null,
@@ -1372,7 +1299,7 @@
         "AssessmentEvidenceFolder$totalEvidence": "<p> The total amount of evidence in the evidence folder. </p>",
         "AssessmentEvidenceFolder$assessmentReportSelectionCount": "<p> The total count of evidence that's included in the assessment report. </p>",
         "AssessmentEvidenceFolder$evidenceResourcesIncludedCount": "<p> The amount of evidence that's included in the evidence folder. </p>",
-        "AssessmentEvidenceFolder$evidenceByTypeConfigurationDataCount": "<p> The number of evidence that falls under the configuration data category. This evidence is collected from configuration snapshots of other Amazon Web Services such as Amazon EC2, Amazon S3, or IAM. </p>",
+        "AssessmentEvidenceFolder$evidenceByTypeConfigurationDataCount": "<p> The number of evidence that falls under the configuration data category. This evidence is collected from configuration snapshots of other Amazon Web Services services such as Amazon EC2, Amazon S3, or IAM. </p>",
         "AssessmentEvidenceFolder$evidenceByTypeManualCount": "<p> The number of evidence that falls under the manual category. This evidence is imported manually. </p>",
         "AssessmentEvidenceFolder$evidenceByTypeComplianceCheckCount": "<p> The number of evidence that falls under the compliance check category. This evidence is collected from Config or Security Hub. </p>",
         "AssessmentEvidenceFolder$evidenceByTypeComplianceCheckIssuesCount": "<p> The total number of issues that were reported directly from Security Hub, Config, or both. </p>",
@@ -1382,8 +1309,7 @@
     },
     "InternalServerException": {
       "base": "<p> An internal service error occurred during the processing of your request. Try again later. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeywordInputType": {
       "base": null,
@@ -1395,7 +1321,7 @@
       "base": null,
       "refs": {
         "Keywords$member": null,
-        "SourceKeyword$keywordValue": "<p> The value of the keyword that's used when mapping a control data source. For example, this can be a CloudTrail event name, a rule name for Config, a Security Hub control, or the name of an Amazon Web Services API call. </p> <p>If you’re mapping a data source to a rule in Config, the <code>keywordValue</code> that you specify depends on the type of rule:</p> <ul> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html\">managed rules</a>, you can use the rule identifier as the <code>keywordValue</code>. You can find the rule identifier from the <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html\">list of Config managed rules</a>. For some rules, the rule identifier is different from the rule name. For example, the rule name <code>restricted-ssh</code> has the following rule identifier: <code>INCOMING_SSH_DISABLED</code>. Make sure to use the rule identifier, not the rule name. </p> <p>Keyword example for managed rules:</p> <ul> <li> <p>Managed rule name: <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-acl-prohibited.html\">s3-bucket-acl-prohibited</a> </p> <p> <code>keywordValue</code>: <code>S3_BUCKET_ACL_PROHIBITED</code> </p> </li> </ul> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_develop-rules.html\">custom rules</a>, you form the <code>keywordValue</code> by adding the <code>Custom_</code> prefix to the rule name. This prefix distinguishes the custom rule from a managed rule. </p> <p>Keyword example for custom rules:</p> <ul> <li> <p>Custom rule name: my-custom-config-rule</p> <p> <code>keywordValue</code>: <code>Custom_my-custom-config-rule</code> </p> </li> </ul> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/service-linked-awsconfig-rules.html\">service-linked rules</a>, you form the <code>keywordValue</code> by adding the <code>Custom_</code> prefix to the rule name. In addition, you remove the suffix ID that appears at the end of the rule name. </p> <p>Keyword examples for service-linked rules:</p> <ul> <li> <p>Service-linked rule name: CustomRuleForAccount-conformance-pack-szsm1uv0w</p> <p> <code>keywordValue</code>: <code>Custom_CustomRuleForAccount-conformance-pack</code> </p> </li> <li> <p>Service-linked rule name: OrgConfigRule-s3-bucket-versioning-enabled-dbgzf8ba</p> <p> <code>keywordValue</code>: <code>Custom_OrgConfigRule-s3-bucket-versioning-enabled</code> </p> </li> </ul> </li> </ul> <important> <p>The <code>keywordValue</code> is case sensitive. If you enter a value incorrectly, Audit Manager might not recognize the data source mapping. As a result, you might not successfully collect evidence from that data source as intended. </p> <p>Keep in mind the following requirements, depending on the data source type that you're using. </p> <ol> <li> <p>For Config: </p> <ul> <li> <p>For managed rules, make sure that the <code>keywordValue</code> is the rule identifier in <code>ALL_CAPS_WITH_UNDERSCORES</code>. For example, <code>CLOUDWATCH_LOG_GROUP_ENCRYPTED</code>. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html\">supported Config managed rules</a>.</p> </li> <li> <p>For custom rules, make sure that the <code>keywordValue</code> has the <code>Custom_</code> prefix followed by the custom rule name. The format of the custom rule name itself may vary. For accuracy, we recommend that you visit the <a href=\"https://console.aws.amazon.com/config/\">Config console</a> to verify your custom rule name.</p> </li> </ul> </li> <li> <p>For Security Hub: The format varies for Security Hub control names. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html\">supported Security Hub controls</a>.</p> </li> <li> <p>For Amazon Web Services API calls: Make sure that the <code>keywordValue</code> is written as <code>serviceprefix_ActionName</code>. For example, <code>iam_ListGroups</code>. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html\">supported API calls</a>.</p> </li> <li> <p>For CloudTrail: Make sure that the <code>keywordValue</code> is written as <code>serviceprefix_ActionName</code>. For example, <code>cloudtrail_StartLogging</code>. For accuracy, we recommend that you review the Amazon Web Service prefix and action names in the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html\">Service Authorization Reference</a>.</p> </li> </ol> </important>"
+        "SourceKeyword$keywordValue": "<p> The value of the keyword that's used when mapping a control data source. For example, this can be a CloudTrail event name, a rule name for Config, a Security Hub control, or the name of an Amazon Web Services API call. </p> <p>If you’re mapping a data source to a rule in Config, the <code>keywordValue</code> that you specify depends on the type of rule:</p> <ul> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html\">managed rules</a>, you can use the rule identifier as the <code>keywordValue</code>. You can find the rule identifier from the <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html\">list of Config managed rules</a>. For some rules, the rule identifier is different from the rule name. For example, the rule name <code>restricted-ssh</code> has the following rule identifier: <code>INCOMING_SSH_DISABLED</code>. Make sure to use the rule identifier, not the rule name. </p> <p>Keyword example for managed rules:</p> <ul> <li> <p>Managed rule name: <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-acl-prohibited.html\">s3-bucket-acl-prohibited</a> </p> <p> <code>keywordValue</code>: <code>S3_BUCKET_ACL_PROHIBITED</code> </p> </li> </ul> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_develop-rules.html\">custom rules</a>, you form the <code>keywordValue</code> by adding the <code>Custom_</code> prefix to the rule name. This prefix distinguishes the custom rule from a managed rule. </p> <p>Keyword example for custom rules:</p> <ul> <li> <p>Custom rule name: my-custom-config-rule</p> <p> <code>keywordValue</code>: <code>Custom_my-custom-config-rule</code> </p> </li> </ul> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/config/latest/developerguide/service-linked-awsconfig-rules.html\">service-linked rules</a>, you form the <code>keywordValue</code> by adding the <code>Custom_</code> prefix to the rule name. In addition, you remove the suffix ID that appears at the end of the rule name. </p> <p>Keyword examples for service-linked rules:</p> <ul> <li> <p>Service-linked rule name: CustomRuleForAccount-conformance-pack-szsm1uv0w</p> <p> <code>keywordValue</code>: <code>Custom_CustomRuleForAccount-conformance-pack</code> </p> </li> <li> <p>Service-linked rule name: OrgConfigRule-s3-bucket-versioning-enabled-dbgzf8ba</p> <p> <code>keywordValue</code>: <code>Custom_OrgConfigRule-s3-bucket-versioning-enabled</code> </p> </li> </ul> </li> </ul> <important> <p>The <code>keywordValue</code> is case sensitive. If you enter a value incorrectly, Audit Manager might not recognize the data source mapping. As a result, you might not successfully collect evidence from that data source as intended. </p> <p>Keep in mind the following requirements, depending on the data source type that you're using. </p> <ol> <li> <p>For Config: </p> <ul> <li> <p>For managed rules, make sure that the <code>keywordValue</code> is the rule identifier in <code>ALL_CAPS_WITH_UNDERSCORES</code>. For example, <code>CLOUDWATCH_LOG_GROUP_ENCRYPTED</code>. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html\">supported Config managed rules</a>.</p> </li> <li> <p>For custom rules, make sure that the <code>keywordValue</code> has the <code>Custom_</code> prefix followed by the custom rule name. The format of the custom rule name itself may vary. For accuracy, we recommend that you visit the <a href=\"https://console.aws.amazon.com/config/\">Config console</a> to verify your custom rule name.</p> </li> </ul> </li> <li> <p>For Security Hub: The format varies for Security Hub control names. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html\">supported Security Hub controls</a>.</p> </li> <li> <p>For Amazon Web Services API calls: Make sure that the <code>keywordValue</code> is written as <code>serviceprefix_ActionName</code>. For example, <code>iam_ListGroups</code>. For accuracy, we recommend that you reference the list of <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html\">supported API calls</a>.</p> </li> <li> <p>For CloudTrail: Make sure that the <code>keywordValue</code> is written as <code>serviceprefix_ActionName</code>. For example, <code>cloudtrail_StartLogging</code>. For accuracy, we recommend that you review the Amazon Web Services service prefix and action names in the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html\">Service Authorization Reference</a>.</p> </li> </ol> </important>"
       }
     },
     "Keywords": {
@@ -1421,33 +1347,27 @@
     },
     "ListAssessmentControlInsightsByControlDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentControlInsightsByControlDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentFrameworkShareRequestsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentFrameworkShareRequestsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentFrameworksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentFrameworksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentMetadata": {
       "base": null,
@@ -1457,93 +1377,75 @@
     },
     "ListAssessmentReportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentReportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssessmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlDomainInsightsByAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlDomainInsightsByAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlDomainInsightsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlDomainInsightsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlInsightsByControlDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlInsightsByControlDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListControlsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKeywordsForDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListKeywordsForDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNotificationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ManualEvidence": {
       "base": "<p> Evidence that's manually added to a control in Audit Manager. <code>manualEvidence</code> can be one of the following: <code>evidenceFileName</code>, <code>s3ResourcePath</code>, or <code>textResponse</code>.</p>",
@@ -1605,9 +1507,9 @@
         "Notification$controlSetName": "<p> Specifies the name of the control set that the notification is about. </p>",
         "Notification$description": "<p> The description of the notification. </p>",
         "Notification$source": "<p> The sender of the notification. </p>",
-        "ServiceMetadata$displayName": "<p> The display name of the Amazon Web Service. </p>",
-        "ServiceMetadata$description": "<p> The description of the Amazon Web Service. </p>",
-        "ServiceMetadata$category": "<p> The category that the Amazon Web Service belongs to, such as compute, storage, or database. </p>",
+        "ServiceMetadata$displayName": "<p> The display name of the Amazon Web Services service. </p>",
+        "ServiceMetadata$description": "<p> The description of the Amazon Web Services service. </p>",
+        "ServiceMetadata$category": "<p> The category that the Amazon Web Services service belongs to, such as compute, storage, or database. </p>",
         "ValidationErrors$member": null
       }
     },
@@ -1667,23 +1569,19 @@
     },
     "RegisterAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterOrganizationAdminAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Resource": {
       "base": "<p> A system asset that's evaluated in an Audit Manager assessment. </p>",
@@ -1693,8 +1591,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p> The resource that's specified in the request can't be found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Resources": {
       "base": null,
@@ -1745,7 +1642,7 @@
       }
     },
     "Scope": {
-      "base": "<p> The wrapper that contains the Amazon Web Services accounts that are in scope for the assessment. </p> <note> <p>You no longer need to specify which Amazon Web Services are in scope when you create or update an assessment. Audit Manager infers the services in scope by examining your assessment controls and their data sources, and then mapping this information to the relevant Amazon Web Services. </p> <p>If an underlying data source changes for your assessment, we automatically update the services scope as needed to reflect the correct Amazon Web Services. This ensures that your assessment collects accurate and comprehensive evidence about all of the relevant services in your AWS environment.</p> </note>",
+      "base": "<p> The wrapper that contains the Amazon Web Services accounts that are in scope for the assessment. </p> <note> <p>You no longer need to specify which Amazon Web Services services are in scope when you create or update an assessment. Audit Manager infers the services in scope by examining your assessment controls and their data sources, and then mapping this information to the relevant Amazon Web Services services. </p> <p>If an underlying data source changes for your assessment, we automatically update the services scope as needed to reflect the correct Amazon Web Services services. This ensures that your assessment collects accurate and comprehensive evidence about all of the relevant services in your AWS environment.</p> </note>",
       "refs": {
         "AssessmentMetadata$scope": "<p> The wrapper of Amazon Web Services accounts and services that are in scope for the assessment. </p>",
         "CreateAssessmentRequest$scope": null,
@@ -1753,7 +1650,7 @@
       }
     },
     "ServiceMetadata": {
-      "base": "<p> The metadata that's associated with the Amazon Web Service. </p>",
+      "base": "<p> The metadata that's associated with the Amazon Web Services service. </p>",
       "refs": {
         "ServiceMetadataList$member": null
       }
@@ -1761,13 +1658,12 @@
     "ServiceMetadataList": {
       "base": null,
       "refs": {
-        "GetServicesInScopeResponse$serviceMetadata": "<p> The metadata that's associated with the Amazon Web Service. </p>"
+        "GetServicesInScopeResponse$serviceMetadata": "<p> The metadata that's associated with the Amazon Web Services service. </p>"
       }
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You've reached your account quota for this resource type. To perform the requested action, delete some existing resources or <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">request a quota increase</a> from the Service Quotas console. For a list of Audit Manager service quotas, see <a href=\"https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html\">Quotas and restrictions for Audit Manager</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SettingAttribute": {
       "base": null,
@@ -1859,19 +1755,17 @@
     },
     "StartAssessmentFrameworkShareRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAssessmentFrameworkShareResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
-        "AssessmentEvidenceFolder$dataSource": "<p> The Amazon Web Service that the evidence was collected from. </p>",
+        "AssessmentEvidenceFolder$dataSource": "<p> The Amazon Web Services service that the evidence was collected from. </p>",
         "AssessmentEvidenceFolder$author": "<p> The name of the user who created the evidence folder. </p>",
         "ControlDomainInsights$name": "<p>The name of the control domain. </p>",
         "ControlInsightsMetadataByAssessmentItem$name": "<p>The name of the assessment control. </p>",
@@ -1926,13 +1820,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1950,8 +1842,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -2131,33 +2022,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentControlSetStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentControlSetStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentFrameworkControlSet": {
       "base": "<p> A <code>controlSet</code> entity that represents a collection of controls in Audit Manager. This doesn't contain the control set ID. </p>",
@@ -2173,63 +2058,51 @@
     },
     "UpdateAssessmentFrameworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentFrameworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentFrameworkShareRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentFrameworkShareResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssessmentStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateControlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateControlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UrlLink": {
       "base": null,
@@ -2247,13 +2120,11 @@
     },
     "ValidateAssessmentReportIntegrityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateAssessmentReportIntegrityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationErrors": {
       "base": null,
@@ -2263,8 +2134,7 @@
     },
     "ValidationException": {
       "base": "<p> The request has invalid or missing parameters. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p> Indicates that the request has invalid or missing parameters for the field. </p>",

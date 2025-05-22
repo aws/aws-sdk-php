@@ -258,6 +258,7 @@
       "type":"structure",
       "members":{
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "kmsEncryptionKey":{"shape":"KmsEncryptionKey"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -281,6 +282,7 @@
         "status":{"shape":"ClusterStatus"},
         "creationTime":{"shape":"ClusterCreationTime"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
+        "encryptionDetails":{"shape":"EncryptionDetails"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"}
       }
     },
@@ -320,6 +322,34 @@
       "type":"boolean",
       "box":true
     },
+    "EncryptionDetails":{
+      "type":"structure",
+      "required":[
+        "encryptionType",
+        "encryptionStatus"
+      ],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "encryptionStatus":{"shape":"EncryptionStatus"}
+      }
+    },
+    "EncryptionStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "UPDATING",
+        "KMS_KEY_INACCESSIBLE",
+        "ENABLING"
+      ]
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KMS_KEY",
+        "CUSTOMER_MANAGED_KMS_KEY"
+      ]
+    },
     "GetClusterInput":{
       "type":"structure",
       "required":["identifier"],
@@ -347,7 +377,8 @@
         "creationTime":{"shape":"ClusterCreationTime"},
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "multiRegionProperties":{"shape":"MultiRegionProperties"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "encryptionDetails":{"shape":"EncryptionDetails"}
       }
     },
     "GetVpcEndpointServiceNameInput":{
@@ -388,6 +419,13 @@
       "fault":true,
       "retryable":{"throttling":false}
     },
+    "KmsEncryptionKey":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:/_-]+"
+    },
+    "KmsKeyArn":{"type":"string"},
     "ListClustersInput":{
       "type":"structure",
       "members":{
@@ -583,6 +621,7 @@
           "locationName":"identifier"
         },
         "deletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
+        "kmsEncryptionKey":{"shape":"KmsEncryptionKey"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true

@@ -5,11 +5,13 @@
     "endpointPrefix":"auditmanager",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Audit Manager",
     "serviceId":"AuditManager",
     "signatureVersion":"v4",
     "signingName":"auditmanager",
-    "uid":"auditmanager-2017-07-25"
+    "uid":"auditmanager-2017-07-25",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateAssessmentReportEvidenceFolder":{
@@ -807,7 +809,8 @@
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateAssessmentControl":{
@@ -1033,7 +1036,12 @@
       "members":{
         "id":{"shape":"UUID"},
         "name":{"shape":"ControlName"},
-        "description":{"shape":"ControlDescription"},
+        "description":{
+          "shape":"ControlDescription",
+          "deprecated":true,
+          "deprecatedMessage":"This data type will be deprecated on May 19, 2025. To view the assessment control description, use GetControl.",
+          "deprecatedSince":"2025-05-19"
+        },
         "status":{"shape":"ControlStatus"},
         "response":{"shape":"ControlResponse"},
         "comments":{"shape":"ControlComments"},
@@ -1293,8 +1301,7 @@
     },
     "AssociateAssessmentReportEvidenceFolderResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AuditManagerArn":{
       "type":"string",
@@ -1950,8 +1957,7 @@
     },
     "DeleteAssessmentFrameworkResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssessmentFrameworkShareRequest":{
       "type":"structure",
@@ -1974,8 +1980,7 @@
     },
     "DeleteAssessmentFrameworkShareResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssessmentReportRequest":{
       "type":"structure",
@@ -1998,8 +2003,7 @@
     },
     "DeleteAssessmentReportResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssessmentRequest":{
       "type":"structure",
@@ -2014,8 +2018,7 @@
     },
     "DeleteAssessmentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteControlRequest":{
       "type":"structure",
@@ -2030,8 +2033,7 @@
     },
     "DeleteControlResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResources":{
       "type":"string",
@@ -2042,8 +2044,7 @@
     },
     "DeregisterAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterAccountResponse":{
       "type":"structure",
@@ -2059,8 +2060,7 @@
     },
     "DeregisterOrganizationAdminAccountResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregistrationPolicy":{
       "type":"structure",
@@ -2085,8 +2085,7 @@
     },
     "DisassociateAssessmentReportEvidenceFolderResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EmailAddress":{
       "type":"string",
@@ -2263,8 +2262,7 @@
     },
     "GetAccountStatusRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountStatusResponse":{
       "type":"structure",
@@ -2627,8 +2625,7 @@
     },
     "GetInsightsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetInsightsResponse":{
       "type":"structure",
@@ -2638,8 +2635,7 @@
     },
     "GetOrganizationAdminAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetOrganizationAdminAccountResponse":{
       "type":"structure",
@@ -2650,8 +2646,7 @@
     },
     "GetServicesInScopeRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetServicesInScopeResponse":{
       "type":"structure",
@@ -3452,8 +3447,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3529,8 +3523,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAssessmentControlRequest":{
       "type":"structure",
