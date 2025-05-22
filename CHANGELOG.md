@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.17 - 2025-05-22
 
 * `Aws\DSQL` - Features: support for customer managed encryption keys
 * `Aws\Glue` - This release supports additional ConversionSpec parameter as part of IntegrationPartition Structure in CreateIntegrationTableProperty API. This parameter is referred to apply appropriate column transformation for columns that are used for timestamp based partitioning
