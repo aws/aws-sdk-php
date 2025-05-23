@@ -46,7 +46,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
     const DEFAULT_MAX_ATTEMPTS = 3;
-    const DEFAULT_MODE = 'legacy';
+    const DEFAULT_MODE = 'standard';
     const ENV_MAX_ATTEMPTS = 'AWS_MAX_ATTEMPTS';
     const ENV_MODE = 'AWS_RETRY_MODE';
     const ENV_PROFILE = 'AWS_PROFILE';
