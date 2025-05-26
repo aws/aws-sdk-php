@@ -4,6 +4,10 @@ namespace Aws\S3\S3Transfer\Progress;
 
 abstract class TransferListener
 {
+    public const REQUEST_ARGS_KEY = TransferListener::REQUEST_ARGS_KEY;
+    public const PROGRESS_SNAPSHOT_KEY = TransferListener::PROGRESS_SNAPSHOT_KEY;
+    public const REASON_KEY = 'reason';
+
     /**
      * @param array $context
      * - request_args: (array) The request arguments that will be provided

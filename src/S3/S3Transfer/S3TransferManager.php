@@ -715,8 +715,8 @@ class S3TransferManager
     {
         if ($listenerNotifier !== null) {
             $listenerNotifier->transferInitiated([
-                'request_args' => $requestArgs,
-                'progress_snapshot' => new TransferProgressSnapshot(
+                TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                     $requestArgs['Key'],
                     0,
                     0
@@ -731,8 +731,8 @@ class S3TransferManager
                 function ($result) use ($requestArgs, $listenerNotifier) {
                     // Notify progress
                     $progressContext = [
-                        'request_args' => $requestArgs,
-                        'progress_snapshot' => new TransferProgressSnapshot(
+                        TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             $requestArgs['Key'],
                             $result['Content-Length'] ?? 0,
                             $result['Content-Length'] ?? 0,
@@ -750,8 +750,8 @@ class S3TransferManager
                 }
             )->otherwise(function ($reason) use ($requestArgs, $listenerNotifier) {
                 $listenerNotifier->transferFail([
-                    'request_args' => $requestArgs,
-                    'progress_snapshot' => new TransferProgressSnapshot(
+                    TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                         $requestArgs['Key'],
                         0,
                         0,
@@ -804,8 +804,8 @@ class S3TransferManager
         if (!empty($listenerNotifier)) {
             $listenerNotifier->transferInitiated(
                 [
-                    'request_args' => $requestArgs,
-                    'progress_snapshot' => new TransferProgressSnapshot(
+                    TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                    TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                         $requestArgs['Key'],
                         0,
                         $objectSize,
@@ -818,8 +818,8 @@ class S3TransferManager
                 function ($result) use ($objectSize, $listenerNotifier, $requestArgs) {
                     $listenerNotifier->bytesTransferred(
                         [
-                            'request_args' => $requestArgs,
-                            'progress_snapshot' => new TransferProgressSnapshot(
+                            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                            TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                 $requestArgs['Key'],
                                 $objectSize,
                                 $objectSize,
@@ -829,8 +829,8 @@ class S3TransferManager
 
                     $listenerNotifier->transferComplete(
                         [
-                            'request_args' => $requestArgs,
-                            'progress_snapshot' => new TransferProgressSnapshot(
+                            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                            TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                                 $requestArgs['Key'],
                                 $objectSize,
                                 $objectSize,
@@ -844,8 +844,8 @@ class S3TransferManager
             )->otherwise(function ($reason) use ($objectSize, $requestArgs, $listenerNotifier) {
                 $listenerNotifier->transferFail(
                     [
-                        'request_args' => $requestArgs,
-                        'progress_snapshot' => new TransferProgressSnapshot(
+                        TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+                        TransferListener::PROGRESS_SNAPSHOT_KEY => new TransferProgressSnapshot(
                             $requestArgs['Key'],
                             0,
                             $objectSize,

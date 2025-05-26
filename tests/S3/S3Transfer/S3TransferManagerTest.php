@@ -297,7 +297,7 @@ class S3TransferManagerTest extends TestCase
         $transferListener->method('bytesTransferred')
             -> willReturnCallback(function ($context) use ($expectedPartSize, &$expectedIncrementalPartSize) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context['progress_snapshot'];
+                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
@@ -394,7 +394,7 @@ class S3TransferManagerTest extends TestCase
                 &$expectedIncrementalPartSize
             ) {
                 /** @var TransferProgressSnapshot $snapshot */
-                $snapshot = $context['progress_snapshot'];
+                $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
                 $this->assertEquals($expectedIncrementalPartSize, $snapshot->getTransferredBytes());
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
@@ -1298,7 +1298,7 @@ class S3TransferManagerTest extends TestCase
             $transferListener->method('bytesTransferred')
                 ->willReturnCallback(function(array $context) use (&$objectKeys) {
                     /** @var TransferProgressSnapshot $snapshot */
-                    $snapshot = $context['progress_snapshot'];
+                    $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
                     $objectKeys[$snapshot->getIdentifier()] = true;
                 });
             $manager->uploadDirectory(

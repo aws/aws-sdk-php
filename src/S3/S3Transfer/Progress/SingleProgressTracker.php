@@ -96,7 +96,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferInitiated(array $context): void
     {
-        $this->currentSnapshot = $context['progress_snapshot'];
+        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         // Probably a common argument
         $progressFormat->setArg(
@@ -114,7 +114,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function bytesTransferred(array $context): void
     {
-        $this->currentSnapshot = $context['progress_snapshot'];
+        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -133,7 +133,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferComplete(array $context): void
     {
-        $this->currentSnapshot = $context['progress_snapshot'];
+        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -154,7 +154,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
      */
     public function transferFail(array $context): void
     {
-        $this->currentSnapshot = $context['progress_snapshot'];
+        $this->currentSnapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressFormat = $this->progressBar->getProgressBarFormat();
         if ($progressFormat instanceof ColoredTransferProgressBarFormat) {
             $progressFormat->setArg(
@@ -163,7 +163,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
             );
             $progressFormat->setArg(
                 'message',
-                $context['reason']
+                $context[TransferListener::REASON_KEY]
             );
         }
 

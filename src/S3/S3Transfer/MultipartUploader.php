@@ -101,7 +101,8 @@ class MultipartUploader implements PromisorInterface
     private function validateConfig(array &$config): void
     {
         if (isset($config['part_size'])) {
-            if ($config['part_size'] < self::PART_MIN_SIZE || $config['part_size'] > self::PART_MAX_SIZE) {
+            if ($config['part_size'] < self::PART_MIN_SIZE
+                || $config['part_size'] > self::PART_MAX_SIZE) {
                 throw new \InvalidArgumentException(
                     "The config `part_size` value must be between "
                     . self::PART_MIN_SIZE . " and " . self::PART_MAX_SIZE . "."
@@ -398,8 +399,8 @@ class MultipartUploader implements PromisorInterface
         }
 
         $this->listenerNotifier?->transferInitiated([
-            'request_args' => $requestArgs,
-            'progress_snapshot' => $this->currentSnapshot
+            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
 
@@ -413,8 +414,8 @@ class MultipartUploader implements PromisorInterface
             $this->abortMultipartUpload()->wait();
         }
         $this->listenerNotifier?->transferFail([
-            'request_args' => $this->createMultipartArgs,
-            'progress_snapshot' => $this->currentSnapshot,
+            TransferListener::REQUEST_ARGS_KEY => $this->createMultipartArgs,
+            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
     }
@@ -433,8 +434,8 @@ class MultipartUploader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->transferComplete([
-            'request_args' => $this->createMultipartArgs,
-            'progress_snapshot' => $this->currentSnapshot,
+            TransferListener::REQUEST_ARGS_KEY => $this->createMultipartArgs,
+            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
 
@@ -456,8 +457,8 @@ class MultipartUploader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->bytesTransferred([
-            'request_args' => $requestArgs,
-            'progress_snapshot' => $this->currentSnapshot,
+            TransferListener::REQUEST_ARGS_KEY => $requestArgs,
+            TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             $this->currentSnapshot
         ]);
     }

@@ -4,12 +4,22 @@ namespace Aws\S3\S3Transfer\Progress;
 
 class MultiProgressBarFormat extends ProgressBarFormat
 {
+    public const FORMAT_TEMPLATE = "[|progress_bar|] |percent|%"
+    ."Completed: |completed|/|total|, Failed: |failed|/|total|";
+    public const FORMAT_PARAMETERS = [
+        'completed',
+        'failed',
+        'total',
+        'percent',
+        'progress_bar'
+    ];
+
     /**
      * @return string
      */
     public function getFormatTemplate(): string
     {
-        return "[|progress_bar|] |percent|% Completed: |completed|/|total|, Failed: |failed|/|total|";
+        return self::FORMAT_TEMPLATE;
     }
 
     /**
@@ -17,13 +27,7 @@ class MultiProgressBarFormat extends ProgressBarFormat
      */
     public function getFormatParameters(): array
     {
-        return [
-            'completed',
-            'failed',
-            'total',
-            'percent',
-            'progress_bar'
-        ];
+        return self::FORMAT_PARAMETERS;
     }
 
     /**

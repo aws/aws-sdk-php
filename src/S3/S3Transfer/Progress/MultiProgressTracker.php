@@ -6,6 +6,8 @@ use Closure;
 
 final class MultiProgressTracker extends TransferListener implements ProgressTrackerInterface
 {
+    private const CLEAR_ASCII_CODE = "\033[2J\033[H";
+
     /** @var array */
     private array $singleProgressTrackers;
 
@@ -103,7 +105,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferInitiated(array $context): void
     {
         $this->transferCount++;
-        $snapshot = $context['progress_snapshot'];
+        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         if (isset($this->singleProgressTrackers[$snapshot->getIdentifier()])) {
             $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         } else {
@@ -135,7 +137,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
      */
     public function bytesTransferred(array $context): void
     {
-        $snapshot = $context['progress_snapshot'];
+        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->bytesTransferred($context);
         $this->showProgress();
@@ -147,7 +149,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferComplete(array $context): void
     {
         $this->completed++;
-        $snapshot = $context['progress_snapshot'];
+        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->transferComplete($context);
         $this->showProgress();
@@ -159,7 +161,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     public function transferFail(array $context): void
     {
         $this->failed++;
-        $snapshot = $context['progress_snapshot'];
+        $snapshot = $context[TransferListener::PROGRESS_SNAPSHOT_KEY];
         $progressTracker = $this->singleProgressTrackers[$snapshot->getIdentifier()];
         $progressTracker->transferFail($context);
         $this->showProgress();
@@ -170,7 +172,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
      */
     public function showProgress(): void
     {
-        fwrite($this->output, "\033[2J\033[H");
+        fwrite($this->output, self::CLEAR_ASCII_CODE);
         $percentsSum = 0;
         /**
          * @var  $_

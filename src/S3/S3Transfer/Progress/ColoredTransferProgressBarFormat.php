@@ -8,15 +8,26 @@ final class ColoredTransferProgressBarFormat extends ProgressBarFormat
     public const BLUE_COLOR_CODE = '[34m';
     public const GREEN_COLOR_CODE = '[32m';
     public const RED_COLOR_CODE = '[31m';
+    public const FORMAT_TEMPLATE = "|object_name|:\n"
+    ."\033|color_code|[|progress_bar|] |percent|% "
+    ."|transferred|/|to_be_transferred| |unit| |message|\033[0m";
+    public const FORMAT_PARAMETERS = [
+        'progress_bar',
+        'percent',
+        'transferred',
+        'to_be_transferred',
+        'unit',
+        'color_code',
+        'message',
+        'object_name'
+    ];
 
     /**
      * @inheritDoc
      */
     public function getFormatTemplate(): string
     {
-        return
-            "|object_name|:\n"
-            ."\033|color_code|[|progress_bar|] |percent|% |transferred|/|to_be_transferred| |unit| |message|\033[0m";
+        return self::FORMAT_TEMPLATE;
     }
 
     /**
@@ -24,16 +35,7 @@ final class ColoredTransferProgressBarFormat extends ProgressBarFormat
      */
     public function getFormatParameters(): array
     {
-        return [
-            'progress_bar',
-            'percent',
-            'transferred',
-            'to_be_transferred',
-            'unit',
-            'color_code',
-            'message',
-            'object_name'
-        ];
+        return self::FORMAT_PARAMETERS;
     }
 
     protected function getFormatDefaultParameterValues(): array
