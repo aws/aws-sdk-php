@@ -1072,6 +1072,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise exportTransitGatewayRoutesAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result exportVerifiedAccessInstanceClientConfiguration(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise exportVerifiedAccessInstanceClientConfigurationAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getActiveVpnTunnelStatus(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getActiveVpnTunnelStatusAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getAllowedImagesSettings(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getAllowedImagesSettingsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getAssociatedEnclaveCertificateIamRoles(array $args = []) (supported in versions 2016-11-15)

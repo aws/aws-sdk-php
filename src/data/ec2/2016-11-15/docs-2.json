@@ -477,6 +477,7 @@
     "ExportImage": "<p>Exports an Amazon Machine Image (AMI) to a VM file. For more information, see <a href=\"https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport_image.html\">Exporting a VM directly from an Amazon Machine Image (AMI)</a> in the <i>VM Import/Export User Guide</i>.</p>",
     "ExportTransitGatewayRoutes": "<p>Exports routes from the specified transit gateway route table to the specified S3 bucket. By default, all routes are exported. Alternatively, you can filter by CIDR range.</p> <p>The routes are saved to the specified bucket in a JSON file. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html#tgw-export-route-tables\">Export route tables to Amazon S3</a> in the <i>Amazon Web Services Transit Gateways Guide</i>.</p>",
     "ExportVerifiedAccessInstanceClientConfiguration": "<p>Exports the client configuration for a Verified Access instance.</p>",
+    "GetActiveVpnTunnelStatus": "<p>Returns the currently negotiated security parameters for an active VPN tunnel, including IKE version, DH groups, encryption algorithms, and integrity algorithms.</p>",
     "GetAllowedImagesSettings": "<p>Gets the current state of the Allowed AMIs setting and the list of Allowed AMIs criteria at the account level in the specified Region.</p> <note> <p>The Allowed AMIs feature does not restrict the AMIs owned by your account. Regardless of the criteria you set, the AMIs created by your account will always be discoverable and usable by users in your account.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html\">Control the discovery and use of AMIs in Amazon EC2 with Allowed AMIs</a> in <i>Amazon EC2 User Guide</i>.</p>",
     "GetAssociatedEnclaveCertificateIamRoles": "<p>Returns the IAM roles that are associated with the specified ACM (ACM) certificate. It also returns the name of the Amazon S3 bucket and the Amazon S3 object key where the certificate, certificate chain, and encrypted private key bundle are stored, and the ARN of the KMS key that's used to encrypt the private key.</p>",
     "GetAssociatedIpv6PoolCidrs": "<p>Gets information about the IPv6 CIDR block associations for a specified IPv6 address pool.</p>",
@@ -926,6 +927,12 @@
       "refs": {
         "DescribeFleetInstancesResult$ActiveInstances": "<p>The running instances. This list is refreshed periodically and might be out of date.</p>",
         "DescribeSpotFleetInstancesResponse$ActiveInstances": "<p>The running instances. This list is refreshed periodically and might be out of date.</p>"
+      }
+    },
+    "ActiveVpnTunnelStatus": {
+      "base": "<p>Contains information about the current security configuration of an active VPN tunnel.</p>",
+      "refs": {
+        "GetActiveVpnTunnelStatusResult$ActiveVpnTunnelStatus": "<p>Information about the current security configuration of the VPN tunnel.</p>"
       }
     },
     "ActivityStatus": {
@@ -2762,6 +2769,7 @@
         "FleetEbsBlockDeviceRequest$DeleteOnTermination": "<p>Indicates whether the EBS volume is deleted on instance termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/preserving-volumes-on-termination.html\">Preserve data when an instance is terminated</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "FpgaImage$Public": "<p>Indicates whether the AFI is public.</p>",
         "FpgaImage$DataRetentionSupport": "<p>Indicates whether data retention support is enabled for the AFI.</p>",
+        "GetActiveVpnTunnelStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request.</p>",
         "GetAllowedImagesSettingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetAssociatedEnclaveCertificateIamRolesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "GetAssociatedIpv6PoolCidrsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -11095,6 +11103,16 @@
         "VpnGateway$Type": "<p>The type of VPN connection the virtual private gateway supports.</p>"
       }
     },
+    "GetActiveVpnTunnelStatusRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetActiveVpnTunnelStatusResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetAllowedImagesSettingsRequest": {
       "base": null,
       "refs": {
@@ -13376,6 +13394,8 @@
         "AcceleratorTotalMemoryMiB$Max": "<p>The maximum amount of accelerator memory, in MiB. If this parameter is not specified, there is no maximum limit.</p>",
         "AcceleratorTotalMemoryMiBRequest$Min": "<p>The minimum amount of accelerator memory, in MiB. To specify no minimum limit, omit this parameter.</p>",
         "AcceleratorTotalMemoryMiBRequest$Max": "<p>The maximum amount of accelerator memory, in MiB. To specify no maximum limit, omit this parameter.</p>",
+        "ActiveVpnTunnelStatus$Phase1DHGroup": "<p>The Diffie-Hellman group number being used in Phase 1 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$Phase2DHGroup": "<p>The Diffie-Hellman group number being used in Phase 2 IKE negotiations.</p>",
         "AllocateHostsRequest$Quantity": "<p>The number of Dedicated Hosts to allocate to your account with these parameters. If you are allocating the Dedicated Hosts on an Outpost, and you specify <b>AssetIds</b>, you can omit this parameter. In this case, Amazon EC2 allocates a Dedicated Host on each specified hardware asset. If you specify both <b>AssetIds</b> and <b>Quantity</b>, then the value that you specify for <b>Quantity</b> must be equal to the number of asset IDs specified.</p>",
         "AllocateIpamPoolCidrRequest$NetmaskLength": "<p>The netmask length of the CIDR you would like to allocate from the IPAM pool. Note the following:</p> <ul> <li> <p>If there is no DefaultNetmaskLength allocation rule set on the pool, you must specify either the NetmaskLength or the CIDR.</p> </li> <li> <p>If the DefaultNetmaskLength allocation rule is set on the pool, you can specify either the NetmaskLength or the CIDR and the DefaultNetmaskLength allocation rule will be ignored.</p> </li> </ul> <p>Possible netmask lengths for IPv4 addresses are 0 - 32. Possible netmask lengths for IPv6 addresses are 0 - 128.</p>",
         "AnalysisAclRule$RuleNumber": "<p>The rule number.</p>",
@@ -21611,6 +21631,12 @@
         "ActiveInstance$InstanceId": "<p>The ID of the instance.</p>",
         "ActiveInstance$InstanceType": "<p>The instance type.</p>",
         "ActiveInstance$SpotInstanceRequestId": "<p>The ID of the Spot Instance request.</p>",
+        "ActiveVpnTunnelStatus$Phase1EncryptionAlgorithm": "<p>The encryption algorithm negotiated in Phase 1 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$Phase2EncryptionAlgorithm": "<p>The encryption algorithm negotiated in Phase 2 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$Phase1IntegrityAlgorithm": "<p>The integrity algorithm negotiated in Phase 1 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$Phase2IntegrityAlgorithm": "<p>The integrity algorithm negotiated in Phase 2 IKE negotiations.</p>",
+        "ActiveVpnTunnelStatus$IkeVersion": "<p>The version of the Internet Key Exchange (IKE) protocol being used.</p>",
+        "ActiveVpnTunnelStatus$ProvisioningStatusReason": "<p>The reason for the current provisioning status.</p>",
         "AddIpamOperatingRegion$RegionName": "<p>The name of the operating Region.</p>",
         "AddIpamOrganizationalUnitExclusion$OrganizationsEntityPath": "<p>An Amazon Web Services Organizations entity path. Build the path for the OU(s) using Amazon Web Services Organizations IDs separated by a <code>/</code>. Include all child OUs by ending the path with <code>/*</code>.</p> <ul> <li> <p>Example 1</p> <ul> <li> <p>Path to a child OU: <code>o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/</code> </p> </li> <li> <p>In this example, <code>o-a1b2c3d4e5</code> is the organization ID, <code>r-f6g7h8i9j0example</code> is the root ID , <code>ou-ghi0-awsccccc</code> is an OU ID, and <code>ou-jkl0-awsddddd</code> is a child OU ID.</p> </li> <li> <p>IPAM will not manage the IP addresses in accounts in the child OU.</p> </li> </ul> </li> <li> <p>Example 2</p> <ul> <li> <p>Path where all child OUs will be part of the exclusion: <code>o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/*</code> </p> </li> <li> <p>In this example, IPAM will not manage the IP addresses in accounts in the OU (<code>ou-ghi0-awsccccc</code>) or in accounts in any OUs that are children of the OU.</p> </li> </ul> </li> </ul> <p>For more information on how to construct an entity path, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_last-accessed-view-data-orgs.html#access_policies_access-advisor-viewing-orgs-entity-path\">Understand the Amazon Web Services Organizations entity path</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p>",
         "AddPrefixListEntry$Cidr": "<p>The CIDR block.</p>",
@@ -22090,6 +22116,7 @@
         "CreateVpcRequest$Ipv6CidrBlock": "<p>The IPv6 CIDR block from the IPv6 address pool. You must also specify <code>Ipv6Pool</code> in the request.</p> <p>To let Amazon choose the IPv6 CIDR block for you, omit this parameter.</p>",
         "CreateVpcRequest$Ipv6CidrBlockNetworkBorderGroup": "<p>The name of the location from which we advertise the IPV6 CIDR block. Use this parameter to limit the address to this location.</p> <p> You must set <code>AmazonProvidedIpv6CidrBlock</code> to <code>true</code> to use this parameter.</p>",
         "CreateVpnConnectionRequest$Type": "<p>The type of VPN connection (<code>ipsec.1</code>).</p>",
+        "CreateVpnConnectionRequest$PreSharedKeyStorage": "<p>Specifies the storage mode for the pre-shared key (PSK). Valid values are <code>Standard</code>\" (stored in the Site-to-Site VPN service) or <code>SecretsManager</code> (stored in Amazon Web Services Secrets Manager).</p>",
         "CreateVpnConnectionRouteRequest$DestinationCidrBlock": "<p>The CIDR block associated with the local subnet of the customer network.</p>",
         "CreateVpnGatewayRequest$AvailabilityZone": "<p>The Availability Zone for the virtual private gateway.</p>",
         "CreditSpecification$CpuCredits": "<p>The credit option for CPU usage of a T instance.</p> <p>Valid values: <code>standard</code> | <code>unlimited</code> </p>",
@@ -22545,6 +22572,7 @@
         "FpgaImageAttribute$Name": "<p>The name of the AFI.</p>",
         "FpgaImageAttribute$Description": "<p>The description of the AFI.</p>",
         "FpgaImageState$Message": "<p>If the state is <code>failed</code>, this is the error message.</p>",
+        "GetActiveVpnTunnelStatusRequest$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel for which to retrieve the active status.</p>",
         "GetAllowedImagesSettingsResult$State": "<p>The current state of the Allowed AMIs setting at the account level in the specified Amazon Web Services Region.</p> <p>Possible values:</p> <ul> <li> <p> <code>disabled</code>: All AMIs are allowed.</p> </li> <li> <p> <code>audit-mode</code>: All AMIs are allowed, but the <code>ImageAllowed</code> field is set to <code>true</code> if the AMI would be allowed with the current list of criteria if allowed AMIs was enabled.</p> </li> <li> <p> <code>enabled</code>: Only AMIs matching the image criteria are discoverable and available for use.</p> </li> </ul>",
         "GetAssociatedIpv6PoolCidrsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetAwsNetworkPerformanceDataRequest$NextToken": "<p>The token for the next page of results.</p>",
@@ -22613,6 +22641,7 @@
         "GetVerifiedAccessEndpointPolicyResult$PolicyDocument": "<p>The Verified Access policy document.</p>",
         "GetVerifiedAccessGroupPolicyResult$PolicyDocument": "<p>The Verified Access policy document.</p>",
         "GetVpnConnectionDeviceSampleConfigurationRequest$InternetKeyExchangeVersion": "<p>The IKE version to be used in the sample configuration file for your customer gateway device. You can specify one of the following versions: <code>ikev1</code> or <code>ikev2</code>.</p>",
+        "GetVpnConnectionDeviceSampleConfigurationRequest$SampleType": "<p>The type of sample configuration to generate. Valid values are \"compatibility\" (includes IKEv1) or \"recommended\" (throws UnsupportedOperationException for IKEv1).</p>",
         "GetVpnTunnelReplacementStatusRequest$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel.</p>",
         "GetVpnTunnelReplacementStatusResult$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel.</p>",
         "GroupIdentifier$GroupId": "<p>The ID of the security group.</p>",
@@ -23102,6 +23131,7 @@
         "ModifyVpnConnectionOptionsRequest$RemoteIpv6NetworkCidr": "<p>The IPv6 CIDR on the Amazon Web Services side of the VPN connection.</p> <p>Default: <code>::/0</code> </p>",
         "ModifyVpnTunnelCertificateRequest$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel.</p>",
         "ModifyVpnTunnelOptionsRequest$VpnTunnelOutsideIpAddress": "<p>The external IP address of the VPN tunnel.</p>",
+        "ModifyVpnTunnelOptionsRequest$PreSharedKeyStorage": "<p>Specifies the storage mode for the pre-shared key (PSK). Valid values are <code>Standard</code> (stored in Site-to-Site VPN service) or <code>SecretsManager</code> (stored in Amazon Web Services Secrets Manager).</p>",
         "ModifyVpnTunnelOptionsSpecification$TunnelInsideCidr": "<p>The range of inside IPv4 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway. </p> <p>Constraints: A size /30 CIDR block from the <code>169.254.0.0/16</code> range. The following CIDR blocks are reserved and cannot be used:</p> <ul> <li> <p> <code>169.254.0.0/30</code> </p> </li> <li> <p> <code>169.254.1.0/30</code> </p> </li> <li> <p> <code>169.254.2.0/30</code> </p> </li> <li> <p> <code>169.254.3.0/30</code> </p> </li> <li> <p> <code>169.254.4.0/30</code> </p> </li> <li> <p> <code>169.254.5.0/30</code> </p> </li> <li> <p> <code>169.254.169.252/30</code> </p> </li> </ul>",
         "ModifyVpnTunnelOptionsSpecification$TunnelInsideIpv6Cidr": "<p>The range of inside IPv6 addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same transit gateway.</p> <p>Constraints: A size /126 CIDR block from the local <code>fd00::/8</code> range.</p>",
         "ModifyVpnTunnelOptionsSpecification$DPDTimeoutAction": "<p>The action to take after DPD timeout occurs. Specify <code>restart</code> to restart the IKE initiation. Specify <code>clear</code> to end the IKE session.</p> <p>Valid Values: <code>clear</code> | <code>none</code> | <code>restart</code> </p> <p>Default: <code>clear</code> </p>",
@@ -23910,6 +23940,7 @@
         "VpnConnection$TransitGatewayId": "<p>The ID of the transit gateway associated with the VPN connection.</p>",
         "VpnConnection$CoreNetworkArn": "<p>The ARN of the core network.</p>",
         "VpnConnection$CoreNetworkAttachmentArn": "<p>The ARN of the core network attachment.</p>",
+        "VpnConnection$PreSharedKeyArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret storing the pre-shared key(s) for the VPN connection.</p>",
         "VpnConnection$VpnConnectionId": "<p>The ID of the VPN connection.</p>",
         "VpnConnection$CustomerGatewayId": "<p>The ID of the customer gateway at your end of the VPN connection.</p>",
         "VpnConnection$VpnGatewayId": "<p>The ID of the virtual private gateway at the Amazon Web Services side of the VPN connection.</p>",
@@ -27196,6 +27227,7 @@
         "CreateVpnConnectionRouteRequest$VpnConnectionId": "<p>The ID of the VPN connection.</p>",
         "DeleteVpnConnectionRequest$VpnConnectionId": "<p>The ID of the VPN connection.</p>",
         "DeleteVpnConnectionRouteRequest$VpnConnectionId": "<p>The ID of the VPN connection.</p>",
+        "GetActiveVpnTunnelStatusRequest$VpnConnectionId": "<p>The ID of the VPN connection for which to retrieve the active tunnel status.</p>",
         "GetVpnConnectionDeviceSampleConfigurationRequest$VpnConnectionId": "<p>The <code>VpnConnectionId</code> specifies the Site-to-Site VPN connection used for the sample configuration.</p>",
         "GetVpnTunnelReplacementStatusRequest$VpnConnectionId": "<p>The ID of the Site-to-Site VPN connection. </p>",
         "GetVpnTunnelReplacementStatusResult$VpnConnectionId": "<p>The ID of the Site-to-Site VPN connection. </p>",
@@ -27327,6 +27359,12 @@
       "base": null,
       "refs": {
         "VpnConnectionOptionsSpecification$TunnelOptions": "<p>The tunnel options for the VPN connection.</p>"
+      }
+    },
+    "VpnTunnelProvisioningStatus": {
+      "base": null,
+      "refs": {
+        "ActiveVpnTunnelStatus$ProvisioningStatus": "<p>The current provisioning status of the VPN tunnel.</p>"
       }
     },
     "WeekDay": {

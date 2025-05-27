@@ -191,6 +191,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetCostAndUsageComparisons":{
+      "name":"GetCostAndUsageComparisons",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCostAndUsageComparisonsRequest"},
+      "output":{"shape":"GetCostAndUsageComparisonsResponse"},
+      "errors":[
+        {"shape":"DataUnavailableException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetCostAndUsageWithResources":{
       "name":"GetCostAndUsageWithResources",
       "http":{
@@ -222,6 +237,21 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetCostComparisonDrivers":{
+      "name":"GetCostComparisonDrivers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCostComparisonDriversRequest"},
+      "output":{"shape":"GetCostComparisonDriversResponse"},
+      "errors":[
+        {"shape":"DataUnavailableException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -856,6 +886,20 @@
         "SavingsPlansPurchaseAnalysisConfiguration":{"shape":"SavingsPlansPurchaseAnalysisConfiguration"}
       }
     },
+    "ComparisonMetricValue":{
+      "type":"structure",
+      "members":{
+        "BaselineTimePeriodAmount":{"shape":"GenericString"},
+        "ComparisonTimePeriodAmount":{"shape":"GenericString"},
+        "Difference":{"shape":"GenericString"},
+        "Unit":{"shape":"GenericString"}
+      }
+    },
+    "ComparisonMetrics":{
+      "type":"map",
+      "key":{"shape":"MetricName"},
+      "value":{"shape":"ComparisonMetricValue"}
+    },
     "Context":{
       "type":"string",
       "enum":[
@@ -949,6 +993,23 @@
     "CostAllocationTagsMaxResults":{
       "type":"integer",
       "max":1000,
+      "min":1
+    },
+    "CostAndUsageComparison":{
+      "type":"structure",
+      "members":{
+        "CostAndUsageSelector":{"shape":"Expression"},
+        "Metrics":{"shape":"ComparisonMetrics"}
+      }
+    },
+    "CostAndUsageComparisons":{
+      "type":"list",
+      "member":{"shape":"CostAndUsageComparison"}
+    },
+    "CostAndUsageComparisonsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
       "min":1
     },
     "CostCategory":{
@@ -1145,6 +1206,36 @@
       "type":"list",
       "member":{"shape":"CostCategoryValue"}
     },
+    "CostComparisonDriver":{
+      "type":"structure",
+      "members":{
+        "CostSelector":{"shape":"Expression"},
+        "Metrics":{"shape":"ComparisonMetrics"},
+        "CostDrivers":{"shape":"CostDrivers"}
+      }
+    },
+    "CostComparisonDrivers":{
+      "type":"list",
+      "member":{"shape":"CostComparisonDriver"}
+    },
+    "CostComparisonDriversMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "CostDriver":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"GenericString"},
+        "Name":{"shape":"GenericString"},
+        "Metrics":{"shape":"ComparisonMetrics"}
+      }
+    },
+    "CostDrivers":{
+      "type":"list",
+      "member":{"shape":"CostDriver"}
+    },
     "Coverage":{
       "type":"structure",
       "members":{
@@ -1288,8 +1379,7 @@
     },
     "DeleteAnomalyMonitorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAnomalySubscriptionRequest":{
       "type":"structure",
@@ -1300,8 +1390,7 @@
     },
     "DeleteAnomalySubscriptionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCostCategoryDefinitionRequest":{
       "type":"structure",
@@ -1691,6 +1780,35 @@
         "CommitmentPurchaseAnalysisConfiguration":{"shape":"CommitmentPurchaseAnalysisConfiguration"}
       }
     },
+    "GetCostAndUsageComparisonsRequest":{
+      "type":"structure",
+      "required":[
+        "BaselineTimePeriod",
+        "ComparisonTimePeriod",
+        "MetricForComparison"
+      ],
+      "members":{
+        "BillingViewArn":{"shape":"BillingViewArn"},
+        "BaselineTimePeriod":{"shape":"DateInterval"},
+        "ComparisonTimePeriod":{"shape":"DateInterval"},
+        "MetricForComparison":{"shape":"MetricName"},
+        "Filter":{"shape":"Expression"},
+        "GroupBy":{"shape":"GroupDefinitions"},
+        "MaxResults":{
+          "shape":"CostAndUsageComparisonsMaxResults",
+          "box":true
+        },
+        "NextPageToken":{"shape":"NextPageToken"}
+      }
+    },
+    "GetCostAndUsageComparisonsResponse":{
+      "type":"structure",
+      "members":{
+        "CostAndUsageComparisons":{"shape":"CostAndUsageComparisons"},
+        "TotalCostAndUsage":{"shape":"ComparisonMetrics"},
+        "NextPageToken":{"shape":"NextPageToken"}
+      }
+    },
     "GetCostAndUsageRequest":{
       "type":"structure",
       "required":[
@@ -1769,6 +1887,34 @@
         "CostCategoryValues":{"shape":"CostCategoryValuesList"},
         "ReturnSize":{"shape":"PageSize"},
         "TotalSize":{"shape":"PageSize"}
+      }
+    },
+    "GetCostComparisonDriversRequest":{
+      "type":"structure",
+      "required":[
+        "BaselineTimePeriod",
+        "ComparisonTimePeriod",
+        "MetricForComparison"
+      ],
+      "members":{
+        "BillingViewArn":{"shape":"BillingViewArn"},
+        "BaselineTimePeriod":{"shape":"DateInterval"},
+        "ComparisonTimePeriod":{"shape":"DateInterval"},
+        "MetricForComparison":{"shape":"MetricName"},
+        "Filter":{"shape":"Expression"},
+        "GroupBy":{"shape":"GroupDefinitions"},
+        "MaxResults":{
+          "shape":"CostComparisonDriversMaxResults",
+          "box":true
+        },
+        "NextPageToken":{"shape":"NextPageToken"}
+      }
+    },
+    "GetCostComparisonDriversResponse":{
+      "type":"structure",
+      "members":{
+        "CostComparisonDrivers":{"shape":"CostComparisonDrivers"},
+        "NextPageToken":{"shape":"NextPageToken"}
       }
     },
     "GetCostForecastRequest":{
@@ -3159,8 +3305,7 @@
     },
     "StartSavingsPlansPurchaseRecommendationGenerationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartSavingsPlansPurchaseRecommendationGenerationResponse":{
       "type":"structure",
@@ -3233,8 +3378,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValues":{
       "type":"structure",
@@ -3339,8 +3483,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UnusedHours":{"type":"string"},
     "UnusedUnits":{"type":"string"},
