@@ -305,7 +305,7 @@ class S3TransferManager
         $objectsUploaded = 0;
         $objectsFailed = 0;
         foreach ($files as $file) {
-            $baseDir = rtrim($sourceDirectory, '/') . '/';
+            $baseDir = rtrim($sourceDirectory, '/') . DIRECTORY_SEPARATOR;
             $relativePath = substr($file, strlen($baseDir));
             if (str_contains($relativePath, $delimiter) && $delimiter !== '/') {
                 throw new S3TransferException(
@@ -593,7 +593,7 @@ class S3TransferManager
         $objectsFailed = 0;
         foreach ($objects as $object) {
             $objectKey = $this->s3UriAsBucketAndKey($object)['Key'];
-            $destinationFile = $destinationDirectory . '/' . $objectKey;
+            $destinationFile = $destinationDirectory . DIRECTORY_SEPARATOR . $objectKey;
             if ($this->resolvesOutsideTargetDirectory($destinationFile, $objectKey)) {
                 throw new S3TransferException(
                     "Cannot download key ' . $objectKey

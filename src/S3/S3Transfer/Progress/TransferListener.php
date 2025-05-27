@@ -4,8 +4,8 @@ namespace Aws\S3\S3Transfer\Progress;
 
 abstract class TransferListener
 {
-    public const REQUEST_ARGS_KEY = TransferListener::REQUEST_ARGS_KEY;
-    public const PROGRESS_SNAPSHOT_KEY = TransferListener::PROGRESS_SNAPSHOT_KEY;
+    public const REQUEST_ARGS_KEY = 'request_args';
+    public const PROGRESS_SNAPSHOT_KEY = 'progress_snapshot';
     public const REASON_KEY = 'reason';
 
     /**
