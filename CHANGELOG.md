@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.19 - 2025-05-27
 
 * `Aws\Deadline` - AWS Deadline Cloud service-managed fleets now support storage profiles. With storage profiles, you can map file paths between a workstation and the worker hosts running the job.
 * `Aws\CostExplorer` - This release introduces Cost Comparison feature (GetCostAndUsageComparisons, GetCostComparisonDrivers) allowing you find cost variations across multiple dimensions and identify key drivers of spending changes.
