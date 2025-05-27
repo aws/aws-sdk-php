@@ -7,6 +7,7 @@ use Aws\S3\S3Transfer\Progress\ConsoleProgressBar;
 use Aws\S3\S3Transfer\Progress\PlainProgressBarFormat;
 use Aws\S3\S3Transfer\Progress\ProgressBarInterface;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
+use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use PHPUnit\Framework\TestCase;
 

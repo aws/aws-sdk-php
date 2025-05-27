@@ -8,6 +8,7 @@ use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Coroutine;

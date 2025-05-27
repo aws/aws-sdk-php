@@ -2684,6 +2684,17 @@ class S3TransferManagerTest extends TestCase
         ];
     }
 
+    public function testFailsWhenKeyResolvesOutsideTargetDirectory() {
+
+    }
+
+    /**
+     * @return array
+     */
+    public function failsWhenKeyResolvesOutsideTargetDirectoryProvider(): array {
+        return [];
+    }
+
     /**
      * @param array $methodsCallback If any from the callbacks below
      *  is not provided then a default implementation will be provided.

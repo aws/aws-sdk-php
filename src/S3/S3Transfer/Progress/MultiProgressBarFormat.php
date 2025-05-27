@@ -4,7 +4,7 @@ namespace Aws\S3\S3Transfer\Progress;
 
 class MultiProgressBarFormat extends ProgressBarFormat
 {
-    public const FORMAT_TEMPLATE = "[|progress_bar|] |percent|%"
+    public const FORMAT_TEMPLATE = "[|progress_bar|] |percent|% "
     ."Completed: |completed|/|total|, Failed: |failed|/|total|";
     public const FORMAT_PARAMETERS = [
         'completed',
