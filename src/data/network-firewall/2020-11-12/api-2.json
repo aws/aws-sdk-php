@@ -116,6 +116,24 @@
         {"shape":"InsufficientCapacityException"}
       ]
     },
+    "CreateVpcEndpointAssociation":{
+      "name":"CreateVpcEndpointAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateVpcEndpointAssociationRequest"},
+      "output":{"shape":"CreateVpcEndpointAssociationResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
+        {"shape":"InsufficientCapacityException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "DeleteFirewall":{
       "name":"DeleteFirewall",
       "http":{
@@ -199,6 +217,22 @@
         {"shape":"InvalidOperationException"}
       ]
     },
+    "DeleteVpcEndpointAssociation":{
+      "name":"DeleteVpcEndpointAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteVpcEndpointAssociationRequest"},
+      "output":{"shape":"DeleteVpcEndpointAssociationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidOperationException"}
+      ]
+    },
     "DescribeFirewall":{
       "name":"DescribeFirewall",
       "http":{
@@ -207,6 +241,21 @@
       },
       "input":{"shape":"DescribeFirewallRequest"},
       "output":{"shape":"DescribeFirewallResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DescribeFirewallMetadata":{
+      "name":"DescribeFirewallMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFirewallMetadataRequest"},
+      "output":{"shape":"DescribeFirewallMetadataResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServerError"},
@@ -312,6 +361,21 @@
       },
       "input":{"shape":"DescribeTLSInspectionConfigurationRequest"},
       "output":{"shape":"DescribeTLSInspectionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DescribeVpcEndpointAssociation":{
+      "name":"DescribeVpcEndpointAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeVpcEndpointAssociationRequest"},
+      "output":{"shape":"DescribeVpcEndpointAssociationResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServerError"},
@@ -465,6 +529,20 @@
         {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"}
+      ]
+    },
+    "ListVpcEndpointAssociations":{
+      "name":"ListVpcEndpointAssociations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListVpcEndpointAssociationsRequest"},
+      "output":{"shape":"ListVpcEndpointAssociationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "PutResourcePolicy":{
@@ -724,6 +802,12 @@
     }
   },
   "shapes":{
+    "AZSyncState":{
+      "type":"structure",
+      "members":{
+        "Attachment":{"shape":"Attachment"}
+      }
+    },
     "ActionDefinition":{
       "type":"structure",
       "members":{
@@ -843,6 +927,11 @@
         "UpdateToken":{"shape":"UpdateToken"}
       }
     },
+    "AssociationSyncState":{
+      "type":"map",
+      "key":{"shape":"AvailabilityZone"},
+      "value":{"shape":"AZSyncState"}
+    },
     "Attachment":{
       "type":"structure",
       "members":{
@@ -864,6 +953,12 @@
       ]
     },
     "AvailabilityZone":{"type":"string"},
+    "AvailabilityZoneMetadata":{
+      "type":"structure",
+      "members":{
+        "IPAddressType":{"shape":"IPAddressType"}
+      }
+    },
     "AzSubnet":{
       "type":"string",
       "max":128,
@@ -1026,6 +1121,28 @@
         "TLSInspectionConfigurationResponse":{"shape":"TLSInspectionConfigurationResponse"}
       }
     },
+    "CreateVpcEndpointAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "FirewallArn",
+        "VpcId",
+        "SubnetMapping"
+      ],
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "VpcId":{"shape":"VpcId"},
+        "SubnetMapping":{"shape":"SubnetMapping"},
+        "Description":{"shape":"Description"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateVpcEndpointAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointAssociation":{"shape":"VpcEndpointAssociation"},
+        "VpcEndpointAssociationStatus":{"shape":"VpcEndpointAssociationStatus"}
+      }
+    },
     "CustomAction":{
       "type":"structure",
       "required":[
@@ -1078,8 +1195,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRuleGroupRequest":{
       "type":"structure",
@@ -1108,6 +1224,36 @@
       "required":["TLSInspectionConfigurationResponse"],
       "members":{
         "TLSInspectionConfigurationResponse":{"shape":"TLSInspectionConfigurationResponse"}
+      }
+    },
+    "DeleteVpcEndpointAssociationRequest":{
+      "type":"structure",
+      "required":["VpcEndpointAssociationArn"],
+      "members":{
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DeleteVpcEndpointAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointAssociation":{"shape":"VpcEndpointAssociation"},
+        "VpcEndpointAssociationStatus":{"shape":"VpcEndpointAssociationStatus"}
+      }
+    },
+    "DescribeFirewallMetadataRequest":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DescribeFirewallMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallPolicyArn":{"shape":"ResourceArn"},
+        "Description":{"shape":"Description"},
+        "Status":{"shape":"FirewallStatusValue"},
+        "SupportedAvailabilityZones":{"shape":"SupportedAvailabilityZones"}
       }
     },
     "DescribeFirewallPolicyRequest":{
@@ -1153,6 +1299,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"}
       }
     },
@@ -1161,6 +1309,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"},
         "FlowOperationType":{"shape":"FlowOperationType"},
         "FlowOperationStatus":{"shape":"FlowOperationStatus"},
@@ -1258,6 +1408,20 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "TLSInspectionConfiguration":{"shape":"TLSInspectionConfiguration"},
         "TLSInspectionConfigurationResponse":{"shape":"TLSInspectionConfigurationResponse"}
+      }
+    },
+    "DescribeVpcEndpointAssociationRequest":{
+      "type":"structure",
+      "required":["VpcEndpointAssociationArn"],
+      "members":{
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"}
+      }
+    },
+    "DescribeVpcEndpointAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointAssociation":{"shape":"VpcEndpointAssociation"},
+        "VpcEndpointAssociationStatus":{"shape":"VpcEndpointAssociationStatus"}
       }
     },
     "Description":{
@@ -1360,6 +1524,7 @@
         "FirewallId":{"shape":"ResourceId"},
         "Tags":{"shape":"TagList"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"},
         "EnabledAnalysisTypes":{"shape":"EnabledAnalysisTypes"}
       }
     },
@@ -1774,7 +1939,9 @@
         "FlowOperationId":{"shape":"FlowOperationId"},
         "NextToken":{"shape":"PaginationToken"},
         "MaxResults":{"shape":"PaginationMaxResults"},
-        "AvailabilityZone":{"shape":"AvailabilityZone"}
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"}
       }
     },
     "ListFlowOperationResultsResponse":{
@@ -1782,6 +1949,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationId":{"shape":"FlowOperationId"},
         "FlowOperationStatus":{"shape":"FlowOperationStatus"},
         "StatusMessage":{"shape":"StatusReason"},
@@ -1796,6 +1965,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "FlowOperationType":{"shape":"FlowOperationType"},
         "NextToken":{"shape":"PaginationToken"},
         "MaxResults":{"shape":"PaginationMaxResults"}
@@ -1853,6 +2024,21 @@
       "members":{
         "NextToken":{"shape":"PaginationToken"},
         "Tags":{"shape":"TagList"}
+      }
+    },
+    "ListVpcEndpointAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "FirewallArn":{"shape":"ResourceArn"}
+      }
+    },
+    "ListVpcEndpointAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"PaginationToken"},
+        "VpcEndpointAssociations":{"shape":"VpcEndpointAssociations"}
       }
     },
     "LogDestinationConfig":{
@@ -2046,8 +2232,7 @@
     },
     "PutResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReferenceSets":{
       "type":"structure",
@@ -2335,6 +2520,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "MinimumFlowAgeInSeconds":{"shape":"Age"},
         "FlowFilters":{"shape":"FlowFilters"}
       }
@@ -2356,6 +2543,8 @@
       "members":{
         "FirewallArn":{"shape":"ResourceArn"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "MinimumFlowAgeInSeconds":{"shape":"Age"},
         "FlowFilters":{"shape":"FlowFilters"}
       }
@@ -2536,6 +2725,11 @@
       "type":"list",
       "member":{"shape":"SubnetMapping"}
     },
+    "SupportedAvailabilityZones":{
+      "type":"map",
+      "key":{"shape":"AvailabilityZone"},
+      "value":{"shape":"AvailabilityZoneMetadata"}
+    },
     "SyncState":{
       "type":"structure",
       "members":{
@@ -2658,8 +2852,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2726,8 +2919,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFirewallAnalysisSettingsRequest":{
       "type":"structure",
@@ -2951,6 +3143,48 @@
     "VariableDefinitionList":{
       "type":"list",
       "member":{"shape":"VariableDefinition"}
+    },
+    "VpcEndpointAssociation":{
+      "type":"structure",
+      "required":[
+        "VpcEndpointAssociationArn",
+        "FirewallArn",
+        "VpcId",
+        "SubnetMapping"
+      ],
+      "members":{
+        "VpcEndpointAssociationId":{"shape":"ResourceId"},
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"},
+        "FirewallArn":{"shape":"ResourceArn"},
+        "VpcId":{"shape":"VpcId"},
+        "SubnetMapping":{"shape":"SubnetMapping"},
+        "Description":{"shape":"Description"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "VpcEndpointAssociationMetadata":{
+      "type":"structure",
+      "members":{
+        "VpcEndpointAssociationArn":{"shape":"ResourceArn"}
+      }
+    },
+    "VpcEndpointAssociationStatus":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"FirewallStatusValue"},
+        "AssociationSyncState":{"shape":"AssociationSyncState"}
+      }
+    },
+    "VpcEndpointAssociations":{
+      "type":"list",
+      "member":{"shape":"VpcEndpointAssociationMetadata"}
+    },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":256,
+      "min":5,
+      "pattern":"^vpce-[a-zA-Z0-9]*$"
     },
     "VpcId":{
       "type":"string",

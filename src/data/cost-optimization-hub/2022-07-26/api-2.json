@@ -416,14 +416,14 @@
     },
     "GetPreferencesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPreferencesResponse":{
       "type":"structure",
       "members":{
         "savingsEstimationMode":{"shape":"SavingsEstimationMode"},
-        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"}
+        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"},
+        "preferredCommitment":{"shape":"PreferredCommitment"}
       }
     },
     "GetRecommendationRequest":{
@@ -661,6 +661,21 @@
       "members":{
         "dimension":{"shape":"String"},
         "order":{"shape":"Order"}
+      }
+    },
+    "PaymentOption":{
+      "type":"string",
+      "enum":[
+        "AllUpfront",
+        "PartialUpfront",
+        "NoUpfront"
+      ]
+    },
+    "PreferredCommitment":{
+      "type":"structure",
+      "members":{
+        "term":{"shape":"Term"},
+        "paymentOption":{"shape":"PaymentOption"}
       }
     },
     "PrimitiveBoolean":{"type":"boolean"},
@@ -989,6 +1004,13 @@
       "max":100,
       "min":1
     },
+    "Term":{
+      "type":"string",
+      "enum":[
+        "OneYear",
+        "ThreeYears"
+      ]
+    },
     "ThrottlingException":{
       "type":"structure",
       "members":{
@@ -1015,14 +1037,16 @@
       "type":"structure",
       "members":{
         "savingsEstimationMode":{"shape":"SavingsEstimationMode"},
-        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"}
+        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"},
+        "preferredCommitment":{"shape":"PreferredCommitment"}
       }
     },
     "UpdatePreferencesResponse":{
       "type":"structure",
       "members":{
         "savingsEstimationMode":{"shape":"SavingsEstimationMode"},
-        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"}
+        "memberAccountDiscountVisibility":{"shape":"MemberAccountDiscountVisibility"},
+        "preferredCommitment":{"shape":"PreferredCommitment"}
       }
     },
     "Usage":{

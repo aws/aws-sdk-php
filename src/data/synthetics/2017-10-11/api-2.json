@@ -509,7 +509,8 @@
         "TimeoutInSeconds":{"shape":"MaxFifteenMinutesInSeconds"},
         "MemoryInMB":{"shape":"MaxSize3008"},
         "ActiveTracing":{"shape":"NullableBoolean"},
-        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"}
+        "EnvironmentVariables":{"shape":"EnvironmentVariablesMap"},
+        "EphemeralStorage":{"shape":"EphemeralStorageSize"}
       }
     },
     "CanaryRunConfigOutput":{
@@ -517,7 +518,8 @@
       "members":{
         "TimeoutInSeconds":{"shape":"MaxFifteenMinutesInSeconds"},
         "MemoryInMB":{"shape":"MaxSize3008"},
-        "ActiveTracing":{"shape":"NullableBoolean"}
+        "ActiveTracing":{"shape":"NullableBoolean"},
+        "EphemeralStorage":{"shape":"EphemeralStorageSize"}
       }
     },
     "CanaryRunState":{
@@ -540,8 +542,17 @@
       "members":{
         "State":{"shape":"CanaryRunState"},
         "StateReason":{"shape":"String"},
-        "StateReasonCode":{"shape":"CanaryRunStateReasonCode"}
+        "StateReasonCode":{"shape":"CanaryRunStateReasonCode"},
+        "TestResult":{"shape":"CanaryRunTestResult"}
       }
+    },
+    "CanaryRunTestResult":{
+      "type":"string",
+      "enum":[
+        "PASSED",
+        "FAILED",
+        "UNKNOWN"
+      ]
     },
     "CanaryRunTimeline":{
       "type":"structure",
@@ -814,6 +825,11 @@
       "type":"map",
       "key":{"shape":"EnvironmentVariableName"},
       "value":{"shape":"EnvironmentVariableValue"}
+    },
+    "EphemeralStorageSize":{
+      "type":"integer",
+      "max":5120,
+      "min":1024
     },
     "ErrorMessage":{"type":"string"},
     "FunctionArn":{

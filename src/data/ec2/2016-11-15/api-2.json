@@ -15786,6 +15786,26 @@
         }
       }
     },
+    "DeleteSnapshotResultSet":{
+      "type":"list",
+      "member":{
+        "shape":"DeleteSnapshotReturnCode",
+        "locationName":"item"
+      }
+    },
+    "DeleteSnapshotReturnCode":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"SnapshotId",
+          "locationName":"snapshotId"
+        },
+        "ReturnCode":{
+          "shape":"SnapshotReturnCodes",
+          "locationName":"returnCode"
+        }
+      }
+    },
     "DeleteSpotDatafeedSubscriptionRequest":{
       "type":"structure",
       "members":{
@@ -16436,6 +16456,7 @@
       "required":["ImageId"],
       "members":{
         "ImageId":{"shape":"ImageId"},
+        "DeleteAssociatedSnapshots":{"shape":"Boolean"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -16445,7 +16466,15 @@
     "DeregisterImageResult":{
       "type":"structure",
       "members":{
-}
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        },
+        "DeleteSnapshotResults":{
+          "shape":"DeleteSnapshotResultSet",
+          "locationName":"deleteSnapshotResultSet"
+        }
+      }
     },
     "DeregisterInstanceEventNotificationAttributesRequest":{
       "type":"structure",
@@ -46096,6 +46125,16 @@
         "shape":"SnapshotRecycleBinInfo",
         "locationName":"item"
       }
+    },
+    "SnapshotReturnCodes":{
+      "type":"string",
+      "enum":[
+        "success",
+        "skipped",
+        "missing-permissions",
+        "internal-error",
+        "client-error"
+      ]
     },
     "SnapshotSet":{
       "type":"list",

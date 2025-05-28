@@ -13,8 +13,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You are not authorized to use this operation with the given parameters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountEnrollmentStatus": {
       "base": "<p>Describes the enrollment status of an organization's member accounts in Cost Optimization Hub.</p>",
@@ -278,23 +277,19 @@
     },
     "GetPreferencesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPreferencesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImplementationEffort": {
       "base": null,
@@ -328,8 +323,7 @@
     },
     "InternalServerException": {
       "base": "<p>An error on the server occurred during the processing of your request. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LambdaFunction": {
       "base": "<p>The Lambda function recommendation details.</p>",
@@ -345,18 +339,15 @@
     },
     "ListEnrollmentStatusesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEnrollmentStatusesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationSummariesRequestMaxResultsInteger": {
       "base": null,
@@ -366,13 +357,11 @@
     },
     "ListRecommendationSummariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendationsRequestMaxResultsInteger": {
       "base": null,
@@ -382,8 +371,7 @@
     },
     "ListRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -400,13 +388,13 @@
       }
     },
     "MemoryDbReservedInstances": {
-      "base": "<p>The MemoryDB reserved instances recommendation details.</p> <note> <p>MemoryDB reserved instances are referred to as \"MemoryDB reserved nodes\" in customer-facing documentation.</p> </note>",
+      "base": "<p>The MemoryDB reserved instances recommendation details.</p> <note> <p>While the API reference uses \"MemoryDB reserved instances\", the user guide and other documentation refer to them as \"MemoryDB reserved nodes\", as the terms are used interchangeably.</p> </note>",
       "refs": {
         "ResourceDetails$memoryDbReservedInstances": "<p>The MemoryDB reserved instances recommendation details.</p>"
       }
     },
     "MemoryDbReservedInstancesConfiguration": {
-      "base": "<p>The MemoryDB reserved instances configuration used for recommendations.</p> <note> <p>MemoryDB reserved instances are referred to as \"MemoryDB reserved nodes\" in customer-facing documentation.</p> </note>",
+      "base": "<p>The MemoryDB reserved instances configuration used for recommendations.</p> <note> <p>While the API reference uses \"MemoryDB reserved instances\", the user guide and other documentation refer to them as \"MemoryDB reserved nodes\", as the terms are used interchangeably.</p> </note>",
       "refs": {
         "MemoryDbReservedInstances$configuration": "<p>The MemoryDB reserved instances configuration used for recommendations.</p>"
       }
@@ -445,6 +433,20 @@
       "base": "<p>Defines how rows will be sorted in the response.</p>",
       "refs": {
         "ListRecommendationsRequest$orderBy": "<p>The ordering of recommendations by a dimension.</p>"
+      }
+    },
+    "PaymentOption": {
+      "base": null,
+      "refs": {
+        "PreferredCommitment$paymentOption": "<p>The preferred upfront payment structure for commitments. If the value is null, it will default to <code>AllUpfront</code> (highest savings) where applicable.</p>"
+      }
+    },
+    "PreferredCommitment": {
+      "base": "<p>The preferred configuration for Reserved Instances and Savings Plans commitment-based discounts, consisting of a payment option and a commitment duration.</p>",
+      "refs": {
+        "GetPreferencesResponse$preferredCommitment": "<p>Retrieves the current preferences for how Reserved Instances and Savings Plans cost-saving opportunities are prioritized in terms of payment option and term length.</p>",
+        "UpdatePreferencesRequest$preferredCommitment": "<p>Sets the preferences for how Reserved Instances and Savings Plans cost-saving opportunities are prioritized in terms of payment option and term length.</p>",
+        "UpdatePreferencesResponse$preferredCommitment": "<p>Shows the updated preferences for how Reserved Instances and Savings Plans cost-saving opportunities are prioritized in terms of payment option and term length.</p>"
       }
     },
     "PrimitiveBoolean": {
@@ -589,8 +591,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified Amazon Resource Name (ARN) in the request doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePricing": {
       "base": "<p>Contains pricing information about the specified resource.</p>",
@@ -855,10 +856,15 @@
         "Recommendation$tags": "<p>A list of tags assigned to the recommendation.</p>"
       }
     },
+    "Term": {
+      "base": null,
+      "refs": {
+        "PreferredCommitment$term": "<p>The preferred length of the commitment period. If the value is null, it will default to <code>ThreeYears</code> (highest savings) where applicable.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -869,23 +875,19 @@
     },
     "UpdateEnrollmentStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEnrollmentStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreferencesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePreferencesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Usage": {
       "base": "<p>Details about the usage.</p>",
@@ -901,8 +903,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionDetail": {
       "base": "<p>The input failed to meet the constraints specified by the Amazon Web Services service in a specified field.</p>",

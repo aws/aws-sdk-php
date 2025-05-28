@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EventBridge` - Allow for more than 2 characters for location codes in EventBridge ARNs
+* `Aws\Synthetics` - Add support to change ephemeral storage. Add a new field "TestResult" under CanaryRunStatus.
+* `Aws\NetworkFirewall` - You can now use VPC endpoint associations to create multiple firewall endpoints for a single firewall.
+* `Aws\CostOptimizationHub` - This release allows customers to modify their preferred commitment term and payment options.
+* `Aws\EC2` - Enable the option to automatically delete underlying Amazon EBS snapshots when deregistering Amazon Machine Images (AMIs)
+
 ## 3.343.19 - 2025-05-27
 
 * `Aws\Deadline` - AWS Deadline Cloud service-managed fleets now support storage profiles. With storage profiles, you can map file paths between a workstation and the worker hosts running the job.
