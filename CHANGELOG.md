@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.20 - 2025-05-28
 
 * `Aws\EventBridge` - Allow for more than 2 characters for location codes in EventBridge ARNs
 * `Aws\Synthetics` - Add support to change ephemeral storage. Add a new field "TestResult" under CanaryRunStatus.
