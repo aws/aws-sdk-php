@@ -16,6 +16,7 @@ use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
+use Aws\Test\TestsUtility;
 use Closure;
 use Exception;
 use GuzzleHttp\Promise\Create;
@@ -2684,15 +2685,129 @@ class S3TransferManagerTest extends TestCase
         ];
     }
 
-    public function testFailsWhenKeyResolvesOutsideTargetDirectory() {
+    /**
+     * @param array $objects
+     *
+     * @dataProvider failsWhenKeyResolvesOutsideTargetDirectoryProvider
+     *
+     * @return void
+     */
+    public function testFailsWhenKeyResolvesOutsideTargetDirectory(
+        string $prefix,
+        array $objects,
+    ) {
+        $bucket = "test-bucket";
+        $directory = "test-directory";
+        try {
+            $fullDirectoryPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $directory;
+            if (is_dir($fullDirectoryPath)) {
+                TestsUtility::cleanUpDir($fullDirectoryPath);
+            }
+            mkdir($fullDirectoryPath, 0777, true);
+            $this->expectException(S3TransferException::class);
+            $called = false;
+            $client = $this->getS3ClientMock([
+                'executeAsync' => function (CommandInterface $command) use (
+                    $objects,
+                    &$called
+                ) {
+                    $called = true;
+                    if ($command->getName() === 'ListObjectsV2') {
+                        return Create::promiseFor(new Result([
+                            'Contents' => $objects,
+                        ]));
+                    }
 
+                    return Create::promiseFor(new Result([
+                        'Body' => Utils::streamFor(
+                            "Test file " . $command['Key']
+                        ),
+                        '@metadata' => []
+                    ]));
+                },
+                'getApi' => function () {
+                    $service = $this->getMockBuilder(Service::class)
+                        ->disableOriginalConstructor()
+                        ->onlyMethods(["getPaginatorConfig"])
+                        ->getMock();
+                    $service->method('getPaginatorConfig')
+                        ->willReturn([
+                            'input_token'  => null,
+                            'output_token' => null,
+                            'limit_key'    => null,
+                            'result_key'   => null,
+                            'more_results' => null,
+                        ]);
+
+                    return $service;
+                },
+                'getHandlerList' => function () {
+                    return new HandlerList();
+                }
+            ]);
+            $manager = new S3TransferManager(
+                $client,
+            );
+            $manager->downloadDirectory(
+                $bucket,
+                $fullDirectoryPath,
+                [],
+                [
+                    's3_prefix' => $prefix,
+                ]
+            )->wait();
+            $this->assertTrue($called);
+        } finally {
+            TestsUtility::cleanUpDir($directory);
+        }
     }
 
     /**
      * @return array
      */
     public function failsWhenKeyResolvesOutsideTargetDirectoryProvider(): array {
-        return [];
+        return [
+            'resolves_outside_target_directory_1' => [
+                'prefix' => 'foo-objects/',
+                'objects' => [
+                    [
+                        'Key' => '../outside/key1.txt'
+                    ],
+                ],
+            ],
+            'resolves_outside_target_directory_2' => [
+                'prefix' => 'foo-objects/',
+                'objects' => [
+                    [
+                        'Key' => '../../foo/key2.txt'
+                    ]
+                ]
+            ],
+            'resolves_outside_target_directory_3' => [
+                'prefix' => 'buzz/',
+                'objects' => [
+                    [
+                        'Key' => '..//inner//key3.txt'
+                    ]
+                ]
+            ],
+            'resolves_outside_target_directory_4' => [
+                'prefix' => 'test/',
+                'objects' => [
+                    [
+                        'Key' => './../../key4.txt'
+                    ]
+                ]
+            ],
+            'resolves_outside_target_directory_5' => [
+                'prefix' => 'test/',
+                'objects' => [
+                    [
+                        'Key' => './../another_dir/.././key1.txt',
+                    ],
+                ]
+            ],
+        ];
     }
 
     /**
