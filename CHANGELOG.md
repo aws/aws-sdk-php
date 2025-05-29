@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.21 - 2025-05-29
 
 * `Aws\SageMaker` - Add maintenance status field to DescribeMlflowTrackingServer API response
 * `Aws\DataSync` - AgentArns field is made optional for Object Storage and Azure Blob location create requests. Location credentials are now managed via Secrets Manager, and may be encrypted with service managed or customer managed keys. Authentication is now optional for Azure Blob locations.
